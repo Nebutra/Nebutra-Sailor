@@ -74,3 +74,17 @@ Customize shimmer colors by overriding CSS variables:
 |----------|-----------------|----------------|---------|
 | `--base-color` | `#a1a1aa` | `#71717a` | Text base color |
 | `--base-gradient-color` | `#000` | `#ffffff` | Shimmer highlight color |
+
+## Accessibility
+
+- Use shimmer for short-lived generation or emphasis only. Long-running loading states need a status message outside the animated text.
+- The text content remains the accessible name; do not put important state changes only in shimmer styling.
+- Respect `paused` when a parent enters reduced-motion mode or when the shimmer is rendered inside dense reading surfaces.
+- Avoid pairing shimmer with low-contrast muted text. The base color must remain readable when the highlight is not passing through.
+
+## Token Contract
+
+- Prefer semantic CSS variables for `--base-color` and `--base-gradient-color`; do not hardcode brand hex values in product surfaces.
+- Duration is a motion parameter and should stay consistent with the surrounding loading pattern.
+- `TextShimmer` is the tool-family text substrate. Use `LoadingDots` for compact non-text progress and `AnimateIn` for entrance motion.
+- Keep animated properties to background position and color interpolation; do not introduce layout-shifting shimmer effects.

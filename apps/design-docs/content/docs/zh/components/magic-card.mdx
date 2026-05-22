@@ -89,6 +89,20 @@ import { MagicCard } from "@nebutra/ui";
 | `gradientTo` | `string` | `"#FE8BBB"` | 边框渐变效果的结束颜色 |
 | `className` | `string` | — | 应用于外部包装容器 |
 
+## 可访问性
+
+- spotlight 是装饰效果，不能作为 selection、active state 或 validation state 的唯一提示。
+- 卡片内部的交互控件必须可以键盘访问；跟随指针的视觉效果不能变成额外 focus target。
+- 当页面同时渲染多张卡片，或动效会干扰主要内容时，组合层需要遵守 `prefers-reduced-motion`。
+- 文本对比度必须独立于 glow 成立。光标离开卡片后，内容仍要可读。
+
+## Token 契约
+
+- 产品用法中，`gradientFrom`、`gradientTo`、`gradientColor` 应优先使用 token-backed CSS variables。literal hex 只适合隔离的品牌实验。
+- 卡片圆角继承自 `className`；使用 `rounded-[var(--radius-xl)]` 这类 radius token，不要引入一次性圆角。
+- spotlight 是装饰性 animation primitive。需要结构语义时，不要用它替代 `FeatureCard` 或 `PricingCard`。
+- hover/pointer work 应限制在 transform、opacity、background 这类不会改变布局的效果上。
+
 ## 注意事项 (Notes)
 
 - `MagicCard` 会将子元素包裹在一个 `relative rounded-[inherit]` 的容器中 —— 应该通过 `className` 来设置圆角半径。

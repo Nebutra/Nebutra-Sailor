@@ -34,25 +34,24 @@ import { ComponentPreview } from "@/components/component-preview";
 <ComponentPreview name="tooltip-rich-content-demo" className="min-h-[150px] flex justify-center items-center"  />
 
 
-## Props
-
+## 属性
 ### Tooltip / TooltipProvider
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `delayDuration` | `number` | `150` | 打开前延迟，单位毫秒。Provider 层值会应用到内部 tooltip。 |
 | `children` | `ReactNode` | - | Root、trigger、content 的组合内容。 |
 
 ### TooltipTrigger
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `asChild` | `boolean` | `false` | 使用子元素作为 trigger，而不是额外包裹。 |
 | `children` | `ReactNode` | - | 可见触发器。纯图标 trigger 必须自带可访问名称。 |
 
 ### TooltipContent
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `side` | `"top" \| "right" \| "bottom" \| "left"` | `"top"` | 首选出现方向。 |
 | `align` | `"start" \| "center" \| "end"` | `"center"` | 相对 trigger 的对齐方式。 |

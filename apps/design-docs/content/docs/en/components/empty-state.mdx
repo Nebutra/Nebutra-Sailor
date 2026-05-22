@@ -129,3 +129,15 @@ Use `live` after async filtering changes so assistive technology announces the n
 - CTAs must be real `Button` or `Link` elements so they join the tab order.
 - Use `live` for no-results states after async filter changes.
 - Icons are decorative; the title and description carry the meaning.
+
+## Design Contract
+
+- Empty states explain the current absence of content; they do not market the whole product.
+- The surface owns one semantic state at a time. Do not combine permission denial, no-results, and onboarding copy in the same instance.
+- The icon is decorative and token-sized through `EmptyState.Icon`; meaning must live in copy and CTA labels.
+- Variants map to product states, not colors. Do not override a variant just to get a different accent.
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/empty-state.stories.tsx`.
+- Registry manifest: `/r/empty-state.json`.

@@ -2,20 +2,22 @@
   "title": "Design System",
   "pages": [
     "index",
-    "--- 概览 ---",
+    "--- 开始 ---",
     "introduction",
     "architecture",
     "how-to-use",
     "contributing",
-    "--- 系统基础 ---",
+    "--- 基础系统 ---",
     "...foundations",
-    "--- 组件系统 ---",
+    "--- 原语 ---",
     "...components",
-    "--- 产品组合 ---",
+    "--- 产品表面 ---",
     "...fragment-components",
     "--- 运行模式 ---",
     "...patterns",
     "--- API 契约 ---",
-    "...api"
+    "...api",
+    "--- Registry ---",
+    "registry"
   ]
 }

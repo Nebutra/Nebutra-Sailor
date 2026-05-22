@@ -3,7 +3,7 @@ title: "PageContainer"
 description: "Section wrapper that enforces consistent max-width, vertical rhythm, and responsive padding across pages."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 import { SectionContainer } from "@nebutra/ui";
@@ -24,7 +24,7 @@ import { SectionContainer } from "@nebutra/ui";
 </SectionContainer>
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { SectionContainer } from "@nebutra/ui";
@@ -47,11 +47,10 @@ export function PricingPage() {
 }
 ```
 
-## Props
-
+## 属性
 ### `SectionContainer` (`SectionContainerProps`)
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `as` | `"section" \| "div" \| "article"` | `"section"` | HTML element to render as the outer wrapper |
 | `size` | `"sm" \| "md" \| "lg" \| "xl" \| "wide" \| "full"` | `"lg"` | Max-width constraint applied to the inner content wrapper |
@@ -83,7 +82,7 @@ export function PricingPage() {
 
 ### `SectionContainer.Header` (`SectionHeaderProps`)
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `centered` | `boolean` | `true` | Centers header text |
 | `spacing` | `"sm" \| "md" \| "lg"` | `"md"` | Bottom margin before the content area (`mb-8`, `mb-12`, `mb-16`) |
@@ -96,15 +95,14 @@ Thin wrapper with `position: relative`. Accepts any `React.ReactNode` and `class
 
 ### `SectionContainer.Footer` (`SectionFooterProps`)
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `centered` | `boolean` | `true` | Centers footer content |
 | `spacing` | `"sm" \| "md" \| "lg"` | `"md"` | Top margin after the content area (`mt-8`, `mt-12`, `mt-16`) |
 | `className` | `string` | — | Additional classes |
 | `children` | `React.ReactNode` | — | CTA buttons, footnotes, etc. |
 
-## Examples
-
+## 示例
 ### Full-width hero (no max-width)
 
 ```tsx
@@ -131,8 +129,7 @@ Thin wrapper with `position: relative`. Accepts any `React.ReactNode` and `class
 </SectionContainer>
 ```
 
-## Accessibility
-
+## 可访问性
 - The default `as="section"` requires a heading (`h1`–`h6`) as a descendant to give the landmark a name.
 - If no visible heading is present, add `aria-label` to the `SectionContainer` to identify the landmark.
 - `SectionContainer.Header`, `SectionContainer.Content`, and `SectionContainer.Footer` are purely structural `<div>` elements with no implicit ARIA roles.

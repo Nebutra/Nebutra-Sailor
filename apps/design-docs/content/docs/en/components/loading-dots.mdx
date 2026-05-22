@@ -3,6 +3,10 @@ title: Loading Dots
 description: Inline three-dot loading indicator with motion-token timing and reduced-motion support.
 ---
 
+## Demo
+
+<ComponentPreview name="loading-dots-demo" />
+
 ## Installation
 
 ```tsx
@@ -33,7 +37,7 @@ Use `LoadingDots` for inline "work is continuing" copy such as saving, building,
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Controls text size and dot rhythm. |
+| `size` | `number` | `6` | Dot diameter in pixels. |
 | `children` | `ReactNode` | `"Loading"` | Visible label rendered before the dots. |
 | `className` | `string` | - | Additional class for layout context only. |
 

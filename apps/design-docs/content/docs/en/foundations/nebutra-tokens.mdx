@@ -19,6 +19,26 @@ External registry consumers can install the manifest:
 npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
 ```
 
+## Token Truth
+
+The registry manifest is a delivery adapter, not the design authority. Token ownership stays in `packages/design/tokens/src/index.ts` and `packages/design/tokens/styles.css`; docs and registry JSON must describe that source instead of inventing another token layer.
+
+<ComponentPreview name="nebutra-tokens-demo" />
+
+## Usage
+
+Use the package stylesheet in product apps and packages that already depend on the monorepo:
+
+```css
+@import "@nebutra/tokens/styles.css";
+```
+
+Use the registry manifest only when a standalone consumer installs Nebutra registry items without the package graph:
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
+```
+
 ## Token Families
 
 | Family | Examples | Purpose |
@@ -29,8 +49,24 @@ npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
 | Status | `--status-danger`, `--status-warning`, `--status-success` | Semantic state colors. |
 | Containers | `--container-text`, `--container-content`, `--container-wide` | Layout width rails. |
 
+## Anti-patterns
+
+- Do not import registry JSON as an internal token source.
+- Do not hardcode primitive color values inside component docs or previews when a semantic/component variable exists.
+- Do not add token fallbacks to individual primitives. Promote missing variables into `@nebutra/tokens` first.
+- Do not treat `nebutra-tokens.json` as a theme preset. It bootstraps runtime variables for registry consumers.
+
 ## Governance
 
 - Runtime UI consumes `@nebutra/tokens/styles.css`.
 - Component examples should use semantic/component variables instead of raw hex.
 - Registry copies may include token fallback CSS, but they do not define the source of truth.
+- Storybook must keep a same-name foundation story so token drift is visible in the docs surface.
+- IA lint treats this page as a foundation template, not a registry exception.
+
+## Verification
+
+- Storybook source: `packages/design/ui/src/primitives/nebutra-tokens.stories.tsx`.
+- Registry manifest: `/r/nebutra-tokens.json`.
+- Preview manifest: `/r/nebutra-tokens-demo.json`.
+- Source package: `packages/design/tokens/src/index.ts`.

@@ -3,6 +3,8 @@ title: Question Tool
 description: AI 工具调用内联问卷组件——支持单选、多选、自由文本三种题型，带进度、汇总态与键盘快捷键。
 ---
 
+## 演示
+
 <ComponentPreview name="question-tool-demo" />
 
 ## 安装
@@ -68,6 +70,26 @@ const questions: QuestionConfig[] = [
 | `maxSelections`     | `number`                              | 仅 `multi`。默认无上限                                     |
 | `placeholder`       | `string`                              | 仅 `text`。textarea placeholder                            |
 
+## 属性
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `questions` | `QuestionConfig[]` | — | 稳定、有序的问题集合。 |
+| `questionIndex` | `number` | 内部状态 | 受控的一基当前题目索引。 |
+| `totalQuestions` | `number` | `questions.length` | 服务端拥有完整流程时的进度分母。 |
+| `onPreviousQuestion` | `() => void` | — | 受控流程中点击上一题按钮时触发。 |
+| `onNextQuestion` | `() => void` | — | 受控流程中点击下一题按钮时触发。 |
+| `submitLabel` | `string` | `"Send"` | 主提交按钮文案。 |
+| `nextLabel` | `string` | `"Next"` | 下一步 affordance 文案。 |
+| `skipLabel` | `string` | `"Skip"` | 跳过动作文案。 |
+| `previousLabel` | `string` | `"Previous"` | 上一题导航的无障碍标签。 |
+| `allowSkip` | `boolean` | `true` | 是否允许提交 skip answer。 |
+| `onSubmitAnswer` | `(answer, questionIndex) => void` | — | 输出判别联合 answer 和一基索引。 |
+| `output` | `{ answer?: QuestionAnswer }` | — | 渲染已完成 tool call 的 summary 状态。 |
+| `toolCallId` | `string` | — | tool call 替换时重置内部答案。 |
+| `headerLabel` | `string` | `"Question"` | 顶部 chrome 标签。 |
+| `className` | `string` | — | 外层样式扩展。 |
+
 ## QuestionAnswer（判别联合类型）
 
 ```ts
@@ -123,3 +145,15 @@ type QuestionAnswer =
 - 聊天之外的独立表单（用 `Form` + `Field` primitive）
 - 单题超过 26 个选项的问卷（字母上限）
 - 异步 / 流式生成的问题——组件预期 `questions` 数组稳定
+
+## 设计契约
+
+- `QuestionTool` 是 AI tool-call surface，应出现在聊天或 assistant timeline 中，不是通用问卷卡片。
+- `QuestionAnswer` 是判别联合类型，也是 API 边界。下游不要把它压平成松散字符串。
+- 字母快捷键只是辅助路径；鼠标、键盘焦点和 textarea 提交都必须成立。
+- 当前实例内的问题集保持稳定；当新的 tool call 替换问题集时传 `toolCallId`。
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/question-tool.stories.tsx`。
+- Registry manifest: `/r/question-tool.json`。

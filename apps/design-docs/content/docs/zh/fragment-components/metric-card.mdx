@@ -1,116 +1,93 @@
 ---
-title: "MetricCard"
-description: "KPI display card showing a metric value with trend indicator, label, and optional sparkline."
+title: Metric Card
+description: 紧凑 dashboard 指标组合，包含数值、可选趋势、说明和图标。
 ---
 
-## Demo
+## 演示
+
+<ComponentPreview name="metric-card-demo" className="w-full" />
+
+## 使用场景
+
+`MetricCard` 用于 dashboard、侧栏和运营摘要中的高密度指标行。它比 `KpiCard` 更轻：默认没有卡片外壳，提供可选 bordered wrapper，并使用更紧凑的字号。
+
+相邻指标需要按二到四列对齐时使用 `MetricGrid`。只有指标需要独立 frame 时才使用 `MetricCardBordered`。
+
+## 用法
 
 ```tsx
-<MetricCard
-  label="Events ingested"
-  value="2.4M"
-  trend={{ direction: "up", value: "+12%", label: "vs last week" }}
-  icon={<Zap className="w-5 h-5" />}
-/>
+import { MetricCard, MetricCardBordered, MetricGrid } from "@nebutra/ui/primitives";
+
+<MetricGrid columns={3}>
+  <MetricCardBordered
+    label="Events ingested"
+    value="2.4M"
+    trend="up"
+    trendValue="+12%"
+    description="vs last week"
+  />
+  <MetricCardBordered
+    label="Error rate"
+    value="0.18%"
+    trend="down"
+    trendValue="-0.3%"
+    description="lower is better"
+  />
+</MetricGrid>
 ```
 
-## Usage
+## 结构
 
-```tsx
-import { MetricCard } from "@nebutra/ui";
+- `MetricCard` 渲染指标 label、value、可选 trend、可选 icon 和可选 description。
+- `MetricGrid` 负责二、三、四列对齐。
+- `MetricCardBordered` 用 token 化 border 和 card background 包住 `MetricCard`。
+- `StatItem` 渲染带状态点、label 和 value 的紧凑 inline stat。
 
-export function DashboardMetrics() {
-  const { metrics } = useMetrics();
+## 属性
 
-  return (
-    <div className="grid grid-cols-3 gap-4">
-      <MetricCard
-        label="Events ingested"
-        value={formatNumber(metrics.eventsIngested)}
-        trend={{ direction: "up", value: "+12%", label: "vs last week" }}
-        icon={<Zap className="w-5 h-5" />}
-      />
-      <MetricCard
-        label="Error rate"
-        value={`${metrics.errorRate}%`}
-        trend={{ direction: "down", value: "-0.3%", label: "vs last week" }}
-        icon={<AlertCircle className="w-5 h-5" />}
-        trendPositive="down"
-      />
-      <MetricCard
-        label="Avg latency"
-        value={`${metrics.p50Latency}ms`}
-        trend={{ direction: "up", value: "+4ms", label: "vs last week" }}
-        icon={<Clock className="w-5 h-5" />}
-        trendPositive="down"
-      />
-    </div>
-  );
-}
-```
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `label` | `string` | — | 值上方的简短指标描述。 |
+| `value` | `number \| string` | — | 主指标值。数字会进行 locale-format。 |
+| `trend` | `"up" \| "down" \| "neutral"` | — | 可选趋势方向。 |
+| `trendValue` | `string` | — | 例如 `+12%` 的紧凑趋势文本。 |
+| `description` | `string` | — | value row 下方的弱化说明。 |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | 字号密度。 |
+| `icon` | `ReactNode` | — | label 前的装饰性图标。 |
+| `className` | `string` | — | 外层样式扩展。 |
 
-## Props
+### MetricGrid
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `label` | `string` | — | **Required.** Short descriptor above the value |
-| `value` | `string \| number` | — | **Required.** The primary metric value to display |
-| `trend` | `MetricTrend` | — | Optional trend indicator shown below the value |
-| `trendPositive` | `"up" \| "down"` | `"up"` | Which direction is considered positive (affects color) |
-| `icon` | `React.ReactNode` | — | Icon in the top-right corner of the card |
-| `description` | `string` | — | Muted secondary text beneath the trend |
-| `isLoading` | `boolean` | `false` | Renders a skeleton placeholder |
-| `onClick` | `() => void` | — | Makes the card interactive; renders with hover styles |
-| `className` | `string` | — | Additional classes on the card root |
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `children` | `ReactNode` | — | Metric card 或 stat item。 |
+| `columns` | `2 \| 3 \| 4` | `3` | Grid 列数。 |
+| `className` | `string` | — | Grid 样式覆盖。 |
 
-### `MetricTrend`
+## 状态
 
-```ts
-interface MetricTrend {
-  direction: "up" | "down" | "neutral";
-  value: string;    // e.g. "+12%" or "-0.3%"
-  label?: string;   // e.g. "vs last week"
-}
-```
+| 状态 | 契约 |
+|------|------|
+| Up | 使用上升图标和 success tone。 |
+| Down | 使用下降图标和 error tone。 |
+| Neutral | 使用中性图标和 muted tone。 |
+| Bordered | 增加 frame，但不改变底层 metric API。 |
 
-## Examples
+## 可访问性
 
-### Loading state
+- 趋势方向必须同时由图标、文字和颜色表达。
+- 图标是装饰性的；label 和 value 保持文本。
+- 相关指标应由父级 dashboard section 提供可见 heading。
+- 不要把 `MetricCard` 当作无名按钮；需要跳转时用有名称的控制包裹。
 
-```tsx
-<MetricCard
-  label="Events ingested"
-  value=""
-  isLoading={true}
-/>
-```
+## 设计契约
 
-### Neutral trend
+- `MetricCard` 用于高密度运营对比；顶层 executive summary 使用 `KpiCard`。
+- Label 保持短，value 使用 tabular 读感。长解释放在外层 copy 或详情页。
+- Trend polarity 表示真实方向，不按指标反转颜色；“lower is better” 写进 `description`。
+- `MetricCardBordered` 是组合 helper，不是新的语义 variant。
 
-```tsx
-<MetricCard
-  label="Active pipelines"
-  value={14}
-  trend={{ direction: "neutral", value: "0", label: "no change" }}
-/>
-```
+## Storybook / Registry
 
-### Clickable card
-
-```tsx
-<MetricCard
-  label="Failed jobs"
-  value={7}
-  trend={{ direction: "up", value: "+3", label: "today" }}
-  trendPositive="down"
-  onClick={() => router.push("/jobs?status=failed")}
-/>
-```
-
-## Accessibility
-
-- Renders as a `<div>` with `role="group"` and `aria-label="{label}: {value}"`.
-- Clickable variant renders as a `<button>` with full keyboard support.
-- Trend direction icons are `aria-hidden="true"`; trend value is included in the text node for screen readers.
-- `isLoading` state has `aria-busy="true"` on the card root.
-- Color is not the sole indicator of trend direction — arrow icons and text labels are always present.
+- Storybook source: `packages/design/ui/src/primitives/metric-card.stories.tsx`。
+- Registry manifest: `/r/metric-card.json`。

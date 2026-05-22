@@ -3,8 +3,7 @@ title: Icons
 description: 541 Geist icons packaged as TypeScript React components in @nebutra/icons.
 ---
 
-## Overview
-
+## 概览
 Icons are managed in `packages/icons` and published as the internal package `@nebutra/icons`. The full Geist icon set (541 icons) is sourced from [vercel.com/geist/icons](https://vercel.com/geist/icons) and converted to TypeScript React components via SVGR.
 
 All icons accept a `size` prop and forward a `ref` to the root `<svg>` element. Colors inherit `currentColor` from the parent — set icon color via the parent's `color` / `fill` CSS property.
@@ -13,8 +12,7 @@ All icons accept a `size` prop and forward a `ref` to the root `<svg>` element. 
 
 ---
 
-## Installation
-
+## 安装
 `@nebutra/icons` is a private workspace package. It is available in any app or package inside the monorepo:
 
 ```json
@@ -65,7 +63,7 @@ All icons accept a `size` prop (number or string). Use these standard values for
 
 ---
 
-## Props
+## 属性
 
 ```ts
 import type { IconProps } from "@nebutra/icons";
@@ -96,8 +94,7 @@ The 541 icons are organized into semantic groups by name prefix:
 
 ---
 
-## Accessibility
-
+## 可访问性
 Icons used without adjacent visible text must have an accessible label.
 
 ```tsx

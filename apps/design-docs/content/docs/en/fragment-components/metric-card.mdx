@@ -1,116 +1,93 @@
 ---
-title: "MetricCard"
-description: "KPI display card showing a metric value with trend indicator, label, and optional sparkline."
+title: Metric Card
+description: Compact dashboard metric composition with value, optional trend, description, and icon.
 ---
 
 ## Demo
 
-```tsx
-<MetricCard
-  label="Events ingested"
-  value="2.4M"
-  trend={{ direction: "up", value: "+12%", label: "vs last week" }}
-  icon={<Zap className="w-5 h-5" />}
-/>
-```
+<ComponentPreview name="metric-card-demo" className="w-full" />
+
+## Use Case
+
+`MetricCard` is the dense metric row used inside dashboards, side panels, and operational summaries. It is lighter than `KpiCard`: no card shell by default, optional bordered wrapper, and smaller typography for high-density surfaces.
+
+Use `MetricGrid` when adjacent metrics should align in two to four columns. Use `MetricCardBordered` only when the metric needs its own frame.
 
 ## Usage
 
 ```tsx
-import { MetricCard } from "@nebutra/ui";
+import { MetricCard, MetricCardBordered, MetricGrid } from "@nebutra/ui/primitives";
 
-export function DashboardMetrics() {
-  const { metrics } = useMetrics();
-
-  return (
-    <div className="grid grid-cols-3 gap-4">
-      <MetricCard
-        label="Events ingested"
-        value={formatNumber(metrics.eventsIngested)}
-        trend={{ direction: "up", value: "+12%", label: "vs last week" }}
-        icon={<Zap className="w-5 h-5" />}
-      />
-      <MetricCard
-        label="Error rate"
-        value={`${metrics.errorRate}%`}
-        trend={{ direction: "down", value: "-0.3%", label: "vs last week" }}
-        icon={<AlertCircle className="w-5 h-5" />}
-        trendPositive="down"
-      />
-      <MetricCard
-        label="Avg latency"
-        value={`${metrics.p50Latency}ms`}
-        trend={{ direction: "up", value: "+4ms", label: "vs last week" }}
-        icon={<Clock className="w-5 h-5" />}
-        trendPositive="down"
-      />
-    </div>
-  );
-}
+<MetricGrid columns={3}>
+  <MetricCardBordered
+    label="Events ingested"
+    value="2.4M"
+    trend="up"
+    trendValue="+12%"
+    description="vs last week"
+  />
+  <MetricCardBordered
+    label="Error rate"
+    value="0.18%"
+    trend="down"
+    trendValue="-0.3%"
+    description="lower is better"
+  />
+</MetricGrid>
 ```
+
+## Anatomy
+
+- `MetricCard` renders the metric label, value, optional trend, optional icon, and optional description.
+- `MetricGrid` owns simple two-, three-, or four-column alignment.
+- `MetricCardBordered` wraps `MetricCard` with a tokenized border and card background.
+- `StatItem` renders compact inline stats with a status dot, label, and value.
 
 ## Props
 
 | Prop | Type | Default | Description |
-|---|---|---|---|
-| `label` | `string` | — | **Required.** Short descriptor above the value |
-| `value` | `string \| number` | — | **Required.** The primary metric value to display |
-| `trend` | `MetricTrend` | — | Optional trend indicator shown below the value |
-| `trendPositive` | `"up" \| "down"` | `"up"` | Which direction is considered positive (affects color) |
-| `icon` | `React.ReactNode` | — | Icon in the top-right corner of the card |
-| `description` | `string` | — | Muted secondary text beneath the trend |
-| `isLoading` | `boolean` | `false` | Renders a skeleton placeholder |
-| `onClick` | `() => void` | — | Makes the card interactive; renders with hover styles |
-| `className` | `string` | — | Additional classes on the card root |
+|------|------|---------|-------------|
+| `label` | `string` | — | Short descriptor above the value. |
+| `value` | `number \| string` | — | Primary metric value. Numbers are locale-formatted. |
+| `trend` | `"up" \| "down" \| "neutral"` | — | Optional trend direction. |
+| `trendValue` | `string` | — | Compact trend text such as `+12%`. |
+| `description` | `string` | — | Muted secondary text below the value row. |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Typography density. |
+| `icon` | `ReactNode` | — | Decorative icon before the label. |
+| `className` | `string` | — | Outer wrapper class. |
 
-### `MetricTrend`
+### MetricGrid
 
-```ts
-interface MetricTrend {
-  direction: "up" | "down" | "neutral";
-  value: string;    // e.g. "+12%" or "-0.3%"
-  label?: string;   // e.g. "vs last week"
-}
-```
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | — | Metric cards or stat items. |
+| `columns` | `2 \| 3 \| 4` | `3` | Grid column count. |
+| `className` | `string` | — | Grid class override. |
 
-## Examples
+## States
 
-### Loading state
-
-```tsx
-<MetricCard
-  label="Events ingested"
-  value=""
-  isLoading={true}
-/>
-```
-
-### Neutral trend
-
-```tsx
-<MetricCard
-  label="Active pipelines"
-  value={14}
-  trend={{ direction: "neutral", value: "0", label: "no change" }}
-/>
-```
-
-### Clickable card
-
-```tsx
-<MetricCard
-  label="Failed jobs"
-  value={7}
-  trend={{ direction: "up", value: "+3", label: "today" }}
-  trendPositive="down"
-  onClick={() => router.push("/jobs?status=failed")}
-/>
-```
+| State | Contract |
+|-------|----------|
+| Up | Uses upward icon and success tone. |
+| Down | Uses downward icon and error tone. |
+| Neutral | Uses neutral icon and muted tone. |
+| Bordered | Adds a frame without changing the underlying metric API. |
 
 ## Accessibility
 
-- Renders as a `<div>` with `role="group"` and `aria-label="{label}: {value}"`.
-- Clickable variant renders as a `<button>` with full keyboard support.
-- Trend direction icons are `aria-hidden="true"`; trend value is included in the text node for screen readers.
-- `isLoading` state has `aria-busy="true"` on the card root.
-- Color is not the sole indicator of trend direction — arrow icons and text labels are always present.
+- Trend direction is represented by icon, text, and color together.
+- Icons are decorative; the label and value remain text.
+- Group related metrics under a visible heading in the parent dashboard section.
+- Do not use `MetricCard` as an unnamed button. Wrap it in a named control if it navigates.
+
+## Design Contract
+
+- Use `MetricCard` for dense operational comparisons; use `KpiCard` for top-level executive summaries.
+- Keep labels short and values tabular. Long explanatory text belongs in surrounding copy or a detail view.
+- Trend polarity is literal direction. Do not invert colors per metric; explain “lower is better” in `description`.
+- `MetricCardBordered` is a composition helper, not a new semantic variant.
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/metric-card.stories.tsx`.
+- Registry manifest: `/r/metric-card.json`.

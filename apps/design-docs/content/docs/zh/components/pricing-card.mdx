@@ -129,6 +129,20 @@ import { Zap } from "lucide-react";
 |------|------|---------|-------------|
 | `children` | `string` | `"Upgrade to access"` | 分隔线上的标签文字 |
 
+## 可访问性
+
+- 价格卡片应该是结构化内容。不要让整张卡成为唯一点击目标；plan selection 应暴露明确 button 或 link。
+- 已包含和未包含的功能都使用语义列表，让屏幕阅读器获得与视觉用户一致的结构。
+- 划线原价旁需要文案解释当前优惠，不要只依赖视觉装饰表达。
+- “Popular” 这类 badge 是营销强调，不是状态。不要只用 badge color 表达推荐方案。
+
+## 设计契约
+
+- `PricingCard` 是 marketing/product-composition primitive，拥有 plan-card anatomy，不拥有 checkout state、billing logic 或 feature entitlement checks。
+- plan comparison layout 由父级 grid 负责。组件本身要能复用于单卡、矩阵单元或 compact upsell surface。
+- docs 和产品代码优先使用 namespace API，让 anatomy 可读。individual exports 用于高级组合，不是第二套默认 API。
+- locked-feature separator 只描述 access boundary，不能暗示组件本身能执行授权。
+
 ## 注意事项 (Notes)
 
 - 为了提供更大的灵活性，各组件也支持不带命名空间模式的导出（如 `PricingCardRoot`, `PricingCardHeader` 等）。

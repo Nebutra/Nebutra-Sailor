@@ -3,6 +3,10 @@ title: "Show More"
 description: "Count-aware progressive disclosure trigger for long lists and content blocks."
 ---
 
+## Demo
+
+<ComponentPreview name="show-more-demo" className="w-full" />
+
 ## Overview
 
 `ShowMore` reveals the hidden tail of a single list or content block. It is not a page switcher and not an optional-section container: use `Pagination` for sibling pages and `Collapse` for optional sections.
@@ -66,6 +70,15 @@ return (
 | `buttonClassName` | `string` | — | Trigger class override |
 | `dividerClassName` | `string` | — | Divider rail class override |
 
+## States
+
+| State | Contract |
+|-------|----------|
+| Collapsed | Announces `aria-expanded="false"` and shows the hidden count when known. |
+| Expanded | Announces `aria-expanded="true"` and rotates the chevron through motion tokens. |
+| No border | Removes divider rails while preserving the button affordance. |
+| Disabled | Keeps the current state and blocks activation. |
+
 ## Best Practices
 
 - Use for progressive disclosure of one long list or block: recent activity, repo branches, attached resources.
@@ -80,3 +93,15 @@ return (
 - Pass `focusTargetRef` for the first newly revealed row so keyboard and screen-reader users land in the new content after expansion.
 - The chevron is decorative and hidden from assistive technology.
 - Reduced-motion users keep the same state changes without icon rotation transitions.
+
+## Design Contract
+
+- `ShowMore` controls one list or content block. Do not use it as a tabs, pagination, or accordion substitute.
+- The controlled `expanded` state is the source of truth; downstream code owns the visible item slice.
+- If expansion reveals keyboard-focusable content, pass `focusTargetRef` so focus moves to the first newly revealed row.
+- Divider rails are part of the reading affordance. Use `noBorder` only inside already-framed dense surfaces.
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/show-more.stories.tsx`.
+- Registry manifest: `/r/show-more.json`.

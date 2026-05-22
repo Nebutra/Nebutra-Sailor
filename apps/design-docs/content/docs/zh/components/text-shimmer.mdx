@@ -74,3 +74,17 @@ import { TextShimmer } from "@nebutra/ui/primitives"
 |----------|-----------------|----------------|---------|
 | `--base-color` | `#a1a1aa` | `#71717a` | 文本基础颜色 |
 | `--base-gradient-color` | `#000` | `#ffffff` | 微光亮点颜色 |
+
+## 可访问性
+
+- shimmer 只用于短暂生成状态或轻量强调。长时间 loading 需要在动画文本之外提供 status message。
+- 文本内容本身仍是 accessible name；不要把重要状态变化只放在 shimmer styling 里。
+- 父级进入 reduced-motion 模式，或 shimmer 出现在高密度阅读表面时，应使用 `paused`。
+- 不要把 shimmer 和低对比 muted text 叠在一起。highlight 未经过时，base color 也必须可读。
+
+## Token 契约
+
+- `--base-color` 和 `--base-gradient-color` 优先使用 semantic CSS variables，不要在产品表面硬编码 brand hex。
+- duration 是 motion parameter，应和周围 loading pattern 保持一致。
+- `TextShimmer` 是 tool-family text substrate。紧凑非文本进度用 `LoadingDots`，入场动效用 `AnimateIn`。
+- 动画属性限制在 background position 和 color interpolation，不要引入会造成 layout shift 的 shimmer 效果。

@@ -129,6 +129,20 @@ All sub-components extend their underlying HTML element's props.
 |------|------|---------|-------------|
 | `children` | `string` | `"Upgrade to access"` | Separator label text |
 
+## Accessibility
+
+- Keep pricing cards as structured content. The card itself should not be the only clickable target; expose explicit buttons or links for plan selection.
+- Use semantic lists for included features and unavailable features so screen readers receive the same structure as sighted users.
+- Strikethrough original prices need nearby copy that explains the current offer; do not rely on visual decoration alone.
+- Badges such as "Popular" are marketing emphasis, not status. Do not use badge color as the only plan recommendation signal.
+
+## Design Contract
+
+- `PricingCard` is a marketing/product-composition primitive. It owns plan-card anatomy, not checkout state, billing logic, or feature entitlement checks.
+- Keep plan comparison layout in the parent grid. The component should remain reusable for one card, a matrix cell, or a compact upsell surface.
+- Use the namespace API for readable anatomy in docs and product code. Individual exports exist for advanced composition, not as a second preferred API.
+- Locked-feature separators should describe access boundaries without implying the component can enforce authorization.
+
 ## Notes
 
 - Individual components are also exported (`PricingCardRoot`, `PricingCardHeader`, etc.) for flexibility without the namespace pattern.

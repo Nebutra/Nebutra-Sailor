@@ -62,12 +62,20 @@ import { Description } from "@nebutra/ui/primitives"
 
 ## 属性 (Props)
 
-| 属性 | 类型 | 默认值 | 描述 |
-|------|------|---------|-------------|
-| `title` | `string` | — | **必填。** 主要标签 / 标题 |
-| `content` | `string` | — | **必填。** 标题下方的辅助文本 |
-| `tooltip` | `ReactNode` | — | 如果提供，则显示一个信息图标，悬停时揭示此内容 |
-| `className` | `string` | — | 包装器的额外 CSS 类名 |
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `title` | `string` | — | **必填。** 元数据标签或标题。 |
+| `content` | `ReactNode` | — | **必填。** 标题下方的值内容。 |
+| `tooltip` | `ReactNode` | — | 提供后会显示信息图标，并在 hover/focus 时展示补充说明。 |
+| `className` | `string` | — | 外层样式扩展。 |
+
+## 状态
+
+| 状态 | 契约 |
+|------|------|
+| 默认 | 渲染语义化 `<dl>`，`dt` 保持弱化，`dd` 承载用户真正关心的值。 |
+| 带 tooltip | 增加可聚焦的信息图标，背后使用 `ContextCard`；不打开 tooltip 也能读到主值。 |
+| 富文本 tooltip | 可传结构化说明，但触发器仍然是小型解释性 affordance。 |
 
 ## 可访问性 (Accessibility)
 
@@ -75,3 +83,15 @@ import { Description } from "@nebutra/ui/primitives"
 - 键盘可达：通过聚焦信息图标来显示工具提示。
 - 屏幕阅读器通过 `role="tooltip"` 播报工具提示内容。
 - 使用 `Escape` 键可关闭工具提示。
+
+## 设计契约
+
+- `Description` 只用于 definition-list 元数据：Region、Plan、Last Deployed、Build Duration。
+- 表单帮助文本归 `Field` 管，不要用 `Description` 伪装 helper text。
+- `title` 保持纯文本；按钮、菜单、链接放在 `content` 或外层布局中。
+- 保留 `<dl><dt><dd>` 语义，不要为了样式把它拍平成普通段落。
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/description.stories.tsx`。
+- Registry manifest: `/r/description.json`。

@@ -1,0 +1,27 @@
+---
+title: Registry
+description: Distribution surface for public Nebutra UI registry manifests and preview examples.
+---
+
+# Registry
+
+The registry is the distribution layer for public `@nebutra/ui` primitives and docs previews. It serves installable manifests from `/registry.json` and `/r/:name.json`, but the contract source remains the package source, tokens, MDX docs, and Storybook stories.
+
+## What This Page Owns
+
+- Links the docs IA to the public registry distribution surface.
+- Makes the difference between product docs and installable registry manifests explicit.
+- Keeps registry JSON from becoming the design authority.
+
+## Usage
+
+Use the registry page when you need the install command or raw manifest for a registry-visible component.
+
+[Open Registry](https://ui.nebutra.com/registry)
+
+## Governance
+
+- `packages/design/ui/scripts/build-registry.ts` owns public component manifests.
+- `apps/design-docs/scripts/build-registry.mjs` owns preview-demo manifests.
+- Registry docs must have a matching MDX page, a real preview when the component is visual, and Storybook coverage unless explicitly allowlisted.
+- Run `pnpm --filter @nebutra/design-docs prebuild` before publishing registry changes.

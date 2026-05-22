@@ -3,8 +3,7 @@ title: Accessibility
 description: WCAG 2.1 AA primitives, ARIA patterns, focus management, and contrast requirements built into the design system.
 ---
 
-## Overview
-
+## 概览
 Accessibility primitives live in `apps/docs-hub/design-system/src/primitives/accessibility.ts`. The file exports style objects, ARIA attribute helpers, and utility functions that implement WCAG 2.1 AA requirements. These are building blocks — components in the design system use them internally, and application code can import them directly when building custom patterns.
 
 Exported members:
@@ -196,8 +195,7 @@ function isAccessible(contrastRatio: number, isLargeText: boolean): boolean {
 
 The design system's semantic color tokens are tested to meet AA contrast requirements in both light and dark modes.
 
-## Usage Guidelines
-
+## 使用准则
 ### Keyboard navigation
 
 Every interactive element must be reachable and operable by keyboard. Never suppress default focus behavior without providing an equivalent custom implementation.

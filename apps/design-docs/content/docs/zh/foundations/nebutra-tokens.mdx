@@ -19,18 +19,54 @@ monorepo 内部仍以 package stylesheet 为准：
 npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
 ```
 
-## Token Families
+## Token 真相源
 
-| Family | Examples | Purpose |
+registry manifest 是分发适配层，不是设计权威。Token 所有权仍在 `packages/design/tokens/src/index.ts` 和 `packages/design/tokens/styles.css`；docs 与 registry JSON 只能描述这个来源，不能发明第二套 token 层。
+
+<ComponentPreview name="nebutra-tokens-demo" />
+
+## 用法
+
+已经接入 monorepo package graph 的产品 app 和 package 使用 package stylesheet：
+
+```css
+@import "@nebutra/tokens/styles.css";
+```
+
+只有 standalone consumer 在没有 package graph 的情况下安装 Nebutra registry item 时，才使用 registry manifest：
+
+```bash
+npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
+```
+
+## Token 分组
+
+| 分组 | 示例 | 用途 |
 | --- | --- | --- |
-| Neutral | `--neutral-1`, `--neutral-12` | surface 与 foreground ramps。 |
-| Brand | `--brand-primary`, `--brand-accent`, `--brand-gradient` | Nebutra identity anchors。 |
-| Accent scales | `--blue-9`, `--cyan-9` | 产品交互和 accent rails。 |
+| Neutral | `--neutral-1`, `--neutral-12` | surface 与 foreground 对比轨道。 |
+| Brand | `--brand-primary`, `--brand-accent`, `--brand-gradient` | Nebutra 品牌身份锚点。 |
+| Accent scales | `--blue-9`, `--cyan-9` | 产品交互与 accent 轨道。 |
 | Status | `--status-danger`, `--status-warning`, `--status-success` | 语义状态颜色。 |
-| Containers | `--container-text`, `--container-content`, `--container-wide` | layout width rails。 |
+| Containers | `--container-text`, `--container-content`, `--container-wide` | 布局宽度轨道。 |
+
+## 反模式
+
+- 不要把 registry JSON 当作内部 token source 导入。
+- 当已有 semantic/component variable 时，不要在组件 docs 或 preview 里硬编码 primitive color value。
+- 不要在单个 primitive 中补 token fallback。缺变量时，先提升到 `@nebutra/tokens`。
+- 不要把 `nebutra-tokens.json` 当作 theme preset。它只为 registry consumers bootstrap runtime variables。
 
 ## 治理规则
 
 - 运行时 UI 消费 `@nebutra/tokens/styles.css`。
 - 组件示例应该使用 semantic/component variables，而不是 raw hex。
 - Registry copies 可以包含 token fallback CSS，但它们不定义真相源。
+- Storybook 必须保留同名 foundation story，让 token drift 在 docs surface 上可见。
+- IA lint 把这个页面当作 foundation template，不再当作 registry exception。
+
+## 验收方式
+
+- Storybook source: `packages/design/ui/src/primitives/nebutra-tokens.stories.tsx`。
+- Registry manifest: `/r/nebutra-tokens.json`。
+- Preview manifest: `/r/nebutra-tokens-demo.json`。
+- Source package: `packages/design/tokens/src/index.ts`。

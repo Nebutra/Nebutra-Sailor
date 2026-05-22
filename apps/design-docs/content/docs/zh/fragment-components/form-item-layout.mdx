@@ -3,7 +3,7 @@ title: "FormItemLayout"
 description: "Structural wrapper combining a label, input slot, helper text, and validation message into a single layout unit."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 <FormItemLayout
@@ -15,7 +15,7 @@ description: "Structural wrapper combining a label, input slot, helper text, and
 </FormItemLayout>
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { FormItemLayout } from "@nebutra/ui";
@@ -52,9 +52,8 @@ export function ProfileForm() {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `label` | `string` | — | **Required.** Text for the `<label>` element |
 | `htmlFor` | `string` | — | `id` of the associated input; wires the label's `for` attribute |
@@ -65,8 +64,7 @@ export function ProfileForm() {
 | `labelSuffix` | `React.ReactNode` | — | Optional content rendered to the right of the label (e.g. a badge or tooltip) |
 | `className` | `string` | — | Additional classes on the root `<div>` |
 
-## Examples
-
+## 示例
 ### With label suffix (tooltip)
 
 ```tsx
@@ -103,8 +101,7 @@ export function ProfileForm() {
 </FormItemLayout>
 ```
 
-## Accessibility
-
+## 可访问性
 - The `<label>` element is always associated to the input via `htmlFor` / `id` — never via wrapping alone.
 - Error messages render in a `<span role="alert">` so they are announced immediately by screen readers.
 - Helper text is linked via `aria-describedby`; error text overrides it when both are present.

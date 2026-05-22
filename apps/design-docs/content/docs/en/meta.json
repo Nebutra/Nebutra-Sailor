@@ -2,20 +2,22 @@
   "title": "Design System",
   "pages": [
     "index",
-    "--- Overview ---",
+    "--- Start Here ---",
     "introduction",
     "architecture",
     "how-to-use",
     "contributing",
-    "--- System Foundations ---",
+    "--- Foundations ---",
     "...foundations",
-    "--- Component System ---",
+    "--- Primitives ---",
     "...components",
-    "--- Product Compositions ---",
+    "--- Product Surfaces ---",
     "...fragment-components",
     "--- Operating Patterns ---",
     "...patterns",
     "--- API Contracts ---",
-    "...api"
+    "...api",
+    "--- Registry ---",
+    "registry"
   ]
 }

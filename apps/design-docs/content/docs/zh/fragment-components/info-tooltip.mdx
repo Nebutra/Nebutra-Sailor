@@ -3,7 +3,7 @@ title: "InfoTooltip"
 description: "Hover tooltip triggered by an info icon, used to surface explanatory content without cluttering the UI."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 <FormItemLayout
@@ -17,7 +17,7 @@ description: "Hover tooltip triggered by an info icon, used to surface explanato
 </FormItemLayout>
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { InfoTooltip } from "@nebutra/ui";
@@ -35,9 +35,8 @@ export function PricingRow({ label, tooltip, value }: PricingRowProps) {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `content` | `string \| React.ReactNode` | — | **Required.** Tooltip body content |
 | `side` | `"top" \| "right" \| "bottom" \| "left"` | `"top"` | Preferred placement of the tooltip |
@@ -47,8 +46,7 @@ export function PricingRow({ label, tooltip, value }: PricingRowProps) {
 | `iconClassName` | `string` | — | Additional classes on the trigger icon |
 | `className` | `string` | — | Additional classes on the tooltip content panel |
 
-## Examples
-
+## 示例
 ### Rich content tooltip
 
 ```tsx
@@ -85,8 +83,7 @@ export function PricingRow({ label, tooltip, value }: PricingRowProps) {
 />
 ```
 
-## Accessibility
-
+## 可访问性
 - The trigger icon button has `aria-label="More information"` and `type="button"`.
 - The tooltip panel has `role="tooltip"` and is linked to the trigger via `aria-describedby`.
 - Tooltip content is announced by screen readers when the trigger is focused via keyboard.

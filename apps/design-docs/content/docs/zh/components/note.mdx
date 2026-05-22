@@ -59,9 +59,8 @@ Geist 示例里暴露了很多视觉化 `type`，例如 `alert`、`lite`、`ghos
 - `children` 尽量是一句主动语态，直接说明影响。
 - 不使用 `Heads up`、`FYI`、`Please note` 这类填充词。
 
-## Props
-
-| Prop       | Type                                                                 | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 | ---------- | -------------------------------------------------------------------- | ------- | ----------- |
 | `tone`     | `"default" \| "secondary" \| "success" \| "warning" \| "error" \| "cyan"` | `"default"` | 语义 tone |
 | `type`     | Same as `tone`                                                       | —       | Geist 迁移别名，不能和 `tone` 同时传 |
@@ -73,8 +72,7 @@ Geist 示例里暴露了很多视觉化 `type`，例如 `alert`、`lite`、`ghos
 | `disabled` | `boolean`                                                            | `false` | 禁用 action 子树并降低表面强调 |
 | `role`     | `"note" \| "alert" \| "status"`                                      | auto    | 覆盖默认 role |
 
-## Accessibility
-
+## 可访问性
 - `error` 默认 `role="alert"`；其他 tone 默认 `role="note"`。
 - 图标是装饰性的，真正的信息由 label 和正文承载。
 - 如果 Note 放在可聚焦卡片或行操作里，外层控件需要显式 accessible name。

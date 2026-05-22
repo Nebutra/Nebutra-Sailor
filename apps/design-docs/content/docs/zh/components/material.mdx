@@ -125,3 +125,10 @@ import { Material } from "@nebutra/ui/primitives";
 
 - `Material` 渲染为一个普通的 `<div>` —— 请根据具体用途在调用处添加语义化角色（如 `role="dialog"`、`role="menu"` 等）。
 - 阴影仅作为视觉引导；不要仅依靠阴影向辅助技术传达状态或层级。
+
+## 设计契约
+
+- `Material` 只负责 surface elevation，不添加 semantic role、focus management、dismissal behavior 或 overlay stacking。
+- 消费者根据 surface 目的选择合适的语义元素或 role。
+- elevation 必须由 theme layer token 驱动，不要在单个 usage 中添加 inline shadow、background 或 border value。
+- 需要行为时使用 `Card`、`Dialog`、`Popover` 或 `Menu` primitive；只需要表面质感时才使用 `Material`。

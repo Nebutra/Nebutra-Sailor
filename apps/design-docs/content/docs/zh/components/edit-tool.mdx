@@ -75,8 +75,7 @@ const [decision, setDecision] = useState<ApprovalDecision>(null);
 
 不传 `approval` 则不渲染 footer。
 
-## Props
-
+## 属性
 | Prop           | 类型                                            | 默认         | 说明                                                         |
 | -------------- | ----------------------------------------------- | ------------ | ------------------------------------------------------------ |
 | `state`        | `"completed" \| "pending" \| "waiting"`         | `"completed"`| 工具调用进度视觉                                             |
@@ -99,6 +98,13 @@ LCS 行级 diff 是 O(m·n) 内存。一万行 diff = 一亿 cell = 浏览器 OO
 - Loading dots 设 `aria-hidden`（装饰性）
 - diff 行前缀符号（`+` / `-` / ` `）`aria-hidden`；语义由行背景色承载（这也是为什么 gutter 必须保持文本字符——见组件的设计 invariants）
 - Esc 拒绝待批审批（业界 chat-tool 惯例）
+
+## 设计契约
+
+- `EditTool` 只负责 chat-tool 渲染，不直接修改文件、编辑器状态或审批 agent 动作。
+- Diff 计算必须受 `maxDiffLines` 约束。需要展示超大 diff 时，应由上游先摘要，而不是把无界文本塞进 primitive。
+- 审批 UI 是显式能力，不能从 completion state 推断 approval。
+- Loading 反馈复用 `TextShimmer` 和 `LoadingDots`，motion 与 reduced-motion 行为由工具族共享 primitive 统一治理。
 
 ## 复用关系
 

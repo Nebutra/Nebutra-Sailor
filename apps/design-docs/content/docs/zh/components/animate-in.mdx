@@ -3,6 +3,10 @@ title: AnimateIn
 description: 带品牌预设、分组 stagger 和 reduced-motion 处理的入场动效原语。
 ---
 
+## 演示
+
+<ComponentPreview name="animate-in-demo" />
+
 ## 安装
 
 ```tsx
@@ -37,8 +41,7 @@ npx shadcn@latest add https://ui.nebutra.com/r/animate-in.json
 </AnimateInGroup>
 ```
 
-## Presets
-
+## 预设
 | Preset | 用途 |
 | --- | --- |
 | `emerge` | 默认 Nebutra materialize-in 入场。 |
@@ -47,18 +50,16 @@ npx shadcn@latest add https://ui.nebutra.com/r/animate-in.json
 | `fadeUp` | 列表/card 带轻微上移动效。 |
 | `scale` | 小型表面的 pop-in。 |
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `preset` | `"emerge" \| "flow" \| "fade" \| "fadeUp" \| "scale"` | `"emerge"` | 品牌化进入动效配方。 |
-| `delay` | `"none" \| "short" \| "normal" \| "long"` | `"none"` | token 化延迟。 |
-| `duration` | `"short" \| "normal" \| "slow"` | `"normal"` | token 化时长。 |
+| `delay` | `number` | `0` | 元素进入前的延迟秒数。 |
+| `duration` | `number` | preset duration | 可选 transition duration override，单位为秒。 |
 | `inView` | `boolean` | `false` | 元素进入视口后再启动动效。 |
-| `once` | `boolean` | `true` | 配合 `inView` 时默认只触发一次。 |
 | `className` | `string` | - | 应用在 motion wrapper 上的类名。 |
 
-`AnimateInGroup` 接收 `stagger`、`inView`、`once`、`className` 和 `children`。`stagger` 只能使用 `"none"`、`"tight"`、`"normal"`、`"slow"`。
+`AnimateInGroup` 接收 `stagger`、`inView`、`className` 和 `children`。`stagger` 只能使用 `"fast"`、`"normal"`、`"slow"`。
 
 ## 可访问性
 

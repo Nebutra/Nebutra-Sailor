@@ -85,7 +85,7 @@ import { Avatar } from "@nebutra/ui/primitives";
 
 ### `Entity`
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|-------------|
 | `as` | `React.ElementType` | `"div"` | 覆盖根元素（例如在 `Entity.List` 内部时设为 `"li"`） |
 | `left` | `ReactNode` | — | 左侧插槽 —— 头像、图标或其他前置内容 |
@@ -95,7 +95,7 @@ import { Avatar } from "@nebutra/ui/primitives";
 
 ### `Entity.Content`
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|-------------|
 | `title` | `string` | — | **必填。** 主要标签 |
 | `description` | `ReactNode` | — | 显示在标题下方的辅助文本 |
@@ -104,7 +104,35 @@ import { Avatar } from "@nebutra/ui/primitives";
 
 ### `Entity.List`
 
-| 属性 (Prop) | 类型 | 默认值 | 描述 |
+| 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | 带有 `as="li"` 的 `Entity` 行 |
 | `className` | `string` | — | 额外的 CSS 类名 |
+
+## 状态
+
+| 状态 | 契约 |
+|------|------|
+| 默认行 | 一个 leading slot、一个内容区和一个 trailing slot。 |
+| 列表 | `Entity.List` 负责 `<ul>`；每个 row 应传 `as="li"`。 |
+| 加载 | 在内容区使用 `Skeleton`，不要改变行高和列表语义。 |
+| 操作行 | 操作放在 `right`；只有一个明确目的地时才让整行可点击。 |
+
+## 可访问性
+
+- 集合场景使用 `Entity.List`，让辅助技术获得列表语义。
+- 在 `Entity.List` 中渲染 row 时，`Entity` 需要传 `as="li"`。
+- 主要操作必须有可见标签或 `aria-label`；纯图标 trailing action 也要有名称。
+- 不要把多个不相关的交互控件铺满整行；多个操作应收进 `Menu`。
+
+## 设计契约
+
+- `Entity` 是可扫描对象行，不是卡片替代品。适合用户、设备、项目、密钥、集成。
+- 标题归 `Entity.Content`；左右 slot 只承载身份辅助和操作区。
+- 加载态和完成态保持稳定密度，避免列表扫描跳动。
+- 静态 key/value 元数据用 `Description`，多列可比较数据用 `Table`。
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/entity.stories.tsx`。
+- Registry manifest: `/r/entity.json`。

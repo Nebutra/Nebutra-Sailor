@@ -3,7 +3,7 @@ title: "LogsBarChart"
 description: "Log volume visualisation showing event counts over time with severity breakdown."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 <LogsBarChart
@@ -18,7 +18,7 @@ description: "Log volume visualisation showing event counts over time with sever
 />
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { LogsBarChart } from "@nebutra/ui";
@@ -41,9 +41,8 @@ export function LogsOverview() {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `data` | `LogBucket[]` | — | **Required.** Array of time-bucketed log counts |
 | `interval` | `"1m" \| "5m" \| "15m" \| "1h" \| "1d"` | `"1h"` | Time bucket granularity; controls x-axis label formatting |
@@ -65,8 +64,7 @@ interface LogBucket {
 }
 ```
 
-## Examples
-
+## 示例
 ### Loading state
 
 ```tsx
@@ -103,8 +101,7 @@ interface LogBucket {
 />
 ```
 
-## Accessibility
-
+## 可访问性
 - The chart container has `role="img"` with `aria-label` describing the data range.
 - A visually hidden data table is rendered below the chart for screen reader users.
 - Interactive bars have `role="button"` with `aria-label="{count} events at {time}"`.

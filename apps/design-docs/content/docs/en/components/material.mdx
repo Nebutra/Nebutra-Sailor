@@ -125,3 +125,10 @@ All values come from `packages/design/theme/themes.css` `@theme` block.
 
 - `Material` renders a plain `<div>` — add semantic roles (`role="dialog"`, `role="menu"`, etc.) at the usage site as appropriate.
 - Shadow is a visual-only affordance; do not rely on it alone to convey state or hierarchy to assistive technologies.
+
+## Design Contract
+
+- `Material` owns surface elevation only. It does not add semantic roles, focus management, dismissal behavior, or overlay stacking.
+- Consumers choose the semantic element or role that matches the surface purpose.
+- Elevation must stay token-driven through the theme layer. Do not add inline shadow, background, or border values to individual usages.
+- Use `Card`, `Dialog`, `Popover`, or `Menu` primitives when behavior is required; use `Material` when only the surface treatment is needed.

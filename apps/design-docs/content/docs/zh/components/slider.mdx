@@ -3,8 +3,7 @@ title: "Slider"
 description: "用于近似数值设置的单值范围输入。"
 ---
 
-## Demo
-
+## 演示
 <ComponentPreview name="slider-demo" className="max-w-[400px]" />
 
 ## 用法
@@ -27,11 +26,10 @@ const [value, setValue] = useState([50])
 />
 ```
 
-## Props
-
+## 属性
 Slider 渲染原生 `<input type="range">`，因此保留浏览器默认键盘行为。公开 API 同时兼容历史 `number` 形态和 Geist 风格的单项 `number[]` 形态。
 
-| Prop | Type | Default | 说明 |
+| 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|------|
 | `value` | `number \| number[]` | — | 受控值；数组只读取第一项，因为这是单手柄 Slider |
 | `defaultValue` | `number \| number[]` | `min` | 非受控初始值 |

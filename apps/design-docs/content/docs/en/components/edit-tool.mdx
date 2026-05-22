@@ -107,6 +107,13 @@ LCS line-diff is O(m·n) memory. A 10K-line diff = 100M cells = browser OOM. `Ed
 - Diff line gutters (`+` / `-` / ` `) are aria-hidden; row background color carries the semantics (this is also why the gutter MUST stay as text characters — see the component's design invariants).
 - Esc rejects a pending approval (matches industry chat-tool convention).
 
+## Design Contract
+
+- `EditTool` owns chat-tool rendering only; it does not apply file changes, mutate editor state, or approve agent actions by itself.
+- Diff computation stays bounded by `maxDiffLines`. If a parent needs very large diffs, it must summarize upstream rather than pushing unbounded text into the primitive.
+- Approval UI is optional and must stay explicit. Never infer approval from completion state.
+- Loading affordances compose `TextShimmer` and `LoadingDots`, so motion and reduced-motion behavior remain governed by the shared tool-family primitives.
+
 ## Reuses
 
 This component composes existing primitives rather than re-implementing:

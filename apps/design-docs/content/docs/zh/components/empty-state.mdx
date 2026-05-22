@@ -129,3 +129,15 @@ import { EmptyState } from "@nebutra/ui/primitives"
 - CTA 必须是真实 `Button` 或 `Link`，这样才能进入 tab order。
 - 异步筛选后的 no-results 状态使用 `live`。
 - 图标只是装饰；语义由标题和描述承载。
+
+## 设计契约
+
+- Empty state 解释当前为什么没有内容，不承担整站营销。
+- 一个实例只表达一个语义状态；不要把权限拒绝、无结果和 onboarding 文案混在一起。
+- 图标是装饰性的，并通过 `EmptyState.Icon` 统一尺寸；含义必须落在文案和 CTA 标签里。
+- Variant 映射产品状态，不是颜色开关。不要为了换强调色而错用 variant。
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/empty-state.stories.tsx`。
+- Registry manifest: `/r/empty-state.json`。

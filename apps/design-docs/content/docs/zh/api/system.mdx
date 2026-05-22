@@ -16,4 +16,20 @@ _openapi:
       method: get
 ---
 
+## 接口目的
+
+系统端点驱动健康检查、就绪门禁、存活探针和状态表面。它们主要被部署自动化、负载均衡器和内部状态看板消费。
+
+## API 驱动的界面状态
+
+- 健康检查成功时，公开状态指示保持绿色。
+- 就绪失败时，应阻止 rollout promotion，但进程仍需要可观测。
+- 存活失败时，应触发基础设施重启策略，而不是用户界面的重试循环。
+
+## 错误 / 加载 / 空状态契约
+
+- 加载：状态面板展示中性 checking 状态。
+- 错误：展示失败端点和可用的 request id。
+- 空状态：系统端点不应该产生空状态；缺失数据应视为错误。
+
 <APIPage document="openapi.json" operations={[{path:"/api/misc/health",method:"get"},{path:"/api/system/status",method:"get"},{path:"/api/system/ready",method:"get"},{path:"/api/system/live",method:"get"},{path:"/api/system/ping",method:"get"}]} />

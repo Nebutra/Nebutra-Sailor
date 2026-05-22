@@ -3,8 +3,7 @@ title: "DataInput"
 description: "Complex data entry form patterns combining input, label, prefix/suffix, and inline validation."
 ---
 
-## Demo
-
+## 演示
 <Tabs>
   <Tab title="Text">
     ```tsx
@@ -37,7 +36,7 @@ description: "Complex data entry form patterns combining input, label, prefix/su
   </Tab>
 </Tabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { DataInput } from "@nebutra/ui";
@@ -63,9 +62,8 @@ export function IntegrationForm() {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `label` | `string` | — | Visible label rendered above the input |
 | `type` | `React.HTMLInputTypeAttribute` | `"text"` | Native input type |
@@ -81,8 +79,7 @@ export function IntegrationForm() {
 | `required` | `boolean` | `false` | Marks the field as required; adds visual indicator |
 | `className` | `string` | — | Additional classes on the root wrapper |
 
-## Examples
-
+## 示例
 ### Required field with helper text
 
 ```tsx
@@ -119,8 +116,7 @@ import { Search } from "lucide-react";
 />
 ```
 
-## Accessibility
-
+## 可访问性
 - Label is always rendered as a `<label>` element associated to the input via `htmlFor` / `id`.
 - Error messages are announced via `aria-describedby` pointing to an element with `role="alert"`.
 - Helper text uses `aria-describedby` when no error is present.

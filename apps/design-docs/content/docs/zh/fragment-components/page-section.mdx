@@ -3,7 +3,7 @@ title: "PageSection"
 description: "Content section with a heading, optional description, and a divider for grouping related UI."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 <PageSection
@@ -15,7 +15,7 @@ description: "Content section with a heading, optional description, and a divide
 </PageSection>
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { PageSection } from "@nebutra/ui";
@@ -43,9 +43,8 @@ export function WorkspaceSettings() {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `title` | `string` | — | **Required.** Section heading text |
 | `description` | `string` | — | Muted body copy below the heading |
@@ -56,8 +55,7 @@ export function WorkspaceSettings() {
 | `className` | `string` | — | Additional classes on the root container |
 | `children` | `React.ReactNode` | — | Section body content |
 
-## Examples
-
+## 示例
 ### With section-level action
 
 ```tsx
@@ -92,8 +90,7 @@ export function WorkspaceSettings() {
 </PageSection>
 ```
 
-## Accessibility
-
+## 可访问性
 - The `title` renders at the heading level specified by `titleLevel` — use `h2` for top-level settings sections and `h3` for nested sub-sections to maintain a correct document outline.
 - `variant="danger"` does not change the heading's semantic role; it is purely visual.
 - `divider` renders as `<hr aria-hidden="true">`.

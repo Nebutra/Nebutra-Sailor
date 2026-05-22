@@ -29,6 +29,15 @@ The sun/moon morph is owned by the component and uses the motion token rail. It 
 
 Sound is opt-in through `sound`. Keep it off for routine product surfaces; only enable it in contexts where audible feedback is already part of the product experience.
 
+## States
+
+| State | Contract |
+|-------|----------|
+| Light | Button announces the action to switch to dark. |
+| Dark | Button announces the action to switch to light. |
+| Disabled | Press and hover motion are disabled; state does not change. |
+| Reduced motion | Morph and press transitions collapse to instant token presets. |
+
 ## Props
 
 | Prop | Type | Default | Description |
@@ -42,9 +51,21 @@ Sound is opt-in through `sound`. Keep it off for routine product surfaces; only 
 | `labels` | `{ light?: string; dark?: string }` | action labels | Accessible action labels. |
 | `className` | `string` | — | Additional classes for the button. |
 
+## Accessibility
+
+- The control is a native button and defaults to `type="button"`.
+- The accessible label describes the next action, not the current icon.
+- `prefers-reduced-motion` disables morph and press animation.
+- Sound is opt-in and triggered only after a user gesture.
+
 ## Best Practices
 
 - Prefer controlled usage with `@nebutra/tokens` or `next-themes`.
 - Do not use this when `system` preference must be visible; use `ThemeSwitcher`.
 - Keep the control icon-only. Add visible text as a sibling label if the setting is not obvious in context.
 - Do not override the SVG. The morph is the component identity and is tied to accessibility and motion tokens.
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/theme-toggle.stories.tsx`.
+- Registry manifest: `/r/theme-toggle.json`.

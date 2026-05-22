@@ -3,7 +3,7 @@ title: "InnerSideMenu"
 description: "In-page secondary navigation for settings, docs, or multi-section layouts."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 <InnerSideMenu
@@ -18,7 +18,7 @@ description: "In-page secondary navigation for settings, docs, or multi-section 
 />
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { InnerSideMenu } from "@nebutra/ui";
@@ -44,9 +44,8 @@ export function SettingsLayout({ children }: { children: React.ReactNode }) {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `items` | `SideMenuItem[]` | — | **Required.** Ordered list of navigation items |
 | `activeId` | `string` | — | `id` of the currently active item |
@@ -67,8 +66,7 @@ interface SideMenuItem {
 }
 ```
 
-## Examples
-
+## 示例
 ### With icons
 
 ```tsx
@@ -97,8 +95,7 @@ for automatic active state tracking on scroll.
 />
 ```
 
-## Accessibility
-
+## 可访问性
 - Renders as `<nav aria-label="Page sections">`.
 - Active item has `aria-current="page"` (for page-level routes) or `aria-current="true"` (for anchors).
 - Disabled items have `aria-disabled="true"` and are excluded from tab order.

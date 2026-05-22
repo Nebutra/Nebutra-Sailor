@@ -108,3 +108,31 @@ Use `Entity.List` as the container and pass `as="li"` on each `Entity` row.
 |------|------|---------|-------------|
 | `children` | `ReactNode` | — | `Entity` rows with `as="li"` |
 | `className` | `string` | — | Additional CSS classes |
+
+## States
+
+| State | Contract |
+|-------|----------|
+| Default row | One leading slot, one content block, and one trailing slot. |
+| List | `Entity.List` owns the `<ul>`; each row should pass `as="li"`. |
+| Loading | Use `Skeleton` in the content zone without changing row height or list semantics. |
+| Action row | Put actions in `right`; do not make the whole row clickable unless the row has one clear destination. |
+
+## Accessibility
+
+- Use `Entity.List` for collections so assistive technology gets list semantics.
+- When a row is rendered inside `Entity.List`, pass `as="li"` on `Entity`.
+- Keep primary action labels visible or accessible through `aria-label`; icon-only trailing actions need names.
+- Avoid placing multiple unrelated interactive controls across the full row. If there are several actions, use `Menu`.
+
+## Design Contract
+
+- `Entity` is a scannable object row, not a card replacement. Use it for users, devices, projects, keys, and integrations.
+- The title belongs inside `Entity.Content`; left/right slots are supporting identity and action zones.
+- Keep row density stable across loading and loaded states so list scanning does not jump.
+- Use `Description` for static key/value metadata and `Table` for comparable multi-column data.
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/entity.stories.tsx`.
+- Registry manifest: `/r/entity.json`.

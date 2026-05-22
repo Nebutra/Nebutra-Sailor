@@ -3,7 +3,7 @@ title: ThemeToggle
 description: 用于浅色和深色主题切换的二态动画图标按钮。
 ---
 
-## Demo
+## 演示
 
 <ComponentPreview name="theme-toggle-demo" />
 
@@ -29,10 +29,19 @@ function AppThemeToggle() {
 
 声音通过 `sound` 显式开启，默认关闭。常规企业产品界面不要默认播放声音；只有当产品本身已有音频反馈语义时才启用。
 
-## Props
+## 状态
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| 状态 | 契约 |
+|------|------|
+| Light | 按钮播报“切到深色”的动作。 |
+| Dark | 按钮播报“切到浅色”的动作。 |
+| Disabled | 禁用 press/hover 动效，状态不变。 |
+| Reduced motion | morph 和按压动效收敛到 instant token preset。 |
+
+## 属性
+
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
 | `value` | `"light" \| "dark"` | — | 受控二态主题值。 |
 | `defaultValue` | `"light" \| "dark"` | document class 或 `"light"` | 非受控初始值。 |
 | `onChange` | `(value: ThemeToggleValue) => void` | — | 用户切换时返回下一个主题。 |
@@ -42,9 +51,21 @@ function AppThemeToggle() {
 | `labels` | `{ light?: string; dark?: string }` | action labels | 无障碍动作标签。 |
 | `className` | `string` | — | 追加到按钮上的类名。 |
 
-## Best Practices
+## 可访问性
+
+- 控件是原生 button，默认 `type="button"`。
+- 无障碍标签描述下一个动作，而不是当前图标。
+- `prefers-reduced-motion` 会关闭 morph 和 press animation。
+- 声音必须显式开启，并且只在用户手势之后触发。
+
+## 最佳实践
 
 - 优先配合 `@nebutra/tokens` 或 `next-themes` 做受控集成。
 - 当用户需要看到 `system` 偏好时，不要用它，改用 `ThemeSwitcher`。
 - 控件保持 icon-only；如果上下文不清晰，把可见文字放在相邻 label 中。
 - 不要覆盖内部 SVG。这个 morph 是组件身份的一部分，并绑定了无障碍与 motion token 契约。
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/theme-toggle.stories.tsx`。
+- Registry manifest: `/r/theme-toggle.json`。

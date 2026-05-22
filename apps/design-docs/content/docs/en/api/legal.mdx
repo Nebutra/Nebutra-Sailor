@@ -16,4 +16,20 @@ _openapi:
       method: get
 ---
 
+## Endpoint Purpose
+
+Legal endpoints persist consent, cookie preferences, and legal-document retrieval. They drive compliance UI rather than general product state.
+
+## UI States Driven By API
+
+- Consent status determines whether consent banners remain visible.
+- Cookie preference updates should optimistically preserve the current choice while the request resolves.
+- Legal document retrieval should render the latest published document, not a stale bundled copy.
+
+## Errors / Loading / Empty Contracts
+
+- Loading: keep the current preference visible and disable duplicate submits.
+- Error: keep the banner/dialog open and name the field or document that failed.
+- Empty: document lists may be empty only in non-production fixtures; production emptiness is a content configuration error.
+
 <APIPage document="openapi.json" operations={[{path:"/api/v1/legal/consent",method:"post"},{path:"/api/v1/legal/consent/status",method:"get"},{path:"/api/v1/legal/cookie-consent",method:"post"},{path:"/api/v1/legal/documents",method:"get"},{path:"/api/v1/legal/documents/{slug}",method:"get"}]} />

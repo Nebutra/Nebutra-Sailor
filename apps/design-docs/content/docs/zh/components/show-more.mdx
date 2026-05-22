@@ -3,6 +3,10 @@ title: "Show More"
 description: "用于长列表和内容块的计数感知渐进展开触发器。"
 ---
 
+## 演示
+
+<ComponentPreview name="show-more-demo" className="w-full" />
+
 ## 概览
 
 `ShowMore` 用来展开单个列表或内容块的隐藏尾部。它不是分页，也不是可选区域容器：同一数据集的兄弟页面用 `Pagination`，可选章节用 `Collapse`。
@@ -48,9 +52,9 @@ return (
 )
 ```
 
-## Props
+## 属性
 
-| Prop | Type | 默认值 | 说明 |
+| 属性 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `expanded` | `boolean` | — | 当前展开状态 |
 | `onExpandedChange` | `(expanded: boolean) => void` | — | 推荐的受控变更回调 |
@@ -66,6 +70,15 @@ return (
 | `buttonClassName` | `string` | — | 触发按钮样式覆盖 |
 | `dividerClassName` | `string` | — | 分隔线样式覆盖 |
 
+## 状态
+
+| 状态 | 契约 |
+|------|------|
+| 折叠 | 宣告 `aria-expanded="false"`，已知数量时展示隐藏项数量。 |
+| 展开 | 宣告 `aria-expanded="true"`，箭头旋转走 motion token。 |
+| 无分隔线 | 移除两侧 divider rails，但保留按钮 affordance。 |
+| 禁用 | 保持当前状态并阻止触发。 |
+
 ## 最佳实践
 
 - 用于单个长列表或内容块的渐进展开：最近活动、仓库分支、附件资源。
@@ -80,3 +93,15 @@ return (
 - 传入 `focusTargetRef` 后，展开会把焦点交给第一个新增行，键盘和读屏用户不会丢上下文。
 - 箭头图标是装饰性的，对辅助技术隐藏。
 - 开启减少动态效果的用户仍然得到相同状态变化，但不会播放图标旋转过渡。
+
+## 设计契约
+
+- `ShowMore` 只控制一个列表或内容块，不替代 tabs、pagination 或 accordion。
+- 受控的 `expanded` 是唯一状态源；下游代码负责决定可见 item slice。
+- 如果展开后出现可键盘聚焦内容，传 `focusTargetRef`，让焦点落到第一个新增行。
+- Divider rails 是阅读 affordance 的一部分；只有在已有 frame 的高密度表面里才使用 `noBorder`。
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/show-more.stories.tsx`。
+- Registry manifest: `/r/show-more.json`。

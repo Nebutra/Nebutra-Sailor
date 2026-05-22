@@ -3,6 +3,10 @@ title: Status Dot
 description: Deployment-lifecycle dot for queued, building, ready, error, canceled, and deleted states.
 ---
 
+## Demo
+
+<ComponentPreview name="status-dot-demo" />
+
 ## Installation
 
 ```tsx
@@ -55,3 +59,8 @@ npx shadcn@latest add https://ui.nebutra.com/r/status-dot.json
 - Use `StatusDot` for deployment lifecycle only. Generic entity state needs a separate status primitive with its own enum.
 - Treat pulsing as activity state, not severity. Only `QUEUED` and `BUILDING` animate.
 - When the surrounding row already names the state, pass `decorative`; otherwise render `label` or keep the accessible label.
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/status-dot.stories.tsx`.
+- Registry manifest: `/r/status-dot.json`.

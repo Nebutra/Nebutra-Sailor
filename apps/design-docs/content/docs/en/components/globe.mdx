@@ -84,3 +84,17 @@ import { Globe } from "@nebutra/ui/primitives";
 - The container must be `position: relative` with a fixed aspect ratio
 - The canvas fades in with a 500ms opacity transition
 - Drag interaction works on pointer and touch devices
+
+## Accessibility
+
+- Treat the canvas as visual support, not the only representation of global state. Pair it with text, a table, or a list when locations or counts matter.
+- Markers need adjacent labels or a linked legend outside the canvas; color and position alone are not enough for assistive technology.
+- Keep drag interaction optional. Auto-rotation and pointer drag must not block keyboard navigation around the canvas.
+- Respect reduced-motion contexts by disabling nonessential rotation in the parent when the globe is used near dense product UI.
+
+## Design Contract
+
+- `Globe` owns the WebGL visualization only. It does not own section layout, copy, metrics, or marker data fetching.
+- The parent owns a stable aspect ratio. Do not rely on the canvas to infer height from content.
+- Use `Chart` or `Table` for quantitative comparison. Use `Globe` when geography is the primary meaning.
+- Avoid ad hoc color arrays in product docs; map brand/status intent to the component config at the usage boundary.

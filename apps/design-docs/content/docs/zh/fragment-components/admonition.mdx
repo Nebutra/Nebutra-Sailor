@@ -3,8 +3,7 @@ title: "Admonition"
 description: "Info, warning, and error callout blocks that draw attention to important content."
 ---
 
-## Demo
-
+## 演示
 <Tabs>
   <Tab title="Info">
     ```tsx
@@ -36,7 +35,7 @@ description: "Info, warning, and error callout blocks that draw attention to imp
   </Tab>
 </Tabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { Admonition } from "@nebutra/ui";
@@ -50,9 +49,8 @@ export function GettingStarted() {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `type` | `"info" \| "warning" \| "error" \| "success"` | `"info"` | Controls the color scheme and default icon |
 | `title` | `string` | — | Bold heading rendered above the body |
@@ -62,8 +60,7 @@ export function GettingStarted() {
 | `className` | `string` | — | Additional Tailwind classes on the root element |
 | `children` | `React.ReactNode` | — | Body content (supports JSX) |
 
-## Examples
-
+## 示例
 ### Without a title
 
 ```tsx
@@ -103,8 +100,7 @@ import { ShieldAlert } from "lucide-react";
 </Admonition>
 ```
 
-## Accessibility
-
+## 可访问性
 - Root element renders as `role="note"` for informational variants and `role="alert"` for `error` type.
 - `dismissible` close button has `aria-label="Dismiss"` and is reachable via keyboard (`Tab`, `Enter`, `Space`).
 - Icons are `aria-hidden="true"` — meaning is conveyed by color, icon, and text together.

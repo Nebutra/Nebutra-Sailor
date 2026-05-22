@@ -3,7 +3,7 @@ title: "FilterBar"
 description: "Search input combined with filter controls for narrowing lists and table views."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 <FilterBar
@@ -32,7 +32,7 @@ description: "Search input combined with filter controls for narrowing lists and
 />
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { FilterBar } from "@nebutra/ui";
@@ -63,11 +63,10 @@ export function ResourceList() {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
-| `searchPlaceholder` | `string` | `"Search..."` | Placeholder text inside the search field |
+| `searchPlaceholder` | `string` | `"Search..."` | 搜索框内的占位文案 |
 | `searchValue` | `string` | — | Controlled value for the search input |
 | `onSearchChange` | `(value: string) => void` | — | Called on every keystroke |
 | `filters` | `FilterDefinition[]` | `[]` | Array of filter group definitions |
@@ -87,8 +86,7 @@ interface FilterDefinition {
 }
 ```
 
-## Examples
-
+## 示例
 ### Search-only (no filters)
 
 ```tsx
@@ -117,8 +115,7 @@ interface FilterDefinition {
 />
 ```
 
-## Accessibility
-
+## 可访问性
 - The search input has `role="searchbox"` and `aria-label="Search"`.
 - Each filter dropdown has an associated visible `<label>`.
 - Active filter count is announced via `aria-live="polite"` when filters change.

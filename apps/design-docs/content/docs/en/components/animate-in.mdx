@@ -3,6 +3,10 @@ title: AnimateIn
 description: Entrance animation primitive with branded presets, staggered groups, and reduced-motion handling.
 ---
 
+## Demo
+
+<ComponentPreview name="animate-in-demo" />
+
 ## Installation
 
 ```tsx
@@ -52,13 +56,12 @@ Use `AnimateInGroup` when sibling items should enter in a single rhythm:
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
 | `preset` | `"emerge" \| "flow" \| "fade" \| "fadeUp" \| "scale"` | `"emerge"` | Branded entrance recipe. |
-| `delay` | `"none" \| "short" \| "normal" \| "long"` | `"none"` | Tokenized delay before the element enters. |
-| `duration` | `"short" \| "normal" \| "slow"` | `"normal"` | Tokenized transition duration. |
+| `delay` | `number` | `0` | Delay in seconds before the element enters. |
+| `duration` | `number` | preset duration | Optional transition duration override in seconds. |
 | `inView` | `boolean` | `false` | Starts motion when the element enters the viewport. |
-| `once` | `boolean` | `true` | When `inView` is set, animate only the first time by default. |
 | `className` | `string` | - | Class applied to the motion wrapper. |
 
-`AnimateInGroup` accepts `stagger`, `inView`, `once`, `className`, and `children`. Group-level `stagger` is tokenized as `"none"`, `"tight"`, `"normal"`, or `"slow"`.
+`AnimateInGroup` accepts `stagger`, `inView`, `className`, and `children`. Group-level `stagger` is tokenized as `"fast"`, `"normal"`, or `"slow"`.
 
 ## Accessibility
 

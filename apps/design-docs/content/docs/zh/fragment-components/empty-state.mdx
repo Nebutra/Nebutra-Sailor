@@ -3,7 +3,7 @@ title: "EmptyState"
 description: "Animated empty state component with an icon trio, title, description, and optional action button."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 import { EmptyState } from "@nebutra/ui";
@@ -23,7 +23,7 @@ import { FolderOpen, Plus, Rocket } from "lucide-react";
 />
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { EmptyState } from "@nebutra/ui";
@@ -48,11 +48,10 @@ export function PipelinesPage() {
 }
 ```
 
-## Props
-
+## 属性
 ### `EmptyStateProps`
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `title` | `string` | — | **Required.** Heading text rendered as `<h2>` |
 | `description` | `string` | — | Supporting body copy beneath the title |
@@ -66,15 +65,14 @@ export function PipelinesPage() {
 
 ### `EmptyStateAction`
 
-| Prop | Type | Default | Description |
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `label` | `string` | — | **Required.** Button label text |
 | `icon` | `React.ReactNode` | — | Optional icon rendered before the label; rotates 90° on hover |
 | `onClick` | `() => void` | — | Click handler |
 | `disabled` | `boolean` | — | Disables the action button |
 
-## Examples
-
+## 示例
 ### Dark theme
 
 ```tsx
@@ -122,8 +120,7 @@ export function PipelinesPage() {
 />
 ```
 
-## Accessibility
-
+## 可访问性
 - The root element renders as `<section>` with `role="region"` and `aria-labelledby` pointing to the title.
 - When `description` is present, `aria-describedby` references the description paragraph.
 - The action button renders as a native `<button>` with `type="button"`.

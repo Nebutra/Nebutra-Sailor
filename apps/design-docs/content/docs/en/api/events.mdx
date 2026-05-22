@@ -7,6 +7,10 @@ description: Event ingestion pipeline
 
 The Event Ingestion API allows you to send custom events measuring user behavior, system actions, or other metrics into the Nebutra ecosystem.
 
+## Endpoint Purpose
+
+Event ingestion persists product analytics and system events. It should power analytics, audit correlation, and downstream processing without blocking the user's primary workflow.
+
 ## Endpoint
 
 `POST /api/v1/events/ingest`
@@ -39,3 +43,15 @@ The Event Ingestion API allows you to send custom events measuring user behavior
   "ingested": 1
 }
 ```
+
+## UI States Driven By API
+
+- Submit success can clear local buffers and show a quiet confirmation.
+- Partial ingestion should keep unsent events queued for retry.
+- Repeated failures should degrade analytics collection without blocking product navigation.
+
+## Errors / Loading / Empty Contracts
+
+- Loading: batch and debounce event sends; do not show foreground spinners for background telemetry.
+- Error: log the request id and preserve unsent events for retry.
+- Empty: an empty events array should be treated as a client bug and not sent.

@@ -3,7 +3,7 @@ title: "TextConfirmDialog"
 description: "Type-to-confirm dialog that requires the user to type a specific string before a destructive action is enabled."
 ---
 
-## Demo
+## 演示
 
 ```tsx
 <TextConfirmDialog
@@ -22,7 +22,7 @@ description: "Type-to-confirm dialog that requires the user to type a specific s
 />
 ```
 
-## Usage
+## 用法
 
 ```tsx
 import { TextConfirmDialog } from "@nebutra/ui";
@@ -64,9 +64,8 @@ export function DangerZone({ workspace }: { workspace: Workspace }) {
 }
 ```
 
-## Props
-
-| Prop | Type | Default | Description |
+## 属性
+| 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `open` | `boolean` | — | Controls dialog open state |
 | `onOpenChange` | `(open: boolean) => void` | — | Called when the dialog requests a state change |
@@ -81,8 +80,7 @@ export function DangerZone({ workspace }: { workspace: Workspace }) {
 | `isLoading` | `boolean` | `false` | Disables all controls and shows a spinner on the confirm button |
 | `className` | `string` | — | Additional classes on the dialog panel |
 
-## Examples
-
+## 示例
 ### Confirming by resource name
 
 ```tsx
@@ -112,8 +110,7 @@ export function DangerZone({ workspace }: { workspace: Workspace }) {
 />
 ```
 
-## Accessibility
-
+## 可访问性
 - Renders as `<dialog>` with `role="alertdialog"`.
 - `aria-labelledby` references the title; `aria-describedby` references the description.
 - Focus is placed on the text input when the dialog opens.

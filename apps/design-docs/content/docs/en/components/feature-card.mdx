@@ -157,6 +157,20 @@ Re-export of `CardContent` — accepts standard `div` props and `className`.
 | `circles` | `CircleConfig[]` | — | Array of circle configs with `pattern: "none" \| "border" \| "primary" \| "blue"` |
 | `className` | `string` | — | Additional classes |
 
+## Accessibility
+
+- Feature cards should be structural containers, not standalone interactive regions. Put links or buttons inside the card instead of making the whole decorative surface clickable.
+- `FeatureCardHeader` icons are decorative unless the feature name depends on the icon. When the icon carries meaning, provide adjacent text that names the same concept.
+- Media passed to `FeatureCardContent` needs useful `alt` text when it explains the feature, and empty `alt` when it is decorative chrome.
+- Keep heading levels in the surrounding page hierarchy; do not use the card title to skip document outline levels.
+
+## Design Contract
+
+- `FeatureCard` is a marketing/product-composition surface. It should compose content, media, and decorators; it must not own grid layout or page section spacing.
+- Corner decorators are part of the component identity and use tokenized border/primary colors. Do not replace them with ad hoc SVG ornaments in docs examples.
+- Theme-specific media must go through `DualModeImage` so light/dark parity is explicit.
+- Dense dashboard metrics should use `MetricCard` or `KpiCard`; `FeatureCard` is for explanatory product surfaces.
+
 ## Notes
 
 - `FeatureCard` renders with `rounded-none` by default — butts up to adjacent cards cleanly. Add a border to the parent grid, not individual cards.

@@ -157,6 +157,20 @@ import { MapPin } from "lucide-react";
 | `circles` | `CircleConfig[]` | — | 圆圈配置数组，`pattern` 可选值：`"none" \| "border" \| "primary" \| "blue"` |
 | `className` | `string` | — | 额外的 CSS 类名 |
 
+## 可访问性
+
+- FeatureCard 应该是结构容器，不是整卡点击的交互区域。需要跳转或执行动作时，把 link/button 放在卡片内部。
+- `FeatureCardHeader` 的图标默认是装饰性；如果图标承载语义，旁边必须有等价文字。
+- 传给 `FeatureCardContent` 的媒体如果用于解释功能，需要有有效 `alt`；纯装饰图像使用空 `alt`。
+- heading level 由页面结构决定，不要为了卡片视觉大小跳过文档大纲层级。
+
+## 设计契约
+
+- `FeatureCard` 是 marketing/product-composition surface，负责组合内容、媒体和装饰，不拥有 grid layout 或 page section spacing。
+- 角标装饰是组件身份的一部分，使用 token 化 border/primary color；docs 示例不要用临时 SVG 装饰替代。
+- 主题相关媒体必须通过 `DualModeImage` 表达 light/dark parity。
+- 高密度 dashboard 指标使用 `MetricCard` 或 `KpiCard`；`FeatureCard` 用于解释型产品表面。
+
 ## 注意事项 (Notes)
 
 - `FeatureCard` 默认渲染为 `rounded-none`（无圆角） —— 以便在网格布局中与相邻卡片无缝衔接。建议在父级网格上添加边框，而不是在单个卡片上。

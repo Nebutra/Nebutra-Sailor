@@ -16,4 +16,20 @@ _openapi:
       method: get
 ---
 
+## 接口目的
+
+法律合规端点负责保存用户同意、Cookie 偏好和法律文档读取。它们驱动合规 UI，不代表通用产品状态。
+
+## API 驱动的界面状态
+
+- Consent status 决定同意横幅是否继续显示。
+- Cookie preference 更新时，在请求完成前保留当前选择并防止重复提交。
+- Legal document 读取应渲染最新发布文档，而不是 stale bundled copy。
+
+## 错误 / 加载 / 空状态契约
+
+- 加载：保留当前偏好可见，并禁用重复提交。
+- 错误：保持 banner/dialog 打开，并指出失败字段或文档。
+- 空状态：文档列表只允许在非生产 fixture 为空；生产环境为空属于内容配置错误。
+
 <APIPage document="openapi.json" operations={[{path:"/api/v1/legal/consent",method:"post"},{path:"/api/v1/legal/consent/status",method:"get"},{path:"/api/v1/legal/cookie-consent",method:"post"},{path:"/api/v1/legal/documents",method:"get"},{path:"/api/v1/legal/documents/{slug}",method:"get"}]} />

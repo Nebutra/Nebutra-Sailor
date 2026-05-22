@@ -84,3 +84,17 @@ import { Globe } from "@nebutra/ui/primitives";
 - 容器必须设置为 `position: relative` 并具有固定的宽高比。
 - 画布会伴随 500ms 的透明度过渡平滑显示。
 - 拖拽交互支持指针和触摸设备。
+
+## 可访问性
+
+- 把 canvas 当作视觉辅助，而不是全球状态的唯一表达。位置或数量重要时，旁边必须配文字、表格或列表。
+- 标记点需要在 canvas 外有对应 label 或 legend；不能只依赖颜色和位置。
+- 拖拽交互必须是可选增强。自动旋转和 pointer drag 不能阻断 canvas 周围的键盘导航。
+- 在高密度产品 UI 附近使用时，父级应根据 reduced-motion 语境关闭非必要旋转。
+
+## 设计契约
+
+- `Globe` 只负责 WebGL 可视化，不拥有 section layout、文案、指标或 marker 数据获取。
+- 父级负责稳定宽高比，不要依赖 canvas 从内容推断高度。
+- 定量比较使用 `Chart` 或 `Table`；只有地理位置本身是核心语义时才使用 `Globe`。
+- 产品 docs 中不要散落临时 color array；在调用边界把 brand/status intent 映射到组件 config。

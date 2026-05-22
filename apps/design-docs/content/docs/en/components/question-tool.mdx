@@ -3,6 +3,8 @@ title: Question Tool
 description: Inline AI tool-call rendering for multi-step questionnaires — single, multi, and free-text question kinds with progress, summary, and keyboard shortcuts.
 ---
 
+## Demo
+
 <ComponentPreview name="question-tool-demo" />
 
 ## Installation
@@ -68,6 +70,26 @@ const questions: QuestionConfig[] = [
 | `maxSelections`     | `number`                              | `multi` only. No cap by default                            |
 | `placeholder`       | `string`                              | `text` only. Placeholder for the textarea                  |
 
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `questions` | `QuestionConfig[]` | — | Stable ordered question set. |
+| `questionIndex` | `number` | internal state | Controlled one-based active question index. |
+| `totalQuestions` | `number` | `questions.length` | Progress denominator when the server owns the full flow. |
+| `onPreviousQuestion` | `() => void` | — | Called from the previous chevron in controlled flows. |
+| `onNextQuestion` | `() => void` | — | Called from the next chevron in controlled flows. |
+| `submitLabel` | `string` | `"Send"` | Primary submit label. |
+| `nextLabel` | `string` | `"Next"` | Label for the next affordance. |
+| `skipLabel` | `string` | `"Skip"` | Label for the skip action. |
+| `previousLabel` | `string` | `"Previous"` | Accessible label for previous navigation. |
+| `allowSkip` | `boolean` | `true` | Allows a skip answer. |
+| `onSubmitAnswer` | `(answer, questionIndex) => void` | — | Emits the discriminated answer and one-based index. |
+| `output` | `{ answer?: QuestionAnswer }` | — | Renders the summary state for a completed tool call. |
+| `toolCallId` | `string` | — | Resets internal answers when the tool call changes. |
+| `headerLabel` | `string` | `"Question"` | Chrome bar label. |
+| `className` | `string` | — | Outer wrapper class. |
+
 ## QuestionAnswer (discriminated union)
 
 ```ts
@@ -123,3 +145,15 @@ Avoid for:
 - Standalone forms outside chat (use `Form` + `Field` primitives instead)
 - Surveys with >26 options per question (alphabet limit)
 - Async/streamed question generation — the component expects a stable `questions` array
+
+## Design Contract
+
+- `QuestionTool` is an AI tool-call surface. It should appear inside chat or assistant timelines, not as a generic survey card.
+- `QuestionAnswer` is a discriminated union and is the API boundary. Do not collapse it to loose strings in downstream code.
+- Option shortcuts are affordances, not the only interaction path. Pointer, keyboard focus, and textarea submit must all work.
+- Keep question generation stable for the mounted instance; use `toolCallId` when a new tool call replaces the question set.
+
+## Storybook / Registry
+
+- Storybook source: `packages/design/ui/src/primitives/question-tool.stories.tsx`.
+- Registry manifest: `/r/question-tool.json`.
