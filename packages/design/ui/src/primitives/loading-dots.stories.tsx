@@ -36,8 +36,8 @@ export const Default: Story = {
 export const WithText: Story = {
   name: "With text",
   render: () => (
-    <LoadingDots size={4}>
-      <p className="text-sm text-foreground">Loading</p>
+    <LoadingDots className="text-foreground text-sm" size={4}>
+      Loading
     </LoadingDots>
   ),
 };

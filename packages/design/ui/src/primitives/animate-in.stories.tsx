@@ -19,7 +19,9 @@ export default meta;
 type Story = StoryObj<typeof AnimateIn>;
 
 const Box = ({ children }: { children: React.ReactNode }) => (
-  <div className="p-6 rounded-lg border bg-white text-gray-900 w-48 text-center">{children}</div>
+  <div className="w-48 rounded-[var(--radius-lg)] border bg-card p-6 text-center text-card-foreground">
+    {children}
+  </div>
 );
 
 export const Emerge: Story = {
@@ -46,7 +48,7 @@ export const InView: Story = {
   name: "In-viewport trigger",
   render: () => (
     <div style={{ marginTop: 600 }}>
-      <p className="text-sm text-gray-500 mb-4">Scroll down — animates on enter</p>
+      <p className="mb-4 text-muted-foreground text-sm">Scroll down — animates on enter</p>
       <AnimateIn preset="emerge" inView>
         <Box>I animate when visible</Box>
       </AnimateIn>
