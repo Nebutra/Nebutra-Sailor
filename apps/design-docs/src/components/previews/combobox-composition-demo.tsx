@@ -1,7 +1,6 @@
-"use client";
-
 import { Combobox } from "@nebutra/ui/primitives";
-export function Combobox11Demo() {
+
+export function ComboboxCompositionDemo() {
   return (
     <Combobox placeholder="Select framework...">
       <Combobox.Input placeholder="Search frameworks..." />

@@ -92,22 +92,6 @@
       "type": "registry:example"
     },
     {
-      "name": "avatar-dicebear-simple-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "avatar-fallback-simple-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "avatar-git-simple-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "avatar-group-simple-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "avatar-smart-group-demo",
       "type": "registry:example"
     },
@@ -144,10 +128,6 @@
       "type": "registry:example"
     },
     {
-      "name": "badge-pill-matrix-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "badge-sizes-demo",
       "type": "registry:example"
     },
@@ -181,10 +161,6 @@
     },
     {
       "name": "box-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "breadcrumb-custom-separator-demo",
       "type": "registry:example"
     },
     {
@@ -244,14 +220,6 @@
       "type": "registry:example"
     },
     {
-      "name": "carousel-2-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "carousel-3-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "carousel-demo",
       "type": "registry:example"
     },
@@ -284,10 +252,6 @@
       "type": "registry:example"
     },
     {
-      "name": "choicebox-radio-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "code-block-demo",
       "type": "registry:example"
     },
@@ -308,43 +272,11 @@
       "type": "registry:example"
     },
     {
-      "name": "combobox-10-demo",
+      "name": "combobox-composition-demo",
       "type": "registry:example"
     },
     {
-      "name": "combobox-11-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "combobox-2-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "combobox-3-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "combobox-4-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "combobox-5-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "combobox-6-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "combobox-7-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "combobox-8-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "combobox-9-demo",
+      "name": "combobox-controlled-demo",
       "type": "registry:example"
     },
     {
@@ -365,6 +297,10 @@
     },
     {
       "name": "combobox-groups-demo",
+      "type": "registry:example"
+    },
+    {
+      "name": "combobox-label-demo",
       "type": "registry:example"
     },
     {
@@ -453,10 +389,6 @@
     },
     {
       "name": "drawer-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "drawer-side-right-demo",
       "type": "registry:example"
     },
     {
@@ -664,10 +596,6 @@
       "type": "registry:example"
     },
     {
-      "name": "introduction-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "iphone-mockup-demo",
       "type": "registry:example"
     },
@@ -816,10 +744,6 @@
       "type": "registry:example"
     },
     {
-      "name": "popover-2-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "popover-controlled-demo",
       "type": "registry:example"
     },
@@ -837,14 +761,6 @@
     },
     {
       "name": "progress-2-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "progress-3-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "progress-4-demo",
       "type": "registry:example"
     },
     {
@@ -880,10 +796,6 @@
       "type": "registry:example"
     },
     {
-      "name": "radio-group-2-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "radio-group-3-demo",
       "type": "registry:example"
     },
@@ -908,10 +820,6 @@
       "type": "registry:example"
     },
     {
-      "name": "reaction-chip-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "relative-time-card-demo",
       "type": "registry:example"
     },
@@ -929,10 +837,6 @@
     },
     {
       "name": "scroll-area-2-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "scroll-area-3-demo",
       "type": "registry:example"
     },
     {
@@ -973,14 +877,6 @@
     },
     {
       "name": "separator-2-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "separator-3-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "separator-4-demo",
       "type": "registry:example"
     },
     {
@@ -1028,10 +924,6 @@
       "type": "registry:example"
     },
     {
-      "name": "skeleton-3-demo",
-      "type": "registry:example"
-    },
-    {
       "name": "skeleton-demo",
       "type": "registry:example"
     },
@@ -1041,10 +933,6 @@
     },
     {
       "name": "slider-2-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "slider-3-demo",
       "type": "registry:example"
     },
     {
@@ -1061,10 +949,6 @@
     },
     {
       "name": "slider-number-flow-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "slider-on-value-change-demo",
       "type": "registry:example"
     },
     {
@@ -1137,14 +1021,6 @@
     },
     {
       "name": "text-shimmer-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "textarea-2-demo",
-      "type": "registry:example"
-    },
-    {
-      "name": "textarea-3-demo",
       "type": "registry:example"
     },
     {

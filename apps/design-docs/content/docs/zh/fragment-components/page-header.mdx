@@ -1,6 +1,6 @@
 ---
 title: "PageHeader"
-description: "Page title block with optional breadcrumbs, description, and action slot."
+description: "页面标题区块，支持可选面包屑、描述和操作槽位。"
 ---
 
 ## 演示
@@ -62,7 +62,7 @@ export function PipelineSettingsPage({ pipeline }: { pipeline: Pipeline }) {
 | `className` | `string` | — | Additional classes on the `<header>` root |
 | `children` | `React.ReactNode` | — | Additional content rendered below the title row (e.g. tabs) |
 
-### Breadcrumb item
+### 面包屑项
 
 ```ts
 interface BreadcrumbItem {
@@ -74,13 +74,13 @@ interface BreadcrumbItem {
 The last item in the `breadcrumbs` array is automatically marked as `selected` and rendered without a link.
 
 ## 示例
-### Title only
+### 仅标题
 
 ```tsx
 <PageHeader title="Members" />
 ```
 
-### With tabs below
+### 下方带标签页
 
 ```tsx
 <PageHeader
@@ -95,7 +95,7 @@ The last item in the `breadcrumbs` array is automatically marked as `selected` a
 </PageHeader>
 ```
 
-### Deep breadcrumb trail
+### 多级面包屑
 
 ```tsx
 <PageHeader
@@ -109,7 +109,7 @@ The last item in the `breadcrumbs` array is automatically marked as `selected` a
 />
 ```
 
-### No breadcrumbs, actions only
+### 无面包屑，仅操作
 
 ```tsx
 <PageHeader

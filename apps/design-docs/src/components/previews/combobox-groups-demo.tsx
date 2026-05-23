@@ -11,8 +11,8 @@ export function ComboboxGroupsDemo() {
         { value: "nuxt", label: "Nuxt", group: "Vue" },
         { value: "svelte", label: "SvelteKit", group: "Svelte" },
       ]}
-      label="框架 (Framework)"
-      placeholder="选择框架..."
+      label="Framework"
+      placeholder="Select framework..."
     />
   );
 }

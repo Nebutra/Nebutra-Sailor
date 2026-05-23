@@ -1,11 +1,10 @@
 ---
-title: "Brand Colors"
-description: "Complete Nebutra color system — primary blue, accent cyan, neutral scale, semantic colors, accessibility, and code references."
+title: "品牌颜色"
+description: "完整 Nebutra 颜色系统：主蓝、强调青、中性色阶、语义颜色、可访问性和代码引用。"
 ---
 
 <Callout>
-  All color values are sourced from the **云毓智能 品牌视觉识别手册**. These are the definitive specifications.
-  Do not substitute with generic Tailwind palette colors.
+  所有颜色值都来自 **云毓智能 品牌视觉识别手册**，这是权威规范。不要用通用 Tailwind 调色盘替代。
 </Callout>
 
 <div className="mt-8">
@@ -13,17 +12,16 @@ description: "Complete Nebutra color system — primary blue, accent cyan, neutr
 </div>
 
 <Tip>
-  The blue undertone in the neutral scale is intentional. It creates a subtle visual connection to the brand blue.
-  Never substitute with pure gray (e.g., Tailwind `gray-*` or `zinc-*`).
+  中性色阶中的蓝色底色是刻意设计的，用于和品牌蓝建立克制的视觉关联。不要替换成纯灰，例如 Tailwind `gray-*` 或 `zinc-*`。
 </Tip>
 
 <ColorUsageDemos />
 
 ---
 
-## Color in Code
+## 代码中的颜色
 
-### CSS Custom Properties
+### CSS 自定义属性
 
 ```css
 :root {
@@ -65,7 +63,7 @@ description: "Complete Nebutra color system — primary blue, accent cyan, neutr
 }
 ```
 
-### Tailwind CSS Classes
+### Tailwind CSS 类
 
 ```tsx
 // Brand colors
@@ -86,12 +84,12 @@ description: "Complete Nebutra color system — primary blue, accent cyan, neutr
 <div className="text-neutral-900 dark:text-neutral-100" />
 ```
 
-### JavaScript / TypeScript
+### JavaScript / TypeScript 用法
 
 ```ts
 import { colors } from "@nebutra/brand"
 
-// Access brand colors programmatically
+// 程序化访问品牌颜色
 colors.blue[500]   // "#0033FE"
 colors.cyan[500]   // "#0BF1C3"
 colors.neutral[950] // "#020617"
@@ -99,21 +97,21 @@ colors.neutral[950] // "#020617"
 
 ---
 
-## Prohibited Uses
+## 禁止用法
 
 <Warning>
-  The following color substitutions are strictly forbidden:
+  以下颜色替代方式严格禁止：
 </Warning>
 
-| Prohibited | Reason |
+| 禁止项 | 原因 |
 |-----------|--------|
 | Tailwind `indigo-*` 或 `blue-*` 作为品牌蓝 | 严禁直接套用，请务必使用全局指定的原生命名 CSS 变量。 |
-| Tailwind `teal-500` for brand cyan | Teal is not Nebutra cyan |
-| Tailwind `gray-*` for neutrals | Nebutra neutrals have a blue undertone |
-| Orange or red as primary action color | Only brand blue is used for primary actions |
-| Cyan as text on light backgrounds | Fails WCAG contrast — use only on dark backgrounds |
-| Brand blue as a flat background fill | Use the brand gradient for hero/CTA surfaces |
-| Any non-brand color for `info` semantic | Info must use brand blue `#0033FE`, not sky/teal |
+| Tailwind `teal-500` 作为品牌青 | Teal 不是 Nebutra cyan。 |
+| Tailwind `gray-*` 作为中性色 | Nebutra 中性色带有蓝色底色。 |
+| 橙色或红色作为主操作色 | 主操作只使用品牌蓝。 |
+| 在浅色背景上使用 cyan 文本 | 不满足 WCAG 对比度，只能在深色背景上使用。 |
+| 用纯品牌蓝填充背景 | Hero / CTA surface 应使用品牌渐变。 |
+| `info` 语义使用非品牌色 | Info 必须使用品牌蓝 `#0033FE`，不能用 sky/teal。 |
 
 ---
 
@@ -121,24 +119,24 @@ colors.neutral[950] // "#020617"
 
 不要将 Tailwind 的默认 `bg-secondary` 或变量 `--secondary` 用作组件的弱化背景轨道（例如进度条 Progress、滑块 Sliders 等组件的底轨）。因为在云毓规范中，`--secondary` 被明确映射为了高饱和度的云毓青 `#0BF1C3`。若直接套用，会导致背景轨道呈现出难以直视的赛博亮色，且无法满足无障碍对比度要求。如果需要弱化轨道颜色，请务必使用带透明度的品牌主色（如 `bg-primary/20`）。
 
-## Do / Don't
+## 应做 / 禁止
 
-**Do** 始终使用全局变量（如 `bg-primary`、`text-primary` 或自定义色名 `blue-500` 即 `#0033FE`）应用于所有的主交互（如按钮、链接、输入框高光等）。
+**应做**：始终使用全局变量（如 `bg-primary`、`text-primary` 或自定义色名 `blue-500` 即 `#0033FE`）应用于所有主交互，例如按钮、链接和输入框高光。
 
-**Do** use the full 11-step scale for subtle tints, hover states, and dark mode adaptations.
+**应做**：使用完整 11 阶色阶承载微妙 tint、hover 状态和深色模式适配。
 
-**Do** 将 `blue-500` 与 `cyan-500` 结合起来组构为品牌的专属高定渐变色（Brand Signature）。
+**应做**：将 `blue-500` 与 `cyan-500` 组合为品牌专属渐变（Brand Signature）。
 
-**Do** use `neutral-950` as the dark mode page background.
+**应做**：使用 `neutral-950` 作为深色模式页面背景。
 
-**Don't** 严禁直接在组件代码里写明 `bg-indigo-500` 或是 `bg-blue-500` 等 Tailwind 默认调色盘色系。一切色彩映射都要回源到 `bg-primary` 或者全局的语义变量上，以确保支持一键更替（比如之后出黑夜/暗网特型）。
+**禁止**：在组件代码里直接写 `bg-indigo-500` 或 `bg-blue-500` 这类 Tailwind 默认调色盘色。所有色彩映射都要回源到 `bg-primary` 或全局语义变量，确保未来主题切换时不会漂移。
 
-**Don't** use cyan on white — it fails WCAG contrast.
+**禁止**：在白底上使用 cyan，它不满足 WCAG 对比度。
 
-**Don't** approximate brand colors with Tailwind defaults (`blue-500`, `emerald-400`).
+**禁止**：用 Tailwind 默认色近似品牌色，例如 `blue-500`、`emerald-400`。
 
-**Don't** introduce new color scales outside the defined blue, cyan, neutral, and semantic palettes.
+**禁止**：在已定义的 blue、cyan、neutral 和语义调色盘之外引入新色阶。
 
-**Don't** use brand blue as a solid fill where the brand gradient is expected (hero sections, primary CTAs).
+**禁止**在需要品牌渐变的场景把品牌蓝当作纯色填充使用，例如 hero 区块和主 CTA。
 
-**Don't** 不要将 Tailwind 的默认 `bg-secondary` 或变量 `--secondary` 用作组件的弱化背景轨道（例如进度条 Progress、滑块 Sliders 等）。在云毓主题中，`--secondary` 被映射为高饱和度的青色 `#0BF1C3`。若直接套用，会导致背景轨道呈现出难以直视的赛博亮色，且大幅破坏无障碍阅读。请务必使用带透明度的品牌主色（如 `bg-primary/20`）作为任何组件的底层轨道。
+**禁止**将 Tailwind 的默认 `bg-secondary` 或变量 `--secondary` 用作组件的弱化背景轨道（例如进度条 Progress、滑块 Sliders 等）。在云毓主题中，`--secondary` 被映射为高饱和度的青色 `#0BF1C3`。若直接套用，会导致背景轨道呈现出难以直视的赛博亮色，且大幅破坏无障碍阅读。请务必使用带透明度的品牌主色（如 `bg-primary/20`）作为任何组件的底层轨道。

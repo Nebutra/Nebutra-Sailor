@@ -1,23 +1,23 @@
 ---
-title: "Empty States"
-description: "Patterns for zero-data, loading, and error conditions."
+title: "空状态"
+description: "零数据、加载中与错误状态的界面模式。"
 ---
 
-## When to Use
+## 何时使用
 
-Every data surface that can be in one of three non-normal conditions needs a corresponding state:
+任何可能进入以下三种非正常状态的数据表面，都需要有对应状态：
 
-| Condition | Component | Trigger |
+| 条件 | 组件 | 触发时机 |
 |---|---|---|
-| Zero data | `EmptyState` | Query returns an empty array |
-| In-flight | `LoadingState` | Async request pending |
-| Failed | `ErrorState` | Request throws or rejects |
+| 零数据 | `EmptyState` | 查询返回空数组 |
+| 请求中 | `LoadingState` | 异步请求未完成 |
+| 失败 | `ErrorState` | 请求抛错或被拒绝 |
 
-Apply these states at the same level as the content they replace — inside a `Card`, a `Section`, or a full page region. Never show a blank area.
+这些状态应该出现在被替换内容的同一层级：`Card` 内、`Section` 内，或整页区域中。不要留下空白区域。
 
-## Structure
+## 结构
 
-### Empty state
+### 空状态
 
 ```
 EmptyState
@@ -27,7 +27,7 @@ EmptyState
   └── actions (optional, Button or ButtonGroup)
 ```
 
-### Loading state
+### 加载状态
 
 ```
 LoadingState
@@ -35,7 +35,7 @@ LoadingState
   └── message (optional, muted text)
 ```
 
-### Error state
+### 错误状态
 
 ```
 ErrorState
@@ -45,11 +45,11 @@ ErrorState
   └── onRetry → Button ("Try again")
 ```
 
-## Composition
+## 组合规则
 
-### EmptyState
+### EmptyState 组件
 
-Use when a list, table, or data region has no records. Always include an action when the user can resolve the emptiness directly.
+列表、表格或数据区域没有记录时使用。只要用户能直接解决空状态，就必须提供动作入口。
 
 ```tsx
 import { EmptyState } from "@nebutra/ui";
@@ -68,7 +68,7 @@ import { Button } from "@nebutra/ui";
 />
 ```
 
-Props:
+Props：
 
 | 属性 | 类型 | 默认值 |
 |---|---|---|
@@ -78,9 +78,9 @@ Props:
 | `actions` | `ReactNode` | — |
 | `className` | `string` | — |
 
-### LoadingState
+### LoadingState 组件
 
-Replace data regions while a request is in-flight. Use `size="large"` for full-page loading; `size="small"` inside compact cards.
+请求进行中时替换数据区域。整页加载使用 `size="large"`；紧凑卡片内使用 `size="small"`。
 
 ```tsx
 import { LoadingState } from "@nebutra/ui";
@@ -94,11 +94,11 @@ import { LoadingState } from "@nebutra/ui";
 </div>
 ```
 
-For complex pages with multiple regions, prefer per-region `LoadingState` over a single full-page spinner. Users can see partial content sooner.
+复杂页面包含多个区域时，优先使用分区域 `LoadingState`，而不是单个全页 spinner。这样用户可以更早看到已加载的局部内容。
 
-### ErrorState
+### ErrorState 组件
 
-Provide `onRetry` whenever the operation is idempotent and can be retried without user input.
+当操作具备幂等性，且无需用户重新输入即可重试时，提供 `onRetry`。
 
 ```tsx
 import { ErrorState } from "@nebutra/ui";
@@ -111,11 +111,11 @@ import { ErrorState } from "@nebutra/ui";
 />
 ```
 
-For unrecoverable errors (auth, permissions), omit `onRetry` and render a `Button` linking to a resolution path instead.
+对于不可直接恢复的错误（认证、权限），省略 `onRetry`，改为渲染链接到解决路径的 `Button`。
 
-### Skeleton (alternative loading pattern)
+### Skeleton（替代加载模式）
 
-For content-heavy pages where layout stability matters, use `Skeleton` atoms in place of `LoadingState`. Skeletons match the shape of real content and reduce layout shift.
+在内容密集且需要布局稳定的页面中，使用 `Skeleton` atom 替代 `LoadingState`。Skeleton 会匹配真实内容形状，并减少布局位移。
 
 ```tsx
 import { Skeleton } from "@nebutra/ui";
@@ -127,10 +127,10 @@ import { Skeleton } from "@nebutra/ui";
 </div>
 ```
 
-Use `LoadingState` (spinner) when load time is unpredictable. Use `Skeleton` when the shape and count of content are known.
+加载时长不可预测时使用 `LoadingState`（spinner）。内容形状和数量已知时使用 `Skeleton`。
 
 ## 示例
-### Table with all three states
+### 同时覆盖三种状态的表格
 
 ```tsx
 function UsageTable() {
@@ -151,9 +151,9 @@ function UsageTable() {
 }
 ```
 
-## Related Components
+## 相关组件
 
-- [Empty State fragment](/zh/docs/fragment-components/empty-state) — pre-styled variant with consistent padding
-- [Skeleton](/zh/docs/components/skeleton) — shape-matching load placeholder
-- [Progress](/zh/docs/components/progress) — deterministic progress bar (use when % complete is known)
-- [Alert](/zh/docs/components/alert) — inline warning or error message within a form or page region
+- [Empty State fragment](/zh/docs/fragment-components/empty-state) — 已预设样式和一致 padding 的空状态片段
+- [Skeleton](/zh/docs/components/skeleton) — 匹配内容形状的加载占位
+- [Progress](/zh/docs/components/progress) — 确定性进度条（已知完成百分比时使用）
+- [Alert](/zh/docs/components/alert) — 表单或页面区域内的 inline 警告 / 错误消息

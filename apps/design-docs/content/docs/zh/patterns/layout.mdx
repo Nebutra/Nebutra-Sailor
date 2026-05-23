@@ -1,20 +1,20 @@
 ---
-title: "Layout"
-description: "Page structure and section composition patterns for dashboard and content pages."
+title: "布局"
+description: "面向仪表盘与内容页的页面结构和区块组合模式。"
 ---
 
-## When to Use
+## 何时使用
 
-Apply layout patterns any time you compose a new page or a major page region. Layout decisions affect information hierarchy, responsive behavior, and spacing consistency across the application.
+每当组合新页面或主要页面区域时，都应该使用布局模式。布局决策会影响信息层级、响应式行为，以及整个应用的间距一致性。
 
-Use this pattern for:
-- Full application pages (dashboard, settings, detail views)
-- Content sections within a page (grouped fields, data regions)
-- Marketing and documentation page shells
+以下场景使用该模式：
+- 完整应用页面（仪表盘、设置、详情页）
+- 页面内的内容区块（字段分组、数据区域）
+- 营销页和文档页外壳
 
-## Structure
+## 结构
 
-### Dashboard page layout
+### 仪表盘页面布局
 
 ```
 <div className="min-h-screen bg-gray-50">       ← page shell
@@ -37,7 +37,7 @@ Use this pattern for:
 </div>
 ```
 
-### Two-column settings layout
+### 双栏设置布局
 
 ```
 <Container size="lg">
@@ -54,11 +54,11 @@ Use this pattern for:
 </Container>
 ```
 
-## Composition
+## 组合规则
 
-### Container
+### Container 容器
 
-`Container` constrains maximum width and applies responsive horizontal padding (`px-4 sm:px-6 lg:px-8`). Use it as the outermost wrapper inside `<main>`.
+`Container` 约束最大宽度，并应用响应式水平 padding（`px-4 sm:px-6 lg:px-8`）。它应该作为 `<main>` 内最外层包装器使用。
 
 ```tsx
 import { Container } from "@nebutra/ui";
@@ -87,9 +87,9 @@ import { Container } from "@nebutra/ui";
 | `wide` | 1400px | `--container-wide` | Landing page 区块、Feature Bento、导航栏 |
 | `full` | 100% | — | 全宽表格、出血区块 |
 
-### PageHeader
+### PageHeader 页头
 
-Place `PageHeader` immediately inside `Container`, before the first `Section`. It owns the page-level title, description, breadcrumb trail, and primary page actions.
+`PageHeader` 应该紧跟在 `Container` 内，并位于第一个 `Section` 之前。它负责页面级标题、描述、面包屑和主操作。
 
 ```tsx
 import { PageHeader } from "@nebutra/ui";
@@ -110,9 +110,9 @@ import { Button } from "@nebutra/ui";
 />
 ```
 
-### Section
+### Section 区块
 
-`Section` groups related content under an `h2` heading. It adds `mb-6` spacing below itself and a flex row for the heading and optional actions.
+`Section` 将相关内容组织在一个 `h2` 标题下。它会添加底部 `mb-6` 间距，并为标题与可选操作提供 flex 行布局。
 
 ```tsx
 import { Section } from "@nebutra/ui";
@@ -122,11 +122,11 @@ import { Section } from "@nebutra/ui";
 </Section>
 ```
 
-When sections need no visible heading (e.g., a card grid that follows a `PageHeader`), omit all Section props and use the element as a spacing wrapper only.
+当区块不需要可见标题时（例如紧跟 `PageHeader` 的卡片网格），省略所有 Section props，把它仅作为间距包装器使用。
 
-### Grid layouts
+### 网格布局
 
-Use Tailwind grid utilities for responsive card grids. The spacing primitives define a 4px base unit — use `gap-6` (24px) for card grids and `gap-4` (16px) for compact form rows.
+响应式卡片网格使用 Tailwind grid utilities。间距 primitive 以 4px 为基础单位：卡片网格使用 `gap-6`（24px），紧凑表单行使用 `gap-4`（16px）。
 
 ```tsx
 // 3-column stat card grid
@@ -143,37 +143,37 @@ Use Tailwind grid utilities for responsive card grids. The spacing primitives de
 </div>
 ```
 
-Reference grid presets in `primitives/layout.ts`: `gridLayouts.two`, `gridLayouts.three`, `gridLayouts.four`, `gridLayouts.auto`.
+网格 preset 参考 `primitives/layout.ts`：`gridLayouts.two`、`gridLayouts.three`、`gridLayouts.four`、`gridLayouts.auto`。
 
-### Spacing scale
+### 间距尺度
 
-The design system uses a 4px base unit. Common values:
+设计系统使用 4px 基础单位。常用值如下：
 
-| Token | px | Tailwind | Use |
+| Token | px | Tailwind | 用途 |
 |---|---|---|---|
-| `spacing[3]` | 16 | `gap-4` | Compact form rows |
-| `spacing[4]` | 24 | `gap-6` | Card grids, section gaps |
-| `spacing[5]` | 32 | `gap-8` | Between sections |
-| `spacing[8]` | 64 | `pt-16` | Page-level vertical breathing room |
+| `spacing[3]` | 16 | `gap-4` | 紧凑表单行 |
+| `spacing[4]` | 24 | `gap-6` | 卡片网格、区块间距 |
+| `spacing[5]` | 32 | `gap-8` | 区块之间 |
+| `spacing[8]` | 64 | `pt-16` | 页面级垂直留白 |
 
-### Z-index layering
+### Z-index 分层
 
-Use the z-index scale from `primitives/layout.ts` for overlapping layers. Do not use arbitrary z-index values.
+重叠层级使用 `primitives/layout.ts` 中的 z-index scale。不要使用任意 z-index 值。
 
-| Layer | Value | Use |
+| 层级 | 值 | 用途 |
 |---|---|---|
-| `base` | 0 | Normal document flow |
-| `dropdown` | 1000 | ActionMenu, Select dropdown |
-| `sticky` | 1020 | Sticky table headers |
-| `fixed` | 1030 | Global navigation bar |
-| `modalBackdrop` | 1040 | Dialog/Drawer overlay |
-| `modal` | 1050 | Dialog/Drawer panel |
+| `base` | 0 | 正常文档流 |
+| `dropdown` | 1000 | ActionMenu、Select dropdown |
+| `sticky` | 1020 | 粘性表头 |
+| `fixed` | 1030 | 全局导航栏 |
+| `modalBackdrop` | 1040 | Dialog / Drawer 遮罩 |
+| `modal` | 1050 | Dialog / Drawer 面板 |
 | `tooltip` | 1070 | Tooltip |
 
 ## 示例
-### Dashboard home page
+### 仪表盘首页
 
-The dashboard page at `apps/web/src/app/(dashboard)/page.tsx` follows this structure:
+`apps/web/src/app/(dashboard)/page.tsx` 中的仪表盘页面遵循以下结构：
 
 ```tsx
 <div className="min-h-screen bg-gray-50">
@@ -188,14 +188,14 @@ The dashboard page at `apps/web/src/app/(dashboard)/page.tsx` follows this struc
 </div>
 ```
 
-Replace `mx-auto max-w-7xl` with `<Container size="xl">` in new pages to inherit future Container changes automatically.
+新页面中用 `<Container size="xl">` 替代 `mx-auto max-w-7xl`，以便自动继承后续 Container 变更。
 
-## Related Components
+## 相关组件
 
-- [Container](/zh/docs/components/card) — max-width and padding wrapper
-- [Page Container fragment](/zh/docs/fragment-components/page-container) — pre-composed Container + PageHeader layout
-- [Page Header fragment](/zh/docs/fragment-components/page-header) — page-level heading fragment
-- [Page Section fragment](/zh/docs/fragment-components/page-section) — section wrapper with consistent spacing
-- [Inner Side Menu fragment](/zh/docs/fragment-components/inner-side-menu) — vertical nav for settings pages
-- [Resizable](/zh/docs/components/resizable) — split-pane layouts
-- [Sidebar](/zh/docs/components/sidebar) — persistent left-rail navigation
+- [Container](/zh/docs/components/card) — 最大宽度与 padding 包装器
+- [Page Container fragment](/zh/docs/fragment-components/page-container) — 预组合的 Container + PageHeader 布局
+- [Page Header fragment](/zh/docs/fragment-components/page-header) — 页面级标题片段
+- [Page Section fragment](/zh/docs/fragment-components/page-section) — 具备一致间距的区块包装器
+- [Inner Side Menu fragment](/zh/docs/fragment-components/inner-side-menu) — 设置页纵向导航
+- [Resizable](/zh/docs/components/resizable) — 分栏可调布局
+- [Sidebar](/zh/docs/components/sidebar) — 常驻左侧导航栏

@@ -1,32 +1,32 @@
 ---
-title: Theming
-description: Theme modes, the DesignSystemProvider, createTheme API, and marketing token injection.
+title: 主题
+description: 主题模式、DesignSystemProvider、createTheme API 和营销 token 注入。
 ---
 
 ## 概览
-The theming layer controls how design tokens are delivered to components at runtime. It has two distinct concerns:
+主题层负责控制设计 token 在运行时如何传递给组件。它分成两个清晰职责：
 
-1. **Application theming** — `createTheme()` + `DesignSystemProvider` for light/dark mode across product UI
-2. **Marketing token injection** — `generateMarketingCSSVars()` for landing page surfaces
+1. **应用主题**：通过 `createTheme()` + `DesignSystemProvider` 驱动产品 UI 的浅色/深色模式。
+2. **营销 token 注入**：通过 `generateMarketingCSSVars()` 为落地页 surface 注入变量。
 
-Tokens originate in `default.ts` (Primer baseline), are optionally overridden in `brand.ts` via `BrandOverrides`, and the marketing extension lives in `marketing.ts`.
+Token 源自 `default.ts`（Primer baseline），可在 `brand.ts` 中通过 `BrandOverrides` 覆盖；营销扩展位于 `marketing.ts`。
 
-## Application Theming
+## 应用主题
 
 ### `createTheme(mode, overrides?)`
 
-Located in `apps/docs-hub/design-system/src/theme/brand.ts`.
+位于 `apps/docs-hub/design-system/src/theme/brand.ts`。
 
 ```ts
 import { createTheme } from "@nebutra/ui/theme/brand";
 
-// Light theme with no overrides (Primer defaults)
+// 无覆盖的浅色主题（Primer 默认值）
 const theme = createTheme("light");
 
-// Dark theme
+// 深色主题
 const darkTheme = createTheme("dark");
 
-// Light theme with brand overrides
+// 带品牌覆盖的浅色主题
 const brandTheme = createTheme("light", {
   colors: {
     accent: {
@@ -53,7 +53,7 @@ const brandTheme = createTheme("light", {
 });
 ```
 
-**Signature:**
+**签名：**
 ```ts
 function createTheme(
   mode: "light" | "dark",
@@ -61,47 +61,47 @@ function createTheme(
 ): DefaultTheme
 ```
 
-**`BrandOverrides` interface:**
+**`BrandOverrides` 接口：**
 
-| Field | Type | Description |
+| 字段 | 类型 | 说明 |
 |---|---|---|
-| `colors` | `Partial<semanticColorsLight>` | Override semantic color tokens |
-| `typography.fontFamily.normal` | `string` | Body / UI font stack |
-| `typography.fontFamily.mono` | `string` | Code / monospace stack |
-| `typography.fontFamily.display` | `string` | Display / hero font stack |
-| `radii` | `Partial<typeof defaultTheme.radii>` | Border radius overrides |
-| `shadows` | `Record<string, string>` | Named shadow additions |
+| `colors` | `Partial<semanticColorsLight>` | 覆盖语义颜色 token |
+| `typography.fontFamily.normal` | `string` | 正文 / UI 字体栈 |
+| `typography.fontFamily.mono` | `string` | 代码 / 等宽字体栈 |
+| `typography.fontFamily.display` | `string` | Display / hero 字体栈 |
+| `radii` | `Partial<typeof defaultTheme.radii>` | 圆角覆盖 |
+| `shadows` | `Record<string, string>` | 命名阴影扩展 |
 
-### Pre-built Themes
+### 预置主题
 
-Two pre-built themes are exported directly:
+直接导出两个预置主题：
 
 ```ts
 import { lightTheme, darkTheme } from "@nebutra/ui/theme/brand";
 ```
 
-Both are `DefaultTheme` objects — Primer semantic tokens with no brand overrides applied.
+两者都是 `DefaultTheme` 对象，即未应用品牌覆盖的 Primer 语义 token。
 
 ### `DesignSystemProvider`
 
 <Info>
-The `DesignSystemProvider` component is the integration point between the design system and React applications. It delivers the active theme via context.
+`DesignSystemProvider` 是设计系统和 React 应用的集成点，通过 context 下发当前主题。
 </Info>
 
 ```tsx
 import { DesignSystemProvider } from "@nebutra/ui";
 
-// Default mode: system preference
+// 默认模式：跟随系统偏好
 <DesignSystemProvider>
   <App />
 </DesignSystemProvider>
 
-// Force light mode
+// 强制浅色模式
 <DesignSystemProvider defaultMode="light">
   <App />
 </DesignSystemProvider>
 
-// Force dark mode
+// 强制深色模式
 <DesignSystemProvider defaultMode="dark">
   <App />
 </DesignSystemProvider>
@@ -111,13 +111,13 @@ import { DesignSystemProvider } from "@nebutra/ui";
 
 | 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
-| `defaultMode` | `"light" \| "dark" \| "system"` | `"system"` | Initial color mode |
-| `theme` | `DefaultTheme` | `lightTheme` | Custom theme object from `createTheme()` |
-| `children` | `ReactNode` | — | Application subtree |
+| `defaultMode` | `"light" \| "dark" \| "system"` | `"system"` | 初始颜色模式 |
+| `theme` | `DefaultTheme` | `lightTheme` | 来自 `createTheme()` 的自定义主题对象 |
+| `children` | `ReactNode` | — | 应用子树 |
 
 ### `useDesignSystem` Hook
 
-Access the current theme and mode toggle from any component inside `DesignSystemProvider`.
+在 `DesignSystemProvider` 内的任意组件中读取当前主题和模式切换方法。
 
 ```tsx
 import { useDesignSystem } from "@nebutra/ui";
@@ -133,30 +133,30 @@ function ThemeToggle() {
 }
 ```
 
-**Return value:**
+**返回值：**
 
-| Property | Type | Description |
+| 属性 | 类型 | 说明 |
 |---|---|---|
-| `mode` | `"light" \| "dark"` | Active color mode |
-| `setMode` | `(mode: "light" \| "dark") => void` | Imperatively switch modes |
-| `theme` | `DefaultTheme` | Full resolved theme object |
+| `mode` | `"light" \| "dark"` | 当前颜色模式 |
+| `setMode` | `(mode: "light" \| "dark") => void` | 命令式切换模式 |
+| `theme` | `DefaultTheme` | 完整解析后的主题对象 |
 
-## Marketing Token Injection
+## 营销 Token 注入
 
-Marketing tokens are not part of the theme context. They are CSS custom properties injected at the page level.
+营销 token 不属于主题 context。它们是注入到页面级别的 CSS 自定义属性。
 
 ### `generateMarketingCSSVars()`
 
-Located in `apps/docs-hub/design-system/src/theme/marketing.ts`.
+位于 `apps/docs-hub/design-system/src/theme/marketing.ts`。
 
 ```ts
 import { generateMarketingCSSVars } from "@nebutra/ui/theme/marketing";
 
-// Returns a string of CSS custom property declarations
+// 返回 CSS 自定义属性声明字符串
 const cssVars = generateMarketingCSSVars();
 ```
 
-Generated properties:
+生成的属性：
 
 ```css
 /* Marketing Spacing */
@@ -182,7 +182,7 @@ Generated properties:
 --marketing-transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 ```
 
-Inject this into the page layout of any marketing surface:
+在任意营销 surface 的页面布局中注入它：
 
 ```tsx
 // apps/landing-page/src/app/layout.tsx
@@ -200,7 +200,7 @@ export default function Layout({ children }) {
 }
 ```
 
-### Full Marketing Token Map
+### 完整营销 Token 映射
 
 ```ts
 import { marketingTokens } from "@nebutra/ui/theme/marketing";
@@ -213,32 +213,32 @@ import { marketingTokens } from "@nebutra/ui/theme/marketing";
 // marketingTokens.zIndex
 ```
 
-See the [Color foundation](/zh/docs/foundations/brand-colors) page for gradient and effect token values. See [Typography](/zh/docs/foundations/typography) for marketing typography presets (`display`, `headline`, `subheadline`, `featureTitle`, `cardText`, `label`).
+渐变和效果 token 值见 [Color foundation](/zh/docs/foundations/brand-colors)。营销排版预设（`display`、`headline`、`subheadline`、`featureTitle`、`cardText`、`label`）见 [Typography](/zh/docs/foundations/typography)。
 
-## Z-Index Scale (Marketing)
+## Z-Index 尺度（营销）
 
-| Token | Value | Layer |
+| Token | 值 | 层级 |
 |---|---|---|
-| `marketingZIndex.background` | −1 | Decorative backgrounds |
-| `marketingZIndex.base` | 0 | Default content |
-| `marketingZIndex.elevated` | 10 | Hover-state cards |
-| `marketingZIndex.sticky` | 100 | Sticky headers |
-| `marketingZIndex.nav` | 1000 | Navigation bar |
-| `marketingZIndex.dropdown` | 1100 | Dropdowns / Popovers |
-| `marketingZIndex.modal` | 1200 | Modals / Dialogs |
-| `marketingZIndex.toast` | 1300 | Toasts / Notifications |
-| `marketingZIndex.tooltip` | 1400 | Tooltips |
+| `marketingZIndex.background` | −1 | 装饰背景 |
+| `marketingZIndex.base` | 0 | 默认内容 |
+| `marketingZIndex.elevated` | 10 | Hover 状态卡片 |
+| `marketingZIndex.sticky` | 100 | 粘性页头 |
+| `marketingZIndex.nav` | 1000 | 导航栏 |
+| `marketingZIndex.dropdown` | 1100 | Dropdown / Popover |
+| `marketingZIndex.modal` | 1200 | Modal / Dialog |
+| `marketingZIndex.toast` | 1300 | Toast / Notification |
+| `marketingZIndex.tooltip` | 1400 | Tooltip |
 
-## Do / Don't
+## 应做 / 禁止
 
-**Do** wrap your application root with `DesignSystemProvider` exactly once, at the top level.
+**应做**：在应用顶层只包裹一次 `DesignSystemProvider`。
 
-**Do** use `useDesignSystem()` to read the active mode and toggle it — do not manage theme state independently.
+**应做**：使用 `useDesignSystem()` 读取和切换当前模式，不要独立管理主题状态。
 
-**Do** call `generateMarketingCSSVars()` only in marketing page layouts, not in the application shell.
+**应做**：只在营销页面布局中调用 `generateMarketingCSSVars()`，不要放进应用 shell。
 
-**Don't** import `marketingTokens` inside shared UI components — they belong exclusively in marketing surface code.
+**禁止**：在共享 UI 组件中导入 `marketingTokens`，它只属于营销 surface 代码。
 
-**Don't** override semantic tokens with hardcoded hex values. Use `createTheme()` with `BrandOverrides` instead.
+**禁止**：用硬编码 HEX 覆盖语义 token。应使用带 `BrandOverrides` 的 `createTheme()`。
 
-**Don't** nest multiple `DesignSystemProvider` instances. A single provider at the root governs the entire tree.
+**禁止**：嵌套多个 `DesignSystemProvider`。根部单一 provider 应治理整棵树。

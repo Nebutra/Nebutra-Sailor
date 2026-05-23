@@ -7,6 +7,6 @@ const frameworks = [
   { value: "nuxt", label: "Nuxt" },
 ];
 
-export function ComboboxDemo() {
-  return <Combobox options={frameworks} placeholder="Select framework..." />;
+export function ComboboxLabelDemo() {
+  return <Combobox options={frameworks} label="Framework" placeholder="Select framework..." />;
 }

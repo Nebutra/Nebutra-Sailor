@@ -1,54 +1,49 @@
 ---
-title: "Fragment Components"
-description: "Composed UI blocks combining multiple atoms into purpose-specific patterns."
+title: "产品组合"
+description: "把多个原子组件组合成特定业务场景可复用区块。"
 ---
 
-Fragment components are pre-assembled combinations of atom components for specific business contexts.
-Unlike UI Patterns (structural guidelines), Fragments are **concrete, importable components**.
+Fragment components 是面向具体业务上下文预先组合好的原子组件集合。它不同于 UI Patterns 这类结构性指导原则；Fragment 是**具体、可导入、可复用的组件**。
 
 <Info>
-  Fragment components are implemented in `@nebutra/ui`.
-  Import paths are specified on each component page.
+  Fragment components 由 `@nebutra/ui` 实现。每个组件页都会标明对应导入路径。
 </Info>
 
-## What makes a Fragment?
+## Fragment 的判定标准
 
-A Fragment is distinguished from a primitive atom by its **composition**. Each Fragment:
+Fragment 和 primitive atom 的区别在于**组合语义**。每个 Fragment 都应该：
 
-- Combines two or more atoms (Button, Input, Badge, Icon, etc.) into a cohesive unit
-- Encodes domain logic — it knows what it represents (an empty state, a metric card, a confirmation dialog)
-- Ships with sensible defaults so it works out of the box with minimal props
-- Is accessible by default (ARIA roles, keyboard navigation, focus management)
+- 把两个或更多原子组件（Button、Input、Badge、Icon 等）组合成一个一致的单元
+- 编码领域语义，清楚表达自己代表什么，例如空状态、指标卡或确认对话框
+- 提供合理默认值，让调用方用较少 props 就能落地
+- 默认具备可访问性，包括 ARIA 角色、键盘导航和焦点管理
 
-## Available fragments
+## 可用 Fragment
 
-| Fragment | Package | Description |
+| Fragment | Package | 说明 |
 |---|---|---|
-| [Admonition](/zh/docs/fragment-components/admonition) | `@nebutra/ui` | Info / warning / error callout blocks |
-| [AssistantChat](/zh/docs/fragment-components/assistant-chat) | `@nebutra/ui` | AI assistant chat interface |
-| [ConfirmationModal](/zh/docs/fragment-components/confirmation-modal) | `@nebutra/ui` | Destructive-action confirmation dialog |
-| [DataInput](/zh/docs/fragment-components/data-input) | `@nebutra/ui` | Complex data entry form patterns |
-| [EmptyState](/zh/docs/fragment-components/empty-state) | `@nebutra/ui` | Animated empty state with icon trio |
-| [FilterBar](/zh/docs/fragment-components/filter-bar) | `@nebutra/ui` | Search + filter controls |
-| [FormItemLayout](/zh/docs/fragment-components/form-item-layout) | `@nebutra/ui` | Label + input + validation message |
-| [InfoTooltip](/zh/docs/fragment-components/info-tooltip) | `@nebutra/ui` | Hover tooltip with explanatory content |
-| [InnerSideMenu](/zh/docs/fragment-components/inner-side-menu) | `@nebutra/ui` | In-page secondary navigation |
-| [LogsBarChart](/zh/docs/fragment-components/logs-bar-chart) | `@nebutra/ui` | Log volume visualisation |
-| [MetricCard](/zh/docs/fragment-components/metric-card) | `@nebutra/ui` | KPI / metric display card |
-| [Modal](/zh/docs/fragment-components/modal) | `@nebutra/ui` | General-purpose overlay dialog |
-| [PageContainer](/zh/docs/fragment-components/page-container) | `@nebutra/ui` | Section wrapper with max-width + spacing |
-| [PageHeader](/zh/docs/fragment-components/page-header) | `@nebutra/ui` | Page title with breadcrumbs and actions |
-| [PageSection](/zh/docs/fragment-components/page-section) | `@nebutra/ui` | Content section with heading |
-| [TableOfContents](/zh/docs/fragment-components/table-of-contents) | `@nebutra/ui` | Scroll-tracking in-page TOC |
-| [TextConfirmDialog](/zh/docs/fragment-components/text-confirm-dialog) | `@nebutra/ui` | Type-to-confirm destructive dialog |
+| [Admonition](/zh/docs/fragment-components/admonition) | `@nebutra/ui` | 信息、警告、错误提示区块 |
+| [AssistantChat](/zh/docs/fragment-components/assistant-chat) | `@nebutra/ui` | AI 助手对话界面 |
+| [ConfirmationModal](/zh/docs/fragment-components/confirmation-modal) | `@nebutra/ui` | 破坏性操作确认对话框 |
+| [DataInput](/zh/docs/fragment-components/data-input) | `@nebutra/ui` | 复杂数据录入表单模式 |
+| [EmptyState](/zh/docs/fragment-components/empty-state) | `@nebutra/ui` | 带动态图标组合的空状态 |
+| [FilterBar](/zh/docs/fragment-components/filter-bar) | `@nebutra/ui` | 搜索与筛选控件组合 |
+| [FormItemLayout](/zh/docs/fragment-components/form-item-layout) | `@nebutra/ui` | 标签、输入框和校验消息布局 |
+| [InfoTooltip](/zh/docs/fragment-components/info-tooltip) | `@nebutra/ui` | 带解释内容的悬停提示 |
+| [InnerSideMenu](/zh/docs/fragment-components/inner-side-menu) | `@nebutra/ui` | 页面内二级导航 |
+| [LogsBarChart](/zh/docs/fragment-components/logs-bar-chart) | `@nebutra/ui` | 日志量可视化 |
+| [MetricCard](/zh/docs/fragment-components/metric-card) | `@nebutra/ui` | KPI / 指标展示卡片 |
+| [Modal](/zh/docs/fragment-components/modal) | `@nebutra/ui` | 通用浮层对话框 |
+| [PageContainer](/zh/docs/fragment-components/page-container) | `@nebutra/ui` | 带最大宽度和间距的区块容器 |
+| [PageHeader](/zh/docs/fragment-components/page-header) | `@nebutra/ui` | 带面包屑和操作区的页面标题 |
+| [PageSection](/zh/docs/fragment-components/page-section) | `@nebutra/ui` | 带标题的内容区块 |
+| [TableOfContents](/zh/docs/fragment-components/table-of-contents) | `@nebutra/ui` | 跟随滚动的页面内目录 |
+| [TextConfirmDialog](/zh/docs/fragment-components/text-confirm-dialog) | `@nebutra/ui` | 输入指定文本后确认的破坏性对话框 |
 
-## Design principles
+## 设计原则
 
-**Composition over configuration.** Fragments compose atoms rather than reimplementing them.
-If you need a button inside a fragment, it renders the `Button` atom — not a styled `<button>`.
+**组合优先于配置。** Fragment 组合现有 atom，而不是重新实现它们。Fragment 内需要按钮时，应渲染 `Button` atom，而不是样式化的 `<button>`。
 
-**Escape hatches via `className`.** Every Fragment accepts a `className` prop for one-off overrides
-without forking the component.
+**通过 `className` 提供逃生口。** 每个 Fragment 都接受 `className`，用于一次性覆盖，而不需要 fork 组件。
 
-**Controlled and uncontrolled modes.** Where state is involved (modals, filter bars), Fragments
-support both controlled (`value` / `onChange`) and uncontrolled (internal state) modes.
+**同时支持受控和非受控模式。** 涉及状态的 Fragment（如 modal、filter bar）应同时支持受控模式（`value` / `onChange`）和内部状态模式。

@@ -1,20 +1,20 @@
 ---
-title: "Forms"
-description: "Data collection patterns for user input, validation, and submission."
+title: "表单"
+description: "面向用户输入、校验与提交的数据采集模式。"
 ---
 
-## When to Use
+## 何时使用
 
-Use the form pattern whenever you collect structured data from a user and need to validate or submit it. This pattern covers:
+当你需要从用户处采集结构化数据，并进行校验或提交时，使用表单模式。它覆盖以下场景：
 
-- Settings panels (account, billing, notification preferences)
-- Create / edit flows (new resource, inline edit)
-- Authentication forms (sign-in, sign-up)
-- Confirmation dialogs that require typed input
+- 设置面板（账户、账单、通知偏好）
+- 创建 / 编辑流程（新建资源、inline edit）
+- 认证表单（登录、注册）
+- 需要用户输入确认文本的确认对话框
 
-Do not apply this pattern to single-field quick-edits. For a single toggle or a single select that saves on change, use the bare atom component (`Switch`, `Select`) without form scaffolding.
+不要把该模式套到单字段快速编辑上。对于保存即变更的单个 toggle 或 select，直接使用 atom 组件（`Switch`、`Select`），不要额外搭建表单脚手架。
 
-## Structure
+## 结构
 
 ```
 <Form> (react-hook-form + zod)
@@ -28,11 +28,11 @@ Do not apply this pattern to single-field quick-edits. For a single toggle or a 
   └── Button type="submit"
 ```
 
-## Composition
+## 组合规则
 
-### Basic Field
+### 基础字段
 
-Every field follows the same `FormField → FormItem → FormControl` structure. `FormMessage` renders the validation error automatically from the schema.
+每个字段都遵循一致的 `FormField → FormItem → FormControl` 结构。`FormMessage` 会根据 schema 自动渲染校验错误。
 
 ```tsx
 import { useForm } from "react-hook-form";
@@ -83,9 +83,9 @@ export function CreateKeyForm({ onSubmit }: { onSubmit: (v: z.infer<typeof schem
 }
 ```
 
-### Validation
+### 校验
 
-Schema is the single source of validation truth. `FormMessage` surfaces errors automatically — no manual error state needed.
+Schema 是校验规则的唯一真相源。`FormMessage` 会自动呈现错误，不需要手写 error state。
 
 ```tsx
 const schema = z.object({
@@ -94,7 +94,7 @@ const schema = z.object({
 });
 ```
 
-Validate on `onBlur` for new forms. Switch to `onChange` after first submission for real-time correction feedback.
+新表单默认在 `onBlur` 时校验。首次提交后切换到 `onChange`，用于实时纠错反馈。
 
 ```tsx
 const form = useForm({
@@ -103,7 +103,7 @@ const form = useForm({
 });
 ```
 
-### Select Field
+### Select 字段
 
 ```tsx
 import {
@@ -137,7 +137,7 @@ import {
 />
 ```
 
-### Checkbox Field
+### Checkbox 字段
 
 ```tsx
 import { Checkbox } from "@nebutra/ui";
@@ -159,9 +159,9 @@ import { Checkbox } from "@nebutra/ui";
 />
 ```
 
-### Submit and Cancel
+### 提交与取消
 
-Place submit/cancel at the end of the form. Destructive actions go in a separate section with an explicit warning above the button.
+提交 / 取消操作放在表单末尾。破坏性操作应放在单独区块，并在按钮上方提供明确警告。
 
 ```tsx
 <div className="flex gap-2 pt-4">
@@ -174,9 +174,9 @@ Place submit/cancel at the end of the form. Destructive actions go in a separate
 </div>
 ```
 
-### Required Fields
+### 必填字段
 
-Annotate the label directly — do not rely on asterisk-only conventions without an explanatory legend.
+直接在 label 上标注必填。不要在没有解释图例的情况下只依赖星号。
 
 ```tsx
 <FormItem>
@@ -190,20 +190,20 @@ Annotate the label directly — do not rely on asterisk-only conventions without
 </FormItem>
 ```
 
-### Complex Input Types
+### 复杂输入类型
 
-| Use case | Component |
+| 使用场景 | 组件 |
 |---|---|
-| Long text | `Textarea` |
-| Single choice from a list | `Select` or `RadioGroup` |
-| Binary on/off | `Checkbox` or `Switch` |
-| Fixed-list multi-selection | `MultiSelect` component |
-| Searchable multi-selection with tags | `MultipleSelector` component |
-| Date | `DatePicker` |
-| OTP / pin | `InputOtp` |
+| 长文本 | `Textarea` |
+| 从列表中单选 | `Select` 或 `RadioGroup` |
+| 二元开关 | `Checkbox` 或 `Switch` |
+| 固定列表多选 | `MultiSelect` 组件 |
+| 可搜索、带标签的多选 | `MultipleSelector` 组件 |
+| 日期 | `DatePicker` |
+| OTP / PIN | `InputOtp` |
 
 ## 示例
-### Create API Key Form
+### 创建 API Key 表单
 
 ```tsx
 import { useForm } from "react-hook-form";
@@ -285,12 +285,12 @@ export function CreateKeyForm({
 }
 ```
 
-## Related Components
+## 相关组件
 
-- [Data Input fragment](/zh/docs/fragment-components/data-input) — reusable controlled field wrapper
-- [Form Item Layout fragment](/zh/docs/fragment-components/form-item-layout) — horizontal label-field layout
-- [Text Confirm Dialog fragment](/zh/docs/fragment-components/text-confirm-dialog) — type-to-confirm destructive action
-- [Field](/zh/docs/components/field) — bare field layout atom
-- [Input](/zh/docs/components/input) — text input primitive
-- [Combobox](/zh/docs/components/combobox) — searchable select
-- [Form](/zh/docs/components/form) — Form atom (react-hook-form primitives)
+- [Data Input fragment](/zh/docs/fragment-components/data-input) — 可复用的受控字段包装器
+- [Form Item Layout fragment](/zh/docs/fragment-components/form-item-layout) — 水平 label-field 布局
+- [Text Confirm Dialog fragment](/zh/docs/fragment-components/text-confirm-dialog) — 输入文本确认的破坏性操作
+- [Field](/zh/docs/components/field) — 裸字段布局 atom
+- [Input](/zh/docs/components/input) — 文本输入 primitive
+- [Combobox](/zh/docs/components/combobox) — 可搜索选择控件
+- [Form](/zh/docs/components/form) — Form atom（react-hook-form primitives）

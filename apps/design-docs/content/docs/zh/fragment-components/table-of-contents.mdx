@@ -1,6 +1,6 @@
 ---
 title: "TableOfContents"
-description: "Scroll-tracking in-page table of contents that highlights the active section as the user scrolls."
+description: "会随滚动追踪当前区块并高亮 active section 的页内目录。"
 ---
 
 ## 演示
@@ -63,9 +63,9 @@ interface TocItem {
 ```
 
 ## 示例
-### Controlled active id
+### 受控 active id
 
-When integrating with a custom scroll handler:
+接入自定义滚动处理器时：
 
 ```tsx
 const [activeId, setActiveId] = useState("overview");
@@ -81,7 +81,7 @@ useScrollSpy(items.map((i) => i.id), {
 />
 ```
 
-### Flat (h2 only) TOC
+### 扁平 TOC（仅 h2）
 
 ```tsx
 <TableOfContents
@@ -89,7 +89,7 @@ useScrollSpy(items.map((i) => i.id), {
 />
 ```
 
-### Custom scroll offset for tall sticky header
+### 为高粘性页头自定义滚动偏移
 
 ```tsx
 <TableOfContents items={items} offset={120} />

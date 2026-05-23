@@ -1,164 +1,164 @@
 ---
-title: "Brand Guidelines"
-description: "Nebutra brand do's and don'ts — comprehensive rules for logo, color, typography, motion, gradients, dark mode, and accessibility."
+title: "品牌使用规范"
+description: "Nebutra 品牌应做与禁止规则：覆盖 Logo、颜色、排版、动效、渐变、深色模式与可访问性。"
 ---
 
 <Callout>
-  These guidelines are mandatory for all Nebutra products, marketing materials, and communications.
-  Violations must be corrected before shipping.
+  这些规范适用于所有 Nebutra 产品、营销物料与外部沟通。
+  任何违反项都必须在发布前修正。
 </Callout>
 
-## Logo Usage Rules
+## Logo 使用规则
 
-### Clearance and Sizing
+### 留白与尺寸
 
-| Rule | Specification |
+| 规则 | 规范 |
 |------|--------------|
-| **Minimum clearance** | All sides ≥ 1/4 of logo height |
-| **Digital minimum height** | ≥ 35 px |
-| **Print minimum height** | ≥ 6 mm |
+| **最小留白** | 四周均不小于 Logo 高度的 1/4 |
+| **数字端最小高度** | ≥ 35 px |
+| **印刷端最小高度** | ≥ 6 mm |
 
-### Approved Uses
+### 允许用法
 
-- Logo on dark backgrounds (`neutral-950`, `neutral-900`) with white or gradient fill
-- Logo with brand gradient fill on dark backgrounds
-- Logomark alone when horizontal space is limited (mobile headers, favicons)
-- Wordmark alone when the logomark has already been established on the page
+- 在深色背景（`neutral-950`、`neutral-900`）上使用白色或品牌渐变 Logo
+- 在深色背景上使用品牌渐变填充 Logo
+- 横向空间受限时单独使用图形标（移动端页头、favicon）
+- 页面中已经建立图形标识别时，可单独使用文字标
 
-### Prohibited Logo Uses
+### 禁止的 Logo 用法
 
 <Warning>
-  The following logo treatments are strictly forbidden:
+  以下 Logo 处理方式严格禁止：
 </Warning>
 
-| Prohibited | Reason |
+| 禁止项 | 原因 |
 |-----------|--------|
-| Distorting proportions (stretch, skew) | Destroys geometric precision |
-| Rotating the logo | The hexagonal N has a fixed orientation |
-| Recoloring with non-brand colors | Only brand gradient, white, or `currentColor` |
-| Adding drop shadows or outer glow | Clutters the clean geometric form |
-| Placing on low-contrast backgrounds | Logo must remain clearly visible |
-| Placing on busy/photographic backgrounds | Use a solid or frosted backdrop behind the logo |
-| Using the reverse (white) logo on light backgrounds | White logo requires dark or gradient backgrounds |
-| Outlining or applying strokes | The logo is a filled shape, not a line drawing |
-| Animating the logo shape itself | The logomark is static — only entrance motion is permitted |
+| 拉伸或倾斜比例 | 破坏几何精度 |
+| 旋转 Logo | 六边形 N 有固定朝向 |
+| 使用非品牌色重染 | 仅允许品牌渐变、白色或 `currentColor` |
+| 添加投影或外发光 | 会污染干净的几何形态 |
+| 放在低对比背景上 | Logo 必须保持清晰可见 |
+| 放在复杂图片背景上 | 应在 Logo 后添加纯色或磨砂底板 |
+| 在浅色背景使用白色反白 Logo | 白色 Logo 需要深色或渐变背景 |
+| 描边或线稿化 | Logo 是填充形，不是线稿图形 |
+| 动画化 Logo 形体本身 | 图形标是静态资产，只允许入场动效 |
 
-### Logo on Landing Page
+### 落地页 Logo
 
 ```tsx
-// CORRECT — always white on landing (forced dark)
+// 正确：落地页强制深色，Logo 始终为白色
 <LogoEnSVG className="text-white" width={160} />
 
-// WRONG — never conditionally swap on landing
+// 错误：落地页不要根据主题条件切换 Logo 颜色
 <LogoEnSVG className={isDark ? "text-white" : "text-black"} width={160} />
 ```
 
 ---
 
-## Color Rules
+## 颜色规则
 
-### Mandatory
+### 必须项
 
-| Rule | Detail |
+| 规则 | 说明 |
 |------|--------|
-| Primary actions use `blue-500` | Buttons, links, focus rings = `#0033FE` |
-| Info semantic = brand blue | `#0033FE`, not sky or teal |
-| Neutrals use blue-undertone scale | `#f8fafc` through `#020617` |
-| Dark mode background = `neutral-950` | `#020617` |
-| Light mode background = `white` | `#ffffff` |
+| 主操作使用 `blue-500` | 按钮、链接、焦点环均使用 `#0033FE` |
+| 信息语义等于品牌蓝 | 使用 `#0033FE`，不要用 sky 或 teal |
+| 中性色使用蓝底色阶 | 从 `#f8fafc` 到 `#020617` |
+| 深色模式背景为 `neutral-950` | `#020617` |
+| 浅色模式背景为 `white` | `#ffffff` |
 
-### Prohibited Color Substitutions
+### 禁止的颜色替代
 
-| Prohibited | Correct Alternative |
+| 禁止项 | 正确替代 |
 |-----------|-------------------|
-| Tailwind `sky-500` (`#0ea5e9`) for info | Brand blue `#0033FE` |
-| Tailwind `teal-500` (`#14b8a6`) for accent | Brand cyan `#0BF1C3` |
-| Tailwind `gray-*` for neutrals | Brand neutrals (`#f8fafc` - `#020617`) |
-| Orange or red as primary action color | Brand blue `#0033FE` |
-| Cyan (`#0BF1C3`) as text on light backgrounds | Fails WCAG — use on dark only |
-| Generic `blue-600` for brand blue | Use exact `#0033FE` |
-| Any green as brand accent | Brand cyan `#0BF1C3` only |
+| 信息色使用 Tailwind `sky-500` (`#0ea5e9`) | 品牌蓝 `#0033FE` |
+| 强调色使用 Tailwind `teal-500` (`#14b8a6`) | 品牌青 `#0BF1C3` |
+| 中性色使用 Tailwind `gray-*` | 品牌中性色（`#f8fafc` - `#020617`） |
+| 主操作使用橙色或红色 | 品牌蓝 `#0033FE` |
+| 浅色背景上使用青色 (`#0BF1C3`) 作为文字 | 不满足 WCAG，只能用于深色背景 |
+| 用通用 `blue-600` 代替品牌蓝 | 使用精确值 `#0033FE` |
+| 用任意绿色作为品牌强调色 | 仅使用品牌青 `#0BF1C3` |
 
-### Color Pairing Rules
+### 颜色搭配规则
 
-- `blue-500` + `cyan-500` = brand gradient (the only approved two-color pairing)
-- `blue-500` + `white` = primary button on light backgrounds
-- `cyan-500` + `neutral-950` = accent text on dark backgrounds
-- Never pair `blue-500` with `cyan-500` as two flat fills side by side — always use a gradient
+- `blue-500` + `cyan-500` = 品牌渐变，这是唯一批准的双色搭配
+- `blue-500` + `white` = 浅色背景上的主按钮
+- `cyan-500` + `neutral-950` = 深色背景上的强调文字
+- 不要把 `blue-500` 与 `cyan-500` 作为两个并排纯色块使用，必须通过渐变表达
 
 ---
 
-## Typography Rules
+## 排版规则
 
-### Font Requirements
+### 字体要求
 
-| Context | Required Font | Fallback |
+| 场景 | 指定字体 | 回退字体 |
 |---------|--------------|----------|
-| Hero/display text | Geist Sans | System sans-serif |
-| English body | Poppins | System sans-serif |
-| Chinese body | vivo Sans | PingFang SC, Microsoft YaHei |
-| Code | JetBrains Mono | Fira Code, system monospace |
+| Hero / 展示文字 | Geist Sans | 系统 sans-serif |
+| 英文正文 | Poppins | 系统 sans-serif |
+| 中文正文 | vivo Sans | PingFang SC, Microsoft YaHei |
+| 代码 | JetBrains Mono | Fira Code, system monospace |
 
-### Prohibited Typography
+### 禁止的排版方式
 
-| Prohibited | Reason |
+| 禁止项 | 原因 |
 |-----------|--------|
-| Inter, Roboto, or Arial for body text | Non-brand fonts |
-| SF Pro in web applications | Apple-only, not cross-platform |
-| Poppins for hero headlines | Use Geist Sans for display text |
-| Geist Sans for body copy | Use Poppins for body text |
-| Poppins weights below 400 or above 700 | Only 400, 500, 600, 700 are approved |
-| Custom or decorative fonts | Only brand-approved typefaces |
-| Letter-spacing on body text | Tracking adjustments are for headings/buttons/overlines only |
+| 正文使用 Inter、Roboto 或 Arial | 非品牌字体 |
+| Web 应用使用 SF Pro | Apple 平台专属，非跨平台 |
+| Hero 标题使用 Poppins | 展示文字应使用 Geist Sans |
+| 正文使用 Geist Sans | 英文正文应使用 Poppins |
+| 使用 400 以下或 700 以上的 Poppins 字重 | 只批准 400、500、600、700 |
+| 使用自定义或装饰字体 | 只允许品牌批准字体 |
+| 正文使用 letter-spacing | 字距调整仅用于标题、按钮和 overline |
 
-### Weight Pairing Guidelines
+### 字重搭配指南
 
-| Heading Weight | Body Weight | Context |
+| 标题字重 | 正文字重 | 场景 |
 |---------------|-------------|---------|
-| Geist 700 (Bold) | Poppins 400 (Regular) | Hero + body |
-| Geist 600 (SemiBold) | Poppins 400 (Regular) | Section heading + body |
-| Poppins 700 (Bold) | Poppins 400 (Regular) | App heading + body |
-| Poppins 600 (SemiBold) | Poppins 400 (Regular) | Subheading + body |
-| Poppins 500 (Medium) | Poppins 400 (Regular) | Label + description |
+| Geist 700 (Bold) | Poppins 400 (Regular) | Hero + 正文 |
+| Geist 600 (SemiBold) | Poppins 400 (Regular) | 区块标题 + 正文 |
+| Poppins 700 (Bold) | Poppins 400 (Regular) | 应用标题 + 正文 |
+| Poppins 600 (SemiBold) | Poppins 400 (Regular) | 小标题 + 正文 |
+| Poppins 500 (Medium) | Poppins 400 (Regular) | 标签 + 描述 |
 
 ---
 
-## Motion Rules
+## 动效规则
 
-### Mandatory Easing
+### 必须使用的缓动
 
-| Context | Required Easing |
+| 场景 | 指定缓动 |
 |---------|----------------|
-| Content entering viewport | `[0.16, 1, 0.3, 1]` (brand) |
-| Elements entering screen | `[0, 0, 0.2, 1]` (enter) |
-| Elements leaving screen | `[0.4, 0, 1, 1]` (exit) |
-| Interactive feedback | Spring physics (brand springs) |
+| 内容进入视口 | `[0.16, 1, 0.3, 1]`（品牌缓动） |
+| 元素进入屏幕 | `[0, 0, 0.2, 1]`（enter） |
+| 元素离开屏幕 | `[0.4, 0, 1, 1]`（exit） |
+| 交互反馈 | Spring physics（品牌 spring） |
 
-### Duration Limits
+### 时长限制
 
-| Rule | Limit |
+| 规则 | 限制 |
 |------|-------|
-| Maximum UI transition duration | `0.8s` (reveal) |
-| Hover/active feedback | `0.1s - 0.2s` |
-| Content entrance | `0.4s - 0.6s` |
-| Modal/panel transitions | `0.3s - 0.6s` |
-| Page transitions | `0.4s - 0.8s` |
+| UI 过渡最大时长 | `0.8s`（reveal） |
+| Hover / active 反馈 | `0.1s - 0.2s` |
+| 内容入场 | `0.4s - 0.6s` |
+| 模态框 / 面板过渡 | `0.3s - 0.6s` |
+| 页面过渡 | `0.4s - 0.8s` |
 
-### Prohibited Motion
+### 禁止的动效
 
-| Prohibited | Reason |
+| 禁止项 | 原因 |
 |-----------|--------|
-| Generic `ease-in-out` | Use brand easing `[0.16, 1, 0.3, 1]` |
-| `linear` easing | Never feels natural |
-| Transitions longer than `0.8s` | Feels sluggish, blocks interaction |
-| Infinite animations (except Pulse) | Only `pulse` is allowed to loop |
-| Bouncing everything | `bouncy` spring is for button feedback only |
-| Animating more than 3 properties | Keep motion focused |
-| Motion without a data metaphor | Every animation must map to emerge, flow, or pulse |
+| 通用 `ease-in-out` | 使用品牌缓动 `[0.16, 1, 0.3, 1]` |
+| `linear` 缓动 | 交互观感不自然 |
+| 超过 `0.8s` 的过渡 | 迟钝并阻塞交互 |
+| 无限循环动效（Pulse 除外） | 只有 `pulse` 允许循环 |
+| 所有元素都弹跳 | `bouncy` spring 仅用于按钮反馈 |
+| 同时动画超过 3 个属性 | 动效必须聚焦 |
+| 没有数据隐喻的动效 | 每个动画都必须映射到 emerge、flow 或 pulse |
 
-### Reduced Motion
+### 减少动态效果
 
-All motion must respect `prefers-reduced-motion`:
+所有动效都必须遵守 `prefers-reduced-motion`：
 
 ```tsx
 import { useReducedMotion } from "framer-motion"
@@ -178,92 +178,92 @@ function AnimatedComponent() {
 
 ---
 
-## Gradient Rules
+## 渐变规则
 
-### Mandatory
+### 必须项
 
-| Rule | Specification |
+| 规则 | 规范 |
 |------|--------------|
-| Primary gradient angle | Always `135deg` |
-| Gradient stops | `#0033FE 0%` to `#0BF1C3 100%` |
-| Hover gradient | Reverse stops (`#0BF1C3 0%` to `#0033FE 100%`) |
-| Vertical sections | `180deg` direction only |
-| Radial glow | `circle` shape only |
+| 主渐变角度 | 始终为 `135deg` |
+| 渐变色标 | `#0033FE 0%` 到 `#0BF1C3 100%` |
+| Hover 渐变 | 反向色标（`#0BF1C3 0%` 到 `#0033FE 100%`） |
+| 纵向区块 | 仅使用 `180deg` |
+| 径向光晕 | 仅使用 `circle` |
 
-### Prohibited Gradient Uses
+### 禁止的渐变用法
 
-| Prohibited | Reason |
+| 禁止项 | 原因 |
 |-----------|--------|
-| Changing the 135deg angle for primary | Breaks visual consistency |
-| Using solid blue where gradient is expected | Hero CTAs and brand surfaces must use gradient |
-| Non-brand colors in gradient stops | Only `#0033FE` and `#0BF1C3` |
-| Gradient on form inputs or controls | Gradients are for CTAs and display, not form elements |
-| Three-color gradients | Brand gradient is strictly two-color |
-| Opacity below 80% on gradient CTAs | Gradient buttons must be fully opaque |
+| 改变主渐变的 135deg 角度 | 破坏视觉一致性 |
+| 在需要渐变处使用纯蓝 | Hero CTA 与品牌表面必须使用渐变 |
+| 渐变色标使用非品牌色 | 只允许 `#0033FE` 与 `#0BF1C3` |
+| 表单输入或控件使用渐变 | 渐变用于 CTA 与展示，不用于表单元素 |
+| 三色渐变 | 品牌渐变严格限定为双色 |
+| 渐变 CTA 透明度低于 80% | 渐变按钮必须完全不透明 |
 
 ---
 
-## Dark Mode Rules
+## 深色模式规则
 
-### Landing Page
+### 落地页
 
-| Rule | Detail |
+| 规则 | 说明 |
 |------|--------|
-| Landing page is **always dark** | `data-theme="dark"` is hardcoded |
-| Logo is always white | `text-white` on all logo variants |
-| No theme toggle on landing | Dark mode is forced, not optional |
-| Brand gradient renders on dark | Never display gradient on white landing |
+| 落地页**始终深色** | 硬编码 `data-theme="dark"` |
+| Logo 始终为白色 | 所有 Logo 变体使用 `text-white` |
+| 落地页没有主题切换 | 深色模式是强制项，不是可选项 |
+| 品牌渐变在深色上渲染 | 不要在白色落地页上展示渐变 |
 
-### Application UI
+### 应用界面
 
-| Rule | Detail |
+| 规则 | 说明 |
 |------|--------|
-| Design dark first | All components designed on `neutral-950` first |
-| Light mode is adaptation | Use lighter tints, not different color palettes |
-| Same tokens, different values | CSS variables switch between modes |
-| Test dark before light | Dark mode is the primary QA surface |
+| 深色优先设计 | 所有组件先在 `neutral-950` 上设计 |
+| 浅色模式是适配 | 使用更浅 tint，不换另一套色板 |
+| 同一套 token，不同值 | CSS 变量在模式间切换 |
+| 先测深色，再测浅色 | 深色模式是主要 QA 表面 |
 
-### Prohibited Dark Mode Practices
+### 禁止的深色模式做法
 
-| Prohibited | Reason |
+| 禁止项 | 原因 |
 |-----------|--------|
-| Conditionally swapping logo color on landing | Landing is forced dark — always use white |
-| Using `#000000` as dark background | Use `neutral-950` (`#020617`) for blue undertone |
-| Using pure white (`#ffffff`) text on dark | Use `neutral-100` (`#f1f5f9`) for softer contrast |
-| Designing light-first, then adapting to dark | Dark-first ensures gradient and glassmorphism work correctly |
+| 落地页根据条件切换 Logo 颜色 | 落地页强制深色，始终使用白色 |
+| 深色背景使用 `#000000` | 使用带蓝色底色的 `neutral-950` (`#020617`) |
+| 深色上使用纯白 (`#ffffff`) 正文 | 使用更柔和的 `neutral-100` (`#f1f5f9`) |
+| 先做浅色再适配深色 | 深色优先才能保证渐变与玻璃拟态成立 |
 
 ---
 
 ## 可访问性要求
-### Minimum Standards
+### 最低标准
 
-| Standard | Requirement |
+| 标准 | 要求 |
 |----------|-------------|
-| **WCAG Version** | 2.1 AA minimum |
-| **Normal text contrast** | ≥ 4.5:1 |
-| **Large text contrast** | ≥ 3:1 (>= 18px bold or ≥ 24px regular) |
-| **Focus indicators** | Visible focus ring on all interactive elements |
-| **Keyboard navigation** | All interactive elements reachable via Tab |
-| **Screen reader support** | Meaningful `aria-label` on all icons and non-text elements |
-| **Color independence** | Information never conveyed by color alone |
+| **WCAG 版本** | 至少 2.1 AA |
+| **普通文字对比度** | ≥ 4.5:1 |
+| **大字号文字对比度** | ≥ 3:1（≥ 18px bold 或 ≥ 24px regular） |
+| **焦点指示器** | 所有交互元素必须有可见焦点环 |
+| **键盘导航** | 所有交互元素都能通过 Tab 到达 |
+| **屏幕阅读器支持** | 图标和非文本元素需要有意义的 `aria-label` |
+| **不依赖颜色传达信息** | 信息不能只靠颜色表达 |
 
-### Brand Color Accessibility
+### 品牌色可访问性
 
-| Combination | Contrast | WCAG AA |
+| 组合 | 对比度 | WCAG AA |
 |-------------|----------|---------|
-| `blue-500` on white | 6.4:1 | Pass |
-| `blue-500` on `blue-50` | 5.8:1 | Pass |
-| White on `blue-500` | 6.4:1 | Pass |
-| `cyan-500` on `neutral-950` | 12.1:1 | Pass |
-| `cyan-500` on white | 1.7:1 | **Fail** |
-| `neutral-900` on white | 16.1:1 | Pass |
+| 白底 `blue-500` | 6.4:1 | 通过 |
+| `blue-50` 上的 `blue-500` | 5.8:1 | 通过 |
+| `blue-500` 上的白色 | 6.4:1 | 通过 |
+| `neutral-950` 上的 `cyan-500` | 12.1:1 | 通过 |
+| 白底 `cyan-500` | 1.7:1 | **失败** |
+| 白底 `neutral-900` | 16.1:1 | 通过 |
 
 <Warning>
-  `cyan-500` (`#0BF1C3`) fails WCAG contrast on light backgrounds. Use only on dark backgrounds or as decorative/gradient fills.
-  For links and interactive text on light backgrounds, always use `blue-500` (`#0033FE`).
+  `cyan-500` (`#0BF1C3`) 在浅色背景上不满足 WCAG 对比度。它只能用于深色背景，或作为装饰 / 渐变填充。
+  浅色背景上的链接和可交互文字始终使用 `blue-500` (`#0033FE`)。
 </Warning>
 
-### Focus Ring Specification
+### 焦点环规范
 
 ```css
 /* Brand focus ring */
@@ -274,56 +274,56 @@ outline-offset: 2px;
 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue-500
 ```
 
-### Reduced Motion
+### 减少动态效果
 
-All animated content must degrade gracefully when `prefers-reduced-motion: reduce` is active:
-- Disable entrance animations (show content immediately)
-- Disable Pulse animations
-- Disable WebGL shaders (show CSS fallback)
-- Keep essential functional transitions (dropdown open/close) but set duration to `0`
+当 `prefers-reduced-motion: reduce` 启用时，所有动画内容都必须优雅降级：
+- 禁用入场动画，直接显示内容
+- 禁用 Pulse 循环动画
+- 禁用 WebGL 着色器，显示 CSS fallback
+- 保留必要的功能性过渡（如下拉打开 / 关闭），但将时长设为 `0`
 
 ---
 
-## Platform Consistency
+## 平台一致性
 
-### Same Tokens Everywhere
+### 全平台同源 Token
 
-| Platform | Token Source | Rendering |
+| 平台 | Token 来源 | 渲染方式 |
 |----------|-------------|-----------|
-| **Web** | CSS custom properties + Tailwind | Browser rendering |
-| **Mobile (React Native)** | JS token export from `@nebutra/brand` | Native rendering |
-| **Email** | Inline HEX values from brand spec | HTML email rendering |
-| **PDF** | HEX values from brand spec | PDF rendering |
-| **Figma** | Synced design tokens | Design tool rendering |
+| **Web** | CSS 自定义属性 + Tailwind | 浏览器渲染 |
+| **Mobile (React Native)** | `@nebutra/brand` 导出的 JS token | 原生渲染 |
+| **Email** | 品牌规范中的 inline HEX 值 | HTML 邮件渲染 |
+| **PDF** | 品牌规范中的 HEX 值 | PDF 渲染 |
+| **Figma** | 同步的设计 token | 设计工具渲染 |
 
-### Cross-Platform Rules
+### 跨平台规则
 
-- Use identical HEX values across all platforms — no "close enough" approximations
-- Font stacks must include platform-appropriate fallbacks
-- Gradients render as CSS on web, as image assets on email
-- Motion tokens apply to web and mobile — email and PDF are static
+- 全平台使用完全相同的 HEX 值，不接受“差不多”的近似色
+- 字体栈必须包含适合对应平台的 fallback
+- 渐变在 Web 上用 CSS 渲染，在 Email 中用图片资产渲染
+- 动效 token 只适用于 Web 与移动端，Email 和 PDF 保持静态
 
 ---
 
-## Compliance Checklist
+## 合规清单
 
-Use this checklist before shipping any Nebutra-branded surface:
+发布任何 Nebutra 品牌表面前，使用以下清单自检：
 
-| Check | Requirement |
+| 检查项 | 要求 |
 |-------|-------------|
-| Logo clearance ≥ 1/4 height | All sides |
-| Logo height ≥ 35px (digital) | Minimum size |
-| Primary color is `#0033FE` | Not approximated |
-| Accent color is `#0BF1C3` | Not approximated |
-| Neutrals have blue undertone | Not pure gray |
-| Info semantic = brand blue | Not sky/teal |
-| Gradient angle is 135deg | Primary gradient |
-| Geist Sans for display text | Not Poppins |
-| Poppins for body text | Not Inter/Roboto |
-| Brand easing curves used | Not generic ease |
-| Max transition duration ≤ 0.8s | No sluggish motion |
-| Dark-first design verified | Primary QA surface |
-| WCAG AA contrast passed | 4.5:1 text, 3:1 large |
-| `prefers-reduced-motion` handled | All animations |
-| Focus rings visible | All interactive elements |
-| Cyan not used as text on light | Dark backgrounds only |
+| Logo 留白 ≥ 高度的 1/4 | 四周一致 |
+| Logo 高度 ≥ 35px（数字端） | 最小尺寸 |
+| 主色为 `#0033FE` | 不近似 |
+| 强调色为 `#0BF1C3` | 不近似 |
+| 中性色带蓝底色 | 不是纯灰 |
+| 信息语义等于品牌蓝 | 不是 sky / teal |
+| 渐变角度为 135deg | 主渐变 |
+| 展示文字使用 Geist Sans | 不是 Poppins |
+| 英文正文使用 Poppins | 不是 Inter / Roboto |
+| 使用品牌缓动曲线 | 不是通用 ease |
+| 最大过渡时长 ≤ 0.8s | 不拖慢交互 |
+| 已验证深色优先设计 | 主要 QA 表面 |
+| 通过 WCAG AA 对比度 | 正文 4.5:1，大字号 3:1 |
+| 已处理 `prefers-reduced-motion` | 所有动画 |
+| 焦点环可见 | 所有交互元素 |
+| 青色不用于浅色文字 | 仅深色背景 |

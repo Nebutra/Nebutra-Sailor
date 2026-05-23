@@ -1,29 +1,29 @@
 ---
 title: "FilterBar"
-description: "Search input combined with filter controls for narrowing lists and table views."
+description: "把搜索输入与筛选控件组合在一起，用于收窄列表和表格视图。"
 ---
 
 ## 演示
 
 ```tsx
 <FilterBar
-  searchPlaceholder="Search pipelines..."
+  searchPlaceholder="搜索流水线..."
   filters={[
     {
       key: "status",
-      label: "Status",
+      label: "状态",
       options: [
-        { value: "active", label: "Active" },
-        { value: "paused", label: "Paused" },
-        { value: "error", label: "Error" },
+        { value: "active", label: "运行中" },
+        { value: "paused", label: "已暂停" },
+        { value: "error", label: "错误" },
       ],
     },
     {
       key: "env",
-      label: "Environment",
+      label: "环境",
       options: [
-        { value: "production", label: "Production" },
-        { value: "staging", label: "Staging" },
+        { value: "production", label: "生产" },
+        { value: "staging", label: "预发" },
       ],
     },
   ]}
@@ -50,7 +50,7 @@ export function ResourceList() {
   return (
     <>
       <FilterBar
-        searchPlaceholder="Search resources..."
+        searchPlaceholder="搜索资源..."
         filters={filterDefs}
         onSearchChange={setQuery}
         onFilterChange={(key, value) =>
@@ -67,14 +67,14 @@ export function ResourceList() {
 | 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `searchPlaceholder` | `string` | `"Search..."` | 搜索框内的占位文案 |
-| `searchValue` | `string` | — | Controlled value for the search input |
-| `onSearchChange` | `(value: string) => void` | — | Called on every keystroke |
-| `filters` | `FilterDefinition[]` | `[]` | Array of filter group definitions |
-| `activeFilters` | `Record<string, string>` | `{}` | Controlled active filter state |
-| `onFilterChange` | `(key: string, value: string) => void` | — | Called when a filter selection changes |
-| `onReset` | `() => void` | — | Called when the "Clear filters" button is clicked |
-| `showReset` | `boolean` | `true` | Whether to show the reset button when filters are active |
-| `className` | `string` | — | Additional classes on the root container |
+| `searchValue` | `string` | — | 搜索输入的受控值 |
+| `onSearchChange` | `(value: string) => void` | — | 每次输入变化时触发 |
+| `filters` | `FilterDefinition[]` | `[]` | 筛选分组定义数组 |
+| `activeFilters` | `Record<string, string>` | `{}` | 当前激活筛选项的受控状态 |
+| `onFilterChange` | `(key: string, value: string) => void` | — | 筛选选项变化时触发 |
+| `onReset` | `() => void` | — | 点击“清除筛选”按钮时触发 |
+| `showReset` | `boolean` | `true` | 有激活筛选项时是否显示重置按钮 |
+| `className` | `string` | — | 根容器上的额外 class |
 
 ### `FilterDefinition`
 
@@ -87,17 +87,17 @@ interface FilterDefinition {
 ```
 
 ## 示例
-### Search-only (no filters)
+### 仅搜索（无筛选）
 
 ```tsx
 <FilterBar
-  searchPlaceholder="Find a member..."
+  searchPlaceholder="查找成员..."
   onSearchChange={setQuery}
   filters={[]}
 />
 ```
 
-### Controlled with active filter state
+### 受控激活筛选状态
 
 ```tsx
 <FilterBar
@@ -116,8 +116,8 @@ interface FilterDefinition {
 ```
 
 ## 可访问性
-- The search input has `role="searchbox"` and `aria-label="Search"`.
-- Each filter dropdown has an associated visible `<label>`.
-- Active filter count is announced via `aria-live="polite"` when filters change.
-- The reset button has `aria-label="Clear all filters"`.
-- All interactive elements are keyboard-accessible and follow logical tab order.
+- 搜索输入使用 `role="searchbox"`，并提供 `aria-label="搜索"`。
+- 每个筛选下拉框都有可见 `<label>` 关联。
+- 筛选项变化时，激活筛选数量通过 `aria-live="polite"` 宣告。
+- 重置按钮提供 `aria-label="清除全部筛选"`。
+- 所有交互元素都可键盘访问，并遵循合理的 tab 顺序。

@@ -1,6 +1,6 @@
 ---
 title: "LogsBarChart"
-description: "Log volume visualisation showing event counts over time with severity breakdown."
+description: "日志量可视化组件，用于按时间展示事件数量，并按严重级别拆分。"
 ---
 
 ## 演示
@@ -65,7 +65,7 @@ interface LogBucket {
 ```
 
 ## 示例
-### Loading state
+### 加载状态
 
 ```tsx
 <LogsBarChart
@@ -76,7 +76,7 @@ interface LogBucket {
 />
 ```
 
-### Click-to-filter time range
+### 点击筛选时间范围
 
 ```tsx
 <LogsBarChart
@@ -90,7 +90,7 @@ interface LogBucket {
 />
 ```
 
-### Without legend
+### 无图例
 
 ```tsx
 <LogsBarChart
@@ -103,7 +103,7 @@ interface LogBucket {
 
 ## 可访问性
 - The chart container has `role="img"` with `aria-label` describing the data range.
-- A visually hidden data table is rendered below the chart for screen reader users.
+- 图表下方会为屏幕阅读器用户渲染一份视觉隐藏的数据表。
 - Interactive bars have `role="button"` with `aria-label="{count} events at {time}"`.
-- Color is not the only differentiator between severity levels — pattern fills are applied for high-contrast mode.
+- 颜色不是区分 severity level 的唯一方式；高对比模式会应用 pattern fill。
 - `isLoading` skeleton has `aria-busy="true"` and `aria-label="Loading chart"`.

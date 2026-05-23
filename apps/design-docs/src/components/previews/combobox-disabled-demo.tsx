@@ -13,7 +13,7 @@ export function ComboboxDisabledDemo() {
       ]}
       defaultValue="remix"
       disabled
-      placeholder="选择框架..."
+      placeholder="Select framework..."
     />
   );
 }

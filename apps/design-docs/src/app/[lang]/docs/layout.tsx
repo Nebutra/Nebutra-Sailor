@@ -32,6 +32,7 @@ export default async function Layout({
               width={140}
               height={24}
               className="h-6 w-auto"
+              style={{ width: "auto" }}
             />
           </div>
         ),

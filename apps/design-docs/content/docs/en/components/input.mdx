@@ -9,6 +9,7 @@ import { InputClearableDemo } from "@/components/previews/input-clearable-demo";
 import { InputDemo } from "@/components/previews/input-demo";
 import { InputErrorDemo } from "@/components/previews/input-error-demo";
 import { InputPasswordRevealDemo } from "@/components/previews/input-password-reveal-demo";
+import { Input2Demo } from "@/components/previews/input-2-demo";
 import { InputWithAddonsDemo } from "@/components/previews/input-with-addons-demo";
 import { InputWithIconDemo } from "@/components/previews/input-with-icon-demo";
 import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo";
@@ -69,6 +70,14 @@ Text affixes such as `https://` and `USD` are wired through `aria-describedby`. 
 </ComponentPreview>
 
 `type="search"` clears the current value with Escape when the field is dirty. Use a scoped placeholder such as `Search projects`, not a generic `Search`.
+
+### Clearable Search
+
+<ComponentPreview name="input-2-demo" className="max-w-[350px]">
+  <Input2Demo />
+</ComponentPreview>
+
+Pair `type="search"` with `clearable` when the field filters an in-place list and needs a one-click reset. Keep the icon decorative and let the scoped `aria-label` provide the accessible name.
 
 ### File
 

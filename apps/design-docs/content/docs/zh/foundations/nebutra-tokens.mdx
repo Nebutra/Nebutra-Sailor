@@ -5,7 +5,7 @@ description: Nebutra 运行时 CSS 变量的 registry bootstrap manifest。
 
 ## 这个页面负责什么
 
-`nebutra-tokens` 是给 standalone Nebutra components 使用的 registry bootstrap manifest。它会把 registry components 需要的运行时 CSS 变量写入宿主 app。
+`nebutra-tokens` 是给独立安装的 Nebutra 组件使用的 registry bootstrap manifest。它会把 registry 组件需要的运行时 CSS 变量写入宿主 app。
 
 monorepo 内部仍以 package stylesheet 为准：
 
@@ -27,7 +27,7 @@ registry manifest 是分发适配层，不是设计权威。Token 所有权仍�
 
 ## 用法
 
-已经接入 monorepo package graph 的产品 app 和 package 使用 package stylesheet：
+已经接入 monorepo package graph 的产品 app 和 package，应使用 package stylesheet：
 
 ```css
 @import "@nebutra/tokens/styles.css";
@@ -43,30 +43,30 @@ npx shadcn@latest add https://ui.nebutra.com/r/nebutra-tokens.json
 
 | 分组 | 示例 | 用途 |
 | --- | --- | --- |
-| Neutral | `--neutral-1`, `--neutral-12` | surface 与 foreground 对比轨道。 |
+| Neutral | `--neutral-1`, `--neutral-12` | surface 与 foreground 的对比轨道。 |
 | Brand | `--brand-primary`, `--brand-accent`, `--brand-gradient` | Nebutra 品牌身份锚点。 |
-| Accent scales | `--blue-9`, `--cyan-9` | 产品交互与 accent 轨道。 |
+| Accent scales | `--blue-9`, `--cyan-9` | 产品交互与强调色轨道。 |
 | Status | `--status-danger`, `--status-warning`, `--status-success` | 语义状态颜色。 |
 | Containers | `--container-text`, `--container-content`, `--container-wide` | 布局宽度轨道。 |
 
 ## 反模式
 
-- 不要把 registry JSON 当作内部 token source 导入。
-- 当已有 semantic/component variable 时，不要在组件 docs 或 preview 里硬编码 primitive color value。
+- 不要把 registry JSON 当作内部 token 来源导入。
+- 当已有语义 / 组件变量时，不要在组件 docs 或 preview 里硬编码 primitive color value。
 - 不要在单个 primitive 中补 token fallback。缺变量时，先提升到 `@nebutra/tokens`。
-- 不要把 `nebutra-tokens.json` 当作 theme preset。它只为 registry consumers bootstrap runtime variables。
+- 不要把 `nebutra-tokens.json` 当作 theme preset。它只为 registry consumer 启动运行时变量。
 
 ## 治理规则
 
 - 运行时 UI 消费 `@nebutra/tokens/styles.css`。
-- 组件示例应该使用 semantic/component variables，而不是 raw hex。
-- Registry copies 可以包含 token fallback CSS，但它们不定义真相源。
-- Storybook 必须保留同名 foundation story，让 token drift 在 docs surface 上可见。
-- IA lint 把这个页面当作 foundation template，不再当作 registry exception。
+- 组件示例应该使用语义 / 组件变量，而不是 raw hex。
+- Registry copy 可以包含 token fallback CSS，但它不定义真相源。
+- Storybook 必须保留同名 foundation story，让 token drift 能在 docs surface 上暴露。
+- IA lint 把这个页面当作 foundation template，不再作为 registry 例外处理。
 
 ## 验收方式
 
-- Storybook source: `packages/design/ui/src/primitives/nebutra-tokens.stories.tsx`。
-- Registry manifest: `/r/nebutra-tokens.json`。
-- Preview manifest: `/r/nebutra-tokens-demo.json`。
-- Source package: `packages/design/tokens/src/index.ts`。
+- Storybook source： `packages/design/ui/src/primitives/nebutra-tokens.stories.tsx`。
+- Registry manifest： `/r/nebutra-tokens.json`。
+- Preview manifest： `/r/nebutra-tokens-demo.json`。
+- Source package： `packages/design/tokens/src/index.ts`。

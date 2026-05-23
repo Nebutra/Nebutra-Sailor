@@ -1,6 +1,6 @@
 ---
 title: "InnerSideMenu"
-description: "In-page secondary navigation for settings, docs, or multi-section layouts."
+description: "用于设置页、文档页或多区块布局的页内二级导航。"
 ---
 
 ## 演示
@@ -67,7 +67,7 @@ interface SideMenuItem {
 ```
 
 ## 示例
-### With icons
+### 带图标
 
 ```tsx
 import { Settings, Shield, Users, CreditCard } from "lucide-react";
@@ -83,10 +83,10 @@ import { Settings, Shield, Users, CreditCard } from "lucide-react";
 />
 ```
 
-### Scroll-spy mode
+### 滚动定位模式
 
 Pass `href` values as anchor links (`#section-id`) and omit `onItemClick`. Pair with `TableOfContents`
-for automatic active state tracking on scroll.
+用于在滚动时自动追踪 active state。
 
 ```tsx
 <InnerSideMenu

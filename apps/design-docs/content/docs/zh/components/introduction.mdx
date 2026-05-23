@@ -49,4 +49,4 @@ lastVerified: "2026-05-21"
 1. 选择能承载行为的最窄 primitive。
 2. 除非 pattern 页面明确允许，不要把装饰组件放进运营工作流。
 3. 组件进入 registry 时，docs 必须说明 package import 和 standalone install 在不同消费场景下的权威关系。
-4. 如果页面需要 demo-only component，就留在 previews，不要把它写成生产 primitive。
+4. `src/components/previews` 下的每个 preview 都必须接入所属 MDX 页面；不属于 docs 契约的示例直接删除。

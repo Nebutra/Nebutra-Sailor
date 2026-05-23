@@ -1,79 +1,79 @@
 ---
-title: Copywriting
-description: Voice, tone, and text conventions for UI copy across product and marketing surfaces.
+title: 文案规范
+description: 产品与营销表面的语气、表达和 UI 文案约定。
 ---
 
 ## 概览
-Copywriting guidelines govern every word users read: button labels, error messages, empty states, tooltips, onboarding prompts, and marketing headlines. Consistent UI copy reduces cognitive load and builds trust.
+文案规范覆盖用户会读到的每一个词：按钮标签、错误消息、空状态、Tooltip、引导提示和营销标题。一致的 UI 文案能降低认知负担，并建立信任。
 
-Two distinct surfaces have different writing registers:
+两类表面使用不同的表达语域：
 
-| Surface | Register | Priority |
+| 表面 | 语域 | 优先级 |
 |---|---|---|
-| Product UI | Concise, functional, calm | Clarity and task completion |
-| Marketing | Compelling, specific, confident | Conversion and credibility |
+| 产品 UI | 简洁、功能性、冷静 | 清晰度与任务完成 |
+| 营销 | 有吸引力、具体、自信 | 转化与可信度 |
 
-These guidelines apply to both. The principles are shared; the tone adjusts to context.
+这些规范同时适用于两者。原则一致，但语气随上下文调整。
 
-## Design Rationale
+## 设计依据
 
-Users do not read UI — they scan. Every additional word is a word that competes for attention. Good UI copy is invisible: it confirms what the user already expects and stays out of the way when things go well.
+用户不会逐字阅读 UI，而是扫描。每多一个词，都会竞争注意力。好的 UI 文案应该近乎隐形：它确认用户已有预期，并在流程顺利时尽量不打扰。
 
-When things go wrong, copy becomes the most important design element on the screen. A clear error message recovers the user. An unclear one loses them.
+当事情出错时，文案会变成屏幕上最重要的设计元素。清晰的错误消息能帮助用户恢复，不清晰的错误消息会让用户流失。
 
-## Voice
+## 表达原则
 
-The Nebutra voice is:
+Nebutra 的表达原则是：
 
-- **Direct** — Say what you mean. Avoid hedging (`try to`, `you might want to`, `in some cases`).
-- **Specific** — Replace vague qualifiers with concrete information.
-- **Human** — Write for a person, not a compliance checklist. Avoid jargon unless the user is technical and the term is precise.
-- **Confident without arrogance** — Do not over-explain or apologize unnecessarily.
+- **直接**：说清楚你的意思。避免模糊措辞（`try to`、`you might want to`、`in some cases`）。
+- **具体**：用具体信息替代模糊限定词。
+- **像人说话**：写给真实用户，而不是合规清单。除非用户是技术受众且术语足够精确，否则避免行话。
+- **自信但不傲慢**：不要过度解释，也不要无意义道歉。
 
-What the voice is not:
-- Casual to the point of being flippant
-- Overly formal or legalistic
-- Enthusiastic in ways that feel hollow (`Awesome!`, `Amazing!`, `Great job!`)
+Nebutra 的声音不应该是：
+- 轻佻到显得不专业
+- 过度正式或法律化
+- 空洞热情（`Awesome!`、`Amazing!`、`Great job!`）
 
-## Tone by Context
+## 按场景区分语气
 
-### Errors and failure states
+### 错误与失败状态
 
-Tone: neutral, direct, recovery-focused.
+语气：中性、直接、聚焦恢复。
 
-State what happened, why it happened (if knowable), and what to do next. Never blame the user.
+说明发生了什么、为什么发生（如果可知），以及下一步怎么做。不要责怪用户。
 
-| Wrong | Correct |
+| 错误 | 正确 |
 |---|---|
 | "Something went wrong." | "Your payment could not be processed. Check your card details and try again." |
 | "Invalid input." | "Email address must include @." |
 | "Error 422." | "We could not save your changes. Your session may have expired — sign in again." |
 
-### Empty states
+### 空状态
 
-Tone: helpful, action-oriented.
+语气：有帮助、以行动为导向。
 
-Empty states are an opportunity to guide the user toward their first action. Do not describe the absence — suggest what to do.
+空状态是引导用户完成第一步的机会。不要只描述“没有内容”，要告诉用户下一步可以做什么。
 
-| Wrong | Correct |
+| 错误 | 正确 |
 |---|---|
 | "No projects found." | "Create your first project to get started." |
 | "Nothing here yet." | "Invite teammates to collaborate on this workspace." |
 
-### Confirmations and success
+### 确认与成功
 
-Tone: brief, affirming, then out of the way.
+语气：简短、确认完成，然后退场。
 
 ```
-File deleted.       ← Correct (past tense, 2 words)
-Your file has been successfully deleted!  ← Wrong (verbose, hollow)
+File deleted.       ← 正确（过去时，2 个词）
+Your file has been successfully deleted!  ← 错误（冗长、空洞）
 ```
 
-### Destructive actions
+### 破坏性操作
 
-Tone: calm, precise, irreversibility is factual — not alarming.
+语气：冷静、精确，把不可逆后果作为事实说明，不制造恐慌。
 
-Make the consequence clear without creating panic.
+把后果说清楚，但不要制造恐慌。
 
 ```
 Delete project?
@@ -82,91 +82,91 @@ This cannot be undone. All tasks, files, and history will be permanently removed
 [Cancel]  [Delete project]
 ```
 
-### Buttons and CTAs
+### 按钮与 CTA
 
-- Use verb-noun pairs: **Create project**, **Delete account**, **Invite member**
-- Match the button label to the dialog title or action being confirmed
-- Avoid generic labels: **OK**, **Submit**, **Confirm** — these force the user to re-read context
+- 使用“动词 + 名词”结构：**Create project**、**Delete account**、**Invite member**
+- 按钮文案要匹配对话框标题或被确认的具体动作
+- 避免通用标签：**OK**、**Submit**、**Confirm**。这些词会迫使用户重新阅读上下文
 
-| Wrong | Correct |
+| 错误 | 正确 |
 |---|---|
 | Submit | Save changes |
 | OK | Got it |
 | Confirm | Delete project |
 | Yes | Remove member |
 
-### Loading and progress
+### 加载与进度
 
-- Use present progressive: **Uploading…**, **Saving…**, **Processing payment…**
-- If the wait is long, give a specific reason: **Analyzing 3,400 records…**
-- Do not use **Loading…** as a default — be specific about what is loading
+- 使用进行时：**Uploading…**、**Saving…**、**Processing payment…**
+- 如果等待较久，给出具体原因：**Analyzing 3,400 records…**
+- 不要默认使用 **Loading…**，要具体说明正在加载什么
 
 ## 使用准则
-### Capitalization
+### 大小写
 
-- **Sentence case** for all UI copy: headings, button labels, tooltips, messages
-- **Title Case** for product names, feature names, and proper nouns only
-- **ALL CAPS** only for overline labels and badges — never for body text
+- 所有 UI 文案使用 **Sentence case**：标题、按钮、Tooltip、消息都一致
+- **Title Case** 只用于产品名、功能名和专有名词
+- **ALL CAPS** 只用于 overline 标签和徽标，不用于正文
 
 ```
-Wrong: Save Changes   ← Title case on button
-Correct: Save changes
+错误：Save Changes   ← 按钮不应使用 Title Case
+正确：Save changes
 
-Wrong: this is a section heading
-Correct: This is a section heading
+错误：this is a section heading
+正确：This is a section heading
 ```
 
-### Punctuation
+### 标点
 
-- No period at the end of button labels, headings, or tooltips
-- Use periods for error messages and instructional body text
-- Use em dashes (—) for parenthetical statements, not double hyphens (--)
-- Avoid ellipsis in body copy; use it only for truncated text or in-progress states
+- 按钮标签、标题、Tooltip 末尾不加句号
+- 错误消息和说明性正文使用句号
+- 插入说明使用 em dash（—），不要使用双连字符（--）
+- 正文避免省略号；只在截断文本或进行中状态中使用
 
-### Numbers and units
+### 数字与单位
 
-- Spell out numbers one through nine; use numerals for 10 and above
-- Use abbreviated units: 2 MB, 14 days, 3 users — no periods in abbreviations
-- Use commas in large numbers: 1,200 records
+- 英文文案中 one 到 nine 拼写出来，10 及以上使用数字
+- 使用缩写单位：2 MB、14 days、3 users，缩写中不加句点
+- 大数字使用逗号分组：1,200 records
 
-### Time and dates
+### 时间与日期
 
-- Use relative time for recent events: 3 minutes ago, Yesterday
-- Use absolute dates for events older than 7 days: Feb 14, 2026
-- Use 24-hour time for technical contexts; 12-hour with AM/PM for general audiences
+- 近期事件使用相对时间：3 minutes ago、Yesterday
+- 超过 7 天的事件使用绝对日期：Feb 14, 2026
+- 技术场景使用 24 小时制；通用受众使用带 AM/PM 的 12 小时制
 
-## Marketing Copy
+## 营销文案
 
-Marketing copy follows the same voice but with a higher energy ceiling.
+营销文案遵循同一套声音，但允许更高能量。
 
-**Headlines:**
-- Lead with the outcome, not the feature
-- Use specific numbers when available: "Deploy in 30 seconds", "99.99% uptime"
-- Avoid superlatives without evidence: "the best", "world-class", "unmatched"
+**标题：**
+- 先讲结果，不先讲功能
+- 有证据时使用具体数字："Deploy in 30 seconds"、"99.99% uptime"
+- 避免无证据最高级："the best"、"world-class"、"unmatched"
 
-**Subheads and body:**
-- Support the headline with a specific, believable claim
-- One idea per paragraph
-- End with a clear CTA
+**副标题与正文：**
+- 用具体、可信的论断支撑标题
+- 每段只表达一个想法
+- 以清晰 CTA 结束
 
-**CTAs:**
-- First-person framing converts better: **Start my free trial** vs **Start free trial**
-- Specificity reduces friction: **See pricing** vs **Learn more**
+**CTA：**
+- 第一人称框架通常转化更好：**Start my free trial** 优于 **Start free trial**
+- 具体性降低阻力：**See pricing** 优于 **Learn more**
 
-## Do / Don't
+## 应做 / 禁止
 
-**Do** use sentence case for all UI copy, headings, and button labels.
+**应做**所有 UI 文案、标题和按钮标签都使用 sentence case。
 
-**Do** write error messages that state the cause and the recovery action.
+**应做**错误消息同时说明原因和恢复动作。
 
-**Do** match button labels to the exact action being performed — especially in destructive confirmation dialogs.
+**应做**按钮标签匹配正在执行的精确动作，尤其是破坏性确认对话框。
 
-**Do** use specific, concrete language in marketing copy. Back claims with numbers.
+**应做**营销文案使用具体语言，并用数字支撑主张。
 
-**Don't** use filler phrases: "Please note that…", "It looks like…", "We noticed that…"
+**禁止**使用填充短语："Please note that…"、"It looks like…"、"We noticed that…"
 
-**Don't** apologize excessively. One genuine apology in an error message is appropriate. `We're sorry. We're sorry this happened. We apologize for the inconvenience.` is not.
+**禁止**过度道歉。错误消息中一次真诚道歉可以接受，但 `We're sorry. We're sorry this happened. We apologize for the inconvenience.` 不可接受。
 
-**Don't** use passive voice for errors or instructions. "Your payment was declined" → "We could not process your payment."
+**禁止**在错误或说明中使用被动语态。"Your payment was declined" → "We could not process your payment."
 
-**Don't** use exclamation points in error states or warnings. Reserve them for genuine celebrations (successful onboarding, first milestone achieved).
+**禁止**在错误状态或警告中使用感叹号。只在真正值得庆祝的时刻使用，例如完成 onboarding 或达成第一个里程碑。

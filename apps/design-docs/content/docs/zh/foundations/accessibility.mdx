@@ -1,39 +1,39 @@
 ---
-title: Accessibility
-description: WCAG 2.1 AA primitives, ARIA patterns, focus management, and contrast requirements built into the design system.
+title: 可访问性
+description: 设计系统内置的 WCAG 2.1 AA 原语、ARIA 模式、焦点管理和对比度要求。
 ---
 
 ## 概览
-Accessibility primitives live in `apps/docs-hub/design-system/src/primitives/accessibility.ts`. The file exports style objects, ARIA attribute helpers, and utility functions that implement WCAG 2.1 AA requirements. These are building blocks — components in the design system use them internally, and application code can import them directly when building custom patterns.
+可访问性原语位于 `apps/docs-hub/design-system/src/primitives/accessibility.ts`。该文件导出样式对象、ARIA 属性辅助函数和实现 WCAG 2.1 AA 要求的工具函数。它们是底层构件：设计系统组件会在内部消费它们，应用代码在创建自定义模式时也可以直接导入。
 
-Exported members:
+导出成员：
 
-| Export | Type | Purpose |
+| 导出 | 类型 | 用途 |
 |---|---|---|
-| `visuallyHidden` | `StyleObject` | Hide visually, preserve for screen readers |
-| `focusRing` | `StyleObject` | Keyboard focus indicator styles |
-| `skipLinkStyle` | `StyleObject` | Skip-to-content link (shown on focus) |
-| `ariaPatterns` | Object | Reusable ARIA attribute sets |
-| `minTouchTarget` | Object | WCAG 2.5.5 minimum touch target |
-| `prefersReducedMotion()` | Function | Runtime motion preference check |
-| `contrastRequirements` | Object | WCAG contrast ratio thresholds |
+| `visuallyHidden` | `StyleObject` | 视觉隐藏，同时保留给屏幕阅读器 |
+| `focusRing` | `StyleObject` | 键盘焦点指示样式 |
+| `skipLinkStyle` | Object | 跳到正文链接，聚焦时显示 |
+| `ariaPatterns` | Object | 可复用 ARIA 属性集合 |
+| `minTouchTarget` | Object | WCAG 2.5.5 最小触控目标 |
+| `prefersReducedMotion()` | Function | 运行时减少动态效果偏好检测 |
+| `contrastRequirements` | Object | WCAG 对比度阈值 |
 
-## Design Rationale
+## 设计依据
 
-Accessibility cannot be an afterthought bolted on after a component ships. These primitives exist to make correct behavior the path of least resistance — it should be easier to use `visuallyHidden` than to guess the six CSS properties required to hide something correctly, and easier to call `ariaPatterns.loading` than to remember `aria-busy` and `aria-live` separately.
+可访问性不能在组件发布后再补。这里的原语让正确行为成为阻力最小的路径：使用 `visuallyHidden` 应该比手写六个隐藏 CSS 属性更容易，调用 `ariaPatterns.loading` 也应该比分别记住 `aria-busy` 和 `aria-live` 更稳。
 
 <Warning>
-These primitives establish the baseline. They do not replace semantic HTML. Use the correct native element (`<button>`, `<nav>`, `<main>`, `<label>`) before reaching for ARIA attributes.
+这些原语只建立基线，不替代语义化 HTML。优先使用正确的原生元素（`<button>`、`<nav>`、`<main>`、`<label>`），再补充 ARIA 属性。
 </Warning>
 
 ## `visuallyHidden`
 
-Removes an element from the visual layout while keeping it in the accessibility tree.
+从视觉布局中移除元素，但保留在可访问性树中。
 
 ```ts
 import { visuallyHidden } from "@nebutra/ui/primitives/accessibility";
 
-// Style object — spread into inline styles or CSS-in-JS
+// 样式对象，可展开到 inline style 或 CSS-in-JS
 const style = visuallyHidden;
 // {
 //   position: "absolute",
@@ -48,18 +48,18 @@ const style = visuallyHidden;
 // }
 ```
 
-Use for: labels on icon buttons, screen-reader-only announcements, visually redundant text.
+适用于：图标按钮标签、仅屏幕阅读器可见的通知、视觉上重复但语义上必要的文本。
 
-Do not use `display: none` or `visibility: hidden` to hide content that screen readers should announce.
+需要屏幕阅读器宣告的内容，不要用 `display: none` 或 `visibility: hidden` 隐藏。
 
 ## `focusRing`
 
-Standard keyboard focus ring that meets WCAG 2.4.7 (Focus Visible).
+符合 WCAG 2.4.7（焦点可见）的标准键盘焦点环。
 
 ```ts
 import { focusRing } from "@nebutra/ui/primitives/accessibility";
 
-// focusRing resolves to:
+// focusRing 解析为：
 // {
 //   outline: "2px solid",
 //   outlineColor: "accent.fg",
@@ -67,30 +67,30 @@ import { focusRing } from "@nebutra/ui/primitives/accessibility";
 // }
 ```
 
-Apply to any interactive element that receives keyboard focus. The design system components apply this automatically via `&:focus-visible` selectors.
+应用于所有会接收键盘焦点的交互元素。设计系统组件会通过 `&:focus-visible` 选择器自动应用。
 
 <Tip>
-Use `:focus-visible` (not `:focus`) to show the ring only for keyboard users. Mouse clicks should not trigger the focus ring on most interactive elements.
+使用 `:focus-visible` 而不是 `:focus`，让焦点环只为键盘用户显示。大多数交互元素不应在鼠标点击时显示焦点环。
 </Tip>
 
 ## `skipLinkStyle`
 
-A skip navigation link visible only on keyboard focus. Required for WCAG 2.4.1 (Bypass Blocks).
+仅在键盘聚焦时可见的跳转导航链接。WCAG 2.4.1（绕过区块）要求提供这种能力。
 
 ```tsx
 import { skipLinkStyle } from "@nebutra/ui/primitives/accessibility";
 
-// In your root layout
+// 在根布局中
 <a href="#main-content" style={skipLinkStyle}>
-  Skip to main content
+  跳到主要内容
 </a>
 ```
 
-The link is visually hidden at rest and becomes visible (fixed to top-left, styled with `focusRing`) when it receives keyboard focus.
+链接默认视觉隐藏；当接收键盘焦点时显示，并固定在左上角，同时应用 `focusRing` 样式。
 
 ## `ariaPatterns`
 
-Pre-composed ARIA attribute objects for common UI states.
+常见 UI 状态的预组合 ARIA 属性对象。
 
 ### `ariaPatterns.loading`
 
@@ -98,18 +98,18 @@ Pre-composed ARIA attribute objects for common UI states.
 import { ariaPatterns } from "@nebutra/ui/primitives/accessibility";
 
 <div {...ariaPatterns.loading}>
-  Loading content...
+  内容加载中...
 </div>
-// Applies: aria-busy="true", aria-live="polite"
+// 应用：aria-busy="true", aria-live="polite"
 ```
 
 ### `ariaPatterns.expandable(expanded)`
 
 ```tsx
 <button {...ariaPatterns.expandable(isOpen)}>
-  Toggle section
+  切换区块
 </button>
-// Applies: aria-expanded={isOpen}
+// 应用：aria-expanded={isOpen}
 ```
 
 ### `ariaPatterns.currentPage`
@@ -118,14 +118,14 @@ import { ariaPatterns } from "@nebutra/ui/primitives/accessibility";
 <a href="/dashboard" {...ariaPatterns.currentPage}>
   Dashboard
 </a>
-// Applies: aria-current="page"
+// 应用：aria-current="page"
 ```
 
 ### `ariaPatterns.required`
 
 ```tsx
 <input {...ariaPatterns.required} />
-// Applies: aria-required="true"
+// 应用：aria-required="true"
 ```
 
 ### `ariaPatterns.invalid(message?)`
@@ -135,12 +135,12 @@ import { ariaPatterns } from "@nebutra/ui/primitives/accessibility";
   {...ariaPatterns.invalid("Email is required")}
   id="email"
 />
-// Applies: aria-invalid="true", aria-errormessage="Email is required"
+// 应用：aria-invalid="true", aria-errormessage="Email is required"
 ```
 
 ## `minTouchTarget`
 
-WCAG 2.5.5 (Target Size) requires a minimum 44×44px interactive area.
+WCAG 2.5.5（目标尺寸）要求交互区域至少为 44×44px。
 
 ```ts
 import { minTouchTarget } from "@nebutra/ui/primitives/accessibility";
@@ -152,11 +152,11 @@ import { minTouchTarget } from "@nebutra/ui/primitives/accessibility";
 </button>
 ```
 
-Apply to any interactive element whose visible area is smaller than 44×44px — icon buttons, close icons, toggle switches.
+所有可视面积小于 44×44px 的交互元素都应应用它，例如图标按钮、关闭图标和开关。
 
 ## `prefersReducedMotion()`
 
-Runtime check for the OS-level reduce-motion preference.
+运行时检测系统级减少动态效果偏好。
 
 ```ts
 import { prefersReducedMotion } from "@nebutra/ui/primitives/accessibility";
@@ -169,18 +169,18 @@ element.animate([{ opacity: 0 }, { opacity: 1 }], {
 });
 ```
 
-Returns `false` on the server (SSR-safe). Use in combination with CSS `@media (prefers-reduced-motion: reduce)` for complete coverage.
+在服务端返回 `false`，因此 SSR 安全。需要完整覆盖时，和 CSS `@media (prefers-reduced-motion: reduce)` 配合使用。
 
 ## `contrastRequirements`
 
-WCAG contrast ratio thresholds for programmatic contrast checking.
+用于程序化对比度检查的 WCAG 对比度阈值。
 
-| Token | Value | Standard | Context |
+| Token | 值 | 标准 | 场景 |
 |---|---|---|---|
-| `contrastRequirements.normalText` | 4.5 | AA | Body text (< 18px or < 14px bold) |
-| `contrastRequirements.largeText` | 3 | AA | Large text (18px+ or 14px+ bold) |
-| `contrastRequirements.normalTextAAA` | 7 | AAA | Enhanced normal text |
-| `contrastRequirements.largeTextAAA` | 4.5 | AAA | Enhanced large text |
+| `contrastRequirements.normalText` | 4.5 | AA | 正文文本（小于 18px 或小于 14px 加粗） |
+| `contrastRequirements.largeText` | 3 | AA | 大文本（18px+ 或 14px+ 加粗） |
+| `contrastRequirements.normalTextAAA` | 7 | AAA | 增强级普通文本 |
+| `contrastRequirements.largeTextAAA` | 4.5 | AAA | 增强级大文本 |
 
 ```ts
 import { contrastRequirements } from "@nebutra/ui/primitives/accessibility";
@@ -193,24 +193,24 @@ function isAccessible(contrastRatio: number, isLargeText: boolean): boolean {
 }
 ```
 
-The design system's semantic color tokens are tested to meet AA contrast requirements in both light and dark modes.
+设计系统的语义颜色 token 需要在浅色和深色模式下都满足 AA 对比度要求。
 
 ## 使用准则
-### Keyboard navigation
+### 键盘导航
 
-Every interactive element must be reachable and operable by keyboard. Never suppress default focus behavior without providing an equivalent custom implementation.
+每个交互元素都必须可以通过键盘到达和操作。没有等价自定义实现时，不要压制默认焦点行为。
 
 ```tsx
-// Wrong — removes focus without replacement
+// 错误：移除了焦点且没有替代方案
 <div onClick={handleClick} tabIndex={-1} style={{ outline: "none" }}>
 
-// Correct — uses semantic button, focus ring applies automatically
+// 正确：使用语义化 button，焦点环自动生效
 <button onClick={handleClick}>
 ```
 
-### Motion
+### 动效
 
-Wrap all animations in a reduced-motion check:
+所有动画都应包在减少动态效果检查中：
 
 ```css
 @media (prefers-reduced-motion: reduce) {
@@ -221,20 +221,20 @@ Wrap all animations in a reduced-motion check:
 }
 ```
 
-The marketing `marketingTransitions` values should be replaced with instant transitions when `prefersReducedMotion()` returns `true`.
+当 `prefersReducedMotion()` 返回 `true` 时，营销侧的 `marketingTransitions` 应替换为即时过渡。
 
-## Do / Don't
+## 应做 / 禁止
 
-**Do** use semantic HTML elements as the primary accessibility mechanism. ARIA patterns supplement; they do not replace native semantics.
+**应做**：把语义化 HTML 元素作为主要可访问性机制。ARIA pattern 是补充，不替代原生语义。
 
-**Do** apply `visuallyHidden` to provide context for icon-only controls (labels, descriptions, announcements).
+**应做**：用 `visuallyHidden` 为纯图标控件提供上下文，例如标签、说明和通知。
 
-**Do** apply `minTouchTarget` to all interactive elements with a visual footprint smaller than 44×44px.
+**应做**：对所有视觉尺寸小于 44×44px 的交互元素应用 `minTouchTarget`。
 
-**Do** verify contrast ratios using `contrastRequirements` thresholds when introducing new color combinations.
+**应做**：新增颜色组合时，用 `contrastRequirements` 阈值验证对比度。
 
-**Don't** use `aria-label` on non-interactive elements. If an element does not receive focus or interaction, it does not need an `aria-label`.
+**禁止**：在非交互元素上使用 `aria-label`。不能聚焦、也没有交互的元素通常不需要 `aria-label`。
 
-**Don't** suppress the default focus ring with `outline: none` or `outline: 0` unless `focusRing` is applied via `:focus-visible`.
+**禁止**：用 `outline: none` 或 `outline: 0` 压制默认焦点环，除非已经通过 `:focus-visible` 应用了 `focusRing`。
 
-**Don't** trigger animations when `prefersReducedMotion()` returns `true`.
+**禁止**：当 `prefersReducedMotion()` 返回 `true` 时触发动画。

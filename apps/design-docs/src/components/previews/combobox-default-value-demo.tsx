@@ -12,7 +12,7 @@ export function ComboboxDefaultValueDemo() {
         { value: "nuxt", label: "Nuxt" },
       ]}
       defaultValue="next"
-      placeholder="选择框架..."
+      placeholder="Select framework..."
     />
   );
 }

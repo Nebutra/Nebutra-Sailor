@@ -1,6 +1,6 @@
 ---
 title: "InfoTooltip"
-description: "Hover tooltip triggered by an info icon, used to surface explanatory content without cluttering the UI."
+description: "由信息图标触发的 hover tooltip，用于在不打断界面的情况下补充说明。"
 ---
 
 ## 演示
@@ -47,7 +47,7 @@ export function PricingRow({ label, tooltip, value }: PricingRowProps) {
 | `className` | `string` | — | Additional classes on the tooltip content panel |
 
 ## 示例
-### Rich content tooltip
+### 富内容 Tooltip
 
 ```tsx
 <InfoTooltip
@@ -63,7 +63,7 @@ export function PricingRow({ label, tooltip, value }: PricingRowProps) {
 />
 ```
 
-### Left-aligned, bottom placement
+### 左对齐底部弹出
 
 ```tsx
 <InfoTooltip
@@ -74,7 +74,7 @@ export function PricingRow({ label, tooltip, value }: PricingRowProps) {
 />
 ```
 
-### Larger trigger icon
+### 更大的触发图标
 
 ```tsx
 <InfoTooltip
@@ -86,7 +86,7 @@ export function PricingRow({ label, tooltip, value }: PricingRowProps) {
 ## 可访问性
 - The trigger icon button has `aria-label="More information"` and `type="button"`.
 - The tooltip panel has `role="tooltip"` and is linked to the trigger via `aria-describedby`.
-- Tooltip content is announced by screen readers when the trigger is focused via keyboard.
+- 通过键盘聚焦 trigger 时，屏幕阅读器会朗读 Tooltip 内容。
 - Tooltip opens on both `hover` (mouse) and `focus` (keyboard) events.
 - Pressing `Escape` dismisses an open tooltip.
 - Icons inside the tooltip are `aria-hidden="true"`.

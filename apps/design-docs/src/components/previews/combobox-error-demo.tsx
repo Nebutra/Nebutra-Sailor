@@ -12,7 +12,7 @@ export function ComboboxErrorDemo() {
         { value: "nuxt", label: "Nuxt" },
       ]}
       errored
-      placeholder="选择框架..."
+      placeholder="Select framework..."
     />
   );
 }

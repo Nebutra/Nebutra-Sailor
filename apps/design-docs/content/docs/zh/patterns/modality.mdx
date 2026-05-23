@@ -1,27 +1,27 @@
 ---
-title: "Modality"
-description: "Patterns for dialogs, drawers, sheets, and overlay surfaces."
+title: "模态界面"
+description: "对话框、抽屉、Sheet 与浮层表面的使用模式。"
 ---
 
-## When to Use
+## 何时使用
 
-Modal surfaces interrupt the primary flow to demand focused attention. Use them when the user must respond before continuing, or when a task requires context that would disrupt the current view if rendered inline.
+模态表面会打断主流程，并要求用户集中注意力。只有当用户必须先回应才能继续，或任务需要额外上下文且 inline 渲染会破坏当前视图时，才使用模态界面。
 
-| Surface | Use when |
+| 表面 | 适用场景 |
 |---|---|
-| `Dialog` | Compact confirmation, destructive action, critical decision — no scrolling |
-| `Sheet` | Form or detail panel that slides in from a screen edge — can scroll |
-| `Drawer` | Navigation or contextual sidebar — opens beside content |
-| `AnchoredOverlay` / `Popover` | Contextual actions anchored to a trigger — stays near the trigger |
+| `Dialog` | 紧凑确认、破坏性操作、关键决策，不需要滚动 |
+| `Sheet` | 从屏幕边缘滑入的表单或详情面板，可滚动 |
+| `Drawer` | 导航或上下文侧栏，在内容旁打开 |
+| `AnchoredOverlay` / `Popover` | 锚定到 trigger 的上下文操作，停留在触发器附近 |
 
-Do not use a modal for:
-- Navigation between pages (use routing)
-- Inline editing that can be done in place
-- Errors that belong in a `Flash` or `Alert` within the page
+以下场景不要使用模态界面：
+- 页面之间的导航（使用 routing）
+- 可以就地完成的 inline editing
+- 应该出现在页面内 `Flash` 或 `Alert` 中的错误
 
-## Structure
+## 结构
 
-### Dialog
+### Dialog 对话框
 
 ```
 Dialog (portal, traps focus)
@@ -33,7 +33,7 @@ Dialog (portal, traps focus)
        └── ButtonGroup (confirm + cancel)
 ```
 
-### Sheet
+### Sheet 抽屉
 
 ```
 Sheet (slides in from edge: left | right | top | bottom)
@@ -45,7 +45,7 @@ Sheet (slides in from edge: left | right | top | bottom)
        └── ButtonGroup
 ```
 
-### Confirmation dialog (Text Confirm)
+### 确认对话框（Text Confirm）
 
 ```
 Dialog
@@ -59,11 +59,11 @@ Dialog
        └── Button variant="invisible" — cancel
 ```
 
-## Composition
+## 组合规则
 
-### Opening and closing
+### 打开与关闭
 
-Manage open state in the parent. Never store open state inside the overlay component.
+open state 由父级管理。不要把 open state 存在 overlay 组件内部。
 
 ```tsx
 const [isOpen, setIsOpen] = useState(false);
@@ -84,13 +84,13 @@ const [isOpen, setIsOpen] = useState(false);
 </Dialog>
 ```
 
-### Focus management
+### 焦点管理
 
-`Dialog` and `Sheet` trap focus automatically. Ensure the first focusable element inside the overlay is the primary action or the first input — not the close button.
+`Dialog` 和 `Sheet` 会自动 trap focus。确保 overlay 内第一个可聚焦元素是主操作或第一个输入框，而不是关闭按钮。
 
-### Destructive confirmation
+### 破坏性确认
 
-For irreversible actions (delete, revoke, transfer), use the Text Confirm Dialog fragment which requires the user to type the resource name before the destructive button enables.
+不可逆操作（删除、吊销、转移）使用 Text Confirm Dialog fragment，要求用户输入资源名后才启用破坏性按钮。
 
 ```tsx
 import { TextConfirmDialog } from "@nebutra/ui";
@@ -106,13 +106,13 @@ import { TextConfirmDialog } from "@nebutra/ui";
 />
 ```
 
-### Confirmation modal fragment
+### 确认 Modal Fragment
 
-For simpler confirms (no typed verification), use the `ConfirmationModal` fragment. It accepts `title`, `description`, `onConfirm`, `onCancel`, and `variant` (`default` or `danger`).
+更简单的确认（不需要输入文本校验）使用 `ConfirmationModal` fragment。它接受 `title`、`description`、`onConfirm`、`onCancel` 和 `variant`（`default` 或 `danger`）。
 
-### Overlay anchoring (ActionMenu, Popover)
+### 浮层锚定（ActionMenu、Popover）
 
-`AnchoredOverlay` and `ActionMenu` position themselves relative to a trigger element and close on outside click or Escape. Use them for contextual row actions, inline option menus, and filter dropdowns — not for forms.
+`AnchoredOverlay` 和 `ActionMenu` 相对 trigger 元素定位，并在外部点击或 Escape 时关闭。它们适合上下文行操作、inline 选项菜单和筛选下拉，不适合承载表单。
 
 ```tsx
 import { ActionMenu, ActionList } from "@nebutra/ui";
@@ -129,7 +129,7 @@ import { ActionMenu, ActionList } from "@nebutra/ui";
 ```
 
 ## 示例
-### Simple confirmation dialog
+### 简单确认对话框
 
 ```tsx
 function DeleteKeyDialog({ keyName, onConfirm, onCancel, isOpen }: Props) {
@@ -153,9 +153,9 @@ function DeleteKeyDialog({ keyName, onConfirm, onCancel, isOpen }: Props) {
 }
 ```
 
-### Edit panel (Sheet)
+### 编辑面板（Sheet）
 
-Use a `Sheet` when the form is long enough to scroll, or when preserving visibility of the underlying page aids context.
+当表单较长需要滚动，或保留底层页面可见性有助于上下文理解时，使用 `Sheet`。
 
 ```tsx
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@nebutra/ui";
@@ -170,12 +170,12 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@nebutra/ui";
 </Sheet>
 ```
 
-## Related Components
+## 相关组件
 
-- [Dialog](/zh/docs/components/dialog) — base modal dialog atom
-- [Drawer](/zh/docs/components/drawer) — slide-in side panel atom
-- [Sheet](/zh/docs/components/sheet) — bottom/edge sheet atom
-- [Confirmation Modal fragment](/zh/docs/fragment-components/confirmation-modal) — pre-composed confirm/cancel dialog
-- [Text Confirm Dialog fragment](/zh/docs/fragment-components/text-confirm-dialog) — type-to-confirm destructive dialog
-- [Modal fragment](/zh/docs/fragment-components/modal) — generic modal shell
-- [Popover](/zh/docs/components/popover) — inline contextual overlay
+- [Dialog](/zh/docs/components/dialog) — 基础模态对话框 atom
+- [Drawer](/zh/docs/components/drawer) — 滑入式侧边面板 atom
+- [Sheet](/zh/docs/components/sheet) — 底部 / 边缘 Sheet atom
+- [Confirmation Modal fragment](/zh/docs/fragment-components/confirmation-modal) — 预组合的确认 / 取消对话框
+- [Text Confirm Dialog fragment](/zh/docs/fragment-components/text-confirm-dialog) — 输入文本确认的破坏性对话框
+- [Modal fragment](/zh/docs/fragment-components/modal) — 通用模态 shell
+- [Popover](/zh/docs/components/popover) — inline 上下文浮层

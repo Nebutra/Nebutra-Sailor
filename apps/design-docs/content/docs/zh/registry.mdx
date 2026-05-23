@@ -24,5 +24,6 @@ Registry 是公开 `@nebutra/ui` 原语和 docs preview 的分发层。它从 `/
 - `packages/design/ui/scripts/build-registry.ts` 负责公开组件 manifest。
 - `apps/design-docs/scripts/build-registry.mjs` 负责 preview-demo manifest。
 - Registry docs 必须有匹配 MDX 页面；视觉组件必须有真实 preview；并且必须有同名 Storybook 覆盖或显式 Storybook metadata。
-- 例外不是通用 allowlist 流程；如果未来重新引入覆盖债务，必须带 owner、reason、expiry。
+- Preview demo 必须接入所属 MDX 页面，或从 preview registry 删除。这里不保留长期 fixture 例外路径。
+- 生成的 preview manifest 只是分发产物；如果 `prebuild` 产生未被文档引用的 manifest，同一轮变更必须让源 preview 进入 docs，或直接删除。
 - 发布 registry 变更前运行 `pnpm --filter @nebutra/design-docs prebuild`。

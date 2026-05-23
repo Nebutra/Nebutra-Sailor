@@ -35,7 +35,7 @@ npx shadcn@latest add https://ui.nebutra.com/r/relative-time-card.json
 <RelativeTimeCard date={Date.now()}>{"2m ago"}</RelativeTimeCard>
 ```
 
-## Hydration safety
+## Hydration 安全
 
 服务端和客户端首屏都先渲染确定性的 UTC 绝对时间。挂载后再升级为相对时间并启动自适应 tick，避免 hydration mismatch。
 

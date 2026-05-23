@@ -119,7 +119,8 @@ function toKebab(name) {
     .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
     .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
     .replace(/([a-zA-Z])(\d)/g, "$1-$2")
-    .toLowerCase();
+    .toLowerCase()
+    .replace(/(^|-)i-18n(?=-|$)/g, "$1i18n");
 }
 
 /** Extract exported component names from a file's source */

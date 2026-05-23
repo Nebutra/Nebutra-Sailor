@@ -1,20 +1,19 @@
 ---
-title: "Gradients & Textures"
-description: "Nebutra brand gradients, grain textures, mesh backgrounds, neural noise, and wave shaders — with CSS, Tailwind, and performance guidance."
+title: "渐变与纹理"
+description: "Nebutra 品牌渐变、颗粒纹理、网格背景、神经噪声与波浪 shader，并包含 CSS、Tailwind 和性能指南。"
 ---
 
 <Callout>
-  The Blue-to-Cyan gradient is a **first-class brand asset**. It is not decorative — it is the visual signature of Nebutra.
-  Treat it with the same care as the logo.
+  蓝到青的渐变是**一等品牌资产**，不是普通装饰。它是 Nebutra 的视觉签名，应该像 Logo 一样被谨慎使用。
 </Callout>
 
-## Brand Gradients
+## 品牌渐变
 
-Four gradient variants cover all use cases. Each is defined with specific direction, stops, and context.
+四种渐变变体覆盖全部核心场景；每一种都有明确方向、色标和上下文。
 
 <BrandGradientsDemo />
 
-### CSS Custom Properties
+### CSS 自定义属性
 
 ```css
 :root {
@@ -25,48 +24,48 @@ Four gradient variants cover all use cases. Each is defined with specific direct
 }
 ```
 
-### Tailwind Usage
+### Tailwind 用法
 
 ```tsx
-// Primary gradient button
+// 主渐变按钮
 <button className="bg-[linear-gradient(135deg,#0033FE_0%,#0BF1C3_100%)] text-white border-0 rounded-lg px-6 py-3">
   Get Started
 </button>
 
-// Hover: swap to reverse gradient
+// Hover：切换为反向渐变
 <button className="bg-[var(--gradient-brand)] hover:bg-[var(--gradient-brand-reverse)] text-white">
   Get Started
 </button>
 
-// Gradient text
+// 渐变文字
 <h1 className="bg-[var(--gradient-brand)] bg-clip-text text-transparent">
   Enterprise SaaS Platform
 </h1>
 
-// Vertical section divider
+// 垂直区块分隔线
 <div className="h-1 w-full bg-[var(--gradient-brand-vertical)]" />
 
-// Glow background
+// 发光背景
 <div className="absolute inset-0 bg-[var(--gradient-brand-glow)] opacity-20 blur-3xl" />
 ```
 
-### React / CSS-in-JS
+### React / CSS-in-JS 用法
 
 ```tsx
-// CSS custom property
+// CSS 自定义属性
 <div style={{ background: 'var(--gradient-brand)' }} />
 
-// Direct value
+// 直接值
 <div style={{ background: 'linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)' }} />
 ```
 
 ---
 
-## Animated Gradients
+## 动态渐变
 
-### AnimatedGradientText
+### AnimatedGradientText 组件
 
-A text component with a slowly shifting gradient fill. Use for hero taglines and featured copy.
+缓慢移动渐变填充的文字组件。适用于 hero 标语和重点文案。
 
 ```tsx
 import { AnimatedGradientText } from "@nebutra/ui"
@@ -76,11 +75,11 @@ import { AnimatedGradientText } from "@nebutra/ui"
 </AnimatedGradientText>
 ```
 
-The gradient cycles between the brand primary and reverse directions over a 6-second loop, creating a subtle shimmer effect.
+渐变会在 6 秒循环中在品牌主方向和反向之间移动，形成克制的微光效果。
 
-### GradientAnimatedText
+### GradientAnimatedText 组件
 
-A variant with configurable speed and direction. Use for interactive labels.
+可配置速度和方向的变体。适用于交互标签。
 
 ```tsx
 import { GradientAnimatedText } from "@nebutra/ui"
@@ -96,11 +95,11 @@ import { GradientAnimatedText } from "@nebutra/ui"
 
 ---
 
-## Grain Texture
+## 颗粒纹理
 
-### GrainGradientBackground
+### GrainGradientBackground 组件
 
-Adds analog warmth to digital surfaces by overlaying a subtle noise texture on the brand gradient. This is the signature hero section treatment.
+在品牌渐变上叠加细腻噪声纹理，为数字界面带来模拟介质的温度。这是 Nebutra hero 区块的标志性处理方式。
 
 ```tsx
 import { GrainGradientBackground } from "@nebutra/ui"
@@ -111,14 +110,14 @@ import { GrainGradientBackground } from "@nebutra/ui"
     className="absolute inset-0"
   />
   <div className="relative z-10">
-    {/* Hero content */}
+    {/* Hero 内容 */}
   </div>
 </section>
 ```
 
-### SVG feTurbulence Approach
+### SVG feTurbulence 方案
 
-For lightweight grain without a component dependency, use an inline SVG filter:
+如果不想引入组件依赖，可以使用内联 SVG filter 实现轻量颗粒：
 
 ```css
 .grain-overlay::after {
@@ -132,17 +131,16 @@ For lightweight grain without a component dependency, use an inline SVG filter:
 ```
 
 <Tip>
-  Grain texture adds analog warmth that counters the "too perfect" feel of pure CSS gradients.
-  Apply at 8-15% opacity — any higher and it competes with content readability.
+  颗粒纹理可以中和纯 CSS 渐变过于完美的数字感。透明度保持在 8-15%；再高就会和内容可读性竞争。
 </Tip>
 
 ---
 
-## Mesh Gradient
+## 网格渐变
 
-### MeshGradientBg
+### MeshGradientBg 组件
 
-A WebGL-powered multi-point gradient that creates organic, flowing color fields. Use for immersive hero sections and feature landing pages.
+基于 WebGL 的多点渐变，可生成有机流动的色场。适用于沉浸式 hero 和功能落地页。
 
 ```tsx
 import { MeshGradientBg } from "@nebutra/ui"
@@ -154,24 +152,24 @@ import { MeshGradientBg } from "@nebutra/ui"
     className="absolute inset-0"
   />
   <div className="relative z-10">
-    {/* Page content */}
+    {/* 页面内容 */}
   </div>
 </section>
 ```
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|-------------|
-| `colors` | `string[]` | Brand blue/cyan | Array of 4 HEX colors for gradient control points |
-| `speed` | `number` | `0.003` | Animation speed multiplier |
-| `className` | `string` | — | Container CSS classes |
+| `colors` | `string[]` | 品牌蓝/青 | 用于控制渐变点位的 4 个 HEX 颜色 |
+| `speed` | `number` | `0.003` | 动画速度倍率 |
+| `className` | `string` | — | 容器 CSS class |
 
 ---
 
-## Neural Noise
+## 神经噪声
 
-### NeuroNoiseBg
+### NeuroNoiseBg 组件
 
-A WebGL shader that generates brain-like organic noise patterns. Use for AI/ML-themed sections and deep-tech feature pages.
+生成类脑有机噪声图案的 WebGL shader。适用于 AI/ML 主题区块和深科技功能页。
 
 ```tsx
 import { NeuroNoiseBg } from "@nebutra/ui"
@@ -185,25 +183,25 @@ import { NeuroNoiseBg } from "@nebutra/ui"
     className="absolute inset-0"
   />
   <div className="relative z-10">
-    {/* AI feature content */}
+    {/* AI 功能内容 */}
   </div>
 </section>
 ```
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|-------------|
-| `scale` | `number` | `1.5` | Noise pattern scale |
-| `speed` | `number` | `0.002` | Animation speed |
-| `colorA` | `string` | `#0033FE` | Primary color |
-| `colorB` | `string` | `#0BF1C3` | Secondary color |
+| `scale` | `number` | `1.5` | 噪声图案缩放 |
+| `speed` | `number` | `0.002` | 动画速度 |
+| `colorA` | `string` | `#0033FE` | 主色 |
+| `colorB` | `string` | `#0BF1C3` | 辅色 |
 
 ---
 
-## Waves
+## 波浪
 
-### WavesBg
+### WavesBg 组件
 
-A WebGL shader that renders animated wave patterns. Use for data-flow and streaming metaphors.
+渲染动态波浪图案的 WebGL shader。适用于数据流和流式传输隐喻。
 
 ```tsx
 import { WavesBg } from "@nebutra/ui"
@@ -217,25 +215,25 @@ import { WavesBg } from "@nebutra/ui"
     className="absolute inset-0 opacity-30"
   />
   <div className="relative z-10">
-    {/* Streaming data section */}
+    {/* 流式数据区块 */}
   </div>
 </section>
 ```
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|-------------|
-| `amplitude` | `number` | `30` | Wave height in pixels |
-| `frequency` | `number` | `0.02` | Wave density |
-| `speed` | `number` | `0.01` | Animation speed |
-| `color` | `string` | `#0033FE` | Wave color |
+| `amplitude` | `number` | `30` | 波浪高度，单位 px |
+| `frequency` | `number` | `0.02` | 波浪密度 |
+| `speed` | `number` | `0.01` | 动画速度 |
+| `color` | `string` | `#0033FE` | 波浪颜色 |
 
 ---
 
-## Dithering
+## 抖动纹理
 
-### DitheringBackground
+### DitheringBackground 组件
 
-A CSS-only dithering effect that creates a retro-digital texture. Use for nostalgic/tech-heritage sections.
+纯 CSS 抖动效果，用于生成复古数字纹理。适用于怀旧或技术传承主题区块。
 
 ```tsx
 import { DitheringBackground } from "@nebutra/ui"
@@ -248,54 +246,54 @@ import { DitheringBackground } from "@nebutra/ui"
     className="absolute inset-0 opacity-20"
   />
   <div className="relative z-10">
-    {/* Content */}
+    {/* 内容 */}
   </div>
 </section>
 ```
 
 ---
 
-## When to Use Each Texture
+## 各纹理使用场景
 
-| Texture | Context | Performance | Fallback |
+| 纹理 | 场景 | 性能 | 降级 |
 |---------|---------|-------------|----------|
-| **Grain** | Hero sections, about pages | Low (CSS/SVG) | Solid gradient |
-| **Mesh Gradient** | Immersive hero, feature landing | Medium (WebGL) | Static CSS gradient |
-| **Neural Noise** | AI/ML features, deep-tech pages | High (WebGL) | Grain + gradient |
-| **Waves** | Data streaming, pipeline features | Medium (WebGL) | CSS gradient |
-| **Dithering** | Heritage/retro sections, subtle texture | Low (CSS) | Solid background |
-| **AnimatedGradientText** | Hero taglines, featured copy | Low (CSS) | Static gradient text |
+| **Grain** | Hero 区块、关于页 | 低（CSS/SVG） | 纯渐变 |
+| **Mesh Gradient** | 沉浸式 hero、功能落地页 | 中（WebGL） | 静态 CSS 渐变 |
+| **Neural Noise** | AI/ML 功能、深科技页面 | 高（WebGL） | 颗粒 + 渐变 |
+| **Waves** | 数据流、流水线功能 | 中（WebGL） | CSS 渐变 |
+| **Dithering** | 技术传承/复古区块、轻纹理 | 低（CSS） | 纯背景 |
+| **AnimatedGradientText** | Hero 标语、重点文案 | 低（CSS） | 静态渐变文字 |
 
 ---
 
-## Performance Notes
+## 性能说明
 
 <Warning>
-  WebGL shaders (MeshGradient, NeuroNoise, Waves) require GPU acceleration. They must not be used on every page.
+  WebGL 着色器（MeshGradient、NeuroNoise、Waves）需要 GPU 加速，不应在每个页面都使用。
 </Warning>
 
-### Guidelines
+### 指南
 
-- **Maximum 1 WebGL background per page** — multiple shaders compete for GPU resources
-- **Always provide a CSS fallback** — detect WebGL support and degrade gracefully
-- **Disable on low-power devices** — use `prefers-reduced-motion` and battery API
-- **Lazy-load shaders** — only initialize when the section enters the viewport
+- **每页最多 1 个 WebGL 背景**：多个 shader 会争夺 GPU 资源
+- **始终提供 CSS 降级**：检测 WebGL 支持并优雅降级
+- **低功耗设备禁用**：结合 `prefers-reduced-motion` 和 Battery API
+- **延迟加载 shader**：只在区块进入视口时初始化
 
-### CSS Fallback Pattern
+### CSS 降级模式
 
 ```tsx
 <section className="relative">
-  {/* CSS fallback — always renders */}
+  {/* CSS 降级：始终渲染 */}
   <div className="absolute inset-0 bg-[var(--gradient-brand)]" />
 
-  {/* WebGL enhancement — lazy-loaded */}
+  {/* WebGL 增强：延迟加载 */}
   <Suspense fallback={null}>
     <MeshGradientBg className="absolute inset-0" />
   </Suspense>
 </section>
 ```
 
-### Reduced Motion
+### 减少动态效果
 
 ```tsx
 import { useReducedMotion } from "framer-motion"
@@ -313,22 +311,22 @@ function HeroBackground() {
 
 ---
 
-## Do / Don't
+## 应做 / 禁止
 
-**Do** use the brand gradient (135deg) as the default for all gradient surfaces.
+**应做**：所有渐变 surface 默认使用 135deg 品牌渐变。
 
-**Do** apply grain texture at 8-15% opacity for analog warmth.
+**应做**：颗粒纹理透明度保持 8-15%，提供模拟介质质感。
 
-**Do** provide CSS fallbacks for all WebGL shaders.
+**应做**：所有 WebGL shader 都提供 CSS 降级。
 
-**Do** respect `prefers-reduced-motion` for all animated textures.
+**应做**：所有动态纹理都遵守 `prefers-reduced-motion`。
 
-**Don't** change the gradient angle from 135deg for the primary brand gradient.
+**禁止**：改变主品牌渐变的 135deg 角度。
 
-**Don't** use more than 1 WebGL background per page.
+**禁止**：单页使用超过 1 个 WebGL 背景。
 
-**Don't** apply grain at opacity > 15% — it reduces content readability.
+**禁止**：颗粒透明度超过 15%，这会降低内容可读性。
 
-**Don't** use non-brand colors in gradient stops (e.g., purple, orange, pink).
+**禁止**：在渐变色标中使用非品牌色，例如紫色、橙色、粉色。
 
-**Don't** use animated textures on content-heavy pages where they compete for attention.
+**禁止**：在内容密集页面使用会争夺注意力的动态纹理。

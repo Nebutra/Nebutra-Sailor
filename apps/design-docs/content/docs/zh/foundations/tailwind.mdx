@@ -1,10 +1,10 @@
 ---
 title: Tailwind
-description: Nebutra's Tailwind CSS 4 preset maps design tokens to utility classes across all apps.
+description: Nebutra Tailwind CSS 4 preset 将设计 token 映射为跨 app 可用的 utility classes。
 ---
 
 ## 概览
-The `@nebutra/ui` package ships a Tailwind preset that makes design tokens available as Tailwind utility classes. All color, spacing, border-radius, shadow, font, and animation values in the preset are derived from the same token source as the React components — keeping the two systems in sync.
+`@nebutra/ui` 提供 Tailwind preset，把设计 token 暴露为 Tailwind utility classes。preset 中的颜色、间距、圆角、阴影、字体与动画值都来自和 React 组件一致的 token 来源，保证两套系统同步。
 
 Source: `packages/design/ui/src/tailwind.preset.ts`
 
@@ -12,35 +12,35 @@ Source: `packages/design/ui/src/tailwind.preset.ts`
 import nebutraPreset from "@nebutra/ui/tailwind.preset";
 ```
 
-The preset exports:
+preset 导出以下对象：
 
-| Export | Type | Description |
+| 导出 | 类型 | 说明 |
 |---|---|---|
-| `nebutraColors` | Object | Primary, secondary, neutral + semantic colors |
-| `nebutraSpacing` | Object | Named spacing scale (xs → 3xl) |
-| `nebutraBorderRadius` | Object | Radius scale (none → full) |
-| `nebutraShadows` | Object | Elevation shadows (sm → xl) |
-| `nebutraTypography` | Object | Font families and size scale |
-| `nebutraAnimations` | Object | Named CSS animation shorthands |
-| `nebutraPreset` | Object | Full combined preset (default export) |
+| `nebutraColors` | Object | primary、secondary、neutral 与语义颜色 |
+| `nebutraSpacing` | Object | 命名间距尺度（xs → 3xl） |
+| `nebutraBorderRadius` | Object | 圆角尺度（none → full） |
+| `nebutraShadows` | Object | 层级阴影（sm → xl） |
+| `nebutraTypography` | Object | 字体族与字号尺度 |
+| `nebutraAnimations` | Object | 命名 CSS 动画简写 |
+| `nebutraPreset` | Object | 完整组合 preset（默认导出） |
 
-## Design Rationale
+## 设计依据
 
-Tailwind CSS 4 supports CSS-native configuration. Rather than maintaining a separate `tailwind.config.ts` per app, the preset centralizes all token decisions. Applications consume the preset and gain access to all tokens without re-declaring them.
+Tailwind CSS 4 支持 CSS-native 配置。与其在每个 app 维护独立 `tailwind.config.ts`，Nebutra 通过 preset 集中管理所有 token 决策。应用接入 preset 后即可使用全部 token，无需重复声明。
 
-The preset co-locates closely with the design system tokens (`default.ts`, `brand.ts`) but is not a direct re-export — it uses a Tailwind-idiomatic structure optimized for class generation, not theme context.
+preset 与设计系统 token（`default.ts`、`brand.ts`）保持近距离维护，但不是直接 re-export。它采用更符合 Tailwind 的结构，为 class 生成优化，而不是为主题上下文优化。
 
 <Info>
-For Tailwind CSS 4, import styles directly via CSS `@source` rather than requiring a JS config file. See the installation section below.
+Tailwind CSS 4 中通过 CSS `@source` 直接导入样式，不再强依赖 JS 配置文件。见下方安装章节。
 </Info>
 
-## Token Reference
+## Token 参考
 
-### Colors (`nebutraColors`)
+### 颜色（`nebutraColors`）
 
-**Primary (Nebutra Blue):**
+**Primary（Nebutra Blue）：**
 
-| Shade | Hex |
+| 色阶 | Hex |
 |---|---|
 | 50 | `#F0F4FF` |
 | 100 | `#DBE4FF` |
@@ -55,20 +55,20 @@ For Tailwind CSS 4, import styles directly via CSS `@source` rather than requiri
 | 950 | `#000830` |
 | foreground | `#F8FAFC` |
 
-**Secondary (Purple):**
+**Secondary（Purple）：**
 
-| Shade | Hex |
+| 色阶 | Hex |
 |---|---|
 | 50 | `#FAF5FF` |
 | 500 / DEFAULT | `#A855F7` |
 | 700 | `#7C3AED` |
 | foreground | `#1E293B` |
 
-Full 50–950 scale available. See `nebutraColors.secondary` in the preset.
+完整 50–950 色阶见 preset 中的 `nebutraColors.secondary`。
 
-**Neutral (Slate):**
+**Neutral（Slate）：**
 
-| Shade | Hex |
+| 色阶 | Hex |
 |---|---|
 | 50 | `#F8FAFC` |
 | 400 | `#94A3B8` |
@@ -76,7 +76,7 @@ Full 50–950 scale available. See `nebutraColors.secondary` in the preset.
 | 800 | `#1E293B` |
 | 950 | `#020617` |
 
-**Semantic:**
+**Semantic：**
 
 | Name | Value |
 |---|---|
@@ -85,7 +85,7 @@ Full 50–950 scale available. See `nebutraColors.secondary` in the preset.
 | `error` | `#EF4444` |
 | `info` | `#0033FE` |
 
-### Spacing (`nebutraSpacing`)
+### 间距（`nebutraSpacing`）
 
 | Token | Value | px |
 |---|---|---|
@@ -97,7 +97,7 @@ Full 50–950 scale available. See `nebutraColors.secondary` in the preset.
 | `2xl` | `3rem` | 48 |
 | `3xl` | `4rem` | 64 |
 
-### Border Radius (`nebutraBorderRadius`)
+### 圆角（`nebutraBorderRadius`）
 
 | Token | Value |
 |---|---|
@@ -109,7 +109,7 @@ Full 50–950 scale available. See `nebutraColors.secondary` in the preset.
 | `2xl` | `1rem` (16px) |
 | `full` | `9999px` |
 
-### Shadows (`nebutraShadows`)
+### 阴影（`nebutraShadows`）
 
 | Token | Value |
 |---|---|
@@ -118,16 +118,16 @@ Full 50–950 scale available. See `nebutraColors.secondary` in the preset.
 | `lg` | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)` |
 | `xl` | `0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)` |
 
-### Typography (`nebutraTypography`)
+### 排版（`nebutraTypography`）
 
-**Font families:**
+**字体族：**
 
-| Token | Stack |
+| Token | 字体栈 |
 |---|---|
 | `sans` | `Inter, system-ui, -apple-system, …, sans-serif` |
 | `mono` | `"JetBrains Mono", ui-monospace, …, monospace` |
 
-**Font sizes** (xs → 4xl, matching the core type scale):
+**字号**（xs → 4xl，与核心字号尺度一致）：
 
 | Token | Value |
 |---|---|
@@ -140,9 +140,9 @@ Full 50–950 scale available. See `nebutraColors.secondary` in the preset.
 | `3xl` | `1.875rem` |
 | `4xl` | `2.25rem` |
 
-### Animations (`nebutraAnimations`)
+### 动效（`nebutraAnimations`）
 
-| Name | Definition |
+| 名称 | 定义 |
 |---|---|
 | `accordion-down` | `accordion-down 0.2s ease-out` |
 | `accordion-up` | `accordion-up 0.2s ease-out` |
@@ -159,7 +159,7 @@ Full 50–950 scale available. See `nebutraColors.secondary` in the preset.
 Keyframe definitions live in `packages/design/ui/styles/globals.css`.
 
 ## 使用准则
-### Tailwind CSS 4 (CSS-first)
+### Tailwind CSS 4（CSS 优先）
 
 ```css
 /* app/globals.css */
@@ -168,7 +168,7 @@ Keyframe definitions live in `packages/design/ui/styles/globals.css`.
 @source "../../../packages/design/ui/src";
 ```
 
-### Tailwind CSS 3 (Config-based)
+### Tailwind CSS 3（配置式）
 
 ```ts
 // tailwind.config.ts
@@ -181,9 +181,9 @@ export default {
 } satisfies Config;
 ```
 
-### Programmatic access
+### 程序化访问
 
-When you need token values in TypeScript (not as Tailwind classes):
+当你需要在 TypeScript 中读取 token 值，而不是使用 Tailwind class 时：
 
 ```ts
 import { nebutraColors, nebutraSpacing } from "@nebutra/ui/tailwind.preset";
@@ -192,14 +192,14 @@ const brandBlue = nebutraColors.primary[500]; // "#0033FE"
 const sectionPadding = nebutraSpacing["2xl"];  // "3rem"
 ```
 
-## Do / Don't
+## 应做 / 禁止
 
-**Do** use the preset instead of redefining design tokens in per-app Tailwind config.
+**应做**使用 preset，而不是在每个 app 的 Tailwind config 中重新定义设计 token。
 
-**Do** reference semantic color tokens (`primary`, `secondary`, `success`, `error`) in utility classes rather than raw hex-based shade names.
+**应做**在 utility classes 中引用语义颜色 token（`primary`、`secondary`、`success`、`error`），而不是基于 raw hex 的临时色阶名。
 
-**Don't** add one-off color values to an app's Tailwind config. Add them to `nebutraColors` in the preset and document the addition.
+**禁止**在单个 app 的 Tailwind config 中添加一次性颜色值。需要新增时，把它提升到 preset 的 `nebutraColors` 并补充文档。
 
-**Don't** mix Tailwind utility classes with inline `style={{ color: "#..." }}` values for the same property — this creates specificity conflicts and undermines the token system.
+**禁止**对同一属性混用 Tailwind utility class 和 inline `style={{ color: "#..." }}`。这会制造 specificity 冲突，并削弱 token 系统。
 
-**Don't** import `nebutraPreset` in production application code paths. It is a build-time configuration artifact, not a runtime dependency.
+**禁止**在生产应用运行时代码中导入 `nebutraPreset`。它是构建期配置产物，不是运行时依赖。

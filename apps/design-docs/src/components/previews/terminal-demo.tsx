@@ -6,13 +6,13 @@ export function TerminalDemo() {
       <Terminal>
         <TypingAnimation>&gt; pnpm install @nebutra/ui</TypingAnimation>
 
-        <AnimatedSpan className="text-emerald-500">✔ Packages installed successfully.</AnimatedSpan>
+        <AnimatedSpan className="text-success">✔ Packages installed successfully.</AnimatedSpan>
 
         <TypingAnimation>&gt; nebutra start dev</TypingAnimation>
 
-        <AnimatedSpan className="text-blue-400">ℹ Starting development server...</AnimatedSpan>
+        <AnimatedSpan className="text-primary">ℹ Starting development server…</AnimatedSpan>
 
-        <AnimatedSpan className="text-emerald-500">✔ Ready on http://localhost:3000</AnimatedSpan>
+        <AnimatedSpan className="text-success">✔ Ready on http://localhost:3000</AnimatedSpan>
       </Terminal>
     </div>
   );

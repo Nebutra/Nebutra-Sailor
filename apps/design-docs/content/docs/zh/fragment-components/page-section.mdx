@@ -1,6 +1,6 @@
 ---
 title: "PageSection"
-description: "Content section with a heading, optional description, and a divider for grouping related UI."
+description: "带标题、可选描述和分隔线的内容区块，用于组织相关 UI。"
 ---
 
 ## 演示
@@ -56,7 +56,7 @@ export function WorkspaceSettings() {
 | `children` | `React.ReactNode` | — | Section body content |
 
 ## 示例
-### With section-level action
+### 带区块级操作
 
 ```tsx
 <PageSection
@@ -68,7 +68,7 @@ export function WorkspaceSettings() {
 </PageSection>
 ```
 
-### No divider (first section)
+### 无分隔线（首个区块）
 
 ```tsx
 <PageSection title="General" divider={false}>
@@ -76,7 +76,7 @@ export function WorkspaceSettings() {
 </PageSection>
 ```
 
-### Nested h3 for sub-sections
+### 子区块使用嵌套 h3
 
 ```tsx
 <PageSection title="Notifications" description="Configure alert delivery channels.">

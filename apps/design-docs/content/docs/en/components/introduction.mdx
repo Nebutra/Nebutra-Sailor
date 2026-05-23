@@ -49,4 +49,4 @@ The sidebar groups components by consumer intent:
 1. Pick the narrowest primitive that owns the behavior.
 2. Do not use decorative components inside operational workflows unless the pattern page says so.
 3. If a component is in the registry, docs must explain whether package imports or standalone install is canonical for the consuming context.
-4. If a page needs a demo-only component, keep it under previews and do not document it as a production primitive.
+4. Every preview under `src/components/previews` must be attached to the owning MDX page. Remove examples that are not part of the docs contract.

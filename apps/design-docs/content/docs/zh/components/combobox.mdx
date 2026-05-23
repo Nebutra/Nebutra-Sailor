@@ -16,17 +16,21 @@ description: "根据输入查询过滤已知列表，并选择一个确定值。
 
 ## 用法
 
-### 非受控
+### 基础用法
 
 <ComponentPreview name="combobox-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 ### 受控
 
+<ComponentPreview name="combobox-controlled-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
+
+### 默认值
+
 <ComponentPreview name="combobox-default-value-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 ### 带标签
 
-<ComponentPreview name="combobox-2-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
+<ComponentPreview name="combobox-label-demo" className="min-h-[300px] flex justify-center items-start pt-10" />
 
 ### 禁用
 
@@ -50,7 +54,7 @@ description: "根据输入查询过滤已知列表，并选择一个确定值。
 
 ### 复合模式
 
-<ComponentPreview name="combobox-11-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
+<ComponentPreview name="combobox-composition-demo" className="min-h-[350px] flex justify-center items-start pt-10" />
 
 ## 属性
 ### Combobox
@@ -68,7 +72,7 @@ description: "根据输入查询过滤已知列表，并选择一个确定值。
 | `listMaxWidth` | `number \| string` | — | 长文本选项的弹层/列表最大宽度。 |
 | `label` | `string` | — | 渲染在触发器上方的可见标签。 |
 | `hideLabel` | `boolean` | `false` | 视觉隐藏内置标签，但保留无障碍名称。 |
-| `placeholder` | `string` | `"Select..."` | 未选择前的触发器文案。推荐领域化文案，例如 `Search regions...`。 |
+| `placeholder` | `string` | `"Select..."` | 未选择前的触发器文案。推荐领域化文案，例如 `搜索区域...`。 |
 | `emptyMessage` | `string` | `"No results found."` | Options 模式无结果文案。 |
 | `searchPlaceholder` | `string` | `"Search..."` | Options 模式搜索输入占位符。 |
 | `loading` | `boolean` | `false` | 异步结果加载时展示 loading 文案。 |
@@ -96,10 +100,10 @@ description: "根据输入查询过滤已知列表，并选择一个确定值。
 
 ## 设计原则
 
-- 可见标签使用短名词，例如 `Region`、`Environment Variable`。
-- placeholder 描述搜索对象，而不是控件本身：用 `Search regions...`，不要只写 `Search...`。
+- 可见标签使用短名词，例如 `区域`、`环境变量`。
+- placeholder 描述搜索对象，而不是控件本身：用 `搜索区域...`，不要只写 `搜索...`。
 - 异步加载时保持列表打开，不要在 refetch 时折叠弹层。
-- 空状态尽量带对象和查询词，例如 `No regions match "fra"`。
+- 空状态尽量带对象和查询词，例如 `没有区域匹配 "fra"`。
 - 选项文案遵循官方品牌大小写，例如 `Next.js`，不要写成 `NextJS`。
 
 ## 可访问性

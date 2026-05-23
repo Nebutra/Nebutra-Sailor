@@ -1,28 +1,11 @@
 ---
 title: "PageContainer"
-description: "Section wrapper that enforces consistent max-width, vertical rhythm, and responsive padding across pages."
+description: "页面级区块包装器，用于统一最大宽度、垂直节奏和响应式 padding。"
 ---
 
 ## 演示
 
-```tsx
-import { SectionContainer } from "@nebutra/ui";
-
-<SectionContainer size="lg" spacing="md">
-  <SectionContainer.Header>
-    <h2 className="text-3xl font-bold">Features</h2>
-    <p className="text-gray-500 mt-2">Everything you need to ship faster.</p>
-  </SectionContainer.Header>
-
-  <SectionContainer.Content>
-    <FeatureGrid />
-  </SectionContainer.Content>
-
-  <SectionContainer.Footer>
-    <Button>View all features</Button>
-  </SectionContainer.Footer>
-</SectionContainer>
-```
+<ComponentPreview name="page-container-demo" className="min-h-[420px] items-center" />
 
 ## 用法
 
@@ -103,7 +86,7 @@ Thin wrapper with `position: relative`. Accepts any `React.ReactNode` and `class
 | `children` | `React.ReactNode` | — | CTA buttons, footnotes, etc. |
 
 ## 示例
-### Full-width hero (no max-width)
+### 全宽 Hero（无最大宽度）
 
 ```tsx
 <SectionContainer size="full" spacing="xl" noPadding>
@@ -111,7 +94,7 @@ Thin wrapper with `position: relative`. Accepts any `React.ReactNode` and `class
 </SectionContainer>
 ```
 
-### Article layout
+### 文章布局
 
 ```tsx
 <SectionContainer as="article" size="sm" spacing="md">
@@ -121,7 +104,7 @@ Thin wrapper with `position: relative`. Accepts any `React.ReactNode` and `class
 </SectionContainer>
 ```
 
-### Without sub-components
+### 不使用子组件
 
 ```tsx
 <SectionContainer size="lg" spacing="sm">

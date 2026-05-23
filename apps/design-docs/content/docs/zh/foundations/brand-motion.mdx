@@ -322,7 +322,7 @@ const item = {
 
 ## 交互微动效
 
-### Hover
+### 悬停
 
 ```tsx
 import { brandSpring } from "@nebutra/brand"
@@ -335,7 +335,7 @@ import { brandSpring } from "@nebutra/brand"
 </motion.div>
 ```
 
-### Tap
+### 点击
 
 ```tsx
 <motion.button
@@ -346,7 +346,7 @@ import { brandSpring } from "@nebutra/brand"
 </motion.button>
 ```
 
-### Hover Lift
+### 悬停抬升
 
 垂直上浮 + 阴影抬升的组合。用于卡片与交互表面。
 
@@ -381,7 +381,7 @@ import { brandSpring } from "@nebutra/brand"
 </motion.section>
 ```
 
-### Always
+### 始终适用
 
 每次元素进入视口都重新触发动画。**慎用**——仅用于环境背景元素与装饰性动效。
 
@@ -424,28 +424,28 @@ import {
 
 ## Do / Don't（推荐与禁止）
 
-**Do** 所有内容进入视口都用 `emerge`（垂直方向 + 模糊揭示）。
+**应做**所有内容进入视口都用 `emerge`（垂直方向 + 模糊揭示）。
 
-**Do** 水平方向的切换（面板、导航、序列内容）用 `flow`。
+**应做**水平方向的切换（面板、导航、序列内容）用 `flow`。
 
-**Do** 状态指示器与环境呼吸效果用 `pulse`。
+**应做**状态指示器与环境呼吸效果用 `pulse`。
 
-**Do** 所有 tween 动画使用品牌缓动曲线（`[0.16, 1, 0.3, 1]`）。
+**应做**所有 tween 动画使用品牌缓动曲线（`[0.16, 1, 0.3, 1]`）。
 
-**Do** 所有交互微动效（hover、tap、drag）使用品牌 spring。
+**应做**所有交互微动效（hover、tap、drag）使用品牌 spring。
 
-**Do** 列表/网格入场用 `0.08s` 的 stagger 子元素延迟。
+**应做**列表/网格入场用 `0.08s` 的 stagger 子元素延迟。
 
-**Do** 尊重 `prefers-reduced-motion`——关闭所有非必要动画。
+**应做**尊重 `prefers-reduced-motion`——关闭所有非必要动画。
 
-**Don't** 不要到处加弹性——`brandSpring.bouncy` 仅用于按钮反馈与成功态。
+**禁止**到处加弹性——`brandSpring.bouncy` 仅用于按钮反馈与成功态。
 
-**Don't** 不要用通用的 `ease-in-out` 或 `linear` 曲线，始终用品牌曲线。
+**禁止**使用通用的 `ease-in-out` 或 `linear` 曲线，始终用品牌曲线。
 
-**Don't** UI 切换时长**不要超过 `cinematic` 轨（500ms）**——这是绝对上限。
+**禁止**UI 切换时长**超过 `cinematic` 轨（500ms）**——这是绝对上限。
 
-**Don't** 内容元素**不要用 `pulse`**——它保留给状态指示器与环境效果。
+**禁止**内容元素使用 `pulse`——它保留给状态指示器与环境效果。
 
-**Don't** 同时动画的属性**不要超过 3 个**——保持动效聚焦、可读。
+**禁止**同时动画超过 3 个属性——保持动效聚焦、可读。
 
-**Don't** **不要**在 `pulse` 之外创建无限循环动画——只有状态指示器可以循环。
+**禁止**在 `pulse` 之外创建无限循环动画——只有状态指示器可以循环。

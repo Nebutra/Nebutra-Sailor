@@ -12,7 +12,7 @@ export function ComboboxWidthDemo() {
         { value: "nuxt", label: "Nuxt" },
       ]}
       width={384}
-      placeholder="选择框架..."
+      placeholder="Select framework..."
     />
   );
 }

@@ -1,24 +1,24 @@
 ---
-title: "Navigation"
-description: "Routing, wayfinding, tabs, breadcrumbs, and sidebar patterns."
+title: "导航"
+description: "路由、定位、标签页、面包屑与侧边栏模式。"
 ---
 
-## When to Use
+## 何时使用
 
-Choose the navigation pattern that matches the depth and frequency of the destinations being linked.
+根据目标页面的层级深度与访问频率选择导航模式。
 
-| Pattern | Use when |
+| 模式 | 适用场景 |
 |---|---|
-| `Header` | Top-level global navigation, always visible |
-| `NavList` / `Sidebar` | Second-level section navigation (settings, admin areas) |
-| `UnderlineNav` / `Tabs` | Peer views of the same resource (overview, activity, settings) |
-| `Breadcrumbs` | Hierarchical location in a nested resource tree |
-| `Pagination` | Moving between sibling pages in a sequence |
-| `TreeView` | Hierarchical file-system or nested item navigation |
+| `Header` | 顶层全局导航，始终可见 |
+| `NavList` / `Sidebar` | 二级区块导航（设置、管理区） |
+| `UnderlineNav` / `Tabs` | 同一资源的同级视图（概览、动态、设置） |
+| `Breadcrumbs` | 嵌套资源树中的层级位置 |
+| `Pagination` | 在一组同级页面之间前后移动 |
+| `TreeView` | 文件系统或嵌套条目的层级导航 |
 
-## Structure
+## 结构
 
-### Global header
+### 全局页头
 
 ```
 Header
@@ -27,7 +27,7 @@ Header
   └── Header.Item → auth controls (UserButton, SignIn, SignUp)
 ```
 
-### Settings page navigation
+### 设置页导航
 
 ```
 <div className="grid gap-8 md:grid-cols-[240px_1fr]">
@@ -41,7 +41,7 @@ Header
 </div>
 ```
 
-### Tab navigation (peer views)
+### 标签页导航（同级视图）
 
 ```
 UnderlineNav (or Tabs)
@@ -53,7 +53,7 @@ UnderlineNav (or Tabs)
 </div>
 ```
 
-### Breadcrumb trail
+### 面包屑路径
 
 ```
 PageHeader
@@ -64,11 +64,11 @@ PageHeader
   ]}
 ```
 
-## Composition
+## 组合规则
 
-### Global Header
+### 全局页头
 
-The application shell at `apps/web/src/app/providers/design-system-shell.tsx` demonstrates the canonical `Header` pattern. `Header.Item full` takes all available space (flex-grow); subsequent `Header.Item` elements stack to the right.
+`apps/web/src/app/providers/design-system-shell.tsx` 中的应用 shell 展示了标准 `Header` 模式。`Header.Item full` 占据剩余空间（flex-grow）；后续 `Header.Item` 会排列到右侧。
 
 ```tsx
 import { Header, Button } from "@nebutra/ui";
@@ -83,9 +83,9 @@ import { Header, Button } from "@nebutra/ui";
 </Header>
 ```
 
-The `Header` sits outside `<main>`. The remaining viewport height is available to main content via `min-h-[calc(100vh-64px)]`.
+`Header` 位于 `<main>` 外部。主内容可通过 `min-h-[calc(100vh-64px)]` 使用剩余视口高度。
 
-### NavList (settings sidebar)
+### NavList（设置侧边栏）
 
 ```tsx
 import { NavList } from "@nebutra/ui";
@@ -106,11 +106,11 @@ import { NavList } from "@nebutra/ui";
 </NavList>
 ```
 
-Apply `aria-current="page"` to the active item. `NavList` renders an `<nav>` — always provide `aria-label` to distinguish it from other `<nav>` elements on the page.
+给当前项添加 `aria-current="page"`。`NavList` 会渲染为 `<nav>`，必须提供 `aria-label`，以便和页面上其他 `<nav>` 区分。
 
-### UnderlineNav (tab navigation)
+### UnderlineNav（标签页导航）
 
-Use `UnderlineNav` for switching between peer views of the same entity. The component renders as a `<nav>` with an underline indicator on the active item.
+同一实体的同级视图切换使用 `UnderlineNav`。该组件渲染为 `<nav>`，并用下划线标识当前项。
 
 ```tsx
 import { UnderlineNav } from "@nebutra/ui";
@@ -125,11 +125,11 @@ import { UnderlineNav } from "@nebutra/ui";
 </UnderlineNav>
 ```
 
-For client-side tab switching without URL changes (e.g., within a modal), use the `Tabs` atom instead.
+如果需要不改变 URL 的客户端标签切换（例如模态框内部），使用 `Tabs` atom。
 
-### Breadcrumbs
+### Breadcrumbs 面包屑
 
-Pass the `breadcrumbs` prop to `PageHeader`. The last item in the array is rendered as the current page (no link, `selected={true}` on the `Breadcrumbs.Item`).
+向 `PageHeader` 传入 `breadcrumbs` prop。数组最后一项会渲染为当前页（无链接，并在 `Breadcrumbs.Item` 上设置 `selected={true}`）。
 
 ```tsx
 <PageHeader
@@ -142,11 +142,11 @@ Pass the `breadcrumbs` prop to `PageHeader`. The last item in the array is rende
 />
 ```
 
-Breadcrumbs are appropriate for resources nested 2 or more levels deep. Do not add breadcrumbs to top-level pages (Dashboard, Settings root).
+面包屑适用于嵌套 2 层或更深的资源。不要在顶层页面（Dashboard、Settings root）添加面包屑。
 
-### Pagination
+### Pagination 分页
 
-Use `Pagination` at the bottom of docs articles, blog posts, or onboarding steps when the user moves to the previous or next sibling page.
+当用户需要在文档文章、博客文章或 onboarding 步骤的相邻页面之间移动时，在底部使用 `Pagination`。
 
 ```tsx
 import { Pagination } from "@nebutra/ui";
@@ -157,14 +157,14 @@ import { Pagination } from "@nebutra/ui";
 />
 ```
 
-For large ordered result sets, use `PaginationControl` or a table-specific paging pattern instead.
+对于大型有序结果集，改用 `PaginationControl` 或表格专用分页模式。
 
-### Table of Contents
+### 目录
 
-For long content pages, use the `TableOfContents` fragment. It renders a sticky right-rail list of section anchors and highlights the active section as the user scrolls.
+长内容页面使用 `TableOfContents` fragment。它会渲染粘性右侧目录，并随滚动高亮当前区块。
 
 ## 示例
-### Settings page layout with NavList
+### 使用 NavList 的设置页布局
 
 ```tsx
 export default function SettingsLayout({ children }: { children: ReactNode }) {
@@ -195,14 +195,14 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
 }
 ```
 
-## Related Components
+## 相关组件
 
-- [Header](/zh/docs/components/navigation-menu) — global app header bar
-- [NavList](/zh/docs/components/navigation-menu) — vertical nav list
-- [Sidebar](/zh/docs/components/sidebar) — collapsible persistent sidebar
-- [Tabs](/zh/docs/components/tabs) — client-side tab switcher
-- [Breadcrumb](/zh/docs/components/breadcrumb) — breadcrumb trail atom
-- [Pagination](/zh/docs/components/pagination) — sibling page navigation
-- [Tree View](/zh/docs/components/tree-view) — hierarchical nested navigation
-- [Inner Side Menu fragment](/zh/docs/fragment-components/inner-side-menu) — pre-composed settings sidebar
-- [Table of Contents fragment](/zh/docs/fragment-components/table-of-contents) — sticky scroll-spy right rail
+- [Header](/zh/docs/components/navigation-menu) — 全局应用页头栏
+- [NavList](/zh/docs/components/navigation-menu) — 纵向导航列表
+- [Sidebar](/zh/docs/components/sidebar) — 可折叠常驻侧边栏
+- [Tabs](/zh/docs/components/tabs) — 客户端标签切换器
+- [Breadcrumb](/zh/docs/components/breadcrumb) — 面包屑路径 atom
+- [Pagination](/zh/docs/components/pagination) — 同级页面导航
+- [Tree View](/zh/docs/components/tree-view) — 层级嵌套导航
+- [Inner Side Menu fragment](/zh/docs/fragment-components/inner-side-menu) — 预组合设置侧栏
+- [Table of Contents fragment](/zh/docs/fragment-components/table-of-contents) — 粘性 scroll-spy 右侧目录

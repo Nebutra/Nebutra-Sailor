@@ -1,13 +1,13 @@
 ---
-title: "Grid & Layout"
-description: "Responsive column grid, spacing scale, and container widths used across all Nebutra products."
+title: "网格与布局"
+description: "Nebutra 产品通用的响应式列网格、间距尺度和容器宽度。"
 ---
 
-## Layout Grid
+## 布局网格
 
-All Nebutra product UIs use a **12-column fluid grid** with fixed gutters. The column count collapses at breakpoints for responsive layouts.
+所有 Nebutra 产品 UI 都使用带固定 gutter 的 **12 列流式网格**。列数会在断点处收缩，以适配响应式布局。
 
-| Breakpoint | Name | Min width | Columns | Gutter | Margin |
+| 断点 | 名称 | 最小宽度 | 列数 | Gutter | Margin |
 |-----------|------|-----------|---------|--------|--------|
 | `sm` | Mobile | 640px | 4 | 16px | 16px |
 | `md` | Tablet | 768px | 8 | 24px | 24px |
@@ -17,78 +17,78 @@ All Nebutra product UIs use a **12-column fluid grid** with fixed gutters. The c
 
 ---
 
-## Container Widths
+## 容器宽度
 
-Standard page containers constrain content to readable line lengths.
+标准页面容器会把内容限制在可读行宽内。
 
 ```tsx
-// Full-width page wrapper
+// 全宽页面 wrapper
 <div className="mx-auto w-full max-w-screen-xl px-4 md:px-6 lg:px-8">
 
-// Prose / documentation
+// 正文 / 文档
 <div className="mx-auto max-w-3xl px-4">
 
-// Dashboard content
+// Dashboard 内容
 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-// Narrow form / modal content
+// 窄表单 / Modal 内容
 <div className="mx-auto max-w-md">
 ```
 
-| Name | Max width | CSS Variable | Usage |
+| 名称 | 最大宽度 | CSS 变量 | 用途 |
 |------|-----------|-------------|-------|
-| `max-w-sm` | 384px | — | Narrow cards, modals |
-| `max-w-md` | 448px | — | Forms, dialogs |
-| `max-w-lg` | 512px | — | Wide modals |
-| `max-w-2xl` | 672px | — | Prose, documentation |
+| `max-w-sm` | 384px | — | 窄卡片、Modal |
+| `max-w-md` | 448px | — | 表单、Dialog |
+| `max-w-lg` | 512px | — | 宽 Modal |
+| `max-w-2xl` | 672px | — | 正文、文档 |
 | `max-w-4xl` | 896px | `--container-text` | 文本聚焦区域（Hero 文案、CTA、FAQ） |
 | `max-w-6xl` | 1152px | `--container-content` | Dashboard 布局、定价、架构 |
 | `max-w-[1400px]` | 1400px | `--container-wide` | Landing page 区块、Feature Bento、导航栏 |
 
 ---
 
-## Spacing Scale
+## 间距尺度
 
-The spacing scale follows Tailwind's default 4px base unit. Use these for margins, paddings, and gaps consistently.
+间距尺度遵循 Tailwind 默认 4px 基准单位。margin、padding 和 gap 都应保持一致使用。
 
-| Class | Value | Usage |
+| Class | 值 | 用途 |
 |-------|-------|-------|
-| `space-1` | 4px | Tight icon gap, inline elements |
-| `space-2` | 8px | Inner padding, badge gap |
-| `space-3` | 12px | Form element internal padding |
-| `space-4` | 16px | Card padding (sm), section gap |
-| `space-6` | 24px | Card padding (md), grid gap |
-| `space-8` | 32px | Card padding (lg), section spacing |
-| `space-12` | 48px | Page section dividers |
-| `space-16` | 64px | Hero section padding |
-| `space-24` | 96px | Large section breaks |
+| `space-1` | 4px | 紧凑图标间距、行内元素 |
+| `space-2` | 8px | 内边距、Badge 间距 |
+| `space-3` | 12px | 表单元素内部 padding |
+| `space-4` | 16px | 小卡片 padding、区块间距 |
+| `space-6` | 24px | 中卡片 padding、网格间距 |
+| `space-8` | 32px | 大卡片 padding、区块间距 |
+| `space-12` | 48px | 页面区块分隔 |
+| `space-16` | 64px | Hero 区块 padding |
+| `space-24` | 96px | 大区块间隔 |
 
 ---
 
-## Common Layout Patterns
+## 常见布局模式
 
-### Page Shell
+### 页面外壳
 
 ```tsx
 <div className="min-h-screen bg-background">
   <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <nav className="flex h-16 items-center justify-between">
-        {/* Nav content */}
+        {/* 导航内容 */}
       </nav>
     </div>
   </header>
 
   <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    {/* Page content */}
+    {/* 页面内容 */}
   </main>
 </div>
 ```
 
-### Dashboard Grid
+### 仪表盘网格
 
 ```tsx
-{/* Stats row — 4 equal cards */}
+{/* 统计行：4 张等宽卡片 */}
 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
   <Card variant="elevated" padding="md">...</Card>
   <Card variant="elevated" padding="md">...</Card>
@@ -96,18 +96,18 @@ The spacing scale follows Tailwind's default 4px base unit. Use these for margin
   <Card variant="elevated" padding="md">...</Card>
 </div>
 
-{/* Main + Sidebar — 2/3 + 1/3 */}
+{/* 主内容 + 侧边栏：2/3 + 1/3 */}
 <div className="mt-6 grid gap-6 lg:grid-cols-3">
   <div className="lg:col-span-2">
-    {/* Main content */}
+    {/* 主内容 */}
   </div>
   <div>
-    {/* Sidebar */}
+    {/* 侧边栏 */}
   </div>
 </div>
 ```
 
-### Feature Section (3-column)
+### 功能区块（三列）
 
 ```tsx
 <section className="py-16">
@@ -130,32 +130,32 @@ The spacing scale follows Tailwind's default 4px base unit. Use these for margin
 </section>
 ```
 
-### Centered Auth / Onboarding
+### 居中认证 / 引导
 
 ```tsx
 <div className="flex min-h-screen items-center justify-center bg-background px-4">
   <div className="w-full max-w-md">
     <Card variant="elevated" padding="lg">
-      {/* Form content */}
+      {/* 表单内容 */}
     </Card>
   </div>
 </div>
 ```
 
-### Split Layout (Marketing / Auth)
+### 分栏布局（营销 / 认证）
 
 ```tsx
 <div className="grid min-h-screen lg:grid-cols-2">
-  {/* Left — brand panel */}
+  {/* 左侧：品牌面板 */}
   <div className="hidden lg:flex flex-col items-center justify-center
                   bg-[linear-gradient(135deg,#0033FE_0%,#0BF1C3_100%)] p-12">
-    {/* Logo, hero copy */}
+    {/* Logo 与 hero 文案 */}
   </div>
 
-  {/* Right — form */}
+  {/* 右侧：表单 */}
   <div className="flex items-center justify-center p-8">
     <div className="w-full max-w-md">
-      {/* Auth form */}
+      {/* 认证表单 */}
     </div>
   </div>
 </div>
@@ -163,12 +163,12 @@ The spacing scale follows Tailwind's default 4px base unit. Use these for margin
 
 ---
 
-## Stack & Flex Utilities
+## Stack 与 Flex 工具
 
-### Vertical Stack
+### 垂直堆叠
 
 ```tsx
-{/* Stack with consistent gap */}
+{/* 保持一致 gap 的 Stack */}
 <div className="flex flex-col gap-4">
   <Component />
   <Component />
@@ -176,20 +176,20 @@ The spacing scale follows Tailwind's default 4px base unit. Use these for margin
 </div>
 ```
 
-### Horizontal Cluster
+### 水平簇
 
 ```tsx
-{/* Inline elements that wrap */}
+{/* 可换行的行内元素 */}
 <div className="flex flex-wrap items-center gap-2">
   <Badge variant="success" dot>Live</Badge>
   <Badge variant="info">v2.1</Badge>
 </div>
 ```
 
-### Space Between
+### 两端分布
 
 ```tsx
-{/* Header with left/right content */}
+{/* 左右分布的页头 */}
 <div className="flex items-center justify-between">
   <h2 className="text-lg font-semibold">Title</h2>
   <Button size="sm" variant="outline">View all</Button>
@@ -198,20 +198,20 @@ The spacing scale follows Tailwind's default 4px base unit. Use these for margin
 
 ---
 
-## Responsive Patterns
+## 响应式模式
 
-Use Tailwind breakpoint prefixes consistently:
+一致使用 Tailwind 断点前缀：
 
 ```tsx
-{/* Mobile-first: 1 col → 2 → 4 */}
+{/* Mobile-first：1 列 → 2 列 → 4 列 */}
 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
-{/* Hidden on mobile, visible on desktop */}
+{/* 移动端隐藏，桌面端显示 */}
 <aside className="hidden lg:block">
 
-{/* Full width mobile, auto width desktop */}
+{/* 移动端全宽，桌面端自动宽度 */}
 <Button className="w-full sm:w-auto">Submit</Button>
 
-{/* Smaller text on mobile */}
+{/* 移动端更小字号 */}
 <h1 className="text-2xl font-bold sm:text-3xl lg:text-4xl">
 ```

@@ -17,6 +17,7 @@ import process from "node:process";
 const ROOT = path.resolve(import.meta.dirname, "..");
 const REPO_ROOT = path.resolve(ROOT, "..", "..");
 const DOCS_DIR = path.join(ROOT, "content", "docs");
+const PREVIEWS_DIR = path.join(ROOT, "src", "components", "previews");
 const SECTIONS = ["components", "foundations", "fragment-components", "patterns", "api"];
 const LANGS = ["en", "zh"];
 const LOCALIZED_FRONTMATTER_KEYS = new Set(["title", "description"]);
@@ -91,75 +92,11 @@ const componentNavigationContract = {
   ],
 };
 
-const demoOnlyPreviewAllowlist = new Map([
-  ["alert-dialog-custom-demo", "variant fixture for alert-dialog visual regression"],
-  ["avatar-dicebear-simple-demo", "registry/simple avatar fixture"],
-  ["avatar-fallback-demo", "variant exported from avatar-demo file"],
-  ["avatar-fallback-simple-demo", "registry/simple avatar fixture"],
-  ["avatar-git-simple-demo", "registry/simple avatar fixture"],
-  ["avatar-group-simple-demo", "registry/simple avatar fixture"],
-  ["avatar-smart-group-demo", "registry/simple avatar fixture"],
-  ["badge-pill-demo", "density fixture covered by badge matrix docs"],
-  ["breadcrumb-ellipsis-demo", "overflow fixture for breadcrumb docs"],
-  ["card-with-icon-demo", "card variant fixture"],
-  ["carousel-multiple-demo", "carousel variant fixture"],
-  ["carousel-vertical-demo", "carousel orientation fixture"],
-  ["checkbox-indeterminate-demo", "checkbox state fixture"],
-  ["choicebox-radio-demo", "choicebox radio-mode fixture"],
-  ["combobox-3-demo", "combobox scenario fixture"],
-  ["combobox-4-demo", "combobox scenario fixture"],
-  ["combobox-5-demo", "combobox scenario fixture"],
-  ["combobox-6-demo", "combobox scenario fixture"],
-  ["combobox-7-demo", "combobox scenario fixture"],
-  ["combobox-8-demo", "combobox scenario fixture"],
-  ["combobox-9-demo", "combobox scenario fixture"],
-  ["combobox-10-demo", "combobox scenario fixture"],
-  ["command-dialog-simple-demo", "simple command-dialog fixture"],
-  ["dialog-destructive-demo", "dialog destructive-flow fixture"],
-  ["drawer-side-right-demo", "drawer placement fixture"],
-  ["dropdown-menu-radio-group-demo", "dropdown-menu radio-group fixture"],
-  ["dropdown-menu-sub-demo", "dropdown-menu sub-menu fixture"],
-  ["grid-system-demo", "foundation grid visual fixture"],
-  ["hex-grid-demo", "brand pattern visual fixture"],
-  ["input-2-demo", "input secondary fixture"],
-  ["introduction-demo", "legacy component-index fixture"],
-  ["label-description-demo", "label helper-text fixture"],
-  ["label-disabled-demo", "label disabled-state fixture"],
-  ["page-container-demo", "fragment component fixture"],
-  ["popover-controlled-demo", "popover controlled-state fixture"],
-  ["popover-settings-demo", "popover settings-content fixture"],
-  ["progress-custom-color-demo", "progress threshold-color fixture"],
-  ["progress-indeterminate-demo", "progress indeterminate fixture"],
-  ["progress-with-label-demo", "progress label fixture"],
-  ["radio-group-horizontal-demo", "radio-group layout fixture"],
-  ["reaction-chip-demo", "content-block fixture"],
-  ["scroll-area-list-demo", "scroll-area overflow fixture"],
-  ["separator-vertical-demo", "separator orientation fixture"],
-  ["separator-with-text-demo", "separator label fixture"],
-  ["separator-with-text-i-18n-demo", "separator i18n label fixture"],
-  ["skeleton-list-demo", "skeleton list fixture"],
-  ["slider-icon-demo", "slider icon-control fixture"],
-  ["slider-number-flow-demo", "slider animated-number fixture"],
-  ["slider-on-value-change-demo", "slider callback fixture"],
-  ["slider-stateful-demo", "slider controlled-state fixture"],
-  ["textarea-2-demo", "textarea secondary fixture"],
-  ["textarea-3-demo", "textarea secondary fixture"],
-  ["toggle-group-single-demo", "toggle-group single-select fixture"],
-  ["toggle-large-demo", "toggle size fixture"],
-  ["toggle-small-demo", "toggle size fixture"],
-]);
-
-const previewDeletionCandidates = new Map();
-
 const failures = [];
 const warnings = [];
 
 function fail(message) {
   failures.push(message);
-}
-
-function warn(message) {
-  warnings.push(message);
 }
 
 function readJson(file) {
@@ -172,6 +109,10 @@ function stripCodeBlocks(source) {
 
 function stripInlineCode(source) {
   return source.replace(/`[^`\n]*`/g, "");
+}
+
+function stripFrontmatter(source) {
+  return source.replace(/^---\n[\s\S]*?\n---\n?/, "");
 }
 
 function parseFrontmatter(file) {
@@ -223,6 +164,15 @@ function collectMdxFiles(dir = DOCS_DIR) {
     }
   }
   return files;
+}
+
+function collectPreviewFiles() {
+  if (!fs.existsSync(PREVIEWS_DIR)) return [];
+  return fs
+    .readdirSync(PREVIEWS_DIR)
+    .filter((file) => file.endsWith(".tsx"))
+    .map((file) => path.join(PREVIEWS_DIR, file))
+    .sort();
 }
 
 function relative(file) {
@@ -479,31 +429,8 @@ function assertPreviewRegistry() {
   }
 
   const orphaned = [...previewKeys].filter((name) => !previewRefs.has(name)).sort();
-  const unclassified = orphaned.filter(
-    (name) => !demoOnlyPreviewAllowlist.has(name) && !previewDeletionCandidates.has(name),
-  );
-  if (unclassified.length > 0) {
-    fail(
-      `generated previews need an MDX link, demo-only allowlist, or deletion: ${unclassified.join(", ")}`,
-    );
-  }
-
-  const staleAllowlist = [...demoOnlyPreviewAllowlist.keys()].filter(
-    (name) => !previewKeys.has(name),
-  );
-  if (staleAllowlist.length > 0) {
-    fail(
-      `demo-only preview allowlist references missing generated previews: ${staleAllowlist.join(", ")}`,
-    );
-  }
-
-  const existingDeletionCandidates = [...previewDeletionCandidates.keys()].filter((name) =>
-    previewKeys.has(name),
-  );
-  if (existingDeletionCandidates.length > 0) {
-    fail(
-      `preview deletion candidates still exist and should be removed: ${existingDeletionCandidates.join(", ")}`,
-    );
+  if (orphaned.length > 0) {
+    fail(`generated previews need an MDX link or deletion: ${orphaned.join(", ")}`);
   }
 }
 
@@ -642,6 +569,38 @@ function assertBrandTokenTruth() {
   }
 }
 
+function assertNoPreviewEscapeHatchCopy() {
+  const bannedPreviewGovernanceCopy = [
+    ["demo-only preview exception", /\bdemo-only\b/i],
+    ["fixture metadata exception", /\bfixture metadata\b/i],
+    ["owner/type/reason exception", /owner\/type\/reason/i],
+    ["generic preview allowlist", /\bgeneric allowlist\b/i],
+    ["previewless exception", /\bpreviewless\b/i],
+  ];
+
+  for (const file of collectMdxFiles(path.join(DOCS_DIR))) {
+    const body = stripInlineCode(stripCodeBlocks(stripFrontmatter(fs.readFileSync(file, "utf8"))));
+    for (const [label, pattern] of bannedPreviewGovernanceCopy) {
+      if (!pattern.test(body)) continue;
+      fail(
+        `${relative(file)} contains stale preview governance copy (${label}); every generated preview must be linked from MDX or deleted.`,
+      );
+    }
+  }
+}
+
+function assertPreviewFixturesAreRealExamples() {
+  const placeholderFixtureCopy = /\b(Lorem ipsum|Mock import|Adjust if necessary)\b/i;
+
+  for (const file of collectPreviewFiles()) {
+    const source = fs.readFileSync(file, "utf8");
+    if (!placeholderFixtureCopy.test(source)) continue;
+    fail(
+      `${relative(file)} contains placeholder fixture copy; previews must use realistic product examples.`,
+    );
+  }
+}
+
 function collectStoryFiles(dir = path.join(REPO_ROOT, "packages", "design", "ui", "src")) {
   const files = [];
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -686,27 +645,63 @@ function assertStorybookCoverage() {
 }
 
 const zhTemplateParentheticalSuffixes = [
-  ["演示 (Demo)", /(^|[|#\s])演示\s+\(Demo\)/m],
-  ["属性 (Props)", /(^|[|#\s])属性\s+\(Props\)/m],
-  ["属性 (Prop)", /(^|[|#\s])属性\s+\(Prop\)/m],
-  ["默认值 (Default)", /(^|[|#\s])默认值\s+\(Default\)/m],
-  ["描述 (Description)", /(^|[|#\s])描述\s+\(Description\)/m],
-  ["可访问性 (Accessibility)", /(^|[|#\s])可访问性\s+\(Accessibility\)/m],
-  ["无障碍支持 (Accessibility)", /(^|[|#\s])无障碍支持\s+\(Accessibility\)/m],
-  ["设计契约 (Design Contract)", /(^|[|#\s])设计契约\s+\(Design Contract\)/m],
+  ["演示 (Demo)", /(^|[^\p{L}\p{N}_-])演示\s+\(Demo\)/mu],
+  ["属性 (Props)", /(^|[^\p{L}\p{N}_-])属性\s+\(Props\)/mu],
+  ["属性 (Prop)", /(^|[^\p{L}\p{N}_-])属性\s+\(Prop\)/mu],
+  ["默认值 (Default)", /(^|[^\p{L}\p{N}_-])默认值\s+\(Default\)/mu],
+  ["描述 (Description)", /(^|[^\p{L}\p{N}_-])描述\s+\(Description\)/mu],
+  ["可访问性 (Accessibility)", /(^|[^\p{L}\p{N}_-])可访问性\s+\(Accessibility\)/mu],
+  ["无障碍支持 (Accessibility)", /(^|[^\p{L}\p{N}_-])无障碍支持\s+\(Accessibility\)/mu],
+  ["设计契约 (Design Contract)", /(^|[^\p{L}\p{N}_-])设计契约\s+\(Design Contract\)/mu],
 ];
 
-function zhLocalizationIssues(source) {
-  const body = stripInlineCode(stripCodeBlocks(source));
+function isAllowedZhEnglishHeading(heading, file) {
+  const exactAllowed = new Set(["API", "Tokens", "Storybook / Registry"]);
+  if (exactAllowed.has(heading)) return true;
+  if (heading.startsWith("`")) return true;
+
+  const docsRelativePath = relative(file);
+  const isComponentContract =
+    docsRelativePath.includes("/components/") || docsRelativePath.includes("/fragment-components/");
+
+  if (!isComponentContract) return false;
+
+  return (
+    /^use[A-Z][A-Za-z0-9]*$/.test(heading) ||
+    /^[A-Z][A-Za-z0-9]*(?:Props|Payload|Config|Ref|Hook)?$/.test(heading) ||
+    /^[A-Z][A-Za-z0-9]*(?:\.[A-Z][A-Za-z0-9]+)+(?:\s*\/\s*[A-Z][A-Za-z0-9]*(?:\.[A-Z][A-Za-z0-9]+)*)*$/.test(
+      heading,
+    ) ||
+    /^[A-Z][A-Za-z0-9]+\s*\/\s*[A-Z][A-Za-z0-9]+$/.test(heading)
+  );
+}
+
+function zhLocalizationIssues(source, file) {
+  const prose = stripCodeBlocks(stripFrontmatter(source));
+  const body = stripInlineCode(prose);
   const issues = [];
+  const frontmatter = source.match(/^---\n([\s\S]*?)\n---/);
+  const description = frontmatter?.[1]?.match(/^description:\s*["']?(.+?)["']?$/m)?.[1]?.trim();
   const englishHeading =
-    /^#{2,4}\s+(Demo|Overview|Installation|Usage|Props|Best Practices|Accessibility|Design Contract|Examples|States|Presets|Token Families|When To Use|When to use)\b/gm;
+    /^#{2,4}[ \t]+(Demo|Overview|Installation|Usage|Props|Best Practices|Accessibility|Design Contract|Examples|States|Presets|Token Families|When To Use|When to use)\b/gm;
+  const headingPattern = /^#{2,4}[ \t]+(.+)$/gm;
   const englishPropsTable =
     /^\|\s*Prop\s*\|\s*Type\s*\|\s*(Default|默认值)\s*\|\s*(Description|说明)\s*\|/gm;
+  const englishDoDontLabel = /\*\*(?:Do|Don't)\*\*/g;
+  const englishParentheticalHeading = /^#{2,4}[ \t]+.+[\u4e00-\u9fff].*\([A-Za-z][^)]+\)/gm;
   const placeholderCopy = /\b(TODO|TBD|Placeholder|Lorem ipsum)\b/g;
 
-  for (const match of body.matchAll(englishHeading)) {
+  if (description && /[A-Za-z]/.test(description) && !/[\u4e00-\u9fff]/.test(description)) {
+    issues.push("English-only frontmatter description");
+  }
+  for (const match of prose.matchAll(englishHeading)) {
     issues.push(`English template heading "${match[1]}"`);
+  }
+  for (const match of prose.matchAll(headingPattern)) {
+    const heading = match[1].trim();
+    if (/[\u4e00-\u9fff]/.test(heading)) continue;
+    if (isAllowedZhEnglishHeading(heading, file)) continue;
+    issues.push(`English-only heading "${heading}"`);
   }
   for (const [label, pattern] of zhTemplateParentheticalSuffixes) {
     if (pattern.test(body)) {
@@ -715,6 +710,12 @@ function zhLocalizationIssues(source) {
   }
   if (englishPropsTable.test(body)) {
     issues.push("English props table header");
+  }
+  if (englishDoDontLabel.test(body)) {
+    issues.push("English do/don't label");
+  }
+  for (const match of prose.matchAll(englishParentheticalHeading)) {
+    issues.push(`English parenthetical heading "${match[0].replace(/^#{2,4}[ \t]+/, "")}"`);
   }
   if (placeholderCopy.test(body)) {
     issues.push("placeholder copy");
@@ -728,7 +729,7 @@ function assertZhLocalization() {
 
   for (const file of collectMdxFiles(zhRoot)) {
     const source = fs.readFileSync(file, "utf8");
-    const issues = zhLocalizationIssues(source);
+    const issues = zhLocalizationIssues(source, file);
     if (issues.length === 0) continue;
 
     fail(`${relative(file)} has Chinese-localization drift: ${issues.join(", ")}`);
@@ -786,6 +787,8 @@ assertStructuredFrontmatterContracts();
 assertRegistryDocTemplateContracts();
 assertNoStaleSubstrateCopy();
 assertBrandTokenTruth();
+assertNoPreviewEscapeHatchCopy();
+assertPreviewFixturesAreRealExamples();
 assertStorybookCoverage();
 assertZhLocalization();
 assertApiTemplateContracts();

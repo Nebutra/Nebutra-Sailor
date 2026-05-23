@@ -9,6 +9,7 @@ import { InputClearableDemo } from "@/components/previews/input-clearable-demo";
 import { InputDemo } from "@/components/previews/input-demo";
 import { InputErrorDemo } from "@/components/previews/input-error-demo";
 import { InputPasswordRevealDemo } from "@/components/previews/input-password-reveal-demo";
+import { Input2Demo } from "@/components/previews/input-2-demo";
 import { InputWithAddonsDemo } from "@/components/previews/input-with-addons-demo";
 import { InputWithIconDemo } from "@/components/previews/input-with-icon-demo";
 import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo";
@@ -17,7 +18,7 @@ import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo"
   <InputBasicDemo />
 
   ```tsx
-<Input aria-label="Project name" placeholder="my-awesome-project" />
+<Input aria-label="项目名称" placeholder="nebutra-control-plane" />
   ```
 </ComponentPreview>
 
@@ -28,9 +29,9 @@ import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo"
 ```tsx
 <Input
   id="project-name"
-  label="Project Name"
-  placeholder="my-awesome-project"
-  description="Use lowercase letters, numbers, and hyphens."
+  label="项目名称"
+  placeholder="nebutra-control-plane"
+  description="使用小写字母、数字和连字符。"
 />
 ```
 
@@ -68,7 +69,15 @@ import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo"
   <InputWithIconDemo />
 </ComponentPreview>
 
-`type="search"` 在字段有内容时可按 Escape 清空。placeholder 必须命名搜索范围，例如 `Search projects`，不要只写 `Search`。
+`type="search"` 在字段有内容时可按 Escape 清空。placeholder 必须命名搜索范围，例如 `搜索项目`，不要只写 `搜索`。
+
+### 可清除搜索
+
+<ComponentPreview name="input-2-demo" className="max-w-[350px]">
+  <Input2Demo />
+</ComponentPreview>
+
+当字段用于过滤当前列表，并且需要一键恢复空查询时，将 `type="search"` 与 `clearable` 一起使用。图标只作为视觉提示，可访问名称由明确范围的 `aria-label` 提供。
 
 ### 文件
 
@@ -116,7 +125,7 @@ import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo"
 
 ## 设计原则
 
-- Label 使用 Title Case 名词：Project Name、Domain、Environment Variable Name。
+- Label 使用简短名词：项目名称、域名、环境变量名。
 - 占位文案展示示例值，不写操作说明。
 - 验证优先在 blur 后触发；错误文案准备好后传入 `error` 字符串。
 - 表单提交前由调用方 trim 首尾空格。

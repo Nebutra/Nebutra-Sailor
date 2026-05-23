@@ -1,23 +1,23 @@
 ---
-title: "Charts"
-description: "Data visualisation patterns built on Recharts with theme-aware styling."
+title: "图表"
+description: "基于 Recharts 的数据可视化模式，并内置主题感知样式。"
 ---
 
-## When to Use
+## 何时使用
 
-Use chart patterns when you need to render quantitative data that benefits from visual comparison — time-series trends, proportional breakdowns, or multi-series comparisons.
+当定量数据需要借助视觉比较才能更快理解时，使用图表模式，例如时间序列趋势、比例拆分或多序列对比。
 
-Use a chart when:
-- The data has at least 3 data points and a comparison axis (time, category)
-- The insight is relational ("X is growing faster than Y")
-- A table of the same data would require mental arithmetic the chart eliminates
+以下场景使用图表：
+- 数据至少有 3 个数据点，并存在比较轴（时间或类别）
+- 洞察是关系型的，例如“X 增长快于 Y”
+- 如果用表格展示，同样数据需要用户心算，而图表可以消除这一步
 
-Do not use a chart when:
-- A single number or a `CounterLabel` communicates the same thing
-- The data is static reference material
-- The user needs the exact values (use a table alongside or instead)
+以下场景不要使用图表：
+- 单个数字或 `CounterLabel` 已经能表达同样信息
+- 数据是静态参考资料
+- 用户需要精确值（应搭配表格，或直接使用表格）
 
-## Structure
+## 结构
 
 ```
 ChartContainer (owns ChartConfig, sets aspect ratio)
@@ -30,13 +30,13 @@ ChartContainer (owns ChartConfig, sets aspect ratio)
             └── Bar | Line | Area (one per data series)
 ```
 
-`ChartContainer` wraps every chart. It injects `ChartConfig` into context, applies CSS custom properties for per-series color tokens, and enforces the `aspect-video` default aspect ratio.
+每个图表都应该由 `ChartContainer` 包裹。它把 `ChartConfig` 注入 context，为每个数据序列设置 CSS 自定义属性，并默认约束为 `aspect-video` 比例。
 
-## Composition
+## 组合规则
 
-### ChartConfig
+### ChartConfig 配置
 
-Define one entry per data series. Map each key to a label and a color token or theme object.
+每个数据序列定义一个条目。将每个 key 映射到 label，以及颜色 token 或 theme object。
 
 ```tsx
 import { ChartConfig } from "@nebutra/ui/primitives";
@@ -53,7 +53,7 @@ const chartConfig: ChartConfig = {
 } satisfies ChartConfig;
 ```
 
-Theme-aware colors (light/dark variants):
+支持主题感知颜色（light / dark 变体）：
 
 ```tsx
 const chartConfig: ChartConfig = {
@@ -67,7 +67,7 @@ const chartConfig: ChartConfig = {
 };
 ```
 
-### ChartContainer
+### ChartContainer 容器
 
 ```tsx
 import {
@@ -87,16 +87,16 @@ import { BarChart, Bar, CartesianGrid, XAxis } from "recharts";
 </ChartContainer>
 ```
 
-### Tooltip
+### Tooltip 提示
 
-`ChartTooltipContent` reads labels and colors from `ChartConfig` automatically. Pass `indicator="line"` for line charts and `indicator="dot"` (default) for bar charts.
+`ChartTooltipContent` 会自动从 `ChartConfig` 读取 label 和颜色。折线图传入 `indicator="line"`，柱状图使用默认的 `indicator="dot"`。
 
-### Legend
+### Legend 图例
 
-Add `ChartLegend` and `ChartLegendContent` when a chart has two or more series. Position the legend at `verticalAlign="bottom"` for horizontal bar and line charts; omit it for single-series charts.
+当图表包含两个或更多序列时，添加 `ChartLegend` 和 `ChartLegendContent`。横向柱状图与折线图建议把图例放在 `verticalAlign="bottom"`；单序列图表省略图例。
 
 ## 示例
-### Single-series bar chart (monthly API calls)
+### 单序列柱状图（月度 API 调用）
 
 ```tsx
 const data = [
@@ -119,7 +119,7 @@ const config: ChartConfig = {
 </ChartContainer>
 ```
 
-### Multi-series line chart
+### 多序列折线图
 
 ```tsx
 const config: ChartConfig = {
@@ -139,9 +139,9 @@ const config: ChartConfig = {
 </ChartContainer>
 ```
 
-## Related Components
+## 相关组件
 
-- [Metric Card](/zh/docs/fragment-components/metric-card) — display a single KPI above a sparkline
-- [Logs Bar Chart](/zh/docs/fragment-components/logs-bar-chart) — pre-built log-volume bar chart fragment
-- [Card](/zh/docs/components/card) — wrap charts inside a card for consistent padding and borders
-- [Skeleton](/zh/docs/components/skeleton) — use while chart data is loading
+- [Metric Card](/zh/docs/fragment-components/metric-card) — 在 sparkline 上方展示单个 KPI
+- [Logs Bar Chart](/zh/docs/fragment-components/logs-bar-chart) — 预组合的日志量柱状图片段
+- [Card](/zh/docs/components/card) — 将图表包裹在卡片中，保持一致 padding 与边框
+- [Skeleton](/zh/docs/components/skeleton) — 图表数据加载期间使用

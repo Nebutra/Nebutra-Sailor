@@ -73,7 +73,7 @@ npx shadcn@latest add https://ui.nebutra.com/r/button.json
 
 Registry manifest 是 shadcn-compatible 分发产物。它可以携带复制出来的源码和 token fallback，但语义权威仍然是 package source 与 MDX docs。
 
-## Import Path Policy
+## 导入路径策略
 
 | Import | 用于 | 不适合 |
 | --- | --- | --- |
@@ -84,7 +84,7 @@ Registry manifest 是 shadcn-compatible 分发产物。它可以携带复制出�
 | `@nebutra/tokens` | ThemeProvider 与运行时主题状态 | 组件代码里只需要 CSS 变量时。 |
 | `@nebutra/tokens/styles.css` | 运行时 CSS variables | 不要在组件文件里 import。 |
 
-## Styling Rules
+## 样式规则
 
 ```tsx
 // Good: 通过组件 API 消费 semantic/component tokens。

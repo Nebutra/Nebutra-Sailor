@@ -28,7 +28,7 @@ import {
 ```tsx
 <Select>
   <SelectTrigger>
-    <SelectValue placeholder="Select a framework" />
+    <SelectValue placeholder="选择框架" />
   </SelectTrigger>
   <SelectContent>
     <SelectItem value="nextjs">Next.js</SelectItem>
@@ -40,10 +40,10 @@ import {
 也支持原生 `<option>` 和 `<optgroup>` children：
 
 ```tsx
-<Select label="Region" placeholder="Select a region">
-  <optgroup label="North America">
-    <option value="iad1">Washington, D.C.</option>
-    <option value="sfo1">San Francisco</option>
+<Select label="区域" placeholder="选择区域">
+  <optgroup label="北美">
+    <option value="iad1">华盛顿特区</option>
+    <option value="sfo1">旧金山</option>
   </optgroup>
 </Select>
 ```
@@ -68,7 +68,7 @@ import {
 | `defaultValue` | `string` | — | 非受控默认值。 |
 | `onChange` | `ChangeEventHandler<HTMLSelectElement>` | — | 原生 change 回调。 |
 
-### Compound Listbox
+### 复合 Listbox
 
 ```tsx
 import {
@@ -99,10 +99,10 @@ compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择�
 ### 尺寸
 
 ```tsx
-<Select placeholder="XSmall" size="xsmall" options={options} />
-<Select placeholder="Small" size="small" options={options} />
-<Select placeholder="Default" options={options} />
-<Select placeholder="Large" size="large" options={options} />
+<Select placeholder="极小尺寸" size="xsmall" options={options} />
+<Select placeholder="小尺寸" size="small" options={options} />
+<Select placeholder="默认尺寸" options={options} />
+<Select placeholder="大尺寸" size="large" options={options} />
 ```
 
 ### 禁用
@@ -123,8 +123,8 @@ compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择�
 - 只有浏览器表单语义、移动端 picker 或 `optgroup` 支持比展开 popup 样式更重要时，才使用 native shorthand。
 - 需要过滤时改用 `Combobox`；允许多选时使用 `MultiSelect`。
 - 超过约十项的原生列表用 `<optgroup>` 分组；compound API 也可以用 `SelectGroup` 处理菜单式分组。
-- 标签使用简短 Title Case 名词，例如 `Framework`、`Region`。
-- placeholder 使用动作句式：`Select a framework`，不要写 `Choose one...` 或重复 label。
+- 标签使用简短名词，例如 `框架`、`区域`。
+- placeholder 使用动作句式：`选择框架`，不要写 `任选一个...` 或重复 label。
 - blur 后校验，并传入以句号结尾的 sentence-case `error` 文案。
 - 不要把带 label 的 `Select` 包进 Tooltip；提示应放在相邻 icon button 上，避免 label 宣告被破坏。
 

@@ -1,6 +1,6 @@
 ---
 title: "TextConfirmDialog"
-description: "Type-to-confirm dialog that requires the user to type a specific string before a destructive action is enabled."
+description: "输入文本确认对话框：用户必须输入指定字符串后才会启用破坏性操作。"
 ---
 
 ## 演示
@@ -81,7 +81,7 @@ export function DangerZone({ workspace }: { workspace: Workspace }) {
 | `className` | `string` | — | Additional classes on the dialog panel |
 
 ## 示例
-### Confirming by resource name
+### 按资源名称确认
 
 ```tsx
 <TextConfirmDialog
@@ -95,7 +95,7 @@ export function DangerZone({ workspace }: { workspace: Workspace }) {
 />
 ```
 
-### Confirming with a fixed phrase
+### 按固定短语确认
 
 ```tsx
 <TextConfirmDialog
@@ -113,8 +113,8 @@ export function DangerZone({ workspace }: { workspace: Workspace }) {
 ## 可访问性
 - Renders as `<dialog>` with `role="alertdialog"`.
 - `aria-labelledby` references the title; `aria-describedby` references the description.
-- Focus is placed on the text input when the dialog opens.
+- 对话框打开时，焦点会落在文本输入框上。
 - The confirm button has `aria-disabled="true"` (not `disabled`) until the text matches, ensuring it remains reachable by screen readers with a relevant tooltip.
 - Input has `autocomplete="off"`, `autocorrect="off"`, and `spellcheck="false"` to prevent browser auto-fill.
 - Pressing `Escape` closes the dialog, resets the input, and calls `onCancel`.
-- The match check is case-sensitive by default to prevent accidental confirmation.
+- 匹配校验默认区分大小写，避免误确认。

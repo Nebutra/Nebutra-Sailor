@@ -111,26 +111,6 @@ export const DiceBearAvatarDemo = dynamic(() =>
 export const AvatarCompositionDemo = dynamic(() =>
   import("@/components/previews/avatar-demo").then((m) => ({ default: m.AvatarCompositionDemo })),
 );
-export const AvatarDicebearSimpleDemo = dynamic(() =>
-  import("@/components/previews/avatar-dicebear-simple-demo").then((m) => ({
-    default: m.AvatarDicebearSimpleDemo,
-  })),
-);
-export const AvatarFallbackSimpleDemo = dynamic(() =>
-  import("@/components/previews/avatar-fallback-simple-demo").then((m) => ({
-    default: m.AvatarFallbackSimpleDemo,
-  })),
-);
-export const AvatarGitSimpleDemo = dynamic(() =>
-  import("@/components/previews/avatar-git-simple-demo").then((m) => ({
-    default: m.AvatarGitSimpleDemo,
-  })),
-);
-export const AvatarGroupSimpleDemo = dynamic(() =>
-  import("@/components/previews/avatar-group-simple-demo").then((m) => ({
-    default: m.AvatarGroupSimpleDemo,
-  })),
-);
 export const AvatarSmartGroupDemo = dynamic(() =>
   import("@/components/previews/avatar-smart-group-demo").then((m) => ({
     default: m.AvatarSmartGroupDemo,
@@ -168,11 +148,6 @@ export const BadgeNotificationDemo = dynamic(() =>
 export const BadgePillDemo = dynamic(() =>
   import("@/components/previews/badge-pill-demo").then((m) => ({ default: m.BadgePillDemo })),
 );
-export const BadgePillMatrixDemo = dynamic(() =>
-  import("@/components/previews/badge-pill-matrix-demo").then((m) => ({
-    default: m.BadgePillMatrixDemo,
-  })),
-);
 export const BadgeSizesDemo = dynamic(() =>
   import("@/components/previews/badge-sizes-demo").then((m) => ({ default: m.BadgeSizesDemo })),
 );
@@ -203,11 +178,6 @@ export const BorderTrailDemo = dynamic(() =>
 );
 export const BoxDemo = dynamic(() =>
   import("@/components/previews/box-demo").then((m) => ({ default: m.BoxDemo })),
-);
-export const BreadcrumbCustomSeparatorDemo = dynamic(() =>
-  import("@/components/previews/breadcrumb-custom-separator-demo").then((m) => ({
-    default: m.BreadcrumbCustomSeparatorDemo,
-  })),
 );
 export const BreadcrumbDemo = dynamic(() =>
   import("@/components/previews/breadcrumb-demo").then((m) => ({ default: m.BreadcrumbDemo })),
@@ -267,12 +237,6 @@ export const CardWithIconDemo = dynamic(() =>
     default: m.CardWithIconDemo,
   })),
 );
-export const Carousel2Demo = dynamic(() =>
-  import("@/components/previews/carousel-2-demo").then((m) => ({ default: m.Carousel2Demo })),
-);
-export const Carousel3Demo = dynamic(() =>
-  import("@/components/previews/carousel-3-demo").then((m) => ({ default: m.Carousel3Demo })),
-);
 export const CarouselDemo = dynamic(() =>
   import("@/components/previews/carousel-demo").then((m) => ({ default: m.CarouselDemo })),
 );
@@ -305,11 +269,6 @@ export const CheckboxIndeterminateDemo = dynamic(() =>
 export const ChoiceboxDemo = dynamic(() =>
   import("@/components/previews/choicebox-demo").then((m) => ({ default: m.ChoiceboxDemo })),
 );
-export const ChoiceboxRadioDemo = dynamic(() =>
-  import("@/components/previews/choicebox-radio-demo").then((m) => ({
-    default: m.ChoiceboxRadioDemo,
-  })),
-);
 export const CodeBlockDemo = dynamic(() =>
   import("@/components/previews/code-block-demo").then((m) => ({ default: m.CodeBlockDemo })),
 );
@@ -325,35 +284,15 @@ export const CollapsibleDemo = dynamic(() =>
 export const ColorBadgeDemo = dynamic(() =>
   import("@/components/previews/color-badge-demo").then((m) => ({ default: m.ColorBadgeDemo })),
 );
-export const Combobox10Demo = dynamic(() =>
-  import("@/components/previews/combobox-10-demo").then((m) => ({ default: m.Combobox10Demo })),
+export const ComboboxCompositionDemo = dynamic(() =>
+  import("@/components/previews/combobox-composition-demo").then((m) => ({
+    default: m.ComboboxCompositionDemo,
+  })),
 );
-export const Combobox11Demo = dynamic(() =>
-  import("@/components/previews/combobox-11-demo").then((m) => ({ default: m.Combobox11Demo })),
-);
-export const Combobox2Demo = dynamic(() =>
-  import("@/components/previews/combobox-2-demo").then((m) => ({ default: m.Combobox2Demo })),
-);
-export const Combobox3Demo = dynamic(() =>
-  import("@/components/previews/combobox-3-demo").then((m) => ({ default: m.Combobox3Demo })),
-);
-export const Combobox4Demo = dynamic(() =>
-  import("@/components/previews/combobox-4-demo").then((m) => ({ default: m.Combobox4Demo })),
-);
-export const Combobox5Demo = dynamic(() =>
-  import("@/components/previews/combobox-5-demo").then((m) => ({ default: m.Combobox5Demo })),
-);
-export const Combobox6Demo = dynamic(() =>
-  import("@/components/previews/combobox-6-demo").then((m) => ({ default: m.Combobox6Demo })),
-);
-export const Combobox7Demo = dynamic(() =>
-  import("@/components/previews/combobox-7-demo").then((m) => ({ default: m.Combobox7Demo })),
-);
-export const Combobox8Demo = dynamic(() =>
-  import("@/components/previews/combobox-8-demo").then((m) => ({ default: m.Combobox8Demo })),
-);
-export const Combobox9Demo = dynamic(() =>
-  import("@/components/previews/combobox-9-demo").then((m) => ({ default: m.Combobox9Demo })),
+export const ComboboxControlledDemo = dynamic(() =>
+  import("@/components/previews/combobox-controlled-demo").then((m) => ({
+    default: m.ComboboxControlledDemo,
+  })),
 );
 export const ComboboxDefaultValueDemo = dynamic(() =>
   import("@/components/previews/combobox-default-value-demo").then((m) => ({
@@ -376,6 +315,11 @@ export const ComboboxErrorDemo = dynamic(() =>
 export const ComboboxGroupsDemo = dynamic(() =>
   import("@/components/previews/combobox-groups-demo").then((m) => ({
     default: m.ComboboxGroupsDemo,
+  })),
+);
+export const ComboboxLabelDemo = dynamic(() =>
+  import("@/components/previews/combobox-label-demo").then((m) => ({
+    default: m.ComboboxLabelDemo,
   })),
 );
 export const ComboboxSizesDemo = dynamic(() =>
@@ -462,11 +406,6 @@ export const Drawer3Demo = dynamic(() =>
 );
 export const DrawerDemo = dynamic(() =>
   import("@/components/previews/drawer-demo").then((m) => ({ default: m.DrawerDemo })),
-);
-export const DrawerSideRightDemo = dynamic(() =>
-  import("@/components/previews/drawer-side-right-demo").then((m) => ({
-    default: m.DrawerSideRightDemo,
-  })),
 );
 export const DropdownMenu2Demo = dynamic(() =>
   import("@/components/previews/dropdown-menu-2-demo").then((m) => ({
@@ -678,9 +617,6 @@ export const InteractiveCardDemo = dynamic(() =>
     default: m.InteractiveCardDemo,
   })),
 );
-export const IntroductionDemo = dynamic(() =>
-  import("@/components/previews/introduction-demo").then((m) => ({ default: m.IntroductionDemo })),
-);
 export const IphoneMockupDemo = dynamic(() =>
   import("@/components/previews/iphone-mockup-demo").then((m) => ({ default: m.IphoneMockupDemo })),
 );
@@ -810,9 +746,6 @@ export const PageContainerDemo = dynamic(() =>
 export const PaginationDemo = dynamic(() =>
   import("@/components/previews/pagination-demo").then((m) => ({ default: m.PaginationDemo })),
 );
-export const Popover2Demo = dynamic(() =>
-  import("@/components/previews/popover-2-demo").then((m) => ({ default: m.Popover2Demo })),
-);
 export const PopoverControlledDemo = dynamic(() =>
   import("@/components/previews/popover-controlled-demo").then((m) => ({
     default: m.PopoverControlledDemo,
@@ -831,12 +764,6 @@ export const PricingCardDemo = dynamic(() =>
 );
 export const Progress2Demo = dynamic(() =>
   import("@/components/previews/progress-2-demo").then((m) => ({ default: m.Progress2Demo })),
-);
-export const Progress3Demo = dynamic(() =>
-  import("@/components/previews/progress-3-demo").then((m) => ({ default: m.Progress3Demo })),
-);
-export const Progress4Demo = dynamic(() =>
-  import("@/components/previews/progress-4-demo").then((m) => ({ default: m.Progress4Demo })),
 );
 export const ProgressBasicDemo = dynamic(() =>
   import("@/components/previews/progress-basic-demo").then((m) => ({
@@ -874,9 +801,6 @@ export const ProjectBannerDemo = dynamic(() =>
 export const QuestionToolDemo = dynamic(() =>
   import("@/components/previews/question-tool-demo").then((m) => ({ default: m.QuestionToolDemo })),
 );
-export const RadioGroup2Demo = dynamic(() =>
-  import("@/components/previews/radio-group-2-demo").then((m) => ({ default: m.RadioGroup2Demo })),
-);
 export const RadioGroup3Demo = dynamic(() =>
   import("@/components/previews/radio-group-3-demo").then((m) => ({ default: m.RadioGroup3Demo })),
 );
@@ -903,9 +827,6 @@ export const RadioGroupStackedDemo = dynamic(() =>
     default: m.RadioGroupStackedDemo,
   })),
 );
-export const ReactionChipDemo = dynamic(() =>
-  import("@/components/previews/reaction-chip-demo").then((m) => ({ default: m.ReactionChipDemo })),
-);
 export const RelativeTimeCardDemo = dynamic(() =>
   import("@/components/previews/relative-time-card-demo").then((m) => ({
     default: m.RelativeTimeCardDemo,
@@ -922,9 +843,6 @@ export const SafariDemo = dynamic(() =>
 );
 export const ScrollArea2Demo = dynamic(() =>
   import("@/components/previews/scroll-area-2-demo").then((m) => ({ default: m.ScrollArea2Demo })),
-);
-export const ScrollArea3Demo = dynamic(() =>
-  import("@/components/previews/scroll-area-3-demo").then((m) => ({ default: m.ScrollArea3Demo })),
 );
 export const ScrollAreaDemo = dynamic(() =>
   import("@/components/previews/scroll-area-demo").then((m) => ({ default: m.ScrollAreaDemo })),
@@ -961,12 +879,6 @@ export const SelectGroupsDemo = dynamic(() =>
 );
 export const Separator2Demo = dynamic(() =>
   import("@/components/previews/separator-2-demo").then((m) => ({ default: m.Separator2Demo })),
-);
-export const Separator3Demo = dynamic(() =>
-  import("@/components/previews/separator-3-demo").then((m) => ({ default: m.Separator3Demo })),
-);
-export const Separator4Demo = dynamic(() =>
-  import("@/components/previews/separator-4-demo").then((m) => ({ default: m.Separator4Demo })),
 );
 export const SeparatorDemo = dynamic(() =>
   import("@/components/previews/separator-demo").then((m) => ({ default: m.SeparatorDemo })),
@@ -1007,9 +919,6 @@ export const SidebarDemo = dynamic(() =>
 export const Skeleton2Demo = dynamic(() =>
   import("@/components/previews/skeleton-2-demo").then((m) => ({ default: m.Skeleton2Demo })),
 );
-export const Skeleton3Demo = dynamic(() =>
-  import("@/components/previews/skeleton-3-demo").then((m) => ({ default: m.Skeleton3Demo })),
-);
 export const SkeletonDemo = dynamic(() =>
   import("@/components/previews/skeleton-demo").then((m) => ({ default: m.SkeletonDemo })),
 );
@@ -1018,9 +927,6 @@ export const SkeletonListDemo = dynamic(() =>
 );
 export const Slider2Demo = dynamic(() =>
   import("@/components/previews/slider-2-demo").then((m) => ({ default: m.Slider2Demo })),
-);
-export const Slider3Demo = dynamic(() =>
-  import("@/components/previews/slider-3-demo").then((m) => ({ default: m.Slider3Demo })),
 );
 export const Slider4Demo = dynamic(() =>
   import("@/components/previews/slider-4-demo").then((m) => ({ default: m.Slider4Demo })),
@@ -1035,9 +941,6 @@ export const SliderNumberFlowDemo = dynamic(() =>
   import("@/components/previews/slider-number-flow-demo").then((m) => ({
     default: m.SliderNumberFlowDemo,
   })),
-);
-export const SliderOnValueChangeDemo = dynamic(() =>
-  import("@/components/previews/slider-on-value-change-demo").then((m) => ({ default: m.default })),
 );
 export const SliderStatefulDemo = dynamic(() =>
   import("@/components/previews/slider-stateful-demo").then((m) => ({ default: m.default })),
@@ -1092,12 +995,6 @@ export const TextScrambleDemo = dynamic(() =>
 );
 export const TextShimmerDemo = dynamic(() =>
   import("@/components/previews/text-shimmer-demo").then((m) => ({ default: m.default })),
-);
-export const Textarea2Demo = dynamic(() =>
-  import("@/components/previews/textarea-2-demo").then((m) => ({ default: m.Textarea2Demo })),
-);
-export const Textarea3Demo = dynamic(() =>
-  import("@/components/previews/textarea-3-demo").then((m) => ({ default: m.Textarea3Demo })),
 );
 export const TextareaDemo = dynamic(() =>
   import("@/components/previews/textarea-demo").then((m) => ({ default: m.TextareaDemo })),
@@ -1265,19 +1162,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "avatar-with-icon-demo": { name: "avatar-with-icon-demo", component: AvatarWithIconDemo },
   "dice-bear-avatar-demo": { name: "dice-bear-avatar-demo", component: DiceBearAvatarDemo },
   "avatar-composition-demo": { name: "avatar-composition-demo", component: AvatarCompositionDemo },
-  "avatar-dicebear-simple-demo": {
-    name: "avatar-dicebear-simple-demo",
-    component: AvatarDicebearSimpleDemo,
-  },
-  "avatar-fallback-simple-demo": {
-    name: "avatar-fallback-simple-demo",
-    component: AvatarFallbackSimpleDemo,
-  },
-  "avatar-git-simple-demo": { name: "avatar-git-simple-demo", component: AvatarGitSimpleDemo },
-  "avatar-group-simple-demo": {
-    name: "avatar-group-simple-demo",
-    component: AvatarGroupSimpleDemo,
-  },
   "avatar-smart-group-demo": { name: "avatar-smart-group-demo", component: AvatarSmartGroupDemo },
   "awards-demo": { name: "awards-demo", component: AwardsDemo },
   "badge-all-colors-demo": { name: "badge-all-colors-demo", component: BadgeAllColorsDemo },
@@ -1287,7 +1171,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "badge-icon-demo": { name: "badge-icon-demo", component: BadgeIconDemo },
   "badge-notification-demo": { name: "badge-notification-demo", component: BadgeNotificationDemo },
   "badge-pill-demo": { name: "badge-pill-demo", component: BadgePillDemo },
-  "badge-pill-matrix-demo": { name: "badge-pill-matrix-demo", component: BadgePillMatrixDemo },
   "badge-sizes-demo": { name: "badge-sizes-demo", component: BadgeSizesDemo },
   "badge-status-dot-demo": { name: "badge-status-dot-demo", component: BadgeStatusDotDemo },
   "badge-table-demo": { name: "badge-table-demo", component: BadgeTableDemo },
@@ -1297,10 +1180,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "book-demo": { name: "book-demo", component: BookDemo },
   "border-trail-demo": { name: "border-trail-demo", component: BorderTrailDemo },
   "box-demo": { name: "box-demo", component: BoxDemo },
-  "breadcrumb-custom-separator-demo": {
-    name: "breadcrumb-custom-separator-demo",
-    component: BreadcrumbCustomSeparatorDemo,
-  },
   "breadcrumb-demo": { name: "breadcrumb-demo", component: BreadcrumbDemo },
   "breadcrumb-ellipsis-demo": {
     name: "breadcrumb-ellipsis-demo",
@@ -1321,8 +1200,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "card-pricing-demo": { name: "card-pricing-demo", component: CardPricingDemo },
   "card-spotlight-demo": { name: "card-spotlight-demo", component: CardSpotlightDemo },
   "card-with-icon-demo": { name: "card-with-icon-demo", component: CardWithIconDemo },
-  "carousel-2-demo": { name: "carousel-2-demo", component: Carousel2Demo },
-  "carousel-3-demo": { name: "carousel-3-demo", component: Carousel3Demo },
   "carousel-demo": { name: "carousel-demo", component: CarouselDemo },
   "carousel-multiple-demo": { name: "carousel-multiple-demo", component: CarouselMultipleDemo },
   "carousel-vertical-demo": { name: "carousel-vertical-demo", component: CarouselVerticalDemo },
@@ -1334,22 +1211,19 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     component: CheckboxIndeterminateDemo,
   },
   "choicebox-demo": { name: "choicebox-demo", component: ChoiceboxDemo },
-  "choicebox-radio-demo": { name: "choicebox-radio-demo", component: ChoiceboxRadioDemo },
   "code-block-demo": { name: "code-block-demo", component: CodeBlockDemo },
   "collapse-demo": { name: "collapse-demo", component: CollapseDemo },
   "collapsible-2-demo": { name: "collapsible-2-demo", component: Collapsible2Demo },
   "collapsible-demo": { name: "collapsible-demo", component: CollapsibleDemo },
   "color-badge-demo": { name: "color-badge-demo", component: ColorBadgeDemo },
-  "combobox-10-demo": { name: "combobox-10-demo", component: Combobox10Demo },
-  "combobox-11-demo": { name: "combobox-11-demo", component: Combobox11Demo },
-  "combobox-2-demo": { name: "combobox-2-demo", component: Combobox2Demo },
-  "combobox-3-demo": { name: "combobox-3-demo", component: Combobox3Demo },
-  "combobox-4-demo": { name: "combobox-4-demo", component: Combobox4Demo },
-  "combobox-5-demo": { name: "combobox-5-demo", component: Combobox5Demo },
-  "combobox-6-demo": { name: "combobox-6-demo", component: Combobox6Demo },
-  "combobox-7-demo": { name: "combobox-7-demo", component: Combobox7Demo },
-  "combobox-8-demo": { name: "combobox-8-demo", component: Combobox8Demo },
-  "combobox-9-demo": { name: "combobox-9-demo", component: Combobox9Demo },
+  "combobox-composition-demo": {
+    name: "combobox-composition-demo",
+    component: ComboboxCompositionDemo,
+  },
+  "combobox-controlled-demo": {
+    name: "combobox-controlled-demo",
+    component: ComboboxControlledDemo,
+  },
   "combobox-default-value-demo": {
     name: "combobox-default-value-demo",
     component: ComboboxDefaultValueDemo,
@@ -1358,6 +1232,7 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "combobox-disabled-demo": { name: "combobox-disabled-demo", component: ComboboxDisabledDemo },
   "combobox-error-demo": { name: "combobox-error-demo", component: ComboboxErrorDemo },
   "combobox-groups-demo": { name: "combobox-groups-demo", component: ComboboxGroupsDemo },
+  "combobox-label-demo": { name: "combobox-label-demo", component: ComboboxLabelDemo },
   "combobox-sizes-demo": { name: "combobox-sizes-demo", component: ComboboxSizesDemo },
   "combobox-width-demo": { name: "combobox-width-demo", component: ComboboxWidthDemo },
   "command-demo": { name: "command-demo", component: CommandDemo },
@@ -1389,7 +1264,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "drawer-2-demo": { name: "drawer-2-demo", component: Drawer2Demo },
   "drawer-3-demo": { name: "drawer-3-demo", component: Drawer3Demo },
   "drawer-demo": { name: "drawer-demo", component: DrawerDemo },
-  "drawer-side-right-demo": { name: "drawer-side-right-demo", component: DrawerSideRightDemo },
   "dropdown-menu-2-demo": { name: "dropdown-menu-2-demo", component: DropdownMenu2Demo },
   "dropdown-menu-3-demo": { name: "dropdown-menu-3-demo", component: DropdownMenu3Demo },
   "dropdown-menu-4-demo": { name: "dropdown-menu-4-demo", component: DropdownMenu4Demo },
@@ -1453,7 +1327,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "input-with-icon-demo": { name: "input-with-icon-demo", component: InputWithIconDemo },
   "input-with-label-demo": { name: "input-with-label-demo", component: InputWithLabelDemo },
   "interactive-card-demo": { name: "interactive-card-demo", component: InteractiveCardDemo },
-  "introduction-demo": { name: "introduction-demo", component: IntroductionDemo },
   "iphone-mockup-demo": { name: "iphone-mockup-demo", component: IphoneMockupDemo },
   "kbd-demo": { name: "kbd-demo", component: KbdDemo },
   "kpi-card-demo": { name: "kpi-card-demo", component: KpiCardDemo },
@@ -1497,14 +1370,11 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   },
   "page-container-demo": { name: "page-container-demo", component: PageContainerDemo },
   "pagination-demo": { name: "pagination-demo", component: PaginationDemo },
-  "popover-2-demo": { name: "popover-2-demo", component: Popover2Demo },
   "popover-controlled-demo": { name: "popover-controlled-demo", component: PopoverControlledDemo },
   "popover-demo": { name: "popover-demo", component: PopoverDemo },
   "popover-settings-demo": { name: "popover-settings-demo", component: PopoverSettingsDemo },
   "pricing-card-demo": { name: "pricing-card-demo", component: PricingCardDemo },
   "progress-2-demo": { name: "progress-2-demo", component: Progress2Demo },
-  "progress-3-demo": { name: "progress-3-demo", component: Progress3Demo },
-  "progress-4-demo": { name: "progress-4-demo", component: Progress4Demo },
   "progress-basic-demo": { name: "progress-basic-demo", component: ProgressBasicDemo },
   "progress-custom-color-demo": {
     name: "progress-custom-color-demo",
@@ -1522,7 +1392,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "progressive-blur-demo": { name: "progressive-blur-demo", component: ProgressiveBlurDemo },
   "project-banner-demo": { name: "project-banner-demo", component: ProjectBannerDemo },
   "question-tool-demo": { name: "question-tool-demo", component: QuestionToolDemo },
-  "radio-group-2-demo": { name: "radio-group-2-demo", component: RadioGroup2Demo },
   "radio-group-3-demo": { name: "radio-group-3-demo", component: RadioGroup3Demo },
   "radio-group-billing-demo": {
     name: "radio-group-billing-demo",
@@ -1538,13 +1407,11 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
     name: "radio-group-stacked-demo",
     component: RadioGroupStackedDemo,
   },
-  "reaction-chip-demo": { name: "reaction-chip-demo", component: ReactionChipDemo },
   "relative-time-card-demo": { name: "relative-time-card-demo", component: RelativeTimeCardDemo },
   "resizable-2-demo": { name: "resizable-2-demo", component: Resizable2Demo },
   "resizable-demo": { name: "resizable-demo", component: ResizableDemo },
   "safari-demo": { name: "safari-demo", component: SafariDemo },
   "scroll-area-2-demo": { name: "scroll-area-2-demo", component: ScrollArea2Demo },
-  "scroll-area-3-demo": { name: "scroll-area-3-demo", component: ScrollArea3Demo },
   "scroll-area-demo": { name: "scroll-area-demo", component: ScrollAreaDemo },
   "scroll-area-list-demo": { name: "scroll-area-list-demo", component: ScrollAreaListDemo },
   "scroll-velocity-demo": { name: "scroll-velocity-demo", component: ScrollVelocityDemo },
@@ -1555,16 +1422,14 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "select-error-demo": { name: "select-error-demo", component: SelectErrorDemo },
   "select-groups-demo": { name: "select-groups-demo", component: SelectGroupsDemo },
   "separator-2-demo": { name: "separator-2-demo", component: Separator2Demo },
-  "separator-3-demo": { name: "separator-3-demo", component: Separator3Demo },
-  "separator-4-demo": { name: "separator-4-demo", component: Separator4Demo },
   "separator-demo": { name: "separator-demo", component: SeparatorDemo },
   "separator-vertical-demo": { name: "separator-vertical-demo", component: SeparatorVerticalDemo },
   "separator-with-text-demo": {
     name: "separator-with-text-demo",
     component: SeparatorWithTextDemo,
   },
-  "separator-with-text-i-18n-demo": {
-    name: "separator-with-text-i-18n-demo",
+  "separator-with-text-i18n-demo": {
+    name: "separator-with-text-i18n-demo",
     component: SeparatorWithTextI18nDemo,
   },
   "sheet-demo": { name: "sheet-demo", component: SheetDemo },
@@ -1574,19 +1439,13 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "show-more-demo": { name: "show-more-demo", component: ShowMoreDemo },
   "sidebar-demo": { name: "sidebar-demo", component: SidebarDemo },
   "skeleton-2-demo": { name: "skeleton-2-demo", component: Skeleton2Demo },
-  "skeleton-3-demo": { name: "skeleton-3-demo", component: Skeleton3Demo },
   "skeleton-demo": { name: "skeleton-demo", component: SkeletonDemo },
   "skeleton-list-demo": { name: "skeleton-list-demo", component: SkeletonListDemo },
   "slider-2-demo": { name: "slider-2-demo", component: Slider2Demo },
-  "slider-3-demo": { name: "slider-3-demo", component: Slider3Demo },
   "slider-4-demo": { name: "slider-4-demo", component: Slider4Demo },
   "slider-demo": { name: "slider-demo", component: SliderDemo },
   "slider-icon-demo": { name: "slider-icon-demo", component: SliderIconDemo },
   "slider-number-flow-demo": { name: "slider-number-flow-demo", component: SliderNumberFlowDemo },
-  "slider-on-value-change-demo": {
-    name: "slider-on-value-change-demo",
-    component: SliderOnValueChangeDemo,
-  },
   "slider-stateful-demo": { name: "slider-stateful-demo", component: SliderStatefulDemo },
   "spinner-demo": { name: "spinner-demo", component: SpinnerDemo },
   "stack-demo": { name: "stack-demo", component: StackDemo },
@@ -1605,8 +1464,6 @@ export const Index: Record<string, { name: string; component: React.ComponentTyp
   "text-loop-demo": { name: "text-loop-demo", component: TextLoopDemo },
   "text-scramble-demo": { name: "text-scramble-demo", component: TextScrambleDemo },
   "text-shimmer-demo": { name: "text-shimmer-demo", component: TextShimmerDemo },
-  "textarea-2-demo": { name: "textarea-2-demo", component: Textarea2Demo },
-  "textarea-3-demo": { name: "textarea-3-demo", component: Textarea3Demo },
   "textarea-demo": { name: "textarea-demo", component: TextareaDemo },
   "textarea-disabled-demo": { name: "textarea-disabled-demo", component: TextareaDisabledDemo },
   "textarea-with-limit-demo": {
