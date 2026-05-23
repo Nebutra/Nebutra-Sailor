@@ -30,6 +30,7 @@
   ],
   "meta": {
     "nebutraTokens": [
+      "--avatar-badge-size",
       "--avatar-font-size",
       "--avatar-size"
     ],

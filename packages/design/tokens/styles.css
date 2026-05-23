@@ -773,7 +773,9 @@ html {
   scroll-behavior: smooth;
 }
 
-:focus-visible {
+:focus-visible:not(
+  :where(input, textarea, select, [cmdk-input], [role="textbox"], [contenteditable="true"])
+) {
   outline: 2px solid hsl(var(--ring) / 0.5);
   outline-offset: 2px;
   border-radius: inherit;

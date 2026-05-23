@@ -2,9 +2,13 @@
 
 import { MagnifyingGlass as Search } from "@nebutra/icons";
 import { Command as CommandPrimitive } from "cmdk";
-import type * as React from "react";
-
+import * as React from "react";
 import { cn } from "../utils/cn";
+import {
+  commandFrameClassName,
+  commandInputClassName,
+  commandInputWrapperClassName,
+} from "./command-styles";
 import { Dialog, DialogContent } from "./dialog";
 import { Kbd } from "./kbd";
 
@@ -43,17 +47,6 @@ export interface CommandResultsProps extends React.HTMLAttributes<HTMLDivElement
   /** Custom screen-reader announcement. */
   label?: (count: number | undefined, search: string) => React.ReactNode;
 }
-
-const commandFrameClassName = cn(
-  "[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium",
-  "[&_[cmdk-group-heading]]:text-muted-foreground",
-  "[&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0",
-  "[&_[cmdk-group]]:px-2",
-  "[&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5",
-  "[&_[cmdk-input]]:h-12",
-  "[&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-2.5",
-  "[&_[cmdk-item]_svg]:h-4 [&_[cmdk-item]_svg]:w-4",
-);
 
 /**
  * Command - A command palette / autocomplete component
@@ -122,16 +115,9 @@ const CommandInput = ({
 }: CommandInputProps & {
   ref?: React.Ref<React.ElementRef<typeof CommandPrimitive.Input>> | undefined;
 }) => (
-  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+  <div className={commandInputWrapperClassName} data-cmdk-input-wrapper="">
     <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-    <CommandPrimitive.Input
-      ref={ref}
-      className={cn(
-        "flex h-11 w-full rounded-[var(--radius-md)] bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
-        className,
-      )}
-      {...props}
-    />
+    <CommandPrimitive.Input ref={ref} className={cn(commandInputClassName, className)} {...props} />
   </div>
 );
 CommandInput.displayName = CommandPrimitive.Input.displayName;
@@ -237,6 +223,12 @@ const CommandResults = ({
 );
 CommandResults.displayName = "CommandResults";
 
+const shortcutKeyId = (key: React.ReactNode) => {
+  if (typeof key === "string" || typeof key === "number") return String(key);
+  if (React.isValidElement(key) && key.key != null) return String(key.key);
+  return String(key);
+};
+
 const CommandShortcut = ({ className, keys, label, children, ...props }: CommandShortcutProps) => {
   const shortcutKeys = keys ?? (children != null ? [children] : []);
 
@@ -246,8 +238,8 @@ const CommandShortcut = ({ className, keys, label, children, ...props }: Command
       {...props}
     >
       {label ? <span className="sr-only">{label}</span> : null}
-      {shortcutKeys.map((key, index) => (
-        <Kbd key={`${String(key)}-${index}`} aria-hidden={label ? true : undefined} small>
+      {shortcutKeys.map((key) => (
+        <Kbd key={shortcutKeyId(key)} aria-hidden={label ? true : undefined} small>
           {key}
         </Kbd>
       ))}
@@ -267,5 +259,4 @@ export {
   CommandResults,
   CommandSeparator,
   CommandShortcut,
-  commandFrameClassName,
 };

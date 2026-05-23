@@ -140,6 +140,7 @@ export * from "./command";
  *   via `npx shadcn@latest add ...`. See docs/architecture/2026-05-14-registry-dual-track-distribution.md.
  */
 export * from "./command-menu";
+export * from "./command-menu-parts";
 export * from "./confetti";
 export * from "./confirm-dialog";
 export * from "./context-card";

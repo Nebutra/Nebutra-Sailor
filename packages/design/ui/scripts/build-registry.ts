@@ -587,6 +587,17 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     description: "AI command palette built on cmdk + base-ui dialog.",
     source: "primitives/command-menu.tsx",
     layer: "business",
+    extraFiles: [
+      {
+        source: "primitives/command-menu-parts.tsx",
+        targetPath: "components/ui/command-menu-parts.tsx",
+      },
+      {
+        source: "primitives/command-styles.ts",
+        targetPath: "components/ui/command-styles.ts",
+        type: "registry:lib",
+      },
+    ],
   },
   {
     name: "empty-state",
@@ -1271,6 +1282,12 @@ function buildOne(
   darkMap: Record<string, string>,
 ): { item: ShadcnRegistryItem; warnings: string[]; sizeBytes: number } {
   const source = readSource(spec);
+  const extraFiles =
+    spec.extraFiles?.map((file) => ({
+      ...file,
+      content: file.content ?? readExtraFile(file.source ?? ""),
+    })) ?? [];
+  const sourceForAnalysis = [source, ...extraFiles.map((file) => file.content)].join("\n");
   const knownExtraFiles = new Set(
     spec.extraFiles?.flatMap((file) =>
       [file.source, file.targetPath]
@@ -1278,8 +1295,8 @@ function buildOne(
         .map(moduleBasename),
     ) ?? [],
   );
-  const deps = parseImports(source, knownRegistry, knownExtraFiles);
-  const cssVarsUsed = collectCssVars(source);
+  const deps = parseImports(sourceForAnalysis, knownRegistry, knownExtraFiles);
+  const cssVarsUsed = collectCssVars(sourceForAnalysis);
   const fallbacks = buildCssVarFallbacks(cssVarsUsed, lightMap, darkMap);
 
   const targetPath = spec.targetPath ?? `components/ui/${spec.name}.tsx`;
@@ -1301,12 +1318,12 @@ function buildOne(
         target: targetPath,
         content: source,
       },
-      ...(spec.extraFiles?.map((file) => ({
+      ...extraFiles.map((file) => ({
         path: file.targetPath,
         type: file.type ?? "registry:lib",
         target: file.targetPath,
-        content: file.content ?? readExtraFile(file.source ?? ""),
-      })) ?? []),
+        content: file.content,
+      })),
     ],
     ...(fallbacks && { cssVars: fallbacks }),
     meta: {
