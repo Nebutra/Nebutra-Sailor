@@ -12,11 +12,11 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: "GPTBot",
-        allow: ["/", "/blog/", "/docs/", "/features", "/pricing"],
+        allow: ["/", "/blog/", "/docs/", "/features", "/features/", "/pricing"],
       },
       {
         userAgent: "ClaudeBot",
-        allow: ["/", "/blog/", "/docs/", "/features", "/pricing"],
+        allow: ["/", "/blog/", "/docs/", "/features", "/features/", "/pricing"],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

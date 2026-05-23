@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+import { getPackageFeatureHref } from "@/components/landing/features/package-feature-data";
 import { type FileNode, TREE_DATA } from "@/lib/constants/landing-data";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { AnimateIn } from "./AnimateIn";
@@ -40,6 +41,15 @@ function TreeNodes({
     const hasChildren = Boolean(node.children?.length);
     const isLast = index === nodes.length - 1;
     const isTopLevel = level === 0;
+    const featureHref = getPackageFeatureHref(locale, node);
+    const icon = (
+      <span
+        aria-hidden="true"
+        className="mr-2 flex size-4 shrink-0 items-center justify-center opacity-90 transition-opacity group-hover/trigger:opacity-100"
+      >
+        {node.icon}
+      </span>
+    );
 
     return (
       <TreeNode
@@ -59,13 +69,17 @@ function TreeNodes({
             hasChildren={hasChildren}
             className="w-5 shrink-0 text-muted-foreground/35 group-hover/trigger:text-muted-foreground/70"
           />
-          {node.icon && (
-            <span
-              aria-hidden="true"
-              className="mr-2 flex size-4 shrink-0 items-center justify-center opacity-90 transition-opacity group-hover/trigger:opacity-100"
+          {node.icon && featureHref ? (
+            <Link
+              aria-label={`${node.label} feature page`}
+              className="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              href={featureHref}
+              onClick={(event) => event.stopPropagation()}
             >
-              {node.icon}
-            </span>
+              {icon}
+            </Link>
+          ) : (
+            node.icon && icon
           )}
           <TreeLabel
             translate="no"
@@ -87,11 +101,11 @@ function TreeNodes({
               {node.description}
             </span>
           )}
-          {node.featureAnchor && (
+          {featureHref && (
             <Link
               aria-label={`${node.label} feature detail`}
               className="ml-2 flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--neutral-6)] bg-background/70 text-muted-foreground opacity-0 transition-[opacity,color,border-color] group-hover/trigger:opacity-100 hover:border-primary/50 hover:text-primary focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-              href={`/${locale}/features#${node.featureAnchor}`}
+              href={featureHref}
               onClick={(event) => event.stopPropagation()}
             >
               <ArrowRight className="size-3.5" aria-hidden="true" />

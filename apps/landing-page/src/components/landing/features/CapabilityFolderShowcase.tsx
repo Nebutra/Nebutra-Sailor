@@ -9,6 +9,7 @@ import {
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { cn } from "@nebutra/ui/utils";
+import Link from "next/link";
 import type { ComponentType, ReactNode } from "react";
 import type { Locale } from "@/i18n/routing";
 import {
@@ -379,6 +380,7 @@ export function CapabilityFolderShowcase({ locale }: { locale: Locale }) {
       <AnimateInGroup stagger="fast" className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {CAPABILITY_FOLDERS.map((folder) => {
           const Icon = folder.icon;
+          const featureHref = `/${locale}/features/${folder.id}`;
 
           return (
             <article
@@ -400,9 +402,13 @@ export function CapabilityFolderShowcase({ locale }: { locale: Locale }) {
 
               <div className="relative z-10 flex-none px-8 pt-10 sm:px-10">
                 <div className="mb-6 flex items-center gap-3">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-border/50 bg-background/50 text-primary backdrop-blur-sm">
+                  <Link
+                    aria-label={`${copyFor(folder.title, locale)} feature page`}
+                    className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-border/50 bg-background/50 text-primary backdrop-blur-sm transition-colors hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                    href={featureHref}
+                  >
                     <Icon className="size-5 opacity-85" aria-hidden="true" />
-                  </span>
+                  </Link>
                   <ShortPath path={folder.sourcePath} />
                 </div>
 

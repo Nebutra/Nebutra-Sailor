@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { PACKAGE_FEATURE_ENTRIES } from "@/components/landing/features/package-feature-data";
 import { routing } from "@/i18n/routing";
 import { type BlogLanguage, getAllPosts } from "@/lib/blog";
 import {
@@ -70,6 +71,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
   });
 
+  const featureDetailEntries = PACKAGE_FEATURE_ENTRIES.flatMap((entry) => {
+    return routing.locales.map((locale) => ({
+      url: canonicalUrlForLocale(baseUrl, locale, `/features/${entry.slug}`),
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: entry.kind === "package" ? 0.35 : 0.6,
+    }));
+  });
+
   // Dynamic blog post entries
   const [englishPosts, chinesePosts] = await Promise.all([getAllPosts("en"), getAllPosts("zh")]);
   const postsByLanguage: Record<"en" | "zh", typeof englishPosts> = {
@@ -87,5 +97,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
   });
 
-  return [...staticEntries, ...docsEntries, ...changelogEntries, ...blogEntries];
+  return [
+    ...staticEntries,
+    ...docsEntries,
+    ...changelogEntries,
+    ...featureDetailEntries,
+    ...blogEntries,
+  ];
 }
