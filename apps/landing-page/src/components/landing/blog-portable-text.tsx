@@ -69,6 +69,49 @@ function decorateTemplatePlaceholders(block: PortableTextBlock): PortableTextBlo
   return { ...block, children: block.children.flatMap(splitSpanTemplatePlaceholders) };
 }
 
+function BlogTable({ value }: { value: PortableTextBlock }) {
+  const rows = value.rows?.filter((row) => row.cells?.some((cell) => cell.trim())) ?? [];
+  const [header, ...bodyRows] = rows;
+  if (!header?.cells?.length) return null;
+
+  return (
+    <div className="my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] shadow-sm">
+      <table className="w-full min-w-[680px] border-collapse text-left text-sm text-[var(--neutral-11)]">
+        <thead className="bg-[var(--neutral-2)] text-[var(--neutral-12)]">
+          <tr>
+            {header.cells.map((cell, index) => (
+              <th
+                key={`${value._key ?? "table"}-head-${index}`}
+                className="border-b border-[var(--neutral-6)] px-4 py-3 font-semibold"
+                scope="col"
+              >
+                {cell}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {bodyRows.map((row, rowIndex) => (
+            <tr
+              key={row._key ?? `${value._key ?? "table"}-row-${rowIndex}`}
+              className="border-b border-[var(--neutral-5)] last:border-b-0"
+            >
+              {(row.cells ?? []).map((cell, cellIndex) => (
+                <td
+                  key={`${row._key ?? rowIndex}-cell-${cellIndex}`}
+                  className="px-4 py-3 align-top leading-6"
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function createPortableTextComponents(
   copyLabel: string,
   copiedLabel: string,
@@ -168,6 +211,7 @@ function createPortableTextComponents(
       ),
     },
     types: {
+      table: ({ value }) => <BlogTable value={value as PortableTextBlock} />,
       image: ({ value }) => {
         const imageUrl = getImageUrl(value as Parameters<typeof getImageUrl>[0], {
           width: 1200,

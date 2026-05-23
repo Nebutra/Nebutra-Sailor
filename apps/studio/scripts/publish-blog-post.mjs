@@ -184,13 +184,44 @@ function flushParagraph(lines, blocks) {
   lines.length = 0;
 }
 
+function isTableRow(line) {
+  return line.includes("|") && /^\|?.+\|.+\|?$/.test(line.trim());
+}
+
+function isTableSeparator(line) {
+  const cells = splitTableRow(line);
+  return cells.length > 1 && cells.every((cell) => /^:?-{3,}:?$/.test(cell));
+}
+
+function splitTableRow(line) {
+  return line
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map((cell) => cell.trim());
+}
+
+function tableBlock(rows) {
+  return {
+    _type: "table",
+    _key: key(),
+    rows: rows.map((cells) => ({
+      _type: "tableRow",
+      _key: key(),
+      cells,
+    })),
+  };
+}
+
 function markdownToPortableText(markdown, title) {
   const blocks = [];
   const paragraph = [];
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   let skippedTitle = false;
 
-  for (const rawLine of lines) {
+  for (let index = 0; index < lines.length; index += 1) {
+    const rawLine = lines[index];
     const line = rawLine.trim();
 
     if (!line) {
@@ -200,6 +231,21 @@ function markdownToPortableText(markdown, title) {
 
     if (/^---+$/.test(line)) {
       flushParagraph(paragraph, blocks);
+      continue;
+    }
+
+    if (isTableRow(line) && index + 1 < lines.length && isTableSeparator(lines[index + 1])) {
+      flushParagraph(paragraph, blocks);
+      const rows = [splitTableRow(line)];
+      index += 2;
+
+      while (index < lines.length && isTableRow(lines[index].trim())) {
+        rows.push(splitTableRow(lines[index]));
+        index += 1;
+      }
+
+      index -= 1;
+      blocks.push(tableBlock(rows));
       continue;
     }
 

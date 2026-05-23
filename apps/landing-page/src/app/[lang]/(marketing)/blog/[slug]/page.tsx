@@ -77,7 +77,12 @@ function getAuthorName(author: BlogPostWithSource["author"]): string | null {
 function extractBodyText(post: BlogPostWithSource): string {
   const bodyText =
     post.body
-      ?.flatMap((block) => block.children?.map((child) => child.text ?? "") ?? [])
+      ?.flatMap((block) => {
+        if (block._type === "table") {
+          return block.rows?.flatMap((row) => row.cells ?? []) ?? [];
+        }
+        return block.children?.map((child) => child.text ?? "") ?? [];
+      })
       .join(" ") ?? "";
   return `${post.title} ${post.excerpt} ${bodyText}`.trim();
 }
@@ -105,6 +110,15 @@ function getSpanCopyText(span: PortableTextSpan, block: PortableTextBlock): stri
 }
 
 function getPortableBlockCopyText(block: PortableTextBlock): string | null {
+  if (block._type === "table") {
+    const rows = block.rows?.filter((row) => row.cells?.some((cell) => cell.trim())) ?? [];
+    if (!rows.length) return null;
+
+    const tableRows = rows.map((row) => `| ${(row.cells ?? []).join(" | ")} |`);
+    const separator = `| ${(rows[0]?.cells ?? []).map(() => "---").join(" | ")} |`;
+    return [tableRows[0], separator, ...tableRows.slice(1)].join("\n");
+  }
+
   if (block._type !== "block") return null;
 
   const text =

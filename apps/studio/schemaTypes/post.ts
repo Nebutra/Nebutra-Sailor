@@ -81,6 +81,45 @@ export const post = defineType({
       of: [
         { type: "block" },
         {
+          name: "table",
+          title: "Table",
+          type: "object",
+          fields: [
+            defineField({
+              name: "rows",
+              title: "Rows",
+              type: "array",
+              of: [
+                {
+                  name: "tableRow",
+                  title: "Table row",
+                  type: "object",
+                  fields: [
+                    defineField({
+                      name: "cells",
+                      title: "Cells",
+                      type: "array",
+                      of: [{ type: "string" }],
+                    }),
+                  ],
+                },
+              ],
+            }),
+          ],
+          preview: {
+            select: {
+              rows: "rows",
+            },
+            prepare(selection) {
+              const rowCount = Array.isArray(selection.rows) ? selection.rows.length : 0;
+              return {
+                title: "Table",
+                subtitle: `${rowCount} row${rowCount === 1 ? "" : "s"}`,
+              };
+            },
+          },
+        },
+        {
           type: "image",
           options: { hotspot: true },
         },

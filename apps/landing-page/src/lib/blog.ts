@@ -31,6 +31,7 @@ export type PortableTextBlock = {
   level?: number;
   children?: PortableTextSpan[];
   markDefs?: Array<Record<string, unknown>>;
+  rows?: Array<{ _key?: string; cells?: string[] }>;
   asset?: { _ref?: string; _type?: string } | null;
   alt?: string | null;
   caption?: string | null;
