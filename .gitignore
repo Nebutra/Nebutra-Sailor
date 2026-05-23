@@ -68,6 +68,9 @@ brand.config/
 # Misc
 *.tsbuildinfo
 artifacts/
+# Source dir, not a build artifact — feature specimen components.
+!apps/landing-page/src/components/landing/features/artifacts/
+!apps/landing-page/src/components/landing/features/artifacts/**
 .vercel
 
 # Generated API client artifacts — produced by pnpm generate:api-types

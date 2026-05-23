@@ -297,6 +297,27 @@
   background-size: 60px 60px;
 }
 
+/* Feature artifact specimens: orbit sweep — slow rotation of a conic
+   gradient masked to a hairline ring, used in OrbitSpecimen. Disabled
+   for users who prefer reduced motion. */
+@keyframes nebutra-orbit-sweep-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.nebutra-orbit-sweep {
+  animation: nebutra-orbit-sweep-rotate 14s linear infinite;
+  transform-origin: 50% 50%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nebutra-orbit-sweep {
+    animation: none;
+  }
+}
+
 /* Hero background animation: direct video, tokenized fallback, and accessible motion opt-out. */
 .hero-stage::after {
   position: absolute;
