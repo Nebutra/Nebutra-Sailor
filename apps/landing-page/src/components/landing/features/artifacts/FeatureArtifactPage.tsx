@@ -1,4 +1,5 @@
 import { AnimateIn } from "@nebutra/ui/components";
+import { Badge } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { getRelatedEntries, type PackageFeatureEntry } from "../package-feature-data";
@@ -28,96 +29,32 @@ export function FeatureArtifactPage({ entry, lang, locale }: Props) {
     >
       <Navbar />
 
-      {/* full-bleed ambient background */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[820px]"
-        style={{
-          background: `radial-gradient(ellipse at 50% 0%, ${entry.tone.halo}, transparent 60%)`,
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(#ffffff14_1px,transparent_1px)] opacity-[0.07] [background-size:24px_24px]"
-      />
-
-      {/* hero + specimen */}
+      {/* hero */}
       <section className="relative mx-auto max-w-[1400px] px-4 pt-32 pb-12 sm:px-6 lg:px-8">
         <ArtifactHero entry={entry} locale={locale} lang={lang} />
       </section>
 
+      {/* specimen stage — dark-locked museum case */}
       <section className="relative mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
-          {/* Specimen stage is force-locked to dark scope so the artifact
-              always reads as a museum case, regardless of the site theme. */}
           <div
-            className="dark relative overflow-hidden rounded-[var(--radius-panel)] border"
+            className="dark relative overflow-hidden rounded-[var(--radius-panel)] border border-border"
             style={{
-              borderColor: "rgba(255,255,255,0.10)",
               background:
-                "radial-gradient(ellipse at 50% 0%, oklch(0.22 0.018 260) 0%, oklch(0.13 0.012 250) 60%, oklch(0.09 0.008 245) 100%)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 30px 80px -40px rgba(0,0,0,0.6)",
+                "radial-gradient(ellipse at 50% 0%, oklch(0.22 0.018 260) 0%, oklch(0.12 0.012 250) 70%, oklch(0.08 0.008 245) 100%)",
               colorScheme: "dark",
             }}
           >
-            {/* specimen header strip */}
-            <div
-              className="flex items-center justify-between border-b px-5 py-3"
-              style={{ borderColor: "rgba(255,255,255,0.08)" }}
-            >
-              <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1.5">
-                  <span
-                    className="size-2 rounded-full"
-                    style={{ background: entry.tone.accent }}
-                    aria-hidden="true"
-                  />
-                  <span
-                    className="size-2 rounded-full"
-                    style={{ background: entry.tone.secondary }}
-                    aria-hidden="true"
-                  />
-                  <span
-                    className="size-2 rounded-full"
-                    style={{ background: "rgba(255,255,255,0.25)" }}
-                    aria-hidden="true"
-                  />
-                </span>
-                <span
-                  className="font-mono text-[10px] uppercase tracking-[0.32em]"
-                  style={{ color: "rgba(255,255,255,0.55)" }}
-                  translate="no"
-                >
-                  specimen · {entry.visualVariant}
-                </span>
-              </div>
+            <div className="flex items-center justify-between border-b border-border/40 px-5 py-3">
+              <Badge variant="outline" size="sm" className="font-mono uppercase tracking-[0.18em]">
+                specimen · {entry.visualVariant}
+              </Badge>
               <span
-                className="font-mono text-[10px] uppercase tracking-[0.32em]"
-                style={{ color: "rgba(255,255,255,0.55)" }}
+                className="truncate font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground"
                 translate="no"
               >
                 {entry.path}
               </span>
-            </div>
-
-            {/* corner brackets — gives the panel a "specimen frame" feel */}
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-              <span
-                className="absolute left-3 top-[3.25rem] block h-3 w-3 border-t border-l"
-                style={{ borderColor: entry.tone.accent }}
-              />
-              <span
-                className="absolute right-3 top-[3.25rem] block h-3 w-3 border-t border-r"
-                style={{ borderColor: entry.tone.accent }}
-              />
-              <span
-                className="absolute bottom-3 left-3 block h-3 w-3 border-b border-l"
-                style={{ borderColor: entry.tone.accent }}
-              />
-              <span
-                className="absolute right-3 bottom-3 block h-3 w-3 border-b border-r"
-                style={{ borderColor: entry.tone.accent }}
-              />
             </div>
 
             <ArtifactSpecimen entry={entry} locale={locale} />
@@ -125,14 +62,11 @@ export function FeatureArtifactPage({ entry, lang, locale }: Props) {
         </AnimateIn>
       </section>
 
-      {/* minimal contracts strip — only when there are children */}
+      {/* contracts strip */}
       {hasChildren ? (
         <section className="relative mx-auto max-w-[1400px] px-4 pb-8 sm:px-6 lg:px-8">
           <AnimateIn preset="fade" inView>
-            <div
-              className="border-t border-b py-6"
-              style={{ borderColor: "color-mix(in oklch, var(--foreground), transparent 88%)" }}
-            >
+            <div className="border-t border-b border-border/40 py-6">
               <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
                 <span>{COPY.contracts[locale]}</span>
                 <span>
@@ -168,7 +102,6 @@ export function FeatureArtifactPage({ entry, lang, locale }: Props) {
         </section>
       ) : null}
 
-      {/* related artifacts rail */}
       <RelatedArtifacts entries={related} lang={lang} locale={locale} />
 
       <FooterMinimal />

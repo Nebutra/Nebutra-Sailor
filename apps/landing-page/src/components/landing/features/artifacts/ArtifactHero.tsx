@@ -62,24 +62,28 @@ export function ArtifactHero({ entry, locale, lang }: Props) {
         </div>
       </AnimateIn>
 
-      {/* oversized title */}
+      {/* oversized title — leading and letter-spacing tuned to fit both
+          Latin and CJK glyphs. CJK characters need ≥1.0 leading because
+          their em-square fills the line box; combined with background-clip:text,
+          tighter leading clips the top of glyphs. */}
       <AnimateIn preset="fadeUp" delay={0.1}>
         <h1
-          className="mt-6 text-[3.25rem] font-semibold leading-[0.95] sm:text-[5rem] lg:text-[7.5rem]"
+          className="mt-6 text-[3rem] font-semibold leading-[1.08] sm:text-[4.5rem] sm:leading-[1.05] lg:text-[6.5rem]"
           style={{
-            letterSpacing: "-0.04em",
+            letterSpacing: "-0.02em",
             color: "var(--foreground)",
           }}
         >
-          <span className="block">{headA}</span>
+          <span className="block pb-1">{headA}</span>
           {headB ? (
             <span
-              className="block"
+              className="block pb-2"
               style={{
                 background: entry.tone.gradient,
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
+                paddingTop: "0.08em",
               }}
             >
               {headB}
