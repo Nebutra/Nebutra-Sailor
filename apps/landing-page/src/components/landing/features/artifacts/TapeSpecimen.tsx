@@ -21,8 +21,8 @@ export function TapeSpecimen({ entry, locale, compact = false }: Props) {
   const secondary = entry.tone.secondary;
   const sig = entrySignature(entry);
   const minHeightStyle = compact
-    ? { minHeight: "260px" }
-    : { minHeight: "clamp(420px, 60vw, 600px)" };
+    ? { minHeight: "240px" }
+    : { minHeight: "clamp(380px, 50vw, 520px)" };
 
   return (
     <div

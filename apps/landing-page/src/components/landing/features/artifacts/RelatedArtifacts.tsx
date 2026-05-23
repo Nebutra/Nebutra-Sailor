@@ -39,7 +39,16 @@ export function RelatedArtifacts({ entries, lang, locale }: Props) {
                   background: "color-mix(in oklch, var(--background), transparent 8%)",
                 }}
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                {/* mini specimen sits inside its own dark cell so siblings read
+                    as same-family artifacts even when the page is light-mode */}
+                <div
+                  className="dark relative aspect-[4/3] w-full overflow-hidden"
+                  style={{
+                    colorScheme: "dark",
+                    background:
+                      "radial-gradient(ellipse at 50% 0%, oklch(0.20 0.018 260) 0%, oklch(0.10 0.010 245) 90%)",
+                  }}
+                >
                   <ArtifactSpecimen entry={related} locale={locale} compact />
                 </div>
                 <div

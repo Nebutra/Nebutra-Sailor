@@ -48,18 +48,22 @@ export function FeatureArtifactPage({ entry, lang, locale }: Props) {
 
       <section className="relative mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
+          {/* Specimen stage is force-locked to dark scope so the artifact
+              always reads as a museum case, regardless of the site theme. */}
           <div
-            className="relative overflow-hidden rounded-[var(--radius-panel)] border backdrop-blur-md"
+            className="dark relative overflow-hidden rounded-[var(--radius-panel)] border"
             style={{
-              borderColor: entry.tone.hairline,
-              background: `color-mix(in oklch, var(--background), transparent 14%)`,
-              boxShadow: "var(--ring-hairline)",
+              borderColor: "rgba(255,255,255,0.10)",
+              background:
+                "radial-gradient(ellipse at 50% 0%, oklch(0.22 0.018 260) 0%, oklch(0.13 0.012 250) 60%, oklch(0.09 0.008 245) 100%)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 30px 80px -40px rgba(0,0,0,0.6)",
+              colorScheme: "dark",
             }}
           >
             {/* specimen header strip */}
             <div
               className="flex items-center justify-between border-b px-5 py-3"
-              style={{ borderColor: "color-mix(in oklch, var(--foreground), transparent 88%)" }}
+              style={{ borderColor: "rgba(255,255,255,0.08)" }}
             >
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1.5">
@@ -75,25 +79,45 @@ export function FeatureArtifactPage({ entry, lang, locale }: Props) {
                   />
                   <span
                     className="size-2 rounded-full"
-                    style={{
-                      background: "color-mix(in oklch, var(--foreground), transparent 70%)",
-                    }}
+                    style={{ background: "rgba(255,255,255,0.25)" }}
                     aria-hidden="true"
                   />
                 </span>
                 <span
-                  className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground"
+                  className="font-mono text-[10px] uppercase tracking-[0.32em]"
+                  style={{ color: "rgba(255,255,255,0.55)" }}
                   translate="no"
                 >
                   specimen · {entry.visualVariant}
                 </span>
               </div>
               <span
-                className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground"
+                className="font-mono text-[10px] uppercase tracking-[0.32em]"
+                style={{ color: "rgba(255,255,255,0.55)" }}
                 translate="no"
               >
                 {entry.path}
               </span>
+            </div>
+
+            {/* corner brackets — gives the panel a "specimen frame" feel */}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+              <span
+                className="absolute left-3 top-[3.25rem] block h-3 w-3 border-t border-l"
+                style={{ borderColor: entry.tone.accent }}
+              />
+              <span
+                className="absolute right-3 top-[3.25rem] block h-3 w-3 border-t border-r"
+                style={{ borderColor: entry.tone.accent }}
+              />
+              <span
+                className="absolute bottom-3 left-3 block h-3 w-3 border-b border-l"
+                style={{ borderColor: entry.tone.accent }}
+              />
+              <span
+                className="absolute right-3 bottom-3 block h-3 w-3 border-b border-r"
+                style={{ borderColor: entry.tone.accent }}
+              />
             </div>
 
             <ArtifactSpecimen entry={entry} locale={locale} />

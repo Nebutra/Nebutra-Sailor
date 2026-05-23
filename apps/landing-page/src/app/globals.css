@@ -308,12 +308,25 @@
     transform: rotate(360deg);
   }
 }
+@keyframes nebutra-orbit-sweep-rotate-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
 .nebutra-orbit-sweep {
   animation: nebutra-orbit-sweep-rotate 14s linear infinite;
   transform-origin: 50% 50%;
 }
+.nebutra-orbit-sweep-reverse {
+  animation: nebutra-orbit-sweep-rotate-reverse 22s linear infinite;
+  transform-origin: 50% 50%;
+}
 @media (prefers-reduced-motion: reduce) {
-  .nebutra-orbit-sweep {
+  .nebutra-orbit-sweep,
+  .nebutra-orbit-sweep-reverse {
     animation: none;
   }
 }
