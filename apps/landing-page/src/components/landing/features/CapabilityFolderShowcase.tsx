@@ -23,16 +23,16 @@ const copyFor = (copy: CapabilityFolder["title"], locale: Locale) =>
 
 const SECTION_COPY = {
   eyebrow: {
-    en: "Source-Aligned Capability Map",
-    zh: "源码对齐的能力地图",
+    en: "High Cohesion · Low Coupling",
+    zh: "高内聚 · 低耦合",
   },
   title: {
-    en: "Each high-value folder now gets its own product-grade surface.",
-    zh: "每个高价值目录，都应该有自己的产品级展示面。",
+    en: "Cohesive capabilities, loosely coupled boundaries.",
+    zh: "高内聚能力，低耦合边界。",
   },
   description: {
-    en: "These cards are not a decorative tree duplicate. Each one is shaped from real package counts, source files, tests, package responsibilities, and the architectural boundary the folder owns.",
-    zh: "这些卡片不是目录树的装饰性重复。每张卡都来自真实包数量、源码文件、测试、包职责，以及该目录真正拥有的架构边界。",
+    en: "Nebutra’s AI, platform, identity, design system, integrations, commerce, and gateway layers are organized around one owner per capability, with source-backed interfaces and verification evidence between modules.",
+    zh: "Nebutra 的 AI、平台、身份、设计系统、集成、商业与网关能力，按“一个能力一个 owner”收束，并用源码级接口与验证证据隔开模块边界。",
   },
   source: {
     en: "Source",
@@ -107,10 +107,10 @@ const TOPOLOGY_ICONS: Record<CapabilityVisualVariant, ComponentType<{ className?
 };
 
 const toneClasses = {
-  adapter: "border-[var(--neutral-6)] bg-[var(--neutral-2)] text-muted-foreground",
-  core: "border-primary/35 bg-primary/10 text-foreground",
-  policy: "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-foreground",
-  port: "border-[var(--neutral-6)] bg-background text-foreground",
+  adapter: "border-border/50 bg-background/40 text-muted-foreground",
+  core: "border-primary/30 bg-primary/10 text-foreground",
+  policy: "border-border/60 bg-background/50 text-foreground",
+  port: "border-border/50 bg-background/40 text-foreground",
 } as const;
 
 function localized(section: keyof typeof SECTION_COPY, locale: Locale) {
@@ -138,9 +138,9 @@ function SourceMetrics({ folder, locale }: { folder: CapabilityFolder; locale: L
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-6)] sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-sm)] border border-border/50 bg-border/50 sm:grid-cols-4">
       {metrics.map((metric) => (
-        <div className="bg-background px-3 py-2.5" key={metric.label}>
+        <div className="bg-background/40 px-3 py-2.5" key={metric.label}>
           <p className="font-mono text-foreground text-sm" translate="no">
             {metric.value}
           </p>
@@ -199,8 +199,8 @@ function OrchestraVisual({ folder, locale }: { folder: CapabilityFolder; locale:
         ))}
       </div>
       {core ? (
-        <div className="relative rounded-[var(--radius-sm)] border border-primary/35 bg-primary/10 p-4 text-center">
-          <div className="mx-auto mb-3 flex size-9 items-center justify-center rounded-full border border-primary/35 bg-background">
+        <div className="relative rounded-[var(--radius-sm)] border border-primary/30 bg-primary/10 p-4 text-center">
+          <div className="mx-auto mb-3 flex size-9 items-center justify-center rounded-full border border-primary/30 bg-background/60">
             <GitBranch className="size-4 text-primary" aria-hidden="true" />
           </div>
           <p className="font-mono text-foreground text-xs" translate="no">
@@ -235,11 +235,11 @@ function StackVisual({ folder, locale }: { folder: CapabilityFolder; locale: Loc
           key={node.label}
         >
           <div className="flex flex-col items-center">
-            <span className="flex size-7 items-center justify-center rounded-full border border-[var(--neutral-6)] bg-background font-mono text-[11px] text-muted-foreground">
+            <span className="flex size-7 items-center justify-center rounded-full border border-border/50 bg-background/40 font-mono text-[11px] text-muted-foreground">
               {index + 1}
             </span>
             {index < folder.topology.nodes.length - 1 ? (
-              <span className="mt-1 h-full min-h-5 w-px bg-[var(--neutral-6)]" aria-hidden="true" />
+              <span className="mt-1 h-full min-h-5 w-px bg-border/50" aria-hidden="true" />
             ) : null}
           </div>
           <NodePill detail={node.detail} label={node.label} locale={locale} tone={node.tone} />
@@ -263,7 +263,7 @@ function SequenceVisual({ folder, locale }: { folder: CapabilityFolder; locale: 
           />
           {index < folder.topology.nodes.length - 1 ? (
             <span
-              className="absolute top-1/2 right-[-0.6rem] hidden h-px w-3 bg-[var(--neutral-7)] md:block"
+              className="absolute top-1/2 right-[-0.6rem] hidden h-px w-3 bg-border/60 md:block"
               aria-hidden="true"
             />
           ) : null}
@@ -276,7 +276,7 @@ function SequenceVisual({ folder, locale }: { folder: CapabilityFolder; locale: 
 function BusVisual({ folder, locale }: { folder: CapabilityFolder; locale: Locale }) {
   return (
     <div className="grid gap-3 md:grid-cols-[minmax(140px,0.6fr)_minmax(0,1.4fr)] md:items-stretch">
-      <div className="flex items-center justify-center rounded-[var(--radius-sm)] border border-primary/35 bg-primary/10 p-4 text-center">
+      <div className="flex items-center justify-center rounded-[var(--radius-sm)] border border-primary/30 bg-primary/10 p-4 text-center">
         <div>
           <Connection className="mx-auto mb-3 size-5 text-primary" aria-hidden="true" />
           <p className="font-mono text-foreground text-xs" translate="no">
@@ -304,7 +304,7 @@ function BusVisual({ folder, locale }: { folder: CapabilityFolder; locale: Local
 
 function LedgerVisual({ folder, locale }: { folder: CapabilityFolder; locale: Locale }) {
   return (
-    <div className="divide-y divide-[var(--neutral-6)] border-[var(--neutral-6)] border-y">
+    <div className="divide-y divide-border/50 border-border/50 border-y">
       {folder.topology.nodes.map((node) => (
         <div
           className="grid gap-2 py-2.5 sm:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)]"
@@ -327,7 +327,7 @@ function TopologyVisual({ folder, locale }: { folder: CapabilityFolder; locale: 
   const variant = folder.topology.variant;
 
   return (
-    <div className="mt-5 border-[var(--neutral-6)] border-y py-5">
+    <div className="mt-5 border-border/50 border-y py-5">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div>
           <p className="mb-1 font-semibold text-foreground text-sm">
@@ -337,7 +337,7 @@ function TopologyVisual({ folder, locale }: { folder: CapabilityFolder; locale: 
             {copyFor(folder.designIntent, locale)}
           </p>
         </div>
-        <div className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+        <div className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-border/50 bg-background/40">
           <Icon className="size-4 text-primary" aria-hidden="true" />
         </div>
       </div>
@@ -353,54 +353,54 @@ function TopologyVisual({ folder, locale }: { folder: CapabilityFolder; locale: 
   );
 }
 
-function ContractList({
-  items,
-  label,
-  locale,
-}: {
-  items: CapabilityFolder["owns"];
-  label: string;
-  locale: Locale;
-}) {
+function BoundarySummary({ folder, locale }: { folder: CapabilityFolder; locale: Locale }) {
+  const summaries = [
+    {
+      label: localized("owns", locale),
+      text: folder.owns[0],
+    },
+    {
+      label: localized("boundaries", locale),
+      text: folder.boundaries[0],
+    },
+    {
+      label: localized("proof", locale),
+      text: folder.proof[0],
+    },
+  ];
+
   return (
-    <div>
-      <h4 className="mb-2 font-semibold text-foreground text-xs">{label}</h4>
-      <ul className="space-y-1.5">
-        {items.map((item) => (
-          <li className="flex gap-2 text-muted-foreground text-xs leading-relaxed" key={item.en}>
-            <CheckCircle className="mt-0.5 size-3.5 shrink-0 text-primary" aria-hidden="true" />
-            <span>{copyFor(item, locale)}</span>
-          </li>
-        ))}
-      </ul>
+    <div className="mt-5 grid gap-px overflow-hidden rounded-[var(--radius-sm)] border border-border/50 bg-border/50 md:grid-cols-3">
+      {summaries.map((summary) => (
+        <div className="bg-background/40 p-4" key={summary.label}>
+          <div className="mb-2 flex items-center gap-2">
+            <CheckCircle className="size-3.5 shrink-0 text-primary" aria-hidden="true" />
+            <h4 className="font-semibold text-foreground text-xs">{summary.label}</h4>
+          </div>
+          <p className="text-muted-foreground text-xs leading-relaxed">
+            {copyFor(summary.text, locale)}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }
 
-function EvidenceGrid({ folder, locale }: { folder: CapabilityFolder; locale: Locale }) {
+function ProofMetrics({ folder, locale }: { folder: CapabilityFolder; locale: Locale }) {
+  const metrics = [folder.signature, ...folder.evidence.slice(0, 2)];
+
   return (
-    <div>
-      <h4 className="mb-2 font-semibold text-foreground text-xs">
-        {localized("evidence", locale)}
-      </h4>
-      <div className="grid gap-px overflow-hidden rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-6)]">
-        {folder.evidence.map((metric) => (
-          <div
-            className="grid grid-cols-[4.5rem_minmax(0,1fr)] bg-background"
-            key={metric.label.en}
-          >
-            <div className="border-[var(--neutral-6)] border-r px-3 py-2">
-              <p className="font-mono text-foreground text-sm" translate="no">
-                {metric.value}
-              </p>
-              <p className="text-[10px] text-muted-foreground">{copyFor(metric.label, locale)}</p>
-            </div>
-            <p className="px-3 py-2 text-muted-foreground text-xs leading-relaxed">
-              {copyFor(metric.detail, locale)}
-            </p>
-          </div>
-        ))}
-      </div>
+    <div className="grid gap-px overflow-hidden rounded-[var(--radius-sm)] border border-border/50 bg-border/50 sm:grid-cols-3">
+      {metrics.map((metric) => (
+        <div className="bg-background/40 px-3 py-2.5" key={metric.label.en}>
+          <p className="font-mono text-foreground text-sm" translate="no">
+            {metric.value}
+          </p>
+          <p className="mt-0.5 text-[11px] text-muted-foreground">
+            {copyFor(metric.label, locale)}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }
@@ -427,7 +427,10 @@ export function CapabilityFolderShowcase({ locale }: { locale: Locale }) {
               {localized("description", locale)}
             </p>
           </div>
-          <div className="rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4">
+          <div
+            className="rounded-[var(--radius-panel)] border border-border/50 bg-background/40 p-4 backdrop-blur-md"
+            style={{ boxShadow: "var(--ring-hairline)" }}
+          >
             <p className="font-mono text-foreground text-sm" translate="no">
               {localized("portfolio", locale)}
             </p>
@@ -447,30 +450,26 @@ export function CapabilityFolderShowcase({ locale }: { locale: Locale }) {
           return (
             <article
               className={cn(
-                "scroll-mt-28 rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/78 p-5 shadow-sm backdrop-blur-md transition-[border-color,background-color,transform] duration-200 hover:-translate-y-px hover:border-primary/35 dark:bg-[var(--neutral-2)]/72",
+                "group relative overflow-hidden scroll-mt-28 rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/40 p-5 backdrop-blur-md transition-[background-color,border-color,transform] duration-150 hover:-translate-y-px hover:border-border/80 hover:bg-muted/20",
                 folder.layout === "wide" && "lg:col-span-7",
                 folder.layout === "standard" && "lg:col-span-5",
                 folder.layout === "full" && "lg:col-span-12",
               )}
               id={folder.anchorId}
               key={folder.id}
+              style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <div
-                className={cn(
-                  "grid gap-6",
-                  folder.layout === "full" &&
-                    "xl:grid-cols-[minmax(0,0.64fr)_minmax(280px,0.36fr)]",
-                )}
-              >
-                <div className="min-w-0">
-                  <div className="flex items-start gap-3">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
-                      <Icon className="size-5 text-primary" aria-hidden="true" />
-                    </div>
+                className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(#0000001a_1px,transparent_1px)] opacity-20 [background-size:24px_24px] dark:bg-[radial-gradient(#ffffff1a_1px,transparent_1px)] dark:opacity-5"
+                aria-hidden="true"
+              />
+              <div className="relative z-10 flex h-full flex-col">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex min-w-0 items-start gap-3">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-border/50 bg-background/40">
+                      <Icon className="size-5 text-primary opacity-85" aria-hidden="true" />
+                    </span>
                     <div className="min-w-0">
-                      <p className="font-medium text-muted-foreground text-xs">
-                        {localized("source", locale)}
-                      </p>
                       <p
                         className="truncate font-mono text-muted-foreground text-xs"
                         translate="no"
@@ -483,89 +482,43 @@ export function CapabilityFolderShowcase({ locale }: { locale: Locale }) {
                       >
                         {copyFor(folder.title, locale)}
                       </h3>
+                      <p className="mt-4 max-w-2xl text-muted-foreground text-sm leading-relaxed">
+                        {copyFor(folder.summary, locale)}
+                      </p>
                     </div>
                   </div>
-
-                  <p className="mt-4 max-w-2xl text-muted-foreground text-sm leading-relaxed">
-                    {copyFor(folder.summary, locale)}
-                  </p>
-
-                  <div className="mt-5">
-                    <SourceMetrics folder={folder} locale={locale} />
-                  </div>
-
-                  <TopologyVisual folder={folder} locale={locale} />
-
-                  <div className="mt-5">
-                    <h4 className="mb-2 font-semibold text-foreground text-xs">
-                      {localized("focus", locale)}
-                    </h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {folder.focusPackages.map((name) => (
-                        <span
-                          className="rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1 font-mono text-[11px] text-foreground/80"
-                          key={name}
-                          translate="no"
-                        >
-                          {name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <a
+                    aria-label={`${localized("docs", locale)}: ${copyFor(folder.title, locale)}`}
+                    className="group/link inline-flex w-fit shrink-0 items-center gap-3 rounded-full font-semibold text-muted-foreground text-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                    href={folder.docsHref}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <span className="flex size-8 items-center justify-center rounded-full border border-border/50 bg-background/50 text-muted-foreground backdrop-blur-sm transition-colors group-hover/link:border-foreground group-hover/link:text-foreground dark:border-border dark:group-hover/link:border-border dark:group-hover/link:text-white">
+                      <ArrowRight className="size-4" aria-hidden="true" />
+                    </span>
+                    <span>{localized("docs", locale)}</span>
+                  </a>
                 </div>
 
-                <aside
-                  className={cn(
-                    "flex min-w-0 flex-col gap-5 border-[var(--neutral-6)] border-t pt-5",
-                    folder.layout === "full" && "xl:border-t-0 xl:border-l xl:pt-0 xl:pl-5",
-                  )}
-                >
-                  <div>
-                    <p className="font-mono text-3xl text-foreground" translate="no">
-                      {folder.signature.value}
-                    </p>
-                    <p className="mt-1 font-semibold text-foreground text-sm">
-                      {copyFor(folder.signature.label, locale)}
-                    </p>
-                    <p className="mt-2 text-muted-foreground text-xs leading-relaxed">
-                      {copyFor(folder.signature.detail, locale)}
-                    </p>
-                  </div>
+                <div className="mt-6">
+                  <SourceMetrics folder={folder} locale={locale} />
+                </div>
 
-                  <EvidenceGrid folder={folder} locale={locale} />
+                <TopologyVisual folder={folder} locale={locale} />
 
-                  <div>
-                    <h4 className="mb-3 font-semibold text-foreground text-xs">
-                      {localized("contract", locale)}
-                    </h4>
-                    <div className="grid gap-4">
-                      <ContractList
-                        items={folder.owns}
-                        label={localized("owns", locale)}
-                        locale={locale}
-                      />
-                      <ContractList
-                        items={folder.boundaries}
-                        label={localized("boundaries", locale)}
-                        locale={locale}
-                      />
-                      <ContractList
-                        items={folder.proof}
-                        label={localized("proof", locale)}
-                        locale={locale}
-                      />
-                    </div>
-                  </div>
+                <BoundarySummary folder={folder} locale={locale} />
 
-                  <div className="mt-auto flex flex-col gap-4">
-                    <div>
-                      <p className="mb-2 font-medium text-muted-foreground text-xs">
+                <div className="mt-auto border-border/50 border-t pt-5">
+                  <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(260px,0.45fr)]">
+                    <div className="min-w-0">
+                      <h4 className="mb-2 font-semibold text-foreground text-xs">
                         {localized("interfaces", locale)}
-                      </p>
+                      </h4>
                       <div className="flex flex-wrap gap-1.5">
                         {folder.interfaces.map((name) => (
                           <span
-                            className="rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1 font-mono text-[11px] text-foreground/80"
+                            className="rounded-md border border-border/50 bg-background/40 px-2 py-1 font-mono text-[11px] text-foreground/80"
                             key={name}
                             translate="no"
                           >
@@ -574,21 +527,9 @@ export function CapabilityFolderShowcase({ locale }: { locale: Locale }) {
                         ))}
                       </div>
                     </div>
-                    <a
-                      aria-label={`${localized("docs", locale)}: ${copyFor(folder.title, locale)}`}
-                      className="group/link inline-flex w-fit items-center gap-2 rounded-full border border-[var(--neutral-6)] bg-background px-3 py-2 font-semibold text-foreground text-sm transition-[border-color,color] hover:border-primary/50 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                      href={folder.docsHref}
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      {localized("docs", locale)}
-                      <ArrowRight
-                        className="size-4 transition-transform group-hover/link:translate-x-0.5"
-                        aria-hidden="true"
-                      />
-                    </a>
+                    <ProofMetrics folder={folder} locale={locale} />
                   </div>
-                </aside>
+                </div>
               </div>
             </article>
           );
