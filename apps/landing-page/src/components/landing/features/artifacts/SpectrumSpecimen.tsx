@@ -1,3 +1,13 @@
+import { BlendMode, Droplet, Layers } from "@nebutra/icons";
+import {
+  AuroraText,
+  Badge,
+  BorderTrail,
+  ColorBadge,
+  Heading,
+  LineShadowText,
+  Text,
+} from "@nebutra/ui/primitives";
 import type { PackageFeatureEntry } from "../package-feature-data";
 import { entrySignature, getSpecimenNodes } from "./specimen-utils";
 
@@ -7,12 +17,24 @@ type Props = {
   compact?: boolean;
 };
 
+const LINEAGE_VARIANTS = [
+  "blue-subtle",
+  "purple-subtle",
+  "teal-subtle",
+  "pink-subtle",
+  "amber-subtle",
+] as const;
+
 /**
- * Design system specimen — a token spectrum.
+ * Design system specimen — a token spectrum / supply chain.
  *
- * Top: a wide gradient sweep that runs from brand-primary → brand-accent.
- * Below: 12 stepped swatches representing the radix-style scale, with
- * package nodes annotated as "lineage" callouts.
+ * Built entirely from @nebutra/ui/primitives + @nebutra/icons:
+ *   - AuroraText      → hero "spectrum" word
+ *   - BorderTrail     → animated outline around the gradient sweep
+ *   - Badge           → 12-step scale chips
+ *   - ColorBadge      → lineage callouts (one per node)
+ *   - Heading + Text  → type ramp
+ *   - LineShadowText  → typography flourish ("Aa Bb Cc Dd")
  */
 export function SpectrumSpecimen({ entry, locale, compact = false }: Props) {
   const nodes = getSpecimenNodes(entry, 5);
@@ -25,7 +47,7 @@ export function SpectrumSpecimen({ entry, locale, compact = false }: Props) {
 
   return (
     <div
-      className="relative w-full overflow-hidden"
+      className="relative flex w-full flex-col gap-4 overflow-hidden p-5 sm:p-6"
       role="img"
       aria-label={`${entry.label} token spectrum specimen`}
       style={minHeightStyle}
@@ -38,15 +60,35 @@ export function SpectrumSpecimen({ entry, locale, compact = false }: Props) {
         }}
       />
 
-      {/* large gradient sweep */}
+      {/* Eyebrow row */}
+      <div className="relative z-10 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <Droplet className="size-3.5" aria-hidden="true" />
+          <Text as="span" variant="caption" className="font-mono uppercase tracking-[0.32em]">
+            spectrum · DTCG
+          </Text>
+        </div>
+        <AuroraText
+          className="font-mono text-[11px] uppercase tracking-[0.32em]"
+          colors={[secondary, accent, secondary]}
+          speed={0.6}
+        >
+          {locale === "zh" ? "TOKEN 供应链" : "TOKEN SUPPLY CHAIN"}
+        </AuroraText>
+      </div>
+
+      {/* Gradient sweep with animated border trail */}
       <div
-        className="absolute inset-x-[6%] top-[12%] h-[28%] overflow-hidden rounded-sm border"
-        style={{ borderColor: entry.tone.hairline }}
+        className="relative overflow-hidden rounded-[var(--radius-md)] border"
+        style={{
+          borderColor: entry.tone.hairline,
+          minHeight: compact ? "64px" : "96px",
+        }}
       >
         <div
+          aria-hidden="true"
           className="absolute inset-0"
           style={{ background: entry.tone.gradient }}
-          aria-hidden="true"
         />
         <div
           aria-hidden="true"
@@ -57,78 +99,101 @@ export function SpectrumSpecimen({ entry, locale, compact = false }: Props) {
           }}
         />
         <div className="absolute inset-x-3 bottom-2 flex items-end justify-between font-mono text-[10px] uppercase tracking-[0.32em] text-white/70">
-          <span>brand · primary</span>
+          <span className="flex items-center gap-1.5">
+            <BlendMode className="size-3" aria-hidden="true" />
+            brand · primary
+          </span>
           <span>brand · accent</span>
         </div>
-        <div className="absolute left-3 top-2 font-mono text-[9px] uppercase tracking-[0.32em] text-white/60">
-          spectrum · 12 step
-        </div>
+        <BorderTrail
+          size={compact ? 40 : 64}
+          style={{
+            background: `linear-gradient(90deg, ${secondary}, ${accent})`,
+          }}
+        />
       </div>
 
       {/* 12-step scale */}
-      <div className="absolute inset-x-[6%] top-[44%] flex h-[8%] items-stretch gap-[2px]">
+      <div className="relative z-10 flex flex-wrap items-center gap-1">
         {Array.from({ length: 12 }).map((_, index) => {
           const t = index / 11;
           return (
-            <div
-              // biome-ignore lint/suspicious/noArrayIndexKey: pure positional decoration
+            <Badge
+              // biome-ignore lint/suspicious/noArrayIndexKey: positional decoration
               key={index}
-              className="relative flex-1 border"
+              variant="outline"
+              size="sm"
+              className="h-5 min-w-[1.75rem] justify-center border px-0 font-mono text-[9px] text-white/85"
               style={{
-                borderColor: "color-mix(in oklch, var(--foreground), transparent 80%)",
+                borderColor: entry.tone.hairline,
                 background: `color-mix(in oklch, ${secondary} ${10 + t * 70}%, ${accent} ${(1 - t) * 60}%)`,
               }}
-              aria-hidden="true"
-            />
+            >
+              {String(index + 1).padStart(2, "0")}
+            </Badge>
           );
         })}
       </div>
-      <div className="absolute inset-x-[6%] top-[54%] flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.32em] text-muted-foreground">
-        <span>01</span>
-        <span>06</span>
-        <span>12</span>
-      </div>
 
-      {/* lineage callouts */}
-      <div className="absolute inset-x-[6%] bottom-[12%] grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {nodes.map((node, index) => (
-          <div
-            key={`${node}-${index}`}
-            className="flex items-center gap-2 rounded-sm border px-3 py-2 backdrop-blur-md"
-            style={{
-              borderColor: entry.tone.hairline,
-              background: `color-mix(in oklch, var(--background) 70%, transparent)`,
-            }}
-          >
-            <span
-              className="size-3 shrink-0 rounded-sm border"
-              style={{
-                background: `color-mix(in oklch, ${accent} ${30 + index * 12}%, ${secondary})`,
-                borderColor: entry.tone.hairline,
-              }}
-              aria-hidden="true"
-            />
-            <span
-              className="truncate font-mono text-[10px] uppercase tracking-[0.12em]"
-              style={{ color: "color-mix(in oklch, var(--foreground), transparent 15%)" }}
-              translate="no"
-            >
-              {node}
-            </span>
+      {/* Type ramp — only on full variant */}
+      {!compact ? (
+        <div
+          className="relative z-10 flex flex-col gap-2 rounded-[var(--radius-md)] border px-4 py-3 backdrop-blur-md"
+          style={{
+            borderColor: entry.tone.hairline,
+            background: "color-mix(in oklch, var(--background) 60%, transparent)",
+          }}
+        >
+          <div className="flex items-baseline justify-between gap-3">
+            <Heading level={2} className="leading-none">
+              <LineShadowText shadowColor={accent}>Aa</LineShadowText>{" "}
+              <LineShadowText shadowColor={secondary}>Bb</LineShadowText>
+            </Heading>
+            <Text as="span" variant="caption" className="font-mono uppercase tracking-[0.32em]">
+              type · ramp
+            </Text>
           </div>
+          <div className="flex items-center gap-4">
+            <Heading level={4} className="leading-none">
+              Cc Dd
+            </Heading>
+            <Text variant="body-sm" color="muted" className="font-mono">
+              16 / 24 / 32
+            </Text>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Lineage callouts */}
+      <div className="relative z-10 flex flex-wrap gap-2">
+        {nodes.map((node, index) => (
+          <ColorBadge
+            key={`${node}-${index}`}
+            variant={LINEAGE_VARIANTS[index % LINEAGE_VARIANTS.length]}
+            size="sm"
+            capitalize={false}
+            icon={<Layers />}
+            className="font-mono tracking-[0.12em]"
+          >
+            {node}
+          </ColorBadge>
         ))}
       </div>
 
-      {/* corner annotations */}
+      {/* Annotation rail */}
       {!compact ? (
-        <div className="pointer-events-none absolute inset-x-6 bottom-3 flex items-end justify-between">
-          <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
-            <div>spectrum · DTCG</div>
-            <div className="mt-1 text-foreground/40">sig {sig}</div>
-          </div>
-          <div className="text-right font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
+        <div className="pointer-events-none relative z-10 mt-auto flex items-end justify-between">
+          <Text as="span" variant="caption" className="font-mono uppercase tracking-[0.32em]">
+            sig {sig}
+          </Text>
+          <Text
+            as="span"
+            variant="caption"
+            color="muted"
+            className="font-mono uppercase tracking-[0.32em]"
+          >
             {locale === "zh" ? "供应链 token" : "token supply chain"}
-          </div>
+          </Text>
         </div>
       ) : null}
     </div>

@@ -1,4 +1,7 @@
+"use client";
+
 import { Check, LockClosed, ShieldCheck } from "@nebutra/icons";
+import { BorderTrail, DotPattern, MagicCard, StatusDot } from "@nebutra/ui/primitives";
 import type { PackageFeatureEntry } from "../package-feature-data";
 import { entrySignature, getSpecimenNodes, pad } from "./specimen-utils";
 
@@ -9,19 +12,26 @@ type Props = {
 };
 
 /**
- * Identity & trust specimen — a gated corridor.
+ * Identity & trust specimen — a "trust corridor" of gates.
  *
- * Verticals columns = identity gates (auth, audit, vault, permissions).
- * Each gate has a small badge stamp. Status pips on the left signal
- * "verified" / "challenge" passes — they are decorative, not real-time.
+ * Each gate is rendered as a {@link MagicCard} (hover spotlight). One gate is
+ * picked deterministically per entry (via {@link entrySignature}) and wrapped
+ * with {@link BorderTrail} to signal the actively-being-validated gate.
+ *
+ * Compact mode disables the trail (animation is overkill at 96px height) and
+ * drops the corner annotations.
  */
 export function CorridorSpecimen({ entry, locale, compact = false }: Props) {
-  const nodes = getSpecimenNodes(entry, 6);
-  const accent = entry.tone.accent;
+  const nodes = compact ? getSpecimenNodes(entry, 4) : getSpecimenNodes(entry, 5);
   const sig = entrySignature(entry);
+  const accent = entry.tone.accent;
   const minHeightStyle = compact
     ? { minHeight: "240px" }
     : { minHeight: "clamp(380px, 50vw, 520px)" };
+
+  // Active-gate index — picked from the entry signature so siblings differ but
+  // the same slug always lights the same gate.
+  const activeIndex = parseInt(sig.slice(0, 2), 16) % nodes.length;
 
   return (
     <div
@@ -30,6 +40,13 @@ export function CorridorSpecimen({ entry, locale, compact = false }: Props) {
       aria-label={`${entry.label} trust corridor specimen`}
       style={minHeightStyle}
     >
+      <DotPattern
+        className="text-foreground/10 [mask-image:radial-gradient(ellipse_at_center,white,transparent_75%)]"
+        width={20}
+        height={20}
+        cr={0.9}
+      />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -38,101 +55,82 @@ export function CorridorSpecimen({ entry, locale, compact = false }: Props) {
         }}
       />
 
-      {/* corridor floor */}
-      <div className="absolute inset-x-6 bottom-12 top-12 flex items-stretch">
-        {/* ceiling/floor rails */}
+      {/* corridor — hairline rails + row of gates */}
+      <div className="absolute inset-x-6 top-1/2 -translate-y-1/2">
+        <div className="h-px w-full bg-foreground/10" aria-hidden="true" />
         <div
-          className="absolute inset-x-0 top-0 h-px"
-          style={{ background: `linear-gradient(90deg, transparent, ${accent}88, transparent)` }}
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-x-0 bottom-0 h-px"
-          style={{ background: `linear-gradient(90deg, transparent, ${accent}88, transparent)` }}
-          aria-hidden="true"
-        />
-
-        {/* gate columns */}
-        <div className="relative flex flex-1 items-stretch justify-between gap-3">
+          className={`grid gap-3 ${compact ? "py-3" : "py-6"}`}
+          style={{ gridTemplateColumns: `repeat(${nodes.length}, minmax(0, 1fr))` }}
+        >
           {nodes.map((node, index) => {
-            const isLast = index === nodes.length - 1;
+            const GateIcon = index % 2 === 0 ? LockClosed : ShieldCheck;
+            const isActive = index === activeIndex;
             return (
-              <div
-                key={`${node}-${index}`}
-                className="relative flex flex-1 flex-col items-center justify-between py-3"
-              >
-                {/* upper badge stamp */}
-                <div
-                  className="flex size-7 items-center justify-center rounded-sm border"
-                  style={{
-                    borderColor: entry.tone.hairline,
-                    background: entry.tone.chip,
-                    color: accent,
-                  }}
+              <div key={`${node}-${index}`} className="relative rounded-md">
+                <MagicCard
+                  className={compact ? "rounded-md" : "rounded-md"}
+                  gradientSize={compact ? 140 : 200}
+                  gradientOpacity={0.6}
                 >
-                  <Check className="size-3.5" aria-hidden="true" />
-                </div>
-
-                {/* vertical column */}
-                <div
-                  className="my-2 w-px flex-1"
-                  style={{
-                    background: `linear-gradient(180deg, ${accent}66, transparent 80%, ${accent}66)`,
-                  }}
-                  aria-hidden="true"
-                />
-
-                {/* gate label */}
-                <div className="flex flex-col items-center gap-1">
                   <div
-                    className="flex size-9 items-center justify-center rounded-sm border backdrop-blur-md"
-                    style={{
-                      borderColor: entry.tone.hairline,
-                      background: `color-mix(in oklch, var(--background) 70%, transparent)`,
-                    }}
+                    className={`relative flex flex-col items-center gap-2 rounded-md ${
+                      compact ? "px-2 py-3" : "px-3 py-4"
+                    }`}
                   >
-                    {index % 2 === 0 ? (
-                      <LockClosed className="size-4" style={{ color: accent }} aria-hidden="true" />
-                    ) : (
-                      <ShieldCheck
-                        className="size-4"
+                    <div
+                      className={`flex items-center justify-center rounded-sm border border-foreground/10 bg-background/60 backdrop-blur-sm ${
+                        compact ? "size-7" : "size-9"
+                      }`}
+                    >
+                      <GateIcon
+                        className={compact ? "size-3.5" : "size-4"}
                         style={{ color: accent }}
                         aria-hidden="true"
                       />
+                    </div>
+
+                    <span
+                      className={`max-w-full truncate font-mono uppercase tracking-[0.12em] text-foreground/70 ${
+                        compact ? "text-[9px]" : "text-[10px]"
+                      }`}
+                      translate="no"
+                    >
+                      {node}
+                    </span>
+
+                    {!compact ? (
+                      <div className="flex items-center gap-1.5">
+                        <StatusDot
+                          state={isActive ? "BUILDING" : "READY"}
+                          decorative
+                          titlePrefix={`${entry.label} gate ${pad(index + 1)}`}
+                        />
+                        <span className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted-foreground">
+                          G·{pad(index + 1)}
+                        </span>
+                      </div>
+                    ) : (
+                      <Check className="size-3 text-foreground/40" aria-hidden="true" />
                     )}
                   </div>
-                  <span
-                    className="max-w-[6rem] truncate font-mono text-[10px] uppercase tracking-[0.12em]"
-                    style={{ color: "color-mix(in oklch, var(--foreground), transparent 20%)" }}
-                    translate="no"
-                  >
-                    {node}
-                  </span>
-                </div>
+                </MagicCard>
 
-                {/* numeric stamp */}
-                <span
-                  className="mt-2 font-mono text-[9px] uppercase tracking-[0.32em] text-muted-foreground"
-                  translate="no"
-                >
-                  G·{pad(index + 1)}
-                </span>
-
-                {/* arch separator */}
-                {!isLast ? (
-                  <div
-                    aria-hidden="true"
-                    className="absolute -right-1.5 top-1/2 size-3 -translate-y-1/2 rounded-full"
-                    style={{ background: `color-mix(in oklch, ${accent} 35%, transparent)` }}
+                {isActive && !compact ? (
+                  <BorderTrail
+                    size={72}
+                    className="bg-[color:var(--brand-primary)]"
+                    style={{
+                      filter: "blur(2px)",
+                    }}
                   />
                 ) : null}
               </div>
             );
           })}
         </div>
+        <div className="h-px w-full bg-foreground/10" aria-hidden="true" />
       </div>
 
-      {/* corner annotations */}
       {!compact ? (
         <div className="pointer-events-none absolute inset-x-6 bottom-3 flex items-end justify-between">
           <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">

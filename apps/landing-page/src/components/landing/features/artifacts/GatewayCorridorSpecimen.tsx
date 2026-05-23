@@ -1,4 +1,8 @@
-import { ArrowRight } from "@nebutra/icons";
+"use client";
+
+import { Api, ArrowRight, Connection, Lightning, LockClosed } from "@nebutra/icons";
+import { AnimatedBeam, BorderTrail, DotPattern, Kbd, MagicCard } from "@nebutra/ui/primitives";
+import { useRef } from "react";
 import type { PackageFeatureEntry } from "../package-feature-data";
 import { entrySignature, getSpecimenNodes, pad } from "./specimen-utils";
 
@@ -8,135 +12,196 @@ type Props = {
   compact?: boolean;
 };
 
+const MAX_MIDDLEWARE = 6;
+const STOP_ICONS = [LockClosed, Connection, Lightning, Api, LockClosed, Connection];
+
+function seeded(slug: string, max: number, offset = 0): number {
+  let hash = offset;
+  for (let i = 0; i < slug.length; i += 1) {
+    hash = (hash * 31 + slug.charCodeAt(i)) | 0;
+  }
+  return Math.abs(hash) % max;
+}
+
 /**
- * Gateway specimen — a left→right request corridor.
+ * Gateway specimen — request corridor.
  *
- * The request lane is a single horizontal track punctuated by
- * middleware "stops" (auth, tenant, rate-limit, route, response).
- * Arrows underline direction; the lane glows with a gradient sweep.
+ * REQ → middleware stops (auth, tenant, rate-limit, route, …) → RES,
+ * rendered as MagicCard pipeline with AnimatedBeams between consecutive
+ * nodes. Sibling differentiation: a single BorderTrail rotates onto a
+ * different middleware per slug.
  */
 export function GatewayCorridorSpecimen({ entry, locale, compact = false }: Props) {
-  const nodes = getSpecimenNodes(entry, 6);
-  const accent = entry.tone.accent;
-  const secondary = entry.tone.secondary;
+  const nodes = getSpecimenNodes(entry, MAX_MIDDLEWARE);
   const sig = entrySignature(entry);
+  const trailIndex = seeded(entry.slug, Math.max(nodes.length, 1));
+
+  // Static refs (max nodes + REQ + RES). Hooks rules: never in a loop.
+  const containerRef = useRef<HTMLDivElement>(null);
+  const reqRef = useRef<HTMLDivElement>(null);
+  const resRef = useRef<HTMLDivElement>(null);
+  const mwRef0 = useRef<HTMLDivElement>(null);
+  const mwRef1 = useRef<HTMLDivElement>(null);
+  const mwRef2 = useRef<HTMLDivElement>(null);
+  const mwRef3 = useRef<HTMLDivElement>(null);
+  const mwRef4 = useRef<HTMLDivElement>(null);
+  const mwRef5 = useRef<HTMLDivElement>(null);
+  const middlewareRefs = [mwRef0, mwRef1, mwRef2, mwRef3, mwRef4, mwRef5];
+
   const minHeightStyle = compact
     ? { minHeight: "240px" }
     : { minHeight: "clamp(380px, 50vw, 520px)" };
 
+  // Build a left-to-right ordered list of refs for beam pairing.
+  const pipelineRefs = [reqRef, ...middlewareRefs.slice(0, nodes.length), resRef];
+
   return (
     <div
+      ref={containerRef}
       className="relative w-full overflow-hidden"
       role="img"
       aria-label={`${entry.label} gateway corridor specimen`}
       style={minHeightStyle}
     >
+      <DotPattern
+        glow={!compact}
+        width={20}
+        height={20}
+        cr={1}
+        className="text-muted-foreground/25 [mask-image:radial-gradient(ellipse_at_center,white,transparent_75%)]"
+      />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
-          background: `radial-gradient(ellipse at 50% 50%, ${entry.tone.halo}, transparent 65%)`,
+          background: `radial-gradient(ellipse at 50% 55%, ${entry.tone.halo}, transparent 70%)`,
         }}
       />
 
-      {/* request lane (centered) */}
-      <div className="absolute inset-x-[5%] top-[42%]">
-        <div
-          className="h-12 rounded-sm border backdrop-blur-md"
-          style={{
-            borderColor: entry.tone.hairline,
-            background: `linear-gradient(90deg, color-mix(in oklch, ${accent} 22%, transparent), color-mix(in oklch, ${secondary} 22%, transparent))`,
-          }}
-        />
-        <div className="-mt-12 flex h-12 items-center justify-between px-3">
-          <span
-            className="font-mono text-[10px] uppercase tracking-[0.32em] text-foreground/70"
-            translate="no"
+      {/* Corridor row — REQ · mw0 · mw1 · … · RES */}
+      <div className="absolute inset-x-[4%] top-1/2 flex -translate-y-1/2 items-center justify-between gap-2 sm:gap-3">
+        {/* REQ entry chip */}
+        <div ref={reqRef} className="flex flex-col items-center gap-1.5">
+          <Kbd
+            small={compact}
+            className="border-[color:var(--border)] bg-background/80 backdrop-blur-md"
+            style={{ color: entry.tone.accent }}
+            aria-label="request entry"
           >
-            req
-          </span>
-          <ArrowRight className="size-4" style={{ color: accent }} aria-hidden="true" />
-          <span
-            className="font-mono text-[10px] uppercase tracking-[0.32em] text-foreground/70"
-            translate="no"
+            REQ
+          </Kbd>
+          {!compact ? (
+            <ArrowRight
+              className="size-3.5"
+              style={{ color: entry.tone.accent }}
+              aria-hidden="true"
+            />
+          ) : null}
+        </div>
+
+        {/* Middleware stops */}
+        {nodes.map((node, index) => {
+          const Icon = STOP_ICONS[index % STOP_ICONS.length];
+          const isTrail = !compact && index === trailIndex;
+          return (
+            <div
+              key={`${node}-${index}`}
+              ref={middlewareRefs[index]}
+              className="flex min-w-0 flex-1"
+            >
+              <MagicCard
+                className="relative h-full w-full overflow-hidden rounded-[var(--radius-md)]"
+                gradientSize={compact ? 90 : 140}
+                gradientFrom={entry.tone.accent}
+                gradientTo={entry.tone.secondary}
+                gradientColor={entry.tone.chip}
+              >
+                <div className="relative flex w-full flex-col items-center gap-1 px-2 py-2.5 sm:px-3">
+                  {isTrail ? (
+                    <BorderTrail size={compact ? 40 : 60} className="bg-foreground/60" />
+                  ) : null}
+                  <Icon
+                    className={compact ? "size-3.5" : "size-4"}
+                    style={{ color: entry.tone.accent }}
+                    aria-hidden="true"
+                  />
+                  <span
+                    className="font-mono text-[9px] uppercase tracking-[0.28em] text-muted-foreground"
+                    translate="no"
+                  >
+                    MW·{pad(index + 1)}
+                  </span>
+                  {!compact ? (
+                    <span
+                      className="max-w-full truncate font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/80"
+                      translate="no"
+                    >
+                      {node}
+                    </span>
+                  ) : null}
+                </div>
+              </MagicCard>
+            </div>
+          );
+        })}
+
+        {/* RES exit chip */}
+        <div ref={resRef} className="flex flex-col items-center gap-1.5">
+          {!compact ? (
+            <ArrowRight
+              className="size-3.5"
+              style={{ color: entry.tone.secondary }}
+              aria-hidden="true"
+            />
+          ) : null}
+          <Kbd
+            small={compact}
+            className="border-[color:var(--border)] bg-background/80 backdrop-blur-md"
+            style={{ color: entry.tone.secondary }}
+            aria-label="response exit"
           >
-            res
-          </span>
+            RES
+          </Kbd>
         </div>
       </div>
 
-      {/* middleware stops above the lane */}
-      <div className="absolute inset-x-[5%] top-[10%] flex items-end justify-between gap-2">
-        {nodes.map((node, index) => (
-          <div
-            key={`${node}-${index}`}
-            className="relative flex flex-col items-center"
-            style={{ width: `${100 / nodes.length}%` }}
-          >
-            <div
-              className="flex w-full flex-col items-center gap-1 rounded-sm border px-2 py-2 backdrop-blur-md"
-              style={{
-                borderColor: entry.tone.hairline,
-                background: `color-mix(in oklch, var(--background) 70%, transparent)`,
-              }}
-            >
-              <span
-                className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted-foreground"
-                translate="no"
-              >
-                MW·{pad(index + 1)}
-              </span>
-              <span
-                className="max-w-full truncate font-mono text-[10px] uppercase tracking-[0.12em]"
-                style={{ color: "color-mix(in oklch, var(--foreground), transparent 15%)" }}
-                translate="no"
-              >
-                {node}
-              </span>
-            </div>
-            {/* drop pin */}
-            <div
-              className="mt-2 h-6 w-px"
-              style={{ background: `color-mix(in oklch, ${accent} 60%, transparent)` }}
-              aria-hidden="true"
-            />
-            <div
-              className="size-2 rounded-full border"
-              style={{
-                borderColor: accent,
-                background: entry.tone.chip,
-              }}
-              aria-hidden="true"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* response latency strip below the lane */}
-      <div className="absolute inset-x-[5%] top-[70%] flex items-center gap-2 sm:gap-3">
-        {Array.from({ length: 24 }).map((_, index) => {
-          const seed = sig.charCodeAt(index % sig.length);
-          const h = ((seed + index * 7) % 60) + 20; // 20–80
+      {/* Compact: static dotted connector. Full: AnimatedBeams. */}
+      {compact ? (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-[6%] top-1/2 -translate-y-1/2 border-t border-dashed"
+          style={{ borderColor: entry.tone.hairline }}
+        />
+      ) : (
+        pipelineRefs.slice(0, -1).map((fromRef, index) => {
+          const toRef = pipelineRefs[index + 1];
+          if (!fromRef || !toRef) return null;
           return (
-            <div
-              // biome-ignore lint/suspicious/noArrayIndexKey: pure decoration
-              key={index}
-              className="flex-1 rounded-sm"
-              style={{
-                height: `${h}px`,
-                background: `linear-gradient(180deg, ${accent}55, transparent)`,
-                opacity: 0.75,
-              }}
-              aria-hidden="true"
+            <AnimatedBeam
+              key={`beam-${index}`}
+              containerRef={containerRef}
+              fromRef={fromRef}
+              toRef={toRef}
+              curvature={0}
+              duration={3 + (index % 2)}
+              delay={index * 0.35}
+              tone="brand"
+              intensity={index === trailIndex ? "strong" : "normal"}
             />
           );
-        })}
-      </div>
+        })
+      )}
 
       {!compact ? (
         <div className="pointer-events-none absolute inset-x-6 bottom-3 flex items-end justify-between">
           <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
-            <div>corridor · {nodes.length} mw</div>
+            <div>
+              corridor · {nodes.length} mw ·{" "}
+              <span style={{ color: entry.tone.accent }} translate="no">
+                {entry.tone.label}
+              </span>
+            </div>
             <div className="mt-1 text-foreground/40">sig {sig}</div>
           </div>
           <div className="text-right font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">

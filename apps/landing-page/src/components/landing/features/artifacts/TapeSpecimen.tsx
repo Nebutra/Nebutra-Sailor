@@ -1,6 +1,6 @@
-import { Terminal } from "@nebutra/icons";
+import { AnimatedSpan, Badge, DotPattern, Terminal, TypingAnimation } from "@nebutra/ui/primitives";
 import type { PackageFeatureEntry } from "../package-feature-data";
-import { entrySignature, getSpecimenNodes, pad } from "./specimen-utils";
+import { entrySignature, getSpecimenNodes } from "./specimen-utils";
 
 type Props = {
   entry: PackageFeatureEntry;
@@ -8,155 +8,161 @@ type Props = {
   compact?: boolean;
 };
 
+const COMMAND_VERBS: Record<string, string> = {
+  cli: "release",
+  preset: "preset apply",
+  sanity: "studio deploy",
+  supabase: "db migrate",
+  compliance: "audit run",
+  ops: "ops verify",
+};
+
+const ZH_LABELS = {
+  ready: "✓ 环境就绪",
+  checking: "✓ 校验",
+  applying: "✓ 应用",
+  publishing: "✓ 发布",
+  done: "✓ 全部完成 · 0 错误",
+  status: "运行中",
+  duration: "耗时 4.2 秒",
+} as const;
+
+const EN_LABELS = {
+  ready: "✓ Environment ready",
+  checking: "✓ Checking",
+  applying: "✓ Applying",
+  publishing: "✓ Publishing",
+  done: "✓ All checks passed · 0 errors",
+  status: "RUNNING",
+  duration: "completed in 4.2s",
+} as const;
+
+function pickVerb(entry: PackageFeatureEntry): string {
+  // Vary the command per-entry so siblings render distinctly.
+  const matched = Object.entries(COMMAND_VERBS).find(
+    ([key]) => entry.slug.includes(key) || entry.group === key,
+  );
+  return matched?.[1] ?? "ops verify";
+}
+
 /**
- * Operations specimen — a cassette / tape-reel artifact.
+ * Operations specimen — release tape.
  *
- * Two reels, an ASCII-style frame, a row of "ops" cue cards underneath
- * for nodes (CLI, preset, compliance...). Neutral palette by design —
- * ops live below product surface tone.
+ * Renders an animated, sequenced macOS-style terminal recording an automated
+ * CLI run (release, preset apply, audit, ...). Uses real `@nebutra/ui`
+ * primitives end-to-end: `Terminal`, `TypingAnimation`, `AnimatedSpan`,
+ * `Badge`, and `DotPattern`.
  */
 export function TapeSpecimen({ entry, locale, compact = false }: Props) {
-  const nodes = getSpecimenNodes(entry, 6);
-  const accent = entry.tone.accent;
-  const secondary = entry.tone.secondary;
+  const nodes = getSpecimenNodes(entry, 4);
   const sig = entrySignature(entry);
+  const verb = pickVerb(entry);
+  const labels = locale === "zh" ? ZH_LABELS : EN_LABELS;
+  const verbLabels =
+    locale === "zh"
+      ? { checking: "校验", applying: "应用", publishing: "发布" }
+      : { checking: "Checking", applying: "Applying", publishing: "Publishing" };
+
+  const command = `$ pnpm nebutra ${verb} --tenant ${entry.slug}`;
   const minHeightStyle = compact
     ? { minHeight: "240px" }
     : { minHeight: "clamp(380px, 50vw, 520px)" };
 
+  if (compact) {
+    return (
+      <div
+        className="relative w-full overflow-hidden"
+        role="img"
+        aria-label={`${entry.label} release tape specimen`}
+        style={minHeightStyle}
+      >
+        <DotPattern
+          aria-hidden="true"
+          className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent_75%)] text-muted-foreground/40"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse at 50% 30%, ${entry.tone.halo}, transparent 70%)`,
+          }}
+        />
+        <div className="relative flex h-full flex-col justify-center gap-2 px-6 font-mono text-xs">
+          <AnimatedSpan delay={0} className="text-muted-foreground" startOnView>
+            {command}
+          </AnimatedSpan>
+          <AnimatedSpan delay={300} className="text-emerald-500" startOnView>
+            {labels.checking} {nodes[0] ?? entry.label}
+          </AnimatedSpan>
+          <AnimatedSpan delay={600} className="text-emerald-500" startOnView>
+            {labels.done}
+          </AnimatedSpan>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
-      className="relative w-full overflow-hidden"
+      className="relative flex w-full items-center justify-center overflow-hidden"
       role="img"
-      aria-label={`${entry.label} operations tape specimen`}
+      aria-label={`${entry.label} release tape specimen`}
       style={minHeightStyle}
     >
+      <DotPattern
+        aria-hidden="true"
+        className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)] text-muted-foreground/40"
+      />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
-          background: `radial-gradient(ellipse at 50% 25%, ${entry.tone.halo}, transparent 65%)`,
+          background: `radial-gradient(ellipse at 50% 30%, ${entry.tone.halo}, transparent 70%)`,
         }}
       />
 
-      {/* ASCII frame */}
-      <div className="absolute inset-x-[6%] top-[6%] flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
-        <span>┌─ ops · cassette</span>
-        <span>{entry.slug}.tape ─┐</span>
-      </div>
-
-      {/* twin reels */}
-      <div className="absolute inset-x-[12%] top-[18%] h-[36%]">
-        <div className="relative flex h-full items-center justify-between">
-          {/* left reel */}
-          <div
-            className="relative flex aspect-square h-full items-center justify-center rounded-full border"
-            style={{
-              borderColor: entry.tone.hairline,
-              background: `radial-gradient(circle, color-mix(in oklch, ${accent} 12%, transparent) 0%, transparent 70%)`,
-            }}
-          >
-            <div
-              className="aspect-square w-[36%] rounded-full border"
-              style={{ borderColor: accent, background: entry.tone.chip }}
+      <div className="relative flex w-full max-w-2xl flex-col gap-3 px-6">
+        <div className="flex items-center justify-between gap-2">
+          <Badge variant="secondary" size="sm" className="font-mono uppercase tracking-[0.18em]">
+            <span
               aria-hidden="true"
+              className="mr-1.5 inline-block size-1.5 rounded-full bg-emerald-500"
+              style={{ boxShadow: "0 0 8px currentColor", color: "var(--status-success, #10b981)" }}
             />
-            {/* spokes */}
-            {[0, 60, 120].map((deg) => (
-              <div
-                key={deg}
-                className="absolute h-px w-[70%]"
-                style={{
-                  background: `color-mix(in oklch, ${accent} 30%, transparent)`,
-                  transform: `rotate(${deg}deg)`,
-                }}
-                aria-hidden="true"
-              />
-            ))}
-          </div>
-
-          {/* tape between reels */}
-          <div
-            className="absolute left-[18%] right-[18%] top-1/2 -translate-y-1/2"
-            aria-hidden="true"
-          >
-            <div
-              className="h-3 w-full rounded-sm"
-              style={{ background: `linear-gradient(90deg, ${accent}66, ${secondary}66)` }}
-            />
-            <div className="mt-1 flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.32em] text-muted-foreground">
-              <span>›› play</span>
-              <span>{sig}</span>
-              <span>00:42:18</span>
-            </div>
-          </div>
-
-          {/* right reel */}
-          <div
-            className="relative flex aspect-square h-full items-center justify-center rounded-full border"
-            style={{
-              borderColor: entry.tone.hairline,
-              background: `radial-gradient(circle, color-mix(in oklch, ${secondary} 12%, transparent) 0%, transparent 70%)`,
-            }}
-          >
-            <div
-              className="aspect-square w-[36%] rounded-full border"
-              style={{ borderColor: secondary, background: entry.tone.chip }}
-              aria-hidden="true"
-            />
-            {[0, 60, 120].map((deg) => (
-              <div
-                key={deg}
-                className="absolute h-px w-[70%]"
-                style={{
-                  background: `color-mix(in oklch, ${secondary} 30%, transparent)`,
-                  transform: `rotate(${deg + 30}deg)`,
-                }}
-                aria-hidden="true"
-              />
-            ))}
-          </div>
+            {labels.status}
+          </Badge>
+          <Badge variant="outline" size="sm" className="font-mono">
+            {entry.slug}.tape · {sig}
+          </Badge>
         </div>
-      </div>
 
-      {/* cue cards */}
-      <div className="absolute inset-x-[6%] top-[62%] grid grid-cols-2 gap-2 sm:grid-cols-3">
-        {nodes.map((node, index) => (
-          <div
-            key={`${node}-${index}`}
-            className="flex items-center gap-2 rounded-sm border px-3 py-2 backdrop-blur-md"
-            style={{
-              borderColor: entry.tone.hairline,
-              background: `color-mix(in oklch, var(--background) 70%, transparent)`,
-            }}
-          >
-            <Terminal className="size-3.5 shrink-0" style={{ color: accent }} aria-hidden="true" />
-            <div className="flex min-w-0 flex-col">
-              <span
-                className="truncate font-mono text-[11px] uppercase tracking-[0.08em]"
-                style={{ color: "color-mix(in oklch, var(--foreground), transparent 15%)" }}
-                translate="no"
-              >
-                {node}
-              </span>
-              <span
-                className="font-mono text-[9px] uppercase tracking-[0.32em] text-muted-foreground"
-                translate="no"
-              >
-                cue · {pad(index + 1)}
-              </span>
-            </div>
-          </div>
-        ))}
+        <Terminal
+          sequence
+          startOnView
+          className="max-h-none max-w-none bg-background/80 backdrop-blur-sm"
+        >
+          <TypingAnimation duration={28} className="text-muted-foreground">
+            {command}
+          </TypingAnimation>
+          <AnimatedSpan className="text-muted-foreground">{labels.ready}</AnimatedSpan>
+          <AnimatedSpan className="text-emerald-500">
+            {verbLabels.checking} {nodes[0] ?? entry.label}
+          </AnimatedSpan>
+          <AnimatedSpan className="text-emerald-500">
+            {verbLabels.applying} {nodes[1] ?? "manifest"}
+          </AnimatedSpan>
+          <AnimatedSpan className="text-emerald-500">
+            {verbLabels.publishing} {nodes[2] ?? "release"}
+          </AnimatedSpan>
+          <AnimatedSpan className="text-muted-foreground">
+            → {nodes[3] ?? "artifact"} · {sig}
+          </AnimatedSpan>
+          <TypingAnimation duration={22} className="mt-2 text-emerald-500">
+            {labels.done}
+          </TypingAnimation>
+          <AnimatedSpan className="text-muted-foreground">{labels.duration}</AnimatedSpan>
+        </Terminal>
       </div>
-
-      {/* ASCII footer */}
-      {!compact ? (
-        <div className="pointer-events-none absolute inset-x-[6%] bottom-[6%] flex items-end justify-between font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
-          <span>└─ rel · {nodes.length} cues</span>
-          <span>{locale === "zh" ? "发布与运维边界" : "release & ops boundary"} ─┘</span>
-        </div>
-      ) : null}
     </div>
   );
 }

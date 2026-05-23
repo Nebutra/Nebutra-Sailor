@@ -1,4 +1,8 @@
+"use client";
+
 import { Sparkles } from "@nebutra/icons";
+import { AnimatedBeam, BorderTrail, DotPattern, MagicCard } from "@nebutra/ui/primitives";
+import { useRef } from "react";
 import type { PackageFeatureEntry } from "../package-feature-data";
 import { entrySignature, getSpecimenNodes } from "./specimen-utils";
 
@@ -8,7 +12,7 @@ type Props = {
   compact?: boolean;
 };
 
-// Hash → integer in [0, max).
+// Hash → integer in [0, max). Deterministic per-slug knob.
 function seeded(slug: string, max: number, offset = 0): number {
   let hash = offset;
   for (let i = 0; i < slug.length; i += 1) {
@@ -18,41 +22,60 @@ function seeded(slug: string, max: number, offset = 0): number {
 }
 
 /**
- * AI runtime specimen — concentric orbits with satellite tool calls.
+ * AI runtime specimen — central planner + tool-call satellites.
  *
- * Sibling differentiation: rotation offset, satellite count, and a
- * deterministic "ring axis tilt" are all derived from the slug so two
- * AI packages don't look identical.
+ * The "orbit" metaphor reads through AnimatedBeam flow (planner → tools),
+ * not painted concentric rings. Sibling differentiation:
+ *   - satellite count: 5–8 derived from slug
+ *   - rotation offset: 0–2π derived from slug
+ *   - beam curvature sign: alternates per index, flipped by slug parity
  */
 export function OrbitSpecimen({ entry, locale, compact = false }: Props) {
-  // Sibling-aware geometry knobs.
-  const satelliteCount = 5 + seeded(entry.slug, 4); // 5–8
+  const satelliteCount = 5 + seeded(entry.slug, 4); // 5..8
   const rotationOffset = (seeded(entry.slug, 360, 7) / 360) * Math.PI * 2;
-  const tiltDeg = -8 + seeded(entry.slug, 16, 13); // -8°..+7°
+  const curvatureFlip = seeded(entry.slug, 2, 11) === 0 ? 1 : -1;
 
   const nodes = getSpecimenNodes(entry, satelliteCount);
-  const accent = entry.tone.accent;
-  const secondary = entry.tone.secondary;
   const sig = entrySignature(entry);
+
+  // Refs declared statically (max 8 satellites) so hooks aren't called in a loop.
+  const containerRef = useRef<HTMLDivElement>(null);
+  const centerRef = useRef<HTMLDivElement>(null);
+  const s0 = useRef<HTMLDivElement>(null);
+  const s1 = useRef<HTMLDivElement>(null);
+  const s2 = useRef<HTMLDivElement>(null);
+  const s3 = useRef<HTMLDivElement>(null);
+  const s4 = useRef<HTMLDivElement>(null);
+  const s5 = useRef<HTMLDivElement>(null);
+  const s6 = useRef<HTMLDivElement>(null);
+  const s7 = useRef<HTMLDivElement>(null);
+  const satelliteRefs = [s0, s1, s2, s3, s4, s5, s6, s7];
+
+  // Radius (in %) — center 50,50 → satellite ring.
+  const radius = compact ? 34 : 36;
+
   const minHeightStyle = compact
     ? { minHeight: "240px" }
     : { minHeight: "clamp(380px, 50vw, 520px)" };
 
-  // Geometry knobs that scale with mode.
-  const centerSize = compact ? "w-[18%]" : "w-[14%]";
-  const innerOrbit = compact ? "w-[42%]" : "w-[36%]";
-  const middleOrbit = compact ? "w-[66%]" : "w-[60%]";
-  const outerOrbit = compact ? "w-[92%]" : "w-[88%]";
-  const satelliteRadius = compact ? 30 : 30; // % of half-size
-
   return (
     <div
+      ref={containerRef}
       className="relative w-full overflow-hidden"
       role="img"
       aria-label={`${entry.label} orbit specimen`}
       style={minHeightStyle}
     >
-      {/* tone halo — punchier on dark */}
+      {/* Background dot pattern — radial mask for vignette */}
+      <DotPattern
+        glow={!compact}
+        width={20}
+        height={20}
+        cr={1}
+        className="text-muted-foreground/30 [mask-image:radial-gradient(circle_at_center,white,transparent_80%)]"
+      />
+
+      {/* Tone halo — gives the AI variant its colored "atmosphere" */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -60,202 +83,125 @@ export function OrbitSpecimen({ entry, locale, compact = false }: Props) {
           background: `radial-gradient(circle at 50% 50%, ${entry.tone.halo} 0%, transparent 60%)`,
         }}
       />
-      {/* second smaller halo for depth */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: `radial-gradient(circle at 50% 50%, ${entry.tone.chip} 0%, transparent 32%)`,
-        }}
-      />
 
-      {/* concentric orbits — tilted on x-axis for depth */}
-      <div
-        className="absolute inset-0 flex items-center justify-center"
-        aria-hidden="true"
-        style={{ transform: `rotateZ(${tiltDeg}deg)` }}
-      >
-        {/* outer dashed ring */}
-        <div
-          className={`absolute aspect-square ${outerOrbit} rounded-full`}
-          style={{
-            border: `1px dashed ${accent}`,
-            opacity: 0.35,
-          }}
-        />
-        {/* middle solid ring — primary orbit */}
-        <div
-          className={`absolute aspect-square ${middleOrbit} rounded-full`}
-          style={{
-            border: `1px solid ${accent}`,
-            opacity: 0.7,
-            boxShadow: `0 0 24px -4px ${accent}, inset 0 0 24px -8px ${accent}`,
-          }}
-        />
-        {/* inner ring */}
-        <div
-          className={`absolute aspect-square ${innerOrbit} rounded-full`}
-          style={{
-            border: `1px solid ${secondary}`,
-            opacity: 0.55,
-          }}
-        />
-
-        {/* sweep — rotating conic on middle ring */}
-        <div
-          className={`absolute aspect-square ${middleOrbit} rounded-full nebutra-orbit-sweep`}
-          style={{
-            background: `conic-gradient(from 0deg, transparent 0deg, ${accent} 18deg, transparent 60deg)`,
-            WebkitMask:
-              "radial-gradient(circle, transparent 49%, black 49.6%, black 50.4%, transparent 51%)",
-            mask: "radial-gradient(circle, transparent 49%, black 49.6%, black 50.4%, transparent 51%)",
-            opacity: 0.85,
-          }}
-        />
-
-        {/* secondary sweep — counter-rotating dim, on outer ring */}
-        <div
-          className={`absolute aspect-square ${outerOrbit} rounded-full nebutra-orbit-sweep-reverse`}
-          style={{
-            background: `conic-gradient(from 200deg, transparent 0deg, ${secondary} 12deg, transparent 40deg)`,
-            WebkitMask:
-              "radial-gradient(circle, transparent 49%, black 49.6%, black 50.4%, transparent 51%)",
-            mask: "radial-gradient(circle, transparent 49%, black 49.6%, black 50.4%, transparent 51%)",
-            opacity: 0.55,
-          }}
-        />
-      </div>
-
-      {/* axis cross — gives the orbit a "telescope reticle" feel */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 flex items-center justify-center"
-      >
-        <div
-          className="absolute h-px w-[14%]"
-          style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
-        />
-        <div
-          className="absolute w-px h-[14%]"
-          style={{ background: `linear-gradient(180deg, transparent, ${accent}, transparent)` }}
-        />
-      </div>
-
-      {/* central planner node — smaller, denser */}
+      {/* Central planner node — MagicCard with BorderTrail */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div
-          className={`relative flex aspect-square ${centerSize} flex-col items-center justify-center rounded-full border backdrop-blur-md`}
-          style={{
-            borderColor: `color-mix(in oklch, ${accent} 55%, transparent)`,
-            background: `radial-gradient(circle, ${entry.tone.chip} 0%, oklch(0.16 0.012 250) 70%)`,
-            boxShadow: `0 0 40px -8px ${accent}, inset 0 0 20px -10px ${accent}`,
-          }}
-        >
-          <Sparkles
-            className={compact ? "size-3.5" : "size-5"}
-            style={{ color: accent }}
-            aria-hidden="true"
-          />
-          {!compact ? (
-            <span
-              className="mt-1 max-w-[82%] truncate text-center font-mono text-[9px] uppercase tracking-[0.24em]"
-              style={{ color: "rgba(255,255,255,0.78)" }}
-              translate="no"
-            >
-              {entry.slug.length > 9 ? `${entry.slug.slice(0, 9)}…` : entry.slug}
-            </span>
-          ) : null}
+        <div ref={centerRef} className={compact ? "h-16 w-16" : "h-24 w-24"}>
+          <MagicCard
+            className="h-full w-full rounded-full"
+            gradientSize={140}
+            gradientFrom={entry.tone.accent}
+            gradientTo={entry.tone.secondary}
+            gradientColor={entry.tone.chip}
+          >
+            <div className="relative flex h-full w-full flex-col items-center justify-center rounded-full">
+              {!compact ? <BorderTrail size={48} className="bg-foreground/60" /> : null}
+              <Sparkles
+                className={compact ? "size-4" : "size-5"}
+                style={{ color: entry.tone.accent }}
+                aria-hidden="true"
+              />
+              {!compact ? (
+                <span
+                  className="mt-1 max-w-[80%] truncate text-center font-mono text-[9px] uppercase tracking-[0.24em] text-foreground/75"
+                  translate="no"
+                >
+                  {entry.slug.length > 9 ? `${entry.slug.slice(0, 9)}…` : entry.slug}
+                </span>
+              ) : null}
+            </div>
+          </MagicCard>
         </div>
       </div>
 
-      {/* satellite tool calls — distributed on outer ring with slug rotation */}
+      {/* Satellite tool calls — placed on a ring around center */}
       {nodes.map((node, index) => {
         const angle =
           (index / Math.max(nodes.length, 1)) * Math.PI * 2 - Math.PI / 2 + rotationOffset;
-        const x = 50 + satelliteRadius * Math.cos(angle);
-        const y = 50 + satelliteRadius * Math.sin(angle);
+        const x = 50 + radius * Math.cos(angle);
+        const y = 50 + radius * Math.sin(angle);
         const isPrimary = index === 0;
         return (
           <div
             key={`${node}-${index}`}
+            ref={satelliteRefs[index]}
             className="absolute -translate-x-1/2 -translate-y-1/2"
             style={{ left: `${x}%`, top: `${y}%` }}
           >
-            <div
-              className="flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] backdrop-blur-md"
-              style={{
-                borderColor: isPrimary
-                  ? `color-mix(in oklch, ${accent} 65%, transparent)`
-                  : `color-mix(in oklch, ${accent} 28%, transparent)`,
-                background: isPrimary
-                  ? `color-mix(in oklch, ${accent} 16%, oklch(0.12 0.014 250))`
-                  : "oklch(0.16 0.012 250 / 0.7)",
-                color: "rgba(255,255,255,0.88)",
-                boxShadow: isPrimary ? `0 0 16px -4px ${accent}` : "none",
-              }}
-              translate="no"
-            >
+            {compact ? (
               <span
-                className="inline-block size-1.5 rounded-full"
-                style={{
-                  background: accent,
-                  boxShadow: `0 0 6px ${accent}`,
-                }}
                 aria-hidden="true"
+                className="block size-2 rounded-full"
+                style={{
+                  background: entry.tone.accent,
+                  boxShadow: `0 0 10px ${entry.tone.accent}`,
+                }}
               />
-              <span className="max-w-[7rem] truncate">{node}</span>
-            </div>
+            ) : (
+              <div
+                className="flex items-center gap-1.5 rounded-full border bg-background/70 px-2.5 py-1 font-mono text-[10px] text-foreground/85 backdrop-blur-md"
+                style={{
+                  borderColor: isPrimary
+                    ? `color-mix(in oklch, ${entry.tone.accent} 65%, transparent)`
+                    : `color-mix(in oklch, ${entry.tone.accent} 28%, transparent)`,
+                  boxShadow: isPrimary ? `0 0 16px -4px ${entry.tone.accent}` : "none",
+                }}
+                translate="no"
+              >
+                <span
+                  className="inline-block size-1.5 rounded-full"
+                  style={{
+                    background: entry.tone.accent,
+                    boxShadow: `0 0 6px ${entry.tone.accent}`,
+                  }}
+                  aria-hidden="true"
+                />
+                <span className="max-w-[7rem] truncate">{node}</span>
+              </div>
+            )}
           </div>
         );
       })}
 
-      {/* dust particles — sprinkled along the middle orbit */}
+      {/* Beams — only in full mode. AnimatedBeam needs measured DOM. */}
       {!compact
-        ? Array.from({ length: 12 }).map((_, dustIndex) => {
-            const dustAngle = (dustIndex / 12) * Math.PI * 2 + rotationOffset + Math.PI / 12;
-            const dustRadius = 30; // matches middleOrbit at w-[60%]
-            const x = 50 + dustRadius * Math.cos(dustAngle);
-            const y = 50 + dustRadius * Math.sin(dustAngle);
+        ? nodes.map((node, index) => {
+            // Curvature alternates direction per index, flipped per slug.
+            const curvature = (index % 2 === 0 ? 40 : -40) * curvatureFlip;
             return (
-              <span
-                // biome-ignore lint/suspicious/noArrayIndexKey: pure decoration
-                key={dustIndex}
-                aria-hidden="true"
-                className="pointer-events-none absolute size-1 -translate-x-1/2 -translate-y-1/2 rounded-full"
-                style={{
-                  left: `${x}%`,
-                  top: `${y}%`,
-                  background: accent,
-                  opacity: dustIndex % 3 === 0 ? 0.6 : 0.18,
-                }}
+              <AnimatedBeam
+                key={`beam-${node}-${index}`}
+                containerRef={containerRef}
+                fromRef={centerRef}
+                toRef={satelliteRefs[index]}
+                curvature={curvature}
+                duration={4 + (index % 3)}
+                delay={index * 0.4}
+                reverse={index % 2 === 1}
+                tone="brand"
+                intensity={index === 0 ? "strong" : "normal"}
               />
             );
           })
         : null}
 
-      {/* corner annotations */}
+      {/* Annotations — full mode only */}
       {!compact ? (
         <div className="pointer-events-none absolute inset-x-8 bottom-6 flex items-end justify-between">
-          <div
-            className="font-mono text-[10px] uppercase tracking-[0.32em]"
-            style={{ color: "rgba(255,255,255,0.55)" }}
-          >
+          <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
             <div>
               orbit · loop {nodes.length} ·{" "}
-              <span style={{ color: accent }} translate="no">
+              <span style={{ color: entry.tone.accent }} translate="no">
                 {entry.tone.label}
               </span>
             </div>
-            <div className="mt-1" style={{ color: "rgba(255,255,255,0.32)" }}>
-              sig {sig} · tilt {tiltDeg}°
+            <div className="mt-1 text-muted-foreground/60">
+              sig {sig} · rot {Math.round((rotationOffset * 180) / Math.PI)}°
             </div>
           </div>
-          <div
-            className="text-right font-mono text-[10px] uppercase tracking-[0.32em]"
-            style={{ color: "rgba(255,255,255,0.55)" }}
-          >
+          <div className="text-right font-mono text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
             <div>{locale === "zh" ? "代理协奏环" : "agent orbit"}</div>
-            <div className="mt-1" style={{ color: "rgba(255,255,255,0.32)" }}>
+            <div className="mt-1 text-muted-foreground/60">
               ∮ {entry.children.length || "—"} tool calls
             </div>
           </div>
