@@ -104,8 +104,12 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO 구조",
-    "title": "10개 앱 · 55개 패키지 · 하나의 monorepo.",
+    "title": "10개 앱 · 104개 패키지 · 4개 백엔드 라인.",
     "description": "공유 코드, 병렬 빌드, 중복 제거. 데이터베이스부터 프론트엔드까지 완전한 엔드투엔드 타입 안정성을 제공합니다.",
+    "metricApps": "앱",
+    "metricBackends": "백엔드 라인",
+    "metricPackages": "패키지",
+    "verifiedPaths": "현재 workspace 경로 기준으로 검증됨",
     "cta": "모노레포 아키텍처 살펴보기"
   },
   "stats": {
@@ -1686,7 +1690,7 @@
         },
         "why-turborepo": {
           "question": "표준 Next.js 앱 대신 왜 Turborepo입니까?",
-          "answer": "Sailor는 10개 앱 + 55개 공유 패키지 + 다중 언어 백엔드(Hono BFF + FastAPI 플릿)로 — 단일 Next.js 메가 앱이 유지 관리 가능한 시점을 훨씬 넘어섰습니다. Turborepo는 영향받은 부분만 빌드, 투명한 원격 캐싱, 공유 디자인 토큰/인증/결제/관측성에 대한 단일 소스를 제공합니다 — 모든 팀을 동일한 Next.js 프로세스에 강제하지 않으면서."
+          "answer": "Sailor는 10개 앱 + packages/*/* 아래의 104개 공유 패키지 + 4개 백엔드 라인(Hono gateway, FastAPI/Python, Go, Rust)으로 — 단일 Next.js 메가 앱이 유지 관리 가능한 시점을 훨씬 넘어섰습니다. Turborepo는 영향받은 부분만 빌드, 투명한 원격 캐싱, 공유 디자인 토큰/인증/결제/관측성에 대한 단일 소스를 제공합니다 — 모든 팀을 동일한 Next.js 프로세스에 강제하지 않으면서."
         }
       }
     },
@@ -1699,7 +1703,7 @@
           "label": "지원 AI 공급자"
         },
         "projects": {
-          "value": "55",
+          "value": "104",
           "label": "모노레포 패키지"
         },
         "uptime": {

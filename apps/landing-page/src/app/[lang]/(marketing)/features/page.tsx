@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { CapabilityFolderShowcase } from "@/components/landing/features/CapabilityFolderShowcase";
 import { FeatureBentoCard } from "@/components/landing/features/FeatureBentoCard";
 import { FeatureSmallCard } from "@/components/landing/features/FeatureSmallCard";
 import { LARGE_FEATURES, SMALL_FEATURES } from "@/components/landing/features/features-data";
@@ -67,6 +68,8 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
           </p>
         </AnimateIn>
       </section>
+
+      <CapabilityFolderShowcase locale={lang as Locale} />
 
       {/* Main Feature Bento Grid */}
       <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">

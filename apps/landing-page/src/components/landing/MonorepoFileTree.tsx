@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowRight } from "@nebutra/icons";
 import {
   TreeExpander,
   TreeLabel,
@@ -10,16 +11,36 @@ import {
   TreeView,
 } from "@nebutra/ui/primitives";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { type FileNode, TREE_DATA } from "@/lib/constants/landing-data";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { AnimateIn } from "./AnimateIn";
 
-function renderNodes(nodes: FileNode[], level = 0, parentPath: boolean[] = []): ReactNode {
+const TREE_METRICS = [
+  { labelKey: "metricApps", value: "10" },
+  { labelKey: "metricBackends", value: "4" },
+  { labelKey: "metricPackages", value: "104" },
+] as const;
+
+const EMPTY_PARENT_PATH: boolean[] = [];
+
+function TreeNodes({
+  level = 0,
+  nodes,
+  parentPath = EMPTY_PARENT_PATH,
+}: {
+  level?: number;
+  nodes: FileNode[];
+  parentPath?: boolean[];
+}): ReactNode {
+  const locale = useLocale();
+
   return nodes.map((node, index) => {
     const hasChildren = Boolean(node.children?.length);
     const isLast = index === nodes.length - 1;
+    const isTopLevel = level === 0;
+
     return (
       <TreeNode
         key={node.id}
@@ -28,28 +49,62 @@ function renderNodes(nodes: FileNode[], level = 0, parentPath: boolean[] = []): 
         isLast={isLast}
         parentPath={parentPath}
       >
-        <TreeNodeTrigger className="hover:bg-muted/80 dark:hover:bg-zinc-800/80 rounded px-1 py-0.5 min-h-[28px] transition-colors group/trigger flex items-center pr-4 min-w-max w-full">
+        <TreeNodeTrigger
+          className={`group/trigger flex min-h-8 min-w-max w-full items-center rounded-md py-1 pr-4 transition-colors hover:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)] ${
+            isTopLevel ? "px-1 font-semibold" : "px-1"
+          }`}
+          title={node.path}
+        >
           <TreeExpander
             hasChildren={hasChildren}
-            className="text-muted-foreground/30 group-hover/trigger:text-muted-foreground/60 shrink-0 w-[20px]"
+            className="w-5 shrink-0 text-muted-foreground/35 group-hover/trigger:text-muted-foreground/70"
           />
           {node.icon && (
-            <span className="mr-2 flex h-4 w-4 shrink-0 items-center justify-center opacity-90 group-hover/trigger:opacity-100 transition-opacity">
+            <span
+              aria-hidden="true"
+              className="mr-2 flex size-4 shrink-0 items-center justify-center opacity-90 transition-opacity group-hover/trigger:opacity-100"
+            >
               {node.icon}
             </span>
           )}
-          <TreeLabel className="font-mono text-[13px] font-medium text-foreground tracking-tight dark:text-zinc-300 pointer-events-none shrink-0 whitespace-nowrap">
+          <TreeLabel
+            translate="no"
+            className={`pointer-events-none shrink-0 whitespace-nowrap font-mono font-medium tracking-normal ${
+              isTopLevel
+                ? "text-[13.5px] text-foreground"
+                : "text-[13px] text-foreground/90 dark:text-zinc-300"
+            }`}
+          >
             {node.label}
           </TreeLabel>
+          {node.tag && (
+            <span className="ml-2 rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground/80">
+              {node.tag}
+            </span>
+          )}
           {node.description && (
-            <span className="ml-2 hidden sm:inline-block text-[12px] text-muted-foreground/50 font-sans font-normal whitespace-nowrap group-hover/trigger:text-muted-foreground transition-colors pointer-events-none">
+            <span className="ml-2 hidden max-w-[440px] truncate font-sans font-normal text-[12px] text-muted-foreground/55 transition-colors group-hover/trigger:text-muted-foreground sm:inline-block">
               {node.description}
             </span>
+          )}
+          {node.featureAnchor && (
+            <Link
+              aria-label={`${node.label} feature detail`}
+              className="ml-2 flex size-6 shrink-0 items-center justify-center rounded-full border border-[var(--neutral-6)] bg-background/70 text-muted-foreground opacity-0 transition-[opacity,color,border-color] group-hover/trigger:opacity-100 hover:border-primary/50 hover:text-primary focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              href={`/${locale}/features#${node.featureAnchor}`}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </Link>
           )}
         </TreeNodeTrigger>
         {hasChildren && (
           <TreeNodeContent hasChildren={hasChildren}>
-            {renderNodes(node.children ?? [], level + 1, [...parentPath, isLast])}
+            <TreeNodes
+              nodes={node.children ?? []}
+              level={level + 1}
+              parentPath={[...parentPath, isLast]}
+            />
           </TreeNodeContent>
         )}
       </TreeNode>
@@ -60,10 +115,10 @@ function renderNodes(nodes: FileNode[], level = 0, parentPath: boolean[] = []): 
 function BaseTree({ variant = "default" }: { variant: "default" | "minimal" }) {
   return (
     <div
-      className={`p-4 sm:p-5 flex-1 overflow-auto w-full relative z-10 scrollbar-thin scrollbar-thumb-primary/10 hover:scrollbar-thumb-primary/20 scrollbar-track-transparent ${variant === "minimal" ? "p-3" : ""}`}
+      className={`relative z-10 w-full flex-1 overflow-auto overscroll-contain scrollbar-thin scrollbar-thumb-primary/10 scrollbar-track-transparent hover:scrollbar-thumb-primary/20 ${variant === "minimal" ? "p-3" : "p-4 sm:p-5"}`}
     >
       <TreeProvider
-        defaultExpandedIds={["apps", "packages", "tooling"]}
+        defaultExpandedIds={["apps", "backends", "packages", "tooling"]}
         showLines
         showIcons={false}
         selectable={false}
@@ -71,7 +126,9 @@ function BaseTree({ variant = "default" }: { variant: "default" | "minimal" }) {
         indent={16}
         className={`font-mono ${variant === "minimal" ? "text-black/10 dark:text-white/10" : "text-black/20 dark:text-white/20"}`}
       >
-        <TreeView>{renderNodes(TREE_DATA)}</TreeView>
+        <TreeView>
+          <TreeNodes nodes={TREE_DATA} />
+        </TreeView>
       </TreeProvider>
     </div>
   );
@@ -84,7 +141,7 @@ export function MinimalMonorepoTree() {
   return (
     <div className="flex-1 overflow-hidden flex flex-col w-full h-full relative group/tree">
       {/* Subtle hover gradient indicator for scrollability */}
-      <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-background dark:from-zinc-950 to-transparent z-20 pointer-events-none opacity-80 group-hover/tree:opacity-10 transition-opacity" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-10 bg-gradient-to-t from-background to-transparent opacity-80 transition-opacity group-hover/tree:opacity-10 dark:from-zinc-950" />
 
       <BaseTree variant="minimal" />
 
@@ -106,18 +163,17 @@ export function MonorepoFileTree() {
 
   return (
     <article
-      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-[var(--color-glass-panel,rgba(255,255,255,0.6))] dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.6))] p-8 md:p-10 overflow-hidden backdrop-blur-2xl transition-all hover:border-primary/40"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-[var(--color-glass-panel,rgba(255,255,255,0.72))] p-6 backdrop-blur-2xl transition-[border-color,box-shadow,background-color] duration-300 hover:border-primary/40 dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.72))] md:p-8"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-100" />
 
-      {/* Subtle grid bg */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(120,120,120,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(120,120,120,0.06)_1px,transparent_1px)] bg-[size:28px_28px] opacity-35" />
 
       <div className="relative z-10 flex flex-col h-full">
         <AnimateIn preset="emerge" inView>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_var(--color-primary)]"></div>
+          <div className="mb-4 flex items-center gap-3">
+            <div className="size-2 rounded-full bg-primary shadow-[0_0_10px_var(--color-primary)]" />
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
               {t("badge")}
             </p>
@@ -131,30 +187,57 @@ export function MonorepoFileTree() {
           <p className="text-[15px] text-muted-foreground mb-8 leading-relaxed">
             {t("description")}
           </p>
+          <div className="mb-5 grid grid-cols-3 gap-2">
+            {TREE_METRICS.map((metric) => (
+              <div
+                key={metric.labelKey}
+                className="rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-background/65 px-3 py-2 shadow-sm dark:bg-[var(--neutral-2)]/70"
+              >
+                <p className="font-mono text-lg font-semibold leading-none text-foreground tabular-nums">
+                  {metric.value}
+                </p>
+                <p className="mt-1 truncate text-[11px] font-medium text-muted-foreground">
+                  {t(metric.labelKey)}
+                </p>
+              </div>
+            ))}
+          </div>
         </AnimateIn>
 
-        <div className="flex-1 overflow-hidden flex flex-col rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/40 dark:bg-[var(--neutral-2)]/80 shadow-inner backdrop-blur-sm relative">
-          <div className="flex flex-none items-center px-4 h-[42px] border-b border-black/5 dark:border-white/5 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md z-20">
+        <div className="relative flex min-h-[360px] flex-1 flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/55 shadow-inner backdrop-blur-sm dark:bg-[var(--neutral-2)]/80">
+          <div className="z-20 flex h-[42px] flex-none items-center border-black/5 border-b bg-white/55 px-4 backdrop-blur-md dark:border-white/5 dark:bg-zinc-900/55">
             <div className="flex gap-1.5 items-center">
-              <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-sm"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] shadow-sm"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f] shadow-sm"></div>
+              <div className="size-2.5 rounded-full bg-[#ff5f56] shadow-sm" />
+              <div className="size-2.5 rounded-full bg-[#ffbd2e] shadow-sm" />
+              <div className="size-2.5 rounded-full bg-[#27c93f] shadow-sm" />
             </div>
-            <div className="flex-1 flex justify-center pb-0.5 pr-[48px]">
-              <span className="text-[12px] font-sans font-medium text-zinc-500 dark:text-zinc-400">
-                nebutra-sailor / Project Explorer
+            <div className="flex min-w-0 flex-1 justify-center pb-0.5 pr-[48px]">
+              <span
+                className="truncate font-sans font-medium text-[12px] text-zinc-500 dark:text-zinc-400"
+                translate="no"
+              >
+                nebutra-sailor / Project Explorer / packages
               </span>
             </div>
           </div>
+          <div className="z-10 flex flex-none items-center gap-2 border-[var(--neutral-6)] border-b bg-[var(--neutral-1)]/70 px-4 py-2 text-[11px] text-muted-foreground">
+            <span
+              className="rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1 font-mono text-foreground/80"
+              translate="no"
+            >
+              main
+            </span>
+            <span className="hidden truncate sm:inline">{t("verifiedPaths")}</span>
+          </div>
 
-          <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-background dark:from-zinc-950 to-transparent z-20 pointer-events-none opacity-80" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-14 bg-gradient-to-t from-background to-transparent opacity-85 dark:from-zinc-950" />
 
           <BaseTree variant="default" />
         </div>
 
         <Link
           href={createPublicDocsUrl("development/project-structure")}
-          className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors group/link"
+          className="group/link mt-6 inline-flex w-fit items-center gap-2 rounded-full p-1 font-semibold text-muted-foreground text-sm transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
         >
           {t("cta")}
           <span className="text-primary transition-transform group-hover/link:translate-x-1">
