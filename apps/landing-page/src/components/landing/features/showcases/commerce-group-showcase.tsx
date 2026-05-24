@@ -278,7 +278,7 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
   );
 }
 
-export function CommerceGroupFallback({ entry, locale }: PackageShowcaseProps) {
+export function CommerceGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const layout = pickLayout(entry.slug);
   const HeaderIcon = layout === "license" ? KeyOld : Briefcase;
   const P = (bi: Bi) => bi[locale === "en" ? 0 : 1];

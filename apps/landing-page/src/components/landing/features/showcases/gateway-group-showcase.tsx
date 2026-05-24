@@ -63,7 +63,7 @@ function formatMs(ms: number): string {
   return `${ms} ms`;
 }
 
-export function GatewayGroupFallback({ entry, locale }: PackageShowcaseProps) {
+export function GatewayGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const t = COPY[locale];
   const slug = entry.slug;
   const base = `/v1/${slug}`;

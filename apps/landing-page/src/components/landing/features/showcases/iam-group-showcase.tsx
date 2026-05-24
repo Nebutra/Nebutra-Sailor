@@ -80,7 +80,7 @@ const COPY: Record<"en" | "zh", Copy> = {
 
 const CHECK_ICONS = [User, Shield, LockClosed, Check] as const;
 
-export function IamGroupFallback({ entry, locale }: PackageShowcaseProps) {
+export function IamGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const t = COPY[locale];
   const sessions = 120 + seeded(entry.slug, 880, 3);
   const auditPerDay = 8_000 + seeded(entry.slug, 42_000, 7);

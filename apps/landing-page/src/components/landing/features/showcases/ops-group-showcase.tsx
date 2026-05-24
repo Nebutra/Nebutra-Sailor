@@ -203,7 +203,7 @@ function Body({
   return <CliBody slug={slug} />;
 }
 
-export function OpsGroupFallback({ entry, locale }: PackageShowcaseProps) {
+export function OpsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
   const layout = pickLayout(entry.slug);
 

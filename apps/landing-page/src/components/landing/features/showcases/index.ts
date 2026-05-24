@@ -1,31 +1,35 @@
 /**
- * Showcase registry — slug-specific first, group fallback second.
+ * Showcase registry — every feature detail page renders one of these.
  *
- * The detail page (`/[lang]/features/[name]`) looks up the entry via
- * `resolveShowcase(slug, group)`:
- *   1. Slug-specific showcase from PACKAGE_SHOWCASES (15 hand-crafted)
- *   2. Group fallback from GROUP_SHOWCASES (8 templates that adapt per entry)
- *   3. null → page renders only the CodeBlock (no entries should hit this)
+ * Two tiers, both equally polished:
+ *   - PACKAGE_SHOWCASES — hand-crafted, slug-specific designs for the
+ *     top-tier packages (db, auth, billing, ...).
+ *   - GROUP_SHOWCASES — parameterized designs for entire capability
+ *     groups (ai, iam, integrations, ...). Each one adapts content per
+ *     entry.slug / entry.label / entry.children so two siblings inside
+ *     the same group still render distinctly.
+ *
+ * `resolveShowcase(slug, group)` checks slug-specific first, then group.
  */
 
 import { AgentRuntimeShowcase } from "./agent-runtime-showcase";
-import { AiGroupFallback } from "./ai-group-fallback";
+import { AiGroupShowcase } from "./ai-group-showcase";
 import { AuditShowcase } from "./audit-showcase";
 import { AuthShowcase } from "./auth-showcase";
 import { BillingShowcase } from "./billing-showcase";
 import { CacheShowcase } from "./cache-showcase";
-import { CommerceGroupFallback } from "./commerce-group-fallback";
+import { CommerceGroupShowcase } from "./commerce-group-showcase";
 import { DbShowcase } from "./db-showcase";
-import { DesignGroupFallback } from "./design-group-fallback";
+import { DesignGroupShowcase } from "./design-group-showcase";
 import { GatewayCoreShowcase } from "./gateway-core-showcase";
-import { GatewayGroupFallback } from "./gateway-group-fallback";
-import { IamGroupFallback } from "./iam-group-fallback";
-import { IntegrationsGroupFallback } from "./integrations-group-fallback";
+import { GatewayGroupShowcase } from "./gateway-group-showcase";
+import { IamGroupShowcase } from "./iam-group-showcase";
+import { IntegrationsGroupShowcase } from "./integrations-group-showcase";
 import { KnowledgeRagShowcase } from "./knowledge-rag-showcase";
 import { MeteringShowcase } from "./metering-showcase";
-import { OpsGroupFallback } from "./ops-group-fallback";
+import { OpsGroupShowcase } from "./ops-group-showcase";
 import { PermissionsShowcase } from "./permissions-showcase";
-import { PlatformGroupFallback } from "./platform-group-fallback";
+import { PlatformGroupShowcase } from "./platform-group-showcase";
 import { QueueShowcase } from "./queue-showcase";
 import { SearchShowcase } from "./search-showcase";
 import { TokensShowcase } from "./tokens-showcase";
@@ -35,7 +39,7 @@ import { WebhooksShowcase } from "./webhooks-showcase";
 
 export type { PackageShowcase, PackageShowcaseProps } from "./types";
 
-/** Slug-specific showcases — hand-crafted for high-priority packages. */
+/** Hand-crafted, slug-specific showcases. */
 export const PACKAGE_SHOWCASES: Record<string, PackageShowcase> = {
   "agent-runtime": AgentRuntimeShowcase,
   audit: AuditShowcase,
@@ -54,16 +58,16 @@ export const PACKAGE_SHOWCASES: Record<string, PackageShowcase> = {
   webhooks: WebhooksShowcase,
 };
 
-/** Group-level fallbacks — adapt content per entry.slug / entry.label. */
+/** Group-level showcases — adapt content per entry.slug / entry.label. */
 export const GROUP_SHOWCASES: Record<string, PackageShowcase> = {
-  ai: AiGroupFallback,
-  iam: IamGroupFallback,
-  integrations: IntegrationsGroupFallback,
-  platform: PlatformGroupFallback,
-  design: DesignGroupFallback,
-  commerce: CommerceGroupFallback,
-  gateway: GatewayGroupFallback,
-  ops: OpsGroupFallback,
+  ai: AiGroupShowcase,
+  iam: IamGroupShowcase,
+  integrations: IntegrationsGroupShowcase,
+  platform: PlatformGroupShowcase,
+  design: DesignGroupShowcase,
+  commerce: CommerceGroupShowcase,
+  gateway: GatewayGroupShowcase,
+  ops: OpsGroupShowcase,
 };
 
 export function getPackageShowcase(slug: string): PackageShowcase | null {
@@ -74,7 +78,7 @@ export function getGroupShowcase(group: string): PackageShowcase | null {
   return GROUP_SHOWCASES[group] ?? null;
 }
 
-/** Resolve the best showcase for an entry: slug-specific → group fallback. */
+/** Resolve the showcase for an entry — slug-specific first, then group. */
 export function resolveShowcase(slug: string, group: string): PackageShowcase | null {
   return getPackageShowcase(slug) ?? getGroupShowcase(group) ?? null;
 }

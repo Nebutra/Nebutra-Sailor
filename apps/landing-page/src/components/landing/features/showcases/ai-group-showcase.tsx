@@ -155,7 +155,7 @@ function PipelineLayout({
   );
 }
 
-export function AiGroupFallback({ entry, locale }: PackageShowcaseProps) {
+export function AiGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
   const useHub = entry.children.length >= 3;
   const latency = 40 + seeded(entry.slug, 180);

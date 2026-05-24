@@ -72,7 +72,7 @@ function configHost(slug: string) {
   return `https://${slug}.${region}.svc.nebutra.internal:6432`;
 }
 
-export function PlatformGroupFallback({ entry, locale }: PackageShowcaseProps) {
+export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const t = COPY[locale];
   const uptime = 99.0 + seeded(entry.slug, 99, 3) / 100;
   const p99Ms = 8 + seeded(entry.slug, 42, 7);

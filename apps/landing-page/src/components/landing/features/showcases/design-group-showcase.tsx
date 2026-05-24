@@ -270,7 +270,7 @@ function renderBody(layout: Layout, copy: Copy) {
   return <GalleryLayout />;
 }
 
-export function DesignGroupFallback(props: PackageShowcaseProps) {
+export function DesignGroupShowcase(props: PackageShowcaseProps) {
   const { entry, locale } = props;
   const copy = COPY[locale];
   const layout = pickLayout(entry.slug);

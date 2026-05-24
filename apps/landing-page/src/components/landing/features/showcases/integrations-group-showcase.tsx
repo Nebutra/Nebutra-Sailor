@@ -76,7 +76,7 @@ function pickStageIcon(slug: string): typeof Envelope {
   return Lightning;
 }
 
-export function IntegrationsGroupFallback({ entry, locale }: PackageShowcaseProps) {
+export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
   const numLocale = locale === "zh" ? "zh-CN" : "en-US";
   const providers = PROVIDERS_FOR_SLUG[entry.slug] ?? DEFAULT_PROVIDERS;
