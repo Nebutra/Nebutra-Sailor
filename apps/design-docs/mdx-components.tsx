@@ -348,6 +348,7 @@ import {
 } from "@/components/grid-layout-demos";
 import { IconGallery } from "@/components/icon-gallery";
 import { IntroductionHero } from "@/components/introduction-hero";
+import { MdxCodeBlock } from "@/components/mdx-code-block";
 import {
   AccordionGroup,
   Check,
@@ -456,6 +457,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ...defaultComponents,
     ...ObsidianComponents,
     ...PythonComponents,
+    pre: MdxCodeBlock,
 
     // ─── Fumadocs Built-ins ────────────────────────────────────────────────────
     Callout,

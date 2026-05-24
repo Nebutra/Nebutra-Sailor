@@ -36,7 +36,7 @@ import {
   getRelatedEntries,
   PACKAGE_FEATURE_ENTRIES,
 } from "@/components/landing/features/package-feature-data";
-import { getPackageShowcase } from "@/components/landing/features/showcases";
+import { resolveShowcase } from "@/components/landing/features/showcases";
 import { type Locale, routing } from "@/i18n/routing";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -187,7 +187,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   const meta = GROUP_META[entry.group] ?? DEFAULT_META;
   const Icon = meta.icon;
   const sample = getCodeSampleForEntry(entry);
-  const Showcase = getPackageShowcase(entry.slug);
+  const Showcase = resolveShowcase(entry.slug, entry.group);
   const related = getRelatedEntries(entry, 4);
   const docsHref = createPublicDocsUrl(meta.docsPath);
 

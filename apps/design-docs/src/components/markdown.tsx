@@ -1,21 +1,13 @@
-import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { ElementContent, Root, RootContent } from "hast";
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
-import {
-  Children,
-  type ComponentProps,
-  type ReactElement,
-  type ReactNode,
-  Suspense,
-  use,
-  useDeferredValue,
-} from "react";
+import { type ReactNode, Suspense, use, useDeferredValue } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkRehype from "remark-rehype";
 import { visit } from "unist-util-visit";
+import { MdxCodeBlock } from "@/components/mdx-code-block";
 
 export interface Processor {
   process: (content: string) => Promise<ReactNode>;
@@ -69,29 +61,12 @@ function createProcessor(): Processor {
         Fragment,
         components: {
           ...defaultMdxComponents,
-          pre: Pre,
+          pre: MdxCodeBlock,
           img: undefined, // use JSX
         },
       });
     },
   };
-}
-
-function Pre(props: ComponentProps<"pre">) {
-  const code = Children.only(props.children) as ReactElement;
-  const codeProps = code.props as ComponentProps<"code">;
-  const content = codeProps.children;
-  if (typeof content !== "string") return null;
-
-  let lang =
-    codeProps.className
-      ?.split(" ")
-      .find((v) => v.startsWith("language-"))
-      ?.slice("language-".length) ?? "text";
-
-  if (lang === "mdx") lang = "md";
-
-  return <DynamicCodeBlock lang={lang} code={content.trimEnd()} />;
 }
 
 const processor = createProcessor();

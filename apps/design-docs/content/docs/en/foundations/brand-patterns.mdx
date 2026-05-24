@@ -104,7 +104,13 @@ A minimal dot grid for subtle, low-key backgrounds. Use where the hexagonal grid
 
 ```tsx
 // Tailwind implementation
-<div className="absolute inset-0 bg-[radial-gradient(circle,rgba(0,51,254,0.12)_1px,transparent_1px)] bg-[size:24px_24px]" />
+<div
+  className={[
+    "absolute inset-0",
+    "bg-[radial-gradient(circle,rgba(0,51,254,0.12)_1px,transparent_1px)]",
+    "bg-[size:24px_24px]",
+  ].join(" ")}
+/>
 ```
 
 ### When to Use
