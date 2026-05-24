@@ -36,6 +36,7 @@ import {
   getRelatedEntries,
   PACKAGE_FEATURE_ENTRIES,
 } from "@/components/landing/features/package-feature-data";
+import { getPackageShowcase } from "@/components/landing/features/showcases";
 import { type Locale, routing } from "@/i18n/routing";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -186,6 +187,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   const meta = GROUP_META[entry.group] ?? DEFAULT_META;
   const Icon = meta.icon;
   const sample = getCodeSampleForEntry(entry);
+  const Showcase = getPackageShowcase(entry.slug);
   const related = getRelatedEntries(entry, 4);
   const docsHref = createPublicDocsUrl(meta.docsPath);
 
@@ -278,6 +280,28 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
           </div>
         </AnimateIn>
       </section>
+
+      {/* BESPOKE SHOWCASE — rendered if a per-package designer landed one */}
+      {Showcase ? (
+        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
+          <AnimateIn preset="fadeUp" inView>
+            <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="font-bold text-primary text-xs uppercase tracking-[0.2em]">
+                  {locale === "zh" ? "实时预览" : "Live preview"}
+                </p>
+                <h2 className="mt-2 font-semibold text-2xl text-foreground sm:text-3xl">
+                  {locale === "zh" ? `${entry.label} 真实形态` : `${entry.label} in action`}
+                </h2>
+              </div>
+            </div>
+            {/* entry.icon is a React.createElement with a function reference —
+                drop it before passing across the showcase boundary (Next can't
+                serialize functions to client components). */}
+            <Showcase entry={{ ...entry, icon: undefined }} locale={locale} />
+          </AnimateIn>
+        </section>
+      ) : null}
 
       {/* CODE SHOWCASE ──────────────────────────────────────────────── */}
       <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
