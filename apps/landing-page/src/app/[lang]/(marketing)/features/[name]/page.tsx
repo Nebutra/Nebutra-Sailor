@@ -27,7 +27,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import type { ComponentType } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
-import { getCodeSampleForGroup } from "@/components/landing/features/feature-code-samples";
+import { getCodeSampleForEntry } from "@/components/landing/features/feature-code-samples";
 import {
   getFeatureSummary,
   getFeatureTitle,
@@ -185,7 +185,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   const groupLabel = getGroupLabel(entry.group, locale);
   const meta = GROUP_META[entry.group] ?? DEFAULT_META;
   const Icon = meta.icon;
-  const sample = getCodeSampleForGroup(entry.group);
+  const sample = getCodeSampleForEntry(entry);
   const related = getRelatedEntries(entry, 4);
   const docsHref = createPublicDocsUrl(meta.docsPath);
 
