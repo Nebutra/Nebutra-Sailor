@@ -12,14 +12,7 @@ import {
   TerminalWindow as TerminalSquare,
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import {
-  AuroraBackground,
-  AuroraText,
-  Badge,
-  CodeBlock,
-  MagicCard,
-  MetricCard,
-} from "@nebutra/ui/primitives";
+import { AuroraBackground, AuroraText, Badge, CodeBlock, MagicCard } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -49,9 +42,7 @@ const localeForCopy = (lang: string): "en" | "zh" => (lang === "zh" ? "zh" : "en
 
 type GroupMeta = {
   icon: ComponentType<{ className?: string }>;
-  /** Aurora gradient colors for the title highlight. */
   auroraColors: string[];
-  /** Subtle aurora-bg variant. */
   ambient: "subtle" | "vivid" | "monochrome";
   docsPath: string;
 };
@@ -116,38 +107,11 @@ const DEFAULT_META: GroupMeta = {
 
 const COPY = {
   back: { en: "All features", zh: "全部能力" },
-  capability: { en: "Capability", zh: "能力" },
-  package: { en: "Package", zh: "能力包" },
-  surface: { en: "Surface", zh: "能力面" },
-  exampleUsage: { en: "Example usage", zh: "示例用法" },
-  exampleDesc: {
-    en: "Drop-in code from the public docs — production-grade and tenant-aware by default.",
-    zh: "公开文档里的可直接使用代码片段——生产级、默认按租户隔离。",
-  },
-  exploreFeature: { en: "Explore feature", zh: "探索功能" },
+  package: { en: "package", zh: "能力包" },
+  surface: { en: "surface", zh: "能力面" },
   openDocs: { en: "Open docs", zh: "打开文档" },
-  subpackages: { en: "Sub-packages", zh: "子能力包" },
-  subpackagesDesc: {
-    en: "Stable contracts composed into this capability boundary.",
-    zh: "组成这个能力边界的稳定契约接口。",
-  },
-  related: { en: "Same domain", zh: "同能力域" },
-  relatedDesc: {
-    en: "Other capability packages inside the same domain.",
-    zh: "同一能力域里的其他 package。",
-  },
-  metric_subpackages: { en: "Sub-packages", zh: "子包" },
-  metric_owner: { en: "Owner", zh: "Owner" },
-  metric_kind: { en: "Kind", zh: "类型" },
-  kind_package: { en: "Package", zh: "Package" },
-  kind_group: { en: "Group", zh: "Group" },
-  kind_capability: { en: "Capability", zh: "Capability" },
-} as const;
-
-const KIND_LABEL = {
-  package: { en: "Package", zh: "Package" },
-  group: { en: "Group", zh: "Group" },
-  capability: { en: "Capability", zh: "Capability" },
+  related: { en: "More in domain", zh: "同能力域" },
+  explore: { en: "Explore", zh: "查看" },
 } as const;
 
 export function generateStaticParams() {
@@ -191,7 +155,6 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   const related = getRelatedEntries(entry, 4);
   const docsHref = createPublicDocsUrl(meta.docsPath);
 
-  // Title split: render `<label>` plain + suffix word in AuroraText.
   const suffix = entry.kind === "package" ? COPY.package[locale] : COPY.surface[locale];
 
   return (
@@ -201,7 +164,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
     >
       <Navbar />
 
-      {/* HERO ───────────────────────────────────────────────────────── */}
+      {/* HERO */}
       <section className="relative isolate mx-auto max-w-[1400px] px-4 pt-36 pb-20 sm:px-6 lg:px-8">
         <AuroraBackground variant={meta.ambient} position="top" intensity={0.55} />
 
@@ -233,9 +196,6 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
             >
               {entry.path}
             </Badge>
-            <Badge size="sm" variant="outline" className="font-mono uppercase tracking-[0.18em]">
-              {KIND_LABEL[entry.kind][locale]}
-            </Badge>
           </div>
         </AnimateIn>
 
@@ -258,67 +218,33 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView delay={0.26}>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href={docsHref}
-              target="_blank"
-              rel="noreferrer"
-              className="group/cta inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-            >
-              {COPY.openDocs[locale]}
-              <ArrowUpRight
-                aria-hidden="true"
-                className="size-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
-              />
-            </a>
-            <Link
-              href={`/${lang}/features#capability-${entry.group}`}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-background/40 px-5 py-2.5 font-semibold text-foreground text-sm backdrop-blur-md transition-colors hover:border-foreground/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-            >
-              {locale === "zh" ? "查看能力地图" : "View capability map"}
-            </Link>
-          </div>
+          <a
+            href={docsHref}
+            target="_blank"
+            rel="noreferrer"
+            className="group/cta mt-8 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+          >
+            {COPY.openDocs[locale]}
+            <ArrowUpRight
+              aria-hidden="true"
+              className="size-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
+            />
+          </a>
         </AnimateIn>
       </section>
 
-      {/* BESPOKE SHOWCASE — rendered if a per-package designer landed one */}
+      {/* SHOWCASE */}
       {Showcase ? (
-        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
+        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
           <AnimateIn preset="fadeUp" inView>
-            <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="font-bold text-primary text-xs uppercase tracking-[0.2em]">
-                  {locale === "zh" ? "实时预览" : "Live preview"}
-                </p>
-                <h2 className="mt-2 font-semibold text-2xl text-foreground sm:text-3xl">
-                  {locale === "zh" ? `${entry.label} 真实形态` : `${entry.label} in action`}
-                </h2>
-              </div>
-            </div>
-            {/* entry.icon is a React.createElement with a function reference —
-                drop it before passing across the showcase boundary (Next can't
-                serialize functions to client components). */}
             <Showcase entry={{ ...entry, icon: undefined }} locale={locale} />
           </AnimateIn>
         </section>
       ) : null}
 
-      {/* CODE SHOWCASE ──────────────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
+      {/* CODE */}
+      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
         <AnimateIn preset="fadeUp" inView>
-          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="font-bold text-primary text-xs uppercase tracking-[0.2em]">
-                {COPY.exampleUsage[locale]}
-              </p>
-              <h2 className="mt-2 font-semibold text-2xl text-foreground sm:text-3xl">
-                {entry.label}
-                <span className="text-muted-foreground"> · {sample.filename}</span>
-              </h2>
-            </div>
-            <p className="max-w-md text-muted-foreground text-sm">{COPY.exampleDesc[locale]}</p>
-          </div>
-
           <CodeBlock
             filename={sample.filename}
             language={sample.language}
@@ -331,45 +257,9 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
         </AnimateIn>
       </section>
 
-      {/* METRIC STRIP ───────────────────────────────────────────────── */}
-      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
-        <AnimateIn preset="fade" inView>
-          <div className="grid grid-cols-2 gap-6 rounded-[var(--radius-panel)] border border-border bg-background/40 p-6 backdrop-blur-md sm:grid-cols-4 sm:p-8">
-            <MetricCard
-              label={COPY.metric_subpackages[locale]}
-              value={entry.children.length}
-              icon={<Layers />}
-            />
-            <MetricCard label={COPY.metric_owner[locale]} value={groupLabel} icon={<Icon />} />
-            <MetricCard label={COPY.metric_kind[locale]} value={KIND_LABEL[entry.kind][locale]} />
-            <MetricCard
-              label={locale === "zh" ? "源码边界" : "Source path"}
-              value={entry.path}
-              size="sm"
-            />
-          </div>
-        </AnimateIn>
-      </section>
-
-      {/* SUB-PACKAGES BENTO ─────────────────────────────────────────── */}
+      {/* SUB-PACKAGES */}
       {entry.children.length > 0 ? (
-        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8">
-          <AnimateIn preset="fade" inView>
-            <div className="mb-8 flex items-end justify-between">
-              <div>
-                <p className="font-bold text-primary text-xs uppercase tracking-[0.2em]">
-                  {COPY.subpackages[locale]}
-                </p>
-                <h2 className="mt-2 max-w-2xl font-semibold text-3xl text-foreground sm:text-4xl">
-                  {entry.children.length} {locale === "zh" ? "个 sub-package" : "stable interfaces"}
-                </h2>
-                <p className="mt-2 max-w-xl text-muted-foreground">
-                  {COPY.subpackagesDesc[locale]}
-                </p>
-              </div>
-            </div>
-          </AnimateIn>
-
+        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
           <AnimateInGroup
             stagger="fast"
             className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
@@ -410,7 +300,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                         {childDesc}
                       </p>
                       <span className="mt-auto inline-flex items-center gap-1 pt-4 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.18em] transition-colors group-hover/sub:text-foreground">
-                        {locale === "zh" ? "查看" : "Explore"}
+                        {COPY.explore[locale]}
                         <ArrowUpRight aria-hidden="true" className="size-3" />
                       </span>
                     </div>
@@ -422,29 +312,21 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
         </section>
       ) : null}
 
-      {/* RELATED ────────────────────────────────────────────────────── */}
+      {/* RELATED */}
       {related.length > 0 ? (
         <section className="relative z-10 mx-auto max-w-[1400px] px-4 pt-12 pb-32 sm:px-6 lg:px-8">
-          <AnimateIn preset="fade" inView>
-            <div className="mb-8 flex items-end justify-between border-t border-border/40 pt-12">
-              <div>
-                <p className="font-bold text-primary text-xs uppercase tracking-[0.2em]">
-                  {COPY.related[locale]}
-                </p>
-                <h2 className="mt-2 max-w-2xl font-semibold text-2xl text-foreground sm:text-3xl">
-                  {groupLabel}
-                </h2>
-                <p className="mt-2 max-w-xl text-muted-foreground">{COPY.relatedDesc[locale]}</p>
-              </div>
-              <Link
-                className="hidden items-center gap-1.5 font-semibold text-muted-foreground text-sm transition-colors hover:text-foreground sm:inline-flex"
-                href={`/${lang}/features#capability-${entry.group}`}
-              >
-                {locale === "zh" ? "查看能力域" : "View domain"}
-                <ArrowRight aria-hidden="true" className="size-3.5" />
-              </Link>
-            </div>
-          </AnimateIn>
+          <div className="mb-6 flex items-center justify-between border-t border-border/40 pt-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em]">
+            <span>
+              {COPY.related[locale]} · {groupLabel}
+            </span>
+            <Link
+              className="hidden items-center gap-1.5 transition-colors hover:text-foreground sm:inline-flex"
+              href={`/${lang}/features#capability-${entry.group}`}
+            >
+              {locale === "zh" ? "查看能力域" : "View domain"}
+              <ArrowRight aria-hidden="true" className="size-3" />
+            </Link>
+          </div>
 
           <AnimateInGroup
             stagger="fast"

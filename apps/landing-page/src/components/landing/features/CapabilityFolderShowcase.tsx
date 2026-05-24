@@ -1,6 +1,6 @@
 import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { AuroraText, Badge, CodeBlock, MagicCard } from "@nebutra/ui/primitives";
+import { Badge, CodeBlock, MagicCard } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import type { Locale } from "@/i18n/routing";
@@ -44,13 +44,6 @@ function copyFor(label: { en: string; zh: string }, locale: Locale) {
   return locale === "zh" ? label.zh : label.en;
 }
 
-function shortPackage(name: string): string {
-  return name
-    .replace(/^@nebutra\//, "")
-    .replace(/^middlewares\//, "")
-    .replace(/^routes\//, "");
-}
-
 function previewCode(code: string, maxLines = 14): string {
   const lines = code.split("\n");
   if (lines.length <= maxLines) return code;
@@ -63,7 +56,6 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
   const aurora = GROUP_AURORA[folder.id] ?? DEFAULT_AURORA;
   const sample = getCodeSampleForGroup(folder.id);
   const code = previewCode(sample.code, 16);
-  const focusChips = folder.focusPackages.slice(0, 5);
   const featureHref = `/${locale}/features/${folder.id}`;
 
   return (
@@ -101,13 +93,6 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
 
         {/* Title + summary */}
         <div className="flex flex-col gap-3 px-6 pt-7 pb-5 sm:px-7">
-          <AuroraText
-            className="font-mono text-[11px] uppercase tracking-[0.32em]"
-            colors={aurora}
-            speed={1.1}
-          >
-            {folder.sourcePath}
-          </AuroraText>
           <h3 className="font-semibold text-2xl text-foreground leading-tight sm:text-3xl">
             {copyFor(folder.title, locale)}
           </h3>
@@ -129,22 +114,6 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
             {code}
           </CodeBlock>
         </div>
-
-        {/* Focus package chips */}
-        {focusChips.length > 0 ? (
-          <div className="flex flex-wrap gap-2 px-6 pb-5 sm:px-7">
-            {focusChips.map((pkg) => (
-              <Badge
-                key={pkg}
-                variant="outline"
-                size="sm"
-                className="font-mono normal-case tracking-normal"
-              >
-                {shortPackage(pkg)}
-              </Badge>
-            ))}
-          </div>
-        ) : null}
 
         {/* Footer — CTA + detail link */}
         <footer className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border/40 px-6 py-4 sm:px-7">
