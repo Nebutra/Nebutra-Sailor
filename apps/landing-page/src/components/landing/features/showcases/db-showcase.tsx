@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 // =============================================================================
@@ -144,10 +145,7 @@ export function DbShowcase(_props: PackageShowcaseProps) {
   const hiddenCount = 12401;
 
   return (
-    <div
-      className="min-h-[400px] w-full overflow-hidden rounded-2xl border border-border bg-background"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame className="p-0! md:p-0!">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-muted/30 px-5 py-3">
         <div className="flex items-center gap-2.5 text-sm font-medium text-foreground">
@@ -252,6 +250,6 @@ export function DbShowcase(_props: PackageShowcaseProps) {
           icon={<EyeOff />}
         />
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

@@ -12,6 +12,7 @@ import {
   ToggleGroupItem,
 } from "@nebutra/ui/primitives";
 import { useState } from "react";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type CellState = "allow" | "deny" | "na";
@@ -148,7 +149,7 @@ export function PermissionsShowcase(_props: PackageShowcaseProps) {
   const highlight = HIGHLIGHT[role];
 
   return (
-    <div className="min-h-[400px] rounded-xl border border-border bg-background p-5 sm:p-6">
+    <ShowcaseFrame>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <Shield className="h-4 w-4" aria-hidden />
@@ -209,6 +210,6 @@ export function PermissionsShowcase(_props: PackageShowcaseProps) {
       <p className="mt-4 text-center text-[10px] uppercase tracking-wider text-muted-foreground/70">
         {copy.footer}
       </p>
-    </div>
+    </ShowcaseFrame>
   );
 }

@@ -13,6 +13,7 @@ import { Input } from "@nebutra/ui/primitives/input";
 import { Progress } from "@nebutra/ui/primitives/progress";
 import type { ComponentType, SVGProps } from "react";
 
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type IconCmp = ComponentType<SVGProps<SVGSVGElement>>;
@@ -172,10 +173,7 @@ export function KnowledgeRagShowcase({ locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
 
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <div className="space-y-4">
         <div className="space-y-1.5">
           <label
@@ -226,6 +224,6 @@ export function KnowledgeRagShowcase({ locale }: PackageShowcaseProps) {
           <p className="text-center font-mono text-[11px] text-muted-foreground">{copy.footer}</p>
         </div>
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

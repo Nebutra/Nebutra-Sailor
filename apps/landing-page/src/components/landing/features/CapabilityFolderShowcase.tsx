@@ -1,11 +1,12 @@
 import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Badge, CodeBlock, MagicCard } from "@nebutra/ui/primitives";
+import { CodeBlock, MagicCard } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import type { Locale } from "@/i18n/routing";
 import { CAPABILITY_FOLDERS, type CapabilityFolder } from "./capability-folder-data";
 import { getCodeSampleForGroup } from "./feature-code-samples";
+import { getGroupTokens } from "./feature-group-tokens";
 
 const SECTION_COPY = {
   eyebrow: { en: "High Cohesion · Low Coupling", zh: "高内聚 · 低耦合" },
@@ -19,23 +20,7 @@ const SECTION_COPY = {
   },
   docs: { en: "Open docs", zh: "打开文档" },
   detail: { en: "View artifact", zh: "查看能力" },
-  packages: { en: "packages", zh: "包" },
-  tests: { en: "tests", zh: "测试" },
 } as const;
-
-// Aurora gradient palette per capability group — mirrors the detail page.
-const GROUP_AURORA: Record<string, string[]> = {
-  ai: ["#9333ea", "#3b82f6", "#22d3ee"],
-  iam: ["#ef4444", "#f97316", "#fb7185"],
-  integrations: ["#06b6d4", "#3b82f6", "#0ea5e9"],
-  platform: ["#3b82f6", "#6366f1", "#8b5cf6"],
-  design: ["#0BF1C3", "#0033FE", "#06b6d4"],
-  commerce: ["#10b981", "#06b6d4", "#34d399"],
-  gateway: ["#10b981", "#3b82f6", "#22d3ee"],
-  ops: ["#f59e0b", "#10b981", "#84cc16"],
-};
-
-const DEFAULT_AURORA = GROUP_AURORA.platform;
 
 type LocaleKey = "en" | "zh";
 const toLocaleKey = (locale: Locale): LocaleKey => (locale === "zh" ? "zh" : "en");
@@ -53,7 +38,8 @@ function previewCode(code: string, maxLines = 14): string {
 function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: Locale }) {
   const localeKey = toLocaleKey(locale);
   const Icon = folder.icon;
-  const aurora = GROUP_AURORA[folder.id] ?? DEFAULT_AURORA;
+  const tokens = getGroupTokens(folder.id);
+  const aurora = tokens.auroraColors;
   const sample = getCodeSampleForGroup(folder.id);
   const code = previewCode(sample.code, 16);
   const featureHref = `/${locale}/features/${folder.id}`;
@@ -67,7 +53,7 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
         gradientTo={aurora[2] ?? aurora[1]}
         gradientOpacity={0.5}
       >
-        {/* Header — icon + source path + metric chips */}
+        {/* Header — icon + source path */}
         <header className="flex items-center justify-between gap-3 border-b border-border/40 px-6 py-4 sm:px-7">
           <div className="flex min-w-0 items-center gap-3">
             <Link
@@ -80,14 +66,6 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
             <span className="truncate font-mono text-foreground/80 text-sm" translate="no">
               {folder.sourcePath}
             </span>
-          </div>
-          <div className="hidden shrink-0 items-center gap-2 sm:flex">
-            <Badge variant="outline" size="sm" className="font-mono tabular-nums">
-              {folder.sourceStats.unitCount} {copyFor(folder.sourceStats.unitLabel, locale)}
-            </Badge>
-            <Badge variant="secondary" size="sm" className="font-mono tabular-nums">
-              {folder.sourceStats.testFiles} {SECTION_COPY.tests[localeKey]}
-            </Badge>
           </div>
         </header>
 

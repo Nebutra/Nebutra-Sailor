@@ -27,6 +27,7 @@ import {
   Text,
 } from "@nebutra/ui/primitives";
 import { Fragment, type ReactNode } from "react";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 // Group-level showcase for design/* packages without a bespoke showcase
@@ -279,10 +280,7 @@ export function DesignGroupShowcase(props: PackageShowcaseProps) {
   const coverage = 82 + seeded(entry.slug, 16, 13);
 
   return (
-    <div
-      className="rounded-[var(--radius-panel)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
@@ -335,6 +333,6 @@ export function DesignGroupShowcase(props: PackageShowcaseProps) {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </ShowcaseFrame>
   );
 }

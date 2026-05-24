@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@nebutra/ui/primitives";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type QueueKey = "email" | "billing" | "ai-tasks" | "webhooks";
@@ -120,10 +121,7 @@ export function QueueShowcase(props: PackageShowcaseProps) {
   };
 
   return (
-    <div
-      className="flex flex-col gap-5 rounded-2xl border border-border bg-background p-5"
-      style={{ minHeight: "400px" }}
-    >
+    <ShowcaseFrame className="flex flex-col gap-5">
       <div className="flex flex-wrap items-center gap-2">
         <Connection className="size-4 text-muted-foreground" aria-hidden="true" />
         {QUEUE_PILLS.map((pill) => {
@@ -225,6 +223,6 @@ export function QueueShowcase(props: PackageShowcaseProps) {
           {t.live}
         </span>
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

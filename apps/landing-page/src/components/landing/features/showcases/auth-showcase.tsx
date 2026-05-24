@@ -20,6 +20,7 @@ import {
   Input,
   Separator,
 } from "@nebutra/ui/primitives";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type Provider = {
@@ -106,10 +107,7 @@ export function AuthShowcase({ locale }: PackageShowcaseProps) {
   const t = COPY[locale];
 
   return (
-    <div
-      className="flex w-full items-stretch justify-center rounded-[var(--radius-lg)] border border-border bg-background p-6 md:p-8"
-      style={{ minHeight: "400px" }}
-    >
+    <ShowcaseFrame className="flex items-stretch justify-center">
       <Card className="flex w-full max-w-md flex-col shadow-sm">
         <CardHeader className="space-y-2 pb-4">
           <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
@@ -185,6 +183,6 @@ export function AuthShowcase({ locale }: PackageShowcaseProps) {
           <p className="text-center text-xs text-muted-foreground">{t.stats}</p>
         </CardContent>
       </Card>
-    </div>
+    </ShowcaseFrame>
   );
 }

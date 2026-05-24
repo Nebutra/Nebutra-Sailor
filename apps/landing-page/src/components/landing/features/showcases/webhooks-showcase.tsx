@@ -10,6 +10,7 @@ import {
   StatusDot,
   Table,
 } from "@nebutra/ui/primitives";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type DeliveryStatus = "success" | "warning" | "destructive" | "retrying";
@@ -134,10 +135,7 @@ export function WebhooksShowcase({ locale }: PackageShowcaseProps) {
   const t = COPY[locale];
 
   return (
-    <div
-      className="flex w-full flex-col gap-4 rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: "400px" }}
-    >
+    <ShowcaseFrame className="flex flex-col gap-4">
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
@@ -220,6 +218,6 @@ export function WebhooksShowcase({ locale }: PackageShowcaseProps) {
       </Table>
 
       <p className="px-1 text-center text-[11px] text-muted-foreground">{t.footer}</p>
-    </div>
+    </ShowcaseFrame>
   );
 }

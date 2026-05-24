@@ -13,6 +13,7 @@ import {
   StatusDot,
 } from "@nebutra/ui/primitives";
 import type { ComponentType, SVGProps } from "react";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
@@ -75,10 +76,7 @@ export function GatewayCoreShowcase({ locale }: PackageShowcaseProps) {
   const t = COPY[locale];
 
   return (
-    <div
-      className="flex w-full flex-col gap-5 rounded-[var(--radius-lg)] border border-border bg-background p-6 md:p-7"
-      style={{ minHeight: "400px" }}
-    >
+    <ShowcaseFrame className="flex flex-col gap-5">
       {/* Request envelope */}
       <Card className="shadow-sm">
         <CardHeader className="flex flex-row flex-wrap items-center gap-3 space-y-0 pb-4">
@@ -154,6 +152,6 @@ export function GatewayCoreShowcase({ locale }: PackageShowcaseProps) {
           </div>
         </Card>
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

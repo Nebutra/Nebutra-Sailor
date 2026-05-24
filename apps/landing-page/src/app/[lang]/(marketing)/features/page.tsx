@@ -1,14 +1,12 @@
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { AuroraBackground } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { CapabilityFolderShowcase } from "@/components/landing/features/CapabilityFolderShowcase";
-import { FeatureBentoCard } from "@/components/landing/features/FeatureBentoCard";
-import { FeatureSmallCard } from "@/components/landing/features/FeatureSmallCard";
-import { LARGE_FEATURES, SMALL_FEATURES } from "@/components/landing/features/features-data";
+import { FeatureHero } from "@/components/landing/features/FeatureHero";
+import { DEFAULT_GROUP_TOKENS } from "@/components/landing/features/feature-group-tokens";
 import { type Locale, routing } from "@/i18n/routing";
+import { createPublicDocsUrl } from "@/lib/docs-links";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export function generateStaticParams() {
@@ -36,7 +34,6 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
   setRequestLocale(lang as Locale);
 
   const t = await getTranslations({ locale: lang as Locale, namespace: "featuresPage" });
-  type FeaturePageTranslationKey = Parameters<typeof t>[0];
 
   return (
     <main
@@ -45,82 +42,18 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
     >
       <Navbar />
 
-      {/* Hero */}
-      <section className="relative mx-auto max-w-4xl px-4 pt-32 pb-20 text-center sm:px-6 lg:px-8 mt-16">
-        <AuroraBackground variant="vivid" position="top" intensity={0.5} />
-
-        <AnimateIn preset="emerge" inView>
-          <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-8 tracking-wider uppercase backdrop-blur-md">
-            {t("hero.badge")}
-          </div>
-          <h1
-            className="text-4xl font-semibold sm:text-5xl md:text-6xl lg:text-7xl mb-8"
-            style={{
-              letterSpacing: "var(--tracking-display)",
-              lineHeight: "var(--leading-display)",
-            }}
-          >
-            {t("hero.headlinePrefix")}
-            <span className="text-primary">{t("hero.headlineHighlight")}</span>
-          </h1>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground leading-relaxed font-medium">
-            {t("hero.description")}
-          </p>
-        </AnimateIn>
-      </section>
+      <FeatureHero
+        align="center"
+        tokens={DEFAULT_GROUP_TOKENS}
+        eyebrow={t("hero.badge")}
+        titlePrefix={t("hero.headlinePrefix")}
+        titleSuffix={t("hero.headlineHighlight")}
+        summary={t("hero.description")}
+        primaryCtaHref={createPublicDocsUrl(DEFAULT_GROUP_TOKENS.docsPath)}
+        primaryCtaLabel={t("sections.exploreFeature")}
+      />
 
       <CapabilityFolderShowcase locale={lang as Locale} />
-
-      {/* Main Feature Bento Grid */}
-      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
-        <AnimateInGroup stagger="normal" className="grid grid-cols-1 md:grid-cols-6 gap-6">
-          {LARGE_FEATURES.map((section, idx) => {
-            const firstFeature = section.features[0];
-            return (
-              <div
-                key={section.categoryKey}
-                className={`
-                  ${idx === 0 ? "md:col-span-4" : ""}
-                  ${idx === 1 ? "md:col-span-2" : ""}
-                  ${idx === 2 ? "md:col-span-2" : ""}
-                  ${idx === 3 ? "md:col-span-4" : ""}
-                  ${idx === 4 ? "md:col-span-3" : ""}
-                  ${idx === 5 ? "md:col-span-3" : ""}
-                `}
-              >
-                <FeatureBentoCard
-                  href={section.href}
-                  icon={section.icon}
-                  color={section.color}
-                  mockup={section.mockup}
-                  title={t(`sections.${section.categoryKey}` as FeaturePageTranslationKey)}
-                  description={t(`sections.${firstFeature.descKey}` as FeaturePageTranslationKey)}
-                  ctaLabel={t("sections.exploreFeature")}
-                />
-              </div>
-            );
-          })}
-        </AnimateInGroup>
-      </section>
-
-      {/* Small Feature Grid */}
-      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-32 sm:px-6 lg:px-8">
-        <AnimateInGroup
-          stagger="fast"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {SMALL_FEATURES.flatMap((section) =>
-            section.features.map((feature: { titleKey: string; descKey: string }) => (
-              <FeatureSmallCard
-                key={feature.titleKey}
-                icon={section.icon}
-                title={t(`sections.${feature.titleKey}` as FeaturePageTranslationKey)}
-                description={t(`sections.${feature.descKey}` as FeaturePageTranslationKey)}
-              />
-            )),
-          )}
-        </AnimateInGroup>
-      </section>
 
       <FooterMinimal showFinalCta />
     </main>

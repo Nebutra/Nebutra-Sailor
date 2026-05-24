@@ -55,6 +55,11 @@
 /*---break---
  */
 @theme inline {
+  /* Section spacing tokens — standardize pb-12 / pb-16 / pb-32 usage */
+  --section-gap-sm: 3rem;
+  --section-gap-md: 4rem;
+  --section-gap-lg: 8rem;
+
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
   --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
   /* 3d-testimonails marquee animations */

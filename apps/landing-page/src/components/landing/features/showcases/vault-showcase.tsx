@@ -14,6 +14,7 @@ import { Badge } from "@nebutra/ui/primitives/badge";
 import { Button } from "@nebutra/ui/primitives/button";
 import { Card } from "@nebutra/ui/primitives/card";
 
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type Secret = {
@@ -151,10 +152,7 @@ export function VaultShowcase({ locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
 
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
           <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
@@ -186,6 +184,6 @@ export function VaultShowcase({ locale }: PackageShowcaseProps) {
         </div>
         <p className="text-center font-mono text-[10px] text-muted-foreground">{copy.footnote}</p>
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

@@ -17,6 +17,7 @@ import { Input } from "@nebutra/ui/primitives/input";
 import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
 import { StatusDot } from "@nebutra/ui/primitives/status-dot";
 
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 // Deterministic per-slug variation. Same slug always renders the same numbers.
@@ -89,10 +90,7 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
     "h-8 w-full rounded-md border border-border bg-background px-2 font-mono text-[11px] text-foreground";
 
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
@@ -246,6 +244,6 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </ShowcaseFrame>
   );
 }

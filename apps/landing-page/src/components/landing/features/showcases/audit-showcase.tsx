@@ -6,6 +6,7 @@ import { Badge } from "@nebutra/ui/primitives/badge";
 import { Input } from "@nebutra/ui/primitives/input";
 import { StatusBadge } from "@nebutra/ui/primitives/status-badge";
 
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type ActionStatus = "info" | "warning" | "success" | "error";
@@ -212,10 +213,7 @@ export function AuditShowcase({ locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
 
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <MagnifyingGlass
@@ -262,6 +260,6 @@ export function AuditShowcase({ locale }: PackageShowcaseProps) {
           className="font-mono text-[10px]"
         />
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

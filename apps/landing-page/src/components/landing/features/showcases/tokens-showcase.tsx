@@ -2,6 +2,7 @@
 
 import { BlendMode, Droplet } from "@nebutra/icons";
 import { Badge, ColorBadge, Heading, Text } from "@nebutra/ui/primitives";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 /**
@@ -69,10 +70,7 @@ export function TokensShowcase(props: PackageShowcaseProps) {
   const copy = COPY[locale];
 
   return (
-    <div
-      className="min-h-[400px] w-full rounded-[var(--radius-panel)] border border-border bg-background p-6 md:p-8"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <div className="mb-6 flex items-center gap-3">
         <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-muted text-foreground">
           <Droplet className="h-4 w-4" />
@@ -195,6 +193,6 @@ export function TokensShowcase(props: PackageShowcaseProps) {
           ))}
         </div>
       </section>
-    </div>
+    </ShowcaseFrame>
   );
 }

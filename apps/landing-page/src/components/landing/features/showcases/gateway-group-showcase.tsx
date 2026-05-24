@@ -12,6 +12,7 @@ import {
   Table,
 } from "@nebutra/ui/primitives";
 
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 // Deterministic per-slug variation. Same slug → same numbers; distinct slugs
@@ -94,10 +95,7 @@ export function GatewayGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   ];
 
   return (
-    <div
-      className="flex w-full flex-col gap-5 rounded-[var(--radius-lg)] border border-border bg-background p-6 md:p-7"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame className="flex flex-col gap-5">
       {/* Header: request envelope */}
       <Card className="shadow-sm">
         <CardHeader className="flex flex-row flex-wrap items-center gap-3 space-y-0 pb-4">
@@ -219,6 +217,6 @@ export function GatewayGroupShowcase({ entry, locale }: PackageShowcaseProps) {
         <span className="truncate">{entry.path}</span>
         <span className="shrink-0">{t.footerSuffix}</span>
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

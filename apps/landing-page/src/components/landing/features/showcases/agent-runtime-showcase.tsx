@@ -16,6 +16,7 @@ import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
 import { StatusDot } from "@nebutra/ui/primitives/status-dot";
 import type { ComponentType, SVGProps } from "react";
 
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type TraceKind = "prompt" | "think" | "tool" | "result" | "answer";
@@ -143,10 +144,7 @@ export function AgentRuntimeShowcase({ locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
 
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
@@ -194,6 +192,6 @@ export function AgentRuntimeShowcase({ locale }: PackageShowcaseProps) {
           </Badge>
         </CardContent>
       </Card>
-    </div>
+    </ShowcaseFrame>
   );
 }

@@ -21,6 +21,7 @@ import {
   TypingAnimation,
 } from "@nebutra/ui/primitives/terminal";
 
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type Layout = "cli" | "connection" | "preset" | "compliance";
@@ -208,10 +209,7 @@ export function OpsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const layout = pickLayout(entry.slug);
 
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
@@ -270,6 +268,6 @@ export function OpsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
       <div className="mt-3 font-mono text-[11px] text-muted-foreground">
         {entry.path} · {copy.boundary}
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

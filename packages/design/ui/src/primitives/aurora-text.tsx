@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { memo } from "react";
+import { useReducedMotion } from "../hooks/use-reduced-motion";
 import { cn } from "../utils";
 
 // =============================================================================
@@ -88,12 +89,16 @@ export const AuroraText = memo(
     colors = ["#FF0080", "#7928CA", "#0070F3", "#38bdf8"],
     speed = 1,
   }: AuroraTextProps) => {
+    const shouldReduceMotion = useReducedMotion();
+
     const gradientStyle: React.CSSProperties = {
       backgroundImage: `linear-gradient(135deg, ${colors.join(", ")}, ${colors[0]})`,
       WebkitBackgroundClip: "text",
       WebkitTextFillColor: "transparent",
       backgroundClip: "text",
-      animationDuration: `${10 / speed}s`,
+      // When reduced-motion is active, omit animationDuration entirely so the
+      // CSS animation never plays — just a static gradient.
+      ...(shouldReduceMotion ? null : { animationDuration: `${10 / speed}s` }),
     };
 
     return (
@@ -102,7 +107,10 @@ export const AuroraText = memo(
         <span className="sr-only">{children}</span>
         {/* Visual aurora text */}
         <span
-          className="animate-aurora relative bg-[length:200%_auto] bg-clip-text text-transparent"
+          className={cn(
+            "relative bg-[length:200%_auto] bg-clip-text text-transparent",
+            !shouldReduceMotion && "animate-aurora",
+          )}
           style={gradientStyle}
           aria-hidden="true"
         >

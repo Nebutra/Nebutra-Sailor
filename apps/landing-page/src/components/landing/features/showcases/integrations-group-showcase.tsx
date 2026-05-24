@@ -7,6 +7,7 @@ import { MagicCard } from "@nebutra/ui/primitives/magic-card";
 import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
 import { Progress } from "@nebutra/ui/primitives/progress";
 import { StatusDot } from "@nebutra/ui/primitives/status-dot";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 // ---------------------------------------------------------------------------
@@ -94,10 +95,7 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
   const StageMidIcon = pickStageIcon(entry.slug);
 
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
@@ -222,6 +220,6 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
           </div>
         </CardContent>
       </Card>
-    </div>
+    </ShowcaseFrame>
   );
 }

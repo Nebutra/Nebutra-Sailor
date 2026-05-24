@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@nebutra/ui/primitives";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type Bilingual = { en: string; zh: string };
@@ -148,10 +149,7 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
   const fmt = (n: number, compact = false) => formatNumber(n, locale, compact);
 
   return (
-    <div
-      className="flex w-full flex-col gap-5 rounded-[var(--radius-lg)] border border-border bg-background p-5 md:p-6"
-      style={{ minHeight: "400px" }}
-    >
+    <ShowcaseFrame className="flex flex-col gap-5">
       <header className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
           <BarChart className="size-4" aria-hidden="true" />
@@ -246,6 +244,6 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
         <Database className="size-3" aria-hidden="true" />
         <span>{t.footer}</span>
       </footer>
-    </div>
+    </ShowcaseFrame>
   );
 }

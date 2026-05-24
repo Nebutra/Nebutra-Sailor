@@ -2,6 +2,7 @@
 
 import { Clock, Lightning, MagnifyingGlass as Search } from "@nebutra/icons";
 import { Badge, Input, Kbd, Progress } from "@nebutra/ui/primitives";
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type Locale = "en" | "zh";
@@ -113,10 +114,7 @@ export function SearchShowcase({ locale }: PackageShowcaseProps) {
   const copy = COPY[locale];
 
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <div className="space-y-4">
         <Input
           id="search-showcase-input"
@@ -215,6 +213,6 @@ export function SearchShowcase({ locale }: PackageShowcaseProps) {
           </span>
         </div>
       </div>
-    </div>
+    </ShowcaseFrame>
   );
 }

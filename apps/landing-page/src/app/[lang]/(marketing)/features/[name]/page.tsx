@@ -1,26 +1,15 @@
-import {
-  Api,
-  ArrowRight,
-  ArrowUpRight,
-  Connection,
-  Cpu,
-  CreditCard,
-  Database,
-  Droplet,
-  Layers,
-  Shield,
-  TerminalWindow as TerminalSquare,
-} from "@nebutra/icons";
+import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { AuroraBackground, AuroraText, Badge, CodeBlock, MagicCard } from "@nebutra/ui/primitives";
+import { Badge, CodeBlock, MagicCard } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import type { ComponentType } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import { getCodeSampleForEntry } from "@/components/landing/features/feature-code-samples";
+import { getGroupTokens } from "@/components/landing/features/feature-group-tokens";
 import {
   getFeatureSummary,
   getFeatureTitle,
@@ -30,6 +19,7 @@ import {
   PACKAGE_FEATURE_ENTRIES,
 } from "@/components/landing/features/package-feature-data";
 import { resolveShowcase } from "@/components/landing/features/showcases";
+import { ShowcaseFrame } from "@/components/landing/features/showcases/showcase-frame";
 import { type Locale, routing } from "@/i18n/routing";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -40,71 +30,6 @@ type FeatureDetailPageProps = {
 
 const localeForCopy = (lang: string): "en" | "zh" => (lang === "zh" ? "zh" : "en");
 
-type GroupMeta = {
-  icon: ComponentType<{ className?: string }>;
-  auroraColors: string[];
-  ambient: "subtle" | "vivid" | "monochrome";
-  docsPath: string;
-};
-
-const GROUP_META: Record<string, GroupMeta> = {
-  ai: {
-    icon: Cpu,
-    auroraColors: ["#9333ea", "#3b82f6", "#22d3ee", "#a855f7"],
-    ambient: "vivid",
-    docsPath: "ai/overview",
-  },
-  iam: {
-    icon: Shield,
-    auroraColors: ["#ef4444", "#f97316", "#fb7185", "#dc2626"],
-    ambient: "vivid",
-    docsPath: "concepts/permissions",
-  },
-  integrations: {
-    icon: Connection,
-    auroraColors: ["#06b6d4", "#3b82f6", "#22d3ee", "#0ea5e9"],
-    ambient: "subtle",
-    docsPath: "integrations/overview",
-  },
-  platform: {
-    icon: Database,
-    auroraColors: ["#3b82f6", "#6366f1", "#8b5cf6", "#0ea5e9"],
-    ambient: "subtle",
-    docsPath: "database/overview",
-  },
-  design: {
-    icon: Droplet,
-    auroraColors: ["#0BF1C3", "#0033FE", "#06b6d4", "#38bdf8"],
-    ambient: "subtle",
-    docsPath: "design/tokens",
-  },
-  commerce: {
-    icon: CreditCard,
-    auroraColors: ["#10b981", "#06b6d4", "#34d399", "#0ea5e9"],
-    ambient: "subtle",
-    docsPath: "payments/overview",
-  },
-  gateway: {
-    icon: Api,
-    auroraColors: ["#10b981", "#3b82f6", "#22d3ee", "#34d399"],
-    ambient: "subtle",
-    docsPath: "development/api-gateway",
-  },
-  ops: {
-    icon: TerminalSquare,
-    auroraColors: ["#f59e0b", "#10b981", "#fbbf24", "#84cc16"],
-    ambient: "monochrome",
-    docsPath: "development/project-structure",
-  },
-};
-
-const DEFAULT_META: GroupMeta = {
-  icon: Layers,
-  auroraColors: ["#3b82f6", "#06b6d4", "#0ea5e9", "#38bdf8"],
-  ambient: "subtle",
-  docsPath: "development/project-structure",
-};
-
 const COPY = {
   back: { en: "All features", zh: "全部能力" },
   package: { en: "package", zh: "能力包" },
@@ -112,7 +37,18 @@ const COPY = {
   openDocs: { en: "Open docs", zh: "打开文档" },
   related: { en: "More in domain", zh: "同能力域" },
   explore: { en: "Explore", zh: "查看" },
+  livePreview: { en: "Live preview", zh: "可交互预览" },
+  codeOnly: { en: "Code sample", zh: "代码示例" },
+  kindPackage: { en: "Package", zh: "能力包" },
+  kindGroup: { en: "Group", zh: "能力组" },
+  kindCapability: { en: "Capability", zh: "能力面" },
 } as const;
+
+function kindLabel(kind: "package" | "group" | "capability", locale: "en" | "zh") {
+  if (kind === "package") return COPY.kindPackage[locale];
+  if (kind === "group") return COPY.kindGroup[locale];
+  return COPY.kindCapability[locale];
+}
 
 export function generateStaticParams() {
   return routing.locales.flatMap((lang) =>
@@ -148,8 +84,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
   const summary = getFeatureSummary(entry, locale);
   const groupLabel = getGroupLabel(entry.group, locale);
-  const meta = GROUP_META[entry.group] ?? DEFAULT_META;
-  const Icon = meta.icon;
+  const meta = getGroupTokens(entry.group);
   const sample = getCodeSampleForEntry(entry);
   const Showcase = resolveShowcase(entry.slug, entry.group);
   const related = getRelatedEntries(entry, 4);
@@ -165,73 +100,18 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       <Navbar />
 
       {/* HERO */}
-      <section className="relative isolate mx-auto max-w-[1400px] px-4 pt-36 pb-20 sm:px-6 lg:px-8">
-        <AuroraBackground variant={meta.ambient} position="top" intensity={0.55} />
-
-        <AnimateIn preset="fade" inView>
-          <Link
-            className="group/back inline-flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em] transition-colors hover:text-foreground"
-            href={`/${lang}/features`}
-          >
-            <ArrowRight aria-hidden="true" className="size-3 rotate-180" />
-            {COPY.back[locale]}
-          </Link>
-        </AnimateIn>
-
-        <AnimateIn preset="fade" inView delay={0.05}>
-          <div className="mt-8 flex flex-wrap items-center gap-2">
-            <Badge
-              variant="outline"
-              size="sm"
-              className="gap-1.5 font-mono uppercase tracking-[0.18em]"
-            >
-              <Icon className="size-3" />
-              {groupLabel}
-            </Badge>
-            <Badge
-              variant="secondary"
-              size="sm"
-              className="font-mono normal-case tracking-normal"
-              translate="no"
-            >
-              {entry.path}
-            </Badge>
-          </div>
-        </AnimateIn>
-
-        <AnimateIn preset="fadeUp" inView delay={0.1}>
-          <h1
-            className="mt-6 font-semibold text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-[5.5rem]"
-            style={{ letterSpacing: "var(--tracking-display)", lineHeight: 1.05 }}
-          >
-            <span translate="no">{entry.label}</span>{" "}
-            <AuroraText colors={meta.auroraColors} speed={1.2}>
-              {suffix}
-            </AuroraText>
-          </h1>
-        </AnimateIn>
-
-        <AnimateIn preset="fadeUp" inView delay={0.18}>
-          <p className="mt-6 max-w-2xl text-base text-muted-foreground leading-relaxed sm:text-lg">
-            {summary}
-          </p>
-        </AnimateIn>
-
-        <AnimateIn preset="fadeUp" inView delay={0.26}>
-          <a
-            href={docsHref}
-            target="_blank"
-            rel="noreferrer"
-            className="group/cta mt-8 inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-          >
-            {COPY.openDocs[locale]}
-            <ArrowUpRight
-              aria-hidden="true"
-              className="size-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
-            />
-          </a>
-        </AnimateIn>
-      </section>
+      <FeatureHero
+        backHref={`/${lang}/features`}
+        backLabel={COPY.back[locale]}
+        tokens={meta}
+        eyebrow={groupLabel}
+        path={entry.path}
+        titlePrefix={entry.label}
+        titleSuffix={suffix}
+        summary={summary}
+        primaryCtaHref={docsHref}
+        primaryCtaLabel={COPY.openDocs[locale]}
+      />
 
       {/* SHOWCASE */}
       {Showcase ? (
@@ -242,18 +122,20 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
         </section>
       ) : null}
 
-      {/* CODE */}
+      {/* CODE — wrapped in ShowcaseFrame so it shares panel chrome with the Showcase above */}
       <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
         <AnimateIn preset="fadeUp" inView>
-          <CodeBlock
-            filename={sample.filename}
-            language={sample.language}
-            highlightedLines={sample.highlightedLines}
-            maxHeight="540px"
-            aria-label={`${entry.label} usage example`}
-          >
-            {sample.code}
-          </CodeBlock>
+          <ShowcaseFrame className="p-0! md:p-0! overflow-hidden">
+            <CodeBlock
+              filename={sample.filename}
+              language={sample.language}
+              highlightedLines={sample.highlightedLines}
+              maxHeight="540px"
+              aria-label={`${entry.label} usage example`}
+            >
+              {sample.code}
+            </CodeBlock>
+          </ShowcaseFrame>
         </AnimateIn>
       </section>
 
@@ -272,6 +154,10 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                 : locale === "zh"
                   ? `${child} — ${entry.label} 能力域中的子 package。`
                   : `${child} — sub-package inside ${entry.label}.`;
+              const childHasShowcase = childEntry
+                ? Boolean(resolveShowcase(childEntry.slug, childEntry.group))
+                : false;
+              const childKind = childEntry?.kind ?? "package";
               return (
                 <Link
                   key={child}
@@ -284,11 +170,41 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                     gradientFrom={meta.auroraColors[0]}
                     gradientTo={meta.auroraColors[1]}
                   >
-                    <div className="flex h-full min-h-[140px] flex-col">
-                      <div className="mb-4 flex items-center gap-3">
-                        <span className="flex size-9 items-center justify-center rounded-[var(--radius-sm)] border border-border bg-background/60">
-                          <Icon className="size-4" />
-                        </span>
+                    <div className="flex h-full min-h-[180px] flex-col">
+                      {/* Top-row signal strip — preview badge + kind pill + arrow */}
+                      <div className="mb-4 flex items-center justify-between gap-2">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {childHasShowcase ? (
+                            <Badge
+                              variant="green-subtle"
+                              size="sm"
+                              className="font-mono uppercase tracking-[0.18em]"
+                            >
+                              {COPY.livePreview[locale]}
+                            </Badge>
+                          ) : (
+                            <Badge
+                              variant="outline"
+                              size="sm"
+                              className="font-mono uppercase tracking-[0.18em]"
+                            >
+                              {COPY.codeOnly[locale]}
+                            </Badge>
+                          )}
+                          <Badge
+                            variant="secondary"
+                            size="sm"
+                            className="font-mono uppercase tracking-[0.18em]"
+                          >
+                            {kindLabel(childKind, locale)}
+                          </Badge>
+                        </div>
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="size-3.5 shrink-0 text-muted-foreground transition-all group-hover/sub:-translate-y-0.5 group-hover/sub:translate-x-0.5 group-hover/sub:text-foreground"
+                        />
+                      </div>
+                      <div className="mb-3 flex items-center gap-3">
                         <span className="font-mono text-foreground text-sm" translate="no">
                           {child}
                         </span>
@@ -301,7 +217,6 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                       </p>
                       <span className="mt-auto inline-flex items-center gap-1 pt-4 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.18em] transition-colors group-hover/sub:text-foreground">
                         {COPY.explore[locale]}
-                        <ArrowUpRight aria-hidden="true" className="size-3" />
                       </span>
                     </div>
                   </MagicCard>

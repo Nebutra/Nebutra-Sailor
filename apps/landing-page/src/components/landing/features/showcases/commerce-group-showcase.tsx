@@ -30,6 +30,7 @@ import {
 } from "@nebutra/ui/primitives";
 import type { ReactNode } from "react";
 
+import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
 type Layout = "license" | "contracts" | "waitlist" | "marketing" | "default";
@@ -283,10 +284,7 @@ export function CommerceGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const HeaderIcon = layout === "license" ? KeyOld : Briefcase;
   const P = (bi: Bi) => bi[locale === "en" ? 0 : 1];
   return (
-    <div
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-4 md:p-6"
-      style={{ minHeight: 400 }}
-    >
+    <ShowcaseFrame>
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
@@ -320,6 +318,6 @@ export function CommerceGroupShowcase({ entry, locale }: PackageShowcaseProps) {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </ShowcaseFrame>
   );
 }
