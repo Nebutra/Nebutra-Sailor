@@ -10,6 +10,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import { getCodeSampleForEntry } from "@/components/landing/features/feature-code-samples";
 import { getGroupTokens } from "@/components/landing/features/feature-group-tokens";
+import { getSubpackageGlyph } from "@/components/landing/features/glyphs";
 import {
   getFeatureSummary,
   getFeatureTitle,
@@ -154,6 +155,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                   ? `${child} — ${entry.label} 能力域中的子 package。`
                   : `${child} — sub-package inside ${entry.label}.`;
               const childKind = childEntry?.kind ?? "package";
+              const Glyph = getSubpackageGlyph(child);
               return (
                 <Link
                   key={child}
@@ -161,23 +163,36 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                   className="group/sub block rounded-[var(--radius-card)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                 >
                   <MagicCard
-                    className="h-full rounded-[var(--radius-card)] p-6"
+                    className="h-full rounded-[var(--radius-card)] overflow-hidden"
                     gradientSize={220}
                     gradientFrom={meta.auroraColors[0]}
                     gradientTo={meta.auroraColors[1]}
                   >
-                    <div className="flex h-full min-h-[180px] flex-col">
-                      {/* identity row */}
-                      <div className="mb-3 flex items-center gap-2">
-                        <span className="flex size-7 items-center justify-center rounded-[var(--radius-sm)] border border-border bg-background/60">
-                          <Icon className="size-3.5" />
-                        </span>
-                        <span className="font-mono text-foreground/85 text-xs" translate="no">
-                          {child}
-                        </span>
+                    {/* Bespoke glyph hero (if a designer landed one) */}
+                    {Glyph && childEntry ? (
+                      <div className="border-b border-border/40 bg-background/40 p-4">
+                        <Glyph entry={childEntry} locale={locale} />
                       </div>
-                      {/* Top-row signal — just Kind pill now */}
-                      <div className="mb-3">
+                    ) : null}
+
+                    <div className="flex flex-col p-6">
+                      {/* identity row (only when no glyph so we don't double the slug) */}
+                      {!Glyph ? (
+                        <div className="mb-3 flex items-center gap-2">
+                          <span className="flex size-7 items-center justify-center rounded-[var(--radius-sm)] border border-border bg-background/60">
+                            <Icon className="size-3.5" />
+                          </span>
+                          <span className="font-mono text-foreground/85 text-xs" translate="no">
+                            {child}
+                          </span>
+                        </div>
+                      ) : null}
+                      <div className="mb-3 flex items-center gap-2">
+                        {Glyph ? (
+                          <span className="font-mono text-foreground/85 text-xs" translate="no">
+                            {child}
+                          </span>
+                        ) : null}
                         <Badge
                           variant="secondary"
                           size="sm"
@@ -192,7 +207,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                       <p className="mt-2 line-clamp-3 text-muted-foreground text-sm leading-relaxed">
                         {childDesc}
                       </p>
-                      <span className="mt-auto inline-flex items-center gap-1 pt-4 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.18em] transition-colors group-hover/sub:text-foreground">
+                      <span className="mt-4 inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.18em] transition-colors group-hover/sub:text-foreground">
                         {COPY.explore[locale]}
                         <ArrowUpRight aria-hidden="true" className="size-3" />
                       </span>
