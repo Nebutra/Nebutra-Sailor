@@ -182,7 +182,10 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
       {/* SHOWCASE */}
       {Showcase ? (
-        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
+        <section
+          id="showcase"
+          className="relative z-10 mx-auto max-w-[1400px] scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
+        >
           <AnimateIn preset="fadeUp" inView>
             <Showcase entry={serializableEntry} locale={locale} />
           </AnimateIn>
@@ -190,7 +193,10 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       ) : null}
 
       {/* CODE — wrapped in ShowcaseFrame so it shares panel chrome with the Showcase above */}
-      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
+      <section
+        id="usage"
+        className="relative z-10 mx-auto max-w-[1400px] scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
+      >
         <AnimateIn preset="fadeUp" inView>
           <div className="mb-4 flex items-end justify-between gap-4 border-b border-border/40 pb-3">
             <div className="flex items-center gap-2">
@@ -231,7 +237,10 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
       {/* SUB-PACKAGES */}
       {entry.children.length > 0 ? (
-        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
+        <section
+          id="sub-packages"
+          className="relative z-10 mx-auto max-w-[1400px] scroll-mt-24 px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8"
+        >
           <AnimateInGroup
             stagger="fast"
             className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
@@ -307,7 +316,10 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
       {/* RELATED */}
       {related.length > 0 ? (
-        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pt-12 pb-[var(--section-gap-lg)] sm:px-6 lg:px-8">
+        <section
+          id="related"
+          className="relative z-10 mx-auto max-w-[1400px] scroll-mt-24 px-4 pt-12 pb-[var(--section-gap-lg)] sm:px-6 lg:px-8"
+        >
           <div className="mb-6 flex items-center justify-between border-t border-border/40 pt-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em]">
             <span>
               {COPY.related[locale]} · {groupLabel}
