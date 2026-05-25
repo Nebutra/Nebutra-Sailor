@@ -42,7 +42,6 @@ function TimelineTrack({ segments }: { segments: ReadonlyArray<Segment> }) {
     <div className="flex h-2.5 w-full items-center gap-[2px] rounded-sm bg-[var(--neutral-3)] px-[2px]">
       {segments.map((seg, i) => (
         <span
-          // biome-ignore lint/suspicious/noArrayIndexKey: static segment list
           key={i}
           className="h-1.5 rounded-[2px]"
           style={{ width: `${seg.width}%`, background: seg.bg }}

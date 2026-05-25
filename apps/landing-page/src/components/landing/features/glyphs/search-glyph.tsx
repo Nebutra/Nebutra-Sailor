@@ -59,14 +59,12 @@ export function SearchGlyph(_props: SubpackageGlyphProps) {
                 {row.title.map((token, idx) =>
                   token.mark ? (
                     <mark
-                      // biome-ignore lint/suspicious/noArrayIndexKey: token order is stable
                       key={idx}
                       className="rounded-sm bg-[image:var(--brand-gradient)] px-0.5 text-white"
                     >
                       {token.text}
                     </mark>
                   ) : (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: token order is stable
                     <span key={idx}>{token.text}</span>
                   ),
                 )}

@@ -72,17 +72,15 @@ export function OnboardingGlyph({ locale }: SubpackageGlyphProps) {
     >
       <div className="flex items-center gap-1.5">
         {STEPS.map((step, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static, ordered list
           <div key={i} className="flex flex-1 items-center gap-1.5 last:flex-none">
             <StepNode index={i} state={step.state} />
-            {i < STEPS.length - 1 ? <Connector filled={STEPS[i + 1]!.state !== "pending"} /> : null}
+            {i < STEPS.length - 1 ? <Connector filled={STEPS[i + 1]?.state !== "pending"} /> : null}
           </div>
         ))}
       </div>
 
       <div className="flex justify-between gap-1 px-0.5 text-[10px] text-muted-foreground">
         {STEPS.map((step, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static, ordered list
           <span
             key={i}
             className={

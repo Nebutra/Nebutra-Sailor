@@ -73,7 +73,6 @@ export function EventBusGlyph(_props: SubpackageGlyphProps) {
           const isLive = pulse.tone === "live";
           return (
             <span
-              // biome-ignore lint/suspicious/noArrayIndexKey: static decorative list
               key={i}
               className={
                 isLive
