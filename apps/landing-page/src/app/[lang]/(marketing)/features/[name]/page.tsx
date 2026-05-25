@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
+import { ArrowRight, ArrowUpRight, Box, GitBranch, Shield } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Badge, CodeBlock, MagicCard } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
@@ -42,12 +42,34 @@ const COPY = {
   kindPackage: { en: "Package", zh: "能力包" },
   kindGroup: { en: "Group", zh: "能力组" },
   kindCapability: { en: "Capability", zh: "能力面" },
+  // Governance strip
+  govStability: { en: "Stability", zh: "稳定性" },
+  govStable: { en: "Stable", zh: "稳定" },
+  govBoundary: { en: "Boundary", zh: "边界" },
+  govOwners: { en: "Owners", zh: "归属" },
+  govScope: { en: "Scope", zh: "作用域" },
+  govScopeTenant: { en: "Tenant-scoped", zh: "按租户隔离" },
+  govScopeRequest: { en: "Request-scoped", zh: "按请求隔离" },
+  govScopeGlobal: { en: "Global", zh: "全局" },
+  // Code section
+  codeUsage: { en: "Usage", zh: "使用方式" },
 } as const;
 
 function kindLabel(kind: "package" | "group" | "capability", locale: "en" | "zh") {
   if (kind === "package") return COPY.kindPackage[locale];
   if (kind === "group") return COPY.kindGroup[locale];
   return COPY.kindCapability[locale];
+}
+
+/**
+ * Derive the runtime scope label from the capability group. iam runs per
+ * tenant, gateway runs per request, everything else is treated as global.
+ * Returning a single tag avoids inventing per-package metadata we don't have.
+ */
+function scopeLabel(group: string, locale: "en" | "zh") {
+  if (group === "iam" || group === "commerce") return COPY.govScopeTenant[locale];
+  if (group === "gateway") return COPY.govScopeRequest[locale];
+  return COPY.govScopeGlobal[locale];
 }
 
 export function generateStaticParams() {
@@ -89,7 +111,6 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   const Showcase = resolveShowcase(entry.slug, entry.group);
   const related = getRelatedEntries(entry, 4);
   const docsHref = createPublicDocsUrl(meta.docsPath);
-  const Icon = meta.icon;
   const serializableEntry = toSerializablePackageFeatureEntry(entry);
 
   const suffix = entry.kind === "package" ? COPY.package[locale] : COPY.surface[locale];
@@ -115,6 +136,50 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
         primaryCtaLabel={COPY.openDocs[locale]}
       />
 
+      {/* GOVERNANCE — small below-hero strip giving the package's
+          stability, scope, and boundary at a glance. */}
+      <section className="relative z-10 mx-auto -mt-6 max-w-[1400px] px-4 pb-10 sm:px-6 lg:px-8">
+        <AnimateIn preset="fade" inView delay={0.05}>
+          <dl className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border/40 pt-5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.22em]">
+            <div className="flex items-center gap-2">
+              <Shield aria-hidden="true" className="size-3 text-foreground/60" />
+              <dt className="sr-only">{COPY.govStability[locale]}</dt>
+              <dd className="flex items-center gap-1.5">
+                <span
+                  className="inline-block size-1.5 rounded-full bg-emerald-500"
+                  aria-hidden="true"
+                />
+                <span className="text-foreground/85">{COPY.govStable[locale]}</span>
+              </dd>
+            </div>
+            <div className="flex items-center gap-2">
+              <Box aria-hidden="true" className="size-3 text-foreground/60" />
+              <dt className="sr-only">{COPY.govScope[locale]}</dt>
+              <dd className="text-foreground/85">{scopeLabel(entry.group, locale)}</dd>
+            </div>
+            <div className="flex items-center gap-2">
+              <GitBranch aria-hidden="true" className="size-3 text-foreground/60" />
+              <dt className="sr-only">{COPY.govBoundary[locale]}</dt>
+              <dd
+                className="font-mono normal-case tracking-normal text-foreground/85"
+                translate="no"
+              >
+                {entry.path}
+              </dd>
+            </div>
+            <div className="ml-auto hidden items-center gap-2 md:flex">
+              <dt className="sr-only">{COPY.govOwners[locale]}</dt>
+              <dd
+                className="font-mono normal-case tracking-normal text-foreground/85"
+                translate="no"
+              >
+                @nebutra/{entry.group}
+              </dd>
+            </div>
+          </dl>
+        </AnimateIn>
+      </section>
+
       {/* SHOWCASE */}
       {Showcase ? (
         <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
@@ -127,6 +192,29 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       {/* CODE — wrapped in ShowcaseFrame so it shares panel chrome with the Showcase above */}
       <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
         <AnimateIn preset="fadeUp" inView>
+          <div className="mb-4 flex items-end justify-between gap-4 border-b border-border/40 pb-3">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em]">
+                {COPY.codeUsage[locale]}
+              </span>
+              <Badge
+                variant="secondary"
+                size="sm"
+                className="font-mono normal-case tracking-normal"
+                translate="no"
+              >
+                {sample.filename}
+              </Badge>
+            </div>
+            <Badge
+              variant="outline"
+              size="sm"
+              className="font-mono uppercase tracking-[0.18em]"
+              translate="no"
+            >
+              {sample.language}
+            </Badge>
+          </div>
           <ShowcaseFrame className="border-0 p-0! md:p-0! overflow-hidden">
             <CodeBlock
               filename={sample.filename}
@@ -150,7 +238,9 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
           >
             {entry.children.map((child) => {
               const childEntry = getPackageFeatureEntry(child);
-              const childTitle = childEntry ? getFeatureTitle(childEntry, locale) : child;
+              // Strip the trailing " package" / "能力包" so we don't repeat the
+              // Kind badge next to it.
+              const childTitle = childEntry?.label ?? child;
               const childDesc = childEntry
                 ? getFeatureSummary(childEntry, locale)
                 : locale === "zh"
@@ -181,32 +271,22 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                     ) : null}
 
                     <div className="flex flex-col p-6">
-                      {/* identity row (only when no glyph so we don't double the slug) */}
-                      {!Glyph ? (
-                        <div className="mb-3 flex items-center gap-2">
-                          <span className="flex size-7 items-center justify-center rounded-[var(--radius-sm)] border border-border bg-background/60">
-                            <Icon className="size-3.5" />
-                          </span>
-                          <span className="font-mono text-foreground/85 text-xs" translate="no">
-                            {child}
-                          </span>
-                        </div>
-                      ) : null}
-                      <div className="mb-3 flex items-center gap-2">
-                        {Glyph ? (
-                          <span className="font-mono text-foreground/85 text-xs" translate="no">
-                            {child}
-                          </span>
-                        ) : null}
+                      <div className="mb-3 flex items-center justify-between gap-2">
+                        <span className="font-mono text-foreground/85 text-xs" translate="no">
+                          {child}
+                        </span>
                         <Badge
-                          variant="secondary"
+                          variant="outline"
                           size="sm"
                           className="font-mono uppercase tracking-[0.18em]"
                         >
                           {kindLabel(childKind, locale)}
                         </Badge>
                       </div>
-                      <h3 className="font-semibold text-foreground text-lg leading-snug">
+                      <h3
+                        className="font-semibold text-foreground text-lg leading-snug"
+                        translate="no"
+                      >
                         {childTitle}
                       </h3>
                       <p className="mt-2 line-clamp-3 text-muted-foreground text-sm leading-relaxed">
@@ -246,7 +326,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
             className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4"
           >
             {related.map((sibling) => {
-              const siblingTitle = getFeatureTitle(sibling, locale);
+              const siblingDesc = getFeatureSummary(sibling, locale);
               return (
                 <Link
                   key={sibling.slug}
@@ -260,16 +340,29 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                     gradientTo={meta.auroraColors[2]}
                   >
                     <div className="flex h-full flex-col">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-mono text-foreground/85 text-xs" translate="no">
+                          {sibling.label}
+                        </span>
+                        <Badge
+                          variant="outline"
+                          size="sm"
+                          className="font-mono uppercase tracking-[0.18em]"
+                        >
+                          {kindLabel(sibling.kind, locale)}
+                        </Badge>
+                      </div>
                       <span
-                        className="font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em]"
+                        className="mt-3 font-mono text-[10px] text-muted-foreground/80 normal-case tracking-normal"
                         translate="no"
                       >
                         {sibling.path}
                       </span>
-                      <h3 className="mt-3 font-semibold text-base text-foreground leading-snug">
-                        {siblingTitle}
-                      </h3>
-                      <span className="mt-auto inline-flex items-center gap-1 pt-6 font-mono text-[11px] text-muted-foreground transition-colors group-hover/sib:text-foreground">
+                      <p className="mt-3 line-clamp-3 text-muted-foreground text-sm leading-relaxed">
+                        {siblingDesc}
+                      </p>
+                      <span className="mt-auto inline-flex items-center gap-1 pt-5 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.18em] transition-colors group-hover/sib:text-foreground">
+                        {COPY.explore[locale]}
                         <ArrowUpRight aria-hidden="true" className="size-3" />
                       </span>
                     </div>
