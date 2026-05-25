@@ -2,7 +2,7 @@
 
 import { ArrowUpRight as MoveUpRight } from "@nebutra/icons";
 import type React from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface InteractiveFrostedGlassCardProps {
   title: string;
@@ -23,20 +23,37 @@ export function InteractiveFrostedGlassCard({
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
   const isElevated = variant === "elevated";
 
+  useEffect(() => {
+    const element = cardRef.current;
+    if (!element) return;
+
+    const handlePointerMove = (event: PointerEvent) => {
+      const rect = element.getBoundingClientRect();
+      setMousePosition({
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+      });
+    };
+
+    const handlePointerEnter = () => setIsHovered(true);
+    const handlePointerLeave = () => setIsHovered(false);
+
+    element.addEventListener("pointermove", handlePointerMove);
+    element.addEventListener("pointerenter", handlePointerEnter);
+    element.addEventListener("pointerleave", handlePointerLeave);
+
+    return () => {
+      element.removeEventListener("pointermove", handlePointerMove);
+      element.removeEventListener("pointerenter", handlePointerEnter);
+      element.removeEventListener("pointerleave", handlePointerLeave);
+    };
+  }, []);
+
   const cardClasses = isElevated
-    ? `group relative w-full overflow-hidden rounded-3xl border border-cyan/25 bg-neutral-950/60 p-8 backdrop-blur-3xl transition-all duration-500 hover:border-cyan/40 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_60px_rgba(11,241,195,0.08)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.5),0_0_80px_rgba(11,241,195,0.12)]`
-    : `group relative w-full overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-2xl transition-all duration-500 hover:border-white/20 shadow-none hover:shadow-[0_4px_16px_rgba(255,255,255,0.05)]`;
+    ? `group relative w-full overflow-hidden rounded-3xl border border-cyan/25 bg-neutral-950/60 p-8 backdrop-blur-3xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-cyan/40 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_60px_rgba(11,241,195,0.08)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.5),0_0_80px_rgba(11,241,195,0.12)]`
+    : `group relative w-full overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-2xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-white/20 shadow-none hover:shadow-[0_4px_16px_rgba(255,255,255,0.05)]`;
 
   const glowColor = isElevated
     ? `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(11,241,195,0.15), transparent 40%)`
@@ -51,9 +68,6 @@ export function InteractiveFrostedGlassCard({
   return (
     <div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className={`${cardClasses} ${className}`}
       style={{
         transform: isHovered
@@ -99,7 +113,7 @@ export function InteractiveFrostedGlassCard({
         <div className="flex items-start justify-between">
           <div className={iconBgClass}>{icon}</div>
           <div
-            className={`flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-sm transition-all duration-300 ${isElevated ? "bg-cyan/5 text-cyan/50 group-hover:bg-cyan/20 group-hover:text-cyan" : "bg-white/5 text-white/30 group-hover:bg-white/10 group-hover:text-white/60"}`}
+            className={`flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 ${isElevated ? "bg-cyan/5 text-cyan/50 group-hover:bg-cyan/20 group-hover:text-cyan" : "bg-white/5 text-white/30 group-hover:bg-white/10 group-hover:text-white/60"}`}
           >
             <MoveUpRight className="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </div>

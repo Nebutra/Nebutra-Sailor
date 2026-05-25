@@ -1,36 +1,44 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 interface SliderProps {
   onValueChange: React.Dispatch<React.SetStateAction<number>>;
   value: number;
 }
 
+function getThemeIsDark() {
+  if (typeof window === "undefined") return false;
+
+  const theme = localStorage.getItem("theme") || "system";
+  if (theme === "system") {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+
+  return theme === "dark";
+}
+
+function subscribeTheme(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  window.addEventListener("storage", callback);
+  media.addEventListener("change", callback);
+
+  return () => {
+    window.removeEventListener("storage", callback);
+    media.removeEventListener("change", callback);
+  };
+}
+
 export const Slider = ({ onValueChange, value }: SliderProps) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useEffect(() => {
-    let theme: string;
-    if (typeof window === "undefined") {
-      theme = "system";
-    } else {
-      theme = localStorage.getItem("theme") || "system";
-    }
-
-    if (theme === "system") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsDarkMode(prefersDark);
-    } else {
-      setIsDarkMode(theme === "dark");
-    }
-  }, []);
+  const isDarkMode = useSyncExternalStore(subscribeTheme, getThemeIsDark, () => false);
 
   return (
     <div className="w-full">
       <div className="relative flex justify-center items-center mb-4">
-        <style jsx>
+        <style>
           {`
             .slider::-webkit-slider-thumb {
               -webkit-appearance: none;
@@ -58,14 +66,15 @@ export const Slider = ({ onValueChange, value }: SliderProps) => {
           `}
         </style>
         <input
+          aria-label="Preview intensity"
           type="range"
           min="1"
           max="100"
           value={value}
           onChange={(event) => onValueChange(parseInt(event.target.value, 10))}
-          className="slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer focus:outline-none"
+          className="slider w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           style={{
-            background: `linear-gradient(to right, #006bff ${value - 0.5}%, ${isDarkMode ? "#1f1f1f" : "#ebebeb"} ${value - 0.5}%)`,
+            background: `linear-gradient(to right, var(--brand-primary) ${value - 0.5}%, ${isDarkMode ? "var(--neutral-7)" : "var(--neutral-4)"} ${value - 0.5}%)`,
           }}
         />
       </div>

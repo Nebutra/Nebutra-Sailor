@@ -81,15 +81,15 @@ export interface WaveAnimationProps {
 // =============================================================================
 
 const DEFAULT_PALETTE = [
-  "#005f73",
-  "#0a9396",
-  "#94d2bd",
-  "#e9d8a6",
-  "#ee9b00",
-  "#ca6702",
-  "#bb3e03",
-  "#ae2012",
-  "#9b2226",
+  "rgb(0 95 115)",
+  "rgb(10 147 150)",
+  "rgb(148 210 189)",
+  "rgb(233 216 166)",
+  "rgb(238 155 0)",
+  "rgb(202 103 2)",
+  "rgb(187 62 3)",
+  "rgb(174 32 18)",
+  "rgb(155 34 38)",
 ];
 
 // =============================================================================
@@ -106,7 +106,7 @@ const DEFAULT_PALETTE = [
  *
  * // Custom colors and speed
  * <WaveAnimation
- *   palette={["#6366f1", "#8b5cf6", "#a855f7", "#d946ef"]}
+ *   palette={["var(--brand-primary)", "var(--brand-accent)", "var(--brand-tertiary)"]}
  *   speed={1.5}
  *   barCount={30}
  * />
@@ -176,7 +176,7 @@ export function WaveAnimation({
       for (let i = 0; i < barCount; i++) {
         const waveHeight = 2 - (Math.sin(i + time / 200) / 2) * canvas.height * amplitude;
 
-        ctx.fillStyle = palette[Math.floor(i + time / 200) % palette.length] ?? "#000";
+        ctx.fillStyle = palette[Math.floor(i + time / 200) % palette.length] ?? "rgb(0 0 0)";
         ctx.fillRect(x, canvas.height / 2, barWidth, waveHeight);
         x += barWidth;
       }

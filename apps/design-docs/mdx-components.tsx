@@ -311,6 +311,7 @@ import {
   BadgeTableDemo,
   BadgeVariantsDemo,
 } from "@/components/badge-demos";
+import { BrandOverridesDemo } from "@/components/brand-overrides-demo";
 import { BrandPhilosophyVisual, LogoShowcase } from "@/components/brand-overview-visuals";
 import { ColorPalette } from "@/components/color-palette";
 import { ColorUsageDemos } from "@/components/color-usage";
@@ -384,12 +385,13 @@ import {
 } from "@/components/pattern-demos";
 import { ThemeSwitcherDemo } from "@/components/previews/theme-switcher-demo";
 import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
-import { BrandOverridesDemo, ThemeColorsDemo, ZIndexDemo } from "@/components/theming-demos";
+import { ThemeColorsDemo } from "@/components/theming-demos";
 import {
   CJKWeightDemo,
   TypeScaleDemo,
   TypographyHierarchyDemos,
 } from "@/components/typography-demos";
+import { ZIndexDemo } from "@/components/z-index-demo";
 import { onBlockFeedbackAction } from "@/lib/github";
 
 type MDXNamespaceComponent<TNamespace extends Record<string, unknown>> =
@@ -399,12 +401,12 @@ function createMDXNamespace<TNamespace extends Record<string, unknown>>(
   displayName: string,
   namespace: TNamespace,
 ): MDXNamespaceComponent<TNamespace> {
-  function Namespace({ children }: PropsWithChildren) {
+  function namespaceRoot({ children }: PropsWithChildren) {
     return <>{children}</>;
   }
 
-  Namespace.displayName = displayName;
-  return Object.assign(Namespace, namespace);
+  namespaceRoot.displayName = displayName;
+  return Object.assign(namespaceRoot, namespace);
 }
 
 const CommandMenu = createMDXNamespace("CommandMenu", {
@@ -452,7 +454,7 @@ const Combobox = Object.assign(ComboboxRoot, {
   Separator: ComboboxSeparatorComp,
 });
 
-export function useMDXComponents(components: MDXComponents): MDXComponents {
+function createMDXComponents(components: MDXComponents): MDXComponents {
   const merged = {
     ...defaultComponents,
     ...ObsidianComponents,
@@ -873,6 +875,5 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
 // Export a direct getter so MDX remote compiler can inject it without React hooks rules
 export function getMDXComponents(): MDXComponents {
-  // biome-ignore lint/correctness/useHookAtTopLevel: Next MDX names this component factory useMDXComponents, but it is not a React hook.
-  return useMDXComponents({});
+  return createMDXComponents({});
 }

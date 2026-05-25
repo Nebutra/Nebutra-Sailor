@@ -58,7 +58,7 @@ export interface HighlighterProps {
  *
  * @example Underline with custom color
  * ```tsx
- * <Highlighter action="underline" color="#FF9800">
+ * <Highlighter action="underline" color="var(--brand-accent)">
  *   Underlined text
  * </Highlighter>
  * ```
@@ -67,11 +67,11 @@ export interface HighlighterProps {
  * ```tsx
  * <p>
  *   The{" "}
- *   <Highlighter action="underline" color="#FF9800">
+ *   <Highlighter action="underline" color="var(--brand-accent)">
  *     Magic UI Highlighter
  *   </Highlighter>{" "}
  *   makes important{" "}
- *   <Highlighter action="highlight" color="#87CEFA">
+ *   <Highlighter action="highlight" color="color-mix(in oklab, var(--brand-accent) 28%, white)">
  *     text stand out
  *   </Highlighter>{" "}
  *   effortlessly.
@@ -80,7 +80,7 @@ export interface HighlighterProps {
  *
  * @example Circle annotation
  * ```tsx
- * <Highlighter action="circle" color="#ef4444" strokeWidth={2}>
+ * <Highlighter action="circle" color="hsl(var(--destructive))" strokeWidth={2}>
  *   Circled!
  * </Highlighter>
  * ```
@@ -88,7 +88,7 @@ export interface HighlighterProps {
 export function Highlighter({
   children,
   action = "highlight",
-  color = "#ffd1dc",
+  color = "color-mix(in oklab, var(--brand-accent) 28%, white)",
   strokeWidth = 1.5,
   animationDuration = 600,
   iterations = 2,

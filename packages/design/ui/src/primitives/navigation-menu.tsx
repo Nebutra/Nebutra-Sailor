@@ -78,7 +78,7 @@ const NavigationMenuItem = ({
 NavigationMenuItem.displayName = "NavigationMenuItem";
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
+  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
 );
 
 const NavigationMenuTrigger = ({
@@ -144,6 +144,8 @@ const NavigationMenuLink = ({
   active,
   className,
   children,
+  href = "#",
+  onClick,
   ref,
   ...props
 }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { asChild?: boolean; active?: boolean } & {
@@ -158,6 +160,7 @@ const NavigationMenuLink = ({
       "data-active": active ? "" : undefined,
       onClick: (e: React.MouseEvent<HTMLAnchorElement>) => {
         onValueChange("");
+        onClick?.(e);
         if (child.props.onClick) child.props.onClick(e);
       },
       className: cn(className, child.props.className),
@@ -168,13 +171,13 @@ const NavigationMenuLink = ({
   return (
     <a
       ref={ref}
+      href={href}
       data-active={active ? "" : undefined}
-      onClick={() => onValueChange("")}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") onValueChange("");
+      onClick={(event) => {
+        if (href === "#") event.preventDefault();
+        onValueChange("");
+        onClick?.(event);
       }}
-      tabIndex={0}
-      role="menuitem"
       className={className}
       {...props}
     >

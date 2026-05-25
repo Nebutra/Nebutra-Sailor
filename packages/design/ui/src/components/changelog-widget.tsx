@@ -98,7 +98,7 @@ export function ChangelogWidget({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-white shadow-lg transition-all duration-200">
+        <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-white shadow-lg transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-200">
           <div className="bg-gradient-to-r from-[var(--blue-3)] to-[var(--cyan-3)] px-4 py-3">
             <h3 className="font-semibold text-[var(--neutral-12)]">What's New</h3>
           </div>

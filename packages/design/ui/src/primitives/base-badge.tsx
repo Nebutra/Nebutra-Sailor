@@ -169,7 +169,7 @@ const baseBadgeVariants = cva(
 );
 
 const baseBadgeButtonVariants = cva(
-  "cursor-pointer transition-all inline-flex items-center justify-center leading-none size-3.5 [&>svg]:opacity-100! [&>svg]:size-3.5 p-0 rounded-md -me-0.5 opacity-60 hover:opacity-100",
+  "cursor-pointer transition-[background-color,border-color,box-shadow,color,opacity,transform] inline-flex items-center justify-center leading-none size-3.5 [&>svg]:opacity-100! [&>svg]:size-3.5 p-0 rounded-md -me-0.5 opacity-60 hover:opacity-100",
   {
     variants: {
       variant: {

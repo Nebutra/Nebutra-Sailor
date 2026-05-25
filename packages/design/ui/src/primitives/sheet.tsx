@@ -229,7 +229,7 @@ const SheetContent = ({
             className={cn(
               "absolute right-[var(--sheet-close-offset)] top-[var(--sheet-close-offset)] inline-flex size-[var(--sheet-close-size)] items-center justify-center rounded-[var(--sheet-close-radius)] text-muted-foreground",
               "transition-[background-color,color,box-shadow] duration-[var(--sheet-duration)] ease-[var(--sheet-easing)] hover:bg-muted hover:text-foreground",
-              "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none motion-reduce:transition-none",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none motion-reduce:transition-none",
             )}
           >
             <XIcon aria-hidden="true" className="size-[var(--sheet-close-icon-size)]" />

@@ -30,7 +30,7 @@ export function DropdownMenuSubDemo() {
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-destructive focus:bg-destructive focus:text-destructive-foreground">
+        <DropdownMenuItem className="text-destructive data-[highlighted]:bg-destructive/10 data-[highlighted]:text-destructive">
           删除 (Delete)
         </DropdownMenuItem>
       </DropdownMenuContent>

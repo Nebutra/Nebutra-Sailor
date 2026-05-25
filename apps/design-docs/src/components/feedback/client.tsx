@@ -12,7 +12,6 @@ import {
   type ReactNode,
   type SyntheticEvent,
   useEffect,
-  useEffectEvent,
   useRef,
   useState,
   useTransition,
@@ -68,11 +67,6 @@ export function Feedback({
   const [message, setMessage] = useState("");
   const [isPending, startTransition] = useTransition();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (opinion === null && previous === null) return;
@@ -102,40 +96,6 @@ export function Feedback({
   }
 
   const activeOpinion = previous?.opinion ?? opinion;
-
-  if (!mounted) {
-    return (
-      <div className="border-y py-3">
-        <div className="flex flex-row items-center gap-2">
-          <p className="text-sm font-medium pe-2">How is this guide?</p>
-          <button
-            type="button"
-            disabled
-            className={cn(
-              rateButtonVariants({
-                active: false,
-              }),
-            )}
-          >
-            <ThumbsUp />
-            Good
-          </button>
-          <button
-            type="button"
-            disabled
-            className={cn(
-              rateButtonVariants({
-                active: false,
-              }),
-            )}
-          >
-            <ThumbsDown />
-            Bad
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <Collapsible
@@ -218,9 +178,10 @@ export function Feedback({
           <form className="flex flex-col gap-3" onSubmit={submit}>
             <textarea
               required
+              aria-label="Page feedback"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none focus-visible:outline-none placeholder:text-fd-muted-foreground"
+              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none outline-none transition-[border-color,box-shadow] focus-visible:border-fd-ring focus-visible:ring-2 focus-visible:ring-fd-ring/30 placeholder:text-fd-muted-foreground"
               placeholder="Leave your feedback..."
               onKeyDown={(e) => {
                 if (!e.shiftKey && e.key === "Enter") {
@@ -233,7 +194,7 @@ export function Feedback({
               className={cn(buttonVariants({ color: "outline" }), "w-fit px-3")}
               disabled={isPending}
             >
-              Submit
+              Send feedback
             </button>
           </form>
         )}
@@ -267,15 +228,11 @@ export function FeedbackBlock({
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (open && !previous) {
-      setTimeout(() => textareaRef.current?.focus(), 0);
+      const timeout = window.setTimeout(() => textareaRef.current?.focus(), 0);
+      return () => window.clearTimeout(timeout);
     }
   }, [open, previous]);
 
@@ -299,14 +256,6 @@ export function FeedbackBlock({
     e?.preventDefault();
   }
 
-  if (!mounted) {
-    return (
-      <div className="relative group/feedback">
-        <div className="in-[.prose-no-margin]:prose-no-margin">{children}</div>
-      </div>
-    );
-  }
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <div className="relative group/feedback">
@@ -321,7 +270,7 @@ export function FeedbackBlock({
         <PopoverTrigger
           className={cn(
             buttonVariants({ variant: "secondary", size: "sm" }),
-            "absolute -top-7 end-0 backdrop-blur-sm text-fd-muted-foreground gap-1.5 transition-all duration-100 data-[state=open]:bg-fd-accent data-[state=open]:text-fd-accent-foreground",
+            "absolute -top-7 end-0 backdrop-blur-sm text-fd-muted-foreground gap-1.5 transition-[background-color,color,opacity] duration-100 data-[state=open]:bg-fd-accent data-[state=open]:text-fd-accent-foreground",
             !open &&
               "opacity-0 pointer-events-none group-hover/feedback:pointer-events-auto group-hover/feedback:opacity-100 group-hover/feedback:delay-100 hover:pointer-events-auto hover:opacity-100 hover:delay-100",
           )}
@@ -377,9 +326,10 @@ export function FeedbackBlock({
           <form className="flex flex-col gap-2" onSubmit={submit}>
             <textarea
               required
+              aria-label="Block feedback"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none focus-visible:outline-none placeholder:text-fd-muted-foreground"
+              className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none outline-none transition-[border-color,box-shadow] focus-visible:border-fd-ring focus-visible:ring-2 focus-visible:ring-fd-ring/30 placeholder:text-fd-muted-foreground"
               placeholder="Leave your feedback..."
               onKeyDown={(e) => {
                 if (!e.shiftKey && e.key === "Enter") {
@@ -393,7 +343,7 @@ export function FeedbackBlock({
               disabled={isPending}
             >
               <CornerDownRightIcon className="text-fd-muted-foreground size-4" />
-              Submit
+              Send feedback
             </button>
           </form>
         )}
@@ -404,16 +354,18 @@ export function FeedbackBlock({
 
 function useSubmissionStorage<Result>(blockId: string, validate: (v: unknown) => Result | null) {
   const storageKey = `docs-feedback-${blockId}`;
-  const [value, setValue] = useState<Result | null>(null);
-  const validateCallback = useEffectEvent(validate);
+  const [value, setValue] = useState<Result | null>(() => {
+    if (typeof window === "undefined") return null;
 
-  useEffect(() => {
-    const item = localStorage.getItem(storageKey);
-    if (item === null) return;
-    const validated = validateCallback(JSON.parse(item));
+    const item = window.localStorage.getItem(storageKey);
+    if (item === null) return null;
 
-    if (validated !== null) setValue(validated);
-  }, [storageKey]);
+    try {
+      return validate(JSON.parse(item));
+    } catch {
+      return null;
+    }
+  });
 
   return {
     previous: value,

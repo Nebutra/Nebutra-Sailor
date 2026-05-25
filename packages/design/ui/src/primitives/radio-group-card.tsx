@@ -30,7 +30,7 @@ const RadioGroupCardItem = ({
     <BaseRadio.Root
       ref={ref}
       className={cn(
-        "relative flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent outline-none hover:text-accent-foreground peer-data-state-checked:border-primary data-state-checked:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "relative flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent outline-none hover:text-accent-foreground peer-data-state-checked:border-primary data-state-checked:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         className,
       )}
       {...props}

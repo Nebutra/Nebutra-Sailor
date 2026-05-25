@@ -2,7 +2,7 @@
 
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import type * as React from "react";
-import { type MouseEvent as ReactMouseEvent, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "../utils/cn";
 import { CanvasRevealEffect } from "./canvas-reveal-effect";
 
@@ -34,32 +34,47 @@ export interface CardSpotlightProps extends React.HTMLAttributes<HTMLDivElement>
 export function CardSpotlight({
   children,
   radius = 350,
-  color = "#262626",
+  color = "var(--neutral-7)",
   className,
   ...props
 }: CardSpotlightProps) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: ReactMouseEvent<HTMLDivElement>) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const [isHovering, setIsHovering] = useState(false);
-  const handleMouseEnter = () => setIsHovering(true);
-  const handleMouseLeave = () => setIsHovering(false);
+
+  useEffect(() => {
+    const element = rootRef.current;
+    if (!element) return;
+
+    const handlePointerMove = ({ clientX, clientY }: PointerEvent) => {
+      const { left, top } = element.getBoundingClientRect();
+      mouseX.set(clientX - left);
+      mouseY.set(clientY - top);
+    };
+
+    const handlePointerEnter = () => setIsHovering(true);
+    const handlePointerLeave = () => setIsHovering(false);
+
+    element.addEventListener("pointermove", handlePointerMove);
+    element.addEventListener("pointerenter", handlePointerEnter);
+    element.addEventListener("pointerleave", handlePointerLeave);
+
+    return () => {
+      element.removeEventListener("pointermove", handlePointerMove);
+      element.removeEventListener("pointerenter", handlePointerEnter);
+      element.removeEventListener("pointerleave", handlePointerLeave);
+    };
+  }, [mouseX, mouseY]);
 
   return (
     <div
+      ref={rootRef}
       className={cn(
         "group/spotlight p-10 rounded-[var(--radius-md)] relative border bg-card",
         className,
       )}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       {...props}
     >
       <motion.div

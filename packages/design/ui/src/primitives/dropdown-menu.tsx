@@ -49,7 +49,7 @@ const DropdownMenuSubTrigger = ({
   <BaseMenu.SubmenuTrigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-[var(--radius-md)] px-2 py-1.5 text-sm outline-none focus:bg-accent data-[popup-open]:bg-accent",
+      "flex cursor-default select-none items-center rounded-[var(--radius-md)] px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-accent data-[popup-open]:bg-accent",
       inset && "pl-8",
       className,
     )}

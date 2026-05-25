@@ -83,7 +83,7 @@ export function ReactionChip({
         const btnClassName = cn(
           "rounded-full p-1 text-base leading-none",
           "transition-transform duration-150 ease-out",
-          "hover:scale-110 focus:scale-110 focus:outline-none",
+          "hover:scale-110 focus-visible:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
           isActive && "bg-muted ring-1 ring-border dark:bg-muted/70",
         );
         const handleMouseDown = (evt: React.MouseEvent) => evt.preventDefault();
@@ -145,11 +145,15 @@ export function ReactionBadge({ emoji, count, bump = false, className }: Reactio
         bump ? "scale-110" : "scale-100",
         className,
       )}
-      aria-label={`${emoji} ${count}`}
       title={`${emoji} ${count}`}
     >
+      <span className="sr-only">
+        {emoji} {count}
+      </span>
       <span aria-hidden="true">{emoji}</span>
-      <span className="tabular-nums">{count}</span>
+      <span aria-hidden="true" className="tabular-nums">
+        {count}
+      </span>
     </span>
   );
 }
@@ -231,7 +235,7 @@ export function MessageWithReactions({
         className={cn(
           "pointer-events-none absolute -top-3 right-0 z-10",
           "translate-y-1 opacity-0",
-          "transition-all duration-200 ease-out",
+          "transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-200 ease-out",
           "group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100",
           "focus-within:pointer-events-auto focus-within:translate-y-0 focus-within:opacity-100",
         )}

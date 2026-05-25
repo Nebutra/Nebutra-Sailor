@@ -29,7 +29,7 @@ export function ShineBorder({
   borderWidth = 1,
   duration = 14,
   shineColor,
-  color = ["#0033FE", "#0BF1C3", "#5c7cfa"],
+  color = ["var(--brand-primary)", "var(--brand-accent)", "var(--brand-tertiary)"],
   borderRadius = 8,
   className,
   style,
@@ -49,8 +49,8 @@ export function ShineBorder({
             "--duration": `${duration}s`,
             backgroundImage: `radial-gradient(transparent,transparent, ${gradient},transparent,transparent)`,
             backgroundSize: "300% 300%",
-            mask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
-            WebkitMask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+            mask: "linear-gradient(white 0 0) content-box, linear-gradient(white 0 0)",
+            WebkitMask: "linear-gradient(white 0 0) content-box, linear-gradient(white 0 0)",
             WebkitMaskComposite: "xor",
             maskComposite: "exclude",
             padding: "var(--border-width)",
@@ -88,7 +88,8 @@ export function ShineBorder({
             "--border-width": `${borderWidth}px`,
             "--border-radius": `${borderRadius}px`,
             "--duration": `${duration}s`,
-            "--mask-linear-gradient": `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
+            "--mask-linear-gradient":
+              "linear-gradient(white 0 0) content-box, linear-gradient(white 0 0)",
             "--background-radial-gradient": `radial-gradient(transparent,transparent, ${gradient},transparent,transparent)`,
           } as React.CSSProperties
         }

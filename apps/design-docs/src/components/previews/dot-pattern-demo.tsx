@@ -11,10 +11,10 @@ export function DotPatternDemo() {
         glow
         width={24}
         height={24}
-        cr={1.5}
+        cr={2}
         className={cn(
-          "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]",
-          "text-primary/30",
+          "[mask-image:radial-gradient(circle_at_center,white_0%,transparent_72%)]",
+          "text-primary/45 dark:text-primary/55",
         )}
       />
     </div>

@@ -64,9 +64,18 @@ function LetterGlitch({
     return colors[Math.floor(Math.random() * colors.length)];
   }, []);
 
-  const hexToRgb = useCallback((hex: string) => {
+  const parseColorToRgb = useCallback((color: string) => {
+    const rgb = /^rgb\(\s*([\d.]+)(?:\s+|,\s*)([\d.]+)(?:\s+|,\s*)([\d.]+)\s*\)$/u.exec(color);
+    if (rgb) {
+      return {
+        r: Number(rgb[1] ?? 0),
+        g: Number(rgb[2] ?? 0),
+        b: Number(rgb[3] ?? 0),
+      };
+    }
+
     const shorthand = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthand, (_m, r, g, b) => r + r + g + g + b + b);
+    const hex = color.replace(shorthand, (_m, r, g, b) => r + r + g + g + b + b);
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
       ? {
@@ -96,8 +105,8 @@ function LetterGlitch({
       grid.current = { columns, rows };
       letters.current = Array.from({ length: columns * rows }, () => ({
         char: getRandomChar() || " ",
-        color: getRandomColor() || "#000",
-        targetColor: getRandomColor() || "#000",
+        color: getRandomColor() || "rgb(0 0 0)",
+        targetColor: getRandomColor() || "rgb(0 0 0)",
         colorProgress: 1,
       }));
     },
@@ -142,7 +151,7 @@ function LetterGlitch({
       const idx = Math.floor(Math.random() * letters.current.length);
       if (!letters.current[idx]) continue;
       letters.current[idx].char = getRandomChar() || " ";
-      letters.current[idx].targetColor = getRandomColor() || "#000";
+      letters.current[idx].targetColor = getRandomColor() || "rgb(0 0 0)";
       if (!smoothRef.current) {
         letters.current[idx].color = letters.current[idx].targetColor;
         letters.current[idx].colorProgress = 1;
@@ -158,8 +167,8 @@ function LetterGlitch({
       if (l.colorProgress < 1) {
         l.colorProgress += 0.05;
         if (l.colorProgress > 1) l.colorProgress = 1;
-        const s = hexToRgb(l.color);
-        const e = hexToRgb(l.targetColor);
+        const s = parseColorToRgb(l.color);
+        const e = parseColorToRgb(l.targetColor);
         if (s && e) {
           l.color = interpolateColor(s, e, l.colorProgress);
           redraw = true;
@@ -167,7 +176,7 @@ function LetterGlitch({
       }
     });
     if (redraw) drawLetters();
-  }, [hexToRgb, interpolateColor, drawLetters]);
+  }, [parseColorToRgb, interpolateColor, drawLetters]);
 
   const animate = useCallback(() => {
     const now = Date.now();
@@ -257,8 +266,8 @@ export function FallbackCard({
 }: FallbackCardProps) {
   const glitchColors =
     theme === "dark"
-      ? ["#78b4ff", "#a0c4ff", "#c7d2fe", "#e0e7ff", "#f0f4ff"]
-      : ["#374151", "#6b7280", "#9ca3af", "#d1d5db"];
+      ? ["rgb(120 180 255)", "rgb(160 196 255)", "rgb(199 210 254)", "rgb(224 231 255)"]
+      : ["rgb(55 65 81)", "rgb(107 114 128)", "rgb(156 163 175)", "rgb(209 213 219)"];
 
   const baseBg = theme === "dark" ? "bg-black text-white/90" : "bg-white text-black/80";
 
@@ -282,8 +291,8 @@ export function FallbackCard({
         style={{
           background:
             theme === "dark"
-              ? "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(120, 180, 255, 0.25), transparent 70%), #000000"
-              : "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(55,65,81,0.2), transparent 70%), #ffffff",
+              ? "radial-gradient(ellipse 80% 60% at 50% 50%, rgb(120 180 255 / 0.25), transparent 70%), rgb(0 0 0)"
+              : "radial-gradient(ellipse 80% 60% at 50% 50%, rgb(55 65 81 / 0.2), transparent 70%), rgb(255 255 255)",
         }}
       />
 

@@ -168,7 +168,7 @@ const ToggleGroupItem = ({
           size: size ?? context.size,
         }),
         className,
-        "focus:z-10", // Prevent focus outline from being clipped by siblings
+        "focus-visible:z-10", // Prevent keyboard focus outline from being clipped by siblings
       )}
       onClick={handleClick}
       {...props}

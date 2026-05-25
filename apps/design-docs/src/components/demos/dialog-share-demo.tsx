@@ -78,14 +78,14 @@ export function DialogShareDemo() {
                   <TooltipTrigger asChild>
                     <button
                       onClick={handleCopy}
-                      className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed"
+                      className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus-visible:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed"
                       aria-label={copied ? "Copied" : "Copy to clipboard"}
                       disabled={copied}
                       type="button"
                     >
                       <div
                         className={cn(
-                          "transition-all",
+                          "transition-[background-color,border-color,box-shadow,color,opacity,transform]",
                           copied ? "scale-100 opacity-100" : "scale-0 opacity-0",
                         )}
                       >
@@ -93,7 +93,7 @@ export function DialogShareDemo() {
                       </div>
                       <div
                         className={cn(
-                          "absolute transition-all",
+                          "absolute transition-[background-color,border-color,box-shadow,color,opacity,transform]",
                           copied ? "scale-0 opacity-0" : "scale-100 opacity-100",
                         )}
                       >

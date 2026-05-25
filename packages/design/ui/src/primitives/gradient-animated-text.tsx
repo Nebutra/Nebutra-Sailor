@@ -23,19 +23,19 @@ export interface GradientAnimatedTextProps extends React.HTMLAttributes<HTMLSpan
 
 const THEME_COLORS: Record<GradientTheme, Record<GradientVariant, { from: string; to: string }>> = {
   neon: {
-    1: { from: "#39ff14", to: "#00ffff" }, // green → cyan
-    2: { from: "#ff073a", to: "#ff6ec7" }, // red-pink → magenta
-    3: { from: "#faff00", to: "#00f0ff" }, // yellow → electric blue
+    1: { from: "var(--brand-primary)", to: "var(--brand-accent)" },
+    2: { from: "var(--brand-accent)", to: "var(--brand-tertiary)" },
+    3: { from: "hsl(var(--primary))", to: "var(--brand-accent)" },
   },
   ai: {
-    1: { from: "#39ff14", to: "#ff00ff" }, // green → magenta
-    2: { from: "#ff6ec7", to: "#00fffb" }, // magenta → cyan
-    3: { from: "#faff00", to: "#00f0ff" }, // yellow → blue
+    1: { from: "var(--brand-primary)", to: "var(--brand-tertiary)" },
+    2: { from: "var(--brand-tertiary)", to: "var(--brand-accent)" },
+    3: { from: "hsl(var(--primary))", to: "var(--brand-accent)" },
   },
   custom: {
-    1: { from: "#6366f1", to: "#8b5cf6" }, // indigo → violet
-    2: { from: "#ec4899", to: "#f43f5e" }, // pink → rose
-    3: { from: "#14b8a6", to: "#06b6d4" }, // teal → cyan
+    1: { from: "var(--brand-primary)", to: "var(--brand-tertiary)" },
+    2: { from: "var(--brand-tertiary)", to: "hsl(var(--destructive))" },
+    3: { from: "var(--brand-accent)", to: "hsl(var(--primary))" },
   },
 };
 

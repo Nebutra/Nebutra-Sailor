@@ -22,6 +22,10 @@ interface GroupOption {
   [key: string]: MultipleSelectorOption[];
 }
 
+type MultipleSelectorCommandFilter = NonNullable<
+  React.ComponentPropsWithoutRef<typeof Command>["filter"]
+>;
+
 export interface MultipleSelectorProps {
   /** Controlled selected values */
   value?: MultipleSelectorOption[];
@@ -407,7 +411,7 @@ const MultipleSelector = ({
     [options, selected],
   );
 
-  const commandFilter = React.useCallback(() => {
+  const commandFilter = React.useCallback<() => MultipleSelectorCommandFilter | undefined>(() => {
     if (commandProps?.filter) return commandProps.filter;
 
     if (creatable) {
@@ -417,6 +421,9 @@ const MultipleSelector = ({
     }
     return undefined;
   }, [creatable, commandProps?.filter]);
+  const resolvedCommandFilter = commandFilter();
+  const commandFilterProps =
+    resolvedCommandFilter === undefined ? {} : { filter: resolvedCommandFilter };
 
   return (
     <Command
@@ -430,12 +437,11 @@ const MultipleSelector = ({
       shouldFilter={
         commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch
       }
-      {...(commandFilter() ? { filter: commandFilter() as any } : {})} // eslint-disable-line @typescript-eslint/no-explicit-any
+      {...commandFilterProps}
     >
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
       <div
         className={cn(
-          "relative min-h-[38px] rounded-[var(--radius-lg)] border border-input text-sm transition-shadow focus-within:border-ring focus-within:outline-none focus-within:ring-[3px] focus-within:ring-ring/20 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50",
+          "relative min-h-[38px] rounded-[var(--radius-lg)] border border-input text-sm transition-shadow has-[:focus-visible]:border-ring has-[:focus-visible]:outline-none has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/20 has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50",
           {
             "p-1": selected.length !== 0,
             "cursor-text": !disabled && selected.length !== 0,
@@ -443,8 +449,9 @@ const MultipleSelector = ({
           !hideClearAllButton && "pe-9",
           className,
         )}
-        onClick={() => {
+        onPointerDown={(event) => {
           if (disabled) return;
+          if (event.target instanceof HTMLButtonElement) return;
           inputRef?.current?.focus();
         }}
       >
@@ -453,7 +460,7 @@ const MultipleSelector = ({
             <div
               key={option.value}
               className={cn(
-                "animate-fadeIn relative inline-flex h-7 cursor-default items-center rounded-[var(--radius-md)] border border-solid bg-background pe-7 pl-2 ps-2 text-xs font-medium text-secondary-foreground transition-all hover:bg-background disabled:cursor-not-allowed disabled:opacity-50 data-[fixed]:pe-2",
+                "animate-fadeIn relative inline-flex h-7 cursor-default items-center rounded-[var(--radius-md)] border border-solid bg-background pe-7 pl-2 ps-2 text-xs font-medium text-secondary-foreground transition-[background-color,border-color,box-shadow,color,opacity,transform] hover:bg-background disabled:cursor-not-allowed disabled:opacity-50 data-[fixed]:pe-2",
                 badgeClassName,
               )}
               data-fixed={option.fixed}

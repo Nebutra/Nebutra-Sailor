@@ -64,7 +64,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center w-full transition-all duration-300 py-3",
+        "flex flex-col items-center justify-center w-full transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 py-3",
         isRecording ? "opacity-100" : "opacity-0 h-0",
       )}
     >
@@ -190,7 +190,7 @@ const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
           <div
             ref={ref}
             className={cn(
-              "rounded-3xl border border-input bg-background p-2 shadow-lg transition-all duration-300",
+              "rounded-3xl border border-input bg-background p-2 shadow-lg transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300",
               isLoading && "border-destructive/70",
               className,
             )}
@@ -423,7 +423,7 @@ export const PromptInputBox = React.forwardRef(
           isLoading={isLoading}
           onSubmit={handleSubmit}
           className={cn(
-            "w-full bg-background border-input shadow-lg transition-all duration-300 ease-in-out",
+            "w-full bg-background border-input shadow-lg transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 ease-in-out",
             isRecording && "border-destructive/70",
             className,
           )}
@@ -434,7 +434,7 @@ export const PromptInputBox = React.forwardRef(
           onDrop={handleDrop}
         >
           {files.length > 0 && !isRecording && (
-            <div className="flex flex-wrap gap-2 p-0 pb-1 transition-all duration-300">
+            <div className="flex flex-wrap gap-2 p-0 pb-1 transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300">
               {files.map((file, index) => (
                 <div key={index} className="relative group">
                   {file.type.startsWith("image/") && filePreviews[file.name] && (
@@ -449,7 +449,7 @@ export const PromptInputBox = React.forwardRef(
                           if (preview) openImageModal(preview);
                         }
                       }}
-                      className="w-16 h-16 rounded-xl overflow-hidden cursor-pointer transition-all duration-300"
+                      className="w-16 h-16 rounded-xl overflow-hidden cursor-pointer transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300"
                       onClick={() => {
                         const preview = filePreviews[file.name];
                         if (preview) openImageModal(preview);
@@ -479,7 +479,7 @@ export const PromptInputBox = React.forwardRef(
           )}
           <div
             className={cn(
-              "transition-all duration-300",
+              "transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300",
               isRecording ? "h-0 overflow-hidden opacity-0" : "opacity-100",
             )}
           >
@@ -536,7 +536,7 @@ export const PromptInputBox = React.forwardRef(
                   type="button"
                   onClick={() => handleToggleChange("search")}
                   className={cn(
-                    "rounded-full transition-all flex items-center gap-1 px-2 py-1 border h-8",
+                    "rounded-full transition-[background-color,border-color,box-shadow,color,opacity,transform] flex items-center gap-1 px-2 py-1 border h-8",
                     showSearch
                       ? "bg-info/15 border-info text-info"
                       : "bg-transparent border-transparent text-muted-foreground hover:text-foreground",
@@ -574,7 +574,7 @@ export const PromptInputBox = React.forwardRef(
                   type="button"
                   onClick={() => handleToggleChange("think")}
                   className={cn(
-                    "rounded-full transition-all flex items-center gap-1 px-2 py-1 border h-8",
+                    "rounded-full transition-[background-color,border-color,box-shadow,color,opacity,transform] flex items-center gap-1 px-2 py-1 border h-8",
                     showThink
                       ? "bg-indigo-500/15 border-indigo-500 text-indigo-500"
                       : "bg-transparent border-transparent text-muted-foreground hover:text-foreground",
@@ -614,7 +614,7 @@ export const PromptInputBox = React.forwardRef(
                   type="button"
                   onClick={handleCanvasToggle}
                   className={cn(
-                    "rounded-full transition-all flex items-center gap-1 px-2 py-1 border h-8",
+                    "rounded-full transition-[background-color,border-color,box-shadow,color,opacity,transform] flex items-center gap-1 px-2 py-1 border h-8",
                     showCanvas
                       ? "bg-warning/15 border-warning text-warning"
                       : "bg-transparent border-transparent text-muted-foreground hover:text-foreground",
@@ -666,7 +666,7 @@ export const PromptInputBox = React.forwardRef(
                 variant="default"
                 size="icon"
                 className={cn(
-                  "h-8 w-8 rounded-full transition-all duration-200",
+                  "h-8 w-8 rounded-full transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-200",
                   isRecording
                     ? "bg-transparent hover:bg-accent text-destructive hover:text-destructive/80"
                     : hasContent

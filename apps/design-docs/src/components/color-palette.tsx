@@ -42,7 +42,7 @@ function ColorSwatch({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className={`group relative flex h-24 flex-col items-start justify-between p-3 text-left transition-all hover:z-10 focus:z-10 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${className}`}
+          className={`group relative flex h-24 flex-col items-start justify-between p-3 text-left transition-[background-color,border-color,box-shadow,color,opacity,transform] hover:z-10 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
           style={{ backgroundColor: hex, color: contrastForeground }}
         >
           <div className="font-mono text-[10px] font-medium opacity-60 transition-opacity group-hover:opacity-100">
@@ -59,26 +59,26 @@ function ColorSwatch({
         <DropdownMenuItem onClick={() => handleCopy(hex, "hex")}>
           <span className="flex-1">Copy HEX</span>
           {copiedData === "hex" ? (
-            <Check className="h-4 w-4 text-green-500" />
+            <Check className="size-4 text-green-500" />
           ) : (
-            <Copy className="h-4 w-4 text-muted-foreground" />
+            <Copy className="size-4 text-muted-foreground" />
           )}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => handleCopy(cssVar, "var")}>
           <span className="flex-1">Copy CSS Var</span>
           {copiedData === "var" ? (
-            <Check className="h-4 w-4 text-green-500" />
+            <Check className="size-4 text-green-500" />
           ) : (
-            <Copy className="h-4 w-4 text-muted-foreground" />
+            <Copy className="size-4 text-muted-foreground" />
           )}
         </DropdownMenuItem>
         {step && (
           <DropdownMenuItem onClick={() => handleCopy(tailwindClass, "tw")}>
             <span className="flex-1">Copy Tailwind</span>
             {copiedData === "tw" ? (
-              <Check className="h-4 w-4 text-green-500" />
+              <Check className="size-4 text-green-500" />
             ) : (
-              <Copy className="h-4 w-4 text-muted-foreground" />
+              <Copy className="size-4 text-muted-foreground" />
             )}
           </DropdownMenuItem>
         )}

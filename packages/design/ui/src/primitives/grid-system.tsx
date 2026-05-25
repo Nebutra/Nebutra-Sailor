@@ -504,7 +504,7 @@ const GridCell = ({
         className={cn(
           scopedClassName,
           "relative min-h-[var(--grid-cell-min-block-size)] min-w-0 overflow-hidden p-[var(--grid-cell-padding)]",
-          "text-foreground focus-within:z-10 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background",
+          "text-foreground has-[:focus-visible]:z-10 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2 has-[:focus-visible]:ring-offset-background",
           clipsGuides && "bg-[var(--grid-cell-solid-background)]",
           !clipsGuides && system.debug && "bg-[var(--grid-cell-debug-background)]",
           className,

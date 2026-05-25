@@ -193,7 +193,7 @@ export function Stepper({
                 onClick={() => clickable && goToStep(index)}
                 disabled={!clickable}
                 className={cn(
-                  "relative flex items-center justify-center rounded-full border-2 transition-all",
+                  "relative flex items-center justify-center rounded-full border-2 transition-[background-color,border-color,box-shadow,color,opacity,transform]",
                   config.icon,
                   status === "completed" && "border-primary bg-primary text-white",
                   status === "current" && "border-primary bg-white text-primary dark:bg-slate-900",
@@ -424,7 +424,7 @@ export function ProgressStepper({
       {/* 进度条 */}
       <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
         <div
-          className="h-full rounded-full bg-primary transition-all duration-300"
+          className="h-full rounded-full bg-primary transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300"
           style={{ width: `${progress}%` }}
         />
       </div>

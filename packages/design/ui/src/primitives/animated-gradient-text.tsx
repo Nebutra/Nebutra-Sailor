@@ -38,7 +38,7 @@ export interface AnimatedGradientTextProps extends ComponentPropsWithoutRef<"spa
  *
  * @example Custom colors
  * ```tsx
- * <AnimatedGradientText colorFrom="#ff0080" colorTo="#7928ca">
+ * <AnimatedGradientText colorFrom="var(--brand-primary)" colorTo="var(--brand-accent)">
  *   Pink to Purple
  * </AnimatedGradientText>
  * ```
@@ -61,8 +61,8 @@ export function AnimatedGradientText({
   children,
   className,
   speed = 1,
-  colorFrom = "#0033FE",
-  colorTo = "#0BF1C3",
+  colorFrom = "var(--brand-primary)",
+  colorTo = "var(--brand-accent)",
   ...props
 }: AnimatedGradientTextProps) {
   return (

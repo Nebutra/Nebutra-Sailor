@@ -86,7 +86,7 @@ const InputOTPSlot = ({
     <div
       ref={ref}
       className={cn(
-        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] first:rounded-l-md first:border-l last:rounded-r-md",
         isActive && "z-10 ring-2 ring-ring ring-offset-background",
         className,
       )}
@@ -109,8 +109,7 @@ const InputOTPSeparator = ({
   ref,
   ...props
 }: InputOTPSeparatorProps & { ref?: React.Ref<React.ElementRef<"div">> | undefined }) => (
-  // biome-ignore lint/a11y/useSemanticElements: Semantic structure is managed by headless/custom ARIA patterns
-  <div ref={ref} role="separator" {...props}>
+  <div ref={ref} aria-hidden="true" {...props}>
     <Minus className="h-4 w-4" />
   </div>
 );

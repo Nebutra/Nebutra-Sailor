@@ -331,7 +331,7 @@ function Alert({
           className={cn(
             "group shrink-0 size-4 inline-flex items-center justify-center rounded-[var(--radius-sm)]",
             "opacity-70 hover:opacity-100 transition-opacity",
-            "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
           )}
         >
           <X className="size-4" />

@@ -32,9 +32,9 @@ function CopyButton({ value, label }: { value: string; label: string }) {
     <DropdownMenuItem onClick={handleCopy} className="cursor-pointer">
       <span className="flex-1">{label}</span>
       {copied ? (
-        <Check className="h-4 w-4 text-green-500" />
+        <Check className="size-4 text-green-500" />
       ) : (
-        <Copy className="h-4 w-4 text-muted-foreground" />
+        <Copy className="size-4 text-muted-foreground" />
       )}
     </DropdownMenuItem>
   );
@@ -61,7 +61,7 @@ function Swatch({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className={`group relative flex h-24 w-full flex-col items-start justify-between p-3 text-left transition-transform hover:z-10 focus:z-10 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:scale-105 rounded-md mx-0.5 ${className} ${contrastClass}`}
+          className={`group relative flex h-24 w-full flex-col items-start justify-between p-3 text-left transition-transform hover:z-10 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:scale-105 rounded-md mx-0.5 ${className} ${contrastClass}`}
           style={{ backgroundColor: hex }}
         >
           <div className="font-mono text-[10px] font-medium opacity-60 transition-opacity group-hover:opacity-100 uppercase">
@@ -159,7 +159,7 @@ export function TailwindSpacingDemo() {
             <code className="text-xs font-mono text-muted-foreground">{String(value)}</code>
             <div className="flex items-center">
               <div
-                className="bg-primary/20 border border-primary/40 rounded-sm h-8 shrink-0 transition-all hover:bg-primary/30"
+                className="bg-primary/20 border border-primary/40 rounded-sm h-8 shrink-0 transition-[background-color,border-color,box-shadow,color,opacity,transform] hover:bg-primary/30"
                 style={{ width: value as string }}
               />
             </div>
@@ -183,7 +183,7 @@ export function TailwindRadiusDemo() {
           className="flex flex-col items-center justify-center p-6 border border-[var(--neutral-6)] bg-card rounded-xl shadow-sm hover:border-primary/50 transition-colors group"
         >
           <div
-            className="h-16 w-16 bg-primary/10 border-2 border-primary/30 group-hover:bg-primary/20 transition-colors mb-4"
+            className="size-16 bg-primary/10 border-2 border-primary/30 group-hover:bg-primary/20 transition-colors mb-4"
             style={{ borderRadius: value as string }}
           />
           <code className="text-xs font-mono text-primary font-semibold mb-1">rounded-{key}</code>
@@ -204,7 +204,7 @@ export function TailwindShadowsDemo() {
       {shadows.map(([key, value]) => (
         <div
           key={key}
-          className="bg-card w-full h-32 rounded-lg flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-1"
+          className="bg-card w-full h-32 rounded-lg flex flex-col items-center justify-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 hover:-translate-y-1"
           style={{ boxShadow: value as string }}
         >
           <code className="text-sm font-mono text-primary font-semibold">shadow-{key}</code>
@@ -272,11 +272,11 @@ export function TailwindAnimationsDemo() {
           className="flex flex-col items-center justify-center p-6 border border-[var(--neutral-6)] bg-card rounded-xl shadow-sm hover:border-primary/50 transition-colors group relative h-32"
         >
           <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Play className="w-4 h-4 text-muted-foreground" />
+            <Play className="size-4 text-muted-foreground" />
           </div>
 
           <div
-            className="w-10 h-10 rounded-md bg-gradient-to-br from-primary to-accent/50 flex items-center justify-center mb-4"
+            className="size-10 rounded-md bg-gradient-to-br from-primary to-accent/50 flex items-center justify-center mb-4"
             style={{
               animation:
                 playing === key ||
@@ -287,7 +287,7 @@ export function TailwindAnimationsDemo() {
                   : "none",
             }}
           >
-            <div className="w-4 h-4 bg-white/50 rounded-full" />
+            <div className="size-4 bg-white/50 rounded-full" />
           </div>
           <code className="text-xs font-mono text-primary font-semibold truncate w-full text-center">
             animate-{key}

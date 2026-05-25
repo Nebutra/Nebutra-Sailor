@@ -46,7 +46,7 @@ export interface AuroraTextProps {
   className?: string;
   /**
    * Array of colors for the gradient
-   * @default ["#FF0080", "#7928CA", "#0070F3", "#38bdf8"]
+   * @default ["var(--brand-primary)", "var(--brand-accent)", "var(--brand-tertiary)", "var(--primary)"]
    */
   colors?: string[];
   /**
@@ -69,7 +69,7 @@ export interface AuroraTextProps {
  * <AuroraText>Aurora Text</AuroraText>
  *
  * // Custom colors
- * <AuroraText colors={["#00ff87", "#60efff", "#0061ff"]}>
+ * <AuroraText colors={["var(--brand-primary)", "var(--brand-accent)", "var(--brand-tertiary)"]}>
  *   Custom Colors
  * </AuroraText>
  *
@@ -86,7 +86,12 @@ export const AuroraText = memo(
   ({
     children,
     className = "",
-    colors = ["#FF0080", "#7928CA", "#0070F3", "#38bdf8"],
+    colors = [
+      "var(--brand-primary)",
+      "var(--brand-accent)",
+      "var(--brand-tertiary)",
+      "hsl(var(--primary))",
+    ],
     speed = 1,
   }: AuroraTextProps) => {
     const shouldReduceMotion = useReducedMotion();

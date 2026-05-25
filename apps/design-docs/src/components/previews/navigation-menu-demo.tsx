@@ -8,7 +8,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import React from "react";
+import Link from "next/link";
+import type React from "react";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -59,15 +60,15 @@ export function NavigationMenuDemo() {
                 <ul className="gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] grid">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
-                      <a
-                        className="p-6 flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted no-underline outline-none select-none focus:shadow-md"
+                      <Link
+                        className="p-6 flex h-full w-full flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted no-underline outline-none select-none focus-visible:shadow-md focus-visible:ring-2 focus-visible:ring-ring/40"
                         href="/"
                       >
                         <div className="mb-2 mt-4 text-lg font-medium">Nebutra UI</div>
                         <p className="text-sm leading-tight text-muted-foreground">
                           Beautifully designed components built with Radix UI and Tailwind CSS.
                         </p>
-                      </a>
+                      </Link>
                     </NavigationMenuLink>
                   </li>
                   <ListItem href="/docs" title="Introduction">
@@ -77,7 +78,7 @@ export function NavigationMenuDemo() {
                     How to install dependencies and structure your app.
                   </ListItem>
                   <ListItem href="/docs/primitives/typography" title="Typography">
-                    Styles for headings, paragraphs, lists...etc
+                    Styles for headings, paragraphs, lists, etc.
                   </ListItem>
                 </ul>
               </NavigationMenuContent>
@@ -95,9 +96,9 @@ export function NavigationMenuDemo() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <a href="/docs" className={navigationMenuTriggerStyle()}>
+              <Link href="/docs" className={navigationMenuTriggerStyle()}>
                 Documentation
-              </a>
+              </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -106,25 +107,29 @@ export function NavigationMenuDemo() {
   );
 }
 
-const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
-  ({ className, title, children, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <a
-            ref={ref}
-            className={cn(
-              "space-y-1 p-3 block rounded-md leading-none no-underline transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-              className,
-            )}
-            {...props}
-          >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="text-sm leading-snug line-clamp-2 text-muted-foreground">{children}</p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    );
-  },
-);
+type ListItemProps = React.ComponentPropsWithoutRef<"a"> & {
+  title: string;
+  ref?: React.Ref<HTMLAnchorElement>;
+};
+
+function ListItem({ className, title, children, ref, ...props }: ListItemProps) {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "space-y-1 p-3 block rounded-md leading-none no-underline transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40",
+            className,
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="text-sm leading-snug line-clamp-2 text-muted-foreground">{children}</p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+}
+
 ListItem.displayName = "ListItem";

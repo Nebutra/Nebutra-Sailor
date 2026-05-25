@@ -135,7 +135,7 @@ export function OnboardingChecklist({
                     {item.helperText}{" "}
                     <a
                       href={item.helperLink.href}
-                      className="text-primary underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-[var(--radius-sm)]"
+                      className="text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-sm)]"
                     >
                       {item.helperLink.text}
                     </a>
@@ -155,7 +155,7 @@ export function OnboardingChecklist({
             <DialogTrigger asChild>
               <button
                 type="button"
-                className="w-full h-full focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-[var(--radius-lg)]"
+                className="w-full h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-lg)]"
               >
                 <Image
                   src={videoThumbnailUrl}
@@ -164,7 +164,7 @@ export function OnboardingChecklist({
                   fill
                 />
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                  <PlayCircle className="h-16 w-16 text-white/80 transform transition-all duration-300 group-hover:scale-110 group-hover:text-white" />
+                  <PlayCircle className="h-16 w-16 text-white/80 transform transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 group-hover:scale-110 group-hover:text-white" />
                 </div>
               </button>
             </DialogTrigger>

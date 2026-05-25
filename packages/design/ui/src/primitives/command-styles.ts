@@ -14,13 +14,13 @@ export const commandFrameClassName = cn(
 export const commandInputWrapperClassName = cn(
   "flex items-center border-b border-border px-3",
   "transition-[border-color] duration-micro ease-out",
-  "focus-within:border-ring/60",
+  "has-[:focus-visible]:border-ring/60",
 );
 
 export const commandInputClassName = cn(
   "flex h-11 w-full appearance-none border-0 bg-transparent py-3 text-sm text-foreground shadow-none outline-none",
   "placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
-  "focus:outline-none focus-visible:outline-none",
+  "outline-none focus-visible:outline-none",
   "[&::-webkit-search-cancel-button]:appearance-none",
   "[&::-webkit-search-decoration]:appearance-none",
   "[&::-webkit-search-results-button]:appearance-none",

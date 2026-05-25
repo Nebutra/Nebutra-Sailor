@@ -42,9 +42,9 @@ export interface MagicCardProps {
  * @example Custom gradient colors
  * ```tsx
  * <MagicCard
- *   gradientFrom="#00C6FF"
- *   gradientTo="#0072FF"
- *   gradientColor="#1a1a2e"
+ *   gradientFrom="var(--brand-primary)"
+ *   gradientTo="var(--brand-accent)"
+ *   gradientColor="color-mix(in oklab, var(--brand-primary) 16%, transparent)"
  * >
  *   <div className="p-6">Custom gradient</div>
  * </MagicCard>
@@ -54,10 +54,10 @@ export function MagicCard({
   children,
   className,
   gradientSize = 200,
-  gradientColor = "rgba(0, 51, 254, 0.15)",
+  gradientColor = "color-mix(in oklab, var(--brand-primary) 16%, transparent)",
   gradientOpacity = 0.8,
-  gradientFrom = "#0033FE",
-  gradientTo = "#0BF1C3",
+  gradientFrom = "var(--brand-primary)",
+  gradientTo = "var(--brand-accent)",
 }: MagicCardProps) {
   const mouseX = useMotionValue(-gradientSize);
   const mouseY = useMotionValue(-gradientSize);

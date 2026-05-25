@@ -420,7 +420,7 @@ const SelectItem = ({
   <BaseSelect.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-pointer select-none items-center rounded-[var(--select-item-radius)] py-[var(--select-item-padding-y)] pl-[var(--select-item-padding-x)] pr-[calc(var(--select-item-indicator-inset)+var(--select-item-indicator-size)+var(--select-item-padding-x))] text-[length:var(--select-font-size)] outline-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
+      "relative flex w-full cursor-pointer select-none items-center rounded-[var(--select-item-radius)] py-[var(--select-item-padding-y)] pl-[var(--select-item-padding-x)] pr-[calc(var(--select-item-indicator-inset)+var(--select-item-indicator-size)+var(--select-item-padding-x))] text-[length:var(--select-font-size)] outline-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
       className,
     )}
     {...props}

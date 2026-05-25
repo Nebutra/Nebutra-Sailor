@@ -10,7 +10,7 @@ import { cn } from "../utils";
 export interface HexGridProps extends React.SVGProps<SVGSVGElement> {
   /** Hex cell radius in pixels (default: 24) */
   size?: number;
-  /** Hex stroke/fill color (default: "#0033FE") */
+  /** Hex stroke/fill color (default: var(--brand-primary)) */
   color?: string;
   /** Hex opacity (default: 0.12) */
   opacity?: number;
@@ -79,7 +79,7 @@ function hexPath(cx: number, cy: number, r: number): string {
  * @example With glow effect
  * ```tsx
  * <div className="relative h-[500px] w-full overflow-hidden">
- *   <HexGrid glow color="#0BF1C3" opacity={0.15} />
+ *   <HexGrid glow color="var(--brand-accent)" opacity={0.15} />
  * </div>
  * ```
  *
@@ -94,7 +94,7 @@ function hexPath(cx: number, cy: number, r: number): string {
  */
 export function HexGrid({
   size = 24,
-  color = "#0033FE",
+  color = "var(--brand-primary)",
   opacity: hexOpacity = 0.12,
   strokeWidth = 1,
   glow = false,

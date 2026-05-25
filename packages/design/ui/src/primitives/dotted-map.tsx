@@ -50,7 +50,7 @@ export interface DottedMapProps extends React.SVGProps<SVGSVGElement> {
  *     { lat: 51.5074, lng: -0.1278 },  // London
  *     { lat: 35.6762, lng: 139.6503 }, // Tokyo
  *   ]}
- *   markerColor="#FF6900"
+ *   markerColor="var(--brand-primary)"
  * />
  * ```
  *
@@ -64,7 +64,7 @@ export function DottedMap({
   height = 75,
   mapSamples = 5000,
   markers = [],
-  markerColor = "#FF6900",
+  markerColor = "var(--brand-primary)",
   dotRadius = 0.2,
   stagger = true,
   className,

@@ -448,7 +448,7 @@ export const MultiSelectRow = ({
         "group m-0 flex min-h-[var(--multi-select-row-min-height)] w-full min-w-0 items-center gap-[var(--multi-select-row-gap)] rounded-[var(--multi-select-row-radius)] border-0",
         "px-[var(--multi-select-row-padding-x)] py-[var(--multi-select-row-padding-y)] text-[length:var(--multi-select-row-font-size)]",
         "transition-colors duration-[var(--multi-select-duration)] ease-[var(--multi-select-easing)]",
-        "hover:bg-accent focus-within:bg-accent",
+        "hover:bg-accent has-[:focus-visible]:bg-accent",
         disabled && "opacity-50",
         className,
       )}

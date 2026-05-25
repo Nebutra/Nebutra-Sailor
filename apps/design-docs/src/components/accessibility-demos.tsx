@@ -61,7 +61,7 @@ export function FocusRingDemo() {
           </div>
           <button
             type="button"
-            className="rounded-md border border-fd-border p-3 text-sm focus:outline-none"
+            className="rounded-md border border-fd-border p-3 text-sm focus-visible:outline-none"
             style={focusRing as React.CSSProperties}
           >
             Custom element (Tab to me)
@@ -73,16 +73,16 @@ export function FocusRingDemo() {
 }
 
 export function AriaPatternsDemo() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Handle loading simulation
   useEffect(() => {
-    if (isLoading) {
-      const timer = setTimeout(() => setIsLoading(false), 2000);
+    if (isProcessing) {
+      const timer = setTimeout(() => setIsProcessing(false), 2000);
       return () => clearTimeout(timer);
     }
-  }, [isLoading]);
+  }, [isProcessing]);
 
   return (
     <ComponentPreview>
@@ -93,14 +93,14 @@ export function AriaPatternsDemo() {
             Uses <code className="text-xs">ariaPatterns.loading</code>
           </p>
           <Button
-            onClick={() => setIsLoading(true)}
-            disabled={isLoading}
+            onClick={() => setIsProcessing(true)}
+            disabled={isProcessing}
             className="w-full"
-            {...(isLoading ? ariaPatterns.loading : {})}
+            {...(isProcessing ? ariaPatterns.loading : {})}
           >
-            {isLoading ? (
+            {isProcessing ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 size-4 animate-spin" />
                 Processing (Wait 2s)
               </>
             ) : (
@@ -144,7 +144,7 @@ export function AriaPatternsDemo() {
             {...ariaPatterns.required}
           />
           <div className="flex items-center gap-1.5 text-xs text-red-500 font-medium">
-            <AlertCircle className="w-3.5 h-3.5" />
+            <AlertCircle className="size-3.5" />
             Please enter a valid email address
           </div>
         </div>
@@ -206,13 +206,8 @@ export function MinTouchTargetDemo() {
 }
 
 export function PrefersReducedMotionDemo() {
-  const [reduceMotion, setReduceMotion] = useState<boolean>(false);
+  const [reduceMotion, setReduceMotion] = useState<boolean>(() => prefersReducedMotion());
   const [isAnimating, setIsAnimating] = useState(true);
-
-  // In a real app we'd just use prefersReducedMotion(), but we mock it here to demo it
-  useEffect(() => {
-    setReduceMotion(prefersReducedMotion());
-  }, []);
 
   return (
     <ComponentPreview>
@@ -231,7 +226,7 @@ export function PrefersReducedMotionDemo() {
 
         <div className="w-full h-32 flex items-center justify-center border border-dashed border-fd-border rounded-lg relative overflow-hidden bg-fd-muted/30">
           <div
-            className="w-12 h-12 bg-primary rounded-full absolute"
+            className="size-12 bg-primary rounded-full absolute"
             style={{
               transition: reduceMotion ? "none" : "transform 2s ease-in-out",
               transform: isAnimating ? "translateX(100px)" : "translateX(-100px)",
@@ -267,7 +262,7 @@ export function ContrastRequirementsDemo() {
             </div>
             <div className="p-4 bg-white text-slate-400 flex justify-between items-center bg-stripes-red">
               <span className="text-sm">Fail (2.8:1)</span>
-              <XCircle className="text-red-600 w-5 h-5" />
+              <XCircle className="text-red-600 size-5" />
             </div>
           </div>
         </div>
@@ -283,7 +278,7 @@ export function ContrastRequirementsDemo() {
             </div>
             <div className="p-4 bg-blue-400 text-white flex justify-between items-center bg-stripes-red">
               <span className="text-xl font-bold">Fail (2.5:1)</span>
-              <XCircle className="text-red-900 w-6 h-6" />
+              <XCircle className="text-red-900 size-6" />
             </div>
           </div>
         </div>
@@ -301,7 +296,7 @@ export function SkipLinkStyleDemo() {
           area below, then press Tab.
         </p>
         <div
-          className="w-full h-[150px] border border-dashed border-fd-border rounded-lg bg-fd-muted/30 relative flex items-center justify-center p-4 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition-all overflow-hidden"
+          className="w-full h-[150px] border border-dashed border-fd-border rounded-lg bg-fd-muted/30 relative flex items-center justify-center p-4 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:focus-visible]:border-transparent transition-[background-color,border-color,box-shadow,color,opacity,transform] overflow-hidden"
           role="tabpanel"
           aria-label="Skip link demo container"
         >

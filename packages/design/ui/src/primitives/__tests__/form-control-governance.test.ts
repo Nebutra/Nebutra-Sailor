@@ -4,12 +4,34 @@ import { describe, expect, it } from "vitest";
 import { formControlFocusClassNames, formControlInvalidClassNames } from "../form-control";
 
 const formPrimitiveSources = ["input.tsx", "textarea.tsx", "select.tsx"] as const;
+const focusVisibleOnlySources = [
+  "alert.tsx",
+  "assisted-password-confirmation.tsx",
+  "command-styles.ts",
+  "dialog.tsx",
+  "dropdown-menu.tsx",
+  "filter-pills.tsx",
+  "grid-system.tsx",
+  "menubar.tsx",
+  "multi-select.tsx",
+  "multiple-selector.tsx",
+  "navigation-menu.tsx",
+  "radio-group-card.tsx",
+  "radio-group-stacked.tsx",
+  "reaction-chip.tsx",
+  "select.tsx",
+  "sheet.tsx",
+  "toggle-group.tsx",
+] as const;
 
 const sourceFor = (filename: (typeof formPrimitiveSources)[number]) =>
   readFileSync(join(process.cwd(), "src", "primitives", filename), "utf8");
 
 const commandStylesSource = () =>
   readFileSync(join(process.cwd(), "src", "primitives", "command-styles.ts"), "utf8");
+
+const primitiveSourceFor = (filename: string) =>
+  readFileSync(join(process.cwd(), "src", "primitives", filename), "utf8");
 
 const globalFocusSources = [
   join(process.cwd(), "..", "design-tokens", "static", "base.css"),
@@ -51,10 +73,28 @@ describe("form primitive focus governance", () => {
     expect(source).toMatch(/\bappearance-none\b/u);
     expect(source).toMatch(/\bborder-0\b/u);
     expect(source).toMatch(/\bshadow-none\b/u);
-    expect(source).toMatch(/\bfocus:outline-none\b/u);
+    expect(source).toMatch(/\boutline-none\b/u);
     expect(source).toMatch(/\bfocus-visible:outline-none\b/u);
     expect(source).toContain("[&::-webkit-search-cancel-button]:appearance-none");
     expect(source).not.toMatch(/\bfocus:ring-/u);
+    expect(source).not.toMatch(/\bfocus-within:border-ring\b/u);
+  });
+
+  it.each(
+    focusVisibleOnlySources,
+  )("does not regress %s to mouse-triggered focus visuals", (filename) => {
+    const source = primitiveSourceFor(filename);
+
+    expect(source).not.toMatch(/\bfocus:border-ring\b/u);
+    expect(source).not.toMatch(/\bfocus:ring-/u);
+    expect(source).not.toMatch(/\bfocus:bg-/u);
+    expect(source).not.toMatch(/\bfocus:text-/u);
+    expect(source).not.toMatch(/\bfocus:shadow-/u);
+    expect(source).not.toMatch(/\bfocus:z-/u);
+    expect(source).not.toMatch(/\bfocus:scale-/u);
+    expect(source).not.toMatch(/\bfocus-within:border-ring\b/u);
+    expect(source).not.toMatch(/\bfocus-within:ring-/u);
+    expect(source).not.toMatch(/\bfocus-within:bg-/u);
   });
 
   it.each(

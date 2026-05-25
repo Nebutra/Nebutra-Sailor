@@ -123,7 +123,7 @@ export function AssistedPasswordConfirmation({
               <motion.div
                 key={index}
                 className={cn(
-                  "absolute h-full w-4 transition-all duration-300 ease-out",
+                  "absolute h-full w-4 transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 ease-out",
                   getLetterStatus(letter, index),
                 )}
                 style={{
@@ -142,7 +142,7 @@ export function AssistedPasswordConfirmation({
         animate={matchAnimation}
       >
         <motion.input
-          className="h-full w-full rounded-[var(--radius-xl)] border-2 border-border bg-background px-3.5 py-3 tracking-[0.4em] text-foreground outline-none transition-colors placeholder:tracking-normal focus:border-ring focus:ring-[3px] focus:ring-ring/30"
+          className="h-full w-full rounded-[var(--radius-xl)] border-2 border-border bg-background px-3.5 py-3 tracking-[0.4em] text-foreground outline-none transition-colors placeholder:tracking-normal focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30"
           type="password"
           placeholder={placeholder}
           value={confirmPassword}

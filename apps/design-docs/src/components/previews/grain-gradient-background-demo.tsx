@@ -20,7 +20,7 @@ export function GrainGradientBackgroundDemo() {
           </p>
           <button
             type="button"
-            className="px-6 py-2 font-medium rounded-full bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+            className="px-6 py-2 font-medium rounded-full bg-primary text-primary-foreground shadow-lg transition-[box-shadow,transform,background-color] hover:scale-105 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             Get Started Focus
           </button>

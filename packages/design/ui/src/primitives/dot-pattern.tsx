@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import React, { useEffect, useId, useRef, useState } from "react";
 import { cn } from "../utils";
 
@@ -27,6 +27,11 @@ export interface DotPatternProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
   /** Enable glowing animation effect */
   glow?: boolean;
+}
+
+function stableMotionSeed(col: number, row: number) {
+  const seed = (col * 928_371 + row * 364_479) % 1_000;
+  return seed / 1_000;
 }
 
 // =============================================================================
@@ -89,18 +94,30 @@ export function DotPattern({
   const id = useId();
   const containerRef = useRef<SVGSVGElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
     const updateDimensions = () => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setDimensions({ width: rect.width, height: rect.height });
-      }
+      const rect = element.getBoundingClientRect();
+      const next = { width: rect.width, height: rect.height };
+      setDimensions((current) =>
+        current.width === next.width && current.height === next.height ? current : next,
+      );
     };
 
     updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
+
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", updateDimensions);
+      return () => window.removeEventListener("resize", updateDimensions);
+    }
+
+    const observer = new ResizeObserver(updateDimensions);
+    observer.observe(element);
+    return () => observer.disconnect();
   }, []);
 
   const dots = React.useMemo(() => {
@@ -111,14 +128,16 @@ export function DotPattern({
     return Array.from({ length: count }, (_, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
+      const seed = stableMotionSeed(col, row);
       return {
         x: col * width + cx + x,
         y: row * height + cy + y,
-        delay: Math.random() * 5,
-        duration: Math.random() * 3 + 2,
+        delay: seed * 5,
+        duration: 2 + seed * 3,
       };
     });
   }, [dimensions.width, dimensions.height, width, height, cx, cy, x, y]);
+  const shouldAnimateGlow = glow && !prefersReducedMotion;
 
   return (
     <svg
@@ -143,7 +162,7 @@ export function DotPattern({
           cy={dot.y}
           r={cr}
           fill={glow ? `url(#${id}-gradient)` : "currentColor"}
-          {...(glow
+          {...(shouldAnimateGlow
             ? {
                 initial: { opacity: 0.4, scale: 1 },
                 animate: { opacity: [0.4, 1, 0.4], scale: [1, 1.5, 1] },

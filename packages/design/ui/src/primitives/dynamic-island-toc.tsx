@@ -439,7 +439,7 @@ export function DynamicIslandTOC({
                         onClick={() => handleJump(h)}
                         style={{ paddingLeft: `${paddingLeft}px` }}
                         className={cn(
-                          "group flex w-full shrink-0 cursor-pointer items-center rounded-lg border-none py-2 pr-3 text-left text-sm transition-all duration-reveal ease-out",
+                          "group flex w-full shrink-0 cursor-pointer items-center rounded-lg border-none py-2 pr-3 text-left text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-out",
                           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40",
                           isActive && "bg-foreground/10 font-medium text-foreground",
                           !isActive && isHovered && "bg-foreground/5 text-foreground/85",
