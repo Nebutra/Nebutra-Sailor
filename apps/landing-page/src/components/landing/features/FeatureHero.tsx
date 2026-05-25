@@ -22,10 +22,10 @@ export type FeatureHeroProps = {
   titleSuffix: string;
   /** Hero summary paragraph. */
   summary: string;
-  /** Primary CTA href (opens in new tab). */
-  primaryCtaHref: string;
-  /** Primary CTA label. */
-  primaryCtaLabel: string;
+  /** Primary CTA href (opens in new tab). Pass with primaryCtaLabel to render. */
+  primaryCtaHref?: string;
+  /** Primary CTA label. Pass with primaryCtaHref to render. */
+  primaryCtaLabel?: string;
   /** Optional secondary block rendered below the CTA (used for the index hero's centered layout). */
   children?: ReactNode;
   /** Layout: "left" (detail page default) or "center" (index page). */
@@ -106,7 +106,7 @@ export function FeatureHero({
             style={{ letterSpacing: "var(--tracking-display)", lineHeight: 1.05 }}
           >
             <span translate="no">{titlePrefix}</span>{" "}
-            <AuroraText colors={tokens.auroraColors} speed={1.2}>
+            <AuroraText colors={tokens.auroraColors} speed={0.6}>
               {titleSuffix}
             </AuroraText>
           </h1>
@@ -120,20 +120,22 @@ export function FeatureHero({
           </p>
         </AnimateIn>
 
-        <AnimateIn preset="fadeUp" inView delay={0.26}>
-          <a
-            href={primaryCtaHref}
-            target="_blank"
-            rel="noreferrer"
-            className="group/cta inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-          >
-            {primaryCtaLabel}
-            <ArrowUpRight
-              aria-hidden="true"
-              className="size-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
-            />
-          </a>
-        </AnimateIn>
+        {primaryCtaHref && primaryCtaLabel ? (
+          <AnimateIn preset="fadeUp" inView delay={0.26}>
+            <a
+              href={primaryCtaHref}
+              target="_blank"
+              rel="noreferrer"
+              className="group/cta inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+            >
+              {primaryCtaLabel}
+              <ArrowUpRight
+                aria-hidden="true"
+                className="size-4 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
+              />
+            </a>
+          </AnimateIn>
+        ) : null}
 
         {children ? (
           <AnimateIn preset="fadeUp" inView delay={0.32}>

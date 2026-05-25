@@ -1,7 +1,6 @@
 import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AnimateInGroup } from "@nebutra/ui/components";
 import { CodeBlock, MagicCard } from "@nebutra/ui/primitives";
-import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import type { Locale } from "@/i18n/routing";
 import { CAPABILITY_FOLDERS, type CapabilityFolder } from "./capability-folder-data";
@@ -9,15 +8,6 @@ import { getCodeSampleForGroup } from "./feature-code-samples";
 import { getGroupTokens } from "./feature-group-tokens";
 
 const SECTION_COPY = {
-  eyebrow: { en: "High Cohesion · Low Coupling", zh: "高内聚 · 低耦合" },
-  title: {
-    en: "Capability boundaries as composable systems.",
-    zh: "把能力边界做成可组合系统。",
-  },
-  description: {
-    en: "Each card is a real folder: one owner, one interface, one boundary — with the code you'd actually write against it.",
-    zh: "每张卡都是一个真实目录：一个 owner、一个接口、一个清晰边界，配上你真正会写的代码。",
-  },
   docs: { en: "Open docs", zh: "打开文档" },
   detail: { en: "View artifact", zh: "查看能力" },
 } as const;
@@ -125,38 +115,14 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
 }
 
 export function CapabilityFolderShowcase({ locale }: { locale: Locale }) {
-  const localeKey = toLocaleKey(locale);
   return (
     <section
       className="relative z-10 mx-auto max-w-[1400px] px-4 pb-20 sm:px-6 lg:px-8"
       id="capability-map"
     >
-      <AnimateIn preset="fadeUp" inView>
-        <div className="mb-10 max-w-3xl">
-          <p className="mb-3 font-bold text-primary text-xs uppercase tracking-[0.2em]">
-            {SECTION_COPY.eyebrow[localeKey]}
-          </p>
-          <h2 className="text-pretty font-semibold text-3xl text-foreground sm:text-4xl">
-            {SECTION_COPY.title[localeKey]}
-          </h2>
-          <p className="mt-4 max-w-2xl font-medium text-base text-muted-foreground leading-relaxed">
-            {SECTION_COPY.description[localeKey]}
-          </p>
-        </div>
-      </AnimateIn>
-
-      <AnimateInGroup stagger="fast" className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <AnimateInGroup stagger="fast" className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {CAPABILITY_FOLDERS.map((folder) => (
-          <div
-            key={folder.id}
-            className={cn(
-              folder.layout === "wide" && "lg:col-span-7",
-              folder.layout === "standard" && "lg:col-span-5",
-              folder.layout === "full" && "lg:col-span-12",
-            )}
-          >
-            <CapabilityCard folder={folder} locale={locale} />
-          </div>
+          <CapabilityCard key={folder.id} folder={folder} locale={locale} />
         ))}
       </AnimateInGroup>
     </section>

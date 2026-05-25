@@ -37,8 +37,6 @@ const COPY = {
   openDocs: { en: "Open docs", zh: "打开文档" },
   related: { en: "More in domain", zh: "同能力域" },
   explore: { en: "Explore", zh: "查看" },
-  livePreview: { en: "Live preview", zh: "可交互预览" },
-  codeOnly: { en: "Code sample", zh: "代码示例" },
   kindPackage: { en: "Package", zh: "能力包" },
   kindGroup: { en: "Group", zh: "能力组" },
   kindCapability: { en: "Capability", zh: "能力面" },
@@ -89,6 +87,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   const Showcase = resolveShowcase(entry.slug, entry.group);
   const related = getRelatedEntries(entry, 4);
   const docsHref = createPublicDocsUrl(meta.docsPath);
+  const Icon = meta.icon;
 
   const suffix = entry.kind === "package" ? COPY.package[locale] : COPY.surface[locale];
 
@@ -115,7 +114,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
       {/* SHOWCASE */}
       {Showcase ? (
-        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
+        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
           <AnimateIn preset="fadeUp" inView>
             <Showcase entry={{ ...entry, icon: undefined }} locale={locale} />
           </AnimateIn>
@@ -123,9 +122,9 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       ) : null}
 
       {/* CODE — wrapped in ShowcaseFrame so it shares panel chrome with the Showcase above */}
-      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
+      <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
         <AnimateIn preset="fadeUp" inView>
-          <ShowcaseFrame className="p-0! md:p-0! overflow-hidden">
+          <ShowcaseFrame className="border-0 p-0! md:p-0! overflow-hidden">
             <CodeBlock
               filename={sample.filename}
               language={sample.language}
@@ -141,7 +140,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
       {/* SUB-PACKAGES */}
       {entry.children.length > 0 ? (
-        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-16 sm:px-6 lg:px-8">
+        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
           <AnimateInGroup
             stagger="fast"
             className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
@@ -154,9 +153,6 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                 : locale === "zh"
                   ? `${child} — ${entry.label} 能力域中的子 package。`
                   : `${child} — sub-package inside ${entry.label}.`;
-              const childHasShowcase = childEntry
-                ? Boolean(resolveShowcase(childEntry.slug, childEntry.group))
-                : false;
               const childKind = childEntry?.kind ?? "package";
               return (
                 <Link
@@ -171,43 +167,24 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                     gradientTo={meta.auroraColors[1]}
                   >
                     <div className="flex h-full min-h-[180px] flex-col">
-                      {/* Top-row signal strip — preview badge + kind pill + arrow */}
-                      <div className="mb-4 flex items-center justify-between gap-2">
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          {childHasShowcase ? (
-                            <Badge
-                              variant="green-subtle"
-                              size="sm"
-                              className="font-mono uppercase tracking-[0.18em]"
-                            >
-                              {COPY.livePreview[locale]}
-                            </Badge>
-                          ) : (
-                            <Badge
-                              variant="outline"
-                              size="sm"
-                              className="font-mono uppercase tracking-[0.18em]"
-                            >
-                              {COPY.codeOnly[locale]}
-                            </Badge>
-                          )}
-                          <Badge
-                            variant="secondary"
-                            size="sm"
-                            className="font-mono uppercase tracking-[0.18em]"
-                          >
-                            {kindLabel(childKind, locale)}
-                          </Badge>
-                        </div>
-                        <ArrowUpRight
-                          aria-hidden="true"
-                          className="size-3.5 shrink-0 text-muted-foreground transition-all group-hover/sub:-translate-y-0.5 group-hover/sub:translate-x-0.5 group-hover/sub:text-foreground"
-                        />
-                      </div>
-                      <div className="mb-3 flex items-center gap-3">
-                        <span className="font-mono text-foreground text-sm" translate="no">
+                      {/* identity row */}
+                      <div className="mb-3 flex items-center gap-2">
+                        <span className="flex size-7 items-center justify-center rounded-[var(--radius-sm)] border border-border bg-background/60">
+                          <Icon className="size-3.5" />
+                        </span>
+                        <span className="font-mono text-foreground/85 text-xs" translate="no">
                           {child}
                         </span>
+                      </div>
+                      {/* Top-row signal — just Kind pill now */}
+                      <div className="mb-3">
+                        <Badge
+                          variant="secondary"
+                          size="sm"
+                          className="font-mono uppercase tracking-[0.18em]"
+                        >
+                          {kindLabel(childKind, locale)}
+                        </Badge>
                       </div>
                       <h3 className="font-semibold text-foreground text-lg leading-snug">
                         {childTitle}
@@ -217,6 +194,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                       </p>
                       <span className="mt-auto inline-flex items-center gap-1 pt-4 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.18em] transition-colors group-hover/sub:text-foreground">
                         {COPY.explore[locale]}
+                        <ArrowUpRight aria-hidden="true" className="size-3" />
                       </span>
                     </div>
                   </MagicCard>
@@ -229,7 +207,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
 
       {/* RELATED */}
       {related.length > 0 ? (
-        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pt-12 pb-32 sm:px-6 lg:px-8">
+        <section className="relative z-10 mx-auto max-w-[1400px] px-4 pt-12 pb-[var(--section-gap-lg)] sm:px-6 lg:px-8">
           <div className="mb-6 flex items-center justify-between border-t border-border/40 pt-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.32em]">
             <span>
               {COPY.related[locale]} · {groupLabel}

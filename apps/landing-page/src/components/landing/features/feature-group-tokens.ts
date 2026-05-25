@@ -25,13 +25,13 @@ export type FeatureGroupTokens = {
 export const FEATURE_GROUP_TOKENS: Record<string, FeatureGroupTokens> = {
   ai: {
     auroraColors: ["#9333ea", "#3b82f6", "#22d3ee", "#a855f7"],
-    ambient: "vivid",
+    ambient: "subtle",
     icon: Cpu,
     docsPath: "ai/overview",
   },
   iam: {
     auroraColors: ["#ef4444", "#f97316", "#fb7185", "#dc2626"],
-    ambient: "vivid",
+    ambient: "subtle",
     icon: Shield,
     docsPath: "concepts/permissions",
   },

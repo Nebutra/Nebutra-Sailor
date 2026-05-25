@@ -6,8 +6,16 @@ import { CapabilityFolderShowcase } from "@/components/landing/features/Capabili
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import { DEFAULT_GROUP_TOKENS } from "@/components/landing/features/feature-group-tokens";
 import { type Locale, routing } from "@/i18n/routing";
-import { createPublicDocsUrl } from "@/lib/docs-links";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+
+// Brand-gradient aurora palette for the multi-domain index hero
+// (blue → cyan → violet → cyan-accent), in contrast to the per-domain
+// detail heroes which use their group-specific tokens.
+const indexHeroTokens = {
+  ...DEFAULT_GROUP_TOKENS,
+  auroraColors: ["#0033FE", "#0BF1C3", "#8b5cf6", "#06b6d4"],
+  ambient: "subtle" as const,
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -43,14 +51,12 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
       <Navbar />
 
       <FeatureHero
-        align="center"
-        tokens={DEFAULT_GROUP_TOKENS}
+        align="left"
+        tokens={indexHeroTokens}
         eyebrow={t("hero.badge")}
         titlePrefix={t("hero.headlinePrefix")}
         titleSuffix={t("hero.headlineHighlight")}
         summary={t("hero.description")}
-        primaryCtaHref={createPublicDocsUrl(DEFAULT_GROUP_TOKENS.docsPath)}
-        primaryCtaLabel={t("sections.exploreFeature")}
       />
 
       <CapabilityFolderShowcase locale={lang as Locale} />
