@@ -12,6 +12,7 @@ const intlMiddleware = createIntlMiddleware(routing);
  * Used by both Clerk and custom auth middlewares.
  */
 const publicRoutePaths = [
+  "/",
   "/sign-in",
   "/sign-up",
   "/login/success",
@@ -21,6 +22,31 @@ const publicRoutePaths = [
   "/demo",
   "/api/webhook",
 ];
+
+function stripLocalePrefix(pathname: string): string {
+  const segments = pathname.split("/").filter(Boolean);
+  const [firstSegment, ...restSegments] = segments;
+
+  if (firstSegment && routing.locales.includes(firstSegment as (typeof routing.locales)[number])) {
+    return restSegments.length > 0 ? `/${restSegments.join("/")}` : "/";
+  }
+
+  return pathname || "/";
+}
+
+function isPublicPathname(pathname: string): boolean {
+  const normalizedPathname = stripLocalePrefix(pathname);
+
+  if (normalizedPathname === "/") {
+    return true;
+  }
+
+  return publicRoutePaths.some(
+    (publicPath) =>
+      publicPath !== "/" &&
+      (normalizedPathname === publicPath || normalizedPathname.startsWith(`${publicPath}/`)),
+  );
+}
 
 const authProvider = getConfiguredAuthProvider();
 
@@ -110,12 +136,11 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
     // Note: In production with Clerk, consider importing clerkMiddleware at the top
     // for better performance instead of dynamic import
     try {
-      const { clerkMiddleware, createRouteMatcher } = await import("@clerk/nextjs/server");
-      const clerkRoutematcher = createRouteMatcher(publicRoutePaths);
+      const { clerkMiddleware } = await import("@clerk/nextjs/server");
 
       // Create Clerk middleware handler
       const clerk = clerkMiddleware(async (auth, innerReq) => {
-        if (!clerkRoutematcher(innerReq)) {
+        if (!isPublicPathname(innerReq.nextUrl.pathname)) {
           await auth.protect();
         }
 
@@ -158,6 +183,6 @@ export const config = {
   // Exclude API routes from the proxy/middleware so they resolve directly to
   // app/api/ route handlers without any locale or CSP processing.
   matcher: [
-    "/((?!_next|api|trpc|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/((?!_next|api|trpc|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|txt|xml|webmanifest)).*)",
   ],
 };

@@ -24,7 +24,7 @@ export default function AuditError({ error, reset }: ErrorProps) {
         "An unexpected error occurred while loading the audit log. Try again, or return to the dashboard."
       }
       primaryAction={{ label: "Try again", onClick: reset }}
-      secondaryAction={{ label: "Go to dashboard", href: "/" }}
+      secondaryAction={{ label: "Go to dashboard", href: "/workspace" }}
       meta={error.digest ? { errorId: error.digest } : undefined}
     />
   );

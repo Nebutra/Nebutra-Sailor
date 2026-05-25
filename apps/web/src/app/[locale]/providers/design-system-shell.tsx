@@ -262,7 +262,7 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
     <div className="flex flex-col gap-2">
       <div className={`flex items-center ${collapsed ? "justify-center" : "justify-start px-2"}`}>
         <ViewTransitionLink
-          href="/"
+          href="/workspace"
           aria-label={webBrandLabels.homeLink}
           className="inline-flex min-w-0 items-center rounded-[var(--radius-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >

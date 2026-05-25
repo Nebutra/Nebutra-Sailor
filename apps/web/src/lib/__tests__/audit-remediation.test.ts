@@ -165,7 +165,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("keeps the dashboard overview decision-led instead of welcome-page centered", () => {
-    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/page.tsx");
+    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
     const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
@@ -198,7 +198,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("keeps onboarding scaffolding off the dashboard overview", () => {
-    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/page.tsx");
+    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
     const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
 
     expect(dashboard).not.toContain("GettingStarted");
@@ -208,7 +208,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("uses compact dashboard metric metadata instead of oversized nested cards", () => {
-    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/page.tsx");
+    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
     expect(dashboard).toContain("snapshotMeta");

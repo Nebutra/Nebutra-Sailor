@@ -35,16 +35,25 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  title: "Nebutra - SaaS Platform",
-  description: "Enterprise-grade AI-native SaaS platform",
-  robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
+  applicationName: "Nebutra",
+  title: {
+    default: "Nebutra - AI-native SaaS console",
+    template: "%s - Nebutra",
+  },
+  description:
+    "Public intelligence surface for Nebutra's AI-native SaaS platform. Sign in to activate private workspaces, chat, analytics, billing, and administration.",
+  openGraph: {
+    type: "website",
+    siteName: "Nebutra",
+    title: "Nebutra - AI-native SaaS console",
+    description:
+      "Public intelligence surface for Nebutra's AI-native SaaS platform with private services behind account access.",
+  },
+  alternates: {
+    canonical: "/",
+    languages: {
+      en: "/en",
+      zh: "/zh",
     },
   },
 };

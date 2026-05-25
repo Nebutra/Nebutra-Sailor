@@ -14,7 +14,7 @@ import { ViewTransitionLink } from "@/components/navigation/view-transition-link
 import { RecentSessions } from "@/components/onboarding/recent-sessions";
 import { getAuth, getUser } from "@/lib/auth";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
-import { CommandSkeleton, MetricsSkeleton, RecentSessionsSkeleton } from "./_dashboard-skeletons";
+import { CommandSkeleton, MetricsSkeleton, RecentSessionsSkeleton } from "../_dashboard-skeletons";
 
 const authProvider = getConfiguredAuthProvider();
 const isAuthConfigured =

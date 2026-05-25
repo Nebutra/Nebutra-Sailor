@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { CommandPaletteMount } from "@/app/[locale]/providers/command-palette-mount";
 import { AccountDialogMount } from "@/components/account/account-dialog";
 import { PlanBadge } from "@/components/billing/plan-badge";
@@ -7,6 +8,19 @@ import { OnboardingMount } from "@/components/onboarding/onboarding-mount";
 import { requireAuth } from "@/lib/auth";
 import { resolveWebProductCapabilities } from "@/lib/product-capabilities";
 import { DesignSystemShell } from "../providers/design-system-shell";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
+};
 
 export default async function AppLayout({
   children,

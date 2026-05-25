@@ -27,7 +27,7 @@ export interface DashboardNavItem {
 }
 
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
-  { href: "/", label: "Overview", icon: LayoutDashboard, group: "Product" },
+  { href: "/workspace", label: "Overview", icon: LayoutDashboard, group: "Product" },
   { href: "/analytics", label: "Analytics", icon: ChartSpline, group: "Product" },
   {
     href: "/chat",
@@ -114,10 +114,10 @@ export function buildBreadcrumbs(pathname: string) {
   const segments = stripLocalePrefix(pathname).split("/").filter(Boolean);
 
   if (segments.length === 0) {
-    return [{ href: "/", label: "Overview" }];
+    return [{ href: "/workspace", label: "Overview" }];
   }
 
-  const crumbs = [{ href: "/", label: "Overview" }];
+  const crumbs = [{ href: "/workspace", label: "Overview" }];
 
   segments.forEach((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join("/")}`;
