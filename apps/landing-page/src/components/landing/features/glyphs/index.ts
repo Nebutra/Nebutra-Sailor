@@ -6,6 +6,9 @@
  * parent group's detail page (e.g. /zh/features/integrations).
  *
  * Lookup: `getSubpackageGlyph(slug)` → component or null.
+ *
+ * Current coverage: integrations group (17 sub-packages). Other groups
+ * fall back to the generic [Icon] ${slug} identity row.
  */
 
 import { AdminToolingGlyph } from "./admin-tooling-glyph";

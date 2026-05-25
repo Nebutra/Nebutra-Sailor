@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, Database, Globe, Shield } from "@nebutra/icons";
 import { Badge, Progress } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";

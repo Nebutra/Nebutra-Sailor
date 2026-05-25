@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import type { PackageFeatureEntry } from "../package-feature-data";
+import type { SerializablePackageFeatureEntry } from "../package-feature-data";
 
 /**
  * Contract for per-package bespoke showcase components.
@@ -10,7 +10,7 @@ import type { PackageFeatureEntry } from "../package-feature-data";
  * SVG/div geometry.
  */
 export type PackageShowcaseProps = {
-  entry: PackageFeatureEntry;
+  entry: SerializablePackageFeatureEntry;
   locale: "en" | "zh";
 };
 

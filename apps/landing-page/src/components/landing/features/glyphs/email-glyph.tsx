@@ -1,3 +1,5 @@
+"use client";
+
 import { Check, Clock, Envelope } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";

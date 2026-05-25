@@ -15,6 +15,8 @@ export type PackageFeatureEntry = {
   slug: string;
 };
 
+export type SerializablePackageFeatureEntry = Omit<PackageFeatureEntry, "icon">;
+
 const GROUP_LABELS: Record<string, { en: string; zh: string }> = {
   ai: { en: "AI runtime", zh: "AI 运行时" },
   commerce: { en: "commerce", zh: "商业化" },
@@ -97,6 +99,13 @@ function flattenFeatureNodes(nodes: FileNode[], entries: PackageFeatureEntry[] =
 }
 
 export const PACKAGE_FEATURE_ENTRIES = flattenFeatureNodes(TREE_DATA);
+
+export function toSerializablePackageFeatureEntry(
+  entry: PackageFeatureEntry,
+): SerializablePackageFeatureEntry {
+  const { icon: _icon, ...serializableEntry } = entry;
+  return serializableEntry;
+}
 
 export function getPackageFeatureEntry(slug: string) {
   return PACKAGE_FEATURE_ENTRIES.find((entry) => entry.slug === slug);

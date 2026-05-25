@@ -1,3 +1,5 @@
+"use client";
+
 import { Bell, Check, Clock, Lightning, User } from "@nebutra/icons";
 import { StatusBadge, StatusDot } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";

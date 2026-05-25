@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRight, Check, Clock, RefreshCounterClockwise } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";

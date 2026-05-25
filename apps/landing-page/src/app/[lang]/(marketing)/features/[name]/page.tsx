@@ -18,6 +18,7 @@ import {
   getPackageFeatureEntry,
   getRelatedEntries,
   PACKAGE_FEATURE_ENTRIES,
+  toSerializablePackageFeatureEntry,
 } from "@/components/landing/features/package-feature-data";
 import { resolveShowcase } from "@/components/landing/features/showcases";
 import { ShowcaseFrame } from "@/components/landing/features/showcases/showcase-frame";
@@ -89,6 +90,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
   const related = getRelatedEntries(entry, 4);
   const docsHref = createPublicDocsUrl(meta.docsPath);
   const Icon = meta.icon;
+  const serializableEntry = toSerializablePackageFeatureEntry(entry);
 
   const suffix = entry.kind === "package" ? COPY.package[locale] : COPY.surface[locale];
 
@@ -117,7 +119,7 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
       {Showcase ? (
         <section className="relative z-10 mx-auto max-w-[1400px] px-4 pb-[var(--section-gap-md)] sm:px-6 lg:px-8">
           <AnimateIn preset="fadeUp" inView>
-            <Showcase entry={{ ...entry, icon: undefined }} locale={locale} />
+            <Showcase entry={serializableEntry} locale={locale} />
           </AnimateIn>
         </section>
       ) : null}
@@ -156,6 +158,9 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                   : `${child} — sub-package inside ${entry.label}.`;
               const childKind = childEntry?.kind ?? "package";
               const Glyph = getSubpackageGlyph(child);
+              const serializableChildEntry = childEntry
+                ? toSerializablePackageFeatureEntry(childEntry)
+                : null;
               return (
                 <Link
                   key={child}
@@ -169,9 +174,9 @@ export default async function FeatureDetailPage({ params }: FeatureDetailPagePro
                     gradientTo={meta.auroraColors[1]}
                   >
                     {/* Bespoke glyph hero (if a designer landed one) */}
-                    {Glyph && childEntry ? (
+                    {Glyph && serializableChildEntry ? (
                       <div className="border-b border-border/40 bg-background/40 p-4">
-                        <Glyph entry={childEntry} locale={locale} />
+                        <Glyph entry={serializableChildEntry} locale={locale} />
                       </div>
                     ) : null}
 
