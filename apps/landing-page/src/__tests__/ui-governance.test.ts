@@ -57,7 +57,11 @@ describe("landing UI governance", () => {
     expect(featureCardSource).toContain("<a");
     expect(featureCardSource).toContain("href={href}");
     expect(featuresPageSource).toContain("<CapabilityFolderShowcase");
-    expect(capabilityFolderShowcaseSource).toContain('t("sections.exploreFeature")');
+    expect(capabilityFolderShowcaseSource).toContain("SECTION_COPY");
+    expect(capabilityFolderShowcaseSource).toContain(
+      'detail: { en: "View artifact", zh: "查看能力" }',
+    );
+    expect(capabilityFolderShowcaseSource).toContain("{SECTION_COPY.detail[localeKey]}");
     expect(featureCardSource).not.toContain(">Explore feature<");
     expect(featureCardSource).not.toContain("t: any");
     expect(featureCardSource).not.toContain("FeatureTranslator");
