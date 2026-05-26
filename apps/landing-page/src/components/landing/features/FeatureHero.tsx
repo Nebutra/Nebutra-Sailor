@@ -62,7 +62,12 @@ export function FeatureHero({
       className="relative isolate mx-auto flex max-w-[1400px] flex-col px-4 pt-36 pb-20 sm:px-6 lg:px-8"
       data-align={align}
     >
-      <AuroraBackground variant={tokens.ambient} position="top" intensity={0.55} />
+      <AuroraBackground
+        variant={tokens.ambient}
+        position="top"
+        intensity={0.55}
+        className="inset-y-0 left-1/2 right-auto w-screen -translate-x-1/2"
+      />
 
       <div className={`relative flex flex-col gap-6 ${stackAlign}`}>
         {backHref && backLabel ? (
