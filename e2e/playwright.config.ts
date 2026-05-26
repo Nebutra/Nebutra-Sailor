@@ -18,6 +18,7 @@ const apiBaseUrl = process.env.API_BASE_URL ?? `http://127.0.0.1:${e2ePorts.api}
 const sleptonsBaseUrl = process.env.SLEPTONS_BASE_URL ?? `http://127.0.0.1:${e2ePorts.sleptons}`;
 const corsOrigins = [landingBaseUrl, appBaseUrl, sleptonsBaseUrl].join(",");
 const e2eHealthPath = "/api/e2e/health";
+const webServerTimeout = 240_000;
 const nextDevWatcherEnv = {
   WATCHPACK_POLLING: "true",
   CHOKIDAR_USEPOLLING: "true",
@@ -53,7 +54,7 @@ export default defineConfig({
       command: `pnpm --filter @nebutra/landing-page exec next dev --webpack --port ${e2ePorts.landing}`,
       url: `${landingBaseUrl}${e2eHealthPath}`,
       reuseExistingServer: !process.env.CI,
-      timeout: 120_000,
+      timeout: webServerTimeout,
       env: {
         ...nextDevWatcherEnv,
         SKIP_ENV_VALIDATION: "true",
@@ -65,7 +66,7 @@ export default defineConfig({
       command: "pnpm --filter @nebutra/gateway dev",
       url: apiBaseUrl,
       reuseExistingServer: !process.env.CI,
-      timeout: 120_000,
+      timeout: webServerTimeout,
       env: {
         PORT: e2ePorts.api,
         CORS_ORIGINS: corsOrigins,
@@ -82,7 +83,7 @@ export default defineConfig({
       command: `pnpm --filter @nebutra/web exec next dev --webpack --port ${e2ePorts.web}`,
       url: `${appBaseUrl}${e2eHealthPath}`,
       reuseExistingServer: !process.env.CI,
-      timeout: 120_000,
+      timeout: webServerTimeout,
       env: {
         ...nextDevWatcherEnv,
         SKIP_ENV_VALIDATION: "true",
@@ -104,7 +105,7 @@ export default defineConfig({
       command: `pnpm --filter @nebutra/sleptons exec next dev --webpack --port ${e2ePorts.sleptons}`,
       url: `${sleptonsBaseUrl}${e2eHealthPath}`,
       reuseExistingServer: !process.env.CI,
-      timeout: 120_000,
+      timeout: webServerTimeout,
       env: {
         ...nextDevWatcherEnv,
         SKIP_ENV_VALIDATION: "true",

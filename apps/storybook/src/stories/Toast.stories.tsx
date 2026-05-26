@@ -2,7 +2,7 @@ import { Button, Toaster, useToasts } from "@nebutra/ui/primitives";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof ToastStories> = {
-  title: "Primitives/Toast",
+  title: "Examples/Toast",
   component: ToastStories,
   tags: ["autodocs"],
   parameters: {

@@ -11,6 +11,10 @@ const featuresPageSource = readFileSync(
   path.join(process.cwd(), "src/app/[lang]/(marketing)/features/page.tsx"),
   "utf8",
 );
+const capabilityFolderShowcaseSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/features/CapabilityFolderShowcase.tsx"),
+  "utf8",
+);
 const useCasesSectionSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/use-cases/UseCasesSection.tsx"),
   "utf8",
@@ -52,7 +56,8 @@ describe("landing UI governance", () => {
   it("keeps feature exploration CTAs semantic and localized", () => {
     expect(featureCardSource).toContain("<a");
     expect(featureCardSource).toContain("href={href}");
-    expect(featuresPageSource).toContain('t("sections.exploreFeature")');
+    expect(featuresPageSource).toContain("<CapabilityFolderShowcase");
+    expect(capabilityFolderShowcaseSource).toContain('t("sections.exploreFeature")');
     expect(featureCardSource).not.toContain(">Explore feature<");
     expect(featureCardSource).not.toContain("t: any");
     expect(featureCardSource).not.toContain("FeatureTranslator");
