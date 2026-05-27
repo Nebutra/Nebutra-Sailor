@@ -7,7 +7,8 @@
  *
  * Environment variables:
  * - SUPABASE_URL              (required)
- * - SUPABASE_ANON_KEY         (required — anon/public key for sign-in flows)
+ * - SUPABASE_PUBLISHABLE_KEY  (required — public key for sign-in flows)
+ * - SUPABASE_ANON_KEY         (legacy alias for SUPABASE_PUBLISHABLE_KEY)
  * - SUPABASE_SERVICE_ROLE_KEY (required — admin key for server-side user ops)
  * - SUPABASE_WEBHOOK_SECRET   (optional — enables webhook signature verification)
  *
@@ -84,17 +85,26 @@ async function lazyAdminClient(url: string, serviceKey: string) {
 export function createSupabaseAuthProvider(_config: AuthConfig): AuthProvider {
   // Accept both server-only and Next.js public-prefixed env var names.
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.SUPABASE_ANON_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const publicKey =
+    process.env.SUPABASE_PUBLISHABLE_KEY ??
+    process.env.SUPABASE_ANON_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!url) throw new Error("SUPABASE_URL is required for the Supabase auth provider.");
-  if (!anonKey) throw new Error("SUPABASE_ANON_KEY is required for the Supabase auth provider.");
+  if (!publicKey)
+    throw new Error("SUPABASE_PUBLISHABLE_KEY is required for the Supabase auth provider.");
   if (!serviceKey)
     throw new Error("SUPABASE_SERVICE_ROLE_KEY is required for the Supabase auth provider.");
 
+  const supabaseUrl = url;
+  const supabasePublicKey = publicKey;
+  const supabaseServiceKey = serviceKey;
+
   let adminClient: SupabaseClient | null = null;
   async function getAdmin(): Promise<SupabaseClient> {
-    if (!adminClient) adminClient = await lazyAdminClient(url!, serviceKey!);
+    if (!adminClient) adminClient = await lazyAdminClient(supabaseUrl, supabaseServiceKey);
     return adminClient;
   }
 
@@ -178,7 +188,7 @@ export function createSupabaseAuthProvider(_config: AuthConfig): AuthProvider {
     async signIn(method: SignInMethod): Promise<SignInResult> {
       try {
         const { createClient } = await import("@supabase/supabase-js");
-        const client = createClient(url!, anonKey!);
+        const client = createClient(supabaseUrl, supabasePublicKey);
 
         switch (method.type) {
           case "email-password": {

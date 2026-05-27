@@ -15,8 +15,14 @@
  *   Plugin paths (`better-auth/plugins/*`) are loaded via the variable-path
  *   `loadOptionalPlugin` helper so Vite skips static resolution at test time.
  */
+
+import { getSystemDb } from "@nebutra/db";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { createBetterAuthProvider, loadBetterAuthOneTapPlugin } from "./better-auth";
+import {
+  createBetterAuthProvider,
+  loadBetterAuthOneTapPlugin,
+  resolveBetterAuthPrismaClient,
+} from "./better-auth";
 
 const ORIGINAL_ENV = { ...process.env };
 
@@ -88,6 +94,17 @@ describe("createBetterAuthProvider conditional social providers", () => {
     process.env.GITHUB_CLIENT_ID = "test-id";
     process.env.GITHUB_CLIENT_SECRET = "test-secret";
     expect(() => createBetterAuthProvider({ provider: "better-auth" })).not.toThrow();
+  });
+});
+
+describe("Better Auth Prisma client resolution", () => {
+  it("uses @nebutra/db getSystemDb when no legacy prisma export exists", async () => {
+    const dbModule = (await import("@nebutra/db")) as Record<string, unknown>;
+
+    expect(dbModule.prisma).toBeUndefined();
+    await expect(resolveBetterAuthPrismaClient({ provider: "better-auth" })).resolves.toBe(
+      getSystemDb(),
+    );
   });
 });
 

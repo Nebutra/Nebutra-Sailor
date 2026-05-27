@@ -127,8 +127,10 @@ export async function applyAuthSelection(targetDir: string, auth: AuthChoice): P
       targetDir,
       "# Supabase Auth\n" +
         "NEXT_PUBLIC_SUPABASE_URL=\n" +
+        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=\n" +
         "NEXT_PUBLIC_SUPABASE_ANON_KEY=\n" +
         "SUPABASE_URL=\n" +
+        "SUPABASE_PUBLISHABLE_KEY=\n" +
         "SUPABASE_ANON_KEY=\n" +
         "SUPABASE_SERVICE_ROLE_KEY=\n",
     );

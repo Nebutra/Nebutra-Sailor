@@ -15,6 +15,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().default("/sign-in"),
   NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().default("/sign-up"),
   NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().optional(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().optional(),
   NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().default("wyfqr24v"),
   NEXT_PUBLIC_SANITY_DATASET: z.string().default("production"),
@@ -79,6 +80,7 @@ describe("web env schema", () => {
     expect(result.success).toBe(true);
     expect(result.data?.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY).toBeUndefined();
     expect(result.data?.NEXT_PUBLIC_SUPABASE_URL).toBeUndefined();
+    expect(result.data?.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY).toBeUndefined();
     expect(result.data?.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY).toBeUndefined();
     expect(result.data?.NEXT_PUBLIC_SENTRY_DSN).toBeUndefined();
   });

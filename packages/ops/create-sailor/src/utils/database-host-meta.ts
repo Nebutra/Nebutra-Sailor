@@ -100,17 +100,19 @@ export const DATABASE_HOSTS: DatabaseHostMeta[] = [
       {
         name: "DATABASE_URL",
         placeholder:
-          "postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres?pgbouncer=true",
-        comment: "Supabase pooler — use for runtime queries",
+          "postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres?sslmode=require",
+        comment: "Supabase session pooler — use for runtime queries",
       },
       {
         name: "DIRECT_URL",
         placeholder:
-          "postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres",
+          "postgresql://postgres:<password>@db.<project-ref>.supabase.co:5432/postgres?sslmode=require",
         comment: "Supabase direct — use for Prisma migrations",
       },
       { name: "NEXT_PUBLIC_SUPABASE_URL", placeholder: "https://<project>.supabase.co" },
+      { name: "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", placeholder: "" },
       { name: "NEXT_PUBLIC_SUPABASE_ANON_KEY", placeholder: "" },
+      { name: "SUPABASE_PUBLISHABLE_KEY", placeholder: "" },
       { name: "SUPABASE_SERVICE_ROLE_KEY", placeholder: "" },
     ],
     docs: "https://supabase.com/docs",

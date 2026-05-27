@@ -97,11 +97,14 @@ export function SupabaseProvider({
     let mounted = true;
     let unsubscribe: (() => void) | undefined;
     const url = supabaseUrl ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const anonKey = supabaseAnonKey ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const publicKey =
+      supabaseAnonKey ??
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (!url || !anonKey) {
+    if (!url || !publicKey) {
       console.warn(
-        "Supabase: NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are required.",
+        "Supabase: NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are required.",
       );
       setContext(createUnauthenticatedAuthContext("supabase", true));
       return;
@@ -110,7 +113,7 @@ export function SupabaseProvider({
     import("@supabase/supabase-js")
       .then((mod) => {
         if (!mounted) return;
-        const supabase = (mod as unknown as SupabaseClientModule).createClient(url, anonKey);
+        const supabase = (mod as unknown as SupabaseClientModule).createClient(url, publicKey);
         setClient(supabase);
         supabase.auth.getSession().then(({ data }) => {
           if (mounted) setContext(mapSession(data.session));

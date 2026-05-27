@@ -33,16 +33,22 @@ const nextAuthSchema = z
     });
   });
 
-const supabaseSchema = z.object({
-  AUTH_PROVIDER: z.literal("supabase"),
-  CLERK_SECRET_KEY: z.string().optional(),
-  CLERK_WEBHOOK_SECRET: z.string().optional(),
-  BETTER_AUTH_SECRET: z.string().optional(),
-  SUPABASE_URL: z.string().url(),
-  SUPABASE_ANON_KEY: z.string().min(1),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
-  SUPABASE_WEBHOOK_SECRET: z.string().optional(),
-});
+const supabaseSchema = z
+  .object({
+    AUTH_PROVIDER: z.literal("supabase"),
+    CLERK_SECRET_KEY: z.string().optional(),
+    CLERK_WEBHOOK_SECRET: z.string().optional(),
+    BETTER_AUTH_SECRET: z.string().optional(),
+    SUPABASE_URL: z.string().url(),
+    SUPABASE_PUBLISHABLE_KEY: z.string().min(1).optional(),
+    SUPABASE_ANON_KEY: z.string().min(1).optional(),
+    SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+    SUPABASE_WEBHOOK_SECRET: z.string().optional(),
+  })
+  .refine((value) => value.SUPABASE_PUBLISHABLE_KEY || value.SUPABASE_ANON_KEY, {
+    message: "SUPABASE_PUBLISHABLE_KEY or SUPABASE_ANON_KEY is required",
+    path: ["SUPABASE_PUBLISHABLE_KEY"],
+  });
 
 const authConfigUnion = z.union([clerkSchema, betterAuthSchema, nextAuthSchema, supabaseSchema]);
 
@@ -165,6 +171,10 @@ export function validateEnv(): Env {
       CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? "sk_test_placeholder",
       AUTH_SECRET: process.env.AUTH_SECRET ?? "dev_nextauth_secret_placeholder",
       SUPABASE_URL: process.env.SUPABASE_URL ?? "http://localhost:54321",
+      SUPABASE_PUBLISHABLE_KEY:
+        process.env.SUPABASE_PUBLISHABLE_KEY ??
+        process.env.SUPABASE_ANON_KEY ??
+        "dev_anon_placeholder",
       SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? "dev_anon_placeholder",
       SUPABASE_SERVICE_ROLE_KEY:
         process.env.SUPABASE_SERVICE_ROLE_KEY ?? "dev_service_role_placeholder",

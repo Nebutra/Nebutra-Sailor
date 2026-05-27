@@ -3,6 +3,8 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "prisma/config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
 
 export default defineConfig({
   earlyAccess: true,
@@ -11,9 +13,11 @@ export default defineConfig({
   // Using `??""` keeps Prisma's runtime client path (which only reads the env)
   // unaffected when DATABASE_URL is absent (e.g. during `prisma generate` in CI).
   datasource: {
-    url: process.env.DATABASE_URL ?? "",
+    url: runtimeDatabaseUrl,
   },
   migrate: {
-    url: process.env.DATABASE_URL,
+    // Supabase/Neon production deployments use a pooled DATABASE_URL for app
+    // traffic and a direct URL for DDL. Fall back for local Docker Postgres.
+    url: migrationDatabaseUrl,
   },
 });

@@ -122,15 +122,23 @@ async function handleAuthStatus(options: AuthCommandOptions) {
   } else {
     status.keys = {
       NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "not set",
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: maskKey(
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+        "publishable",
+      ),
       NEXT_PUBLIC_SUPABASE_ANON_KEY: maskKey(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, "anon"),
       SUPABASE_URL: process.env.SUPABASE_URL || "not set",
+      SUPABASE_PUBLISHABLE_KEY: maskKey(process.env.SUPABASE_PUBLISHABLE_KEY, "publishable"),
       SUPABASE_ANON_KEY: maskKey(process.env.SUPABASE_ANON_KEY, "anon"),
       SUPABASE_SERVICE_ROLE_KEY: maskKey(process.env.SUPABASE_SERVICE_ROLE_KEY, "service role"),
       SUPABASE_WEBHOOK_SECRET: maskKey(process.env.SUPABASE_WEBHOOK_SECRET, "webhook"),
     };
     status.configured = !!(
       (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) &&
-      (process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) &&
+      (process.env.SUPABASE_PUBLISHABLE_KEY ||
+        process.env.SUPABASE_ANON_KEY ||
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) &&
       process.env.SUPABASE_SERVICE_ROLE_KEY
     );
   }
@@ -220,8 +228,10 @@ async function handleAuthSetup(provider: string, options: AuthCommandOptions) {
     logger.info('   AUTH_PROVIDER="supabase"');
     logger.info('   NEXT_PUBLIC_AUTH_PROVIDER="supabase"');
     logger.info('   NEXT_PUBLIC_SUPABASE_URL="https://xxx.supabase.co"');
+    logger.info('   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="sb_publishable_..."');
     logger.info('   NEXT_PUBLIC_SUPABASE_ANON_KEY="..."');
     logger.info('   SUPABASE_URL="https://xxx.supabase.co"');
+    logger.info('   SUPABASE_PUBLISHABLE_KEY="sb_publishable_..."');
     logger.info('   SUPABASE_ANON_KEY="..."');
     logger.info('   SUPABASE_SERVICE_ROLE_KEY="..."');
   }
@@ -276,8 +286,13 @@ async function handleAuthKeys(options: AuthCommandOptions) {
     },
     supabase: {
       NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "not set",
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: maskKey(
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+        "publishable",
+      ),
       NEXT_PUBLIC_SUPABASE_ANON_KEY: maskKey(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY, "anon"),
       SUPABASE_URL: process.env.SUPABASE_URL || "not set",
+      SUPABASE_PUBLISHABLE_KEY: maskKey(process.env.SUPABASE_PUBLISHABLE_KEY, "publishable"),
       SUPABASE_ANON_KEY: maskKey(process.env.SUPABASE_ANON_KEY, "anon"),
       SUPABASE_SERVICE_ROLE_KEY: maskKey(process.env.SUPABASE_SERVICE_ROLE_KEY, "service role"),
     },
@@ -304,7 +319,12 @@ async function handleAuthKeys(options: AuthCommandOptions) {
       },
       supabase: {
         url: !!(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL),
-        anonKey: !!(process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+        publishableKey: !!(
+          process.env.SUPABASE_PUBLISHABLE_KEY ||
+          process.env.SUPABASE_ANON_KEY ||
+          process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        ),
         serviceRole: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
       },
     },
@@ -317,7 +337,7 @@ async function handleAuthKeys(options: AuthCommandOptions) {
     const nextAuthConfigured = output.configured.nextAuth.secret && output.configured.nextAuth.url;
     const supabaseConfigured =
       output.configured.supabase.url &&
-      output.configured.supabase.anonKey &&
+      output.configured.supabase.publishableKey &&
       output.configured.supabase.serviceRole;
 
     if (!clerkConfigured && !betterAuthConfigured && !nextAuthConfigured && !supabaseConfigured) {
