@@ -1,6 +1,6 @@
 import { ArrowRight, BookOpen, Calendar } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import Image from "next/image";
@@ -10,6 +10,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { type BlogPostWithSource, getAllPosts, toBlogLanguage } from "@/lib/blog";
 import { getFallbackBlogCover } from "@/lib/blog-covers";
@@ -40,6 +41,34 @@ function getAuthorName(author: BlogPostWithSource["author"]): string | null {
   return typeof author === "string" ? author : (author.name ?? null);
 }
 
+function getAuthorAvatarUrl(author: BlogPostWithSource["author"]): string | null {
+  if (!author || typeof author === "string" || !author.image) return null;
+  return getImageUrl(author.image as Parameters<typeof getImageUrl>[0], {
+    width: 96,
+    height: 96,
+    format: "webp",
+  });
+}
+
+function getPostCover(post: BlogPostWithSource, width: number, height: number) {
+  if (post.mainImage) {
+    return {
+      src: getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
+        width,
+        height,
+        format: "webp",
+      }),
+      alt: post.title,
+    };
+  }
+
+  const fallbackCover = getFallbackBlogCover(post);
+  return {
+    src: fallbackCover.src,
+    alt: fallbackCover.alt,
+  };
+}
+
 function localizedBlogHref(lang: string, slug?: string): string {
   const prefix = lang === routing.defaultLocale ? "" : `/${lang}`;
   return slug ? `${prefix}/blog/${slug}` : `${prefix}/blog`;
@@ -55,7 +84,12 @@ async function getCachedAllPosts(language: ReturnType<typeof toBlogLanguage>) {
 function extractBodyText(post: BlogPostWithSource): string {
   const bodyText =
     post.body
-      ?.flatMap((block) => block.children?.map((child) => child.text ?? "") ?? [])
+      ?.flatMap((block) => {
+        if (block._type === "table") {
+          return block.rows?.flatMap((row) => row.cells ?? []) ?? [];
+        }
+        return block.children?.map((child) => child.text ?? "") ?? [];
+      })
       .join(" ") ?? "";
   return `${post.title} ${post.excerpt} ${bodyText}`.trim();
 }
@@ -75,6 +109,49 @@ function formatPostDate(post: BlogPostWithSource, isZh: boolean): string | null 
         day: "numeric",
       })
     : null;
+}
+
+function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean): BlogIndexPost {
+  const cover = getPostCover(post, 840, 520);
+
+  return {
+    id: post.id,
+    title: post.title,
+    excerpt: post.excerpt,
+    href: localizedBlogHref(lang, post.slug),
+    tags: post.tags,
+    dateLabel: formatPostDate(post, isZh),
+    readTime: estimateReadTime(post, isZh),
+    authorName: getAuthorName(post.author),
+    authorAvatarUrl: getAuthorAvatarUrl(post.author),
+    imageUrl: cover.src,
+    imageAlt: cover.alt,
+  };
+}
+
+function AuthorByline({ post }: { post: BlogPostWithSource }) {
+  const authorName = getAuthorName(post.author);
+  const authorAvatarUrl = getAuthorAvatarUrl(post.author);
+  if (!authorName) return null;
+
+  return (
+    <span className="inline-flex items-center gap-2">
+      {authorAvatarUrl ? (
+        <Image
+          src={authorAvatarUrl}
+          alt={`${authorName} avatar`}
+          width={24}
+          height={24}
+          className="size-6 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] object-cover"
+        />
+      ) : (
+        <span className="inline-flex size-6 items-center justify-center rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[10px] font-semibold text-[var(--neutral-11)]">
+          {authorName.slice(0, 2).toUpperCase()}
+        </span>
+      )}
+      <span>{authorName}</span>
+    </span>
+  );
 }
 
 function ArticleVisual({
@@ -112,16 +189,9 @@ function ArticleVisual({
 
 function FeaturedPostCard({ post, lang }: { post: BlogPostWithSource; lang: string }) {
   const isZh = lang === "zh";
-  const imageUrl = post.mainImage
-    ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
-        width: 1200,
-        height: 720,
-        format: "webp",
-      })
-    : null;
+  const imageUrl = post.mainImage ? getPostCover(post, 1200, 720).src : null;
 
   const date = formatPostDate(post, isZh);
-  const authorName = getAuthorName(post.author);
 
   return (
     <Link
@@ -156,52 +226,12 @@ function FeaturedPostCard({ post, lang }: { post: BlogPostWithSource; lang: stri
                 {date}
               </span>
             )}
-            {authorName && <span>{authorName}</span>}
+            <AuthorByline post={post} />
           </div>
           <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--blue-9)]">
             {isZh ? "阅读全文" : "Read article"}
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function PostCard({ post, lang }: { post: BlogPostWithSource; lang: string }) {
-  const isZh = lang === "zh";
-  const imageUrl = post.mainImage
-    ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
-        width: 720,
-        height: 420,
-        format: "webp",
-      })
-    : null;
-  const date = formatPostDate(post, isZh);
-
-  return (
-    <Link
-      href={localizedBlogHref(lang, post.slug)}
-      className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-shadow hover:shadow-sm"
-    >
-      <ArticleVisual post={post} imageUrl={imageUrl} />
-      <div className="flex flex-1 flex-col p-5">
-        <h2 className="text-base font-semibold text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
-          {post.title}
-        </h2>
-        {post.excerpt && (
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[var(--neutral-11)]">
-            {post.excerpt}
-          </p>
-        )}
-        <div className="mt-auto flex items-center gap-3 pt-4 text-xs text-[var(--neutral-10)]">
-          {date && (
-            <span className="flex items-center gap-1">
-              <Calendar className="size-3.5" aria-hidden />
-              {date}
-            </span>
-          )}
-          <span>{estimateReadTime(post, isZh)}</span>
         </div>
       </div>
     </Link>
@@ -301,16 +331,12 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
             )}
 
             {archivePosts.length > 0 && (
-              <AnimateInGroup
-                stagger="fast"
-                className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-              >
-                {archivePosts.map((post) => (
-                  <AnimateIn key={post.id} preset="fadeUp" inView>
-                    <PostCard post={post} lang={lang} />
-                  </AnimateIn>
-                ))}
-              </AnimateInGroup>
+              <AnimateIn preset="fadeUp" inView>
+                <BlogIndexExplorer
+                  posts={archivePosts.map((post) => toBlogIndexPost(post, lang, isZh))}
+                  isZh={isZh}
+                />
+              </AnimateIn>
             )}
           </div>
         )}
