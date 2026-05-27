@@ -183,6 +183,11 @@ load_runtime_env() {
   fi
 
   if [ "$app" = "web" ]; then
+    if [ ! -f "$app_root/.env" ]; then
+      bootstrap_web_runtime_env "$app_root"
+      source_runtime_env_file "$app_root/.env"
+    fi
+
     local missing=()
     [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
     [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
