@@ -65,6 +65,96 @@ source_runtime_env_file() {
   set +a
 }
 
+generate_runtime_secret() {
+  if command -v openssl >/dev/null 2>&1; then
+    openssl rand -hex 32
+  elif command -v python3 >/dev/null 2>&1; then
+    python3 - <<'PY'
+import secrets
+print(secrets.token_hex(32))
+PY
+  else
+    echo "$(date -u +%s%N)-runtime-secret"
+  fi
+}
+
+append_env_assignment() {
+  local env_file="$1" key="$2" value="$3"
+  [ -n "$value" ] || return 0
+  printf '%s=' "$key" >> "$env_file"
+  printf '%q' "$value" >> "$env_file"
+  printf '\n' >> "$env_file"
+}
+
+ensure_env_assignment() {
+  local env_file="$1" key="$2" value="$3"
+  [ -n "$value" ] || return 0
+  if [ -f "$env_file" ] && grep -qE "^${key}=" "$env_file"; then
+    return 0
+  fi
+  append_env_assignment "$env_file" "$key" "$value"
+}
+
+bootstrap_web_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  local api_env="$DEPLOY_ROOT/api/.env"
+
+  if [ -f "$api_env" ]; then
+    source_runtime_env_file "$api_env"
+  fi
+
+  if [ -z "${DATABASE_URL:-}" ]; then
+    DATABASE_URL="$(discover_local_postgres_url || true)"
+    export DATABASE_URL
+  fi
+
+  AUTH_PROVIDER="${AUTH_PROVIDER:-better-auth}"
+  NEXT_PUBLIC_AUTH_PROVIDER="${NEXT_PUBLIC_AUTH_PROVIDER:-$AUTH_PROVIDER}"
+  BETTER_AUTH_SECRET="${BETTER_AUTH_SECRET:-$(generate_runtime_secret)}"
+  BETTER_AUTH_URL="${BETTER_AUTH_URL:-https://app.nebutra.com}"
+  NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://app.nebutra.com}"
+  NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL:-https://app.nebutra.com}"
+  NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-https://api.nebutra.com}"
+  NEXT_PUBLIC_API_GATEWAY_URL="${NEXT_PUBLIC_API_GATEWAY_URL:-https://api.nebutra.com}"
+  NEBUTRA_LANDING_ORIGIN="${NEBUTRA_LANDING_ORIGIN:-https://nebutra.com}"
+  NEBUTRA_SESSION_HINT_DOMAIN="${NEBUTRA_SESSION_HINT_DOMAIN:-.nebutra.com}"
+
+  export AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_SECRET BETTER_AUTH_URL
+  export NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL
+  export NEBUTRA_LANDING_ORIGIN NEBUTRA_SESSION_HINT_DOMAIN
+
+  local missing=()
+  [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+  [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
+  if [ "${AUTH_PROVIDER:-}" = "better-auth" ]; then
+    [ -n "${BETTER_AUTH_SECRET:-}" ] || missing+=("BETTER_AUTH_SECRET")
+  fi
+  if [ "${#missing[@]}" -gt 0 ]; then
+    fail "web runtime env missing required keys after bootstrap: ${missing[*]}"
+  fi
+
+  mkdir -p "$app_root"
+  touch "$env_file"
+  chmod 600 "$env_file"
+  ensure_env_assignment "$env_file" NODE_ENV "production"
+  ensure_env_assignment "$env_file" PORT "3000"
+  ensure_env_assignment "$env_file" HOSTNAME "127.0.0.1"
+  ensure_env_assignment "$env_file" DATABASE_URL "$DATABASE_URL"
+  ensure_env_assignment "$env_file" AUTH_PROVIDER "$AUTH_PROVIDER"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_AUTH_PROVIDER "$NEXT_PUBLIC_AUTH_PROVIDER"
+  ensure_env_assignment "$env_file" BETTER_AUTH_SECRET "$BETTER_AUTH_SECRET"
+  ensure_env_assignment "$env_file" BETTER_AUTH_URL "$BETTER_AUTH_URL"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_SITE_URL "$NEXT_PUBLIC_SITE_URL"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_APP_URL "$NEXT_PUBLIC_APP_URL"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_API_URL "$NEXT_PUBLIC_API_URL"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_API_GATEWAY_URL "$NEXT_PUBLIC_API_GATEWAY_URL"
+  ensure_env_assignment "$env_file" NEBUTRA_LANDING_ORIGIN "$NEBUTRA_LANDING_ORIGIN"
+  ensure_env_assignment "$env_file" NEBUTRA_SESSION_HINT_DOMAIN "$NEBUTRA_SESSION_HINT_DOMAIN"
+  chmod 600 "$env_file"
+  log "ensured web runtime env: $env_file"
+}
+
 load_runtime_env() {
   local app="$1" release="$2" pm2_name="$3"
   local app_root="$DEPLOY_ROOT/$app"
@@ -90,6 +180,28 @@ load_runtime_env() {
     log "loaded runtime env for $app: $loaded"
   else
     log "no runtime env files found for $app"
+  fi
+
+  if [ "$app" = "web" ]; then
+    local missing=()
+    [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+    [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
+    if [ "${AUTH_PROVIDER:-better-auth}" = "better-auth" ]; then
+      [ -n "${BETTER_AUTH_SECRET:-}" ] || missing+=("BETTER_AUTH_SECRET")
+    fi
+    if [ "${#missing[@]}" -gt 0 ]; then
+      load_existing_pm2_env "$pm2_name"
+      missing=()
+      [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+      [ -n "${AUTH_PROVIDER:-}" ] || missing+=("AUTH_PROVIDER")
+      if [ "${AUTH_PROVIDER:-better-auth}" = "better-auth" ]; then
+        [ -n "${BETTER_AUTH_SECRET:-}" ] || missing+=("BETTER_AUTH_SECRET")
+      fi
+      if [ "${#missing[@]}" -gt 0 ]; then
+        bootstrap_web_runtime_env "$app_root"
+        source_runtime_env_file "$app_root/.env"
+      fi
+    fi
   fi
 
   if [ "$app" = "api" ]; then
@@ -471,7 +583,12 @@ for p in procs:
   fi
 }
 
-for app in $APPS; do
+for app in api landing web design-docs sailor-docs; do
+  case " $APPS " in
+    *" $app "*) : ;;
+    *) continue ;;
+  esac
+
   case "$app" in
     landing)     deploy_one landing     landing-page ;;
     web)         deploy_one web         web          ;;

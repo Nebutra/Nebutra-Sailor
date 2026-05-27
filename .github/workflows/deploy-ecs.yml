@@ -551,6 +551,38 @@ jobs:
             done
           done
 
+          if [ "${{ needs.detect-changes.outputs.api }}" = "true" ]; then
+            health="$(curl -fsS --max-time 15 https://api.nebutra.com/api/misc/health)"
+            echo "$health" | grep -q '"database":{"status":"up"' || {
+              echo "::error::API health did not report database.status=up: $health"
+              exit 1
+            }
+            echo "✅ api database dependency -> up"
+          fi
+
+          if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then
+            declare -A web_targets=(
+              [web-health]="https://app.nebutra.com/api/e2e/health"
+              [web-auth-session]="https://app.nebutra.com/api/auth/get-session"
+              [web-public-profile]="https://app.nebutra.com/api/me/public"
+            )
+            declare -A expected_codes=(
+              [web-health]="200"
+              [web-auth-session]="200"
+              [web-public-profile]="401"
+            )
+            for name in "${!web_targets[@]}"; do
+              url="${web_targets[$name]}"
+              expected="${expected_codes[$name]}"
+              code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 15 "$url" || echo 000)
+              if [ "$code" != "$expected" ]; then
+                echo "::error::Smoke test failed for $name at $url (expected $expected, got $code)"
+                exit 1
+              fi
+              echo "✅ $name $url -> $code"
+            done
+          fi
+
       - name: Cleanup SSH
         if: always()
         run: rm -rf ~/.ssh
