@@ -121,3 +121,28 @@ function DensityRow({ label, value }: { label: string; value: string }) {
 `RadioGroup` 使用 `<fieldset>` 和 `<legend>` 表达组名。Standalone `Radio` 必须有 `id`、`aria-label` 或 `aria-labelledby`。
 
 不要替换掉 focus ring。键盘用户需要在方向键切换时看到当前目标。
+
+## 可访问性
+
+- `RadioGroup` 渲染原生 fieldset 和 legend 来表达组名。
+- 方向键在选项之间移动；Space 选择当前聚焦项。
+- Standalone `Radio` 必须提供 `id`、`aria-label` 或 `aria-labelledby`。
+- 禁用选项在原因不明显时必须提供 `disabledReason`。
+
+## 设计契约
+
+- RadioGroup 用于从少量可见选项中必须选择一个的场景。
+- 选项文案保持平行，原因文本放入 `description` 或 `disabledReason`。
+- 组 label 命名这个决策，不写“请选择”类指令。
+
+## 真实产品示例
+
+- Monthly 与 yearly 计费周期选择。
+- 部署区域数量较少时的区域选择。
+- 数据保留策略选择，并展示 enterprise-only 禁用选项。
+
+## 反模式
+
+- 不要用 RadioGroup 表达独立 toggle；使用 CheckboxGroup 或 Switch。
+- 不要把很长的 radio 列表藏进 menu；使用 Select 或 Combobox。
+- 不要让必选 RadioGroup 缺少 label。

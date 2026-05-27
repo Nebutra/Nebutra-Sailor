@@ -1,10 +1,12 @@
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/page";
 import type { MDXComponents } from "mdx/types";
 import { notFound } from "next/navigation";
+import { DeprecatedBanner } from "@/components/deprecated-banner";
 import { Feedback } from "@/components/feedback/client";
 import { FigmaLink } from "@/components/figma-link";
+import { MaturityBadge } from "@/components/maturity-badge";
 import { LLMCopyButton, ViewOptions } from "@/components/page-actions";
-import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
+import { StatusBadge } from "@/components/status-badge";
 import { onPageFeedbackAction } from "@/lib/github";
 import { getRegistryDocsMetadata, type RegistryDocsMetadata } from "@/lib/registry";
 import { getPageImage, source } from "@/lib/source";
@@ -21,7 +23,8 @@ export default async function Page({ params }: PageProps) {
   const page = source.getPage(slug, lang);
   if (!page) notFound();
 
-  const MDX = (page.data as { body: React.ComponentType<{ components: MDXComponents }> }).body;
+  const MdxContent = (page.data as { body: React.ComponentType<{ components: MDXComponents }> })
+    .body;
   const docsMetadata = resolveDocsMetadata(slug, page.data);
 
   return (
@@ -43,9 +46,10 @@ export default async function Page({ params }: PageProps) {
     >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
-      {docsMetadata?.status && (
-        <div className="mt-2 mb-4 gap-2 flex items-center">
-          <StatusBadge status={docsMetadata.status} />
+      {(docsMetadata?.status || docsMetadata?.maturity) && (
+        <div className="mt-2 mb-4 flex items-center gap-2">
+          {docsMetadata.status && <StatusBadge status={docsMetadata.status} />}
+          {docsMetadata.maturity && <MaturityBadge maturity={docsMetadata.maturity} />}
         </div>
       )}
       {docsMetadata?.status === "deprecated" && <DeprecatedBanner />}
@@ -60,7 +64,7 @@ export default async function Page({ params }: PageProps) {
         )}
       </div>
       <DocsBody>
-        <MDX components={mdxComponents} />
+        <MdxContent components={mdxComponents} />
       </DocsBody>
       <Feedback onSendAction={onPageFeedbackAction} />
     </DocsPage>
@@ -70,15 +74,18 @@ export default async function Page({ params }: PageProps) {
 function resolveDocsMetadata(
   slug: string[] | undefined,
   data: unknown,
-): Pick<RegistryDocsMetadata, "status"> | undefined {
+): Partial<Pick<RegistryDocsMetadata, "maturity" | "status">> | undefined {
   const registryName = slug?.at(-1);
   if (registryName) {
     const registryMetadata = getRegistryDocsMetadata(registryName);
-    if (registryMetadata) return registryMetadata;
+    if (registryMetadata) {
+      return { maturity: registryMetadata.maturity, status: registryMetadata.status };
+    }
   }
 
   const status = (data as { status?: RegistryDocsMetadata["status"] }).status;
-  return status ? { status } : undefined;
+  const maturity = (data as { maturity?: RegistryDocsMetadata["maturity"] }).maturity;
+  return status || maturity ? { maturity, status } : undefined;
 }
 
 export async function generateStaticParams() {

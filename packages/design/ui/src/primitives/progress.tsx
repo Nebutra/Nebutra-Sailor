@@ -225,8 +225,9 @@ const Progress = function Progress({
             style={thresholdColor ? { backgroundColor: thresholdColor } : undefined}
             render={
               <motion.div
-                initial={{ transform: "translateX(-100%)" }}
-                animate={{ transform: `translateX(-${100 - pct}%)` }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: pct / 100 }}
+                style={{ transformOrigin: "left center" }}
                 transition={{
                   duration: animated ? motionDurations.cinematic / 1000 : 0,
                   ease: easings.easeInOut,

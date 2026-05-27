@@ -58,7 +58,7 @@ All native `<textarea>` props are supported, plus:
 
 <ComponentPreview name="textarea-disabled-demo" className="max-w-[400px]" />
 
-## Design Principles
+## Design Contract
 
 - Use Textarea for content that naturally wraps: release notes, descriptions, comments, and incident summaries.
 - Keep the field visually flat: semantic border, background, text, muted placeholder, and tokenized focus ring only.
@@ -81,3 +81,15 @@ Textarea consumes component geometry from `textareaTokens` and semantic runtime 
 | `textareaTokens.focusRingWidth` | Tokenized focus ring width shared by focus and error focus states. |
 | `textareaTokens.fieldGap` | Space between label, control, and field messages. |
 | `--background`, `--foreground`, `--input`, `--ring`, `--destructive` | Semantic color contract. |
+
+## Real Product Examples
+
+- Release notes or changelog summaries.
+- Incident postmortem notes with helper text and max-length validation.
+- Comments and descriptions inside dense forms.
+
+## Anti-patterns
+
+- Do not use Textarea for a single scalar value such as a name, URL, or email.
+- Do not grow the textarea until primary actions move below the fold.
+- Do not rely on placeholder instructions instead of a visible label.

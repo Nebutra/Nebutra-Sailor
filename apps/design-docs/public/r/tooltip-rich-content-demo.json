@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/tooltip-rich-content-demo.tsx",
-      "content": "\"use client\";\nimport { Button, GeistTooltip as Tooltip } from \"@nebutra/ui/primitives\";\n\nexport function TooltipRichContentDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip\n        text={\n          <>\n            The <b>Evil Rabbit</b> Jumped over the <i>Fence</i>.\n          </>\n        }\n      >\n        <Button variant=\"outline\">Rich Content</Button>\n      </Tooltip>\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\nimport { Button, Tooltip, TooltipContent, TooltipTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TooltipRichContentDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip>\n        <TooltipTrigger asChild>\n          <Button variant=\"outline\">Rich content</Button>\n        </TooltipTrigger>\n        <TooltipContent>\n          <>\n            <b>Pro plan</b> includes <i>90-day audit retention</i>.\n          </>\n        </TooltipContent>\n      </Tooltip>\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

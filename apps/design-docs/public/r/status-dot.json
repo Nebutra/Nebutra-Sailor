@@ -18,6 +18,7 @@
     "nebutraLayer": "dashboard",
     "docs": {
       "status": "experimental",
+      "maturity": "experimental",
       "layer": "primitive",
       "package": "@nebutra/ui",
       "source": "packages/design/ui/src/primitives/status-dot.tsx",

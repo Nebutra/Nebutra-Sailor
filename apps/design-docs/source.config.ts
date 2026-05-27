@@ -19,6 +19,7 @@ export const docs = defineDocs({
   docs: {
     schema: frontmatterSchema.extend({
       status: z.enum(["stable", "beta", "deprecated", "experimental"]).optional(),
+      maturity: z.enum(["experimental", "beta", "stable", "canonical"]).optional(),
       figma: z.string().optional(),
       layer: z
         .enum(["foundation", "primitive", "composition", "pattern", "registry", "api", "guide"])

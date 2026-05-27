@@ -14,7 +14,22 @@ import { ComponentPreview } from "@/components/component-preview";
 <ComponentPreview name="tooltip-demo" className="min-h-[150px] flex justify-center items-center"  />
 
 
+## Overview
+
+`Tooltip` uses the canonical Base UI parts API: `Tooltip`, `TooltipTrigger`, `TooltipContent`, and optional `TooltipProvider`. The legacy `GeistTooltip text="..."` wrapper is compatibility-only and should not appear in new docs or product examples.
+
 ## Usage
+
+```tsx
+import { Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
+
+<Tooltip>
+  <TooltipTrigger asChild>
+    <button aria-label="Add item">...</button>
+  </TooltipTrigger>
+  <TooltipContent>Creates a new workspace shortcut</TooltipContent>
+</Tooltip>
+```
 
 <ComponentPreview name="tooltip-icon-button-demo" className="min-h-[150px] flex justify-center items-center"  />
 
@@ -73,3 +88,15 @@ import { ComponentPreview } from "@/components/component-preview";
 - Tooltip content explains a constraint, scope, or limit; it must not repeat the visible label.
 - Keep tooltip content non-interactive. Put actions in a Popover, ContextCard, Dialog, or inline control instead.
 - Icon-only triggers must carry their own `aria-label`; tooltip copy adds context but never becomes the control name.
+
+## Real Product Examples
+
+- Icon-only toolbar actions such as add, copy, refresh, or expand.
+- Status labels that need one sentence of context, such as retention limits or permission scope.
+- Dense table metadata where the visible label is intentionally short.
+
+## Anti-patterns
+
+- Do not use tooltips for required instructions, errors, or anything touch users must complete.
+- Do not put buttons, links, inputs, or menus inside tooltip content; use Popover or Dialog.
+- Do not use the legacy `GeistTooltip` wrapper in new examples.

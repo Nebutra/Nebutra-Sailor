@@ -15,9 +15,11 @@
     "smoke/**/*.ts",
     "golden/**/*.ts",
     "sleptons/**/*.ts",
+    "visual/**/*.ts",
     "fixtures/**/*.ts",
     "playwright.config.ts",
     "playwright.golden.config.ts",
-    "playwright.sleptons.config.ts"
+    "playwright.sleptons.config.ts",
+    "playwright.visual.config.ts"
   ]
 }

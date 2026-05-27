@@ -107,3 +107,21 @@ Manual activation is the default: Left/Right moves focus, Enter/Space activates.
 Give `TabsList` or array-mode `Tabs` a stable `aria-label` when there is no visible heading above it.
 
 Keep visible focus rings. Do not suppress focus styling on the active tab.
+
+## Design Contract
+
+- Tabs switch same-scope sibling panels; they are not route navigation.
+- Keep tab rows compact and horizontally scrollable only as a fallback.
+- Use manual activation unless every panel is already cheap to render.
+
+## Real Product Examples
+
+- Project Overview / Logs / Settings panels.
+- Billing Monthly / Yearly view switch with the same surrounding content.
+- Documentation preview/code/install surfaces.
+
+## Anti-patterns
+
+- Do not use Tabs for primary site navigation.
+- Do not place more than seven top-level tabs in a single row.
+- Do not hide destructive actions inside inactive tab panels without persistent context.

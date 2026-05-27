@@ -187,3 +187,21 @@ const [open, setOpen] = useState(false)
 - Focus is trapped inside the dialog while open.
 - Pressing `Escape` closes the dialog.
 - Focus returns to the trigger element on close.
+
+## Design Contract
+
+- Use Dialog for blocking decisions, destructive confirmation, and compact focused forms.
+- Keep the title and description explicit; the close button is an escape hatch, not the primary action.
+- Keep the surface small enough to understand without scrolling. Use Sheet for long forms.
+
+## Real Product Examples
+
+- Delete API key confirmation with a destructive final action.
+- Invite member form that must complete before returning to the table.
+- Billing plan change confirmation where the user must acknowledge the consequence.
+
+## Anti-patterns
+
+- Do not use Dialog for navigation or passive notifications.
+- Do not mount two modal dialogs at the same time.
+- Do not place large data tables or long settings pages inside Dialog.

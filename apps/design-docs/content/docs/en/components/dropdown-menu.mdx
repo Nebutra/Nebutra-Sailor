@@ -81,3 +81,15 @@ You can nest `DropdownMenuSub` within `DropdownMenuContent` to create cascading 
 - Use `DropdownMenu` for compact secondary actions. Primary destructive or form-submitting actions should stay visible.
 - Menu rows must be commands, toggles, or navigation targets. Do not place form fields or rich interactive controls inside menu content.
 - Submenus are for stable taxonomies only; if users need to compare options, use a Dialog, Popover, or page-level picker instead.
+
+## Real Product Examples
+
+- Row action menus in data tables.
+- View-density toggles using checkbox menu items.
+- Stable nested navigation for account or workspace scopes.
+
+## Anti-patterns
+
+- Do not use DropdownMenu as a replacement for Select in forms.
+- Do not put text inputs, date pickers, or multi-step flows inside menu content.
+- Do not use submenus when labels are dynamic or user-generated.

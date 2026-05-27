@@ -3,6 +3,7 @@
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
 /* -------------------------------------------------------------------------- *\
@@ -95,6 +96,7 @@ TooltipTrigger.displayName = "TooltipTrigger";
 
 const TooltipContent = ({
   className,
+  style,
   side = "top",
   align = "center",
   sideOffset = 4,
@@ -113,14 +115,12 @@ const TooltipContent = ({
       align={align}
       sideOffset={sideOffset}
       alignOffset={alignOffset}
-      className="z-50"
+      style={{ zIndex: overlayZIndex.tooltip }}
     >
       <BaseTooltip.Popup
         ref={ref}
-        className={cn(
-          "z-50 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md px-3 py-1.5 text-sm text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-200 data-starting-style:animate-in data-starting-style:fade-in-0 data-starting-style:zoom-in-95 data-ending-style:animate-out data-ending-style:fade-out-0 data-ending-style:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-          className,
-        )}
+        className={cn(overlayClassNames.tooltipSurface, className)}
+        style={{ zIndex: overlayZIndex.tooltip, ...style }}
         {...props}
       />
     </BaseTooltip.Positioner>

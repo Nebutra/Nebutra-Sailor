@@ -3,6 +3,7 @@
 import { Dialog as BaseDialog } from "@base-ui/react/dialog";
 import { Cross as X } from "@nebutra/icons";
 import * as React from "react";
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
 // We keep these standard export names so the rest of the application using Nebutra UI doesn't break.
@@ -61,6 +62,7 @@ DialogClose.displayName = "DialogClose";
 
 const DialogOverlay = ({
   className,
+  style,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseDialog.Backdrop> & {
@@ -68,10 +70,8 @@ const DialogOverlay = ({
 }) => (
   <BaseDialog.Backdrop
     ref={ref}
-    className={cn(
-      "fixed inset-0 z-50 bg-black/40 backdrop-blur-sm data-ending-style:animate-out data-starting-style:animate-in data-ending-style:fade-out-0 data-starting-style:fade-in-0 duration-300 transition-[opacity,display]",
-      className,
-    )}
+    className={cn(overlayClassNames.backdrop, className)}
+    style={{ zIndex: overlayZIndex.backdrop, ...style }}
     {...props}
   />
 );
@@ -80,6 +80,7 @@ DialogOverlay.displayName = "DialogOverlay";
 const DialogContent = ({
   className,
   children,
+  style,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseDialog.Popup> & {
@@ -89,14 +90,12 @@ const DialogContent = ({
     <DialogOverlay />
     <BaseDialog.Popup
       ref={ref}
-      className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-border/50 bg-background/90 p-6 shadow-2xl backdrop-blur-xl duration-300 transition-[opacity,transform,display] data-starting-style:animate-in data-ending-style:animate-out data-ending-style:fade-out-0 data-starting-style:fade-in-0 data-ending-style:zoom-out-95 data-starting-style:zoom-in-95 sm:rounded-2xl",
-        className,
-      )}
+      className={cn(overlayClassNames.modalSurface, className)}
+      style={{ zIndex: overlayZIndex.modal, ...style }}
       {...props}
     >
       {children}
-      <DialogClose className="absolute right-4 top-4 rounded-[var(--radius-sm)] opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none data-[open]:bg-accent data-[open]:text-muted-foreground">
+      <DialogClose className={overlayClassNames.closeButton}>
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogClose>

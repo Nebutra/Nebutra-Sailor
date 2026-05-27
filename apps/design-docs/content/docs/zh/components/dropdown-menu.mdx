@@ -81,3 +81,15 @@ import {
 - `DropdownMenu` 用于紧凑的次级动作。主要破坏性动作或提交动作应保持可见。
 - 菜单行只能是命令、切换项或导航目标，不要把表单字段或复杂交互控件塞进 menu content。
 - Submenu 只用于稳定分类；如果用户需要比较选项，改用 Dialog、Popover 或页面级 picker。
+
+## 真实产品示例
+
+- 数据表格行内的次级动作菜单。
+- 使用 checkbox menu item 控制视图密度。
+- 账号或工作区范围内的稳定嵌套导航。
+
+## 反模式
+
+- 不要把 DropdownMenu 当作表单里的 Select。
+- 不要在 menu content 内放文本输入、日期选择器或多步骤流程。
+- 当标签来自动态或用户生成内容时，不要使用 submenu。

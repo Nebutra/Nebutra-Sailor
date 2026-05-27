@@ -31,6 +31,14 @@ const heroInstallPillSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/HeroInstallPill.tsx"),
   "utf8",
 );
+const navbarSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/Navbar.tsx"),
+  "utf8",
+);
+const desktopNavSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/navbar/DesktopNav.tsx"),
+  "utf8",
+);
 const mobileDrawerSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/navbar/MobileDrawer.tsx"),
   "utf8",
@@ -99,6 +107,16 @@ describe("landing UI governance", () => {
     expect(themeSwitcherSource).toContain("size-11");
     expect(newsletterFormSource).toContain("min-h-11");
     expect(newsletterFormSource).toContain('type="submit"');
+  });
+
+  it("keeps the marketing header visible until desktop navigation takes over", () => {
+    expect(desktopNavSource).toContain("hidden lg:flex");
+    expect(navbarSource).toContain("max-lg:bg-[var(--neutral-1)]/90");
+    expect(navbarSource).toContain("max-lg:border-[var(--neutral-6)]");
+    expect(navbarSource).toContain('className="flex items-center gap-1 lg:hidden"');
+    expect(mobileDrawerSource).toContain('className="lg:hidden flex items-center"');
+    expect(navbarSource).not.toContain('className="flex items-center gap-1 md:hidden"');
+    expect(mobileDrawerSource).not.toContain('className="md:hidden flex items-center"');
   });
 
   it("uses mobile-specific section skeleton heights for lazy landing content", () => {

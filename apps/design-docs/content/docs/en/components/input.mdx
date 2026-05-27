@@ -124,7 +124,7 @@ Use `revealable` on `type="password"` when the field needs a visibility toggle. 
 | `wrapperClassName` | `string` | - | Applies to the control wrapper when affixes are present. |
 | `fieldClassName` | `string` | - | Applies to the label/helper/error wrapper. |
 
-## Design Principles
+## Design Contract
 
 - Labels are Title Case nouns: Project Name, Domain, Environment Variable Name.
 - Placeholders show example values, never instructions.
@@ -145,3 +145,15 @@ Use `revealable` on `type="password"` when the field needs a visibility toggle. 
 ## Tokens
 
 `Input` consumes `inputTokens` for size, radius, padding, affix offsets, control sizes, icon sizes, and focus ring width. Runtime colors use semantic tokens: `background`, `foreground`, `input`, `ring`, `muted-foreground`, and `destructive`.
+
+## Real Product Examples
+
+- Workspace name fields with helper text and blur validation.
+- Search inputs with a prefix icon, clear button, and keyboard shortcut hint.
+- Password inputs with a reveal control and server-side error text.
+
+## Anti-patterns
+
+- Do not use Input for multi-line content. Use Textarea.
+- Do not put actionable controls in both suffix and clear/reveal slots at the same time.
+- Do not validate only through color; provide `error` text linked by `aria-describedby`.

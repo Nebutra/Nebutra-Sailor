@@ -22,6 +22,16 @@ const scanRoots = [
   path.join(REPO_ROOT, "packages", "design", "ui", "src", "primitives"),
   path.join(REPO_ROOT, "packages", "design", "ui", "src", "components"),
   path.join(REPO_ROOT, "packages", "design", "ui", "src", "layout"),
+  path.join(
+    REPO_ROOT,
+    "apps",
+    "landing-page",
+    "src",
+    "components",
+    "landing",
+    "features",
+    "showcases",
+  ),
 ];
 
 const ignoredSegments = new Set([
@@ -49,13 +59,56 @@ const hardRules = [
   },
 ];
 
-const advisoryRules = [
+const ratchetRules = [
   {
-    id: "transition-all",
+    id: "motion-transition-all",
     pattern: /\btransition-all\b/gu,
+    ceiling: 0,
     message: "Prefer explicit transition properties so motion remains tokenizable and predictable.",
   },
+  {
+    id: "motion-raw-duration",
+    pattern: /\bduration-(?:75|100|150|200|300|500|700|1000)\b|\bduration-\[[^\]]+\]/gu,
+    ceiling: 117,
+    message: "Promote repeated timing values to motion tokens instead of raw Tailwind durations.",
+  },
+  {
+    id: "surface-large-shadow",
+    pattern: /\bshadow-(?:md|lg|xl|2xl|\[[^\]]+\])\b/gu,
+    ceiling: 86,
+    message:
+      "Use component elevation tokens; large shadows quickly produce default SaaS card chrome.",
+  },
+  {
+    id: "surface-large-radius",
+    pattern: /\brounded-(?:xl|2xl|3xl)\b/gu,
+    ceiling: 143,
+    message: "Use radius tokens with restrained corners for dense product surfaces.",
+  },
+  {
+    id: "primitive-tailwind-color",
+    pattern:
+      /\b(?:bg|text|border|ring|from|to|via)-(?:slate|zinc|gray|neutral|red|green|yellow|purple|indigo|amber|emerald|blue|cyan)-\d{2,3}(?:\/\d+)?\b/gu,
+    ceiling: 931,
+    message: "Use semantic/component tokens instead of primitive Tailwind palette classes.",
+  },
+  {
+    id: "primitive-css-var",
+    pattern: /var\(--(?:neutral|blue|cyan)-\d{1,2}\)/gu,
+    ceiling: 268,
+    message:
+      "Docs/components should consume semantic or component tokens; direct functional scales must not spread.",
+  },
+  {
+    id: "media-image-fill",
+    pattern: /<Image\b[\s\S]*?\bfill\b[\s\S]*?\/?>/gu,
+    ceiling: 6,
+    message:
+      "Use a dedicated relative media frame for Image fill so assets cannot escape layout bounds.",
+  },
 ];
+
+const advisoryRules = [];
 
 const rawHexRule = {
   id: "raw-hex-color",
@@ -170,6 +223,7 @@ function scanRule(rule, file, source) {
 
 const files = scanRoots.flatMap(collectFiles).sort();
 const hardFindings = [];
+const ratchetFindings = [];
 const advisoryFindings = [];
 const acceptedRawHexFindings = [];
 
@@ -183,6 +237,10 @@ for (const file of files) {
 
   for (const rule of advisoryRules) {
     advisoryFindings.push(...scanRule(rule, file, source).map((finding) => ({ ...finding, rule })));
+  }
+
+  for (const rule of ratchetRules) {
+    ratchetFindings.push(...scanRule(rule, file, source).map((finding) => ({ ...finding, rule })));
   }
 
   const rawHexReason = acceptedRawHexSources[relativeFile];
@@ -206,6 +264,33 @@ if (hardFindings.length > 0) {
   process.exit(1);
 }
 
+const ratchetGrouped = new Map();
+for (const finding of ratchetFindings) {
+  const current = ratchetGrouped.get(finding.rule.id) ?? { rule: finding.rule, findings: [] };
+  current.findings.push(finding);
+  ratchetGrouped.set(finding.rule.id, current);
+}
+
+const ratchetFailures = [...ratchetGrouped.values()].filter(
+  ({ rule, findings }) => findings.length > rule.ceiling,
+);
+
+if (ratchetFailures.length > 0) {
+  process.stderr.write("[design-docs:ui-quality] ratchet failures\n");
+  for (const { rule, findings } of ratchetFailures) {
+    process.stderr.write(
+      `${rule.id}: ${findings.length} exceeds ceiling ${rule.ceiling} — ${rule.message}\n`,
+    );
+    for (const finding of findings.slice(0, 20)) {
+      process.stderr.write(`  ${relative(finding.file)}:${finding.line} ${finding.token}\n`);
+    }
+    if (findings.length > 20) {
+      process.stderr.write(`  ... ${findings.length - 20} more\n`);
+    }
+  }
+  process.exit(1);
+}
+
 if (advisoryFindings.length > 0) {
   const grouped = new Map();
   for (const finding of advisoryFindings) {
@@ -213,6 +298,13 @@ if (advisoryFindings.length > 0) {
   }
   const summary = [...grouped.entries()].map(([ruleId, count]) => `${ruleId}: ${count}`).join(", ");
   process.stderr.write(`[design-docs:ui-quality] advisory debt still present (${summary})\n`);
+}
+
+if (ratchetFindings.length > 0) {
+  const summary = [...ratchetGrouped.values()]
+    .map(({ rule, findings }) => `${rule.id}: ${findings.length}/${rule.ceiling}`)
+    .join(", ");
+  process.stderr.write(`[design-docs:ui-quality] ratchet ceilings held (${summary})\n`);
 }
 
 if (acceptedRawHexFindings.length > 0) {
@@ -225,5 +317,5 @@ if (acceptedRawHexFindings.length > 0) {
 }
 
 process.stdout.write(
-  `[design-docs:ui-quality] OK hard interaction-state rules passed (${files.length} files scanned)\n`,
+  `[design-docs:ui-quality] OK hard UI-system rules passed (${files.length} files scanned)\n`,
 );

@@ -12,9 +12,143 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/avatar.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Primary action primitive with intent, size, shape, loading, prefix/suffix, and link variants.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/button.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Single-line form control with labels, helper/error text, clear button, affixes, shortcuts, and password reveal.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/input.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Multi-line text input with tokenized density, helper/error association, and focus-visible-only chrome.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/textarea.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Short-list select primitive with native and compound listbox paths sharing one trigger contract.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/select.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Native checkbox control with checked, unchecked, disabled, and indeterminate states.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/checkbox-group.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Native radio-group fieldset with labelled options, descriptions, disabled reasons, and controlled/uncontrolled value.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/radio-group.tsx",
+          "substrate": "native",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Base UI tabs primitive with tokenized density, indicators, activation modes, badges, and overflow handling.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/tabs.tsx",
           "substrate": "mixed",
           "registry": true,
           "lastVerified": "2026-05-21"
@@ -30,6 +164,7 @@
         "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/bento-grid.tsx",
@@ -48,6 +183,7 @@
         "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/pricing-card.tsx",
@@ -66,6 +202,7 @@
         "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/feature-card.tsx",
@@ -84,6 +221,7 @@
         "nebutraLayer": "animation",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/animate-in.tsx",
@@ -102,6 +240,7 @@
         "nebutraLayer": "animation",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/magic-card.tsx",
@@ -120,6 +259,7 @@
         "nebutraLayer": "dataviz",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/globe.tsx",
@@ -138,6 +278,7 @@
         "nebutraLayer": "dataviz",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/chart.tsx",
@@ -156,6 +297,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/command-menu.tsx",
@@ -174,6 +316,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/empty-state.tsx",
@@ -192,6 +335,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/feedback.tsx",
@@ -210,6 +354,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/show-more.tsx",
@@ -228,6 +373,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/table.tsx",
@@ -246,6 +392,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/toaster.tsx",
@@ -264,6 +411,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/theme-toggle.tsx",
@@ -282,6 +430,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/kpi-card.tsx",
@@ -300,6 +449,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/metric-card.tsx",
@@ -318,6 +468,7 @@
         "nebutraLayer": "animation",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/text-shimmer.tsx",
@@ -336,6 +487,7 @@
         "nebutraLayer": "animation",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/loading-dots.tsx",
@@ -354,6 +506,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/edit-tool.tsx",
@@ -372,6 +525,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/question-tool.tsx",
@@ -390,6 +544,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/mcp-tool.tsx",
@@ -408,6 +563,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/todo-tool.tsx",
@@ -426,6 +582,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/search-tool.tsx",
@@ -444,6 +601,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/subagent-tool.tsx",
@@ -462,6 +620,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/file-attachment.tsx",
@@ -480,6 +639,7 @@
         "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/expandable-gallery.tsx",
@@ -498,6 +658,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/tooltip.tsx",
@@ -516,9 +677,29 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/accordion.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Base UI dialog primitive with tokenized backdrop, modal surface, close affordance, focus trap, and labelled content.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/dialog.tsx",
           "substrate": "mixed",
           "registry": true,
           "lastVerified": "2026-05-21"
@@ -534,9 +715,29 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/dropdown-menu.tsx",
+          "substrate": "mixed",
+          "registry": true,
+          "lastVerified": "2026-05-21"
+        }
+      }
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Anchored Base UI popover primitive for contextual, non-blocking surfaces with shared overlay tokens.",
+      "meta": {
+        "nebutraLayer": "business",
+        "docs": {
+          "status": "stable",
+          "maturity": "canonical",
+          "layer": "primitive",
+          "package": "@nebutra/ui",
+          "source": "packages/design/ui/src/primitives/popover.tsx",
           "substrate": "mixed",
           "registry": true,
           "lastVerified": "2026-05-21"
@@ -552,6 +753,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/context-card.tsx",
@@ -570,6 +772,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/relative-time-card.tsx",
@@ -588,6 +791,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/project-banner.tsx",
@@ -606,6 +810,7 @@
         "nebutraLayer": "marketing",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/browser-mockup.tsx",
@@ -624,6 +829,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/middle-truncate.tsx",
@@ -642,6 +848,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "beta",
+          "maturity": "beta",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/choicebox.tsx",
@@ -660,6 +867,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/code-block.tsx",
@@ -678,6 +886,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/collapse.tsx",
@@ -696,6 +905,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/description.tsx",
@@ -714,6 +924,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/entity.tsx",
@@ -732,6 +943,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/material.tsx",
@@ -750,6 +962,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/menu.tsx",
@@ -768,6 +981,7 @@
         "nebutraLayer": "business",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/modal.tsx",
@@ -786,6 +1000,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/progress.tsx",
@@ -804,6 +1019,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/skeleton.tsx",
@@ -822,6 +1038,7 @@
         "nebutraLayer": "dashboard",
         "docs": {
           "status": "experimental",
+          "maturity": "experimental",
           "layer": "primitive",
           "package": "@nebutra/ui",
           "source": "packages/design/ui/src/primitives/status-dot.tsx",
@@ -840,6 +1057,7 @@
         "nebutraLayer": "decoration",
         "docs": {
           "status": "stable",
+          "maturity": "canonical",
           "layer": "foundation",
           "package": "@nebutra/tokens",
           "source": "packages/design/tokens/src/index.ts",

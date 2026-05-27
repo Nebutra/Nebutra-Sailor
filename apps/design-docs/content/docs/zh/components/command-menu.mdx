@@ -173,3 +173,15 @@ useEffect(() => {
 - 搜索通过 cmdk 实现实时过滤。
 - `CommandMenu.Results` 通过 `aria-live="polite"` 播报结果数量变化。
 - 没有关闭按钮 — 命令面板通常依赖 `Escape`、点击外部区域和选择具体操作条目作为退出路径。
+
+## 真实产品示例
+
+- 通过 `Cmd+K` / `Ctrl+K` 打开的全局产品搜索。
+- Workspace switcher，默认状态展示最近工作区。
+- AI 工具启动器，每个命令都有稳定 `value` 以支持过滤和 telemetry。
+
+## 反模式
+
+- 不要把 CommandMenu 当作局部表格筛选器；inline 场景使用 Command 或 Combobox。
+- 不要把破坏性操作混进全局导航，除非后面还有二次确认。
+- 不要让 `Cmd+K` 同时绑定 CommandMenu 和当前聚焦的页面内搜索输入框。

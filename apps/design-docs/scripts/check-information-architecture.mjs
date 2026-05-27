@@ -23,6 +23,7 @@ const LANGS = ["en", "zh"];
 const LOCALIZED_FRONTMATTER_KEYS = new Set(["title", "description"]);
 const REGISTRY_OWNED_FRONTMATTER_KEYS = [
   "status",
+  "maturity",
   "layer",
   "package",
   "source",
@@ -33,10 +34,27 @@ const REGISTRY_OWNED_FRONTMATTER_KEYS = [
 ];
 const DOCS_METADATA_ENUMS = {
   status: new Set(["stable", "beta", "deprecated", "experimental"]),
+  maturity: new Set(["experimental", "beta", "stable", "canonical"]),
   layer: new Set(["foundation", "primitive", "composition", "pattern", "registry", "api", "guide"]),
   package: new Set(["@nebutra/ui", "@nebutra/tokens"]),
   substrate: new Set(["native", "custom", "mixed"]),
 };
+
+const criticalComponentDocTemplateSlugs = [
+  "button",
+  "checkbox",
+  "command-menu",
+  "dialog",
+  "dropdown-menu",
+  "input",
+  "menu",
+  "popover",
+  "radio-group",
+  "select",
+  "tabs",
+  "textarea",
+  "tooltip",
+];
 
 const rootNavigationContract = {
   en: [
@@ -449,6 +467,29 @@ function assertRegistryDocs() {
   }
 }
 
+function assertRegistryMaturityContracts() {
+  const registry = readJson(path.join(ROOT, "public", "registry.json"));
+  const allowedMaturityByStatus = {
+    stable: new Set(["stable", "canonical"]),
+    beta: new Set(["beta"]),
+    experimental: new Set(["experimental"]),
+    deprecated: new Set(["experimental"]),
+  };
+
+  for (const item of registry.items) {
+    const status = item.meta?.docs?.status;
+    const maturity = item.meta?.docs?.maturity;
+    if (!status || !maturity) continue;
+
+    const allowed = allowedMaturityByStatus[status];
+    if (allowed?.has(maturity)) continue;
+
+    fail(
+      `registry item "${item.name}" has inconsistent docs maturity: status=${status}, maturity=${maturity}.`,
+    );
+  }
+}
+
 function assertStructuredFrontmatterContracts() {
   const registry = readJson(path.join(ROOT, "public", "registry.json"));
   const registryItems = new Set(registry.items.map((item) => item.name));
@@ -490,6 +531,7 @@ function assertRegistryDocTemplateContracts() {
   const registry = readJson(path.join(ROOT, "public", "registry.json"));
   const requiredRegistryMetadataKeys = [
     "status",
+    "maturity",
     "layer",
     "package",
     "source",
@@ -540,6 +582,37 @@ function assertRegistryDocTemplateContracts() {
 
     if (missing.length > 0) {
       fail(`${relative(docs.file)} registry docs template is incomplete: ${missing.join(", ")}.`);
+    }
+  }
+}
+
+function assertCriticalComponentExamplesAndAntiPatterns() {
+  const requiredHeadings = {
+    en: [
+      { label: "Real Product Examples", pattern: /^##\s+Real Product Examples\b/m },
+      { label: "Anti-patterns", pattern: /^##\s+Anti-patterns\b/m },
+    ],
+    zh: [
+      { label: "真实产品示例", pattern: /^##\s+真实产品示例\s*$/m },
+      { label: "反模式", pattern: /^##\s+反模式\s*$/m },
+    ],
+  };
+
+  for (const slug of criticalComponentDocTemplateSlugs) {
+    for (const lang of LANGS) {
+      const file = path.join(DOCS_DIR, lang, "components", `${slug}.mdx`);
+      if (!fs.existsSync(file)) {
+        fail(`${lang}/components/${slug}.mdx is required for critical primitive governance.`);
+        continue;
+      }
+
+      const source = fs.readFileSync(file, "utf8");
+      for (const heading of requiredHeadings[lang]) {
+        if (hasHeading(source, heading.pattern)) continue;
+        fail(
+          `${relative(file)} is missing "${heading.label}". Critical component docs must document real usage and anti-patterns.`,
+        );
+      }
     }
   }
 }
@@ -783,8 +856,10 @@ for (const section of SECTIONS) {
 
 assertPreviewRegistry();
 assertRegistryDocs();
+assertRegistryMaturityContracts();
 assertStructuredFrontmatterContracts();
 assertRegistryDocTemplateContracts();
+assertCriticalComponentExamplesAndAntiPatterns();
 assertNoStaleSubstrateCopy();
 assertBrandTokenTruth();
 assertNoPreviewEscapeHatchCopy();

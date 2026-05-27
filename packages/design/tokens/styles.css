@@ -105,10 +105,12 @@
   --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
   --brand-accent: #0bf1c3; /** Brand accent — 云毓青 */
   --brand-tertiary: #8b5cf6;
-  --brand-gradient: linear-gradient(135deg, #254bfa 0%, #057963 100%); /** UI brand gradient — usage-adjusted from the locked VI blue/cyan anchors to reduce saturation and preserve white-text contrast. */
-  --brand-gradient-reverse: linear-gradient(135deg, #057963 0%, #254bfa 100%);
-  --brand-gradient-vertical: linear-gradient(180deg, #254bfa 0%, #057963 100%);
-  --brand-gradient-radial: radial-gradient(circle, #057963 0%, #254bfa 100%);
+  --brand-gradient-start: #2f5bff; /** Product action gradient start. Brighter than the locked VI blue while keeping white text contrast above WCAG AA. */
+  --brand-gradient-end: #047c9a; /** Product action gradient end. Cyan-blue instead of green so compact CTAs stay crisp and luminous. */
+  --brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%); /** UI brand gradient for product actions — cleaner blue-to-cyan, calibrated for white-text contrast on compact controls. */
+  --brand-gradient-reverse: linear-gradient(135deg, #047c9a 0%, #2f5bff 100%);
+  --brand-gradient-vertical: linear-gradient(180deg, #2f5bff 0%, #047c9a 100%);
+  --brand-gradient-radial: radial-gradient(circle, #047c9a 0%, #2f5bff 100%);
   --brand-gradient-logo: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient. */
   --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
   --status-danger: #ef4444;
@@ -375,10 +377,12 @@
   --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
   --brand-accent: #1af7c8; /** Dark-mode brand accent — visible against dark surfaces (uses --cyan-9 = nebutra-cyan-400). */
   --brand-tertiary: #8b5cf6;
-  --brand-gradient: linear-gradient(135deg, #254bfa 0%, #057963 100%); /** UI brand gradient — usage-adjusted from the locked VI blue/cyan anchors to reduce saturation and preserve white-text contrast. */
-  --brand-gradient-reverse: linear-gradient(135deg, #057963 0%, #254bfa 100%);
-  --brand-gradient-vertical: linear-gradient(180deg, #254bfa 0%, #057963 100%);
-  --brand-gradient-radial: radial-gradient(circle, #057963 0%, #254bfa 100%);
+  --brand-gradient-start: #2f5bff; /** Product action gradient start. Brighter than the locked VI blue while keeping white text contrast above WCAG AA. */
+  --brand-gradient-end: #047c9a; /** Product action gradient end. Cyan-blue instead of green so compact CTAs stay crisp and luminous. */
+  --brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%); /** UI brand gradient for product actions — cleaner blue-to-cyan, calibrated for white-text contrast on compact controls. */
+  --brand-gradient-reverse: linear-gradient(135deg, #047c9a 0%, #2f5bff 100%);
+  --brand-gradient-vertical: linear-gradient(180deg, #2f5bff 0%, #047c9a 100%);
+  --brand-gradient-radial: radial-gradient(circle, #047c9a 0%, #2f5bff 100%);
   --brand-gradient-logo: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient. */
   --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
   --status-danger: #ef4444;

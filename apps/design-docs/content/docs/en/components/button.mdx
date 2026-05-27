@@ -127,3 +127,27 @@ description: Interactive click target with eight visual variants, five size opti
     },
   }}
 />
+
+## Accessibility
+
+- Use a native `<button>` unless `ButtonLink` or `asChild` is intentionally rendering navigation.
+- Loading buttons set busy visuals but should keep an accessible label through their children.
+- Icon-only buttons must provide `aria-label`.
+
+## Design Contract
+
+- Use one primary button per decision area.
+- Use `destructive` only for irreversible or high-risk actions.
+- Prefer `prefix` / `suffix` icons over custom inline layout.
+
+## Real Product Examples
+
+- Primary submit action in a billing form.
+- Secondary toolbar action with a leading icon.
+- Icon-only copy or refresh action with an accessible label.
+
+## Anti-patterns
+
+- Do not use `link` variant for destructive or form-submitting actions.
+- Do not place two visually primary buttons in the same action group.
+- Do not use `className` to invent one-off sizes.

@@ -16,6 +16,7 @@ export { inputTokens } from "./input";
 export { messageContentTokens } from "./message-content";
 export { type MultiSelectWidth, multiSelectTokens } from "./multi-select";
 export { type NoteSize, type NoteTone, noteSizes, noteTokens, noteTones } from "./note";
+export { overlayClassNames, overlayTokens, overlayZIndex } from "./overlay";
 export { paginationTokens } from "./pagination";
 export { type PhoneChrome, phoneChromes, phoneTokens } from "./phone";
 export { type RadioOrientation, radioOrientations, radioTokens } from "./radio";

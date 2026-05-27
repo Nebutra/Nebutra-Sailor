@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/tooltip-demo.tsx",
-      "content": "\"use client\";\nimport { Button, GeistTooltip as Tooltip } from \"@nebutra/ui/primitives\";\n\nexport function TooltipDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip text=\"The Evil Rabbit Jumped over the Fence\">\n        <Button variant=\"outline\">Hover me</Button>\n      </Tooltip>\n    </div>\n  );\n}\n",
+      "content": "\"use client\";\nimport { Button, Tooltip, TooltipContent, TooltipTrigger } from \"@nebutra/ui/primitives\";\n\nexport function TooltipDemo() {\n  return (\n    <div className=\"p-8 flex items-center justify-center\">\n      <Tooltip>\n        <TooltipTrigger asChild>\n          <Button variant=\"outline\">Hover me</Button>\n        </TooltipTrigger>\n        <TooltipContent>Available to admins and billing owners</TooltipContent>\n      </Tooltip>\n    </div>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

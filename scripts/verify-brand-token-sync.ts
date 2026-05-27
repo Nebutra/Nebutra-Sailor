@@ -68,12 +68,76 @@ interface DtcgCore {
     cn: DtcgLeaf;
   };
 }
+interface DtcgSemantic {
+  brand: {
+    gradient: {
+      start: DtcgLeaf;
+      end: DtcgLeaf;
+      primary: DtcgLeaf;
+    };
+  };
+}
 
 const core = readJson<DtcgCore>("packages/design/design-tokens/tokens/core.json");
+const semantic = readJson<DtcgSemantic>("packages/design/design-tokens/tokens/semantic.json");
 
 const tokensCss = read("packages/design/tokens/styles.css");
 const themesCss = read("packages/design/theme/themes.css");
 const primitiveTs = read("packages/design/ui/src/tokens/primitive.ts");
+
+function hexToRgb(hex: string): [number, number, number] {
+  const match = /^#?([0-9a-f]{6})$/iu.exec(hex.trim());
+  if (!match) throw new Error(`Expected 6-digit hex color, got "${hex}"`);
+  const value = match[1];
+  if (!value) throw new Error(`Expected 6-digit hex color, got "${hex}"`);
+  return [
+    Number.parseInt(value.slice(0, 2), 16),
+    Number.parseInt(value.slice(2, 4), 16),
+    Number.parseInt(value.slice(4, 6), 16),
+  ];
+}
+
+function srgbToLinear(channel: number): number {
+  const normalized = channel / 255;
+  return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+}
+
+function relativeLuminance(hex: string): number {
+  const [r, g, b] = hexToRgb(hex).map(srgbToLinear);
+  return 0.2126 * (r ?? 0) + 0.7152 * (g ?? 0) + 0.0722 * (b ?? 0);
+}
+
+function contrastRatio(foreground: string, background: string): number {
+  const fg = relativeLuminance(foreground);
+  const bg = relativeLuminance(background);
+  const lighter = Math.max(fg, bg);
+  const darker = Math.min(fg, bg);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function rgbToHsl(hex: string): { hue: number; lightness: number } {
+  const [rRaw, gRaw, bRaw] = hexToRgb(hex);
+  const r = rRaw / 255;
+  const g = gRaw / 255;
+  const b = bRaw / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+  const lightness = ((max + min) / 2) * 100;
+
+  if (delta === 0) return { hue: 0, lightness };
+
+  let hue = 0;
+  if (max === r) hue = ((g - b) / delta) % 6;
+  else if (max === g) hue = (b - r) / delta + 2;
+  else hue = (r - g) / delta + 4;
+
+  return { hue: (hue * 60 + 360) % 360, lightness };
+}
+
+function extractHexStops(gradient: string): string[] {
+  return [...gradient.matchAll(/#[0-9a-f]{6}\b/giu)].map((match) => match[0].toLowerCase());
+}
 
 process.stdout.write("Verifying brand token sync against @nebutra/design-tokens SSOT...\n\n");
 
@@ -235,7 +299,78 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
   }
 }
 
-// ─── 8. P3 wide-gamut overrides + oklch overrides present ───────────────────
+// ─── 8. Brand action gradient — contrast-safe and visually clean ────────────
+{
+  const actionGradient = semantic.brand.gradient.primary.$value.toLowerCase();
+  const stops = extractHexStops(actionGradient);
+  if (stops.length < 2) {
+    fail(
+      "semantic.brand.gradient.primary",
+      `Expected at least two explicit hex stops, got: ${semantic.brand.gradient.primary.$value}`,
+    );
+  }
+
+  const start = semantic.brand.gradient.start.$value.toLowerCase();
+  const end = semantic.brand.gradient.end.$value.toLowerCase();
+  const firstStop = stops[0];
+  const finalStop = stops.at(-1);
+
+  if (firstStop !== start || finalStop !== end) {
+    fail(
+      "semantic.brand.gradient start/end",
+      `primary gradient stops ${firstStop ?? "missing"} → ${finalStop ?? "missing"} must match start/end tokens ${start} → ${end}`,
+    );
+  } else {
+    ok(`semantic.brand.gradient start/end === ${start} → ${end}`);
+  }
+
+  for (const stop of stops) {
+    const ratio = contrastRatio(stop, "#ffffff");
+    if (ratio < 4.5) {
+      fail(
+        `semantic.brand.gradient stop ${stop}`,
+        `White text contrast is ${ratio.toFixed(2)}:1; compact CTA stops must stay ≥ 4.5:1`,
+      );
+    }
+  }
+  if (stops.length > 0) {
+    ok("semantic.brand.gradient: every stop preserves white-text contrast ≥ 4.5:1");
+  }
+
+  const endTone = rgbToHsl(end);
+  if (endTone.hue < 185 || endTone.hue > 205) {
+    fail(
+      "semantic.brand.gradient.end hue",
+      `Expected a cyan-blue end stop (185–205deg), got ${endTone.hue.toFixed(1)}deg for ${end}`,
+    );
+  } else {
+    ok(`semantic.brand.gradient.end hue is cyan-blue (${endTone.hue.toFixed(1)}deg)`);
+  }
+
+  if (endTone.lightness < 30) {
+    fail(
+      "semantic.brand.gradient.end lightness",
+      `End stop ${end} is too dark (${endTone.lightness.toFixed(1)}%); action gradients must not collapse into muddy emerald.`,
+    );
+  } else {
+    ok(`semantic.brand.gradient.end lightness is usable (${endTone.lightness.toFixed(1)}%)`);
+  }
+
+  if (!tokensCss.toLowerCase().includes(actionGradient)) {
+    fail("tokens/styles.css --brand-gradient", "runtime CSS must contain the DTCG action gradient");
+  } else {
+    ok("tokens/styles.css: --brand-gradient mirrors DTCG action gradient");
+  }
+
+  if (tokensCss.toLowerCase().includes("linear-gradient(135deg, #254bfa 0%, #057963 100%)")) {
+    fail(
+      "tokens/styles.css --brand-gradient",
+      "Old dark green action gradient is still present as a direct UI gradient",
+    );
+  }
+}
+
+// ─── 9. P3 wide-gamut overrides + oklch overrides present ───────────────────
 {
   if (!tokensCss.includes("@supports (color: color(display-p3")) {
     fail("tokens/styles.css P3 support", "Display-P3 @supports block missing");
@@ -249,7 +384,7 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
   }
 }
 
-// ─── 9. Theme CSS structural checks ─────────────────────────────────────────
+// ─── 10. Theme CSS structural checks ────────────────────────────────────────
 {
   if (!themesCss.includes("@theme")) {
     fail("themes.css", "Missing Tailwind v4 @theme block");
@@ -274,7 +409,7 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
   }
 }
 
-// ─── 10. --brand-gradient single source of truth (no duplicate definition) ───
+// ─── 11. --brand-gradient single source of truth (no duplicate definition) ───
 {
   // Generated CSS emits --brand-gradient once per selector scope (:root, .dark).
   // We expect at most 2 direct linear-gradient definitions (one per scope).

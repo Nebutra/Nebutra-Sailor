@@ -1,5 +1,6 @@
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import * as React from "react";
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
 function Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
@@ -24,6 +25,7 @@ function PopoverTrigger({ asChild, children, render, ...props }: PopoverTriggerP
 
 function PopoverPositioner({
   sideOffset = 4,
+  style,
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Positioner>) {
   return (
@@ -31,6 +33,7 @@ function PopoverPositioner({
       <PopoverPrimitive.Positioner
         data-slot="popover-positioner"
         sideOffset={sideOffset}
+        style={{ zIndex: overlayZIndex.popover, ...style }}
         {...props}
       />
     </PopoverPrimitive.Portal>
@@ -53,6 +56,7 @@ function PopoverContent({
   side = "bottom",
   children,
   showArrow = false,
+  style,
   ...props
 }: PopoverContentProps) {
   return (
@@ -66,16 +70,8 @@ function PopoverContent({
       >
         <PopoverPrimitive.Popup
           data-slot="popover-content"
-          className={cn(
-            `
-              w-72 z-50 bg-background/90 backdrop-blur-md text-popover-foreground rounded-xl border p-4 shadow-xl outline-none
-              data-[open]:animate-in data-[closed]:animate-out data-[closed]:fade-out-0 data-[open]:fade-in-0 data-[closed]:zoom-out-95 
-              data-[open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 
-              data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 
-              origin-(--radix-popover-content-transform-origin)
-            `,
-            className,
-          )}
+          className={cn(overlayClassNames.popoverSurface, className)}
+          style={{ zIndex: overlayZIndex.popover, ...style }}
           {...props}
         >
           {children}
@@ -88,15 +84,17 @@ function PopoverContent({
 
 function PopoverArrow({
   className,
+  style,
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Arrow>) {
   return (
     <PopoverPrimitive.Arrow
       data-slot="popover-arrow"
       className={cn(
-        "z-50 data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90 data-[side=right]:left-[-13px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180",
+        "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90 data-[side=right]:left-[-13px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180",
         className,
       )}
+      style={{ zIndex: overlayZIndex.popover, ...style }}
       {...props}
     >
       <svg aria-hidden="true" width="20" height="10" viewBox="0 0 20 10" fill="none">
@@ -113,8 +111,8 @@ function PopoverArrow({
   );
 }
 
-function PopoverAnchor({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Arrow>) {
-  return <PopoverPrimitive.Arrow data-slot="popover-anchor" {...props} />;
+function PopoverAnchor({ ...props }: React.ComponentProps<"span">) {
+  return <span data-slot="popover-anchor" {...props} />;
 }
 
 export { Popover, PopoverAnchor, PopoverContent, PopoverPositioner, PopoverTrigger };

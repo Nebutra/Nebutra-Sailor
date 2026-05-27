@@ -338,6 +338,7 @@ import { MacbookProDemo } from "@/components/demos/macbook-pro-demo";
 import { SheetDemo } from "@/components/demos/sheet-demo";
 import { SheetMobileDemo } from "@/components/demos/sheet-mobile-demo";
 import { SheetSideDemo } from "@/components/demos/sheet-side-demo";
+import { DeprecatedBanner } from "@/components/deprecated-banner";
 import { FeedbackBlock } from "@/components/feedback/client";
 import { FigmaLink } from "@/components/figma-link";
 import { BrandGradientsDemo } from "@/components/gradient-demos";
@@ -384,7 +385,7 @@ import {
   WarpBackgroundDemo,
 } from "@/components/pattern-demos";
 import { ThemeSwitcherDemo } from "@/components/previews/theme-switcher-demo";
-import { DeprecatedBanner, StatusBadge } from "@/components/status-badge";
+import { StatusBadge } from "@/components/status-badge";
 import { ThemeColorsDemo } from "@/components/theming-demos";
 import {
   CJKWeightDemo,

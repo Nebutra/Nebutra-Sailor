@@ -16,6 +16,20 @@ export interface RegistryStrings {
   intro: string;
   empty: string;
   backToDocs: string;
+  maturity: {
+    title: string;
+    subtitle: string;
+    componentCountLabel: string;
+    canonical: string;
+    stable: string;
+    beta: string;
+    experimental: string;
+    canonicalDescription: string;
+    stableDescription: string;
+    betaDescription: string;
+    experimentalDescription: string;
+    canonicalRailTitle: string;
+  };
   // Detail page
   allComponents: string;
   install: string;
@@ -36,6 +50,23 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     empty:
       "No registry items found. Run pnpm --filter @nebutra/ui build:registry to populate apps/design-docs/public/r/.",
     backToDocs: "Back to design system docs",
+    maturity: {
+      title: "Maturity matrix",
+      subtitle: "Distribution is generated from registry metadata, not hand-written page copy.",
+      componentCountLabel: "items",
+      canonical: "Canonical",
+      stable: "Stable",
+      beta: "Beta",
+      experimental: "Experimental",
+      canonicalDescription:
+        "Reference implementation with complete docs, stories, registry, and API contract.",
+      stableDescription:
+        "Production-safe API that still needs canonical examples or governance hardening.",
+      betaDescription: "Usable surface with an explicit migration path before it can be promoted.",
+      experimentalDescription:
+        "Discovery or showcase surface; do not treat as a default primitive choice.",
+      canonicalRailTitle: "Canonical starting points",
+    },
     allComponents: "All components",
     install: "Install",
     installHelper:
@@ -54,6 +85,20 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     empty:
       "暂无 registry 条目，请运行 pnpm --filter @nebutra/ui build:registry 生成 apps/design-docs/public/r/ 下的清单。",
     backToDocs: "返回设计系统文档",
+    maturity: {
+      title: "成熟度矩阵",
+      subtitle: "分布来自 registry metadata，而不是页面手写文案。",
+      componentCountLabel: "项",
+      canonical: "Canonical",
+      stable: "Stable",
+      beta: "Beta",
+      experimental: "Experimental",
+      canonicalDescription: "参考实现，已具备完整文档、Storybook、registry 与 API 契约。",
+      stableDescription: "生产可用 API，但仍需要 canonical 示例或治理加固。",
+      betaDescription: "可用表面，晋级前必须保留明确迁移路径。",
+      experimentalDescription: "探索或展示表面，不应作为默认 primitive 选择。",
+      canonicalRailTitle: "Canonical 起点",
+    },
     allComponents: "全部组件",
     install: "安装",
     installHelper: "确保你的 Next.js 项目已经运行过 shadcn init 并配置了 components.json。",
@@ -71,6 +116,21 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     empty:
       "レジストリ項目が見つかりません。pnpm --filter @nebutra/ui build:registry を実行して apps/design-docs/public/r/ を生成してください。",
     backToDocs: "デザインシステム文書へ戻る",
+    maturity: {
+      title: "成熟度マトリクス",
+      subtitle: "分布は手書きコピーではなく registry metadata から生成されます。",
+      componentCountLabel: "件",
+      canonical: "Canonical",
+      stable: "Stable",
+      beta: "Beta",
+      experimental: "Experimental",
+      canonicalDescription: "完全な docs、stories、registry、API 契約を持つ参照実装。",
+      stableDescription: "本番利用可能な API。canonical 例や治理強化はまだ必要です。",
+      betaDescription: "利用可能な surface。昇格前に明確な移行経路が必要です。",
+      experimentalDescription:
+        "探索または showcase surface。既定 primitive として扱わないでください。",
+      canonicalRailTitle: "Canonical の開始点",
+    },
     allComponents: "すべてのコンポーネント",
     install: "インストール",
     installHelper:
@@ -89,6 +149,22 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     empty:
       "레지스트리 항목이 없습니다. pnpm --filter @nebutra/ui build:registry 를 실행하여 apps/design-docs/public/r/ 를 채우세요.",
     backToDocs: "디자인 시스템 문서로 돌아가기",
+    maturity: {
+      title: "성숙도 매트릭스",
+      subtitle: "분포는 손으로 쓴 문구가 아니라 registry metadata 에서 생성됩니다.",
+      componentCountLabel: "개",
+      canonical: "Canonical",
+      stable: "Stable",
+      beta: "Beta",
+      experimental: "Experimental",
+      canonicalDescription: "문서, Storybook, registry, API 계약을 모두 갖춘 기준 구현입니다.",
+      stableDescription:
+        "프로덕션 사용이 가능한 API이며 canonical 예시나 거버넌스 보강이 남아 있습니다.",
+      betaDescription: "사용 가능한 surface 이지만 승격 전 명확한 마이그레이션 경로가 필요합니다.",
+      experimentalDescription:
+        "탐색 또는 showcase surface 이며 기본 primitive 로 선택하지 않습니다.",
+      canonicalRailTitle: "Canonical 시작점",
+    },
     allComponents: "모든 컴포넌트",
     install: "설치",
     installHelper:
@@ -107,6 +183,23 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     empty:
       "Keine Registry-Einträge gefunden. Führe pnpm --filter @nebutra/ui build:registry aus, um apps/design-docs/public/r/ zu befüllen.",
     backToDocs: "Zurück zur Design-System-Dokumentation",
+    maturity: {
+      title: "Maturity-Matrix",
+      subtitle: "Die Verteilung wird aus Registry-Metadaten generiert, nicht aus Seitentext.",
+      componentCountLabel: "Einträge",
+      canonical: "Canonical",
+      stable: "Stable",
+      beta: "Beta",
+      experimental: "Experimental",
+      canonicalDescription:
+        "Referenzimplementierung mit vollständigen Docs, Stories, Registry und API-Vertrag.",
+      stableDescription:
+        "Produktionssichere API, braucht aber noch canonical Beispiele oder Governance.",
+      betaDescription: "Nutzbare Oberfläche mit klarem Migrationspfad vor der Beförderung.",
+      experimentalDescription:
+        "Discovery- oder Showcase-Oberfläche; nicht als Default-Primitive verwenden.",
+      canonicalRailTitle: "Canonical Startpunkte",
+    },
     allComponents: "Alle Komponenten",
     install: "Installation",
     installHelper:
@@ -125,6 +218,23 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     empty:
       "No se encontraron entradas de registro. Ejecuta pnpm --filter @nebutra/ui build:registry para poblar apps/design-docs/public/r/.",
     backToDocs: "Volver a la documentación del sistema de diseño",
+    maturity: {
+      title: "Matriz de madurez",
+      subtitle: "La distribución se genera desde metadata del registry, no desde texto manual.",
+      componentCountLabel: "ítems",
+      canonical: "Canonical",
+      stable: "Stable",
+      beta: "Beta",
+      experimental: "Experimental",
+      canonicalDescription:
+        "Implementación de referencia con docs, stories, registry y contrato API completos.",
+      stableDescription:
+        "API segura para producción que aún necesita ejemplos canonical o más gobernanza.",
+      betaDescription: "Superficie usable con ruta de migración explícita antes de promocionarse.",
+      experimentalDescription:
+        "Superficie de exploración o showcase; no debe ser la primitive por defecto.",
+      canonicalRailTitle: "Puntos de partida canonical",
+    },
     allComponents: "Todos los componentes",
     install: "Instalación",
     installHelper:
@@ -143,6 +253,23 @@ const TRANSLATIONS: Record<RegistryLang, RegistryStrings> = {
     empty:
       "Aucune entrée de registre trouvée. Exécutez pnpm --filter @nebutra/ui build:registry pour générer apps/design-docs/public/r/.",
     backToDocs: "Retour à la documentation du design system",
+    maturity: {
+      title: "Matrice de maturité",
+      subtitle: "La distribution provient des métadonnées du registry, pas du texte des pages.",
+      componentCountLabel: "éléments",
+      canonical: "Canonical",
+      stable: "Stable",
+      beta: "Beta",
+      experimental: "Experimental",
+      canonicalDescription:
+        "Implémentation de référence avec docs, stories, registry et contrat API complets.",
+      stableDescription:
+        "API sûre en production, avec exemples canonical ou gouvernance à renforcer.",
+      betaDescription: "Surface utilisable avec un chemin de migration explicite avant promotion.",
+      experimentalDescription:
+        "Surface de découverte ou de showcase; ne pas choisir comme primitive par défaut.",
+      canonicalRailTitle: "Points de départ canonical",
+    },
     allComponents: "Tous les composants",
     install: "Installation",
     installHelper:

@@ -22,6 +22,19 @@ description: "Floating content container anchored to a trigger element, built on
 
 <ComponentPreview name="popover-settings-demo" className="min-h-[280px] flex justify-center items-start pt-10" />
 
+## Props
+
+### PopoverContent
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `side` | `"top" \| "right" \| "bottom" \| "left"` | `"bottom"` | Preferred placement side. |
+| `align` | `"start" \| "center" \| "end"` | `"center"` | Alignment against the trigger. |
+| `sideOffset` | `number` | `8` | Distance from trigger. |
+| `alignOffset` | `number` | `0` | Alignment offset. |
+| `showArrow` | `boolean` | `false` | Renders the tokenized arrow. |
+| `className` | `string` | — | Additional class on the popup. |
+
 
 ## Accessibility
 
@@ -30,3 +43,21 @@ description: "Floating content container anchored to a trigger element, built on
 - Focus is moved into the popover when opened; returns to trigger on close.
 - Pressing `Escape` closes the popover.
 - Clicking outside the popover closes it by default.
+
+## Design Contract
+
+- Use Popover for contextual, non-blocking detail or short controls anchored to a visible trigger.
+- Keep content compact; if it needs a footer with primary/secondary actions, consider Dialog or Sheet.
+- Keep arrow usage rare. Use it when the relationship between trigger and surface is otherwise ambiguous.
+
+## Real Product Examples
+
+- Inline plan details next to a pricing row.
+- Quick filter details from a table toolbar.
+- Entity metadata panels that do not interrupt the current workflow.
+
+## Anti-patterns
+
+- Do not use Popover for global command search or navigation menus.
+- Do not hide required form validation inside Popover.
+- Do not use Popover when the task must block the page until the user responds.

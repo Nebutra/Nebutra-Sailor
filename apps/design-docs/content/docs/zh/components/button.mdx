@@ -126,3 +126,27 @@ description: 提供八种视觉变体、五种尺寸选项和图标插槽的交�
     },
   }}
 />
+
+## 可访问性
+
+- 除非 `ButtonLink` 或 `asChild` 明确用于导航，否则使用原生 `<button>`。
+- loading 状态应保留 children 提供的可访问名称。
+- 纯图标按钮必须提供 `aria-label`。
+
+## 设计契约
+
+- 每个决策区域只放一个 primary button。
+- `destructive` 只用于不可逆或高风险操作。
+- 优先使用 `prefix` / `suffix` 图标，不要临时拼一套 inline layout。
+
+## 真实产品示例
+
+- 计费表单里的主提交按钮。
+- 带前置图标的次级工具栏动作。
+- 带可访问名称的复制或刷新图标按钮。
+
+## 反模式
+
+- 不要用 `link` variant 承载破坏性或表单提交动作。
+- 不要在同一个动作组里放两个视觉 primary 按钮。
+- 不要用 `className` 发明一次性尺寸。

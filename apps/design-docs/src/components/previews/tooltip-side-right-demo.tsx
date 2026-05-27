@@ -1,11 +1,14 @@
 "use client";
-import { Button, GeistTooltip as Tooltip } from "@nebutra/ui/primitives";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
 
 export function TooltipSideRightDemo() {
   return (
     <div className="p-8 flex items-center justify-center">
-      <Tooltip position="right" text="The Evil Rabbit Jumped over the Fence">
-        <Button variant="outline">Right</Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="outline">Right</Button>
+        </TooltipTrigger>
+        <TooltipContent side="right">Placed beside compact toolbar actions</TooltipContent>
       </Tooltip>
     </div>
   );

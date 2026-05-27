@@ -22,6 +22,7 @@
     "nebutraLayer": "business",
     "docs": {
       "status": "stable",
+      "maturity": "canonical",
       "layer": "primitive",
       "package": "@nebutra/ui",
       "source": "packages/design/ui/src/primitives/accordion.tsx",

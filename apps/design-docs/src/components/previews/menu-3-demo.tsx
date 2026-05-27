@@ -1,24 +1,18 @@
 "use client";
 
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@nebutra/ui/primitives";
+import { Menu, MenuButton, MenuContainer, MenuItem } from "@nebutra/ui/primitives";
 
 export function Menu3Demo() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">Actions</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="w-[180px]">
-        <DropdownMenuItem>Duplicate</DropdownMenuItem>
-        <DropdownMenuItem disabled>Rename...</DropdownMenuItem>
-        <DropdownMenuItem disabled>Delete</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <MenuContainer position="bottom-start">
+      <MenuButton type="secondary" showChevron>
+        Actions
+      </MenuButton>
+      <Menu width={180}>
+        <MenuItem>Duplicate</MenuItem>
+        <MenuItem disabled>Rename&hellip;</MenuItem>
+        <MenuItem disabled>Delete</MenuItem>
+      </Menu>
+    </MenuContainer>
   );
 }

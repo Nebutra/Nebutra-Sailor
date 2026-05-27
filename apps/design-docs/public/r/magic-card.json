@@ -22,8 +22,8 @@
       "--brand-primary": "#0033fe"
     },
     "dark": {
-      "--brand-accent": "#0bf1c3",
-      "--brand-primary": "#0033fe"
+      "--brand-accent": "#1af7c8",
+      "--brand-primary": "#5c7cfa"
     }
   },
   "meta": {
@@ -35,6 +35,7 @@
     "nebutraLayer": "animation",
     "docs": {
       "status": "experimental",
+      "maturity": "experimental",
       "layer": "primitive",
       "package": "@nebutra/ui",
       "source": "packages/design/ui/src/primitives/magic-card.tsx",

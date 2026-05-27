@@ -56,6 +56,7 @@ export interface RegistryItem {
 
 export interface RegistryDocsMetadata {
   status: "stable" | "beta" | "deprecated" | "experimental";
+  maturity: "experimental" | "beta" | "stable" | "canonical";
   layer: "foundation" | "primitive" | "composition" | "pattern" | "registry" | "api" | "guide";
   package: "@nebutra/ui" | "@nebutra/tokens";
   source: string;

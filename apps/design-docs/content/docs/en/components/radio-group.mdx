@@ -121,3 +121,28 @@ Disabled options need `disabledReason`. A greyed-out radio without a reason read
 `RadioGroup` uses `<fieldset>` and `<legend>` for the group name. Standalone `Radio` must have `id`, `aria-label`, or `aria-labelledby`.
 
 Do not replace the focus ring. Keyboard users need a visible target while arrowing through the group.
+
+## Accessibility
+
+- `RadioGroup` renders a native fieldset and legend for the group name.
+- Arrow keys move through options; Space selects the focused option.
+- Standalone `Radio` must provide `id`, `aria-label`, or `aria-labelledby`.
+- Disabled options need `disabledReason` when the reason is not visually obvious.
+
+## Design Contract
+
+- Use RadioGroup when exactly one option must be selected from a small visible set.
+- Keep option copy parallel and put any reason text in `description` or `disabledReason`.
+- The group label should name the decision, not instruct the user to choose.
+
+## Real Product Examples
+
+- Monthly versus yearly billing cycle selection.
+- Deployment region selection when the number of regions is small.
+- Data retention policy selection with disabled enterprise-only choices.
+
+## Anti-patterns
+
+- Do not use RadioGroup for independent toggles. Use CheckboxGroup or Switch.
+- Do not hide a long list of radio options in a menu; use Select or Combobox.
+- Do not leave a required RadioGroup unlabeled.

@@ -14,7 +14,22 @@ import { ComponentPreview } from "@/components/component-preview";
 <ComponentPreview name="tooltip-demo" className="min-h-[150px] flex justify-center items-center"  />
 
 
+## 概述
+
+`Tooltip` 使用 canonical Base UI parts API：`Tooltip`、`TooltipTrigger`、`TooltipContent`，以及可选的 `TooltipProvider`。旧的 `GeistTooltip text="..."` 只作为兼容 wrapper 保留，不应出现在新的文档或产品示例中。
+
 ## 使用方法
+
+```tsx
+import { Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
+
+<Tooltip>
+  <TooltipTrigger asChild>
+    <button aria-label="Add item">...</button>
+  </TooltipTrigger>
+  <TooltipContent>Creates a new workspace shortcut</TooltipContent>
+</Tooltip>
+```
 
 <ComponentPreview name="tooltip-icon-button-demo" className="min-h-[150px] flex justify-center items-center"  />
 
@@ -72,3 +87,15 @@ import { ComponentPreview } from "@/components/component-preview";
 - Tooltip 内容解释约束、范围或限制，不能重复可见 label。
 - Tooltip 内容保持非交互。需要动作时使用 Popover、ContextCard、Dialog 或 inline control。
 - 纯图标 trigger 必须自带 `aria-label`；tooltip 文案只是补充上下文，不能替代控件名称。
+
+## 真实产品示例
+
+- 添加、复制、刷新、展开等纯图标工具栏动作。
+- 需要一句话补充的状态标签，例如保留期限、权限范围或套餐限制。
+- 表格中有意压缩的元数据标签。
+
+## 反模式
+
+- 不要把必读说明、错误信息或触摸用户必须完成的内容只放进 Tooltip。
+- 不要在 Tooltip 内容里放按钮、链接、输入框或菜单；需要交互时使用 Popover 或 Dialog。
+- 不要在新示例中使用旧的 `GeistTooltip` wrapper。

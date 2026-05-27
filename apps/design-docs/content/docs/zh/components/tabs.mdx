@@ -107,3 +107,21 @@ Tabs 通过 Base UI 渲染 WAI-ARIA tablist/tab/tabpanel 语义。
 当上方没有可见标题时，为 `TabsList` 或数组模式 `Tabs` 提供稳定的 `aria-label`。
 
 保留可见焦点环。不要为了视觉干净而压掉 active tab 的焦点样式。
+
+## 设计契约
+
+- Tabs 切换同一范围内的兄弟面板；它不是路由导航。
+- Tab row 保持紧凑，横向滚动只能作为兜底。
+- 默认使用 manual activation，除非每个 panel 都已挂载且切换成本极低。
+
+## 真实产品示例
+
+- Project Overview / Logs / Settings 面板。
+- 计费 Monthly / Yearly 视图切换，周围上下文保持不变。
+- 文档里的 preview / code / install 表面。
+
+## 反模式
+
+- 不要用 Tabs 做站点主导航。
+- 不要在单行放超过七个顶层 tabs。
+- 不要把破坏性操作藏在 inactive tab panel 且没有持久上下文。

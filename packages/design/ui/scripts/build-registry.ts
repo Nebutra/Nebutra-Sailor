@@ -389,28 +389,89 @@ const DOCS_LAST_VERIFIED = "2026-05-21";
 const DOCS_STATUS_BY_NAME: Readonly<Record<string, DocsStatus>> = {
   accordion: "stable",
   avatar: "stable",
+  button: "stable",
+  checkbox: "stable",
   choicebox: "beta",
+  dialog: "stable",
   "dropdown-menu": "stable",
+  input: "stable",
+  popover: "stable",
   progress: "stable",
+  "radio-group": "stable",
+  select: "stable",
   skeleton: "stable",
   table: "stable",
+  tabs: "stable",
+  textarea: "stable",
   toast: "stable",
   tooltip: "stable",
+};
+
+const DOCS_MATURITY_BY_NAME: Readonly<Record<string, DocsMaturity>> = {
+  accordion: "canonical",
+  avatar: "canonical",
+  button: "canonical",
+  checkbox: "canonical",
+  choicebox: "beta",
+  dialog: "canonical",
+  "dropdown-menu": "canonical",
+  input: "canonical",
+  popover: "canonical",
+  progress: "canonical",
+  "radio-group": "canonical",
+  select: "canonical",
+  skeleton: "canonical",
+  table: "canonical",
+  tabs: "canonical",
+  textarea: "canonical",
+  toast: "canonical",
+  tooltip: "canonical",
 };
 
 const DOCS_SUBSTRATE_BY_NAME: Readonly<Record<string, DocsSubstrate>> = {
   accordion: "mixed",
   avatar: "mixed",
+  button: "native",
+  checkbox: "native",
+  dialog: "mixed",
   "dropdown-menu": "mixed",
+  input: "mixed",
+  popover: "mixed",
   progress: "mixed",
+  "radio-group": "native",
+  select: "mixed",
   skeleton: "native",
   table: "native",
+  tabs: "mixed",
+  textarea: "native",
   toast: "mixed",
   tooltip: "mixed",
   "file-attachment": "native",
   "project-banner": "native",
   "status-dot": "native",
 };
+
+const primitiveTokenFile = {
+  source: "tokens/primitive.ts",
+  targetPath: "components/tokens/primitive.ts",
+  type: "registry:lib" as const,
+};
+
+const shadowTokenFile = {
+  source: "tokens/shadows.ts",
+  targetPath: "components/tokens/shadows.ts",
+  type: "registry:lib" as const,
+};
+
+const overlayTokenFiles = [
+  primitiveTokenFile,
+  shadowTokenFile,
+  {
+    source: "tokens/components/overlay.ts",
+    targetPath: "components/tokens/components/overlay.ts",
+    type: "registry:lib" as const,
+  },
+] as const;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -425,6 +486,7 @@ type RegistryLayer =
   | "business";
 
 type DocsStatus = "stable" | "beta" | "deprecated" | "experimental";
+type DocsMaturity = "experimental" | "beta" | "stable" | "canonical";
 type DocsLayer =
   | "foundation"
   | "primitive"
@@ -437,6 +499,7 @@ type DocsSubstrate = "native" | "custom" | "mixed";
 
 interface DocsMetadata {
   status: DocsStatus;
+  maturity: DocsMaturity;
   layer: DocsLayer;
   package: "@nebutra/ui" | "@nebutra/tokens";
   source: string;
@@ -531,6 +594,142 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     ],
   },
   {
+    name: "button",
+    title: "Button",
+    description:
+      "Primary action primitive with intent, size, shape, loading, prefix/suffix, and link variants.",
+    source: "primitives/button.tsx",
+    layer: "business",
+    extraFiles: [
+      {
+        source: "utils/slot.tsx",
+        targetPath: "components/utils/slot.tsx",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "input",
+    title: "Input",
+    description:
+      "Single-line form control with labels, helper/error text, clear button, affixes, shortcuts, and password reveal.",
+    source: "primitives/input.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/input.ts",
+        targetPath: "components/tokens/components/input.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/form-control.ts",
+        targetPath: "components/ui/form-control.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/kbd.tsx",
+        targetPath: "components/ui/kbd.tsx",
+      },
+    ],
+  },
+  {
+    name: "textarea",
+    title: "Textarea",
+    description:
+      "Multi-line text input with tokenized density, helper/error association, and focus-visible-only chrome.",
+    source: "primitives/textarea.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/textarea.ts",
+        targetPath: "components/tokens/components/textarea.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/form-control.ts",
+        targetPath: "components/ui/form-control.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "select",
+    title: "Select",
+    description:
+      "Short-list select primitive with native and compound listbox paths sharing one trigger contract.",
+    source: "primitives/select.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/select.ts",
+        targetPath: "components/tokens/components/select.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/error-message.tsx",
+        targetPath: "components/ui/error-message.tsx",
+      },
+      {
+        source: "primitives/form-control.ts",
+        targetPath: "components/ui/form-control.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "primitives/label.tsx",
+        targetPath: "components/ui/label.tsx",
+      },
+    ],
+  },
+  {
+    name: "checkbox",
+    title: "Checkbox",
+    description:
+      "Native checkbox control with checked, unchecked, disabled, and indeterminate states.",
+    source: "primitives/checkbox-group.tsx",
+    layer: "business",
+    targetPath: "components/ui/checkbox.tsx",
+  },
+  {
+    name: "radio-group",
+    title: "Radio Group",
+    description:
+      "Native radio-group fieldset with labelled options, descriptions, disabled reasons, and controlled/uncontrolled value.",
+    source: "primitives/radio-group.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/radio.ts",
+        targetPath: "components/tokens/components/radio.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
+    name: "tabs",
+    title: "Tabs",
+    description:
+      "Base UI tabs primitive with tokenized density, indicators, activation modes, badges, and overflow handling.",
+    source: "primitives/tabs.tsx",
+    layer: "business",
+    extraFiles: [
+      primitiveTokenFile,
+      {
+        source: "tokens/components/tabs.ts",
+        targetPath: "components/tokens/components/tabs.ts",
+        type: "registry:lib",
+      },
+      {
+        source: "utils/primitive-props.ts",
+        targetPath: "components/utils/primitive-props.ts",
+        type: "registry:lib",
+      },
+    ],
+  },
+  {
     name: "bento-grid",
     title: "Bento Grid",
     description: "Responsive bento-style feature grid with hover-reveal CTAs.",
@@ -597,6 +796,7 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
         targetPath: "components/ui/command-styles.ts",
         type: "registry:lib",
       },
+      ...overlayTokenFiles,
     ],
   },
   {
@@ -812,6 +1012,7 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     description: "Base UI Tooltip wrapper for concise, non-interactive explanatory text.",
     source: "primitives/tooltip.tsx",
     layer: "business",
+    extraFiles: [...overlayTokenFiles],
   },
   {
     name: "accordion",
@@ -822,12 +1023,31 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     layer: "business",
   },
   {
+    name: "dialog",
+    title: "Dialog",
+    description:
+      "Base UI dialog primitive with tokenized backdrop, modal surface, close affordance, focus trap, and labelled content.",
+    source: "primitives/dialog.tsx",
+    layer: "business",
+    extraFiles: [...overlayTokenFiles],
+  },
+  {
     name: "dropdown-menu",
     title: "Dropdown Menu",
     description:
       "Base UI menu primitive with keyboard navigation, checkbox/radio items, and submenu support.",
     source: "primitives/dropdown-menu.tsx",
     layer: "business",
+    extraFiles: [...overlayTokenFiles],
+  },
+  {
+    name: "popover",
+    title: "Popover",
+    description:
+      "Anchored Base UI popover primitive for contextual, non-blocking surfaces with shared overlay tokens.",
+    source: "primitives/popover.tsx",
+    layer: "business",
+    extraFiles: [...overlayTokenFiles],
   },
   {
     name: "context-card",
@@ -984,7 +1204,7 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
  */
 function buildTokenMap(filePath: string): Record<string, string> {
   const source = readFileSync(filePath, "utf-8");
-  const decls = [...source.matchAll(/export const (\w+) = ["']([^"']+)["'];/g)];
+  const decls = [...source.matchAll(/export const (\w+)\s*=\s*["']([^"']+)["'];/g)];
   const map: Record<string, string> = {};
 
   for (const [, ident, value] of decls) {
@@ -1005,7 +1225,18 @@ function buildTokenMap(filePath: string): Record<string, string> {
       continue;
     }
 
-    if (ident === "ColorTertiaryPurple") map["--brand-tertiary"] = value;
+    if (ident === "BrandPrimary") map["--brand-primary"] = value;
+    else if (ident === "BrandAccent") map["--brand-accent"] = value;
+    else if (ident === "BrandTertiary") map["--brand-tertiary"] = value;
+    else if (ident === "BrandGradientStart") map["--brand-gradient-start"] = value;
+    else if (ident === "BrandGradientEnd") map["--brand-gradient-end"] = value;
+    else if (ident === "BrandGradientPrimary") map["--brand-gradient"] = value;
+    else if (ident === "BrandGradientReverse") map["--brand-gradient-reverse"] = value;
+    else if (ident === "BrandGradientVertical") map["--brand-gradient-vertical"] = value;
+    else if (ident === "BrandGradientRadial") map["--brand-gradient-radial"] = value;
+    else if (ident === "BrandGradientLogo") map["--brand-gradient-logo"] = value;
+    else if (ident === "BrandGradientLogoReverse") map["--brand-gradient-logo-reverse"] = value;
+    else if (ident === "ColorTertiaryPurple") map["--brand-tertiary"] = value;
     else if (ident === "ColorStatusDanger") map["--status-danger"] = value;
     else if (ident === "ColorStatusWarning") map["--status-warning"] = value;
     else if (ident === "ColorStatusSuccess") map["--status-success"] = value;
@@ -1025,12 +1256,15 @@ function buildTokenMap(filePath: string): Record<string, string> {
   }
 
   // Brand aliases derived from the scale entries.
-  if (map["--blue-9"]) map["--brand-primary"] = map["--blue-9"];
-  if (map["--cyan-9"]) map["--brand-accent"] = map["--cyan-9"];
-  if (map["--blue-9"] && map["--cyan-9"]) {
+  if (!map["--brand-primary"] && map["--blue-9"]) map["--brand-primary"] = map["--blue-9"];
+  if (!map["--brand-accent"] && map["--cyan-9"]) map["--brand-accent"] = map["--cyan-9"];
+  if (!map["--brand-gradient-logo"] && map["--blue-9"] && map["--cyan-9"]) {
     map["--brand-gradient-logo"] =
       `linear-gradient(135deg, ${map["--blue-9"]} 0%, ${map["--cyan-9"]} 100%)`;
-    map["--brand-gradient"] = "linear-gradient(135deg, #254bfa 0%, #057963 100%)";
+  }
+  if (!map["--brand-gradient"] && map["--brand-gradient-start"] && map["--brand-gradient-end"]) {
+    map["--brand-gradient"] =
+      `linear-gradient(135deg, ${map["--brand-gradient-start"]} 0%, ${map["--brand-gradient-end"]} 100%)`;
   }
 
   return map;
@@ -1264,8 +1498,11 @@ function readExtraFile(source: string): string {
 }
 
 function buildDocsMetadata(spec: ComponentSpec): DocsMetadata {
+  const status = spec.docs?.status ?? DOCS_STATUS_BY_NAME[spec.name] ?? "experimental";
+
   return {
-    status: spec.docs?.status ?? DOCS_STATUS_BY_NAME[spec.name] ?? "experimental",
+    status,
+    maturity: spec.docs?.maturity ?? DOCS_MATURITY_BY_NAME[spec.name] ?? statusToMaturity(status),
     layer: spec.docs?.layer ?? "primitive",
     package: "@nebutra/ui",
     source: `packages/design/ui/src/${spec.source}`,
@@ -1273,6 +1510,12 @@ function buildDocsMetadata(spec: ComponentSpec): DocsMetadata {
     registry: true,
     lastVerified: DOCS_LAST_VERIFIED,
   };
+}
+
+function statusToMaturity(status: DocsStatus): DocsMaturity {
+  if (status === "stable") return "stable";
+  if (status === "beta") return "beta";
+  return "experimental";
 }
 
 function buildOne(
@@ -1355,7 +1598,14 @@ function buildThemeEntry(
     "--brand-primary",
     "--brand-accent",
     "--brand-tertiary",
+    "--brand-gradient-start",
+    "--brand-gradient-end",
     "--brand-gradient",
+    "--brand-gradient-reverse",
+    "--brand-gradient-vertical",
+    "--brand-gradient-radial",
+    "--brand-gradient-logo",
+    "--brand-gradient-logo-reverse",
     "--status-danger",
     "--status-warning",
     "--status-success",
@@ -1386,6 +1636,7 @@ function buildThemeEntry(
       nebutraLayer: "decoration",
       docs: {
         status: "stable",
+        maturity: "canonical",
         layer: "foundation",
         package: "@nebutra/tokens",
         source: "packages/design/tokens/src/index.ts",

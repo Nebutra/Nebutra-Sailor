@@ -12,7 +12,7 @@ description: "对话框、抽屉、Sheet 与浮层表面的使用模式。"
 | `Dialog` | 紧凑确认、破坏性操作、关键决策，不需要滚动 |
 | `Sheet` | 从屏幕边缘滑入的表单或详情面板，可滚动 |
 | `Drawer` | 导航或上下文侧栏，在内容旁打开 |
-| `AnchoredOverlay` / `Popover` | 锚定到 trigger 的上下文操作，停留在触发器附近 |
+| `Popover` | 锚定到 trigger 的非阻塞上下文详情，停留在触发器附近 |
 
 以下场景不要使用模态界面：
 - 页面之间的导航（使用 routing）
@@ -70,17 +70,20 @@ const [isOpen, setIsOpen] = useState(false);
 
 <Button onClick={() => setIsOpen(true)}>Open dialog</Button>
 
-<Dialog isOpen={isOpen} onDismiss={() => setIsOpen(false)} aria-labelledby="dialog-title">
-  <Dialog.Header id="dialog-title">Confirm deletion</Dialog.Header>
-  <Dialog.Body>
-    This action cannot be undone.
-  </Dialog.Body>
-  <Dialog.Footer>
-    <ButtonGroup>
-      <Button variant="danger" onClick={handleDelete}>Delete</Button>
-      <Button variant="invisible" onClick={() => setIsOpen(false)}>Cancel</Button>
-    </ButtonGroup>
-  </Dialog.Footer>
+<Dialog open={isOpen} onOpenChange={setIsOpen}>
+  <DialogTrigger asChild>
+    <Button variant="outline">Open dialog</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Confirm deletion</DialogTitle>
+      <DialogDescription>This action cannot be undone.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <Button variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
+      <Button variant="destructive" onClick={handleDelete}>Delete</Button>
+    </DialogFooter>
+  </DialogContent>
 </Dialog>
 ```
 
@@ -110,22 +113,20 @@ import { TextConfirmDialog } from "@nebutra/ui";
 
 更简单的确认（不需要输入文本校验）使用 `ConfirmationModal` fragment。它接受 `title`、`description`、`onConfirm`、`onCancel` 和 `variant`（`default` 或 `danger`）。
 
-### 浮层锚定（ActionMenu、Popover）
+### 浮层锚定（Menu、Popover）
 
-`AnchoredOverlay` 和 `ActionMenu` 相对 trigger 元素定位，并在外部点击或 Escape 时关闭。它们适合上下文行操作、inline 选项菜单和筛选下拉，不适合承载表单。
+`Menu` 和 `Popover` 相对 trigger 元素定位，并在外部点击或 Escape 时关闭。短动作列表使用 `Menu`；非阻塞上下文详情使用 `Popover`。
 
 ```tsx
-import { ActionMenu, ActionList } from "@nebutra/ui";
+import { Menu, MenuButton, MenuContainer, MenuItem } from "@nebutra/ui/primitives";
 
-<ActionMenu>
-  <ActionMenu.Button>Actions</ActionMenu.Button>
-  <ActionMenu.Overlay>
-    <ActionList>
-      <ActionList.Item onSelect={handleEdit}>Edit</ActionList.Item>
-      <ActionList.Item onSelect={handleDelete} variant="danger">Delete</ActionList.Item>
-    </ActionList>
-  </ActionMenu.Overlay>
-</ActionMenu>
+<MenuContainer position="bottom-end">
+  <MenuButton type="secondary" showChevron>Actions</MenuButton>
+  <Menu width={180}>
+    <MenuItem onClick={handleEdit}>Edit</MenuItem>
+    <MenuItem type="error" onClick={handleDelete}>Delete</MenuItem>
+  </Menu>
+</MenuContainer>
 ```
 
 ## 示例
@@ -134,20 +135,20 @@ import { ActionMenu, ActionList } from "@nebutra/ui";
 ```tsx
 function DeleteKeyDialog({ keyName, onConfirm, onCancel, isOpen }: Props) {
   return (
-    <Dialog isOpen={isOpen} onDismiss={onCancel} aria-labelledby="delete-dialog-title">
-      <Dialog.Header id="delete-dialog-title">Delete API key</Dialog.Header>
-      <Dialog.Body>
-        <Flash variant="danger">
-          Deleting <strong>{keyName}</strong> will immediately revoke all requests
-          using this key. This cannot be undone.
-        </Flash>
-      </Dialog.Body>
-      <Dialog.Footer>
-        <ButtonGroup>
-          <Button variant="danger" onClick={onConfirm}>Delete key</Button>
-          <Button variant="invisible" onClick={onCancel}>Cancel</Button>
-        </ButtonGroup>
-      </Dialog.Footer>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete API key</DialogTitle>
+          <DialogDescription>
+            Deleting <strong>{keyName}</strong> will immediately revoke all
+            requests using this key. This cannot be undone.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button variant="destructive" onClick={onConfirm}>Delete key</Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 }

@@ -1,11 +1,14 @@
 "use client";
-import { Button, GeistTooltip as Tooltip } from "@nebutra/ui/primitives";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
 
 export function TooltipDemo() {
   return (
     <div className="p-8 flex items-center justify-center">
-      <Tooltip text="The Evil Rabbit Jumped over the Fence">
-        <Button variant="outline">Hover me</Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="outline">Hover me</Button>
+        </TooltipTrigger>
+        <TooltipContent>Available to admins and billing owners</TooltipContent>
       </Tooltip>
     </div>
   );

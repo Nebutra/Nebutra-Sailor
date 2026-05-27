@@ -109,7 +109,9 @@ Scales: `--neutral-{1..12}`, `--blue-{1..12}`, `--cyan-{1..12}`. Light values ar
 | `--brand-primary` | `var(--blue-9)` → `#0033FE` | Primary brand |
 | `--brand-accent` | `var(--cyan-9)` → `#0BF1C3` | Accent |
 | `--brand-tertiary` | `#8B5CF6` | Data viz / infra tags only |
-| `--brand-gradient` | `linear-gradient(135deg, #254BFA → #057963)` | UI usage gradient for CTAs, badges, hero text |
+| `--brand-gradient-start` | `#2F5BFF` | Product action gradient start; white text contrast ≥ 4.5:1 |
+| `--brand-gradient-end` | `#047C9A` | Product action gradient end; cyan-blue, not green/emerald |
+| `--brand-gradient` | `linear-gradient(135deg, #2F5BFF → #047C9A)` | UI usage gradient for CTAs, badges, hero text |
 | `--brand-gradient-logo` | `linear-gradient(135deg, #0033FE → #0BF1C3)` | VI/logo assets only |
 
 ### 2.4 Semantic theme tokens (HSL triplets — Tailwind compatible)
@@ -305,7 +307,7 @@ For the **multi-theme product feature** (6 oklch presets), see [`packages/design
 | Surface | Status |
 |--------|--------|
 | Brand color hex anchors (`#0033FE`, `#0BF1C3`, `--nebutra-neutral-{50..950}`) | **Locked** |
-| UI brand gradient (`--brand-gradient`) | Extensible — may tune saturation/contrast while preserving locked brand anchors |
+| UI brand gradient (`--brand-gradient`) | Extensible — may tune saturation/contrast while preserving white-text contrast and a cyan-blue action end |
 | 12-step semantic ladder positions (1–12 meaning) | **Locked** |
 | Container widths | **Locked** |
 | Radius scale values | **Locked** |

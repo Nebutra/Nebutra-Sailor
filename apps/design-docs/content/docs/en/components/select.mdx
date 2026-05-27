@@ -146,3 +146,21 @@ opened menu surface, radius, shadow, and focus treatment.
 - Native Select keeps browser form semantics, mobile pickers, and keyboard behavior.
 - `error` sets `aria-invalid` and connects the field to the inline error message.
 - The compound API follows the ARIA listbox pattern through Base UI primitives.
+
+## Design Contract
+
+- Use Select for short, finite lists where filtering is unnecessary.
+- Use the same trigger density as Input and Textarea in the surrounding form.
+- Keep option labels parallel and stable.
+
+## Real Product Examples
+
+- Region selection in a deployment form.
+- Framework selection in a starter template picker.
+- Billing country or invoice language when the list remains short.
+
+## Anti-patterns
+
+- Do not use Select for long searchable lists. Use Combobox.
+- Do not use Select for multi-value choices. Use MultiSelect or CheckboxGroup.
+- Do not use a menu item group as a fake form select.

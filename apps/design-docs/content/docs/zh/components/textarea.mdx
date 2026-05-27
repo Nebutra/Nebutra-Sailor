@@ -58,7 +58,7 @@ import { Textarea } from "@nebutra/ui/primitives";
 
 <ComponentPreview name="textarea-disabled-demo" className="max-w-[400px]" />
 
-## 设计原则
+## 设计契约
 
 - Textarea 只用于天然会换行的内容：发布说明、描述、评论和事故摘要。
 - 视觉保持克制：语义 border、background、text、muted placeholder 和 token 化焦点环，不叠额外阴影。
@@ -81,3 +81,15 @@ Textarea 的几何尺寸来自 `textareaTokens`，颜色来自运行时语义 CS
 | `textareaTokens.focusRingWidth` | focus 与错误 focus 状态共享的焦点环宽度。 |
 | `textareaTokens.fieldGap` | label、控件和字段消息之间的间距。 |
 | `--background`, `--foreground`, `--input`, `--ring`, `--destructive` | 语义颜色契约。 |
+
+## 真实产品示例
+
+- 发布说明或 changelog 摘要。
+- 带 helper text 和长度校验的事故复盘备注。
+- 密集表单里的评论和描述。
+
+## 反模式
+
+- 不要用 Textarea 填单个标量值，例如名称、URL 或 email。
+- 不要让 textarea 自动增长到把主操作挤出首屏。
+- 不要用 placeholder instructions 替代可见 label。

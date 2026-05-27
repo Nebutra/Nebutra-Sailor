@@ -198,7 +198,7 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
           </div>
           <div className="rounded-md border border-border/60 bg-muted/30 p-3">
             <p className={micro}>{P(S.position)}</p>
-            <p className="mt-1 font-mono text-lg font-semibold text-foreground">#142</p>
+            <p className="mt-1 font-mono text-lg font-semibold text-foreground">POS 142</p>
           </div>
         </div>
         <div className={`${panel} md:col-span-3`}>

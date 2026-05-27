@@ -17,7 +17,7 @@ export function MobileDrawer() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="md:hidden flex items-center">
+    <div className="lg:hidden flex items-center">
       <button
         type="button"
         onClick={() => setOpen(!open)}

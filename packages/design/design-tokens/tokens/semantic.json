@@ -14,21 +14,31 @@
     },
     "tertiary": { "$value": "{color.tertiary-purple}", "$type": "color" },
     "gradient": {
+      "start": {
+        "$value": "#2f5bff",
+        "$type": "color",
+        "$description": "Product action gradient start. Brighter than the locked VI blue while keeping white text contrast above WCAG AA."
+      },
+      "end": {
+        "$value": "#047c9a",
+        "$type": "color",
+        "$description": "Product action gradient end. Cyan-blue instead of green so compact CTAs stay crisp and luminous."
+      },
       "primary": {
-        "$value": "linear-gradient(135deg, #254bfa 0%, #057963 100%)",
+        "$value": "linear-gradient(135deg, #2f5bff 0%, #047c9a 100%)",
         "$type": "gradient",
-        "$description": "UI brand gradient — usage-adjusted from the locked VI blue/cyan anchors to reduce saturation and preserve white-text contrast."
+        "$description": "UI brand gradient for product actions — cleaner blue-to-cyan, calibrated for white-text contrast on compact controls."
       },
       "reverse": {
-        "$value": "linear-gradient(135deg, #057963 0%, #254bfa 100%)",
+        "$value": "linear-gradient(135deg, #047c9a 0%, #2f5bff 100%)",
         "$type": "gradient"
       },
       "vertical": {
-        "$value": "linear-gradient(180deg, #254bfa 0%, #057963 100%)",
+        "$value": "linear-gradient(180deg, #2f5bff 0%, #047c9a 100%)",
         "$type": "gradient"
       },
       "radial": {
-        "$value": "radial-gradient(circle, #057963 0%, #254bfa 100%)",
+        "$value": "radial-gradient(circle, #047c9a 0%, #2f5bff 100%)",
         "$type": "gradient"
       },
       "logo": {

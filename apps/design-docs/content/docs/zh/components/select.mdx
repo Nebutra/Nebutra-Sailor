@@ -133,3 +133,21 @@ compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择�
 - 原生 Select 保留浏览器表单语义、移动端 picker 和键盘行为。
 - `error` 会设置 `aria-invalid`，并把字段关联到内联错误消息。
 - compound API 通过 Base UI primitive 遵循 ARIA listbox pattern。
+
+## 设计契约
+
+- Select 用于无需过滤的短固定列表。
+- 与周围表单里的 Input、Textarea 保持同一触发器密度。
+- Option label 要平行且稳定。
+
+## 真实产品示例
+
+- 部署表单里的区域选择。
+- Starter template picker 里的框架选择。
+- 列表较短时的账单国家或发票语言选择。
+
+## 反模式
+
+- 不要用 Select 承载长可搜索列表；使用 Combobox。
+- 不要用 Select 承载多选；使用 MultiSelect 或 CheckboxGroup。
+- 不要把 menu item group 伪装成表单 select。

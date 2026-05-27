@@ -1,23 +1,25 @@
 "use client";
 
 import { User } from "@nebutra/icons";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@nebutra/ui/primitives";
+import { Menu, MenuButton, MenuContainer, MenuItem } from "@nebutra/ui/primitives";
 
 export function Menu5Demo() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="h-10 w-10 p-0 flex shrink-0 items-center justify-center rounded-full bg-muted text-foreground select-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none">
-        <User className="h-5 w-5" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[200px]">
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Preferences</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <MenuContainer position="bottom-end">
+      <MenuButton
+        aria-label="Account menu"
+        className="bg-muted text-foreground"
+        shape="circle"
+        size="medium"
+        svgOnly
+        type="tertiary"
+      >
+        <User className="size-5" />
+      </MenuButton>
+      <Menu width={200}>
+        <MenuItem>Profile</MenuItem>
+        <MenuItem>Preferences</MenuItem>
+      </Menu>
+    </MenuContainer>
   );
 }

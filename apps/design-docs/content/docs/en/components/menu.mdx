@@ -3,17 +3,41 @@ title: "Menu"
 description: "High-level semantic dropdown component with common layout patterns built-in."
 ---
 
-import { User, Settings, LogOut, ChevronRight, Lock, Command, Plus } from "lucide-react";
-
 <Note>
   Interactive examples available in [Storybook](https://storybook.nebutra.com/?path=/docs/primitives-menu--docs).
 </Note>
 
 ## Overview
 
-`Menu` is a semantic dropdown component built on top of Nebutra `DropdownMenu`, which currently uses Base UI Menu under the hood. It exposes a high-level API with `prefix`, `suffix`, `locked`, `disabled`, and `href` slots on each item — covering all standard UI Menu variants without exposing substrate internals at the usage site.
+`Menu` is a semantic dropdown facade built on top of Nebutra `DropdownMenu`, which currently uses Base UI Menu under the hood. The public API is flat and explicit: `MenuContainer`, `MenuButton`, `Menu`, `MenuItem`, `MenuLink`, `MenuItemLocked`, and `MenuSection`.
 
 Use `DropdownMenu` directly when you need raw building blocks like checkbox items, radio groups, or sub-menus. Use `Menu` for standard navigation and action lists.
+
+## Usage
+
+```tsx
+import {
+  Menu,
+  MenuButton,
+  MenuContainer,
+  MenuItem,
+  MenuItemLocked,
+  MenuSection,
+} from "@nebutra/ui/primitives";
+
+<MenuContainer position="bottom-start">
+  <MenuButton type="secondary" showChevron>
+    Workspace
+  </MenuButton>
+  <Menu width={220}>
+    <MenuSection title="General" showDivider={false}>
+      <MenuItem>Overview</MenuItem>
+      <MenuItem href="/settings/members">Members</MenuItem>
+      <MenuItemLocked>Billing</MenuItemLocked>
+    </MenuSection>
+  </Menu>
+</MenuContainer>
+```
 
 ## Default Menu
 
@@ -43,7 +67,7 @@ Automatically renders the item as an `<a>` tag when the `href` prop is provided.
 
 ## Custom Trigger
 
-You can completely replace the `Menu.Trigger` appearance by overriding classes or using other elements via `asChild` (if you use the raw `DropdownMenu` primitives). With `<Menu.Trigger>`, you can pass custom children.
+Use `MenuButton variant="unstyled"` for avatar or icon triggers. If you need render-slot control or checkbox/radio menu items, drop to raw `DropdownMenu`.
 
 <ComponentPreview name="menu-5-demo" className="min-h-[200px] flex justify-center items-start pt-10" />
 
@@ -52,23 +76,33 @@ You can completely replace the `Menu.Trigger` appearance by overriding classes o
 
 The API mirrors Nebutra `DropdownMenu` content props, but the `.Item` accepts custom rendering props.
 
-### `Menu.Trigger`
-
-Extends `<button>` HTML attributes.
+### `MenuContainer`
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `chevron` | `boolean` | `false` | Adds a rotating ChevronDown icon |
-| `className` | `string` | — | Override trigger styles |
+| `position` | `"bottom-start" \| "bottom-end" \| "top-start" \| "top-end" \| "right-start" \| "right-end" \| "left-start" \| "left-end"` | `"bottom-start"` | Popup side and alignment relative to the trigger. |
+| `children` | `ReactNode` | — | `MenuButton` plus one `Menu`. |
 
-### `Menu.Content`
+### `MenuButton`
 
-Extends Nebutra `DropdownMenuContent` props.
+Extends Nebutra `Button` interaction props, but maps Geist naming to Button variants.
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `align` | `"start" \| "center" \| "end"` | `"start"` | Horizontal alignment relative to trigger |
-| `sideOffset` | `number` | `4` | Gap between trigger and content in px |
+| `showChevron` | `boolean` | `false` | Adds a chevron after the label. |
+| `type` | `"primary" \| "secondary" \| "tertiary" \| "ghost" \| "warning" \| "destructive"` | `"primary"` | Maps Geist intent to Nebutra Button variants. |
+| `variant` | `"unstyled"` | — | Removes button chrome for avatar/dots triggers. |
+| `size` | `"tiny" \| "small" \| "medium" \| "large"` | `"medium"` | Trigger size. |
+| `shape` | `"default" \| "square" \| "circle"` | `"default"` | Trigger shape. |
+
+### `Menu`
+
+Extends Nebutra `DropdownMenuContent` popup props except `side` and `align`, which come from `MenuContainer.position`.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `width` | `number \| string` | — | Fixed popup width. Otherwise the menu sizes to content. |
+| `className` | `string` | — | Additional popup class. |
 
 ### `Menu.Item`
 
@@ -77,10 +111,14 @@ Extends Nebutra `DropdownMenuContent` props.
 | `prefix` | `ReactNode` | — | Icon/element on the left |
 | `suffix` | `ReactNode` | — | Icon/element on the right (overridden by lock icon when `locked`) |
 | `disabled` | `boolean` | `false` | Grays out item, removes pointer events |
-| `locked` | `boolean` | `false` | Permission-gated state — shows lock icon, prevents interaction |
 | `href` | `string` | — | Renders item as `<a>` navigating to this URL |
-| `onSelect` | `(e: Event) => void` | — | Called on item selection |
+| `onClick` | `() => void` | — | Called on item activation |
+| `type` | `"default" \| "error"` | `"default"` | Use `error` for destructive actions. |
 | `className` | `string` | — | Additional CSS classes |
+
+### `MenuItemLocked`
+
+`MenuItemLocked` is a permission-gated row. It forwards the same visual slots as `MenuItem`, forces `disabled`, and injects a lock suffix.
 
 ## Accessibility
 
@@ -94,3 +132,15 @@ Extends Nebutra `DropdownMenuContent` props.
 - Use `Menu` for short action or navigation lists where every row has the same density and interaction model.
 - Use raw `DropdownMenu` when the menu needs checkbox items, radio groups, separators, nested submenus, or custom item composition.
 - Keep menus stable. If users need to scan, compare, or edit multiple fields, use a Popover, Dialog, or page-level settings surface.
+
+## Real Product Examples
+
+- Account menus in the dashboard header where Profile, Settings, Keyboard Shortcuts, and Log out share one row density.
+- Workspace menus where billing and security entries are visible but permission-gated through `MenuItemLocked`.
+- Compact row actions in tables when the action list is shorter than seven items and does not need form controls.
+
+## Anti-patterns
+
+- Do not document `Menu.Trigger`, `Menu.Content`, or `locked` on `MenuItem`; those are not the public API.
+- Do not use `Menu` for checkbox groups, radio menus, nested submenus, or filter builders. Use `DropdownMenu` or `Popover`.
+- Do not hide gated actions completely when the user needs to understand upgrade or permission boundaries.

@@ -173,3 +173,15 @@ useEffect(() => {
 - Search filters items in real-time via cmdk.
 - `CommandMenu.Results` announces result-count changes with `aria-live="polite"`.
 - No close button — command palettes rely on `Escape`, outside click, and item selection as exit paths.
+
+## Real Product Examples
+
+- Global product search opened with `Cmd+K` / `Ctrl+K`.
+- Workspace switchers where the default state lists recent workspaces.
+- AI tool launchers where each command has a stable `value` for filtering and telemetry.
+
+## Anti-patterns
+
+- Do not use CommandMenu as a local table filter. Use Command or Combobox inline.
+- Do not mix destructive actions with global navigation unless the destructive action has a second confirmation step.
+- Do not bind `Cmd+K` to both CommandMenu and a focused in-page search input.

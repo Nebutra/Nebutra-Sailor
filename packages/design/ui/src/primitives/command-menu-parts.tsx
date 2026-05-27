@@ -2,6 +2,7 @@
 
 import { Dialog } from "@base-ui/react/dialog";
 import * as React from "react";
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 import type {
   CommandEmptyProps,
@@ -52,14 +53,7 @@ export interface CommandMenuItemProps extends CommandItemProps {
   callback?: () => void;
 }
 
-const commandMenuSurfaceClassName = cn(
-  "fixed left-[50%] top-[18vh] z-50 w-[calc(100vw-2rem)] max-w-xl translate-x-[-50%]",
-  "overflow-hidden rounded-[var(--radius-lg)] border border-border/70 bg-popover text-popover-foreground shadow-2xl",
-  "transition-[opacity,transform,display] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)]",
-  "data-starting-style:translate-y-[-0.5rem] data-starting-style:scale-95 data-starting-style:opacity-0",
-  "data-ending-style:translate-y-[-0.5rem] data-ending-style:scale-95 data-ending-style:opacity-0",
-  "motion-reduce:transition-none motion-reduce:data-starting-style:transform-none motion-reduce:data-ending-style:transform-none",
-);
+const commandMenuSurfaceClassName = overlayClassNames.commandSurface;
 
 // =============================================================================
 // CommandMenuRoot
@@ -78,7 +72,10 @@ export function CommandMenuRoot({
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <DialogPortal>
         <DialogOverlay />
-        <Dialog.Popup className={cn(commandMenuSurfaceClassName, className)}>
+        <Dialog.Popup
+          className={cn(commandMenuSurfaceClassName, className)}
+          style={{ zIndex: overlayZIndex.modal }}
+        >
           {/* Visually-hidden title for screen reader accessibility (WCAG 4.1.2) */}
           <Dialog.Title className="sr-only">{label}</Dialog.Title>
           {description ? (

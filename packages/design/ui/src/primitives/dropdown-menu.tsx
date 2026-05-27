@@ -3,6 +3,7 @@
 import { Menu as BaseMenu } from "@base-ui/react/menu";
 import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
 import * as React from "react";
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
 const DropdownMenu = BaseMenu.Root;
@@ -63,6 +64,7 @@ DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger";
 
 const DropdownMenuSubContent = ({
   className,
+  style,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseMenu.Popup> & {
@@ -72,10 +74,8 @@ const DropdownMenuSubContent = ({
     <BaseMenu.Positioner>
       <BaseMenu.Popup
         ref={ref}
-        className={cn(
-          "z-50 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md p-1 text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-flow ease-out data-[starting-style]:zoom-out-95 data-[ending-style]:zoom-out-95 data-[starting-style]:fade-out-0 data-[ending-style]:fade-out-0",
-          className,
-        )}
+        className={cn(overlayClassNames.menuSurface, className)}
+        style={{ zIndex: overlayZIndex.popover, ...style }}
         {...props}
       />
     </BaseMenu.Positioner>
@@ -93,6 +93,7 @@ export interface DropdownMenuContentProps
 
 const DropdownMenuContent = ({
   className,
+  style,
   sideOffset = 4,
   align = "center",
   alignOffset = 0,
@@ -111,10 +112,8 @@ const DropdownMenuContent = ({
     >
       <BaseMenu.Popup
         ref={ref}
-        className={cn(
-          "z-50 min-w-32 overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md p-1 text-popover-foreground shadow-xl transition-[opacity,transform,display] duration-flow ease-out outline-none data-[starting-style]:zoom-out-95 data-[ending-style]:zoom-out-95 data-[starting-style]:fade-out-0 data-[ending-style]:fade-out-0",
-          className,
-        )}
+        className={cn(overlayClassNames.menuSurface, className)}
+        style={{ zIndex: overlayZIndex.popover, ...style }}
         {...props}
       />
     </BaseMenu.Positioner>

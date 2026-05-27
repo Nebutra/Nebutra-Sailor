@@ -1,17 +1,18 @@
 "use client";
-import { Button, GeistTooltip as Tooltip } from "@nebutra/ui/primitives";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
 
 export function TooltipRichContentDemo() {
   return (
     <div className="p-8 flex items-center justify-center">
-      <Tooltip
-        text={
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="outline">Rich content</Button>
+        </TooltipTrigger>
+        <TooltipContent>
           <>
-            The <b>Evil Rabbit</b> Jumped over the <i>Fence</i>.
+            <b>Pro plan</b> includes <i>90-day audit retention</i>.
           </>
-        }
-      >
-        <Button variant="outline">Rich Content</Button>
+        </TooltipContent>
       </Tooltip>
     </div>
   );

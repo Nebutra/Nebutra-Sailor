@@ -11,7 +11,7 @@
   "files": [
     {
       "path": "registry/examples/menu-2-demo.tsx",
-      "content": "\"use client\";\n\nimport {\n  Button,\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuLabel,\n  DropdownMenuSeparator,\n  DropdownMenuTrigger,\n} from \"@nebutra/ui/primitives\";\n\nexport function Menu2Demo() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Workspace</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align=\"center\" className=\"w-[220px]\">\n        <DropdownMenuItem>General</DropdownMenuItem>\n        <DropdownMenuItem>Members</DropdownMenuItem>\n        <DropdownMenuSeparator />\n        <DropdownMenuLabel>Admin Settings</DropdownMenuLabel>\n        <DropdownMenuItem>Billing &amp; Plans</DropdownMenuItem>\n        <DropdownMenuItem>Security Logs</DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n}\n",
+      "content": "\"use client\";\n\nimport {\n  Menu,\n  MenuButton,\n  MenuContainer,\n  MenuItem,\n  MenuItemLocked,\n  MenuSection,\n} from \"@nebutra/ui/primitives\";\n\nexport function Menu2Demo() {\n  return (\n    <MenuContainer position=\"bottom-start\">\n      <MenuButton type=\"secondary\" showChevron>\n        Workspace\n      </MenuButton>\n      <Menu width={220}>\n        <MenuSection showDivider={false}>\n          <MenuItem>General</MenuItem>\n          <MenuItem>Members</MenuItem>\n        </MenuSection>\n        <MenuSection title=\"Admin Settings\">\n          <MenuItemLocked>Billing &amp; Plans</MenuItemLocked>\n          <MenuItemLocked>Security Logs</MenuItemLocked>\n        </MenuSection>\n      </Menu>\n    </MenuContainer>\n  );\n}\n",
       "type": "registry:example"
     }
   ]

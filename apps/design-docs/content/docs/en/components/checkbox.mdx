@@ -1,6 +1,6 @@
 ---
 title: "Checkbox"
-description: "A control that toggles between checked and unchecked, with optional indeterminate state."
+description: "Native checkbox control for binary and indeterminate selection."
 ---
 
 import { CheckboxDemo } from "@/components/previews/checkbox-demo";
@@ -14,96 +14,95 @@ import { ComponentPreview } from "@/components/component-preview";
   ```
 </ComponentPreview>
 
-## Overview
+## Decision Criteria
 
-`Checkbox` wraps HeroUI's `@heroui/checkbox`, providing a fully-accessible toggle control with checked, unchecked, and indeterminate states. Supports colors, sizes, radii, and disabled combinations.
+Use `Checkbox` when users can select zero, one, or multiple independent options. Use `Switch` for immediate on/off settings, `RadioGroup` when exactly one option must be chosen, and `Choicebox` when the option itself needs a richer card surface.
 
 ## Usage
 
 ```tsx
-import { Checkbox } from "@nebutra/ui/primitives";
-```
+import { Checkbox, CheckboxGroup } from "@nebutra/ui/primitives";
 
-## Examples
-
-### Default
-
-```tsx
-const [checked, setChecked] = useState(false);
-
-<Checkbox isSelected={checked} onValueChange={setChecked}>
-  Option 1
+<Checkbox name="notifications" defaultChecked>
+  Email notifications
 </Checkbox>
 ```
 
-### Disabled
+## Anatomy
+
+`Checkbox` renders a native `<input type="checkbox">` inside a label. The visual indicator is decorative; form submission, keyboard toggling, disabled behavior, and checked state stay on the native input.
 
 ```tsx
-<Checkbox isDisabled>Disabled</Checkbox>
-<Checkbox isSelected isDisabled>Disabled Checked</Checkbox>
-<Checkbox isIndeterminate isDisabled>Disabled Indeterminate</Checkbox>
+<CheckboxGroup label="Notification channels" orientation="vertical">
+  <Checkbox name="email" defaultChecked>
+    Email
+  </Checkbox>
+  <Checkbox name="slack">Slack</Checkbox>
+</CheckboxGroup>
 ```
 
-### Indeterminate
+## States
 
-```tsx
-<Checkbox isIndeterminate>Option 1</Checkbox>
-```
+| State | Prop contract | Behavior |
+| --- | --- | --- |
+| Unchecked | `checked={false}` or uncontrolled default | Space toggles to checked. |
+| Checked | `checked` / `defaultChecked` | Indicator shows the check path. |
+| Indeterminate | `indeterminate` | Indicator shows the mixed mark; the control does not toggle until the parent clears `indeterminate`. |
+| Disabled | `disabled` | Native input is disabled and the visual label becomes non-interactive. |
+| Grouped | `CheckboxGroup label="..."` | Group receives `role="group"` and an accessible label. |
 
 <ComponentPreview name="checkbox-indeterminate-demo" className="min-h-[150px] flex justify-center items-center" />
 
-### Sizes
-
-```tsx
-<Checkbox size="sm">Small</Checkbox>
-<Checkbox size="md">Medium</Checkbox>
-<Checkbox size="lg">Large</Checkbox>
-```
-
-### Colors
-
-```tsx
-<Checkbox isSelected color="default">Default</Checkbox>
-<Checkbox isSelected color="primary">Primary</Checkbox>
-<Checkbox isSelected color="success">Success</Checkbox>
-<Checkbox isSelected color="warning">Warning</Checkbox>
-<Checkbox isSelected color="danger">Danger</Checkbox>
-```
-
-### Radius
-
-```tsx
-<Checkbox isSelected radius="none">None</Checkbox>
-<Checkbox isSelected radius="sm">Small</Checkbox>
-<Checkbox isSelected radius="md">Medium</Checkbox>
-<Checkbox isSelected radius="full">Full</Checkbox>
-```
-
 ## Props
+
+### Checkbox
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | — | Label content |
-| `isSelected` | `boolean` | — | Controlled checked state |
-| `defaultSelected` | `boolean` | `false` | Uncontrolled default checked |
-| `onValueChange` | `(isSelected: boolean) => void` | — | Callback when state changes |
-| `isIndeterminate` | `boolean` | `false` | Show indeterminate (mixed) state |
-| `isDisabled` | `boolean` | `false` | Disable the checkbox |
-| `isReadOnly` | `boolean` | `false` | Read-only mode |
-| `isRequired` | `boolean` | `false` | Mark as required in form context |
-| `isInvalid` | `boolean` | `false` | Show invalid/error styling |
-| `color` | `"default" \| "primary" \| "secondary" \| "success" \| "warning" \| "danger"` | `"primary"` | Accent color |
-| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Size variant |
-| `radius` | `"none" \| "sm" \| "md" \| "lg" \| "full"` | `"md"` | Border radius |
-| `value` | `string` | — | Value submitted with form |
-| `name` | `string` | — | Form field name |
+| `checked` | `boolean` | — | Controlled checked state. |
+| `defaultChecked` | `boolean` | `false` | Initial unchecked/checked state for uncontrolled usage. |
+| `onChange` | `(checked: boolean) => void` | — | Value-first callback fired by the native input change event. |
+| `disabled` | `boolean` | `false` | Disables the native input and pointer interaction. |
+| `indeterminate` | `boolean` | `false` | Shows the mixed visual state. |
+| `children` | `ReactNode` | — | Visible label content. |
+| `id` | `string` | — | Native input id. |
+| `name` | `string` | — | Native form field name. |
+| `className` | `string` | — | Applied to the label wrapper. |
+
+### CheckboxGroup
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — | Accessible group label. |
+| `orientation` | `"vertical" \| "horizontal"` | `"vertical"` | Layout direction for children. |
+| `children` | `ReactNode` | — | Checkbox items. |
+| `className` | `string` | — | Applied to the group wrapper. |
 
 ## Accessibility
 
-- ARIA `role="checkbox"` with `aria-checked` (supports `true`, `false`, `mixed`)
-- Keyboard: `Space` toggles the checkbox
-- Label is automatically associated via `children`
-- Disabled state sets `aria-disabled="true"`
+- The native checkbox input owns form state and keyboard behavior.
+- Pressing `Space` toggles the input when it is not disabled.
+- Text labels are associated because the input and indicator live inside the wrapping `<label>`.
+- `CheckboxGroup` uses `role="group"` with `aria-label` when `label` is provided.
+- Do not use `indeterminate` as a third persisted value. It communicates mixed child state controlled by the parent.
+
+## Design Contract
+
+- Keep the checkbox row compact: one label, optional short helper text nearby, no nested controls inside the label.
+- Use neutral chrome for unchecked and brand/foreground emphasis only for checked or mixed states.
+- Use disabled for unavailable options, not for permission education. If the user should understand an upgrade path, pair the row with text or a tooltip icon.
+
+## Real Product Examples
+
+- Billing settings where multiple invoice recipients can be selected.
+- Permission forms where several independent scopes can be granted.
+- Bulk-selection headers using `indeterminate` while some child rows are selected.
+
+## Anti-patterns
+
+- Do not document HeroUI-style props such as `isSelected`, `isDisabled`, `color`, or `radius`; this primitive does not expose them.
+- Do not use `Checkbox` for mutually exclusive options. Use `RadioGroup`.
+- Do not rely on placeholder text or color alone to explain the option.
 
 ## See Also
 
