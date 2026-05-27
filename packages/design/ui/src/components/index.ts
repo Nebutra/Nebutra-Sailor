@@ -50,8 +50,6 @@ export {
   TextArea,
   Tooltip,
 } from "@lobehub/ui";
-// Spotlight (moved to @lobehub/ui/awesome in v5)
-export { Spotlight } from "@lobehub/ui/awesome";
 // Chat types (moved to @lobehub/ui/chat in v5)
 export type {
   ChatItemProps,
@@ -66,6 +64,10 @@ export {
   MessageInput,
   MessageModal,
 } from "@lobehub/ui/chat";
+// Import Spotlight directly. The @lobehub/ui/awesome barrel also imports Spline,
+// whose runtime uses Function() and violates the app's production CSP.
+// @ts-expect-error Upstream .d.mts declares a named export, but the runtime .mjs only ships default.
+export { default as Spotlight } from "@lobehub/ui/es/awesome/Spotlight/Spotlight";
 export * from "./ai-prompt-box";
 // Animation
 export {

@@ -113,6 +113,7 @@ function applyThemeToDom(
   resolved: ResolvedTheme,
   attribute: "class" | "data-theme",
   disableTransitionOnChange: boolean,
+  nonce?: string,
 ) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
@@ -120,6 +121,7 @@ function applyThemeToDom(
   // Suppress CSS transitions during the swap so the change appears instant.
   if (disableTransitionOnChange) {
     const suppressor = document.createElement("style");
+    if (nonce) suppressor.setAttribute("nonce", nonce);
     suppressor.appendChild(
       document.createTextNode(
         "*,*::before,*::after{transition:none!important;animation-duration:0s!important}",
@@ -140,7 +142,6 @@ function applyThemeToDom(
   } else {
     root.setAttribute("data-theme", resolved);
   }
-  root.style.colorScheme = resolved;
 }
 
 export interface ThemeProviderProps {
@@ -169,6 +170,7 @@ export function ThemeProvider({
   forcedTheme,
   disableTransitionOnChange = true,
   storageKey = THEME_STORAGE_KEY,
+  nonce,
 }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(() => readStoredTheme(storageKey, defaultTheme));
   const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(() => resolveSystemTheme());
@@ -198,9 +200,9 @@ export function ThemeProvider({
   // SSR can render the correct <html> class directly (no inline script,
   // no React 19 "script in component" warning).
   useEffect(() => {
-    applyThemeToDom(resolvedTheme, attribute, disableTransitionOnChange);
+    applyThemeToDom(resolvedTheme, attribute, disableTransitionOnChange, nonce);
     writeThemeCookie(resolvedTheme, storageKey);
-  }, [resolvedTheme, attribute, disableTransitionOnChange, storageKey]);
+  }, [resolvedTheme, attribute, disableTransitionOnChange, nonce, storageKey]);
 
   // Follow OS preference changes when in `system` mode
   useEffect(() => {
