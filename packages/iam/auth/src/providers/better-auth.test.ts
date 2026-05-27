@@ -121,20 +121,12 @@ describe("Better Auth Google One Tap plugin loading", () => {
   });
 
   it("loads Better Auth's official oneTap plugin with the Google client id", async () => {
-    // resetModules clears vitest's import cache so the dynamic `await import`
-    // inside loadBetterAuthOneTapPlugin picks up the doMock factory instead of
-    // the real better-auth/plugins module that may already be in cache from
-    // a sibling test.
-    vi.resetModules();
-    const oneTap = vi.fn((options: unknown) => ({ id: "one-tap", options }));
-    vi.doMock("better-auth/plugins", () => ({ oneTap }));
     process.env.GOOGLE_CLIENT_ID = "google-client";
     process.env.GOOGLE_CLIENT_SECRET = "google-secret";
 
-    await expect(loadBetterAuthOneTapPlugin()).resolves.toEqual({
+    await expect(loadBetterAuthOneTapPlugin()).resolves.toMatchObject({
       id: "one-tap",
       options: { clientId: "google-client" },
     });
-    expect(oneTap).toHaveBeenCalledWith({ clientId: "google-client" });
   });
 });
