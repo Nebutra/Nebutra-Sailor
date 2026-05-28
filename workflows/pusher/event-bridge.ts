@@ -6,7 +6,10 @@
  */
 
 import { type BaseEvent, EventTypes, eventBus } from "@nebutra/event-bus";
+import { logger } from "@nebutra/logger";
 import { PusherEvents, triggerEvent } from "./server";
+
+const log = logger.child({ service: "pusher-event-bridge" });
 
 /**
  * Event mapping configuration
@@ -160,7 +163,13 @@ export function initEventBridge(): () => void {
         await Promise.all(
           channels.map((channel) => triggerEvent(channel, config.pusherEvent, payload)),
         );
-      } catch (_error) {}
+      } catch (error) {
+        log.warn("Failed to bridge event-bus event to Pusher", {
+          error,
+          eventId: event.id,
+          eventType,
+        });
+      }
     });
 
     unsubscribers.push(unsubscribe);

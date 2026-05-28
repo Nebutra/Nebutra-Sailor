@@ -97,4 +97,4 @@ const response = await eventBus.request("user.validate", {
 ## Related
 
 - [Saga patterns](../saga/)
-- [Inngest workflows](../../workflows/inngest/)
+- [Inngest workflows](../../../workflows/inngest/)

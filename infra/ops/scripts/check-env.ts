@@ -7,7 +7,11 @@
  */
 
 import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = resolve(SCRIPT_DIR, "../../..");
 
 // ============================================
 // Required Environment Variables by Context
@@ -44,6 +48,7 @@ const APP_REQUIREMENTS: Record<string, (keyof typeof REQUIRED_VARS)[]> = {
   web: ["core", "database", "auth", "redis"],
   "landing-page": ["core", "auth"],
   "api-gateway": ["core", "database", "auth", "redis", "ai"],
+  gateway: ["core", "database", "auth", "redis", "ai"],
   studio: ["core"],
 };
 
@@ -101,6 +106,28 @@ function loadEnvFile(envPath: string): void {
   }
 }
 
+function resolveEnvFileForApp(appName: string): string | null {
+  const explicitPaths: Record<string, string> = {
+    "landing-page": resolve(REPO_ROOT, "apps/landing-page/.env.local"),
+    web: resolve(REPO_ROOT, "apps/web/.env.local"),
+    studio: resolve(REPO_ROOT, "apps/studio/.env.local"),
+    gateway: resolve(REPO_ROOT, "backends/gateway/.env.local"),
+    "api-gateway": resolve(REPO_ROOT, "backends/gateway/.env.local"),
+  };
+
+  if (appName in explicitPaths) {
+    return explicitPaths[appName];
+  }
+
+  const appPath = resolve(REPO_ROOT, `apps/${appName}/.env.local`);
+  if (existsSync(appPath)) return appPath;
+
+  const backendPath = resolve(REPO_ROOT, `backends/${appName}/.env.local`);
+  if (existsSync(backendPath)) return backendPath;
+
+  return null;
+}
+
 function getRequiredVarsForApp(appName: string): string[] {
   const categories = APP_REQUIREMENTS[appName] || ["core"];
   const vars: string[] = [];
@@ -124,17 +151,19 @@ function main(): void {
   const skipValidation = process.env.SKIP_ENV_VALIDATION === "true";
 
   if (skipValidation) {
+    process.stdout.write("[check-env] skipped via SKIP_ENV_VALIDATION=true\n");
     process.exit(0);
   }
 
   // Load .env files
-  const rootDir = resolve(__dirname, "../..");
-  loadEnvFile(resolve(rootDir, ".env"));
-  loadEnvFile(resolve(rootDir, ".env.local"));
+  loadEnvFile(resolve(REPO_ROOT, ".env"));
+  loadEnvFile(resolve(REPO_ROOT, ".env.local"));
 
   if (appName) {
-    const appEnvPath = resolve(rootDir, `apps/${appName}/.env.local`);
-    loadEnvFile(appEnvPath);
+    const appEnvPath = resolveEnvFileForApp(appName);
+    if (appEnvPath) {
+      loadEnvFile(appEnvPath);
+    }
   }
 
   // Determine required vars
@@ -144,15 +173,21 @@ function main(): void {
 
   // Output results
   if (result.valid.length > 0) {
-    result.valid.forEach((_v) => {});
+    process.stdout.write(
+      `[check-env] valid (${result.valid.length}): ${result.valid.join(", ")}\n`,
+    );
   }
 
   if (result.empty.length > 0) {
-    result.empty.forEach((_v) => {});
+    process.stderr.write(
+      `[check-env] empty (${result.empty.length}): ${result.empty.join(", ")}\n`,
+    );
   }
 
   if (result.missing.length > 0) {
-    result.missing.forEach((_v) => {});
+    process.stderr.write(
+      `[check-env] missing (${result.missing.length}): ${result.missing.join(", ")}\n`,
+    );
   }
 
   // Exit with error if critical vars are missing
@@ -163,7 +198,7 @@ function main(): void {
   }
 
   if (hasCriticalMissing && isCI) {
-    // Don't exit with error in CI - let the build fail naturally
+    process.stderr.write("[check-env] CI mode detected; reporting drift without forcing exit 1\n");
   }
 }
 

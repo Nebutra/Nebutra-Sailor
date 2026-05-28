@@ -120,6 +120,6 @@ Thanks to everyone who contributed to this release!
 
 ## 📚 Related Links
 
-- [Full Changelog](../CHANGELOG.md)
+- [Full Changelog](../../CHANGELOG.md)
 - [Documentation](../../docs/)
 - [Issue Tracker](https://github.com/your-org/nebutra-sailor/issues)

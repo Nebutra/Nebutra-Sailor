@@ -315,5 +315,5 @@ ANALYTICS_COOKIE_CONSENT=true
 ## Related
 
 - [Dub Documentation](https://dub.co/docs)
-- [Event Bus](../event-bus/) — Cross-service events
-- [Audit](../audit/) — Activity logging
+- [Event Bus](../../integrations/event-bus/) — Cross-service events
+- [Audit](../../iam/audit/) — Activity logging

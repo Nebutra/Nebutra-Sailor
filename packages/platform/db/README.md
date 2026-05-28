@@ -284,5 +284,5 @@ wishing to override community pricing can manually edit rows after seeding.
 ## Related
 
 - [Prisma 7 Release Notes](https://www.prisma.io/blog/announcing-prisma-orm-7-0-0)
-- [Database RLS policies](../../infra/supabase/)
+- [Database RLS policies](../../../infra/data/database/)
 - [Supabase dashboard](https://supabase.com/dashboard)

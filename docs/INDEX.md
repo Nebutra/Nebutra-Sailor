@@ -19,7 +19,7 @@ Complete navigation to all project documentation.
 
 | Service                                                | Description                              |
 | ------------------------------------------------------ | ---------------------------------------- |
-| [gateway](../backends/gateway/README.md)               | BFF: auth, tenancy, rate-limit, routing  |
+| [gateway](../backends/gateway/)                        | BFF: auth, tenancy, rate-limit, routing  |
 
 ### Python — active
 
@@ -110,5 +110,5 @@ Complete navigation to all project documentation.
 | Document                            | Description          |
 | ----------------------------------- | -------------------- |
 | [DOMAINS](./DOMAINS.md)             | Domain configuration |
-| [changelog](../changelog/README.md) | Version history      |
+| [changelog](../CHANGELOG.md)        | Version history      |
 | [Alibaba Cloud ECS](./阿里云ECS部署指南.md) | ECS deployment guide |

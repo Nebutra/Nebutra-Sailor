@@ -102,5 +102,5 @@ API_WEIGHTS["/api/v1/custom"] = 3;
 
 ## Related
 
-- [Cache strategies](../cache/)
-- [BFF rate limit middleware](../../backends/gateway/)
+- [Cache strategies](../../integrations/cache/)
+- [BFF rate limit middleware](../../../backends/gateway/)

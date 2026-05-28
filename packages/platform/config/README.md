@@ -89,5 +89,5 @@ import { PLANS, ROLES, LIMITS } from "@nebutra/config";
 
 ## Related
 
-- [API Gateway](../../backends/gateway/)
+- [API Gateway](../../../backends/gateway/)
 - [Database package](../db/)

@@ -99,5 +99,5 @@ ALERT_DEFAULT_CHANNEL=slack
 
 ## Related
 
-- [Observability](../../infra/ops/observability/)
+- [Observability](../../../infra/ops/observability/)
 - [Health package](../health/)
