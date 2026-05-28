@@ -99,5 +99,5 @@ try {
 
 ## Related
 
-- [API Gateway](../../backends/gateway/)
-- [Observability](../../infra/ops/observability/)
+- [API Gateway](../../../backends/gateway/)
+- [Observability](../../../infra/ops/observability/)
