@@ -113,6 +113,48 @@ function BlogTable({ value }: { value: PortableTextBlock }) {
   );
 }
 
+function parseMarkdownTableText(text: string): PortableTextBlock["rows"] | null {
+  const trimmed = text.trim();
+  if (!trimmed.startsWith("|") || !trimmed.includes("---")) return null;
+
+  const rowText = trimmed.includes("\n")
+    ? trimmed
+    : // Older imported PortableText can collapse markdown table line breaks into
+      // adjacent pipes. Recover those rows so already-published posts render well.
+      trimmed.replace(/\|\s*\|/g, "|\n|");
+  const lines = rowText
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  if (lines.length < 3) return null;
+
+  const cellsByRow = lines.map((line) =>
+    line
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
+      .map((cell) => cell.trim()),
+  );
+  const separatorIndex = cellsByRow.findIndex(
+    (cells) => cells.length > 0 && cells.every((cell) => /^:?-{3,}:?$/.test(cell)),
+  );
+
+  if (separatorIndex !== 1 || !cellsByRow[0]?.length) return null;
+
+  const header = cellsByRow[0];
+  const rows = cellsByRow
+    .slice(2)
+    .filter((cells) => cells.some(Boolean))
+    .map((cells, index) => ({
+      _key: `markdown-row-${index}`,
+      cells: header.map((_, cellIndex) => cells[cellIndex] ?? ""),
+    }));
+
+  if (!rows.length) return null;
+  return [{ _key: "markdown-head", cells: header }, ...rows];
+}
+
 function getHeadingId(
   value: unknown,
   headingIds: Record<string, string> | undefined,
@@ -142,9 +184,24 @@ function createPortableTextComponents(
 ): PortableTextComponents {
   return {
     block: {
-      normal: ({ children }) => (
-        <p className="mt-5 text-[1.02rem] leading-8 text-[var(--neutral-11)]">{children}</p>
-      ),
+      normal: ({ children, value }) => {
+        const text = getBlockText(value as PortableTextBlock);
+        const tableRows = parseMarkdownTableText(text);
+
+        if (tableRows) {
+          return (
+            <BlogTable
+              value={{
+                _key: (value as PortableTextBlock | undefined)?._key ?? "markdown-table",
+                _type: "table",
+                rows: tableRows,
+              }}
+            />
+          );
+        }
+
+        return <p className="mt-5 text-[1.02rem] leading-8 text-[var(--neutral-11)]">{children}</p>;
+      },
       h2: ({ children, value }) => {
         const id = getHeadingId(value, headingIds);
         return (

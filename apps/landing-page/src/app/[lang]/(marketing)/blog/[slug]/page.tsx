@@ -3,7 +3,6 @@ import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
@@ -12,7 +11,9 @@ import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogComments } from "@/components/landing/blog-comments";
 import { BlogCopyButton } from "@/components/landing/blog-copy-button";
+import { BlogImage } from "@/components/landing/blog-image";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
+import { BlogShareActions } from "@/components/landing/blog-share-actions";
 import { BlogTableOfContents, type BlogTocItem } from "@/components/landing/blog-table-of-contents";
 import { type Locale, routing } from "@/i18n/routing";
 import {
@@ -27,6 +28,7 @@ import {
 } from "@/lib/blog";
 import { getFallbackBlogCover } from "@/lib/blog-covers";
 import { env } from "@/lib/env";
+import { getSiteUrl } from "@/lib/seo/site-routes";
 
 type Params = { lang: string; slug: string };
 
@@ -313,6 +315,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const authorName = getAuthorName(post.author);
   const articleCopyText = getPostCopyText(post);
   const tableOfContents = getBlogTableOfContents(post.body);
+  const canonicalUrl = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}`;
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
@@ -395,6 +398,12 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     </a>
                   )}
                 </div>
+                <BlogShareActions
+                  excerpt={post.excerpt}
+                  isZh={isZh}
+                  title={post.title}
+                  url={canonicalUrl}
+                />
               </div>
             </div>
           </AnimateIn>
@@ -403,9 +412,11 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
         {/* Hero image */}
         <AnimateIn preset="fadeUp" inView>
           <div className="relative mt-8 h-64 w-full overflow-hidden rounded-[var(--radius-lg)] sm:h-96">
-            <Image
+            <BlogImage
               src={imageUrl}
               alt={imageAlt}
+              fallbackSrc={fallbackCover.src}
+              fallbackAlt={fallbackCover.alt}
               fill
               priority
               className="object-cover"

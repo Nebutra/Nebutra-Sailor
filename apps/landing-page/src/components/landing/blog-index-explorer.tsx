@@ -4,6 +4,7 @@ import { Box, Calendar, Menu, MagnifyingGlass as Search, User } from "@nebutra/i
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { BlogImage } from "./blog-image";
 
 export type BlogIndexPost = {
   id: string;
@@ -15,6 +16,8 @@ export type BlogIndexPost = {
   readTime: string;
   authorName: string | null;
   authorAvatarUrl: string | null;
+  fallbackImageAlt: string;
+  fallbackImageUrl: string;
   imageUrl: string;
   imageAlt: string;
 };
@@ -99,9 +102,11 @@ function GridCard({ post }: { post: BlogIndexPost }) {
       className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]"
     >
       <div className="relative h-52 overflow-hidden bg-[var(--neutral-3)]">
-        <Image
+        <BlogImage
           src={post.imageUrl}
           alt={post.imageAlt}
+          fallbackSrc={post.fallbackImageUrl}
+          fallbackAlt={post.fallbackImageAlt}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
           className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
@@ -142,9 +147,11 @@ function ListCard({ post }: { post: BlogIndexPost }) {
       className="group grid gap-5 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] sm:grid-cols-[220px_1fr]"
     >
       <div className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-[var(--neutral-3)]">
-        <Image
+        <BlogImage
           src={post.imageUrl}
           alt={post.imageAlt}
+          fallbackSrc={post.fallbackImageUrl}
+          fallbackAlt={post.fallbackImageAlt}
           fill
           sizes="(max-width: 640px) 100vw, 220px"
           className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"

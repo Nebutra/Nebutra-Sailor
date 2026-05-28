@@ -10,6 +10,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { BlogImage } from "@/components/landing/blog-image";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { type BlogPostWithSource, getAllPosts, toBlogLanguage } from "@/lib/blog";
@@ -51,6 +52,8 @@ function getAuthorAvatarUrl(author: BlogPostWithSource["author"]): string | null
 }
 
 function getPostCover(post: BlogPostWithSource, width: number, height: number) {
+  const fallbackCover = getFallbackBlogCover(post);
+
   if (post.mainImage) {
     return {
       src: getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
@@ -59,13 +62,16 @@ function getPostCover(post: BlogPostWithSource, width: number, height: number) {
         format: "webp",
       }),
       alt: post.title,
+      fallbackSrc: fallbackCover.src,
+      fallbackAlt: fallbackCover.alt,
     };
   }
 
-  const fallbackCover = getFallbackBlogCover(post);
   return {
     src: fallbackCover.src,
     alt: fallbackCover.alt,
+    fallbackSrc: fallbackCover.src,
+    fallbackAlt: fallbackCover.alt,
   };
 }
 
@@ -126,6 +132,8 @@ function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean):
     authorAvatarUrl: getAuthorAvatarUrl(post.author),
     imageUrl: cover.src,
     imageAlt: cover.alt,
+    fallbackImageUrl: cover.fallbackSrc,
+    fallbackImageAlt: cover.fallbackAlt,
   };
 }
 
@@ -155,18 +163,12 @@ function AuthorByline({ post }: { post: BlogPostWithSource }) {
 }
 
 function ArticleVisual({
-  post,
-  imageUrl,
+  cover,
   variant = "compact",
 }: {
-  post: BlogPostWithSource;
-  imageUrl: string | null;
+  cover: ReturnType<typeof getPostCover>;
   variant?: "featured" | "compact";
 }) {
-  const fallbackCover = getFallbackBlogCover(post);
-  const coverSrc = imageUrl ?? fallbackCover.src;
-  const coverAlt = imageUrl ? post.title : fallbackCover.alt;
-
   return (
     <div
       className={
@@ -175,9 +177,11 @@ function ArticleVisual({
           : "relative h-48 w-full overflow-hidden bg-[var(--neutral-3)]"
       }
     >
-      <Image
-        src={coverSrc}
-        alt={coverAlt}
+      <BlogImage
+        src={cover.src}
+        alt={cover.alt}
+        fallbackSrc={cover.fallbackSrc}
+        fallbackAlt={cover.fallbackAlt}
         fill
         priority={variant === "featured"}
         className="object-cover transition-transform duration-150 group-hover:-translate-y-px"
@@ -189,7 +193,7 @@ function ArticleVisual({
 
 function FeaturedPostCard({ post, lang }: { post: BlogPostWithSource; lang: string }) {
   const isZh = lang === "zh";
-  const imageUrl = post.mainImage ? getPostCover(post, 1200, 720).src : null;
+  const cover = getPostCover(post, 1200, 720);
 
   const date = formatPostDate(post, isZh);
 
@@ -198,7 +202,7 @@ function FeaturedPostCard({ post, lang }: { post: BlogPostWithSource; lang: stri
       href={localizedBlogHref(lang, post.slug)}
       className="group grid overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] shadow-sm transition-shadow hover:shadow-md lg:grid-cols-[0.9fr_1.1fr]"
     >
-      <ArticleVisual post={post} imageUrl={imageUrl} variant="featured" />
+      <ArticleVisual cover={cover} variant="featured" />
 
       <div className="flex min-h-80 flex-col p-6 sm:p-8">
         <div className="mb-5 flex flex-wrap items-center gap-2 text-xs font-medium text-[var(--neutral-11)]">
