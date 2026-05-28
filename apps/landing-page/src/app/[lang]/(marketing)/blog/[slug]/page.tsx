@@ -13,6 +13,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogComments } from "@/components/landing/blog-comments";
 import { BlogCopyButton } from "@/components/landing/blog-copy-button";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
+import { BlogTableOfContents, type BlogTocItem } from "@/components/landing/blog-table-of-contents";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   type BlogLanguage,
@@ -141,6 +142,59 @@ function getPortableBlockCopyText(block: PortableTextBlock): string | null {
   return text;
 }
 
+function getHeadingDepth(style: string | undefined): BlogTocItem["depth"] | null {
+  if (style === "h2") return 2;
+  if (style === "h3") return 3;
+  if (style === "h4") return 4;
+  return null;
+}
+
+function hashHeadingId(input: string): string {
+  let hash = 0x811c9dc5;
+  for (let index = 0; index < input.length; index++) {
+    hash ^= input.charCodeAt(index);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return (hash >>> 0).toString(36);
+}
+
+function getHeadingText(block: PortableTextBlock): string {
+  return (
+    block.children
+      ?.map((child) => child.text ?? "")
+      .join("")
+      .replace(/\s+/g, " ")
+      .trim() ?? ""
+  );
+}
+
+function getBlogTableOfContents(body: PortableTextBlock[] | null | undefined): {
+  items: BlogTocItem[];
+  headingIds: Record<string, string>;
+} {
+  const headingIds: Record<string, string> = {};
+  const seen = new Map<string, number>();
+  const items =
+    body?.flatMap((block, index) => {
+      if (block._type !== "block") return [];
+      const depth = getHeadingDepth(block.style);
+      if (!depth || !block._key) return [];
+
+      const title = getHeadingText(block);
+      if (!title) return [];
+
+      const baseId = `section-${index + 1}-${hashHeadingId(`${block._key}:${title}`)}`;
+      const count = seen.get(baseId) ?? 0;
+      seen.set(baseId, count + 1);
+      const id = count > 0 ? `${baseId}-${count + 1}` : baseId;
+      headingIds[block._key] = id;
+
+      return [{ id, title, depth }];
+    }) ?? [];
+
+  return { items, headingIds };
+}
+
 function getPostCopyText(post: BlogPostWithSource): string {
   const parts = [`# ${post.title}`];
   if (post.excerpt) parts.push(post.excerpt);
@@ -258,6 +312,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
     : null;
   const authorName = getAuthorName(post.author);
   const articleCopyText = getPostCopyText(post);
+  const tableOfContents = getBlogTableOfContents(post.body);
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
@@ -360,40 +415,65 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView>
-          <div className="mx-auto mt-10 max-w-3xl">
-            <BlogPortableText
-              body={post.body}
-              copyLabel={isZh ? "复制此段" : "Copy block"}
-              copiedLabel={isZh ? "已复制" : "Copied"}
+          <div className="mx-auto mt-10 grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,720px)_256px] lg:items-start lg:justify-center lg:gap-12">
+            <div className="min-w-0">
+              <BlogTableOfContents
+                items={tableOfContents.items}
+                variant="mobile"
+                labels={{
+                  title: isZh ? "目录" : "Contents",
+                  current: isZh ? "正在阅读" : "Reading",
+                  progress: isZh ? "阅读进度" : "Reading progress",
+                  open: isZh ? "展开目录" : "Open contents",
+                }}
+              />
+              <BlogPortableText
+                body={post.body}
+                copyLabel={isZh ? "复制此段" : "Copy block"}
+                copiedLabel={isZh ? "已复制" : "Copied"}
+                headingIds={tableOfContents.headingIds}
+              />
+            </div>
+            <BlogTableOfContents
+              items={tableOfContents.items}
+              variant="desktop"
+              labels={{
+                title: isZh ? "目录" : "Contents",
+                current: isZh ? "正在阅读" : "Reading",
+                progress: isZh ? "阅读进度" : "Reading progress",
+                open: isZh ? "展开目录" : "Open contents",
+              }}
             />
           </div>
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView>
-          <BlogComments
-            appUrl={env.NEXT_PUBLIC_APP_URL}
-            translationKey={post.translationKey ?? post.slug}
-            slug={post.slug}
-            language={blogLanguage}
-            labels={{
-              title: isZh ? "讨论" : "Discussion",
-              subtitle: isZh
-                ? "使用 Nebutra 账号参与评论。评论会先进入审核队列。"
-                : "Join with your Nebutra account. New comments enter moderation first.",
-              empty: isZh ? "还没有评论。来写下第一条。" : "No comments yet. Start the thread.",
-              signIn: isZh ? "登录后评论" : "Sign in to comment",
-              placeholder: isZh ? "写下你的想法..." : "Share your thought...",
-              submit: isZh ? "发布评论" : "Post comment",
-              submitting: isZh ? "发布中" : "Posting",
-              pending: isZh ? "待审核" : "Pending",
-              error: isZh
-                ? "评论暂时不可用，请稍后再试。"
-                : "Comments are unavailable. Try again later.",
-              like: isZh ? "点赞" : "Like",
-              liked: isZh ? "已点赞" : "Liked",
-              signInToLike: isZh ? "登录后点赞" : "Sign in to like",
-            }}
-          />
+          <div className="mx-auto max-w-3xl">
+            <BlogComments
+              appUrl={env.NEXT_PUBLIC_APP_URL}
+              translationKey={post.translationKey ?? post.slug}
+              slug={post.slug}
+              language={blogLanguage}
+              labels={{
+                title: isZh ? "讨论" : "Discussion",
+                subtitle: isZh
+                  ? "使用 Nebutra 账号参与评论。评论会先进入审核队列。"
+                  : "Join with your Nebutra account. New comments enter moderation first.",
+                empty: isZh ? "还没有评论。来写下第一条。" : "No comments yet. Start the thread.",
+                signIn: isZh ? "登录后评论" : "Sign in to comment",
+                placeholder: isZh ? "写下你的想法..." : "Share your thought...",
+                submit: isZh ? "发布评论" : "Post comment",
+                submitting: isZh ? "发布中" : "Posting",
+                pending: isZh ? "待审核" : "Pending",
+                error: isZh
+                  ? "评论暂时不可用，请稍后再试。"
+                  : "Comments are unavailable. Try again later.",
+                like: isZh ? "点赞" : "Like",
+                liked: isZh ? "已点赞" : "Liked",
+                signInToLike: isZh ? "登录后点赞" : "Sign in to like",
+              }}
+            />
+          </div>
         </AnimateIn>
       </article>
 

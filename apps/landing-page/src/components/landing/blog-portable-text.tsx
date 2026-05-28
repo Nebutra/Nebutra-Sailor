@@ -1,3 +1,4 @@
+import { Hash } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
@@ -112,30 +113,74 @@ function BlogTable({ value }: { value: PortableTextBlock }) {
   );
 }
 
+function getHeadingId(
+  value: unknown,
+  headingIds: Record<string, string> | undefined,
+): string | undefined {
+  const key = (value as PortableTextBlock | undefined)?._key;
+  return key ? headingIds?.[key] : undefined;
+}
+
+function HeadingAnchor({ id }: { id: string | undefined }) {
+  if (!id) return null;
+
+  return (
+    <a
+      href={`#${id}`}
+      aria-label="Link to section"
+      className="ml-2 inline-flex translate-y-0.5 text-[var(--neutral-8)] opacity-0 transition-opacity hover:text-[var(--neutral-12)] group-hover:opacity-100 focus-visible:opacity-100"
+    >
+      <Hash className="size-[0.8em]" aria-hidden />
+    </a>
+  );
+}
+
 function createPortableTextComponents(
   copyLabel: string,
   copiedLabel: string,
+  headingIds?: Record<string, string>,
 ): PortableTextComponents {
   return {
     block: {
       normal: ({ children }) => (
         <p className="mt-5 text-[1.02rem] leading-8 text-[var(--neutral-11)]">{children}</p>
       ),
-      h2: ({ children }) => (
-        <h2 className="mt-12 border-t border-[var(--neutral-6)] pt-8 text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {children}
-        </h2>
-      ),
-      h3: ({ children }) => (
-        <h3 className="mt-9 text-xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {children}
-        </h3>
-      ),
-      h4: ({ children }) => (
-        <h4 className="mt-7 text-base font-semibold tracking-tight text-[var(--neutral-12)]">
-          {children}
-        </h4>
-      ),
+      h2: ({ children, value }) => {
+        const id = getHeadingId(value, headingIds);
+        return (
+          <h2
+            id={id}
+            className="group mt-12 scroll-mt-28 text-2xl font-semibold tracking-tight text-[var(--neutral-12)]"
+          >
+            {children}
+            <HeadingAnchor id={id} />
+          </h2>
+        );
+      },
+      h3: ({ children, value }) => {
+        const id = getHeadingId(value, headingIds);
+        return (
+          <h3
+            id={id}
+            className="group mt-9 scroll-mt-28 text-xl font-semibold tracking-tight text-[var(--neutral-12)]"
+          >
+            {children}
+            <HeadingAnchor id={id} />
+          </h3>
+        );
+      },
+      h4: ({ children, value }) => {
+        const id = getHeadingId(value, headingIds);
+        return (
+          <h4
+            id={id}
+            className="group mt-7 scroll-mt-28 text-base font-semibold tracking-tight text-[var(--neutral-12)]"
+          >
+            {children}
+            <HeadingAnchor id={id} />
+          </h4>
+        );
+      },
       blockquote: ({ children, value }) => {
         const text = getBlockText(value as PortableTextBlock);
         const isTemplate = hasTemplatePlaceholders(text);
@@ -241,10 +286,12 @@ export function BlogPortableText({
   body,
   copyLabel = "Copy original",
   copiedLabel = "Copied",
+  headingIds,
 }: {
   body: PortableTextBlock[] | null | undefined;
   copyLabel?: string;
   copiedLabel?: string;
+  headingIds?: Record<string, string>;
 }) {
   if (!body?.length) return null;
   const visibleBody = body.filter(hasVisibleText).map(decorateTemplatePlaceholders);
@@ -254,7 +301,7 @@ export function BlogPortableText({
     <div className="max-w-none text-[var(--neutral-11)]">
       <PortableText
         value={visibleBody}
-        components={createPortableTextComponents(copyLabel, copiedLabel)}
+        components={createPortableTextComponents(copyLabel, copiedLabel, headingIds)}
       />
     </div>
   );
