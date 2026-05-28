@@ -214,6 +214,38 @@ function tableBlock(rows) {
   };
 }
 
+function parseCodeFenceMeta(rawMeta) {
+  const meta = rawMeta.trim();
+  const language = meta.match(/^([A-Za-z0-9_-]+)/)?.[1] || "text";
+  const filename =
+    meta.match(/(?:title|filename)=["']([^"']+)["']/)?.[1] ?? meta.match(/\[(.+?)\]/)?.[1] ?? null;
+  const highlightedLines = [];
+  const highlightMatch = meta.match(/\{([0-9,\s-]+)\}/);
+  if (highlightMatch?.[1]) {
+    for (const part of highlightMatch[1].split(",")) {
+      const range = part.trim();
+      if (!range) continue;
+      const [startRaw, endRaw] = range.split("-").map((item) => Number.parseInt(item, 10));
+      if (!Number.isFinite(startRaw)) continue;
+      const end = Number.isFinite(endRaw) ? endRaw : startRaw;
+      for (let line = startRaw; line <= end; line += 1) highlightedLines.push(line);
+    }
+  }
+
+  return { filename, highlightedLines, language };
+}
+
+function codeBlock(code, meta) {
+  return {
+    _type: "code",
+    _key: key(),
+    code,
+    language: meta.language,
+    ...(meta.filename ? { filename: meta.filename } : {}),
+    ...(meta.highlightedLines.length ? { highlightedLines: meta.highlightedLines } : {}),
+  };
+}
+
 function markdownToPortableText(markdown, title) {
   const blocks = [];
   const paragraph = [];
@@ -231,6 +263,22 @@ function markdownToPortableText(markdown, title) {
 
     if (/^---+$/.test(line)) {
       flushParagraph(paragraph, blocks);
+      continue;
+    }
+
+    const fence = line.match(/^```(.*)$/);
+    if (fence) {
+      flushParagraph(paragraph, blocks);
+      const codeLines = [];
+      const meta = parseCodeFenceMeta(fence[1] ?? "");
+      index += 1;
+
+      while (index < lines.length && !lines[index].trim().startsWith("```")) {
+        codeLines.push(lines[index]);
+        index += 1;
+      }
+
+      blocks.push(codeBlock(codeLines.join("\n"), meta));
       continue;
     }
 

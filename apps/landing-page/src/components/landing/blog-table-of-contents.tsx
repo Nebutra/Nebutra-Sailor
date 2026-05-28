@@ -1,13 +1,8 @@
 "use client";
 
+import type { BlogTocItem } from "@nebutra/blog";
 import { ChevronDown, ListOrdered } from "@nebutra/icons";
 import { useCallback, useEffect, useMemo, useState } from "react";
-
-export type BlogTocItem = {
-  id: string;
-  title: string;
-  depth: 2 | 3 | 4;
-};
 
 type BlogTableOfContentsLabels = {
   title: string;
@@ -55,7 +50,7 @@ function TocLink({
   active: boolean;
   onNavigate: (id: string) => void;
 }) {
-  const inset = item.depth === 2 ? "pl-0" : item.depth === 3 ? "pl-4" : "pl-8";
+  const inset = item.depth === 2 ? "pl-3" : item.depth === 3 ? "pl-6" : "pl-9";
 
   return (
     <a
@@ -65,14 +60,14 @@ function TocLink({
         event.preventDefault();
         onNavigate(item.id);
       }}
-      className={`group relative block rounded-[var(--radius-sm)] py-1.5 pr-2 text-sm leading-5 transition-colors ${inset} ${
+      className={`group relative block py-1.5 pr-1 text-[13px] leading-5 transition-colors ${inset} ${
         active
-          ? "font-medium text-[var(--neutral-12)]"
-          : "text-[var(--neutral-10)] hover:text-[var(--neutral-12)]"
+          ? "font-semibold text-[var(--neutral-12)]"
+          : "text-[var(--neutral-9)] hover:text-[var(--neutral-12)]"
       }`}
     >
       <span
-        className={`absolute left-[-15px] top-2 h-4 w-px rounded-full transition-colors ${
+        className={`absolute left-[-1px] top-2 h-4 w-px rounded-full transition-colors ${
           active ? "bg-[var(--blue-9)]" : "bg-transparent group-hover:bg-[var(--neutral-7)]"
         }`}
         aria-hidden
@@ -134,7 +129,7 @@ export function BlogTableOfContents({ items, labels, variant = "both" }: BlogTab
   return (
     <>
       {showMobile && (
-        <section className="mb-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 lg:hidden">
+        <section className="mb-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 xl:hidden">
           <button
             type="button"
             aria-expanded={open}
@@ -188,21 +183,16 @@ export function BlogTableOfContents({ items, labels, variant = "both" }: BlogTab
       )}
 
       {showDesktop && (
-        <aside className="sticky top-28 hidden self-start lg:block">
-          <nav aria-label={labels.title} className="w-64 border-l border-[var(--neutral-6)] pl-5">
-            <div className="mb-4 flex items-center justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--neutral-9)]">
-                  <ListOrdered className="size-3.5" aria-hidden />
-                  {labels.title}
-                </div>
-                <p className="mt-1 line-clamp-2 text-xs text-[var(--neutral-10)]">
-                  {labels.current}: {activeItem?.title}
-                </p>
+        <aside className="sticky top-28 hidden self-start xl:block">
+          <nav
+            aria-label={labels.title}
+            className="w-[240px] border-l border-[var(--neutral-6)] pl-4"
+          >
+            <div className="mb-3">
+              <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--neutral-9)]">
+                <ListOrdered className="size-3.5" aria-hidden />
+                {labels.title}
               </div>
-              <span className="font-mono text-[11px] text-[var(--neutral-9)]">
-                {Math.round(progress)}%
-              </span>
             </div>
             <div
               aria-label={labels.progress}
@@ -213,11 +203,11 @@ export function BlogTableOfContents({ items, labels, variant = "both" }: BlogTab
               role="progressbar"
             >
               <div
-                className="h-full bg-[var(--blue-9)] transition-[width]"
+                className="h-full bg-[var(--blue-9)] transition-[width] duration-200"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="max-h-[calc(100vh-14rem)] space-y-0.5 overflow-y-auto pr-2">
+            <div className="max-h-[calc(100vh-14rem)] space-y-0.5 overflow-y-auto pr-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {items.map((item) => (
                 <TocLink
                   key={item.id}

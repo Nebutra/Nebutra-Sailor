@@ -8,6 +8,7 @@ import {
   LogoTwitterXSmall,
   Share,
 } from "@nebutra/icons";
+import Image from "next/image";
 import type { ComponentType, SVGProps } from "react";
 import { useMemo, useState } from "react";
 
@@ -25,6 +26,7 @@ type IntentShareItem = {
 };
 
 type CopyShareItem = {
+  iconUrl: string;
   label: string;
   monogram: string;
   value: string;
@@ -70,9 +72,24 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
   ];
 
   const domesticShareItems: CopyShareItem[] = [
-    { label: isZh ? "微信" : "WeChat", monogram: "微", value: shareText },
-    { label: isZh ? "小红书" : "XHS", monogram: "小", value: shareText },
-    { label: "知乎", monogram: "知", value: shareText },
+    {
+      iconUrl: "https://cdn.simpleicons.org/wechat/07C160",
+      label: isZh ? "微信" : "WeChat",
+      monogram: "微",
+      value: shareText,
+    },
+    {
+      iconUrl: "https://cdn.simpleicons.org/xiaohongshu/FF2442",
+      label: isZh ? "小红书" : "XHS",
+      monogram: "小",
+      value: shareText,
+    },
+    {
+      iconUrl: "https://cdn.simpleicons.org/zhihu/0084FF",
+      label: "知乎",
+      monogram: "知",
+      value: shareText,
+    },
   ];
 
   async function handleNativeShare() {
@@ -103,7 +120,7 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
   return (
     <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--neutral-10)]">
+        <p className="text-xs font-semibold uppercase text-[var(--neutral-10)]">
           {isZh ? "分发" : "Share"}
         </p>
         <button
@@ -163,8 +180,16 @@ export function BlogShareActions({ excerpt, isZh, title, url }: BlogShareActions
                 aria-label={`${isZh ? "复制到" : "Copy for"} ${item.label}`}
                 title={copied === item.label ? (isZh ? "已复制" : "Copied") : item.label}
               >
-                <span className="inline-flex size-5 items-center justify-center rounded-full bg-[var(--neutral-12)] text-[10px] font-semibold text-[var(--neutral-1)]">
-                  {item.monogram}
+                <span className="relative inline-flex size-5 items-center justify-center overflow-hidden rounded-full bg-[var(--neutral-2)] text-[10px] font-semibold text-[var(--neutral-11)]">
+                  <Image
+                    src={item.iconUrl}
+                    alt=""
+                    width={14}
+                    height={14}
+                    className="size-3.5"
+                    unoptimized
+                  />
+                  <span className="sr-only">{item.monogram}</span>
                 </span>
                 {item.label}
               </button>

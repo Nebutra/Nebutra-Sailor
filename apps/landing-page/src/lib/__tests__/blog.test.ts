@@ -102,6 +102,15 @@ describe("blog lib", () => {
       expect(posts).toEqual([]);
     });
 
+    it("keeps build-time Sanity network failures from failing the blog shell", async () => {
+      mocks.getPosts.mockRejectedValue(new TypeError("fetch failed"));
+
+      const { getAllPosts } = await import("@/lib/blog");
+      const posts = await getAllPosts();
+
+      expect(posts).toEqual([]);
+    });
+
     it("keeps fallback posts behind the explicit fallback source switch", async () => {
       process.env.NEXT_PUBLIC_BLOG_SOURCE = "fallback";
 
@@ -154,6 +163,15 @@ describe("blog lib", () => {
       const post = await getPost("non-existent-post-slug-12345");
       expect(post).toBeNull();
     });
+
+    it("returns null when Sanity cannot be reached during prerender", async () => {
+      mocks.getPostBySlug.mockRejectedValue(new TypeError("fetch failed"));
+
+      const { getPost } = await import("@/lib/blog");
+      const post = await getPost("deep-governance");
+
+      expect(post).toBeNull();
+    });
   });
 
   describe("getAllSlugs", () => {
@@ -197,6 +215,15 @@ describe("blog lib", () => {
         language: "zh",
         slug: "why-nebutra-sailor-exists-zh",
       });
+    });
+
+    it("returns null when the translation lookup hits a recoverable Sanity outage", async () => {
+      mocks.getPostTranslationByKey.mockRejectedValue(new TypeError("fetch failed"));
+
+      const { getPostTranslation } = await import("@/lib/blog");
+      const translation = await getPostTranslation("why-nebutra-sailor-exists", "zh");
+
+      expect(translation).toBeNull();
     });
   });
 

@@ -81,6 +81,51 @@ export const post = defineType({
       of: [
         { type: "block" },
         {
+          name: "code",
+          title: "Code",
+          type: "object",
+          fields: [
+            defineField({
+              name: "code",
+              title: "Code",
+              type: "text",
+              rows: 12,
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "language",
+              title: "Language",
+              type: "string",
+              initialValue: "text",
+            }),
+            defineField({
+              name: "filename",
+              title: "Filename",
+              type: "string",
+            }),
+            defineField({
+              name: "highlightedLines",
+              title: "Highlighted lines",
+              type: "array",
+              of: [{ type: "number" }],
+            }),
+          ],
+          preview: {
+            select: {
+              code: "code",
+              filename: "filename",
+              language: "language",
+            },
+            prepare(selection) {
+              const { code, filename, language } = selection;
+              return {
+                title: filename || `${language || "text"} code`,
+                subtitle: typeof code === "string" ? code.split("\n")[0]?.slice(0, 80) : "Code",
+              };
+            },
+          },
+        },
+        {
           name: "table",
           title: "Table",
           type: "object",

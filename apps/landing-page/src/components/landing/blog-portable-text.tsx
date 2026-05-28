@@ -1,74 +1,18 @@
+import {
+  getBlockText,
+  hasTemplatePlaceholders,
+  hasVisibleText,
+  normalizePortableTextBlocks,
+  type PortableTextBlock,
+  TEMPLATE_PLACEHOLDER_MARK,
+} from "@nebutra/blog";
 import { Hash } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import Image from "next/image";
-import type { PortableTextBlock, PortableTextSpan } from "@/lib/blog";
+import { prepareBlogPortableTextBlocks } from "@/lib/blog-code-highlighting";
+import { BlogCodeBlock } from "./blog-code-block";
 import { BlogCopyButton } from "./blog-copy-button";
-
-const TEMPLATE_PLACEHOLDER_MARK = "templatePlaceholder";
-const TEMPLATE_PLACEHOLDER_PATTERN = /\[[^[\]\n]{1,120}\]/g;
-
-function hasTemplatePlaceholders(text: string): boolean {
-  return /\[[^[\]\n]{1,120}\]/.test(text);
-}
-
-function getBlockText(block: PortableTextBlock | undefined): string {
-  return block?.children?.map((child) => child.text ?? "").join("") ?? "";
-}
-
-function hasVisibleText(block: PortableTextBlock): boolean {
-  if (block._type !== "block") return true;
-  return Boolean(block.children?.some((child) => child.text?.trim()));
-}
-
-function splitSpanTemplatePlaceholders(span: PortableTextSpan): PortableTextSpan[] {
-  const text = span.text ?? "";
-  if (!hasTemplatePlaceholders(text)) return [span];
-
-  const parts: PortableTextSpan[] = [];
-  const baseMarks = span.marks ?? [];
-  let lastIndex = 0;
-  let partIndex = 0;
-
-  for (const match of text.matchAll(TEMPLATE_PLACEHOLDER_PATTERN)) {
-    const start = match.index ?? 0;
-    const token = match[0];
-    if (start > lastIndex) {
-      parts.push({
-        ...span,
-        _key: `${span._key ?? "span"}-${partIndex++}`,
-        text: text.slice(lastIndex, start),
-        marks: baseMarks,
-      });
-    }
-
-    parts.push({
-      ...span,
-      _key: `${span._key ?? "span"}-${partIndex++}`,
-      text: token,
-      marks: [...baseMarks, TEMPLATE_PLACEHOLDER_MARK],
-    });
-    lastIndex = start + token.length;
-  }
-
-  if (lastIndex < text.length) {
-    parts.push({
-      ...span,
-      _key: `${span._key ?? "span"}-${partIndex++}`,
-      text: text.slice(lastIndex),
-      marks: baseMarks,
-    });
-  }
-
-  return parts;
-}
-
-function decorateTemplatePlaceholders(block: PortableTextBlock): PortableTextBlock {
-  if (block._type !== "block" || block.style !== "blockquote" || !block.children?.length) {
-    return block;
-  }
-  return { ...block, children: block.children.flatMap(splitSpanTemplatePlaceholders) };
-}
 
 function BlogTable({ value }: { value: PortableTextBlock }) {
   const rows = value.rows?.filter((row) => row.cells?.some((cell) => cell.trim())) ?? [];
@@ -113,48 +57,6 @@ function BlogTable({ value }: { value: PortableTextBlock }) {
   );
 }
 
-function parseMarkdownTableText(text: string): PortableTextBlock["rows"] | null {
-  const trimmed = text.trim();
-  if (!trimmed.startsWith("|") || !trimmed.includes("---")) return null;
-
-  const rowText = trimmed.includes("\n")
-    ? trimmed
-    : // Older imported PortableText can collapse markdown table line breaks into
-      // adjacent pipes. Recover those rows so already-published posts render well.
-      trimmed.replace(/\|\s*\|/g, "|\n|");
-  const lines = rowText
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  if (lines.length < 3) return null;
-
-  const cellsByRow = lines.map((line) =>
-    line
-      .replace(/^\|/, "")
-      .replace(/\|$/, "")
-      .split("|")
-      .map((cell) => cell.trim()),
-  );
-  const separatorIndex = cellsByRow.findIndex(
-    (cells) => cells.length > 0 && cells.every((cell) => /^:?-{3,}:?$/.test(cell)),
-  );
-
-  if (separatorIndex !== 1 || !cellsByRow[0]?.length) return null;
-
-  const header = cellsByRow[0];
-  const rows = cellsByRow
-    .slice(2)
-    .filter((cells) => cells.some(Boolean))
-    .map((cells, index) => ({
-      _key: `markdown-row-${index}`,
-      cells: header.map((_, cellIndex) => cells[cellIndex] ?? ""),
-    }));
-
-  if (!rows.length) return null;
-  return [{ _key: "markdown-head", cells: header }, ...rows];
-}
-
 function getHeadingId(
   value: unknown,
   headingIds: Record<string, string> | undefined,
@@ -184,22 +86,7 @@ function createPortableTextComponents(
 ): PortableTextComponents {
   return {
     block: {
-      normal: ({ children, value }) => {
-        const text = getBlockText(value as PortableTextBlock);
-        const tableRows = parseMarkdownTableText(text);
-
-        if (tableRows) {
-          return (
-            <BlogTable
-              value={{
-                _key: (value as PortableTextBlock | undefined)?._key ?? "markdown-table",
-                _type: "table",
-                rows: tableRows,
-              }}
-            />
-          );
-        }
-
+      normal: ({ children }) => {
         return <p className="mt-5 text-[1.02rem] leading-8 text-[var(--neutral-11)]">{children}</p>;
       },
       h2: ({ children, value }) => {
@@ -313,6 +200,16 @@ function createPortableTextComponents(
       ),
     },
     types: {
+      codeHtml: ({ value }) => (
+        <BlogCodeBlock
+          code={typeof value?.code === "string" ? value.code : ""}
+          copiedLabel={copiedLabel}
+          copyLabel={copyLabel}
+          filename={typeof value?.filename === "string" ? value.filename : null}
+          html={typeof value?.html === "string" ? value.html : ""}
+          language={typeof value?.language === "string" ? value.language : null}
+        />
+      ),
       table: ({ value }) => <BlogTable value={value as PortableTextBlock} />,
       image: ({ value }) => {
         const imageUrl = getImageUrl(value as Parameters<typeof getImageUrl>[0], {
@@ -339,7 +236,7 @@ function createPortableTextComponents(
   };
 }
 
-export function BlogPortableText({
+export async function BlogPortableText({
   body,
   copyLabel = "Copy original",
   copiedLabel = "Copied",
@@ -351,11 +248,49 @@ export function BlogPortableText({
   headingIds?: Record<string, string>;
 }) {
   if (!body?.length) return null;
-  const visibleBody = body.filter(hasVisibleText).map(decorateTemplatePlaceholders);
+  const visibleBody = await prepareBlogPortableTextBlocks(
+    normalizePortableTextBlocks(body).filter(hasVisibleText),
+  );
   if (!visibleBody.length) return null;
 
   return (
     <div className="max-w-none text-[var(--neutral-11)]">
+      <style>{`
+        .blog-code-html .shiki {
+          margin: 0;
+          background: transparent !important;
+          padding: 1rem 0;
+          font-size: 0.875rem;
+          line-height: 1.75;
+        }
+        .blog-code-html .line {
+          display: block;
+          min-height: 1.55rem;
+          padding: 0 1rem;
+        }
+        .blog-code-html .line[data-line]::before {
+          content: attr(data-line);
+          display: inline-block;
+          width: 2.25rem;
+          margin-right: 1rem;
+          color: var(--neutral-9);
+          text-align: right;
+          user-select: none;
+        }
+        .blog-code-html .line[data-highlighted="true"] {
+          background: color-mix(in oklch, var(--blue-3) 74%, transparent);
+        }
+        .blog-code-html .line[data-diff="add"] {
+          background: color-mix(in oklch, var(--green-3) 74%, transparent);
+        }
+        .blog-code-html .line[data-diff="remove"] {
+          background: color-mix(in oklch, var(--red-3) 74%, transparent);
+        }
+        :is(.dark .blog-code-html) .shiki,
+        :is(.dark .blog-code-html) .shiki span {
+          color: var(--shiki-dark) !important;
+        }
+      `}</style>
       <PortableText
         value={visibleBody}
         components={createPortableTextComponents(copyLabel, copiedLabel, headingIds)}

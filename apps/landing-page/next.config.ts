@@ -4,6 +4,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const withBundleAnalyzer = createBundleAnalyzer({ enabled: true });
+const isDevelopment = process.env.NODE_ENV !== "production";
+const scriptSrc = ["'self'", "'unsafe-inline'", ...(isDevelopment ? ["'unsafe-eval'"] : [])].join(
+  " ",
+);
 
 const securityHeaders = [
   {
@@ -32,8 +36,7 @@ const securityHeaders = [
   },
   {
     key: "Content-Security-Policy",
-    value:
-      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://svgl.app https://cdn.simpleicons.org https://github.com https://images.unsplash.com https://avatars.githubusercontent.com https://api.dicebear.com; font-src 'self' data:; media-src 'self' https://d8j0ntlcm91z4.cloudfront.net; connect-src 'self'; frame-ancestors 'none';",
+    value: `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://svgl.app https://cdn.simpleicons.org https://github.com https://images.unsplash.com https://avatars.githubusercontent.com https://api.dicebear.com; font-src 'self' data:; media-src 'self' https://d8j0ntlcm91z4.cloudfront.net; connect-src 'self'; frame-ancestors 'none';`,
   },
 ];
 
@@ -47,6 +50,7 @@ const nextConfig: NextConfig = {
   // Enable Partial Prerendering — Next.js 16 merged experimental.ppr into cacheComponents.
   cacheComponents: true,
   experimental: {
+    viewTransition: true,
     webpackBuildWorker: true,
     webpackMemoryOptimizations: true,
   },
@@ -65,6 +69,7 @@ const nextConfig: NextConfig = {
     "@nebutra/agents",
     "@nebutra/auth",
     "@nebutra/billing",
+    "@nebutra/blog",
     "@nebutra/db",
     "@nebutra/identity",
     "@nebutra/license",

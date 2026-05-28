@@ -1,58 +1,20 @@
 import {
+  type BlogAuthor,
+  type BlogLanguage,
+  type BlogPostWithSource,
+  type PortableTextBlock,
+  toBlogLanguage,
+} from "@nebutra/blog";
+import {
   getPostBySlug as fetchSanityPostBySlug,
   getPostTranslationByKey as fetchSanityPostTranslationByKey,
   getPosts,
 } from "@nebutra/sanity/queries";
 import { type BlogPost, FALLBACK_POSTS } from "./blog-fallback";
 
-export type { BlogPost };
-
-export type BlogSource = "sanity" | "fallback";
-export type BlogLanguage = "en" | "zh";
-
-export type BlogAuthor = {
-  name?: string | null;
-  image?: unknown;
-  bio?: unknown;
-};
-
-export type PortableTextSpan = {
-  _type?: "span";
-  _key?: string;
-  text?: string;
-  marks?: string[];
-};
-
-export type PortableTextBlock = {
-  _type: string;
-  _key?: string;
-  style?: string;
-  listItem?: string;
-  level?: number;
-  children?: PortableTextSpan[];
-  markDefs?: Array<Record<string, unknown>>;
-  rows?: Array<{ _key?: string; cells?: string[] }>;
-  asset?: { _ref?: string; _type?: string } | null;
-  alt?: string | null;
-  caption?: string | null;
-};
-
-export type BlogPostWithSource = BlogPost & {
-  id: string;
-  slug: string;
-  title: string;
-  language: BlogLanguage;
-  translationKey?: string;
-  excerpt: string;
-  description: string;
-  date: string;
-  updatedAt?: string;
-  tags: string[];
-  author?: string | BlogAuthor;
-  mainImage?: unknown;
-  body?: PortableTextBlock[] | null;
-  source: BlogSource;
-};
+export type { PortableTextBlock, PortableTextSpan } from "@nebutra/blog";
+export type { BlogPost } from "./blog-fallback";
+export { type BlogLanguage, type BlogPostWithSource, toBlogLanguage };
 
 type SanityPost = {
   _id?: string;
@@ -72,10 +34,6 @@ type SanityPost = {
 function normalizeSlug(slug: SanityPost["slug"]): string | null {
   if (typeof slug === "string") return slug || null;
   return slug?.current || null;
-}
-
-export function toBlogLanguage(locale: string): BlogLanguage {
-  return locale === "zh" ? "zh" : "en";
 }
 
 function normalizeFallbackPost(post: BlogPost, idx: number): BlogPostWithSource {
@@ -126,12 +84,36 @@ function getFallbackPosts(): BlogPostWithSource[] {
   return FALLBACK_POSTS.map((post, idx) => normalizeFallbackPost(post, idx));
 }
 
+function isRecoverableCmsError(error: unknown): boolean {
+  if (error instanceof TypeError && error.message === "fetch failed") return true;
+  if (!error || typeof error !== "object") return false;
+
+  const maybeError = error as {
+    code?: unknown;
+    isNetworkError?: unknown;
+    cause?: { code?: unknown } | null;
+  };
+
+  return (
+    maybeError.isNetworkError === true ||
+    maybeError.code === "ECONNRESET" ||
+    maybeError.cause?.code === "ECONNRESET"
+  );
+}
+
 export async function getAllPosts(language: BlogLanguage = "en"): Promise<BlogPostWithSource[]> {
   if (shouldUseFallbackSource()) {
     return getFallbackPosts().filter((post) => post.language === language);
   }
 
-  const posts = (await getPosts(language)) as SanityPost[];
+  let posts: SanityPost[];
+  try {
+    posts = (await getPosts(language)) as SanityPost[];
+  } catch (error) {
+    if (isRecoverableCmsError(error)) return [];
+    throw error;
+  }
+
   return posts.map(normalizeSanityPost).filter((post): post is BlogPostWithSource => Boolean(post));
 }
 
@@ -145,9 +127,14 @@ export async function getPost(
     );
   }
 
-  const post = normalizeSanityPost(
-    (await fetchSanityPostBySlug(slug, language)) as SanityPost | null,
-  );
+  let post: BlogPostWithSource | null;
+  try {
+    post = normalizeSanityPost((await fetchSanityPostBySlug(slug, language)) as SanityPost | null);
+  } catch (error) {
+    if (isRecoverableCmsError(error)) return null;
+    throw error;
+  }
+
   return post;
 }
 
@@ -162,9 +149,16 @@ export async function getPostTranslation(
 ): Promise<BlogPostWithSource | null> {
   if (shouldUseFallbackSource()) return null;
 
-  const post = normalizeSanityPost(
-    (await fetchSanityPostTranslationByKey(translationKey, language)) as SanityPost | null,
-  );
+  let post: BlogPostWithSource | null;
+  try {
+    post = normalizeSanityPost(
+      (await fetchSanityPostTranslationByKey(translationKey, language)) as SanityPost | null,
+    );
+  } catch (error) {
+    if (isRecoverableCmsError(error)) return null;
+    throw error;
+  }
+
   return post;
 }
 

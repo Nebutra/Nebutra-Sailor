@@ -1,4 +1,18 @@
-import { ArrowLeft, BookOpen, Calendar, Clock, Globe } from "@nebutra/icons";
+import {
+  type BlogLanguage,
+  type BlogPostWithSource,
+  estimateReadTime,
+  getBlogRelatedPosts,
+  getBlogTableOfContents,
+  getBlogUrlSegment,
+  getBlogViewTransitionName,
+  getFallbackBlogCover,
+  getPostCopyText,
+  oppositeBlogLanguage,
+  resolveBlogCover,
+  toBlogLanguage,
+} from "@nebutra/blog";
+import { ArrowLeft, ArrowRight, BookOpen, Calendar, Clock, Globe, Message } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
@@ -8,25 +22,20 @@ import { notFound, redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { FooterMinimal, Navbar } from "@/components/landing";
+import { FooterMinimal, Navbar, NewsletterForm } from "@/components/landing";
 import { BlogComments } from "@/components/landing/blog-comments";
 import { BlogCopyButton } from "@/components/landing/blog-copy-button";
 import { BlogImage } from "@/components/landing/blog-image";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { BlogShareActions } from "@/components/landing/blog-share-actions";
-import { BlogTableOfContents, type BlogTocItem } from "@/components/landing/blog-table-of-contents";
+import { BlogTableOfContents } from "@/components/landing/blog-table-of-contents";
 import { type Locale, routing } from "@/i18n/routing";
 import {
-  type BlogLanguage,
-  type BlogPostWithSource,
+  getAllPosts,
   getLocalizedPostForSiblingSlug,
   getPostBySlug,
   getPostTranslation,
-  type PortableTextBlock,
-  type PortableTextSpan,
-  toBlogLanguage,
 } from "@/lib/blog";
-import { getFallbackBlogCover } from "@/lib/blog-covers";
 import { env } from "@/lib/env";
 import { getSiteUrl } from "@/lib/seo/site-routes";
 
@@ -50,20 +59,13 @@ async function buildBlogMetadata(lang: string, slug: string): Promise<Metadata> 
     (await getCachedLocalizedPostForSiblingSlug(slug, toBlogLanguage(lang)));
   if (!post) return {};
 
-  const fallbackCover = getFallbackBlogCover(post);
-  const ogImage = post.mainImage
-    ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
-        width: 1200,
-        height: 630,
-        format: "webp",
-      })
-    : `https://nebutra.com${fallbackCover.src}`;
+  const ogImage = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}/opengraph-image`;
 
   return {
     title: `${post.title} — Nebutra Blog`,
     description: post.excerpt ?? undefined,
     alternates: { canonical: localizedPostHref(lang, post.slug) },
-    openGraph: ogImage ? { images: [{ url: ogImage, width: 1200, height: 630 }] } : undefined,
+    openGraph: { images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }] },
   };
 }
 
@@ -77,144 +79,6 @@ function getAuthorName(author: BlogPostWithSource["author"]): string | null {
   return typeof author === "string" ? author : (author.name ?? null);
 }
 
-function extractBodyText(post: BlogPostWithSource): string {
-  const bodyText =
-    post.body
-      ?.flatMap((block) => {
-        if (block._type === "table") {
-          return block.rows?.flatMap((row) => row.cells ?? []) ?? [];
-        }
-        return block.children?.map((child) => child.text ?? "") ?? [];
-      })
-      .join(" ") ?? "";
-  return `${post.title} ${post.excerpt} ${bodyText}`.trim();
-}
-
-function getMarkHref(block: PortableTextBlock, mark: string): string | null {
-  const markDef = block.markDefs?.find((def) => def._key === mark);
-  return typeof markDef?.href === "string" ? markDef.href : null;
-}
-
-function getSpanCopyText(span: PortableTextSpan, block: PortableTextBlock): string {
-  let text = span.text ?? "";
-  for (const mark of span.marks ?? []) {
-    const href = getMarkHref(block, mark);
-    if (href) {
-      text = `[${text}](${href})`;
-    } else if (mark === "code") {
-      text = `\`${text}\``;
-    } else if (mark === "strong") {
-      text = `**${text}**`;
-    } else if (mark === "em") {
-      text = `*${text}*`;
-    }
-  }
-  return text;
-}
-
-function getPortableBlockCopyText(block: PortableTextBlock): string | null {
-  if (block._type === "table") {
-    const rows = block.rows?.filter((row) => row.cells?.some((cell) => cell.trim())) ?? [];
-    if (!rows.length) return null;
-
-    const tableRows = rows.map((row) => `| ${(row.cells ?? []).join(" | ")} |`);
-    const separator = `| ${(rows[0]?.cells ?? []).map(() => "---").join(" | ")} |`;
-    return [tableRows[0], separator, ...tableRows.slice(1)].join("\n");
-  }
-
-  if (block._type !== "block") return null;
-
-  const text =
-    block.children
-      ?.map((child) => getSpanCopyText(child, block))
-      .join("")
-      .trim() ?? "";
-  if (!text) return null;
-
-  if (block.listItem) {
-    const indent = "  ".repeat(Math.max((block.level ?? 1) - 1, 0));
-    return block.listItem === "number" ? `${indent}1. ${text}` : `${indent}- ${text}`;
-  }
-
-  if (block.style === "h2") return `## ${text}`;
-  if (block.style === "h3") return `### ${text}`;
-  if (block.style === "h4") return `#### ${text}`;
-  if (block.style === "blockquote") return `> ${text}`;
-
-  return text;
-}
-
-function getHeadingDepth(style: string | undefined): BlogTocItem["depth"] | null {
-  if (style === "h2") return 2;
-  if (style === "h3") return 3;
-  if (style === "h4") return 4;
-  return null;
-}
-
-function hashHeadingId(input: string): string {
-  let hash = 0x811c9dc5;
-  for (let index = 0; index < input.length; index++) {
-    hash ^= input.charCodeAt(index);
-    hash = Math.imul(hash, 0x01000193);
-  }
-  return (hash >>> 0).toString(36);
-}
-
-function getHeadingText(block: PortableTextBlock): string {
-  return (
-    block.children
-      ?.map((child) => child.text ?? "")
-      .join("")
-      .replace(/\s+/g, " ")
-      .trim() ?? ""
-  );
-}
-
-function getBlogTableOfContents(body: PortableTextBlock[] | null | undefined): {
-  items: BlogTocItem[];
-  headingIds: Record<string, string>;
-} {
-  const headingIds: Record<string, string> = {};
-  const seen = new Map<string, number>();
-  const items =
-    body?.flatMap((block, index) => {
-      if (block._type !== "block") return [];
-      const depth = getHeadingDepth(block.style);
-      if (!depth || !block._key) return [];
-
-      const title = getHeadingText(block);
-      if (!title) return [];
-
-      const baseId = `section-${index + 1}-${hashHeadingId(`${block._key}:${title}`)}`;
-      const count = seen.get(baseId) ?? 0;
-      seen.set(baseId, count + 1);
-      const id = count > 0 ? `${baseId}-${count + 1}` : baseId;
-      headingIds[block._key] = id;
-
-      return [{ id, title, depth }];
-    }) ?? [];
-
-  return { items, headingIds };
-}
-
-function getPostCopyText(post: BlogPostWithSource): string {
-  const parts = [`# ${post.title}`];
-  if (post.excerpt) parts.push(post.excerpt);
-
-  const body =
-    post.body?.map(getPortableBlockCopyText).filter((part): part is string => Boolean(part)) ?? [];
-  parts.push(...body);
-
-  return parts.join("\n\n").trim();
-}
-
-function estimateReadTime(post: BlogPostWithSource, isZh: boolean): string {
-  const text = extractBodyText(post);
-  const units = isZh ? text.replace(/\s/g, "").length / 420 : text.split(/\s+/).length / 220;
-  const minutes = Math.max(2, Math.ceil(units));
-  return isZh ? `${minutes} 分钟阅读` : `${minutes} min read`;
-}
-
 function localizedPostHref(locale: string, slug?: string): string {
   const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
   return slug ? `${prefix}/blog/${slug}` : `${prefix}/blog`;
@@ -222,10 +86,6 @@ function localizedPostHref(locale: string, slug?: string): string {
 
 function languageSwitchPostHref(locale: Locale, slug: string): string {
   return `/${locale}/blog/${slug}`;
-}
-
-function oppositeBlogLanguage(language: BlogLanguage): BlogLanguage {
-  return language === "zh" ? "en" : "zh";
 }
 
 function localeForBlogLanguage(language: BlogLanguage): Locale {
@@ -265,6 +125,123 @@ async function getCachedLocalizedPostForSiblingSlug(
   return getLocalizedPostForSiblingSlug(slug, language);
 }
 
+async function getCachedAllPosts(language: BlogLanguage): Promise<BlogPostWithSource[]> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blog");
+  return getAllPosts(language);
+}
+
+function postCover(post: BlogPostWithSource) {
+  const imageUrl = post.mainImage
+    ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
+        width: 720,
+        height: 420,
+        format: "webp",
+      })
+    : null;
+  return resolveBlogCover(post, { alt: `${post.title} cover`, imageUrl });
+}
+
+function BlogArticleFooter({
+  isZh,
+  lang,
+  posts,
+}: {
+  isZh: boolean;
+  lang: string;
+  posts: BlogPostWithSource[];
+}) {
+  return (
+    <section className="mx-auto mt-16 max-w-5xl border-y border-[var(--neutral-6)] py-10">
+      <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
+        <div>
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase text-[var(--neutral-10)]">
+                {isZh ? "继续阅读" : "Continue reading"}
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold text-[var(--neutral-12)]">
+                {isZh ? "同主题文章" : "Related notes"}
+              </h2>
+            </div>
+            <Link
+              href={localizedPostHref(lang)}
+              className="hidden items-center gap-1.5 text-sm font-medium text-[var(--blue-9)] sm:inline-flex"
+            >
+              {isZh ? "全部文章" : "All posts"}
+              <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            {posts.map((relatedPost) => {
+              const cover = postCover(relatedPost);
+              return (
+                <Link
+                  key={relatedPost.id}
+                  href={localizedPostHref(lang, relatedPost.slug)}
+                  className="group overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-colors hover:bg-[var(--neutral-2)]"
+                >
+                  <div className="relative h-36 overflow-hidden bg-[var(--neutral-3)]">
+                    <BlogImage
+                      src={cover.src}
+                      alt={cover.alt}
+                      fallbackSrc={cover.fallbackSrc}
+                      fallbackAlt={cover.fallbackAlt}
+                      blurDataURL={cover.blurDataURL}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 360px"
+                      className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
+                    />
+                  </div>
+                  <div className="p-4">
+                    {relatedPost.tags[0] && (
+                      <p className="text-xs font-medium text-[var(--neutral-10)]">
+                        {relatedPost.tags[0]}
+                      </p>
+                    )}
+                    <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug text-[var(--neutral-12)]">
+                      {relatedPost.title}
+                    </h3>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+        <aside className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5">
+          <p className="text-sm font-semibold text-[var(--neutral-12)]">
+            {isZh ? "订阅 Nebutra Originals" : "Subscribe to Nebutra Originals"}
+          </p>
+          <p className="mt-2 text-sm leading-6 text-[var(--neutral-11)]">
+            {isZh
+              ? "低频、认真，只发产品工程和 AI SaaS 交付笔记。"
+              : "Low-frequency notes on product engineering and AI SaaS delivery."}
+          </p>
+          <div className="mt-4">
+            <NewsletterForm />
+          </div>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <a
+              href="#comments"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+            >
+              <Message className="size-4" aria-hidden />
+              {isZh ? "去评论" : "Discuss"}
+            </a>
+            <a
+              href="#article-share"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+            >
+              {isZh ? "分享" : "Share"}
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  );
+}
+
 export default function BlogPostPage({ params }: { params: Promise<Params> }) {
   return (
     <Suspense fallback={<BlogPostSkeleton />}>
@@ -296,14 +273,16 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const translationLocale = localeForBlogLanguage(targetLanguage);
 
   const fallbackCover = getFallbackBlogCover(post);
-  const imageUrl = post.mainImage
+  const primaryImageUrl = post.mainImage
     ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
         width: 1200,
         height: 630,
         format: "webp",
       })
-    : fallbackCover.src;
-  const imageAlt = post.mainImage ? post.title : fallbackCover.alt;
+    : null;
+  const cover = resolveBlogCover(post, { alt: `${post.title} cover`, imageUrl: primaryImageUrl });
+  const imageUrl = cover.src;
+  const imageAlt = cover.alt;
 
   const date = post.date
     ? new Date(post.date).toLocaleDateString(isZh ? "zh-CN" : "en-US", {
@@ -316,6 +295,12 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const articleCopyText = getPostCopyText(post);
   const tableOfContents = getBlogTableOfContents(post.body);
   const canonicalUrl = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}`;
+  const allPosts = await getCachedAllPosts(blogLanguage);
+  const relatedPosts = getBlogRelatedPosts(allPosts, post, 2);
+  const footerPosts =
+    relatedPosts.length > 0
+      ? relatedPosts
+      : allPosts.filter((candidate) => candidate.slug !== post.slug).slice(0, 2);
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
@@ -337,12 +322,13 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
             <AnimateIn preset="fadeUp" inView>
               <div className="mb-5 flex flex-wrap gap-1.5">
                 {post.tags.map((cat) => (
-                  <span
+                  <Link
                     key={cat}
+                    href={`${localizedPostHref(lang)}/tag/${getBlogUrlSegment(cat)}`}
                     className="rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]"
                   >
                     {cat}
-                  </span>
+                  </Link>
                 ))}
               </div>
             </AnimateIn>
@@ -355,7 +341,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                   <BookOpen className="size-3.5" aria-hidden />
                   {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
                 </div>
-                <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-[var(--neutral-12)] sm:text-5xl">
+                <h1 className="max-w-3xl text-4xl font-semibold text-[var(--neutral-12)] sm:text-5xl">
                   {post.title}
                 </h1>
                 {post.excerpt && (
@@ -368,7 +354,12 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
               <div className="space-y-4 text-sm text-[var(--neutral-11)]">
                 <div className="grid gap-2">
                   {authorName && (
-                    <span className="font-medium text-[var(--neutral-12)]">{authorName}</span>
+                    <Link
+                      href={`${localizedPostHref(lang)}/author/${getBlogUrlSegment(authorName)}`}
+                      className="font-medium text-[var(--neutral-12)] hover:text-[var(--blue-9)]"
+                    >
+                      {authorName}
+                    </Link>
                   )}
                   {date && (
                     <span className="flex items-center gap-1.5">
@@ -398,12 +389,14 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     </a>
                   )}
                 </div>
-                <BlogShareActions
-                  excerpt={post.excerpt}
-                  isZh={isZh}
-                  title={post.title}
-                  url={canonicalUrl}
-                />
+                <div id="article-share">
+                  <BlogShareActions
+                    excerpt={post.excerpt}
+                    isZh={isZh}
+                    title={post.title}
+                    url={canonicalUrl}
+                  />
+                </div>
               </div>
             </div>
           </AnimateIn>
@@ -411,12 +404,16 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
 
         {/* Hero image */}
         <AnimateIn preset="fadeUp" inView>
-          <div className="relative mt-8 h-64 w-full overflow-hidden rounded-[var(--radius-lg)] sm:h-96">
+          <div
+            className="relative mt-8 h-64 w-full overflow-hidden rounded-[var(--radius-lg)] sm:h-96"
+            style={{ viewTransitionName: getBlogViewTransitionName(post.id) }}
+          >
             <BlogImage
               src={imageUrl}
               alt={imageAlt}
               fallbackSrc={fallbackCover.src}
               fallbackAlt={fallbackCover.alt}
+              blurDataURL={cover.blurDataURL}
               fill
               priority
               className="object-cover"
@@ -426,7 +423,17 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView>
-          <div className="mx-auto mt-10 grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,720px)_256px] lg:items-start lg:justify-center lg:gap-12">
+          <div className="mx-auto mt-10 grid max-w-[1500px] gap-10 px-6 xl:grid-cols-[240px_minmax(0,720px)] xl:items-start xl:gap-12 2xl:px-0">
+            <BlogTableOfContents
+              items={tableOfContents.items}
+              variant="desktop"
+              labels={{
+                title: isZh ? "目录" : "Contents",
+                current: isZh ? "正在阅读" : "Reading",
+                progress: isZh ? "阅读进度" : "Reading progress",
+                open: isZh ? "展开目录" : "Open contents",
+              }}
+            />
             <div className="min-w-0">
               <BlogTableOfContents
                 items={tableOfContents.items}
@@ -445,21 +452,17 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                 headingIds={tableOfContents.headingIds}
               />
             </div>
-            <BlogTableOfContents
-              items={tableOfContents.items}
-              variant="desktop"
-              labels={{
-                title: isZh ? "目录" : "Contents",
-                current: isZh ? "正在阅读" : "Reading",
-                progress: isZh ? "阅读进度" : "Reading progress",
-                open: isZh ? "展开目录" : "Open contents",
-              }}
-            />
           </div>
         </AnimateIn>
 
+        {footerPosts.length > 0 && (
+          <AnimateIn preset="fadeUp" inView>
+            <BlogArticleFooter isZh={isZh} lang={lang} posts={footerPosts} />
+          </AnimateIn>
+        )}
+
         <AnimateIn preset="fadeUp" inView>
-          <div className="mx-auto max-w-3xl">
+          <div id="comments" className="mx-auto max-w-3xl scroll-mt-28">
             <BlogComments
               appUrl={env.NEXT_PUBLIC_APP_URL}
               translationKey={post.translationKey ?? post.slug}
@@ -481,7 +484,10 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                   : "Comments are unavailable. Try again later.",
                 like: isZh ? "点赞" : "Like",
                 liked: isZh ? "已点赞" : "Liked",
+                save: isZh ? "收藏" : "Save",
+                saved: isZh ? "已收藏" : "Saved",
                 signInToLike: isZh ? "登录后点赞" : "Sign in to like",
+                signInToSave: isZh ? "登录后收藏" : "Sign in to save",
               }}
             />
           </div>

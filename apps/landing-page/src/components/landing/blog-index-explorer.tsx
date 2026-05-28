@@ -18,8 +18,11 @@ export type BlogIndexPost = {
   authorAvatarUrl: string | null;
   fallbackImageAlt: string;
   fallbackImageUrl: string;
+  imageBlurDataURL?: string;
   imageUrl: string;
   imageAlt: string;
+  searchText?: string;
+  viewTransitionName?: string;
 };
 
 type BlogIndexExplorerProps = {
@@ -101,12 +104,18 @@ function GridCard({ post }: { post: BlogIndexPost }) {
       href={post.href}
       className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]"
     >
-      <div className="relative h-52 overflow-hidden bg-[var(--neutral-3)]">
+      <div
+        className="relative h-52 overflow-hidden bg-[var(--neutral-3)]"
+        style={
+          post.viewTransitionName ? { viewTransitionName: post.viewTransitionName } : undefined
+        }
+      >
         <BlogImage
           src={post.imageUrl}
           alt={post.imageAlt}
           fallbackSrc={post.fallbackImageUrl}
           fallbackAlt={post.fallbackImageAlt}
+          blurDataURL={post.imageBlurDataURL}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
           className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
@@ -115,7 +124,7 @@ function GridCard({ post }: { post: BlogIndexPost }) {
 
       <div className="flex flex-1 flex-col p-5">
         <PostMeta post={post} />
-        <h2 className="mt-3 text-lg font-semibold leading-snug tracking-tight text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
+        <h2 className="mt-3 text-lg font-semibold leading-snug text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
           {post.title}
         </h2>
         {post.excerpt && (
@@ -146,12 +155,18 @@ function ListCard({ post }: { post: BlogIndexPost }) {
       href={post.href}
       className="group grid gap-5 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] sm:grid-cols-[220px_1fr]"
     >
-      <div className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-[var(--neutral-3)]">
+      <div
+        className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-[var(--neutral-3)]"
+        style={
+          post.viewTransitionName ? { viewTransitionName: post.viewTransitionName } : undefined
+        }
+      >
         <BlogImage
           src={post.imageUrl}
           alt={post.imageAlt}
           fallbackSrc={post.fallbackImageUrl}
           fallbackAlt={post.fallbackImageAlt}
+          blurDataURL={post.imageBlurDataURL}
           fill
           sizes="(max-width: 640px) 100vw, 220px"
           className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
@@ -160,7 +175,7 @@ function ListCard({ post }: { post: BlogIndexPost }) {
 
       <div className="flex min-w-0 flex-col py-1 pr-2">
         <PostMeta post={post} />
-        <h2 className="mt-3 text-xl font-semibold leading-snug tracking-tight text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
+        <h2 className="mt-3 text-xl font-semibold leading-snug text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
           {post.title}
         </h2>
         {post.excerpt && (
@@ -212,7 +227,13 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
       if (!matchesTag) return false;
       if (!normalizedQuery) return true;
 
-      const searchable = [post.title, post.excerpt, post.authorName ?? "", post.tags.join(" ")]
+      const searchable = [
+        post.title,
+        post.excerpt,
+        post.authorName ?? "",
+        post.tags.join(" "),
+        post.searchText ?? "",
+      ]
         .join(" ")
         .toLowerCase();
       return searchable.includes(normalizedQuery);
@@ -240,7 +261,7 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
       <div className="flex flex-col gap-5 border-t border-[var(--neutral-6)] pt-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--neutral-10)]">
+            <p className="text-xs font-semibold uppercase text-[var(--neutral-10)]">
               {copy.archive}
             </p>
             <p className="mt-2 text-sm text-[var(--neutral-11)]">{copy.count}</p>

@@ -37,7 +37,10 @@ export const blogReaction = defineType({
       initialValue: "like",
       options: {
         layout: "radio",
-        list: [{ title: "Like", value: "like" }],
+        list: [
+          { title: "Like", value: "like" },
+          { title: "Save", value: "save" },
+        ],
       },
       validation: (Rule) => Rule.required(),
     }),

@@ -1,3 +1,11 @@
+import {
+  type BlogPostWithSource,
+  estimateReadTime,
+  extractBodyText,
+  getBlogViewTransitionName,
+  resolveBlogCover,
+  toBlogLanguage,
+} from "@nebutra/blog";
 import { ArrowRight, BookOpen, Calendar } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
@@ -13,8 +21,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogImage } from "@/components/landing/blog-image";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
-import { type BlogPostWithSource, getAllPosts, toBlogLanguage } from "@/lib/blog";
-import { getFallbackBlogCover } from "@/lib/blog-covers";
+import { getAllPosts } from "@/lib/blog";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -52,27 +59,15 @@ function getAuthorAvatarUrl(author: BlogPostWithSource["author"]): string | null
 }
 
 function getPostCover(post: BlogPostWithSource, width: number, height: number) {
-  const fallbackCover = getFallbackBlogCover(post);
-
-  if (post.mainImage) {
-    return {
-      src: getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
+  const imageUrl = post.mainImage
+    ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
         width,
         height,
         format: "webp",
-      }),
-      alt: post.title,
-      fallbackSrc: fallbackCover.src,
-      fallbackAlt: fallbackCover.alt,
-    };
-  }
+      })
+    : null;
 
-  return {
-    src: fallbackCover.src,
-    alt: fallbackCover.alt,
-    fallbackSrc: fallbackCover.src,
-    fallbackAlt: fallbackCover.alt,
-  };
+  return resolveBlogCover(post, { alt: `${post.title} cover`, imageUrl });
 }
 
 function localizedBlogHref(lang: string, slug?: string): string {
@@ -85,26 +80,6 @@ async function getCachedAllPosts(language: ReturnType<typeof toBlogLanguage>) {
   cacheLife("hours");
   cacheTag("blog");
   return getAllPosts(language);
-}
-
-function extractBodyText(post: BlogPostWithSource): string {
-  const bodyText =
-    post.body
-      ?.flatMap((block) => {
-        if (block._type === "table") {
-          return block.rows?.flatMap((row) => row.cells ?? []) ?? [];
-        }
-        return block.children?.map((child) => child.text ?? "") ?? [];
-      })
-      .join(" ") ?? "";
-  return `${post.title} ${post.excerpt} ${bodyText}`.trim();
-}
-
-function estimateReadTime(post: BlogPostWithSource, isZh: boolean): string {
-  const text = extractBodyText(post);
-  const units = isZh ? text.replace(/\s/g, "").length / 420 : text.split(/\s+/).length / 220;
-  const minutes = Math.max(2, Math.ceil(units));
-  return isZh ? `${minutes} 分钟阅读` : `${minutes} min read`;
 }
 
 function formatPostDate(post: BlogPostWithSource, isZh: boolean): string | null {
@@ -134,6 +109,9 @@ function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean):
     imageAlt: cover.alt,
     fallbackImageUrl: cover.fallbackSrc,
     fallbackImageAlt: cover.fallbackAlt,
+    imageBlurDataURL: cover.blurDataURL,
+    searchText: extractBodyText(post),
+    viewTransitionName: getBlogViewTransitionName(post.id),
   };
 }
 
@@ -182,6 +160,7 @@ function ArticleVisual({
         alt={cover.alt}
         fallbackSrc={cover.fallbackSrc}
         fallbackAlt={cover.fallbackAlt}
+        blurDataURL={cover.blurDataURL}
         fill
         priority={variant === "featured"}
         className="object-cover transition-transform duration-150 group-hover:-translate-y-px"
