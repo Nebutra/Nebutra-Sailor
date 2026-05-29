@@ -94,7 +94,7 @@ export function ValuesStatement({
 
   return (
     <section
-      className={`rounded-2xl border border-neutral-7 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.02] ${padding} ${className}`}
+      className={`rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.02] ${padding} ${className}`}
       aria-label="Our values commitment"
     >
       {heading && (
@@ -110,11 +110,11 @@ export function ValuesStatement({
         {pillars.map(({ id, icon: Icon, title, description: desc, metric, linkLabel, href }) => (
           <div
             key={id}
-            className="flex h-full flex-col gap-2 rounded-xl border border-neutral-6 bg-neutral-2 p-4 dark:border-white/10 dark:bg-white/[0.03]"
+            className="flex h-full flex-col gap-2 rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-4 dark:border-white/10 dark:bg-white/[0.03]"
           >
             <div className="flex items-center justify-between">
               <div
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-white"
+                className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] text-white"
                 style={{ background: "var(--brand-gradient)" }}
               >
                 <Icon className="h-4 w-4" />

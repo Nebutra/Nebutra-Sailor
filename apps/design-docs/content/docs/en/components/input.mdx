@@ -126,12 +126,23 @@ Use `revealable` on `type="password"` when the field needs a visibility toggle. 
 
 ## Design Contract
 
-- Labels are Title Case nouns: Project Name, Domain, Environment Variable Name.
-- Placeholders show example values, never instructions.
-- Validate on blur and pass a string to `error` when the message is ready.
-- Trim leading and trailing whitespace before submit in the calling form.
-- Keep the input focusable while saving; use `loading` instead of disabling unless input is impossible.
+- Labels are short product nouns: Project Name, API Key Name, Custom Domain, Webhook URL.
+- Placeholders show realistic example values, never instructions. Use `nebutra-control-plane`, `api.nebutra.com`, or `sk_live_...`, not `Enter a value`.
+- Validate on blur for ordinary fields and on submit for server-backed uniqueness checks. Pass a string to `error` once the message is ready.
+- Trim leading and trailing whitespace before submit in the calling form, except for secrets where whitespace may be meaningful.
+- Keep the input focusable while saving; use `loading` instead of disabling unless the value is locked by role, plan, or system ownership.
 - Do not use `suffix` for buttons. Use built-in controls such as `clearable` and `revealable`, or compose a dedicated field primitive when the right side needs custom interaction.
+
+### State Matrix
+
+| State | Product use | Contract |
+|---|---|---|
+| Empty | New project, custom domain, invite email | Visible label provides the name; placeholder is only an example. |
+| Filled | Editing tenant metadata or API key label | Preserve user text exactly while focused; format only after blur or submit. |
+| Focus | Keyboard editing in dense settings forms | Tokenized ring wraps the rounded control and never falls back to a square browser outline. |
+| Loading | Checking domain availability or validating an invite | Spinner does not steal focus or replace the input value. |
+| Error | Duplicate slug, invalid email, unsupported region code | `error` text names the field and constraint and is linked by `aria-describedby`. |
+| Disabled | Role-locked organization slug or system-owned URL | Use disabled only when editing is impossible; explain the lock nearby. |
 
 ## Accessibility
 
@@ -141,6 +152,7 @@ Use `revealable` on `type="password"` when the field needs a visibility toggle. 
 - Prefix and suffix icons are decorative; hide them from assistive technology.
 - Search inputs clear with Escape only while dirty, so Escape can still close an outer dialog when the field is empty.
 - Password reveal exposes `aria-pressed` and restores focus to the input after toggling.
+- Focus treatment is part of the primitive contract: keyboard and pointer focus use the same tokenized ring, including error focus, clearable search, and password reveal controls.
 
 ## Tokens
 
@@ -148,12 +160,15 @@ Use `revealable` on `type="password"` when the field needs a visibility toggle. 
 
 ## Real Product Examples
 
-- Workspace name fields with helper text and blur validation.
-- Search inputs with a prefix icon, clear button, and keyboard shortcut hint.
-- Password inputs with a reveal control and server-side error text.
+- Project slug field in onboarding, with helper text explaining lowercase letters, numbers, and hyphens.
+- API key name field in developer settings, with blur validation and server-side duplicate-name error text.
+- Audit log search scoped to users, actions, and resource IDs, with a prefix icon, `clearable`, and an `Esc` hint.
+- Password or secret input in account security, using `revealable` and preserving focus after toggling visibility.
 
 ## Anti-patterns
 
 - Do not use Input for multi-line content. Use Textarea.
 - Do not put actionable controls in both suffix and clear/reveal slots at the same time.
 - Do not validate only through color; provide `error` text linked by `aria-describedby`.
+- Do not use placeholder text as the only label in settings, billing, or IAM flows.
+- Do not disable the field during async validation; keep it editable and show `loading`.

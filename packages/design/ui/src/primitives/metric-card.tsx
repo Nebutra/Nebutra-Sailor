@@ -135,7 +135,7 @@ export function MetricGrid({ children, columns = 3, className }: MetricGridProps
 
 export function MetricCardBordered({ className, ...props }: MetricCardProps) {
   return (
-    <div className={cn("rounded-lg border bg-card p-4", className)}>
+    <div className={cn("rounded-[var(--radius-lg)] border bg-card p-4", className)}>
       <MetricCard {...props} />
     </div>
   );

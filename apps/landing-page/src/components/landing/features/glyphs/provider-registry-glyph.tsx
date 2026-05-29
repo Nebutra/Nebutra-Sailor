@@ -18,7 +18,7 @@ const CATEGORIES: Category[] = [
 export function ProviderRegistryGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-md bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       <div className="font-mono text-[9px] tracking-tight text-[var(--neutral-10)]">
@@ -39,7 +39,7 @@ export function ProviderRegistryGlyph(_props: SubpackageGlyphProps) {
                   <Badge
                     key={p}
                     variant="outline"
-                    className="h-4 rounded-sm border-[var(--neutral-6)] px-1 font-mono text-[8px] font-normal text-[var(--neutral-12)]"
+                    className="h-4 rounded-[var(--radius-sm)] border-[var(--neutral-6)] px-1 font-mono text-[8px] font-normal text-[var(--neutral-12)]"
                   >
                     {p}
                   </Badge>

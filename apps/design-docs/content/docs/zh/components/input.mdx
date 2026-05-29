@@ -1,5 +1,5 @@
 ---
-title: "输入框 (Input)"
+title: "输入框"
 description: "用于单行文本输入，支持强关联标签、语义错误态、前后缀、可清除搜索与快捷键提示。"
 ---
 
@@ -69,7 +69,7 @@ import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo"
   <InputWithIconDemo />
 </ComponentPreview>
 
-`type="search"` 在字段有内容时可按 Escape 清空。placeholder 必须命名搜索范围，例如 `搜索项目`，不要只写 `搜索`。
+`type="search"` 在字段有内容时可按 Escape 清空。占位文案必须命名搜索范围，例如 `搜索项目`，不要只写 `搜索`。
 
 ### 可清除搜索
 
@@ -115,44 +115,59 @@ import { InputWithLabelDemo } from "@/components/previews/input-with-label-demo"
 | `onClear` | `() => void` | - | 字段被清空后触发。 |
 | `onValueChange` | `(value: string) => void` | - | 面向受控场景的 value-first 回调。 |
 | `shortcut` | `string` | - | 可视快捷键提示。字段有内容时显示 `Esc`。 |
-| `loading` | `boolean` | `false` | 显示 spinner，但不移除输入焦点能力。 |
+| `loading` | `boolean` | `false` | 显示加载指示器，但不移除输入焦点能力。 |
 | `revealable` | `boolean` | `false` | 在 `type="password"` 时添加密码显示按钮。 |
-| `revealLabel` | `string` | `"Show password"` | 密码隐藏状态下的按钮无障碍标签。 |
-| `hideLabel` | `string` | `"Hide password"` | 密码可见状态下的按钮无障碍标签。 |
+| `revealLabel` | `string` | `"Show password"` | 密码隐藏状态下的按钮无障碍标签，可按业务语言覆盖。 |
+| `hideLabel` | `string` | `"Hide password"` | 密码可见状态下的按钮无障碍标签，可按业务语言覆盖。 |
 | `clearOnEscape` | `boolean` | `type === "search"` | 字段有内容时按 Escape 清空。 |
-| `wrapperClassName` | `string` | - | 应用于带前后缀的 control wrapper。 |
-| `fieldClassName` | `string` | - | 应用于 label/helper/error 的 field wrapper。 |
+| `wrapperClassName` | `string` | - | 应用于带前后缀的控件外层容器。 |
+| `fieldClassName` | `string` | - | 应用于标签、辅助说明和错误消息的字段外层容器。 |
 
 ## 设计契约
 
-- Label 使用简短名词：项目名称、域名、环境变量名。
-- 占位文案展示示例值，不写操作说明。
-- 验证优先在 blur 后触发；错误文案准备好后传入 `error` 字符串。
-- 表单提交前由调用方 trim 首尾空格。
-- 保存中保持输入框可聚焦；除非真的无法输入，否则用 `loading` 而不是 `disabled`。
-- 不要把按钮塞进 `suffix`。优先使用 `clearable`、`revealable` 这类内建控件；右侧需要自定义交互时应抽成专用 field primitive。
+- 标签使用简短产品名词：项目名称、API Key 名称、自定义域名、Webhook URL。
+- 占位文案展示真实示例值，不写操作说明。使用 `nebutra-control-plane`、`api.nebutra.com` 或 `sk_live_...`，不要写“请输入”。
+- 普通字段在失焦后校验；需要服务端唯一性检查的字段在提交或防抖后校验。错误文案准备好后传入 `error` 字符串。
+- 提交前由调用方裁剪首尾空格；密码、密钥等空格可能有意义的字段例外。
+- 保存中保持输入框可聚焦；只有值被角色、套餐或系统所有权锁定时才使用 `disabled`。
+- 不要把按钮塞进 `suffix`。优先使用 `clearable`、`revealable` 这类内建控件；右侧需要自定义交互时应抽成专用字段原语。
+
+### 状态矩阵
+
+| 状态 | 产品场景 | 合约 |
+|---|---|---|
+| 空值 | 新建项目、自定义域名、邀请邮箱 | 可见标签负责命名字段；占位文案只提供示例。 |
+| 已填写 | 编辑租户元数据或 API Key 标签 | 聚焦期间保留用户原文，只在失焦或提交后格式化。 |
+| 聚焦 | 密集设置表单中的键盘编辑 | 令牌化焦点环包住圆角控件，不能退回浏览器方形轮廓。 |
+| 加载中 | 检查域名可用性、校验邀请邮箱 | 加载指示器不抢焦点，也不替换输入值。 |
+| 错误 | 项目标识重复、邮箱无效、区域码不支持 | `error` 文案说明字段和约束，并通过 `aria-describedby` 关联。 |
+| 禁用 | 角色锁定的组织标识、系统生成 URL | 只有无法编辑时才禁用，并在附近说明锁定原因。 |
 
 ## 可访问性
 
-- `label` 没有 `id` 不会通过类型检查，避免 label 与 input 脱钩。
+- `label` 没有 `id` 不会通过类型检查，避免标签与输入框脱钩。
 - `description`、文本前后缀、字符串错误会合并进 `aria-describedby`。
 - 错误文案使用 `role="alert"`。
 - 图标前后缀是装饰性内容，应从辅助技术中隐藏。
 - 搜索框只有在有内容时拦截 Escape；为空时 Escape 仍可关闭外层 Dialog。
 - 密码显示按钮暴露 `aria-pressed`，切换后会把焦点还给输入框。
+- 焦点样式属于原语合约：键盘和鼠标聚焦都使用同一个令牌化焦点环，错误聚焦、可清除搜索和密码显示控件也必须一致。
 
-## Tokens
+## 令牌
 
-`Input` 使用 `inputTokens` 管理尺寸、圆角、内边距、前后缀偏移、控制按钮尺寸、图标尺寸与 focus ring 宽度。运行时颜色只消费 semantic tokens：`background`、`foreground`、`input`、`ring`、`muted-foreground`、`destructive`。
+`Input` 使用 `inputTokens` 管理尺寸、圆角、内边距、前后缀偏移、控制按钮尺寸、图标尺寸与焦点环宽度。运行时颜色只消费语义令牌：`background`、`foreground`、`input`、`ring`、`muted-foreground`、`destructive`。
 
 ## 真实产品示例
 
-- Workspace name 字段，带 helper text 和 blur validation。
-- 带 prefix icon、清除按钮和快捷键提示的搜索输入。
-- 带 reveal 控件和服务端错误文案的密码输入。
+- 引导流程中的项目标识字段，辅助文本说明只能使用小写字母、数字和连字符。
+- 开发者设置里的 API Key 名称字段，失焦校验并展示服务端返回的重名错误。
+- 审计日志搜索框限定搜索用户、动作和资源 ID，带前置图标、清除按钮和 `Esc` 提示。
+- 账户安全里的密码或密钥输入框，使用显示/隐藏控件，切换后焦点仍回到输入框。
 
 ## 反模式
 
 - 不要用 Input 承载多行内容；使用 Textarea。
-- 不要同时在 suffix 和 clear/reveal slot 放可操作控件。
+- 不要同时在后缀和清除/显示密码区域放可操作控件。
 - 不要只通过颜色表达校验；传入 `error` 文案并通过 `aria-describedby` 关联。
+- 不要在设置、账单或 IAM 流程里把占位文案当成唯一标签。
+- 异步校验时不要禁用字段；保持可编辑并显示 `loading`。

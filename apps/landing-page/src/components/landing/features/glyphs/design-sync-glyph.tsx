@@ -33,7 +33,7 @@ function FlowNode({ label, tone }: { label: string; tone: NodeTone }) {
   const styles = NODE_TONE_STYLES[tone];
   return (
     <div
-      className="flex items-center gap-1.5 rounded-md px-2 py-1"
+      className="flex items-center gap-1.5 rounded-[var(--radius-md)] px-2 py-1"
       style={{
         background: styles.bg,
         border: `1px solid ${styles.border}`,
@@ -70,7 +70,7 @@ function LogRow({ verb, meta, time }: { verb: string; meta: string; time: string
 export function DesignSyncGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2 rounded-md p-3"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] p-3"
       style={{
         height: 160,
         background: "var(--neutral-2)",

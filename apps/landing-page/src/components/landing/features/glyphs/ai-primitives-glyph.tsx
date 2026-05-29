@@ -28,7 +28,7 @@ const ROWS = [
 export function AiPrimitivesGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-md bg-neutral-2 px-3 py-2.5"
+      className="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-neutral-2 px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2 z-10">
@@ -43,7 +43,7 @@ export function AiPrimitivesGlyph(_props: SubpackageGlyphProps) {
           return (
             <div
               key={row.name}
-              className="flex items-center gap-2 rounded-sm bg-neutral-1 px-2 py-1"
+              className="flex items-center gap-2 rounded-[var(--radius-sm)] bg-neutral-1 px-2 py-1"
             >
               <Icon size={11} className="shrink-0 text-neutral-10" />
               <span className="w-[78px] shrink-0 text-neutral-12">{row.name}</span>

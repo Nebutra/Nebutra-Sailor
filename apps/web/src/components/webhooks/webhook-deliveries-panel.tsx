@@ -145,7 +145,7 @@ export function WebhookDeliveriesPanel({
           return (
             <li
               key={delivery.id}
-              className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3"
+              className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3"
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">

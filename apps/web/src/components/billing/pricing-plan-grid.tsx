@@ -147,7 +147,7 @@ async function defaultOnSelectPlan(
  * `onSelectPlan`. By default selecting a plan POSTs `{ planId, interval,
  * redirectUrl }` to `/api/billing/checkout` and redirects to the returned URL.
  *
- * Tokens follow the project palette: rounded-3xl cards, `var(--neutral-*)`,
+ * Tokens follow the project palette: rounded-[var(--radius-3xl)] cards, `var(--neutral-*)`,
  * `var(--brand-primary)` highlights for the recommended plan and CTA.
  */
 export function PricingPlanGrid({
@@ -229,7 +229,7 @@ export function PricingPlanGrid({
       {checkoutError && (
         <div
           role="alert"
-          className="mb-4 rounded-2xl border border-[color:var(--amber-7)] bg-[color:var(--amber-2)] px-4 py-3 text-[color:var(--amber-11)] text-sm"
+          className="mb-4 rounded-[var(--radius-2xl)] border border-[color:var(--amber-7)] bg-[color:var(--amber-2)] px-4 py-3 text-[color:var(--amber-11)] text-sm"
         >
           {checkoutError} You can retry checkout or contact support if the provider setup is still
           unavailable.
@@ -323,7 +323,7 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
     <article
       aria-label={plan.name}
       data-testid={`pricing-plan-${plan.id}`}
-      className={`relative flex flex-col rounded-3xl border p-6 shadow-sm transition ${
+      className={`relative flex flex-col rounded-[var(--radius-3xl)] border p-6 shadow-sm transition ${
         recommended
           ? "border-[color:var(--brand-primary)] bg-[color:var(--neutral-1)]"
           : "border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)]"
@@ -387,7 +387,7 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
         onClick={onSelect}
         disabled={loading || disabled || isFree}
         aria-label={isFree ? `${plan.name} included` : `Choose ${plan.name}`}
-        className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-sm transition ${
+        className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] px-4 py-2.5 font-medium text-sm transition ${
           recommended
             ? "bg-[color:var(--brand-primary)] text-[color:var(--neutral-1)] hover:opacity-90"
             : "border border-[color:var(--neutral-7)] text-[color:var(--neutral-12)] hover:bg-[color:var(--neutral-3)]"

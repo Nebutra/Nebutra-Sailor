@@ -57,7 +57,7 @@ export function ExecutionPolicyGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-md bg-[var(--neutral-2)] p-2.5"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-2.5"
       style={{ height: 160 }}
     >
       {/* Header: policy id + rule count */}
@@ -71,7 +71,7 @@ export function ExecutionPolicyGlyph({ locale }: SubpackageGlyphProps) {
         {RULES.map((rule) => (
           <div
             key={rule.condition}
-            className="flex items-center gap-1.5 rounded-sm bg-[var(--neutral-1)] px-1.5 py-1"
+            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-[var(--neutral-1)] px-1.5 py-1"
           >
             <span className="flex-1 truncate font-mono text-[9px] text-foreground/85">
               {rule.condition}

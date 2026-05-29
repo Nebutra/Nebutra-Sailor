@@ -17,7 +17,7 @@ const ARCHIVED: ArchivedIdea[] = [
 export function FounderCemeteryGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-lg bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
@@ -32,7 +32,7 @@ export function FounderCemeteryGlyph(_props: SubpackageGlyphProps) {
         {ARCHIVED.map((idea) => (
           <li
             key={idea.name}
-            className="flex items-center gap-1.5 rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center gap-1.5 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1"
           >
             <span className="font-mono text-[10px] text-[var(--neutral-10)]">idea</span>
             <span className="font-mono text-[10px] text-[var(--neutral-11)]">·</span>

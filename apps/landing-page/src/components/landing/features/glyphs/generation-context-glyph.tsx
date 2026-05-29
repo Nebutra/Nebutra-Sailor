@@ -46,7 +46,7 @@ export function GenerationContextGlyph(_props: SubpackageGlyphProps) {
 
       {/* Budget bar — 15 cells, segmented by role */}
       <div className="flex flex-col gap-1.5">
-        <div className="flex h-7 w-full gap-[2px] overflow-hidden rounded-md border border-neutral-6 bg-neutral-2 p-[2px]">
+        <div className="flex h-7 w-full gap-[2px] overflow-hidden rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 p-[2px]">
           {SEGMENTS.flatMap((seg) =>
             Array.from({ length: seg.cells }, (_, i) => (
               <div
@@ -64,7 +64,7 @@ export function GenerationContextGlyph(_props: SubpackageGlyphProps) {
           {SEGMENTS.map((seg) => (
             <div
               key={seg.key}
-              className="flex items-center gap-1 rounded-md border border-neutral-6 bg-neutral-2 px-1.5 py-[1px]"
+              className="flex items-center gap-1 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 px-1.5 py-[1px]"
             >
               <span
                 className="h-2 w-2 rounded-[1px]"

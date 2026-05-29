@@ -35,7 +35,7 @@ jobs:
   visual:
     name: Docs and Feature Showcase
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -57,13 +57,40 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run visual acceptance
-        run: pnpm visual:ci
+      - name: Run production visual acceptance
+        env:
+          VISUAL_SERVER_MODE: production
+        run: |
+          set +e
+
+          rm -rf playwright-report visual-acceptance-report
+
+          pnpm visual:design-docs:ci
+          design_docs_status=$?
+          if [ -d playwright-report ]; then
+            mkdir -p visual-acceptance-report/design-docs
+            cp -R playwright-report/. visual-acceptance-report/design-docs/
+          fi
+
+          rm -rf playwright-report
+
+          pnpm visual:landing:ci
+          landing_status=$?
+          if [ -d playwright-report ]; then
+            mkdir -p visual-acceptance-report/landing
+            cp -R playwright-report/. visual-acceptance-report/landing/
+          fi
+
+          if [ "$design_docs_status" -ne 0 ] || [ "$landing_status" -ne 0 ]; then
+            exit 1
+          fi
 
       - name: Upload visual report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: visual-acceptance-report-${{ github.run_id }}
-          path: playwright-report/
-          if-no-files-found: ignore
+          path: |
+            visual-acceptance-report/
+            test-results/
+          if-no-files-found: error

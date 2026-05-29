@@ -22,7 +22,7 @@ const STEPS: Step[] = [
 export function PlayLoaderGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-md bg-[var(--neutral-2)] p-3 font-mono text-[10px] leading-tight"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3 font-mono text-[10px] leading-tight"
       style={{ height: 160 }}
     >
       {/* Header: playbook identity */}

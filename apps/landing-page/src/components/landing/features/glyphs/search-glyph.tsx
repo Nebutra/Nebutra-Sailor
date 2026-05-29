@@ -52,7 +52,7 @@ export function SearchGlyph(_props: SubpackageGlyphProps) {
         {RESULTS.map((row) => (
           <li
             key={row.path}
-            className="flex items-center justify-between gap-2 rounded-md border border-border bg-background/40 px-2 py-1.5"
+            className="flex items-center justify-between gap-2 rounded-[var(--radius-md)] border border-border bg-background/40 px-2 py-1.5"
           >
             <div className="flex min-w-0 flex-1 flex-col gap-0.5">
               <span className="truncate text-[12px] leading-tight text-foreground">
@@ -60,7 +60,7 @@ export function SearchGlyph(_props: SubpackageGlyphProps) {
                   token.mark ? (
                     <mark
                       key={idx}
-                      className="rounded-sm bg-[image:var(--brand-gradient)] px-0.5 text-white"
+                      className="rounded-[var(--radius-sm)] bg-[image:var(--brand-gradient)] px-0.5 text-white"
                     >
                       {token.text}
                     </mark>

@@ -30,7 +30,7 @@ export function MetricsSkeleton() {
         {metricCards.map((id) => (
           <div
             key={id}
-            className="h-24 animate-pulse rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2"
+            className="h-28 animate-pulse rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2"
           />
         ))}
       </div>

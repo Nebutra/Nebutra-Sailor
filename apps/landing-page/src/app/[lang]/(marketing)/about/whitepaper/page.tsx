@@ -271,7 +271,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <AnimateIn preset="fadeUp">
             <nav
               aria-label={hero.tocKicker}
-              className="rounded-2xl border border-border/60 bg-muted/20 p-6 md:p-8"
+              className="rounded-[var(--radius-2xl)] border border-border/60 bg-muted/20 p-6 md:p-8"
             >
               <div className="flex items-center gap-3 mb-5">
                 <BookOpen className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
@@ -358,7 +358,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             >
               {iCopy.goals.map((goal, idx) => (
                 <AnimateIn key={goal.title} preset="fadeUp">
-                  <article className="h-full rounded-2xl border border-border/60 bg-background p-6 md:p-7">
+                  <article className="h-full rounded-[var(--radius-2xl)] border border-border/60 bg-background p-6 md:p-7">
                     <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-4 block">
                       0{idx + 1}
                     </span>
@@ -527,7 +527,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   {builder.highlights.map((h, idx) => (
                     <li
                       key={h.title}
-                      className="rounded-xl border border-border/50 bg-muted/20 p-4"
+                      className="rounded-[var(--radius-xl)] border border-border/50 bg-muted/20 p-4"
                     >
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
@@ -578,7 +578,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   {sleptons.highlights.map((h, idx) => (
                     <li
                       key={h.title}
-                      className="rounded-xl border border-border/50 bg-muted/20 p-4"
+                      className="rounded-[var(--radius-xl)] border border-border/50 bg-muted/20 p-4"
                     >
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">

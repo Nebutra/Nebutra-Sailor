@@ -51,7 +51,7 @@ export function ProviderFactoryGlyph(_props: SubpackageGlyphProps) {
         })}
       </div>
 
-      <div className="rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2.5 py-1.5">
+      <div className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2.5 py-1.5">
         <div className="font-mono text-[10px] leading-snug text-[var(--neutral-11)]">
           <span className="text-[var(--neutral-10)]">Detected via</span>{" "}
           <span className="text-[var(--neutral-12)]">BILLING_PROVIDER</span>

@@ -95,12 +95,12 @@ export function ApiKeysList({
 
   if (keys.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] py-10 text-center">
+      <div className="flex flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] py-10 text-center">
         <p className="mb-3 text-sm text-[var(--neutral-11)]">{emptyTitle}</p>
         <button
           type="button"
           onClick={onCreate}
-          className="rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
           style={{ background: "var(--brand-gradient)" }}
         >
           {emptyCta}
@@ -110,7 +110,7 @@ export function ApiKeysList({
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-[var(--neutral-7)]">
+    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)]">
       <table className="w-full text-sm">
         <thead className="bg-[var(--neutral-2)] text-left text-xs font-medium text-[var(--neutral-11)]">
           <tr>

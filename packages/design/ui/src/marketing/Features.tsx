@@ -3,7 +3,9 @@
 import { cva } from "class-variance-authority";
 import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
 import { cn } from "../utils/cn";
-import type { FeaturesProps } from "./types";
+import type { Feature, FeaturesProps } from "./types";
+
+const EMPTY_FEATURES: Feature[] = [];
 
 const featuresVariants = cva("w-full mx-auto", {
   variants: {
@@ -36,7 +38,7 @@ export function Features({
   layout = "grid",
   columns = 3,
   showIcons = true,
-  features = [],
+  features = EMPTY_FEATURES,
   title,
   subtitle,
   className,
@@ -51,7 +53,7 @@ export function Features({
     >
       {(title || subtitle) && (
         <AnimateIn preset="fadeUp">
-          <div className="flex flex-col items-center text-center space-y-4 mb-12 md:mb-16">
+          <div className="mb-12 flex flex-col items-center gap-4 text-center md:mb-16">
             {title && (
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--neutral-12)]">
                 {title}
@@ -76,7 +78,7 @@ export function Features({
               <AnimateIn key={feature.id} preset="fadeUp">
                 <div
                   className={cn(
-                    "group relative flex flex-col justify-between overflow-hidden rounded-3xl bg-[var(--neutral-2)] p-6 sm:p-8 border border-[var(--neutral-6)] transition-all hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)]",
+                    "group relative flex flex-col justify-between overflow-hidden rounded-[var(--radius-3xl)] bg-[var(--neutral-2)] p-6 sm:p-8 border border-[var(--neutral-6)] transition-all hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)]",
                     layout === "alternating" ? "md:flex-row md:items-center md:gap-12" : "h-full",
                     layout === "alternating" && index % 2 === 1 ? "md:flex-row-reverse" : "",
                     isBentoLarge ? "md:col-span-2 md:row-span-2 bg-[var(--neutral-3)]" : "",
@@ -90,7 +92,7 @@ export function Features({
                   >
                     <div className="flex items-center gap-3 mb-4">
                       {showIcons && feature.icon && (
-                        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--neutral-4)] text-[var(--neutral-12)] border border-[var(--neutral-6)]">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-[var(--radius-xl)] bg-[var(--neutral-4)] text-[var(--neutral-12)] border border-[var(--neutral-6)]">
                           {/* Fallback to text if icon string, ideally mapped to icons component */}
                           <span className="text-sm font-semibold">
                             {feature.icon.charAt(0).toUpperCase()}
@@ -116,7 +118,7 @@ export function Features({
                       <div className="mt-auto pt-4">
                         <a
                           href={feature.href}
-                          className="inline-flex items-center text-sm font-medium text-[var(--neutral-12)] hover:text-[var(--neutral-11)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-7)] rounded-md"
+                          className="inline-flex items-center text-sm font-medium text-[var(--neutral-12)] hover:text-[var(--neutral-11)] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-7)] rounded-[var(--radius-md)]"
                         >
                           Learn more
                           <span className="ml-1 transition-transform group-hover:translate-x-1">
@@ -130,7 +132,7 @@ export function Features({
                   {feature.image && (
                     <div
                       className={cn(
-                        "relative rounded-2xl overflow-hidden bg-[var(--neutral-4)] border border-[var(--neutral-6)]",
+                        "relative rounded-[var(--radius-2xl)] overflow-hidden bg-[var(--neutral-4)] border border-[var(--neutral-6)]",
                         layout === "alternating"
                           ? "md:w-1/2 mt-8 md:mt-0 aspect-video"
                           : "mt-8 aspect-[4/3]",

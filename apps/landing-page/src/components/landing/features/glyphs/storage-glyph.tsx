@@ -50,7 +50,7 @@ export function StorageGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2.5 rounded-md bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2.5 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Header — Box icon + bucket name + region pill */}

@@ -1,3 +1,4 @@
+import { PlayFill } from "@nebutra/icons";
 import type { ReactNode, Ref } from "react";
 import { cn } from "../utils/cn";
 
@@ -223,7 +224,7 @@ function SlidePlaceholder() {
     <>
       <div className="bg-foreground/5 mb-1.5 space-y-1 rounded border p-1">
         <div className="flex justify-center gap-1">
-          <div className="size-3 rounded-sm bg-orange-400/40" />
+          <div className="size-3 rounded-[var(--radius-sm)] bg-orange-400/40" />
         </div>
         <div className="bg-foreground/15 mx-auto h-0.75 w-8 rounded-full" />
       </div>
@@ -243,7 +244,7 @@ function ImagePlaceholder() {
   return (
     <div className="bg-foreground/5 mb-1.5 space-y-1 rounded border p-1">
       <div className="flex justify-center gap-1">
-        <div className="size-3 rounded-sm bg-yellow-400/40" />
+        <div className="size-3 rounded-[var(--radius-sm)] bg-yellow-400/40" />
       </div>
       <div className="bg-foreground/15 mx-auto mt-1 h-0.75 w-4 rounded-full" />
       <div className="bg-foreground/15 mx-auto h-0.75 w-8 rounded-full" />
@@ -255,7 +256,7 @@ function VideoPlaceholder() {
   return (
     <div className="bg-foreground/5 mb-1.5 space-y-1 rounded border p-1">
       <div className="flex justify-center gap-1">
-        <div className="size-0 border-y-[5px] border-l-8 border-y-transparent border-l-green-400/60" />
+        <PlayFill className="size-3 text-green-400/70" aria-hidden="true" />
       </div>
       <div className="bg-foreground/15 mx-auto mt-1 h-0.75 w-4 rounded-full" />
       <div className="bg-foreground/15 mx-auto h-0.75 w-8 rounded-full" />
@@ -396,7 +397,7 @@ export const FileCard = function FileCard({
       >
         {format}
       </div>
-      <div className="ring-border relative z-1 h-18 w-14 space-y-3 rounded-md bg-card p-2 ring-1">
+      <div className="ring-border relative z-1 h-18 w-14 space-y-3 rounded-[var(--radius-md)] bg-card p-2 ring-1">
         <Renderer />
       </div>
     </div>

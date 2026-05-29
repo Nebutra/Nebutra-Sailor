@@ -86,7 +86,7 @@ export function InviteTeamStep({ onComplete }: InviteTeamStepProps) {
                   type="button"
                   aria-label="Remove email"
                   onClick={() => removeField(i)}
-                  className="rounded-md p-1.5 text-muted-foreground hover:text-destructive"
+                  className="rounded-[var(--radius-md)] p-1.5 text-muted-foreground hover:text-destructive"
                 >
                   <X className="h-4 w-4" />
                 </button>

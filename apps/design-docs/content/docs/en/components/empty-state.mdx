@@ -137,6 +137,18 @@ Use `live` after async filtering changes so assistive technology announces the n
 - The icon is decorative and token-sized through `EmptyState.Icon`; meaning must live in copy and CTA labels.
 - Variants map to product states, not colors. Do not override a variant just to get a different accent.
 
+## Real Product Examples
+
+- A new workspace project list before the first project exists, with a direct create action.
+- A filtered audit-log table returning no results, with a clear-filter action and the active query named in the copy.
+- A recoverable loading failure for deployments, including a retry action and request ID for support.
+
+## Anti-patterns
+
+- Do not use empty states as marketing panels or feature explainers when the page already has usable content.
+- Do not show an empty state while data is still loading; use `LoadingState` or skeleton treatment until the request resolves.
+- Do not hide permission, billing, or error causes behind generic "No items" copy. The state must name why the content is unavailable.
+
 ## Storybook / Registry
 
 - Storybook source: `packages/design/ui/src/primitives/empty-state.stories.tsx`.

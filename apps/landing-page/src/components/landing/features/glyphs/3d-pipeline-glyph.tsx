@@ -60,7 +60,7 @@ function StageCard({
 export function ThreeDPipelineGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2 rounded-md p-3"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] p-3"
       style={{
         height: 160,
         background: "var(--neutral-2)",

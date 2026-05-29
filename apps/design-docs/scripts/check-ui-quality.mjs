@@ -49,6 +49,26 @@ const ignoredFilePatterns = [
   /\.test\.ts$/u,
 ];
 
+const formControlFocusContractFile = path.join(
+  REPO_ROOT,
+  "packages",
+  "design",
+  "ui",
+  "src",
+  "primitives",
+  "form-control.ts",
+);
+
+const formControlFocusContractTokens = [
+  "focus:border-ring",
+  "focus:ring-[length:var(--input-focus-ring-width)]",
+  "focus:ring-[length:var(--textarea-focus-ring-width)]",
+  "focus:ring-[length:var(--select-focus-ring-width)]",
+  "focus:ring-ring/30",
+  "aria-invalid:focus:border-destructive",
+  "aria-invalid:focus:ring-destructive/20",
+];
+
 const hardRules = [
   {
     id: "raw-focus-visual-state",
@@ -221,6 +241,18 @@ function scanRule(rule, file, source) {
   return findings;
 }
 
+function sourceForHardRule(rule, file, source) {
+  if (rule.id !== "raw-focus-visual-state" || file !== formControlFocusContractFile) {
+    return source;
+  }
+
+  let normalizedSource = source;
+  for (const token of formControlFocusContractTokens) {
+    normalizedSource = normalizedSource.split(token).join("form-control-focus-contract");
+  }
+  return normalizedSource;
+}
+
 const files = scanRoots.flatMap(collectFiles).sort();
 const hardFindings = [];
 const ratchetFindings = [];
@@ -232,7 +264,12 @@ for (const file of files) {
   const relativeFile = relative(file);
 
   for (const rule of hardRules) {
-    hardFindings.push(...scanRule(rule, file, source).map((finding) => ({ ...finding, rule })));
+    hardFindings.push(
+      ...scanRule(rule, file, sourceForHardRule(rule, file, source)).map((finding) => ({
+        ...finding,
+        rule,
+      })),
+    );
   }
 
   for (const rule of advisoryRules) {

@@ -22,7 +22,10 @@ export function NewsletterForm() {
         body: JSON.stringify({ email }),
       });
 
-      if (!res.ok) throw new Error("Failed");
+      if (!res.ok) {
+        setStatus("error");
+        return;
+      }
       setStatus("success");
       setEmail("");
     } catch {
@@ -64,7 +67,7 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="min-h-11 min-w-16 rounded-lg border border-[color:var(--blue-6)] bg-[color:var(--blue-2)] px-3 py-2 text-sm font-medium text-[color:var(--neutral-12)] shadow-[0_1px_2px_rgba(15,23,42,0.05)] transition-colors hover:border-[color:var(--blue-7)] hover:bg-[color:var(--blue-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] disabled:cursor-not-allowed disabled:opacity-60 dark:border-[color:var(--cyan-6)] dark:bg-[color:var(--cyan-2)] dark:text-[color:var(--neutral-12)] dark:hover:bg-[color:var(--cyan-3)]"
+        className="min-h-11 min-w-16 rounded-[var(--radius-lg)] border border-[color:var(--blue-6)] bg-[color:var(--blue-2)] px-3 py-2 text-sm font-medium text-[color:var(--neutral-12)] shadow-[0_1px_2px_rgba(15,23,42,0.05)] transition-colors hover:border-[color:var(--blue-7)] hover:bg-[color:var(--blue-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] disabled:cursor-not-allowed disabled:opacity-60 dark:border-[color:var(--cyan-6)] dark:bg-[color:var(--cyan-2)] dark:text-[color:var(--neutral-12)] dark:hover:bg-[color:var(--cyan-3)]"
       >
         {status === "loading" ? "…" : t("newsletterSubscribe")}
       </button>

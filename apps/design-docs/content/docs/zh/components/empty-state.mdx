@@ -1,5 +1,5 @@
 ---
-title: "空状态 (Empty State)"
+title: "空状态"
 description: "当尚未添加内容，或由于功能状态而暂时为空时，用于填充对应空间。"
 ---
 
@@ -38,14 +38,14 @@ import { EmptyState } from "@nebutra/ui/primitives"
 
 ```tsx
 <EmptyState.Root
-  description="This should detail the actions you can take on this screen, as well as why it's valuable."
+  description="说明当前页面还能做什么，以及这个功能为什么值得继续配置。"
   icon={<EmptyState.Icon icon={<ChartBarPeak size={32} />} />}
-  title="Title"
+  title="配置团队工作区"
   variant="informational"
 >
-  <Button type="button" variant="secondary">Primary Action</Button>
+  <Button type="button" variant="secondary">开始配置</Button>
   <Button asChild type="button" variant="ghost">
-    <a href="/docs">Learn More</a>
+    <a href="/docs">查看文档</a>
   </Button>
 </EmptyState.Root>
 ```
@@ -56,13 +56,13 @@ import { EmptyState } from "@nebutra/ui/primitives"
 
 ```tsx
 <EmptyState.Root
-  description="No logs match “status:error”. Clear the filter to see all logs."
+  description="没有日志匹配 “status:error”。清除筛选后可查看全部日志。"
   icon={<EmptyState.Icon icon={<MagnifyingGlass size={32} />} />}
   live
-  title="No Logs Match Your Filter"
+  title="没有匹配筛选条件的日志"
   variant="no-results"
 >
-  <Button type="button" variant="secondary">Clear Filter</Button>
+  <Button type="button" variant="secondary">清除筛选</Button>
 </EmptyState.Root>
 ```
 
@@ -70,12 +70,12 @@ import { EmptyState } from "@nebutra/ui/primitives"
 
 ```tsx
 <EmptyState.Root
-  description="Couldn't load deployments. Request ID: req_7K3QZ."
+  description="部署记录加载失败。请求 ID：req_7K3QZ。"
   icon={<EmptyState.Icon icon={<Warning size={32} />} />}
-  title="Deployments Failed To Load"
+  title="部署记录加载失败"
   variant="error"
 >
-  <Button type="button" variant="destructive">Try Again</Button>
+  <Button type="button" variant="destructive">重试</Button>
 </EmptyState.Root>
 ```
 
@@ -85,8 +85,8 @@ import { EmptyState } from "@nebutra/ui/primitives"
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
-| `title` | `ReactNode` | — | 表达状态的 Title Case 标题 |
-| `description` | `ReactNode` | — | sentence case 的辅助说明 |
+| `title` | `ReactNode` | — | 表达状态的短标题 |
+| `description` | `ReactNode` | — | 补充标题没有说出的状态原因或下一步 |
 | `icon` | `ReactNode` | — | 使用 `<EmptyState.Icon icon={...} />` 保持尺寸一致 |
 | `children` | `ReactNode` | — | CTA 插槽。使用真实 `Button` 或 `Link` |
 | `action` | `ReactNode` | — | 主 CTA 的兼容别名 |
@@ -118,10 +118,10 @@ import { EmptyState } from "@nebutra/ui/primitives"
 
 ## 文案
 
-- `title` 使用 Title Case，例如 `No Logs Match Your Filter`。
-- `description` 使用 sentence case，并补充标题没有说出的信息。
-- 单个查询词用弯引号包裹：`No logs match “status:error”.`
-- CTA 文案使用 Title Case Verb + Noun。避免 `Get Started`、`Continue`、`OK`。
+- `title` 使用短句，例如 `没有匹配筛选条件的日志`。
+- `description` 补充标题没有说出的原因、作用域或下一步。
+- 单个查询词用弯引号包裹：`没有日志匹配 “status:error”。`
+- CTA 文案使用明确动作。避免 `开始`、`继续`、`确定` 这类泛化按钮。
 - 最多一个主 CTA；只有确实存在两条合理路径时，才加一个次 CTA。
 
 ## 可访问性
@@ -137,7 +137,19 @@ import { EmptyState } from "@nebutra/ui/primitives"
 - 图标是装饰性的，并通过 `EmptyState.Icon` 统一尺寸；含义必须落在文案和 CTA 标签里。
 - Variant 映射产品状态，不是颜色开关。不要为了换强调色而错用 variant。
 
-## Storybook / Registry
+## 真实产品示例
 
-- Storybook source: `packages/design/ui/src/primitives/empty-state.stories.tsx`。
-- Registry manifest: `/r/empty-state.json`。
+- 新工作区的项目列表还没有第一个项目时，提供直接创建动作。
+- 审计日志表格筛选后没有结果，文案命名当前查询，并提供清除筛选动作。
+- 部署数据加载失败但可恢复时，提供重试动作和可用于支持排查的 request ID。
+
+## 反模式
+
+- 页面已经有可用内容时，不要把 empty state 当作营销面板或功能介绍。
+- 数据仍在加载时不要提前显示空状态；请求完成前应使用 `LoadingState` 或 skeleton。
+- 不要用泛泛的 “No items” 掩盖权限、计费或错误原因。状态必须说明内容为什么不可用。
+
+## Storybook 与 Registry
+
+- Storybook 来源：`packages/design/ui/src/primitives/empty-state.stories.tsx`。
+- Registry 清单：`/r/empty-state.json`。

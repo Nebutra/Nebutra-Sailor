@@ -57,7 +57,7 @@ export function AdminToolingGlyph(_props: SubpackageGlyphProps) {
           return (
             <li
               key={action.object}
-              className="flex items-center gap-2 rounded-md border border-border bg-background/40 px-2 py-1.5"
+              className="flex items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background/40 px-2 py-1.5"
             >
               <span className="flex size-4 shrink-0 items-center justify-center text-muted-foreground">
                 <Icon className="size-3.5" />

@@ -40,7 +40,7 @@ function nodeById(id: string): NodePos {
 export function KnowledgeGraphGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-3 py-3"
+      className="relative w-full overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-3 py-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
@@ -89,7 +89,7 @@ export function KnowledgeGraphGlyph(_props: SubpackageGlyphProps) {
       {NODES.map((node) => (
         <div
           key={node.id}
-          className="absolute rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-0.5 text-[10px] font-medium text-[var(--neutral-12)] shadow-sm"
+          className="absolute rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-0.5 text-[10px] font-medium text-[var(--neutral-12)] shadow-sm"
           style={{ top: node.top, left: `${node.left}%` }}
         >
           {node.label}

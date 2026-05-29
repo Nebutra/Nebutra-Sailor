@@ -34,45 +34,114 @@ const HSL_RE = /\bhsl\(/g;
 const OKLCH_RE = /\boklch\(/g;
 const OUTLINE_HIDDEN_RE = /\b(?:focus-visible:|focus:)?outline-hidden\b/g;
 const GLOBAL_FOCUS_RESET_RE = /\*:focus-visible\s*\{/g;
+const FORM_CONTROL_CONTRACT_FILE = "packages/design/ui/src/primitives/form-control.ts";
 const FORM_CONTROL_FOCUS_VISIBLE_RE =
   /\bfocus-visible:(?:border-ring|ring-\[length:var\(--(?:input|textarea|select)-focus-ring-width\)\]|ring-ring\/30|border-destructive|ring-destructive\/20)\b/g;
+const FORM_CONTROL_INLINE_FOCUS_RE =
+  /\b(?:focus:(?:border-ring|ring-\[length:var\(--(?:input|textarea|select)-focus-ring-width\)\]|ring-ring\/30)|aria-invalid:focus:(?:border-destructive|ring-destructive\/20))\b/g;
 const FOCUS_GOVERNANCE_ROOTS = ["packages/design/ui/src", "apps/landing-page/src"] as const;
 const FORM_CONTROL_FOCUS_REQUIREMENTS = [
   {
+    slot: "input",
     file: "packages/design/ui/src/primitives/input.tsx",
-    markers: [
+    contractMarkers: [
       "outline-none",
       "focus:border-ring",
       "focus:ring-[length:var(--input-focus-ring-width)]",
+      "focus:ring-ring/30",
+      "aria-invalid:border-destructive/60",
       "aria-invalid:focus:border-destructive",
       "aria-invalid:focus:ring-destructive/20",
+    ],
+    consumerMarkers: [
+      "formControlFocusClassNames.input",
+      "formControlInvalidClassNames.input",
       'borderRadius: "var(--input-radius)"',
       'outline: "none"',
     ],
   },
   {
+    slot: "textarea",
     file: "packages/design/ui/src/primitives/textarea.tsx",
-    markers: [
+    contractMarkers: [
       "outline-none",
       "focus:border-ring",
       "focus:ring-[length:var(--textarea-focus-ring-width)]",
+      "focus:ring-ring/30",
+      "aria-invalid:border-destructive/60",
       "aria-invalid:focus:border-destructive",
       "aria-invalid:focus:ring-destructive/20",
+    ],
+    consumerMarkers: [
+      "formControlFocusClassNames.textarea",
+      "formControlInvalidClassNames.textarea",
       'borderRadius: "var(--textarea-radius)"',
       'outline: "none"',
     ],
   },
   {
+    slot: "select",
     file: "packages/design/ui/src/primitives/select.tsx",
-    markers: [
+    contractMarkers: [
       "outline-none",
       "focus:border-ring",
       "focus:ring-[length:var(--select-focus-ring-width)]",
+      "focus:ring-ring/30",
+      "aria-invalid:border-destructive/60",
       "aria-invalid:focus:border-destructive",
       "aria-invalid:focus:ring-destructive/20",
+    ],
+    consumerMarkers: [
+      "formControlFocusClassNames.select",
+      "formControlInvalidClassNames.select",
       'borderRadius: "var(--select-radius)"',
       'outline: "none"',
     ],
+  },
+] as const;
+const CI_WORKFLOW_CONTRACTS = [
+  {
+    file: ".github/workflows/ui-governance.yml",
+    requiredContains: [
+      "pnpm exec tsx scripts/verify-ui-governance.ts",
+      "pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs docs:governance",
+      "pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs prebuild",
+      "git diff --exit-code -- \\",
+      "apps/design-docs/public/r \\",
+      "apps/design-docs/public/registry.json \\",
+      "apps/design-docs/public/previews-index.json \\",
+      "apps/design-docs/src/__registry__/index.tsx \\",
+      "apps/design-docs/src/__registry__/file-map.json",
+      "pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs typecheck",
+      "pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs build",
+    ],
+    forbiddenContains: ["continue-on-error: true"],
+  },
+  {
+    file: ".github/workflows/visual-acceptance.yml",
+    requiredContains: [
+      "VISUAL_SERVER_MODE: production",
+      "pnpm visual:design-docs:ci",
+      "pnpm visual:landing:ci",
+      "visual-acceptance-report/design-docs",
+      "visual-acceptance-report/landing",
+      "uses: actions/upload-artifact@v4",
+      "if: always()",
+      "visual-acceptance-report/",
+      "test-results/",
+      "if-no-files-found: error",
+    ],
+    forbiddenContains: ["run: pnpm visual:ci", "if-no-files-found: ignore"],
+  },
+  {
+    file: ".github/workflows/chromatic.yml",
+    requiredContains: [
+      "packages/design/ui/src/**",
+      "apps/storybook/**",
+      "apps/design-docs/content/docs/**",
+      ".github/workflows/chromatic.yml",
+    ],
+    forbiddenContains: [],
   },
 ] as const;
 
@@ -452,17 +521,44 @@ function verifyFocusRingGovernance() {
     `Focus ring governance violation: do not reset *:focus-visible globally inside components.\n${globalFocusResetViolations.map((item) => `- ${item}`).join("\n")}`,
   );
 
-  for (const requirement of FORM_CONTROL_FOCUS_REQUIREMENTS) {
-    const content = stripComments(read(requirement.file), requirement.file);
-    const missingMarkers = requirement.markers.filter((marker) => !content.includes(marker));
-    const focusVisibleOnlyCount = countMatches(content, FORM_CONTROL_FOCUS_VISIBLE_RE);
+  const formControlContract = stripComments(
+    read(FORM_CONTROL_CONTRACT_FILE),
+    FORM_CONTROL_CONTRACT_FILE,
+  );
+  const contractFocusVisibleCount = countMatches(
+    formControlContract,
+    FORM_CONTROL_FOCUS_VISIBLE_RE,
+  );
 
-    if (missingMarkers.length > 0) {
-      formControlViolations.push(`${requirement.file} missing ${missingMarkers.join(", ")}`);
-    }
-    if (focusVisibleOnlyCount > 0) {
+  if (contractFocusVisibleCount > 0) {
+    formControlViolations.push(
+      `${FORM_CONTROL_CONTRACT_FILE} contains ${contractFocusVisibleCount} focus-visible marker(s); text-like form controls must use :focus so mouse focus cannot leak the native square outline`,
+    );
+  }
+
+  for (const requirement of FORM_CONTROL_FOCUS_REQUIREMENTS) {
+    const missingContractMarkers = requirement.contractMarkers.filter(
+      (marker) => !formControlContract.includes(marker),
+    );
+    const content = stripComments(read(requirement.file), requirement.file);
+    const missingConsumerMarkers = requirement.consumerMarkers.filter(
+      (marker) => !content.includes(marker),
+    );
+    const inlineFocusCount = countMatches(content, FORM_CONTROL_INLINE_FOCUS_RE);
+
+    if (missingContractMarkers.length > 0) {
       formControlViolations.push(
-        `${requirement.file} contains ${focusVisibleOnlyCount} component focus-visible marker(s); text-like form controls must use :focus so mouse focus cannot leak the native square outline`,
+        `${FORM_CONTROL_CONTRACT_FILE} missing ${requirement.slot} contract marker(s): ${missingContractMarkers.join(", ")}`,
+      );
+    }
+    if (missingConsumerMarkers.length > 0) {
+      formControlViolations.push(
+        `${requirement.file} missing shared form-control marker(s): ${missingConsumerMarkers.join(", ")}`,
+      );
+    }
+    if (inlineFocusCount > 0) {
+      formControlViolations.push(
+        `${requirement.file} contains ${inlineFocusCount} inline form-control focus marker(s); use ${FORM_CONTROL_CONTRACT_FILE} instead`,
       );
     }
   }
@@ -473,8 +569,36 @@ function verifyFocusRingGovernance() {
   );
 }
 
+function verifyCiGovernanceContracts() {
+  const violations: string[] = [];
+
+  for (const contract of CI_WORKFLOW_CONTRACTS) {
+    const content = read(contract.file);
+    const missing = contract.requiredContains.filter((marker) => !content.includes(marker));
+    const forbidden = contract.forbiddenContains.filter((marker) => content.includes(marker));
+
+    if (missing.length > 0) {
+      violations.push(
+        `${contract.file} is missing required CI governance marker(s):\n${missing.map((item) => `- ${item}`).join("\n")}`,
+      );
+    }
+
+    if (forbidden.length > 0) {
+      violations.push(
+        `${contract.file} contains forbidden CI governance bypass marker(s):\n${forbidden.map((item) => `- ${item}`).join("\n")}`,
+      );
+    }
+  }
+
+  assert(
+    violations.length === 0,
+    `CI governance workflow contract violation:\n\n${violations.join("\n\n")}`,
+  );
+}
+
 function main() {
   const policy = loadUiGovernancePolicy();
+  verifyCiGovernanceContracts();
   verifyFocusRingGovernance();
   const rawColorStats = verifyRawTailwindColorUsage(policy);
   verifyMotionImports(policy);

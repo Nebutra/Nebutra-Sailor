@@ -7,8 +7,8 @@ import { Button } from "./button";
 import { Form, FormField, FormItem, FormMessage, useZodForm } from "./form";
 import { Input } from "./input";
 import { Label } from "./label";
+import { PasswordStrengthIndicator } from "./password-strength-indicator";
 // Schema defined inline for portability
-// PasswordStrengthIndicator omitted — add as optional child prop
 
 export function ChangePasswordForm() {
   const { t } = useI18n();
@@ -27,39 +27,44 @@ export function ChangePasswordForm() {
   const onSubmit = async (data: ChangePasswordFormData) => {
     setIsLoading(true);
 
-    try {
-      const response = await fetch("/api/user/password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          currentPassword: data.currentPassword,
-          newPassword: data.newPassword,
-        }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || t("settings.profile.toast.passwordUpdateFailed"));
-      }
-
-      toast.success(t("settings.profile.toast.passwordUpdated"));
-      form.reset();
-    } catch (error) {
+    const response = await fetch("/api/user/password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      }),
+    }).catch((error: unknown) => {
       console.error("Failed to change password:", error);
       toast.error(
         error instanceof Error && error.message
           ? error.message
           : t("settings.profile.toast.passwordUpdateFailed"),
       );
-    } finally {
+      return null;
+    });
+
+    if (!response) {
       setIsLoading(false);
+      return;
     }
+
+    if (!response.ok) {
+      const error = (await response.json().catch(() => null)) as { error?: string } | null;
+      toast.error(error?.error || t("settings.profile.toast.passwordUpdateFailed"));
+      setIsLoading(false);
+      return;
+    }
+
+    toast.success(t("settings.profile.toast.passwordUpdated"));
+    form.reset();
+    setIsLoading(false);
   };
 
   return (
-    <section className="rounded-md border border-border bg-background">
+    <section className="rounded-[var(--radius-md)] border border-border bg-background">
       <div className="border-b border-border px-6 py-4">
         <h2 className="text-base font-semibold text-foreground">
           {t("settings.profile.password.title")}

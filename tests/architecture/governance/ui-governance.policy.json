@@ -99,6 +99,7 @@
       "./layouts",
       "./patterns",
       "./primitives",
+      "./primitives/canonical",
       "./tailwind.preset",
       "./theme",
       "./typography",
@@ -111,17 +112,19 @@
       {
         "name": "web-dashboard-overview-high-resolution-density",
         "description": "Dashboard overview must be decision-led and capability-backed; it must not fabricate empty modules, onboarding billboards, or mock metric cards before real data exists.",
-        "file": "apps/web/src/app/[locale]/(app)/page.tsx",
+        "file": "apps/web/src/app/[locale]/(app)/workspace/page.tsx",
         "requiredContains": [
           "CommandCenter",
-          "max-w-[1440px]",
+          "max-w-[1760px]",
           "if (!tenantId) return null",
           "if (!summary?.day) return null",
           "snapshotMeta",
+          "details.activeUsers",
+          "meta.latestDay",
           "meta.snapshot",
           "meta.cadence",
           "meta.tenant",
-          "2xl:grid-cols-4",
+          "xl:grid-cols-4",
           "RecentSessions"
         ],
         "forbiddenContains": [
@@ -138,14 +141,15 @@
           "type MetricMeta",
           "dailyMeta",
           "<dl",
-          "text-3xl font-semibold tabular-nums"
+          "text-3xl font-semibold tabular-nums",
+          "2xl:grid-cols-4"
         ]
       },
       {
         "name": "web-dashboard-loading-state-matches-final-ia",
         "description": "Skeletons must mirror the final dashboard information architecture so loading does not feel like a different product.",
         "file": "apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx",
-        "requiredContains": ["max-w-3xl", "metricCards", "h-28"],
+        "requiredContains": ["max-w-5xl", "metricCards", "h-28"],
         "forbiddenContains": [
           "OnboardingSkeleton",
           "space-y-px overflow-hidden",

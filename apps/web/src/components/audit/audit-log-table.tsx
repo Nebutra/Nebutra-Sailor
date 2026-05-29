@@ -73,7 +73,7 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
           <div
             // biome-ignore lint/suspicious/noArrayIndexKey: skeleton placeholders
             key={i}
-            className="h-12 animate-pulse rounded-md bg-[var(--neutral-3)]"
+            className="h-12 animate-pulse rounded-[var(--radius-md)] bg-[var(--neutral-3)]"
           />
         ))}
       </div>
@@ -84,7 +84,7 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
     return (
       <div
         data-testid="audit-empty"
-        className="rounded-lg border border-dashed border-[var(--neutral-7)] p-12 text-center text-sm text-[var(--neutral-11)]"
+        className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] p-12 text-center text-sm text-[var(--neutral-11)]"
       >
         {t("empty")}
       </div>
@@ -92,7 +92,7 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-[var(--neutral-7)]">
+    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)]">
       <table className="w-full text-sm">
         <thead className="border-b border-[var(--neutral-7)] bg-[var(--neutral-2)] text-left text-xs uppercase tracking-wide text-[var(--neutral-11)]">
           <tr>

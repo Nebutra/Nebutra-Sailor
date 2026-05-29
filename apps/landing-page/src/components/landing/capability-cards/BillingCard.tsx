@@ -67,7 +67,7 @@ export function BillingCard() {
             $12,400
           </p>
           {/* CSS-only sparkline chart */}
-          <div className="relative w-full h-16 rounded-lg overflow-hidden bg-muted/20 dark:bg-white/[0.02]">
+          <div className="relative w-full h-16 rounded-[var(--radius-lg)] overflow-hidden bg-muted/20 dark:bg-white/[0.02]">
             {/* Gradient fill area */}
             <div
               className="absolute inset-0"

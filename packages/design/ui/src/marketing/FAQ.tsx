@@ -2,6 +2,7 @@
 
 import { cva } from "class-variance-authority";
 import * as React from "react";
+import ReactMarkdown from "react-markdown";
 import {
   Accordion,
   AccordionContent,
@@ -10,19 +11,21 @@ import {
 } from "../primitives/accordion";
 import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
 import { cn } from "../utils/cn";
-import type { FAQProps } from "./types";
+import type { FAQItem, FAQProps } from "./types";
+
+const EMPTY_FAQ_ITEMS: FAQItem[] = [];
 
 const faqVariants = cva("w-full mx-auto", {
   variants: {
     layout: {
-      accordion: "max-w-3xl",
+      accordion: "max-w-3xl flex flex-col",
       "two-column": "grid md:grid-cols-2 gap-8 max-w-5xl",
       cards: "grid sm:grid-cols-2 gap-6 max-w-5xl",
     },
     density: {
-      compact: "mt-8 space-y-4",
-      normal: "mt-12 space-y-8",
-      spacious: "mt-16 space-y-12",
+      compact: "mt-8 gap-4",
+      normal: "mt-12 gap-8",
+      spacious: "mt-16 gap-12",
     },
   },
   defaultVariants: {
@@ -31,9 +34,29 @@ const faqVariants = cva("w-full mx-auto", {
   },
 });
 
+function getFAQCategories(items: FAQItem[]) {
+  const categories: string[] = [];
+  const seen = new Set<string>();
+
+  for (const item of items) {
+    if (!item.category || seen.has(item.category)) {
+      continue;
+    }
+
+    seen.add(item.category);
+    categories.push(item.category);
+  }
+
+  return categories;
+}
+
+function getFAQItemKey(item: FAQItem) {
+  return [item.category ?? "general", item.question, item.answer].join("::");
+}
+
 export function FAQ({
   locale: _locale = "en",
-  items = [],
+  items = EMPTY_FAQ_ITEMS,
   showCategories = false,
   layout = "accordion",
   title,
@@ -44,20 +67,15 @@ export function FAQ({
 }: FAQProps) {
   const [activeCategory, setActiveCategory] = React.useState<string | null>(null);
 
-  const categories = React.useMemo(() => {
-    const cats = new Set(items.map((item) => item.category).filter(Boolean) as string[]);
-    return Array.from(cats);
-  }, [items]);
-
-  const filteredItems = React.useMemo(() => {
-    if (!activeCategory) return items;
-    return items.filter((item) => item.category === activeCategory);
-  }, [items, activeCategory]);
+  const categories = getFAQCategories(items);
+  const filteredItems = activeCategory
+    ? items.filter((item) => item.category === activeCategory)
+    : items;
 
   return (
     <section id={id} className={cn("py-16 md:py-24", className)} data-density={density}>
       <AnimateIn preset="fadeUp">
-        <div className="flex flex-col items-center text-center space-y-4 mb-10">
+        <div className="mb-10 flex flex-col items-center gap-4 text-center">
           {title && (
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--neutral-12)]">
               {title}
@@ -105,40 +123,38 @@ export function FAQ({
         <div className={cn(faqVariants({ layout, density }))}>
           {layout === "accordion" ? (
             <Accordion>
-              {filteredItems.map((item, index) => (
-                <AnimateIn key={index} preset="fadeUp">
-                  <AccordionItem value={`item-${index}`} className="border-[var(--neutral-6)]">
+              {filteredItems.map((item) => (
+                <AnimateIn key={getFAQItemKey(item)} preset="fadeUp">
+                  <AccordionItem value={getFAQItemKey(item)} className="border-[var(--neutral-6)]">
                     <AccordionTrigger className="text-[var(--neutral-12)] hover:text-[var(--neutral-11)] text-left">
                       {item.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-[var(--neutral-11)]">
-                      <div
-                        className="prose prose-neutral dark:prose-invert max-w-none text-sm leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: item.answer }}
-                      />
+                      <ReactMarkdown className="prose prose-neutral dark:prose-invert max-w-none text-sm leading-relaxed">
+                        {item.answer}
+                      </ReactMarkdown>
                     </AccordionContent>
                   </AccordionItem>
                 </AnimateIn>
               ))}
             </Accordion>
           ) : (
-            filteredItems.map((item, index) => (
-              <AnimateIn key={index} preset="fadeUp">
+            filteredItems.map((item) => (
+              <AnimateIn key={getFAQItemKey(item)} preset="fadeUp">
                 <div
                   className={cn(
-                    "flex flex-col space-y-3 h-full",
+                    "flex h-full flex-col gap-3",
                     layout === "cards"
-                      ? "p-6 rounded-2xl bg-[var(--neutral-2)] border border-[var(--neutral-6)] transition-colors hover:border-[var(--neutral-7)]"
+                      ? "p-6 rounded-[var(--radius-2xl)] bg-[var(--neutral-2)] border border-[var(--neutral-6)] transition-colors hover:border-[var(--neutral-7)]"
                       : "",
                   )}
                 >
                   <h3 className="font-semibold text-base text-[var(--neutral-12)]">
                     {item.question}
                   </h3>
-                  <div
-                    className="prose prose-neutral dark:prose-invert max-w-none text-sm text-[var(--neutral-11)]"
-                    dangerouslySetInnerHTML={{ __html: item.answer }}
-                  />
+                  <ReactMarkdown className="prose prose-neutral dark:prose-invert max-w-none text-sm text-[var(--neutral-11)]">
+                    {item.answer}
+                  </ReactMarkdown>
                 </div>
               </AnimateIn>
             ))

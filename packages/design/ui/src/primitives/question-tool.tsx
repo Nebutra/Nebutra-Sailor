@@ -4,10 +4,9 @@ import { ChevronDown, ChevronUp, Question } from "@nebutra/icons";
 import {
   type KeyboardEvent,
   type ReactElement,
-  useCallback,
   useEffect,
+  useEffectEvent,
   useId,
-  useMemo,
   useState,
 } from "react";
 import { cn } from "../utils/cn";
@@ -46,6 +45,64 @@ function optionBadge(idx: number): string {
   return String.fromCharCode(65 + idx);
 }
 
+type QuestionPromptDraft = {
+  selectedIds: string[];
+  customText: string;
+  textValue: string;
+};
+
+function getQuestionPromptDraft(
+  initialAnswer: QuestionAnswer | undefined,
+  customEnabled: boolean,
+): QuestionPromptDraft {
+  if (!initialAnswer || initialAnswer.kind === "skip") {
+    return { selectedIds: [], customText: "", textValue: "" };
+  }
+
+  if (initialAnswer.kind === "text") {
+    return { selectedIds: [], customText: "", textValue: initialAnswer.text };
+  }
+
+  const selectedIds = new Set(initialAnswer.selectedIds);
+  const customText = initialAnswer.text ?? "";
+  if (customEnabled && customText.trim().length > 0) {
+    selectedIds.add(QUESTION_CUSTOM_ID);
+  }
+
+  return {
+    selectedIds: Array.from(selectedIds),
+    customText,
+    textValue: "",
+  };
+}
+
+function getQuestionPromptResetKey(
+  questionIndex: number,
+  question: QuestionConfig | undefined,
+  initialAnswer: QuestionAnswer | undefined,
+  customEnabled: boolean,
+): string {
+  const questionKey = question
+    ? `${questionIndex}:${question.kind}:${question.title}:${question.description ?? ""}`
+    : `${questionIndex}:missing`;
+
+  if (!initialAnswer || initialAnswer.kind === "skip") {
+    return `${questionKey}:skip`;
+  }
+
+  if (initialAnswer.kind === "text") {
+    return `${questionKey}:text:${initialAnswer.text}`;
+  }
+
+  return [
+    questionKey,
+    initialAnswer.kind,
+    initialAnswer.selectedIds.join(","),
+    customEnabled ? "custom" : "fixed",
+    initialAnswer.text ?? "",
+  ].join(":");
+}
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -82,10 +139,10 @@ export type QuestionAnswer =
 // ---------------------------------------------------------------------------
 
 const optionRowBase =
-  "w-full text-left rounded-md px-2 py-1.5 flex items-center gap-2 -mx-2 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none transition-colors duration-micro";
+  "w-full text-left rounded-[var(--radius-md)] px-2 py-1.5 flex items-center gap-2 -mx-2 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none transition-colors duration-micro";
 
 const badgeBase =
-  "h-5 min-w-5 px-1 rounded-sm inline-flex items-center justify-center text-sm font-medium border transition-colors duration-micro";
+  "h-5 min-w-5 px-1 rounded-[var(--radius-sm)] inline-flex items-center justify-center text-sm font-medium border transition-colors duration-micro";
 
 const badgeOff = "bg-transparent text-muted-foreground border-border";
 const badgeOn = "bg-primary text-primary-foreground border-primary";
@@ -98,8 +155,8 @@ export type QuestionPromptProps = {
   questions: QuestionConfig[];
   questionIndex?: number;
   totalQuestions?: number;
-  onPreviousQuestion?: () => void;
-  onNextQuestion?: () => void;
+  onPreviousQuestion?: (() => void) | undefined;
+  onNextQuestion?: (() => void) | undefined;
   initialAnswer?: QuestionAnswer;
   submitLabel?: string;
   nextLabel?: string;
@@ -112,6 +169,206 @@ export type QuestionPromptProps = {
 };
 
 export function QuestionPrompt({
+  questions,
+  questionIndex = 1,
+  totalQuestions,
+  initialAnswer,
+  ...props
+}: QuestionPromptProps): ReactElement | null {
+  const resolvedTotal = totalQuestions ?? questions.length;
+  const clampedIndex = Math.max(1, Math.min(questionIndex, resolvedTotal));
+  const activeQuestion = questions[clampedIndex - 1];
+  const customEnabled = activeQuestion?.allowCustom ?? false;
+  const resetKey = getQuestionPromptResetKey(
+    clampedIndex,
+    activeQuestion,
+    initialAnswer,
+    customEnabled,
+  );
+
+  return (
+    <QuestionPromptForm
+      key={resetKey}
+      questions={questions}
+      questionIndex={questionIndex}
+      {...(totalQuestions !== undefined ? { totalQuestions } : {})}
+      {...(initialAnswer !== undefined ? { initialAnswer } : {})}
+      {...props}
+    />
+  );
+}
+
+type QuestionOptionListProps = {
+  activeQuestion: QuestionConfig;
+  selectedIds: string[];
+  customText: string;
+  customEnabled: boolean;
+  titleId: string;
+  descriptionId: string;
+  onOptionClick: (id: string) => void;
+  onCustomTextChange: (value: string) => void;
+};
+
+function QuestionOptionList({
+  activeQuestion,
+  selectedIds,
+  customText,
+  customEnabled,
+  titleId,
+  descriptionId,
+  onOptionClick,
+  onCustomTextChange,
+}: QuestionOptionListProps): ReactElement | null {
+  if (activeQuestion.kind === "text" || (activeQuestion.options?.length ?? 0) === 0) {
+    return null;
+  }
+
+  const groupProps =
+    activeQuestion.kind === "single"
+      ? ({
+          role: "radiogroup",
+          "aria-labelledby": titleId,
+          "aria-describedby": activeQuestion.description ? descriptionId : undefined,
+        } as const)
+      : ({
+          role: "group",
+          "aria-labelledby": titleId,
+          "aria-describedby": activeQuestion.description ? descriptionId : undefined,
+        } as const);
+
+  return (
+    <div {...groupProps} className="space-y-px">
+      {activeQuestion.options?.map((option, idx) => {
+        const checked = selectedIds.includes(option.id);
+        const badge = optionBadge(idx);
+        const optionProps =
+          activeQuestion.kind === "single"
+            ? ({ role: "radio", "aria-checked": checked } as const)
+            : ({ role: "checkbox", "aria-checked": checked } as const);
+
+        return (
+          <button
+            key={option.id}
+            type="button"
+            {...optionProps}
+            onClick={() => onOptionClick(option.id)}
+            className={optionRowBase}
+          >
+            <span aria-hidden="true" className={cn(badgeBase, checked ? badgeOn : badgeOff)}>
+              {badge}
+            </span>
+            <span className="text-sm text-foreground">
+              {option.label}
+              {option.description && (
+                <span className="text-muted-foreground"> {option.description}</span>
+              )}
+            </span>
+          </button>
+        );
+      })}
+
+      {customEnabled && activeQuestion.options && (
+        <div className="flex items-center gap-2 pt-1">
+          <span
+            aria-hidden="true"
+            className={cn(badgeBase, selectedIds.includes(QUESTION_CUSTOM_ID) ? badgeOn : badgeOff)}
+          >
+            {optionBadge(activeQuestion.options.length)}
+          </span>
+          <Input
+            id={`${descriptionId}-custom`}
+            value={customText}
+            onChange={(event) => onCustomTextChange(event.target.value)}
+            placeholder={activeQuestion.customPlaceholder ?? "Type your answer"}
+            aria-label={activeQuestion.customLabel ?? "Custom answer"}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+type QuestionPromptActionsProps = {
+  state: {
+    showNav: boolean;
+    canGoPrev: boolean;
+    canGoNext: boolean;
+    canSubmit: boolean;
+    allowSkip: boolean;
+  };
+  previousLabel: string;
+  nextLabel: string;
+  skipLabel: string;
+  primaryLabel: string;
+  onPreviousQuestion?: (() => void) | undefined;
+  onNextQuestion?: (() => void) | undefined;
+  onSkip: () => void;
+  onSubmit: () => void;
+};
+
+function QuestionPromptActions({
+  state,
+  previousLabel,
+  nextLabel,
+  skipLabel,
+  primaryLabel,
+  onPreviousQuestion,
+  onNextQuestion,
+  onSkip,
+  onSubmit,
+}: QuestionPromptActionsProps): ReactElement {
+  const { showNav, canGoPrev, canGoNext, canSubmit, allowSkip } = state;
+
+  return (
+    <div className={cn("flex items-center gap-1.5", showNav ? "justify-between" : "justify-end")}>
+      {showNav && (
+        <div className="flex items-center gap-1.5">
+          {onPreviousQuestion && (
+            <button
+              type="button"
+              onClick={onPreviousQuestion}
+              disabled={!canGoPrev}
+              className="h-6 rounded-[var(--radius-sm)] px-2 text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground disabled:pointer-events-none disabled:opacity-60"
+            >
+              {previousLabel}
+            </button>
+          )}
+          {onNextQuestion && (
+            <button
+              type="button"
+              onClick={onNextQuestion}
+              disabled={!canGoNext}
+              className="h-6 rounded-[var(--radius-sm)] px-2 text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground disabled:pointer-events-none disabled:opacity-60"
+            >
+              {nextLabel}
+            </button>
+          )}
+        </div>
+      )}
+      <div className="flex items-center justify-end gap-1.5">
+        {allowSkip && (
+          <button
+            type="button"
+            onClick={onSkip}
+            className="h-6 rounded-[var(--radius-sm)] px-2 text-sm text-muted-foreground transition-colors duration-micro hover:bg-accent hover:text-foreground active:scale-[0.98]"
+          >
+            {skipLabel}
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={onSubmit}
+          disabled={!canSubmit}
+          className="h-6 rounded-[var(--radius-sm)] bg-primary px-2.5 text-sm font-medium text-primary-foreground transition-[background-color,transform] duration-micro hover:bg-primary/90 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60"
+        >
+          {primaryLabel}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function QuestionPromptForm({
   questions,
   questionIndex = 1,
   totalQuestions,
@@ -129,52 +386,20 @@ export function QuestionPrompt({
 }: QuestionPromptProps): ReactElement | null {
   const titleId = useId();
   const descriptionId = useId();
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [customText, setCustomText] = useState("");
-  const [textValue, setTextValue] = useState("");
 
   const resolvedTotal = totalQuestions ?? questions.length;
   const clampedIndex = Math.max(1, Math.min(questionIndex, resolvedTotal));
   const activeQuestion = questions[clampedIndex - 1];
   const customEnabled = activeQuestion?.allowCustom ?? false;
+  const [draft, setDraft] = useState(() => getQuestionPromptDraft(initialAnswer, customEnabled));
+  const { selectedIds, customText, textValue } = draft;
   const showNav = resolvedTotal > 1 && (!!onPreviousQuestion || !!onNextQuestion);
   const canGoPrev = clampedIndex > 1;
   const canGoNext = clampedIndex < resolvedTotal;
   const isLastQuestion = clampedIndex >= resolvedTotal;
   const primaryLabel = isLastQuestion ? submitLabel : nextLabel;
 
-  // Stable signature for initialAnswer keeps the reset effect from churning on
-  // array-identity changes. Used in the deps array below.
-  const initialAnswerSignature = useMemo(() => {
-    if (!initialAnswer || initialAnswer.kind === "skip") return "";
-    if (initialAnswer.kind === "text") return `t:${initialAnswer.text}`;
-    return `${initialAnswer.kind}:${initialAnswer.selectedIds.join(",")}:${initialAnswer.text ?? ""}`;
-  }, [initialAnswer]);
-
-  useEffect(() => {
-    if (!initialAnswer || initialAnswer.kind === "skip") {
-      setSelectedIds([]);
-      setCustomText("");
-      setTextValue("");
-      return;
-    }
-    if (initialAnswer.kind === "text") {
-      setSelectedIds([]);
-      setCustomText("");
-      setTextValue(initialAnswer.text);
-      return;
-    }
-    const nextSelected = new Set(initialAnswer.selectedIds);
-    const nextCustomText = initialAnswer.text ?? "";
-    if (customEnabled && nextCustomText.trim().length > 0) {
-      nextSelected.add(QUESTION_CUSTOM_ID);
-    }
-    setSelectedIds(Array.from(nextSelected));
-    setCustomText(nextCustomText);
-    setTextValue("");
-  }, [customEnabled, initialAnswer, initialAnswerSignature]);
-
-  const canSubmit = useMemo(() => {
+  const canSubmit = (() => {
     if (!activeQuestion) return false;
     if (activeQuestion.kind === "text") return textValue.trim().length > 0;
     const selectedNonCustom = selectedIds.filter((id) => id !== QUESTION_CUSTOM_ID).length;
@@ -186,42 +411,58 @@ export function QuestionPrompt({
     if (total < min) return false;
     if (typeof max === "number" && total > max) return false;
     return total > 0;
-  }, [activeQuestion, selectedIds, customText, textValue]);
+  })();
 
-  const handleSingleSelect = useCallback(
-    (id: string) => {
-      setSelectedIds([id]);
-      if (customEnabled) setCustomText("");
-    },
-    [customEnabled],
-  );
+  function handleSingleSelect(id: string) {
+    setDraft((current) => ({
+      ...current,
+      selectedIds: [id],
+      customText: customEnabled ? "" : current.customText,
+    }));
+  }
 
-  const toggleMulti = useCallback((id: string) => {
-    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
-  }, []);
+  function toggleMulti(id: string) {
+    setDraft((current) => ({
+      ...current,
+      selectedIds: current.selectedIds.includes(id)
+        ? current.selectedIds.filter((x) => x !== id)
+        : [...current.selectedIds, id],
+    }));
+  }
 
-  const handleOptionClick = useCallback(
-    (id: string) => {
-      if (!activeQuestion) return;
-      if (activeQuestion.kind === "single") handleSingleSelect(id);
-      else if (activeQuestion.kind === "multi") toggleMulti(id);
-    },
-    [activeQuestion, handleSingleSelect, toggleMulti],
-  );
+  function handleOptionClick(id: string) {
+    if (!activeQuestion) return;
+    if (activeQuestion.kind === "single") handleSingleSelect(id);
+    else if (activeQuestion.kind === "multi") toggleMulti(id);
+  }
 
   const handleCustomTextChange = (nextValue: string) => {
-    setCustomText(nextValue);
     if (!activeQuestion) return;
     if (activeQuestion.kind === "single") {
-      setSelectedIds(nextValue.trim().length > 0 ? [QUESTION_CUSTOM_ID] : []);
+      setDraft((current) => ({
+        ...current,
+        customText: nextValue,
+        selectedIds: nextValue.trim().length > 0 ? [QUESTION_CUSTOM_ID] : [],
+      }));
       return;
     }
-    setSelectedIds((prev) => {
-      const hasCustom = prev.includes(QUESTION_CUSTOM_ID);
-      if (nextValue.trim().length > 0 && !hasCustom) return [...prev, QUESTION_CUSTOM_ID];
-      if (nextValue.trim().length === 0 && hasCustom)
-        return prev.filter((id) => id !== QUESTION_CUSTOM_ID);
-      return prev;
+    setDraft((current) => {
+      const hasCustom = current.selectedIds.includes(QUESTION_CUSTOM_ID);
+      if (nextValue.trim().length > 0 && !hasCustom) {
+        return {
+          ...current,
+          customText: nextValue,
+          selectedIds: [...current.selectedIds, QUESTION_CUSTOM_ID],
+        };
+      }
+      if (nextValue.trim().length === 0 && hasCustom) {
+        return {
+          ...current,
+          customText: nextValue,
+          selectedIds: current.selectedIds.filter((id) => id !== QUESTION_CUSTOM_ID),
+        };
+      }
+      return { ...current, customText: nextValue };
     });
   };
 
@@ -245,12 +486,22 @@ export function QuestionPrompt({
     onSubmit({ kind: "skip" });
   };
 
+  const selectShortcutOption = useEffectEvent((id: string) => {
+    handleOptionClick(id);
+  });
+
+  const focusCustomShortcutInput = useEffectEvent(() => {
+    const customInput = document.getElementById(
+      `${descriptionId}-custom`,
+    ) as HTMLInputElement | null;
+    customInput?.focus();
+  });
+
   // A/B/C/… letter shortcuts — option-based questions only.
   // Ignored while an input/textarea is focused (so user can type freely).
   useEffect(() => {
-    if (!activeQuestion || activeQuestion.kind === "text") return;
-    const options = activeQuestion.options ?? [];
-    if (options.length === 0) return;
+    const options = activeQuestion?.kind === "text" ? undefined : activeQuestion?.options;
+    if (!options?.length) return;
 
     const onKey = (event: globalThis.KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
@@ -264,24 +515,18 @@ export function QuestionPrompt({
       const option = options[optionIdx];
       if (option) {
         event.preventDefault();
-        handleOptionClick(option.id);
+        selectShortcutOption(option.id);
       } else if (customEnabled && optionIdx === options.length) {
         // The custom write-in slot reserves the next letter.
         event.preventDefault();
-        const customInput = document.getElementById(
-          `${descriptionId}-custom`,
-        ) as HTMLInputElement | null;
-        customInput?.focus();
+        focusCustomShortcutInput();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [activeQuestion, customEnabled, descriptionId, handleOptionClick]);
+  }, [activeQuestion, customEnabled]);
 
   if (!activeQuestion) return null;
-
-  const groupRole = activeQuestion.kind === "single" ? "radiogroup" : "group";
-  const optionRole = activeQuestion.kind === "single" ? "radio" : "checkbox";
 
   return (
     <div className={cn("space-y-2 bg-background px-3 py-2", className)}>
@@ -289,7 +534,7 @@ export function QuestionPrompt({
         <div className="flex items-center gap-2 text-sm text-foreground">
           <span
             aria-hidden="true"
-            className="inline-flex h-5 min-w-5 items-center justify-center rounded-sm px-1 text-sm font-medium text-muted-foreground"
+            className="inline-flex h-5 min-w-5 items-center justify-center rounded-[var(--radius-sm)] px-1 text-sm font-medium text-muted-foreground"
           >
             {clampedIndex}
           </span>
@@ -305,66 +550,23 @@ export function QuestionPrompt({
         </p>
       )}
 
-      {activeQuestion.kind !== "text" && (activeQuestion.options?.length ?? 0) > 0 && (
-        <div
-          role={groupRole}
-          aria-labelledby={titleId}
-          aria-describedby={activeQuestion.description ? descriptionId : undefined}
-          {...(activeQuestion.kind === "multi" ? { "aria-multiselectable": true } : {})}
-          className="space-y-px"
-        >
-          {activeQuestion.options?.map((option, idx) => {
-            const checked = selectedIds.includes(option.id);
-            const badge = optionBadge(idx);
-            return (
-              <button
-                key={option.id}
-                type="button"
-                role={optionRole}
-                aria-checked={checked}
-                onClick={() => handleOptionClick(option.id)}
-                className={optionRowBase}
-              >
-                <span aria-hidden="true" className={cn(badgeBase, checked ? badgeOn : badgeOff)}>
-                  {badge}
-                </span>
-                <span className="text-sm text-foreground">
-                  {option.label}
-                  {option.description && (
-                    <span className="text-muted-foreground"> {option.description}</span>
-                  )}
-                </span>
-              </button>
-            );
-          })}
-
-          {customEnabled && activeQuestion.options && (
-            <div className="flex items-center gap-2 pt-1">
-              <span
-                aria-hidden="true"
-                className={cn(
-                  badgeBase,
-                  selectedIds.includes(QUESTION_CUSTOM_ID) ? badgeOn : badgeOff,
-                )}
-              >
-                {optionBadge(activeQuestion.options.length)}
-              </span>
-              <Input
-                id={`${descriptionId}-custom`}
-                value={customText}
-                onChange={(event) => handleCustomTextChange(event.target.value)}
-                placeholder={activeQuestion.customPlaceholder ?? "Type your answer"}
-                aria-label={activeQuestion.customLabel ?? "Custom answer"}
-              />
-            </div>
-          )}
-        </div>
-      )}
+      <QuestionOptionList
+        activeQuestion={activeQuestion}
+        selectedIds={selectedIds}
+        customText={customText}
+        customEnabled={customEnabled}
+        titleId={titleId}
+        descriptionId={descriptionId}
+        onOptionClick={handleOptionClick}
+        onCustomTextChange={handleCustomTextChange}
+      />
 
       {activeQuestion.kind === "text" && (
         <Textarea
           value={textValue}
-          onChange={(event) => setTextValue(event.target.value)}
+          onChange={(event) =>
+            setDraft((current) => ({ ...current, textValue: event.target.value }))
+          }
           placeholder={activeQuestion.placeholder ?? "Type your answer"}
           aria-labelledby={titleId}
           aria-describedby={activeQuestion.description ? descriptionId : undefined}
@@ -379,51 +581,17 @@ export function QuestionPrompt({
         />
       )}
 
-      <div className={cn("flex items-center gap-1.5", showNav ? "justify-between" : "justify-end")}>
-        {showNav && (
-          <div className="flex items-center gap-1.5">
-            {onPreviousQuestion && (
-              <button
-                type="button"
-                onClick={onPreviousQuestion}
-                disabled={!canGoPrev}
-                className="h-6 rounded-sm px-2 text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground disabled:pointer-events-none disabled:opacity-60"
-              >
-                {previousLabel}
-              </button>
-            )}
-            {onNextQuestion && (
-              <button
-                type="button"
-                onClick={onNextQuestion}
-                disabled={!canGoNext}
-                className="h-6 rounded-sm px-2 text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground disabled:pointer-events-none disabled:opacity-60"
-              >
-                {nextLabel}
-              </button>
-            )}
-          </div>
-        )}
-        <div className="flex items-center justify-end gap-1.5">
-          {allowSkip && (
-            <button
-              type="button"
-              onClick={handleSkip}
-              className="h-6 rounded-sm px-2 text-sm text-muted-foreground transition-colors duration-micro hover:bg-accent hover:text-foreground active:scale-[0.98]"
-            >
-              {skipLabel}
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={!canSubmit}
-            className="h-6 rounded-sm bg-primary px-2.5 text-sm font-medium text-primary-foreground transition-[background-color,transform] duration-micro hover:bg-primary/90 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60"
-          >
-            {primaryLabel}
-          </button>
-        </div>
-      </div>
+      <QuestionPromptActions
+        state={{ showNav, canGoPrev, canGoNext, canSubmit, allowSkip }}
+        previousLabel={previousLabel}
+        nextLabel={nextLabel}
+        skipLabel={skipLabel}
+        primaryLabel={primaryLabel}
+        onPreviousQuestion={onPreviousQuestion}
+        onNextQuestion={onNextQuestion}
+        onSkip={handleSkip}
+        onSubmit={handleSubmit}
+      />
     </div>
   );
 }
@@ -468,7 +636,11 @@ export type QuestionToolProps = {
   className?: string;
 };
 
-export function QuestionTool({
+export function QuestionTool({ toolCallId, ...props }: QuestionToolProps): ReactElement | null {
+  return <QuestionToolState key={toolCallId ?? "question-tool"} {...props} />;
+}
+
+function QuestionToolState({
   questions,
   questionIndex,
   totalQuestions: totalQuestionsProp,
@@ -481,7 +653,6 @@ export function QuestionTool({
   allowSkip,
   onSubmitAnswer,
   output,
-  toolCallId,
   headerLabel = "Question",
   className,
 }: QuestionToolProps): ReactElement | null {
@@ -497,17 +668,6 @@ export function QuestionTool({
   const question = questions[clampedIndex - 1];
   const [localAnswers, setLocalAnswers] = useState<Record<number, QuestionAnswer>>({});
 
-  useEffect(() => {
-    if (typeof questionIndex === "number") setLocalIndex(questionIndex);
-  }, [questionIndex]);
-
-  useEffect(() => {
-    setLocalAnswers({});
-    setLocalIndex(questionIndex ?? 1);
-    // toolCallId is the reset signal — questionIndex left intentionally out of deps.
-    // biome-ignore lint/correctness/useExhaustiveDependencies: reset signal
-  }, [toolCallId]);
-
   const outputAnswer = output?.answer;
   const answeredCount = Object.keys(localAnswers).length;
   const isComplete =
@@ -518,7 +678,11 @@ export function QuestionTool({
   const canGoPrev = clampedIndex > 1;
   const canGoNext = clampedIndex < totalQuestions;
 
-  const summaryRows = useMemo(() => {
+  const summaryRows: Array<{
+    answer: QuestionAnswer | undefined;
+    index: number;
+    question: QuestionConfig | undefined;
+  }> = (() => {
     if (!isComplete) return [];
     if (totalQuestions <= 1) {
       const answer = outputAnswer ?? localAnswers[clampedIndex];
@@ -529,7 +693,7 @@ export function QuestionTool({
       answer: localAnswers[idx + 1],
       question: questions[idx],
     }));
-  }, [isComplete, totalQuestions, outputAnswer, localAnswers, clampedIndex, questions]);
+  })();
 
   const goPrev = () => {
     if (!canGoPrev) return;
@@ -548,7 +712,10 @@ export function QuestionTool({
   return (
     <section
       aria-label={headerLabel}
-      className={cn("overflow-hidden rounded-lg border border-border bg-muted", className)}
+      className={cn(
+        "overflow-hidden rounded-[var(--radius-lg)] border border-border bg-muted",
+        className,
+      )}
     >
       <header className="flex h-7 items-center justify-between border-b border-border px-3 text-xs text-muted-foreground">
         <div className="inline-flex items-center gap-1.5">
@@ -561,7 +728,7 @@ export function QuestionTool({
               type="button"
               onClick={goPrev}
               disabled={!canGoPrev}
-              className="inline-flex size-5 items-center justify-center rounded-sm transition-colors duration-micro hover:bg-accent disabled:pointer-events-none disabled:opacity-40"
+              className="inline-flex size-5 items-center justify-center rounded-[var(--radius-sm)] transition-colors duration-micro hover:bg-accent disabled:pointer-events-none disabled:opacity-40"
               aria-label="Previous question"
             >
               <ChevronUp className="h-3.5 w-3.5" aria-hidden="true" />
@@ -573,7 +740,7 @@ export function QuestionTool({
               type="button"
               onClick={goNext}
               disabled={!canGoNext}
-              className="inline-flex size-5 items-center justify-center rounded-sm transition-colors duration-micro hover:bg-accent disabled:pointer-events-none disabled:opacity-40"
+              className="inline-flex size-5 items-center justify-center rounded-[var(--radius-sm)] transition-colors duration-micro hover:bg-accent disabled:pointer-events-none disabled:opacity-40"
               aria-label="Next question"
             >
               <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
@@ -584,12 +751,18 @@ export function QuestionTool({
 
       {isComplete ? (
         <dl className="space-y-1 bg-background px-3 py-2 text-xs text-muted-foreground">
-          {summaryRows.map(({ index, answer, question: q }) => (
-            <div key={index} className="flex items-baseline gap-2">
-              <dt className="font-medium text-muted-foreground">{index}.</dt>
-              <dd className="text-foreground">{answer ? formatAnswer(answer, q) : "Pending"}</dd>
-            </div>
-          ))}
+          {summaryRows.map(({ index, answer, question: q }) => {
+            const rowKey = q
+              ? `${q.kind}:${q.title}:${q.description ?? ""}`
+              : `answer:${answer?.kind ?? "pending"}`;
+
+            return (
+              <div key={rowKey} className="flex items-baseline gap-2">
+                <dt className="font-medium text-muted-foreground">{index}.</dt>
+                <dd className="text-foreground">{answer ? formatAnswer(answer, q) : "Pending"}</dd>
+              </div>
+            );
+          })}
         </dl>
       ) : (
         <QuestionPrompt

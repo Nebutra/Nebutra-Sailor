@@ -44,6 +44,7 @@ import {
   Trash as Trash2,
 } from "@nebutra/icons";
 import * as React from "react";
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 import {
   AlertDialog,
@@ -58,6 +59,9 @@ import {
 import { Button } from "./button";
 import { Input } from "./input";
 import { Label } from "./label";
+
+const EMPTY_WARNINGS: string[] = [];
+const EMPTY_PREVIEW_ITEMS: string[] = [];
 
 // ============================================================================
 // Types
@@ -111,15 +115,14 @@ export function ConfirmDialog({
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleConfirm = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       await onConfirm();
       onOpenChange(false);
     } catch (error) {
       console.error("[ConfirmDialog] Error:", error);
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   const handleCancel = () => {
@@ -231,6 +234,29 @@ function getErrorMessage(error: DestructiveActionModalProps["error"]): string | 
 
 export function DestructiveActionModal({
   open,
+  loading = false,
+  onCancel,
+  ...props
+}: DestructiveActionModalProps) {
+  function handleOpenChange(nextOpen: boolean) {
+    if (!nextOpen && !loading) onCancel();
+  }
+
+  return (
+    <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
+      <DestructiveActionModalContent
+        key={open ? "destructive-action-open" : "destructive-action-closed"}
+        open={open}
+        loading={loading}
+        onCancel={onCancel}
+        {...props}
+      />
+    </BaseDialog.Root>
+  );
+}
+
+function DestructiveActionModalContent({
+  open,
   title,
   description,
   confirmLabel,
@@ -264,117 +290,104 @@ export function DestructiveActionModal({
 
   React.useEffect(() => {
     if (!open) return;
-    setValue("");
     const timer = window.setTimeout(() => inputRef.current?.focus(), 0);
     return () => window.clearTimeout(timer);
   }, [open]);
 
-  const handleOpenChange = React.useCallback(
-    (nextOpen: boolean) => {
-      if (!nextOpen && !loading) onCancel();
-    },
-    [loading, onCancel],
-  );
-
-  const handleSubmit = React.useCallback(
-    (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      if (!isVerified || loading) return;
-      onConfirm();
-    },
-    [isVerified, loading, onConfirm],
-  );
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!isVerified || loading) return;
+    onConfirm();
+  }
 
   return (
-    <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
-      <BaseDialog.Portal>
-        <BaseDialog.Backdrop className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm transition-[opacity,display] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] data-ending-style:opacity-0 data-starting-style:opacity-0" />
-        <BaseDialog.Popup
-          aria-busy={loading || undefined}
-          aria-describedby={describedBy}
-          className={cn(
-            "fixed left-[50%] top-[50%] z-50 w-[calc(100vw-2rem)] max-w-md translate-x-[-50%] translate-y-[-50%]",
-            "overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background text-foreground shadow-2xl",
-            "transition-[opacity,transform,display] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)]",
-            "data-starting-style:scale-95 data-starting-style:opacity-0 data-ending-style:scale-95 data-ending-style:opacity-0",
-            "motion-reduce:transition-none motion-reduce:data-starting-style:transform-none motion-reduce:data-ending-style:transform-none",
-            className,
-          )}
-        >
-          <form onSubmit={handleSubmit}>
-            <div className="space-y-5 p-6">
-              <div className="space-y-2">
-                <BaseDialog.Title className="text-base font-semibold leading-none">
-                  {title}
-                </BaseDialog.Title>
-                <BaseDialog.Description
-                  id={descriptionId}
-                  className="text-sm leading-6 text-muted-foreground"
-                >
-                  {description}
-                </BaseDialog.Description>
-              </div>
-
-              <div className="space-y-2">
-                <Label
-                  id={promptId}
-                  htmlFor={inputId}
-                  className="block text-sm leading-6 text-foreground"
-                >
-                  To confirm, type{" "}
-                  {verificationLabel ? <span>the {verificationLabel} </span> : null}
-                  <span className="font-mono text-destructive">"{verificationPhrase}"</span>.
-                </Label>
-                <Input
-                  ref={inputRef}
-                  id={inputId}
-                  aria-describedby={describedBy}
-                  aria-invalid={errorMessage ? true : undefined}
-                  aria-labelledby={promptId}
-                  autoComplete="off"
-                  className="font-mono"
-                  disabled={loading}
-                  onChange={(event) => setValue(event.target.value)}
-                  value={value}
-                />
-                {errorMessage ? (
-                  <p id={errorId} className="text-sm text-destructive" role="alert">
-                    {errorMessage}
-                  </p>
-                ) : null}
-              </div>
-
-              <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                <Button disabled={loading} onClick={onCancel} type="button" variant="outline">
-                  {cancelLabel}
-                </Button>
-                <Button
-                  disabled={!isVerified || loading}
-                  loading={loading}
-                  type="submit"
-                  variant="destructive"
-                >
-                  {confirmLabel}
-                </Button>
-              </div>
+    <BaseDialog.Portal>
+      <BaseDialog.Backdrop
+        className={overlayClassNames.backdrop}
+        style={{ zIndex: overlayZIndex.backdrop }}
+      />
+      <BaseDialog.Popup
+        aria-busy={loading || undefined}
+        aria-describedby={describedBy}
+        className={cn(
+          overlayClassNames.modalSurface,
+          "w-[calc(100vw-2rem)] max-w-md overflow-hidden rounded-[var(--radius-lg)] p-0",
+          className,
+        )}
+        style={{ zIndex: overlayZIndex.modal }}
+      >
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-5 p-6">
+            <div className="space-y-2">
+              <BaseDialog.Title className="text-base font-semibold leading-none">
+                {title}
+              </BaseDialog.Title>
+              <BaseDialog.Description
+                id={descriptionId}
+                className="text-sm leading-6 text-muted-foreground"
+              >
+                {description}
+              </BaseDialog.Description>
             </div>
 
-            {irreversibleDescription ? (
-              <div
-                id={irreversibleId}
-                className={cn(
-                  "flex items-start gap-2 border-t border-destructive/20 px-6 py-3 text-sm text-destructive",
-                  "bg-[repeating-linear-gradient(-45deg,hsl(var(--destructive)/0.08),hsl(var(--destructive)/0.08)_1px,transparent_1px,transparent_7px)]",
-                )}
+            <div className="space-y-2">
+              <Label
+                id={promptId}
+                htmlFor={inputId}
+                className="block text-sm leading-6 text-foreground"
               >
-                <AlertTriangle aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-                <span>{irreversibleDescription}</span>
-              </div>
-            ) : null}
-          </form>
-        </BaseDialog.Popup>
-      </BaseDialog.Portal>
-    </BaseDialog.Root>
+                To confirm, type {verificationLabel ? <span>the {verificationLabel} </span> : null}
+                <span className="font-mono text-destructive">"{verificationPhrase}"</span>.
+              </Label>
+              <Input
+                ref={inputRef}
+                id={inputId}
+                aria-describedby={describedBy}
+                aria-invalid={errorMessage ? true : undefined}
+                aria-labelledby={promptId}
+                autoComplete="off"
+                className="font-mono"
+                disabled={loading}
+                onChange={(event) => setValue(event.target.value)}
+                value={value}
+              />
+              {errorMessage ? (
+                <p id={errorId} className="text-sm text-destructive" role="alert">
+                  {errorMessage}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <Button disabled={loading} onClick={onCancel} type="button" variant="outline">
+                {cancelLabel}
+              </Button>
+              <Button
+                disabled={!isVerified || loading}
+                loading={loading}
+                type="submit"
+                variant="destructive"
+              >
+                {confirmLabel}
+              </Button>
+            </div>
+          </div>
+
+          {irreversibleDescription ? (
+            <div
+              id={irreversibleId}
+              className={cn(
+                "flex items-start gap-2 border-t border-destructive/20 px-6 py-3 text-sm text-destructive",
+                "bg-[repeating-linear-gradient(-45deg,hsl(var(--destructive)/0.08),hsl(var(--destructive)/0.08)_1px,transparent_1px,transparent_7px)]",
+              )}
+            >
+              <AlertTriangle aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+              <span>{irreversibleDescription}</span>
+            </div>
+          ) : null}
+        </form>
+      </BaseDialog.Popup>
+    </BaseDialog.Portal>
   );
 }
 
@@ -409,7 +422,7 @@ export function ConfirmDeleteDialog({
   confirmationText = "DELETE",
   onConfirm,
   loading = false,
-  warnings = [],
+  warnings = EMPTY_WARNINGS,
 }: ConfirmDeleteDialogProps) {
   const warningCopy = warnings.length > 0 ? ` ${warnings.join(" ")}` : "";
   const verificationLabelProps =
@@ -467,7 +480,16 @@ export interface BulkActionConfirmDialogProps {
   previewItems?: string[];
 }
 
-export function BulkActionConfirmDialog({
+export function BulkActionConfirmDialog(props: BulkActionConfirmDialogProps) {
+  return (
+    <BulkActionConfirmDialogContent
+      key={props.open ? "bulk-action-open" : "bulk-action-closed"}
+      {...props}
+    />
+  );
+}
+
+function BulkActionConfirmDialogContent({
   open,
   onOpenChange,
   action,
@@ -479,7 +501,7 @@ export function BulkActionConfirmDialog({
   requireInputConfirmation = false,
   inputConfirmationThreshold = 10,
   description,
-  previewItems = [],
+  previewItems = EMPTY_PREVIEW_ITEMS,
 }: BulkActionConfirmDialogProps) {
   const [inputValue, setInputValue] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -490,25 +512,17 @@ export function BulkActionConfirmDialog({
   const isConfirmEnabled = !needsInputConfirmation || inputValue === confirmationText;
   const isProcessing = loading || isLoading;
 
-  // Reset input when dialog opens/closes
-  React.useEffect(() => {
-    if (open) {
-      setInputValue("");
-    }
-  }, [open]);
-
   const handleConfirm = async () => {
     if (!isConfirmEnabled) return;
 
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       await onConfirm();
       onOpenChange(false);
     } catch (error) {
       console.error("[BulkActionConfirmDialog] Error:", error);
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   const variantStyles = {
@@ -558,10 +572,10 @@ export function BulkActionConfirmDialog({
 
         {/* Preview items */}
         {previewItems.length > 0 && (
-          <div className="max-h-32 overflow-auto rounded-md border bg-muted/50 p-3">
+          <div className="max-h-32 overflow-auto rounded-[var(--radius-md)] border bg-muted/50 p-3">
             <ul className="space-y-1 text-sm">
-              {previewItems.slice(0, 5).map((item, index) => (
-                <li key={index} className="truncate text-muted-foreground">
+              {previewItems.slice(0, 5).map((item) => (
+                <li key={item} className="truncate text-muted-foreground">
                   • {item}
                 </li>
               ))}
@@ -584,13 +598,11 @@ export function BulkActionConfirmDialog({
             </Label>
             <Input
               id="bulk-confirm-input"
+              data-verified={isConfirmEnabled ? "" : undefined}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder={confirmationText}
-              className={cn(
-                "font-mono",
-                isConfirmEnabled && "border-green-500 focus-visible:ring-green-500",
-              )}
+              className="font-mono data-[verified]:border-success/50"
               disabled={isProcessing}
               autoComplete="off"
             />
@@ -635,22 +647,22 @@ export function useConfirmDialog<T = void>({
   const [isOpen, setIsOpen] = React.useState(false);
   const [data, setData] = React.useState<T | null>(null);
 
-  const open = React.useCallback((newData: T) => {
+  function open(newData: T) {
     setData(newData);
     setIsOpen(true);
-  }, []);
+  }
 
-  const close = React.useCallback(() => {
+  function close() {
     setIsOpen(false);
     setData(null);
-  }, []);
+  }
 
-  const confirm = React.useCallback(async () => {
+  async function confirm() {
     if (data !== null) {
       await onConfirm(data);
     }
     close();
-  }, [data, onConfirm, close]);
+  }
 
   return {
     isOpen,

@@ -47,7 +47,7 @@ export function SagaGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden
-      className="relative flex w-full flex-col justify-center gap-3 rounded-lg bg-[var(--neutral-2)] px-3 py-3"
+      className="relative flex w-full flex-col justify-center gap-3 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
       style={{ height: 160 }}
     >
       {/* Top-right timeout badge */}

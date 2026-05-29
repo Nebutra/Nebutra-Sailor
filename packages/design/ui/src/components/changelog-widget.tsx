@@ -2,6 +2,7 @@
 
 import { Bell, ChevronRight } from "@nebutra/icons";
 import * as React from "react";
+import { useEffectEvent } from "react";
 import { cn } from "../utils";
 
 export interface ChangelogEntry {
@@ -29,6 +30,17 @@ const TAG_COLOR_MAP: Record<string, string> = {
   experimental: "bg-[var(--neutral-8)] text-[var(--neutral-12)]",
 };
 
+const getTagColor = (tag?: string) => {
+  if (!tag) return "bg-[var(--neutral-7)] text-[var(--neutral-12)]";
+  return TAG_COLOR_MAP[tag.toLowerCase()] || TAG_COLOR_MAP.feature;
+};
+
+const getUnreadCount = (entries: ChangelogEntry[], lastSeenVersion: string | null) => {
+  if (!lastSeenVersion) return entries.length;
+  const lastSeenIndex = entries.findIndex((entry) => entry.version === lastSeenVersion);
+  return lastSeenIndex === -1 ? entries.length : lastSeenIndex;
+};
+
 export function ChangelogWidget({
   entries,
   changelogUrl = "/changelog",
@@ -38,47 +50,40 @@ export function ChangelogWidget({
   const [lastSeenVersion, setLastSeenVersion] = React.useState<string | null>(null);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
-  const unreadCount = React.useMemo(() => {
-    if (!lastSeenVersion) return entries.length;
-    const lastSeenIndex = entries.findIndex((e) => e.version === lastSeenVersion);
-    return lastSeenIndex === -1 ? entries.length : lastSeenIndex;
-  }, [entries, lastSeenVersion]);
-
+  const unreadCount = getUnreadCount(entries, lastSeenVersion);
   const recentEntries = entries.slice(0, 5);
+  const latestVersion = recentEntries[0]?.version ?? null;
 
-  const handleClose = React.useCallback(() => {
+  const closeAndMarkSeen = () => {
     setIsOpen(false);
-    if (recentEntries.length > 0) {
-      setLastSeenVersion(recentEntries[0]?.version ?? null);
-    }
-  }, [recentEntries]);
+    if (latestVersion) setLastSeenVersion(latestVersion);
+  };
+
+  const closeFromDocumentEvent = useEffectEvent(() => {
+    closeAndMarkSeen();
+  });
 
   React.useEffect(() => {
+    if (!isOpen) return;
+
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose();
+      if (e.key === "Escape") closeFromDocumentEvent();
     };
 
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        handleClose();
+        closeFromDocumentEvent();
       }
     };
 
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen, handleClose]);
-
-  const getTagColor = (tag?: string) => {
-    if (!tag) return "bg-[var(--neutral-7)] text-[var(--neutral-12)]";
-    return TAG_COLOR_MAP[tag.toLowerCase()] || TAG_COLOR_MAP.feature;
-  };
+  }, [isOpen]);
 
   return (
     <div className={cn("relative", className)} ref={dropdownRef}>
@@ -86,8 +91,8 @@ export function ChangelogWidget({
         type="button"
         aria-label="View changelog"
         aria-expanded={isOpen}
-        onClick={() => setIsOpen(!isOpen)}
-        className="relative inline-flex items-center justify-center rounded-lg p-2 transition-colors hover:bg-[var(--neutral-3)]"
+        onClick={() => setIsOpen((open) => !open)}
+        className="relative inline-flex items-center justify-center rounded-[var(--radius-lg)] p-2 transition-colors hover:bg-[var(--neutral-3)]"
       >
         <Bell className="h-5 w-5 text-[var(--neutral-11)]" />
         {unreadCount > 0 && (
@@ -98,7 +103,7 @@ export function ChangelogWidget({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-white shadow-lg transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-200">
+        <div className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-white shadow-lg transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-200">
           <div className="bg-gradient-to-r from-[var(--blue-3)] to-[var(--cyan-3)] px-4 py-3">
             <h3 className="font-semibold text-[var(--neutral-12)]">What's New</h3>
           </div>
@@ -144,7 +149,7 @@ export function ChangelogWidget({
 
           <a
             href={changelogUrl}
-            onClick={handleClose}
+            onClick={closeAndMarkSeen}
             className="flex items-center justify-between border-t border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 py-3 text-sm font-medium text-[var(--blue-9)] transition-colors hover:bg-[var(--neutral-2)]"
           >
             <span>View all updates</span>

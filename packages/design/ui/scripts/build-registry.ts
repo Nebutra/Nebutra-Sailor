@@ -602,6 +602,11 @@ const COMPONENT_REGISTRY: ComponentSpec[] = [
     layer: "business",
     extraFiles: [
       {
+        source: "primitives/button-variants.ts",
+        targetPath: "components/ui/button-variants.ts",
+        type: "registry:lib",
+      },
+      {
         source: "utils/slot.tsx",
         targetPath: "components/utils/slot.tsx",
         type: "registry:lib",

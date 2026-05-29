@@ -17,7 +17,7 @@ const TILE_TINTS = [
 export function AtelierCanvasGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-md bg-neutral-2 px-3 py-2.5"
+      className="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-neutral-2 px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2 z-10">
@@ -28,7 +28,7 @@ export function AtelierCanvasGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       <div className="mt-5 flex items-start gap-3">
-        <div className="relative h-[80px] w-[120px] shrink-0 rounded-sm border border-neutral-7 bg-neutral-1">
+        <div className="relative h-[80px] w-[120px] shrink-0 rounded-[var(--radius-sm)] border border-neutral-7 bg-neutral-1">
           <div className="absolute left-1.5 top-1.5 flex items-center gap-1 font-mono text-[8.5px] text-neutral-9">
             <Image size={9} />
             <span>canvas</span>
@@ -51,7 +51,7 @@ export function AtelierCanvasGlyph(_props: SubpackageGlyphProps) {
             return (
               <div
                 key={layer.name}
-                className="flex items-center gap-1.5 rounded-sm bg-neutral-1 px-1.5 py-1"
+                className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-neutral-1 px-1.5 py-1"
               >
                 <span className="text-neutral-9">·</span>
                 <span

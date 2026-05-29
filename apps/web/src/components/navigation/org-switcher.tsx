@@ -129,7 +129,7 @@ export function OrgSwitcher() {
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex h-8 items-center gap-2 rounded-md border border-neutral-7 bg-neutral-2 px-3 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
+        className="inline-flex h-8 items-center gap-2 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-2 px-3 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
       >
         <Building2 className="h-4 w-4 text-neutral-11" aria-hidden />
         <span className="max-w-[12rem] truncate">{triggerLabel}</span>
@@ -141,14 +141,14 @@ export function OrgSwitcher() {
           <div
             role="menu"
             aria-label={t("ariaLabel")}
-            className="absolute right-0 z-50 mt-2 w-72 rounded-md border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
+            className="absolute right-0 z-50 mt-2 w-72 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
           >
             {orgs.length === 0 ? (
               <div className="px-3 py-3 text-sm">
                 <p className="mb-2 text-neutral-11 dark:text-white/60">{t("empty")}</p>
                 <Link
                   href="/onboarding"
-                  className="inline-flex items-center gap-2 rounded-sm bg-[var(--brand-primary)] px-3 py-1.5 text-xs font-medium text-white hover:opacity-90"
+                  className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--brand-primary)] px-3 py-1.5 text-xs font-medium text-white hover:opacity-90"
                   onClick={() => setOpen(false)}
                 >
                   <Plus className="h-3.5 w-3.5" aria-hidden />
@@ -171,7 +171,7 @@ export function OrgSwitcher() {
                         onClick={() => {
                           void handleSelect(entry.id);
                         }}
-                        className="flex w-full items-center justify-between gap-2 rounded-sm px-3 py-2 text-left text-sm text-neutral-12 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-70 dark:text-white dark:hover:bg-white/10"
+                        className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-left text-sm text-neutral-12 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-70 dark:text-white dark:hover:bg-white/10"
                       >
                         <span className="min-w-0 flex-1">
                           <span className="block truncate font-medium">{entry.name}</span>
@@ -195,7 +195,7 @@ export function OrgSwitcher() {
                   <Link
                     href="/onboarding"
                     role="menuitem"
-                    className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+                    className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
                     onClick={() => setOpen(false)}
                   >
                     <Plus className="h-4 w-4 text-neutral-11" aria-hidden />
@@ -208,7 +208,7 @@ export function OrgSwitcher() {
             {errorMessage && (
               <p
                 role="alert"
-                className="mt-1 rounded-sm bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
+                className="mt-1 rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
               >
                 {errorMessage}
               </p>

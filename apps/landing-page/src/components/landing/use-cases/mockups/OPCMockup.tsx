@@ -39,7 +39,7 @@ export function OPCMockup() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-xl overflow-hidden shadow-sm flex flex-col"
+        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Top bar */}
         <div className="px-3 py-2 border-b border-border flex items-center gap-2 shrink-0">

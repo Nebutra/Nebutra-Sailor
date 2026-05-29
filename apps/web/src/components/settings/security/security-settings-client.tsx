@@ -129,7 +129,7 @@ export function SecuritySettingsClient() {
   if (!isBetterAuth) {
     return (
       <div className="space-y-6">
-        <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+        <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
           <h2 className="text-lg font-semibold text-[var(--neutral-12)]">Security</h2>
           <p className="mt-2 text-sm text-[var(--neutral-11)]">
             This workspace is using {authProvider}. Advanced security controls are still being
@@ -146,7 +146,7 @@ export function SecuritySettingsClient() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <h2 className="text-lg font-semibold text-[var(--neutral-12)]">Security</h2>
         <p className="mt-1 text-sm text-[var(--neutral-11)]">
           Signed in as{" "}
@@ -159,7 +159,7 @@ export function SecuritySettingsClient() {
       </section>
 
       {error && (
-        <section className="rounded-lg border border-red-6 bg-red-2 p-4 text-sm text-red-11">
+        <section className="rounded-[var(--radius-lg)] border border-red-6 bg-red-2 p-4 text-sm text-red-11">
           {error}
         </section>
       )}

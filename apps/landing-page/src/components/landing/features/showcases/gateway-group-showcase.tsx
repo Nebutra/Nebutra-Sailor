@@ -99,7 +99,7 @@ export function GatewayGroupShowcase({ entry, locale }: PackageShowcaseProps) {
       {/* Header: request envelope */}
       <Card className="shadow-sm">
         <CardHeader className="flex flex-row flex-wrap items-center gap-3 space-y-0 pb-4">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
             <Api className="h-3.5 w-3.5" aria-hidden="true" />
           </span>
           <div className="flex min-w-0 flex-1 items-center gap-2">
@@ -120,7 +120,7 @@ export function GatewayGroupShowcase({ entry, locale }: PackageShowcaseProps) {
           />
         </CardHeader>
         <CardContent className="space-y-4 pt-0">
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <code className="block truncate font-mono text-xs text-foreground">
               <span className="text-muted-foreground">GET </span>
               {base}
@@ -200,7 +200,7 @@ export function GatewayGroupShowcase({ entry, locale }: PackageShowcaseProps) {
             </Badge>
           </CardHeader>
           <CardContent className="pt-0">
-            <pre className="overflow-hidden rounded-md border border-border/60 bg-muted/30 p-3 font-mono text-[11px] leading-relaxed text-foreground">
+            <pre className="overflow-hidden rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3 font-mono text-[11px] leading-relaxed text-foreground">
               {`{
   "id": string,
   "slug": "${slug}",

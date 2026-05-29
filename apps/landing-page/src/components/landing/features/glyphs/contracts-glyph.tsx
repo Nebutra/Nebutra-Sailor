@@ -27,7 +27,7 @@ const EVENTS: ReadonlyArray<EventRow> = [
 export function ContractsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-lg bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -46,7 +46,7 @@ export function ContractsGlyph(_props: SubpackageGlyphProps) {
         {EVENTS.map((row) => (
           <li
             key={row.name}
-            className="flex items-center gap-2 rounded-md bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1"
           >
             <Badge
               variant="secondary"

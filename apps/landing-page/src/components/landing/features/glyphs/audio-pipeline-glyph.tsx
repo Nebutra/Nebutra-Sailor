@@ -18,7 +18,7 @@ export function AudioPipelineGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="relative flex w-full flex-col justify-between overflow-hidden rounded-md bg-[var(--neutral-2)] px-4 py-3"
+      className="relative flex w-full flex-col justify-between overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Header sparkle hint */}

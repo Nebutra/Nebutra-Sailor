@@ -50,37 +50,36 @@ export function AIGatewayCard() {
         >
           <div className="flex items-center px-4 py-2.5 bg-muted/30 dark:bg-white/[0.02] border-b border-border/50 dark:border-white/5">
             <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
-              <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
-              <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700" />
+              <div className="h-2.5 w-2.5 rounded-full bg-border/80 dark:bg-[var(--neutral-4)]" />
+              <div className="h-2.5 w-2.5 rounded-full bg-border/80 dark:bg-[var(--neutral-4)]" />
+              <div className="h-2.5 w-2.5 rounded-full bg-border/80 dark:bg-[var(--neutral-4)]" />
             </div>
-            <span className="ml-3 text-muted-foreground dark:text-zinc-500 text-[10px] uppercase font-semibold tracking-widest">
+            <span className="ml-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-[var(--neutral-10)]">
               endpoint.ts
             </span>
           </div>
-          <div className="p-5 font-mono text-[12px] leading-relaxed text-foreground dark:text-zinc-300">
+          <div className="p-5 font-mono text-[12px] leading-relaxed text-foreground dark:text-[var(--neutral-11)]">
             <div>
-              <span className="text-primary dark:text-blue-400">import</span>{" "}
-              {`{ createEdgeRouter }`} <span className="text-primary dark:text-blue-400">from</span>{" "}
-              <span className="text-emerald-600 dark:text-emerald-300">'@nebutra/ai';</span>
+              <span className="text-[var(--brand-primary)]">import</span> {`{ createEdgeRouter }`}{" "}
+              <span className="text-[var(--brand-primary)]">from</span>{" "}
+              <span className="text-[var(--green-11)]">'@nebutra/ai';</span>
             </div>
-            <div className="mt-3 text-muted-foreground dark:text-zinc-600 font-medium">
+            <div className="mt-3 font-medium text-muted-foreground dark:text-[var(--neutral-9)]">
               {"// Auto-fallback & latency routing"}
             </div>
             <div>
-              <span className="text-primary dark:text-blue-400">export const</span> POST ={" "}
-              <span className="text-purple-600 dark:text-purple-400">createEdgeRouter</span>({`{`}
+              <span className="text-[var(--brand-primary)]">export const</span> POST ={" "}
+              <span className="text-[var(--brand-tertiary)]">createEdgeRouter</span>({`{`}
             </div>
             <div className="pl-4">
-              strategy:{" "}
-              <span className="text-emerald-600 dark:text-emerald-300">'lowest-latency'</span>,
+              strategy: <span className="text-[var(--green-11)]">'lowest-latency'</span>,
             </div>
             <div className="pl-4">
-              models: [<span className="text-emerald-600 dark:text-emerald-300">'gpt-4'</span>,{" "}
-              <span className="text-emerald-600 dark:text-emerald-300">'claude-3'</span>],
+              models: [<span className="text-[var(--green-11)]">'gpt-4'</span>,{" "}
+              <span className="text-[var(--green-11)]">'claude-3'</span>],
             </div>
             <div className="pl-4">
-              stream: <span className="text-primary dark:text-blue-400">true</span>
+              stream: <span className="text-[var(--brand-primary)]">true</span>
             </div>
             <div>{`});`}</div>
           </div>
@@ -90,11 +89,11 @@ export function AIGatewayCard() {
           {/* Source Node */}
           <div
             ref={appRef}
-            className="flex-shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-[var(--radius-card)] bg-background border border-[var(--neutral-6)] dark:bg-zinc-950 dark:border-white/10 z-10"
+            className="z-10 flex h-16 w-16 flex-shrink-0 flex-col items-center justify-center rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background dark:border-white/10 dark:bg-[var(--neutral-1)]"
             style={{ boxShadow: "var(--ring-hairline)" }}
           >
             <span
-              className="text-[11px] font-semibold text-foreground dark:text-white leading-tight text-center"
+              className="text-center text-[11px] font-semibold leading-tight text-foreground dark:text-[var(--neutral-12)]"
               style={{ letterSpacing: "var(--tracking-tight)" }}
             >
               Your
@@ -107,37 +106,37 @@ export function AIGatewayCard() {
           <div className="flex flex-col gap-3 z-10">
             <div
               ref={openaiRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-[var(--neutral-1)]"
             >
               <OpenAIIcon size={14} className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[11px] font-semibold text-foreground/80 dark:text-zinc-300 tracking-wide">
+              <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
                 OpenAI
               </span>
             </div>
             <div
               ref={anthropicRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-[var(--neutral-1)]"
             >
               <AnthropicIcon size={14} className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[11px] font-semibold text-foreground/80 dark:text-zinc-300 tracking-wide">
+              <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
                 Anthropic
               </span>
             </div>
             <div
               ref={geminiRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-[var(--neutral-1)]"
             >
               <GeminiIcon size={14} className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[11px] font-semibold text-foreground/80 dark:text-zinc-300 tracking-wide">
+              <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
                 Gemini
               </span>
             </div>
             <div
               ref={deepseekRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background dark:bg-zinc-950 dark:border-white/10 shadow-sm px-4 py-1.5 backdrop-blur-sm"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-[var(--neutral-1)]"
             >
               <DeepSeekIcon size={14} className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[11px] font-semibold text-foreground/80 dark:text-zinc-300 tracking-wide">
+              <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
                 DeepSeek
               </span>
             </div>

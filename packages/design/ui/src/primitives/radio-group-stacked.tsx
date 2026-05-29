@@ -30,7 +30,7 @@ const RadioGroupStackedItem = ({
     <BaseRadio.Root
       ref={ref}
       className={cn(
-        "relative flex w-full flex-row items-center justify-between rounded-lg border px-4 py-3 text-left hover:bg-accent outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 peer-data-state-checked:border-primary peer-data-state-checked:bg-primary/5 data-state-checked:border-primary data-state-checked:bg-primary/5",
+        "relative flex w-full flex-row items-center justify-between rounded-[var(--radius-lg)] border px-4 py-3 text-left hover:bg-accent outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 peer-data-state-checked:border-primary peer-data-state-checked:bg-primary/5 data-state-checked:border-primary data-state-checked:bg-primary/5",
         className,
       )}
       {...props}

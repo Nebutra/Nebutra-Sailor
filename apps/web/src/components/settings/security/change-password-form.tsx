@@ -112,7 +112,7 @@ export function ChangePasswordForm({
 
   if (loading) {
     return (
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
             <h3 className="text-sm font-medium text-[var(--neutral-12)]">Password</h3>
@@ -129,7 +129,7 @@ export function ChangePasswordForm({
 
   if (!capability.hasPasswordAccount) {
     return (
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
             <h3 className="text-sm font-medium text-[var(--neutral-12)]">Password</h3>
@@ -183,7 +183,7 @@ export function ChangePasswordForm({
   const errorMessage = state.errorKey ? tErrors(state.errorKey) : null;
 
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>

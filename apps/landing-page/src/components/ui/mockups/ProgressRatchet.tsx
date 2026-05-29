@@ -14,7 +14,7 @@ export function ProgressRatchet() {
         return (
           <div
             key={bar.label}
-            className="rounded-xl border border-border/50 bg-muted/30 dark:bg-zinc-950/60 px-5 py-4"
+            className="rounded-[var(--radius-xl)] border border-border/50 bg-muted/30 dark:bg-zinc-950/60 px-5 py-4"
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/80">

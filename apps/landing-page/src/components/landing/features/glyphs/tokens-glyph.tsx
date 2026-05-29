@@ -52,7 +52,7 @@ const RADIUS_CHIPS: ReadonlyArray<RadiusChip> = [
 export function TokensGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-2 rounded-md bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2 flex items-center gap-1">
@@ -67,7 +67,7 @@ export function TokensGlyph(_props: SubpackageGlyphProps) {
         <span>--blue-1 → --blue-12</span>
       </div>
 
-      <div className="flex h-4 w-full overflow-hidden rounded-sm border border-[var(--neutral-6)]">
+      <div className="flex h-4 w-full overflow-hidden rounded-[var(--radius-sm)] border border-[var(--neutral-6)]">
         {COLOR_SCALE_STEPS.map((color, idx) => (
           <div
             key={`step-${idx}`}
@@ -86,7 +86,7 @@ export function TokensGlyph(_props: SubpackageGlyphProps) {
             className="inline-flex items-center gap-1 rounded border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-1.5 py-0.5"
           >
             <span
-              className="h-2.5 w-2.5 rounded-sm border border-[var(--neutral-7)]"
+              className="h-2.5 w-2.5 rounded-[var(--radius-sm)] border border-[var(--neutral-7)]"
               style={{ background: chip.swatch }}
             />
             <span className="text-[9px] font-mono text-[var(--neutral-11)]">{chip.name}</span>

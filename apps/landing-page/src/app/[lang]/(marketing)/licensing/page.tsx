@@ -204,7 +204,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </div>
 
               <Button
-                className="w-full h-12 text-base font-bold rounded-xl"
+                className="w-full h-12 text-base font-bold rounded-[var(--radius-xl)]"
                 variant="secondary"
                 asChild
               >
@@ -278,7 +278,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </div>
 
               <Button
-                className="w-full h-12 text-base font-bold rounded-xl shadow-lg shadow-primary/20"
+                className="w-full h-12 text-base font-bold rounded-[var(--radius-xl)] shadow-lg shadow-primary/20"
                 variant="default"
                 asChild
               >
@@ -348,7 +348,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </div>
 
               <Button
-                className="w-full h-12 text-base font-bold rounded-xl"
+                className="w-full h-12 text-base font-bold rounded-[var(--radius-xl)]"
                 variant="secondary"
                 asChild
               >
@@ -377,7 +377,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
           <AnimateInGroup stagger="normal">
             {faqItems.map((item, idx) => (
               <AnimateIn key={idx} preset="fadeUp" inView>
-                <div className="border border-border/50 rounded-2xl p-6 bg-background/50 backdrop-blur-md hover:border-primary/30 transition-colors">
+                <div className="border border-border/50 rounded-[var(--radius-2xl)] p-6 bg-background/50 backdrop-blur-md hover:border-primary/30 transition-colors">
                   <h3 className="text-lg font-bold mb-3">{item.q}</h3>
                   <p className="text-muted-foreground leading-relaxed">{item.a}</p>
                 </div>

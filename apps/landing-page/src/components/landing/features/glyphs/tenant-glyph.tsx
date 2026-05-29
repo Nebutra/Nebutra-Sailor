@@ -5,11 +5,11 @@ import type { SubpackageGlyphProps } from "./types";
 export function TenantGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-md bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       {/* Active tenant row */}
-      <div className="flex items-center justify-between rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2.5 py-2">
+      <div className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2.5 py-2">
         <div className="flex min-w-0 items-center gap-2">
           <Buildings className="h-4 w-4 shrink-0 text-[var(--neutral-12)]" />
           <span className="truncate text-xs font-medium text-[var(--neutral-12)]">
@@ -26,7 +26,7 @@ export function TenantGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Inactive tenant rows */}
-      <div className="flex items-center justify-between rounded-md px-2.5 py-1.5 opacity-60">
+      <div className="flex items-center justify-between rounded-[var(--radius-md)] px-2.5 py-1.5 opacity-60">
         <div className="flex min-w-0 items-center gap-2">
           <Buildings className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]" />
           <span className="truncate text-xs text-[var(--neutral-11)]">Globex Corp</span>
@@ -36,7 +36,7 @@ export function TenantGlyph(_props: SubpackageGlyphProps) {
         </Badge>
       </div>
 
-      <div className="flex items-center justify-between rounded-md px-2.5 py-1.5 opacity-60">
+      <div className="flex items-center justify-between rounded-[var(--radius-md)] px-2.5 py-1.5 opacity-60">
         <div className="flex min-w-0 items-center gap-2">
           <Buildings className="h-3.5 w-3.5 shrink-0 text-[var(--neutral-11)]" />
           <span className="truncate text-xs text-[var(--neutral-11)]">Initech Labs</span>

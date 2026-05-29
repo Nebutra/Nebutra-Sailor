@@ -150,7 +150,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
   if (sessions.length === 0) {
     return (
       <AnimateIn preset="fadeUp">
-        <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-neutral-7 bg-neutral-1 px-6 py-12 text-center dark:border-white/10 dark:bg-white/[0.02]">
+        <div className="flex flex-col items-center justify-center gap-3 rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-12 text-center dark:border-white/10 dark:bg-white/[0.02]">
           <MessageSquare className="h-8 w-8 text-neutral-9 dark:text-white/30" />
           <div>
             <p className="text-sm font-medium text-neutral-12 dark:text-white">
@@ -194,7 +194,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
 
       {/* Empty filter result */}
       {totalMatches === 0 && query && (
-        <div className="rounded-xl border border-dashed border-neutral-7 px-6 py-10 text-center dark:border-white/15">
+        <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 px-6 py-10 text-center dark:border-white/15">
           <Search className="mx-auto h-5 w-5 text-neutral-9 dark:text-white/30" />
           <p className="mt-2 text-sm font-medium text-neutral-12 dark:text-white">
             No sessions match "{query}"
@@ -221,7 +221,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
                 const href = `/chat?sessionId=${encodeURIComponent(session.id)}&mode=${encodeURIComponent(session.mode)}`;
                 return (
                   <AnimateIn key={session.id} preset="fadeUp">
-                    <div className="group relative flex h-full flex-col rounded-xl border border-neutral-6 bg-neutral-1 p-4 transition-all duration-150 hover:border-neutral-8 hover:shadow-md dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-white/20 dark:hover:shadow-none">
+                    <div className="group relative flex h-full flex-col rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-4 transition-all duration-150 hover:border-neutral-8 hover:shadow-md dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-white/20 dark:hover:shadow-none">
                       <div className="mb-2 flex items-center justify-between">
                         <span
                           className={`inline-flex items-center gap-1 rounded-full bg-neutral-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider dark:bg-white/10 ${meta.accent}`}
@@ -251,7 +251,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
                         type="button"
                         onClick={() => setPendingDelete(session)}
                         aria-label={`Delete session: ${session.title}`}
-                        className="absolute right-3 top-3 rounded-md p-1 text-neutral-9 opacity-0 transition-all group-hover:opacity-100 hover:bg-red-2 hover:text-red-11 focus-visible:opacity-100 dark:text-white/30 dark:hover:bg-red-2/30"
+                        className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-all group-hover:opacity-100 hover:bg-red-2 hover:text-red-11 focus-visible:opacity-100 dark:text-white/30 dark:hover:bg-red-2/30"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>

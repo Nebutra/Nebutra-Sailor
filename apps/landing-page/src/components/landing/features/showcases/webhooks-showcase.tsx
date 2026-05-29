@@ -139,7 +139,7 @@ export function WebhooksShowcase({ locale }: PackageShowcaseProps) {
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-border bg-muted/40 text-muted-foreground">
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] border border-border bg-muted/40 text-muted-foreground">
               <Connection className="h-4 w-4" aria-hidden="true" />
             </span>
             <span className="truncate font-mono text-xs text-foreground md:text-sm">

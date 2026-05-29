@@ -194,12 +194,12 @@ export function TeamMemberList({ orgId }: Props) {
       </div>
 
       {notice && (
-        <p className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-2 text-sm text-[var(--neutral-12)]">
+        <p className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-3 py-2 text-sm text-[var(--neutral-12)]">
           {notice}
         </p>
       )}
 
-      <div className="overflow-hidden rounded-xl border border-[var(--neutral-7)]">
+      <div className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--neutral-7)]">
         <table className="w-full border-collapse text-left text-sm">
           <thead className="bg-[var(--neutral-2)] text-xs uppercase tracking-[0.16em] text-[var(--neutral-10)]">
             <tr>

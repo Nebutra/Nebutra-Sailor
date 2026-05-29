@@ -34,7 +34,7 @@ export function NotificationPreferenceMatrix({
   sections,
 }: Props) {
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-base font-semibold text-[var(--neutral-12)]">Delivery matrix</h3>
@@ -60,7 +60,7 @@ export function NotificationPreferenceMatrix({
       </div>
 
       {!runtime.canManagePreferences ? (
-        <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <div className="mt-4 rounded-[var(--radius-lg)] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
           Changes are disabled here because the current notification runtime does not expose durable
           preference storage yet.
         </div>
@@ -74,7 +74,7 @@ export function NotificationPreferenceMatrix({
               <p className="mt-1 text-sm text-[var(--neutral-11)]">{section.description}</p>
             </div>
 
-            <div className="overflow-x-auto rounded-lg border border-[var(--neutral-7)]">
+            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-7)]">
               <table className="min-w-[720px] w-full border-collapse">
                 <thead className="bg-[var(--neutral-2)] text-left">
                   <tr className="border-b border-[var(--neutral-7)]">

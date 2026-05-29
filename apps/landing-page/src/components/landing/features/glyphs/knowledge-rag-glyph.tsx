@@ -71,7 +71,7 @@ export function KnowledgeRagGlyph(_props: SubpackageGlyphProps) {
         {CHUNKS.map((chunk) => (
           <li
             key={chunk.path}
-            className="flex items-center justify-between gap-2 rounded-md border border-border bg-background/40 px-2 py-1"
+            className="flex items-center justify-between gap-2 rounded-[var(--radius-md)] border border-border bg-background/40 px-2 py-1"
           >
             <span className="truncate font-mono text-[11px] tracking-tight text-foreground">
               {chunk.path}

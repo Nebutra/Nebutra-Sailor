@@ -1,12 +1,11 @@
 "use client";
 
 import { Warning as AlertCircle, Check, Shield, ShieldCheck, Cross as X } from "@nebutra/icons";
-import { type ZxcvbnResult, zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
+import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
 import * as zxcvbnEnPackage from "@zxcvbn-ts/language-en";
-import { useDeferredValue, useEffect, useMemo } from "react";
-import { useI18n } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
+import { useDeferredValue } from "react";
+import { cn } from "../utils/cn";
 
 // 初始化 zxcvbn 配置
 const options = {
@@ -26,13 +25,15 @@ zxcvbnOptions.setOptions(options);
  * 密码强度等级
  */
 type StrengthLevel = 0 | 1 | 2 | 3 | 4;
+type StrengthLabel = "veryWeak" | "weak" | "fair" | "strong" | "veryStrong";
+type RequirementLabel = "minLength" | "lowercase" | "uppercase" | "number" | "special";
 
 /**
  * 密码强度配置
  */
 const STRENGTH_CONFIG: Record<
   StrengthLevel,
-  { label: string; color: string; bgColor: string; icon: React.ReactNode }
+  { label: StrengthLabel; color: string; bgColor: string; icon: React.ReactNode }
 > = {
   0: {
     label: "veryWeak",
@@ -71,9 +72,25 @@ const STRENGTH_CONFIG: Record<
  */
 interface PasswordRequirement {
   id: string;
-  label: string;
+  label: RequirementLabel;
   check: (password: string) => boolean;
 }
+
+const STRENGTH_LABELS: Record<StrengthLabel, string> = {
+  veryWeak: "Very weak",
+  weak: "Weak",
+  fair: "Fair",
+  strong: "Strong",
+  veryStrong: "Very strong",
+};
+
+const REQUIREMENT_LABELS: Record<RequirementLabel, string> = {
+  minLength: "At least 8 characters",
+  lowercase: "Lowercase letter",
+  uppercase: "Uppercase letter",
+  number: "Number",
+  special: "Special character",
+};
 
 const PASSWORD_REQUIREMENTS: PasswordRequirement[] = [
   {
@@ -114,8 +131,6 @@ interface PasswordStrengthIndicatorProps {
   showFeedback?: boolean;
   /** 自定义类名 */
   className?: string;
-  /** 密码强度变化回调 */
-  onStrengthChange?: (score: StrengthLevel, isValid: boolean) => void;
 }
 
 /**
@@ -123,11 +138,9 @@ interface PasswordStrengthIndicatorProps {
  */
 function usePasswordStrength(password: string) {
   const deferredPassword = useDeferredValue(password);
-  return useMemo<ZxcvbnResult | null>(() => {
-    if (!deferredPassword) return null;
-    // 使用同步 API（zxcvbn v3 使用同步调用）
-    return zxcvbn(deferredPassword);
-  }, [deferredPassword]);
+  if (!deferredPassword) return null;
+  // 使用同步 API（zxcvbn v3 使用同步调用）
+  return zxcvbn(deferredPassword);
 }
 
 /**
@@ -145,35 +158,18 @@ export function PasswordStrengthIndicator({
   showBar = true,
   showFeedback = true,
   className,
-  onStrengthChange,
 }: PasswordStrengthIndicatorProps) {
-  const { t } = useI18n();
   const result = usePasswordStrength(password);
 
   // 检查密码要求
-  const requirementResults = useMemo(
-    () =>
-      PASSWORD_REQUIREMENTS.map((req) => ({
-        ...req,
-        passed: password ? req.check(password) : false,
-      })),
-    [password],
-  );
-
-  // 计算通过的要求数量
-  const passedCount = requirementResults.filter((r) => r.passed).length;
-  const allPassed = passedCount === PASSWORD_REQUIREMENTS.length;
+  const requirementResults = PASSWORD_REQUIREMENTS.map((req) => ({
+    ...req,
+    passed: password ? req.check(password) : false,
+  }));
 
   // 获取强度等级
   const score = (result?.score ?? 0) as StrengthLevel;
   const config = STRENGTH_CONFIG[score];
-
-  // 通知父组件强度变化
-  useEffect(() => {
-    if (onStrengthChange && password) {
-      onStrengthChange(score, allPassed && score >= 2);
-    }
-  }, [score, allPassed, password, onStrengthChange]);
 
   // 如果没有密码，不显示
   if (!password) {
@@ -189,7 +185,7 @@ export function PasswordStrengthIndicator({
             <div className="flex items-center gap-1.5">
               <span className={cn("flex items-center", config.color)}>{config.icon}</span>
               <span className={cn("text-xs font-medium", config.color)}>
-                {t(`auth.passwordStrength.levels.${config.label}`) || config.label}
+                {STRENGTH_LABELS[config.label]}
               </span>
             </div>
             <span className="text-xs text-muted-foreground">{score}/4</span>
@@ -222,7 +218,7 @@ export function PasswordStrengthIndicator({
               )}
             >
               {req.passed ? <Check className="h-3 w-3" /> : <X className="h-3 w-3" />}
-              <span>{t(`auth.passwordStrength.requirements.${req.label}`) || req.label}</span>
+              <span>{REQUIREMENT_LABELS[req.label]}</span>
             </div>
           ))}
         </div>
@@ -230,7 +226,7 @@ export function PasswordStrengthIndicator({
 
       {/* 反馈信息 */}
       {showFeedback && result?.feedback?.warning && (
-        <div className="flex items-start gap-2 rounded-md bg-amber-50 p-2 text-xs text-amber-800 dark:bg-amber-950/30 dark:text-amber-200">
+        <div className="flex items-start gap-2 rounded-[var(--radius-md)] bg-amber-50 p-2 text-xs text-amber-800 dark:bg-amber-950/30 dark:text-amber-200">
           <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <span>{result.feedback.warning}</span>
         </div>
@@ -238,8 +234,8 @@ export function PasswordStrengthIndicator({
 
       {showFeedback && result?.feedback?.suggestions && result.feedback.suggestions.length > 0 && (
         <div className="space-y-1">
-          {result.feedback.suggestions.map((suggestion, index) => (
-            <div key={index} className="flex items-start gap-2 text-xs text-muted-foreground">
+          {result.feedback.suggestions.map((suggestion) => (
+            <div key={suggestion} className="flex items-start gap-2 text-xs text-muted-foreground">
               <span className="shrink-0">•</span>
               <span>{suggestion}</span>
             </div>

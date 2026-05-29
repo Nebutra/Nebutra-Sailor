@@ -189,7 +189,7 @@ export function PasskeysBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
             <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
@@ -269,7 +269,7 @@ export function PasskeysBlock({
   const errorMessage = state.errorKey ? tErrors(state.errorKey) : null;
 
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
@@ -293,7 +293,7 @@ export function PasskeysBlock({
       )}
 
       {state.listLoaded && state.passkeys.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+        <div className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
           <p className="text-sm text-[var(--neutral-11)]">{t("empty")}</p>
         </div>
       ) : (
@@ -301,7 +301,7 @@ export function PasskeysBlock({
           {state.passkeys.map((passkey) => (
             <li
               key={passkey.id}
-              className="flex flex-col gap-3 rounded-lg border border-[var(--neutral-7)] p-4 md:flex-row md:items-center md:justify-between"
+              className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-4 md:flex-row md:items-center md:justify-between"
             >
               {state.renamingId === passkey.id ? (
                 <form
@@ -375,7 +375,7 @@ export function PasskeysBlock({
       <div className="mt-4">
         {state.adding ? (
           <form
-            className="space-y-3 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4"
+            className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4"
             onSubmit={handleAdd}
           >
             <div className="space-y-1.5">

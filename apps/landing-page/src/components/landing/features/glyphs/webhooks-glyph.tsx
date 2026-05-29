@@ -16,7 +16,7 @@ import type { SubpackageGlyphProps } from "./types";
 export function WebhooksGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-lg bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Endpoint URL */}

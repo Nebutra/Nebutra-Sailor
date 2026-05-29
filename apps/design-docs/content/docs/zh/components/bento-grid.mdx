@@ -1,6 +1,6 @@
 ---
-title: Bento 网格 (BentoGrid)
-description: 响应式 Bento 风格网格容器，带有具有背景插槽、图标和悬停显示 CTA 的 BentoCard 条目。
+title: Bento 网格
+description: 响应式 Bento 风格网格容器，带有背景插槽、图标和悬停显示 CTA 的 BentoCard 条目。
 ---
 
 ## 演示
@@ -83,25 +83,25 @@ import { Sparkles, Zap, Lock } from "lucide-react";
 ```tsx
 <BentoGrid className="lg:grid-cols-3">
   <BentoCard
-    name="宽屏 (Wide)"
-    description="..."
+    name="宽屏"
+    description="适合强调一个主能力。"
     Icon={Maximize}
     className="lg:col-span-2 lg:row-span-2"
   />
   <BentoCard
-    name="纵向 (Tall)"
-    description="..."
+    name="纵向"
+    description="适合展示长图或纵向状态。"
     Icon={ArrowUp}
     className="lg:row-span-2"
   />
-  <BentoCard name="常规 (Normal)" description="..." Icon={Square} />
-  <BentoCard name="常规 (Normal)" description="..." Icon={Circle} />
+  <BentoCard name="常规" description="适合单个辅助能力。" Icon={Square} />
+  <BentoCard name="补充" description="适合链接到下一步。" Icon={Circle} />
 </BentoGrid>
 ```
 
 ## 属性
 
-### BentoGrid (网格容器)
+### BentoGrid 网格容器
 
 | 属性 | 类型 | 默认值 | 描述 |
 | ----------- | ----------- | ------- | -------------------------- |
@@ -110,7 +110,7 @@ import { Sparkles, Zap, Lock } from "lucide-react";
 
 默认网格：`grid-cols-1 md:grid-cols-2 lg:grid-cols-3`，`auto-rows-[22rem]`，`gap-4`。
 
-### BentoCard (网格条目)
+### BentoCard 网格条目
 
 | 属性 | 类型 | 默认值 | 描述 |
 | ------------- | ------------------- | -------------- | ------------------------------------------------------ |
@@ -141,3 +141,15 @@ import { Sparkles, Zap, Lock } from "lucide-react";
 - `BentoGrid` 用于强调节奏和横向比较的编辑型功能组，不用于高密度数据扫描。
 - 每张卡片只保留一个主动作。如果需要多个动作，应升级为普通 surface 并放置显式控件。
 - `background` 插槽只承担视觉氛围，不承载产品关键信息。产品截图不能依赖 hover 才可读。
+
+## 真实产品示例
+
+- 产品总览页把 AI 编排、计费、治理和可观测性能力分组成少量重点卡片。
+- 文档首页把读者导向少数高价值组件或模式家族。
+- 发布记录或发布页中，每张卡解释一个已交付能力，并链接到更深的证据页面。
+
+## 反模式
+
+- 不要把 `BentoGrid` 用在后台 dashboard、设置页或高密度资源列表；这些场景需要表格、筛选和稳定行结构。
+- 不要在卡片里塞入独立表单、菜单或多个 CTA。一个 bento card 应只有一个清晰去向。
+- 不要把必要产品文案藏进装饰性 `background` 插槽或悬停才出现的内容里。

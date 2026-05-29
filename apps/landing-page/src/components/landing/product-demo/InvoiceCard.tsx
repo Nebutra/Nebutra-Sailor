@@ -117,7 +117,7 @@ export function InvoiceCard() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="absolute -inset-0.5 rounded-2xl border-2 border-emerald-500/30 blur-[4px] pointer-events-none -z-10"
+            className="absolute -inset-0.5 rounded-[var(--radius-2xl)] border-2 border-emerald-500/30 blur-[4px] pointer-events-none -z-10"
           />
         )}
       </AnimatePresence>

@@ -1,10 +1,7 @@
 "use client";
 
 import { Calendar, Check, ChevronRight, Clock, MagnifyingGlass, Shield } from "@nebutra/icons";
-
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Input } from "@nebutra/ui/primitives/input";
-import { StatusBadge } from "@nebutra/ui/primitives/status-badge";
+import { Badge, Input, StatusBadge } from "@nebutra/ui/primitives";
 
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
@@ -18,7 +15,6 @@ type AuditEntry = {
   action: string;
   target: string;
   status: ActionStatus;
-  tone: string;
 };
 
 type Copy = {
@@ -49,7 +45,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "user.invite",
         target: "alex@nebutra.co",
         status: "info",
-        tone: "bg-blue-500/15 text-blue-700 dark:text-blue-300",
       },
       {
         time: "14m ago",
@@ -58,7 +53,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "billing.cancel",
         target: "sub_8f2a",
         status: "warning",
-        tone: "bg-amber-500/15 text-amber-700 dark:text-amber-300",
       },
       {
         time: "32m ago",
@@ -67,7 +61,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "auth.signin",
         target: "sso/okta",
         status: "success",
-        tone: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300",
       },
       {
         time: "1h ago",
@@ -76,7 +69,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "role.assign",
         target: "org/admins",
         status: "info",
-        tone: "bg-violet-500/15 text-violet-700 dark:text-violet-300",
       },
       {
         time: "2h ago",
@@ -85,7 +77,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "key.rotate",
         target: "kms/prod",
         status: "success",
-        tone: "bg-cyan-500/15 text-cyan-700 dark:text-cyan-300",
       },
       {
         time: "3h ago",
@@ -94,7 +85,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "access.deny",
         target: "vault/secrets",
         status: "error",
-        tone: "bg-rose-500/15 text-rose-700 dark:text-rose-300",
       },
     ],
   },
@@ -114,7 +104,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "user.invite",
         target: "alex@nebutra.co",
         status: "info",
-        tone: "bg-blue-500/15 text-blue-700 dark:text-blue-300",
       },
       {
         time: "14 分钟前",
@@ -123,7 +112,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "billing.cancel",
         target: "sub_8f2a",
         status: "warning",
-        tone: "bg-amber-500/15 text-amber-700 dark:text-amber-300",
       },
       {
         time: "32 分钟前",
@@ -132,7 +120,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "auth.signin",
         target: "sso/okta",
         status: "success",
-        tone: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300",
       },
       {
         time: "1 小时前",
@@ -141,7 +128,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "role.assign",
         target: "org/admins",
         status: "info",
-        tone: "bg-violet-500/15 text-violet-700 dark:text-violet-300",
       },
       {
         time: "2 小时前",
@@ -150,7 +136,6 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "key.rotate",
         target: "kms/prod",
         status: "success",
-        tone: "bg-cyan-500/15 text-cyan-700 dark:text-cyan-300",
       },
       {
         time: "3 小时前",
@@ -159,22 +144,29 @@ const COPY: Record<"en" | "zh", Copy> = {
         action: "access.deny",
         target: "vault/secrets",
         status: "error",
-        tone: "bg-rose-500/15 text-rose-700 dark:text-rose-300",
       },
     ],
   },
 };
 
+const statusTone: Record<ActionStatus, string> = {
+  info: "border-primary/30 bg-primary/10 text-primary",
+  warning: "border-[var(--amber-8)]/30 bg-[var(--amber-3)] text-[var(--amber-11)]",
+  success: "border-[var(--green-8)]/30 bg-[var(--green-3)] text-[var(--green-11)]",
+  error: "border-[var(--red-8)]/30 bg-[var(--red-3)] text-[var(--red-11)]",
+};
+
+const avatarTone: Record<ActionStatus, string> = {
+  info: "bg-primary/10 text-primary",
+  warning: "bg-[var(--amber-3)] text-[var(--amber-11)]",
+  success: "bg-[var(--green-3)] text-[var(--green-11)]",
+  error: "bg-[var(--red-3)] text-[var(--red-11)]",
+};
+
 function ActionChip({ label, status }: { label: string; status: ActionStatus }) {
-  const palette: Record<ActionStatus, string> = {
-    info: "border-blue-500/30 bg-blue-500/10 text-blue-700 dark:text-blue-300",
-    warning: "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300",
-    success: "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
-    error: "border-rose-500/30 bg-rose-500/10 text-rose-700 dark:text-rose-300",
-  };
   return (
     <span
-      className={`inline-flex shrink-0 items-center rounded-md border px-1.5 py-0.5 font-mono text-[10px] font-medium ${palette[status]}`}
+      className={`inline-flex shrink-0 items-center rounded-[var(--radius-md)] border px-1.5 py-0.5 font-mono text-[10px] font-medium ${statusTone[status]}`}
     >
       {label}
     </span>
@@ -183,11 +175,11 @@ function ActionChip({ label, status }: { label: string; status: ActionStatus }) 
 
 function AuditRow({ entry, viewDiff }: { entry: AuditEntry; viewDiff: string }) {
   return (
-    <div className="grid grid-cols-[64px_1fr_auto] items-center gap-3 rounded-md border border-border/60 bg-muted/20 px-3 py-2 transition-colors hover:bg-muted/40">
+    <div className="grid grid-cols-[64px_1fr_auto] items-center gap-3 rounded-[var(--radius-md)] border border-border/60 bg-muted/20 px-3 py-2 transition-colors hover:bg-muted/40">
       <span className="font-mono text-[11px] text-muted-foreground">{entry.time}</span>
       <div className="flex min-w-0 items-center gap-2">
         <span
-          className={`inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold ${entry.tone}`}
+          className={`inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold ${avatarTone[entry.status]}`}
           aria-hidden="true"
         >
           {entry.initials}

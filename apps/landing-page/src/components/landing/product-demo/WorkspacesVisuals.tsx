@@ -13,7 +13,7 @@ export function RoleSwitcher() {
   }, []);
 
   return (
-    <div className="flex items-center gap-4 bg-background dark:bg-[var(--neutral-2)] border border-border/50 rounded-xl p-3 shadow-elevation-high">
+    <div className="flex items-center gap-4 bg-background dark:bg-[var(--neutral-2)] border border-border/50 rounded-[var(--radius-xl)] p-3 shadow-elevation-high">
       {/* Fake User Avatar */}
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-violet-500 to-fuchsia-500 ring-2 ring-background overflow-hidden relative">
@@ -86,7 +86,7 @@ export function TenantDiagram() {
     <div className="w-full flex items-center justify-center p-4">
       <div className="flex gap-4 items-center">
         {/* DB Source */}
-        <div className="w-16 h-16 rounded-2xl bg-muted/40 border border-border/50 flex items-center justify-center shadow-inner relative">
+        <div className="w-16 h-16 rounded-[var(--radius-2xl)] bg-muted/40 border border-border/50 flex items-center justify-center shadow-inner relative">
           <svg
             className="w-6 h-6 text-muted-foreground"
             viewBox="0 0 24 24"
@@ -107,7 +107,7 @@ export function TenantDiagram() {
             initial={{ scale: 0.8, opacity: 0.8 }}
             animate={{ scale: 1.5, opacity: 0 }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
-            className="absolute inset-0 rounded-2xl border border-primary/40 pointer-events-none"
+            className="absolute inset-0 rounded-[var(--radius-2xl)] border border-primary/40 pointer-events-none"
           />
         </div>
 
@@ -123,7 +123,7 @@ export function TenantDiagram() {
                 className="w-4 h-full bg-primary absolute top-0 left-0 blur-[2px]"
               />
             </div>
-            <div className="px-3 py-1.5 rounded-lg border border-primary/20 bg-primary/10 text-primary text-[10px] font-mono tracking-wide shadow-sm">
+            <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-primary/20 bg-primary/10 text-primary text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Acme
             </div>
           </div>
@@ -138,7 +138,7 @@ export function TenantDiagram() {
                 className="w-4 h-full bg-emerald-500 absolute top-0 left-0 blur-[2px]"
               />
             </div>
-            <div className="px-3 py-1.5 rounded-lg border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono tracking-wide shadow-sm">
+            <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Globex
             </div>
           </div>

@@ -19,7 +19,7 @@ const TOOL_ROWS: readonly ToolRow[] = [
 export function ToolRegistryGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-md bg-[var(--neutral-1)] p-2.5"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center gap-1.5 font-mono text-[9px] text-[var(--neutral-10)]">

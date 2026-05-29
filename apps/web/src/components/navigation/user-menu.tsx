@@ -110,7 +110,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
         <div
           role="menu"
           aria-label={t("ariaLabel")}
-          className="absolute right-0 z-50 mt-2 w-60 rounded-md border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
+          className="absolute right-0 z-50 mt-2 w-60 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
         >
           <div className="px-3 py-2">
             <p className="truncate text-sm font-medium text-neutral-12 dark:text-white">
@@ -126,7 +126,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
             type="button"
             role="menuitem"
             aria-label={t("profile")}
-            className="flex w-full items-center gap-2 rounded-sm px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+            className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
             onClick={() => {
               setOpen(false);
               account.openDialog("profile");
@@ -139,7 +139,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
             role="menuitem"
             href="/settings"
             aria-label={t("settings")}
-            className="flex items-center gap-2 rounded-sm px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+            className="flex items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
             onClick={() => setOpen(false)}
           >
             <Settings className="h-4 w-4" aria-hidden />
@@ -153,7 +153,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
             aria-haspopup="menu"
             aria-expanded={themeOpen}
             onClick={() => setThemeOpen((prev) => !prev)}
-            className="flex w-full items-center justify-between gap-2 rounded-sm px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+            className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
           >
             <span className="flex items-center gap-2">
               <Sun className="h-4 w-4" aria-hidden />
@@ -175,7 +175,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
                     aria-checked={isActive}
                     aria-label={tTheme(choice)}
                     onClick={() => setTheme(choice)}
-                    className="flex w-full items-center justify-between rounded-sm px-3 py-1.5 text-xs text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+                    className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-xs text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
                   >
                     <span className="flex items-center gap-2">
                       <Icon className="h-3.5 w-3.5" aria-hidden />
@@ -197,7 +197,7 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
             onClick={() => {
               void handleSignOut();
             }}
-            className="flex w-full items-center gap-2 rounded-sm px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+            className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
           >
             <LogOut className="h-4 w-4" aria-hidden />
             <span>{t("signOut")}</span>

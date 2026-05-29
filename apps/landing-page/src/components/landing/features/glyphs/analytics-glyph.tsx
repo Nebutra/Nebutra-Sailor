@@ -27,7 +27,7 @@ export function AnalyticsGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-lg bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
         {/* KPI tiles row */}
         <div className="grid grid-cols-3 gap-2">
           <div className="flex flex-col gap-0.5">
@@ -58,7 +58,7 @@ export function AnalyticsGlyph({ locale }: SubpackageGlyphProps) {
           {BARS.map((h, i) => (
             <div
               key={`bar-${i}`}
-              className="flex-1 rounded-sm bg-[var(--blue-9)]"
+              className="flex-1 rounded-[var(--radius-sm)] bg-[var(--blue-9)]"
               style={{ height: `${h}%`, opacity: 0.55 + (h / 100) * 0.45 }}
             />
           ))}

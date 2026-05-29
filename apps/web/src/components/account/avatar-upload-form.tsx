@@ -266,7 +266,7 @@ export function AvatarUploadForm({
   }
 
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <h2 className="text-base font-semibold text-[var(--neutral-12)]">{t("title")}</h2>
       <p className="mt-1 mb-4 text-sm text-[var(--neutral-11)]">{t("description")}</p>
 
@@ -301,7 +301,7 @@ export function AvatarUploadForm({
           }}
           onDragLeave={() => dispatch({ type: "drag.active", active: false })}
           onDrop={handleDrop}
-          className={`flex flex-1 flex-col items-start gap-2 rounded-md border border-dashed px-4 py-3 ${
+          className={`flex flex-1 flex-col items-start gap-2 rounded-[var(--radius-md)] border border-dashed px-4 py-3 ${
             state.dragActive
               ? "border-[var(--blue-9)] bg-[var(--blue-2)]"
               : "border-[var(--neutral-7)] bg-[var(--neutral-2)]"
@@ -320,7 +320,7 @@ export function AvatarUploadForm({
           />
           <label
             htmlFor="account-avatar-input"
-            className={`inline-flex cursor-pointer items-center justify-center rounded-md border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] ${
+            className={`inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] ${
               state.pending ? "cursor-not-allowed opacity-50" : ""
             }`}
           >

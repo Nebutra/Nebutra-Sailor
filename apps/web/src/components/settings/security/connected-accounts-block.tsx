@@ -68,7 +68,7 @@ export function ConnectedAccountsBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
             <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
@@ -115,7 +115,7 @@ export function ConnectedAccountsBlock({
   const linkedSet = new Set(capability.linkedProviders);
 
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
@@ -139,7 +139,7 @@ export function ConnectedAccountsBlock({
           {PROVIDERS.map((providerId) => (
             <div
               key={providerId}
-              className="h-14 animate-pulse rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-2)]"
+              className="h-14 animate-pulse rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]"
             />
           ))}
         </div>
@@ -151,7 +151,7 @@ export function ConnectedAccountsBlock({
             return (
               <div
                 key={providerId}
-                className="flex flex-col gap-3 rounded-lg border border-[var(--neutral-7)] p-4 md:flex-row md:items-center md:justify-between"
+                className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-4 md:flex-row md:items-center md:justify-between"
               >
                 <div>
                   <p className="text-sm font-medium text-[var(--neutral-12)]">

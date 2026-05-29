@@ -31,7 +31,7 @@ function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
       : "border-amber-6 bg-amber-2 text-amber-11";
 
   return (
-    <div className={`rounded-2xl border p-4 ${tone}`}>
+    <div className={`rounded-[var(--radius-2xl)] border p-4 ${tone}`}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h2 className="font-semibold">{notice.title}</h2>
@@ -40,14 +40,14 @@ function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
           <Link
             href={notice.primaryAction.href}
-            className="inline-flex items-center justify-center rounded-xl bg-neutral-12 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-11 dark:bg-white dark:text-black dark:hover:bg-white/90"
+            className="inline-flex items-center justify-center rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-11 dark:bg-white dark:text-black dark:hover:bg-white/90"
           >
             {notice.primaryAction.label}
           </Link>
           {notice.secondaryAction && (
             <Link
               href={notice.secondaryAction.href}
-              className="inline-flex items-center justify-center rounded-xl border border-current/20 px-4 py-2 text-sm font-medium transition hover:bg-white/20"
+              className="inline-flex items-center justify-center rounded-[var(--radius-xl)] border border-current/20 px-4 py-2 text-sm font-medium transition hover:bg-white/20"
             >
               {notice.secondaryAction.label}
             </Link>

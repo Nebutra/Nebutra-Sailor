@@ -74,7 +74,7 @@ function RoutingPath({
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.8, delay }}
-      className="flex flex-col md:flex-row items-center justify-between gap-4 w-full p-6 md:p-8 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] transition-colors"
+      className="flex flex-col md:flex-row items-center justify-between gap-4 w-full p-6 md:p-8 rounded-[var(--radius-2xl)] border border-white/5 bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.04] transition-colors"
     >
       <div className="text-xl md:text-2xl font-bold text-white w-full md:w-1/3 text-center md:text-left">
         {source}

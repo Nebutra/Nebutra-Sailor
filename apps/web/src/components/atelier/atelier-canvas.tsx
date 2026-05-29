@@ -67,7 +67,7 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_340px]">
       {/* Canvas viewport */}
-      <div className="relative h-[560px] overflow-auto rounded-lg border border-neutral-7 bg-neutral-2">
+      <div className="relative h-[560px] overflow-auto rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-2">
         {elements.length === 0 ? (
           <div className="absolute inset-0 flex items-center justify-center text-neutral-11">
             <p className="text-sm">Generated assets land here, placed by the server.</p>
@@ -87,7 +87,7 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
                   src={el.ref}
                   controls
                   aria-label={String(el.meta?.prompt ?? "generated video")}
-                  className="absolute rounded-md border border-neutral-7 shadow-sm"
+                  className="absolute rounded-[var(--radius-md)] border border-neutral-7 shadow-sm"
                   style={style}
                 >
                   <track kind="captions" />
@@ -100,7 +100,7 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
                 key={el.id}
                 src={src}
                 alt={String(el.meta?.prompt ?? "generated asset")}
-                className="absolute rounded-md border border-neutral-7 shadow-sm"
+                className="absolute rounded-[var(--radius-md)] border border-neutral-7 shadow-sm"
                 style={style}
               />
             );
@@ -110,7 +110,7 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
 
       {/* Prompt panel */}
       <AnimateIn preset="fade">
-        <div className="flex h-full flex-col gap-3 rounded-lg border border-neutral-7 bg-neutral-1 p-4">
+        <div className="flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-4">
           <h2 className="font-semibold text-neutral-12 text-sm">Brief</h2>
           <Textarea
             value={prompt}

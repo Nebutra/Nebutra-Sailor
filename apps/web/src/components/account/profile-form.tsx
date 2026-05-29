@@ -143,7 +143,7 @@ export function ProfileForm({
   }
 
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <h2 className="text-base font-semibold text-[var(--neutral-12)]">{t("title")}</h2>
       <p className="mt-1 mb-4 text-sm text-[var(--neutral-11)]">{t("description")}</p>
 
@@ -188,7 +188,7 @@ export function ProfileForm({
                 void handleVerifyEmail();
               }}
               disabled={!emailDirty || verifying}
-              className="shrink-0 rounded-md border border-[var(--neutral-7)] px-3 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
+              className="shrink-0 rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {verifying ? t("verifying") : t("verifyEmail")}
             </button>
@@ -226,7 +226,7 @@ export function ProfileForm({
           <button
             type="submit"
             disabled={!profileDirty || pending}
-            className="rounded-md bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--blue-10)] disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-[var(--radius-md)] bg-[var(--blue-9)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--blue-10)] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {pending ? t("saving") : t("submit")}
           </button>

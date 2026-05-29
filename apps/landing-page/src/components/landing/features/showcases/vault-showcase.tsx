@@ -9,10 +9,7 @@ import {
   RefreshClockwise,
   Shield,
 } from "@nebutra/icons";
-
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Button } from "@nebutra/ui/primitives/button";
-import { Card } from "@nebutra/ui/primitives/card";
+import { Badge, Button, Card } from "@nebutra/ui/primitives";
 
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
@@ -103,7 +100,7 @@ function SecretRow({ secret, revealLabel }: { secret: Secret; revealLabel: strin
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+            <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-muted text-muted-foreground">
               <KeyAsterisk className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-medium text-foreground">{secret.name}</span>
@@ -155,7 +152,7 @@ export function VaultShowcase({ locale }: PackageShowcaseProps) {
     <ShowcaseFrame>
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
             <LockClosed className="h-3.5 w-3.5" aria-hidden="true" />
           </span>
           <span className="text-sm font-semibold text-foreground">{copy.headerTitle}</span>
@@ -174,7 +171,7 @@ export function VaultShowcase({ locale }: PackageShowcaseProps) {
         ))}
       </div>
 
-      <div className="mt-4 flex flex-col items-center gap-2 rounded-md border border-border/60 bg-muted/30 p-3">
+      <div className="mt-4 flex flex-col items-center gap-2 rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
         <div className="flex flex-wrap items-center justify-center gap-1.5">
           <ChainPill icon={<Eye className="h-3 w-3" />} label={copy.chain.plaintext} />
           <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />

@@ -534,21 +534,21 @@ function BulkActions({
   return (
     <div
       data-testid="bulk-actions"
-      className="flex items-center justify-between rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2"
+      className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2"
     >
       <span className="text-sm text-[var(--neutral-11)]">{selectedLabel}</span>
       <div className="flex gap-2">
         <button
           type="button"
           onClick={() => void onMarkRead()}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
+          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
         >
           {markReadLabel}
         </button>
         <button
           type="button"
           onClick={() => void onArchive()}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
+          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
         >
           {archiveLabel}
         </button>
@@ -561,7 +561,7 @@ function ErrorBanner({ message }: { message: string }): React.ReactElement {
   return (
     <div
       role="alert"
-      className="rounded-md border border-destructive/20 bg-destructive/10 px-4 py-2 text-sm text-destructive"
+      className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-4 py-2 text-sm text-destructive"
     >
       {message}
     </div>
@@ -588,7 +588,7 @@ function NotificationsListPanel({
   onToggleSelect,
 }: NotificationsListPanelProps): React.ReactElement {
   return (
-    <div className="overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
+    <div className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
       <InboxList
         notifications={notifications}
         loading={loading}
@@ -623,7 +623,7 @@ function LoadMoreButton({
         type="button"
         onClick={() => void onLoadMore()}
         disabled={loading}
-        className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
       >
         {loading ? loadingLabel : label}
       </button>
@@ -658,7 +658,7 @@ function FilterTabButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "rounded-md px-3 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50",
+        "rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50",
         active
           ? "bg-[var(--neutral-3)] text-[var(--neutral-12)]"
           : "text-[var(--neutral-11)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]",

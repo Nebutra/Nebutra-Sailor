@@ -48,7 +48,7 @@ export function LlmGatewayGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       style={{ height: 160 }}
-      className="relative flex w-full flex-col gap-2 overflow-hidden rounded-md bg-neutral-2 px-3 py-2"
+      className="relative flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-md)] bg-neutral-2 px-3 py-2"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-1.5 rounded border border-neutral-7 bg-neutral-1 px-2 py-0.5 font-mono text-[10px] text-neutral-12">

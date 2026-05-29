@@ -36,7 +36,7 @@ const SERVICE_ROWS: ReadonlyArray<ServiceRow> = [
 export function SupabaseGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-lg bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2.5"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -76,7 +76,7 @@ function ServiceCell({ row }: ServiceCellProps) {
   const badgeVariant = isOk ? "green-subtle" : "amber-subtle";
 
   return (
-    <div className="flex items-center gap-1.5 rounded-md bg-[var(--neutral-1)] px-2 py-1 ring-1 ring-[var(--neutral-5)]">
+    <div className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1 ring-1 ring-[var(--neutral-5)]">
       <row.Icon className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" aria-hidden="true" />
       <span className="truncate font-mono text-[10px] text-[var(--neutral-12)]">{row.label}</span>
       <Badge variant={badgeVariant} size="sm" className="ml-auto gap-1 font-mono text-[9px]">

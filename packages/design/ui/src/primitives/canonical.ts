@@ -35,8 +35,8 @@ export {
   ButtonLink,
   type ButtonLinkProps,
   type ButtonProps,
-  buttonVariants,
 } from "./button";
+export { buttonVariants } from "./button-variants";
 export * from "./card";
 export {
   Checkbox,
@@ -93,6 +93,7 @@ export * from "./menubar";
 export * from "./modal";
 export * from "./multi-select";
 export * from "./navigation-menu";
+export { navigationMenuTriggerStyle } from "./navigation-menu-variants";
 export * from "./note";
 export * from "./pagination";
 export * from "./popover";
@@ -143,6 +144,7 @@ export * from "./theme-toggle";
 export * from "./toaster";
 export * from "./toggle";
 export * from "./toggle-group";
+export { toggleGroupItemVariants, toggleGroupVariants } from "./toggle-group-variants";
 export {
   Tooltip,
   TooltipContent,

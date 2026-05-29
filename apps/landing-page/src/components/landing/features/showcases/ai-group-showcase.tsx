@@ -1,7 +1,7 @@
 "use client";
 
 import { BeakerFlask, Brain, Cpu, Lightning, MagnifyingGlass, Sparkles } from "@nebutra/icons";
-import { Badge } from "@nebutra/ui/primitives/badge";
+import { Badge } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import type { ComponentType, SVGProps } from "react";
 
@@ -91,7 +91,7 @@ function CompactMetric({
     <div
       className={cn(
         "min-w-0 rounded-[var(--radius-md)] border px-3 py-2.5",
-        accent ? "border-[var(--blue-7)] bg-[var(--blue-2)]" : "border-border/60 bg-background/70",
+        accent ? "border-primary/30 bg-primary/5" : "border-border/60 bg-background/70",
       )}
     >
       <div className="mb-1 flex items-center gap-1.5 text-muted-foreground">
@@ -151,7 +151,7 @@ function CapabilityNode({
       className={cn(
         "flex min-w-0 items-center gap-2 rounded-[var(--radius-md)] border px-3 py-2",
         active
-          ? "border-transparent bg-[image:var(--brand-gradient)] text-white shadow-[0_10px_30px_-18px_var(--blue-9)]"
+          ? "border-transparent bg-[image:var(--brand-gradient)] text-white shadow-[0_10px_30px_-18px_hsl(var(--primary))]"
           : "border-border/60 bg-background/80 text-foreground",
       )}
     >
@@ -186,9 +186,9 @@ export function AiGroupShowcase({ entry, locale }: PackageShowcaseProps) {
 
   return (
     <ShowcaseFrame className="p-0! md:p-0!" minHeight={360}>
-      <div className="relative overflow-hidden rounded-[calc(var(--radius-panel)-1px)] border border-border/50 bg-[var(--neutral-1)]">
+      <div className="relative overflow-hidden rounded-[calc(var(--radius-panel)-1px)] border border-border/50 bg-background">
         <div
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--neutral-4)_1px,transparent_1px),linear-gradient(var(--neutral-4)_1px,transparent_1px)] bg-[length:32px_32px] opacity-[0.28]"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,hsl(var(--border))_1px,transparent_1px),linear-gradient(hsl(var(--border))_1px,transparent_1px)] bg-[length:32px_32px] opacity-[0.28]"
           aria-hidden="true"
         />
         <div className="relative flex flex-col gap-5 p-4 md:p-5">

@@ -36,7 +36,7 @@ export function VideoPipelineGlyph(_props: SubpackageGlyphProps) {
             <div key={stage.label} className="flex flex-1 items-center gap-1">
               <div
                 className={[
-                  "flex min-w-0 flex-1 flex-col gap-1 rounded-md border px-2 py-1.5",
+                  "flex min-w-0 flex-1 flex-col gap-1 rounded-[var(--radius-md)] border px-2 py-1.5",
                   stage.active
                     ? "border-[var(--blue-7)] bg-[var(--blue-2)]"
                     : "border-neutral-6 bg-[var(--neutral-2)]",

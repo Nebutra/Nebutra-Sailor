@@ -33,7 +33,7 @@ import {
   User,
 } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { env } from "@/lib/env";
 
 const SESSION_HINT_COOKIE = "nebutra_session_hint";
@@ -54,6 +54,18 @@ function readSessionHint(): boolean {
     .some((c) => c.startsWith(`${SESSION_HINT_COOKIE}=1`));
 }
 
+function subscribeToSessionHint() {
+  return () => {};
+}
+
+function getClientSessionHint() {
+  return readSessionHint();
+}
+
+function getServerSessionHint() {
+  return false;
+}
+
 function initialsFor(name: string, email: string): string {
   const source = (name || email || "").trim();
   if (!source) return "?";
@@ -66,18 +78,15 @@ function initialsFor(name: string, email: string): string {
 
 export function UserAvatarMenu(): React.ReactElement | null {
   const t = useTranslations("nav.avatarMenu");
-  const [hintPresent, setHintPresent] = useState(false);
+  const hintPresent = useSyncExternalStore(
+    subscribeToSessionHint,
+    getClientSessionHint,
+    getServerSessionHint,
+  );
   const [me, setMe] = useState<PublicMe | null>(null);
   const [loadFailed, setLoadFailed] = useState(false);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
-
-  // Detect the session-hint cookie after hydration. Reading document.cookie
-  // on the server would always be empty; deferring to useEffect avoids the
-  // SSR/CSR mismatch.
-  useEffect(() => {
-    setHintPresent(readSessionHint());
-  }, []);
 
   // Hydrate user info once the hint is observed.
   useEffect(() => {
@@ -123,7 +132,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
     };
   }, [open]);
 
-  const handleSignOut = useCallback(async () => {
+  async function handleSignOut() {
     // Drive sign-out through the canonical web-app route — that flow
     // also clears the .nebutra.com session-hint cookie via session-hint.ts.
     try {
@@ -138,7 +147,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
     // Optimistically clear in case the catchall didn't reach us.
     document.cookie = `${SESSION_HINT_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`;
     window.location.assign(`${APP_URL}/sign-in`);
-  }, []);
+  }
 
   // Nothing renders until we know there's a session AND the fetch succeeded.
   if (!hintPresent || loadFailed) return null;
@@ -184,9 +193,9 @@ export function UserAvatarMenu(): React.ReactElement | null {
         <div
           role="menu"
           aria-label={t("ariaLabel")}
-          className="absolute right-0 top-full z-50 mt-2 w-72 origin-top-right rounded-xl border border-neutral-7/70 bg-white p-1.5 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl dark:border-white/10 dark:bg-black/95"
+          className="absolute right-0 top-full z-50 mt-2 w-72 origin-top-right rounded-[var(--radius-xl)] border border-neutral-7/70 bg-white p-1.5 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl dark:border-white/10 dark:bg-black/95"
         >
-          <div className="flex items-center gap-3 rounded-lg px-3 py-2.5">
+          <div className="flex items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2.5">
             <span
               aria-hidden
               className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[image:var(--brand-gradient)] text-sm font-semibold text-white shadow-inner"
@@ -229,7 +238,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
             onClick={() => {
               void handleSignOut();
             }}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
+            className="flex w-full items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2 text-sm font-medium text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
           >
             <LogOut className="h-4 w-4" aria-hidden />
             <span>{t("signOut")}</span>
@@ -250,7 +259,7 @@ interface MenuLinkProps {
 function MenuLink({ href, icon: Icon, label, external = true }: MenuLinkProps) {
   const isExternal = external && href.startsWith("http");
   const className =
-    "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/5";
+    "flex w-full items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/5";
   return (
     <a
       role="menuitem"

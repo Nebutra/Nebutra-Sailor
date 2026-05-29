@@ -1,11 +1,16 @@
 "use client";
 
 import { Check, Clock, Eye, Fingerprint, Key, LockClosed, Shield, User } from "@nebutra/icons";
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Card, CardContent, CardHeader } from "@nebutra/ui/primitives/card";
-import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
-import { Progress } from "@nebutra/ui/primitives/progress";
-import { StatusDot } from "@nebutra/ui/primitives/status-dot";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  MetricCard,
+  MetricGrid,
+  Progress,
+  StatusDot,
+} from "@nebutra/ui/primitives";
 
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
@@ -109,7 +114,7 @@ export function IamGroupShowcase({ entry, locale }: PackageShowcaseProps) {
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
               <Shield className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{entry.label}</span>
@@ -128,7 +133,7 @@ export function IamGroupShowcase({ entry, locale }: PackageShowcaseProps) {
         <CardContent className="space-y-4 p-4 pt-0 md:p-5 md:pt-0">
           <div className="grid gap-4 md:grid-cols-[1fr_220px]">
             {/* Policy decision diagram */}
-            <div className="space-y-2 rounded-md border border-border/60 bg-muted/30 p-3">
+            <div className="space-y-2 rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-muted-foreground">{t.policyHeading}</span>
                 <Badge variant="green-subtle" size="sm" icon={<Check />}>
@@ -139,7 +144,7 @@ export function IamGroupShowcase({ entry, locale }: PackageShowcaseProps) {
                 {checks.map((c, idx) => (
                   <li
                     key={c.label}
-                    className="flex items-center gap-2 rounded-sm border border-border/40 bg-background/70 px-2 py-1.5"
+                    className="flex items-center gap-2 rounded-[var(--radius-sm)] border border-border/40 bg-background/70 px-2 py-1.5"
                   >
                     <c.Icon className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
                     <span className="flex-1 truncate text-xs text-foreground">{c.label}</span>
@@ -159,7 +164,7 @@ export function IamGroupShowcase({ entry, locale }: PackageShowcaseProps) {
             </div>
 
             {/* Session card */}
-            <div className="flex flex-col gap-2 rounded-md border border-border/60 bg-muted/30 p-3">
+            <div className="flex flex-col gap-2 rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
               <span className="text-xs font-medium text-muted-foreground">{t.sessionHeading}</span>
               <div className="flex items-center gap-2">
                 <span
@@ -195,7 +200,7 @@ export function IamGroupShowcase({ entry, locale }: PackageShowcaseProps) {
           </div>
 
           {/* Footer metrics */}
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={3} className="gap-3">
               <MetricCard
                 size="sm"

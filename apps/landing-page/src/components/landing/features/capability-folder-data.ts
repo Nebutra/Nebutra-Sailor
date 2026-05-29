@@ -506,8 +506,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 7,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 1108,
-      testFiles: 13,
+      sourceFiles: 1123,
+      testFiles: 15,
       readmes: 8,
     },
     title: copy("Design System Supply Chain", "设计系统供应链"),
@@ -768,11 +768,11 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     icon: CreditCard,
     layout: "standard",
     sourceStats: {
-      unitCount: 8,
+      unitCount: 9,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 81,
-      testFiles: 19,
-      readmes: 8,
+      sourceFiles: 85,
+      testFiles: 20,
+      readmes: 9,
     },
     title: copy("Commercial System of Record", "商业系统记录源"),
     summary: copy(

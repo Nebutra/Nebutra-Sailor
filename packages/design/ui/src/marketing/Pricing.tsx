@@ -5,7 +5,22 @@ import { cva } from "class-variance-authority";
 import * as React from "react";
 import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
 import { cn } from "../utils/cn";
-import type { PricingProps } from "./types";
+import type { PricingFeature, PricingPlan, PricingProps } from "./types";
+
+const EMPTY_PRICING_PLANS: PricingPlan[] = [];
+
+function formatPrice(locale: string, amount: number, currency = "USD") {
+  return amount.toLocaleString(locale, {
+    style: "currency",
+    currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+}
+
+function getPricingFeatureKey(planId: string, feature: PricingFeature) {
+  return `${planId}-${feature.included ? "included" : "excluded"}-${feature.text}`;
+}
 
 const pricingVariants = cva("w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", {
   variants: {
@@ -21,7 +36,7 @@ const pricingVariants = cva("w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", {
 });
 
 const cardVariants = cva(
-  "relative flex flex-col p-8 rounded-3xl border transition-all h-full bg-[var(--neutral-1)]",
+  "relative flex flex-col p-8 rounded-[var(--radius-3xl)] border transition-all h-full bg-[var(--neutral-1)]",
   {
     variants: {
       popular: {
@@ -37,7 +52,7 @@ const cardVariants = cva(
 
 export function Pricing({
   locale = "en",
-  plans = [],
+  plans = EMPTY_PRICING_PLANS,
   defaultBillingCycle = "monthly",
   showBillingToggle = true,
   showComparison = false,
@@ -50,19 +65,10 @@ export function Pricing({
 }: PricingProps) {
   const [billingCycle, setBillingCycle] = React.useState(defaultBillingCycle);
 
-  const formatPrice = (amount: number, currency = "USD") => {
-    return new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }).format(amount);
-  };
-
   return (
     <section id={id} className={cn(pricingVariants({ density }), className)}>
       <AnimateIn preset="fadeUp">
-        <div className="flex flex-col items-center text-center space-y-4 mb-12">
+        <div className="mb-12 flex flex-col items-center gap-4 text-center">
           {title && (
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-[var(--neutral-12)]">
               {title}
@@ -112,7 +118,7 @@ export function Pricing({
 
       <AnimateInGroup stagger="normal">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-4 xl:gap-8 items-center max-w-6xl mx-auto">
-          {plans.map((plan, _index) => (
+          {plans.map((plan) => (
             <AnimateIn key={plan.id} preset="fadeUp">
               <div
                 className={cn(cardVariants({ popular: plan.popular }))}
@@ -120,7 +126,7 @@ export function Pricing({
               >
                 {/* Popular Gradient Glow Background (Optional) */}
                 {plan.popular && (
-                  <div className="absolute inset-0 bg-gradient-to-b from-[var(--blue-9)]/5 to-transparent rounded-3xl pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[var(--blue-9)]/5 to-transparent rounded-[var(--radius-3xl)] pointer-events-none" />
                 )}
 
                 <div className="relative z-10 flex flex-col h-full">
@@ -140,6 +146,7 @@ export function Pricing({
                   <div className="flex items-baseline gap-2 mb-2">
                     <span className="text-4xl font-bold tracking-tight text-[var(--neutral-12)]">
                       {formatPrice(
+                        locale,
                         billingCycle === "monthly" ? plan.price.monthly : plan.price.yearly / 12,
                         plan.price.currency,
                       )}
@@ -149,7 +156,7 @@ export function Pricing({
 
                   {billingCycle === "yearly" ? (
                     <div className="text-sm text-[var(--neutral-10)] mb-8 h-5">
-                      Billed {formatPrice(plan.price.yearly, plan.price.currency)}/year
+                      Billed {formatPrice(locale, plan.price.yearly, plan.price.currency)}/year
                     </div>
                   ) : (
                     <div className="mb-8 h-5" aria-hidden="true" />
@@ -159,7 +166,7 @@ export function Pricing({
                     href={plan.cta.href}
                     data-analytics={`pricing-cta-${plan.id}`}
                     className={cn(
-                      "w-full inline-flex justify-center items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--neutral-12)] mb-8",
+                      "w-full inline-flex justify-center items-center px-4 py-3 text-sm font-semibold rounded-[var(--radius-xl)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--neutral-12)] mb-8",
                       plan.popular
                         ? "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] shadow-md hover:shadow-lg"
                         : "bg-[var(--neutral-3)] text-[var(--neutral-12)] hover:bg-[var(--neutral-4)] border border-[var(--neutral-6)]",
@@ -174,9 +181,12 @@ export function Pricing({
                         ? "Features included:"
                         : "What's included"}
                     </p>
-                    <ul className="space-y-3">
-                      {plan.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-3">
+                    <ul className="flex flex-col gap-3">
+                      {plan.features.map((feature) => (
+                        <li
+                          key={getPricingFeatureKey(plan.id, feature)}
+                          className="flex items-start gap-3"
+                        >
                           <div className="flex-shrink-0 mt-0.5">
                             {feature.included ? (
                               <Check className="w-4 h-4 text-[var(--green-10)]" />
@@ -223,7 +233,7 @@ export function Pricing({
             </div>
           </AnimateIn>
           {/* Comparison table can be implemented as a separate component */}
-          <div className="max-w-5xl mx-auto border border-[var(--neutral-6)] rounded-2xl p-8 bg-[var(--neutral-2)] flex items-center justify-center min-h-[200px] text-[var(--neutral-10)] text-sm">
+          <div className="max-w-5xl mx-auto border border-[var(--neutral-6)] rounded-[var(--radius-2xl)] p-8 bg-[var(--neutral-2)] flex items-center justify-center min-h-[200px] text-[var(--neutral-10)] text-sm">
             Detailed comparison matrix coming soon.
           </div>
         </div>

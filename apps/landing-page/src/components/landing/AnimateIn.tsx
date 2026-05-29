@@ -1,7 +1,7 @@
 "use client";
 
 import { brandSpring, emerge, flow } from "@nebutra/brand";
-import { m, useReducedMotion } from "framer-motion";
+import { domAnimation, LazyMotion, m, useReducedMotion } from "framer-motion";
 import type * as React from "react";
 
 // LazyMotion is hoisted to the (marketing) route group layout so framer's
@@ -44,6 +44,10 @@ const PRESETS = {
 type Preset = keyof typeof PRESETS;
 
 const STAGGER = { fast: 0.05, normal: 0.1, slow: 0.2 } as const;
+
+export function MarketingMotionProvider({ children }: { children: React.ReactNode }) {
+  return <LazyMotion features={domAnimation}>{children}</LazyMotion>;
+}
 
 export interface AnimateInProps {
   children: React.ReactNode;
@@ -135,5 +139,3 @@ export function AnimateInGroup({
     </m.div>
   );
 }
-
-export { brandSpring };

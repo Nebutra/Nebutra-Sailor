@@ -57,7 +57,7 @@ const SEVERITY_TONE: Record<Severity, { bg: string; border: string; text: string
 export function ErrorsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-md bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between text-[10px] text-[var(--neutral-11)]">
@@ -74,7 +74,7 @@ export function ErrorsGlyph(_props: SubpackageGlyphProps) {
           return (
             <div
               key={row.code}
-              className="flex items-center justify-between gap-2 rounded-sm border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1"
+              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1"
             >
               <div className="flex min-w-0 items-center gap-1.5">
                 <span className="font-mono text-[9px] text-[var(--neutral-10)] tabular-nums">
@@ -82,7 +82,7 @@ export function ErrorsGlyph(_props: SubpackageGlyphProps) {
                 </span>
                 <Badge
                   variant="outline"
-                  className="h-4 rounded-sm px-1.5 text-[9px] font-semibold leading-none"
+                  className="h-4 rounded-[var(--radius-sm)] px-1.5 text-[9px] font-semibold leading-none"
                   style={{
                     background: tone.bg,
                     borderColor: tone.border,
@@ -103,7 +103,7 @@ export function ErrorsGlyph(_props: SubpackageGlyphProps) {
         })}
       </div>
 
-      <div className="flex flex-1 flex-col justify-end gap-0.5 rounded-sm border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1">
+      <div className="flex flex-1 flex-col justify-end gap-0.5 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1">
         <code className="truncate font-mono text-[9px] text-[var(--neutral-11)]">
           at packages/commerce/billing/src/charge.ts:42
         </code>

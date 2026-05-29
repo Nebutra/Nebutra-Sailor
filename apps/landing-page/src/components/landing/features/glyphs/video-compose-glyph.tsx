@@ -39,7 +39,7 @@ const CAPTION_SEGMENTS: ReadonlyArray<Segment> = [
 
 function TimelineTrack({ segments }: { segments: ReadonlyArray<Segment> }) {
   return (
-    <div className="flex h-2.5 w-full items-center gap-[2px] rounded-sm bg-[var(--neutral-3)] px-[2px]">
+    <div className="flex h-2.5 w-full items-center gap-[2px] rounded-[var(--radius-sm)] bg-[var(--neutral-3)] px-[2px]">
       {segments.map((seg, i) => (
         <span
           key={i}
@@ -54,14 +54,14 @@ function TimelineTrack({ segments }: { segments: ReadonlyArray<Segment> }) {
 export function VideoComposeGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2.5 rounded-lg bg-[var(--neutral-2)] px-4 py-3"
+      className="flex w-full flex-col justify-between gap-2.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Top: preview frame + three tracks */}
       <div className="flex items-start gap-3">
         <div
           aria-hidden="true"
-          className="flex shrink-0 items-center justify-center rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] text-[var(--neutral-11)]"
+          className="flex shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] text-[var(--neutral-11)]"
           style={{ width: 80, height: 45 }}
         >
           <Play className="h-4 w-4" />

@@ -10,16 +10,18 @@ import {
   Lightning,
   TerminalWindow as Terminal,
 } from "@nebutra/icons";
-
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Card, CardContent, CardHeader } from "@nebutra/ui/primitives/card";
-import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
-import { StatusBadge } from "@nebutra/ui/primitives/status-badge";
 import {
   AnimatedSpan,
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  MetricCard,
+  MetricGrid,
+  StatusBadge,
   Terminal as TerminalView,
   TypingAnimation,
-} from "@nebutra/ui/primitives/terminal";
+} from "@nebutra/ui/primitives";
 
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
@@ -111,7 +113,7 @@ function ConnectionBody({ slug }: { slug: string }) {
   return (
     <Card className="border-border/60 shadow-none">
       <CardContent className="flex items-center gap-4 p-4 md:p-5">
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+        <span className="inline-flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
         <div className="flex min-w-0 flex-col gap-1">
@@ -213,7 +215,7 @@ export function OpsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
               <Terminal className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="text-sm font-semibold text-foreground">{entry.label}</span>
@@ -227,7 +229,7 @@ export function OpsGroupShowcase({ entry, locale }: PackageShowcaseProps) {
         <CardContent className="space-y-5 p-4 pt-0 md:p-5 md:pt-0">
           <Body layout={layout} slug={entry.slug} locale={locale} copy={copy} />
 
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={4} className="gap-3">
               <MetricCard
                 size="sm"

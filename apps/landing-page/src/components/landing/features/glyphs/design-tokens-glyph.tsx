@@ -28,7 +28,7 @@ const SWATCHES: ReadonlyArray<Swatch> = [
 export function DesignTokensGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-lg bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -47,7 +47,7 @@ export function DesignTokensGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* DTCG JSON snippet */}
-      <pre className="m-0 flex-1 overflow-hidden rounded-md bg-[var(--neutral-1)] px-2 py-1 font-mono text-[9px] leading-[1.35] text-[var(--neutral-12)]">
+      <pre className="m-0 flex-1 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1 font-mono text-[9px] leading-[1.35] text-[var(--neutral-12)]">
         <code>
           {`{
   "color.brand.primary": {
@@ -59,7 +59,7 @@ export function DesignTokensGlyph(_props: SubpackageGlyphProps) {
       </pre>
 
       {/* Swatch row */}
-      <ul className="flex items-center justify-between gap-1.5 rounded-md bg-[var(--neutral-1)] px-2 py-1">
+      <ul className="flex items-center justify-between gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1">
         {SWATCHES.map((swatch) => (
           <li key={swatch.token} className="flex min-w-0 flex-1 items-center gap-1.5">
             <span

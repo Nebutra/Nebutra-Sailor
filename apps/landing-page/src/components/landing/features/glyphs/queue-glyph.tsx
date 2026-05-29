@@ -38,13 +38,13 @@ const STATUS_COLOR: Readonly<Record<JobState, string>> = {
 export function QueueGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-1 rounded-lg bg-[var(--neutral-2)] px-3 py-3"
+      className="flex w-full flex-col justify-between gap-1 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
       style={{ height: 160 }}
     >
       {JOB_ROWS.map((row) => (
         <div
           key={row.id}
-          className="flex h-7 items-center gap-2.5 rounded-md bg-[var(--neutral-1)] px-2.5"
+          className="flex h-7 items-center gap-2.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2.5"
         >
           <StatusDot state={row.state} titlePrefix={row.id} decorative />
           <span className="font-mono text-[11px] text-[var(--neutral-12)]">{row.id}</span>

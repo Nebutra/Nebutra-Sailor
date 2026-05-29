@@ -173,7 +173,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                       type="button"
                       onClick={() => setActiveTab(tab.id)}
                       aria-current={isActive ? "page" : undefined}
-                      className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
+                      className={`flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2 text-left text-sm font-medium transition-colors ${
                         isActive
                           ? "bg-blue-3/60 text-blue-12 dark:bg-blue-3/20 dark:text-blue-9"
                           : "text-neutral-11 hover:bg-neutral-3/60 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/[0.05] dark:hover:text-white"
@@ -273,7 +273,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                 alt=""
                 width={56}
                 height={56}
-                className="h-14 w-14 rounded-2xl object-cover ring-2 ring-neutral-6 dark:ring-white/10"
+                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6 dark:ring-white/10"
               />
             ) : (
               <BrandMark size="lg" variant="gradient">
@@ -297,7 +297,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
         <button
           type="button"
           onClick={onOpenFull}
-          className="group flex items-center justify-between rounded-xl border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm transition-colors hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]"
+          className="group flex items-center justify-between rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm transition-colors hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]"
         >
           <span className="flex items-center gap-2.5 text-neutral-12 dark:text-white">
             <SettingsIcon
@@ -325,7 +325,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
   }) {
     return (
       <div className="flex flex-col gap-5">
-        <div className="rounded-2xl border border-neutral-6 bg-gradient-to-br from-blue-2/40 to-transparent p-4 dark:border-white/10 dark:from-blue-2/10">
+        <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-gradient-to-br from-blue-2/40 to-transparent p-4 dark:border-white/10 dark:from-blue-2/10">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/40">
@@ -343,7 +343,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           <button
             type="button"
             onClick={onUpgrade}
-            className="group flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="group flex items-center justify-between rounded-[var(--radius-xl)] px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             style={{ background: "var(--brand-gradient)" }}
           >
             <span>{t("subscription.upgradeCta")}</span>
@@ -352,7 +352,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           <button
             type="button"
             onClick={onManage}
-            className="group flex items-center justify-between rounded-xl border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm text-neutral-12 transition-colors hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:text-white dark:hover:border-white/20 dark:hover:bg-white/[0.05]"
+            className="group flex items-center justify-between rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm text-neutral-12 transition-colors hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:text-white dark:hover:border-white/20 dark:hover:bg-white/[0.05]"
           >
             <span className="flex items-center gap-2">
               <CreditCard
@@ -429,7 +429,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                   type="button"
                   onClick={() => setTheme(option.id)}
                   aria-pressed={isActive}
-                  className={`flex flex-col items-center gap-1.5 rounded-xl border px-3 py-3 text-xs font-medium transition-colors ${
+                  className={`flex flex-col items-center gap-1.5 rounded-[var(--radius-xl)] border px-3 py-3 text-xs font-medium transition-colors ${
                     isActive
                       ? "border-blue-7 bg-blue-2/60 text-blue-12 dark:border-blue-7/60 dark:bg-blue-2/20 dark:text-blue-9"
                       : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:text-white/70 dark:hover:border-white/20"
@@ -451,7 +451,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             <button
               type="button"
               onClick={onReportIssue}
-              className="group flex items-center justify-between rounded-lg px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/[0.05]"
+              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/[0.05]"
             >
               <span className="flex items-center gap-2.5">
                 <LifeBuoy
@@ -465,7 +465,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             <button
               type="button"
               onClick={onShortcuts}
-              className="group flex items-center justify-between rounded-lg px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/[0.05]"
+              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/[0.05]"
             >
               <span className="flex items-center gap-2.5">
                 <Keyboard

@@ -1,12 +1,17 @@
 "use client";
 
 import { ArrowRight, Bell, Check, Connection, Database, Envelope, Lightning } from "@nebutra/icons";
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Card, CardContent, CardHeader } from "@nebutra/ui/primitives/card";
-import { MagicCard } from "@nebutra/ui/primitives/magic-card";
-import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
-import { Progress } from "@nebutra/ui/primitives/progress";
-import { StatusDot } from "@nebutra/ui/primitives/status-dot";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  MagicCard,
+  MetricCard,
+  MetricGrid,
+  Progress,
+  StatusDot,
+} from "@nebutra/ui/primitives";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 
@@ -99,7 +104,7 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
               <Connection className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{entry.label}</span>
@@ -124,7 +129,7 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
                 return (
                   <MagicCard
                     key={name}
-                    className="rounded-md"
+                    className="rounded-[var(--radius-md)]"
                     gradientSize={120}
                     gradientOpacity={isActive ? 0.8 : 0.4}
                   >
@@ -140,7 +145,7 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
             </div>
           </div>
 
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <div className="mb-2 flex items-center justify-between gap-2">
               <span className="text-xs font-medium text-muted-foreground">{copy.request}</span>
               <Badge variant="gray-subtle" size="sm" className="font-mono">
@@ -157,7 +162,7 @@ export function IntegrationsGroupShowcase({ entry, locale }: PackageShowcaseProp
                 return (
                   <div
                     key={label}
-                    className={`flex flex-col items-center justify-center gap-1.5 rounded-md border px-2 py-2 ${
+                    className={`flex flex-col items-center justify-center gap-1.5 rounded-[var(--radius-md)] border px-2 py-2 ${
                       accent
                         ? "border-transparent bg-[image:var(--brand-gradient)] text-white"
                         : "border-border bg-background text-foreground"

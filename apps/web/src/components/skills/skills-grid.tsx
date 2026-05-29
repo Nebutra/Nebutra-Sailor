@@ -126,11 +126,11 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
         <button
           type="button"
           onClick={onAddCustom}
-          className="group flex w-full items-center justify-between gap-3 rounded-xl border border-dashed border-neutral-7 bg-neutral-1 p-4 text-left transition-colors hover:border-neutral-9 hover:bg-neutral-2 dark:border-white/15 dark:bg-white/[0.02] dark:hover:border-white/25 dark:hover:bg-white/[0.04]"
+          className="group flex w-full items-center justify-between gap-3 rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-1 p-4 text-left transition-colors hover:border-neutral-9 hover:bg-neutral-2 dark:border-white/15 dark:bg-white/[0.02] dark:hover:border-white/25 dark:hover:bg-white/[0.04]"
         >
           <div className="flex items-center gap-3">
             <div
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
               style={{ background: "var(--brand-gradient)" }}
             >
               <Plus className="h-4 w-4" />
@@ -152,7 +152,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-neutral-7 bg-neutral-1 px-6 py-10 text-center dark:border-white/15 dark:bg-white/[0.02]">
+        <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-10 text-center dark:border-white/15 dark:bg-white/[0.02]">
           <Sparkles className="mx-auto h-6 w-6 text-neutral-9 dark:text-white/30" />
           <p className="mt-3 text-sm font-medium text-neutral-12 dark:text-white">
             No skills match
@@ -169,7 +169,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
             return (
               <article
                 key={skill.id}
-                className={`flex h-full flex-col rounded-xl border p-4 transition-colors ${
+                className={`flex h-full flex-col rounded-[var(--radius-xl)] border p-4 transition-colors ${
                   enabled
                     ? "border-blue-6 bg-blue-2/30 dark:border-blue-7/50 dark:bg-blue-2/10"
                     : "border-neutral-6 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.02]"
@@ -213,7 +213,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
                   <button
                     type="button"
                     aria-label={`${skill.name} actions`}
-                    className="rounded-md p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/40 dark:hover:bg-white/10 dark:hover:text-white"
+                    className="rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/40 dark:hover:bg-white/10 dark:hover:text-white"
                   >
                     <MoreHorizontal className="h-3.5 w-3.5" />
                   </button>

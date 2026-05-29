@@ -32,7 +32,7 @@ function GraphNode({ kind, label }: { kind: NodeTone; label: string }) {
 function Edge({ label }: { label: string }) {
   return (
     <span className="inline-flex items-center gap-1 font-mono text-[9.5px] uppercase tracking-wider text-neutral-10">
-      <span className="rounded-sm bg-neutral-3 px-1.5 py-0.5">{label}</span>
+      <span className="rounded-[var(--radius-sm)] bg-neutral-3 px-1.5 py-0.5">{label}</span>
       <ArrowRight className="h-3 w-3 text-neutral-9" />
     </span>
   );
@@ -45,7 +45,7 @@ export function GraphModelGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       style={{ height: 160 }}
-      className="relative w-full overflow-hidden rounded-md bg-gradient-to-br from-blue-1 via-neutral-1 to-cyan-1 px-3 py-3"
+      className="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-gradient-to-br from-blue-1 via-neutral-1 to-cyan-1 px-3 py-3"
     >
       {/* Faint grid backdrop */}
       <div

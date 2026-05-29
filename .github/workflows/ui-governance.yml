@@ -33,5 +33,22 @@ jobs:
         run: pnpm exec tsx scripts/verify-brand-token-sync.ts
 
       - name: Verify UI Governance Rules
-        continue-on-error: true
         run: pnpm exec tsx scripts/verify-ui-governance.ts
+
+      - name: Verify Design Docs Governance
+        run: pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs docs:governance
+
+      - name: Verify Design Docs Registry Freshness
+        run: |
+          pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs prebuild
+          git diff --exit-code -- \
+            apps/design-docs/public/r \
+            apps/design-docs/public/registry.json \
+            apps/design-docs/public/previews-index.json \
+            apps/design-docs/src/__registry__/index.tsx \
+            apps/design-docs/src/__registry__/file-map.json
+
+      - name: Verify Design Docs Runtime Contract
+        run: |
+          pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs typecheck
+          pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs build

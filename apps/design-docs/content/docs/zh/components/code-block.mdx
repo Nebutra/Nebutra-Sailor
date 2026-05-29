@@ -192,3 +192,15 @@ pnpm add react-syntax-highlighter @types/react-syntax-highlighter
 - `CodeBlock` 用于代码检查、安装片段和多文件示例。标识符和短命令使用 inline code。
 - 示例必须可执行且聚焦；一个代码块只讲一个操作，不要变成小型文章。
 - 优先通过 `title` 自动识别语言；只有用户确实需要比较语法时才暴露 `showLanguageSwitcher`。
+
+## 真实产品示例
+
+- SDK 文档把 request handler、生成类型和环境变量片段拆成多个标签页展示。
+- 发布说明用高亮行展示一次迁移 diff 中真正变化的代码。
+- Registry 安装页需要可复制命令，并且要限制代码区域高度。
+
+## 反模式
+
+- 不要用 `CodeBlock` 展示单个标识符、短参数或一句命令；inline code 更容易扫读。
+- 不要把无限长日志或生成文件直接贴进页面。应链接到 artifact，或放进专用查看器。
+- 不要展示脱离当前 package context 的占位代码。消费者复制后应只需少量修改即可运行。

@@ -71,7 +71,7 @@ export function EmailChangeForm({
   return (
     <section
       aria-labelledby="email-change-heading"
-      className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+      className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
     >
       <h2 id="email-change-heading" className="text-base font-semibold text-[var(--neutral-12)]">
         {t("title")}
@@ -96,7 +96,7 @@ export function EmailChangeForm({
         <button
           type="submit"
           disabled={submitting || value.trim() === ""}
-          className="inline-flex items-center justify-center rounded-md bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting ? t("submitting") : t("submit")}
         </button>

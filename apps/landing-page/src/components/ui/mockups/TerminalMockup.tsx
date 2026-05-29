@@ -5,7 +5,7 @@ import { HARNESS_CODE_LINES } from "@/lib/constants/landing-data";
 /** Mini code snippet for Architecture Tests card */
 export function TerminalMockup() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border/50 bg-muted/30 dark:bg-zinc-950/60 backdrop-blur-md shadow-elevation-high dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
+    <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-border/50 bg-muted/30 dark:bg-zinc-950/60 backdrop-blur-md shadow-elevation-high dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
       <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-muted/50 dark:bg-zinc-900/40">
         <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700/80" />
         <div className="w-2.5 h-2.5 rounded-full bg-border/80 dark:bg-zinc-700/80" />

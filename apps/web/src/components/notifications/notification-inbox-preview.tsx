@@ -47,7 +47,7 @@ export function NotificationInboxPreview({
   unreadCount,
 }: Props) {
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-base font-semibold text-[var(--neutral-12)]">Inbox preview</h3>
@@ -64,14 +64,14 @@ export function NotificationInboxPreview({
       </div>
 
       {inboxSource === "unavailable" ? (
-        <div className="mt-5 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-4 text-sm text-[var(--neutral-11)]">
+        <div className="mt-5 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-4 text-sm text-[var(--neutral-11)]">
           {inboxReason ?? "No live inbox storage is connected yet for this environment."}
         </div>
       ) : null}
 
       <div className="mt-5 space-y-3">
         {inboxItems.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-6 text-sm text-[var(--neutral-11)]">
+          <div className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-6 text-sm text-[var(--neutral-11)]">
             {inboxSource === "provider"
               ? "Your inbox is currently empty."
               : "Inbox messages will appear here once a persistent notification backend is connected."}
@@ -81,13 +81,13 @@ export function NotificationInboxPreview({
             const Icon = getInboxIcon(item.groupId);
             const body = (
               <div
-                className={`flex gap-3 rounded-lg border px-4 py-4 transition-colors ${
+                className={`flex gap-3 rounded-[var(--radius-lg)] border px-4 py-4 transition-colors ${
                   item.read
                     ? "border-[var(--neutral-7)] bg-[var(--neutral-1)]"
                     : "border-blue-200 bg-blue-50/60"
                 }`}
               >
-                <div className="rounded-md bg-[var(--neutral-2)] p-2 text-[var(--neutral-11)]">
+                <div className="rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-2 text-[var(--neutral-11)]">
                   <Icon className="h-4 w-4" aria-hidden />
                 </div>
 
@@ -111,7 +111,7 @@ export function NotificationInboxPreview({
                   {item.href ? (
                     <Link
                       href={item.href}
-                      className="inline-flex items-center gap-1 rounded-md border border-[var(--neutral-7)] px-2.5 py-1.5 text-xs font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                      className="inline-flex items-center gap-1 rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-2.5 py-1.5 text-xs font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                     >
                       Open
                       <ExternalLink className="h-3.5 w-3.5" aria-hidden />
@@ -130,7 +130,7 @@ export function NotificationInboxPreview({
                       <button
                         type="submit"
                         disabled={!runtime.canMarkInboxRead}
-                        className="rounded-md border border-[var(--neutral-7)] px-2.5 py-1.5 text-xs font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
+                        className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-2.5 py-1.5 text-xs font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-not-allowed disabled:opacity-50"
                         title={
                           runtime.canMarkInboxRead
                             ? "Mark this notification as read"

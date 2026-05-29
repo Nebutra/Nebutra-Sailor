@@ -28,10 +28,10 @@ export function EmailGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-lg bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
         {/* Top row: envelope + recipient + delivered badge */}
         <div className="flex items-center gap-2">
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[var(--neutral-3)] text-[var(--neutral-11)]">
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-3)] text-[var(--neutral-11)]">
             <Envelope className="h-3.5 w-3.5" />
           </span>
           <span className="truncate font-mono text-[11px] text-[var(--neutral-11)]">

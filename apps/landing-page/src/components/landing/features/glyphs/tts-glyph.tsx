@@ -25,14 +25,14 @@ const BAR_HEIGHTS: readonly number[] = Array.from({ length: TOTAL_BARS }, (_, i)
 export function TtsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2.5 rounded-lg bg-[var(--neutral-2)] px-4 py-3"
+      className="flex w-full flex-col justify-between gap-2.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Script line */}
       <div className="flex items-start gap-2">
         <span
           aria-hidden="true"
-          className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[var(--neutral-3)] text-[var(--neutral-11)]"
+          className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-3)] text-[var(--neutral-11)]"
         >
           <Sparkles className="h-3 w-3" />
         </span>

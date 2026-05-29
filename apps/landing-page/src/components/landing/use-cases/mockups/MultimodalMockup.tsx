@@ -25,7 +25,7 @@ export function MultimodalMockup() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-xl overflow-hidden shadow-sm flex flex-col"
+        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Top bar */}
         <div className="px-3 py-2 border-b border-border flex items-center gap-2 shrink-0">
@@ -67,12 +67,12 @@ export function MultimodalMockup() {
                     className={`max-w-[75%] space-y-1.5 ${m.role === "user" ? "items-end" : ""}`}
                   >
                     <div
-                      className={`px-3 py-2 rounded-xl text-xs text-foreground ${m.role === "user" ? "bg-muted/60 border border-border rounded-tr-sm" : "bg-primary/5 border border-primary/20 rounded-tl-sm"}`}
+                      className={`px-3 py-2 rounded-[var(--radius-xl)] text-xs text-foreground ${m.role === "user" ? "bg-muted/60 border border-border rounded-tr-sm" : "bg-primary/5 border border-primary/20 rounded-tl-sm"}`}
                     >
                       {m.text}
                     </div>
                     {m.hasImage && (
-                      <div className="h-24 w-40 rounded-lg bg-muted/40 border border-border flex items-center justify-center">
+                      <div className="h-24 w-40 rounded-[var(--radius-lg)] bg-muted/40 border border-border flex items-center justify-center">
                         <ImageIcon className="h-6 w-6 text-muted-foreground/30" />
                       </div>
                     )}
@@ -83,10 +83,10 @@ export function MultimodalMockup() {
             </div>
             {/* Input */}
             <div className="px-3 py-2 border-t border-border flex items-center gap-2 shrink-0">
-              <div className="flex-1 h-8 bg-muted rounded-lg flex items-center px-3">
+              <div className="flex-1 h-8 bg-muted rounded-[var(--radius-lg)] flex items-center px-3">
                 <span className="text-[11px] text-muted-foreground">Message AI...</span>
               </div>
-              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+              <div className="h-8 w-8 rounded-[var(--radius-lg)] bg-primary flex items-center justify-center">
                 <Send className="h-3.5 w-3.5 text-primary-foreground" />
               </div>
             </div>

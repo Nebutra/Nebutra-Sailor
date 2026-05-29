@@ -82,7 +82,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
       aria-labelledby={titleId}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
     >
-      <div className="w-full max-w-md rounded-lg border border-neutral-7 bg-neutral-1 p-5 shadow-xl dark:border-white/10 dark:bg-neutral-12">
+      <div className="w-full max-w-md rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-5 shadow-xl dark:border-white/10 dark:bg-neutral-12">
         <div className="mb-4 flex items-start justify-between gap-3">
           <h2 id={titleId} className="text-base font-semibold text-neutral-12 dark:text-white">
             {t("title")}
@@ -91,7 +91,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
             type="button"
             aria-label={t("title")}
             onClick={onClose}
-            className="rounded-md p-1 text-neutral-11 transition-colors hover:bg-neutral-2 dark:hover:bg-white/10"
+            className="rounded-[var(--radius-md)] p-1 text-neutral-11 transition-colors hover:bg-neutral-2 dark:hover:bg-white/10"
           >
             <X className="h-4 w-4" aria-hidden />
           </button>
@@ -141,7 +141,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
           {errorMessage && (
             <p
               role="alert"
-              className="rounded-sm bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
+              className="rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
             >
               {errorMessage}
             </p>

@@ -24,7 +24,7 @@ export default async function TeamPage() {
     <div className="space-y-8">
       {/* Organization profile — admins only */}
       <PermissionGate require="team:manage">
-        <section className="p-6 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
+        <section className="p-6 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
           <h2 className="mb-1 text-base font-semibold text-[var(--neutral-12)]">
             Organization profile
           </h2>
@@ -40,7 +40,7 @@ export default async function TeamPage() {
 
       {/* Invite section — admins only */}
       <PermissionGate require="team:invite">
-        <section className="p-6 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
+        <section className="p-6 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
           <h2 className="mb-1 text-base font-semibold text-[var(--neutral-12)]">
             Invite a team member
           </h2>
@@ -52,7 +52,7 @@ export default async function TeamPage() {
       </PermissionGate>
 
       {/* Members list */}
-      <section className="p-6 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
+      <section className="p-6 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
         <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">Members</h2>
         <TeamMemberList orgId={orgId} />
       </section>

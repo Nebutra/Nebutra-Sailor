@@ -44,7 +44,7 @@ export function CodeIndexGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       style={{ height: 160 }}
-      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-md bg-neutral-2 p-2"
+      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-[var(--radius-md)] bg-neutral-2 p-2"
     >
       <div className="relative">
         <MagnifyingGlass
@@ -63,7 +63,7 @@ export function CodeIndexGlyph(_props: SubpackageGlyphProps) {
         {ROWS.map((row) => (
           <li
             key={row.path}
-            className="flex flex-col gap-0.5 rounded-sm border border-neutral-6 bg-neutral-1 px-1.5 py-1"
+            className="flex flex-col gap-0.5 rounded-[var(--radius-sm)] border border-neutral-6 bg-neutral-1 px-1.5 py-1"
           >
             <div className="flex items-center justify-between gap-2">
               <span className="truncate font-mono text-[9px] text-neutral-11">

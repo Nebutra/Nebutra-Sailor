@@ -35,7 +35,7 @@ const SCHEMA_ROWS: readonly SchemaRow[] = [
 export function SanityGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-lg bg-[var(--neutral-1)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -56,7 +56,7 @@ export function SanityGlyph(_props: SubpackageGlyphProps) {
           return (
             <div
               key={row.name}
-              className="flex items-center justify-between rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1"
+              className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1"
             >
               <div className="flex items-center gap-1.5">
                 <Icon className="h-3 w-3 text-[var(--neutral-11)]" />

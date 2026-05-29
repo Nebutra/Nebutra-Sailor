@@ -274,7 +274,7 @@ export function ActiveSessionsBlock({
   const showEmpty = sessions.length === 0 || otherSessionsCount === 0;
 
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-sm font-medium text-[var(--neutral-12)]">{SESSION_STRINGS.title}</h3>
@@ -296,7 +296,7 @@ export function ActiveSessionsBlock({
         <div className="mb-4">
           {state.confirmingAll ? (
             <div
-              className="flex flex-col gap-2 rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3 md:flex-row md:items-center md:justify-between"
+              className="flex flex-col gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3 md:flex-row md:items-center md:justify-between"
               role="alertdialog"
             >
               <div>
@@ -344,7 +344,7 @@ export function ActiveSessionsBlock({
           {[1, 2].map((item) => (
             <div
               key={item}
-              className="h-20 animate-pulse rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-2)]"
+              className="h-20 animate-pulse rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]"
             />
           ))}
         </div>
@@ -357,7 +357,7 @@ export function ActiveSessionsBlock({
             return (
               <div
                 key={session.id}
-                className="flex flex-col gap-4 rounded-lg border border-[var(--neutral-7)] p-4 md:flex-row md:items-start md:justify-between"
+                className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-4 md:flex-row md:items-start md:justify-between"
               >
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-[var(--neutral-12)]">

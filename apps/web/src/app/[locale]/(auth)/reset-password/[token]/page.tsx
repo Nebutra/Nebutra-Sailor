@@ -38,7 +38,7 @@ async function ResetPasswordPageContent({ params }: PageProps) {
         ) : (
           <section
             aria-live="polite"
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+            className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
             role="alert"
           >
             <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("invalidTitle")}</h3>

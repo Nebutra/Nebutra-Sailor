@@ -14,7 +14,7 @@ const FRAMES: ReadonlyArray<{ tint: string; label: string }> = [
 export function CinemaGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex flex-col gap-2 rounded-md bg-[var(--neutral-1)] p-3"
+      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-3"
       style={{ height: 160 }}
     >
       {/* Clip-name row */}
@@ -31,7 +31,7 @@ export function CinemaGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Film strip — 6 frame cells */}
-      <div className="flex items-center gap-0.5 rounded-sm bg-[var(--neutral-12)] p-1">
+      <div className="flex items-center gap-0.5 rounded-[var(--radius-sm)] bg-[var(--neutral-12)] p-1">
         {/* Left sprocket column */}
         <div className="flex h-10 flex-col justify-between py-0.5">
           {[0, 1, 2].map((i) => (

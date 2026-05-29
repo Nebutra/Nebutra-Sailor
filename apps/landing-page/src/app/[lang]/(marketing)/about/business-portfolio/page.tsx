@@ -237,7 +237,7 @@ export default async function BusinessPortfolioPage({
                   const cap = pick(lang, item);
                   return (
                     <AnimateIn key={`${group.key}-${idx}`} preset="fadeUp">
-                      <article className="group relative h-full flex flex-col gap-4 p-7 md:p-8 rounded-2xl border border-border bg-background hover:border-foreground/40 hover:shadow-lg transition-all duration-300">
+                      <article className="group relative h-full flex flex-col gap-4 p-7 md:p-8 rounded-[var(--radius-2xl)] border border-border bg-background hover:border-foreground/40 hover:shadow-lg transition-all duration-300">
                         <div className="flex items-center justify-between">
                           <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
                             {String.fromCharCode(65 + groupIdx)}.{String(idx + 1).padStart(2, "0")}
@@ -301,7 +301,7 @@ export default async function BusinessPortfolioPage({
               const Icon = GROUP_ICONS[group.key] ?? Boxes;
               return (
                 <AnimateIn key={group.key} preset="fadeUp">
-                  <div className="h-full flex flex-col gap-5 p-6 md:p-7 rounded-2xl border border-border bg-muted/30">
+                  <div className="h-full flex flex-col gap-5 p-6 md:p-7 rounded-[var(--radius-2xl)] border border-border bg-muted/30">
                     <div className="flex items-center gap-3 pb-5 border-b border-border/60">
                       <Icon className="h-5 w-5 text-foreground" aria-hidden="true" />
                       <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground">

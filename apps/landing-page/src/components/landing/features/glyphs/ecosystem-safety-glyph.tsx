@@ -43,7 +43,7 @@ const COPY = {
 export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
-      className="flex flex-col gap-2 rounded-md bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between gap-2">
@@ -64,7 +64,7 @@ export function EcosystemSafetyGlyph({ locale }: SubpackageGlyphProps) {
           return (
             <div
               key={layer.label.en}
-              className="flex items-center justify-between gap-2 rounded-sm bg-[var(--neutral-1)] px-1.5 py-1"
+              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] bg-[var(--neutral-1)] px-1.5 py-1"
             >
               <div className="flex min-w-0 items-center gap-1.5">
                 <LayerIcon className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" />

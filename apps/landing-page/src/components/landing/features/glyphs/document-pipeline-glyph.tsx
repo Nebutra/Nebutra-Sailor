@@ -45,7 +45,7 @@ export function DocumentPipelineGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="relative flex w-full flex-col justify-between overflow-hidden rounded-md bg-[var(--neutral-2)] px-4 py-3"
+      className="relative flex w-full flex-col justify-between overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -80,7 +80,7 @@ export function DocumentPipelineGlyph({ locale }: SubpackageGlyphProps) {
         {docs.map((doc) => (
           <div
             key={doc.name}
-            className="flex items-center justify-between gap-2 rounded-sm border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1"
           >
             <div className="flex min-w-0 items-center gap-1.5">
               <FileText className="h-3 w-3 shrink-0 text-[var(--neutral-10)]" />

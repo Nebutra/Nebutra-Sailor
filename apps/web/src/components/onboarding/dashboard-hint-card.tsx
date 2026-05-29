@@ -32,7 +32,7 @@ export function DashboardHintCard({ cookieName }: Props) {
 
   return isVisible ? (
     <AnimateIn preset="fadeUp">
-      <div className="relative overflow-hidden rounded-2xl border border-blue-6 bg-blue-2/35 p-4 dark:border-blue-7/50 dark:bg-blue-2/10">
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-blue-6 bg-blue-2/35 p-4 dark:border-blue-7/50 dark:bg-blue-2/10">
         {/* Decorative gradient glow */}
         <div
           aria-hidden
@@ -42,7 +42,7 @@ export function DashboardHintCard({ cookieName }: Props) {
 
         <div className="relative flex items-start gap-3">
           <div
-            className="flex size-9 shrink-0 items-center justify-center rounded-xl text-white"
+            className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
             style={{ background: "var(--brand-gradient)" }}
           >
             <Sparkles className="size-4" />
@@ -86,7 +86,7 @@ export function DashboardHintCard({ cookieName }: Props) {
             type="button"
             onClick={dismiss}
             aria-label="Dismiss hint"
-            className="absolute right-0 top-0 rounded-md p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white"
+            className="absolute right-0 top-0 rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white"
           >
             <X className="size-3.5" />
           </button>

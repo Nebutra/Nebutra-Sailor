@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, ChevronRight, FileText } from "@nebutra/icons";
-import { memo, type ReactElement, useCallback, useId, useState } from "react";
+import { type ReactElement, useId, useState } from "react";
 import { cn } from "../utils/cn";
 import { TextShimmer } from "./text-shimmer";
 
@@ -70,6 +70,8 @@ export type SearchToolProps = {
   className?: string;
 };
 
+const EMPTY_SEARCH_RESULTS: readonly SearchResult[] = [];
+
 // ---------------------------------------------------------------------------
 // Result row (internal)
 // ---------------------------------------------------------------------------
@@ -99,7 +101,7 @@ function SearchResultRow({ result }: { result: SearchResult }): ReactElement {
     </>
   );
 
-  const baseCls = "flex items-center gap-2 rounded-md px-2 py-1";
+  const baseCls = "flex items-center gap-2 rounded-[var(--radius-md)] px-2 py-1";
 
   if (isLink) {
     return (
@@ -119,14 +121,20 @@ function SearchResultRow({ result }: { result: SearchResult }): ReactElement {
   return <li className={cn(baseCls, "cursor-default")}>{inner}</li>;
 }
 
+function getSearchResultKey(result: SearchResult): string {
+  return (
+    result.id ?? result.url ?? [result.source, result.title, result.date ?? "undated"].join(":")
+  );
+}
+
 // ---------------------------------------------------------------------------
 // SearchTool
 // ---------------------------------------------------------------------------
 
-export const SearchTool = memo(function SearchTool({
+export function SearchTool({
   state = "completed",
   query,
-  results = [],
+  results = EMPTY_SEARCH_RESULTS,
   defaultOpen = false,
   expanded,
   onExpandedChange,
@@ -137,22 +145,19 @@ export const SearchTool = memo(function SearchTool({
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isOpen: boolean = expanded !== undefined ? expanded : internalOpen;
 
-  const setOpen = useCallback(
-    (next: boolean) => {
-      if (expanded === undefined) setInternalOpen(next);
-      onExpandedChange?.(next);
-    },
-    [expanded, onExpandedChange],
-  );
+  function setOpen(next: boolean) {
+    if (expanded === undefined) setInternalOpen(next);
+    onExpandedChange?.(next);
+  }
 
   const isPending = state === "pending";
   const totalResults = results.length;
   const expandable = !isPending && totalResults > 0;
 
-  const handleToggle = useCallback(() => {
+  function handleToggle() {
     if (!expandable) return;
     setOpen(!isOpen);
-  }, [expandable, isOpen, setOpen]);
+  }
 
   const headerLabel = isPending
     ? "Searching..."
@@ -196,21 +201,23 @@ export const SearchTool = memo(function SearchTool({
       </button>
 
       {expandable && isOpen && (
-        <div id={panelId} className="overflow-hidden rounded-lg border border-border bg-muted">
+        <div
+          id={panelId}
+          className="overflow-hidden rounded-[var(--radius-lg)] border border-border bg-muted"
+        >
           <header className="flex h-7 items-center gap-1 border-b border-border px-2.5 text-xs">
             <span className="font-medium text-foreground">Searched for</span>
             <span className="truncate text-muted-foreground">&ldquo;{query}&rdquo;</span>
           </header>
           <div className="overflow-y-auto bg-card" style={{ maxHeight: `${maxResultsHeightPx}px` }}>
             <ul aria-label="Search results" className="flex flex-col gap-1 p-1">
-              {results.map((result, idx) => {
-                const key = result.id ?? result.url ?? `${idx}-${result.title.slice(0, 16)}`;
-                return <SearchResultRow key={key} result={result} />;
-              })}
+              {results.map((result) => (
+                <SearchResultRow key={getSearchResultKey(result)} result={result} />
+              ))}
             </ul>
           </div>
         </div>
       )}
     </section>
   );
-});
+}

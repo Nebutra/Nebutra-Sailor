@@ -16,7 +16,7 @@ const ROWS: ContentRow[] = [
 export function ContentStoreGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 overflow-hidden rounded-md bg-[var(--neutral-1)] p-3"
+      className="flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-11)]">
@@ -30,7 +30,7 @@ export function ContentStoreGlyph(_props: SubpackageGlyphProps) {
         {ROWS.map((row) => (
           <div
             key={row.name}
-            className="flex items-center gap-2 rounded-sm border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1"
+            className="flex items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1"
           >
             <FileText className="h-3 w-3 shrink-0 text-[var(--neutral-11)]" />
             <span className="truncate font-mono text-[10px] text-[var(--neutral-12)]">

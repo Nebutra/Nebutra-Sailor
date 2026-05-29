@@ -18,7 +18,7 @@ function barColor(i: number): string {
 export function LocalEmbeddingGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-md bg-neutral-2 px-3 pb-2 pt-2.5"
+      className="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-neutral-2 px-3 pb-2 pt-2.5"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2 z-10">
@@ -33,7 +33,7 @@ export function LocalEmbeddingGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       <div
-        className="mt-3 flex h-[52px] items-end justify-between gap-[2px] rounded-sm bg-neutral-1 px-2 py-1.5"
+        className="mt-3 flex h-[52px] items-end justify-between gap-[2px] rounded-[var(--radius-sm)] bg-neutral-1 px-2 py-1.5"
         aria-hidden
       >
         {BAR_HEIGHTS.map((h, i) => (

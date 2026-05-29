@@ -54,7 +54,7 @@ export function KnowledgeBaseGlyph(_props: SubpackageGlyphProps) {
         {ARTICLES.map((article) => (
           <li
             key={article.title}
-            className="flex items-center gap-2 rounded-md border border-border bg-background/40 px-2 py-1"
+            className="flex items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background/40 px-2 py-1"
           >
             <BookClosed className="size-3 shrink-0 text-muted-foreground" />
             <div className="flex min-w-0 flex-1 flex-col gap-0.5">

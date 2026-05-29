@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, ChevronUpDown as ChevronsUpDown } from "@nebutra/icons";
-import * as React from "react";
+import type * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../primitives/avatar";
 import { Badge } from "../primitives/badge";
 import {
@@ -85,13 +85,17 @@ interface WorkspaceAvatarProps {
 function WorkspaceAvatar({ workspace, size = "sm", className }: WorkspaceAvatarProps) {
   const initials = getInitials(workspace);
   return (
-    <Avatar size={size} className={cn("rounded-md", className)}>
+    <Avatar size={size} className={cn("rounded-[var(--radius-md)]", className)}>
       {workspace.avatarUrl && (
-        <AvatarImage src={workspace.avatarUrl} alt={workspace.name} className="rounded-md" />
+        <AvatarImage
+          src={workspace.avatarUrl}
+          alt={workspace.name}
+          className="rounded-[var(--radius-md)]"
+        />
       )}
       <AvatarFallback
         size={size}
-        className="rounded-md bg-[image:var(--brand-gradient)] text-white font-semibold"
+        className="rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white font-semibold"
       >
         {initials}
       </AvatarFallback>
@@ -109,31 +113,17 @@ interface TriggerProps {
   className?: string;
 }
 
-const TriggerButton = React.forwardRef<HTMLButtonElement, TriggerProps>(
-  ({ activeWorkspace, variant, showRoleBadge, disabled, className }, ref) => {
-    const isOwner = activeWorkspace.role === "owner";
+function TriggerButton({
+  activeWorkspace,
+  variant,
+  showRoleBadge,
+  disabled,
+  className,
+  ref,
+}: TriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) {
+  const isOwner = activeWorkspace.role === "owner";
 
-    if (variant === "compact") {
-      return (
-        <button
-          ref={ref}
-          type="button"
-          aria-label="Switch workspace"
-          disabled={disabled}
-          className={cn(
-            "inline-flex items-center gap-1 rounded-md p-1 outline-none transition-colors",
-            "hover:bg-accent hover:text-accent-foreground",
-            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
-            "disabled:cursor-not-allowed disabled:opacity-50",
-            className,
-          )}
-        >
-          <WorkspaceAvatar workspace={activeWorkspace} size="sm" />
-          <ChevronsUpDown aria-hidden="true" className="h-3.5 w-3.5 text-muted-foreground" />
-        </button>
-      );
-    }
-
+  if (variant === "compact") {
     return (
       <button
         ref={ref}
@@ -141,7 +131,7 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, TriggerProps>(
         aria-label="Switch workspace"
         disabled={disabled}
         className={cn(
-          "inline-flex w-full items-center gap-2 rounded-md border border-border bg-background px-2 py-1 text-left outline-none transition-colors",
+          "inline-flex items-center gap-1 rounded-[var(--radius-md)] p-1 outline-none transition-colors",
           "hover:bg-accent hover:text-accent-foreground",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
           "disabled:cursor-not-allowed disabled:opacity-50",
@@ -149,21 +139,40 @@ const TriggerButton = React.forwardRef<HTMLButtonElement, TriggerProps>(
         )}
       >
         <WorkspaceAvatar workspace={activeWorkspace} size="sm" />
-        <div className="flex min-w-0 flex-1 items-center gap-2">
-          <span className="truncate font-medium text-[13px] text-foreground">
-            {activeWorkspace.name}
-          </span>
-          {showRoleBadge && isOwner && (
-            <Badge variant="owner" size="sm">
-              Owner
-            </Badge>
-          )}
-        </div>
-        <ChevronsUpDown aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
+        <ChevronsUpDown aria-hidden="true" className="h-3.5 w-3.5 text-muted-foreground" />
       </button>
     );
-  },
-);
+  }
+
+  return (
+    <button
+      ref={ref}
+      type="button"
+      aria-label="Switch workspace"
+      disabled={disabled}
+      className={cn(
+        "inline-flex w-full items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background px-2 py-1 text-left outline-none transition-colors",
+        "hover:bg-accent hover:text-accent-foreground",
+        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        className,
+      )}
+    >
+      <WorkspaceAvatar workspace={activeWorkspace} size="sm" />
+      <div className="flex min-w-0 flex-1 items-center gap-2">
+        <span className="truncate font-medium text-[13px] text-foreground">
+          {activeWorkspace.name}
+        </span>
+        {showRoleBadge && isOwner && (
+          <Badge variant="owner" size="sm">
+            Owner
+          </Badge>
+        )}
+      </div>
+      <ChevronsUpDown aria-hidden="true" className="size-3.5 shrink-0 text-muted-foreground" />
+    </button>
+  );
+}
 TriggerButton.displayName = "WorkspaceSwitcherTrigger";
 
 // ─── Workspace List Item ──────────────────────────────────────────────────────
@@ -240,7 +249,7 @@ export function WorkspaceSwitcher({
     return (
       <div
         className={cn(
-          "inline-flex items-center gap-2 rounded-md border border-dashed border-border px-2 py-1.5 text-sm text-muted-foreground",
+          "inline-flex items-center gap-2 rounded-[var(--radius-md)] border border-dashed border-border px-2 py-1.5 text-sm text-muted-foreground",
           className,
         )}
       >

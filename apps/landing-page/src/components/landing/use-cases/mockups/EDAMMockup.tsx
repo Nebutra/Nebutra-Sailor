@@ -26,7 +26,7 @@ export function EDAMMockup() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-xl overflow-hidden shadow-sm flex flex-col"
+        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Top bar */}
         <div className="px-4 py-2 border-b border-border flex items-center gap-2 shrink-0">
@@ -53,7 +53,7 @@ export function EDAMMockup() {
               </span>
             ))}
           </div>
-          <div className="ml-auto flex items-center gap-1 bg-primary text-primary-foreground text-[10px] font-medium px-2.5 py-1 rounded-lg">
+          <div className="ml-auto flex items-center gap-1 bg-primary text-primary-foreground text-[10px] font-medium px-2.5 py-1 rounded-[var(--radius-lg)]">
             <Plus className="h-3 w-3" /> Upload
           </div>
         </div>
@@ -63,7 +63,7 @@ export function EDAMMockup() {
             {assets.map((a) => (
               <div
                 key={a.name}
-                className="rounded-lg border border-border bg-background p-2 flex flex-col gap-1.5"
+                className="rounded-[var(--radius-lg)] border border-border bg-background p-2 flex flex-col gap-1.5"
               >
                 <div
                   className={`flex-1 min-h-0 rounded ${a.color} flex items-center justify-center`}

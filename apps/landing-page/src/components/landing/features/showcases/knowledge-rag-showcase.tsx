@@ -7,10 +7,7 @@ import {
   MagnifyingGlass as Search,
   Sparkles,
 } from "@nebutra/icons";
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Card, CardContent } from "@nebutra/ui/primitives/card";
-import { Input } from "@nebutra/ui/primitives/input";
-import { Progress } from "@nebutra/ui/primitives/progress";
+import { Badge, Card, CardContent, Input, Progress } from "@nebutra/ui/primitives";
 import type { ComponentType, SVGProps } from "react";
 
 import { ShowcaseFrame } from "./showcase-frame";
@@ -121,8 +118,8 @@ const COPY: Record<"en" | "zh", Copy> = {
 function StageRow({ stage }: { stage: Stage }) {
   const { Icon } = stage;
   return (
-    <li className="flex items-center gap-3 rounded-md border border-border/60 bg-muted/30 px-3 py-2">
-      <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border bg-background text-foreground">
+    <li className="flex items-center gap-3 rounded-[var(--radius-md)] border border-border/60 bg-muted/30 px-3 py-2">
+      <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-background text-foreground">
         <Icon className="h-3.5 w-3.5" aria-hidden="true" />
       </span>
       <div className="flex min-w-0 flex-1 items-center gap-2">

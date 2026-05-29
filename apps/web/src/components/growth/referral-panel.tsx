@@ -77,7 +77,7 @@ function CopyButton({ value, label }: { value: string; label: string }) {
         setTimeout(() => setCopied(false), 1600);
       }}
       aria-label={`Copy ${label}`}
-      className="inline-flex items-center gap-1.5 rounded-md border border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/15 dark:bg-black/40 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+      className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/15 dark:bg-black/40 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
     >
       {copied ? (
         <>
@@ -98,10 +98,10 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
   // Preview state — no live data yet.
   if (!stats) {
     return (
-      <section className="rounded-2xl border border-dashed border-neutral-7 bg-neutral-1 p-6 dark:border-white/15 dark:bg-white/[0.02]">
+      <section className="rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 p-6 dark:border-white/15 dark:bg-white/[0.02]">
         <div className="flex items-start gap-3">
           <div
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
             style={{ background: "var(--brand-gradient)" }}
           >
             <Gift className="h-4 w-4" />
@@ -123,7 +123,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
   return (
     <section className="space-y-5">
       {/* Hero card */}
-      <div className="relative overflow-hidden rounded-2xl border border-neutral-7 bg-neutral-1 p-5 dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 p-5 dark:border-white/10 dark:bg-white/[0.03]">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 opacity-[0.16] blur-3xl"
@@ -142,7 +142,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
           </p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-neutral-6 bg-neutral-2 p-3 dark:border-white/10 dark:bg-black/30">
+            <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-3 dark:border-white/10 dark:bg-black/30">
               <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10 dark:text-white/40">
                 Referral code
               </p>
@@ -153,7 +153,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
                 <CopyButton value={stats.referralCode} label="referral code" />
               </div>
             </div>
-            <div className="rounded-xl border border-neutral-6 bg-neutral-2 p-3 dark:border-white/10 dark:bg-black/30">
+            <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-3 dark:border-white/10 dark:bg-black/30">
               <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10 dark:text-white/40">
                 Share link
               </p>
@@ -180,7 +180,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
         ].map((cell) => (
           <div
             key={cell.label}
-            className="rounded-xl border border-neutral-6 bg-neutral-1 p-3 text-center dark:border-white/10 dark:bg-white/[0.03]"
+            className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3 text-center dark:border-white/10 dark:bg-white/[0.03]"
           >
             <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10 dark:text-white/40">
               {cell.label}
@@ -200,7 +200,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
           return (
             <div
               key={level.id}
-              className={`flex items-center justify-between gap-4 rounded-xl border p-4 ${
+              className={`flex items-center justify-between gap-4 rounded-[var(--radius-xl)] border p-4 ${
                 isActive
                   ? "border-blue-7 bg-blue-2 dark:border-blue-7/60 dark:bg-blue-2/15"
                   : "border-neutral-6 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.02]"

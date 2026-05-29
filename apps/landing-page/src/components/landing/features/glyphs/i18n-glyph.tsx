@@ -17,7 +17,7 @@ const ROWS: ReadonlyArray<LocaleRow> = [
 export function I18nGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-2 overflow-hidden rounded-md bg-[var(--neutral-1)] p-3"
+      className="flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-3"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -28,13 +28,13 @@ export function I18nGlyph(_props: SubpackageGlyphProps) {
           <span className="font-mono text-[10px] text-[var(--neutral-10)]">·</span>
           <Badge
             variant="outline"
-            className="h-4 rounded-sm border-[var(--neutral-6)] px-1 font-mono text-[9px] text-[var(--neutral-11)]"
+            className="h-4 rounded-[var(--radius-sm)] border-[var(--neutral-6)] px-1 font-mono text-[9px] text-[var(--neutral-11)]"
           >
             7 locales
           </Badge>
           <Badge
             variant="outline"
-            className="h-4 rounded-sm border-[var(--neutral-6)] px-1 font-mono text-[9px] text-[var(--neutral-11)]"
+            className="h-4 rounded-[var(--radius-sm)] border-[var(--neutral-6)] px-1 font-mono text-[9px] text-[var(--neutral-11)]"
           >
             2,401 keys
           </Badge>
@@ -47,7 +47,7 @@ export function I18nGlyph(_props: SubpackageGlyphProps) {
         {ROWS.map((row) => (
           <div
             key={row.code}
-            className="flex items-center gap-1.5 rounded-sm border border-[var(--neutral-5)] bg-[var(--neutral-2)] px-1.5 py-1"
+            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-[var(--neutral-5)] bg-[var(--neutral-2)] px-1.5 py-1"
           >
             <span className="w-5 shrink-0 font-mono text-[9px] uppercase text-[var(--brand-primary)]">
               {row.code}

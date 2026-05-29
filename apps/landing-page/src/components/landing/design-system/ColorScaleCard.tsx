@@ -13,7 +13,7 @@ export function ColorScaleCard() {
     <div className="relative flex h-full flex-col overflow-hidden p-6 md:p-8 group">
       {/* Header */}
       <div className="relative z-10 flex items-center gap-3 mb-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary/10 text-primary">
           <Layers className="h-4 w-4" />
         </div>
         <h3 className="text-lg font-bold tracking-tight text-foreground">{t("card1Title")}</h3>
@@ -28,7 +28,7 @@ export function ColorScaleCard() {
               <Tooltip key={step}>
                 <TooltipTrigger asChild>
                   <div
-                    className="relative flex h-7 sm:h-8 lg:h-7 xl:h-8 w-[85%] items-center rounded-md px-3 cursor-pointer transition-all duration-300 hover:w-full hover:shadow-md border border-black/5 dark:border-white/5"
+                    className="relative flex h-7 sm:h-8 lg:h-7 xl:h-8 w-[85%] items-center rounded-[var(--radius-md)] px-3 cursor-pointer transition-all duration-300 hover:w-full hover:shadow-md border border-black/5 dark:border-white/5"
                     style={{
                       backgroundColor: `var(--neutral-${step})`,
                     }}

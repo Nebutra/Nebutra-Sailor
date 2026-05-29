@@ -139,7 +139,7 @@ export function CommandPalette({
         aria-modal="true"
         label={t("ariaLabel")}
         loop
-        className="w-full max-w-xl overflow-hidden rounded-xl border border-neutral-7 bg-neutral-1 shadow-2xl dark:border-white/10 dark:bg-neutral-2"
+        className="w-full max-w-xl overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 shadow-2xl dark:border-white/10 dark:bg-neutral-2"
       >
         <div className="border-b border-neutral-7 px-4 dark:border-white/10">
           <Command.Input
@@ -173,7 +173,7 @@ export function CommandPalette({
                       value={command.id}
                       keywords={keywords}
                       onSelect={() => handleSelect(command)}
-                      className="flex cursor-pointer items-center gap-3 rounded-md px-2 py-2 text-sm text-neutral-12 aria-selected:bg-neutral-3 aria-selected:text-neutral-12 dark:aria-selected:bg-white/10"
+                      className="flex cursor-pointer items-center gap-3 rounded-[var(--radius-md)] px-2 py-2 text-sm text-neutral-12 aria-selected:bg-neutral-3 aria-selected:text-neutral-12 dark:aria-selected:bg-white/10"
                     >
                       <Icon className="h-4 w-4 shrink-0 text-neutral-11" aria-hidden />
                       <span className="flex-1">{title}</span>

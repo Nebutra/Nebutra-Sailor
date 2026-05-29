@@ -1,11 +1,12 @@
 "use client";
 
+import { Check } from "@nebutra/icons";
 import { cva } from "class-variance-authority";
 import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
 import { cn } from "../utils/cn";
 import type { CTAProps } from "./types";
 
-const ctaVariants = cva("relative overflow-hidden w-full rounded-3xl", {
+const ctaVariants = cva("relative overflow-hidden w-full rounded-[var(--radius-3xl)]", {
   variants: {
     variant: {
       simple: "flex flex-col md:flex-row items-center justify-between p-8 md:p-12",
@@ -59,7 +60,7 @@ export function CTA({
         <div className={cn(ctaVariants({ variant, backgroundType, density }))}>
           {/* Optional Ambient Background Layer */}
           {backgroundType === "image" && (
-            <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none" />
+            <div className="absolute inset-0 z-0 bg-[var(--neutral-12)]/40 pointer-events-none dark:bg-[var(--neutral-1)]/60" />
           )}
           {variant === "gradient" && (
             <div className="absolute inset-0 bg-white/10 [mask-image:linear-gradient(to_bottom,white,transparent)] z-0 pointer-events-none" />
@@ -106,7 +107,7 @@ export function CTA({
                       className={cn(
                         "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                         isDarkCanvas
-                          ? "bg-white text-black hover:bg-white/90 focus-visible:ring-white"
+                          ? "bg-[var(--neutral-1)] text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] focus-visible:ring-white"
                           : "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] focus-visible:ring-[var(--neutral-12)]",
                       )}
                       data-analytics="footer-cta-primary"
@@ -142,27 +143,13 @@ export function CTA({
                         : "justify-start",
                     )}
                   >
-                    <div className="flex -space-x-2">
+                    <div className="flex">
                       <div className="w-6 h-6 rounded-full bg-[var(--neutral-6)] border-2 border-white/10" />
-                      <div className="w-6 h-6 rounded-full bg-[var(--neutral-7)] border-2 border-white/10" />
-                      <div className="w-6 h-6 rounded-full bg-[var(--neutral-8)] border-2 border-white/10" />
+                      <div className="-ml-2 w-6 h-6 rounded-full bg-[var(--neutral-7)] border-2 border-white/10" />
+                      <div className="-ml-2 w-6 h-6 rounded-full bg-[var(--neutral-8)] border-2 border-white/10" />
                     </div>
                     <p className="ml-2 flex items-center gap-1.5 opacity-90">
-                      <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 15 15"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="currentColor opacity-70"
-                      >
-                        <path
-                          d="M7.49991 0.876892C3.84222 0.876892 0.877075 3.84204 0.877075 7.49972C0.877075 11.1574 3.84222 14.1226 7.49991 14.1226C11.1576 14.1226 14.1227 11.1574 14.1227 7.49972C14.1227 3.84204 11.1576 0.876892 7.49991 0.876892ZM1.82707 7.49972C1.82707 4.36671 4.36689 1.82689 7.49991 1.82689C10.6329 1.82689 13.1727 4.36671 13.1727 7.49972C13.1727 10.6327 10.6329 13.1726 7.49991 13.1726C4.36689 13.1726 1.82707 10.6327 1.82707 7.49972ZM10.6067 4.35334L6.15177 9.87321L4.17065 7.9103C3.89664 7.63878 3.4542 7.64062 3.18267 7.91463C2.91114 8.18864 2.91299 8.63108 3.187 8.90261L5.687 11.3793C5.83416 11.5252 6.03927 11.6026 6.25 11.5973C6.46074 11.592 6.66014 11.5049 6.79974 11.332L11.7997 5.13845C12.0463 4.83296 11.9986 4.38531 11.6931 4.13876C11.3876 3.8922 10.9399 3.93988 10.6934 4.24543L10.6067 4.35334Z"
-                          fill="currentColor"
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
+                      <Check className="h-[15px] w-[15px] opacity-70" aria-hidden="true" />
                       No credit card required &bull; 14-day free trial
                     </p>
                   </div>

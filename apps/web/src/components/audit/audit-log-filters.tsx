@@ -79,7 +79,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
   }
 
   return (
-    <div className="flex flex-wrap items-end gap-3 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4">
+    <div className="flex flex-wrap items-end gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4">
       <div className="flex flex-col">
         <label
           htmlFor="audit-filter-action"
@@ -110,7 +110,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           data-allow-native
           value={filters.entityType ?? ""}
           onChange={(e) => setField("entityType", e.target.value || undefined)}
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
+          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         >
           <option value="">{t("all")}</option>
           {ENTITY_TYPES.map((entity) => (
@@ -136,7 +136,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           onChange={(e) =>
             setField("outcome", (e.target.value || undefined) as AuditLogFilterValues["outcome"])
           }
-          className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
+          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm"
         >
           <option value="">{t("all")}</option>
           <option value="success">{t("outcomeSuccess")}</option>
@@ -182,7 +182,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           type="button"
           data-testid="audit-filter-range-24h"
           onClick={() => applyRangeDays(1)}
-          className="rounded-md border border-[var(--neutral-7)] px-3 py-1.5 text-xs hover:bg-[var(--neutral-2)]"
+          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-1.5 text-xs hover:bg-[var(--neutral-2)]"
         >
           {t("range24h")}
         </button>
@@ -190,7 +190,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           type="button"
           data-testid="audit-filter-range-7d"
           onClick={() => applyRangeDays(7)}
-          className="rounded-md border border-[var(--neutral-7)] px-3 py-1.5 text-xs hover:bg-[var(--neutral-2)]"
+          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-1.5 text-xs hover:bg-[var(--neutral-2)]"
         >
           {t("range7d")}
         </button>
@@ -198,7 +198,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           type="button"
           data-testid="audit-filter-range-30d"
           onClick={() => applyRangeDays(30)}
-          className="rounded-md border border-[var(--neutral-7)] px-3 py-1.5 text-xs hover:bg-[var(--neutral-2)]"
+          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-1.5 text-xs hover:bg-[var(--neutral-2)]"
         >
           {t("range30d")}
         </button>
@@ -206,7 +206,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
           type="button"
           data-testid="audit-filter-reset"
           onClick={reset}
-          className="rounded-md border border-[var(--neutral-7)] px-3 py-1.5 text-xs hover:bg-[var(--neutral-2)]"
+          className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-1.5 text-xs hover:bg-[var(--neutral-2)]"
         >
           {t("reset")}
         </button>

@@ -21,7 +21,7 @@ export const postsQuery = `*[
   publishedAt,
   excerpt,
   mainImage,
-  "author": author->name,
+  "author": author->{name, image, bio},
   "categories": categories[]->title
 }`;
 
@@ -65,7 +65,7 @@ export const postTranslationByKeyQuery = `*[
   publishedAt,
   excerpt,
   mainImage,
-  "author": author->name,
+  "author": author->{name, image, bio},
   "categories": categories[]->title
 }`;
 

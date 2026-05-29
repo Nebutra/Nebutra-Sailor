@@ -87,3 +87,15 @@ See [Charts](/en/docs/patterns/charts) for higher-level chart composition rules,
 - `ChartContainer` owns theme-aware CSS variable injection; consumers fill series with `var(--color-seriesKey)`.
 - Use semantic chart tokens from the app theme, not arbitrary Tailwind color classes.
 - Set a stable height/aspect ratio at the container. Charts that resize while data streams make dashboards harder to scan.
+
+## Real Product Examples
+
+- Workspace usage dashboards comparing API calls, active users, and error rates across the same time window.
+- Billing and metering pages where plan usage needs a quick trend before the user drills into a table.
+- Incident review panels that pair a latency or error-rate chart with a written summary of the affected service.
+
+## Anti-patterns
+
+- Do not use charts for a single headline value; use `KpiCard` and reserve chart space for shape or comparison.
+- Do not use a chart when the user must audit exact rows, invoices, or logs. Put the source data in a table.
+- Do not invent decorative series or gradients to fill empty dashboard space. If there is no meaningful comparison, leave the surface empty or explain the missing data.

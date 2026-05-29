@@ -7,14 +7,18 @@ on:
     paths:
       - "packages/design/ui/src/**"
       - "apps/storybook/**"
+      - "apps/design-docs/content/docs/**"
       - "apps/landing-page/src/components/**"
       - "apps/landing-page/src/app/**/page.tsx"
+      - ".github/workflows/chromatic.yml"
   pull_request:
     paths:
       - "packages/design/ui/src/**"
       - "apps/storybook/**"
+      - "apps/design-docs/content/docs/**"
       - "apps/landing-page/src/components/**"
       - "apps/landing-page/src/app/**/page.tsx"
+      - ".github/workflows/chromatic.yml"
 
 jobs:
   chromatic:

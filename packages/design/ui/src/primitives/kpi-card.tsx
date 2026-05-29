@@ -56,7 +56,7 @@ export function KpiCard({ title, value, icon, trend, description, className }: K
             {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
           </div>
 
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-muted">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-muted">
             {icon}
           </div>
         </div>

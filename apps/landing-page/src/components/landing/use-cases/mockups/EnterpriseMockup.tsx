@@ -17,7 +17,7 @@ export function EnterpriseMockup() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-xl overflow-hidden shadow-sm flex flex-col"
+        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Nav */}
         <div className="px-4 py-2 border-b border-border flex items-center gap-4 shrink-0">
@@ -29,7 +29,7 @@ export function EnterpriseMockup() {
           </div>
           <div className="ml-auto flex items-center gap-2">
             <span className="text-[11px] text-muted-foreground">Sign in</span>
-            <div className="h-6 px-3 rounded-md bg-primary flex items-center">
+            <div className="h-6 px-3 rounded-[var(--radius-md)] bg-primary flex items-center">
               <span className="text-[10px] text-primary-foreground font-medium">Get Started</span>
             </div>
           </div>
@@ -45,10 +45,10 @@ export function EnterpriseMockup() {
             Scalable infrastructure for modern teams. Ship faster with confidence.
           </div>
           <div className="mt-4 flex items-center justify-center gap-2">
-            <div className="inline-flex items-center gap-1 bg-primary text-primary-foreground text-[11px] font-medium px-4 py-1.5 rounded-lg">
+            <div className="inline-flex items-center gap-1 bg-primary text-primary-foreground text-[11px] font-medium px-4 py-1.5 rounded-[var(--radius-lg)]">
               Start Free <ChevronRight className="h-3 w-3" />
             </div>
-            <div className="inline-flex items-center text-[11px] font-medium px-4 py-1.5 rounded-lg border border-border text-foreground">
+            <div className="inline-flex items-center text-[11px] font-medium px-4 py-1.5 rounded-[var(--radius-lg)] border border-border text-foreground">
               Book Demo
             </div>
           </div>

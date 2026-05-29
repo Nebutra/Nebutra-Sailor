@@ -2,8 +2,9 @@
 
 import { AlertDialog as BaseAlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
-import { buttonVariants } from "./button";
+import { buttonVariants } from "./button-variants";
 
 const AlertDialog = BaseAlertDialog.Root;
 const AlertDialogPortal = BaseAlertDialog.Portal;
@@ -35,6 +36,7 @@ AlertDialogTrigger.displayName = "AlertDialogTrigger";
 
 const AlertDialogOverlay = ({
   className,
+  style,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Backdrop> & {
@@ -42,10 +44,8 @@ const AlertDialogOverlay = ({
 }) => (
   <BaseAlertDialog.Backdrop
     ref={ref}
-    className={cn(
-      "fixed inset-0 z-50 bg-black/80 data-ending-style:animate-out data-starting-style:animate-in data-ending-style:fade-out-0 data-starting-style:fade-in-0 duration-200 transition-[opacity,display]",
-      className,
-    )}
+    className={cn(overlayClassNames.backdrop, className)}
+    style={{ zIndex: overlayZIndex.backdrop, ...style }}
     {...props}
   />
 );
@@ -54,6 +54,7 @@ AlertDialogOverlay.displayName = "AlertDialogOverlay";
 const AlertDialogContent = ({
   className,
   children,
+  style,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Popup> & {
@@ -63,10 +64,8 @@ const AlertDialogContent = ({
     <AlertDialogOverlay />
     <BaseAlertDialog.Popup
       ref={ref}
-      className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 transition-[opacity,transform,display] data-starting-style:animate-in data-ending-style:animate-out data-ending-style:fade-out-0 data-starting-style:fade-in-0 data-ending-style:zoom-out-95 data-starting-style:zoom-in-95 sm:rounded-[var(--radius-lg)]",
-        className,
-      )}
+      className={cn(overlayClassNames.modalSurface, className)}
+      style={{ zIndex: overlayZIndex.modal, ...style }}
       {...props}
     >
       {children}

@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, type ReactElement, useCallback, useEffect, useMemo, useState } from "react";
+import { type ReactElement, useEffect, useState } from "react";
 import { cn } from "../utils/cn";
 import { LoadingDots } from "./loading-dots";
 import { TextShimmer } from "./text-shimmer";
@@ -106,6 +106,44 @@ function countDiffStats(ops: DiffOp[]): { added: number; removed: number } {
   return { added, removed };
 }
 
+function getDiffOps({
+  isWaiting,
+  isWrite,
+  oldContent,
+  newContent,
+  maxDiffLines,
+}: {
+  isWaiting: boolean;
+  isWrite: boolean;
+  oldContent: string | undefined;
+  newContent: string | undefined;
+  maxDiffLines: number;
+}): DiffOp[] | null {
+  if (isWaiting) return null;
+
+  if (isWrite && newContent !== undefined) {
+    const lines = newContent.split("\n");
+    if (lines.length > maxDiffLines) return null;
+    return lines.map((text) => ({ type: "add" as const, text }));
+  }
+
+  if (oldContent !== undefined && newContent !== undefined) {
+    const aLines = oldContent.split("\n").length;
+    const bLines = newContent.split("\n").length;
+    if (aLines > maxDiffLines || bLines > maxDiffLines) return null;
+    return lineDiff(oldContent, newContent);
+  }
+
+  return null;
+}
+
+function getDiffLineKey(op: DiffOp, counts: Map<string, number>): string {
+  const keyBase = `${op.type}-${op.text.slice(0, 48)}`;
+  const occurrence = counts.get(keyBase) ?? 0;
+  counts.set(keyBase, occurrence + 1);
+  return `${keyBase}-${occurrence}`;
+}
+
 // ---------------------------------------------------------------------------
 // Public types
 // ---------------------------------------------------------------------------
@@ -178,23 +216,20 @@ function ApprovalFooter({ isPending, approval }: ApprovalFooterProps): ReactElem
   const isControlled = controlledDecision !== undefined;
   const decision = isControlled ? controlledDecision : uncontrolled;
 
-  const update = useCallback(
-    (next: ApprovalDecision) => {
-      if (!isControlled) setUncontrolled(next);
-      onDecisionChange?.(next);
-    },
-    [isControlled, onDecisionChange],
-  );
+  function update(next: ApprovalDecision) {
+    if (!isControlled) setUncontrolled(next);
+    onDecisionChange?.(next);
+  }
 
-  const handleApprove = useCallback(() => {
+  function handleApprove() {
     update("approved");
     onApprove?.();
-  }, [update, onApprove]);
+  }
 
-  const handleReject = useCallback(() => {
+  function handleReject() {
     update("rejected");
     onReject?.();
-  }, [update, onReject]);
+  }
 
   let status: string | null = null;
   if (decision === "approved") status = isPending ? "Starting" : "Approved";
@@ -215,14 +250,14 @@ function ApprovalFooter({ isPending, approval }: ApprovalFooterProps): ReactElem
           <button
             type="button"
             onClick={handleReject}
-            className="h-7 rounded-sm border border-border bg-transparent px-2 text-xs font-medium text-foreground transition-colors duration-micro hover:bg-accent"
+            className="h-7 rounded-[var(--radius-sm)] border border-border bg-transparent px-2 text-xs font-medium text-foreground transition-colors duration-micro hover:bg-accent"
           >
             {rejectLabel}
           </button>
           <button
             type="button"
             onClick={handleApprove}
-            className="h-7 rounded-sm bg-primary px-2 text-xs font-medium text-primary-foreground transition-colors duration-micro hover:bg-primary/90"
+            className="h-7 rounded-[var(--radius-sm)] bg-primary px-2 text-xs font-medium text-primary-foreground transition-colors duration-micro hover:bg-primary/90"
           >
             {approveLabel}
           </button>
@@ -236,7 +271,7 @@ function ApprovalFooter({ isPending, approval }: ApprovalFooterProps): ReactElem
 // EditTool
 // ---------------------------------------------------------------------------
 
-export const EditTool = memo(function EditTool({
+export function EditTool({
   state = "completed",
   variant = "edit",
   filePath,
@@ -251,34 +286,11 @@ export const EditTool = memo(function EditTool({
   const isWrite = variant === "write";
   const fileName = filePath?.split("/").pop();
 
-  // Cap-aware diff computation.
-  const diffOps = useMemo<DiffOp[] | null>(() => {
-    if (isWaiting) return null;
-
-    if (isWrite && newContent !== undefined) {
-      const lines = newContent.split("\n");
-      if (lines.length > maxDiffLines) return null;
-      return lines.map((text) => ({ type: "add" as const, text }));
-    }
-
-    if (oldContent !== undefined && newContent !== undefined) {
-      const aLines = oldContent.split("\n").length;
-      const bLines = newContent.split("\n").length;
-      if (aLines > maxDiffLines || bLines > maxDiffLines) return null;
-      return lineDiff(oldContent, newContent);
-    }
-
-    return null;
-  }, [isWaiting, isWrite, oldContent, newContent, maxDiffLines]);
-
-  const exceededCap = useMemo(() => {
-    if (isWaiting) return false;
-    if (diffOps !== null) return false;
-    if (oldContent === undefined && newContent === undefined) return false;
-    return true;
-  }, [isWaiting, diffOps, oldContent, newContent]);
-
-  const stats = useMemo(() => (diffOps ? countDiffStats(diffOps) : null), [diffOps]);
+  const diffOps = getDiffOps({ isWaiting, isWrite, oldContent, newContent, maxDiffLines });
+  const exceededCap =
+    !isWaiting && diffOps === null && (oldContent !== undefined || newContent !== undefined);
+  const stats = diffOps ? countDiffStats(diffOps) : null;
+  const diffLineCounts = new Map<string, number>();
 
   // Lazy keyboard hook — Esc dismisses pending approval if controlled by parent.
   useEffect(() => {
@@ -301,7 +313,10 @@ export const EditTool = memo(function EditTool({
   return (
     <section
       aria-label={fileName ? `${headerLabel} (${fileName})` : headerLabel}
-      className={cn("w-full overflow-hidden rounded-lg border border-border bg-card", className)}
+      className={cn(
+        "w-full overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card",
+        className,
+      )}
     >
       <header
         className={cn(
@@ -327,15 +342,15 @@ export const EditTool = memo(function EditTool({
       </header>
 
       {exceededCap && (
-        <div className="bg-background px-3 py-3 text-xs text-muted-foreground">
-          Diff exceeds {maxDiffLines.toLocaleString()} lines — open the file to view changes.
+        <div className="bg-background p-3 text-xs text-muted-foreground">
+          Diff exceeds {maxDiffLines.toLocaleString()} lines: open the file to view changes.
         </div>
       )}
 
       {diffOps && diffOps.length > 0 && (
         <div className="overflow-x-auto bg-background font-mono text-[12px] leading-[1.5]">
-          {diffOps.map((op, i) => {
-            const stableKey = `${op.type}-${i}-${op.text.slice(0, 24)}`;
+          {diffOps.map((op) => {
+            const stableKey = getDiffLineKey(op, diffLineCounts);
             return (
               <div
                 key={stableKey}
@@ -367,4 +382,4 @@ export const EditTool = memo(function EditTool({
       {approval && <ApprovalFooter isPending={isPending} approval={approval} />}
     </section>
   );
-});
+}

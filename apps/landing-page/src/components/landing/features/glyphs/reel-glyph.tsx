@@ -33,7 +33,7 @@ const LAYERS: ReadonlyArray<LayerRow> = [
 export function ReelGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-2 rounded-lg bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       <div className="flex flex-1 gap-3 overflow-hidden">
@@ -65,7 +65,7 @@ export function ReelGlyph(_props: SubpackageGlyphProps) {
             return (
               <div
                 key={layer.tag}
-                className="flex min-w-0 items-center gap-2 rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
+                className="flex min-w-0 items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
               >
                 <Badge
                   variant="outline"

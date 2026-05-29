@@ -4,12 +4,13 @@ import { ChevronDown, LockClosed } from "@nebutra/icons";
 import {
   createContext,
   type HTMLAttributes,
+  isValidElement,
   type ReactElement,
   type ReactNode,
   type Ref,
   use,
-  useMemo,
 } from "react";
+import { overlayClassNames } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 import { Button, type ButtonProps } from "./button";
 import {
@@ -70,11 +71,10 @@ function splitPosition(position: MenuPosition): { side: Side; align: Align } {
 // Context — share position from MenuContainer down to Menu
 // ---------------------------------------------------------------------------
 
-type MenuContextValue = { position: MenuPosition };
-const MenuContext = createContext<MenuContextValue | null>(null);
+const MenuContext = createContext<MenuPosition | null>(null);
 
 function useMenuPosition(): MenuPosition {
-  return use(MenuContext)?.position ?? "bottom-start";
+  return use(MenuContext) ?? "bottom-start";
 }
 
 // ---------------------------------------------------------------------------
@@ -88,9 +88,8 @@ export interface MenuContainerProps {
 }
 
 export function MenuContainer({ position = "bottom-start", children }: MenuContainerProps) {
-  const value = useMemo<MenuContextValue>(() => ({ position }), [position]);
   return (
-    <MenuContext.Provider value={value}>
+    <MenuContext.Provider value={position}>
       <DropdownMenu>{children}</DropdownMenu>
     </MenuContext.Provider>
   );
@@ -165,7 +164,8 @@ export const MenuButton = function MenuButton({
           ref={ref}
           type="button"
           className={cn(
-            "inline-flex items-center justify-center rounded-[var(--radius-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "inline-flex items-center justify-center rounded-[var(--radius-md)]",
+            overlayClassNames.focusRing,
             className,
           )}
           {...buttonHtmlProps}
@@ -256,6 +256,20 @@ export interface MenuItemProps {
   children: ReactNode;
 }
 
+function getTextFromNode(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) {
+    const parts: string[] = [];
+    for (const child of node) {
+      const text = getTextFromNode(child);
+      if (text) parts.push(text);
+    }
+    return parts.join(" ");
+  }
+  if (isValidElement<{ children?: ReactNode }>(node)) return getTextFromNode(node.props.children);
+  return "";
+}
+
 export const MenuItem = function MenuItem({
   ref,
   onClick,
@@ -294,6 +308,8 @@ export const MenuItem = function MenuItem({
   if (disabled !== undefined) passthrough.disabled = disabled;
 
   if (href !== undefined) {
+    const anchorLabel = getTextFromNode(children);
+
     return (
       <DropdownMenuItem
         ref={ref}
@@ -301,7 +317,7 @@ export const MenuItem = function MenuItem({
         // Base UI's `render` pattern slots `content` in as the anchor's child
         // at render time, so the `<a>` is not actually empty at runtime.
         // biome-ignore lint/a11y/useAnchorContent: content is injected by Base UI's render-prop pattern at mount time.
-        render={<a href={href} />}
+        render={<a href={href} aria-label={anchorLabel || undefined} />}
         className={cn(errorClass, className)}
         {...passthrough}
       >

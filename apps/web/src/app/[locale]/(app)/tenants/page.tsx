@@ -16,7 +16,7 @@ async function TenantsContent() {
       <AnimateIn preset="fadeUp">
         <Card className="overflow-hidden p-0">
           <div className="space-y-3 p-4 md:hidden">
-            <div className="rounded-lg border border-neutral-7 bg-neutral-2 p-3 dark:border-white/10 dark:bg-white/5">
+            <div className="rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-2 p-3 dark:border-white/10 dark:bg-white/5">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-neutral-12 dark:text-white">

@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Filter } from "@nebutra/icons";
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import { Badge } from "../../../primitives/badge";
 import { Button } from "../../../primitives/button";
 import {
@@ -22,6 +22,8 @@ export interface FacetedFilterOption {
   group?: string;
 }
 
+type DataTableTranslation = (key: string, values?: Record<string, string | number>) => string;
+
 interface DataTableFacetedFilterProps {
   /** Filter title shown on button */
   title: string;
@@ -32,7 +34,7 @@ interface DataTableFacetedFilterProps {
   /** Callback when selection changes */
   onSelectionChange: (value: string, checked: boolean) => void;
   /** i18n translation function */
-  t: any;
+  t: DataTableTranslation;
 }
 
 export function DataTableFacetedFilter({
@@ -45,36 +47,30 @@ export function DataTableFacetedFilter({
   const [open, setOpen] = useState(false);
   const selectedCount = selected.size;
 
-  // Group options
-  const { grouped, ungrouped } = useMemo(() => {
-    const groupMap = new Map<string, FacetedFilterOption[]>();
-    const un: FacetedFilterOption[] = [];
-    for (const opt of options) {
-      if (opt.group) {
-        if (!groupMap.has(opt.group)) groupMap.set(opt.group, []);
-        groupMap.get(opt.group)?.push(opt);
+  const grouped = new Map<string, FacetedFilterOption[]>();
+  const ungrouped: FacetedFilterOption[] = [];
+  for (const opt of options) {
+    if (opt.group) {
+      const group = grouped.get(opt.group);
+      if (group) {
+        group.push(opt);
       } else {
-        un.push(opt);
+        grouped.set(opt.group, [opt]);
       }
+    } else {
+      ungrouped.push(opt);
     }
-    return { grouped: groupMap, ungrouped: un };
-  }, [options]);
+  }
 
-  const handleToggle = useCallback(
-    (value: string) => {
-      onSelectionChange(value, !selected.has(value));
-    },
-    [onSelectionChange, selected],
-  );
+  function handleToggle(value: string) {
+    onSelectionChange(value, !selected.has(value));
+  }
 
-  const handleSelectAllGroup = useCallback(
-    (opts: FacetedFilterOption[], allSelected: boolean) => {
-      for (const opt of opts) {
-        onSelectionChange(opt.value, !allSelected);
-      }
-    },
-    [onSelectionChange],
-  );
+  function handleSelectAllGroup(opts: FacetedFilterOption[], allSelected: boolean) {
+    for (const opt of opts) {
+      onSelectionChange(opt.value, !allSelected);
+    }
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -110,7 +106,7 @@ export function DataTableFacetedFilter({
                   >
                     <div
                       className={cn(
-                        "mr-2 flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border",
+                        "mr-2 flex h-4 w-4 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border",
                         allSelected
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-muted-foreground/40",
@@ -133,7 +129,7 @@ export function DataTableFacetedFilter({
                       >
                         <div
                           className={cn(
-                            "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border",
+                            "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border",
                             isSelected
                               ? "border-primary bg-primary text-primary-foreground"
                               : "border-muted-foreground/40",
@@ -168,7 +164,7 @@ export function DataTableFacetedFilter({
                     >
                       <div
                         className={cn(
-                          "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border",
+                          "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border",
                           isSelected
                             ? "border-primary bg-primary text-primary-foreground"
                             : "border-muted-foreground/40",

@@ -60,7 +60,7 @@ export default function AuditLogPage() {
     <PermissionGate
       require="audit_log:read"
       fallback={
-        <div className="rounded-lg border border-[var(--neutral-7)] p-6 text-sm text-[var(--neutral-11)]">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-6 text-sm text-[var(--neutral-11)]">
           {t("forbidden")}
         </div>
       }
@@ -74,7 +74,7 @@ export default function AuditLogPage() {
         <AuditLogFilters onChange={setFilters} />
 
         {error ? (
-          <div className="rounded-md border border-red-6 bg-red-2 p-3 text-sm text-red-11">
+          <div className="rounded-[var(--radius-md)] border border-red-6 bg-red-2 p-3 text-sm text-red-11">
             {error}
           </div>
         ) : null}
@@ -87,7 +87,7 @@ export default function AuditLogPage() {
               type="button"
               onClick={() => void load(filters, nextCursor, true)}
               disabled={isLoading}
-              className="rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium hover:bg-[var(--neutral-2)] disabled:opacity-50"
+              className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium hover:bg-[var(--neutral-2)] disabled:opacity-50"
             >
               {isLoading ? t("loading") : t("loadMore")}
             </button>

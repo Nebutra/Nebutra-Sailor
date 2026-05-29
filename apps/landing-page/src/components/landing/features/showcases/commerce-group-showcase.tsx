@@ -101,10 +101,14 @@ const JOINERS: { email: string; ago: Bi }[] = [
 ];
 const OPEN = 42;
 
-const panel = "space-y-3 rounded-md border border-border/60 bg-card p-4";
+const panel = "space-y-3 rounded-[var(--radius-md)] border border-border/60 bg-card p-4";
 const kicker =
   "flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground";
 const micro = "text-[10px] uppercase tracking-wide text-muted-foreground";
+
+function localizeCopy(bi: Bi, locale: Locale) {
+  return bi[locale === "en" ? 0 : 1];
+}
 
 function Stat({ label, value, icon }: { label: string; value: string; icon?: ReactNode }) {
   return (
@@ -119,33 +123,33 @@ function Stat({ label, value, icon }: { label: string; value: string; icon?: Rea
 }
 
 function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
-  const P = (bi: Bi) => bi[locale === "en" ? 0 : 1];
+  const copy = (bi: Bi) => localizeCopy(bi, locale);
   if (layout === "license")
     return (
       <div className={panel}>
         <div className="flex items-center justify-between gap-2">
-          <span className={kicker}>{P(S.licenseKey)}</span>
+          <span className={kicker}>{copy(S.licenseKey)}</span>
           <Badge variant="green-subtle" size="sm">
             <Sparkles className="h-3 w-3" aria-hidden="true" />
-            {P(S.active)}
+            {copy(S.active)}
           </Badge>
         </div>
         <p className="break-all font-mono text-sm text-foreground">NBTRA-XK7Q-••••-••••-A19F</p>
         <div>
-          <p className={micro}>{P(S.entitlements)}</p>
+          <p className={micro}>{copy(S.entitlements)}</p>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
             {FEATURES.map((f) => (
               <Badge key={f[0]} variant="gray-subtle" size="sm">
                 <Check className="h-3 w-3" aria-hidden="true" />
-                {P(f)}
+                {copy(f)}
               </Badge>
             ))}
           </div>
         </div>
         <div className="flex items-center gap-1.5 border-t border-border/60 pt-3 text-xs text-muted-foreground">
           <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-          <span>{P(S.expires)}</span>
-          <span className="font-medium text-foreground">{P(S.expiresValue)}</span>
+          <span>{copy(S.expires)}</span>
+          <span className="font-medium text-foreground">{copy(S.expiresValue)}</span>
         </div>
       </div>
     );
@@ -154,14 +158,14 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
       <div className={panel}>
         <span className={kicker}>
           <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-          {P(S.contracts)}
+          {copy(S.contracts)}
         </span>
         <Table wrapperClassName="border-0 bg-transparent p-0">
           <TableHeader>
             <TableRow>
-              <TableHead>{P(S.hEvent)}</TableHead>
-              <TableHead>{P(S.hSchema)}</TableHead>
-              <TableHead>{P(S.hStatus)}</TableHead>
+              <TableHead>{copy(S.hEvent)}</TableHead>
+              <TableHead>{copy(S.hSchema)}</TableHead>
+              <TableHead>{copy(S.hStatus)}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody bordered>
@@ -173,7 +177,7 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
                 </TableCell>
                 <TableCell>
                   <Badge variant={row.stable ? "green-subtle" : "amber-subtle"} size="sm">
-                    {P(row.stable ? S.stable : S.beta)}
+                    {copy(row.stable ? S.stable : S.beta)}
                   </Badge>
                 </TableCell>
               </TableRow>
@@ -188,21 +192,21 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
         <div className={`${panel} md:col-span-2`}>
           <span className={kicker}>
             <Users className="h-3.5 w-3.5" aria-hidden="true" />
-            {P(S.waitlist)}
+            {copy(S.waitlist)}
           </span>
           <div>
             <p className="text-3xl font-semibold tabular-nums tracking-tight text-foreground">
               1,843
             </p>
-            <p className="text-xs text-muted-foreground">{P(S.waiting)}</p>
+            <p className="text-xs text-muted-foreground">{copy(S.waiting)}</p>
           </div>
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
-            <p className={micro}>{P(S.position)}</p>
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
+            <p className={micro}>{copy(S.position)}</p>
             <p className="mt-1 font-mono text-lg font-semibold text-foreground">POS 142</p>
           </div>
         </div>
         <div className={`${panel} md:col-span-3`}>
-          <span className={kicker}>{P(S.recent)}</span>
+          <span className={kicker}>{copy(S.recent)}</span>
           <ul className="space-y-1.5">
             {JOINERS.map((j) => (
               <li
@@ -213,7 +217,7 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
                   <Email className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
                   <span className="truncate font-mono text-foreground">{j.email}</span>
                 </span>
-                <span className="shrink-0 text-[10px] text-muted-foreground">{P(j.ago)}</span>
+                <span className="shrink-0 text-[10px] text-muted-foreground">{copy(j.ago)}</span>
               </li>
             ))}
           </ul>
@@ -226,37 +230,37 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
         <div className="flex items-center justify-between gap-2">
           <span className={kicker}>
             <Tag className="h-3.5 w-3.5" aria-hidden="true" />
-            {P(S.marketing)}
+            {copy(S.marketing)}
           </span>
           <Badge variant="green-subtle" size="sm">
             <Sparkles className="h-3 w-3" aria-hidden="true" />
-            {P(S.running)}
+            {copy(S.running)}
           </Badge>
         </div>
-        <p className="truncate text-sm font-semibold text-foreground">{P(S.campaign)}</p>
+        <p className="truncate text-sm font-semibold text-foreground">{copy(S.campaign)}</p>
         <div className="grid grid-cols-3 gap-3 text-xs">
           <Stat
-            label={P(S.audience)}
+            label={copy(S.audience)}
             value="24,800"
             icon={<Users className="h-3 w-3 text-muted-foreground" aria-hidden="true" />}
           />
           <Stat
-            label={P(S.ctr)}
+            label={copy(S.ctr)}
             value="3.4%"
             icon={<BarChart className="h-3 w-3 text-muted-foreground" aria-hidden="true" />}
           />
-          <Stat label={P(S.openRate)} value={`${OPEN}%`} />
+          <Stat label={copy(S.openRate)} value={`${OPEN}%`} />
         </div>
-        <Progress value={OPEN} max={100} size="sm" aria-label={P(S.openRate)} />
+        <Progress value={OPEN} max={100} size="sm" aria-label={copy(S.openRate)} />
       </div>
     );
   return (
     <div className={panel}>
       <div className="flex items-center justify-between gap-2">
-        <span className={kicker}>{P(S.txn)}</span>
+        <span className={kicker}>{copy(S.txn)}</span>
         <Badge variant="green-subtle" size="sm">
           <Sparkles className="h-3 w-3" aria-hidden="true" />
-          {P(S.settled)}
+          {copy(S.settled)}
         </Badge>
       </div>
       <div className="flex items-baseline gap-2">
@@ -268,10 +272,10 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
         </Badge>
       </div>
       <div className="grid grid-cols-2 gap-3 border-t border-border/60 pt-3 text-xs">
-        <Stat label={P(S.tenant)} value="org_8d2f••••" />
+        <Stat label={copy(S.tenant)} value="org_8d2f••••" />
         <Stat
-          label={P(S.recorded)}
-          value={P(S.timestamp)}
+          label={copy(S.recorded)}
+          value={copy(S.timestamp)}
           icon={<Calendar className="h-3 w-3 text-muted-foreground" aria-hidden="true" />}
         />
       </div>
@@ -282,13 +286,13 @@ function Body({ layout, locale }: { layout: Layout; locale: Locale }) {
 export function CommerceGroupShowcase({ entry, locale }: PackageShowcaseProps) {
   const layout = pickLayout(entry.slug);
   const HeaderIcon = layout === "license" ? KeyOld : Briefcase;
-  const P = (bi: Bi) => bi[locale === "en" ? 0 : 1];
+  const copy = (bi: Bi) => localizeCopy(bi, locale);
   return (
     <ShowcaseFrame>
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
               <HeaderIcon className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{entry.label}</span>
@@ -297,24 +301,24 @@ export function CommerceGroupShowcase({ entry, locale }: PackageShowcaseProps) {
             </span>
           </div>
           <Badge variant="blue-subtle" size="sm">
-            {P(S.sor)}
+            {copy(S.sor)}
           </Badge>
         </CardHeader>
         <CardContent className="space-y-5 p-4 pt-0 md:p-5 md:pt-0">
           <Body layout={layout} locale={locale} />
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={4} className="gap-3">
-              <MetricCard size="sm" label={P(S.volume)} value="$1.24M" />
-              <MetricCard size="sm" label={P(S.records)} value="8,472" />
-              <MetricCard size="sm" label={P(S.growth)} value="+8.4%" trend="up" />
-              <MetricCard size="sm" label={P(S.success)} value="99.6%" />
+              <MetricCard size="sm" label={copy(S.volume)} value="$1.24M" />
+              <MetricCard size="sm" label={copy(S.records)} value="8,472" />
+              <MetricCard size="sm" label={copy(S.growth)} value="+8.4%" trend="up" />
+              <MetricCard size="sm" label={copy(S.success)} value="99.6%" />
             </MetricGrid>
           </div>
           <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
             <CreditCard className="h-3 w-3" aria-hidden="true" />
             <span className="font-mono">{entry.path}</span>
             <span>·</span>
-            <span>{P(S.footer)}</span>
+            <span>{copy(S.footer)}</span>
           </div>
         </CardContent>
       </Card>

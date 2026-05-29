@@ -10,13 +10,13 @@ export type ShowcaseFrameProps = {
 
 /**
  * Shared outer frame for all feature showcases. Provides the consistent
- * card chrome — rounded panel, border, bg-background, internal padding,
+ * card chrome — rounded panel, calibrated surface, internal padding,
  * minimum height. Showcase content lives inside.
  */
 export function ShowcaseFrame({ children, minHeight = 400, className }: ShowcaseFrameProps) {
   return (
     <div
-      className={`relative w-full overflow-hidden rounded-[var(--radius-panel)] border border-border bg-background p-5 md:p-6 ${className ?? ""}`.trim()}
+      className={`landing-showcase-surface relative w-full overflow-hidden rounded-[var(--radius-panel)] border p-5 md:p-6 ${className ?? ""}`.trim()}
       style={{ minHeight: `${minHeight}px` }}
     >
       {children}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import {
   buildConsent,
   type CookieConsent,
@@ -33,6 +33,18 @@ const primaryActionClass =
 const secondaryActionClass =
   "min-w-36 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] dark:text-white";
 
+function subscribeToConsentSnapshot() {
+  return () => {};
+}
+
+function getClientConsentSnapshot() {
+  return Boolean(getCookieConsent());
+}
+
+function getServerConsentSnapshot() {
+  return true;
+}
+
 /**
  * GDPR/CCPA cookie-consent banner.
  *
@@ -45,21 +57,18 @@ const secondaryActionClass =
  */
 export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = {}) {
   const t = useTranslations("cookieConsent");
-  const [hydrated, setHydrated] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const hasExistingConsent = useSyncExternalStore(
+    subscribeToConsentSnapshot,
+    getClientConsentSnapshot,
+    getServerConsentSnapshot,
+  );
+  const [dismissed, setDismissed] = useState(false);
   const [toggles, setToggles] = useState<Record<CategoryKey, boolean>>({
     necessary: true,
     functional: false,
     analytics: false,
     marketing: false,
   });
-
-  // On mount: decide whether the banner should appear.
-  useEffect(() => {
-    setHydrated(true);
-    const existing = getCookieConsent();
-    if (!existing) setVisible(true);
-  }, []);
 
   function handleToggle(key: CategoryKey) {
     if (key === "necessary") return;
@@ -69,7 +78,7 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
   async function persist(input: CookieConsentInput) {
     const consent: CookieConsent = buildConsent(input);
     setCookieConsent(consent);
-    setVisible(false);
+    setDismissed(true);
 
     if (apiEndpoint) {
       try {
@@ -103,7 +112,7 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
     });
   }
 
-  if (!hydrated || !visible) return null;
+  if (hasExistingConsent || dismissed) return null;
 
   return (
     <div
@@ -111,9 +120,9 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
       aria-modal="false"
       aria-labelledby="cookie-consent-title"
       aria-describedby="cookie-consent-description"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--neutral-7)] bg-[var(--neutral-1)]/95 p-4 shadow-lg backdrop-blur-md dark:bg-black/95 sm:p-6"
+      className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-5xl rounded-[var(--radius-xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]/95 p-3 shadow-lg backdrop-blur-md dark:bg-black/95 sm:bottom-5 sm:p-4"
     >
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+      <div className="mx-auto flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex-1">
           <h2
             id="cookie-consent-title"
@@ -125,14 +134,14 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
             {t("banner.description")}
           </p>
 
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
             {CATEGORIES.map(({ key, alwaysOn }) => {
               const inputId = `cookie-toggle-${key}`;
               return (
                 <label
                   key={key}
                   htmlFor={inputId}
-                  className="flex cursor-pointer items-start gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-3 transition-colors hover:border-[color:var(--blue-8)]"
+                  className="flex cursor-pointer items-start gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] p-2.5 transition-colors hover:border-[color:var(--blue-8)]"
                 >
                   <input
                     data-allow-native

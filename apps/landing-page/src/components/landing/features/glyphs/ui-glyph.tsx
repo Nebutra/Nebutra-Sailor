@@ -6,7 +6,7 @@ import type { SubpackageGlyphProps } from "./types";
 export function UiGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-2 rounded-md bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       <div className="absolute right-2 top-2">

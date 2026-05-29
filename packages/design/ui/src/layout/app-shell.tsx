@@ -66,7 +66,6 @@ export function AppShell({
   sidebarCollapsedWidth = DEFAULT_COLLAPSED_WIDTH,
   collapsed,
   defaultCollapsed = false,
-  onCollapsedChange,
   headerHeight = DEFAULT_HEADER_HEIGHT,
   contentClassName,
   className,
@@ -74,15 +73,6 @@ export function AppShell({
   const isControlled = collapsed !== undefined;
   const [internalCollapsed] = React.useState(defaultCollapsed);
   const isCollapsed = isControlled ? collapsed : internalCollapsed;
-
-  // Notify parent when the collapsed prop transitions (controlled-mode passthrough).
-  const lastReportedRef = React.useRef(isCollapsed);
-  React.useEffect(() => {
-    if (lastReportedRef.current !== isCollapsed) {
-      lastReportedRef.current = isCollapsed;
-      onCollapsedChange?.(isCollapsed);
-    }
-  }, [isCollapsed, onCollapsedChange]);
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -131,7 +121,7 @@ export function AppShell({
               aria-label="Open navigation menu"
               onClick={() => setMobileOpen(true)}
               className={cn(
-                "relative inline-flex size-8 items-center justify-center rounded-md text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
+                "relative inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
                 "hover:bg-muted hover:text-foreground md:hidden",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1",
               )}
@@ -150,7 +140,7 @@ export function AppShell({
               aria-label="Open navigation menu"
               onClick={() => setMobileOpen(true)}
               className={cn(
-                "relative inline-flex size-8 items-center justify-center rounded-md text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
+                "relative inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-foreground/80 after:absolute after:-inset-1.5 after:content-['']",
                 "hover:bg-muted hover:text-foreground",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1",
               )}

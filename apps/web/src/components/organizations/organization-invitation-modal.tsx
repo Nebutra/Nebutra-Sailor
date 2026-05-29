@@ -93,7 +93,7 @@ export function OrganizationInvitationModal({
     return (
       <section
         aria-labelledby="invitation-declined-heading"
-        className="mx-auto w-full max-w-md rounded-2xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm"
+        className="mx-auto w-full max-w-md rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm"
       >
         <h2
           id="invitation-declined-heading"
@@ -105,7 +105,7 @@ export function OrganizationInvitationModal({
         <button
           type="button"
           onClick={() => router.push("/")}
-          className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90"
+          className="mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90"
         >
           {t("backToDashboard")}
         </button>
@@ -116,7 +116,7 @@ export function OrganizationInvitationModal({
   return (
     <section
       aria-labelledby="invitation-heading"
-      className="mx-auto w-full max-w-md rounded-2xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm"
+      className="mx-auto w-full max-w-md rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 shadow-sm"
     >
       <div className="flex items-center gap-3">
         {logoUrl ? (
@@ -124,12 +124,12 @@ export function OrganizationInvitationModal({
           <img
             src={logoUrl}
             alt=""
-            className="h-12 w-12 rounded-lg border border-[var(--neutral-7)] object-cover"
+            className="h-12 w-12 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] object-cover"
           />
         ) : (
           <div
             aria-hidden="true"
-            className="flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-3)] text-sm font-semibold text-[var(--neutral-12)]"
+            className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-3)] text-sm font-semibold text-[var(--neutral-12)]"
           >
             {getInitials(organizationName) || "?"}
           </div>
@@ -155,7 +155,7 @@ export function OrganizationInvitationModal({
       {errorKey ? (
         <p
           role="alert"
-          className="mt-4 rounded-lg border border-[var(--status-danger)] bg-[var(--status-danger)]/10 px-3 py-2 text-sm text-[color:var(--status-danger)]"
+          className="mt-4 rounded-[var(--radius-lg)] border border-[var(--status-danger)] bg-[var(--status-danger)]/10 px-3 py-2 text-sm text-[color:var(--status-danger)]"
         >
           {tErrors(errorKey)}
         </p>
@@ -166,7 +166,7 @@ export function OrganizationInvitationModal({
           type="button"
           onClick={handleDecline}
           disabled={!!submitting}
-          className="inline-flex flex-1 items-center justify-center rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-3)] disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-12)] transition hover:bg-[var(--neutral-3)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting === "decline" ? t("declining") : t("decline")}
         </button>
@@ -174,7 +174,7 @@ export function OrganizationInvitationModal({
           type="button"
           onClick={handleAccept}
           disabled={!!submitting}
-          className="inline-flex flex-1 items-center justify-center rounded-lg bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--neutral-12)] px-4 py-2.5 text-sm font-medium text-[var(--neutral-1)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting === "accept" ? t("accepting") : t("accept")}
         </button>

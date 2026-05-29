@@ -135,7 +135,7 @@ export function SearchShowcase({ locale }: PackageShowcaseProps) {
             {RESULTS.map((r) => (
               <li
                 key={r.id}
-                className="rounded-md border border-border/60 bg-card p-3 transition-colors hover:bg-muted/40"
+                className="rounded-[var(--radius-md)] border border-border/60 bg-card p-3 transition-colors hover:bg-muted/40"
               >
                 <div className="flex items-start justify-between gap-3">
                   <p className="min-w-0 text-sm font-semibold text-foreground">

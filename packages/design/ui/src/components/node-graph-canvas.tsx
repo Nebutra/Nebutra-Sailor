@@ -29,6 +29,8 @@ import {
   Handle,
   type Node,
   type NodeChange,
+  type NodeProps,
+  type NodeTypes,
   Panel,
   Position,
   ReactFlow,
@@ -37,7 +39,7 @@ import {
 import "@xyflow/react/dist/style.css";
 import { Button } from "@lobehub/ui";
 import { cva } from "class-variance-authority";
-import { type CSSProperties, type ReactNode, useCallback, useId, useMemo, useState } from "react";
+import { type CSSProperties, type ReactNode, useId, useState } from "react";
 import { cn } from "../utils/cn";
 import { AnimateIn } from "./animate-in";
 import {
@@ -94,12 +96,42 @@ const XYFLOW_TOKEN_THEME: CSSProperties = {
 };
 
 const nodeCardVariants = cva(
-  "min-w-[160px] rounded-lg border bg-neutral-2 px-3 py-2 text-neutral-12 shadow-sm transition-colors",
+  "min-w-[160px] rounded-[var(--radius-lg)] border bg-neutral-2 px-3 py-2 text-neutral-12 shadow-sm transition-colors",
   {
     variants: { ready: { true: "border-success", false: "border-neutral-7" } },
     defaultVariants: { ready: false },
   },
 );
+
+type RenderedGraphFlowNode = Node<
+  {
+    node: GraphNode;
+    view: NodeView;
+  },
+  typeof GRAPH_NODE_FLOW_TYPE
+>;
+
+function GraphNodeCard({ data }: NodeProps<RenderedGraphFlowNode>) {
+  const view = data.view;
+
+  return (
+    <div className={nodeCardVariants({ ready: view.ready ?? false })}>
+      <Handle type="target" position={Position.Left} />
+      <div className="flex items-center gap-1.5 text-xs font-medium text-neutral-11 uppercase tracking-wide">
+        {view.icon}
+        {view.label}
+      </div>
+      {view.subtitle ? <div className="mt-0.5 text-sm text-neutral-12">{view.subtitle}</div> : null}
+      <Handle type="source" position={Position.Right} />
+    </div>
+  );
+}
+
+const NODE_TYPES = {
+  [GRAPH_NODE_FLOW_TYPE]: GraphNodeCard,
+} satisfies NodeTypes;
+
+const REACT_FLOW_PRO_OPTIONS = { hideAttribution: true };
 
 export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G extends Graph<N, E>>({
   graph,
@@ -113,91 +145,67 @@ export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G exte
   const statusId = useId();
   const [rejection, setRejection] = useState<string | null>(null);
 
-  const { nodes, edges } = useMemo(() => graphToFlow(graph, edgeIdentity), [graph, edgeIdentity]);
-
-  const nodeTypes = useMemo(
-    () => ({
-      [GRAPH_NODE_FLOW_TYPE]: ({ data }: { data: FlowNode<N>["data"] }) => {
-        const view = renderNode(data.node);
-        return (
-          <div className={nodeCardVariants({ ready: view.ready ?? false })}>
-            <Handle type="target" position={Position.Left} />
-            <div className="flex items-center gap-1.5 text-xs font-medium text-neutral-11 uppercase tracking-wide">
-              {view.icon}
-              {view.label}
-            </div>
-            {view.subtitle ? (
-              <div className="mt-0.5 text-sm text-neutral-12">{view.subtitle}</div>
-            ) : null}
-            <Handle type="source" position={Position.Right} />
-          </div>
-        );
-      },
-    }),
-    [renderNode],
-  );
-
-  const onNodesChange = useCallback(
-    (changes: NodeChange[]) => {
-      if (readOnly) return;
-      const removed = changes.filter(
-        (c): c is NodeChange & { type: "remove"; id: string } => c.type === "remove",
-      );
-      if (removed.length > 0) {
-        let next = graph;
-        for (const r of removed) next = removeNode(next, r.id);
-        onChange(next);
-        return;
-      }
-      const positional = changes.some((c) => c.type === "position" && c.dragging === false);
-      if (positional) {
-        const moved = nodes.map((n) => {
-          const change = changes.find((c) => c.type === "position" && c.id === n.id);
-          if (change && change.type === "position" && change.position) {
-            return { ...n, position: change.position } as FlowNode<N>;
-          }
-          return n as FlowNode<N>;
-        });
-        onChange(applyNodePositions(graph, moved));
-      }
+  const { nodes: graphNodes, edges } = graphToFlow(graph, edgeIdentity);
+  const nodes = graphNodes.map((node) => ({
+    ...node,
+    data: {
+      ...node.data,
+      view: renderNode(node.data.node),
     },
-    [graph, nodes, onChange, readOnly],
-  );
+  }));
 
-  const onEdgesChange = useCallback(
-    (changes: EdgeChange[]) => {
-      if (readOnly) return;
-      const removed = changes.filter(
-        (c): c is EdgeChange & { type: "remove"; id: string } => c.type === "remove",
-      );
-      if (removed.length === 0) return;
+  const onNodesChange = (changes: NodeChange[]) => {
+    if (readOnly) return;
+    const removed = changes.filter(
+      (c): c is NodeChange & { type: "remove"; id: string } => c.type === "remove",
+    );
+    if (removed.length > 0) {
       let next = graph;
-      for (const r of removed) next = removeFlowEdge(next, r.id, edgeIdentity);
+      for (const r of removed) next = removeNode(next, r.id);
       onChange(next);
-    },
-    [graph, edgeIdentity, onChange, readOnly],
-  );
+      return;
+    }
+    const positional = changes.some((c) => c.type === "position" && c.dragging === false);
+    if (positional) {
+      const moved = nodes.map((n) => {
+        const change = changes.find((c) => c.type === "position" && c.id === n.id);
+        if (change && change.type === "position" && change.position) {
+          return { ...n, position: change.position } as FlowNode<N>;
+        }
+        return n as FlowNode<N>;
+      });
+      onChange(applyNodePositions(graph, moved));
+    }
+  };
 
-  const onConnect = useCallback(
-    (connection: Connection) => {
-      if (readOnly) return;
-      const result = tryAddEdge(graph, connection, { makeEdge, edgeIdentity });
-      if (result.ok) {
-        setRejection(null);
-        onChange(result.graph);
-      } else {
-        setRejection(result.reason);
-      }
-    },
-    [graph, edgeIdentity, makeEdge, onChange, readOnly],
-  );
+  const onEdgesChange = (changes: EdgeChange[]) => {
+    if (readOnly) return;
+    const removed = changes.filter(
+      (c): c is EdgeChange & { type: "remove"; id: string } => c.type === "remove",
+    );
+    if (removed.length === 0) return;
+    let next = graph;
+    for (const r of removed) next = removeFlowEdge(next, r.id, edgeIdentity);
+    onChange(next);
+  };
+
+  const onConnect = (connection: Connection) => {
+    if (readOnly) return;
+    const result = tryAddEdge(graph, connection, { makeEdge, edgeIdentity });
+    if (result.ok) {
+      setRejection(null);
+      onChange(result.graph);
+    } else {
+      setRejection(result.reason);
+    }
+  };
 
   return (
     <AnimateIn preset="emerge">
       <div
         style={XYFLOW_TOKEN_THEME}
         className={cn(
-          "relative h-[480px] w-full overflow-hidden rounded-xl border border-neutral-7 bg-neutral-1",
+          "relative h-[480px] w-full overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1",
           className,
         )}
       >
@@ -205,7 +213,7 @@ export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G exte
           <ReactFlow
             nodes={nodes as Node[]}
             edges={edges as Edge[]}
-            nodeTypes={nodeTypes}
+            nodeTypes={NODE_TYPES}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
@@ -213,7 +221,7 @@ export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G exte
             nodesConnectable={!readOnly}
             elementsSelectable={!readOnly}
             fitView
-            proOptions={{ hideAttribution: true }}
+            proOptions={REACT_FLOW_PRO_OPTIONS}
           >
             <Background color="var(--neutral-6)" />
             <Controls showInteractive={!readOnly} />
@@ -223,7 +231,7 @@ export function NodeGraphCanvas<N extends GraphNode, E extends GraphEdge, G exte
                   id={statusId}
                   role="alert"
                   aria-live="assertive"
-                  className="flex items-center gap-2 rounded-md border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive"
+                  className="flex items-center gap-2 rounded-[var(--radius-md)] border border-destructive bg-destructive/10 px-3 py-2 text-sm text-destructive"
                 >
                   <span>{rejection}</span>
                   <Button

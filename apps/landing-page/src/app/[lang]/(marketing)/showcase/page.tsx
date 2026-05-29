@@ -80,7 +80,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
 
         {projects.length === 0 ? (
           <AnimateIn preset="fadeUp">
-            <div className="mt-16 rounded-xl border border-neutral-7 bg-neutral-2 p-12 text-center dark:border-white/10 dark:bg-white/5">
+            <div className="mt-16 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 p-12 text-center dark:border-white/10 dark:bg-white/5">
               <p className="text-lg font-medium text-neutral-12 dark:text-white">Coming soon</p>
               <p className="mt-2 text-sm text-neutral-11 dark:text-white/70">
                 Projects built with Nebutra Sailor will be featured here.
@@ -98,7 +98,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block overflow-hidden rounded-xl border border-neutral-7 bg-neutral-1 transition-shadow hover:shadow-lg dark:border-white/10 dark:bg-white/5"
+                  className="group block overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 transition-shadow hover:shadow-lg dark:border-white/10 dark:bg-white/5"
                 >
                   {project.screenshot?.asset ? (
                     <div className="relative aspect-video overflow-hidden bg-neutral-3 dark:bg-white/10">

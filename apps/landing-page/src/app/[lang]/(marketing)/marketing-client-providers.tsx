@@ -1,8 +1,8 @@
 "use client";
 
-import { domAnimation, LazyMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import { GoogleOneTap } from "@/components/auth/google-one-tap";
+import { MarketingMotionProvider } from "@/components/landing/AnimateIn";
 
 interface MarketingClientProvidersProps {
   appUrl: string;
@@ -22,7 +22,7 @@ export function MarketingClientProviders({
   googleOneTapEnabled,
 }: MarketingClientProvidersProps) {
   return (
-    <LazyMotion features={domAnimation}>
+    <MarketingMotionProvider>
       {children}
       <GoogleOneTap
         appUrl={appUrl}
@@ -31,6 +31,6 @@ export function MarketingClientProviders({
         clientId={googleClientId}
         enabled={googleOneTapEnabled}
       />
-    </LazyMotion>
+    </MarketingMotionProvider>
   );
 }

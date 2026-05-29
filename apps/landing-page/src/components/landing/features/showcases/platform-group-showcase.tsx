@@ -9,13 +9,18 @@ import {
   SettingsGear,
   Shield,
 } from "@nebutra/icons";
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Card, CardContent, CardHeader } from "@nebutra/ui/primitives/card";
-import { Field } from "@nebutra/ui/primitives/field";
-import { Gauge } from "@nebutra/ui/primitives/gauge";
-import { Input } from "@nebutra/ui/primitives/input";
-import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
-import { StatusDot } from "@nebutra/ui/primitives/status-dot";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  Field,
+  Gauge,
+  Input,
+  MetricCard,
+  MetricGrid,
+  StatusDot,
+} from "@nebutra/ui/primitives";
 
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
@@ -87,14 +92,14 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
     matchIdx !== -1 ? matchIdx : STACK_LAYERS.findIndex((l) => l.id === "platform");
 
   const inputCls =
-    "h-8 w-full rounded-md border border-border bg-background px-2 font-mono text-[11px] text-foreground";
+    "h-8 w-full rounded-[var(--radius-md)] border border-border bg-background px-2 font-mono text-[11px] text-foreground";
 
   return (
     <ShowcaseFrame>
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
               <Database className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{entry.label}</span>
@@ -113,7 +118,7 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
         <CardContent className="space-y-4 p-4 pt-0 md:p-5 md:pt-0">
           <div className="grid gap-4 md:grid-cols-[1fr_220px]">
             {/* Stack diagram */}
-            <div className="space-y-2 rounded-md border border-border/60 bg-muted/30 p-3">
+            <div className="space-y-2 rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-muted-foreground">{t.stackHeading}</span>
                 <Badge variant="gray-subtle" size="sm" icon={<Servers />}>
@@ -125,10 +130,10 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
                   const active = idx === highlightIdx;
                   const dim = active ? 1 : Math.max(0.4, 1 - Math.abs(idx - highlightIdx) * 0.18);
                   const rowCls = active
-                    ? "flex items-center gap-2 rounded-sm border border-blue-500/40 bg-[image:var(--brand-gradient)]/10 px-2 py-1.5 shadow-[0_0_0_1px_var(--blue-7),0_4px_18px_-4px_var(--blue-9)]"
-                    : "flex items-center gap-2 rounded-sm border border-border/40 bg-background/70 px-2 py-1.5";
+                    ? "flex items-center gap-2 rounded-[var(--radius-sm)] border border-primary/30 bg-primary/10 px-2 py-1.5 shadow-[0_0_0_1px_hsl(var(--primary)/0.28),0_4px_18px_-4px_hsl(var(--primary)/0.45)]"
+                    : "flex items-center gap-2 rounded-[var(--radius-sm)] border border-border/40 bg-background/70 px-2 py-1.5";
                   const iconCls = active
-                    ? "h-3.5 w-3.5 text-blue-600"
+                    ? "h-3.5 w-3.5 text-primary"
                     : "h-3.5 w-3.5 text-muted-foreground";
                   const lblCls = active
                     ? "flex-1 truncate font-mono text-xs font-semibold text-foreground"
@@ -154,7 +159,7 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
             </div>
 
             {/* Uptime gauge */}
-            <div className="flex flex-col items-center justify-center gap-2 rounded-md border border-border/60 bg-muted/30 p-3">
+            <div className="flex flex-col items-center justify-center gap-2 rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
               <span className="text-xs font-medium text-muted-foreground">{t.uptimeLabel}</span>
               <Gauge value={uptime} size="medium" showValue aria-label={t.uptimeLabel} />
               <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
@@ -164,7 +169,7 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
           </div>
 
           {/* Config panel */}
-          <div className="space-y-3 rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="space-y-3 rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-muted-foreground">{t.configHeading}</span>
               <Badge variant="gray-subtle" size="sm" icon={<SettingsGear />}>
@@ -200,7 +205,7 @@ export function PlatformGroupShowcase({ entry, locale }: PackageShowcaseProps) {
           </div>
 
           {/* Metrics */}
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={4} className="gap-3">
               <MetricCard
                 size="sm"

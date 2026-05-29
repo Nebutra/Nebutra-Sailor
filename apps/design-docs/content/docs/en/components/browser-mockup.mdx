@@ -83,3 +83,15 @@ All other `<div>` props are forwarded to the container element.
 - Use `Browser` for product screenshots, docs previews, and launch-page evidence where browser context helps comprehension.
 - Prefer real `children` for inspectable UI demos and `imageSrc` for static captured states.
 - Keep the frame subordinate to the content. If the browser chrome dominates the composition, use a plain image or card instead.
+
+## Real Product Examples
+
+- Feature pages showing a real dashboard state with the production URL or workspace route visible in the address bar.
+- Documentation pages that need to distinguish an in-browser app preview from a standalone component demo.
+- Launch notes or changelog entries where a captured product state needs browser context but no interaction.
+
+## Anti-patterns
+
+- Do not use `Browser` as a live app shell, iframe replacement, or navigation container. It is a presentation frame.
+- Do not put tiny screenshots inside the frame if labels, charts, or form states become unreadable.
+- Do not use decorative fake URLs for product-critical evidence. The address should help users understand where the state belongs.

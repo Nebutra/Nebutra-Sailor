@@ -4,18 +4,15 @@ import { notFound } from "next/navigation";
 import { MaturityBadge } from "@/components/maturity-badge";
 import { CopyCommand } from "@/components/registry/copy-command";
 import { StatusBadge } from "@/components/status-badge";
-import { loadRegistryIndex, loadRegistryItem } from "@/lib/registry";
-import { getRegistryStrings, REGISTRY_LANGS } from "@/lib/registry-strings";
+import { loadRegistryItem } from "@/lib/registry";
+import { getRegistryStrings } from "@/lib/registry-strings";
 
 const REGISTRY_HOST = process.env.NEXT_PUBLIC_REGISTRY_HOST ?? "https://ui.nebutra.com";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{ lang: string; name: string }>;
-}
-
-export async function generateStaticParams(): Promise<{ lang: string; name: string }[]> {
-  const index = loadRegistryIndex();
-  return REGISTRY_LANGS.flatMap((lang) => index.items.map((item) => ({ lang, name: item.name })));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

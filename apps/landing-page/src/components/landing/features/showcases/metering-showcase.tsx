@@ -176,7 +176,10 @@ export function MeteringShowcase({ locale }: PackageShowcaseProps) {
           const compact = kpi.format === "compact";
           const unit = kpi.unit ? ` ${kpi.unit[locale]}` : "";
           return (
-            <li key={kpi.id} className="rounded-md border border-border bg-card p-3">
+            <li
+              key={kpi.id}
+              className="rounded-[var(--radius-md)] border border-border bg-card p-3"
+            >
               <MetricCard
                 size="sm"
                 icon={<Icon aria-hidden="true" />}

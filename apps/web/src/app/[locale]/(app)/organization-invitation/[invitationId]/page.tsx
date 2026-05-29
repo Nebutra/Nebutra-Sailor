@@ -20,7 +20,7 @@ function InvitationStatusView({ title, description }: InvitationStatusViewProps)
   return (
     <section
       aria-labelledby="invitation-status-heading"
-      className="mx-auto w-full max-w-md rounded-2xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center shadow-sm"
+      className="mx-auto w-full max-w-md rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center shadow-sm"
     >
       <h2 id="invitation-status-heading" className="text-lg font-semibold text-[var(--neutral-12)]">
         {title}

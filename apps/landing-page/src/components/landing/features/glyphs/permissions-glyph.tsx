@@ -31,7 +31,7 @@ function Cell({ allow }: { allow: Allow }) {
 export function PermissionsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex flex-col gap-2 rounded-md bg-[var(--neutral-2)] p-3"
+      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">

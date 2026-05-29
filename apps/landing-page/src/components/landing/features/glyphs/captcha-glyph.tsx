@@ -14,7 +14,7 @@ const CELLS = [
 export function CaptchaGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full items-stretch gap-4 overflow-hidden rounded-lg bg-[var(--neutral-2)] p-4"
+      className="relative flex w-full items-stretch gap-4 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4"
       style={{ height: 160 }}
     >
       {/* Left: 3x2 challenge grid */}
@@ -27,7 +27,7 @@ export function CaptchaGlyph(_props: SubpackageGlyphProps) {
           {CELLS.map((cell, idx) => (
             <div
               key={idx}
-              className="relative h-7 w-7 overflow-hidden rounded-sm border"
+              className="relative h-7 w-7 overflow-hidden rounded-[var(--radius-sm)] border"
               style={{
                 background: cell.selected
                   ? "color-mix(in srgb, var(--brand-primary) 14%, var(--neutral-1))"

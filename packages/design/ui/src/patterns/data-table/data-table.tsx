@@ -11,6 +11,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
   const { showToolbar = true, enableColumnVisibility = true, extraActions } = props;
 
   const { table, state, refs, virtualization, helpers, data: tableData, t } = useDataTable(props);
+  const { scrollContainerRef } = refs;
 
   const { scrollIndicators } = state;
 
@@ -42,13 +43,9 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
         />
       ) : null}
 
-      <div className="rounded-xl border border-slate-200 bg-white shadow-inner dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
+      <div className="rounded-[var(--radius-xl)] border border-slate-200 bg-white shadow-inner dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
         <div className="relative">
-          <div
-            // eslint-disable-next-line react-hooks/refs
-            ref={refs.scrollContainerRef}
-            className="max-h-[60vh] overflow-auto"
-          >
+          <div ref={scrollContainerRef} className="max-h-[60vh] overflow-auto">
             <table
               className="min-w-[900px] table-fixed caption-bottom text-sm"
               style={{ width: tableDisplayWidth }}
@@ -58,8 +55,11 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                   <tr key={headerGroup.id} className="border-b border-slate-200">
                     {headerGroup.headers.map((header) => {
                       const isGroupHeader =
-                        Array.isArray((header.column.columnDef as { columns?: any[] }).columns) &&
-                        ((header.column.columnDef as { columns?: any[] }).columns?.length ?? 0) > 0;
+                        Array.isArray(
+                          (header.column.columnDef as { columns?: unknown[] }).columns,
+                        ) &&
+                        ((header.column.columnDef as { columns?: unknown[] }).columns?.length ??
+                          0) > 0;
                       const pinnedStyle = getPinnedStyles(header.column);
                       const isPinned = header.column.getIsPinned();
                       const zIndex = isPinned ? 20 : 10;
@@ -118,27 +118,43 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
               <tbody className="[&_tr:last-child]:border-0">
                 {shouldVirtualize && paddingTop > 0 ? (
                   <tr
-                    aria-hidden
+                    aria-label="Virtualized rows above"
                     className="pointer-events-none border-b border-slate-200 hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors"
                   >
                     <td
                       colSpan={table.getAllLeafColumns().length}
+                      aria-label="Virtualized rows above"
                       className="h-0 p-0 align-middle whitespace-nowrap"
                       style={{ height: `${paddingTop}px` }}
                     />
                   </tr>
                 ) : null}
                 {(shouldVirtualize ? virtualRows : rowModelRows).length ? (
-                  (shouldVirtualize ? virtualRows : rowModelRows).map((item) => {
-                    const rowIndex = shouldVirtualize ? (item as any).index : (item as any).index;
-                    const row = rowModelRows[rowIndex];
-                    if (!row) return null;
+                  shouldVirtualize ? (
+                    virtualRows.map((virtualRow) => {
+                      const row = rowModelRows[virtualRow.index];
+                      if (!row) return null;
 
-                    return (
+                      return (
+                        <MemoizedDataTableRow
+                          key={row.id}
+                          row={row}
+                          virtualRow={virtualRow}
+                          pinnedColumnStyles={pinnedColumnStyles}
+                          t={t}
+                          handleCellCopy={handleCellCopy}
+                          shouldMeasure={shouldMeasureRows}
+                          measureElement={rowVirtualizer.measureElement}
+                          cellSelection={cellSelection}
+                        />
+                      );
+                    })
+                  ) : (
+                    rowModelRows.map((row) => (
                       <MemoizedDataTableRow
                         key={row.id}
                         row={row}
-                        virtualRow={shouldVirtualize ? (item as any) : null}
+                        virtualRow={undefined}
                         pinnedColumnStyles={pinnedColumnStyles}
                         t={t}
                         handleCellCopy={handleCellCopy}
@@ -146,8 +162,8 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                         measureElement={rowVirtualizer.measureElement}
                         cellSelection={cellSelection}
                       />
-                    );
-                  })
+                    ))
+                  )
                 ) : (
                   <tr className="border-b border-slate-200 hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors">
                     <td
@@ -160,11 +176,12 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                 )}
                 {shouldVirtualize && paddingBottom > 0 ? (
                   <tr
-                    aria-hidden
+                    aria-label="Virtualized rows below"
                     className="pointer-events-none border-b border-slate-200 hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors"
                   >
                     <td
                       colSpan={table.getAllLeafColumns().length}
+                      aria-label="Virtualized rows below"
                       className="h-0 p-0 align-middle whitespace-nowrap"
                       style={{ height: `${paddingBottom}px` }}
                     />

@@ -67,7 +67,7 @@ function Connector({ filled }: { filled: boolean }) {
 export function OnboardingGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-3 rounded-md bg-gradient-to-br from-primary/[0.03] via-transparent to-transparent p-3"
+      className="flex w-full flex-col justify-between gap-3 rounded-[var(--radius-md)] bg-gradient-to-br from-primary/[0.03] via-transparent to-transparent p-3"
       style={{ height: 160 }}
     >
       <div className="flex items-center gap-1.5">

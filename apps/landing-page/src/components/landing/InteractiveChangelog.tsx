@@ -83,34 +83,24 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
   const debouncedSearch = useDebounce(searchQuery, 300);
   const [reactions, setReactions] = React.useState<Record<string, Record<string, number>>>({});
 
-  // Get unique tags from releases
-  const uniqueTags = React.useMemo(() => {
-    const tags = new Set<string>();
-    releases.forEach((release) => {
-      if (release.tag) tags.add(release.tag);
-    });
-    return Array.from(tags).sort();
-  }, [releases]);
+  const uniqueTags = Array.from(
+    new Set(releases.map((release) => release.tag).filter((tag): tag is string => Boolean(tag))),
+  ).sort();
 
-  // Filter and search logic
-  const filteredReleases = React.useMemo(() => {
-    return releases.filter((release) => {
-      // Apply tag filter
-      if (activeFilter && release.tag !== activeFilter) {
-        return false;
-      }
+  const filteredReleases = releases.filter((release) => {
+    if (activeFilter && release.tag !== activeFilter) {
+      return false;
+    }
 
-      // Apply search filter
-      if (debouncedSearch.trim()) {
-        const query = debouncedSearch.toLowerCase();
-        const matchesTitle = release.title.toLowerCase().includes(query);
-        const matchesExcerpt = release.excerpt.toLowerCase().includes(query);
-        return matchesTitle || matchesExcerpt;
-      }
+    if (debouncedSearch.trim()) {
+      const query = debouncedSearch.toLowerCase();
+      const matchesTitle = release.title.toLowerCase().includes(query);
+      const matchesExcerpt = release.excerpt.toLowerCase().includes(query);
+      return matchesTitle || matchesExcerpt;
+    }
 
-      return true;
-    });
-  }, [releases, activeFilter, debouncedSearch]);
+    return true;
+  });
 
   const getVersionSlug = (version: string) => {
     return version.replace(/[^a-zA-Z0-9.-]/g, "").toLowerCase() || "latest";
@@ -292,10 +282,10 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                 alt={item.title}
                                 width={1200}
                                 height={700}
-                                className="max-h-96 w-full rounded-lg border border-[var(--neutral-7)] dark:border-[var(--neutral-2)] object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
+                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] dark:border-[var(--neutral-2)] object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
                                 unoptimized={item.image?.endsWith(".svg")}
                               />
-                              <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-transparent to-black/50 opacity-100" />
+                              <div className="absolute inset-0 rounded-[var(--radius-lg)] bg-gradient-to-b from-transparent to-black/50 opacity-100" />
                             </div>
                           </DialogTrigger>
 
@@ -439,7 +429,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         alt={item.title}
                         width={1200}
                         height={700}
-                        className="max-h-96 w-full rounded-lg border border-[var(--neutral-7)] dark:border-[var(--neutral-3)] object-cover"
+                        className="max-h-96 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] dark:border-[var(--neutral-3)] object-cover"
                         unoptimized={item.image?.endsWith(".svg")}
                       />
                       {item.content}

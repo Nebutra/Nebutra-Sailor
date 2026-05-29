@@ -162,7 +162,7 @@ export function HeroMockupWindow() {
                   {CODE_LINES.map(({ id, lineNumber, tokens }) => (
                     <div
                       key={id}
-                      className="min-w-fit flex hover:bg-muted/30 transition-colors rounded-sm -mx-1 px-1"
+                      className="min-w-fit flex hover:bg-muted/30 transition-colors rounded-[var(--radius-sm)] -mx-1 px-1"
                     >
                       <span className="inline-block text-right pr-4 select-none text-[11px] w-7 shrink-0 py-px text-muted-foreground/30">
                         {lineNumber}

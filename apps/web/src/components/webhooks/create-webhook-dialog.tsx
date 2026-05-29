@@ -113,7 +113,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
     return (
       <div
         role="alert"
-        className="rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900"
+        className="rounded-[var(--radius-md)] border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900"
       >
         <p className="mb-2 font-medium">Endpoint created — copy the signing secret now.</p>
         <p className="mb-3 text-xs">
@@ -126,7 +126,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
           <button
             type="button"
             onClick={() => copySecret(signingSecret)}
-            className="rounded-md border border-amber-300 px-3 py-2 text-xs font-medium text-amber-800 hover:bg-amber-100"
+            className="rounded-[var(--radius-md)] border border-amber-300 px-3 py-2 text-xs font-medium text-amber-800 hover:bg-amber-100"
           >
             {copied ? "Copied!" : "Copy"}
           </button>
@@ -194,7 +194,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
         <button
           type="submit"
           disabled={status.kind === "submitting" || !url || selected.size === 0}
-          className="rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
+          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
           style={{ background: "var(--brand-gradient)" }}
         >
           {status.kind === "submitting" ? "Creating…" : "Create endpoint"}

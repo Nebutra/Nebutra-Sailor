@@ -49,7 +49,7 @@ export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-lg bg-[var(--neutral-1)] p-3 shadow-sm ring-1 ring-[var(--neutral-6)]">
+      <div className="mx-auto flex w-full max-w-[320px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 shadow-sm ring-1 ring-[var(--neutral-6)]">
         {ROWS.map((row) => (
           <div key={row.name} className="flex flex-col gap-0.5">
             {/* Top row: name · toggle · rollout % */}

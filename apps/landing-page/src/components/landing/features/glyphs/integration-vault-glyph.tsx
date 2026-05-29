@@ -44,7 +44,7 @@ export function IntegrationVaultGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-md bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -63,7 +63,7 @@ export function IntegrationVaultGlyph({ locale }: SubpackageGlyphProps) {
         {SECRETS.map(({ provider, masked, Icon }) => (
           <div
             key={provider}
-            className="flex items-center justify-between gap-2 rounded-sm border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
+            className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
           >
             <div className="flex min-w-0 items-center gap-1.5">
               <Icon className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />

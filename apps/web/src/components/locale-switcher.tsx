@@ -23,14 +23,14 @@ export function LocaleSwitcher() {
       <button
         type="button"
         disabled={isPending}
-        className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+        className="flex items-center gap-2 rounded-[var(--radius-md)] px-3 py-2 text-sm font-medium hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
       >
         <Globe className="w-4 h-4" />
         <span className="uppercase">{locale}</span>
       </button>
 
       {/* Simple dropdown just for demo; replaced with better UI primitive in prod */}
-      <div className="absolute right-0 mt-1 w-32 origin-top-right rounded-md bg-white dark:bg-neutral-900 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block z-50">
+      <div className="absolute right-0 mt-1 w-32 origin-top-right rounded-[var(--radius-md)] bg-white dark:bg-neutral-900 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden group-hover:block z-50">
         <div className="py-1" role="menu">
           {["en", "zh"].map((cur) => (
             <button

@@ -118,7 +118,7 @@ export function CommunicationPreferences({
         </p>
       </header>
 
-      <div className="overflow-hidden rounded-xl border border-neutral-7 dark:border-white/10">
+      <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 dark:border-white/10">
         <ul className="divide-y divide-neutral-6 dark:divide-white/10">
           {ROWS.map((row) => {
             const Icon = row.icon;
@@ -130,7 +130,7 @@ export function CommunicationPreferences({
                 className="flex items-start justify-between gap-4 bg-neutral-1 px-4 py-3 dark:bg-white/[0.02]"
               >
                 <div className="flex min-w-0 items-start gap-3">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-neutral-2 text-neutral-11 dark:bg-white/10 dark:text-white/60">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-neutral-2 text-neutral-11 dark:bg-white/10 dark:text-white/60">
                     <Icon className="h-3.5 w-3.5" />
                   </div>
                   <div className="min-w-0">

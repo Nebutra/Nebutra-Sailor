@@ -194,7 +194,7 @@ export function InboxList({
                   e.stopPropagation();
                   void onArchive(item.id);
                 }}
-                className="rounded-md p-1 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)]"
+                className="rounded-[var(--radius-md)] p-1 text-[var(--neutral-11)] hover:bg-[var(--neutral-3)]"
               >
                 <Trash2 className="size-4" aria-hidden="true" />
               </button>

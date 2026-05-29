@@ -32,7 +32,7 @@ export function IPMockup() {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-xl overflow-hidden shadow-sm flex flex-col"
+        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Top bar */}
         <div className="px-4 py-2 border-b border-border flex items-center gap-4 shrink-0">
@@ -52,7 +52,7 @@ export function IPMockup() {
               {posts.map((p, i) => (
                 <div
                   key={p.title}
-                  className={`p-2.5 rounded-lg cursor-default ${i === 0 ? "bg-muted/60 border border-border" : ""}`}
+                  className={`p-2.5 rounded-[var(--radius-lg)] cursor-default ${i === 0 ? "bg-muted/60 border border-border" : ""}`}
                 >
                   <div className="text-[11px] font-semibold text-foreground leading-snug">
                     {p.title}
@@ -73,7 +73,7 @@ export function IPMockup() {
           </div>
           {/* Preview */}
           <div className="flex-1 p-4 flex flex-col min-w-0">
-            <div className="h-28 rounded-lg bg-muted/40 border border-border flex items-center justify-center mb-3 shrink-0">
+            <div className="h-28 rounded-[var(--radius-lg)] bg-muted/40 border border-border flex items-center justify-center mb-3 shrink-0">
               <Eye className="h-6 w-6 text-muted-foreground/30" />
             </div>
             <div className="text-sm font-bold text-foreground leading-snug">

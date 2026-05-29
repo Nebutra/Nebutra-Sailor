@@ -164,7 +164,7 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
               alt={block.alt || "Changelog image"}
               width={1200}
               height={675}
-              className="rounded-lg max-w-full h-auto mt-4 mb-4"
+              className="rounded-[var(--radius-lg)] max-w-full h-auto mt-4 mb-4"
             />
           );
         }

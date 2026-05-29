@@ -60,6 +60,18 @@ npx shadcn@latest add https://ui.nebutra.com/r/status-dot.json
 - Treat pulsing as activity state, not severity. Only `QUEUED` and `BUILDING` animate.
 - When the surrounding row already names the state, pass `decorative`; otherwise render `label` or keep the accessible label.
 
+## Real Product Examples
+
+- Deployment tables showing `QUEUED`, `BUILDING`, `READY`, `ERROR`, `CANCELED`, or `DELETED` for each release.
+- Environment headers where the deployment state sits beside a commit SHA and production URL.
+- Build-detail timelines where the dot labels the current deployment lifecycle step.
+
+## Anti-patterns
+
+- Do not reuse `StatusDot` for arbitrary queues, billing status, user presence, or integration health.
+- Do not add pulsing to error or ready states to attract attention. Motion means active deployment work only.
+- Do not render an unlabeled dot in dense tables unless adjacent text already names the state.
+
 ## Storybook / Registry
 
 - Storybook source: `packages/design/ui/src/primitives/status-dot.stories.tsx`.

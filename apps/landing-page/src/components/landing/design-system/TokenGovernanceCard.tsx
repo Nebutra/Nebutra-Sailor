@@ -8,7 +8,7 @@ export function TokenGovernanceCard() {
     <div className="relative flex h-full flex-col overflow-hidden p-6 md:p-8">
       {/* Header */}
       <div className="relative z-10 flex items-center gap-3 mb-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary/10 text-primary">
           <ShieldCheck className="h-4 w-4" />
         </div>
         <h3 className="text-lg font-bold tracking-tight text-foreground line-clamp-1">
@@ -17,9 +17,9 @@ export function TokenGovernanceCard() {
       </div>
 
       {/* CI Mockup */}
-      <div className="relative z-10 mt-auto flex flex-col h-[180px] w-full rounded-xl border border-border/60 bg-background p-4 shadow-sm font-mono text-xs overflow-hidden group">
+      <div className="relative z-10 mt-auto flex flex-col h-[180px] w-full rounded-[var(--radius-xl)] border border-border/60 bg-background p-4 shadow-sm font-mono text-xs overflow-hidden group">
         <div className="flex items-center justify-between border-b border-border/50 pb-2 mb-3">
-          <div className="flex items-center gap-2 text-foreground font-semibold bg-muted px-2 py-0.5 rounded-md border border-border/50">
+          <div className="flex items-center gap-2 text-foreground font-semibold bg-muted px-2 py-0.5 rounded-[var(--radius-md)] border border-border/50">
             <GitBranch className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
             <span className="font-bold text-[10px]">token-sync.yml</span>
           </div>
@@ -56,7 +56,7 @@ export function TokenGovernanceCard() {
               <div className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse" />
             </div>
             <span className="text-foreground font-semibold">verify contrast (WCAG)</span>
-            <span className="ml-auto text-muted-foreground font-bold animate-pulse hidden sm:inline-block border border-border/50 bg-muted/30 px-1.5 rounded-sm">
+            <span className="ml-auto text-muted-foreground font-bold animate-pulse hidden sm:inline-block border border-border/50 bg-muted/30 px-1.5 rounded-[var(--radius-sm)]">
               11s
             </span>
           </div>

@@ -175,7 +175,7 @@ export default function IntegrationsPage() {
 
                     <div className="flex items-start gap-3">
                       <div
-                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${catalog?.bgColor ?? "bg-neutral-3"}`}
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] ${catalog?.bgColor ?? "bg-neutral-3"}`}
                       >
                         <Icon className={`h-5 w-5 ${catalog?.color ?? "text-neutral-11"}`} />
                       </div>
@@ -196,7 +196,7 @@ export default function IntegrationsPage() {
                       <button
                         type="button"
                         onClick={() => handleToggle(integration.id, integration.isActive)}
-                        className={`flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                        className={`flex items-center gap-1 rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors ${
                           integration.isActive
                             ? "bg-amber-3 text-amber-11 hover:bg-amber-4"
                             : "bg-green-3 text-green-11 hover:bg-green-4"
@@ -215,7 +215,7 @@ export default function IntegrationsPage() {
                       <button
                         type="button"
                         onClick={() => handleDisconnect(integration.id)}
-                        className="flex items-center gap-1 rounded-md bg-red-3 px-2.5 py-1.5 text-xs font-medium text-red-11 transition-colors hover:bg-red-4"
+                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-red-3 px-2.5 py-1.5 text-xs font-medium text-red-11 transition-colors hover:bg-red-4"
                       >
                         <X className="h-3 w-3" /> Disconnect
                       </button>
@@ -265,7 +265,7 @@ export default function IntegrationsPage() {
                 >
                   <div className="flex items-start gap-3">
                     <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${item.bgColor}`}
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] ${item.bgColor}`}
                     >
                       <Icon className={`h-5 w-5 ${item.color}`} />
                     </div>
@@ -290,7 +290,7 @@ export default function IntegrationsPage() {
                         type="button"
                         disabled={isConnecting_}
                         onClick={() => handleConnect(item.type, item.name)}
-                        className="flex items-center gap-1 rounded-md bg-[var(--brand-9)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--brand-10)] disabled:opacity-50"
+                        className="flex items-center gap-1 rounded-[var(--radius-md)] bg-[var(--brand-9)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--brand-10)] disabled:opacity-50"
                       >
                         {isConnecting_ ? (
                           <Loader2 className="h-3 w-3 animate-spin" />

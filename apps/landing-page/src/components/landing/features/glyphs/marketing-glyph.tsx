@@ -37,12 +37,12 @@ export function MarketingGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden="true"
-      className="flex w-full flex-col justify-between gap-2.5 rounded-lg bg-[var(--neutral-2)] px-4 py-3"
+      className="flex w-full flex-col justify-between gap-2.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Header row: icon + campaign name + status badge */}
       <div className="flex items-center gap-2.5">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[var(--neutral-3)] text-[var(--neutral-11)]">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-3)] text-[var(--neutral-11)]">
           <Notification className="h-3.5 w-3.5" />
         </span>
         <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
@@ -57,7 +57,7 @@ export function MarketingGlyph({ locale }: SubpackageGlyphProps) {
 
       {/* 3-cell stat strip */}
       <div className="grid grid-cols-3 gap-1.5">
-        <div className="flex flex-col gap-0.5 rounded-md bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-6)]">
+        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-6)]">
           <span className="text-[9px] uppercase tracking-wide text-[var(--neutral-10)]">
             {copy.sent}
           </span>
@@ -65,14 +65,14 @@ export function MarketingGlyph({ locale }: SubpackageGlyphProps) {
             12,400
           </span>
         </div>
-        <div className="flex flex-col gap-0.5 rounded-md bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-6)]">
+        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-6)]">
           <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wide text-[var(--neutral-10)]">
             <Users className="h-2.5 w-2.5" />
             {copy.opens}
           </span>
           <span className="font-mono text-[12px] font-semibold text-[var(--neutral-12)]">47%</span>
         </div>
-        <div className="flex flex-col gap-0.5 rounded-md bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-6)]">
+        <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-6)]">
           <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wide text-[var(--neutral-10)]">
             <ChartTrendingUp className="h-2.5 w-2.5" />
             {copy.clicks}

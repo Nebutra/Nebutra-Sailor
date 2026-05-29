@@ -21,7 +21,7 @@ export function MobileDrawer() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="relative z-[60] flex size-11 items-center justify-center rounded-lg text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+        className="relative z-[60] flex size-11 items-center justify-center rounded-[var(--radius-lg)] text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
         aria-label="Toggle menu"
       >
         {open ? <Cross className="size-6" /> : <Menu className="size-6" />}
@@ -129,14 +129,14 @@ export function MobileDrawer() {
                   <a
                     href={`${APP_URL}/sign-in`}
                     onClick={() => setOpen(false)}
-                    className="w-full rounded-lg border border-neutral-7 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border dark:text-white"
+                    className="w-full rounded-[var(--radius-lg)] border border-neutral-7 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border dark:text-white"
                   >
                     {t("signIn")}
                   </a>
                   <a
                     href={`${APP_URL}/sign-up`}
                     onClick={() => setOpen(false)}
-                    className="w-full rounded-lg bg-[color:var(--neutral-12)] px-4 py-3 text-center text-sm font-medium text-[color:var(--neutral-1)]"
+                    className="w-full rounded-[var(--radius-lg)] bg-[color:var(--neutral-12)] px-4 py-3 text-center text-sm font-medium text-[color:var(--neutral-1)]"
                   >
                     {t("getStarted")}
                   </a>

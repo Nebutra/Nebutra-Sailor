@@ -56,7 +56,7 @@ export function LocaleSwitcher() {
         aria-expanded={open}
         disabled={isPending}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center gap-2 rounded-md px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+        className="inline-flex items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
       >
         <Globe className="h-4 w-4" aria-hidden />
         <span className="uppercase">{locale}</span>
@@ -66,7 +66,7 @@ export function LocaleSwitcher() {
         <div
           role="menu"
           aria-label={t("ariaLabel")}
-          className="absolute right-0 z-50 mt-1 w-36 rounded-md border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
+          className="absolute right-0 z-50 mt-1 w-36 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
         >
           {LOCALES.map((cur) => {
             const isActive = locale === cur;
@@ -77,7 +77,7 @@ export function LocaleSwitcher() {
                 role="menuitem"
                 aria-current={isActive ? "true" : undefined}
                 onClick={() => handleLocaleChange(cur)}
-                className="flex w-full items-center justify-between rounded-sm px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+                className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
               >
                 <span>{t(cur)}</span>
                 {isActive && <Check className="h-3.5 w-3.5" aria-hidden />}

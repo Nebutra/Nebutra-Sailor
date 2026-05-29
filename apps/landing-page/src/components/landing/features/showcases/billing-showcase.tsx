@@ -1,12 +1,16 @@
 "use client";
 
 import { Calendar, ChartTrendingUp, CreditCard, Sparkles } from "@nebutra/icons";
-
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Card, CardContent, CardHeader } from "@nebutra/ui/primitives/card";
-import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
-import { Progress } from "@nebutra/ui/primitives/progress";
-import { StatusDot } from "@nebutra/ui/primitives/status-dot";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  MetricCard,
+  MetricGrid,
+  Progress,
+  StatusDot,
+} from "@nebutra/ui/primitives";
 
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
@@ -100,7 +104,7 @@ export function BillingShowcase({ locale }: PackageShowcaseProps) {
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
               <CreditCard className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{copy.title}</span>
@@ -111,7 +115,7 @@ export function BillingShowcase({ locale }: PackageShowcaseProps) {
           </div>
         </CardHeader>
         <CardContent className="space-y-5 p-4 pt-0 md:p-5 md:pt-0">
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={4} className="gap-3">
               {copy.metrics.map((metric) => (
                 <MetricCard
@@ -127,7 +131,7 @@ export function BillingShowcase({ locale }: PackageShowcaseProps) {
           </div>
 
           <div className="grid gap-4 md:grid-cols-5">
-            <div className="space-y-3 rounded-md border border-border/60 bg-card p-4 md:col-span-3">
+            <div className="space-y-3 rounded-[var(--radius-md)] border border-border/60 bg-card p-4 md:col-span-3">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                   {copy.invoice.heading}
@@ -168,7 +172,7 @@ export function BillingShowcase({ locale }: PackageShowcaseProps) {
               </div>
             </div>
 
-            <div className="space-y-3 rounded-md border border-border/60 bg-card p-4 md:col-span-2">
+            <div className="space-y-3 rounded-[var(--radius-md)] border border-border/60 bg-card p-4 md:col-span-2">
               <div className="flex items-center gap-1.5">
                 <ChartTrendingUp className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
                 <span className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">

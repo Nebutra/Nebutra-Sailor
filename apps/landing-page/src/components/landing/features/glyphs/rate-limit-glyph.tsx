@@ -48,7 +48,7 @@ export function RateLimitGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-md bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       <header className="flex items-center gap-1.5 font-mono text-[10px] text-[var(--neutral-11)]">

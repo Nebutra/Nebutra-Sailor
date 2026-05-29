@@ -183,7 +183,7 @@ function DefaultErrorFallback({
 
     case "compact":
       return (
-        <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+        <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[var(--radius-lg)]">
           <AlertCircle className="size-5 text-red-600 dark:text-red-400 shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-red-800 dark:text-red-200 truncate">
@@ -206,7 +206,7 @@ function DefaultErrorFallback({
 
     default:
       return (
-        <div className="flex flex-col items-center justify-center p-6 bg-muted/50 border border-border rounded-lg">
+        <div className="flex flex-col items-center justify-center p-6 bg-muted/50 border border-border rounded-[var(--radius-lg)]">
           <div className="size-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4">
             <AlertCircle className="size-6 text-red-600 dark:text-red-400" />
           </div>
@@ -233,26 +233,6 @@ function DefaultErrorFallback({
 }
 
 // ============================================================================
-// HOC for wrapping components
-// ============================================================================
-
-export function withErrorBoundary<P extends object>(
-  WrappedComponent: React.ComponentType<P>,
-  options: Omit<ErrorBoundaryProps, "children"> = {},
-): React.FC<P> {
-  const displayName = WrappedComponent.displayName || WrappedComponent.name || "Component";
-
-  const WithErrorBoundary: React.FC<P> = (props) => (
-    <ErrorBoundary componentName={displayName} {...options}>
-      <WrappedComponent {...props} />
-    </ErrorBoundary>
-  );
-
-  WithErrorBoundary.displayName = `WithErrorBoundary(${displayName})`;
-  return WithErrorBoundary;
-}
-
-// ============================================================================
 // Specialized Error Boundaries
 // ============================================================================
 
@@ -271,7 +251,7 @@ export function TableErrorBoundary({
       componentName={tableName || "表格"}
       variant="compact"
       fallback={({ error, resetError }) => (
-        <div className="border border-border rounded-lg overflow-hidden">
+        <div className="border border-border rounded-[var(--radius-lg)] overflow-hidden">
           <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20">
             <div className="flex items-center gap-2">
               <AlertCircle className="size-4 text-red-600 dark:text-red-400" />

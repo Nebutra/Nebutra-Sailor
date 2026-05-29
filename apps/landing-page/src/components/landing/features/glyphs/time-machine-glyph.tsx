@@ -16,7 +16,7 @@ const MARKERS = [
 export function TimeMachineGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex flex-col gap-2.5 rounded-lg bg-neutral-2/40 p-3"
+      className="relative flex flex-col gap-2.5 rounded-[var(--radius-lg)] bg-neutral-2/40 p-3"
       style={{ height: 160 }}
     >
       {/* Header row */}

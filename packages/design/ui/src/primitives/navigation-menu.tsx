@@ -1,10 +1,11 @@
 "use client";
 
 import { ChevronDown } from "@nebutra/icons";
-import { cva } from "class-variance-authority";
 import * as React from "react";
 
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { navigationMenuTriggerStyle } from "./navigation-menu-variants";
 
 const NavigationMenuContext = React.createContext<{
   value: string;
@@ -25,9 +26,10 @@ const NavigationMenu = ({
   const [uncontrolledValue, setUncontrolledValue] = React.useState("");
   const value = controlledValue !== undefined ? controlledValue : uncontrolledValue;
   const setValue = onValueChange || setUncontrolledValue;
+  const contextValue = { value, onValueChange: setValue };
 
   return (
-    <NavigationMenuContext.Provider value={{ value, onValueChange: setValue }}>
+    <NavigationMenuContext.Provider value={contextValue}>
       <div
         ref={ref}
         className={cn("relative z-10 flex max-w-max flex-1 items-center justify-center", className)}
@@ -67,8 +69,10 @@ const NavigationMenuItem = ({
 }) => {
   const defaultId = React.useId();
   const itemValue = value || defaultId;
+  const contextValue = { value: itemValue };
+
   return (
-    <NavigationMenuItemContext.Provider value={{ value: itemValue }}>
+    <NavigationMenuItemContext.Provider value={contextValue}>
       <li ref={ref} className={cn("relative", className)} {...props}>
         {children}
       </li>
@@ -76,10 +80,6 @@ const NavigationMenuItem = ({
   );
 };
 NavigationMenuItem.displayName = "NavigationMenuItem";
-
-const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50",
-);
 
 const NavigationMenuTrigger = ({
   className,
@@ -96,6 +96,7 @@ const NavigationMenuTrigger = ({
 
   return (
     <button
+      type="button"
       ref={ref}
       data-state={isOpen ? "open" : "closed"}
       onClick={() => onValueChange(isOpen ? "" : itemValue)}
@@ -105,7 +106,7 @@ const NavigationMenuTrigger = ({
     >
       {children}{" "}
       <ChevronDown
-        className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+        className="relative top-[1px] ml-1 h-3 w-3 transition-transform duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] group-data-[state=open]:rotate-180 motion-reduce:transition-none"
         aria-hidden="true"
       />
     </button>
@@ -128,10 +129,13 @@ const NavigationMenuContent = ({
   return (
     <div
       ref={ref}
-      className={cn("left-0 top-full w-full absolute pt-1.5 md:w-auto", className)}
+      className={cn("absolute left-0 top-full w-full pt-1.5 md:w-auto", className)}
       {...props}
     >
-      <div className="overflow-hidden rounded-xl border bg-background/90 backdrop-blur-md text-popover-foreground shadow-xl animate-in fade-in zoom-in-95 duration-200">
+      <div
+        className={overlayClassNames.navigationMenuSurface}
+        style={{ zIndex: overlayZIndex.popover }}
+      >
         {children}
       </div>
     </div>
@@ -144,7 +148,7 @@ const NavigationMenuLink = ({
   active,
   className,
   children,
-  href = "#",
+  href,
   onClick,
   ref,
   ...props
@@ -174,7 +178,6 @@ const NavigationMenuLink = ({
       href={href}
       data-active={active ? "" : undefined}
       onClick={(event) => {
-        if (href === "#") event.preventDefault();
         onValueChange("");
         onClick?.(event);
       }}
@@ -218,5 +221,4 @@ export {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
-  navigationMenuTriggerStyle,
 };

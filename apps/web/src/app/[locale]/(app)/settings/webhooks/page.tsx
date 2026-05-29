@@ -43,12 +43,12 @@ export default function WebhooksSettingsPage() {
         </p>
       </header>
 
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">New endpoint</h2>
         <CreateWebhookDialog onCreated={handleCreated} />
       </section>
 
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <h2 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">Active endpoints</h2>
         <WebhooksList
           key={refreshKey}
@@ -63,7 +63,7 @@ export default function WebhooksSettingsPage() {
       </section>
 
       {activeDeliveries && (
-        <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
+        <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)]">
           <WebhookDeliveriesPanel
             endpointId={activeDeliveries}
             onClose={() => setActiveDeliveries(null)}

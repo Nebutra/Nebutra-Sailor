@@ -100,3 +100,15 @@ export function CreateProjectModal() {
 - Use `Sheet` or `Drawer` when surrounding page context should remain readable, and use a dedicated page for routine create/edit flows with many fields.
 - Titles are short Title Case statements, not questions. Subtitles are sentence case and should explain consequence, scope, or next step.
 - Keep actions to two buttons in normal flows. More than two actions usually means the flow belongs in a page-level surface.
+
+## Real Product Examples
+
+- Creating a project from an empty workspace when only a name, region, and default observability choice are required.
+- Rotating an API key after the user has reviewed the affected integrations and can cancel safely.
+- Inviting a teammate from a team table when the form is short and the surrounding list should stay in context after submit.
+
+## Anti-patterns
+
+- Do not use `Modal` for long create/edit workflows with multiple sections. Move those flows to a page or route-level form.
+- Do not use it for passive information that users can read inline without blocking the page.
+- Do not use it for destructive actions that need typed confirmation unless the flow includes a dedicated confirmation gate or `DestructiveActionModal`.

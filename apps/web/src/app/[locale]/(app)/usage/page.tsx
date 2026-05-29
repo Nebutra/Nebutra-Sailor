@@ -72,12 +72,12 @@ function UsageGauge({
 
       {/* Warning */}
       {isCritical && (
-        <div className="mt-3 rounded-lg border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11">
+        <div className="mt-3 rounded-[var(--radius-lg)] border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11">
           ⛔ Quota nearly exhausted. Upgrade your plan to avoid service interruption.
         </div>
       )}
       {isWarning && !isCritical && (
-        <div className="mt-3 rounded-lg border border-amber-6 bg-amber-2 px-3 py-2 text-xs text-amber-11">
+        <div className="mt-3 rounded-[var(--radius-lg)] border border-amber-6 bg-amber-2 px-3 py-2 text-xs text-amber-11">
           ⚠️ Approaching quota limit. Consider upgrading to avoid disruptions.
         </div>
       )}

@@ -10,7 +10,7 @@ import {
   type Transition,
   useReducedMotion,
 } from "framer-motion";
-import { type ReactElement, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { type ReactElement, type RefObject, useEffect, useId, useRef, useState } from "react";
 import { cn } from "../utils/cn";
 
 /* -------------------------------------------------------------------------- *\
@@ -136,40 +136,283 @@ function CircleProgress({ percentage, reduceMotion }: CircleProgressProps) {
 
 function scanHeadings(selector: string): HeadingData[] {
   const elements = Array.from(document.querySelectorAll(selector)) as HTMLElement[];
+  const valid: HeadingData[] = [];
 
-  const valid = elements
-    .filter((el) => !el.hasAttribute("data-toc-ignore"))
-    .map((el, index) => {
-      if (!el.id) {
-        const slug =
-          el.textContent
-            ?.toLowerCase()
-            .replace(/\s+/g, "-")
-            .replace(/[^\w-]/g, "") || `toc-heading-${index}`;
-        el.id = slug;
-      }
+  for (const [index, el] of elements.entries()) {
+    if (el.hasAttribute("data-toc-ignore")) continue;
 
-      const depthAttr = el.getAttribute("data-toc-depth");
-      let level = 2;
-      if (depthAttr) {
-        const parsed = Number.parseInt(depthAttr, 10);
+    if (!el.id) {
+      const slug =
+        el.textContent
+          ?.toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]/g, "") || `toc-heading-${index}`;
+      el.id = slug;
+    }
+
+    const depthAttr = el.getAttribute("data-toc-depth");
+    let level = 2;
+    if (depthAttr) {
+      const parsed = Number.parseInt(depthAttr, 10);
+      if (!Number.isNaN(parsed)) level = parsed;
+    } else {
+      const tag = el.tagName.toUpperCase();
+      if (tag.length === 2 && tag.startsWith("H")) {
+        const parsed = Number.parseInt(tag[1] ?? "", 10);
         if (!Number.isNaN(parsed)) level = parsed;
-      } else {
-        const tag = el.tagName.toUpperCase();
-        if (tag.length === 2 && tag.startsWith("H")) {
-          const parsed = Number.parseInt(tag[1] ?? "", 10);
-          if (!Number.isNaN(parsed)) level = parsed;
-        }
       }
+    }
 
-      const text = el.getAttribute("data-toc-title") || el.textContent || "Section";
-      return { id: el.id, text, level, element: el };
-    });
+    const text = el.getAttribute("data-toc-title") || el.textContent || "Section";
+    valid.push({ id: el.id, text, level, element: el });
+  }
 
   valid.sort((a, b) =>
     a.element.compareDocumentPosition(b.element) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1,
   );
   return valid;
+}
+
+type TocBackdropProps = {
+  isExpanded: boolean;
+  onClose: () => void;
+};
+
+function TocBackdrop({ isExpanded, onClose }: TocBackdropProps) {
+  return (
+    <AnimatePresence>
+      {isExpanded && (
+        <m.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ ...islandTween, duration: motionDurationSec.flow }}
+          className="fixed inset-0 -z-10 bg-foreground/20 backdrop-blur-[4px]"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
+    </AnimatePresence>
+  );
+}
+
+type TocClosedPillProps = {
+  buttonRef: RefObject<HTMLButtonElement | null>;
+  isExpanded: boolean;
+  activeId: string | null;
+  activeHeading: HeadingData | undefined;
+  emptyLabel: string;
+  ariaLabel: string;
+  menuLabelId: string;
+  progress: number;
+  reduceMotion: boolean;
+  onOpen: () => void;
+};
+
+function TocClosedPill({
+  buttonRef,
+  isExpanded,
+  activeId,
+  activeHeading,
+  emptyLabel,
+  ariaLabel,
+  menuLabelId,
+  progress,
+  reduceMotion,
+  onOpen,
+}: TocClosedPillProps) {
+  return (
+    <m.button
+      ref={buttonRef}
+      type="button"
+      aria-expanded={isExpanded}
+      aria-controls={isExpanded ? menuLabelId : undefined}
+      aria-label={activeHeading ? `Table of contents — current: ${activeHeading.text}` : ariaLabel}
+      onClick={onOpen}
+      initial={false}
+      animate={
+        reduceMotion
+          ? { opacity: isExpanded ? 0 : 1 }
+          : {
+              opacity: isExpanded ? 0 : 1,
+              scale: isExpanded ? 0.95 : 1,
+              filter: isExpanded ? "blur(4px)" : "blur(0px)",
+            }
+      }
+      transition={
+        reduceMotion
+          ? { duration: 0 }
+          : { ...islandTween, delay: isExpanded ? 0 : motionDurationSec.micro }
+      }
+      className={cn(
+        "absolute inset-0 flex w-full items-center gap-4 border-0 bg-transparent px-4 text-left text-foreground outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 sm:px-5",
+        isExpanded && "pointer-events-none",
+      )}
+    >
+      <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-foreground" />
+      <span className="relative flex h-full flex-1 items-center overflow-hidden">
+        <AnimatePresence mode="popLayout" initial={false}>
+          <m.span
+            key={activeId || "empty"}
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
+            transition={{
+              duration: reduceMotion ? 0 : motionDurationSec.reveal,
+              ease: ISLAND_EASE,
+            }}
+            className="block w-full overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium text-foreground"
+          >
+            {activeHeading?.text || emptyLabel}
+          </m.span>
+        </AnimatePresence>
+      </span>
+      <CircleProgress percentage={progress} reduceMotion={reduceMotion} />
+    </m.button>
+  );
+}
+
+type TocExpandedMenuProps = {
+  isExpanded: boolean;
+  ariaLabel: string;
+  menuLabelId: string;
+  menuHeading: string;
+  headings: HeadingData[];
+  activeId: string | null;
+  hoveredId: string | null;
+  minLevel: number;
+  reduceMotion: boolean;
+  firstMenuItemRef: RefObject<HTMLButtonElement | null>;
+  onClose: () => void;
+  onHover: (id: string | null) => void;
+  onJump: (heading: HeadingData) => void;
+};
+
+function TocExpandedMenu({
+  isExpanded,
+  ariaLabel,
+  menuLabelId,
+  menuHeading,
+  headings,
+  activeId,
+  hoveredId,
+  minLevel,
+  reduceMotion,
+  firstMenuItemRef,
+  onClose,
+  onHover,
+  onJump,
+}: TocExpandedMenuProps) {
+  return (
+    <m.div
+      role="menu"
+      id={menuLabelId}
+      aria-label={ariaLabel}
+      initial={false}
+      animate={{
+        opacity: isExpanded ? 1 : 0,
+        scale: reduceMotion ? 1 : isExpanded ? 1 : 1.05,
+      }}
+      transition={
+        reduceMotion
+          ? { duration: 0 }
+          : { ...islandTween, delay: isExpanded ? motionDurationSec.micro : 0 }
+      }
+      className={cn("absolute inset-0 flex flex-col", !isExpanded && "pointer-events-none")}
+    >
+      <div className="flex shrink-0 items-center justify-between px-6 pb-3 pt-5">
+        <span className="text-[11px] font-semibold tracking-[0.08em] text-muted-foreground">
+          {menuHeading}
+        </span>
+        <button
+          type="button"
+          aria-label="Close table of contents"
+          onClick={onClose}
+          className="text-muted-foreground transition-colors duration-micro hover:text-foreground focus-visible:text-foreground focus-visible:outline-none"
+        >
+          <X className="h-5 w-5" aria-hidden="true" />
+        </button>
+      </div>
+
+      <div
+        className="flex-1 overflow-y-auto overscroll-contain px-3 pb-4"
+        data-lenis-prevent="true"
+      >
+        <div className="flex flex-col gap-0.5">
+          {headings.map((heading, index) => (
+            <TocMenuItem
+              key={heading.id}
+              heading={heading}
+              isActive={activeId === heading.id}
+              isHovered={hoveredId === heading.id}
+              paddingLeft={Math.max(0, heading.level - minLevel) * 14 + 12}
+              ref={index === 0 ? firstMenuItemRef : undefined}
+              reduceMotion={reduceMotion}
+              onHover={onHover}
+              onJump={onJump}
+            />
+          ))}
+        </div>
+      </div>
+    </m.div>
+  );
+}
+
+type TocMenuItemProps = {
+  heading: HeadingData;
+  isActive: boolean;
+  isHovered: boolean;
+  paddingLeft: number;
+  reduceMotion: boolean;
+  onHover: (id: string | null) => void;
+  onJump: (heading: HeadingData) => void;
+  ref?: RefObject<HTMLButtonElement | null> | undefined;
+};
+
+function TocMenuItem({
+  heading,
+  isActive,
+  isHovered,
+  paddingLeft,
+  reduceMotion,
+  onHover,
+  onJump,
+  ref,
+}: TocMenuItemProps) {
+  return (
+    <button
+      ref={ref}
+      role="menuitem"
+      type="button"
+      aria-current={isActive ? "location" : undefined}
+      onMouseEnter={() => onHover(heading.id)}
+      onMouseLeave={() => onHover(null)}
+      onFocus={() => onHover(heading.id)}
+      onBlur={() => onHover(null)}
+      onClick={() => onJump(heading)}
+      style={{ paddingLeft: `${paddingLeft}px` }}
+      className={cn(
+        "group flex w-full shrink-0 cursor-pointer items-center rounded-[var(--radius-lg)] border-none py-2 pr-3 text-left text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-out",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40",
+        isActive && "bg-foreground/10 font-medium text-foreground",
+        !isActive && isHovered && "bg-foreground/5 text-foreground/85",
+        !isActive && !isHovered && "bg-transparent text-foreground/45",
+      )}
+    >
+      <span className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap transition-transform duration-reveal group-hover:translate-x-1 group-focus-visible:translate-x-1">
+        {heading.text}
+      </span>
+      <m.span
+        aria-hidden="true"
+        initial={false}
+        animate={{ scale: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
+        transition={
+          reduceMotion ? { duration: 0 } : { duration: motionDurationSec.reveal, ease: "easeOut" }
+        }
+        className="ml-3 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground"
+      />
+    </button>
+  );
 }
 
 // --- Main Component ---
@@ -185,47 +428,58 @@ export function DynamicIslandTOC({
   const menuLabelId = useId();
 
   const [headings, setHeadings] = useState<HeadingData[]>([]);
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [scrollState, setScrollState] = useState<{ activeId: string | null; progress: number }>({
+    activeId: null,
+    progress: 0,
+  });
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   const pillButtonRef = useRef<HTMLButtonElement | null>(null);
   const firstMenuItemRef = useRef<HTMLButtonElement | null>(null);
 
   // 1. DOM scan — immediate, with MutationObserver fallback for hydration races.
   useEffect(() => {
-    const immediate = scanHeadings(selector);
-    if (immediate.length > 0) {
-      setHeadings(immediate);
-      return;
-    }
-
-    setHeadings([]);
+    let observer: MutationObserver | null = null;
+    let disposed = false;
     const target = document.querySelector("main") ?? document.body;
-    const observer = new MutationObserver(() => {
-      const next = scanHeadings(selector);
-      if (next.length > 0) {
-        setHeadings(next);
-        observer.disconnect();
-      }
-    });
-    observer.observe(target, { childList: true, subtree: true });
 
-    const stopAfter = window.setTimeout(() => observer.disconnect(), 3000);
+    const applyScan = () => {
+      if (disposed) return false;
+      const next = scanHeadings(selector);
+      setHeadings(next);
+      return next.length > 0;
+    };
+
+    const scanFrame = window.requestAnimationFrame(() => {
+      if (applyScan() || disposed) return;
+      observer = new MutationObserver(() => {
+        if (applyScan()) {
+          observer?.disconnect();
+          observer = null;
+        }
+      });
+      observer.observe(target, { childList: true, subtree: true });
+    });
+
+    const stopAfter = window.setTimeout(() => {
+      if (observer) {
+        observer.disconnect();
+        observer = null;
+      }
+    }, 3000);
+
     return () => {
-      observer.disconnect();
+      disposed = true;
+      observer?.disconnect();
+      window.cancelAnimationFrame(scanFrame);
       window.clearTimeout(stopAfter);
     };
   }, [selector]);
 
   // 2. Scroll spy + progress.
   useEffect(() => {
-    if (headings.length === 0) {
-      setActiveId(null);
-      setProgress(0);
-      return;
-    }
+    if (headings.length === 0) return;
 
     const handleScroll = () => {
       let current: string | null = null;
@@ -234,10 +488,12 @@ export function DynamicIslandTOC({
         if (top <= SCROLL_SPY_OFFSET) current = h.id;
         else break;
       }
-      setActiveId(current ?? headings[0]?.id ?? null);
 
       const total = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(total > 0 ? Math.min(100, Math.max(0, (window.scrollY / total) * 100)) : 0);
+      setScrollState({
+        activeId: current ?? headings[0]?.id ?? null,
+        progress: total > 0 ? Math.min(100, Math.max(0, (window.scrollY / total) * 100)) : 0,
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -266,23 +522,19 @@ export function DynamicIslandTOC({
     }
   }, [isExpanded]);
 
+  const activeId = headings.length === 0 ? null : scrollState.activeId;
+  const progress = headings.length === 0 ? 0 : scrollState.progress;
   const activeHeading = headings.find((h) => h.id === activeId);
 
   // Normalize indentation so the highest-level heading touches the left edge.
-  const minLevel = useMemo(() => {
-    if (headings.length === 0) return 1;
-    return Math.min(...headings.map((h) => h.level));
-  }, [headings]);
+  const minLevel = headings.length === 0 ? 1 : Math.min(...headings.map((h) => h.level));
 
-  const handleJump = useCallback(
-    (h: HeadingData) => {
-      const y = h.element.getBoundingClientRect().top + window.scrollY - SCROLL_TOP_OFFSET;
-      window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
-      setIsExpanded(false);
-      pillButtonRef.current?.focus();
-    },
-    [reduceMotion],
-  );
+  function handleJump(h: HeadingData) {
+    const y = h.element.getBoundingClientRect().top + window.scrollY - SCROLL_TOP_OFFSET;
+    window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
+    setIsExpanded(false);
+    pillButtonRef.current?.focus();
+  }
 
   // Reduced-motion variants — opacity only, no shape morph.
   const pillAnimate = reduceMotion
@@ -302,20 +554,7 @@ export function DynamicIslandTOC({
           className,
         )}
       >
-        {/* Backdrop */}
-        <AnimatePresence>
-          {isExpanded && (
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ ...islandTween, duration: motionDurationSec.flow }}
-              className="fixed inset-0 -z-10 bg-foreground/20 backdrop-blur-[4px]"
-              onClick={() => setIsExpanded(false)}
-              aria-hidden="true"
-            />
-          )}
-        </AnimatePresence>
+        <TocBackdrop isExpanded={isExpanded} onClose={() => setIsExpanded(false)} />
 
         {/* Pill entrance + morph wrapper */}
         <m.div
@@ -329,143 +568,36 @@ export function DynamicIslandTOC({
             transition={reduceMotion ? { duration: 0 } : islandTween}
             className="relative overflow-hidden border border-foreground/10 bg-background text-foreground shadow-2xl"
           >
-            {/* CLOSED state — pill button */}
-            <m.button
-              ref={pillButtonRef}
-              type="button"
-              aria-expanded={isExpanded}
-              aria-controls={isExpanded ? menuLabelId : undefined}
-              aria-label={
-                activeHeading ? `Table of contents — current: ${activeHeading.text}` : ariaLabel
-              }
-              onClick={() => setIsExpanded(true)}
-              initial={false}
-              animate={
-                reduceMotion
-                  ? { opacity: isExpanded ? 0 : 1 }
-                  : {
-                      opacity: isExpanded ? 0 : 1,
-                      scale: isExpanded ? 0.95 : 1,
-                      filter: isExpanded ? "blur(4px)" : "blur(0px)",
-                    }
-              }
-              transition={
-                reduceMotion
-                  ? { duration: 0 }
-                  : { ...islandTween, delay: isExpanded ? 0 : motionDurationSec.micro }
-              }
-              className={cn(
-                "absolute inset-0 flex w-full items-center gap-4 border-0 bg-transparent px-4 text-left text-foreground outline-none focus-visible:ring-2 focus-visible:ring-foreground/40 sm:px-5",
-                isExpanded && "pointer-events-none",
-              )}
-            >
-              <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-full bg-foreground" />
-              <span className="relative flex h-full flex-1 items-center overflow-hidden">
-                <AnimatePresence mode="popLayout" initial={false}>
-                  <m.span
-                    key={activeId || "empty"}
-                    initial={reduceMotion ? false : { opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
-                    transition={{
-                      duration: reduceMotion ? 0 : motionDurationSec.reveal,
-                      ease: ISLAND_EASE,
-                    }}
-                    className="block w-full overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium text-foreground"
-                  >
-                    {activeHeading?.text || emptyLabel}
-                  </m.span>
-                </AnimatePresence>
-              </span>
-              <CircleProgress percentage={progress} reduceMotion={reduceMotion} />
-            </m.button>
-
-            {/* EXPANDED state — menu */}
-            <m.div
-              role="menu"
-              id={menuLabelId}
-              aria-label={ariaLabel}
-              initial={false}
-              animate={{
-                opacity: isExpanded ? 1 : 0,
-                scale: reduceMotion ? 1 : isExpanded ? 1 : 1.05,
+            <TocClosedPill
+              buttonRef={pillButtonRef}
+              isExpanded={isExpanded}
+              activeId={activeId}
+              activeHeading={activeHeading}
+              emptyLabel={emptyLabel}
+              ariaLabel={ariaLabel}
+              menuLabelId={menuLabelId}
+              progress={progress}
+              reduceMotion={reduceMotion}
+              onOpen={() => setIsExpanded(true)}
+            />
+            <TocExpandedMenu
+              isExpanded={isExpanded}
+              ariaLabel={ariaLabel}
+              menuLabelId={menuLabelId}
+              menuHeading={menuHeading}
+              headings={headings}
+              activeId={activeId}
+              hoveredId={hoveredId}
+              minLevel={minLevel}
+              reduceMotion={reduceMotion}
+              firstMenuItemRef={firstMenuItemRef}
+              onClose={() => {
+                setIsExpanded(false);
+                pillButtonRef.current?.focus();
               }}
-              transition={
-                reduceMotion
-                  ? { duration: 0 }
-                  : { ...islandTween, delay: isExpanded ? motionDurationSec.micro : 0 }
-              }
-              className={cn("absolute inset-0 flex flex-col", !isExpanded && "pointer-events-none")}
-            >
-              <div className="flex shrink-0 items-center justify-between px-6 pb-3 pt-5">
-                <span className="text-[11px] font-semibold tracking-[0.08em] text-muted-foreground">
-                  {menuHeading}
-                </span>
-                <button
-                  type="button"
-                  aria-label="Close table of contents"
-                  onClick={() => {
-                    setIsExpanded(false);
-                    pillButtonRef.current?.focus();
-                  }}
-                  className="text-muted-foreground transition-colors duration-micro hover:text-foreground focus-visible:text-foreground focus-visible:outline-none"
-                >
-                  <X className="h-5 w-5" aria-hidden="true" />
-                </button>
-              </div>
-
-              <div
-                className="flex-1 overflow-y-auto overscroll-contain px-3 pb-4"
-                data-lenis-prevent="true"
-              >
-                <div className="flex flex-col gap-0.5">
-                  {headings.map((h, i) => {
-                    const isActive = activeId === h.id;
-                    const isHovered = hoveredId === h.id;
-                    const indent = Math.max(0, h.level - minLevel);
-                    const paddingLeft = indent * 14 + 12;
-
-                    return (
-                      <button
-                        key={h.id}
-                        ref={i === 0 ? firstMenuItemRef : undefined}
-                        role="menuitem"
-                        type="button"
-                        aria-current={isActive ? "location" : undefined}
-                        onMouseEnter={() => setHoveredId(h.id)}
-                        onMouseLeave={() => setHoveredId(null)}
-                        onFocus={() => setHoveredId(h.id)}
-                        onBlur={() => setHoveredId(null)}
-                        onClick={() => handleJump(h)}
-                        style={{ paddingLeft: `${paddingLeft}px` }}
-                        className={cn(
-                          "group flex w-full shrink-0 cursor-pointer items-center rounded-lg border-none py-2 pr-3 text-left text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-out",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/40",
-                          isActive && "bg-foreground/10 font-medium text-foreground",
-                          !isActive && isHovered && "bg-foreground/5 text-foreground/85",
-                          !isActive && !isHovered && "bg-transparent text-foreground/45",
-                        )}
-                      >
-                        <span className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap transition-transform duration-reveal group-hover:translate-x-1 group-focus-visible:translate-x-1">
-                          {h.text}
-                        </span>
-                        <m.span
-                          aria-hidden="true"
-                          initial={false}
-                          animate={{ scale: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
-                          transition={
-                            reduceMotion
-                              ? { duration: 0 }
-                              : { duration: motionDurationSec.reveal, ease: "easeOut" }
-                          }
-                          className="ml-3 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground"
-                        />
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </m.div>
+              onHover={setHoveredId}
+              onJump={handleJump}
+            />
           </m.div>
         </m.div>
       </nav>

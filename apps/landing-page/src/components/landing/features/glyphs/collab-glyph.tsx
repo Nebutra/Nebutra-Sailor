@@ -42,7 +42,7 @@ export function CollabGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       style={{ height: 160 }}
-      className="relative flex w-full flex-col justify-between gap-2 overflow-hidden rounded-lg bg-[var(--neutral-2)] px-3 py-3"
+      className="relative flex w-full flex-col justify-between gap-2 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
       aria-hidden="true"
     >
       {/* Header */}
@@ -80,7 +80,9 @@ export function CollabGlyph(_props: SubpackageGlyphProps) {
           style={g.style}
         >
           <span className={`h-1.5 w-1.5 rounded-full ${g.bg}`} />
-          <span className={`rounded-sm px-1 py-px font-mono text-[9px] text-white ${g.bg}`}>
+          <span
+            className={`rounded-[var(--radius-sm)] px-1 py-px font-mono text-[9px] text-white ${g.bg}`}
+          >
             {g.name}
           </span>
         </div>

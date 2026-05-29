@@ -69,7 +69,7 @@ export function PresetGlyph({ locale }: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden
-      className="flex w-full flex-col gap-1.5 rounded-lg bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       {/* 2x2 preset grid */}
@@ -79,7 +79,7 @@ export function PresetGlyph({ locale }: SubpackageGlyphProps) {
           return (
             <li
               key={id}
-              className="flex flex-col justify-between rounded-md bg-[var(--neutral-1)] px-2 py-1.5"
+              className="flex flex-col justify-between rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1.5"
               style={active ? { boxShadow: "inset 0 0 0 1px var(--brand-primary)" } : undefined}
             >
               <div className="flex items-center justify-between gap-1">

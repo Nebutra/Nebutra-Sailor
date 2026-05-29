@@ -21,6 +21,10 @@ export interface AvatarSmartGroupProps {
   tooltipBg?: string;
 }
 
+function getAvatarUserKey(user: User): string {
+  return [user.name, user.role ?? "member", user.image ?? "no-image"].join("|");
+}
+
 export function AvatarSmartGroup({
   users,
   variant = "uniform",
@@ -31,27 +35,36 @@ export function AvatarSmartGroup({
   hoverScale = 1.1,
   tooltipBg = "bg-popover",
 }: AvatarSmartGroupProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [activeKey, setActiveKey] = useState<string | null>(null);
   const centerIndex = Math.floor(users.length / 2);
 
   return (
     <TooltipProvider delayDuration={0}>
-      <div className="flex items-center justify-center -space-x-4" style={{ gap: `${overlap}px` }}>
+      <div
+        className="flex items-center justify-center"
+        style={overlap >= 0 ? { gap: `${overlap}px` } : undefined}
+      >
         {users.map((user, index) => {
+          const userKey = getAvatarUserKey(user);
           const isCenter = variant === "centered" && index === centerIndex;
           const avatarSize = variant === "centered" ? (isCenter ? size + sizeStep : size) : size;
 
           return (
-            <Tooltip key={index}>
+            <Tooltip key={userKey}>
               <TooltipTrigger asChild>
-                <div
-                  className={`rounded-full ring-2 ${ringColor} transition-transform duration-200 cursor-pointer border-none outline-none`}
+                <button
+                  type="button"
+                  aria-label={user.role ? `${user.name}, ${user.role}` : user.name}
+                  className={`rounded-full ring-2 ${ringColor} transition-transform duration-200 cursor-pointer border-none bg-transparent p-0 outline-none`}
                   style={{
-                    transform: activeIndex === index ? `scale(${hoverScale})` : "scale(1)",
+                    marginLeft: index > 0 && overlap < 0 ? `${overlap}px` : undefined,
+                    transform: activeKey === userKey ? `scale(${hoverScale})` : "scale(1)",
                     zIndex: isCenter ? 10 : 0,
                   }}
-                  onMouseEnter={() => setActiveIndex(index)}
-                  onMouseLeave={() => setActiveIndex(null)}
+                  onFocus={() => setActiveKey(userKey)}
+                  onBlur={() => setActiveKey(null)}
+                  onMouseEnter={() => setActiveKey(userKey)}
+                  onMouseLeave={() => setActiveKey(null)}
                 >
                   <Avatar
                     className="border-none"
@@ -68,10 +81,10 @@ export function AvatarSmartGroup({
                         .join("")}
                     </AvatarFallback>
                   </Avatar>
-                </div>
+                </button>
               </TooltipTrigger>
               <TooltipContent
-                className={`${tooltipBg} text-popover-foreground shadow-md rounded-lg px-3 py-2 border-inherit`}
+                className={`${tooltipBg} text-popover-foreground shadow-md rounded-[var(--radius-lg)] px-3 py-2 border-inherit`}
               >
                 <p className="font-semibold">{user.name}</p>
                 {user.role && <p className="text-xs opacity-80">{user.role}</p>}

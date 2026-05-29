@@ -39,11 +39,11 @@ function getModeClasses(runtime: NotificationRuntimeStatus): string {
 
 export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSource }: Props) {
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-2xl">
           <div className="flex items-center gap-3">
-            <div className="rounded-md bg-[var(--neutral-2)] p-2 text-[var(--neutral-11)]">
+            <div className="rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-2 text-[var(--neutral-11)]">
               <BellRing className="h-4 w-4" aria-hidden />
             </div>
             <div>
@@ -63,7 +63,7 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
       </div>
 
       <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-        <div className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
           <div className="flex items-center gap-2 text-sm font-medium text-[var(--neutral-12)]">
             <DatabaseZap className="h-4 w-4 text-[var(--neutral-11)]" aria-hidden />
             Preferences
@@ -75,7 +75,7 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
           </p>
         </div>
 
-        <div className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
           <div className="flex items-center gap-2 text-sm font-medium text-[var(--neutral-12)]">
             <RadioTower className="h-4 w-4 text-[var(--neutral-11)]" aria-hidden />
             Inbox
@@ -87,7 +87,7 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
           </p>
         </div>
 
-        <div className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+        <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
           <div className="text-sm font-medium text-[var(--neutral-12)]">Missing integration</div>
           <p className="mt-2 text-sm text-[var(--neutral-11)]">
             {runtime.missing.length > 0

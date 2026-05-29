@@ -21,7 +21,7 @@ export function SmsGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-md bg-[var(--neutral-2)]"
+      className="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)]"
       style={{ height: 160 }}
     >
       {/* Top row — provider chip + channel label */}
@@ -38,7 +38,7 @@ export function SmsGlyph({ locale }: SubpackageGlyphProps) {
       {/* Message bubble */}
       <div className="px-4 pt-3">
         <div className="flex justify-end">
-          <div className="max-w-[88%] rounded-2xl rounded-br-md bg-primary/15 px-3 py-2 text-[11px] leading-snug text-foreground">
+          <div className="max-w-[88%] rounded-[var(--radius-2xl)] rounded-br-md bg-primary/15 px-3 py-2 text-[11px] leading-snug text-foreground">
             {message}
           </div>
         </div>

@@ -218,7 +218,7 @@ export function OrganizationLogoForm({
   }
 
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <h3 className="text-sm font-medium text-[var(--neutral-12)]">
         {t("organizations.settings.logo.title")}
       </h3>
@@ -265,7 +265,7 @@ export function OrganizationLogoForm({
           />
           <label
             htmlFor="organization-logo-input"
-            className={`inline-flex cursor-pointer items-center justify-center rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] ${
+            className={`inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] ${
               pending ? "cursor-not-allowed opacity-50" : ""
             }`}
           >

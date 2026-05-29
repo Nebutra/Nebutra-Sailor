@@ -77,3 +77,27 @@ import { CheckCircle2, AlertCircle, XCircle } from "lucide-react";
 
 - The status only affects icon colors — the badge container always uses `bg-background` with a `border`.
 - The divider between labels is a `1px` wide `bg-border` element.
+
+## Accessibility
+
+- The two labels must remain textual; icons and color are secondary signals.
+- Keep each label short enough to wrap predictably in compact status rows.
+- When the same state is already named in nearby copy, avoid repeating redundant icon-only badges.
+
+## Design Contract
+
+- Use `StatusBadge` for compact paired status copy, such as capability plus current condition.
+- Keep the left label as the entity or capability and the right label as the current state or qualifier.
+- Status color is an affordance, not the contract. The labels must still explain the state without color.
+
+## Real Product Examples
+
+- Security settings rows showing `Protection` plus `SSO disabled` or `SCIM active`.
+- Region or environment headers pairing a location with its current rollout state.
+- Integration cards summarizing provider connection health and the last successful sync label.
+
+## Anti-patterns
+
+- Do not use `StatusBadge` as a severity alert, toast, or validation error. Use the dedicated feedback component for those flows.
+- Do not put long sentences in either side of the badge; switch to normal body copy when the state needs explanation.
+- Do not use multiple badges as the only filterable status control in a dense table. Use a table column with text and an accessible filter.

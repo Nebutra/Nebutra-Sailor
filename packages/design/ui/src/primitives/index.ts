@@ -69,7 +69,9 @@ export * from "./awards";
 export { Badge, type BadgeProps, badgeVariants } from "./badge";
 export * from "./badge-1";
 export * from "./base-badge";
+export { baseBadgeVariants } from "./base-badge-variants";
 export * from "./base-button";
+export { baseButtonVariants } from "./base-button-variants";
 /**
  * @registry https://ui.nebutra.com/r/bento-grid.json
  * @distribution dual-track (npm + shadcn registry) until 2026-11-09.
@@ -90,8 +92,8 @@ export {
   ButtonLink,
   type ButtonLinkProps,
   type ButtonProps,
-  buttonVariants,
 } from "./button";
+export { buttonVariants } from "./button-variants";
 export * from "./canvas-reveal-effect";
 export * from "./card";
 export * from "./card-spotlight";
@@ -187,6 +189,7 @@ export * from "./empty-state";
 export * from "./enable-2fa-card";
 export * from "./entity";
 export * from "./error-boundary";
+export * from "./error-boundary-helpers";
 export * from "./error-message";
 export * from "./expandable-gallery";
 export * from "./expandable-tabs";
@@ -319,6 +322,7 @@ export * from "./modal";
 export * from "./multi-select";
 export * from "./multiple-selector";
 export * from "./navigation-menu";
+export { navigationMenuTriggerStyle } from "./navigation-menu-variants";
 export * from "./neuro-noise-bg";
 export * from "./noise-pattern-card";
 export * from "./note";
@@ -445,6 +449,7 @@ export * from "./toaster";
 export * from "./todo-tool";
 export * from "./toggle";
 export * from "./toggle-group";
+export { toggleGroupItemVariants, toggleGroupVariants } from "./toggle-group-variants";
 export {
   Tooltip,
   TooltipContent,

@@ -60,7 +60,7 @@ function TreeNodes({
         parentPath={parentPath}
       >
         <TreeNodeTrigger
-          className={`group/trigger flex min-h-8 min-w-max w-full items-center rounded-md py-1 pr-4 transition-colors hover:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)] ${
+          className={`group/trigger flex min-h-8 min-w-max w-full items-center rounded-[var(--radius-md)] py-1 pr-4 transition-colors hover:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)] ${
             isTopLevel ? "px-1 font-semibold" : "px-1"
           }`}
           title={node.path}
@@ -72,7 +72,7 @@ function TreeNodes({
           {node.icon && featureHref ? (
             <Link
               aria-label={`${node.label} feature page`}
-              className="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
               href={featureHref}
               onClick={(event) => event.stopPropagation()}
             >

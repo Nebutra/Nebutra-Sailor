@@ -44,7 +44,7 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       aria-hidden
-      className="flex w-full flex-col justify-between gap-2 rounded-lg bg-[var(--neutral-2)] px-3 py-3"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-3"
       style={{ height: 160 }}
     >
       {/* Pipeline row */}
@@ -56,7 +56,7 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
         {STAGES.map((stage) => (
           <div key={stage.key} className="flex items-center gap-1.5">
             <ArrowRight className="h-3 w-3 shrink-0 text-[var(--neutral-10)]" />
-            <div className="flex items-center gap-1 rounded-md bg-[var(--neutral-1)] px-1.5 py-1 ring-1 ring-[var(--neutral-6)]">
+            <div className="flex items-center gap-1 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-1.5 py-1 ring-1 ring-[var(--neutral-6)]">
               <Check className="h-3 w-3 text-[color:var(--status-success)]" />
               <span className="font-mono text-[10px] text-[var(--neutral-12)]">{stage.label}</span>
             </div>
@@ -74,7 +74,7 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
         {METRICS.map((metric) => (
           <div
             key={metric.key}
-            className="flex flex-1 flex-col gap-0.5 rounded-md bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-5)]"
+            className="flex flex-1 flex-col gap-0.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1.5 ring-1 ring-[var(--neutral-5)]"
           >
             <span className="font-mono text-[9px] uppercase tracking-wide text-[var(--neutral-10)]">
               {metric.label}

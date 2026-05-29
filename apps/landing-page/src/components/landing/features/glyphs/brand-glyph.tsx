@@ -42,7 +42,7 @@ const TYPE_SAMPLES: ReadonlyArray<TypeSample> = [
 export function BrandGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-lg bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -61,7 +61,7 @@ export function BrandGlyph(_props: SubpackageGlyphProps) {
         {SWATCHES.map((swatch) => (
           <li
             key={swatch.name}
-            className="flex h-7 flex-1 items-center justify-center rounded-md"
+            className="flex h-7 flex-1 items-center justify-center rounded-[var(--radius-md)]"
             style={{ background: swatch.background }}
           >
             <span
@@ -75,7 +75,7 @@ export function BrandGlyph(_props: SubpackageGlyphProps) {
       </ul>
 
       {/* Typography samples */}
-      <div className="flex flex-1 items-center justify-around rounded-md bg-[var(--neutral-1)] px-2">
+      <div className="flex flex-1 items-center justify-around rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2">
         {TYPE_SAMPLES.map((sample, idx) => (
           <span
             key={sample.className}

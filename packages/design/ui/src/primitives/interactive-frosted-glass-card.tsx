@@ -52,16 +52,16 @@ export function InteractiveFrostedGlassCard({
   }, []);
 
   const cardClasses = isElevated
-    ? `group relative w-full overflow-hidden rounded-3xl border border-cyan/25 bg-neutral-950/60 p-8 backdrop-blur-3xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-cyan/40 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_60px_rgba(11,241,195,0.08)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.5),0_0_80px_rgba(11,241,195,0.12)]`
-    : `group relative w-full overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-2xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-white/20 shadow-none hover:shadow-[0_4px_16px_rgba(255,255,255,0.05)]`;
+    ? `group relative w-full overflow-hidden rounded-[var(--radius-3xl)] border border-cyan/25 bg-neutral-950/60 p-8 backdrop-blur-3xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-cyan/40 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_60px_rgba(11,241,195,0.08)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.5),0_0_80px_rgba(11,241,195,0.12)]`
+    : `group relative w-full overflow-hidden rounded-[var(--radius-3xl)] border border-white/10 bg-white/5 p-8 backdrop-blur-2xl transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-500 hover:border-white/20 shadow-none hover:shadow-[0_4px_16px_rgba(255,255,255,0.05)]`;
 
   const glowColor = isElevated
     ? `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(11,241,195,0.15), transparent 40%)`
     : `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,255,255,0.06), transparent 40%)`;
 
   const iconBgClass = isElevated
-    ? "flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan/10 text-cyan backdrop-blur-md border border-cyan/20 shadow-[0_0_20px_rgba(11,241,195,0.1)]"
-    : "flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white/80 backdrop-blur-md border border-white/10";
+    ? "flex h-12 w-12 items-center justify-center rounded-[var(--radius-2xl)] bg-cyan/10 text-cyan backdrop-blur-md border border-cyan/20 shadow-[0_0_20px_rgba(11,241,195,0.1)]"
+    : "flex h-12 w-12 items-center justify-center rounded-[var(--radius-2xl)] bg-white/5 text-white/80 backdrop-blur-md border border-white/10";
 
   const noiseFilterId = `cardNoise_${variant}`;
 
@@ -104,12 +104,12 @@ export function InteractiveFrostedGlassCard({
 
       {/* Mouse Follow Glow */}
       <div
-        className="pointer-events-none absolute -inset-px z-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px z-0 rounded-[var(--radius-3xl)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{ background: glowColor }}
       />
 
       {/* Content */}
-      <div className="relative z-10 flex h-full flex-col justify-between space-y-8">
+      <div className="relative z-10 flex h-full flex-col justify-between gap-y-8">
         <div className="flex items-start justify-between">
           <div className={iconBgClass}>{icon}</div>
           <div

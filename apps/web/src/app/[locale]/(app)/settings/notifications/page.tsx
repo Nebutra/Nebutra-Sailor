@@ -40,13 +40,13 @@ export default async function NotificationSettingsPage({ params, searchParams }:
       </div>
 
       {query.notice ? (
-        <div className="rounded-lg border border-green-6 bg-green-2 px-4 py-3 text-sm text-green-11">
+        <div className="rounded-[var(--radius-lg)] border border-green-6 bg-green-2 px-4 py-3 text-sm text-green-11">
           {query.notice}
         </div>
       ) : null}
 
       {query.error ? (
-        <div className="rounded-lg border border-red-6 bg-red-2 px-4 py-3 text-sm text-red-11">
+        <div className="rounded-[var(--radius-lg)] border border-red-6 bg-red-2 px-4 py-3 text-sm text-red-11">
           {query.error}
         </div>
       ) : null}
@@ -80,10 +80,10 @@ export default async function NotificationSettingsPage({ params, searchParams }:
         ].map(({ icon: Icon, label, value, description }) => (
           <div
             key={label}
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5"
+            className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5"
           >
             <div className="flex items-start gap-3">
-              <div className="rounded-md bg-[var(--neutral-2)] p-2 text-[var(--neutral-11)]">
+              <div className="rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-2 text-[var(--neutral-11)]">
                 <Icon className="h-4 w-4" aria-hidden />
               </div>
               <div>

@@ -32,7 +32,7 @@ const ROWS: ReadonlyArray<ConfigRow> = [
 export function ConfigGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-lg bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -51,7 +51,7 @@ export function ConfigGlyph(_props: SubpackageGlyphProps) {
         {ROWS.map((row) => (
           <li
             key={row.key}
-            className="flex items-center gap-2 rounded-md bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1"
           >
             <span className="shrink-0 truncate font-mono text-[10px] text-[var(--neutral-12)]">
               {row.key}

@@ -86,3 +86,15 @@ const chartConfig = {
 - `ChartContainer` 负责 theme-aware CSS 变量注入；消费方用 `var(--color-seriesKey)` 填充 series。
 - 使用应用主题里的语义 chart token，不使用临时 Tailwind 色值。
 - 容器必须有稳定高度/宽高比。数据流式更新时尺寸跳动会破坏 dashboard 扫描。
+
+## 真实产品示例
+
+- 工作区使用量 dashboard，用同一时间窗口比较 API 调用、活跃用户和错误率。
+- 计费与用量页面，先给出套餐用量趋势，再让用户进入表格查看明细。
+- 事故复盘面板，把延迟或错误率图表和受影响服务的文字摘要放在一起。
+
+## 反模式
+
+- 不要用图表展示单个 headline value；这种场景用 `KpiCard`，图表空间留给趋势形状或横向比较。
+- 用户需要审计精确行、发票或日志时不要用图表替代表格。
+- 不要为了填满 dashboard 空位而编造装饰性 series 或渐变。如果没有有意义的比较，应保留空状态或解释数据缺失原因。

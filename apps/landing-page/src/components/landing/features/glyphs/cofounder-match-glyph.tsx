@@ -7,7 +7,7 @@ const TRAITS: ReadonlyArray<string> = ["Engineering", "Sales", "NYC", "YC alum"]
 export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2 rounded-md bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">

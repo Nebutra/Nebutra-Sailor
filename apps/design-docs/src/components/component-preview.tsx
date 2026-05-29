@@ -4,7 +4,7 @@ import { Check, Copy, Message as MessageSquare, Moon, Sun, Terminal } from "@neb
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import type { ReactNode } from "react";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const REGISTRY_BASE = "https://ui.nebutra.com/r";
 
@@ -69,7 +69,7 @@ function useClipboard() {
     return () => clearTimeout(t);
   }, [hasCopied]);
 
-  const copy = useCallback(async (value: string) => {
+  async function copy(value: string) {
     try {
       await navigator.clipboard.writeText(value);
       setHasCopied(true);
@@ -87,7 +87,7 @@ function useClipboard() {
         // Both methods failed
       }
     }
-  }, []);
+  }
 
   return { hasCopied, copy };
 }
@@ -276,8 +276,11 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
       defaultValue="preview"
       className="my-8 relative w-full overflow-hidden rounded-xl border border-border/80 bg-background shadow-sm ring-1 ring-ring/10"
     >
-      <div className="px-4 h-13 flex items-center justify-between border-b border-border/80 bg-muted/30">
-        <TabsList variant="default" className="bg-accent/50 transition-colors hover:bg-accent/80">
+      <div className="flex min-h-13 flex-col gap-3 border-b border-border/80 bg-muted/30 p-3 sm:h-13 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:py-0">
+        <TabsList
+          variant="default"
+          className="max-w-full overflow-x-auto bg-accent/50 transition-colors hover:bg-accent/80"
+        >
           <TabsTrigger value="preview" className="px-3">
             Preview
           </TabsTrigger>
@@ -290,7 +293,7 @@ export function ComponentPreview({ children, name, code, className }: ComponentP
             </TabsTrigger>
           )}
         </TabsList>
-        <div className="gap-2 flex items-center">
+        <div className="flex max-w-full flex-wrap items-center justify-end gap-2">
           {themeToggle}
           {registryItemName && <InstallButton name={registryItemName} />}
           {name && code && <PromptButton name={name} code={code} />}

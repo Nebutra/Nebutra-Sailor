@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { domAnimation, LazyMotion, m, type Variants } from "framer-motion";
 import type { Ref } from "react";
 import { cn } from "../utils/cn";
 
@@ -259,20 +259,30 @@ export const Folder = function Folder({
 
       {/* Papers */}
       <div className={cn("absolute z-10", s.papers)}>
-        <motion.div
+        <m.div
           variants={v.backRight}
           style={{ originY: 1 }}
-          className={cn("absolute inset-x-0 rounded-2xl", s.paperOffset, s.paperH, c.paperBack)}
+          className={cn(
+            "absolute inset-x-0 rounded-[var(--radius-2xl)]",
+            s.paperOffset,
+            s.paperH,
+            c.paperBack,
+          )}
         />
-        <motion.div
+        <m.div
           variants={v.backLeft}
           style={{ originY: 1 }}
-          className={cn("absolute inset-x-0 rounded-2xl", s.paperOffset, s.paperH, c.paperBack)}
+          className={cn(
+            "absolute inset-x-0 rounded-[var(--radius-2xl)]",
+            s.paperOffset,
+            s.paperH,
+            c.paperBack,
+          )}
         />
-        <motion.div
+        <m.div
           variants={v.front}
           className={cn(
-            "absolute inset-x-0 top-0 rounded-xl border-t",
+            "absolute inset-x-0 top-0 rounded-[var(--radius-xl)] border-t",
             s.paperH,
             c.paperFront,
             c.paperBorder,
@@ -283,7 +293,7 @@ export const Folder = function Folder({
             <div className={cn("h-1 w-1/2 rounded-full", c.paperLine)} />
             <div className={cn("h-1 w-2/3 rounded-full", c.paperLine)} />
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Label */}
@@ -297,32 +307,36 @@ export const Folder = function Folder({
 
   if (interactive) {
     return (
-      <motion.button
-        ref={ref as React.Ref<HTMLButtonElement>}
-        type="button"
-        onClick={onClick}
-        aria-label={label ?? "Open folder"}
-        initial="rest"
-        animate="rest"
-        whileHover="hover"
-        whileFocus="hover"
-        className={cn(containerCls, "border-0 p-0")}
-      >
-        {children}
-      </motion.button>
+      <LazyMotion features={domAnimation}>
+        <m.button
+          ref={ref as React.Ref<HTMLButtonElement>}
+          type="button"
+          onClick={onClick}
+          aria-label={label ?? "Open folder"}
+          initial="rest"
+          animate="rest"
+          whileHover="hover"
+          whileFocus="hover"
+          className={cn(containerCls, "border-0 p-0")}
+        >
+          {children}
+        </m.button>
+      </LazyMotion>
     );
   }
 
   return (
-    <motion.div
-      ref={ref as React.Ref<HTMLDivElement>}
-      aria-hidden="true"
-      initial="rest"
-      animate="rest"
-      whileHover="hover"
-      className={containerCls}
-    >
-      {children}
-    </motion.div>
+    <LazyMotion features={domAnimation}>
+      <m.div
+        ref={ref as React.Ref<HTMLDivElement>}
+        aria-hidden="true"
+        initial="rest"
+        animate="rest"
+        whileHover="hover"
+        className={containerCls}
+      >
+        {children}
+      </m.div>
+    </LazyMotion>
   );
 };

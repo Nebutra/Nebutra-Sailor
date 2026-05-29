@@ -284,7 +284,7 @@ export function DesignGroupShowcase(props: PackageShowcaseProps) {
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
               <Droplet className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="truncate text-sm font-semibold text-foreground">{entry.label}</span>
@@ -298,7 +298,7 @@ export function DesignGroupShowcase(props: PackageShowcaseProps) {
         </CardHeader>
         <CardContent className="space-y-5 p-4 pt-0 md:p-5 md:pt-0">
           {renderBody(layout, copy)}
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={4} className="gap-3">
               <MetricCard
                 size="sm"

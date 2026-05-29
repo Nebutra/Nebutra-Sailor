@@ -1,6 +1,19 @@
 import { Droplet } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 
+const syntaxClassNames = {
+  keyword: "text-[var(--brand-primary)]",
+  string: "text-[var(--green-11)]",
+  symbol: "text-[var(--brand-tertiary)]",
+} as const;
+
+const swatches = [
+  "bg-[var(--green-9)] shadow-[0_0_8px_color-mix(in_oklch,var(--green-9)_45%,transparent)] ring-[var(--green-8)]/30 scale-110",
+  "bg-[var(--brand-tertiary)] opacity-40 hover:opacity-100",
+  "bg-[var(--brand-primary)] opacity-40 hover:opacity-100",
+  "bg-[var(--red-9)] opacity-40 hover:opacity-100",
+] as const;
+
 export function ThemeSelectorCard() {
   const t = useTranslations("designSystem");
 
@@ -8,7 +21,7 @@ export function ThemeSelectorCard() {
     <div className="relative flex h-full flex-col overflow-hidden p-6 md:p-8">
       {/* Header */}
       <div className="relative z-10 flex items-center gap-3 mb-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary/10 text-primary">
           <Droplet className="h-4 w-4" />
         </div>
         <h3 className="text-lg font-bold tracking-tight text-foreground line-clamp-1">
@@ -17,56 +30,54 @@ export function ThemeSelectorCard() {
       </div>
 
       {/* Theme Selector UI Mockup */}
-      <div className="relative z-10 mt-auto flex h-[180px] w-full rounded-xl border border-border/50 bg-background shadow-sm overflow-hidden p-3 gap-3 group">
+      <div className="relative z-10 mt-auto flex h-[180px] w-full rounded-[var(--radius-xl)] border border-border/50 bg-background shadow-sm overflow-hidden p-3 gap-3 group">
         {/* Code snippet side */}
-        <div className="w-[45%] h-full rounded-lg bg-background p-3 lg:p-4 font-mono text-[9px] sm:text-[10px] leading-relaxed overflow-hidden hidden sm:block relative transition-colors duration-500 group-hover:bg-muted/30 border border-border/60 shadow-sm">
-          <span className="text-blue-600 dark:text-blue-400">const</span>{" "}
+        <div className="w-[45%] h-full rounded-[var(--radius-lg)] bg-background p-3 lg:p-4 font-mono text-[9px] sm:text-[10px] leading-relaxed overflow-hidden hidden sm:block relative transition-colors duration-500 group-hover:bg-muted/30 border border-border/60 shadow-sm">
+          <span className={syntaxClassNames.keyword}>const</span>{" "}
           <span className="text-foreground">themes = &#123;</span>
           <br />
-          &nbsp;&nbsp;<span className="text-emerald-600 dark:text-emerald-400">emerald</span>
+          &nbsp;&nbsp;<span className={syntaxClassNames.string}>emerald</span>
           <span className="text-foreground">: &#123;</span>
           <br />
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <span className="text-purple-600 dark:text-purple-400">"--primary"</span>:{" "}
-          <span className="text-emerald-600 dark:text-emerald-400">"oklch(0.65 0.15 150)"</span>,
+          <span className={syntaxClassNames.symbol}>"--primary"</span>:{" "}
+          <span className={syntaxClassNames.string}>"oklch(0.65 0.15 150)"</span>,
           <br />
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <span className="text-purple-600 dark:text-purple-400">"--muted"</span>:{" "}
-          <span className="text-emerald-600 dark:text-emerald-400">"color-mix(...)"</span>
+          <span className={syntaxClassNames.symbol}>"--muted"</span>:{" "}
+          <span className={syntaxClassNames.string}>"color-mix(...)"</span>
           <br />
           &nbsp;&nbsp;<span className="text-foreground">&#125;,</span>
           <br />
-          &nbsp;&nbsp;<span className="text-violet-600 dark:text-violet-400">violet</span>
+          &nbsp;&nbsp;<span className={syntaxClassNames.symbol}>violet</span>
           <span className="text-foreground">: &#123; ... &#125;</span>
           <br />
           <span className="text-foreground">&#125;;</span>
           {/* Soft highlight gradient from bottom right */}
-          <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-emerald-500/10 blur-xl rounded-full" />
+          <div className="absolute -bottom-4 -right-4 h-16 w-16 rounded-full bg-[var(--green-3)] blur-xl" />
         </div>
 
         {/* Preview UI side */}
         <div className="flex-1 flex flex-col gap-2 relative h-full">
           {/* Theme pills */}
           <div className="flex gap-1.5 p-1.5 rounded-full bg-muted/40 w-fit ring-1 ring-border/50 shadow-inner overflow-x-auto scrollbar-hide">
-            {/* Emerald (Active) */}
-            <div className="h-4 w-4 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] ring-2 ring-emerald-500/30 transition-transform scale-110 cursor-pointer" />
-            {/* Violet */}
-            <div className="h-4 w-4 rounded-full bg-violet-500 opacity-40 hover:opacity-100 hover:-translate-y-px transition-transform duration-150 cursor-pointer" />
-            {/* Blue */}
-            <div className="h-4 w-4 rounded-full bg-blue-500 opacity-40 hover:opacity-100 hover:-translate-y-px transition-transform duration-150 cursor-pointer" />
-            {/* Rose */}
-            <div className="h-4 w-4 rounded-full bg-rose-500 opacity-40 hover:opacity-100 hover:-translate-y-px transition-transform duration-150 cursor-pointer" />
+            {swatches.map((className) => (
+              <div
+                key={className}
+                className={`h-4 w-4 cursor-pointer rounded-full transition-transform duration-150 hover:-translate-y-px ${className}`}
+              />
+            ))}
           </div>
 
           {/* Mini dashboard Dashboard preview */}
-          <div className="flex-1 bg-background rounded-lg border border-border bg-gradient-to-br from-emerald-500/5 to-transparent shadow-sm p-3 flex flex-col gap-3 relative overflow-hidden transition-colors duration-500">
+          <div className="flex-1 bg-background rounded-[var(--radius-lg)] border border-border bg-gradient-to-br from-[var(--green-2)] to-transparent shadow-sm p-3 flex flex-col gap-3 relative overflow-hidden transition-colors duration-500">
             {/* Dashboard Header */}
             <div className="flex justify-between items-center relative z-10">
               <div className="flex flex-col gap-1">
                 <div className="h-2 w-16 bg-muted-foreground/30 rounded-full" />
                 <div className="h-1.5 w-10 bg-muted rounded-full" />
               </div>
-              <div className="h-[14px] px-1.5 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded text-[8px] font-bold flex items-center justify-center">
+              <div className="flex h-[14px] items-center justify-center rounded bg-[var(--green-3)] px-1.5 text-[8px] font-bold text-[var(--green-11)]">
                 Active
               </div>
             </div>
@@ -74,7 +85,7 @@ export function ThemeSelectorCard() {
             {/* Dashboard Content */}
             <div className="grid grid-cols-2 gap-2 mt-auto relative z-10 h-[50%]">
               {/* Chart Block 1 */}
-              <div className="h-full rounded bg-emerald-500/90 shadow-inner flex flex-col justify-end p-1.5 items-end gap-0.5 overflow-hidden relative">
+              <div className="relative flex h-full flex-col items-end justify-end gap-0.5 overflow-hidden rounded bg-[var(--green-9)] p-1.5 shadow-inner">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                 <div
                   className="font-mono text-[8px] text-white/90 z-10 font-bold"
@@ -87,9 +98,9 @@ export function ThemeSelectorCard() {
               <div className="h-full rounded bg-muted/30 border border-border/50 flex flex-col gap-1 justify-end items-center p-1 relative overflow-hidden">
                 {/* Bars */}
                 <div className="flex gap-1 items-end w-full h-[80%] px-1">
-                  <div className="w-1/3 bg-emerald-500/40 rounded-t-sm h-[40%] group-hover:h-[50%] transition-all duration-500" />
-                  <div className="w-1/3 bg-emerald-500/60 rounded-t-sm h-[70%] group-hover:h-[80%] transition-all duration-500 delay-75" />
-                  <div className="w-1/3 bg-emerald-500/90 rounded-t-sm h-[90%] group-hover:h-[100%] transition-all duration-500 delay-150 shadow-[0_0_5px_rgba(16,185,129,0.5)]" />
+                  <div className="h-[40%] w-1/3 rounded-t-sm bg-[var(--green-7)] transition-all duration-500 group-hover:h-[50%]" />
+                  <div className="h-[70%] w-1/3 rounded-t-sm bg-[var(--green-8)] transition-all delay-75 duration-500 group-hover:h-[80%]" />
+                  <div className="h-[90%] w-1/3 rounded-t-sm bg-[var(--green-9)] shadow-[0_0_5px_color-mix(in_oklch,var(--green-9)_45%,transparent)] transition-all delay-150 duration-500 group-hover:h-[100%]" />
                 </div>
               </div>
             </div>

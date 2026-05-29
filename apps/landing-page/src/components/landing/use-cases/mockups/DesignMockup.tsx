@@ -23,7 +23,7 @@ export function DesignMockup() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-xl overflow-hidden shadow-sm flex flex-col"
+        className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Top bar */}
         <div className="px-4 py-2 border-b border-border flex items-center gap-2 shrink-0">
@@ -60,18 +60,18 @@ export function DesignMockup() {
               Interactive element for triggering actions
             </div>
             {/* Preview */}
-            <div className="mt-3 p-4 rounded-lg border border-border bg-muted/20 flex items-center justify-center gap-3">
+            <div className="mt-3 p-4 rounded-[var(--radius-lg)] border border-border bg-muted/20 flex items-center justify-center gap-3">
               {variants.map((v) => (
                 <div
                   key={v.name}
-                  className={`text-[10px] font-medium px-3 py-1.5 rounded-lg ${v.cls}`}
+                  className={`text-[10px] font-medium px-3 py-1.5 rounded-[var(--radius-lg)] ${v.cls}`}
                 >
                   {v.name}
                 </div>
               ))}
             </div>
             {/* Props table */}
-            <div className="mt-3 border border-border rounded-lg overflow-hidden text-[10px]">
+            <div className="mt-3 border border-border rounded-[var(--radius-lg)] overflow-hidden text-[10px]">
               <div className="grid grid-cols-3 bg-muted/40 px-3 py-1.5 font-semibold text-muted-foreground border-b border-border">
                 <span>Prop</span>
                 <span>Type</span>

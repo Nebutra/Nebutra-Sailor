@@ -141,3 +141,15 @@ Default grid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`, `auto-rows-[22rem]`, 
 - Use `BentoGrid` for editorial feature groups where card rhythm and comparison matter more than dense data scanning.
 - Keep one primary action per card. If a card needs multiple actions, graduate it to a normal surface with explicit controls.
 - The `background` slot is visual atmosphere, not product-critical content. Product screenshots must remain readable without depending on hover.
+
+## Real Product Examples
+
+- Product overview pages grouping AI orchestration, billing, governance, and observability capabilities.
+- Docs landing pages that route readers into a small set of high-value component or pattern families.
+- Changelog or launch pages where each card explains one shipped capability and links to the deeper evidence.
+
+## Anti-patterns
+
+- Do not use `BentoGrid` for admin dashboards, settings pages, or dense resource lists; users need tables, filters, and predictable rows there.
+- Do not put independent forms, menus, or multiple CTAs inside a card. A bento card should have one clear destination.
+- Do not hide essential product copy inside the decorative `background` slot or hover-only reveal.

@@ -64,7 +64,7 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-lg bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-2 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-3 ring-1 ring-[var(--neutral-6)] shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-1 font-mono text-[9px] text-[var(--neutral-11)]">
@@ -87,9 +87,9 @@ export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
               >
                 {span.label}
               </span>
-              <div className="relative h-2 flex-1 rounded-sm bg-[var(--neutral-3)]">
+              <div className="relative h-2 flex-1 rounded-[var(--radius-sm)] bg-[var(--neutral-3)]">
                 <div
-                  className="absolute top-0 h-full rounded-sm"
+                  className="absolute top-0 h-full rounded-[var(--radius-sm)]"
                   style={{
                     width: `${span.widthPct}%`,
                     left: `${span.offsetPct}%`,

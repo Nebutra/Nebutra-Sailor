@@ -1,6 +1,6 @@
 ---
-title: "选择器 (Select)"
-description: "短固定列表选择控件，提供原生 shorthand 和 compound listbox 扩展路径。"
+title: "选择器"
+description: "短固定列表选择控件，提供原生简写和复合列表框扩展路径。"
 ---
 
 <ComponentPreview name="select-demo" className="min-h-[260px] flex items-start justify-center pt-8" />
@@ -19,9 +19,9 @@ import {
 
 ## 概览
 
-`Select` 适用于短固定列表，输入搜索没有收益的场景：框架、区域、套餐、小型状态过滤。产品界面里需要展开菜单仍保持 Nebutra 视觉系统时，优先使用 compound listbox API。
+`Select` 适用于短固定列表，输入搜索没有收益的场景：框架、区域、套餐、小型状态过滤。产品界面里需要展开菜单仍保持 Nebutra 视觉系统时，优先使用复合列表框 API。
 
-原生 shorthand 仍保留给真实表单提交、移动端系统 picker 和 `optgroup` 语义。它展开后的 `<option>` popup 由浏览器/系统控制，不作为主视觉 demo。需要过滤时使用 `Combobox`，允许多选时使用 `MultiSelect`。
+原生简写仍保留给真实表单提交、移动端系统选择器和 `optgroup` 语义。它展开后的 `<option>` 弹层由浏览器/系统控制，不作为主视觉演示。需要过滤时使用 `Combobox`，允许多选时使用 `MultiSelect`。
 
 ## 用法
 
@@ -37,7 +37,7 @@ import {
 </Select>;
 ```
 
-也支持原生 `<option>` 和 `<optgroup>` children：
+也支持原生 `<option>` 和 `<optgroup>` 子元素：
 
 ```tsx
 <Select label="区域" placeholder="选择区域">
@@ -51,12 +51,12 @@ import {
 ## 属性
 ### 原生 Select
 
-当产品需求明确需要浏览器原生控件时使用 native shorthand：经典表单提交、移动端 OS picker 或 `optgroup` 语义。不要依赖展开后的原生 option popup 承载品牌样式。
+当产品需求明确需要浏览器原生控件时使用原生简写：经典表单提交、移动端系统选择器或 `optgroup` 语义。不要依赖展开后的原生选项弹层承载品牌样式。
 
 | 属性 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `options` | `{ value: string; label: string; disabled?: boolean }[]` | — | 短固定选项列表。 |
-| `label` | `string` | — | 简短 Title Case 字段标签。 |
+| `label` | `string` | — | 简短字段标签。 |
 | `placeholder` | `string` | — | 选择前展示的 disabled 第一项。 |
 | `size` | `"xsmall" \| "small" \| "medium" \| "large"` | `"medium"` | 控件密度。 |
 | `variant` | `"default" \| "ghost"` | `"default"` | 视觉样式。 |
@@ -68,7 +68,7 @@ import {
 | `defaultValue` | `string` | — | 非受控默认值。 |
 | `onChange` | `ChangeEventHandler<HTMLSelectElement>` | — | 原生 change 回调。 |
 
-### 复合 Listbox
+### 复合列表框
 
 ```tsx
 import {
@@ -83,16 +83,16 @@ import {
 } from "@nebutra/ui/primitives";
 ```
 
-compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择，并且拥有展开 surface、圆角、阴影和焦点样式的控制权。
+复合 API 保留 Base UI 列表框行为，适合更像菜单的分组选择，并且拥有展开表面、圆角、阴影和焦点样式的控制权。
 
-| Component | 作用 |
+| 组件 | 作用 |
 |---|---|
-| `Select` | 未传 native props 时作为 root state provider。 |
+| `Select` | 未传原生属性时作为根状态提供者。 |
 | `SelectTrigger` | 按钮触发器。支持和原生 Select 相同的 `size`。 |
 | `SelectValue` | 选中值 / placeholder 渲染器。 |
-| `SelectContent` | 定位的 listbox surface。 |
-| `SelectItem` | 可选择 listbox option。 |
-| `SelectGroup` / `SelectLabel` / `SelectSeparator` | 较长列表的分组 primitive。 |
+| `SelectContent` | 定位的列表框表面。 |
+| `SelectItem` | 可选择的列表项。 |
+| `SelectGroup` / `SelectLabel` / `SelectSeparator` | 较长列表的分组原语。 |
 
 ## 示例
 
@@ -113,41 +113,60 @@ compound API 保留 Base UI listbox 行为，适合更像菜单的分组选择�
 
 <ComponentPreview name="select-error-demo" className="min-h-[240px] flex items-start justify-center pt-8" />
 
-### 分组 Compound Listbox
+### 分组复合列表框
 
 <ComponentPreview name="select-groups-demo" className="min-h-[350px] flex items-start justify-center pt-8" />
 
 ## 最佳实践
 
-- 需要展开菜单符合 Nebutra surface 样式时，优先使用 compound `Select`。
-- 只有浏览器表单语义、移动端 picker 或 `optgroup` 支持比展开 popup 样式更重要时，才使用 native shorthand。
+- 需要展开菜单符合 Nebutra 表面样式时，优先使用复合 `Select`。
+- 只有浏览器表单语义、移动端系统选择器或 `optgroup` 支持比展开弹层样式更重要时，才使用原生简写。
 - 需要过滤时改用 `Combobox`；允许多选时使用 `MultiSelect`。
-- 超过约十项的原生列表用 `<optgroup>` 分组；compound API 也可以用 `SelectGroup` 处理菜单式分组。
+- 超过约十项的原生列表用 `<optgroup>` 分组；复合 API 也可以用 `SelectGroup` 处理菜单式分组。
 - 标签使用简短名词，例如 `框架`、`区域`。
-- placeholder 使用动作句式：`选择框架`，不要写 `任选一个...` 或重复 label。
-- blur 后校验，并传入以句号结尾的 sentence-case `error` 文案。
-- 不要把带 label 的 `Select` 包进 Tooltip；提示应放在相邻 icon button 上，避免 label 宣告被破坏。
+- 占位文案使用动作句式：`选择框架`，不要写 `任选一个...` 或重复标签。
+- 失焦后校验，并传入完整的 `error` 文案。
+- 不要把带标签的 `Select` 包进提示气泡；提示应放在相邻图标按钮上，避免标签宣告被破坏。
 
 ## 可访问性
 
-- 原生 Select 保留浏览器表单语义、移动端 picker 和键盘行为。
+- 原生 Select 保留浏览器表单语义、移动端系统选择器和键盘行为。
 - `error` 会设置 `aria-invalid`，并把字段关联到内联错误消息。
-- compound API 通过 Base UI primitive 遵循 ARIA listbox pattern。
+- 复合 API 通过 Base UI 原语遵循 ARIA 列表框模式。
+- 触发器焦点环在菜单打开前后都必须可见；列表项焦点不能在圆角表面外再产生第二层方形轮廓。
+- 选中值必须以“触发器标签 + 当前值”的方式被宣告，不能只依赖装饰性标签块或颜色。
 
 ## 设计契约
 
-- Select 用于无需过滤的短固定列表。
-- 与周围表单里的 Input、Textarea 保持同一触发器密度。
-- Option label 要平行且稳定。
+- 选择器用于无需过滤的短固定列表：区域、套餐周期、环境、发票语言、部署模板。
+- 与周围表单里的 Input、Textarea 保持同一触发器密度。只有放在表格行或紧凑工具栏中时，才允许使用更小密度。
+- 选项标签要平行且稳定。区域列表不要混用云厂商代码、城市名和营销名称。
+- 选项值必须稳定，不要把本地化标签或展示名作为持久化值。
+- 占位文案只在未选择时出现；一旦已有值，触发器在校验或后台刷新期间也要展示选中标签。
+
+### 状态矩阵
+
+| 状态 | 产品场景 | 合约 |
+|---|---|---|
+| 占位 | 新建部署区域、套餐周期 | 占位文案使用动作句式；原生 Select 中对应 disabled 第一项。 |
+| 已选择 | 现有租户区域、发票语言、模板 | 触发器展示稳定标签，持久化值保持提供商安全格式。 |
+| 展开 | 产品设置中的复合菜单 | 表面使用 Nebutra 圆角、阴影和列表项焦点，布局不抖动。 |
+| 聚焦 | 表单和过滤栏的键盘路径 | 触发器焦点环保持可见；列表框内部有独立的项焦点样式。 |
+| 错误 | 必填区域缺失、账单国家不支持 | 错误文案内联展示，并通过 `aria-describedby` 关联宣告。 |
+| 禁用 | 首次部署后锁定区域、套餐限制选项 | 说明是整个字段不可用，还是单个选项不可用。 |
 
 ## 真实产品示例
 
-- 部署表单里的区域选择。
-- Starter template picker 里的框架选择。
-- 列表较短时的账单国家或发票语言选择。
+- 部署区域选择，值使用 `iad1`、`sfo1`、`hkg1`；列表超过一屏时按地理区域分组。
+- 账单设置里的套餐周期选择，在月付和年付间切换，但不暴露 Stripe price ID。
+- 创建 API Key 时的环境选择，只允许 `Development`、`Preview`、`Production`。
+- 发票语言选择，支持语言较少时用 Select；覆盖范围变大后改用 Combobox。
 
 ## 反模式
 
 - 不要用 Select 承载长可搜索列表；使用 Combobox。
 - 不要用 Select 承载多选；使用 MultiSelect 或 CheckboxGroup。
-- 不要把 menu item group 伪装成表单 select。
+- 不要把菜单项分组伪装成表单选择器。
+- 不要把人类可读标签持久化为选项值。
+- 不要把禁用原因藏在选项 title 里；套餐或权限锁定要在字段附近解释。
+- 当展开菜单必须匹配 Nebutra 截图或视觉回归门禁时，不要使用原生 Select。

@@ -164,7 +164,7 @@ export function NotificationPreferencesMatrix({
     return (
       <div
         data-testid="notification-preferences-loading"
-        className="space-y-3 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
+        className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6"
         aria-busy="true"
         aria-live="polite"
       >
@@ -177,7 +177,7 @@ export function NotificationPreferencesMatrix({
   }
 
   return (
-    <section className="space-y-4 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="space-y-4 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <header className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-base font-semibold text-[var(--neutral-12)]">
@@ -200,7 +200,7 @@ export function NotificationPreferencesMatrix({
           <button
             type="button"
             onClick={handleResetAll}
-            className="rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
+            className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-xs font-medium text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]"
           >
             {t("settings.notifications.actions.resetAll")}
           </button>
@@ -208,7 +208,7 @@ export function NotificationPreferencesMatrix({
       </header>
 
       {loadError ? (
-        <div className="rounded-md border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11">
+        <div className="rounded-[var(--radius-md)] border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11">
           {loadError}
         </div>
       ) : null}

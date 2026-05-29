@@ -167,7 +167,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
         {successMessage && (
           <p
             role="status"
-            className="rounded-sm bg-[color:var(--status-success)]/10 px-3 py-2 text-xs text-[color:var(--status-success)]"
+            className="rounded-[var(--radius-sm)] bg-[color:var(--status-success)]/10 px-3 py-2 text-xs text-[color:var(--status-success)]"
           >
             {successMessage}
           </p>
@@ -176,7 +176,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
         {errorMessage && (
           <p
             role="alert"
-            className="rounded-sm bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
+            className="rounded-[var(--radius-sm)] bg-[color:var(--status-danger)]/10 px-3 py-2 text-xs text-[color:var(--status-danger)]"
           >
             {errorMessage}
           </p>
@@ -185,11 +185,11 @@ export function MembersClient({ orgId }: MembersClientProps) {
         {loading ? (
           <p className="text-sm text-neutral-11">{t("loading")}</p>
         ) : members.length === 0 ? (
-          <p className="rounded-md border border-dashed border-neutral-7 px-4 py-6 text-center text-sm text-neutral-11 dark:border-white/10">
+          <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-7 px-4 py-6 text-center text-sm text-neutral-11 dark:border-white/10">
             {t("empty")}
           </p>
         ) : (
-          <div className="overflow-hidden rounded-md border border-neutral-7 dark:border-white/10">
+          <div className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-7 dark:border-white/10">
             <table className="w-full text-left text-sm">
               <thead className="bg-neutral-2 text-xs uppercase text-neutral-11 dark:bg-white/5 dark:text-white/60">
                 <tr>
@@ -267,7 +267,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
                             type="button"
                             aria-label={`${t("remove")} ${displayName}`}
                             onClick={() => setConfirmRemoveId(member.id)}
-                            className="inline-flex items-center gap-1 rounded-sm px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
+                            className="inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-xs text-[color:var(--status-danger)] transition-colors hover:bg-[color:var(--status-danger)]/10"
                           >
                             <Trash2 className="h-3.5 w-3.5" aria-hidden />
                             <span>{t("remove")}</span>
@@ -299,7 +299,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
             aria-labelledby={confirmDialogId}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
           >
-            <div className="w-full max-w-sm rounded-lg border border-neutral-7 bg-neutral-1 p-5 shadow-xl dark:border-white/10 dark:bg-neutral-12">
+            <div className="w-full max-w-sm rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-5 shadow-xl dark:border-white/10 dark:bg-neutral-12">
               <h2
                 id={confirmDialogId}
                 className="text-sm font-semibold text-neutral-12 dark:text-white"

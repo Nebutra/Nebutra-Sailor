@@ -57,7 +57,7 @@ export function ReelStudio({ graphId }: ReelStudioProps) {
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_340px]">
-      <div className="relative h-[560px] overflow-auto rounded-lg border border-neutral-7 bg-neutral-2">
+      <div className="relative h-[560px] overflow-auto rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-2">
         {!graph ? (
           <div className="absolute inset-0 flex items-center justify-center text-neutral-11">
             <p className="text-sm">Split a script — the server builds a typed node graph here.</p>
@@ -68,7 +68,7 @@ export function ReelStudio({ graphId }: ReelStudioProps) {
             return (
               <div
                 key={node.id}
-                className="absolute w-[260px] rounded-md border border-neutral-7 bg-neutral-1 p-3 shadow-sm"
+                className="absolute w-[260px] rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-3 shadow-sm"
                 style={{ left: node.x * SCALE + 16, top: node.y * SCALE + 16 }}
               >
                 <p className="mb-1 font-medium text-neutral-12 text-xs">
@@ -93,7 +93,7 @@ export function ReelStudio({ graphId }: ReelStudioProps) {
       </div>
 
       <AnimateIn preset="fade">
-        <div className="flex h-full flex-col gap-3 rounded-lg border border-neutral-7 bg-neutral-1 p-4">
+        <div className="flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-4">
           <h2 className="font-semibold text-neutral-12 text-sm">Script</h2>
           <Textarea
             value={script}

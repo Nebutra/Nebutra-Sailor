@@ -1,12 +1,16 @@
 "use client";
 
 import { Bug, Check, Clock, Database, Lightning } from "@nebutra/icons";
-
-import { Badge } from "@nebutra/ui/primitives/badge";
-import { Card, CardContent, CardHeader } from "@nebutra/ui/primitives/card";
-import { Gauge } from "@nebutra/ui/primitives/gauge";
-import { MetricCard, MetricGrid } from "@nebutra/ui/primitives/metric-card";
-import { Progress } from "@nebutra/ui/primitives/progress";
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  Gauge,
+  MetricCard,
+  MetricGrid,
+  Progress,
+} from "@nebutra/ui/primitives";
 
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
@@ -80,7 +84,7 @@ export function CacheShowcase({ locale }: PackageShowcaseProps) {
       <Card className="border-border/60 shadow-none">
         <CardHeader className="flex flex-row items-center justify-between gap-3 space-y-0 p-4 md:p-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[image:var(--brand-gradient)] text-white">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] text-white">
               <Database className="h-3.5 w-3.5" aria-hidden="true" />
             </span>
             <span className="text-sm font-semibold text-foreground">{copy.title}</span>
@@ -96,7 +100,7 @@ export function CacheShowcase({ locale }: PackageShowcaseProps) {
         </CardHeader>
 
         <CardContent className="space-y-5 p-4 pt-0 md:p-5 md:pt-0">
-          <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+          <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={4} className="gap-3">
               <MetricCard
                 size="sm"
@@ -133,7 +137,7 @@ export function CacheShowcase({ locale }: PackageShowcaseProps) {
           </div>
 
           <div className="grid gap-4 md:grid-cols-[auto_1fr]">
-            <div className="flex flex-col items-center justify-center gap-2 rounded-md border border-border/60 bg-muted/30 p-4">
+            <div className="flex flex-col items-center justify-center gap-2 rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-4">
               <Gauge
                 value={HIT_RATIO}
                 size="large"
@@ -148,7 +152,7 @@ export function CacheShowcase({ locale }: PackageShowcaseProps) {
             </div>
 
             <div className="space-y-3">
-              <div className="rounded-md border border-border/60 bg-muted/30 p-3">
+              <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-medium text-foreground">{copy.memUsed}</span>
                   <span className="font-mono text-muted-foreground">847 MB / 2 GB</span>
@@ -158,7 +162,7 @@ export function CacheShowcase({ locale }: PackageShowcaseProps) {
                 </div>
               </div>
 
-              <div className="rounded-md border border-border/60">
+              <div className="rounded-[var(--radius-md)] border border-border/60">
                 <div className="flex items-center justify-between border-b border-border/60 px-3 py-2 text-xs">
                   <span className="font-medium text-foreground">{copy.recent}</span>
                   <span className="flex gap-6 font-medium text-muted-foreground">

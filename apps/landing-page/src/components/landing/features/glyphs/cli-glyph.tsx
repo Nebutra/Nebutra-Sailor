@@ -16,7 +16,7 @@ export function CliGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       style={{ height: 160 }}
-      className="relative w-full overflow-hidden rounded-lg bg-[oklch(0.16_0.012_250)]"
+      className="relative w-full overflow-hidden rounded-[var(--radius-lg)] bg-[oklch(0.16_0.012_250)]"
     >
       {/* Title bar */}
       <div className="flex items-center justify-between border-b border-white/5 px-3 py-1.5">

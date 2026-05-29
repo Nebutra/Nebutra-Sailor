@@ -34,7 +34,7 @@ export function AccessGateGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-md bg-[var(--neutral-2)] p-3"
+      className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       {/* Header: feature title + lock */}
@@ -48,7 +48,7 @@ export function AccessGateGlyph({ locale }: SubpackageGlyphProps) {
 
       {/* Blurred content placeholder bars */}
       <div
-        className="flex flex-1 flex-col justify-center gap-1.5 rounded-sm border border-dashed border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2.5 py-2"
+        className="flex flex-1 flex-col justify-center gap-1.5 rounded-[var(--radius-sm)] border border-dashed border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2.5 py-2"
         role="img"
         aria-label="Locked content"
       >

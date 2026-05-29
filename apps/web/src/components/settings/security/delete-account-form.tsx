@@ -86,7 +86,7 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
   }
 
   return (
-    <section className="rounded-lg border border-[var(--status-danger)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--status-danger)] bg-[var(--neutral-1)] p-6">
       <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-sm font-medium text-[var(--status-danger)]">

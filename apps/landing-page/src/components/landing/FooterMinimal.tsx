@@ -241,7 +241,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(
-                      "rounded-md p-2.5 text-[color:var(--neutral-9)] transition-all duration-200",
+                      "rounded-[var(--radius-md)] p-2.5 text-[color:var(--neutral-9)] transition-all duration-200",
                       "hover:bg-[color:var(--neutral-3)] hover:text-[color:var(--neutral-12)]",
                       "dark:text-white/40 dark:hover:bg-white/[0.06] dark:hover:text-white/90",
                     )}

@@ -33,7 +33,7 @@ export function TenantStoreGlyph(_props: SubpackageGlyphProps) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-0.5 rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2.5 py-2 font-mono text-[10px] leading-snug">
+      <div className="flex flex-col gap-0.5 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2.5 py-2 font-mono text-[10px] leading-snug">
         {SQL_LINES.map((line) => (
           <div key={line.text} className={`truncate ${TONE_CLASS[line.tone]}`}>
             {line.text}

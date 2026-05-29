@@ -51,7 +51,7 @@ const STATUS_TONE: Record<RuleRow["status"], { bg: string; border: string; text:
 export function AlertingGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-md bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between text-[10px] text-[var(--neutral-11)]">
@@ -68,7 +68,7 @@ export function AlertingGlyph(_props: SubpackageGlyphProps) {
           return (
             <div
               key={rule.expression}
-              className="flex items-center justify-between gap-2 rounded-sm border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
+              className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-2 py-1.5"
             >
               <div className="flex min-w-0 items-center gap-2">
                 <Lightning className="h-3 w-3 shrink-0" style={{ color: tone.text }} aria-hidden />
@@ -79,7 +79,7 @@ export function AlertingGlyph(_props: SubpackageGlyphProps) {
               <div className="flex shrink-0 items-center gap-1.5">
                 <Badge
                   variant="outline"
-                  className="h-4 rounded-sm px-1.5 text-[9px] font-semibold leading-none"
+                  className="h-4 rounded-[var(--radius-sm)] px-1.5 text-[9px] font-semibold leading-none"
                   style={{
                     background: tone.bg,
                     borderColor: tone.border,

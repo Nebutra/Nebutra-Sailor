@@ -76,6 +76,18 @@ import { KpiCard } from "@nebutra/ui/primitives";
 - Trend is a secondary indicator. If trend shape matters, use `Chart`.
 - Keep the icon quiet and semantic; it should identify the metric family, not decorate the card.
 
+## Real Product Examples
+
+- SaaS overview dashboards showing active tenants, billable usage, open incidents, and monthly recurring revenue.
+- Admin health pages summarizing gateway requests, failed webhooks, and queue latency before deeper charts.
+- Team or workspace reports where a metric needs one number, one trend direction, and a short qualifier.
+
+## Anti-patterns
+
+- Do not use `KpiCard` for exact financial ledgers, audit history, or data that must be reconciled row by row.
+- Do not place one KPI card alone as a decorative hero tile. It works best as a comparable metric set.
+- Do not encode the entire meaning in trend color or icon choice; the title, value, and description must carry the metric.
+
 ## Storybook / Registry
 
 - Storybook source: `packages/design/ui/src/primitives/kpi-card.stories.tsx`.

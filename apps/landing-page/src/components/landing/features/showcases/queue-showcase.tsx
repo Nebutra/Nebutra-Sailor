@@ -191,7 +191,7 @@ export function QueueShowcase(props: PackageShowcaseProps) {
         </TableBody>
       </Table>
 
-      <div className="grid grid-cols-2 gap-4 rounded-xl border border-border bg-card p-4 sm:grid-cols-3">
+      <div className="grid grid-cols-2 gap-4 rounded-[var(--radius-xl)] border border-border bg-card p-4 sm:grid-cols-3">
         <MetricCard
           size="sm"
           label={t.throughput}

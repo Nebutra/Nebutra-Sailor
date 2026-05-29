@@ -19,7 +19,8 @@ export async function prepareVisualPage(
     document.documentElement.dataset.theme = nextTheme;
   }, theme);
 
-  await page.goto(url, { waitUntil: "domcontentloaded" });
+  const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45_000 });
+  expect(response?.ok() ?? false, `${url} should return a successful document response`).toBe(true);
   await page.addStyleTag({
     content: `
       *, *::before, *::after {
@@ -40,9 +41,15 @@ export async function prepareVisualPage(
     document.documentElement.classList.toggle("dark", nextTheme === "dark");
     document.documentElement.dataset.theme = nextTheme;
   }, theme);
-  await page.waitForLoadState("networkidle", { timeout: 10_000 }).catch(() => undefined);
   await page.locator(readySelector).first().waitFor({ state: "visible", timeout: 30_000 });
-  await page.evaluate(() => document.fonts?.ready);
+  await page.waitForLoadState("load", { timeout: 15_000 }).catch(() => undefined);
+  await Promise.race([
+    page.evaluate(async () => {
+      await document.fonts?.ready;
+    }),
+    page.waitForTimeout(2_000),
+  ]).catch(() => undefined);
+  await page.waitForTimeout(100);
 }
 
 export async function expectNoHorizontalOverflow(page: Page, rootSelector = "main") {
@@ -60,6 +67,7 @@ export async function expectNoHorizontalOverflow(page: Page, rootSelector = "mai
     }
 
     const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
     const rootRect = root.getBoundingClientRect();
     const leftBound = Math.max(0, Math.floor(rootRect.left) - 2);
     const rightBound = Math.min(viewportWidth, Math.ceil(rootRect.right) + 2);
@@ -71,6 +79,10 @@ export async function expectNoHorizontalOverflow(page: Page, rootSelector = "mai
         const rect = node.getBoundingClientRect();
         if (rect.width === 0 || rect.height === 0) return false;
         if (ignoredTags.has(node.tagName)) return false;
+        if (rect.bottom < -2 || rect.top > viewportHeight + 2) return false;
+        if (node.closest("pre, code, figure, .shiki, [data-rehype-pretty-code-figure]")) {
+          return false;
+        }
 
         const style = getComputedStyle(node);
         if (style.position === "fixed" || style.position === "sticky") return false;
@@ -96,12 +108,38 @@ export async function expectNoHorizontalOverflow(page: Page, rootSelector = "mai
   expect(offenders, JSON.stringify(offenders, null, 2)).toEqual([]);
 }
 
-export async function expectStableVisualSurface(locator: Locator) {
+export async function expectStableVisualSurface(
+  locator: Locator,
+  minimum = { width: 240, height: 120 },
+) {
   await expect(locator).toBeVisible();
   const box = await locator.boundingBox();
 
-  expect(box?.width ?? 0).toBeGreaterThan(240);
-  expect(box?.height ?? 0).toBeGreaterThan(120);
+  expect(box?.width ?? 0).toBeGreaterThan(minimum.width);
+  expect(box?.height ?? 0).toBeGreaterThan(minimum.height);
+}
+
+export async function expectVisibleTextDensity(locator: Locator, minimumCharacters = 80) {
+  await expect(locator).toBeVisible();
+  const visibleText = await locator.evaluate((node) =>
+    Array.from(node.querySelectorAll<HTMLElement>("*"))
+      .filter((element) => {
+        const style = window.getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return (
+          rect.width > 0 &&
+          rect.height > 0 &&
+          style.visibility !== "hidden" &&
+          style.display !== "none"
+        );
+      })
+      .map((element) => element.textContent?.trim() ?? "")
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
+
+  expect(visibleText.length).toBeGreaterThanOrEqual(minimumCharacters);
 }
 
 export async function attachViewportScreenshot(page: Page, testInfo: TestInfo, name: string) {

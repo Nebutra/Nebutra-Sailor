@@ -3,7 +3,19 @@
 import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
 import * as React from "react";
 
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+
+function assignRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
+  if (typeof ref === "function") {
+    ref(value);
+    return;
+  }
+
+  if (ref) {
+    ref.current = value;
+  }
+}
 
 const MenubarContext = React.createContext<{
   activeMenu: string | null;
@@ -17,28 +29,38 @@ const Menubar = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
   const [activeMenu, setActiveMenu] = React.useState<string | null>(null);
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const contextValue = { activeMenu, setActiveMenu };
 
-  // Close on click outside
   React.useEffect(() => {
-    const handleClickOutside = () => setActiveMenu(null);
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
+    function handlePointerDown(event: PointerEvent) {
+      if (event.target instanceof Node && rootRef.current?.contains(event.target)) return;
+      setActiveMenu(null);
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, []);
 
+  function setRootRef(node: HTMLDivElement | null) {
+    rootRef.current = node;
+    assignRef(ref, node);
+  }
+
   return (
-    <MenubarContext.Provider value={{ activeMenu, setActiveMenu }}>
+    <MenubarContext.Provider value={contextValue}>
       <div
-        ref={ref}
+        ref={setRootRef}
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.stopPropagation();
           }
         }}
-        tabIndex={0}
+        tabIndex={-1}
         role="menubar"
         className={cn(
-          "flex h-10 items-center space-x-1 rounded-[var(--radius-md)] border border-border bg-background p-1",
+          "flex h-10 items-center space-x-1 rounded-[var(--radius-md)] border border-border bg-background p-1 outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
           className,
         )}
         {...props}
@@ -59,9 +81,10 @@ const MenubarMenu = ({ children }: { children: React.ReactNode }) => {
   const { activeMenu } = React.use(MenubarContext);
   const value = React.useId();
   const isOpen = activeMenu === value;
+  const contextValue = { value, isOpen };
 
   return (
-    <MenubarMenuContext.Provider value={{ value, isOpen }}>
+    <MenubarMenuContext.Provider value={contextValue}>
       <div className="relative inline-block text-left">{children}</div>
     </MenubarMenuContext.Provider>
   );
@@ -73,6 +96,7 @@ const MenubarGroup = ({ children }: { children: React.ReactNode }) => <>{childre
 
 const MenubarTrigger = ({
   className,
+  type = "button",
   ref,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -84,6 +108,7 @@ const MenubarTrigger = ({
   return (
     <button
       ref={ref}
+      type={type}
       data-state={isOpen ? "open" : "closed"}
       onClick={() => setActiveMenu(isOpen ? null : value)}
       onMouseEnter={() => {
@@ -93,7 +118,7 @@ const MenubarTrigger = ({
         }
       }}
       className={cn(
-        "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+        "flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-3 py-1.5 text-sm font-medium outline-none focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
         className,
       )}
       {...props}
@@ -109,8 +134,10 @@ const MenubarSubContext = React.createContext<{
 
 const MenubarSub = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const contextValue = { isOpen, setIsOpen };
+
   return (
-    <MenubarSubContext.Provider value={{ isOpen, setIsOpen }}>
+    <MenubarSubContext.Provider value={contextValue}>
       <div
         className="relative"
         onPointerEnter={() => setIsOpen(true)}
@@ -137,7 +164,7 @@ const MenubarSubTrigger = ({
       ref={ref}
       data-state={isOpen ? "open" : "closed"}
       className={cn(
-        "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+        "flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm outline-none focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
         inset && "pl-8",
         className,
       )}
@@ -152,6 +179,7 @@ MenubarSubTrigger.displayName = "MenubarSubTrigger";
 
 const MenubarSubContent = ({
   className,
+  style,
   ref,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
@@ -163,9 +191,11 @@ const MenubarSubContent = ({
     <div
       ref={ref}
       className={cn(
-        "absolute top-0 left-full z-50 min-w-[8rem] ml-1 overflow-hidden rounded-[var(--radius-md)] border border-border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in zoom-in-95 duration-200 slide-in-from-left-2",
+        overlayClassNames.menuSurface,
+        "absolute top-0 left-full ml-1 min-w-[8rem]",
         className,
       )}
+      style={{ zIndex: overlayZIndex.popover, ...style }}
       {...props}
     />
   );
@@ -177,6 +207,7 @@ const MenubarContent = ({
   align: _align = "start",
   alignOffset: _alignOffset = -4,
   sideOffset: _sideOffset = 8,
+  style,
   ref,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
@@ -192,9 +223,11 @@ const MenubarContent = ({
     <div
       ref={ref}
       className={cn(
-        "absolute top-full left-0 mt-[8px] z-50 min-w-[12rem] overflow-hidden rounded-[var(--radius-md)] border border-border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in slide-in-from-top-2 duration-200",
+        overlayClassNames.menuSurface,
+        "absolute top-full left-0 mt-[8px] min-w-[12rem]",
         className,
       )}
+      style={{ zIndex: overlayZIndex.popover, ...style }}
       {...props}
     />
   );
@@ -216,7 +249,7 @@ const MenubarItem = ({
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
   const { setActiveMenu } = React.use(MenubarContext);
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const activateMenuItem = (e: React.MouseEvent<HTMLDivElement>) => {
     if (disabled) {
       e.preventDefault();
       return;
@@ -231,11 +264,11 @@ const MenubarItem = ({
       ref,
       "data-disabled": disabled ? "" : undefined,
       onClick: (e: React.MouseEvent<HTMLDivElement>) => {
-        handleClick(e);
+        activateMenuItem(e);
         if (child.props.onClick) child.props.onClick(e);
       },
       className: cn(
-        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         inset && "pl-8",
         className,
         child.props.className,
@@ -250,14 +283,14 @@ const MenubarItem = ({
       role="menuitem"
       tabIndex={disabled ? -1 : 0}
       data-disabled={disabled ? "" : undefined}
-      onClick={handleClick}
+      onClick={activateMenuItem}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
-          handleClick(e as unknown as React.MouseEvent<HTMLDivElement>);
+          activateMenuItem(e as unknown as React.MouseEvent<HTMLDivElement>);
         }
       }}
       className={cn(
-        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         inset && "pl-8",
         className,
       )}
@@ -283,7 +316,7 @@ const MenubarCheckboxItem = ({
     ref={ref}
     data-disabled={disabled ? "" : undefined}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className,
     )}
     {...props}
@@ -309,7 +342,7 @@ const MenubarRadioItem = ({
     ref={ref}
     data-disabled={disabled ? "" : undefined}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className,
     )}
     {...props}

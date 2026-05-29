@@ -60,16 +60,31 @@ All native `<textarea>` props are supported, plus:
 
 ## Design Contract
 
-- Use Textarea for content that naturally wraps: release notes, descriptions, comments, and incident summaries.
+- Use Textarea for content that naturally wraps: release notes, integration descriptions, support replies, and incident summaries.
 - Keep the field visually flat: semantic border, background, text, muted placeholder, and tokenized focus ring only.
 - Mouse and keyboard focus both use `:focus` for the component ring so native square browser outlines never leak around rounded controls.
-- Use `ExpandingTextarea` only when the surface has vertical room for growth; fixed rows are safer inside dense forms and footers.
+- Use `ExpandingTextarea` only when the surface has vertical room for growth; fixed rows are safer inside dense forms, table drawers, and dialog footers.
+- Set `rows` from the expected product workload: `3` for comments, `4` to `6` for release notes, and a larger fixed height for incident postmortems.
+- Use a visible character or word limit when the value is sent to customers, webhooks, email, or model prompts.
+
+### State Matrix
+
+| State | Product use | Contract |
+|---|---|---|
+| Empty | New changelog entry, connector description, support reply | Label names the field; placeholder shows a realistic first sentence. |
+| Filled | Editing policy copy, release notes, incident summary | Preserve line breaks and user casing; do not auto-format while focused. |
+| Focus | Writing long text in a drawer or modal | Tokenized focus ring follows the rounded textarea and remains visible in scroll containers. |
+| Error | Missing user-facing change, over limit, unsafe prompt text | String `error` replaces helper text and is announced with `role="alert"`. |
+| Disabled | Historical audit note or locked legal copy | Disabled styling must still keep text readable for review. |
+| Expanding | Composer surfaces with enough vertical space | Growth cannot push primary actions out of reach on mobile or narrow drawers. |
 
 ## Accessibility
 
 `label`, `description`, and string `error` are wired to `id`, `aria-describedby`, and `aria-invalid`. Error text is rendered with `role="alert"`.
 
 If composing labels externally, keep the same contract: `htmlFor` must match the textarea `id`, helper text should be one sentence, and validation should name the field and constraint.
+
+Focus is part of the accessibility contract. The ring must be visible for pointer and keyboard users, including error focus, and the textarea must remain reachable while async validation or save operations are pending.
 
 ## Tokens
 
@@ -84,12 +99,15 @@ Textarea consumes component geometry from `textareaTokens` and semantic runtime 
 
 ## Real Product Examples
 
-- Release notes or changelog summaries.
-- Incident postmortem notes with helper text and max-length validation.
-- Comments and descriptions inside dense forms.
+- Changelog summary in the release editor, with a character limit and helper text that asks for the user-facing change.
+- Incident postmortem notes in operations, using fixed rows so action buttons remain visible in a drawer.
+- Webhook description inside integration settings, with validation that rejects empty operational notes.
+- AI prompt instructions in an agent configuration form, with explicit unsafe-content or length errors.
 
 ## Anti-patterns
 
 - Do not use Textarea for a single scalar value such as a name, URL, or email.
 - Do not grow the textarea until primary actions move below the fold.
 - Do not rely on placeholder instructions instead of a visible label.
+- Do not hide validation in a toast; field-level errors must stay next to the textarea.
+- Do not use Textarea as a rich-text editor or code editor. Use a dedicated editor when formatting, syntax, or mentions are part of the task.

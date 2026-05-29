@@ -200,7 +200,7 @@ export function TwoFactorBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
             <h3 className="text-sm font-medium text-[var(--neutral-12)]">{t("title")}</h3>
@@ -211,7 +211,7 @@ export function TwoFactorBlock({
           </span>
         </div>
 
-        <div className="rounded-lg border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+        <div className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
           <p className="text-sm font-medium text-[var(--neutral-12)]">Authenticator app setup</p>
           <p className="mt-1 text-sm text-[var(--neutral-11)]">{capability.reason}</p>
         </div>
@@ -292,7 +292,7 @@ export function TwoFactorBlock({
   }
 
   return (
-    <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+    <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <TwoFactorHeader
         title={t("title")}
         description={t("description")}
@@ -539,7 +539,7 @@ function VerifyTotpForm({
     <form className="space-y-4" onSubmit={onSubmit} noValidate>
       <p className="text-sm text-[var(--neutral-11)]">{scanLabel}</p>
 
-      <div className="flex flex-col items-start gap-3 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4 sm:flex-row sm:items-center">
+      <div className="flex flex-col items-start gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4 sm:flex-row sm:items-center">
         <NextImage
           alt="Two-factor QR code"
           className="size-[200px] rounded bg-white p-2"
@@ -627,7 +627,7 @@ function BackupCodesPanel({
         <p className="mt-1 text-sm text-[var(--neutral-11)]">{description}</p>
       </div>
 
-      <ul className="grid grid-cols-2 gap-2 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+      <ul className="grid grid-cols-2 gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
         {codes.map((backupCode) => (
           <li
             className="rounded bg-[var(--neutral-1)] px-2 py-1.5 text-center font-mono text-[var(--neutral-12)] text-xs"

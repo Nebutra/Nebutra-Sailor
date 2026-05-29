@@ -87,7 +87,7 @@ export function ApiKeysPageClient() {
         <button
           type="button"
           onClick={() => setDialogOpen(true)}
-          className="rounded-md px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
           style={{ background: "var(--brand-gradient)" }}
         >
           Create API key
@@ -95,7 +95,7 @@ export function ApiKeysPageClient() {
       </div>
 
       {error ? (
-        <p className="rounded-md border border-red-6 bg-red-2 px-3 py-2 text-sm text-red-11">
+        <p className="rounded-[var(--radius-md)] border border-red-6 bg-red-2 px-3 py-2 text-sm text-red-11">
           {error}
         </p>
       ) : null}

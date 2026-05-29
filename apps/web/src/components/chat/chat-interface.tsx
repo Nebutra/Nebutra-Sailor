@@ -138,7 +138,7 @@ function ChatMessage({ message }: { message: UIMessage }) {
       </div>
       <div className={`flex max-w-[80%] flex-col ${isUser ? "items-end" : "items-start"}`}>
         <div
-          className={`rounded-2xl px-4 py-2.5 text-sm ${
+          className={`rounded-[var(--radius-2xl)] px-4 py-2.5 text-sm ${
             isUser
               ? "bg-blue-9 text-white dark:bg-blue-9"
               : "bg-neutral-3 text-neutral-12 dark:bg-white/10 dark:text-white"
@@ -152,7 +152,7 @@ function ChatMessage({ message }: { message: UIMessage }) {
               type="button"
               onClick={handleCopy}
               aria-label="Copy message"
-              className="inline-flex items-center gap-1 rounded-md border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 text-[10px] font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/10 dark:bg-black/40 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+              className="inline-flex items-center gap-1 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 text-[10px] font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/10 dark:bg-black/40 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
             >
               {copied ? <Check className="h-3 w-3 text-green-9" /> : <Copy className="h-3 w-3" />}
               {copied ? "Copied" : "Copy"}
@@ -314,7 +314,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
   const currentMeta = MODE_META[mode];
 
   return (
-    <div className="flex h-[calc(100vh-12rem)] flex-col rounded-xl border border-neutral-7 bg-neutral-1 dark:border-white/10 dark:bg-black/30">
+    <div className="flex h-[calc(100vh-12rem)] flex-col rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 dark:border-white/10 dark:bg-black/30">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-7 px-4 py-3 dark:border-white/10">
         <div className="flex items-center gap-2">
@@ -360,7 +360,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
               type="button"
               aria-label="Start a new chat"
               onClick={handleNewChat}
-              className="rounded-md p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+              className="rounded-[var(--radius-md)] p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
             >
               <Plus className="h-4 w-4" />
             </button>
@@ -370,7 +370,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
               type="button"
               aria-label="Clear conversation (does not delete session)"
               onClick={() => setMessages([])}
-              className="rounded-md p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+              className="rounded-[var(--radius-md)] p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
             >
               <Trash2 className="h-4 w-4" />
             </button>
@@ -394,7 +394,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
             <button
               type="button"
               onClick={handleRetryLoad}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-2 dark:border-white/15 dark:bg-black/40 dark:text-white dark:hover:bg-white/10"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-2 dark:border-white/15 dark:bg-black/40 dark:text-white dark:hover:bg-white/10"
             >
               <RotateCcw className="h-3 w-3" />
               Try again
@@ -432,7 +432,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-3 text-neutral-11 dark:bg-white/10 dark:text-white/70">
                     <Bot className="h-4 w-4" />
                   </div>
-                  <div className="flex items-center gap-2 rounded-2xl bg-neutral-3 px-4 py-2.5 dark:bg-white/10">
+                  <div className="flex items-center gap-2 rounded-[var(--radius-2xl)] bg-neutral-3 px-4 py-2.5 dark:bg-white/10">
                     <Loader2 className="h-4 w-4 animate-spin text-neutral-11 dark:text-white/70" />
                     <span className="text-sm text-neutral-11 dark:text-white/70">Thinking...</span>
                   </div>
@@ -462,7 +462,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
             type="submit"
             disabled={!inputValue.trim() || isStreaming || isLoadingSession}
             aria-label="Send message"
-            className="rounded-lg bg-blue-9 px-3 py-2 text-white transition-colors hover:bg-blue-10 disabled:opacity-50 dark:bg-cyan-9 dark:text-black dark:hover:bg-cyan-10"
+            className="rounded-[var(--radius-lg)] bg-blue-9 px-3 py-2 text-white transition-colors hover:bg-blue-10 disabled:opacity-50 dark:bg-cyan-9 dark:text-black dark:hover:bg-cyan-10"
           >
             <Send className="h-4 w-4" />
           </button>

@@ -231,7 +231,7 @@ function StatusPageSkeleton() {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-[color:var(--neutral-4)] bg-[color:var(--neutral-1)] p-4 dark:border-white/10 dark:bg-black/30">
+    <div className="rounded-[var(--radius-2xl)] border border-[color:var(--neutral-4)] bg-[color:var(--neutral-1)] p-4 dark:border-white/10 dark:bg-black/30">
       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--neutral-9)] dark:text-white/35">
         {label}
       </p>
@@ -244,7 +244,7 @@ function Metric({ label, value }: { label: string; value: string }) {
 
 function StatusDatum({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-[color:var(--neutral-2)] p-3 dark:bg-white/[0.04]">
+    <div className="rounded-[var(--radius-2xl)] bg-[color:var(--neutral-2)] p-3 dark:bg-white/[0.04]">
       <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--neutral-9)] dark:text-white/35">
         {label}
       </dt>

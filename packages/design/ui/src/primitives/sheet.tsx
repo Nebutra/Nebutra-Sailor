@@ -5,6 +5,7 @@ import { Cross as XIcon } from "@nebutra/icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
+import { overlayClassNames, overlayTokens, overlayZIndex } from "../tokens/components/overlay";
 import { sheetTokens } from "../tokens/components/sheet";
 import { cn } from "../utils/cn";
 
@@ -52,8 +53,8 @@ function getSheetStyle(style: React.CSSProperties | undefined): SheetCssVars {
     "--sheet-overlay-blur": sheetTokens.overlay.blur,
     "--sheet-background": sheetTokens.surface.background,
     "--sheet-shadow": sheetTokens.surface.shadow,
-    "--sheet-duration": `${sheetTokens.motion.duration}ms`,
-    "--sheet-easing": sheetTokens.motion.easing,
+    "--sheet-duration": `${overlayTokens.motion.duration}ms`,
+    "--sheet-easing": overlayTokens.motion.easing,
     ...style,
   };
 }
@@ -146,40 +147,28 @@ const SheetOverlay = ({
   <BaseDialog.Backdrop
     ref={ref}
     data-slot="sheet-overlay"
-    className={cn(
-      "fixed inset-0 z-50 bg-[var(--sheet-overlay-background)] backdrop-blur-[var(--sheet-overlay-blur)]",
-      "transition-[opacity,backdrop-filter,display] duration-[var(--sheet-duration)] ease-[var(--sheet-easing)]",
-      "data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:transition-none",
-      className,
-    )}
-    style={getSheetStyle(style)}
+    className={cn(overlayClassNames.sheetBackdrop, className)}
+    style={{ zIndex: overlayZIndex.backdrop, ...getSheetStyle(style) }}
     {...props}
   />
 );
 SheetOverlay.displayName = "SheetOverlay";
 
-const sheetVariants = cva(
-  [
-    "fixed z-50 flex flex-col overflow-hidden border border-border bg-[var(--sheet-background)] text-foreground shadow-[var(--sheet-shadow)] outline-none",
-    "transition-[opacity,transform,display] duration-[var(--sheet-duration)] ease-[var(--sheet-easing)]",
-    "data-ending-style:opacity-0 data-starting-style:opacity-0 motion-reduce:transition-none",
-  ].join(" "),
-  {
-    variants: {
-      side: {
-        top: "inset-x-[var(--sheet-inset)] top-[var(--sheet-inset)] max-h-[min(var(--sheet-edge-height),calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:-translate-y-full data-starting-style:-translate-y-full",
-        bottom:
-          "inset-x-[var(--sheet-inset)] bottom-[var(--sheet-inset)] max-h-[min(var(--sheet-edge-height),calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:translate-y-full data-starting-style:translate-y-full",
-        left: "inset-y-[var(--sheet-inset)] left-[var(--sheet-inset)] h-[calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset))] w-[min(var(--sheet-side-width),calc(100vw_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:-translate-x-full data-starting-style:-translate-x-full",
-        right:
-          "inset-y-[var(--sheet-inset)] right-[var(--sheet-inset)] h-[calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset))] w-[min(var(--sheet-side-width),calc(100vw_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:translate-x-full data-starting-style:translate-x-full",
-      },
-    },
-    defaultVariants: {
-      side: "right",
+const sheetVariants = cva(overlayClassNames.sheetSurface, {
+  variants: {
+    side: {
+      top: "inset-x-[var(--sheet-inset)] top-[var(--sheet-inset)] max-h-[min(var(--sheet-edge-height),calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:-translate-y-full data-starting-style:-translate-y-full",
+      bottom:
+        "inset-x-[var(--sheet-inset)] bottom-[var(--sheet-inset)] max-h-[min(var(--sheet-edge-height),calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:translate-y-full data-starting-style:translate-y-full",
+      left: "inset-y-[var(--sheet-inset)] left-[var(--sheet-inset)] h-[calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset))] w-[min(var(--sheet-side-width),calc(100vw_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:-translate-x-full data-starting-style:-translate-x-full",
+      right:
+        "inset-y-[var(--sheet-inset)] right-[var(--sheet-inset)] h-[calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset))] w-[min(var(--sheet-side-width),calc(100vw_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:translate-x-full data-starting-style:translate-x-full",
     },
   },
-);
+  defaultVariants: {
+    side: "right",
+  },
+});
 
 export interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof BaseDialog.Popup>,
@@ -219,7 +208,7 @@ const SheetContent = ({
         ref={ref}
         data-slot="sheet-content"
         className={cn(sheetVariants({ side }), className)}
-        style={getSheetStyle(style)}
+        style={{ zIndex: overlayZIndex.modal, ...getSheetStyle(style) }}
         {...props}
       >
         {children}
@@ -228,8 +217,9 @@ const SheetContent = ({
             aria-label="Close"
             className={cn(
               "absolute right-[var(--sheet-close-offset)] top-[var(--sheet-close-offset)] inline-flex size-[var(--sheet-close-size)] items-center justify-center rounded-[var(--sheet-close-radius)] text-muted-foreground",
-              "transition-[background-color,color,box-shadow] duration-[var(--sheet-duration)] ease-[var(--sheet-easing)] hover:bg-muted hover:text-foreground",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none motion-reduce:transition-none",
+              "transition-[background-color,color,box-shadow] duration-[var(--motion-duration-micro)] ease-[var(--ease-out)] hover:bg-muted hover:text-foreground",
+              overlayClassNames.focusRing,
+              "disabled:pointer-events-none motion-reduce:transition-none",
             )}
           >
             <XIcon aria-hidden="true" className="size-[var(--sheet-close-icon-size)]" />

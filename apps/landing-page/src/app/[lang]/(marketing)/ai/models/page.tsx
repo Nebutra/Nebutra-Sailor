@@ -108,7 +108,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
                         href={p.docs}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group rounded-2xl border border-border bg-card/30 p-5 hover:border-primary/40 hover:bg-card/50 transition-colors"
+                        className="group rounded-[var(--radius-2xl)] border border-border bg-card/30 p-5 hover:border-primary/40 hover:bg-card/50 transition-colors"
                       >
                         <div className="flex items-start justify-between gap-3 mb-3">
                           <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">

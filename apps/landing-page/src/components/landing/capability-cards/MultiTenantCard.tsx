@@ -72,15 +72,15 @@ export function MultiTenantCard() {
         {/* File Tabs */}
         <div className="flex border-b border-border/60 dark:border-white/5 bg-muted/10 dark:bg-white/[0.02]">
           <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground dark:text-white bg-background dark:bg-[var(--neutral-2)] border-b-2 border-primary dark:border-[var(--cyan-9)]">
-            <span className="w-2 h-2 rounded-sm bg-blue-500/60" />
+            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-blue-500/60" />
             query.ts
           </div>
           <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-medium text-muted-foreground dark:text-zinc-500">
-            <span className="w-2 h-2 rounded-sm bg-emerald-500/40" />
+            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-emerald-500/40" />
             schema.prisma
           </div>
           <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-medium text-muted-foreground dark:text-zinc-500">
-            <span className="w-2 h-2 rounded-sm bg-amber-500/40" />
+            <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-amber-500/40" />
             middleware.ts
           </div>
         </div>

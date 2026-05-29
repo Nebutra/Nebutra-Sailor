@@ -14,14 +14,14 @@ import type { SubpackageGlyphProps } from "./types";
 export function UploadsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-3 rounded-lg bg-[var(--neutral-2)] px-4 py-3"
+      className="flex w-full flex-col justify-between gap-3 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Filename row */}
       <div className="flex items-center gap-2.5">
         <span
           aria-hidden="true"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-[var(--neutral-3)] text-[var(--neutral-11)]"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-3)] text-[var(--neutral-11)]"
         >
           <Box className="h-3.5 w-3.5" />
         </span>

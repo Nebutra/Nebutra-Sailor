@@ -99,7 +99,7 @@ export default function ShortcutsPage() {
           <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/50">
             Global
           </h2>
-          <div className="overflow-hidden rounded-xl border border-neutral-7 dark:border-white/10">
+          <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 dark:border-white/10">
             <table className="w-full border-collapse text-left text-sm">
               <tbody className="divide-y divide-neutral-6 dark:divide-white/10">
                 {GLOBAL_SHORTCUTS.map((row) => (
@@ -146,7 +146,7 @@ export default function ShortcutsPage() {
                 <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/50">
                   {t(`sections.${section}`)}
                 </h2>
-                <div className="overflow-hidden rounded-xl border border-neutral-7 dark:border-white/10">
+                <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 dark:border-white/10">
                   <table className="w-full border-collapse text-left text-sm">
                     <tbody className="divide-y divide-neutral-6 dark:divide-white/10">
                       {items.map((cmd) => {

@@ -74,7 +74,7 @@ export function DeleteOrganizationForm({
 
   if (success) {
     return (
-      <section className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
+      <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
         <p role="status" className="text-sm text-[var(--neutral-12)]">
           {t("success")}
         </p>
@@ -83,7 +83,7 @@ export function DeleteOrganizationForm({
   }
 
   return (
-    <section className="rounded-lg border border-red-6 bg-red-2 p-6">
+    <section className="rounded-[var(--radius-lg)] border border-red-6 bg-red-2 p-6">
       <div className="mb-4">
         <h3 className="text-sm font-semibold text-red-11">{t("title")}</h3>
         <p className="mt-1 text-sm text-[var(--neutral-11)]">{t("description")}</p>

@@ -61,12 +61,12 @@ function readParam(value: string | string[] | undefined): string {
 function RetoolBanner() {
   return (
     <div
-      className="mb-6 rounded-xl border p-4"
+      className="mb-6 rounded-[var(--radius-xl)] border p-4"
       style={{
         background: "var(--brand-gradient)",
       }}
     >
-      <div className="rounded-lg bg-[var(--neutral-1)] p-4 dark:bg-neutral-12">
+      <div className="rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-4 dark:bg-neutral-12">
         <div className="flex items-start gap-3">
           <ExternalLink
             aria-hidden="true"
@@ -91,7 +91,7 @@ function ChartPlaceholder({ label }: { label: string }) {
     <div
       role="img"
       aria-label={`${label} chart placeholder`}
-      className="mt-4 flex h-24 items-center justify-center rounded-md border border-dashed border-neutral-7 bg-neutral-2 text-neutral-10 text-xs"
+      className="mt-4 flex h-24 items-center justify-center rounded-[var(--radius-md)] border border-dashed border-neutral-7 bg-neutral-2 text-neutral-10 text-xs"
     >
       chart: wire real data
     </div>

@@ -77,7 +77,7 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="group relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border-2 border-dashed border-muted-foreground/30 transition-colors hover:border-primary"
+            className="group relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-[var(--radius-xl)] border-2 border-dashed border-muted-foreground/30 transition-colors hover:border-primary"
           >
             {logoPreview ? (
               <Image

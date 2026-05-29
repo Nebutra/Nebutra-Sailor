@@ -1,48 +1,46 @@
 import { useTheme } from "@nebutra/tokens";
-import { useEffect, useState } from "react";
 import { type Activity, ActivityCalendar } from "react-activity-calendar";
+
+const ACTIVITY_DATA = createActivityData();
+
+function createActivityData(): Activity[] {
+  const mockData: Activity[] = [];
+  const today = new Date("2026-05-29T00:00:00.000Z");
+
+  for (let i = 365; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+
+    const dateStr = date.toISOString().split("T")[0];
+    if (!dateStr) continue;
+
+    const isHigh = Math.sin(i / 3) + Math.sin(i / 13) > 0.5;
+    const isIdle = Math.sin(i * 17 + 5) > 0.6;
+
+    let level = 0;
+    if (isHigh && !isIdle) level = 4;
+    else if (isHigh) level = 3;
+    else if (!isIdle) level = 2;
+    else level = 1;
+
+    const finalLevel = i % 7 === 0 || i % 11 === 0 ? 0 : level;
+
+    mockData.push({
+      date: dateStr,
+      count: finalLevel * 10,
+      level: finalLevel as 0 | 1 | 2 | 3 | 4,
+    });
+  }
+
+  return mockData;
+}
 
 export function ActivityMatrix() {
   const { theme } = useTheme();
-  const [data, setData] = useState<Activity[]>([]);
-
-  useEffect(() => {
-    // Generate deterministic heatmap data for the last year
-    const mockData: Activity[] = [];
-    const today = new Date();
-
-    for (let i = 365; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-
-      const dateStr = date.toISOString().split("T")[0];
-      if (!dateStr) continue;
-
-      // Deterministic fake wave pattern for data visualization
-      const isHigh = Math.sin(i / 3) + Math.sin(i / 13) > 0.5;
-      const isIdle = Math.sin(i * 17 + 5) > 0.6;
-
-      let level = 0;
-      if (isHigh && !isIdle) level = 4;
-      else if (isHigh) level = 3;
-      else if (!isIdle) level = 2;
-      else level = 1;
-
-      // Force level to be 0|1|2|3|4 based on deterministic pattern
-      const finalLevel = i % 7 === 0 || i % 11 === 0 ? 0 : level;
-
-      mockData.push({
-        date: dateStr,
-        count: finalLevel * 10,
-        level: finalLevel as 0 | 1 | 2 | 3 | 4,
-      });
-    }
-
-    setData(mockData);
-  }, []);
+  const data = ACTIVITY_DATA;
 
   return (
-    <div className="mt-6 p-5 rounded-xl bg-muted/30 dark:bg-white/[0.02] border border-border/50 dark:border-white/5 relative overflow-hidden group">
+    <div className="mt-6 p-5 rounded-[var(--radius-xl)] bg-muted/30 dark:bg-white/[0.02] border border-border/50 dark:border-white/5 relative overflow-hidden group">
       <div className="flex items-center justify-between mb-5">
         <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           Fleet Telemetry

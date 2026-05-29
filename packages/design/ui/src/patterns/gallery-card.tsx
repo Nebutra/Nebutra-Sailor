@@ -1,7 +1,7 @@
 "use client";
 
 import { MoreHorizontal, Pin } from "@nebutra/icons";
-import * as React from "react";
+import type * as React from "react";
 import { Badge } from "../primitives/badge";
 import {
   DropdownMenu,
@@ -123,7 +123,7 @@ const badgeToneToVariant: Record<
 // ─── Shared className ─────────────────────────────────────────────────────────
 
 const cardClassName = cn(
-  "group relative block rounded-xl border border-border bg-card text-card-foreground p-5 text-left",
+  "group relative block rounded-[var(--radius-xl)] border border-border bg-card text-card-foreground p-5 text-left",
   "transition-all duration-150",
   "hover:border-neutral-7 hover:shadow-sm hover:-translate-y-px",
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
@@ -142,9 +142,9 @@ interface GalleryCardActionsMenuProps {
  * user opens the menu or selects an item.
  */
 function GalleryCardActionsMenu({ actions, title }: GalleryCardActionsMenuProps) {
-  const stop = React.useCallback((event: React.SyntheticEvent) => {
+  function stop(event: React.SyntheticEvent) {
     event.stopPropagation();
-  }, []);
+  }
 
   return (
     <div onClickCapture={stop} onPointerDownCapture={stop}>
@@ -155,7 +155,7 @@ function GalleryCardActionsMenu({ actions, title }: GalleryCardActionsMenuProps)
               type="button"
               aria-label={`Actions for ${title}`}
               className={cn(
-                "inline-flex h-7 w-7 items-center justify-center rounded-md",
+                "inline-flex h-7 w-7 items-center justify-center rounded-[var(--radius-md)]",
                 "text-muted-foreground transition-colors",
                 "hover:bg-accent hover:text-accent-foreground",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
@@ -223,7 +223,7 @@ function GalleryCardBody({
         {icon ? (
           <div
             className={cn(
-              "flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-base",
+              "flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] text-base",
               iconToneStyles[iconTone],
             )}
             aria-hidden="true"

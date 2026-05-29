@@ -37,7 +37,7 @@ const TOOLS: ReadonlyArray<{
 export function McpGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col justify-between gap-2 rounded-md bg-[var(--neutral-2)] px-3 py-2.5"
+      className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
@@ -51,7 +51,7 @@ export function McpGlyph(_props: SubpackageGlyphProps) {
         {TOOLS.map(({ name, desc, latency, icon: Icon }) => (
           <li
             key={name}
-            className="flex items-center gap-1.5 rounded-sm bg-[var(--neutral-1)] px-2 py-1"
+            className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-[var(--neutral-1)] px-2 py-1"
           >
             <Icon className="h-2.5 w-2.5 shrink-0 text-[var(--brand-primary)]" />
             <code className="truncate font-mono text-[10px] text-[var(--neutral-12)]">

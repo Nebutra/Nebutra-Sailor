@@ -6,7 +6,45 @@ import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 
-const DropdownMenu = BaseMenu.Root;
+type DropdownMenuContextValue = {
+  setOpen: (open: boolean) => void;
+};
+
+const DropdownMenuContext = React.createContext<DropdownMenuContextValue | null>(null);
+
+type DropdownMenuProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Root>;
+
+function DropdownMenu({
+  open: controlledOpen,
+  defaultOpen = false,
+  onOpenChange,
+  children,
+  ...props
+}: DropdownMenuProps) {
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
+  const open = controlledOpen ?? uncontrolledOpen;
+
+  function setOpen(
+    nextOpen: boolean,
+    eventDetails?: Parameters<NonNullable<DropdownMenuProps["onOpenChange"]>>[1],
+  ) {
+    if (controlledOpen === undefined) {
+      setUncontrolledOpen(nextOpen);
+    }
+    onOpenChange?.(nextOpen, eventDetails as never);
+  }
+
+  const contextValue: DropdownMenuContextValue = { setOpen };
+
+  return (
+    <DropdownMenuContext.Provider value={contextValue}>
+      <BaseMenu.Root open={open} onOpenChange={setOpen} {...props}>
+        {children}
+      </BaseMenu.Root>
+    </DropdownMenuContext.Provider>
+  );
+}
+DropdownMenu.displayName = "DropdownMenu";
 
 type DropdownMenuTriggerProps = React.ComponentProps<typeof BaseMenu.Trigger> & {
   asChild?: boolean;
@@ -19,7 +57,38 @@ const DropdownMenuTrigger = ({
   ref,
   ...props
 }: DropdownMenuTriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
-  const renderElement = asChild && React.isValidElement(children) ? children : render;
+  const context = React.use(DropdownMenuContext);
+  function openFromTrigger() {
+    context?.setOpen(true);
+  }
+
+  const childRenderElement =
+    asChild && React.isValidElement<Record<string, unknown>>(children)
+      ? React.cloneElement(children, {
+          onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
+            (
+              children.props.onMouseDown as
+                | ((event: React.MouseEvent<HTMLElement>) => void)
+                | undefined
+            )?.(event);
+            if (!event.defaultPrevented) {
+              openFromTrigger();
+            }
+          },
+          onKeyDown: (event: React.KeyboardEvent<HTMLElement>) => {
+            (
+              children.props.onKeyDown as
+                | ((event: React.KeyboardEvent<HTMLElement>) => void)
+                | undefined
+            )?.(event);
+            if (!event.defaultPrevented && (event.key === "Enter" || event.key === " ")) {
+              openFromTrigger();
+            }
+          },
+        })
+      : null;
+
+  const renderElement = childRenderElement ?? render;
   return (
     <BaseMenu.Trigger
       ref={ref}
@@ -200,10 +269,10 @@ const DropdownMenuLabel = ({
   inset,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseMenu.GroupLabel> & {
+}: React.HTMLAttributes<HTMLDivElement> & {
   inset?: boolean;
-} & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.GroupLabel>> | undefined }) => (
-  <BaseMenu.GroupLabel
+} & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <div
     ref={ref}
     className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
     {...props}

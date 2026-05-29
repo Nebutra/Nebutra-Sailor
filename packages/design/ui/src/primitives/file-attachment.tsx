@@ -1,6 +1,7 @@
 "use client";
 
 import { Code, File, Image as ImageIcon, Cross as X } from "@nebutra/icons";
+import Image from "next/image";
 import type { ReactElement } from "react";
 import { cn } from "../utils/cn";
 
@@ -88,7 +89,7 @@ function getFileIconName(filename: string, isImage?: boolean): FileIconName {
   return "text";
 }
 
-function renderFileIcon(name: FileIconName): ReactElement {
+function FileIconPreview({ name }: { name: FileIconName }): ReactElement {
   const cls = "size-4 text-muted-foreground";
   switch (name) {
     case "image":
@@ -102,6 +103,27 @@ function renderFileIcon(name: FileIconName): ReactElement {
     case "text":
       return <File className={cls} aria-hidden="true" />;
   }
+}
+
+function FileThumbnail({
+  url,
+  filename,
+  className,
+}: {
+  url: string;
+  filename: string;
+  className?: string;
+}): ReactElement {
+  return (
+    <Image
+      src={url}
+      alt={filename}
+      width={40}
+      height={40}
+      unoptimized
+      className={cn("block object-cover", className)}
+    />
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -124,7 +146,7 @@ export function FileAttachment({
   return (
     <div
       className={cn(
-        "group relative rounded-md bg-muted",
+        "group relative rounded-[var(--radius-md)] bg-muted",
         canShowImageOnly
           ? "flex size-10 items-center justify-center"
           : "flex min-w-[120px] max-w-[200px] items-center gap-2 py-1 pl-1 pr-2",
@@ -132,25 +154,18 @@ export function FileAttachment({
       )}
     >
       {canShowImageOnly ? (
-        <span className="size-8 shrink-0 overflow-hidden rounded-[4px]">
-          {/* biome-ignore lint/performance/noImgElement: framework-neutral primitive — consumers may not be on Next.js */}
-          <img src={url} alt={filename} loading="lazy" className="h-full w-full object-cover" />
-        </span>
+        <FileThumbnail url={url} filename={filename} className="size-8 shrink-0 rounded-[4px]" />
       ) : (
         <>
           {hasThumbnail ? (
-            <span className="w-8 shrink-0 self-stretch overflow-hidden rounded-[4px]">
-              {/* biome-ignore lint/performance/noImgElement: framework-neutral primitive — consumers may not be on Next.js */}
-              <img
-                src={url}
-                alt={filename}
-                loading="lazy"
-                className="aspect-square h-full w-full object-cover"
-              />
-            </span>
+            <FileThumbnail
+              url={url}
+              filename={filename}
+              className="aspect-square h-full w-8 shrink-0 self-stretch rounded-[4px]"
+            />
           ) : (
             <span className="flex w-8 shrink-0 items-center justify-center self-stretch rounded-[4px] bg-background">
-              {renderFileIcon(iconName)}
+              <FileIconPreview name={iconName} />
             </span>
           )}
           <span className="flex min-w-0 flex-col">

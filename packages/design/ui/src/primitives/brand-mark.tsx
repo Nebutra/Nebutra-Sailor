@@ -71,7 +71,7 @@ export function BrandMark({
 
       <span
         className={cn(
-          "relative inline-flex items-center justify-center rounded-2xl",
+          "relative inline-flex items-center justify-center rounded-[var(--radius-2xl)]",
           sizes.box,
           variant === "gradient" && "text-white shadow-sm",
           variant === "soft" && "bg-blue-2 text-blue-11 dark:bg-blue-2/20 dark:text-blue-9",

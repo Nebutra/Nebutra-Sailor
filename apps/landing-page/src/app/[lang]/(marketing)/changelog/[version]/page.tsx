@@ -240,7 +240,7 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
               width={width}
               height={height}
               sizes="(min-width: 768px) 720px, 100vw"
-              className="rounded-lg max-w-full h-auto mt-4 mb-4"
+              className="rounded-[var(--radius-lg)] max-w-full h-auto mt-4 mb-4"
             />
           );
         }

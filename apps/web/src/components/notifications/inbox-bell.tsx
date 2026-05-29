@@ -179,7 +179,7 @@ export function InboxBell({
         aria-expanded={open}
         aria-haspopup="dialog"
         onClick={() => setOpen((current) => !current)}
-        className="relative inline-flex h-9 w-9 items-center justify-center rounded-md text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
+        className="relative inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
         data-testid="inbox-bell-trigger"
       >
         <Bell className="h-5 w-5" aria-hidden="true" />
@@ -199,7 +199,7 @@ export function InboxBell({
           role="dialog"
           aria-label="Notifications"
           data-testid="inbox-bell-panel"
-          className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] shadow-lg sm:w-96"
+          className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] shadow-lg sm:w-96"
         >
           <div className="flex items-center justify-between border-b border-[var(--neutral-7)] px-4 py-2.5">
             <h2 className="text-sm font-semibold text-[var(--neutral-12)]">Notifications</h2>

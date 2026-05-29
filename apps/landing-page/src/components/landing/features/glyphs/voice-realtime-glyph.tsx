@@ -7,7 +7,7 @@ const WAVEFORM_HEIGHTS = [30, 55, 18, 68, 42, 80, 25, 60, 38, 72, 22, 50, 65, 32
 export function VoiceRealtimeGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex w-full flex-col gap-3 overflow-hidden rounded-lg bg-[var(--neutral-1)] px-4 py-3"
+      className="relative flex w-full flex-col gap-3 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-1)] px-4 py-3"
       style={{ height: 160 }}
     >
       {/* Top row: live indicator + timer + status */}

@@ -2,7 +2,7 @@
 
 import { Heart, HeartFill, Message, PaperAirplane, Star, StarFill } from "@nebutra/icons";
 import type { ComponentType, SVGProps } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface BlogComment {
   id: string;
@@ -72,6 +72,39 @@ function formatDate(value: string | null, language: "en" | "zh"): string | null 
   }).format(new Date(value));
 }
 
+function ReactionButton({
+  active,
+  count,
+  disabled,
+  icon: Icon,
+  label,
+  onClick,
+}: {
+  active: boolean;
+  count: number;
+  disabled: boolean;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-pressed={active}
+      aria-label={label}
+      className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-wait disabled:opacity-60"
+    >
+      <Icon
+        className={active ? "size-4 text-[var(--accent-11)]" : "size-4 text-[var(--neutral-11)]"}
+        aria-hidden
+      />
+      <span>{count}</span>
+    </button>
+  );
+}
+
 export function BlogComments({
   appUrl,
   labels,
@@ -84,7 +117,8 @@ export function BlogComments({
   const [body, setBody] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isReacting, setIsReacting] = useState(false);
+  const isReactingRef = useRef(false);
+  const [reactionPending, setReactionPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [reactions, setReactions] = useState<BlogCommentsResponse["reactions"]>({
     likeCount: 0,
@@ -93,10 +127,11 @@ export function BlogComments({
     viewerSaved: false,
   });
 
-  const endpoint = useMemo(() => {
-    const params = new URLSearchParams({ language, slug, translationKey });
-    return `/api/blog/comments?${params.toString()}`;
-  }, [language, slug, translationKey]);
+  const endpoint = `/api/blog/comments?${new URLSearchParams({
+    language,
+    slug,
+    translationKey,
+  }).toString()}`;
 
   useEffect(() => {
     let cancelled = false;
@@ -108,7 +143,11 @@ export function BlogComments({
           credentials: "include",
           headers: { Accept: "application/json" },
         });
-        if (!response.ok) throw new Error("Failed to load comments");
+        if (!response.ok) {
+          if (!cancelled) setError(labels.error);
+          if (!cancelled) setIsLoading(false);
+          return;
+        }
         const data = (await response.json()) as BlogCommentsResponse;
         if (cancelled) return;
         setComments(data.comments);
@@ -116,9 +155,8 @@ export function BlogComments({
         setReactions(data.reactions);
       } catch {
         if (!cancelled) setError(labels.error);
-      } finally {
-        if (!cancelled) setIsLoading(false);
       }
+      if (!cancelled) setIsLoading(false);
     }
 
     void loadComments();
@@ -141,7 +179,11 @@ export function BlogComments({
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ translationKey, slug, language, body: trimmed }),
       });
-      if (!response.ok) throw new Error("Failed to submit comment");
+      if (!response.ok) {
+        setError(labels.error);
+        setIsSubmitting(false);
+        return;
+      }
       const data = (await response.json()) as { comment: BlogComment };
       setComments((current) => [
         ...current,
@@ -155,13 +197,12 @@ export function BlogComments({
       setBody("");
     } catch {
       setError(labels.error);
-    } finally {
-      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   }
 
   async function handleReaction(kind: "like" | "save") {
-    if (isReacting) return;
+    if (isReactingRef.current) return;
     if (!viewer?.isSignedIn) {
       window.location.href = `${appUrl}/sign-in`;
       return;
@@ -171,7 +212,8 @@ export function BlogComments({
     const activeField = kind === "like" ? "viewerLiked" : "viewerSaved";
     const countField = kind === "like" ? "likeCount" : "saveCount";
     const optimisticActive = !previous[activeField];
-    setIsReacting(true);
+    isReactingRef.current = true;
+    setReactionPending(true);
     setError(null);
     setReactions({
       ...previous,
@@ -186,7 +228,13 @@ export function BlogComments({
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ translationKey, slug, language, kind }),
       });
-      if (!response.ok) throw new Error("Failed to update reaction");
+      if (!response.ok) {
+        setReactions(previous);
+        setError(labels.error);
+        isReactingRef.current = false;
+        setReactionPending(false);
+        return;
+      }
       const data = (await response.json()) as {
         likeCount?: number;
         liked?: boolean;
@@ -202,9 +250,9 @@ export function BlogComments({
     } catch {
       setReactions(previous);
       setError(labels.error);
-    } finally {
-      setIsReacting(false);
     }
+    isReactingRef.current = false;
+    setReactionPending(false);
   }
 
   const LikeIcon = reactions.viewerLiked ? HeartFill : Heart;
@@ -223,37 +271,6 @@ export function BlogComments({
         ? labels.saved
         : labels.save
       : labels.signInToSave;
-  }
-
-  function ReactionButton({
-    active,
-    count,
-    icon: Icon,
-    kind,
-  }: {
-    active: boolean;
-    count: number;
-    icon: ComponentType<SVGProps<SVGSVGElement>>;
-    kind: "like" | "save";
-  }) {
-    return (
-      <button
-        type="button"
-        onClick={() => {
-          void handleReaction(kind);
-        }}
-        disabled={isReacting}
-        aria-pressed={active}
-        aria-label={getReactionLabel(kind)}
-        className="inline-flex shrink-0 items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:cursor-wait disabled:opacity-60"
-      >
-        <Icon
-          className={active ? "size-4 text-[var(--accent-11)]" : "size-4 text-[var(--neutral-11)]"}
-          aria-hidden
-        />
-        <span>{count}</span>
-      </button>
-    );
   }
 
   return (
@@ -279,14 +296,22 @@ export function BlogComments({
           <ReactionButton
             active={reactions.viewerLiked}
             count={reactions.likeCount}
+            disabled={reactionPending}
             icon={LikeIcon}
-            kind="like"
+            label={getReactionLabel("like")}
+            onClick={() => {
+              void handleReaction("like");
+            }}
           />
           <ReactionButton
             active={reactions.viewerSaved}
             count={reactions.saveCount}
+            disabled={reactionPending}
             icon={SaveIcon}
-            kind="save"
+            label={getReactionLabel("save")}
+            onClick={() => {
+              void handleReaction("save");
+            }}
           />
         </div>
       </div>
@@ -349,6 +374,7 @@ export function BlogComments({
               onChange={(event) => setBody(event.target.value)}
               maxLength={1200}
               rows={4}
+              aria-label={labels.placeholder}
               placeholder={labels.placeholder}
               className="min-h-28 w-full resize-y bg-transparent px-1 py-1 text-sm leading-6 text-[var(--neutral-12)] outline-none placeholder:text-[var(--neutral-10)]"
             />

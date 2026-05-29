@@ -1,5 +1,5 @@
 ---
-title: "多行文本框 (Textarea)"
+title: "多行文本框"
 description: "用于备注、描述和较长自由文本的 token 化多行输入原语。"
 ---
 
@@ -34,7 +34,7 @@ import { Textarea } from "@nebutra/ui/primitives";
 | `description` | `string` | — | 通过 `aria-describedby` 关联的辅助说明。渲染字符串错误时会被错误替代。 |
 | `error` | `string \| boolean` | — | 标记字段无效；字符串会渲染内联错误消息。 |
 | `onValueChange` | `(value: string) => void` | — | 除原生 `onChange` 外的 value-first 回调。 |
-| `fieldClassName` | `string` | — | label、辅助说明、错误消息外层容器的类名。 |
+| `fieldClassName` | `string` | — | 标签、辅助说明和错误消息外层容器的类名。 |
 
 ## 示例
 
@@ -60,36 +60,54 @@ import { Textarea } from "@nebutra/ui/primitives";
 
 ## 设计契约
 
-- Textarea 只用于天然会换行的内容：发布说明、描述、评论和事故摘要。
-- 视觉保持克制：语义 border、background、text、muted placeholder 和 token 化焦点环，不叠额外阴影。
-- 鼠标和键盘聚焦都由组件的 `:focus` 接管，避免浏览器原生方形 outline 从圆角控件外漏。
-- 只有界面有足够纵向空间时才使用 `ExpandingTextarea`；密集表单和 footer 里固定 rows 更稳。
+- 多行文本框只用于天然会换行的内容：发布说明、集成描述、客服回复和事故摘要。
+- 视觉保持克制：语义边框、背景、文本、弱化占位文案和令牌化焦点环，不叠额外阴影。
+- 鼠标和键盘聚焦都由组件的 `:focus` 接管，避免浏览器原生方形轮廓从圆角控件外漏。
+- 只有界面有足够纵向空间时才使用 `ExpandingTextarea`；密集表单、表格抽屉和弹窗底部区域里固定行数更稳。
+- 根据产品任务设置 `rows`：评论用 `3`，发布说明用 `4` 到 `6`，事故复盘使用更高的固定高度。
+- 内容会发给客户、Webhook、邮件或模型提示词时，应提供可见的字符数或字数限制。
+
+### 状态矩阵
+
+| 状态 | 产品场景 | 合约 |
+|---|---|---|
+| 空值 | 新建 changelog、连接器描述、客服回复 | 标签命名字段，占位文案只展示真实第一句示例。 |
+| 已填写 | 编辑策略文案、发布说明、事故摘要 | 保留换行和原文大小写，聚焦期间不自动格式化。 |
+| 聚焦 | 在抽屉或弹窗中编写长文本 | 令牌化焦点环贴合圆角，并在滚动容器中保持可见。 |
+| 错误 | 缺少用户可见变化、超出长度、prompt 文案不安全 | 字符串 `error` 替代辅助说明，并通过 `role="alert"` 宣告。 |
+| 禁用 | 历史审计备注、锁定的法务文案 | 禁用样式仍要保证文本可读，方便复核。 |
+| 自动增高 | 有足够纵向空间的编辑器界面 | 在移动端或窄抽屉里不能把主操作挤到不可达区域。 |
 
 ## 可访问性
 
 `label`、`description` 和字符串 `error` 会自动关联到 `id`、`aria-describedby`、`aria-invalid`。错误文本使用 `role="alert"`。
 
-如果外部组合 label，仍需保持同样契约：`htmlFor` 必须匹配 textarea 的 `id`，辅助说明保持一句话，校验文案要指出字段和约束。
+如果外部组合标签，仍需保持同样契约：`htmlFor` 必须匹配多行文本框的 `id`，辅助说明保持一句话，校验文案要指出字段和约束。
 
-## Tokens
+焦点属于可访问性合约：鼠标和键盘用户都必须看到焦点环，错误聚焦也一样；异步校验或保存期间，多行文本框仍应可达。
 
-Textarea 的几何尺寸来自 `textareaTokens`，颜色来自运行时语义 CSS 变量：
+## 令牌
 
-| Token | 用途 |
+多行文本框的几何尺寸来自 `textareaTokens`，颜色来自运行时语义 CSS 变量：
+
+| 令牌 | 用途 |
 | ----- | ---- |
 | `textareaTokens.sizes` | 每个密度尺寸的最小高度、padding、字号和圆角。 |
-| `textareaTokens.focusRingWidth` | focus 与错误 focus 状态共享的焦点环宽度。 |
+| `textareaTokens.focusRingWidth` | 聚焦与错误聚焦状态共享的焦点环宽度。 |
 | `textareaTokens.fieldGap` | label、控件和字段消息之间的间距。 |
 | `--background`, `--foreground`, `--input`, `--ring`, `--destructive` | 语义颜色契约。 |
 
 ## 真实产品示例
 
-- 发布说明或 changelog 摘要。
-- 带 helper text 和长度校验的事故复盘备注。
-- 密集表单里的评论和描述。
+- 发布编辑器里的 changelog 摘要，带字符数限制和“说明用户可见变化”的辅助文本。
+- 运维抽屉里的事故复盘备注，使用固定 rows，保证操作按钮仍在可见区域。
+- 集成设置中的 Webhook 描述，校验空白或无运营意义的备注。
+- Agent 配置表单中的 AI 提示词指令，显示长度或安全校验错误。
 
 ## 反模式
 
 - 不要用 Textarea 填单个标量值，例如名称、URL 或 email。
 - 不要让 textarea 自动增长到把主操作挤出首屏。
-- 不要用 placeholder instructions 替代可见 label。
+- 不要用占位提示替代可见标签。
+- 不要把校验错误藏在 toast 里；字段级错误必须留在多行文本框旁边。
+- 不要把 Textarea 当富文本编辑器或代码编辑器；需要格式、语法或 mention 时使用专用编辑器。

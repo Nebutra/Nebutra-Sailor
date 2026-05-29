@@ -9,7 +9,7 @@ export function FauxTerminal({ children }: { children: React.ReactNode }) {
           <div className="w-3 h-3 rounded-full bg-border/80 dark:bg-zinc-700/80 shadow-sm border border-black/5 dark:border-white/5 hover:bg-emerald-400 transition-colors"></div>
         </div>
         <div className="ml-6 flex-1 text-center pr-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-md bg-background dark:bg-zinc-900 border border-border/40 dark:border-white/5 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-[var(--radius-md)] bg-background dark:bg-zinc-900 border border-border/40 dark:border-white/5 shadow-sm">
             <span className="text-[10px] font-mono font-bold text-muted-foreground tracking-widest">
               operator@nebutra-sailor: ~
             </span>

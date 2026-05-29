@@ -192,3 +192,15 @@ Language is inferred from file extension when `language` is not provided:
 - Use `CodeBlock` for code inspection, installation snippets, and multi-file examples. Use inline code for identifiers and short commands.
 - Keep examples executable and scoped; a code block should teach one operation, not become a miniature article.
 - Prefer language auto-detection from `title`; only expose `showLanguageSwitcher` when users genuinely need to compare syntaxes.
+
+## Real Product Examples
+
+- SDK documentation showing a request handler, generated type, and environment snippet as separate tabs.
+- Release notes that highlight the exact changed lines in a migration diff.
+- Registry install pages where a command block needs copy behavior and a bounded height.
+
+## Anti-patterns
+
+- Do not use `CodeBlock` for one-word identifiers, short flags, or inline commands; inline code is easier to scan.
+- Do not paste unbounded logs or generated files into a page. Link to the artifact or collapse the output behind a purpose-built viewer.
+- Do not show placeholder code that cannot run in the documented package context. Consumers should be able to copy the snippet with minimal edits.

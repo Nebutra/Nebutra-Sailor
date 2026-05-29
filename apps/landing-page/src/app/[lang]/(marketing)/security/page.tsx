@@ -199,7 +199,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                     style={{ boxShadow: "var(--ring-hairline)" }}
                   >
                     <div className="flex items-start gap-4 mb-3">
-                      <div className="rounded-xl bg-primary/10 p-2.5 shrink-0">
+                      <div className="rounded-[var(--radius-xl)] bg-primary/10 p-2.5 shrink-0">
                         <cap.icon className="h-5 w-5 text-primary" />
                       </div>
                       <div className="flex-1">

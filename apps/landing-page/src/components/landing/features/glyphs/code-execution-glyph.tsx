@@ -20,7 +20,7 @@ export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
 
   return (
     <div
-      className="relative flex w-full flex-col gap-2 overflow-hidden rounded-lg bg-[var(--neutral-2)] p-3"
+      className="relative flex w-full flex-col gap-2 overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-3"
       style={{ height: 160 }}
     >
       {/* Top-right runtime badge */}
@@ -38,7 +38,7 @@ export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
       {/* Main row: code → arrow → result */}
       <div className="flex flex-1 items-center gap-2">
         {/* Code snippet */}
-        <div className="flex-1 self-stretch rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2">
+        <div className="flex-1 self-stretch rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2">
           <pre className="font-mono text-[9px] leading-[1.45] text-[var(--neutral-12)]">
             <code>
               <span className="text-[var(--neutral-10)]">const</span>
@@ -65,7 +65,7 @@ export const CodeExecutionGlyph = ({ locale }: SubpackageGlyphProps) => {
         <ArrowRight className="h-4 w-4 shrink-0 text-[var(--neutral-10)]" />
 
         {/* Result panel */}
-        <div className="flex w-[110px] shrink-0 flex-col justify-center gap-1 self-stretch rounded-md border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2">
+        <div className="flex w-[110px] shrink-0 flex-col justify-center gap-1 self-stretch rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2">
           <div className="flex items-center gap-1">
             <Check className="h-3 w-3 text-emerald-500" />
             <span className="font-mono text-[10px] font-semibold text-emerald-500">

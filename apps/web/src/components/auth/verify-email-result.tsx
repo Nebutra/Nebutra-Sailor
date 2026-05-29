@@ -19,7 +19,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
     return (
       <section
         aria-live="polite"
-        className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center"
+        className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center"
       >
         <div
           aria-hidden
@@ -34,7 +34,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
         <div className="mt-5">
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-md bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
+            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
           >
             {t("continueCta")}
           </Link>
@@ -46,7 +46,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
   return (
     <section
       aria-live="polite"
-      className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center"
+      className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-center"
     >
       <div
         aria-hidden
@@ -62,7 +62,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
       <div className="mt-5">
         <Link
           href="/sign-in"
-          className="inline-flex items-center justify-center rounded-md border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)]"
+          className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-2)]"
         >
           {t("signInCta")}
         </Link>

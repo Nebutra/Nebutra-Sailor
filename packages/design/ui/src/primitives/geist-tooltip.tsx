@@ -1,7 +1,7 @@
 "use client";
 
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import * as React from "react";
 import { cn } from "../utils/cn";
 
@@ -86,64 +86,66 @@ export const GeistTooltip = ({
             )
           }
         />
-        <AnimatePresence>
-          {open && (
-            <BaseTooltip.Portal>
-              <BaseTooltip.Positioner
-                side={position}
-                align={getBaseAlign(boxAlign)}
-                sideOffset={tip ? 5 : 8}
-              >
-                <BaseTooltip.Popup
-                  {...popupProps}
-                  render={
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        scale: 0.96,
-                        y: position === "top" ? 4 : position === "bottom" ? -4 : 0,
-                        x: position === "left" ? 4 : position === "right" ? -4 : 0,
-                      }}
-                      animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-                      exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.1 } }}
-                      transition={{
-                        type: "spring",
-                        damping: 30,
-                        stiffness: 400,
-                        mass: 0.8,
-                      }}
-                      className={cn(
-                        "z-50 px-3 py-1.5 text-xs leading-tight tracking-tight font-medium rounded-md shadow-md",
-                        "flex items-center",
-                        colorClasses,
-                        center ? "text-center" : "text-left",
-                        className,
-                      )}
-                    >
-                      {text}
-                      {tip && (
-                        <BaseTooltip.Arrow
-                          className={cn(
-                            "w-2.5 h-2.5 rotate-45 border-none",
-                            type === "default" && "bg-primary text-primary",
-                            type === "success" && "bg-success text-success",
-                            type === "warning" && "bg-warning text-warning",
-                            type === "error" && "bg-destructive text-destructive",
-                            type === "violet" && "bg-violet text-violet",
-                          )}
-                          style={{
-                            // Base UI naturally positions the arrow, but we add visual flair
-                            boxShadow: "-1px -1px 1px rgba(0,0,0,0.05)",
-                          }}
-                        />
-                      )}
-                    </motion.div>
-                  }
-                />
-              </BaseTooltip.Positioner>
-            </BaseTooltip.Portal>
-          )}
-        </AnimatePresence>
+        <LazyMotion features={domAnimation}>
+          <AnimatePresence>
+            {open && (
+              <BaseTooltip.Portal>
+                <BaseTooltip.Positioner
+                  side={position}
+                  align={getBaseAlign(boxAlign)}
+                  sideOffset={tip ? 5 : 8}
+                >
+                  <BaseTooltip.Popup
+                    {...popupProps}
+                    render={
+                      <m.div
+                        initial={{
+                          opacity: 0,
+                          scale: 0.96,
+                          y: position === "top" ? 4 : position === "bottom" ? -4 : 0,
+                          x: position === "left" ? 4 : position === "right" ? -4 : 0,
+                        }}
+                        animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.1 } }}
+                        transition={{
+                          type: "spring",
+                          damping: 30,
+                          stiffness: 400,
+                          mass: 0.8,
+                        }}
+                        className={cn(
+                          "z-50 px-3 py-1.5 text-xs leading-tight tracking-tight font-medium rounded-[var(--radius-md)] shadow-md",
+                          "flex items-center",
+                          colorClasses,
+                          center ? "text-center" : "text-left",
+                          className,
+                        )}
+                      >
+                        {text}
+                        {tip && (
+                          <BaseTooltip.Arrow
+                            className={cn(
+                              "w-2.5 h-2.5 rotate-45 border-none",
+                              type === "default" && "bg-primary text-primary",
+                              type === "success" && "bg-success text-success",
+                              type === "warning" && "bg-warning text-warning",
+                              type === "error" && "bg-destructive text-destructive",
+                              type === "violet" && "bg-violet text-violet",
+                            )}
+                            style={{
+                              // Base UI naturally positions the arrow, but we add visual flair
+                              boxShadow: "-1px -1px 1px rgba(0,0,0,0.05)",
+                            }}
+                          />
+                        )}
+                      </m.div>
+                    }
+                  />
+                </BaseTooltip.Positioner>
+              </BaseTooltip.Portal>
+            )}
+          </AnimatePresence>
+        </LazyMotion>
       </BaseTooltip.Root>
     </BaseTooltip.Provider>
   );

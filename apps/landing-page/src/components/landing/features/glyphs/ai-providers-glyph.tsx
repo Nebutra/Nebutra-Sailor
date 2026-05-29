@@ -18,7 +18,7 @@ const ROWS: ReadonlyArray<ModelRow> = [
 export function AiProvidersGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="relative flex flex-col gap-1.5 rounded-md bg-[var(--neutral-1)] px-3 py-2.5"
+      className="relative flex flex-col gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-3 py-2.5"
       style={{ height: 160 }}
     >
       <div className="flex items-center justify-between">
@@ -32,7 +32,7 @@ export function AiProvidersGlyph(_props: SubpackageGlyphProps) {
         </Badge>
       </div>
 
-      <div className="flex-1 overflow-hidden rounded-sm border border-[var(--neutral-6)]">
+      <div className="flex-1 overflow-hidden rounded-[var(--radius-sm)] border border-[var(--neutral-6)]">
         <div className="grid grid-cols-[1fr_50px_56px] items-center gap-2 border-b border-[var(--neutral-6)] bg-[var(--neutral-2)] px-2 py-1 text-[9px] font-medium uppercase tracking-wide text-[var(--neutral-10)]">
           <span>Model</span>
           <span className="text-right">Context</span>

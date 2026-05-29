@@ -1,11 +1,10 @@
 import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
 import { AnimateInGroup } from "@nebutra/ui/components";
-import { CodeBlock, MagicCard } from "@nebutra/ui/primitives";
+import { CodeBlock } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import type { Locale } from "@/i18n/routing";
 import { CAPABILITY_FOLDERS, type CapabilityFolder } from "./capability-folder-data";
 import { getCodeSampleForGroup } from "./feature-code-samples";
-import { getGroupTokens } from "./feature-group-tokens";
 
 const SECTION_COPY = {
   docs: { en: "Open docs", zh: "打开文档" },
@@ -28,21 +27,13 @@ function previewCode(code: string, maxLines = 14): string {
 function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: Locale }) {
   const localeKey = toLocaleKey(locale);
   const Icon = folder.icon;
-  const tokens = getGroupTokens(folder.id);
-  const aurora = tokens.auroraColors;
   const sample = getCodeSampleForGroup(folder.id);
   const code = previewCode(sample.code, 16);
   const featureHref = `/${locale}/features/${folder.id}`;
 
   return (
     <article className="group/card relative flex flex-col scroll-mt-28" id={folder.anchorId}>
-      <MagicCard
-        className="flex h-full flex-col overflow-hidden rounded-[var(--radius-panel)]"
-        gradientSize={300}
-        gradientFrom={aurora[0]}
-        gradientTo={aurora[2] ?? aurora[1]}
-        gradientOpacity={0.5}
-      >
+      <div className="landing-showcase-surface flex h-full flex-col overflow-hidden rounded-[var(--radius-panel)] border">
         {/* Header — icon + source path */}
         <header className="flex items-center justify-between gap-3 border-b border-border/40 px-6 py-4 sm:px-7">
           <div className="flex min-w-0 items-center gap-3">
@@ -109,7 +100,7 @@ function CapabilityCard({ folder, locale }: { folder: CapabilityFolder; locale: 
             />
           </Link>
         </footer>
-      </MagicCard>
+      </div>
     </article>
   );
 }

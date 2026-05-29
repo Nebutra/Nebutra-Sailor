@@ -31,7 +31,7 @@ export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
-      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-1.5 rounded-lg bg-[var(--neutral-1)] p-2.5 ring-1 ring-[var(--neutral-6)] shadow-sm">
+      <div className="mx-auto flex w-full max-w-[340px] flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-2.5 ring-1 ring-[var(--neutral-6)] shadow-sm">
         {/* Browser chrome */}
         <div className="flex items-center gap-2 border-b border-[var(--neutral-5)] pb-1.5">
           <div className="flex items-center gap-1">
@@ -39,7 +39,7 @@ export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--amber-9)]" />
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-9)]" />
           </div>
-          <div className="flex flex-1 items-center gap-1 rounded-sm bg-[var(--neutral-2)] px-1.5 py-0.5">
+          <div className="flex flex-1 items-center gap-1 rounded-[var(--radius-sm)] bg-[var(--neutral-2)] px-1.5 py-0.5">
             <Globe className="h-2.5 w-2.5 text-[var(--neutral-10)]" />
             <span className="font-mono text-[9px] text-[var(--neutral-11)]">{copy.url}</span>
           </div>

@@ -1,5 +1,5 @@
 ---
-title: 按钮 (Button)
+title: 按钮
 description: 提供八种视觉变体、五种尺寸选项和图标插槽的交互式点击目标组件。
 ---
 
@@ -30,38 +30,38 @@ description: 提供八种视觉变体、五种尺寸选项和图标插槽的交�
 ## 变体
 
 <ComponentPreview name="button-variants-demo" className="gap-3">
-  <Button variant="default">默认 (Default)</Button>
-  <Button variant="outline">轮廓 (Outline)</Button>
-  <Button variant="secondary">次要 (Secondary)</Button>
-  <Button variant="ghost">幽灵 (Ghost)</Button>
-  <Button variant="destructive">删除 (Delete)</Button>
-  <Button variant="warning">警告 (Warning)</Button>
-  <Button variant="link">了解更多 (Learn more)</Button>
+  <Button variant="default">默认</Button>
+  <Button variant="outline">轮廓</Button>
+  <Button variant="secondary">次要</Button>
+  <Button variant="ghost">轻量</Button>
+  <Button variant="destructive">删除</Button>
+  <Button variant="warning">警告</Button>
+  <Button variant="link">查看详情</Button>
 
   ```tsx
-<Button variant="default">默认 (Default)</Button>
-  <Button variant="outline">轮廓 (Outline)</Button>
-  <Button variant="secondary">次要 (Secondary)</Button>
-  <Button variant="ghost">幽灵 (Ghost)</Button>
-  <Button variant="destructive">删除 (Delete)</Button>
-  <Button variant="warning">警告 (Warning)</Button>
-  <Button variant="link">了解更多 (Learn more)</Button>
+<Button variant="default">默认</Button>
+  <Button variant="outline">轮廓</Button>
+  <Button variant="secondary">次要</Button>
+  <Button variant="ghost">轻量</Button>
+  <Button variant="destructive">删除</Button>
+  <Button variant="warning">警告</Button>
+  <Button variant="link">查看详情</Button>
   ```
 </ComponentPreview>
 
 ## 尺寸
 
 <ComponentPreview name="button-sizes-demo" className="gap-3 items-center">
-  <Button size="tiny">极小 (Tiny)</Button>
-  <Button size="sm">小 (Small)</Button>
-  <Button size="default">默认 (Default)</Button>
-  <Button size="lg">大 (Large)</Button>
+  <Button size="tiny">极小</Button>
+  <Button size="sm">小</Button>
+  <Button size="default">默认</Button>
+  <Button size="lg">大</Button>
 
   ```tsx
-<Button size="tiny">极小 (Tiny)</Button>
-  <Button size="sm">小 (Small)</Button>
-  <Button size="default">默认 (Default)</Button>
-  <Button size="lg">大 (Large)</Button>
+<Button size="tiny">极小</Button>
+  <Button size="sm">小</Button>
+  <Button size="default">默认</Button>
+  <Button size="lg">大</Button>
   ```
 </ComponentPreview>
 
@@ -129,24 +129,42 @@ description: 提供八种视觉变体、五种尺寸选项和图标插槽的交�
 
 ## 可访问性
 
-- 除非 `ButtonLink` 或 `asChild` 明确用于导航，否则使用原生 `<button>`。
-- loading 状态应保留 children 提供的可访问名称。
-- 纯图标按钮必须提供 `aria-label`。
+- 保存账单设置、轮换 API Key、邀请成员这类变更请求使用原生 `<button>`。
+- 只有打开审计详情、跳转套餐结账这类导航动作才使用 `ButtonLink` 或 `asChild`。
+- `loading` 状态继续用 `children` 提供可访问名称；如果整块表单也在刷新，应在外层区域同步标记 `aria-busy`。
+- 纯图标按钮必须提供 `aria-label`，例如 `复制 Webhook URL` 或 `刷新部署状态`。
+- 键盘焦点在 `default`、`outline`、`secondary`、`ghost`、`destructive`、`warning` 变体上都必须显示令牌化焦点环。
 
 ## 设计契约
 
-- 每个决策区域只放一个 primary button。
-- `destructive` 只用于不可逆或高风险操作。
-- 优先使用 `prefix` / `suffix` 图标，不要临时拼一套 inline layout。
+- 每个决策区域只保留一个主按钮：保存项目、创建 API Key、邀请成员、升级套餐。
+- 破坏性动作必须和常规提交分开。删除租户、吊销 token、清空 Webhook endpoint、变更账单这类不可逆操作使用 `destructive`；暂停自动化这类可恢复风险使用 `warning`。
+- 图标优先走 `prefix` 和 `suffix`，让间距、行高、禁用透明度和加载替换都由按钮原语管理。
+- 不能执行的动作才用 `disabled`，例如必填字段缺失；请求进行中用 `loading`，保持按钮宽度和文案稳定。
+- 密集 SaaS 工具栏不要用一次性 class 扩宽按钮。表格行和命令面板使用 `tiny` 或 `sm`；表单底部和引导步骤使用 `default` 或 `lg`。
+
+### 状态矩阵
+
+| 状态 | 产品场景 | 合约 |
+|---|---|---|
+| 默认 | 提交表单、打开弹窗、复制命令 | 文案说明动作本身，不能只写对象名。 |
+| 悬停 | 工具栏和卡片里的指针确认 | 颜色变化使用 token，布局不能抖动。 |
+| 聚焦 | 账单、IAM、审计工具的键盘路径 | 每个变体都显示焦点环，且不能被父容器裁切。 |
+| 加载中 | 保存租户设置、生成 API Key、部署模板 | 保留最终动作文案，不改成含糊的“处理中”。 |
+| 禁用 | 必填缺失、权限不足、套餐不可用 | 原因不明显时，在按钮附近提供解释文本。 |
+| 破坏性 | 删除组织、吊销 token、清除 Webhook endpoint | 执行前必须经过确认弹窗或二次步骤。 |
 
 ## 真实产品示例
 
-- 计费表单里的主提交按钮。
-- 带前置图标的次级工具栏动作。
-- 带可访问名称的复制或刷新图标按钮。
+- 发票资料表单中的 `保存账单信息`，作为唯一主按钮；`取消` 使用 `outline`。
+- 组织设置工具栏中的 `邀请成员`，带前置图标，请求中仍保留按钮文案。
+- `轮换 API Key` 在确认前用 `warning`，最终吊销动作在确认弹窗里用 `destructive`。
+- 集成列表里的纯图标 `复制 Webhook 签名密钥`，同时提供 `aria-label` 和同义提示气泡。
 
 ## 反模式
 
 - 不要用 `link` variant 承载破坏性或表单提交动作。
 - 不要在同一个动作组里放两个视觉 primary 按钮。
-- 不要用 `className` 发明一次性尺寸。
+- 不要用无提示的禁用状态掩盖正在执行的变更请求。
+- 不要为了单个产品页用自定义 padding 或原始颜色造“特殊按钮”。
+- 纯图标按钮不能只依赖提示气泡；没有悬停时也必须有可访问名称。

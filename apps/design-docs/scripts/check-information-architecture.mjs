@@ -40,17 +40,26 @@ const DOCS_METADATA_ENUMS = {
   substrate: new Set(["native", "custom", "mixed"]),
 };
 
-const criticalComponentDocTemplateSlugs = [
+const highSignalRegistryDocTemplateSlugs = [
+  "bento-grid",
+  "browser-mockup",
   "button",
+  "chart",
   "checkbox",
+  "code-block",
   "command-menu",
   "dialog",
   "dropdown-menu",
+  "empty-state",
   "input",
+  "kpi-card",
   "menu",
+  "modal",
   "popover",
   "radio-group",
   "select",
+  "status-badge",
+  "status-dot",
   "tabs",
   "textarea",
   "tooltip",
@@ -467,6 +476,44 @@ function assertRegistryDocs() {
   }
 }
 
+function fileTargetWithoutExtension(file) {
+  return String(file.target ?? file.path ?? "").replace(/\.(tsx?|jsx?)$/u, "");
+}
+
+function assertRegistryManifestSiblingFiles() {
+  const registryDir = path.join(ROOT, "public", "r");
+  const importPattern = /\bfrom\s+["'](\.[^"']+)["']/g;
+
+  for (const fileName of fs.readdirSync(registryDir).sort()) {
+    if (!fileName.endsWith(".json")) continue;
+
+    const item = readJson(path.join(registryDir, fileName));
+    const files = Array.isArray(item.files) ? item.files : [];
+    const knownTargets = new Set(files.map(fileTargetWithoutExtension));
+
+    for (const file of files) {
+      const source = typeof file.content === "string" ? file.content : "";
+      const target = String(file.target ?? file.path ?? "");
+      const targetDir = path.posix.dirname(target);
+
+      for (const match of source.matchAll(importPattern)) {
+        const specifier = match[1];
+        if (!specifier.startsWith("./")) continue;
+
+        const siblingBasename = specifier.replace(/^\.\//u, "");
+        if (siblingBasename.includes("/")) continue;
+
+        const expectedTarget = path.posix.join(targetDir, siblingBasename);
+        if (knownTargets.has(expectedTarget)) continue;
+
+        fail(
+          `registry manifest ${fileName} has unresolved sibling import "${specifier}" from ${target}. Run prebuild so design-docs repairs the public registry files.`,
+        );
+      }
+    }
+  }
+}
+
 function assertRegistryMaturityContracts() {
   const registry = readJson(path.join(ROOT, "public", "registry.json"));
   const allowedMaturityByStatus = {
@@ -586,7 +633,7 @@ function assertRegistryDocTemplateContracts() {
   }
 }
 
-function assertCriticalComponentExamplesAndAntiPatterns() {
+function assertHighSignalRegistryDocExamplesAndAntiPatterns() {
   const requiredHeadings = {
     en: [
       { label: "Real Product Examples", pattern: /^##\s+Real Product Examples\b/m },
@@ -598,19 +645,19 @@ function assertCriticalComponentExamplesAndAntiPatterns() {
     ],
   };
 
-  for (const slug of criticalComponentDocTemplateSlugs) {
+  for (const slug of highSignalRegistryDocTemplateSlugs) {
     for (const lang of LANGS) {
-      const file = path.join(DOCS_DIR, lang, "components", `${slug}.mdx`);
-      if (!fs.existsSync(file)) {
-        fail(`${lang}/components/${slug}.mdx is required for critical primitive governance.`);
+      const docs = findDocsFile(lang, slug);
+      if (!docs) {
+        fail(`${lang}/${slug}.mdx is required for high-signal registry docs governance.`);
         continue;
       }
 
-      const source = fs.readFileSync(file, "utf8");
+      const source = fs.readFileSync(docs.file, "utf8");
       for (const heading of requiredHeadings[lang]) {
         if (hasHeading(source, heading.pattern)) continue;
         fail(
-          `${relative(file)} is missing "${heading.label}". Critical component docs must document real usage and anti-patterns.`,
+          `${relative(docs.file)} is missing "${heading.label}". High-signal registry docs must document real usage and anti-patterns.`,
         );
       }
     }
@@ -856,10 +903,11 @@ for (const section of SECTIONS) {
 
 assertPreviewRegistry();
 assertRegistryDocs();
+assertRegistryManifestSiblingFiles();
 assertRegistryMaturityContracts();
 assertStructuredFrontmatterContracts();
 assertRegistryDocTemplateContracts();
-assertCriticalComponentExamplesAndAntiPatterns();
+assertHighSignalRegistryDocExamplesAndAntiPatterns();
 assertNoStaleSubstrateCopy();
 assertBrandTokenTruth();
 assertNoPreviewEscapeHatchCopy();

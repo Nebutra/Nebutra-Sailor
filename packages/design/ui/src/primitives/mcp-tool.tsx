@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronRight } from "@nebutra/icons";
-import { memo, type ReactElement, useCallback, useId, useMemo, useState } from "react";
+import { type ReactElement, useId, useState } from "react";
 import { cn } from "../utils/cn";
 import { TextShimmer } from "./text-shimmer";
 
@@ -35,7 +35,7 @@ import { TextShimmer } from "./text-shimmer";
  *    - <section> wrapper with aria-label for the whole tool
  *    - Toggle button: aria-expanded + aria-controls → output region id
  *    - Output is a nested <section aria-label="Tool output"> wrapping <pre>
- *    - Interrupted state: role="status" so SR announces termination
+ *    - Interrupted state: semantic <output> so SR announces termination
  *    - ChevronRight rendered aria-hidden (decorative)
 \* -------------------------------------------------------------------------- */
 
@@ -85,6 +85,7 @@ const PRIORITY_ARG_KEYS: readonly string[] = [
   "summary",
   "title",
 ];
+const PRIORITY_ARG_KEY_ORDER = new Map(PRIORITY_ARG_KEYS.map((key, index) => [key, index]));
 
 // ---------------------------------------------------------------------------
 // Pure helpers
@@ -121,6 +122,27 @@ function getCompletedTitle(humanized: string): string {
 export type McpToolArgValue = string | number | boolean | null | undefined;
 export type McpToolArgs = Record<string, McpToolArgValue>;
 
+function sortArgEntries(entries: [string, McpToolArgValue][]): [string, McpToolArgValue][] {
+  const buckets = PRIORITY_ARG_KEYS.map(() => [] as [string, McpToolArgValue][]);
+  const fallback: [string, McpToolArgValue][] = [];
+
+  for (const entry of entries) {
+    const priorityIndex = PRIORITY_ARG_KEY_ORDER.get(entry[0]);
+    if (priorityIndex === undefined) {
+      fallback.push(entry);
+    } else {
+      buckets[priorityIndex]?.push(entry);
+    }
+  }
+
+  const sorted: [string, McpToolArgValue][] = [];
+  for (const bucket of buckets) {
+    sorted.push(...bucket);
+  }
+  sorted.push(...fallback);
+  return sorted;
+}
+
 function formatArgs(
   input: McpToolArgs | undefined,
   maxShown: number,
@@ -132,14 +154,7 @@ function formatArgs(
   );
   if (entries.length === 0) return "";
 
-  const sorted = [...entries].sort(([a], [b]) => {
-    const ai = PRIORITY_ARG_KEYS.indexOf(a);
-    const bi = PRIORITY_ARG_KEYS.indexOf(b);
-    if (ai !== -1 && bi !== -1) return ai - bi;
-    if (ai !== -1) return -1;
-    if (bi !== -1) return 1;
-    return 0;
-  });
+  const sorted = sortArgEntries(entries);
 
   const parts: string[] = [];
   for (const [key, value] of sorted) {
@@ -218,7 +233,7 @@ export type McpToolProps = {
 // Component
 // ---------------------------------------------------------------------------
 
-export const McpTool = memo(function McpTool({
+export function McpTool({
   state = "completed",
   name,
   args,
@@ -232,46 +247,40 @@ export const McpTool = memo(function McpTool({
   className,
 }: McpToolProps): ReactElement {
   const outputId = useId();
-  const humanized = useMemo(() => humanizeToolName(name), [name]);
+  const humanized = humanizeToolName(name);
 
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isOpen: boolean = expanded !== undefined ? expanded : internalOpen;
 
-  const setOpen = useCallback(
-    (next: boolean) => {
-      if (expanded === undefined) setInternalOpen(next);
-      onExpandedChange?.(next);
-    },
-    [expanded, onExpandedChange],
-  );
+  function setOpen(next: boolean) {
+    if (expanded === undefined) setInternalOpen(next);
+    onExpandedChange?.(next);
+  }
 
   const isPending = state === "pending";
   const isInterrupted = state === "interrupted";
 
-  const formattedOutput = useMemo(
-    () => (isPending || isInterrupted || !output ? "" : formatOutput(output, maxOutputChars)),
-    [isPending, isInterrupted, output, maxOutputChars],
-  );
+  const formattedOutput =
+    isPending || isInterrupted || !output ? "" : formatOutput(output, maxOutputChars);
 
   const expandable = !isPending && !isInterrupted && formattedOutput.length > 0;
 
-  const handleToggle = useCallback(() => {
+  function handleToggle() {
     if (!expandable) return;
     setOpen(!isOpen);
-  }, [expandable, isOpen, setOpen]);
+  }
 
   // --- Interrupted: degenerate render path (after all hooks) ---------------
   if (isInterrupted) {
     return (
-      <div
-        role="status"
+      <output
         className={cn(
           "flex select-none items-center gap-1 text-sm text-muted-foreground",
           className,
         )}
       >
         <span className="font-medium">{humanized} interrupted</span>
-      </div>
+      </output>
     );
   }
 
@@ -325,7 +334,7 @@ export const McpTool = memo(function McpTool({
       {expandable && isOpen && (
         <section
           aria-label="Tool output"
-          className="overflow-hidden rounded-lg border border-border bg-card"
+          className="overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card"
         >
           <pre
             id={outputId}
@@ -337,4 +346,4 @@ export const McpTool = memo(function McpTool({
       )}
     </section>
   );
-});
+}

@@ -36,7 +36,7 @@ export function PricingComparisonTable() {
           <p className="mt-4 text-base text-[var(--neutral-11)]">{t("subtitle")}</p>
         </div>
 
-        <div className="mt-16 overflow-x-auto rounded-2xl border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+        <div className="mt-16 overflow-x-auto rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
           <table
             aria-label={t("ariaTable")}
             className="w-full min-w-[640px] border-collapse text-left text-sm"

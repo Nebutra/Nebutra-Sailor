@@ -34,7 +34,7 @@ export function WorkspacesTerminal() {
 
       <AnimatedSpan
         delay={4000}
-        className="w-full mt-auto mb-2 text-center text-[10px] text-muted-foreground border-border/50 bg-background/50 rounded-lg p-2"
+        className="w-full mt-auto mb-2 text-center text-[10px] text-muted-foreground border-border/50 bg-background/50 rounded-[var(--radius-lg)] p-2"
       >
         Row-Level Security (RLS) dynamically enforced by Identity JWT.
       </AnimatedSpan>

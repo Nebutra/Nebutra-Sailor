@@ -146,21 +146,40 @@ opened menu surface, radius, shadow, and focus treatment.
 - Native Select keeps browser form semantics, mobile pickers, and keyboard behavior.
 - `error` sets `aria-invalid` and connects the field to the inline error message.
 - The compound API follows the ARIA listbox pattern through Base UI primitives.
+- The trigger focus ring must remain visible before and after the menu opens; listbox item focus must not create a second square outline around the rounded surface.
+- The selected value must be announced as the trigger label/value pair, not only as a decorative chip or color.
 
 ## Design Contract
 
-- Use Select for short, finite lists where filtering is unnecessary.
-- Use the same trigger density as Input and Textarea in the surrounding form.
-- Keep option labels parallel and stable.
+- Use Select for short, finite lists where filtering is unnecessary: region, plan cadence, environment, invoice language, deployment template.
+- Use the same trigger density as Input and Textarea in the surrounding form. Mixed densities are allowed only when the Select sits in a table row or compact toolbar.
+- Keep option labels parallel and stable. Region labels should not mix provider codes, city names, and marketing names in the same list.
+- Keep option values durable. Do not store localized labels or display names as persisted values.
+- Use placeholder only before selection. Once a value exists, the trigger should show the selected label even during validation or background refresh.
+
+### State Matrix
+
+| State | Product use | Contract |
+|---|---|---|
+| Placeholder | New deployment region or plan cadence | Placeholder is action-oriented and disabled for native Select. |
+| Selected | Existing tenant region, invoice language, template | Trigger shows a stable label; persisted value stays provider-safe. |
+| Open | Compound menu in product settings | Surface uses Nebutra radius, shadow, and item focus without layout shift. |
+| Focus | Keyboard path through forms and filter bars | Trigger ring remains visible; item focus is visually distinct inside the listbox. |
+| Error | Required region missing, unsupported billing country | Error text is inline, linked, and announced through `aria-describedby`. |
+| Disabled | Region locked after first deployment or plan-gated option | Disabled state explains whether the field or a single option is unavailable. |
 
 ## Real Product Examples
 
-- Region selection in a deployment form.
-- Framework selection in a starter template picker.
-- Billing country or invoice language when the list remains short.
+- Deployment region Select with `iad1`, `sfo1`, and `hkg1` values, grouped by geography when the list grows past one screen.
+- Plan cadence Select in billing settings, switching between monthly and annual without exposing raw Stripe price IDs.
+- Environment Select in API key creation, limited to `Development`, `Preview`, and `Production`.
+- Invoice language Select for a short supported-locale list; switch to Combobox only when localization coverage becomes large.
 
 ## Anti-patterns
 
 - Do not use Select for long searchable lists. Use Combobox.
 - Do not use Select for multi-value choices. Use MultiSelect or CheckboxGroup.
 - Do not use a menu item group as a fake form select.
+- Do not persist human-readable labels as option values.
+- Do not hide disabled reasons inside an option title; explain plan or permission locks near the field.
+- Do not use a native Select when the opened menu must visually match Nebutra screenshots or visual-regression gates.

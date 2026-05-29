@@ -4,6 +4,7 @@ import { Select as BaseSelect, type SelectRoot } from "@base-ui/react/select";
 import { Check, ChevronDown } from "@nebutra/icons";
 import * as React from "react";
 
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { type SelectSize, selectTokens } from "../tokens/components/select";
 import { cn } from "../utils/cn";
 import { ErrorMessage } from "./error-message";
@@ -139,6 +140,7 @@ function getSelectContentStyle(style: React.CSSProperties | undefined): SelectCo
     "--select-item-indicator-inset": `${selectTokens.item.indicatorInset}px`,
     "--select-item-indicator-size": `${selectTokens.item.indicatorSize}px`,
     "--select-item-indicator-icon-size": `${selectTokens.item.indicatorIconSize}px`,
+    zIndex: overlayZIndex.popover,
     ...style,
   };
 }
@@ -375,10 +377,7 @@ const SelectContent = ({
     >
       <BaseSelect.Popup
         ref={ref}
-        className={cn(
-          "relative z-50 max-h-[var(--select-content-max-height)] min-w-[var(--select-content-min-width)] overflow-hidden rounded-[var(--select-content-radius)] border bg-background/90 backdrop-blur-md text-popover-foreground shadow-[var(--select-content-shadow)] outline-none transition-[opacity,transform,display] duration-[var(--select-duration)] ease-[var(--select-easing)] data-starting-style:animate-in data-starting-style:fade-in-0 data-starting-style:zoom-in-95 data-ending-style:animate-out data-ending-style:fade-out-0 data-ending-style:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-          className,
-        )}
+        className={cn("relative", overlayClassNames.selectSurface, className)}
         style={getSelectContentStyle(style)}
         {...props}
       >

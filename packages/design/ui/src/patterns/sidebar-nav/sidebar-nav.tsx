@@ -65,7 +65,7 @@ export interface SidebarNavProps {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const ITEM_BASE_CLASSES =
-  "flex items-center gap-2 rounded-md px-2.5 py-1.5 text-[13px] leading-5 transition-colors";
+  "flex items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-colors";
 const ITEM_DEFAULT_CLASSES = "text-foreground hover:bg-accent hover:text-accent-foreground";
 const ITEM_ACTIVE_CLASSES = "bg-accent text-accent-foreground font-medium";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
@@ -242,10 +242,7 @@ function ParentItem({
   itemClassName,
   renderLink,
 }: ParentItemProps): React.ReactElement {
-  const hasActiveChild = React.useMemo(
-    () => item.children?.some((c) => c.isActive === true) ?? false,
-    [item.children],
-  );
+  const hasActiveChild = item.children?.some((c) => c.isActive === true) ?? false;
   const [open, setOpen] = React.useState<boolean>(item.isActive === true || hasActiveChild);
 
   // If collapsed, render parent as a flat icon-only item with tooltip (no nested expansion).

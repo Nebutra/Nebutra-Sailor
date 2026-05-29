@@ -32,7 +32,7 @@ const TAGLINES: ReadonlyArray<string> = ["Make work flow", "Calm power"];
 export function BrandGenesisGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex w-full flex-col gap-1.5 rounded-lg bg-[var(--neutral-2)] px-3 py-2"
+      className="flex w-full flex-col gap-1.5 rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-3 py-2"
       style={{ height: 160 }}
     >
       {/* Header */}
@@ -51,7 +51,7 @@ export function BrandGenesisGlyph(_props: SubpackageGlyphProps) {
         {SWATCHES.map((swatch) => (
           <li
             key={swatch.name}
-            className="flex h-7 flex-1 items-center justify-center rounded-md"
+            className="flex h-7 flex-1 items-center justify-center rounded-[var(--radius-md)]"
             style={{ background: swatch.background }}
           >
             <span
@@ -65,7 +65,7 @@ export function BrandGenesisGlyph(_props: SubpackageGlyphProps) {
       </ul>
 
       {/* Typography pairing */}
-      <div className="flex items-center justify-between rounded-md bg-[var(--neutral-1)] px-2 py-1">
+      <div className="flex items-center justify-between rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-1">
         <span className="text-[13px] font-bold tracking-tight text-[var(--neutral-12)]">
           Aria Display
         </span>
@@ -78,7 +78,7 @@ export function BrandGenesisGlyph(_props: SubpackageGlyphProps) {
         {TAGLINES.map((tagline) => (
           <li
             key={tagline}
-            className="flex items-center gap-1.5 rounded-md bg-[var(--neutral-1)] px-2 py-0.5"
+            className="flex items-center gap-1.5 rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2 py-0.5"
           >
             <span
               className="h-1 w-1 rounded-full"

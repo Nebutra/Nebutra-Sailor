@@ -1,71 +1,47 @@
 "use client";
 
-import { cva, type VariantProps } from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { cn } from "../utils/cn";
+import { toggleGroupItemVariants, toggleGroupVariants } from "./toggle-group-variants";
 
-const toggleGroupVariants = cva(
-  "inline-flex items-center justify-center gap-1 rounded-lg bg-muted p-1 text-muted-foreground",
-  {
-    variants: {
-      variant: {
-        default: "",
-        outline: "bg-transparent border",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  },
+type ToggleGroupType = "single" | "multiple";
+type ToggleGroupValue = string | string[];
+type ToggleGroupItemVariant = VariantProps<typeof toggleGroupItemVariants>["variant"];
+type ToggleGroupItemSize = VariantProps<typeof toggleGroupItemVariants>["size"];
+
+const ToggleGroupTypeContext = React.createContext<ToggleGroupType | null>(null);
+const ToggleGroupValueContext = React.createContext<ToggleGroupValue | null>(null);
+const ToggleGroupChangeContext = React.createContext<((value: ToggleGroupValue) => void) | null>(
+  null,
 );
-
-const toggleGroupItemVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-[background-color,box-shadow,color,opacity] duration-flow ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-background data-[state=on]:text-foreground data-[state=on]:shadow-sm",
-  {
-    variants: {
-      variant: {
-        default: "",
-        outline:
-          "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
-      },
-      size: {
-        default: "h-9 px-3",
-        sm: "h-8 px-2",
-        lg: "h-10 px-4",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  },
-);
-
-interface ToggleGroupContextValue extends VariantProps<typeof toggleGroupItemVariants> {
-  type?: "single" | "multiple";
-  value: string | string[];
-  onValueChange: (value: string | string[]) => void;
-  disabled?: boolean | undefined;
-}
-
-const ToggleGroupContext = React.createContext<ToggleGroupContextValue | null>(null);
+const ToggleGroupDisabledContext = React.createContext<boolean | undefined>(undefined);
+const ToggleGroupVariantContext = React.createContext<ToggleGroupItemVariant>(undefined);
+const ToggleGroupSizeContext = React.createContext<ToggleGroupItemSize>(undefined);
 
 function useToggleGroup() {
-  const context = React.use(ToggleGroupContext);
-  if (!context) {
+  const type = React.use(ToggleGroupTypeContext);
+  const value = React.use(ToggleGroupValueContext);
+  const onValueChange = React.use(ToggleGroupChangeContext);
+  const disabled = React.use(ToggleGroupDisabledContext);
+  const variant = React.use(ToggleGroupVariantContext);
+  const size = React.use(ToggleGroupSizeContext);
+
+  if (type === null || value === null || onValueChange === null) {
     throw new Error("ToggleGroup internal components must be used within a ToggleGroup");
   }
-  return context;
+
+  return { disabled, onValueChange, size, type, value, variant };
 }
 
 export interface ToggleGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof toggleGroupVariants>,
     VariantProps<typeof toggleGroupItemVariants> {
-  type?: "single" | "multiple";
-  value?: string | string[];
-  defaultValue?: string | string[];
-  onValueChange?: (value: string | string[]) => void;
+  type?: ToggleGroupType;
+  value?: ToggleGroupValue;
+  defaultValue?: ToggleGroupValue;
+  onValueChange?: (value: ToggleGroupValue) => void;
   disabled?: boolean;
 }
 
@@ -82,30 +58,35 @@ const ToggleGroup = ({
   ref,
   ...props
 }: ToggleGroupProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
-  const [uncontrolledValue, setUncontrolledValue] = React.useState<string | string[]>(
+  const [uncontrolledValue, setUncontrolledValue] = React.useState<ToggleGroupValue>(
     defaultValue !== undefined ? defaultValue : type === "single" ? "" : [],
   );
 
   const isControlled = controlledValue !== undefined;
   const value = isControlled ? controlledValue : uncontrolledValue;
 
-  const handleValueChange = React.useCallback(
-    (newValue: string | string[]) => {
-      if (!isControlled) {
-        setUncontrolledValue(newValue);
-      }
-      onValueChange?.(newValue);
-    },
-    [isControlled, onValueChange],
-  );
+  function changeToggleGroupValue(newValue: ToggleGroupValue) {
+    if (!isControlled) {
+      setUncontrolledValue(newValue);
+    }
+    onValueChange?.(newValue);
+  }
 
   return (
     <div ref={ref} className={cn(toggleGroupVariants({ variant }), className)} {...props}>
-      <ToggleGroupContext.Provider
-        value={{ variant, size, type, value, onValueChange: handleValueChange, disabled }}
-      >
-        {children}
-      </ToggleGroupContext.Provider>
+      <ToggleGroupTypeContext.Provider value={type}>
+        <ToggleGroupValueContext.Provider value={value}>
+          <ToggleGroupChangeContext.Provider value={changeToggleGroupValue}>
+            <ToggleGroupDisabledContext.Provider value={disabled}>
+              <ToggleGroupVariantContext.Provider value={variant}>
+                <ToggleGroupSizeContext.Provider value={size}>
+                  {children}
+                </ToggleGroupSizeContext.Provider>
+              </ToggleGroupVariantContext.Provider>
+            </ToggleGroupDisabledContext.Provider>
+          </ToggleGroupChangeContext.Provider>
+        </ToggleGroupValueContext.Provider>
+      </ToggleGroupTypeContext.Provider>
     </div>
   );
 };
@@ -128,32 +109,27 @@ const ToggleGroupItem = ({
 }: ToggleGroupItemProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
   const context = useToggleGroup();
   const isDisabled = context.disabled || props.disabled;
+  const isSelected =
+    context.type === "single"
+      ? context.value === value
+      : Array.isArray(context.value) && context.value.includes(value);
 
-  const isSelected = React.useMemo(() => {
-    if (context.type === "single") {
-      return context.value === value;
-    }
-    return Array.isArray(context.value) && context.value.includes(value);
-  }, [context.value, context.type, value]);
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  function toggleItemSelection(event: React.MouseEvent<HTMLButtonElement>) {
     if (isDisabled) return;
 
     if (context.type === "single") {
-      // If clicking an already selected item in single mode, we often allow deselect.
-      // Standard radix-ui also does this unless forced otherwise.
       context.onValueChange(isSelected ? "" : value);
     } else {
       const currentArray = Array.isArray(context.value) ? context.value : [];
-      if (isSelected) {
-        context.onValueChange(currentArray.filter((v) => v !== value));
-      } else {
-        context.onValueChange([...currentArray, value]);
-      }
+      context.onValueChange(
+        isSelected
+          ? currentArray.filter((currentValue) => currentValue !== value)
+          : [...currentArray, value],
+      );
     }
 
-    props.onClick?.(e);
-  };
+    props.onClick?.(event);
+  }
 
   return (
     <button
@@ -168,9 +144,9 @@ const ToggleGroupItem = ({
           size: size ?? context.size,
         }),
         className,
-        "focus-visible:z-10", // Prevent keyboard focus outline from being clipped by siblings
+        "focus-visible:z-10",
       )}
-      onClick={handleClick}
+      onClick={toggleItemSelection}
       {...props}
     >
       {children}
@@ -179,4 +155,4 @@ const ToggleGroupItem = ({
 };
 ToggleGroupItem.displayName = "ToggleGroupItem";
 
-export { ToggleGroup, ToggleGroupItem, toggleGroupItemVariants, toggleGroupVariants };
+export { ToggleGroup, ToggleGroupItem };

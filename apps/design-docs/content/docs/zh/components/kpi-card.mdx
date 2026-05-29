@@ -1,5 +1,5 @@
 ---
-title: KPI Card
+title: KPI 卡片
 description: 用于 dashboard 的 KPI 卡片，包含数值、图标、趋势和可选描述。
 ---
 
@@ -13,7 +13,7 @@ description: 用于 dashboard 的 KPI 卡片，包含数值、图标、趋势和
 import { KpiCard } from "@nebutra/ui/primitives";
 ```
 
-或通过 registry 安装 standalone copy：
+或通过 registry 安装独立副本：
 
 ```bash
 npx shadcn@latest add https://ui.nebutra.com/r/kpi-card.json
@@ -28,11 +28,11 @@ import { ChartTrendingUp } from "@nebutra/icons";
 import { KpiCard } from "@nebutra/ui/primitives";
 
 <KpiCard
-  title="Active tenants"
+  title="活跃租户"
   value={1284}
   icon={<ChartTrendingUp className="size-5" />}
   trend={{ value: 12, isPositive: true }}
-  description="Enterprise workspaces only"
+  description="仅统计企业工作区"
 />
 ```
 
@@ -66,7 +66,7 @@ import { KpiCard } from "@nebutra/ui/primitives";
 
 - 指标值不能依赖趋势颜色才能理解。
 - 图标是装饰性的；指标 title 和 value 必须是文本。
-- 多个 KPI 卡片一起出现时，外层应有 heading 或 dashboard section label。
+- 多个 KPI 卡片一起出现时，外层应有标题或 dashboard 区块标签。
 - 不要让整张卡片成为唯一导航入口，除非有明确的无障碍标签。
 
 ## 设计契约
@@ -76,10 +76,22 @@ import { KpiCard } from "@nebutra/ui/primitives";
 - 趋势只是辅助信号；如果用户需要趋势形状，用 `Chart`。
 - 图标保持克制并承载指标类别，不做纯装饰。
 
-## Storybook / Registry
+## 真实产品示例
 
-- Storybook source: `packages/design/ui/src/primitives/kpi-card.stories.tsx`。
-- Registry manifest: `/r/kpi-card.json`。
+- SaaS 概览 dashboard 展示活跃租户、可计费用量、未关闭事故和月经常性收入。
+- 管理员健康页先总结 gateway 请求、失败 webhook 和队列延迟，再进入更深的图表。
+- 团队或工作区报表中，一个指标只需要一个数值、一个趋势方向和一条短说明。
+
+## 反模式
+
+- 不要用 `KpiCard` 展示需要逐行核对的财务流水、审计历史或精确明细数据。
+- 不要把单张 KPI 卡当作装饰性 hero tile。它更适合组成可比较的指标组。
+- 不要把含义完全压到趋势颜色或图标上；标题、数值和描述必须能独立表达指标。
+
+## Storybook 与 Registry
+
+- Storybook 来源：`packages/design/ui/src/primitives/kpi-card.stories.tsx`。
+- Registry 清单：`/r/kpi-card.json`。
 
 ## 治理备注
 
