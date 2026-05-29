@@ -206,29 +206,13 @@ function ListCard({ post }: { post: BlogIndexPost }) {
 }
 
 export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
-  const [activeTag, setActiveTag] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
-  const tagCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    posts.forEach((post) => {
-      post.tags.forEach((tag) => {
-        counts.set(tag, (counts.get(tag) ?? 0) + 1);
-      });
-    });
-    return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-  }, [posts]);
-
-  const tags = tagCounts.map(([tag]) => tag);
-
   const filteredPosts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
+    if (!normalizedQuery) return posts;
     return posts.filter((post) => {
-      const matchesTag = !activeTag || post.tags.includes(activeTag);
-      if (!matchesTag) return false;
-      if (!normalizedQuery) return true;
-
       const searchable = [
         post.title,
         post.excerpt,
@@ -240,24 +224,16 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
         .toLowerCase();
       return searchable.includes(normalizedQuery);
     });
-  }, [activeTag, posts, query]);
+  }, [posts, query]);
 
   const copy = {
-    all: isZh ? "全部" : "All",
     archive: isZh ? "文章归档" : "All articles",
     count: isZh
       ? `${filteredPosts.length} / ${posts.length} 篇`
       : `${filteredPosts.length} of ${posts.length}`,
     emptyTitle: isZh ? "没有匹配文章" : "No matching posts",
-    emptyBody: isZh
-      ? "换一个关键词或取消分类筛选。"
-      : "Try another keyword or clear the topic filter.",
+    emptyBody: isZh ? "换一个关键词试试。" : "Try another keyword.",
     search: isZh ? "搜索标题、作者或主题" : "Search title, author, or topic",
-    topics: isZh ? "主题" : "Topics",
-    filter: isZh ? "筛选与排序" : "Filter and sort",
-    sort: isZh ? "排序" : "Sort",
-    latest: isZh ? "最新优先" : "Latest first",
-    category: isZh ? "分类" : "Category",
     view: isZh ? "视图" : "View",
     grid: isZh ? "网格视图" : "Grid view",
     list: isZh ? "列表视图" : "List view",
@@ -265,167 +241,78 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
 
   return (
     <section className="mt-16">
-      <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-12">
-        <aside className="hidden lg:block">
-          <div className="sticky top-28">
-            <p className="text-sm font-semibold text-[var(--neutral-12)]">{copy.filter}</p>
-            <div className="mt-3 border-t border-[var(--neutral-6)]">
-              <div className="border-b border-[var(--neutral-6)] py-4">
-                <div className="flex items-center justify-between gap-4 text-sm text-[var(--neutral-11)]">
-                  <span>{copy.sort}</span>
-                  <span className="font-medium text-[var(--neutral-12)]">{copy.latest}</span>
-                </div>
-              </div>
-              <fieldset className="border-b border-[var(--neutral-6)] py-4">
-                <legend className="mb-3 text-sm text-[var(--neutral-11)]">{copy.category}</legend>
-                <div className="space-y-1">
-                  <button
-                    type="button"
-                    aria-pressed={!activeTag}
-                    onClick={() => setActiveTag(null)}
-                    className={`flex w-full items-center justify-between gap-3 rounded-[var(--radius-sm)] px-2 py-1.5 text-left text-sm transition-colors ${
-                      !activeTag
-                        ? "bg-[var(--neutral-12)] text-[var(--neutral-1)]"
-                        : "text-[var(--neutral-11)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
-                    }`}
-                  >
-                    <span>{copy.all}</span>
-                    <span className="text-xs opacity-70">{posts.length}</span>
-                  </button>
-                  {tagCounts.map(([tag, count]) => {
-                    const active = activeTag === tag;
-                    return (
-                      <button
-                        key={tag}
-                        type="button"
-                        aria-pressed={active}
-                        onClick={() => setActiveTag(active ? null : tag)}
-                        className={`flex w-full items-center justify-between gap-3 rounded-[var(--radius-sm)] px-2 py-1.5 text-left text-sm transition-colors ${
-                          active
-                            ? "bg-[var(--neutral-12)] text-[var(--neutral-1)]"
-                            : "text-[var(--neutral-11)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
-                        }`}
-                      >
-                        <span className="truncate">{tag}</span>
-                        <span className="text-xs opacity-70">{count}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </fieldset>
-            </div>
-          </div>
-        </aside>
+      <div className="flex flex-col gap-4 border-t border-[var(--neutral-6)] pt-8 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--neutral-10)]">
+            {copy.archive}
+          </p>
+          <p className="mt-2 text-sm text-[var(--neutral-11)]">{copy.count}</p>
+        </div>
 
-        <div className="min-w-0">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--neutral-10)]">
-                {copy.archive}
-              </p>
-              <p className="mt-2 text-sm text-[var(--neutral-11)]">{copy.count}</p>
-            </div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <label className="relative block sm:w-80">
+            <span className="sr-only">{copy.search}</span>
+            <Search
+              className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--neutral-10)]"
+              aria-hidden
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={copy.search}
+              className="h-11 w-full rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-9 text-sm text-[var(--neutral-12)] outline-none transition-colors placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-8)] focus:ring-2 focus:ring-[var(--blue-5)]"
+            />
+          </label>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <label className="relative block sm:w-80">
-                <span className="sr-only">{copy.search}</span>
-                <Search
-                  className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--neutral-10)]"
-                  aria-hidden
-                />
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder={copy.search}
-                  className="h-11 w-full rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-9 text-sm text-[var(--neutral-12)] outline-none transition-colors placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-8)] focus:ring-2 focus:ring-[var(--blue-5)]"
-                />
-              </label>
-
-              <fieldset className="inline-flex h-11 w-fit rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-1">
-                <legend className="sr-only">{copy.view}</legend>
-                {(["grid", "list"] as const).map((mode) => {
-                  const active = viewMode === mode;
-                  const Icon = mode === "grid" ? Box : Menu;
-                  return (
-                    <button
-                      key={mode}
-                      type="button"
-                      aria-pressed={active}
-                      aria-label={mode === "grid" ? copy.grid : copy.list}
-                      onClick={() => setViewMode(mode)}
-                      className={`inline-flex h-9 w-10 items-center justify-center rounded-[calc(var(--radius-md)-4px)] transition-colors ${
-                        active
-                          ? "bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-sm"
-                          : "text-[var(--neutral-10)] hover:bg-[var(--neutral-1)] hover:text-[var(--neutral-12)]"
-                      }`}
-                    >
-                      <Icon className="size-4" aria-hidden />
-                    </button>
-                  );
-                })}
-              </fieldset>
-            </div>
-          </div>
-
-          <fieldset className="mt-5 flex min-w-0 max-w-full items-center gap-2 overflow-x-auto pb-1 lg:hidden">
-            <legend className="sr-only">{copy.topics}</legend>
-            <button
-              type="button"
-              aria-pressed={!activeTag}
-              onClick={() => setActiveTag(null)}
-              className={`shrink-0 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
-                !activeTag
-                  ? "border-[var(--neutral-12)] bg-[var(--neutral-12)] text-[var(--neutral-1)]"
-                  : "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:border-[var(--neutral-8)] hover:text-[var(--neutral-12)]"
-              }`}
-            >
-              {copy.all}
-            </button>
-            {tags.map((tag) => {
-              const active = activeTag === tag;
+          <fieldset className="inline-flex h-11 w-fit rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-1">
+            <legend className="sr-only">{copy.view}</legend>
+            {(["grid", "list"] as const).map((mode) => {
+              const active = viewMode === mode;
+              const Icon = mode === "grid" ? Box : Menu;
               return (
                 <button
-                  key={tag}
+                  key={mode}
                   type="button"
                   aria-pressed={active}
-                  onClick={() => setActiveTag(active ? null : tag)}
-                  className={`shrink-0 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+                  aria-label={mode === "grid" ? copy.grid : copy.list}
+                  onClick={() => setViewMode(mode)}
+                  className={`inline-flex h-9 w-10 items-center justify-center rounded-[calc(var(--radius-md)-4px)] transition-colors ${
                     active
-                      ? "border-[var(--neutral-12)] bg-[var(--neutral-12)] text-[var(--neutral-1)]"
-                      : "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:border-[var(--neutral-8)] hover:text-[var(--neutral-12)]"
+                      ? "bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-sm"
+                      : "text-[var(--neutral-10)] hover:bg-[var(--neutral-1)] hover:text-[var(--neutral-12)]"
                   }`}
                 >
-                  {tag}
+                  <Icon className="size-4" aria-hidden />
                 </button>
               );
             })}
           </fieldset>
-
-          {filteredPosts.length === 0 ? (
-            <div className="mt-8 rounded-[var(--radius-md)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-1)] px-6 py-12 text-center">
-              <p className="text-base font-semibold text-[var(--neutral-12)]">{copy.emptyTitle}</p>
-              <p className="mt-2 text-sm text-[var(--neutral-11)]">{copy.emptyBody}</p>
-            </div>
-          ) : (
-            <div
-              className={
-                viewMode === "grid"
-                  ? "mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
-                  : "mt-8 grid gap-4"
-              }
-            >
-              {filteredPosts.map((post) =>
-                viewMode === "grid" ? (
-                  <GridCard key={post.id} post={post} />
-                ) : (
-                  <ListCard key={post.id} post={post} />
-                ),
-              )}
-            </div>
-          )}
         </div>
       </div>
+
+      {filteredPosts.length === 0 ? (
+        <div className="mt-8 rounded-[var(--radius-md)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-1)] px-6 py-12 text-center">
+          <p className="text-base font-semibold text-[var(--neutral-12)]">{copy.emptyTitle}</p>
+          <p className="mt-2 text-sm text-[var(--neutral-11)]">{copy.emptyBody}</p>
+        </div>
+      ) : (
+        <div
+          className={
+            viewMode === "grid"
+              ? "mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              : "mt-8 grid gap-4"
+          }
+        >
+          {filteredPosts.map((post) =>
+            viewMode === "grid" ? (
+              <GridCard key={post.id} post={post} />
+            ) : (
+              <ListCard key={post.id} post={post} />
+            ),
+          )}
+        </div>
+      )}
     </section>
   );
 }

@@ -110,41 +110,47 @@ function localizedTagHref(lang: string, tag: string): string {
 }
 
 function BlogHeroTopics({ isZh, lang, topics }: { isZh: boolean; lang: string; topics: string[] }) {
+  const topicList =
+    topics.length > 0
+      ? topics
+      : isZh
+        ? ["AI SaaS", "平台工程", "设计系统", "治理"]
+        : ["AI SaaS", "Platform Engineering", "Design System", "Governance"];
+
   return (
     <div className="border-y border-[var(--neutral-6)] py-12 sm:py-16">
-      <div className="grid gap-10 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-24">
-        <div className="flex flex-col justify-between gap-8">
-          <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
-              <BookOpen className="size-3.5" aria-hidden />
-              {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
-            </div>
-            <h1 className="text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
-              {isZh ? "Blog" : "Blog"}
-            </h1>
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)] lg:gap-16">
+        <div className="flex flex-col gap-5">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
+            <BookOpen className="size-3.5" aria-hidden />
+            {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
           </div>
-          <p className="max-w-sm text-base leading-7 text-[var(--neutral-11)]">
+          <h1 className="text-balance text-4xl font-semibold tracking-tight text-[var(--neutral-12)] sm:text-5xl">
+            {isZh ? "工程、产品与治理笔记" : "Notes on engineering, product, and governance"}
+          </h1>
+          <p className="max-w-xl text-base leading-7 text-[var(--neutral-11)]">
             {isZh
               ? "少量、认真、可复用的文章：记录 Nebutra 在工程、产品、治理和 AI 原生交付中的真实取舍。"
               : "Sparse, careful writing on Nebutra's engineering, product, governance, and AI-native delivery decisions."}
           </p>
         </div>
 
-        <nav aria-label={isZh ? "博客主题" : "Blog topics"} className="space-y-2">
-          {(topics.length > 0
-            ? topics
-            : isZh
-              ? ["AI SaaS", "平台工程", "设计系统", "治理"]
-              : ["AI SaaS", "Platform Engineering", "Design System", "Governance"]
-          ).map((topic) => (
+        <nav
+          aria-label={isZh ? "博客主题" : "Blog topics"}
+          className="flex flex-col lg:border-l lg:border-[var(--neutral-6)] lg:pl-10"
+        >
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--neutral-10)]">
+            {isZh ? "按主题浏览" : "Browse by topic"}
+          </p>
+          {topicList.map((topic) => (
             <Link
               key={topic}
               href={localizedTagHref(lang, topic)}
-              className="group flex max-w-4xl items-center justify-between gap-4 text-balance border-b border-transparent py-0.5 text-3xl font-semibold leading-[0.98] tracking-tight text-[var(--neutral-12)] transition-colors hover:border-[var(--neutral-7)] hover:text-[var(--blue-9)] sm:text-5xl lg:text-6xl"
+              className="group flex items-center justify-between gap-3 border-b border-[var(--neutral-6)] py-3 text-lg font-medium tracking-tight text-[var(--neutral-12)] transition-colors last:border-b-0 hover:text-[var(--blue-9)] sm:text-xl"
             >
-              <span className="min-w-0">{topic}</span>
+              <span className="min-w-0 truncate">{topic}</span>
               <ArrowRight
-                className="mt-1 size-7 shrink-0 text-[var(--neutral-9)] transition-transform group-hover:translate-x-1 group-hover:text-[var(--blue-9)] sm:size-10"
+                className="size-4 shrink-0 text-[var(--neutral-9)] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--blue-9)]"
                 aria-hidden
               />
             </Link>
