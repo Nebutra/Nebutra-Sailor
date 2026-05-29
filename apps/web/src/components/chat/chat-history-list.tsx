@@ -16,11 +16,11 @@ import { useMemo, useState, useTransition } from "react";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 
 const MODE_META: Record<string, { label: string; icon: LucideIcon; accent: string }> = {
-  chat: { label: "Chat", icon: MessageSquare, accent: "text-blue-11 dark:text-blue-9" },
-  data: { label: "Data", icon: Database, accent: "text-cyan-11 dark:text-cyan-9" },
-  workflow: { label: "Workflow", icon: Workflow, accent: "text-green-11 dark:text-green-9" },
-  search: { label: "Search", icon: Search, accent: "text-neutral-11 dark:text-white/70" },
-  code: { label: "Code", icon: Code2, accent: "text-amber-11 dark:text-amber-9" },
+  chat: { label: "Chat", icon: MessageSquare, accent: "text-info" },
+  data: { label: "Data", icon: Database, accent: "text-cyan-11" },
+  workflow: { label: "Workflow", icon: Workflow, accent: "text-success" },
+  search: { label: "Search", icon: Search, accent: "text-muted-foreground" },
+  code: { label: "Code", icon: Code2, accent: "text-warning" },
 };
 
 const REL_TIME_THRESHOLDS: Array<[number, Intl.RelativeTimeFormatUnit]> = [
@@ -150,13 +150,11 @@ export function ChatHistoryList({ initialSessions }: Props) {
   if (sessions.length === 0) {
     return (
       <AnimateIn preset="fadeUp">
-        <div className="flex flex-col items-center justify-center gap-3 rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-12 text-center dark:border-white/10 dark:bg-white/[0.02]">
-          <MessageSquare className="h-8 w-8 text-neutral-9 dark:text-white/30" />
+        <div className="flex flex-col items-center justify-center gap-3 rounded-[var(--radius-2xl)] border border-dashed border-border bg-card px-6 py-12 text-center">
+          <MessageSquare className="h-8 w-8 text-muted-foreground/45" />
           <div>
-            <p className="text-sm font-medium text-neutral-12 dark:text-white">
-              No chat history yet
-            </p>
-            <p className="mt-1 max-w-sm text-xs text-neutral-10 dark:text-white/50">
+            <p className="text-sm font-medium text-card-foreground">No chat history yet</p>
+            <p className="mt-1 max-w-sm text-xs text-muted-foreground">
               Start a conversation with Sailor and it will be saved here automatically.
             </p>
           </div>
@@ -177,7 +175,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
     <div className="space-y-6">
       {/* Search */}
       <div className="relative">
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-10 dark:text-white/40" />
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
         <Input
           type="search"
           value={query}
@@ -186,7 +184,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
           aria-label="Search chat history"
         />
         {query && (
-          <p className="mt-1.5 text-[11px] text-neutral-10 dark:text-white/40">
+          <p className="mt-1.5 text-[11px] text-muted-foreground">
             {totalMatches} match{totalMatches === 1 ? "" : "es"} for "{query}"
           </p>
         )}
@@ -194,12 +192,12 @@ export function ChatHistoryList({ initialSessions }: Props) {
 
       {/* Empty filter result */}
       {totalMatches === 0 && query && (
-        <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 px-6 py-10 text-center dark:border-white/15">
-          <Search className="mx-auto h-5 w-5 text-neutral-9 dark:text-white/30" />
-          <p className="mt-2 text-sm font-medium text-neutral-12 dark:text-white">
+        <div className="rounded-[var(--radius-xl)] border border-dashed border-border px-6 py-10 text-center">
+          <Search className="mx-auto h-5 w-5 text-muted-foreground/45" />
+          <p className="mt-2 text-sm font-medium text-card-foreground">
             No sessions match "{query}"
           </p>
-          <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/50">
+          <p className="mt-0.5 text-xs text-muted-foreground">
             Try a different keyword or clear the search.
           </p>
         </div>
@@ -211,7 +209,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
         if (items.length === 0) return null;
         return (
           <section key={bucket}>
-            <h2 className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/40">
+            <h2 className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
               {BUCKET_LABELS[bucket]} · {items.length}
             </h2>
             <AnimateInGroup stagger="fast" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -221,15 +219,15 @@ export function ChatHistoryList({ initialSessions }: Props) {
                 const href = `/chat?sessionId=${encodeURIComponent(session.id)}&mode=${encodeURIComponent(session.mode)}`;
                 return (
                   <AnimateIn key={session.id} preset="fadeUp">
-                    <div className="group relative flex h-full flex-col rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-4 transition-all duration-150 hover:border-neutral-8 hover:shadow-md dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-white/20 dark:hover:shadow-none">
+                    <div className="group relative flex h-full flex-col rounded-[var(--radius-xl)] border border-border bg-card p-4 transition-colors duration-150 hover:border-muted-foreground/30 hover:bg-muted/35">
                       <div className="mb-2 flex items-center justify-between">
                         <span
-                          className={`inline-flex items-center gap-1 rounded-full bg-neutral-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider dark:bg-white/10 ${meta.accent}`}
+                          className={`inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${meta.accent}`}
                         >
                           <Icon className="h-3 w-3" />
                           {meta.label}
                         </span>
-                        <span className="text-[10px] text-neutral-10 dark:text-white/40">
+                        <span className="text-[10px] text-muted-foreground">
                           {formatRelative(new Date(session.lastMessageAt))}
                         </span>
                       </div>
@@ -239,10 +237,10 @@ export function ChatHistoryList({ initialSessions }: Props) {
                         className="block flex-1 focus-visible:outline-none"
                         aria-label={`Open session: ${session.title}`}
                       >
-                        <p className="line-clamp-2 text-sm font-medium text-neutral-12 dark:text-white">
+                        <p className="line-clamp-2 text-sm font-medium text-card-foreground">
                           {session.title || "Untitled session"}
                         </p>
-                        <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">
+                        <p className="mt-1 text-xs text-muted-foreground">
                           {session.messageCount} message{session.messageCount === 1 ? "" : "s"}
                         </p>
                       </ViewTransitionLink>
@@ -251,7 +249,7 @@ export function ChatHistoryList({ initialSessions }: Props) {
                         type="button"
                         onClick={() => setPendingDelete(session)}
                         aria-label={`Delete session: ${session.title}`}
-                        className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-all group-hover:opacity-100 hover:bg-red-2 hover:text-red-11 focus-visible:opacity-100 dark:text-white/30 dark:hover:bg-red-2/30"
+                        className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:bg-destructive/10 hover:text-destructive focus-visible:opacity-100"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>

@@ -90,6 +90,18 @@ Sheet 默认不会因点击外部区域关闭。始终提供明确的关闭控�
 
 标题使用 Title Case，命名实体本身，例如 Deployment Details 或 Member Profile。主体以阅读为主，底部操作按钮可选。
 
+## 真实产品示例
+
+- 从部署表格查看部署详情，同时让底层行列表保持可见。
+- 在团队页查看成员资料、角色、最近活动和快捷操作。
+- 打开日志或审计事件的全局筛选，不离开当前查询。
+
+## 反模式
+
+- 不要用 Sheet 做最终破坏性确认；使用 `AlertDialog` 或 `DestructiveActionModal`。
+- 流程包含多个分区或校验步骤时，不要用 Sheet 替代完整设置页。
+- 不要在同一工作流中切换 `side`；空间行为必须保持可预测。
+
 ## 可访问性
 
 Sheet 基于 Base UI Dialog。根组件默认 `modal="trap-focus"` 且 `disablePointerDismissal`，键盘用户会留在面板内，同时 toast 等指针层仍可达。

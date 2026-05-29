@@ -199,6 +199,7 @@ export function getSpanCopyText(span: PortableTextSpan, block: PortableTextBlock
   const marks = span.marks ?? [];
   let text = span.text ?? "";
 
+  if (marks.includes("mathInline")) text = `$${text}$`;
   if (marks.includes("code")) text = `\`${text}\``;
   if (marks.includes("strong")) text = `**${text}**`;
   if (marks.includes("em")) text = `*${text}*`;
@@ -208,6 +209,16 @@ export function getSpanCopyText(span: PortableTextSpan, block: PortableTextBlock
 }
 
 export function getPortableBlockCopyText(block: PortableTextBlock): string | null {
+  if (block._type === "mathBlock") {
+    const math = block.math?.trim();
+    return math ? `$$\n${math}\n$$` : null;
+  }
+
+  if (block._type === "mermaid") {
+    const code = block.code?.trimEnd();
+    return code ? `\`\`\`mermaid\n${code}\n\`\`\`` : null;
+  }
+
   if (block._type === "code" || block._type === "codeHtml") {
     const code = block.code?.trimEnd();
     if (!code) return null;
@@ -265,6 +276,12 @@ export function extractBodyText(post: BlogPostWithSource): string {
       ?.flatMap((block) => {
         if (block._type === "table") {
           return block.rows?.flatMap((row) => row.cells ?? []) ?? [];
+        }
+        if (block._type === "mathBlock") {
+          return block.math ? [block.math] : [];
+        }
+        if (block._type === "mermaid") {
+          return block.code ? [block.code] : [];
         }
         return block.children?.map((child) => child.text ?? "") ?? [];
       })

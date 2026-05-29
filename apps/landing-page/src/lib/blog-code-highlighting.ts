@@ -33,6 +33,15 @@ async function highlightCodeBlock(block: PortableTextBlock): Promise<PortableTex
   const highlightedLines = new Set(block.highlightedLines ?? []);
   const diffLines = lineDiffMap(code);
   const language = normalizeLanguage(block.language);
+  if (language === "mermaid") {
+    return {
+      ...block,
+      _type: "mermaid",
+      code,
+      language,
+    };
+  }
+
   const highlighterOptions = {
     lang: language,
     themes: SHIKI_THEMES,

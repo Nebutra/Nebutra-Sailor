@@ -34,26 +34,22 @@ const MODE_META: Record<ChatMode, { label: string; icon: LucideIcon; accentClass
   chat: {
     label: "Chat",
     icon: MessageSquare,
-    accentClass:
-      "border-blue-7 bg-blue-2 text-blue-11 dark:border-blue-7/60 dark:bg-blue-2/25 dark:text-blue-9",
+    accentClass: "border-info/30 bg-info/10 text-info",
   },
   data: {
     label: "Data",
     icon: Database,
-    accentClass:
-      "border-cyan-7 bg-cyan-2 text-cyan-11 dark:border-cyan-7/60 dark:bg-cyan-2/25 dark:text-cyan-9",
+    accentClass: "border-cyan-7/60 bg-cyan-3/25 text-cyan-11",
   },
   workflow: {
     label: "Workflow",
     icon: Workflow,
-    accentClass:
-      "border-green-7 bg-green-2 text-green-11 dark:border-green-7/60 dark:bg-green-2/25 dark:text-green-9",
+    accentClass: "border-success/30 bg-success/10 text-success",
   },
   search: {
     label: "Search",
     icon: Search,
-    accentClass:
-      "border-neutral-8 bg-neutral-2 text-neutral-12 dark:border-white/30 dark:bg-white/10 dark:text-white",
+    accentClass: "border-border bg-muted text-foreground",
   },
 };
 
@@ -129,9 +125,7 @@ function ChatMessage({ message }: { message: UIMessage }) {
     <div className={`group flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
       <div
         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-          isUser
-            ? "bg-blue-3 text-blue-11 dark:bg-blue-9/20 dark:text-blue-9"
-            : "bg-neutral-3 text-neutral-11 dark:bg-white/10 dark:text-white/70"
+          isUser ? "bg-info/10 text-info" : "bg-muted text-muted-foreground"
         }`}
       >
         {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
@@ -139,9 +133,7 @@ function ChatMessage({ message }: { message: UIMessage }) {
       <div className={`flex max-w-[80%] flex-col ${isUser ? "items-end" : "items-start"}`}>
         <div
           className={`rounded-[var(--radius-2xl)] px-4 py-2.5 text-sm ${
-            isUser
-              ? "bg-blue-9 text-white dark:bg-blue-9"
-              : "bg-neutral-3 text-neutral-12 dark:bg-white/10 dark:text-white"
+            isUser ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
           }`}
         >
           <MessageBody message={message} />
@@ -152,7 +144,7 @@ function ChatMessage({ message }: { message: UIMessage }) {
               type="button"
               onClick={handleCopy}
               aria-label="Copy message"
-              className="inline-flex items-center gap-1 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 text-[10px] font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/10 dark:bg-black/40 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+              className="inline-flex items-center gap-1 rounded-[var(--radius-md)] border border-border bg-card px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               {copied ? <Check className="h-3 w-3 text-green-9" /> : <Copy className="h-3 w-3" />}
               {copied ? "Copied" : "Copy"}
@@ -314,14 +306,12 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
   const currentMeta = MODE_META[mode];
 
   return (
-    <div className="flex h-[calc(100vh-12rem)] flex-col rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 dark:border-white/10 dark:bg-black/30">
+    <div className="flex h-[calc(100vh-12rem)] flex-col rounded-[var(--radius-xl)] border border-border bg-card text-card-foreground shadow-sm">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-7 px-4 py-3 dark:border-white/10">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-3">
         <div className="flex items-center gap-2">
-          <Bot className="h-5 w-5 text-blue-10 dark:text-cyan-9" />
-          <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
-            Sailor AI Assistant
-          </h2>
+          <Bot className="h-5 w-5 text-info" />
+          <h2 className="text-sm font-semibold text-card-foreground">Sailor AI Assistant</h2>
         </div>
         <div
           role="radiogroup"
@@ -342,10 +332,10 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
                 disabled={isStreaming}
                 title={meta.label}
                 onClick={() => handleModeChange(m)}
-                className={`flex items-center gap-1 whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-medium transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 ${
+                className={`flex items-center gap-1 whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-medium transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50 ${
                   isActive
                     ? meta.accentClass
-                    : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/10 dark:bg-white/[0.04] dark:text-white/60 dark:hover:bg-white/[0.08] dark:hover:text-white"
+                    : "border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >
                 <ModeIcon className="h-3 w-3" />
@@ -360,7 +350,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
               type="button"
               aria-label="Start a new chat"
               onClick={handleNewChat}
-              className="rounded-[var(--radius-md)] p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+              className="rounded-[var(--radius-md)] p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <Plus className="h-4 w-4" />
             </button>
@@ -370,7 +360,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
               type="button"
               aria-label="Clear conversation (does not delete session)"
               onClick={() => setMessages([])}
-              className="rounded-[var(--radius-md)] p-1.5 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+              className="rounded-[var(--radius-md)] p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <Trash2 className="h-4 w-4" />
             </button>
@@ -382,19 +372,15 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
       <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4">
         {sessionLoadError ? (
           <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
-            <AlertCircle className="h-8 w-8 text-red-11" />
+            <AlertCircle className="h-8 w-8 text-destructive" />
             <div>
-              <p className="text-sm font-medium text-neutral-12 dark:text-white">
-                Couldn't load this session
-              </p>
-              <p className="mt-0.5 max-w-sm text-xs text-neutral-10 dark:text-white/50">
-                {sessionLoadError}
-              </p>
+              <p className="text-sm font-medium text-card-foreground">Couldn't load this session</p>
+              <p className="mt-0.5 max-w-sm text-xs text-muted-foreground">{sessionLoadError}</p>
             </div>
             <button
               type="button"
               onClick={handleRetryLoad}
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-2 dark:border-white/15 dark:bg-black/40 dark:text-white dark:hover:bg-white/10"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] border border-border bg-card px-3 py-1.5 text-xs font-medium text-card-foreground transition-colors hover:bg-muted"
             >
               <RotateCcw className="h-3 w-3" />
               Try again
@@ -402,17 +388,17 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
           </div>
         ) : isLoadingSession ? (
           <div className="flex h-full items-center justify-center">
-            <Loader2 className="h-5 w-5 animate-spin text-neutral-10 dark:text-white/40" />
+            <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
           </div>
         ) : messages.length === 0 ? (
           <AnimateIn preset="fade">
             <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
               <div className="flex flex-col items-center">
-                <currentMeta.icon className="h-12 w-12 text-neutral-7 dark:text-white/20" />
-                <h3 className="mt-4 text-sm font-medium text-neutral-12 dark:text-white">
+                <currentMeta.icon className="h-12 w-12 text-muted-foreground/40" />
+                <h3 className="mt-4 text-sm font-medium text-card-foreground">
                   {currentMeta.label} mode — how can I help?
                 </h3>
-                <p className="mt-1 max-w-sm text-sm text-neutral-11 dark:text-white/70">
+                <p className="mt-1 max-w-sm text-sm text-muted-foreground">
                   Ask anything about your SaaS platform. The mode shapes what Sailor focuses on.
                 </p>
               </div>
@@ -429,12 +415,12 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
               ))}
               {isStreaming && messages[messages.length - 1]?.role === "user" && (
                 <div className="flex gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-3 text-neutral-11 dark:bg-white/10 dark:text-white/70">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
                     <Bot className="h-4 w-4" />
                   </div>
-                  <div className="flex items-center gap-2 rounded-[var(--radius-2xl)] bg-neutral-3 px-4 py-2.5 dark:bg-white/10">
-                    <Loader2 className="h-4 w-4 animate-spin text-neutral-11 dark:text-white/70" />
-                    <span className="text-sm text-neutral-11 dark:text-white/70">Thinking...</span>
+                  <div className="flex items-center gap-2 rounded-[var(--radius-2xl)] bg-muted px-4 py-2.5">
+                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">Thinking...</span>
                   </div>
                 </div>
               )}
@@ -444,10 +430,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
       </div>
 
       {/* Input */}
-      <form
-        onSubmit={handleSubmit}
-        className="border-t border-neutral-7 px-4 py-3 dark:border-white/10"
-      >
+      <form onSubmit={handleSubmit} className="border-t border-border px-4 py-3">
         <div className="flex items-end gap-2">
           <Textarea
             ref={textareaRef}
@@ -462,7 +445,7 @@ export function ChatInterface({ initialSessionId, initialMode }: ChatInterfacePr
             type="submit"
             disabled={!inputValue.trim() || isStreaming || isLoadingSession}
             aria-label="Send message"
-            className="rounded-[var(--radius-lg)] bg-blue-9 px-3 py-2 text-white transition-colors hover:bg-blue-10 disabled:opacity-50 dark:bg-cyan-9 dark:text-black dark:hover:bg-cyan-10"
+            className="rounded-[var(--radius-lg)] bg-primary px-3 py-2 text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
           >
             <Send className="h-4 w-4" />
           </button>

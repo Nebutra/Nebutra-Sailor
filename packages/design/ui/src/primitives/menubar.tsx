@@ -5,6 +5,7 @@ import * as React from "react";
 
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { overlayPrimitiveClassNames } from "./overlay";
 
 function assignRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
   if (typeof ref === "function") {
@@ -59,10 +60,7 @@ const Menubar = ({
         }}
         tabIndex={-1}
         role="menubar"
-        className={cn(
-          "flex h-10 items-center space-x-1 rounded-[var(--radius-md)] border border-border bg-background p-1 outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
-          className,
-        )}
+        className={cn(overlayPrimitiveClassNames.menubarRoot, className)}
         {...props}
       >
         {children}
@@ -109,6 +107,10 @@ const MenubarTrigger = ({
     <button
       ref={ref}
       type={type}
+      role="menuitem"
+      tabIndex={0}
+      aria-haspopup="menu"
+      aria-expanded={isOpen}
       data-state={isOpen ? "open" : "closed"}
       onClick={() => setActiveMenu(isOpen ? null : value)}
       onMouseEnter={() => {
@@ -117,10 +119,7 @@ const MenubarTrigger = ({
           setActiveMenu(value);
         }
       }}
-      className={cn(
-        "flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-3 py-1.5 text-sm font-medium outline-none focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
-        className,
-      )}
+      className={cn(overlayPrimitiveClassNames.menubarTrigger, className)}
       {...props}
     />
   );
@@ -162,12 +161,12 @@ const MenubarSubTrigger = ({
   return (
     <div
       ref={ref}
+      role="menuitem"
+      tabIndex={0}
+      aria-haspopup="menu"
+      aria-expanded={isOpen}
       data-state={isOpen ? "open" : "closed"}
-      className={cn(
-        "flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm outline-none focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
-        inset && "pl-8",
-        className,
-      )}
+      className={cn(overlayPrimitiveClassNames.menubarSubTrigger, inset && "pl-8", className)}
       {...props}
     >
       {children}
@@ -190,8 +189,10 @@ const MenubarSubContent = ({
   return (
     <div
       ref={ref}
+      role="menu"
       className={cn(
         overlayClassNames.menuSurface,
+        overlayPrimitiveClassNames.menuSurface,
         "absolute top-0 left-full ml-1 min-w-[8rem]",
         className,
       )}
@@ -216,15 +217,43 @@ const MenubarContent = ({
   sideOffset?: number;
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
   const { isOpen } = React.use(MenubarMenuContext);
+  const contentRef = React.useRef<HTMLDivElement | null>(null);
+  const [side, setSide] = React.useState<"top" | "bottom">("bottom");
+
+  React.useLayoutEffect(() => {
+    if (!isOpen) {
+      setSide("bottom");
+      return;
+    }
+
+    const content = contentRef.current;
+    if (!content) return;
+
+    const viewportPadding = 8;
+    const rect = content.getBoundingClientRect();
+    const availableAbove = rect.top - content.offsetHeight - viewportPadding;
+    const isBottomClipped = rect.bottom > window.innerHeight - viewportPadding;
+
+    setSide(isBottomClipped && availableAbove >= viewportPadding ? "top" : "bottom");
+  }, [isOpen]);
+
+  function setContentRef(node: HTMLDivElement | null) {
+    contentRef.current = node;
+    assignRef(ref, node);
+  }
 
   if (!isOpen) return null;
 
   return (
     <div
-      ref={ref}
+      ref={setContentRef}
+      role="menu"
+      data-side={side}
       className={cn(
         overlayClassNames.menuSurface,
-        "absolute top-full left-0 mt-[8px] min-w-[12rem]",
+        overlayPrimitiveClassNames.menuSurface,
+        "absolute left-0 min-w-[12rem]",
+        side === "top" ? "bottom-full mb-[8px]" : "top-full mt-[8px]",
         className,
       )}
       style={{ zIndex: overlayZIndex.popover, ...style }}
@@ -258,17 +287,26 @@ const MenubarItem = ({
     if (props.onClick) props.onClick(e);
   };
 
+  const closeMenuItem = () => {
+    if (!disabled) {
+      setActiveMenu(null);
+    }
+  };
+
   if (asChild && React.isValidElement(children)) {
     const child = children as React.ReactElement<React.ComponentProps<"div">>;
     return React.cloneElement(child, {
       ref,
+      role: child.props.role ?? "menuitem",
+      tabIndex: disabled ? -1 : (child.props.tabIndex ?? 0),
+      "aria-disabled": disabled || undefined,
       "data-disabled": disabled ? "" : undefined,
       onClick: (e: React.MouseEvent<HTMLDivElement>) => {
         activateMenuItem(e);
         if (child.props.onClick) child.props.onClick(e);
       },
       className: cn(
-        "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        overlayPrimitiveClassNames.menubarItem,
         inset && "pl-8",
         className,
         child.props.className,
@@ -282,18 +320,16 @@ const MenubarItem = ({
       ref={ref}
       role="menuitem"
       tabIndex={disabled ? -1 : 0}
+      aria-disabled={disabled || undefined}
       data-disabled={disabled ? "" : undefined}
       onClick={activateMenuItem}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
-          activateMenuItem(e as unknown as React.MouseEvent<HTMLDivElement>);
+          e.preventDefault();
+          closeMenuItem();
         }
       }}
-      className={cn(
-        "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        inset && "pl-8",
-        className,
-      )}
+      className={cn(overlayPrimitiveClassNames.menubarItem, inset && "pl-8", className)}
       {...props}
     >
       {children}
@@ -314,11 +350,12 @@ const MenubarCheckboxItem = ({
 }) => (
   <div
     ref={ref}
+    role="menuitemcheckbox"
+    tabIndex={disabled ? -1 : 0}
+    aria-checked={checked || false}
+    aria-disabled={disabled || undefined}
     data-disabled={disabled ? "" : undefined}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className,
-    )}
+    className={cn(overlayPrimitiveClassNames.menubarCheckboxItem, className)}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -332,32 +369,43 @@ MenubarCheckboxItem.displayName = "MenubarCheckboxItem";
 const MenubarRadioItem = ({
   className,
   children,
+  checked,
   disabled,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { value?: string; disabled?: boolean } & {
+}: React.HTMLAttributes<HTMLDivElement> & {
+  checked?: boolean;
+  value?: string;
+  disabled?: boolean;
+} & {
   ref?: React.Ref<HTMLDivElement> | undefined;
 }) => (
   <div
     ref={ref}
+    role="menuitemradio"
+    tabIndex={disabled ? -1 : 0}
+    aria-checked={checked || false}
+    aria-disabled={disabled || undefined}
     data-disabled={disabled ? "" : undefined}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] py-1.5 pl-8 pr-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring/40 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className,
-    )}
+    className={cn(overlayPrimitiveClassNames.menubarCheckboxItem, className)}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      {/* The actual selection logic would need a RadioGroup context, but keeping purely structural to satisfy API */}
-      <Circle className="h-2 w-2 fill-current opacity-0" />
+      <Circle className={cn("h-2 w-2 fill-current", checked ? "opacity-100" : "opacity-0")} />
     </span>
     {children}
   </div>
 );
 MenubarRadioItem.displayName = "MenubarRadioItem";
 
-const MenubarRadioGroup = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div {...props}>{children}</div>
+const MenubarRadioGroup = ({
+  children,
+  className,
+  ...props
+}: React.FieldsetHTMLAttributes<HTMLFieldSetElement>) => (
+  <fieldset className={cn("m-0 min-w-0 border-0 p-0", className)} {...props}>
+    {children}
+  </fieldset>
 );
 
 const MenubarLabel = ({

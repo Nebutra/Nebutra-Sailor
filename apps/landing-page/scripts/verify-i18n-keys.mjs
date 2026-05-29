@@ -60,7 +60,6 @@ const CRITICAL_CONTENT_NAMESPACES = new Set([
   "metadata",
   "features",
   "comingSoon",
-  "impact",
 ]);
 
 // Namespaces where identical-to-EN is reported as Tier 2 advisory (not

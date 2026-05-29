@@ -1,13 +1,12 @@
 "use client";
 
+import { KineticConsoleFrame } from "@nebutra/ui/patterns";
 import { AuroraBackground } from "@nebutra/ui/primitives";
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { AnalyticsTerminal } from "./product-demo/AnalyticsTerminal";
 import { BillingTerminal } from "./product-demo/BillingTerminal";
-
-import { FauxTerminal } from "./product-demo/FauxTerminal";
 import { PRODUCT_DEMO_TABS, type ProductDemoTabId } from "./product-demo/product-demo-data";
 import { WorkspacesTerminal } from "./product-demo/WorkspacesTerminal";
 
@@ -123,9 +122,9 @@ export function ProductDemoSection() {
 
             {/* Right: Premium Faux-Terminal Render */}
             <div className="hidden lg:col-span-7 lg:block w-full h-[500px] relative">
-              <FauxTerminal>
+              <KineticConsoleFrame status={activeId}>
                 <ProductDemoTerminal activeId={activeId} />
-              </FauxTerminal>
+              </KineticConsoleFrame>
             </div>
           </div>
         </LazyMotion>

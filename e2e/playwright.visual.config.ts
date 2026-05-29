@@ -86,7 +86,7 @@ export default defineConfig({
           {
             command: shouldUseProductionServer
               ? `rm -rf apps/landing-page/.next && pnpm --config.verify-deps-before-run=false --filter @nebutra/landing-page build && pnpm --dir apps/landing-page exec next start --port ${visualPorts.landing}`
-              : `pnpm --config.verify-deps-before-run=false --filter @nebutra/landing-page exec next dev --port ${visualPorts.landing}`,
+              : `pnpm --config.verify-deps-before-run=false --dir apps/landing-page exec next dev --webpack --port ${visualPorts.landing}`,
             url: `${landingBaseUrl}/api/e2e/health`,
             cwd: repoRoot,
             reuseExistingServer: !process.env.CI,

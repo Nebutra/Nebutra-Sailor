@@ -2,7 +2,10 @@ import { expect, type Page, test } from "@playwright/test";
 import {
   attachViewportScreenshot,
   expectNoHorizontalOverflow,
+  expectNoNativeFocusOutline,
+  expectRenderableSurface,
   expectStableVisualSurface,
+  expectVisibleOverlaySurface,
   expectVisibleTextDensity,
   prepareVisualPage,
 } from "./helpers/visual";
@@ -49,7 +52,7 @@ const overlayPages = [
   {
     route: "/en/docs/components/tooltip",
     triggerName: "Hover me",
-    open: "hover",
+    open: "focus",
     expectedText: /Available to admins/i,
   },
 ] as const;
@@ -80,11 +83,43 @@ function isTouchProject(projectName: string) {
 test.describe("design-docs visual acceptance", () => {
   test("registry surfaces stay scannable", async ({ page }, testInfo) => {
     await prepareVisualPage(page, `${DESIGN_DOCS_BASE_URL}/en/registry`, testInfo);
+    const main = page.locator("main").first();
+    const registryCards = main.locator("article");
+
     await expect(page.getByRole("heading", { name: /Registry/i })).toBeVisible();
-    await expectStableVisualSurface(page.locator("main").first());
-    await expectVisibleTextDensity(page.locator("main").first(), 600);
+    await expectRenderableSurface(main, {
+      minimum: { width: 280, height: 480 },
+      minimumTextCharacters: 600,
+      minimumVisibleDescendants: 12,
+    });
+    await expect(registryCards.first()).toBeVisible();
+    await expectRenderableSurface(registryCards.first(), {
+      minimum: { width: 240, height: 160 },
+      minimumTextCharacters: 120,
+      minimumVisibleDescendants: 3,
+    });
     await expectNoHorizontalOverflow(page);
     await attachViewportScreenshot(page, testInfo, "design-docs-registry");
+  });
+
+  test("registry detail source preview is populated", async ({ page }, testInfo) => {
+    await prepareVisualPage(page, `${DESIGN_DOCS_BASE_URL}/en/registry/button`, testInfo);
+    const main = page.locator("main").first();
+    const sourcePreview = main.locator("pre").first();
+
+    await expect(page.getByRole("heading", { name: /^Button$/i })).toBeVisible();
+    await expectRenderableSurface(main, {
+      minimum: { width: 280, height: 520 },
+      minimumTextCharacters: 1_200,
+      minimumVisibleDescendants: 6,
+    });
+    await expectRenderableSurface(sourcePreview, {
+      minimum: { width: 260, height: 240 },
+      minimumTextCharacters: 700,
+      minimumVisibleDescendants: 1,
+    });
+    await expectNoHorizontalOverflow(page);
+    await attachViewportScreenshot(page, testInfo, "design-docs-registry-button-detail");
   });
 
   for (const entry of overlayPages) {
@@ -126,6 +161,8 @@ test.describe("design-docs visual acceptance", () => {
       const visibleTextBeforeOpen = await countVisibleText(page, entry.expectedText);
       if ("open" in entry && entry.open === "hover") {
         await trigger.hover();
+      } else if ("open" in entry && entry.open === "focus") {
+        await trigger.focus();
       } else {
         await trigger.click();
       }
@@ -137,6 +174,8 @@ test.describe("design-docs visual acceptance", () => {
         })
         .toBeGreaterThan(visibleTextBeforeOpen);
 
+      await expectVisibleOverlaySurface(page, entry.expectedText);
+      await expectNoNativeFocusOutline(page);
       await expectStableVisualSurface(page.locator("#nd-page").first());
       await expectNoHorizontalOverflow(page, "#nd-page");
       await attachViewportScreenshot(page, testInfo, routeName);

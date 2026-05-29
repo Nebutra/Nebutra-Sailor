@@ -2,6 +2,7 @@ import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { overlayPrimitiveClassNames } from "./overlay";
 
 function Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />;
@@ -70,7 +71,11 @@ function PopoverContent({
       >
         <PopoverPrimitive.Popup
           data-slot="popover-content"
-          className={cn(overlayClassNames.popoverSurface, className)}
+          className={cn(
+            overlayClassNames.popoverSurface,
+            overlayPrimitiveClassNames.popoverSurface,
+            className,
+          )}
           style={{ zIndex: overlayZIndex.popover, ...style }}
           {...props}
         >

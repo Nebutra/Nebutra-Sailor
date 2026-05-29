@@ -80,13 +80,17 @@ export function AppShell({
 
   return (
     <div
-      className={cn("relative flex min-h-screen w-full bg-background text-foreground", className)}
+      data-ui="nebutra-app-shell"
+      className={cn(
+        "relative flex h-screen w-full overflow-hidden bg-background text-foreground",
+        className,
+      )}
     >
       {/* Desktop sidebar — fixed rail, hidden on small screens */}
       <aside
         aria-label="Primary"
         className={cn(
-          "hidden shrink-0 overflow-hidden border-r border-neutral-4 bg-neutral-2/80 md:block",
+          "hidden h-screen shrink-0 overflow-hidden border-r border-sidebar-border bg-sidebar text-sidebar-foreground md:block",
           "transition-[width] duration-200 ease-out",
         )}
         style={{ width: railWidth }}
@@ -101,18 +105,18 @@ export function AppShell({
 
       {/* Mobile sidebar — Sheet overlay */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" className="w-72 border-r border-neutral-4 bg-neutral-2 p-0">
+        <SheetContent side="left" className="w-72 border-r border-sidebar-border bg-sidebar p-0">
           <div className="h-full overflow-y-auto">{sidebar}</div>
         </SheetContent>
       </Sheet>
 
       {/* Right column — header + main */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         {header !== undefined && (
           <header
             className={cn(
-              "sticky top-0 z-30 flex items-center gap-2 border-b border-border",
-              "bg-background/85 px-3 backdrop-blur supports-[backdrop-filter]:bg-background/70 sm:px-4",
+              "sticky top-0 z-30 flex shrink-0 items-center gap-2 border-b border-border",
+              "bg-background/90 px-3 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80 sm:px-4",
             )}
             style={{ height: headerHeight }}
           >
@@ -134,7 +138,7 @@ export function AppShell({
 
         {/* Header is optional — still show a mobile-only hamburger row when header is omitted */}
         {header === undefined && (
-          <div className="flex items-center border-b border-border bg-background px-4 py-2 md:hidden">
+          <div className="flex shrink-0 items-center border-b border-border bg-background px-4 py-2 md:hidden">
             <button
               type="button"
               aria-label="Open navigation menu"
@@ -151,7 +155,10 @@ export function AppShell({
         )}
 
         <main
-          className={cn("w-full max-w-none px-3 py-4 sm:px-4 md:px-5 2xl:px-6", contentClassName)}
+          className={cn(
+            "min-h-0 flex-1 overflow-y-auto w-full max-w-none px-3 py-4 sm:px-4 md:px-5 2xl:px-6",
+            contentClassName,
+          )}
         >
           {children}
         </main>

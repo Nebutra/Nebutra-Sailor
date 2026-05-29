@@ -56,6 +56,10 @@
     min-height: calc(100vh - 4rem);
   }
 
+  .dashboard-app-content {
+    container: dashboard-content / inline-size;
+  }
+
   /*
    * Theme playground uses dashboard chrome plus its own tool panels. Its breakpoints
    * must follow the actual content slot width, not the browser viewport.

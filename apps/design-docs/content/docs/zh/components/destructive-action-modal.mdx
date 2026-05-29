@@ -124,6 +124,18 @@ export function DeleteProjectDemo() {
 - `irreversibleDescription` 要点名操作和资源，并以 `cannot be undone.` 结尾。
 - 组件不会在 `onConfirm` 内自行关闭；API 结束后由调用方关闭。
 
+## 真实产品示例
+
+- 删除项目及其关联部署前，要求用户输入项目名。
+- 轮换生产 API key 前，点名会受影响的 webhook 消费方和集成负责人。
+- 关闭组织安全策略前，要求管理员输入指定确认短语。
+
+## 反模式
+
+- 不要把它用于关闭草稿、清空筛选等低风险确认。
+- 不要把 `verificationPhrase` 设成 `delete` 这类通用词；应使用资源名或精确的高风险动作。
+- 不要在破坏性请求完成前乐观关闭弹窗，否则重试错误无法显示。
+
 ## 可访问性
 
 - 打开时聚焦确认输入框。

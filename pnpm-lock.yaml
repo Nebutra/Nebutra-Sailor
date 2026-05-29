@@ -51,6 +51,9 @@ catalogs:
     jsdom:
       specifier: ^28.1.0
       version: 28.1.0
+    mermaid:
+      specifier: ^11.15.0
+      version: 11.15.0
     next-themes:
       specifier: ^0.4.6
       version: 0.4.6
@@ -513,6 +516,12 @@ importers:
       geist:
         specifier: 'catalog:'
         version: 1.7.0(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+      katex:
+        specifier: ^0.17.0
+        version: 0.17.0
+      mermaid:
+        specifier: 'catalog:'
+        version: 11.15.0
       next:
         specifier: ^16.2.6
         version: 16.2.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -15540,6 +15549,10 @@ packages:
 
   katex@0.16.35:
     resolution: {integrity: sha512-S0+riEvy1CK4VKse1ivMff8gmabe/prY7sKB3njjhyoLLsNFDQYtKNgXrbWUggGDCJBz7Fctl5i8fLCESHXzSg==}
+    hasBin: true
+
+  katex@0.17.0:
+    resolution: {integrity: sha512-Vdw0ATsQ9V+LuegM/BTwQqV/6cTl5lbGcIrU+BCgLxyf6bo38ybOr372tuSIxir3CN720flu1meYR6XzNMwQnw==}
     hasBin: true
 
   keygrip@1.1.0:
@@ -33565,6 +33578,10 @@ snapshots:
       safe-buffer: 5.2.1
 
   katex@0.16.35:
+    dependencies:
+      commander: 8.3.0
+
+  katex@0.17.0:
     dependencies:
       commander: 8.3.0
 

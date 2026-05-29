@@ -31,6 +31,7 @@ export type PortableTextBlock = {
   highlightedLines?: number[] | null;
   html?: string | null;
   language?: string | null;
+  math?: string | null;
 };
 
 export type BlogPostBase = {

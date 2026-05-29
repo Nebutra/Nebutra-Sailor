@@ -14,7 +14,6 @@
     "resources": "리소스",
     "changelog": "변경 이력",
     "designDocs": "디자인 시스템",
-    "impact": "매니페스토",
     "avatarMenu": {
       "ariaLabel": "계정 메뉴",
       "loadingName": "로딩 중…",
@@ -1416,31 +1415,6 @@
     "desc": "링크가 오래되었거나 페이지가 이동되었을 수 있습니다.",
     "home": "Nebutra로 돌아가기",
     "docs": "문서 열기"
-  },
-  "impact": {
-    "hero_eyebrow": "Nebutra 핵심 비전 백서",
-    "hero_title": "거버넌스 기반 AI 플랫폼",
-    "hero_subtitle": "AI 네이티브 제품을 출시하는 팀을 위한 플랫폼 베이스라인, 거버넌스 모델, Harness 레이어를 구축합니다.",
-    "phil_title": "Ⅰ. 철학",
-    "phil_headline": "글루 코드보다 거버넌스",
-    "phil_desc": "AI 네이티브 제품을 시작할 때마다 동일한 플랫폼 레이어를 재구축할 필요는 없습니다. Nebutra는 그 반복되는 플랫폼 작업을 감사 가능하고 확장 가능하며 빠르게 출시할 수 있는 거버넌스된 재사용 베이스라인으로 전환하는 데 집중합니다.",
-    "infra_title": "Ⅱ. 인프라스트럭처",
-    "infra_headline": "AI 네이티브 플랫폼 레이어",
-    "infra_desc": "Nebutra는 짜깁기한 스타터가 아닙니다. 스캐폴딩, 런타임 통합, 거버넌스, 배포를 아우르는 프로덕션급 플랫폼 레이어입니다.",
-    "infra_1_title": "The Builder Core",
-    "infra_1_desc": "테넌트 격리, 빌링, 인증, 문서, AI 통합이 이미 연결된 거버넌스된 모노레포 베이스라인입니다.",
-    "infra_2_title": "The Launchpad",
-    "infra_2_desc": "검증된 스캐폴딩, 재현 가능한 배포, 운영자 친화적 도구로 0일차부터 플랫폼 리스크를 줄입니다.",
-    "infra_3_title": "Sleptons Router",
-    "infra_3_desc": "레지스트리 기반 확장과 통합 인터페이스를 통해 코드베이스 분열 없이 팀이 계속 전진할 수 있습니다.",
-    "infra_4_title": "Algorithmic Capital",
-    "infra_4_desc": "Harness 프리미티브, MCP 상호운용성, 워크플로 오케스트레이션이 차세대 AI 네이티브 소프트웨어를 위한 스택을 자리매김합니다.",
-    "route_title": "Ⅲ. 라우팅",
-    "route_headline": "명확한 업그레이드 경로",
-    "route_desc": "플랫폼은 일회성 재작성과 숨겨진 드리프트가 아니라 호환성 검사, 마이그레이션, 관측 가능한 런타임 동작을 통해 성장해야 합니다.",
-    "org_title": "Ⅳ. 조직",
-    "org_headline": "규모에 걸맞는 운영 규율",
-    "org_desc": "자동화, 테스트, 거버넌스 래칫을 활용하여 팀과 워크로드가 성장함에 따라 플랫폼이 지속적으로 개선되도록 합니다. 인적 주의는 반복적인 인프라 정리가 아닌 제품 의사결정에 집중됩니다."
   },
   "ui": {
     "search": {

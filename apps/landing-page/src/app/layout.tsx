@@ -62,8 +62,8 @@ export const metadata: Metadata = {
 // `theme` request header (the way apps/web does via next/headers). Reading
 // any request-scoped data here would make the root layout dynamic, which
 // breaks Next.js 16 Cache Components (PPR) for every static marketing route
-// — confirmed regression that failed seven prerendered routes (changelog,
-// legal, impact, blog, etc.).
+// — confirmed regression that failed prerendered routes (changelog, legal,
+// blog, etc.).
 //
 // Trade-off: users who have picked light/dark see a brief (~50ms) flash
 // on first paint while the client-side ThemeProvider in <Providers> takes

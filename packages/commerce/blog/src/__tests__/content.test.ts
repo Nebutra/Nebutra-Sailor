@@ -142,6 +142,43 @@ describe("blog content helpers", () => {
     );
   });
 
+  test("serializes math and mermaid blocks without flattening them into paragraphs", () => {
+    const post: BlogPostWithSource = {
+      id: "post-math",
+      slug: "math-mermaid",
+      title: "Math and Mermaid",
+      language: "en",
+      excerpt: "Structured technical content.",
+      description: "Structured technical content.",
+      date: "2026-05-29",
+      tags: [],
+      source: "sanity",
+      body: [
+        block("intro", "normal", "Inline math should remain copyable."),
+        {
+          _key: "formula",
+          _type: "mathBlock",
+          math: "E = mc^2",
+        },
+        {
+          _key: "diagram",
+          _type: "mermaid",
+          code: 'flowchart LR\n  A["Idea"] --> B["Company"]',
+        },
+      ],
+    };
+
+    expect(getPostCopyText(post)).toBe(
+      [
+        "# Math and Mermaid",
+        "Structured technical content.",
+        "Inline math should remain copyable.",
+        "$$\nE = mc^2\n$$",
+        '```mermaid\nflowchart LR\n  A["Idea"] --> B["Company"]\n```',
+      ].join("\n\n"),
+    );
+  });
+
   test("estimates localized reading time with a two-minute floor", () => {
     const post: BlogPostWithSource = {
       id: "short",

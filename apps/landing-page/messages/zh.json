@@ -14,7 +14,6 @@
     "getStarted": "起航",
     "changelog": "更新日志",
     "designDocs": "设计系统",
-    "impact": "宣言 (Impact)",
     "avatarMenu": {
       "ariaLabel": "账户菜单",
       "loadingName": "加载中…",
@@ -1416,31 +1415,6 @@
     "desc": "链接可能已过期，或页面已迁移。",
     "home": "返回 Nebutra",
     "docs": "打开文档"
-  },
-  "impact": {
-    "hero_eyebrow": "Nebutra 核心愿景白皮书",
-    "hero_title": "受治理的 AI 平台",
-    "hero_subtitle": "我们关注的是 AI Native 产品团队真正依赖的平台底座、治理模型与 Harness 层能力。",
-    "phil_title": "Ⅰ. 核心哲学",
-    "phil_headline": "治理优先，而非胶水式拼装",
-    "phil_desc": "团队不应在每次启动 AI Native 产品时都重复搭一遍平台层。Nebutra 的目标，是把这类重复平台工作沉淀成一套可审计、可扩展、可持续交付的基线能力。",
-    "infra_title": "Ⅱ. 超级基建",
-    "infra_headline": "AI 原生平台层",
-    "infra_desc": "Nebutra 不是对现有工具的临时缝合，而是一套覆盖脚手架、运行时集成、工程治理与交付路径的平台层。",
-    "infra_1_title": "Builder Core",
-    "infra_1_desc": "以受治理的 monorepo 基线交付多租户、计费、认证、文档与 AI 集成等核心能力。",
-    "infra_2_title": "可验证交付",
-    "infra_2_desc": "通过可验证脚手架、可复现交付和面向运营的控制面，把平台风险前置收敛。",
-    "infra_3_title": "扩展注册中心",
-    "infra_3_desc": "通过注册中心驱动的扩展能力与集成接口，让团队在不撕裂代码库的前提下持续演进。",
-    "infra_4_title": "Harness 运行时",
-    "infra_4_desc": "以 Harness 原语、MCP 互操作与工作流编排，为下一代 AI Native 软件提供稳定的系统坐标。",
-    "route_title": "Ⅲ. 全要素路由",
-    "route_headline": "清晰的升级路径",
-    "route_desc": "平台的成长应建立在兼容性检查、迁移机制与可观测运行时之上，而不是一次次推倒重来和隐性漂移。",
-    "org_title": "Ⅳ. 组织演进",
-    "org_headline": "面向规模的运营纪律",
-    "org_desc": "通过自动化、架构测试与治理棘轮，让平台在团队和负载增长时持续变好。人的注意力应该留给产品判断，而不是反复清理基础设施遗留问题。"
   },
   "ui": {
     "search": {

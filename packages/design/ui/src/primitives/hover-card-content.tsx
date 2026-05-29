@@ -4,6 +4,7 @@ import { Popover as BasePopover } from "@base-ui/react/popover";
 import type * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { overlayPrimitiveClassNames } from "./overlay";
 
 const HoverCardContent = ({
   className,
@@ -22,7 +23,12 @@ const HoverCardContent = ({
     <BasePopover.Positioner side={side} align={align} sideOffset={sideOffset}>
       <BasePopover.Popup
         ref={ref}
-        className={cn(overlayClassNames.popoverSurface, "w-64", className)}
+        className={cn(
+          overlayClassNames.popoverSurface,
+          overlayPrimitiveClassNames.popoverSurface,
+          "w-64",
+          className,
+        )}
         style={{ zIndex: overlayZIndex.popover, ...style }}
         {...props}
       />

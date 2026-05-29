@@ -1,5 +1,14 @@
 // Card compound component
 
+// ArtifactShiftCard — textured hover artifact surface for product capability cards
+export {
+  ArtifactShiftCard,
+  ArtifactShiftCardFooter,
+  type ArtifactShiftCardFooterProps,
+  ArtifactShiftCardPreview,
+  type ArtifactShiftCardPreviewProps,
+  type ArtifactShiftCardProps,
+} from "./artifact-shift-card";
 export type {
   CardBodyProps,
   CardDescriptionProps,
@@ -23,6 +32,16 @@ export type { CommandBoxProps } from "./CommandBox";
 // CommandBox
 export { CommandBox } from "./CommandBox";
 
+// Dashboard surfaces — dense SaaS command, panel, and metric primitives
+export {
+  DashboardCommandSurface,
+  type DashboardCommandSurfaceProps,
+  DashboardMetricTile,
+  type DashboardMetricTileProps,
+  DashboardPanel,
+  type DashboardPanelProps,
+} from "./dashboard-surfaces";
+
 // GalleryCard — content discovery cards (MiniMax / GPT Store style)
 export {
   GalleryCard,
@@ -34,6 +53,26 @@ export {
   type GalleryCardProps,
   type GalleryCardRenderLinkProps,
 } from "./gallery-card";
+
+// Kinetic marketing patterns — Cult-inspired texture, terminal, and beam surfaces
+export {
+  KineticCodePreview,
+  type KineticCodePreviewProps,
+  KineticCommandBox,
+  type KineticCommandBoxProps,
+  KineticConsoleFrame,
+  type KineticConsoleFrameProps,
+  KineticFeatureCard,
+  type KineticFeatureCardProps,
+  KineticMorphSurface,
+  type KineticMorphSurfaceProps,
+  KineticSignalMarquee,
+  type KineticSignalMarqueeProps,
+  KineticStep,
+  type KineticStepProps,
+  KineticStepRail,
+  type KineticStepRailProps,
+} from "./kinetic-marketing";
 
 // QAPage — Stack Overflow-style question + answers surface. react-markdown +
 // remark-gfm for post rendering; @nebutra/icons (Geist) for all toolbar /

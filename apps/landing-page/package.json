@@ -42,6 +42,8 @@
     "cobe": "^0.6.5",
     "framer-motion": "^12.35.0",
     "geist": "catalog:",
+    "katex": "^0.17.0",
+    "mermaid": "catalog:",
     "next": "^16.2.6",
     "next-intl": "^4.12.0",
     "next-themes": "^0.4.6",

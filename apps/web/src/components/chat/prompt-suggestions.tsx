@@ -35,7 +35,7 @@ export function PromptSuggestions({ onSelect, disabled = false }: PromptSuggesti
 
   return (
     <div className="flex w-full flex-col gap-3">
-      <p className="text-center text-sm text-neutral-11 dark:text-white/70">{t("title")}</p>
+      <p className="text-center text-sm text-muted-foreground">{t("title")}</p>
       <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
         {SUGGESTIONS.map(({ key, Icon }) => {
           const title = t(`${key}.title`);
@@ -47,13 +47,11 @@ export function PromptSuggestions({ onSelect, disabled = false }: PromptSuggesti
               aria-label={title}
               disabled={disabled}
               onClick={() => onSelect(prompt)}
-              className="flex flex-col items-start gap-2 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 p-4 text-left transition-colors hover:bg-neutral-2 disabled:opacity-50 dark:border-white/15 dark:bg-black/30 dark:hover:bg-white/5"
+              className="flex flex-col items-start gap-2 rounded-[var(--radius-xl)] border border-border bg-card p-4 text-left transition-colors hover:bg-muted disabled:opacity-50"
             >
-              <Icon className="h-4 w-4 text-blue-10 dark:text-cyan-9" aria-hidden="true" />
-              <span className="text-sm font-medium text-neutral-12 dark:text-white">{title}</span>
-              <span className="line-clamp-2 text-xs text-neutral-11 dark:text-white/60">
-                {prompt}
-              </span>
+              <Icon className="h-4 w-4 text-info" aria-hidden="true" />
+              <span className="text-sm font-medium text-card-foreground">{title}</span>
+              <span className="line-clamp-2 text-xs text-muted-foreground">{prompt}</span>
             </button>
           );
         })}

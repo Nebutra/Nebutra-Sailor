@@ -128,7 +128,7 @@ function parseInline(text) {
   const children = [];
   const markDefs = [];
   const tokenPattern =
-    /(\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*)/g;
+    /(\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*|\$([^$\n]+)\$)/g;
   let lastIndex = 0;
   let match;
 
@@ -151,6 +151,8 @@ function parseInline(text) {
       children.push(makeSpan(match[5], ["strong"]));
     } else if (match[6]) {
       children.push(makeSpan(match[6], ["em"]));
+    } else if (match[7]) {
+      children.push(makeSpan(match[7], ["mathInline"]));
     }
 
     lastIndex = match.index + match[0].length;
@@ -246,6 +248,22 @@ function codeBlock(code, meta) {
   };
 }
 
+function mathBlock(math) {
+  return {
+    _type: "mathBlock",
+    _key: key(),
+    math: math.trim(),
+  };
+}
+
+function mermaidBlock(code) {
+  return {
+    _type: "mermaid",
+    _key: key(),
+    code: code.trimEnd(),
+  };
+}
+
 function markdownToPortableText(markdown, title) {
   const blocks = [];
   const paragraph = [];
@@ -266,6 +284,27 @@ function markdownToPortableText(markdown, title) {
       continue;
     }
 
+    if (line === "$$") {
+      flushParagraph(paragraph, blocks);
+      const mathLines = [];
+      index += 1;
+
+      while (index < lines.length && lines[index].trim() !== "$$") {
+        mathLines.push(lines[index]);
+        index += 1;
+      }
+
+      blocks.push(mathBlock(mathLines.join("\n")));
+      continue;
+    }
+
+    const singleLineMath = line.match(/^\$\$\s*(.+?)\s*\$\$$/);
+    if (singleLineMath) {
+      flushParagraph(paragraph, blocks);
+      blocks.push(mathBlock(singleLineMath[1]));
+      continue;
+    }
+
     const fence = line.match(/^```(.*)$/);
     if (fence) {
       flushParagraph(paragraph, blocks);
@@ -278,7 +317,11 @@ function markdownToPortableText(markdown, title) {
         index += 1;
       }
 
-      blocks.push(codeBlock(codeLines.join("\n"), meta));
+      if (meta.language.toLowerCase() === "mermaid") {
+        blocks.push(mermaidBlock(codeLines.join("\n")));
+      } else {
+        blocks.push(codeBlock(codeLines.join("\n"), meta));
+      }
       continue;
     }
 
@@ -483,6 +526,7 @@ async function main() {
     mainImage: mainImage ? path.basename(mainImage) : null,
     publishedAt,
     blocks: body.length,
+    blockTypes: body.map((block) => block._type),
   };
 
   if (args["dry-run"]) {

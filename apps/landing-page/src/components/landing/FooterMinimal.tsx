@@ -13,8 +13,9 @@ import { useTranslations } from "next-intl";
 import { useMount } from "@/hooks/useMount";
 import { Link } from "@/i18n/navigation";
 import { createPublicDocsUrl } from "@/lib/docs-links";
-import { footerContent } from "@/lib/landing-content";
+import { footerContent, heroContent } from "@/lib/landing-content";
 import { cn } from "@/lib/utils";
+import { CommandInstallBox } from "./CommandInstallBox";
 import { NewsletterForm } from "./NewsletterForm";
 
 const SOCIAL_ICONS = {
@@ -118,7 +119,7 @@ export function FooterMinimal({
 function LegalFooter() {
   const t = useTranslations("footer");
   return (
-    <footer className="border-t border-[var(--neutral-7)] bg-[var(--neutral-1)] dark:border-white/[0.08] dark:bg-black">
+    <footer className="border-t border-[var(--neutral-7)] bg-[var(--neutral-1)] dark:border-white/[0.08] dark:bg-[var(--neutral-1)]">
       <div className="mx-auto max-w-[1400px] px-6 py-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <nav
@@ -160,6 +161,7 @@ function LegalFooter() {
 function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
   const t = useTranslations("footer");
   const tCta = useTranslations("microLanding.cta");
+  const tCommand = useTranslations("cta");
   type FooterTranslationKey = Parameters<typeof t>[0];
   const { resolvedTheme } = useTheme();
   const isMounted = useMount();
@@ -175,7 +177,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
   return (
     <footer
       data-testid="footer-minimal"
-      className="relative w-full overflow-hidden bg-[color:var(--neutral-1)] dark:bg-black"
+      className="relative w-full overflow-hidden bg-[color:var(--neutral-1)] dark:bg-[var(--neutral-1)]"
     >
       <div
         aria-hidden="true"
@@ -207,11 +209,18 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
             <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
               {tCta("description")}
             </p>
-            <div className="mt-8">
+            <div className="mx-auto mt-8 max-w-xl">
+              <CommandInstallBox
+                command={heroContent.command}
+                copyLabel={tCommand("copyLabel")}
+                copiedLabel={tCommand("copiedLabel")}
+              />
+            </div>
+            <div className="mt-6">
               <Button asChild variant="ink" size="lg">
                 <Link href="/get-license">
                   {tCta("button")}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 size-4" />
                 </Link>
               </Button>
             </div>
@@ -247,7 +256,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
                     )}
                     aria-label={SOCIAL_LABELS[item.platform] ?? item.platform}
                   >
-                    <Icon className="h-[18px] w-[18px]" />
+                    <Icon className="size-[18px]" />
                   </a>
                 );
               })}
@@ -327,7 +336,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
           >
             <span
               data-testid="status-dot"
-              className="h-1.5 w-1.5 rounded-full bg-[color:var(--cyan-9)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--cyan-9)_20%,transparent)]"
+              className="size-1.5 rounded-full bg-[color:var(--cyan-9)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--cyan-9)_20%,transparent)]"
             />
             {t("statusOnline")}
           </a>

@@ -2,23 +2,22 @@ import {
   type BlogPostWithSource,
   estimateReadTime,
   extractBodyText,
+  getBlogUrlSegment,
   getBlogViewTransitionName,
   resolveBlogCover,
   toBlogLanguage,
 } from "@nebutra/blog";
-import { ArrowRight, BookOpen, Calendar } from "@nebutra/icons";
+import { ArrowRight, BookOpen } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
-import { BlogImage } from "@/components/landing/blog-image";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
@@ -92,6 +91,124 @@ function formatPostDate(post: BlogPostWithSource, isZh: boolean): string | null 
     : null;
 }
 
+function getTopTags(posts: BlogPostWithSource[], limit = 4): string[] {
+  const counts = new Map<string, number>();
+  posts.forEach((post) => {
+    post.tags.forEach((tag) => {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    });
+  });
+
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([tag]) => tag);
+}
+
+function localizedTagHref(lang: string, tag: string): string {
+  return `${localizedBlogHref(lang)}/tag/${getBlogUrlSegment(tag)}`;
+}
+
+function BlogHeroTopics({ isZh, lang, topics }: { isZh: boolean; lang: string; topics: string[] }) {
+  return (
+    <div className="border-y border-[var(--neutral-6)] py-12 sm:py-16">
+      <div className="grid gap-10 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-24">
+        <div className="flex flex-col justify-between gap-8">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
+              <BookOpen className="size-3.5" aria-hidden />
+              {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
+            </div>
+            <h1 className="text-2xl font-semibold tracking-tight text-[var(--neutral-12)]">
+              {isZh ? "Blog" : "Blog"}
+            </h1>
+          </div>
+          <p className="max-w-sm text-base leading-7 text-[var(--neutral-11)]">
+            {isZh
+              ? "少量、认真、可复用的文章：记录 Nebutra 在工程、产品、治理和 AI 原生交付中的真实取舍。"
+              : "Sparse, careful writing on Nebutra's engineering, product, governance, and AI-native delivery decisions."}
+          </p>
+        </div>
+
+        <nav aria-label={isZh ? "博客主题" : "Blog topics"} className="space-y-2">
+          {(topics.length > 0
+            ? topics
+            : isZh
+              ? ["AI SaaS", "平台工程", "设计系统", "治理"]
+              : ["AI SaaS", "Platform Engineering", "Design System", "Governance"]
+          ).map((topic) => (
+            <Link
+              key={topic}
+              href={localizedTagHref(lang, topic)}
+              className="group flex max-w-4xl items-center justify-between gap-4 text-balance border-b border-transparent py-0.5 text-3xl font-semibold leading-[0.98] tracking-tight text-[var(--neutral-12)] transition-colors hover:border-[var(--neutral-7)] hover:text-[var(--blue-9)] sm:text-5xl lg:text-6xl"
+            >
+              <span className="min-w-0">{topic}</span>
+              <ArrowRight
+                className="mt-1 size-7 shrink-0 text-[var(--neutral-9)] transition-transform group-hover:translate-x-1 group-hover:text-[var(--blue-9)] sm:size-10"
+                aria-hidden
+              />
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </div>
+  );
+}
+
+function LatestPostRail({
+  isZh,
+  lang,
+  posts,
+}: {
+  isZh: boolean;
+  lang: string;
+  posts: BlogPostWithSource[];
+}) {
+  if (posts.length === 0) return null;
+
+  return (
+    <section
+      aria-label={isZh ? "最新文章" : "Latest posts"}
+      className="relative -mx-4 border-b border-[var(--neutral-6)] sm:-mx-6 lg:-mx-8"
+    >
+      <div className="flex overflow-x-auto px-4 sm:px-6 lg:px-8">
+        {posts.slice(0, 5).map((post, index) => (
+          <Link
+            key={post.id}
+            href={localizedBlogHref(lang, post.slug)}
+            className="group flex min-w-[240px] flex-1 flex-col justify-between border-l border-[var(--neutral-6)] px-5 py-6 transition-colors first:border-l-0 hover:bg-[var(--neutral-2)] lg:min-w-0"
+          >
+            <div>
+              <p className="text-xs font-medium text-[var(--neutral-10)]">
+                {formatPostDate(post, isZh) ?? (isZh ? "未定日期" : "Undated")}
+              </p>
+              <h2
+                className={`mt-3 line-clamp-3 text-base font-semibold leading-snug text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)] ${
+                  index === 0 ? "sm:text-lg" : ""
+                }`}
+              >
+                {post.title}
+              </h2>
+            </div>
+            <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-[var(--neutral-10)]">
+              {estimateReadTime(post, isZh)}
+              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </Link>
+        ))}
+      </div>
+      <div
+        className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[var(--neutral-1)] to-transparent sm:w-14"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[var(--neutral-1)] to-transparent sm:w-14"
+        aria-hidden
+      />
+    </section>
+  );
+}
+
 function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean): BlogIndexPost {
   const cover = getPostCover(post, 840, 520);
 
@@ -115,112 +232,6 @@ function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean):
   };
 }
 
-function AuthorByline({ post }: { post: BlogPostWithSource }) {
-  const authorName = getAuthorName(post.author);
-  const authorAvatarUrl = getAuthorAvatarUrl(post.author);
-  if (!authorName) return null;
-
-  return (
-    <span className="inline-flex items-center gap-2">
-      {authorAvatarUrl ? (
-        <Image
-          src={authorAvatarUrl}
-          alt={`${authorName} avatar`}
-          width={24}
-          height={24}
-          className="size-6 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] object-cover"
-        />
-      ) : (
-        <span className="inline-flex size-6 items-center justify-center rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[10px] font-semibold text-[var(--neutral-11)]">
-          {authorName.slice(0, 2).toUpperCase()}
-        </span>
-      )}
-      <span>{authorName}</span>
-    </span>
-  );
-}
-
-function ArticleVisual({
-  cover,
-  variant = "compact",
-}: {
-  cover: ReturnType<typeof getPostCover>;
-  variant?: "featured" | "compact";
-}) {
-  return (
-    <div
-      className={
-        variant === "featured"
-          ? "relative min-h-72 overflow-hidden bg-[var(--neutral-3)] lg:min-h-full"
-          : "relative h-48 w-full overflow-hidden bg-[var(--neutral-3)]"
-      }
-    >
-      <BlogImage
-        src={cover.src}
-        alt={cover.alt}
-        fallbackSrc={cover.fallbackSrc}
-        fallbackAlt={cover.fallbackAlt}
-        blurDataURL={cover.blurDataURL}
-        fill
-        priority={variant === "featured"}
-        className="object-cover transition-transform duration-150 group-hover:-translate-y-px"
-        sizes={variant === "featured" ? "(max-width: 1024px) 100vw, 420px" : "360px"}
-      />
-    </div>
-  );
-}
-
-function FeaturedPostCard({ post, lang }: { post: BlogPostWithSource; lang: string }) {
-  const isZh = lang === "zh";
-  const cover = getPostCover(post, 1200, 720);
-
-  const date = formatPostDate(post, isZh);
-
-  return (
-    <Link
-      href={localizedBlogHref(lang, post.slug)}
-      className="group grid overflow-hidden rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] shadow-sm transition-shadow hover:shadow-md lg:grid-cols-[0.9fr_1.1fr]"
-    >
-      <ArticleVisual cover={cover} variant="featured" />
-
-      <div className="flex min-h-80 flex-col p-6 sm:p-8">
-        <div className="mb-5 flex flex-wrap items-center gap-2 text-xs font-medium text-[var(--neutral-11)]">
-          <span className="rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-[var(--neutral-12)]">
-            {isZh ? "最新文章" : "Latest"}
-          </span>
-          <span>{estimateReadTime(post, isZh)}</span>
-        </div>
-
-        <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
-          {post.title}
-        </h2>
-
-        {post.excerpt && (
-          <p className="mt-4 max-w-xl text-base leading-7 text-[var(--neutral-11)]">
-            {post.excerpt}
-          </p>
-        )}
-
-        <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-8">
-          <div className="flex flex-wrap items-center gap-3 text-sm text-[var(--neutral-10)]">
-            {date && (
-              <span className="flex items-center gap-1">
-                <Calendar className="size-3.5" aria-hidden />
-                {date}
-              </span>
-            )}
-            <AuthorByline post={post} />
-          </div>
-          <span className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--blue-9)]">
-            {isZh ? "阅读全文" : "Read article"}
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
 export default function BlogPage({ params }: { params: Promise<{ lang: string }> }) {
   return (
     <Suspense fallback={<BlogPageSkeleton />}>
@@ -237,34 +248,15 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
   const isZh = lang === "zh";
   const blogLanguage = toBlogLanguage(lang);
   const posts = await getCachedAllPosts(blogLanguage);
-  const [featuredPost, ...archivePosts] = posts;
+  const topTags = getTopTags(posts);
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
       <Navbar />
 
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-6xl px-4 pt-16 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
-          <div className="border-y border-[var(--neutral-6)] py-10 sm:py-14">
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
-                  <BookOpen className="size-3.5" aria-hidden />
-                  {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
-                </div>
-                <h1 className="text-4xl font-semibold tracking-tight text-[var(--neutral-12)] sm:text-5xl">
-                  {isZh
-                    ? "面向 AI SaaS 的工程、产品与治理笔记"
-                    : "Engineering notes for AI-native SaaS"}
-                </h1>
-                <p className="mt-5 max-w-2xl text-base leading-7 text-[var(--neutral-11)] sm:text-lg">
-                  {isZh
-                    ? "少量、认真、可复用的文章：记录 Nebutra 在多租户、国际化、平台工程和 AI 产品交付中的真实取舍。"
-                    : "Sparse, careful, reusable writing on multi-tenancy, localization, platform engineering, and AI product delivery inside Nebutra."}
-                </p>
-              </div>
-            </div>
-          </div>
+          <BlogHeroTopics isZh={isZh} lang={lang} topics={topTags} />
         </AnimateIn>
 
         {posts.length === 0 ? (
@@ -306,21 +298,17 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
             </div>
           </AnimateIn>
         ) : (
-          <div className="py-12">
-            {featuredPost && (
-              <AnimateIn preset="fadeUp" inView>
-                <FeaturedPostCard post={featuredPost} lang={lang} />
-              </AnimateIn>
-            )}
+          <div className="pb-20">
+            <AnimateIn preset="fadeUp" inView>
+              <LatestPostRail isZh={isZh} lang={lang} posts={posts} />
+            </AnimateIn>
 
-            {archivePosts.length > 0 && (
-              <AnimateIn preset="fadeUp" inView>
-                <BlogIndexExplorer
-                  posts={archivePosts.map((post) => toBlogIndexPost(post, lang, isZh))}
-                  isZh={isZh}
-                />
-              </AnimateIn>
-            )}
+            <AnimateIn preset="fadeUp" inView>
+              <BlogIndexExplorer
+                posts={posts.map((post) => toBlogIndexPost(post, lang, isZh))}
+                isZh={isZh}
+              />
+            </AnimateIn>
           </div>
         )}
       </section>

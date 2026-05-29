@@ -124,6 +124,18 @@ Pass a string or `Error` to `error`. The modal stays open so the user can retry.
 - `irreversibleDescription` names the action and resource and ends with `cannot be undone.`
 - The component never closes itself from `onConfirm`; close after the API settles.
 
+## Real Product Examples
+
+- Deleting a project and all linked deployments after the user types the project name.
+- Rotating a production API key when webhook consumers and integration owners have been named.
+- Disabling an organization security policy after the admin types the required confirmation phrase.
+
+## Anti-patterns
+
+- Do not use this modal for low-risk confirmations such as closing a draft or clearing a filter.
+- Do not set `verificationPhrase` to a generic word like `delete`; use the resource name or exact high-risk action.
+- Do not close the modal optimistically before the destructive request has settled and retry errors can be shown.
+
 ## Accessibility
 
 - The verification input focuses on open.

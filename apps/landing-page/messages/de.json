@@ -14,7 +14,6 @@
     "resources": "Ressourcen",
     "changelog": "Änderungsprotokoll",
     "designDocs": "Design-System",
-    "impact": "Manifest",
     "avatarMenu": {
       "ariaLabel": "Kontomenü",
       "loadingName": "Wird geladen…",
@@ -1416,31 +1415,6 @@
     "desc": "Der Link ist möglicherweise veraltet, oder die Seite wurde verschoben.",
     "home": "Zurück zu Nebutra",
     "docs": "Docs öffnen"
-  },
-  "impact": {
-    "hero_eyebrow": "Whitepaper zur Kernvision von Nebutra",
-    "hero_title": "Die Governierte KI-Plattform",
-    "hero_subtitle": "Wir bauen die Plattform-Baseline, das Governance-Modell und die Harness-Schicht für Teams, die KI-native Produkte deployen.",
-    "phil_title": "Ⅰ. Philosophie",
-    "phil_headline": "Governance statt Klebe-Code",
-    "phil_desc": "Teams sollten die gleiche Plattformschicht nicht jedes Mal neu aufbauen müssen, wenn sie ein KI-natives Produkt starten. Nebutra verwandelt diese wiederholte Plattformarbeit in eine governierte, wiederverwendbare Baseline, die überprüfbar, erweiterbar und schnell deploybar bleibt.",
-    "infra_title": "Ⅱ. Infrastruktur",
-    "infra_headline": "Die KI-native Plattformschicht",
-    "infra_desc": "Nebutra ist kein zusammengestückelter Starter. Es ist eine produktive Plattformschicht, die Scaffolding, Runtime-Integrationen, Governance und Delivery umfasst.",
-    "infra_1_title": "Der Builder-Kern",
-    "infra_1_desc": "Eine governierte Monorepo-Baseline mit Tenant-Isolierung, Billing, Auth, Docs und KI-Integrationen — bereits vollständig verdrahtet.",
-    "infra_2_title": "Die Startrampe",
-    "infra_2_desc": "Verifiziertes Scaffolding, reproduzierbare Delivery und operatorbezogenes Tooling, das Plattformrisiken ab Tag null reduziert.",
-    "infra_3_title": "Sleptons Router",
-    "infra_3_desc": "Registry-gesteuerte Erweiterungen und Integrationsoberflächen halten Teams in Bewegung, ohne die Codebasis zu fragmentieren.",
-    "infra_4_title": "Algorithmisches Kapital",
-    "infra_4_desc": "Harness-Primitive, MCP-Interoperabilität und Workflow-Orchestrierung positionieren den Stack für die nächste Generation KI-nativer Software.",
-    "route_title": "Ⅲ. Routing",
-    "route_headline": "Ein klarer Upgrade-Pfad",
-    "route_desc": "Die Plattform sollte durch Kompatibilitätsprüfungen, Migrationen und beobachtbares Laufzeitverhalten wachsen — nicht durch einmalige Rewrites und versteckten Drift.",
-    "org_title": "Ⅳ. Organisation",
-    "org_headline": "Operative Disziplin im Maßstab",
-    "org_desc": "Wir verwenden Automatisierung, Tests und Governance-Ratschen, um die Plattform kontinuierlich zu verbessern, während Teams und Workloads wachsen. Menschliche Aufmerksamkeit bleibt auf Produktentscheidungen fokussiert — nicht auf wiederholtes Infrastruktur-Aufräumen."
   },
   "ui": {
     "search": {

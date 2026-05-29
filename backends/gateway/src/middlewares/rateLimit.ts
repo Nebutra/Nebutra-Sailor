@@ -10,6 +10,12 @@ import type { Context, Next } from "hono";
 type PlanKey = keyof typeof PLAN_LIMITS;
 type RateLimiter = ReturnType<typeof getRateLimiter> | ReturnType<typeof createRedisRateLimiter>;
 
+function hasRedisRateLimitStore() {
+  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.UPSTASH_REDIS_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.UPSTASH_REDIS_TOKEN;
+  return Boolean(url && token);
+}
+
 function resolvePlanKey(plan: unknown): PlanKey {
   if (plan === "PRO" || plan === "ENTERPRISE") return plan;
   return "FREE";
@@ -39,7 +45,7 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
   const planKey = resolvePlanKey(tenant?.plan);
   let limiter: RateLimiter;
   try {
-    if (!process.env.UPSTASH_REDIS_URL || !process.env.UPSTASH_REDIS_TOKEN) {
+    if (!hasRedisRateLimitStore()) {
       throw new Error("Redis rate limit store is not configured");
     }
 
