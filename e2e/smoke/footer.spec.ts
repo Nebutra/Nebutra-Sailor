@@ -11,6 +11,7 @@ import { gotoMarketingPage } from "../helpers/navigation";
 test.describe("FooterMinimal", () => {
   test.beforeEach(async ({ page }) => {
     await gotoMarketingPage(page, "/");
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     const footer = page.getByTestId("footer-minimal");
     await footer.scrollIntoViewIfNeeded();
     await expect(footer).toBeVisible();

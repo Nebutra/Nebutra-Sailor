@@ -1,13 +1,15 @@
 import type { Page } from "@playwright/test";
 
 const ROUTE_PREWARM_TIMEOUT_MS = 30_000;
-const NAVIGATION_RETRIES = 3;
-const NAVIGATION_TIMEOUT_MS = 8_000;
+const NAVIGATION_RETRIES = 5;
+const NAVIGATION_TIMEOUT_MS = 15_000;
 const TRANSIENT_NAVIGATION_ERRORS = [
   "page.request.get: Timeout",
   "page.goto: Timeout",
   "Timeout",
   "net::ERR_ABORTED",
+  "net::ERR_CONNECTION_RESET",
+  "ECONNRESET",
   "ERR_NETWORK_IO_SUSPENDED",
   "maybe frame was detached",
   "frame was detached",

@@ -22,6 +22,7 @@ const webServerTimeout = 240_000;
 const nextDevWatcherEnv = {
   WATCHPACK_POLLING: "true",
   CHOKIDAR_USEPOLLING: "true",
+  NODE_OPTIONS: "--max-old-space-size=8192",
 };
 
 process.env.PLAYWRIGHT_BASE_URL ??= landingBaseUrl;

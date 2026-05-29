@@ -2,6 +2,7 @@
 
 import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
+import type { FormEvent } from "react";
 import { useRef, useState } from "react";
 
 export function NewsletterForm() {
@@ -33,7 +34,7 @@ export function NewsletterForm() {
     }
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     void submitNewsletter();
   }
@@ -65,7 +66,8 @@ export function NewsletterForm() {
         className="sm:w-48"
       />
       <button
-        type="submit"
+        type="button"
+        onClick={() => void submitNewsletter()}
         disabled={status === "loading"}
         className="min-h-11 min-w-16 rounded-[var(--radius-lg)] border border-[color:var(--blue-6)] bg-[color:var(--blue-2)] px-3 py-2 text-sm font-medium text-[color:var(--neutral-12)] shadow-[0_1px_2px_rgba(15,23,42,0.05)] transition-colors hover:border-[color:var(--blue-7)] hover:bg-[color:var(--blue-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] disabled:cursor-not-allowed disabled:opacity-60 dark:border-[color:var(--cyan-6)] dark:bg-[color:var(--cyan-2)] dark:text-[color:var(--neutral-12)] dark:hover:bg-[color:var(--cyan-3)]"
       >

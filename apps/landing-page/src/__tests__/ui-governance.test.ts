@@ -169,7 +169,8 @@ describe("landing UI governance", () => {
     expect(localeSwitcherSource).toContain("min-h-11");
     expect(themeSwitcherSource).toContain("size-11");
     expect(newsletterFormSource).toContain("min-h-11");
-    expect(newsletterFormSource).toContain('type="submit"');
+    expect(newsletterFormSource).toContain('type="button"');
+    expect(newsletterFormSource).toContain("onClick={() => void submitNewsletter()}");
   });
 
   it("keeps the marketing header visible until desktop navigation takes over", () => {
