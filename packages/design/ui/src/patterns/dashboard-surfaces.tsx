@@ -156,7 +156,7 @@ export function DashboardMetricTile({
           </span>
         ) : null}
       </div>
-      <p className="mt-2 text-2xl font-semibold tabular-nums tracking-normal text-card-foreground">
+      <p className="mt-2 text-xl font-semibold tabular-nums tracking-normal text-card-foreground">
         {value}
       </p>
       {(detail || source) && (
