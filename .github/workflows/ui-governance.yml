@@ -43,12 +43,14 @@ jobs:
       - name: Verify UI Governance Rules
         run: pnpm exec tsx scripts/verify-ui-governance.ts
 
+      - name: Build Design Docs Registry
+        run: pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs prebuild
+
       - name: Verify Design Docs Governance
         run: pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs docs:governance
 
       - name: Verify Design Docs Registry Freshness
         run: |
-          pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs prebuild
           git diff --exit-code -- \
             apps/design-docs/public/r \
             apps/design-docs/public/registry.json \
