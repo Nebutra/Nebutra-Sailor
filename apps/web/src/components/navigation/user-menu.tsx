@@ -17,6 +17,7 @@ import { useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 import { useAccountDialog } from "@/components/account/account-dialog";
 import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
+import { dicebearAvatarUrl } from "@/lib/avatar";
 
 type ThemeChoice = "system" | "light" | "dark";
 
@@ -26,16 +27,6 @@ interface UserMenuProps {
    * Exposed primarily for tests.
    */
   signOutRedirect?: string;
-}
-
-function initialsFor(name?: string | null, email?: string | null): string {
-  const source = (name ?? "").trim() || (email ?? "").trim();
-  if (!source) return "?";
-  const tokens = source.split(/\s+/).filter(Boolean);
-  if (tokens.length >= 2) {
-    return (tokens[0][0] + tokens[1][0]).toUpperCase();
-  }
-  return source.slice(0, 2).toUpperCase();
 }
 
 const THEME_ICON: Record<ThemeChoice, typeof Monitor> = {
@@ -75,7 +66,6 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
     return null;
   }
 
-  const initials = initialsFor(user.name, user.email);
   const activeTheme = (theme as ThemeChoice | undefined) ?? "system";
 
   return (
@@ -98,7 +88,13 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
             className="h-8 w-8 object-cover"
           />
         ) : (
-          <span aria-hidden>{initials}</span>
+          <img
+            src={dicebearAvatarUrl(user.email ?? user.name)}
+            alt={user.name ?? user.email ?? "User avatar"}
+            width={32}
+            height={32}
+            className="h-8 w-8 object-cover"
+          />
         )}
       </button>
 

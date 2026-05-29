@@ -60,11 +60,15 @@ describe("UserMenu", () => {
     expect(decodeURIComponent(img?.getAttribute("src") ?? "")).toContain("https://x/y.png");
   });
 
-  it("falls back to initials when no imageUrl is set", () => {
+  it("falls back to a DiceBear avatar (not initials) when no imageUrl is set", () => {
     withUser({ name: "Bob Carter", email: "bob@example.com" });
     render(<UserMenu />);
     const trigger = screen.getByRole("button", { name: /userMenu\.ariaLabel/ });
-    expect(trigger.textContent).toMatch(/BC/);
+    const img = trigger.querySelector("img");
+    expect(img).not.toBeNull();
+    // Locally-generated DiceBear SVG data URI — never letter initials.
+    expect(img?.getAttribute("src") ?? "").toMatch(/^data:image\/svg\+xml/);
+    expect(trigger.textContent).not.toMatch(/BC/);
   });
 
   it("opens the dropdown menu on click and shows name + email", () => {

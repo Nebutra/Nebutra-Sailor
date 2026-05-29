@@ -3,36 +3,30 @@
 import { cn } from "@nebutra/ui/utils";
 import Image from "next/image";
 import { useState } from "react";
+import { dicebearAvatarUrl } from "@/lib/avatar";
 
 interface ExternalAvatarProps {
   src?: string | null;
   alt: string;
   size?: number;
   className?: string;
-  fallbackInitial?: string;
+  /** Stable identity (email/name) seeding the DiceBear fallback. Defaults to `alt`. */
+  seed?: string;
 }
 
-export function ExternalAvatar({
-  src,
-  alt,
-  size = 32,
-  className,
-  fallbackInitial,
-}: ExternalAvatarProps) {
+export function ExternalAvatar({ src, alt, size = 32, className, seed }: ExternalAvatarProps) {
   const [error, setError] = useState(false);
 
   if (!src || error) {
-    const initial = fallbackInitial ?? alt.charAt(0).toUpperCase();
+    // Fallback is a deterministic DiceBear avatar, never letter initials.
     return (
-      <div
-        className={cn(
-          "flex items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-bold",
-          className,
-        )}
-        style={{ width: size, height: size }}
-      >
-        {initial}
-      </div>
+      <img
+        src={dicebearAvatarUrl(seed ?? alt)}
+        alt={alt}
+        width={size}
+        height={size}
+        className={cn("rounded-full object-cover", className)}
+      />
     );
   }
 

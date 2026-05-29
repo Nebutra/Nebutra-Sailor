@@ -4,6 +4,7 @@
 import { getConfiguredAuthProvider, useAuth } from "@nebutra/auth/client";
 import {
   Warning as AlertTriangle,
+  Bell,
   ChevronRight,
   Lifebuoy as LifeBuoy,
   SidebarLeft as PanelLeftClose,
@@ -17,7 +18,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
-import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
+import { BrandLogo } from "@/components/brand/brand-assets";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
@@ -31,7 +32,6 @@ import { buildBreadcrumbs, DASHBOARD_NAV_GROUPS, isActiveRoute, WORKSPACES } fro
 
 interface Props {
   children: React.ReactNode;
-  notificationCenter?: React.ReactNode;
   productCapabilities?: WebProductCapabilities;
 }
 
@@ -74,7 +74,7 @@ function renderNextLink({
   );
 }
 
-function DesignSystemShellInner({ children, notificationCenter, productCapabilities }: Props) {
+function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
   const { openDialog: openFeedback } = useFeedbackDialog();
@@ -208,17 +208,48 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
   // ─── Sidebar header slot — logo + workspace switcher ─────────────────────
   const sidebarHeader = (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-center px-2">
-        <ViewTransitionLink
-          href="/workspace"
-          aria-label={webBrandLabels.homeLink}
-          className="inline-flex min-w-0 items-center justify-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
-        >
-          <BrandLogo
-            variant={collapsed ? "mark" : "horizontal"}
-            className={collapsed ? "size-7" : "h-6 w-[8.5rem]"}
-          />
-        </ViewTransitionLink>
+      <div
+        className={cn("flex items-center px-2", collapsed ? "justify-center" : "justify-between")}
+      >
+        {collapsed ? (
+          // Collapsed rail: the brand mark morphs into the expand icon on
+          // sidebar hover — no room for a separate button.
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label="Expand sidebar"
+            title="Expand sidebar"
+            className="relative inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
+          >
+            <span className="flex items-center justify-center transition-opacity duration-150 group-hover/sidebar:opacity-0">
+              <BrandLogo variant="mark" className="size-7" />
+            </span>
+            <span className="absolute inset-0 flex items-center justify-center text-sidebar-foreground/70 opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100">
+              <PanelLeftOpen className="size-5" aria-hidden="true" />
+            </span>
+          </button>
+        ) : (
+          // Expanded: logo (home link) on the left, a separate collapse button
+          // on the right that reveals on sidebar hover — like Lovable.
+          <>
+            <ViewTransitionLink
+              href="/workspace"
+              aria-label="Home"
+              className="inline-flex items-center rounded-[var(--radius-sm)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
+            >
+              <BrandLogo variant="horizontal" className="h-6 w-[8.5rem]" />
+            </ViewTransitionLink>
+            <button
+              type="button"
+              onClick={toggle}
+              aria-label="Collapse sidebar"
+              title="Collapse sidebar"
+              className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 opacity-0 transition-opacity duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring group-hover/sidebar:opacity-100"
+            >
+              <PanelLeftClose className="size-4" aria-hidden="true" />
+            </button>
+          </>
+        )}
       </div>
       {supportsWorkspaceSwitching && workspacesForSwitcher.length > 0 && (
         <div className={collapsed ? "flex justify-center" : "px-2"}>
@@ -241,7 +272,14 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
 
   const utilityControls = (
     <>
-      {notificationCenter}
+      <ViewTransitionLink
+        href="/notifications"
+        aria-label="Open notifications"
+        title="Notifications"
+        className={footerIconButton}
+      >
+        <Bell className="size-4" aria-hidden="true" />
+      </ViewTransitionLink>
       <button
         type="button"
         onClick={openFeedback}
@@ -256,35 +294,21 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
     </>
   );
 
-  const collapseButton = (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-      className={footerIconButton}
-    >
-      {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
-    </button>
-  );
-
   const sidebarFooter = collapsed ? (
     <div className="flex flex-col items-center gap-1">
       {utilityControls}
-      {collapseButton}
       {isSignedIn ? <UserMenu /> : null}
     </div>
   ) : (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between gap-0.5">
-        <div className="flex items-center gap-0.5">{utilityControls}</div>
-        {collapseButton}
-      </div>
+      <div className="flex items-center gap-0.5">{utilityControls}</div>
       {isSignedIn ? <UserMenu /> : null}
     </div>
   );
 
   const sidebar = (
     <SidebarNav
+      className="group/sidebar"
       sections={sidebarSections}
       collapsed={collapsed}
       header={sidebarHeader}
