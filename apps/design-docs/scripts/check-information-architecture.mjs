@@ -65,6 +65,13 @@ const highSignalRegistryDocTemplateSlugs = [
   "tooltip",
 ];
 
+const highSignalOverlayDocTemplateSlugs = [
+  "alert-dialog",
+  "destructive-action-modal",
+  "drawer",
+  "sheet",
+];
+
 const rootNavigationContract = {
   en: [
     "--- Start Here ---",
@@ -514,6 +521,38 @@ function assertRegistryManifestSiblingFiles() {
   }
 }
 
+function assertRegistryManifestIndexParity() {
+  const registry = readJson(path.join(ROOT, "public", "registry.json"));
+
+  for (const item of registry.items) {
+    const itemManifestFile = path.join(ROOT, "public", "r", `${item.name}.json`);
+    if (!fs.existsSync(itemManifestFile)) {
+      fail(`registry item "${item.name}" is listed in registry.json but has no public/r manifest.`);
+      continue;
+    }
+
+    const itemManifest = readJson(itemManifestFile);
+    const driftChecks = [
+      ["type", item.type, itemManifest.type],
+      ["title", item.title, itemManifest.title],
+      ["description", item.description, itemManifest.description],
+      ["meta.nebutraLayer", item.meta?.nebutraLayer, itemManifest.meta?.nebutraLayer],
+      [
+        "meta.docs",
+        JSON.stringify(item.meta?.docs ?? {}),
+        JSON.stringify(itemManifest.meta?.docs ?? {}),
+      ],
+    ];
+
+    for (const [field, indexValue, manifestValue] of driftChecks) {
+      if (indexValue === manifestValue) continue;
+      fail(
+        `registry item "${item.name}" has ${field} drift between registry.json and public/r/${item.name}.json.`,
+      );
+    }
+  }
+}
+
 function assertRegistryMaturityContracts() {
   const registry = readJson(path.join(ROOT, "public", "registry.json"));
   const allowedMaturityByStatus = {
@@ -527,6 +566,13 @@ function assertRegistryMaturityContracts() {
     const status = item.meta?.docs?.status;
     const maturity = item.meta?.docs?.maturity;
     if (!status || !maturity) continue;
+
+    const lastVerified = item.meta?.docs?.lastVerified;
+    if (lastVerified && !/^\d{4}-\d{2}-\d{2}$/.test(lastVerified)) {
+      fail(
+        `registry item "${item.name}" meta.docs.lastVerified must use YYYY-MM-DD format: ${lastVerified}.`,
+      );
+    }
 
     const allowed = allowedMaturityByStatus[status];
     if (allowed?.has(maturity)) continue;
@@ -645,7 +691,11 @@ function assertHighSignalRegistryDocExamplesAndAntiPatterns() {
     ],
   };
 
-  for (const slug of highSignalRegistryDocTemplateSlugs) {
+  const requiredSlugs = [
+    ...new Set([...highSignalRegistryDocTemplateSlugs, ...highSignalOverlayDocTemplateSlugs]),
+  ].sort();
+
+  for (const slug of requiredSlugs) {
     for (const lang of LANGS) {
       const docs = findDocsFile(lang, slug);
       if (!docs) {
@@ -657,7 +707,7 @@ function assertHighSignalRegistryDocExamplesAndAntiPatterns() {
       for (const heading of requiredHeadings[lang]) {
         if (hasHeading(source, heading.pattern)) continue;
         fail(
-          `${relative(docs.file)} is missing "${heading.label}". High-signal registry docs must document real usage and anti-patterns.`,
+          `${relative(docs.file)} is missing "${heading.label}". High-signal component docs must document real usage and anti-patterns.`,
         );
       }
     }
@@ -904,6 +954,7 @@ for (const section of SECTIONS) {
 assertPreviewRegistry();
 assertRegistryDocs();
 assertRegistryManifestSiblingFiles();
+assertRegistryManifestIndexParity();
 assertRegistryMaturityContracts();
 assertStructuredFrontmatterContracts();
 assertRegistryDocTemplateContracts();

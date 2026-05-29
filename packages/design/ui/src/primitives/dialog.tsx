@@ -5,6 +5,7 @@ import { Cross as X } from "@nebutra/icons";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { overlayPrimitiveClassNames } from "./overlay";
 
 // We keep these standard export names so the rest of the application using Nebutra UI doesn't break.
 const Dialog = BaseDialog.Root;
@@ -90,7 +91,11 @@ const DialogContent = ({
     <DialogOverlay />
     <BaseDialog.Popup
       ref={ref}
-      className={cn(overlayClassNames.modalSurface, className)}
+      className={cn(
+        overlayClassNames.modalSurface,
+        overlayPrimitiveClassNames.modalSurface,
+        className,
+      )}
       style={{ zIndex: overlayZIndex.modal, ...style }}
       {...props}
     >

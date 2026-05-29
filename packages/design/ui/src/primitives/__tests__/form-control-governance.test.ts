@@ -25,6 +25,15 @@ const focusVisibleOnlySources = [
   "toggle-group.tsx",
 ] as const;
 const overlayPrimitiveSources = ["navigation-menu.tsx", "menu.tsx", "sheet.tsx"] as const;
+const overlayFamilyPrimitiveSources = [
+  "command.tsx",
+  "dialog.tsx",
+  "popover.tsx",
+  "dropdown-menu.tsx",
+  "menubar.tsx",
+  "context-menu.tsx",
+  "hover-card-content.tsx",
+] as const;
 
 const sourceFor = (filename: (typeof formPrimitiveSources)[number]) =>
   readFileSync(join(process.cwd(), "src", "primitives", filename), "utf8");
@@ -194,7 +203,21 @@ describe("overlay primitive focus governance", () => {
   it("keeps menubar root out of the tab order so the surface cannot show native focus chrome", () => {
     const source = primitiveSourceFor("menubar.tsx");
 
-    expect(source).not.toMatch(/tabIndex=\{0\}/u);
+    expect(source).toMatch(/tabIndex=\{-1\}\s+role="menubar"/u);
+    expect(source).toMatch(/role="menuitem"\s+tabIndex=\{0\}/u);
     expect(source).toMatch(/overlayClassNames\.menuSurface/u);
+  });
+
+  it.each(
+    overlayFamilyPrimitiveSources,
+  )("routes %s through canonical primitive overlay class contracts", (filename) => {
+    const source = primitiveSourceFor(filename);
+
+    expect(source).toMatch(/overlay(?:Primitive)?ClassNames/u);
+    expect(source).not.toMatch(/\bz-50\b/u);
+    expect(source).not.toMatch(/\bshadow-(?:lg|xl|2xl)\b/u);
+    expect(source).not.toMatch(/\bfocus-visible:ring-/u);
+    expect(source).not.toMatch(/\brounded-\[var\(--radius-(?:md|lg|xl)\)\]/u);
+    expect(source).not.toMatch(/\bborder-border(?:\b|\/)/u);
   });
 });

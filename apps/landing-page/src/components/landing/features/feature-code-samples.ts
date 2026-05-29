@@ -3,161 +3,16 @@
  *
  * Lookup priority:
  *   1. PACKAGE_CODE_SAMPLES[slug]   — curated per-package snippet
- *   2. GROUP_CODE_SAMPLES[group]    — group fallback (also used by
- *                                     CapabilityFolderShowcase for the
- *                                     group anchors on the index page)
+ *   2. GROUP_CODE_SAMPLES[group]    — group fallback
  *   3. synthesizeSlugSample(entry)  — last resort, slug-templated
  */
 
+import type { FeatureCodeSample } from "./feature-group-code-samples";
+import { GROUP_CODE_SAMPLES } from "./feature-group-code-samples";
 import type { PackageFeatureEntry } from "./package-feature-data";
 
-export type FeatureCodeSample = {
-  filename: string;
-  language: string;
-  code: string;
-  highlightedLines?: number[];
-};
-
-// ─────────────────────────────────────────────────────────────────────────
-// Group fallbacks — used on /features index cards AND when no per-slug
-// sample exists.
-// ─────────────────────────────────────────────────────────────────────────
-
-export const GROUP_CODE_SAMPLES: Record<string, FeatureCodeSample> = {
-  ai: {
-    filename: "agent.ts",
-    language: "typescript",
-    code: `import { Agent, tool } from "@nebutra/agents";
-import { z } from "zod";
-
-const agent = new Agent({
-  model: "claude-sonnet-4-6",
-  tools: {
-    search: tool({
-      description: "Search internal docs",
-      parameters: z.object({ query: z.string() }),
-      execute: async ({ query }) => searchDocs(query),
-    }),
-  },
-});
-
-const stream = await agent.stream({
-  prompt: "Find Q4 revenue trends",
-  maxSteps: 6,
-});
-
-for await (const event of stream) {
-  console.log(event.type, event.data);
-}`,
-    highlightedLines: [4, 13],
-  },
-
-  iam: {
-    filename: "permissions.ts",
-    language: "typescript",
-    code: `import { ability } from "@nebutra/permissions";
-import { requirePermission } from "@nebutra/permissions/server";
-
-await requirePermission("user.invite", { orgId });
-
-const can = ability(currentUser);
-if (can("delete", "Project", project)) {
-  await deleteProject(project.id);
-}`,
-    highlightedLines: [3, 6],
-  },
-
-  integrations: {
-    filename: "queue.ts",
-    language: "typescript",
-    code: `import { getQueue, createJob } from "@nebutra/queue";
-
-const queue = await getQueue();
-
-await queue.enqueue(
-  createJob("email", "send", {
-    to: "user@example.com",
-    template: "welcome",
-  }, { tenantId: org.id }),
-);`,
-    highlightedLines: [3, 5],
-  },
-
-  platform: {
-    filename: "platform.ts",
-    language: "typescript",
-    code: `import { prisma } from "@nebutra/db";
-import { getCurrentTenant } from "@nebutra/tenant";
-
-const tenant = getCurrentTenant();
-
-const posts = await prisma.post.findMany({
-  where: { tenantId: tenant.tenantId, published: true },
-  orderBy: { publishedAt: "desc" },
-  take: 10,
-});`,
-    highlightedLines: [3, 6],
-  },
-
-  design: {
-    filename: "theme.css",
-    language: "css",
-    code: `@import "@nebutra/tokens/styles.css";
-
-.cta {
-  background: var(--brand-gradient);
-  color: var(--neutral-1);
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-5);
-}`,
-    highlightedLines: [3, 4],
-  },
-
-  commerce: {
-    filename: "checkout.ts",
-    language: "typescript",
-    code: `import { createCheckoutSession } from "@nebutra/billing";
-
-const session = await createCheckoutSession({
-  customerId: orgId,
-  priceId: "price_pro_monthly",
-  successUrl: \`\${origin}/billing/success\`,
-});
-
-return Response.redirect(session.url);`,
-    highlightedLines: [2],
-  },
-
-  gateway: {
-    filename: "router.ts",
-    language: "typescript",
-    code: `import { createApp } from "@nebutra/gateway-core";
-import { tenancy, rateLimit } from "@nebutra/gateway-core/middleware";
-
-const app = createApp()
-  .use(tenancy())
-  .use(rateLimit({ rps: 100 }));
-
-app.get("/v1/posts", async (c) => {
-  return c.json({ tenant: c.var.tenant.id });
-});`,
-    highlightedLines: [3, 4, 5],
-  },
-
-  ops: {
-    filename: "create-sailor.sh",
-    language: "bash",
-    code: `$ npx create-sailor my-saas
-✔ Cloning template
-✔ Installing dependencies
-✔ Setting up environment
-✔ Running database migrations
-
-Ready in 12.3s.
-
-$ cd my-saas && pnpm dev:dashboard`,
-  },
-};
+export type { FeatureCodeSample } from "./feature-group-code-samples";
+export { GROUP_CODE_SAMPLES, getCodeSampleForGroup } from "./feature-group-code-samples";
 
 // ─────────────────────────────────────────────────────────────────────────
 // Per-package curated samples — these are the differentiated, real-feeling
@@ -939,10 +794,6 @@ function synthesizeSlugSample(entry: PackageFeatureEntry): FeatureCodeSample {
 // ─────────────────────────────────────────────────────────────────────────
 
 export const DEFAULT_CODE_SAMPLE: FeatureCodeSample = GROUP_CODE_SAMPLES.platform;
-
-export function getCodeSampleForGroup(group: string): FeatureCodeSample {
-  return GROUP_CODE_SAMPLES[group] ?? DEFAULT_CODE_SAMPLE;
-}
 
 export function getCodeSampleForEntry(entry: PackageFeatureEntry): FeatureCodeSample {
   // 1. Curated per-package

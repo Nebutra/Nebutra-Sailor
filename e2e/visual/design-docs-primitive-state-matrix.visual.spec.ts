@@ -2,6 +2,8 @@ import { expect, type Locator, type Page, type TestInfo, test } from "@playwrigh
 import {
   attachViewportScreenshot,
   expectNoHorizontalOverflow,
+  expectNoNativeFocusOutline,
+  expectRenderableSurface,
   expectStableVisualSurface,
   expectVisibleTextDensity,
   prepareVisualPage,
@@ -37,7 +39,10 @@ async function previewContaining(page: Page, locator: Locator) {
 }
 
 async function expectPreviewBoxStable(preview: Locator, action: () => Promise<void>) {
-  await expectStableVisualSurface(preview, { width: 220, height: 120 });
+  await expectRenderableSurface(preview, {
+    minimum: { width: 220, height: 120 },
+    minimumVisibleDescendants: 1,
+  });
   const before = await preview.boundingBox();
   expect(before, "preview should have a measurable box before interaction").not.toBeNull();
 
@@ -47,6 +52,10 @@ async function expectPreviewBoxStable(preview: Locator, action: () => Promise<vo
   expect(after, "preview should have a measurable box after interaction").not.toBeNull();
   expect(Math.abs((after?.width ?? 0) - (before?.width ?? 0))).toBeLessThanOrEqual(stableDeltaPx);
   expect(Math.abs((after?.height ?? 0) - (before?.height ?? 0))).toBeLessThanOrEqual(stableDeltaPx);
+  await expectRenderableSurface(preview, {
+    minimum: { width: 220, height: 120 },
+    minimumVisibleDescendants: 1,
+  });
 }
 
 async function expectControlKeepsPreviewStable(
@@ -56,6 +65,7 @@ async function expectControlKeepsPreviewStable(
 ) {
   const preview = await previewContaining(page, control);
   await expectPreviewBoxStable(preview, () => action(control));
+  await expectNoNativeFocusOutline(page, "#nd-page");
   await expectNoHorizontalOverflow(page, "#nd-page");
 }
 

@@ -11,6 +11,7 @@ import {
 } from "./command-styles";
 import { Dialog, DialogContent } from "./dialog";
 import { Kbd } from "./kbd";
+import { overlayPrimitiveClassNames } from "./overlay";
 
 export type CommandProps = React.ComponentPropsWithoutRef<typeof CommandPrimitive>;
 
@@ -90,7 +91,8 @@ const Command = ({
   <CommandPrimitive
     ref={ref}
     className={cn(
-      "flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-md)] bg-popover text-popover-foreground",
+      "flex h-full w-full flex-col overflow-hidden",
+      overlayPrimitiveClassNames.commandFrame,
       className,
     )}
     {...props}
@@ -101,7 +103,12 @@ Command.displayName = CommandPrimitive.displayName;
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
     <Dialog {...props}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg">
+      <DialogContent
+        className={cn(
+          overlayPrimitiveClassNames.modalSurface,
+          overlayPrimitiveClassNames.commandDialogSurface,
+        )}
+      >
         <Command className={commandFrameClassName}>{children}</Command>
       </DialogContent>
     </Dialog>
@@ -187,10 +194,7 @@ const CommandItem = ({
 }) => (
   <CommandPrimitive.Item
     ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected='true']:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50",
-      className,
-    )}
+    className={cn(overlayPrimitiveClassNames.commandItem, className)}
     {...props}
   />
 );

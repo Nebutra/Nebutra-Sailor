@@ -70,3 +70,15 @@ import {
 - Escape closes the drawer and focus returns to the trigger.
 - Body scroll is locked while open; scrollable content stays inside `DrawerBody`.
 - Preserve swipe-down and outside-dismiss unless dirty input would cause data loss.
+
+## Real Product Examples
+
+- Mobile workspace filters that let users narrow a table and return to the same result list.
+- A one-step invite form with role selection and a single primary action.
+- A compact account switcher where the drawer closes after choosing a workspace.
+
+## Anti-patterns
+
+- Do not use Drawer for destructive confirmations; use `AlertDialog`, `Dialog`, or `DestructiveActionModal`.
+- Do not put multi-section settings, nested navigation, or dense tables inside a bottom sheet.
+- Do not disable swipe or outside dismissal unless unsaved user input would be lost.

@@ -3,7 +3,9 @@
 import { ContextMenu as BaseContextMenu } from "@base-ui/react/context-menu";
 import { Check, ChevronRight } from "@nebutra/icons";
 import * as React from "react";
+import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { overlayPrimitiveClassNames } from "./overlay";
 
 type ContextMenuItemVariant = "default" | "destructive";
 
@@ -96,25 +98,6 @@ export interface ContextMenuContentProps
   side?: React.ComponentProps<typeof BaseContextMenu.Positioner>["side"];
 }
 
-const contextMenuContentClassName = [
-  "z-50 min-w-40 max-w-80 overflow-hidden rounded-[var(--radius-md)] border border-border bg-background/95 backdrop-blur-md",
-  "p-1 text-popover-foreground shadow-lg outline-none",
-  "transition-[opacity,transform] duration-flow ease-out",
-  "data-[starting-style]:scale-95 data-[ending-style]:scale-95",
-  "data-[starting-style]:opacity-0 data-[ending-style]:opacity-0",
-].join(" ");
-
-const contextMenuItemClassName = [
-  "relative flex min-h-8 cursor-default select-none items-center gap-2 rounded-[var(--radius-sm)] px-2 py-1.5",
-  "text-sm outline-none transition-colors duration-micro ease-out",
-  "data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground",
-  "data-[disabled]:pointer-events-none data-[disabled]:opacity-60",
-  "data-[variant=destructive]:text-destructive data-[variant=destructive]:data-[highlighted]:bg-destructive/10 data-[variant=destructive]:data-[highlighted]:text-destructive",
-].join(" ");
-
-const contextMenuIndicatorClassName =
-  "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center text-muted-foreground";
-
 function ContextMenuItemContent({
   children,
   prefix,
@@ -182,8 +165,14 @@ export const ContextMenuContent = ({
     >
       <BaseContextMenu.Popup
         ref={ref}
-        className={cn(contextMenuContentClassName, className)}
+        className={cn(
+          overlayClassNames.menuSurface,
+          overlayPrimitiveClassNames.menuSurface,
+          "min-w-40 max-w-80",
+          className,
+        )}
         style={{
+          zIndex: overlayZIndex.popover,
           maxHeight: "var(--context-menu-max-height, var(--available-height))",
           ...style,
         }}
@@ -259,7 +248,7 @@ export const ContextMenuItem = ({
         rel={rel}
         data-value={value}
         data-variant={variant}
-        className={cn(contextMenuItemClassName, className)}
+        className={cn(overlayPrimitiveClassNames.contextMenuItem, className)}
         {...props}
       >
         {inner}
@@ -274,7 +263,7 @@ export const ContextMenuItem = ({
       data-variant={variant}
       disabled={disabled}
       onClick={onSelect}
-      className={cn(contextMenuItemClassName, className)}
+      className={cn(overlayPrimitiveClassNames.contextMenuItem, className)}
       {...props}
     >
       {inner}
@@ -303,10 +292,10 @@ export const ContextMenuCheckboxItem = ({
     defaultChecked={defaultChecked}
     data-value={value}
     onClick={onSelect}
-    className={cn(contextMenuItemClassName, "pl-8", className)}
+    className={cn(overlayPrimitiveClassNames.contextMenuItem, "pl-8", className)}
     {...props}
   >
-    <BaseContextMenu.CheckboxItemIndicator className={contextMenuIndicatorClassName}>
+    <BaseContextMenu.CheckboxItemIndicator className={overlayPrimitiveClassNames.menuIndicator}>
       <Check className="size-4" />
     </BaseContextMenu.CheckboxItemIndicator>
     <ContextMenuItemContent prefix={prefix} suffix={suffix}>
@@ -341,10 +330,10 @@ export const ContextMenuRadioItem = ({
     ref={ref}
     value={value}
     onClick={onSelect}
-    className={cn(contextMenuItemClassName, "pl-8", className)}
+    className={cn(overlayPrimitiveClassNames.contextMenuItem, "pl-8", className)}
     {...props}
   >
-    <BaseContextMenu.RadioItemIndicator className={contextMenuIndicatorClassName}>
+    <BaseContextMenu.RadioItemIndicator className={overlayPrimitiveClassNames.menuIndicator}>
       <span className="size-2 rounded-full bg-current" />
     </BaseContextMenu.RadioItemIndicator>
     <ContextMenuItemContent prefix={prefix} suffix={suffix}>
@@ -370,7 +359,7 @@ export const ContextMenuSubTrigger = ({
   <BaseContextMenu.SubmenuTrigger
     ref={ref}
     onClick={onSelect}
-    className={cn(contextMenuItemClassName, className)}
+    className={cn(overlayPrimitiveClassNames.contextMenuItem, className)}
     {...props}
   >
     <ContextMenuItemContent prefix={prefix} suffix={suffix ?? <ChevronRight className="size-4" />}>

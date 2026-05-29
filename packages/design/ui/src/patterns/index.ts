@@ -1,5 +1,14 @@
 // Card compound component
 
+// ArtifactShiftCard — textured hover artifact surface for product capability cards
+export {
+  ArtifactShiftCard,
+  ArtifactShiftCardFooter,
+  type ArtifactShiftCardFooterProps,
+  ArtifactShiftCardPreview,
+  type ArtifactShiftCardPreviewProps,
+  type ArtifactShiftCardProps,
+} from "./artifact-shift-card";
 export type {
   CardBodyProps,
   CardDescriptionProps,

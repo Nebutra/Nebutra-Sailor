@@ -75,6 +75,17 @@ describe("landing UI governance", () => {
     expect(featureCardSource).not.toContain("FeatureTranslator");
   });
 
+  it("consumes the design-system artifact shift pattern for capability cards", () => {
+    expect(capabilityFolderShowcaseSource).toContain('from "@nebutra/ui/patterns"');
+    expect(capabilityFolderShowcaseSource).toContain('from "./feature-group-code-samples"');
+    expect(capabilityFolderShowcaseSource).not.toContain('from "./feature-code-samples"');
+    expect(capabilityFolderShowcaseSource).toContain("<ArtifactShiftCard");
+    expect(capabilityFolderShowcaseSource).toContain("<ArtifactShiftCardPreview");
+    expect(capabilityFolderShowcaseSource).toContain("<ArtifactShiftCardFooter>");
+    expect(capabilityFolderShowcaseSource).not.toContain("function CapabilityArtifactPreview");
+    expect(capabilityFolderShowcaseSource).not.toContain('data-taste="cult-shift-card"');
+  });
+
   it("routes every large feature card to a canonical docs page", () => {
     expect(LARGE_FEATURES.length).toBeGreaterThan(0);
 

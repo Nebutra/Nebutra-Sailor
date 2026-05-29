@@ -5,6 +5,7 @@ import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { overlayPrimitiveClassNames } from "./overlay";
 
 type DropdownMenuContextValue = {
   setOpen: (open: boolean) => void;
@@ -118,11 +119,7 @@ const DropdownMenuSubTrigger = ({
 } & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.SubmenuTrigger>> | undefined }) => (
   <BaseMenu.SubmenuTrigger
     ref={ref}
-    className={cn(
-      "flex cursor-default select-none items-center rounded-[var(--radius-md)] px-2 py-1.5 text-sm outline-none data-[highlighted]:bg-accent data-[popup-open]:bg-accent",
-      inset && "pl-8",
-      className,
-    )}
+    className={cn(overlayPrimitiveClassNames.menuSubTrigger, inset && "pl-8", className)}
     {...props}
   >
     {children}
@@ -143,7 +140,11 @@ const DropdownMenuSubContent = ({
     <BaseMenu.Positioner>
       <BaseMenu.Popup
         ref={ref}
-        className={cn(overlayClassNames.menuSurface, className)}
+        className={cn(
+          overlayClassNames.menuSurface,
+          overlayPrimitiveClassNames.menuSurface,
+          className,
+        )}
         style={{ zIndex: overlayZIndex.popover, ...style }}
         {...props}
       />
@@ -181,7 +182,11 @@ const DropdownMenuContent = ({
     >
       <BaseMenu.Popup
         ref={ref}
-        className={cn(overlayClassNames.menuSurface, className)}
+        className={cn(
+          overlayClassNames.menuSurface,
+          overlayPrimitiveClassNames.menuSurface,
+          className,
+        )}
         style={{ zIndex: overlayZIndex.popover, ...style }}
         {...props}
       />
@@ -200,11 +205,7 @@ const DropdownMenuItem = ({
 } & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.Item>> | undefined }) => (
   <BaseMenu.Item
     ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--radius-md)] px-2 py-1.5 text-sm outline-none transition-colors data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      inset && "pl-8",
-      className,
-    )}
+    className={cn(overlayPrimitiveClassNames.menuItem, inset && "pl-8", className)}
     {...props}
   />
 );
@@ -221,10 +222,7 @@ const DropdownMenuCheckboxItem = ({
 }) => (
   <BaseMenu.CheckboxItem
     ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--radius-md)] py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className,
-    )}
+    className={cn(overlayPrimitiveClassNames.menuCheckboxItem, className)}
     {...(checked !== undefined && { checked })}
     {...props}
   >
@@ -248,10 +246,7 @@ const DropdownMenuRadioItem = ({
 }) => (
   <BaseMenu.RadioItem
     ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-[var(--radius-md)] py-1.5 pl-8 pr-2 text-sm outline-none transition-colors data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className,
-    )}
+    className={cn(overlayPrimitiveClassNames.menuCheckboxItem, className)}
     {...props}
   >
     <span className="absolute left-2 flex size-3.5 items-center justify-center">

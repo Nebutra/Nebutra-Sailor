@@ -63,6 +63,7 @@ export interface RegistryDocsMetadata {
   substrate: "native" | "custom" | "mixed";
   registry: true;
   lastVerified: string;
+  storybook?: string;
 }
 
 /**

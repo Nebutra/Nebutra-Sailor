@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import {
   attachViewportScreenshot,
   expectNoHorizontalOverflow,
+  expectRenderableSurface,
   expectStableVisualSurface,
   expectVisibleTextDensity,
   prepareVisualPage,
@@ -33,20 +34,44 @@ test.describe("landing feature showcase visual acceptance", () => {
 
       if (entry.kind === "capability-map") {
         const capabilityMap = page.locator("#capability-map").first();
-        await expectStableVisualSurface(capabilityMap, { width: 280, height: 500 });
-        await expect(capabilityMap.locator("article")).toHaveCount(CAPABILITY_FOLDER_COUNT);
+        const capabilityCards = capabilityMap.locator("article");
+
+        await expectRenderableSurface(capabilityMap, {
+          minimum: { width: 280, height: 500 },
+          minimumTextCharacters: 1_200,
+          minimumVisibleDescendants: 28,
+        });
+        await expect(capabilityCards).toHaveCount(CAPABILITY_FOLDER_COUNT);
         await expect(capabilityMap.getByRole("link", { name: /feature page/i })).toHaveCount(
           CAPABILITY_FOLDER_COUNT,
         );
         await expectVisibleTextDensity(capabilityMap, 1_200);
+
+        for (let index = 0; index < CAPABILITY_FOLDER_COUNT; index += 1) {
+          await expectRenderableSurface(capabilityCards.nth(index), {
+            minimum: { width: 260, height: 360 },
+            minimumTextCharacters: 180,
+            minimumVisibleDescendants: 4,
+          });
+        }
       } else {
         const showcase = page.locator("#showcase").first();
+        const showcaseSurface = showcase.locator(".landing-showcase-surface").first();
+
         await expectStableVisualSurface(showcase, { width: 280, height: 360 });
+        await expectRenderableSurface(showcaseSurface, {
+          minimum: { width: 260, height: 320 },
+          minimumTextCharacters: 100,
+          minimumVisibleDescendants: 5,
+        });
         await expectVisibleTextDensity(showcase, 120);
 
         const usage = page.locator("#usage").first();
-        await expectStableVisualSurface(usage, { width: 280, height: 300 });
-        await expectVisibleTextDensity(usage, 220);
+        await expectRenderableSurface(usage, {
+          minimum: { width: 280, height: 300 },
+          minimumTextCharacters: 220,
+          minimumVisibleDescendants: 3,
+        });
       }
 
       await attachViewportScreenshot(page, testInfo, entry.route.replaceAll("/", "-").slice(1));

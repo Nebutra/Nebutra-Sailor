@@ -92,6 +92,18 @@ Sheet does not close on outside click by default. Always render an explicit clos
 
 Title is Title Case and names the entity, such as Deployment Details or Member Profile. Body content should be read-mostly, with optional action buttons in the footer.
 
+## Real Product Examples
+
+- Inspecting deployment details from a deployments table while keeping the row list visible.
+- Reviewing a member profile, role, recent activity, and quick actions from a team page.
+- Opening global filters for logs or audit events without navigating away from the current query.
+
+## Anti-patterns
+
+- Do not use Sheet for final destructive confirmations; use `AlertDialog` or `DestructiveActionModal`.
+- Do not use Sheet as a replacement for a full settings page when the flow has multiple sections or validation steps.
+- Do not switch the `side` during the same workflow; spatial behavior must stay predictable.
+
 ## Accessibility
 
 Sheet is built on Base UI Dialog. The root defaults to `modal="trap-focus"` and `disablePointerDismissal`, so keyboard users stay inside the panel while pointer-only surfaces like toasts can remain reachable.
