@@ -29,15 +29,52 @@ APPS="${APPS:-landing web api design-docs sailor-docs}"
 KEEP_RELEASES="${KEEP_RELEASES:-1}"
 PM2_CONFIG="${PM2_CONFIG:-$DEPLOY_ROOT/ecosystem.config.cjs}"
 SHA="${SHA:?SHA env var required}"
-DEPLOY_UPSTASH_REDIS_REST_URL="${UPSTASH_REDIS_REST_URL:-}"
-DEPLOY_UPSTASH_REDIS_REST_TOKEN="${UPSTASH_REDIS_REST_TOKEN:-}"
-DEPLOY_UPSTASH_REDIS_URL="${UPSTASH_REDIS_URL:-}"
-DEPLOY_UPSTASH_REDIS_TOKEN="${UPSTASH_REDIS_TOKEN:-}"
-DEPLOY_GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-}"
-DEPLOY_GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
-DEPLOY_NEXT_PUBLIC_GOOGLE_CLIENT_ID="${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
-DEPLOY_GITHUB_CLIENT_ID="${GITHUB_CLIENT_ID:-}"
-DEPLOY_GITHUB_CLIENT_SECRET="${GITHUB_CLIENT_SECRET:-}"
+
+capture_deploy_runtime_env() {
+  local key value
+  for key in "$@"; do
+    value="${!key:-}"
+    printf -v "DEPLOY_$key" '%s' "$value"
+  done
+}
+
+DEPLOY_RUNTIME_KEYS=(
+  DATABASE_URL DIRECT_URL SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL
+  AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_SECRET BETTER_AUTH_URL
+  NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL
+  NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN
+  NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO
+  LANDING_URL WEB_URL STUDIO_URL CORS_ORIGINS
+  UPSTASH_REDIS_REST_URL UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_URL UPSTASH_REDIS_TOKEN
+  GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET NEXT_PUBLIC_GOOGLE_CLIENT_ID
+  GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET
+  SUPABASE_URL SUPABASE_PUBLISHABLE_KEY SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY
+  SUPABASE_WEBHOOK_SECRET NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+  NEXT_PUBLIC_SUPABASE_ANON_KEY
+  RESEND_API_KEY RESEND_AUDIENCE_ID RESEND_FROM EMAIL_FROM EMAIL_PROVIDER
+  SMTP_HOST SMTP_PORT SMTP_SECURE SMTP_USER SMTP_PASS
+  STRIPE_SECRET_KEY NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY STRIPE_WEBHOOK_SECRET
+  STRIPE_PRICE_ID_PRO_MONTHLY STRIPE_PRICE_ID_PRO_YEARLY
+  PRICE_ID_PRO_MONTHLY PRICE_ID_PRO_YEARLY STRIPE_PRICE_ID_STARTUP_LICENSE
+  OPENAI_API_KEY OPENAI_BASE_URL OPENROUTER_API_KEY OPENROUTER_BASE_URL SILICONFLOW_API_KEY
+  UPLOAD_PROVIDER UPLOAD_DIR UPLOADS_PUBLIC_BASE_URL UPLOAD_HTTP_BASE_URL UPLOAD_MAX_CONCURRENCY
+  R2_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_ENDPOINT R2_PUBLIC_URL
+  R2_BUCKET R2_BUCKET_ASSETS R2_BUCKET_UPLOADS R2_BUCKET_BACKUPS
+  AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_REGION S3_BUCKET S3_PUBLIC_URL
+  BLOB_READ_WRITE_TOKEN
+  SENTRY_DSN NEXT_PUBLIC_SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED
+  POSTHOG_KEY NEXT_PUBLIC_POSTHOG_KEY NEXT_PUBLIC_POSTHOG_HOST
+  CRON_SECRET TURNSTILE_SECRET_KEY NEXT_PUBLIC_TURNSTILE_SITE_KEY
+  ADMIN_API_KEY SERVICE_SECRET INTERNAL_API_KEY
+  CLICKHOUSE_URL CLICKHOUSE_HTTP_URL CLICKHOUSE_USERNAME CLICKHOUSE_USER
+  CLICKHOUSE_PASSWORD CLICKHOUSE_DATABASE AUDIT_USE_CLICKHOUSE METERING_PROVIDER
+  QSTASH_TOKEN QSTASH_CURRENT_SIGNING_KEY QSTASH_NEXT_SIGNING_KEY QSTASH_CALLBACK_BASE_URL
+  INNGEST_EVENT_KEY INNGEST_SIGNING_KEY
+  SANITY_API_TOKEN NEXT_PUBLIC_SANITY_PROJECT_ID NEXT_PUBLIC_SANITY_DATASET
+  NEXT_PUBLIC_SANITY_API_VERSION SANITY_WEBHOOK_SECRET
+  GOOGLE_SITE_VERIFICATION
+)
+capture_deploy_runtime_env "${DEPLOY_RUNTIME_KEYS[@]}"
 
 log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
@@ -90,9 +127,11 @@ PY
 append_env_assignment() {
   local env_file="$1" key="$2" value="$3"
   [ -n "$value" ] || return 0
-  printf '%s=' "$key" >> "$env_file"
-  printf '%q' "$value" >> "$env_file"
-  printf '\n' >> "$env_file"
+  {
+    printf '%s=' "$key"
+    printf '%q' "$value"
+    printf '\n'
+  } >> "$env_file"
 }
 
 ensure_env_assignment() {
@@ -117,6 +156,78 @@ replace_env_assignment() {
   rm -f "$tmp"
   append_env_assignment "$env_file" "$key" "$value"
   chmod 600 "$env_file"
+}
+
+runtime_env_value() {
+  local key="$1"
+  local deploy_key="DEPLOY_$key"
+  local value="${!deploy_key:-}"
+
+  if [ -z "$value" ]; then
+    value="${!key:-}"
+  fi
+
+  printf '%s' "$value"
+}
+
+persist_runtime_keys() {
+  local app_root="$1" label="$2"
+  shift 2
+
+  local env_file="$app_root/.env"
+  local key value count=0
+
+  mkdir -p "$app_root"
+  touch "$env_file"
+  chmod 600 "$env_file"
+
+  for key in "$@"; do
+    value="$(runtime_env_value "$key")"
+    [ -n "$value" ] || continue
+    export "$key=$value"
+    replace_env_assignment "$env_file" "$key" "$value"
+    count=$((count + 1))
+  done
+
+  if [ "$count" -gt 0 ]; then
+    log "ensured $label runtime env keys ($count): $env_file"
+  fi
+}
+
+persist_database_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  local database_url direct_url supabase_database_url supabase_direct_url
+
+  database_url="$(runtime_env_value DATABASE_URL)"
+  supabase_database_url="$(runtime_env_value SUPABASE_DATABASE_URL)"
+  direct_url="$(runtime_env_value DIRECT_URL)"
+  supabase_direct_url="$(runtime_env_value SUPABASE_DIRECT_URL)"
+
+  if [ -z "$database_url" ] && [ -n "$supabase_database_url" ]; then
+    database_url="$supabase_database_url"
+  fi
+  if [ -z "$direct_url" ] && [ -n "$supabase_direct_url" ]; then
+    direct_url="$supabase_direct_url"
+  fi
+
+  [ -n "$database_url$direct_url$supabase_database_url$supabase_direct_url" ] || return 0
+
+  mkdir -p "$app_root"
+  touch "$env_file"
+  chmod 600 "$env_file"
+
+  if [ -n "$database_url" ]; then
+    export DATABASE_URL="$database_url"
+    replace_env_assignment "$env_file" DATABASE_URL "$database_url"
+  fi
+  if [ -n "$direct_url" ]; then
+    export DIRECT_URL="$direct_url"
+    replace_env_assignment "$env_file" DIRECT_URL "$direct_url"
+  fi
+  replace_env_assignment "$env_file" SUPABASE_DATABASE_URL "$supabase_database_url"
+  replace_env_assignment "$env_file" SUPABASE_DIRECT_URL "$supabase_direct_url"
+  log "ensured database runtime env: $env_file"
 }
 
 persist_redis_runtime_env() {
@@ -201,6 +312,71 @@ persist_github_auth_runtime_env() {
   replace_env_assignment "$env_file" GITHUB_CLIENT_ID "$github_client_id"
   replace_env_assignment "$env_file" GITHUB_CLIENT_SECRET "$github_client_secret"
   log "ensured GitHub OAuth runtime env: $env_file"
+}
+
+persist_web_mvp_runtime_env() {
+  local app_root="$1"
+
+  persist_runtime_keys "$app_root" "web MVP" \
+    AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_SECRET BETTER_AUTH_URL \
+    NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL \
+    NEXT_PUBLIC_STUDIO_URL NEBUTRA_LANDING_ORIGIN NEBUTRA_SESSION_HINT_DOMAIN \
+    SUPABASE_URL SUPABASE_PUBLISHABLE_KEY SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY \
+    SUPABASE_WEBHOOK_SECRET NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY \
+    NEXT_PUBLIC_SUPABASE_ANON_KEY \
+    RESEND_API_KEY RESEND_AUDIENCE_ID RESEND_FROM EMAIL_FROM EMAIL_PROVIDER \
+    SMTP_HOST SMTP_PORT SMTP_SECURE SMTP_USER SMTP_PASS \
+    STRIPE_SECRET_KEY NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY STRIPE_WEBHOOK_SECRET \
+    STRIPE_PRICE_ID_PRO_MONTHLY STRIPE_PRICE_ID_PRO_YEARLY PRICE_ID_PRO_MONTHLY PRICE_ID_PRO_YEARLY \
+    OPENAI_API_KEY OPENAI_BASE_URL OPENROUTER_API_KEY OPENROUTER_BASE_URL SILICONFLOW_API_KEY \
+    UPLOAD_PROVIDER UPLOAD_DIR UPLOADS_PUBLIC_BASE_URL UPLOAD_HTTP_BASE_URL UPLOAD_MAX_CONCURRENCY \
+    R2_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_ENDPOINT R2_PUBLIC_URL \
+    R2_BUCKET R2_BUCKET_ASSETS R2_BUCKET_UPLOADS R2_BUCKET_BACKUPS \
+    AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_REGION S3_BUCKET S3_PUBLIC_URL BLOB_READ_WRITE_TOKEN \
+    SENTRY_DSN NEXT_PUBLIC_SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED \
+    POSTHOG_KEY NEXT_PUBLIC_POSTHOG_KEY NEXT_PUBLIC_POSTHOG_HOST \
+    CRON_SECRET TURNSTILE_SECRET_KEY NEXT_PUBLIC_TURNSTILE_SITE_KEY \
+    ADMIN_API_KEY SERVICE_SECRET INTERNAL_API_KEY \
+    CLICKHOUSE_URL CLICKHOUSE_HTTP_URL CLICKHOUSE_USERNAME CLICKHOUSE_USER CLICKHOUSE_PASSWORD CLICKHOUSE_DATABASE \
+    QSTASH_TOKEN QSTASH_CURRENT_SIGNING_KEY QSTASH_NEXT_SIGNING_KEY QSTASH_CALLBACK_BASE_URL \
+    INNGEST_EVENT_KEY INNGEST_SIGNING_KEY \
+    SANITY_API_TOKEN NEXT_PUBLIC_SANITY_PROJECT_ID NEXT_PUBLIC_SANITY_DATASET NEXT_PUBLIC_SANITY_API_VERSION
+}
+
+persist_api_mvp_runtime_env() {
+  local app_root="$1"
+
+  persist_runtime_keys "$app_root" "api MVP" \
+    AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_SECRET BETTER_AUTH_URL \
+    DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO LANDING_URL WEB_URL STUDIO_URL CORS_ORIGINS \
+    SUPABASE_URL SUPABASE_PUBLISHABLE_KEY SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY SUPABASE_WEBHOOK_SECRET \
+    RESEND_API_KEY RESEND_FROM EMAIL_FROM EMAIL_PROVIDER SMTP_HOST SMTP_PORT SMTP_SECURE SMTP_USER SMTP_PASS \
+    STRIPE_SECRET_KEY STRIPE_WEBHOOK_SECRET STRIPE_PRICE_ID_PRO_MONTHLY STRIPE_PRICE_ID_PRO_YEARLY \
+    PRICE_ID_PRO_MONTHLY PRICE_ID_PRO_YEARLY \
+    OPENAI_API_KEY OPENAI_BASE_URL OPENROUTER_API_KEY OPENROUTER_BASE_URL SILICONFLOW_API_KEY \
+    R2_ACCOUNT_ID R2_ACCESS_KEY_ID R2_SECRET_ACCESS_KEY R2_ENDPOINT R2_PUBLIC_URL \
+    R2_BUCKET R2_BUCKET_ASSETS R2_BUCKET_UPLOADS R2_BUCKET_BACKUPS \
+    AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_REGION S3_BUCKET S3_PUBLIC_URL BLOB_READ_WRITE_TOKEN \
+    SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED \
+    CRON_SECRET TURNSTILE_SECRET_KEY ADMIN_API_KEY SERVICE_SECRET INTERNAL_API_KEY \
+    CLICKHOUSE_URL CLICKHOUSE_HTTP_URL CLICKHOUSE_USERNAME CLICKHOUSE_USER CLICKHOUSE_PASSWORD CLICKHOUSE_DATABASE \
+    AUDIT_USE_CLICKHOUSE METERING_PROVIDER \
+    QSTASH_TOKEN QSTASH_CURRENT_SIGNING_KEY QSTASH_NEXT_SIGNING_KEY QSTASH_CALLBACK_BASE_URL \
+    INNGEST_EVENT_KEY INNGEST_SIGNING_KEY SANITY_WEBHOOK_SECRET
+}
+
+persist_landing_mvp_runtime_env() {
+  local app_root="$1"
+
+  persist_runtime_keys "$app_root" "landing MVP" \
+    NEXT_PUBLIC_AUTH_PROVIDER NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_DOCS_URL \
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP \
+    RESEND_API_KEY RESEND_AUDIENCE_ID RESEND_FROM EMAIL_FROM EMAIL_PROVIDER \
+    STRIPE_SECRET_KEY STRIPE_PRICE_ID_STARTUP_LICENSE \
+    SENTRY_DSN NEXT_PUBLIC_SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED \
+    POSTHOG_KEY NEXT_PUBLIC_POSTHOG_KEY NEXT_PUBLIC_POSTHOG_HOST \
+    NEXT_PUBLIC_SANITY_PROJECT_ID NEXT_PUBLIC_SANITY_DATASET NEXT_PUBLIC_SANITY_API_VERSION \
+    SANITY_API_TOKEN SANITY_WEBHOOK_SECRET GOOGLE_SITE_VERIFICATION
 }
 
 bootstrap_web_runtime_env() {
@@ -327,6 +503,11 @@ load_runtime_env() {
     log "no runtime env files found for $app"
   fi
 
+  if [ "$app" = "web" ] || [ "$app" = "api" ]; then
+    persist_database_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
   if [ "$app" = "web" ]; then
     if [ ! -f "$app_root/.env" ]; then
       bootstrap_web_runtime_env "$app_root"
@@ -360,6 +541,7 @@ load_runtime_env() {
       source_runtime_env_file "$app_root/.env"
     fi
     persist_google_public_runtime_env "$app_root"
+    persist_landing_mvp_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 
@@ -367,6 +549,7 @@ load_runtime_env() {
     persist_google_auth_runtime_env "$app_root"
     persist_github_auth_runtime_env "$app_root"
     persist_redis_runtime_env "$app_root"
+    persist_web_mvp_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 
@@ -393,6 +576,7 @@ load_runtime_env() {
 
     refresh_bootstrapped_api_database_url "$app_root"
     persist_redis_runtime_env "$app_root"
+    persist_api_mvp_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 }
@@ -479,37 +663,36 @@ PY
 bootstrap_api_runtime_env() {
   local app_root="$1"
   local env_file="$app_root/.env"
-  local secret=""
-
-  if [ -f "$env_file" ]; then
-    return 0
-  fi
-
-  if command -v openssl >/dev/null 2>&1; then
-    secret="$(openssl rand -hex 32)"
-  elif command -v python3 >/dev/null 2>&1; then
-    secret="$(python3 - <<'PY'
-import secrets
-print(secrets.token_hex(32))
-PY
-)"
-  else
-    secret="$(date -u +%s%N)-api-bootstrap-secret"
-  fi
 
   mkdir -p "$app_root"
-  umask 077
-  cat > "$env_file" <<EOF
-NODE_ENV=production
-PORT=3002
-HOSTNAME=127.0.0.1
-DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/nebutra?schema=public
-AUTH_PROVIDER=better-auth
-NEXT_PUBLIC_AUTH_PROVIDER=better-auth
-BETTER_AUTH_SECRET=$secret
-EOF
+  touch "$env_file"
   chmod 600 "$env_file"
-  log "bootstrapped minimal api runtime env: $env_file"
+
+  if [ -f "$env_file" ]; then
+    source_runtime_env_file "$env_file"
+  fi
+
+  if [ -z "${DATABASE_URL:-}" ]; then
+    DATABASE_URL="$(discover_local_postgres_url || true)"
+    DATABASE_URL="${DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:5432/nebutra?schema=public}"
+    export DATABASE_URL
+  fi
+
+  AUTH_PROVIDER="${AUTH_PROVIDER:-better-auth}"
+  NEXT_PUBLIC_AUTH_PROVIDER="${NEXT_PUBLIC_AUTH_PROVIDER:-$AUTH_PROVIDER}"
+  BETTER_AUTH_SECRET="${BETTER_AUTH_SECRET:-$(generate_runtime_secret)}"
+
+  export AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_SECRET
+
+  ensure_env_assignment "$env_file" NODE_ENV "production"
+  ensure_env_assignment "$env_file" PORT "3002"
+  ensure_env_assignment "$env_file" HOSTNAME "127.0.0.1"
+  ensure_env_assignment "$env_file" DATABASE_URL "$DATABASE_URL"
+  ensure_env_assignment "$env_file" AUTH_PROVIDER "$AUTH_PROVIDER"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_AUTH_PROVIDER "$NEXT_PUBLIC_AUTH_PROVIDER"
+  ensure_env_assignment "$env_file" BETTER_AUTH_SECRET "$BETTER_AUTH_SECRET"
+  chmod 600 "$env_file"
+  log "ensured api runtime env: $env_file"
 }
 
 load_existing_pm2_env() {
@@ -531,19 +714,23 @@ load_existing_pm2_env() {
           | .pm2_env
           | to_entries[]
           | select(.value | type == "string" or type == "number" or type == "boolean")
-          | select(.key | test("^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"))
+          | select(.key | test("^(DATABASE_URL|DIRECT_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|EMAIL_|SMTP_|SENTRY_|POSTHOG_|SANITY_|JWT_|COOKIE_|APP_|API_|DOMAIN_|LANDING_URL|WEB_URL|STUDIO_URL|CORS_ORIGINS|R2_|AWS_|S3_|BLOB_|UPLOAD_|TURNSTILE_|CRON_|ADMIN_|SERVICE_SECRET|INTERNAL_API_KEY|CLICKHOUSE_|AUDIT_USE_CLICKHOUSE|METERING_PROVIDER|QSTASH_|INNGEST_)"))
           | "\(.key)=\(.value | tostring)"
         ' || true)
   elif command -v python3 >/dev/null 2>&1; then
-    pm2_env_lines=$(pm2 jlist 2>/dev/null | python3 - "$pm2_name" <<'PY' || true
+    pm2_env_lines=$(pm2 jlist 2>/dev/null | python3 -c '
 import json
 import re
 import sys
 
 name = sys.argv[1]
 allow = re.compile(
-    r"^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|"
-    r"NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"
+    r"^(DATABASE_URL|DIRECT_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|"
+    r"STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|EMAIL_|"
+    r"SMTP_|SENTRY_|POSTHOG_|SANITY_|JWT_|COOKIE_|APP_|API_|DOMAIN_|LANDING_URL|WEB_URL|"
+    r"STUDIO_URL|CORS_ORIGINS|R2_|AWS_|S3_|BLOB_|UPLOAD_|TURNSTILE_|CRON_|ADMIN_|"
+    r"SERVICE_SECRET|INTERNAL_API_KEY|CLICKHOUSE_|AUDIT_USE_CLICKHOUSE|METERING_PROVIDER|"
+    r"QSTASH_|INNGEST_)"
 )
 
 try:
@@ -560,8 +747,7 @@ for proc in procs:
         if isinstance(value, (str, int, float, bool)):
             print(f"{key}={value}")
     break
-PY
-)
+' "$pm2_name" || true)
   else
     log "cannot inherit runtime env from pm2 $pm2_name: jq/python3 not installed"
     return 0
