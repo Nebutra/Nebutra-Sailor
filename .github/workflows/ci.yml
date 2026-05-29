@@ -890,6 +890,7 @@ jobs:
         run: pnpm --filter @nebutra/web analyze
         env:
           ANALYZE: "true"
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
           NODE_OPTIONS: "--max-old-space-size=8192"
           SKIP_ENV_VALIDATION: true
 
