@@ -7,6 +7,7 @@
 
 /* Tailwind CSS v4 */
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 /* Unified token system */
 @import "@nebutra/tokens/styles.css";
 @import "tw-animate-css";

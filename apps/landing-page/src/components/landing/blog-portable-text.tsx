@@ -9,10 +9,13 @@ import {
 import { Hash } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import katex from "katex";
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { prepareBlogPortableTextBlocks } from "@/lib/blog-code-highlighting";
 import { BlogCodeBlock } from "./blog-code-block";
 import { BlogCopyButton } from "./blog-copy-button";
+import { BlogMermaidDiagram } from "./blog-mermaid-diagram";
 
 function BlogTable({ value }: { value: PortableTextBlock }) {
   const rows = value.rows?.filter((row) => row.cells?.some((cell) => cell.trim())) ?? [];
@@ -76,6 +79,44 @@ function HeadingAnchor({ id }: { id: string | undefined }) {
     >
       <Hash className="size-[0.8em]" aria-hidden />
     </a>
+  );
+}
+
+function reactNodeToText(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(reactNodeToText).join("");
+  return "";
+}
+
+function renderMath(math: string, displayMode: boolean): string {
+  return katex.renderToString(math, {
+    displayMode,
+    output: "htmlAndMathml",
+    strict: false,
+    throwOnError: false,
+  });
+}
+
+function BlogInlineMath({ children }: { children: ReactNode }) {
+  const math = reactNodeToText(children).trim();
+  if (!math) return null;
+
+  return (
+    <span
+      className="blog-math-inline"
+      dangerouslySetInnerHTML={{ __html: renderMath(math, false) }}
+    />
+  );
+}
+
+function BlogMathBlock({ value }: { value: PortableTextBlock }) {
+  const math = value.math?.trim();
+  if (!math) return null;
+
+  return (
+    <figure className="blog-math-block my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 py-5 shadow-sm">
+      <div dangerouslySetInnerHTML={{ __html: renderMath(math, true) }} />
+    </figure>
   );
 }
 
@@ -191,6 +232,7 @@ function createPortableTextComponents(
           {children}
         </code>
       ),
+      mathInline: ({ children }) => <BlogInlineMath>{children}</BlogInlineMath>,
       strong: ({ children }) => (
         <strong className="font-semibold text-[var(--neutral-12)]">{children}</strong>
       ),
@@ -202,6 +244,10 @@ function createPortableTextComponents(
       ),
     },
     types: {
+      mathBlock: ({ value }) => <BlogMathBlock value={value as PortableTextBlock} />,
+      mermaid: ({ value }) => (
+        <BlogMermaidDiagram chart={typeof value?.code === "string" ? value.code : ""} />
+      ),
       codeHtml: ({ value }) => (
         <BlogCodeBlock
           code={typeof value?.code === "string" ? value.code : ""}
@@ -291,6 +337,12 @@ export async function BlogPortableText({
         :is(.dark .blog-code-html) .shiki,
         :is(.dark .blog-code-html) .shiki span {
           color: var(--shiki-dark) !important;
+        }
+        .blog-math-inline .katex {
+          font-size: 1.02em;
+        }
+        .blog-math-block .katex-display {
+          margin: 0;
         }
       `}</style>
       <PortableText

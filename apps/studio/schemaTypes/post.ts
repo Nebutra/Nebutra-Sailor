@@ -79,7 +79,88 @@ export const post = defineType({
       title: "Body",
       type: "array",
       of: [
-        { type: "block" },
+        {
+          type: "block",
+          marks: {
+            annotations: [
+              {
+                name: "link",
+                title: "Link",
+                type: "object",
+                fields: [
+                  defineField({
+                    name: "href",
+                    title: "URL",
+                    type: "url",
+                    validation: (Rule) => Rule.required(),
+                  }),
+                ],
+              },
+            ],
+            decorators: [
+              { title: "Strong", value: "strong" },
+              { title: "Emphasis", value: "em" },
+              { title: "Code", value: "code" },
+              { title: "Inline math", value: "mathInline" },
+            ],
+          },
+        },
+        {
+          name: "mathBlock",
+          title: "Math",
+          type: "object",
+          fields: [
+            defineField({
+              name: "math",
+              title: "LaTeX",
+              type: "text",
+              rows: 6,
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              math: "math",
+            },
+            prepare(selection) {
+              return {
+                title: "Math",
+                subtitle:
+                  typeof selection.math === "string"
+                    ? selection.math.split("\n")[0]?.slice(0, 80)
+                    : "LaTeX",
+              };
+            },
+          },
+        },
+        {
+          name: "mermaid",
+          title: "Mermaid diagram",
+          type: "object",
+          fields: [
+            defineField({
+              name: "code",
+              title: "Mermaid",
+              type: "text",
+              rows: 12,
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              code: "code",
+            },
+            prepare(selection) {
+              return {
+                title: "Mermaid diagram",
+                subtitle:
+                  typeof selection.code === "string"
+                    ? selection.code.split("\n")[0]?.slice(0, 80)
+                    : "Diagram",
+              };
+            },
+          },
+        },
         {
           name: "code",
           title: "Code",
