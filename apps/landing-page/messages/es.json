@@ -14,7 +14,6 @@
     "getStarted": "Get Sailed",
     "changelog": "Registro de cambios",
     "designDocs": "Sistema de Diseño",
-    "impact": "Manifiesto",
     "avatarMenu": {
       "ariaLabel": "Menú de cuenta",
       "loadingName": "Cargando…",
@@ -1416,31 +1415,6 @@
     "desc": "El enlace puede estar desactualizado o la página se movió.",
     "home": "Volver a Nebutra",
     "docs": "Abrir docs"
-  },
-  "impact": {
-    "hero_eyebrow": "Documento de Visión Central de Nebutra",
-    "hero_title": "La Plataforma IA Gobernada",
-    "hero_subtitle": "Construimos la base de la plataforma, el modelo de gobernanza y la capa Harness para equipos que desarrollan productos nativos en IA.",
-    "phil_title": "Ⅰ. Filosofía",
-    "phil_headline": "Gobernanza sobre Código de Pegamento",
-    "phil_desc": "Los equipos no deberían tener que reconstruir la misma capa de plataforma cada vez que inician un producto nativo en IA. Nebutra se enfoca en convertir ese trabajo repetido de plataforma en una base gobernada y reutilizable que permanezca auditable, extensible y rápida de desplegar.",
-    "infra_title": "Ⅱ. Infraestructura",
-    "infra_headline": "La Capa de Plataforma Nativa en IA",
-    "infra_desc": "Nebutra no es un starter ensamblado con parches. Es una capa de plataforma de producción que abarca el scaffolding, las integraciones de runtime, la gobernanza y la entrega.",
-    "infra_1_title": "Núcleo Constructor",
-    "infra_1_desc": "Una base de monorepo gobernada con aislamiento de tenants, facturación, autenticación, documentación e integraciones IA ya conectadas.",
-    "infra_2_title": "Entrega Verificada",
-    "infra_2_desc": "Scaffolding verificado, entrega reproducible y herramientas orientadas al operador que reducen el riesgo de la plataforma desde el día cero.",
-    "infra_3_title": "Registro de Extensiones",
-    "infra_3_desc": "Las extensiones basadas en registro y las superficies de integración mantienen a los equipos en movimiento sin fragmentar el código base.",
-    "infra_4_title": "Runtime Harness",
-    "infra_4_desc": "Los primitivos Harness, la interoperabilidad MCP y la orquestación de flujos de trabajo posicionan el stack para la próxima generación de software nativo en IA.",
-    "route_title": "Ⅲ. Enrutamiento",
-    "route_headline": "Una Ruta de Actualización Clara",
-    "route_desc": "La plataforma debe crecer mediante verificaciones de compatibilidad, migraciones y comportamiento de runtime observable, no mediante reescrituras únicas y deriva oculta.",
-    "org_title": "Ⅳ. Organización",
-    "org_headline": "Disciplina Operativa a Escala",
-    "org_desc": "Usamos automatización, pruebas y ratchets de gobernanza para mantener la plataforma mejorando a medida que crecen los equipos y las cargas de trabajo. La atención humana se mantiene en las decisiones de producto, no en la limpieza repetida de infraestructura."
   },
   "ui": {
     "search": {

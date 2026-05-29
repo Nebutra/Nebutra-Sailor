@@ -14,7 +14,6 @@
     "resources": "Ressources",
     "changelog": "Journal des modifications",
     "designDocs": "Système de Design",
-    "impact": "Manifeste",
     "avatarMenu": {
       "ariaLabel": "Menu du compte",
       "loadingName": "Chargement…",
@@ -1416,31 +1415,6 @@
     "desc": "Le lien est peut-être obsolète, ou la page a été déplacée.",
     "home": "Retour à Nebutra",
     "docs": "Ouvrir la doc"
-  },
-  "impact": {
-    "hero_eyebrow": "Livre blanc Vision Nebutra",
-    "hero_title": "La plateforme IA gouvernée",
-    "hero_subtitle": "Nous construisons la base de plateforme, le modèle de gouvernance et la couche Harness pour les équipes livrant des produits natifs IA.",
-    "phil_title": "Ⅰ. Philosophie",
-    "phil_headline": "Gouvernance plutôt que code de collage",
-    "phil_desc": "Les équipes ne devraient pas avoir à reconstruire la même couche de plateforme à chaque fois qu'elles démarrent un produit natif IA. Nebutra se concentre sur la transformation de ce travail de plateforme répétitif en une base gouvernée et réutilisable qui reste auditable, extensible et rapide à livrer.",
-    "infra_title": "Ⅱ. Infrastructure",
-    "infra_headline": "La couche de plateforme native IA",
-    "infra_desc": "Nebutra n'est pas un starter assemblé à la hâte. C'est une couche de plateforme de production couvrant l'échafaudage, les intégrations à l'exécution, la gouvernance et la livraison.",
-    "infra_1_title": "Cœur bâtisseur",
-    "infra_1_desc": "Une base monorepo gouvernée avec isolation des tenants, facturation, auth, docs et intégrations IA déjà câblées.",
-    "infra_2_title": "Livraison vérifiée",
-    "infra_2_desc": "Échafaudage vérifié, livraison reproductible et outillage orienté opérateur qui réduisent le risque de plateforme dès le premier jour.",
-    "infra_3_title": "Registre d'extensions",
-    "infra_3_desc": "Les extensions pilotées par registre et les surfaces d'intégration maintiennent les équipes en mouvement sans fragmenter la base de code.",
-    "infra_4_title": "Runtime Harness",
-    "infra_4_desc": "Les primitives Harness, l'interopérabilité MCP et l'orchestration de workflows positionnent la stack pour la prochaine génération de logiciels natifs IA.",
-    "route_title": "Ⅲ. Routage",
-    "route_headline": "Un chemin de mise à niveau clair",
-    "route_desc": "La plateforme devrait croître à travers des vérifications de compatibilité, des migrations et un comportement à l'exécution observable, pas à travers des réécritures ad hoc et une dérive cachée.",
-    "org_title": "Ⅳ. Organisation",
-    "org_headline": "Discipline opérationnelle à l'échelle",
-    "org_desc": "Nous utilisons l'automatisation, les tests et les cliquets de gouvernance pour maintenir l'amélioration de la plateforme à mesure que les équipes et les charges de travail augmentent. L'attention humaine reste sur les décisions produit, pas sur le nettoyage répété de l'infrastructure."
   },
   "ui": {
     "search": {

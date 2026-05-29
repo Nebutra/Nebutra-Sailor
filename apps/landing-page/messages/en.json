@@ -14,7 +14,6 @@
     "getStarted": "Get Sailed",
     "changelog": "Changelog",
     "designDocs": "Design System",
-    "impact": "Manifesto",
     "avatarMenu": {
       "ariaLabel": "Account menu",
       "loadingName": "Loading…",
@@ -1416,31 +1415,6 @@
     "desc": "The link may be outdated, or the page may have moved.",
     "home": "Back to Nebutra",
     "docs": "Open docs"
-  },
-  "impact": {
-    "hero_eyebrow": "Nebutra Core Vision Whitepaper",
-    "hero_title": "The Governed AI Platform",
-    "hero_subtitle": "We build the platform baseline, governance model, and Harness layer for teams shipping AI-native products.",
-    "phil_title": "Ⅰ. Philosophy",
-    "phil_headline": "Governance over Glue Code",
-    "phil_desc": "Teams should not have to rebuild the same platform layer every time they start an AI-native product. Nebutra focuses on turning that repeated platform work into a governed, reusable baseline that stays auditable, extensible, and fast to ship.",
-    "infra_title": "Ⅱ. Infrastructure",
-    "infra_headline": "The AI-Native Platform Layer",
-    "infra_desc": "Nebutra is not a stitched-together starter. It is a production platform layer spanning scaffolding, runtime integrations, governance, and delivery.",
-    "infra_1_title": "Builder Core",
-    "infra_1_desc": "A governed monorepo baseline with tenant isolation, billing, auth, docs, and AI integrations already wired.",
-    "infra_2_title": "Verified Delivery",
-    "infra_2_desc": "Verified scaffolding, reproducible delivery, and operator-facing tooling that reduce platform risk from day zero.",
-    "infra_3_title": "Extension Registry",
-    "infra_3_desc": "Registry-driven extensions and integration surfaces keep teams moving without fragmenting the codebase.",
-    "infra_4_title": "Harness Runtime",
-    "infra_4_desc": "Harness primitives, MCP interoperability, and workflow orchestration position the stack for the next generation of AI-native software.",
-    "route_title": "Ⅲ. Routing",
-    "route_headline": "A Clear Upgrade Path",
-    "route_desc": "The platform should grow through compatibility checks, migrations, and observable runtime behavior, not through one-off rewrites and hidden drift.",
-    "org_title": "Ⅳ. Organization",
-    "org_headline": "Operational Discipline at Scale",
-    "org_desc": "We use automation, tests, and governance ratchets to keep the platform improving as teams and workloads grow. Human attention stays on product decisions, not repeated infrastructure cleanup."
   },
   "ui": {
     "search": {
