@@ -3,12 +3,11 @@
 /**
  * Cookie Consent Banner
  *
- * Concise GDPR/CCPA consent banner with progressive optional controls.
+ * Concise GDPR/CCPA consent banner.
  */
 
 import { useEffect, useState } from "react";
 import {
-  getCookieConsent,
   hasCookieConsent,
   recordCookieConsent,
   saveCookieConsent,
@@ -61,43 +60,12 @@ const defaultTranslations: CookieBannerTranslations = {
     "Nebutra uses necessary cookies to keep the site working. Optional cookies help improve the product and personalize content.",
   acceptAll: "Accept All",
   rejectAll: "Only Necessary",
-  customize: "Manage Choices",
-  savePreferences: "Save Choices",
-  necessary: "Strictly Necessary",
-  functional: "Functional",
-  analytics: "Analytics",
-  marketing: "Marketing",
-  thirdParty: "Third-Party",
-  optionalCookies: "Optional Cookies",
-  optionalCookiesDescription:
-    "Enable functional, analytics, marketing, and third-party cookies together.",
   learnMore: "Learn more",
   privacyPolicy: "Privacy Policy",
   cookiePolicy: "Cookie Policy",
 };
 
 const emptyTranslations: CookieBannerTranslations = {};
-
-const defaultOptionalPreferences: Omit<CookiePreferences, "necessary"> = {
-  functional: false,
-  analytics: false,
-  marketing: false,
-  thirdParty: false,
-};
-
-function readStoredOptionalPreferences(): Omit<CookiePreferences, "necessary"> {
-  const existingConsent = getCookieConsent();
-  if (!existingConsent) {
-    return defaultOptionalPreferences;
-  }
-
-  return {
-    functional: existingConsent.functional,
-    analytics: existingConsent.analytics,
-    marketing: existingConsent.marketing,
-    thirdParty: existingConsent.thirdParty,
-  };
-}
 
 // ============================================
 // Cookie Banner Component
@@ -114,15 +82,10 @@ export function CookieBanner({
   const translations = { ...defaultTranslations, ...customTranslations };
 
   const [uncontrolledVisible, setUncontrolledVisible] = useState(() => !hasCookieConsent());
-  const [showDetails, setShowDetails] = useState(false);
-  const [preferences, setPreferences] = useState(readStoredOptionalPreferences);
-  const optionalCookiesEnabled = Object.values(preferences).some(Boolean);
   const isVisible = controlledShow ?? uncontrolledVisible;
 
   useEffect(() => {
     const openBanner = () => {
-      setPreferences(readStoredOptionalPreferences());
-      setShowDetails(true);
       setUncontrolledVisible(true);
     };
 
@@ -134,23 +97,6 @@ export function CookieBanner({
       window.removeEventListener("cookie-consent-open", openBanner);
     };
   }, []);
-
-  function setAllOptionalCookies(enabled: boolean) {
-    setPreferences({
-      functional: enabled,
-      analytics: enabled,
-      marketing: enabled,
-      thirdParty: enabled,
-    });
-  }
-
-  function toggleOptionalCookies() {
-    setAllOptionalCookies(!optionalCookiesEnabled);
-  }
-
-  function togglePreferencesPanel() {
-    setShowDetails((current) => !current);
-  }
 
   async function saveConsent(prefs: Omit<CookiePreferences, "necessary">) {
     saveCookieConsent(prefs);
@@ -191,10 +137,6 @@ export function CookieBanner({
       marketing: false,
       thirdParty: false,
     });
-  }
-
-  function saveCustomPreferences() {
-    void saveConsent(preferences);
   }
 
   if (!isVisible) {
@@ -244,65 +186,11 @@ export function CookieBanner({
             <button type="button" onClick={saveNecessaryOnly} className={secondaryButtonClass}>
               {translations.rejectAll}
             </button>
-            <button
-              type="button"
-              onClick={togglePreferencesPanel}
-              className={secondaryButtonClass}
-              aria-expanded={showDetails}
-              aria-controls="cookie-preferences"
-            >
-              {translations.customize}
-            </button>
             <button type="button" onClick={acceptAll} className={primaryButtonClass}>
               {translations.acceptAll}
             </button>
           </div>
         </div>
-
-        {showDetails ? (
-          <div
-            id="cookie-preferences"
-            className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-3 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <div className="min-w-0">
-              <p
-                id="cookie-optional-label"
-                className="text-sm font-medium text-[var(--neutral-12)]"
-              >
-                {translations.optionalCookies}
-              </p>
-              <p
-                id="cookie-optional-description"
-                className="mt-1 text-sm leading-5 text-[var(--neutral-11)]"
-              >
-                {translations.optionalCookiesDescription}
-              </p>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <button
-                id="cookie-optional"
-                type="button"
-                onClick={toggleOptionalCookies}
-                className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-2)] ${
-                  optionalCookiesEnabled ? "bg-[var(--neutral-12)]" : "bg-[var(--neutral-6)]"
-                }`}
-                role="switch"
-                aria-checked={optionalCookiesEnabled}
-                aria-labelledby="cookie-optional-label"
-                aria-describedby="cookie-optional-description"
-              >
-                <span
-                  className={`pointer-events-none inline-block size-5 rounded-full bg-[var(--neutral-1)] shadow transition-transform ${
-                    optionalCookiesEnabled ? "translate-x-5" : "translate-x-0"
-                  }`}
-                />
-              </button>
-              <button type="button" onClick={saveCustomPreferences} className={primaryButtonClass}>
-                {translations.savePreferences}
-              </button>
-            </div>
-          </div>
-        ) : null}
       </div>
     </div>
   );

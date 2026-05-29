@@ -177,13 +177,6 @@ const DEFAULT_CATEGORIES: CustomConsent = {
   preferences: false,
 };
 
-const OPTIONAL_CATEGORIES: CustomConsent = {
-  necessary: true,
-  analytics: true,
-  marketing: true,
-  preferences: true,
-};
-
 function readStoredConsent(): StoredConsent | null {
   if (typeof window === "undefined") return null;
 
@@ -218,12 +211,6 @@ function emitConsent(consent: StoredConsent): void {
 
 export function CookieBanner() {
   const [isOpen, setIsOpen] = useState(shouldOpenInitially);
-  const [showCustomize, setShowCustomize] = useState(false);
-  const [categories, setCategories] = useState<CustomConsent>(
-    () => readStoredConsent()?.categories ?? DEFAULT_CATEGORIES,
-  );
-  const optionalCookiesEnabled =
-    categories.analytics || categories.marketing || categories.preferences;
 
   useEffect(() => {
     const stored = readStoredConsent();
@@ -234,8 +221,6 @@ export function CookieBanner() {
 
   useEffect(() => {
     const handler = () => {
-      setCategories(readStoredConsent()?.categories ?? DEFAULT_CATEGORIES);
-      setShowCustomize(true);
       setIsOpen(true);
     };
     window.addEventListener(OPEN_EVENT, handler);
@@ -252,7 +237,6 @@ export function CookieBanner() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
     emitConsent(consent);
     setIsOpen(false);
-    setShowCustomize(false);
   }
 
   function acceptAll() {
@@ -266,14 +250,6 @@ export function CookieBanner() {
 
   function saveNecessaryOnly() {
     persist("rejected", DEFAULT_CATEGORIES);
-  }
-
-  function saveCustom() {
-    persist("custom", categories);
-  }
-
-  function toggleOptionalCookies() {
-    setCategories(optionalCookiesEnabled ? DEFAULT_CATEGORIES : OPTIONAL_CATEGORIES);
   }
 
   if (!isOpen) return null;
@@ -313,15 +289,6 @@ export function CookieBanner() {
             </button>
             <button
               type="button"
-              onClick={() => setShowCustomize((current) => !current)}
-              className="inline-flex min-h-10 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]"
-              aria-expanded={showCustomize}
-              aria-controls="cookie-preferences"
-            >
-              Manage Choices / 管理偏好
-            </button>
-            <button
-              type="button"
               onClick={acceptAll}
               className="inline-flex min-h-10 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 text-sm font-medium text-[var(--neutral-1)] transition-colors hover:bg-[var(--neutral-11)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]"
             >
@@ -329,52 +296,6 @@ export function CookieBanner() {
             </button>
           </div>
         </div>
-
-        {showCustomize ? (
-          <div
-            id="cookie-preferences"
-            className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-3 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <div className="min-w-0">
-              <p id="cookie-optional-label" className="text-sm font-medium text-[var(--neutral-12)]">
-                Optional Cookies / 可选 Cookie
-              </p>
-              <p
-                id="cookie-optional-description"
-                className="mt-1 text-sm leading-5 text-[var(--neutral-11)]"
-              >
-                Includes analytics, marketing, and saved preferences. / 包含分析、营销和偏好保存。
-              </p>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <button
-                id="cookie-optional"
-                type="button"
-                onClick={toggleOptionalCookies}
-                className={\`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-2)] \${
-                  optionalCookiesEnabled ? "bg-[var(--neutral-12)]" : "bg-[var(--neutral-6)]"
-                }\`}
-                role="switch"
-                aria-checked={optionalCookiesEnabled}
-                aria-labelledby="cookie-optional-label"
-                aria-describedby="cookie-optional-description"
-              >
-                <span
-                  className={\`pointer-events-none inline-block size-5 rounded-full bg-[var(--neutral-1)] shadow transition-transform \${
-                    optionalCookiesEnabled ? "translate-x-5" : "translate-x-0"
-                  }\`}
-                />
-              </button>
-              <button
-                type="button"
-                onClick={saveCustom}
-                className="inline-flex min-h-10 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 text-sm font-medium text-[var(--neutral-1)] transition-colors hover:bg-[var(--neutral-11)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]"
-              >
-                Save Choices / 保存选择
-              </button>
-            </div>
-          </div>
-        ) : null}
       </div>
     </div>
   );
