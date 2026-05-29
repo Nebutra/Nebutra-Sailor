@@ -126,18 +126,6 @@ export interface paths {
               services: {
                 /** @enum {string} */
                 ai: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                content: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                recsys: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                ecommerce: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                web3: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                billing: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                eventIngest: "available" | "unavailable" | "unknown";
               };
               uptime: number;
               checks: {
@@ -168,18 +156,6 @@ export interface paths {
               services: {
                 /** @enum {string} */
                 ai: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                content: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                recsys: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                ecommerce: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                web3: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                billing: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                eventIngest: "available" | "unavailable" | "unknown";
               };
               uptime: number;
               checks: {
@@ -458,18 +434,6 @@ export interface paths {
               services: {
                 /** @enum {string} */
                 ai: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                content: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                recsys: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                ecommerce: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                web3: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                billing: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                eventIngest: "available" | "unavailable" | "unknown";
               };
               uptime: number;
               checks: {
@@ -500,18 +464,6 @@ export interface paths {
               services: {
                 /** @enum {string} */
                 ai: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                content: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                recsys: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                ecommerce: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                web3: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                billing: "available" | "unavailable" | "unknown";
-                /** @enum {string} */
-                eventIngest: "available" | "unavailable" | "unknown";
               };
               uptime: number;
               checks: {
@@ -1304,7 +1256,7 @@ export interface paths {
     put?: never;
     /**
      * Ingest events
-     * @description Accepts a batch of events (1-1000) and forwards them to the event ingest service for processing.
+     * @description Accepts a batch of events (1-1000) and persists them to ClickHouse bronze.
      */
     post: {
       parameters: {
@@ -1320,7 +1272,17 @@ export interface paths {
               eventName: string;
               context: {
                 tenantId: string;
+                userId?: string | null;
+                sessionId?: string | null;
+                utmSource?: string | null;
+                utmMedium?: string | null;
+                utmCampaign?: string | null;
+                experimentId?: string | null;
+                requestId?: string | null;
+                traceId?: string | null;
                 occurredAt: string;
+                /** @default v1 */
+                contractVersion?: string;
               };
               /** @default {} */
               payload?: {
@@ -1334,18 +1296,31 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Events accepted for processing */
+        /** @description Events accepted */
         200: {
           headers: {
             [name: string]: unknown;
           };
           content: {
             "application/json": {
-              [key: string]: unknown;
+              accepted: number;
+              duplicated: number;
             };
           };
         };
-        /** @description Event ingest service unavailable */
+        /** @description Tenant mismatch between authenticated context and event payload */
+        400: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              message: string;
+            };
+          };
+        };
+        /** @description Ingest backend (ClickHouse) unavailable */
         502: {
           headers: {
             [name: string]: unknown;
@@ -1574,6 +1549,23 @@ export interface paths {
         };
       };
     };
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/agent-runtime/turns": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Run an agent runtime turn */
+    post: operations["createAgentRuntimeTurn"];
+    delete?: never;
     options?: never;
     head?: never;
     patch?: never;
@@ -2288,6 +2280,7 @@ export interface paths {
             successUrl: string;
             /** Format: uri */
             cancelUrl: string;
+            quantity?: number;
             trialPeriodDays?: number;
           };
         };
@@ -2352,6 +2345,62 @@ export interface paths {
         };
       };
     };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/billing/provider-status": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get billing provider readiness */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Billing provider readiness */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              provider: string;
+              /** @enum {string} */
+              status: "disabled" | "degraded" | "ready";
+              checkoutReady: boolean;
+              portalReady: boolean;
+              missing: string[];
+              title: string;
+              description: string;
+            };
+          };
+        };
+        /** @description Organization membership required */
+        403: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -3067,7 +3116,7 @@ export interface paths {
             "application/json": {
               runtime: {
                 /** @enum {string} */
-                provider: "novu" | "direct";
+                provider: "novu" | "knock" | "direct";
                 providerLabel: string;
                 /** @enum {string} */
                 mode: "managed" | "self_hosted" | "preview" | "degraded";
@@ -4252,4 +4301,52 @@ export interface components {
   pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+  createAgentRuntimeTurn: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          input: string;
+          threadId: string;
+          model?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description SSE stream of thread events */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Unauthenticated */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Feature disabled */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Model stack unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+}
