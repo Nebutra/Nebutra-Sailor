@@ -498,8 +498,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build shared packages
-        run: pnpm turbo build --filter="./packages/*"
+      - name: Build size-limit dependency packages
+        run: |
+          pnpm turbo build \
+            --filter="@nebutra/ui^..." \
+            --filter="@nebutra/icons"
         env:
           SKIP_ENV_VALIDATION: true
 

@@ -182,6 +182,12 @@ run_snapshot_once() {
       export CI=1
       export SKIP_ENV_VALIDATION=true
       export NEBUTRA_SKIP_GIT_HOOKS=1
+      export AUTH_PROVIDER=clerk
+      export NEXT_PUBLIC_AUTH_PROVIDER=clerk
+      export NEXT_TELEMETRY_DISABLED=1
+      # Next.js collect-page-data workers import server env modules even when
+      # the audited public route does not touch the database.
+      export DATABASE_URL='postgresql://ci:ci@localhost:5432/ci'
 
       rm -f apps/web/.env.local
 
