@@ -58,8 +58,8 @@ jobs:
             --filter="@nebutra/design-docs^..." \
             --filter="@nebutra/landing-page^..."
 
-      - name: Install Playwright Chromium
-        run: pnpm exec playwright install --with-deps chromium
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium webkit
 
       - name: Run production visual acceptance
         env:
