@@ -306,124 +306,128 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
       <Navbar />
 
-      <article className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8">
-        <AnimateIn preset="fade" inView>
-          <Link
-            href={localizedPostHref(lang)}
-            className="mb-8 inline-flex items-center gap-1.5 text-sm text-[var(--neutral-11)] hover:text-[var(--blue-9)] transition-colors rounded"
-          >
-            <ArrowLeft className="size-4" aria-hidden />
-            {isZh ? "全部文章" : "All posts"}
-          </Link>
-        </AnimateIn>
+      <article className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto max-w-5xl">
+          <AnimateIn preset="fade" inView>
+            <Link
+              href={localizedPostHref(lang)}
+              className="mb-8 inline-flex items-center gap-1.5 rounded text-sm text-[var(--neutral-11)] transition-colors hover:text-[var(--blue-9)]"
+            >
+              <ArrowLeft className="size-4" aria-hidden />
+              {isZh ? "全部文章" : "All posts"}
+            </Link>
+          </AnimateIn>
 
-        <header className="border-y border-[var(--neutral-6)] py-10 sm:py-12">
-          {post.tags.length > 0 && (
-            <AnimateIn preset="fadeUp" inView>
-              <div className="mb-5 flex flex-wrap gap-1.5">
-                {post.tags.map((cat) => (
-                  <Link
-                    key={cat}
-                    href={`${localizedPostHref(lang)}/tag/${getBlogUrlSegment(cat)}`}
-                    className="rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)]"
-                  >
-                    {cat}
-                  </Link>
-                ))}
+          <header className="border-b border-[var(--neutral-6)] pb-10 sm:pb-12">
+            {post.tags.length > 0 && (
+              <AnimateIn preset="fadeUp" inView>
+                <div className="mb-5 flex flex-wrap gap-1.5">
+                  {post.tags.map((cat) => (
+                    <Link
+                      key={cat}
+                      href={`${localizedPostHref(lang)}/tag/${getBlogUrlSegment(cat)}`}
+                      className="rounded-full border border-[var(--neutral-7)] px-2.5 py-1 text-xs font-medium text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
+                    >
+                      {cat}
+                    </Link>
+                  ))}
+                </div>
+              </AnimateIn>
+            )}
+
+            <AnimateIn preset="emerge" inView>
+              <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
+                <div>
+                  <div className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--neutral-10)]">
+                    <BookOpen className="size-3.5" aria-hidden />
+                    {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
+                  </div>
+                  <h1 className="max-w-4xl text-4xl font-semibold text-[var(--neutral-12)] sm:text-5xl lg:text-6xl">
+                    {post.title}
+                  </h1>
+                  {post.excerpt && (
+                    <p className="mt-6 max-w-3xl text-lg leading-8 text-[var(--neutral-11)] sm:text-xl sm:leading-9">
+                      {post.excerpt}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-5 border-t border-[var(--neutral-6)] pt-5 text-sm text-[var(--neutral-11)] lg:border-t-0 lg:pt-0">
+                  <div className="grid gap-2">
+                    {authorName && (
+                      <Link
+                        href={`${localizedPostHref(lang)}/author/${getBlogUrlSegment(authorName)}`}
+                        className="font-medium text-[var(--neutral-12)] hover:text-[var(--blue-9)]"
+                      >
+                        {authorName}
+                      </Link>
+                    )}
+                    {date && (
+                      <span className="flex items-center gap-1.5">
+                        <Calendar className="size-3.5" aria-hidden />
+                        <time dateTime={post.date}>{date}</time>
+                      </span>
+                    )}
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="size-3.5" aria-hidden />
+                      {estimateReadTime(post, isZh)}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <BlogCopyButton
+                      value={articleCopyText}
+                      label={isZh ? "复制原文" : "Copy original"}
+                      copiedLabel={isZh ? "已复制" : "Copied"}
+                    />
+                    {translation && (
+                      <a
+                        href={languageSwitchPostHref(translationLocale, translation.slug)}
+                        hrefLang={targetLanguage === "zh" ? "zh-CN" : "en"}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                      >
+                        <Globe className="size-4" aria-hidden />
+                        {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
+                      </a>
+                    )}
+                  </div>
+                  <div id="article-share">
+                    <BlogShareActions
+                      excerpt={post.excerpt}
+                      isZh={isZh}
+                      title={post.title}
+                      url={canonicalUrl}
+                    />
+                  </div>
+                </div>
               </div>
             </AnimateIn>
-          )}
-
-          <AnimateIn preset="emerge" inView>
-            <div className="grid gap-8 lg:grid-cols-[1fr_260px] lg:items-end">
-              <div>
-                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
-                  <BookOpen className="size-3.5" aria-hidden />
-                  {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
-                </div>
-                <h1 className="max-w-3xl text-4xl font-semibold text-[var(--neutral-12)] sm:text-5xl">
-                  {post.title}
-                </h1>
-                {post.excerpt && (
-                  <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--neutral-11)]">
-                    {post.excerpt}
-                  </p>
-                )}
-              </div>
-
-              <div className="space-y-4 text-sm text-[var(--neutral-11)]">
-                <div className="grid gap-2">
-                  {authorName && (
-                    <Link
-                      href={`${localizedPostHref(lang)}/author/${getBlogUrlSegment(authorName)}`}
-                      className="font-medium text-[var(--neutral-12)] hover:text-[var(--blue-9)]"
-                    >
-                      {authorName}
-                    </Link>
-                  )}
-                  {date && (
-                    <span className="flex items-center gap-1.5">
-                      <Calendar className="size-3.5" aria-hidden />
-                      <time dateTime={post.date}>{date}</time>
-                    </span>
-                  )}
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="size-3.5" aria-hidden />
-                    {estimateReadTime(post, isZh)}
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <BlogCopyButton
-                    value={articleCopyText}
-                    label={isZh ? "复制原文" : "Copy original"}
-                    copiedLabel={isZh ? "已复制" : "Copied"}
-                  />
-                  {translation && (
-                    <a
-                      href={languageSwitchPostHref(translationLocale, translation.slug)}
-                      hrefLang={targetLanguage === "zh" ? "zh-CN" : "en"}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
-                    >
-                      <Globe className="size-4" aria-hidden />
-                      {targetLanguage === "zh" ? "阅读中文版" : "Read in English"}
-                    </a>
-                  )}
-                </div>
-                <div id="article-share">
-                  <BlogShareActions
-                    excerpt={post.excerpt}
-                    isZh={isZh}
-                    title={post.title}
-                    url={canonicalUrl}
-                  />
-                </div>
-              </div>
-            </div>
-          </AnimateIn>
-        </header>
+          </header>
+        </div>
 
         {/* Hero image */}
         <AnimateIn preset="fadeUp" inView>
-          <div
-            className="relative mt-8 h-64 w-full overflow-hidden rounded-[var(--radius-lg)] sm:h-96"
-            style={{ viewTransitionName: getBlogViewTransitionName(post.id) }}
-          >
-            <BlogImage
-              src={imageUrl}
-              alt={imageAlt}
-              fallbackSrc={fallbackCover.src}
-              fallbackAlt={fallbackCover.alt}
-              blurDataURL={cover.blurDataURL}
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 720px"
-            />
+          <div className="mx-auto max-w-5xl">
+            <div
+              className="relative mt-8 aspect-[16/7] min-h-60 w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-3)] sm:min-h-80"
+              style={{ viewTransitionName: getBlogViewTransitionName(post.id) }}
+            >
+              <BlogImage
+                src={imageUrl}
+                alt={imageAlt}
+                fallbackSrc={fallbackCover.src}
+                fallbackAlt={fallbackCover.alt}
+                blurDataURL={cover.blurDataURL}
+                fill
+                priority
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 1024px"
+              />
+            </div>
           </div>
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView>
-          <div className="mx-auto mt-10 grid max-w-[1500px] gap-10 px-6 xl:grid-cols-[240px_minmax(0,720px)] xl:items-start xl:gap-12 2xl:px-0">
+          <div className="mx-auto mt-12 grid max-w-7xl gap-10 xl:grid-cols-[240px_minmax(0,720px)_240px] xl:items-start xl:gap-12">
             <BlogTableOfContents
               items={tableOfContents.items}
               variant="desktop"
@@ -452,6 +456,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                 headingIds={tableOfContents.headingIds}
               />
             </div>
+            <div aria-hidden className="hidden xl:block" />
           </div>
         </AnimateIn>
 

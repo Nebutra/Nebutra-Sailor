@@ -87,14 +87,16 @@ function createPortableTextComponents(
   return {
     block: {
       normal: ({ children }) => {
-        return <p className="mt-5 text-[1.02rem] leading-8 text-[var(--neutral-11)]">{children}</p>;
+        return (
+          <p className="mt-5 text-[1.03rem] leading-[1.95] text-[var(--neutral-11)]">{children}</p>
+        );
       },
       h2: ({ children, value }) => {
         const id = getHeadingId(value, headingIds);
         return (
           <h2
             id={id}
-            className="group mt-12 scroll-mt-28 text-2xl font-semibold tracking-tight text-[var(--neutral-12)]"
+            className="group mt-16 scroll-mt-28 text-2xl font-semibold text-[var(--neutral-12)]"
           >
             {children}
             <HeadingAnchor id={id} />
@@ -106,7 +108,7 @@ function createPortableTextComponents(
         return (
           <h3
             id={id}
-            className="group mt-9 scroll-mt-28 text-xl font-semibold tracking-tight text-[var(--neutral-12)]"
+            className="group mt-11 scroll-mt-28 text-xl font-semibold text-[var(--neutral-12)]"
           >
             {children}
             <HeadingAnchor id={id} />
@@ -118,7 +120,7 @@ function createPortableTextComponents(
         return (
           <h4
             id={id}
-            className="group mt-7 scroll-mt-28 text-base font-semibold tracking-tight text-[var(--neutral-12)]"
+            className="group mt-8 scroll-mt-28 text-base font-semibold text-[var(--neutral-12)]"
           >
             {children}
             <HeadingAnchor id={id} />
@@ -131,7 +133,7 @@ function createPortableTextComponents(
 
         if (!isTemplate) {
           return (
-            <blockquote className="my-7 text-lg font-semibold leading-8 tracking-tight text-[var(--neutral-12)]">
+            <blockquote className="my-8 border-l border-[var(--neutral-7)] pl-5 text-lg font-semibold leading-9 text-[var(--neutral-12)]">
               {children}
             </blockquote>
           );
@@ -154,19 +156,19 @@ function createPortableTextComponents(
     },
     list: {
       bullet: ({ children }) => (
-        <ul className="mt-5 list-disc space-y-2 pl-6 text-[var(--neutral-11)] marker:text-[var(--neutral-8)]">
+        <ul className="mt-5 list-disc space-y-2.5 pl-6 text-[var(--neutral-11)] marker:text-[var(--neutral-8)]">
           {children}
         </ul>
       ),
       number: ({ children }) => (
-        <ol className="mt-5 list-decimal space-y-2 pl-6 text-[var(--neutral-11)] marker:text-[var(--neutral-9)]">
+        <ol className="mt-5 list-decimal space-y-2.5 pl-6 text-[var(--neutral-11)] marker:text-[var(--neutral-9)]">
           {children}
         </ol>
       ),
     },
     listItem: {
-      bullet: ({ children }) => <li className="leading-7">{children}</li>,
-      number: ({ children }) => <li className="leading-7">{children}</li>,
+      bullet: ({ children }) => <li className="leading-8">{children}</li>,
+      number: ({ children }) => <li className="leading-8">{children}</li>,
     },
     marks: {
       link: ({ children, value }) => {
