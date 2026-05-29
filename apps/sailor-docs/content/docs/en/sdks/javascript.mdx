@@ -1,226 +1,126 @@
 ---
-title: JavaScript / TypeScript SDK
-description: Official @nebutra/sdk reference — installation, initialization, and full method reference.
+title: JavaScript / TypeScript Surfaces
+description: The current Nebutra JavaScript entry points: auth, typed API clients, AI runtime, permissions, and UI packages.
 ---
 
-## Installation
+Nebutra-Sailor no longer ships a single catch-all `@nebutra/sdk` package.
+The current JavaScript / TypeScript integration model is **package-first**:
+pick the focused surface that matches the job you are doing.
 
-<CodeGroup>
+## What to use today
 
-```bash npm
-npm install @nebutra/sdk
-```
+| Need | Current surface | Notes |
+| --- | --- | --- |
+| App authentication | `@nebutra/auth` | Provider-agnostic auth runtime used by `apps/web` |
+| Typed gateway calls | `apps/web/src/lib/api/client.ts` | OpenAPI-generated `openapi-fetch` client |
+| AI generation | `@nebutra/agents` | `generateText`, `streamText`, embeddings, provider helpers |
+| Permission checks | `@nebutra/permissions` | IAM rules, middleware, optional React helpers |
+| Multi-tenant context | `@nebutra/tenant` | Tenant resolution and RLS helpers |
+| UI primitives / layouts | `@nebutra/ui` | Components, layout wrappers, utilities |
 
-```bash pnpm
-pnpm add @nebutra/sdk
-```
+## Typed API client
 
-```bash yarn
-yarn add @nebutra/sdk
-```
-
-</CodeGroup>
-
-## Initialize the client
+Inside the web app, the supported way to call the API gateway is the generated
+OpenAPI client:
 
 ```typescript
-import { createClient } from "@nebutra/sdk";
+import { browserApiClient, getTypedApi } from "@/lib/api/client";
 
-const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
-  // Optional
-  baseUrl: "https://api.nebutra.com",  // override for self-hosted
-  timeout: 30000,                       // ms, default 30000
-  retry: {
-    maxAttempts: 3,
-    backoff: "exponential",
-  },
-});
+// Server Component / Server Action
+const api = await getTypedApi();
+const { data } = await api.GET("/api/v1/ai/models");
+
+// Client Component
+const response = await browserApiClient.GET("/api/v1/integrations");
 ```
+
+Types come from the committed/generated `types.generated.ts` contract, sourced
+from `backends/gateway/openapi.json`.
 
 ## Authentication
 
-### Verify a JWT token
+`apps/web` uses the shared auth abstraction from `@nebutra/auth`, while
+server-side route protection lives in `apps/web/src/lib/auth.ts`:
 
 ```typescript
-import { verifyToken } from "@nebutra/sdk/server";
+import { requireAuth, getTenantContext } from "@/lib/auth";
 
-const payload = await verifyToken(bearerToken, {
-  apiKey: process.env.NEBUTRA_API_KEY!,
-});
-// { userId, orgId, scopes, plan }
+export default async function Page() {
+  await requireAuth();
+  const { tenantId, plan } = await getTenantContext();
+  return <div>{tenantId} · {plan}</div>;
+}
 ```
 
-### Create an API key
+If you need the lower-level provider runtime directly, import from
+`@nebutra/auth` / `@nebutra/auth/server` rather than a fictional SDK wrapper.
+
+## AI runtime
+
+AI features are exposed from `@nebutra/agents`:
 
 ```typescript
-const key = await nebutra.apiKeys.create({
-  name: "CI/CD Pipeline",
-  scopes: ["project:read"],
-  expiresAt: new Date("2027-01-01"),
-});
-// key.secret is shown ONCE
-```
+import { generateText, streamText } from "@nebutra/agents";
 
-## Organizations
-
-```typescript
-// Get current org
-const org = await nebutra.orgs.get(orgId);
-
-// Update org
-await nebutra.orgs.update(orgId, { name: "New Name" });
-
-// List members
-const members = await nebutra.members.list({ orgId });
-
-// Invite a member
-await nebutra.members.invite({
-  orgId,
-  email: "alice@example.com",
-  role: "MEMBER",
+const completion = await generateText({
+  model: "openai/gpt-4.1-mini",
+  prompt: "Summarize this tenant's weekly funnel performance.",
 });
 
-// Remove a member
-await nebutra.members.remove({ orgId, userId });
-```
-
-## Projects
-
-```typescript
-// List projects (scoped to org automatically)
-const { data, meta } = await nebutra.projects.list({
-  limit: 20,
-  cursor: meta.next_cursor,
+const stream = await streamText({
+  model: "openai/gpt-4.1-mini",
+  prompt: "Draft release notes for the newest billing changes.",
 });
-
-// Get a project
-const project = await nebutra.projects.get("proj_123");
-
-// Create a project
-const project = await nebutra.projects.create({
-  name: "My Project",
-  description: "Optional description",
-});
-
-// Update a project
-await nebutra.projects.update("proj_123", { name: "New Name" });
-
-// Delete a project
-await nebutra.projects.delete("proj_123");
 ```
 
 ## Permissions
 
-```typescript
-import { can, requirePermission } from "@nebutra/sdk/permissions";
-
-// Check a permission
-const allowed = await can(userId, "project:delete", { orgId });
-
-// Throw 403 if not allowed
-await requirePermission("project:delete");
-```
-
-## Metering & quotas
+Authorization logic is provided by `@nebutra/permissions` and the app-level
+helpers layered on top of it:
 
 ```typescript
-// Get quota usage
-const quota = await nebutra.metering.getQuota("api_calls");
-// { limit, used, remaining, percentage, reset_at }
+import { hasPermission } from "@/lib/permissions";
 
-// Ingest a usage event
-await nebutra.metering.ingest({
-  metricId: "api_calls",
-  tenantId: orgId,
-  quantity: 1,
-});
+const allowed = hasPermission("admin", "billing:manage");
 ```
 
-## Webhooks
+For reusable UI gates in a standalone React surface, use the package's React
+subpath rather than an old `@nebutra/react` package:
 
 ```typescript
-// Create a webhook endpoint
-const endpoint = await nebutra.webhooks.createEndpoint({
-  url: "https://your-app.com/webhooks",
-  events: ["project.created", "invoice.paid"],
-});
-
-// List endpoints
-const endpoints = await nebutra.webhooks.listEndpoints();
-
-// Delete an endpoint
-await nebutra.webhooks.deleteEndpoint("wh_123");
-
-// Send a custom event
-await nebutra.webhooks.sendEvent({
-  id: crypto.randomUUID(),
-  eventType: "custom.event",
-  payload: { ... },
-  tenantId: orgId,
-});
+import { PermissionGate } from "@/components/permission-gate";
 ```
 
-## Error handling
+## UI and layout packages
 
-```typescript
-import {
-  NebutraError,
-  NotFoundError,
-  ValidationError,
-  ForbiddenError,
-  RateLimitError,
-} from "@nebutra/sdk";
-
-try {
-  await nebutra.projects.get("proj_123");
-} catch (error) {
-  if (error instanceof NotFoundError) {
-    // 404 — resource not found
-  } else if (error instanceof ForbiddenError) {
-    // 403 — insufficient permissions
-  } else if (error instanceof ValidationError) {
-    console.error(error.fields); // Field-level errors
-  } else if (error instanceof RateLimitError) {
-    // Wait error.retryAfter seconds
-    await sleep(error.retryAfter * 1000);
-  } else if (error instanceof NebutraError) {
-    console.error(error.code, error.requestId);
-  }
-}
+```tsx
+import { Button } from "@nebutra/ui/components";
+import { PageHeader, EmptyState, LoadingState } from "@nebutra/ui/layout";
+import { cn } from "@nebutra/ui/utils";
 ```
 
-## TypeScript types
+`@nebutra/design-system` has already been absorbed into `@nebutra/ui`.
 
-```typescript
-import type {
-  Organization,
-  Member,
-  Project,
-  ApiKey,
-  Role,
-  Plan,
-  Scope,
-} from "@nebutra/sdk/types";
-```
+## What not to use
 
-## React hooks
+- Do not document or import `@nebutra/sdk`.
+- Do not document or import `@nebutra/react`.
+- Do not document or import `@nebutra/integrations`.
+- Do not treat `@nebutra/db` as a browser-safe client library.
 
-For React/Next.js, install `@nebutra/react`:
+## Related
 
-```bash
-npm install @nebutra/react
-```
-
-```typescript
-import {
-  useNebutraUser,
-  useNebutraOrg,
-  useNebutraToken,
-  Can,
-  NebutraProvider,
-} from "@nebutra/react";
-```
-
-See the [React Quickstart](/quickstart/react) for usage examples.
+<CardGroup cols={2}>
+  <Card title="Next.js Quickstart" icon="rocket" href="/quickstart/nextjs">
+    Current app integration flow for Next.js 16 and the Nebutra monorepo.
+  </Card>
+  <Card title="AI Overview" icon="sparkles" href="/ai/overview">
+    AI runtime surfaces available from `@nebutra/agents`.
+  </Card>
+  <Card title="Permissions" icon="lock" href="/concepts/permissions">
+    Role / scope model and where to enforce authorization.
+  </Card>
+  <Card title="Database Client" icon="database" href="/database/use-client">
+    Tenant-scoped vs system-scoped database access.
+  </Card>
+</CardGroup>

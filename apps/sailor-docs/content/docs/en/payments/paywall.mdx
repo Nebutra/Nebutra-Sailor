@@ -1,156 +1,79 @@
 ---
 title: Paywall
-description: Gate UI features and API routes by plan using requirePlan and the PlanGate component.
+description: Gate billing-sensitive features with current tenant context, billing state, and entitlements.
 ---
 
-## Overview
+The old `requirePlan()` / `PlanGate` examples in earlier docs no longer match
+the current app surface. Today, paywalls in Nebutra-Sailor are enforced through
+a mix of:
 
-Nebutra provides two complementary mechanisms for enforcing plan-based access:
+- server-side tenant context from `apps/web/src/lib/auth.ts`
+- billing/entitlement checks from `@nebutra/billing`
+- route-level enforcement in `backends/gateway/src/routes/billing/` or the
+  calling product route
 
-| Mechanism | Where to use |
-|-----------|-------------|
-| `requirePlan(planId)` | Server-side: API route middleware, Server Components, Server Actions |
-| `<PlanGate require="plan">` | Client-side: React components, conditional UI rendering |
+## UI gating in app pages
 
-Both read the current tenant's active plan from the database — no client-side state to spoof.
-
-## Server Component paywall
-
-Use `requirePlan` in a Next.js Server Component to redirect users below the required plan:
-
-```typescript apps/web/src/app/dashboard/analytics/page.tsx
-import { requirePlan } from "@nebutra/billing";
-import { getCurrentTenant } from "@nebutra/tenant";
-
-export default async function AnalyticsPage() {
-  const tenant = getCurrentTenant();
-
-  // Redirects to /billing/upgrade if the tenant is not on PRO or higher
-  await requirePlan("pro", tenant.tenantId);
-
-  return <AnalyticsDashboard />;
-}
-```
-
-### `requirePlan` behavior
-
-| Tenant plan | Required plan | Result |
-|-------------|--------------|--------|
-| `free` | `pro` | Redirects to `/billing/upgrade` |
-| `pro` | `pro` | Passes through |
-| `enterprise` | `pro` | Passes through (enterprise ≥ pro) |
-| `pro` | `enterprise` | Redirects to `/billing/upgrade` |
-
-<Note>
-Plan hierarchy is `free < pro < enterprise`. `requirePlan("pro")` allows both `pro` and `enterprise` tenants through.
-</Note>
-
-## API route gating
-
-Protect API routes with `requirePlan` as middleware:
-
-```typescript backends/gateway/src/routes/exports.ts
-import { requirePlan } from "@nebutra/billing";
-import { getCurrentTenant } from "@nebutra/tenant";
-
-app.post("/api/v1/exports", async (c) => {
-  const tenant = getCurrentTenant();
-
-  // Returns 403 Forbidden with a structured error if plan is insufficient
-  await requirePlan("pro", tenant.tenantId, { throwOnFail: true });
-
-  // ... handle the export
-});
-```
-
-When `throwOnFail: true`, `requirePlan` throws a structured error that the API gateway error handler converts to:
-
-```json
-HTTP 403 Forbidden
-
-{
-  "success": false,
-  "error": {
-    "code": "PLAN_REQUIRED",
-    "message": "This feature requires the PRO plan.",
-    "details": {
-      "requiredPlan": "pro",
-      "currentPlan": "free",
-      "upgradeUrl": "https://app.nebutra.com/billing/upgrade"
-    }
-  }
-}
-```
-
-## React `<PlanGate>` component
-
-Use `<PlanGate>` to conditionally render UI based on the current tenant's plan. This is a Server Component — plan data is never exposed to the client.
+In server-rendered app pages, start from the shared tenant context:
 
 ```typescript
-import { PlanGate } from "@nebutra/billing/react";
+import { getTenantContext, requireAuth } from "@/lib/auth";
 
-// Hard block — shows an upgrade prompt when plan is insufficient
-<PlanGate require="pro">
-  <AdvancedAnalytics />
-</PlanGate>
+export default async function BillingAwarePage() {
+  await requireAuth();
+  const { tenantId, plan } = await getTenantContext();
 
-// Custom fallback — show your own upgrade UI
-<PlanGate require="pro" fallback={<UpgradeBanner feature="Advanced Analytics" />}>
-  <AdvancedAnalytics />
-</PlanGate>
+  if (!tenantId || plan === "FREE") {
+    return <UpgradePrompt />;
+  }
 
-// Silent hide — renders nothing when plan is insufficient (no upgrade prompt)
-<PlanGate require="pro" fallback={null}>
-  <ExportButton />
-</PlanGate>
+  return <AdvancedFeature />;
+}
 ```
 
-### Default upgrade prompt
+Keep UI gating close to the page, but remember it is only the first layer.
 
-When no `fallback` is provided, `<PlanGate>` renders the built-in upgrade prompt:
+## API and backend enforcement
 
-```
-┌────────────────────────────────────────────────┐
-│  🔒  This feature requires the PRO plan.        │
-│                                                  │
-│  [Upgrade to PRO →]                              │
-└────────────────────────────────────────────────┘
-```
+Sensitive features must also be enforced on the server:
 
-The button links to `/billing/upgrade`.
+```typescript
+import { checkEntitlement } from "@nebutra/billing";
 
-## Upgrade redirect target
+const result = checkEntitlement("org_123", "ai.chat");
 
-The `/billing/upgrade` route creates a Stripe Checkout session and redirects the user. It is pre-built and requires no configuration beyond the environment variables.
-
-If you want to customize the upgrade page (e.g., to show a plan comparison table before redirecting), edit:
-
-```
-apps/web/src/app/billing/upgrade/page.tsx
+if (!result.allowed) {
+  throw new Error("Feature not available on the current plan.");
+}
 ```
 
-## Showing upgrade prompts vs hard blocks
+In the gateway, perform the same class of check before executing the protected
+operation.
 
-Use the following heuristics to choose between a soft prompt and a hard block:
+## Where the current billing UI lives
 
-| Scenario | Recommendation |
-|----------|---------------|
-| Feature is discoverable but gated (e.g., export button) | Soft prompt — show `<PlanGate>` with upgrade CTA |
-| Route only makes sense on the paid plan (e.g., SSO settings) | Hard redirect via `requirePlan` in the Server Component |
-| Sensitive data that must never reach FREE users | Hard block on both Server Component **and** API route |
-| Feature preview / teaser | Render a disabled/locked version with tooltip via `<PlanGate fallback={...}>` |
+```text
+apps/web/src/app/[locale]/(app)/billing/
+apps/web/src/components/billing/
+```
 
-<Warning>
-Never rely on client-side plan checks alone. Always enforce access on the server using `requirePlan`. A motivated user can bypass any client-side guard.
-</Warning>
+If you need an upgrade prompt, start from the current billing surfaces there
+instead of wiring a stale `/billing/upgrade` example from older docs.
+
+## Recommended rule of thumb
+
+- UI discoverability: page-level prompt or disabled state
+- mutation / export / usage-consuming action: enforce again on the server
+- cross-tenant or financial side effects: enforce in the gateway and record
+  audit/billing consequences there
 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Subscriptions" icon="refresh-cw" href="/payments/subscriptions">
-    Checkout flow and subscription lifecycle states.
+  <Card title="Payments Overview" icon="credit-card" href="/payments/overview">
+    Current billing package layout and provider model.
   </Card>
   <Card title="Manage Plans" icon="sliders" href="/payments/manage-plans">
-    Define plan limits and add new billing tiers.
+    Where plan config and entitlements now live.
   </Card>
 </CardGroup>

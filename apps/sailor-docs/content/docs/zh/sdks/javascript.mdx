@@ -1,107 +1,124 @@
 ---
-title: JavaScript / TypeScript SDK
-description: 官方 @nebutra/sdk 参考——安装、初始化和完整方法参考。
+title: JavaScript / TypeScript 接入面
+description: 当前 Nebutra JavaScript 入口：认证、类型化 API 客户端、AI runtime、权限与 UI 包。
 ---
 
-## 安装
+Nebutra-Sailor 已不再提供单一的 `@nebutra/sdk` 聚合包。当前的
+JavaScript / TypeScript 集成模型是 **按职责拆分包面**：
+按你要解决的问题选择具体 surface。
 
-```bash
-npm install @nebutra/sdk
-# 或
-pnpm add @nebutra/sdk
-```
+## 当前应该用什么
 
-## 初始化客户端
+| 需求 | 当前 surface | 说明 |
+| --- | --- | --- |
+| 应用认证 | `@nebutra/auth` | `apps/web` 使用的 provider-agnostic auth runtime |
+| 类型化网关调用 | `apps/web/src/lib/api/client.ts` | 基于 OpenAPI 生成的 `openapi-fetch` 客户端 |
+| AI 生成 | `@nebutra/agents` | `generateText`、`streamText`、embedding、provider helpers |
+| 权限检查 | `@nebutra/permissions` | IAM 规则、中间件、可选 React 子路径 |
+| 多租户上下文 | `@nebutra/tenant` | Tenant 解析与 RLS 辅助 |
+| UI 原语 / 布局 | `@nebutra/ui` | 组件、layout、utils |
+
+## 类型化 API 客户端
+
+在 web 应用里，调用 API 网关的标准方式是生成的 OpenAPI 客户端：
 
 ```typescript
-import { createClient } from "@nebutra/sdk";
+import { browserApiClient, getTypedApi } from "@/lib/api/client";
 
-const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
-  retry: { maxAttempts: 3, backoff: "exponential" },
-});
+// Server Component / Server Action
+const api = await getTypedApi();
+const { data } = await api.GET("/api/v1/ai/models");
+
+// Client Component
+const response = await browserApiClient.GET("/api/v1/integrations");
 ```
+
+相关类型来自提交/生成的 `types.generated.ts`，源头是
+`backends/gateway/openapi.json`。
 
 ## 认证
 
-```typescript
-import { verifyToken } from "@nebutra/sdk/server";
+`apps/web` 通过 `@nebutra/auth` 暴露的运行时完成认证，而页面保护由
+`apps/web/src/lib/auth.ts` 提供：
 
-// 验证 JWT 令牌
-const payload = await verifyToken(bearerToken, {
-  apiKey: process.env.NEBUTRA_API_KEY!,
+```typescript
+import { requireAuth, getTenantContext } from "@/lib/auth";
+
+export default async function Page() {
+  await requireAuth();
+  const { tenantId, plan } = await getTenantContext();
+  return <div>{tenantId} · {plan}</div>;
+}
+```
+
+如果要直接使用底层 provider runtime，请从 `@nebutra/auth` /
+`@nebutra/auth/server` 导入，而不是依赖一个并不存在的 SDK 包装层。
+
+## AI runtime
+
+AI 能力由 `@nebutra/agents` 提供：
+
+```typescript
+import { generateText, streamText } from "@nebutra/agents";
+
+const completion = await generateText({
+  model: "openai/gpt-4.1-mini",
+  prompt: "总结最近一周的漏斗表现。",
 });
-// payload.userId, payload.orgId, payload.scopes, payload.plan
-```
 
-## 组织
-
-```typescript
-const org = await nebutra.orgs.get(orgId);
-await nebutra.orgs.update(orgId, { name: "新名称" });
-
-const members = await nebutra.members.list({ orgId });
-await nebutra.members.invite({ orgId, email: "alice@example.com", role: "MEMBER" });
-await nebutra.members.remove({ orgId, userId });
-```
-
-## 项目
-
-```typescript
-const { data, meta } = await nebutra.projects.list({ limit: 20 });
-const project = await nebutra.projects.get("proj_123");
-const project = await nebutra.projects.create({ name: "我的项目" });
-await nebutra.projects.update("proj_123", { name: "新名称" });
-await nebutra.projects.delete("proj_123");
+const stream = await streamText({
+  model: "openai/gpt-4.1-mini",
+  prompt: "为最新账单改动起草发布说明。",
+});
 ```
 
 ## 权限
 
-```typescript
-import { can, requirePermission } from "@nebutra/sdk/permissions";
-
-const allowed = await can(userId, "project:delete", { orgId });
-await requirePermission("project:delete"); // 权限不足时抛出 403
-```
-
-## 计量与配额
+授权逻辑应通过 `@nebutra/permissions` 以及应用层 helper 使用：
 
 ```typescript
-const quota = await nebutra.metering.getQuota("api_calls");
-// { limit, used, remaining, percentage, reset_at }
+import { hasPermission } from "@/lib/permissions";
 
-await nebutra.metering.ingest({ metricId: "api_calls", tenantId: orgId, quantity: 1 });
+const allowed = hasPermission("admin", "billing:manage");
 ```
 
-## 错误处理
+如果你在独立 React 界面里需要通用权限门控，请使用包的 React 子路径，
+而不是旧的 `@nebutra/react`：
 
 ```typescript
-import { NebutraError, NotFoundError, ValidationError, RateLimitError } from "@nebutra/sdk";
-
-try {
-  await nebutra.projects.get("proj_123");
-} catch (error) {
-  if (error instanceof NotFoundError) { return notFound(); }
-  if (error instanceof ValidationError) { return { errors: error.fields }; }
-  if (error instanceof RateLimitError) { await sleep(error.retryAfter * 1000); }
-  if (error instanceof NebutraError) {
-    console.error(`[${error.code}] ${error.requestId}`);
-    throw error;
-  }
-}
+import { PermissionGate } from "@nebutra/permissions/react";
 ```
 
-## React Hooks
+## UI 与布局包
 
-安装 `@nebutra/react`：
-
-```bash
-npm install @nebutra/react
+```tsx
+import { Button } from "@nebutra/ui/components";
+import { PageHeader, EmptyState, LoadingState } from "@nebutra/ui/layout";
+import { cn } from "@nebutra/ui/utils";
 ```
 
-```typescript
-import { useNebutraUser, useNebutraOrg, Can, NebutraProvider } from "@nebutra/react";
-```
+`@nebutra/design-system` 已经并入 `@nebutra/ui`。
 
-详见 [React 快速开始](/zh/quickstart/react)。
+## 不要再使用这些旧 surface
+
+- 不要文档化或导入 `@nebutra/sdk`
+- 不要文档化或导入 `@nebutra/react`
+- 不要文档化或导入 `@nebutra/integrations`
+- 不要把 `@nebutra/db` 当成浏览器可用的数据客户端
+
+## 相关内容
+
+<CardGroup cols={2}>
+  <Card title="Next.js 快速开始" icon="rocket" href="/zh/quickstart/nextjs">
+    当前 Next.js 16 与 Nebutra monorepo 的接入方式。
+  </Card>
+  <Card title="AI 概览" icon="sparkles" href="/zh/ai/overview">
+    `@nebutra/agents` 的当前 runtime surface。
+  </Card>
+  <Card title="权限" icon="lock" href="/zh/concepts/permissions">
+    角色 / scope 模型以及在哪一层强制执行。
+  </Card>
+  <Card title="数据库客户端" icon="database" href="/zh/database/use-client">
+    tenant-scoped 与 system-scoped 数据访问。
+  </Card>
+</CardGroup>

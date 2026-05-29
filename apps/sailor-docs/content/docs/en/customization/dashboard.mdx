@@ -1,285 +1,134 @@
 ---
 title: Dashboard Customization
-description: Add new dashboard sections, customize sidebar navigation, handle empty/loading/error states, and gate features by plan.
+description: Add new app pages inside the current `[locale]/(app)` shell and compose them with shared layout primitives.
 ---
 
-The authenticated dashboard lives in `apps/web/src/app/(dashboard)/`. Every page in that route group automatically gets the shared sidebar, header, and authentication guard.
+The authenticated product shell now lives under:
 
-## Anatomy of a dashboard page
-
+```text
+apps/web/src/app/[locale]/(app)/
 ```
-apps/web/src/app/(dashboard)/
-  layout.tsx          ← shared sidebar + header shell
+
+It is mounted by the shared layout in
+`apps/web/src/app/[locale]/(app)/layout.tsx`, which already applies the auth
+guard and wraps pages in `DesignSystemShell`.
+
+## Anatomy of a current app page
+
+```text
+apps/web/src/app/[locale]/(app)/
+  layout.tsx
   analytics/
-    page.tsx          ← your new section
-    loading.tsx       ← optional Suspense fallback
-    error.tsx         ← optional error boundary
+    page.tsx
+    loading.tsx
+  billing/
+    page.tsx
+    loading.tsx
 ```
 
-A standard page has four responsibilities:
+Older docs that assume a non-locale dashboard route group are obsolete.
 
-1. **Auth guard** — reject unauthenticated requests server-side
-2. **Tenant context** — resolve the current organization
-3. **Data fetch** — load data in the Server Component
-4. **Render** — compose layout primitives and feature components
+## Create a new section
+
+```bash
+mkdir -p 'apps/web/src/app/[locale]/(app)/my-section'
+```
 
 ```typescript
-// apps/web/src/app/(dashboard)/analytics/page.tsx
+// apps/web/src/app/[locale]/(app)/my-section/page.tsx
 import { PageHeader } from "@nebutra/ui/layout";
-import { requireAuth, getTenantContext } from "@/lib/auth";
+import { requireAuth } from "@/lib/auth";
 
-export default async function AnalyticsPage() {
+export default async function MySectionPage() {
   await requireAuth();
-  const { tenantId, plan } = await getTenantContext();
 
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Analytics"
-        description="Track usage and performance across your organization"
-        actions={<ExportButton />}
+        title="My Section"
+        description="A new section inside the shared app shell."
       />
-      {/* page content */}
     </div>
   );
 }
 ```
 
-## Adding a new dashboard section
+## Loading and error states
 
-<Steps>
-  <Step title="Create the route directory">
-    ```bash
-    mkdir -p apps/web/src/app/\(dashboard\)/my-section
-    ```
-  </Step>
-  <Step title="Create page.tsx">
-    ```typescript
-    // apps/web/src/app/(dashboard)/my-section/page.tsx
-    import { PageHeader } from "@nebutra/ui/layout";
-    import { requireAuth, getTenantContext } from "@/lib/auth";
+```typescript
+// apps/web/src/app/[locale]/(app)/my-section/loading.tsx
+import { LoadingState } from "@nebutra/ui/layout";
 
-    export const metadata = {
-      title: "My Section",
-    };
+export default function Loading() {
+  return <LoadingState message="Loading section…" />;
+}
+```
 
-    export default async function MySectionPage() {
-      await requireAuth();
-      const { tenantId } = await getTenantContext();
+For client-side error recovery, add a route-local `error.tsx` with the standard
+`ErrorState` component.
 
-      return (
-        <div className="space-y-6">
-          <PageHeader
-            title="My Section"
-            description="Manage your widgets"
-          />
-          {/* Add your content components here */}
-        </div>
-      );
-    }
-    ```
-  </Step>
-  <Step title="Add to sidebar navigation">
-    Open `apps/web/src/components/sidebar/nav-items.ts` and add an entry to the appropriate nav group:
+## Shared shell behavior
 
-    ```typescript
-    // apps/web/src/components/sidebar/nav-items.ts
-    export const mainNavItems: NavItem[] = [
-      // ... existing items
-      {
-        title: "My Section",
-        href: "/my-section",
-        icon: "layers",          // any Lucide icon name
-        group: "product",        // "product" | "settings" | "admin"
-      },
-    ];
-    ```
-  </Step>
-  <Step title="Add loading and error states">
-    ```typescript
-    // apps/web/src/app/(dashboard)/my-section/loading.tsx
-    import { LoadingState } from "@nebutra/ui/layout";
-    export default function Loading() {
-      return <LoadingState message="Loading your data…" />;
-    }
-    ```
+The page chrome, notifications surface, and product capabilities are owned by:
 
-    ```typescript
-    // apps/web/src/app/(dashboard)/my-section/error.tsx
-    "use client";
-    import { ErrorState } from "@nebutra/ui/layout";
-    export default function Error({ error, reset }: { error: Error; reset: () => void }) {
-      return <ErrorState message={error.message} onRetry={reset} />;
-    }
-    ```
-  </Step>
-</Steps>
+- `apps/web/src/app/[locale]/(app)/layout.tsx`
+- `apps/web/src/app/[locale]/providers/design-system-shell.tsx`
+- `apps/web/src/lib/product-capabilities.ts`
+
+If your new page depends on billing, workspace mode, or notifications, update
+the capability assumptions there instead of inventing a parallel dashboard
+contract.
+
+## Navigation
+
+The previous sidebar item registry used by older docs no longer exists.
+Current navigation behavior is composed from the shell and navigation
+components under:
+
+```text
+apps/web/src/components/navigation/
+```
+
+When adding a new primary section, inspect the current shell/navigation wiring
+first and keep it aligned with the active product capability model.
 
 ## Layout primitives
 
-`@nebutra/ui/layout` provides four ready-made state components. Use them consistently rather than building custom variants.
-
-### PageHeader
-
 ```tsx
-import { PageHeader } from "@nebutra/ui/layout";
-
-<PageHeader
-  title="Billing"
-  description="Manage your subscription and invoices"
-  actions={
-    <button type="button" className="btn-primary">
-      Upgrade Plan
-    </button>
-  }
-  breadcrumbs={[
-    { label: "Settings", href: "/settings" },
-    { label: "Billing" },
-  ]}
-/>
+import { Card, EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
 ```
 
-### EmptyState
+Use these shared layout components rather than building one-off dashboard
+variants.
 
-```tsx
-import { EmptyState } from "@nebutra/ui/layout";
+## Tenant-aware page logic
 
-<EmptyState
-  icon="inbox"
-  title="No invoices yet"
-  description="Invoices will appear here once your first billing cycle completes."
-  action={<CreateButton />}
-/>
-```
-
-### LoadingState
-
-```tsx
-import { LoadingState } from "@nebutra/ui/layout";
-
-<LoadingState message="Fetching your reports…" />
-```
-
-### ErrorState
-
-```tsx
-import { ErrorState } from "@nebutra/ui/layout";
-
-<ErrorState
-  message="Failed to load billing data"
-  onRetry={() => router.refresh()}
-/>
-```
-
-## Feature gating by plan
-
-Use `<PlanGate>` to conditionally render content based on the tenant's subscription plan. The component resolves the plan server-side and renders nothing (or a fallback) for ineligible tenants.
-
-```tsx
-import { PlanGate } from "@/components/plan-gate";
-
-// Show only to "pro" and "enterprise" users
-<PlanGate plans={["pro", "enterprise"]}>
-  <AdvancedAnalyticsPanel />
-</PlanGate>
-
-// Show an upgrade prompt to free users
-<PlanGate
-  plans={["pro", "enterprise"]}
-  fallback={<UpgradeBanner feature="Advanced Analytics" />}
->
-  <AdvancedAnalyticsPanel />
-</PlanGate>
-```
-
-<Warning>
-  `<PlanGate>` is a UI convenience only. Always enforce plan restrictions at the API level using `requirePermission` in your Hono routes. Never rely on client-side gating alone.
-</Warning>
-
-## Sidebar navigation structure
+When a page depends on tenant state, derive it from the shared server helpers:
 
 ```typescript
-// apps/web/src/components/sidebar/nav-items.ts
+import { getTenantContext, requireAuth } from "@/lib/auth";
 
-export interface NavItem {
-  title: string;
-  href: string;
-  icon: string;           // Lucide icon name
-  group: NavGroup;
-  plans?: Plan[];         // if set, only show for these plans
-  badge?: string;         // optional badge text e.g. "New", "Beta"
-}
-
-type NavGroup = "product" | "settings" | "admin";
-type Plan = "free" | "starter" | "pro" | "enterprise";
+await requireAuth();
+const { tenantId, plan } = await getTenantContext();
 ```
 
-The sidebar renders items grouped by `group`. Items with a `plans` restriction are hidden from tenants on other plans — but this is **display-only**. The route itself must also be gated.
+Prefer explicit plan or capability checks in the page and backing route logic.
+Do not rely on a stale `PlanGate` example if the actual component is not part of
+the current app surface.
 
-## File structure for a new section
-
-A complete dashboard section with a detail page follows this structure:
-
-```
-apps/web/src/app/(dashboard)/
-  reports/
-    page.tsx              ← list view
-    loading.tsx
-    error.tsx
-    [reportId]/
-      page.tsx            ← detail view
-      loading.tsx
-  _components/            ← section-local components (underscore = not a route)
-    report-card.tsx
-    report-filters.tsx
-```
-
-<Tip>
-  Develop section-local components in Storybook before wiring them into the page. Run `pnpm --filter @nebutra/storybook dev` and create a story at `apps/storybook/src/stories/Reports.stories.tsx`.
-</Tip>
-
-## Using AnimateIn for page entrance
-
-Wrap content sections with `AnimateIn` for a polished entrance animation. Use `inView` for content below the fold.
-
-```tsx
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-
-export default async function ReportsPage() {
-  await requireAuth();
-  const reports = await fetchReports();
-
-  return (
-    <div className="space-y-6">
-      <AnimateIn preset="emerge">
-        <PageHeader title="Reports" description="Historical snapshots of your usage" />
-      </AnimateIn>
-
-      <AnimateInGroup stagger="normal" className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {reports.map((report) => (
-          <AnimateIn key={report.id} preset="fadeUp">
-            <ReportCard report={report} />
-          </AnimateIn>
-        ))}
-      </AnimateInGroup>
-    </div>
-  );
-}
-```
-
----
+## Related
 
 <CardGroup cols={2}>
-  <Card title="Customization Overview" icon="sliders" href="/customization/overview">
-    Back to the full customization map
+  <Card title="Next.js Quickstart" icon="rocket" href="/quickstart/nextjs">
+    Current auth, shell, and typed API flow.
   </Card>
-  <Card title="Theming" icon="paintbrush" href="/customization/theming">
-    Tokens, light/dark, and multi-theme presets
+  <Card title="Project Structure" icon="folders" href="/development/project-structure">
+    Updated app/package layout for Nebutra-Sailor.
   </Card>
-  <Card title="Onboarding" icon="route" href="/customization/onboarding">
-    Customize the new-user setup flow
+  <Card title="Database Client" icon="database" href="/database/use-client">
+    Tenant-scoped data access for app pages.
   </Card>
-  <Card title="Build a Feature" icon="hammer" href="/recipes/build-a-feature">
-    Full recipe: analytics dashboard end-to-end
+  <Card title="UI Components" icon="component" href="/components/overview">
+    Shared primitives and layout packages.
   </Card>
 </CardGroup>

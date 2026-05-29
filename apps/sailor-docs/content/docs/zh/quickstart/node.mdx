@@ -1,69 +1,94 @@
 ---
 title: Node.js 快速开始
-description: 在 Node.js 后端或 Serverless 函数中使用 Nebutra SDK，5 分钟内完成集成。
+description: 在 Node.js 或 Hono 后端中组合 Nebutra 当前的服务端包面。
 ---
 
-## 前提条件
+仓库里已经没有独立的 `@nebutra/sdk` Node 包。服务端集成的方式是组合若干
+聚焦包，例如 `@nebutra/logger`、`@nebutra/agents`、`@nebutra/permissions`
+和 `@nebutra/db`。
 
-- Node.js 22+
-- 拥有 [OPC 许可证](https://nebutra.com/en/get-license) 的 Nebutra 账户（免费）
-
-## 安装与初始化
+## 第一步：安装聚焦的服务端包
 
 ```bash
-npm install @nebutra/sdk
+pnpm add @nebutra/logger @nebutra/agents @nebutra/permissions @nebutra/db
 ```
 
-```bash .env
-NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
-NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
+只安装你的服务真正需要的部分。
+
+## 第二步：先接入结构化日志
+
+```typescript
+import { logger } from "@nebutra/logger";
+
+logger.info("worker.started", { service: "reporting" });
 ```
 
-```typescript src/lib/nebutra.ts
-import { createClient } from "@nebutra/sdk";
+长期运行的服务不要使用 `console.log`，否则日志路由与租户元数据会和平台
+其余部分脱节。
 
-export const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
+## 第三步：AI 生成通过 `@nebutra/agents`
+
+```typescript
+import { generateText } from "@nebutra/agents";
+
+const result = await generateText({
+  model: "openai/gpt-4.1-mini",
+  prompt: "总结最近 24 小时的用量异常。",
 });
 ```
 
-## 验证请求令牌
+## 第四步：显式做权限判断
 
 ```typescript
-import { verifyToken } from "@nebutra/sdk/server";
+import { createPermissionChecker } from "@nebutra/permissions";
 
-export async function authMiddleware(req: Request) {
-  const token = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (!token) throw new Error("未授权");
-
-  const { userId, orgId, scopes } = await verifyToken(token, {
-    apiKey: process.env.NEBUTRA_API_KEY!,
-  });
-
-  return { userId, orgId, scopes };
-}
-```
-
-## 检查权限
-
-```typescript
-const allowed = await nebutra.permissions.check({
-  userId,
-  action: "delete",
-  resource: "Project",
+const checker = createPermissionChecker({
+  role: "admin",
 });
 
-if (!allowed) throw new Error("权限不足");
+const allowed = checker.can("billing:manage");
 ```
 
-## 相关文档
+要与 UI 暴露的 permission model 保持一致，不要把客户端门控当成服务端授权。
+
+## 第五步：区分 tenant-scoped 与 system-scoped DB 访问
+
+```typescript
+import { getSystemDb, getTenantDb } from "@nebutra/db";
+
+const tenantDb = getTenantDb("org_123");
+const systemDb = getSystemDb();
+```
+
+- `getTenantDb()` 适用于 request-scoped tenant 数据
+- `getSystemDb()` 适用于管理任务、webhook bootstrap、跨租户作业
+
+## 第六步：优先把后端代码放进 Hono gateway
+
+在这个仓库中，新产品后端工作默认进入 `backends/gateway/`：
+
+```typescript
+import { OpenAPIHono } from "@hono/zod-openapi";
+
+const app = new OpenAPIHono();
+```
+
+当前 gateway 已经承载 auth、tenancy、billing、integrations 与 webhooks，
+应优先扩展这里，而不是再平行造一套运行时。
+
+## 相关内容
 
 <CardGroup cols={2}>
-  <Card title="JavaScript SDK 参考" icon="js" href="/zh/sdks/javascript">
-    完整的 SDK 方法参考。
+  <Card title="后端语言策略" icon="server" href="/zh/architecture/backend-language-policy">
+    何时保持在 TypeScript，何时再升级到其他 runtime。
   </Card>
-  <Card title="API 参考" icon="code" href="/zh/api-reference/overview">
-    完整的 REST API 文档。
+  <Card title="数据库客户端" icon="database" href="/zh/database/use-client">
+    tenant-scoped 与 system-scoped 数据库访问。
+  </Card>
+  <Card title="AI 概览" icon="sparkles" href="/zh/ai/overview">
+    当前 `@nebutra/agents` runtime surface。
+  </Card>
+  <Card title="监控日志" icon="file-text" href="/zh/monitoring/logs">
+    使用 `@nebutra/logger` 做结构化日志。
   </Card>
 </CardGroup>

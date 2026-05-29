@@ -1,75 +1,92 @@
 ---
 title: Integrations
-description: Connect Nebutra with the tools your team already uses.
+description: Current user-managed integration surfaces and the supporting platform services around them.
 ---
 
-## Available integrations
+Nebutra-Sailor distinguishes between:
 
-<CardGroup cols={3}>
-  <Card title="Vercel" icon="triangle" href="/integrations/vercel">
-    Deploy to Vercel with zero config. Auto-provisioned environment variables.
-  </Card>
-  <Card title="Stripe" icon="credit-card" href="/integrations/stripe">
-    Billing, subscriptions, and payment webhooks pre-wired.
-  </Card>
-  <Card title="Slack" icon="slack" href="/integrations/slack">
-    Send notifications and alerts to Slack channels.
-  </Card>
-  <Card title="GitHub" icon="github" href="/integrations/github">
-    Trigger workflows on GitHub events. Sync issues and PRs.
-  </Card>
-  <Card title="Linear" icon="pencil" href="/integrations/linear">
-    Create and sync Linear issues from Nebutra events.
-  </Card>
-  <Card title="Resend" icon="envelope">
-    Transactional email — already configured. Templates in Sanity.
-  </Card>
-  <Card title="Sanity" icon="database">
-    Content management for blog, changelog, and email templates.
-  </Card>
-  <Card title="Sentry" icon="bug">
-    Error tracking with tenant context, pre-configured.
-  </Card>
-  <Card title="Supabase" icon="server">
-    PostgreSQL + pgvector. RLS policies pre-configured for multi-tenancy.
-  </Card>
-</CardGroup>
+- **user-managed integrations** exposed in the product UI
+- **platform services** that power the stack but are not registered through a
+  generic `defineIntegration()` API
 
-## Built-in vs configurable
+## User-managed integrations
 
-Some integrations are pre-wired and active by default. Others require API keys to activate.
+The current integrations page in the web app works with these types:
 
-| Integration | Status | Notes |
-|-------------|--------|-------|
-| Vercel | Built-in | Zero-config deployment |
-| Resend | Active when `RESEND_API_KEY` is set | Email templates ready |
-| Stripe | Active when `STRIPE_SECRET_KEY` is set | Webhooks pre-configured |
-| Sentry | Active when `SENTRY_DSN` is set | Tenant context auto-tagged |
-| Sanity | Active when `SANITY_API_TOKEN` is set | Studio at studio.nebutra.com |
-| Slack | Requires OAuth setup | Via Settings → Integrations |
-| GitHub | Requires OAuth setup | Via Settings → Integrations |
-| Linear | Requires API key | Via Settings → Integrations |
-| Supabase | Active when `DATABASE_URL` is set | RLS pre-configured |
+- `SHOPIFY`
+- `SHOPLINE`
+- `STRIPE`
+- `CUSTOM`
 
-## Adding a new integration
+See the live product surface in:
 
-To add a custom integration for your own product, implement the `Integration` interface:
-
-```typescript
-import { defineIntegration } from "@nebutra/integrations";
-
-export const myIntegration = defineIntegration({
-  id: "my-service",
-  name: "My Service",
-  events: ["project.created", "invoice.paid"],
-  onEvent: async (event, config) => {
-    await fetch(`${config.webhookUrl}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(event),
-    });
-  },
-});
+```text
+apps/web/src/app/[locale]/(app)/integrations/page.tsx
 ```
 
-Register it in `apps/web/src/integrations/registry.ts`.
+The backing API lives in:
+
+```text
+backends/gateway/src/routes/integrations/index.ts
+```
+
+## Platform services
+
+These are important parts of the stack, but they are **not** registered through
+a fictional `@nebutra/integrations` package:
+
+| Service | Role |
+| --- | --- |
+| Resend / email | Transactional email infrastructure |
+| Sanity | Content management and editorial data |
+| Sentry | Error monitoring |
+| Vercel | Deployment target |
+
+Treat them as platform dependencies or provider-specific packages, not as rows
+inside an abstract integration registry API unless the codebase actually models
+them that way.
+
+## Current route/API model
+
+The gateway exposes CRUD for integrations under `/api/v1/integrations` and
+stores credentials/settings through the encrypted integration model.
+
+Example browser call:
+
+```typescript
+import { browserApiClient } from "@/lib/api/client";
+
+const { data } = await browserApiClient.GET("/api/v1/integrations");
+```
+
+## Adding a new managed integration
+
+Today, adding a new integration means updating the real gateway + UI surfaces:
+
+1. Extend the integration type/schema in `backends/gateway/src/routes/integrations/index.ts`.
+2. Update the UI catalog in `apps/web/src/app/[locale]/(app)/integrations/page.tsx`.
+3. If secrets are required, keep them in the encrypted `integration.credentials`
+   / `integration.settings` fields handled by the DB layer.
+
+Do not document or import a nonexistent:
+
+- `@nebutra/integrations`
+- `defineIntegration(...)`
+- a dedicated web-app integration registry file
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Stripe" icon="credit-card" href="/integrations/stripe">
+    Payment provider integration guidance.
+  </Card>
+  <Card title="Payments Overview" icon="wallet" href="/payments/overview">
+    Billing providers, checkout flows, and gateway routes.
+  </Card>
+  <Card title="Database Client" icon="database" href="/database/use-client">
+    Encrypted integration credentials and tenant-scoped access.
+  </Card>
+  <Card title="Project Structure" icon="folders" href="/development/project-structure">
+    Where the real integration routes and UI pages live.
+  </Card>
+</CardGroup>

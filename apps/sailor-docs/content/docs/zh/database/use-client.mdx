@@ -1,231 +1,162 @@
 ---
 title: 使用数据库客户端
-description: 如何在服务端组件、API 路由和多租户上下文中通过 Prisma v7 客户端查询 PostgreSQL。
+description: 当前 `getTenantDb()`、`getSystemDb()` 与 tenant context helper 的数据库访问模式。
 ---
 
-Nebutra 从 `@nebutra/db` 导出一个预配置的 Prisma 客户端。始终从该包导入 — 永远不要在应用程序代码中直接实例化 `PrismaClient`。
+`@nebutra/db` 已不再导出裸 `db` 客户端。当前契约是显式区分：
 
-```typescript packages/platform/db/src/index.ts
-import { PrismaClient } from "@prisma/client";
-import { withAccelerate } from "@prisma/extension-accelerate";
+- `getTenantDb(organizationId)` 用于 tenant-scoped 查询
+- `getSystemDb()` 用于跨租户或 bootstrap 场景
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+这样可以让行级安全的决策直接体现在调用点上。
 
-export const db =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-  }).$extends(withAccelerate());
+## 当前包面
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+```typescript
+import { getSystemDb, getTenantDb } from "@nebutra/db";
 ```
 
-## 服务端组件查询
+实现入口位于 [`packages/platform/db/src/index.ts`](../../../packages/platform/db/src/index.ts)，
+底层 lazy Prisma client 位于 `client.ts`。
 
-直接在 React 服务端组件中获取数据。内部数据访问不需要 API 层。
+## tenant-scoped 查询
 
-```typescript apps/web/src/app/dashboard/projects/page.tsx
-import { db } from "@nebutra/db";
+当请求已经解析出 tenant 时，请使用 `getTenantDb()`：
 
-export default async function ProjectsPage() {
-  const projects = await db.project.findMany({
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      name: true,
-      createdAt: true,
-      _count: { select: { members: true } },
-    },
-  });
+```typescript
+import { getCurrentTenant } from "@nebutra/tenant";
+import { getTenantDb } from "@nebutra/db";
 
-  return <ProjectList projects={projects} />;
-}
-```
-
-<Note>
-服务端组件在服务器上运行，因此数据库访问是安全的。永远不要在客户端组件（`"use client"` 文件）中导入 `@nebutra/db` — 数据库凭据会暴露给浏览器。
-</Note>
-
-## 多租户查询
-
-在多租户上下文中，查询前用 `withRls` 包装 `db` 客户端。这会激活 PostgreSQL 行级安全，确保查询自动限定在当前租户范围内。
-
-```typescript apps/web/src/app/dashboard/projects/page.tsx
-import { db } from "@nebutra/db";
-import { getCurrentTenant, withRls } from "@nebutra/tenant";
-
-export default async function ProjectsPage() {
+export async function listProjects() {
   const tenant = getCurrentTenant();
-  const tenantDb = withRls(db, tenant.tenantId);
+  const db = getTenantDb(tenant.id);
 
-  // 只返回当前租户的项目
-  const projects = await tenantDb.project.findMany({
+  return db.project.findMany({
     orderBy: { createdAt: "desc" },
   });
-
-  return <ProjectList projects={projects} />;
 }
 ```
 
-<Warning>
-对于涉及租户所有数据的任何查询，始终使用 `withRls(db, tenantId)`。不使用 RLS 查询将返回**所有**租户的数据。
-</Warning>
+`getTenantDb()` 会为查询注入仓库当前 RLS 策略需要的 PostgreSQL session state，
+因此应优先于到处手写 `where: { organizationId }`。
 
-## 客户端数据获取
+## system-scoped 查询
 
-客户端组件不能导入 `@nebutra/db`。通过 API 路由获取数据：
+只有在还没有可信 tenant 上下文时才使用 `getSystemDb()`：
 
-```typescript apps/web/src/hooks/use-projects.ts
-"use client";
+```typescript
+import { getSystemDb } from "@nebutra/db";
 
-import { useEffect, useState } from "react";
-
-export function useProjects() {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/projects")
-      .then((res) => res.json())
-      .then((data) => {
-        setProjects(data.data);
-        setLoading(false);
-      });
-  }, []);
-
-  return { projects, loading };
-}
-```
-
-```typescript apps/web/src/app/api/projects/route.ts
-import { db } from "@nebutra/db";
-import { getCurrentTenant, withRls } from "@nebutra/tenant";
-import { NextResponse } from "next/server";
-
-export async function GET() {
-  const tenant = getCurrentTenant();
-  const tenantDb = withRls(db, tenant.tenantId);
-
-  const projects = await tenantDb.project.findMany({
-    orderBy: { createdAt: "desc" },
+export async function findOrganizationByStripeCustomer(customerId: string) {
+  const db = getSystemDb();
+  return db.organization.findFirst({
+    where: { stripeCustomerId: customerId },
   });
-
-  return NextResponse.json({ success: true, data: projects });
 }
 ```
+
+典型场景：
+
+- webhook bootstrap 阶段还未解析 tenant
+- admin / 跨租户报表
+- 涉及多个组织的后台作业
+
+## Web 应用中的服务端页面
+
+在 `apps/web` 中，页面级状态通常先通过 auth helper 推导：
+
+```typescript
+import { getTenantContext, requireAuth } from "@/lib/auth";
+
+export default async function BillingPage() {
+  await requireAuth();
+  const { tenantId, plan } = await getTenantContext();
+
+  if (!tenantId) {
+    return null;
+  }
+
+  const db = getTenantDb(tenantId);
+  const subscriptions = await db.subscription.findMany();
+
+  return <pre>{JSON.stringify({ plan, count: subscriptions.length }, null, 2)}</pre>;
+}
+```
+
+## Client Component
+
+Client Component 不得直接导入 `@nebutra/db`。应通过 HTTP 边界访问：
+
+```typescript
+import { browserApiClient } from "@/lib/api/client";
+
+const { data } = await browserApiClient.GET("/api/v1/integrations");
+```
+
+如果需要浏览器端 hook，应构建在 API client 或 route handler 之上，而不是
+直接套 Prisma。
 
 ## 事务
 
-当多个写操作必须一起成功或失败时，使用 Prisma 交互式事务：
+基于 `getTenantDb()` 或 `getSystemDb()` 返回的 scoped client 执行事务：
 
-```typescript backends/gateway/src/routes/organizations.ts
-import { db } from "@nebutra/db";
+```typescript
+import { getTenantDb } from "@nebutra/db";
 
-async function createOrganizationWithOwner(name: string, userId: string) {
+export async function createProject(organizationId: string, userId: string) {
+  const db = getTenantDb(organizationId);
+
   return db.$transaction(async (tx) => {
-    const org = await tx.organization.create({
-      data: { name },
-    });
-
-    await tx.membership.create({
-      data: {
-        organizationId: org.id,
-        userId,
-        role: "OWNER",
-      },
+    const project = await tx.project.create({
+      data: { organizationId, name: "New project" },
     });
 
     await tx.auditLog.create({
       data: {
-        organizationId: org.id,
-        action: "organization.created",
+        organizationId,
         actorId: userId,
+        action: "project.created",
       },
     });
 
-    return org;
+    return project;
   });
 }
 ```
 
 ## 错误处理
 
-Prisma 抛出类型化错误。显式处理它们以返回有意义的响应：
+优先将 Prisma 失败映射到共享 API error，而不是抛裸字符串：
 
-```typescript backends/gateway/src/lib/db-errors.ts
-import { Prisma } from "@prisma/client";
+```typescript
+import { Prisma } from "@nebutra/db";
+import { ConflictError } from "@nebutra/errors";
 
-export function handlePrismaError(error: unknown): never {
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    switch (error.code) {
-      case "P2002":
-        // 唯一约束违反
-        throw new Error(`该值的记录已存在。字段：${error.meta?.target}`);
-      case "P2025":
-        // 记录未找到
-        throw new Error("请求的记录不存在。");
-      case "P2003":
-        // 外键约束失败
-        throw new Error("此操作引用了一条不存在的记录。");
-      default:
-        throw new Error(`数据库错误：${error.code}`);
-    }
-  }
-
-  if (error instanceof Prisma.PrismaClientValidationError) {
-    throw new Error("提供给数据库查询的数据无效。");
+export function mapDbError(error: unknown): never {
+  if (
+    error instanceof Prisma.PrismaClientKnownRequestError &&
+    error.code === "P2002"
+  ) {
+    throw new ConflictError("该唯一字段对应的记录已存在。");
   }
 
   throw error;
 }
 ```
 
-常见 Prisma 错误代码：
-
-| 代码 | 含义 |
-|------|------|
-| `P2002` | 唯一约束违反 |
-| `P2003` | 外键约束失败 |
-| `P2025` | 记录未找到（`findUniqueOrThrow`、`update`、`delete`） |
-| `P2016` | 查询解释错误 |
-| `P1001` | 无法连接到数据库服务器 |
-| `P1002` | 数据库服务器超时 |
-
-## 类型化查询
-
-Prisma v7 为每个模型和查询生成完整的 TypeScript 类型。直接使用生成的类型：
-
-```typescript apps/web/src/types/project.ts
-import type { Prisma } from "@prisma/client";
-
-// 从特定查询形状推断返回类型
-type ProjectWithCount = Prisma.ProjectGetPayload<{
-  include: {
-    _count: { select: { members: true } };
-  };
-}>;
-
-// 用于组件 props
-interface ProjectCardProps {
-  project: ProjectWithCount;
-}
-```
-
-<Tip>
-使用 `Prisma.XxxGetPayload` 从查询的 `select` 或 `include` 形状派生精确类型。这避免了维护可能与架构偏离的手动接口定义。
-</Tip>
+## 相关内容
 
 <CardGroup cols={2}>
   <Card title="行级安全" icon="shield" href="/zh/database/rls">
-    withRls 如何强制租户隔离
+    tenant 隔离底层如何生效。
   </Card>
-  <Card title="架构与迁移" icon="database" href="/zh/database/schema-migrations">
-    编辑模型并运行迁移
+  <Card title="项目结构" icon="folders" href="/zh/development/project-structure">
+    当前 DB、IAM、app 包的真实位置。
   </Card>
-  <Card title="多租户" icon="building" href="/zh/concepts/tenants">
-    租户上下文和 AsyncLocalStorage
+  <Card title="Next.js 快速开始" icon="rocket" href="/zh/quickstart/nextjs">
+    当前 app shell 与 typed client 接入流。
   </Card>
-  <Card title="Prisma Studio" icon="table" href="/zh/database/studio">
-    可视化浏览和编辑记录
+  <Card title="权限" icon="lock" href="/zh/concepts/permissions">
+    让数据访问与授权逻辑保持一致。
   </Card>
 </CardGroup>

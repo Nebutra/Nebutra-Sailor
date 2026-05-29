@@ -1,88 +1,102 @@
 ---
 title: React 快速开始
-description: 向任意 React 应用添加 Nebutra 认证和权限门控。
+description: 在 React 应用中复用 Nebutra 的权限与 UI 包，而不是依赖一个并不存在的浏览器 SDK。
 ---
 
-## 前提条件
+Nebutra-Sailor 当前 **不会** 发布独立的 `@nebutra/react` 包。对于纯 React
+应用，推荐模式是：
 
-- React 18+
-- 拥有 [OPC 许可证](https://nebutra.com/en/get-license) 的 Nebutra 账户（免费）
+- 由宿主应用自己维护 auth / session
+- 通过你自己的后端或类型化客户端调用 Nebutra HTTP surface
+- 复用 `@nebutra/permissions`、`@nebutra/ui` 这类聚焦包
 
-## 第一步：安装 SDK
+## 第一步：安装真正需要的包
 
 ```bash
-npm install @nebutra/sdk @nebutra/react
+pnpm add @nebutra/ui @nebutra/permissions
 ```
 
-## 第二步：用 NebutraProvider 包裹应用
+如果你的 React 应用还要承载服务端 AI 功能，请在服务端 runtime 中加入
+`@nebutra/agents`，不要放进浏览器 bundle。
 
-```tsx src/main.tsx
-import { NebutraProvider } from "@nebutra/react";
-
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <NebutraProvider orgId={import.meta.env.VITE_NEBUTRA_ORG_ID}>
-      <App />
-    </NebutraProvider>
-  </StrictMode>
-);
-```
-
-## 第三步：通过 Hook 访问认证状态
+## 第二步：渲染共享 UI 原语
 
 ```tsx
-import { useNebutraUser, useNebutraOrg } from "@nebutra/react";
+import { Button } from "@nebutra/ui/components";
+import { EmptyState, PageHeader } from "@nebutra/ui/layout";
 
-export function UserMenu() {
-  const { user, isLoaded, isSignedIn } = useNebutraUser();
-  const { org } = useNebutraOrg();
-
-  if (!isLoaded) return <Skeleton />;
-  if (!isSignedIn) return <SignInButton />;
-
-  return <p>{user.fullName} · {org.name} · {org.plan}</p>;
-}
-```
-
-## 第四步：用权限检查门控 UI
-
-```tsx
-import { Can } from "@nebutra/react";
-
-export function DeleteButton({ projectId }: { projectId: string }) {
+export function BillingPage() {
   return (
-    <Can action="delete" resource="Project">
-      <button onClick={() => handleDelete(projectId)}>删除项目</button>
-    </Can>
+    <div className="space-y-6">
+      <PageHeader title="Billing" description="管理用量与订阅状态。" />
+      <Button>Upgrade</Button>
+      <EmptyState title="暂无发票" description="完成结账后会在这里看到发票。" />
+    </div>
   );
 }
 ```
 
-如果当前用户缺少所需范围，`<Can>` 组件将不渲染任何内容。
+## 第三步：用权限感知组件门控 UI
 
-## 第五步：保护路由
+`@nebutra/permissions` 暴露了 React 子路径，可用于 UI 层的权限检查：
 
 ```tsx
-import { useNebutraUser } from "@nebutra/react";
-import { Navigate } from "react-router-dom";
+import { PermissionGate } from "@nebutra/permissions/react";
 
-export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isLoaded, isSignedIn } = useNebutraUser();
-
-  if (!isLoaded) return <LoadingSpinner />;
-  if (!isSignedIn) return <Navigate to="/sign-in" />;
-
-  return <>{children}</>;
+export function DeleteButton() {
+  return (
+    <PermissionGate require="project:delete">
+      <button type="button">删除项目</button>
+    </PermissionGate>
+  );
 }
 ```
 
-## 相关文档
+这只是一层展示逻辑。真正的写操作仍需在服务端再次验证权限。
+
+## 第四步：通过服务端拥有的边界拉取数据
+
+客户端 React 代码应通过你自己的 route handler / API 层获取数据，而不是
+调用一个虚构的 Nebutra 浏览器 SDK：
+
+```tsx
+import { useEffect, useState } from "react";
+
+export function useIntegrations() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/integrations")
+      .then((res) => res.json())
+      .then((payload) => setItems(payload.integrations ?? []));
+  }, []);
+
+  return items;
+}
+```
+
+## 第五步：tenant 与权限状态放在服务端
+
+如果 React 应用后端由 Nebutra-Sailor 提供，请在服务端解析 tenant / scope，
+只把最小必要 UI 状态传给浏览器：
+
+```tsx
+type ViewerState = {
+  tenantId: string;
+  plan: string;
+  scopes: string[];
+};
+```
+
+这样可以避免把内部 auth / data-access 假设泄露到前端。
+
+## 相关内容
 
 <CardGroup cols={2}>
   <Card title="权限" icon="lock" href="/zh/concepts/permissions">
-    完整的 RBAC 模型和权限范围参考。
+    Scope 词汇表与服务端强制执行模式。
   </Card>
-  <Card title="认证指南" icon="shield-check" href="/zh/guides/authentication">
-    深入了解认证流程。
+  <Card title="JavaScript 接入面" icon="code" href="/zh/sdks/javascript">
+    当前 package-first 集成模型。
   </Card>
 </CardGroup>

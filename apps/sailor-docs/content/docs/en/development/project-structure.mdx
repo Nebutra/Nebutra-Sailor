@@ -1,187 +1,133 @@
 ---
 title: Project Structure
-description: An annotated directory tree of the Nebutra-Sailor monorepo — categorized packages, backends split, infra/workflows/e2e/tests directories.
+description: Current Nebutra-Sailor monorepo layout: apps, language-split backends, domain packages, workflows, and tests.
 ---
 
-The Nebutra-Sailor monorepo is organized by **purpose** at the top level (`apps/`, `backends/`, `packages/`, `infra/`, `workflows/`, `e2e/`, `tests/`), and packages are **categorized by domain** (`packages/<category>/<name>/`).
+Nebutra-Sailor is organized by **purpose** at the top level and by **domain**
+inside `packages/`.
 
 ## Top-level layout
 
-```
+```text
 nebutra-sailor/
-├── apps/                User-facing apps (Next.js / Hono / Storybook / docs)
-├── backends/            Non-UI backends — split by language (gateway/, python/)
-├── packages/            Shared TypeScript libraries — categorized by domain
-├── infra/               iac/ + runtime/ + data/ + ops/  (Wave 2.2)
-├── workflows/           inngest/ + n8n/ + pusher/        (Wave 2.3)
-├── e2e/                 smoke/ + golden/ + sleptons/     (Wave 2.1)
-├── tests/               architecture/ + load/            (vitest + k6)
-├── docs/                Internal architecture ADRs (source repo only)
-├── scripts/             Repo-level utility scripts
-├── docker-compose.infra.yml
-├── turbo.json
-├── pnpm-workspace.yaml
-└── package.json
+├── apps/
+├── backends/
+├── packages/
+├── infra/
+├── workflows/
+├── e2e/
+├── tests/
+├── scripts/
+├── package.json
+└── pnpm-workspace.yaml
 ```
 
-## `apps/` — user-facing apps
+## `apps/`
 
-| App | Framework | Purpose |
-|-----|-----------|---------|
-| `apps/landing-page` | Next.js 16 + Tailwind v4 | Public marketing site (7 locales) |
-| `apps/web` | Next.js 16 + Tailwind v4 | Authenticated SaaS dashboard |
-| `apps/storybook` | Storybook 8.x | Component library documentation |
-| `apps/design-docs` | Next.js + Fumadocs | Internal design system docs |
-| `apps/sailor-docs` | Next.js + Fumadocs | Public product docs (this site) |
-| `apps/studio` | Sanity Studio v4 | CMS — content management |
-| `apps/docs` | Mintlify | Public product docs (Mintlify variant) |
-| `apps/idp` | Next.js | Self-hosted identity provider |
-| `apps/mail-preview` | Next.js | React Email template preview |
-| `apps/sleptons`, `apps/tsekaluk-dev` | — | Auxiliary product surfaces |
+Current checked-in apps include:
 
-## `backends/` — non-UI services
+| App | Purpose |
+| --- | --- |
+| `apps/landing-page` | Public marketing site |
+| `apps/web` | Authenticated SaaS app |
+| `apps/storybook` | Component docs / stories |
+| `apps/design-docs` | Internal design system docs |
+| `apps/sailor-docs` | Product documentation |
+| `apps/studio` | Sanity Studio |
+| `apps/idp` | Identity provider app |
+| `apps/mail-preview` | Email preview surface |
+| `apps/sleptons`, `apps/tsekaluk-dev` | Auxiliary product surfaces |
 
-```
+The old Mintlify-style docs app described by earlier documentation is not part
+of the current repository and should not be referenced as the public docs app.
+
+## `backends/`
+
+```text
 backends/
-├── gateway/             TypeScript / Hono — BFF, auth, tenancy, rate-limit, routing
-│                        DEFAULT for new backend work per ADR 2026-05-10
-└── python/              Python / FastAPI — batch / ML / specialized libs only
-    ├── _shared/         Cross-service utilities (active)
-    └── ai/              LLM, embeddings, agent orchestration (active)
+├── gateway/   TypeScript / Hono
+├── go/
+├── python/
+└── rust/
 ```
 
-The TS/Python split mirrors `vercel/vercel`'s `pkg/` layout. **New backend work goes in `backends/gateway`** unless the [TS-by-Default ADR](/docs/architecture/backend-language-policy) exception applies.
+Per the repo contract, new product backend work defaults to
+`backends/gateway/` unless there is a clear reason to move to another runtime.
 
-Each Python module has exactly one of three lifecycle tiers — `active` (has real callers, builds in CI), `stub` (interface preserved, `src/` empty), or `incubator` (excluded from workspaces and CI).
+## `packages/`
 
-## `packages/` — categorized libraries
+Workspace packages are grouped by domain:
 
-Every package lives under `packages/<category>/<name>/`:
+| Domain | Examples |
+| --- | --- |
+| `ai/` | `agents`, `agent-runtime`, `mcp`, `browser-control` |
+| `commerce/` | `billing`, `marketing`, `metering`, `blog` |
+| `design/` | `ui`, `tokens`, `brand`, `icons`, `theme` |
+| `iam/` | `auth`, `identity`, `permissions`, `tenant`, `vault` |
+| `integrations/` | `email`, `event-bus`, `queue`, `notifications`, `webhooks` |
+| `ops/` | `cli`, `create-sailor`, `preset`, `sanity`, `supabase` |
+| `platform/` | `db`, `logger`, `errors`, `config`, `rate-limit` |
 
-| Category | Purpose | Example packages |
-|----------|---------|------------------|
-| `design/` | UI, tokens, brand, icons, theme | `ui`, `tokens`, `design-tokens`, `brand`, `theme`, `icons`, `design-sync` |
-| `iam/` | Identity, auth, tenancy, secrets, audit, permissions | `auth`, `audit`, `vault`, `tenant`, `permissions`, `identity` |
-| `commerce/` | Billing, marketing, license, metering, contracts, waitlist | `billing`, `contracts`, `license`, `marketing`, `metering`, `waitlist` |
-| `integrations/` | Queue, search, notifications, webhooks, uploads, storage, email, saga | `queue`, `search`, `notifications`, `webhooks`, `uploads`, `storage`, `email`, `saga` |
-| `platform/` | Lower-level platform primitives | `db`, `logger`, `config` |
-| `ai/` | AI primitives and provider metadata | `mcp`, `ai-providers`, `agents` |
-| `ops/` | CLI, scaffolding, presets, Sanity helpers | `cli`, `create-sailor`, `sanity`, `preset` |
+## Current web app route structure
 
-### Design system note
+The authenticated app shell is locale-aware:
 
-`@nebutra/design-system` has been **merged into `@nebutra/ui`**. The layout wrappers it used to export now live at `@nebutra/ui/layout`:
-
-```tsx
-import { Button, Input, Card } from "@nebutra/ui/components";
-import { PageHeader, EmptyState, LoadingState } from "@nebutra/ui/layout";
+```text
+apps/web/src/app/
+  [locale]/
+    (app)/
+    (auth)/
+    (public)/
+  api/
 ```
 
-### Icon governance (three-tier)
+When you add new product pages, place them inside `[locale]/(app)` rather than
+the old `(dashboard)` path shown in earlier docs.
 
-Three icon libraries are allowed; each has a single, well-defined slot:
+## Workflows, tests, and infra
 
-| Tier | Package | Where to use |
-|------|---------|--------------|
-| 1 — default | `@nebutra/icons` (Geist 541) | All product / app / dashboard surfaces |
-| 2 — marketing | `@phosphor-icons/react/light` | **Only** inside `packages/design/ui/src/marketing/**` for thin/duotone AI-brand emphasis |
-| 3 — deprecated | `lucide-react` | **Zero new imports allowed** — existing references will be migrated |
-
-See [Linting rules](/docs/customization/linting-rules) for details.
-
-## `infra/`, `workflows/`, `e2e/`, `tests/`
-
-```
-infra/
-├── iac/                 Terraform / Pulumi
-├── runtime/             Cloud Run / ECS / Vercel runtime configs
-├── data/                Migration / seeding pipelines
-└── ops/                 Operational runbooks
-
+```text
 workflows/
-├── inngest/             Durable workflow functions
-├── n8n/                 Self-hosted n8n workflow JSON exports
-└── pusher/              Realtime channels
+  inngest/
+  n8n/
+  pusher/
 
 e2e/
-├── smoke/               Critical-path smoke tests
-├── golden/              Golden-path visual regressions
-├── sleptons/            Sleptons product flows
-├── playwright.config.ts
-├── playwright.golden.config.ts
-└── playwright.sleptons.config.ts
+  playwright.config.ts
+  playwright.golden.config.ts
+  playwright.sleptons.config.ts
 
 tests/
-├── architecture/        Architecture conformance tests (vitest)
-└── load/                Load tests (k6)
+  architecture/
 ```
 
-`nebutra workflow init <provider>` scaffolds a starter into `workflows/<provider>/`. `nebutra e2e <suite>` runs the matching Playwright config.
-
-## File naming conventions
-
-| Pattern | Example | Purpose |
-|---------|---------|---------|
-| `kebab-case.tsx` | `user-avatar.tsx` | React component files |
-| `kebab-case.ts` | `format-date.ts` | Utility and helper files |
-| `*.test.ts` / `*.test.tsx` | `billing.test.ts` | Vitest tests |
-| `*.stories.tsx` | `button.stories.tsx` | Storybook stories |
-| `route.ts` | `app/api/webhooks/route.ts` | Next.js App Router API route |
-| `page.tsx` / `layout.tsx` | `app/dashboard/page.tsx` | App Router page / layout |
+The current `e2e/` folder is config-first; it is not partitioned into the old
+`smoke/` / `golden/` / `sleptons/` subdirectories described by earlier docs.
 
 ## Where to add new things
 
-| You want to... | Where to put it |
-|---------------|----------------|
-| Add a new dashboard page | `apps/web/src/app/(dashboard)/` |
-| Add a new marketing page | `apps/landing-page/src/app/[lang]/` |
-| Add a new API route | `backends/gateway/src/routes/` |
-| Add a new Python service | `backends/python/<name>/` (must cite ADR justification) |
-| Add a new UI component | `packages/design/ui/src/components/` + Storybook story |
-| Add a new layout wrapper | `packages/design/ui/src/layout/` |
-| Add a new design token | `packages/design/tokens/styles.css` |
-| Add a new email template | `packages/integrations/email/src/templates/` |
-| Add a new Prisma model | `packages/platform/db/prisma/schema.prisma` |
-| Add a queue handler | `packages/integrations/queue/src/handlers/` |
-| Add a workflow | `workflows/<provider>/` (scaffold via `nebutra workflow init`) |
-| Add an e2e test | `e2e/<suite>/` |
-
-## Turborepo task pipeline
-
-The `turbo.json` at the repo root defines how tasks depend on each other:
-
-```json
-{
-  "tasks": {
-    "build":     { "dependsOn": ["^build"], "outputs": [".next/**", "dist/**"] },
-    "typecheck": { "dependsOn": ["^typecheck"] },
-    "lint":      { "dependsOn": [] },
-    "test":      { "dependsOn": ["^build"] },
-    "dev":       { "cache": false, "persistent": true }
-  }
-}
-```
-
-Use `--filter` to scope tasks to a single workspace:
-
-```bash
-pnpm turbo run build --filter=@nebutra/ui
-pnpm turbo run typecheck --filter=apps/web
-```
+| Need | Current home |
+| --- | --- |
+| New authenticated page | `apps/web/src/app/[locale]/(app)/` |
+| New marketing page | `apps/landing-page/src/app/[lang]/` |
+| New gateway route | `backends/gateway/src/routes/` |
+| New reusable UI component | `packages/design/ui/src/` |
+| New DB contract | `packages/platform/db/` |
+| New workflow scaffold | `workflows/<provider>/` |
 
 ## Related
 
 <CardGroup cols={2}>
-  <Card title="Backend Language Policy" icon="server" href="/docs/architecture/backend-language-policy">
-    TS-by-Default ADR — when (and only when) Python is acceptable.
+  <Card title="Next.js Quickstart" icon="rocket" href="/quickstart/nextjs">
+    Current app-shell and typed-client integration flow.
   </Card>
-  <Card title="Linting Rules" icon="shield" href="/docs/customization/linting-rules">
-    Lint-enforced governance: form controls, focus rings, icon tiers.
+  <Card title="Dashboard Customization" icon="layout-dashboard" href="/customization/dashboard">
+    Add new sections in the current `[locale]/(app)` tree.
   </Card>
-  <Card title="Local Development" icon="laptop" href="/docs/development/local-dev">
-    Step-by-step environment setup guide.
+  <Card title="Backend Language Policy" icon="server" href="/architecture/backend-language-policy">
+    When backend work belongs in TypeScript vs another runtime.
   </Card>
-  <Card title="Development Overview" icon="map" href="/docs/development/overview">
-    Prerequisites and quick start.
+  <Card title="JavaScript Surfaces" icon="code" href="/sdks/javascript">
+    Updated package-first integration model.
   </Card>
 </CardGroup>

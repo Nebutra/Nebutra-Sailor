@@ -1,285 +1,129 @@
 ---
 title: 仪表板定制
-description: 添加新的仪表板板块，自定义侧边栏导航，处理空状态/加载状态/错误状态，以及按套餐限制功能访问。
+description: 在当前 `[locale]/(app)` shell 中添加新页面，并用共享 layout 原语组合内容。
 ---
 
-已认证的仪表板位于 `apps/web/src/app/(dashboard)/`。该路由组中的每个页面都会自动获得共享的侧边栏、顶栏以及认证守卫。
+已认证产品 shell 当前位于：
 
-## 仪表板页面的结构
-
+```text
+apps/web/src/app/[locale]/(app)/
 ```
-apps/web/src/app/(dashboard)/
-  layout.tsx          ← 共享侧边栏 + 顶栏外壳
+
+它由 `apps/web/src/app/[locale]/(app)/layout.tsx` 挂载，layout 本身已经负责
+auth guard，并通过 `DesignSystemShell` 包裹所有页面。
+
+## 当前 app 页面结构
+
+```text
+apps/web/src/app/[locale]/(app)/
+  layout.tsx
   analytics/
-    page.tsx          ← 您的新板块
-    loading.tsx       ← 可选的 Suspense 回退
-    error.tsx         ← 可选的错误边界
+    page.tsx
+    loading.tsx
+  billing/
+    page.tsx
+    loading.tsx
 ```
 
-一个标准页面有四项职责：
+旧文档里假定“非 locale dashboard route group”的写法已经过时。
 
-1. **认证守卫** — 在服务端拒绝未认证的请求
-2. **租户上下文** — 解析当前组织信息
-3. **数据获取** — 在 Server Component 中加载数据
-4. **渲染** — 组合布局原语和功能组件
+## 创建新的板块
+
+```bash
+mkdir -p 'apps/web/src/app/[locale]/(app)/my-section'
+```
 
 ```typescript
-// apps/web/src/app/(dashboard)/analytics/page.tsx
+// apps/web/src/app/[locale]/(app)/my-section/page.tsx
 import { PageHeader } from "@nebutra/ui/layout";
-import { requireAuth, getTenantContext } from "@/lib/auth";
+import { requireAuth } from "@/lib/auth";
 
-export default async function AnalyticsPage() {
+export default async function MySectionPage() {
   await requireAuth();
-  const { tenantId, plan } = await getTenantContext();
 
   return (
     <div className="space-y-6">
       <PageHeader
-        title="分析"
-        description="跟踪整个组织的使用情况和性能"
-        actions={<ExportButton />}
+        title="My Section"
+        description="A new section inside the shared app shell."
       />
-      {/* 页面内容 */}
     </div>
   );
 }
 ```
 
-## 添加新的仪表板板块
+## Loading 与 error 状态
 
-<Steps>
-  <Step title="创建路由目录">
-    ```bash
-    mkdir -p apps/web/src/app/\(dashboard\)/my-section
-    ```
-  </Step>
-  <Step title="创建 page.tsx">
-    ```typescript
-    // apps/web/src/app/(dashboard)/my-section/page.tsx
-    import { PageHeader } from "@nebutra/ui/layout";
-    import { requireAuth, getTenantContext } from "@/lib/auth";
+```typescript
+// apps/web/src/app/[locale]/(app)/my-section/loading.tsx
+import { LoadingState } from "@nebutra/ui/layout";
 
-    export const metadata = {
-      title: "我的板块",
-    };
+export default function Loading() {
+  return <LoadingState message="Loading section…" />;
+}
+```
 
-    export default async function MySectionPage() {
-      await requireAuth();
-      const { tenantId } = await getTenantContext();
+如果需要客户端错误恢复，可增加 route-local `error.tsx` 并使用标准
+`ErrorState`。
 
-      return (
-        <div className="space-y-6">
-          <PageHeader
-            title="我的板块"
-            description="管理您的组件"
-          />
-          {/* 在此添加您的内容组件 */}
-        </div>
-      );
-    }
-    ```
-  </Step>
-  <Step title="添加到侧边栏导航">
-    打开 `apps/web/src/components/sidebar/nav-items.ts`，在适当的导航组中添加一条记录：
+## 共享 shell 行为
 
-    ```typescript
-    // apps/web/src/components/sidebar/nav-items.ts
-    export const mainNavItems: NavItem[] = [
-      // ... 现有条目
-      {
-        title: "我的板块",
-        href: "/my-section",
-        icon: "layers",          // 任意 Lucide 图标名称
-        group: "product",        // "product" | "settings" | "admin"
-      },
-    ];
-    ```
-  </Step>
-  <Step title="添加加载和错误状态">
-    ```typescript
-    // apps/web/src/app/(dashboard)/my-section/loading.tsx
-    import { LoadingState } from "@nebutra/ui/layout";
-    export default function Loading() {
-      return <LoadingState message="正在加载数据…" />;
-    }
-    ```
+页面 chrome、通知区与 product capability 由以下文件拥有：
 
-    ```typescript
-    // apps/web/src/app/(dashboard)/my-section/error.tsx
-    "use client";
-    import { ErrorState } from "@nebutra/ui/layout";
-    export default function Error({ error, reset }: { error: Error; reset: () => void }) {
-      return <ErrorState message={error.message} onRetry={reset} />;
-    }
-    ```
-  </Step>
-</Steps>
+- `apps/web/src/app/[locale]/(app)/layout.tsx`
+- `apps/web/src/app/[locale]/providers/design-system-shell.tsx`
+- `apps/web/src/lib/product-capabilities.ts`
+
+当新页面依赖 billing、workspace mode 或 notifications 时，应在这些能力
+假设上做收敛，而不是再发明一套平行 dashboard 约定。
+
+## 导航
+
+旧文档依赖的 sidebar item registry 已不存在。当前导航由 shell 与这些组件
+组合而成：
+
+```text
+apps/web/src/components/navigation/
+```
+
+新增主导航板块前，先读当前 shell / navigation wiring，并与活跃的 product
+capability model 保持一致。
 
 ## 布局原语
 
-`@nebutra/ui/layout` 提供四个即用的状态组件。请统一使用它们，而不是构建自定义变体。
-
-### PageHeader（页面标题）
-
 ```tsx
-import { PageHeader } from "@nebutra/ui/layout";
-
-<PageHeader
-  title="账单"
-  description="管理您的订阅和发票"
-  actions={
-    <button type="button" className="btn-primary">
-      升级套餐
-    </button>
-  }
-  breadcrumbs={[
-    { label: "设置", href: "/settings" },
-    { label: "账单" },
-  ]}
-/>
+import { Card, EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
 ```
 
-### EmptyState（空状态）
+优先复用这些共享 layout 组件，而不是再写一套私有 dashboard 变体。
 
-```tsx
-import { EmptyState } from "@nebutra/ui/layout";
+## tenant-aware 页面逻辑
 
-<EmptyState
-  icon="inbox"
-  title="暂无发票"
-  description="您的第一个计费周期完成后，发票将显示在这里。"
-  action={<CreateButton />}
-/>
-```
-
-### LoadingState（加载状态）
-
-```tsx
-import { LoadingState } from "@nebutra/ui/layout";
-
-<LoadingState message="正在获取报告…" />
-```
-
-### ErrorState（错误状态）
-
-```tsx
-import { ErrorState } from "@nebutra/ui/layout";
-
-<ErrorState
-  message="加载账单数据失败"
-  onRetry={() => router.refresh()}
-/>
-```
-
-## 按套餐限制功能访问
-
-使用 `<PlanGate>` 根据租户的订阅套餐有条件地渲染内容。该组件在服务端解析套餐，对不符合条件的租户不渲染任何内容（或渲染回退内容）。
-
-```tsx
-import { PlanGate } from "@/components/plan-gate";
-
-// 仅向 "pro" 和 "enterprise" 用户显示
-<PlanGate plans={["pro", "enterprise"]}>
-  <AdvancedAnalyticsPanel />
-</PlanGate>
-
-// 向免费用户显示升级提示
-<PlanGate
-  plans={["pro", "enterprise"]}
-  fallback={<UpgradeBanner feature="高级分析" />}
->
-  <AdvancedAnalyticsPanel />
-</PlanGate>
-```
-
-<Warning>
-  `<PlanGate>` 仅是 UI 便利组件。务必在 API 层通过 Hono 路由中的 `requirePermission` 强制执行套餐限制。切勿仅依赖客户端限制。
-</Warning>
-
-## 侧边栏导航结构
+当页面依赖租户状态时，通过共享服务端 helper 获取：
 
 ```typescript
-// apps/web/src/components/sidebar/nav-items.ts
+import { getTenantContext, requireAuth } from "@/lib/auth";
 
-export interface NavItem {
-  title: string;
-  href: string;
-  icon: string;           // Lucide 图标名称
-  group: NavGroup;
-  plans?: Plan[];         // 若设置，则仅对这些套餐的用户显示
-  badge?: string;         // 可选徽章文本，例如 "新功能"、"Beta"
-}
-
-type NavGroup = "product" | "settings" | "admin";
-type Plan = "free" | "starter" | "pro" | "enterprise";
+await requireAuth();
+const { tenantId, plan } = await getTenantContext();
 ```
 
-侧边栏按 `group` 分组渲染条目。带有 `plans` 限制的条目对其他套餐的租户隐藏——但这仅是**显示层面的处理**。路由本身也必须进行套餐限制。
+建议在页面和后端路由中显式做 plan / capability 判断，不要继续依赖已经不在
+当前 app surface 中的旧 `PlanGate` 例子。
 
-## 新板块的文件结构
-
-一个包含详情页的完整仪表板板块遵循以下结构：
-
-```
-apps/web/src/app/(dashboard)/
-  reports/
-    page.tsx              ← 列表视图
-    loading.tsx
-    error.tsx
-    [reportId]/
-      page.tsx            ← 详情视图
-      loading.tsx
-  _components/            ← 板块本地组件（下划线 = 非路由）
-    report-card.tsx
-    report-filters.tsx
-```
-
-<Tip>
-  在将板块本地组件接入页面之前，先在 Storybook 中开发它们。运行 `pnpm --filter @nebutra/storybook dev` 并在 `apps/storybook/src/stories/Reports.stories.tsx` 创建一个故事。
-</Tip>
-
-## 使用 AnimateIn 实现页面入场动画
-
-用 `AnimateIn` 包裹内容板块，以实现精致的入场动画。对折叠线以下的内容使用 `inView`。
-
-```tsx
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-
-export default async function ReportsPage() {
-  await requireAuth();
-  const reports = await fetchReports();
-
-  return (
-    <div className="space-y-6">
-      <AnimateIn preset="emerge">
-        <PageHeader title="报告" description="使用情况的历史快照" />
-      </AnimateIn>
-
-      <AnimateInGroup stagger="normal" className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {reports.map((report) => (
-          <AnimateIn key={report.id} preset="fadeUp">
-            <ReportCard report={report} />
-          </AnimateIn>
-        ))}
-      </AnimateInGroup>
-    </div>
-  );
-}
-```
-
----
+## 相关内容
 
 <CardGroup cols={2}>
-  <Card title="定制概览" icon="sliders" href="/zh/customization/overview">
-    返回完整定制地图
+  <Card title="Next.js 快速开始" icon="rocket" href="/zh/quickstart/nextjs">
+    当前 auth、shell 与 typed API 流程。
   </Card>
-  <Card title="主题配置" icon="paintbrush" href="/zh/customization/theming">
-    Token、明暗模式与多主题预设
+  <Card title="项目结构" icon="folders" href="/zh/development/project-structure">
+    Nebutra-Sailor 最新 apps / packages 布局。
   </Card>
-  <Card title="引导流程" icon="route" href="/zh/customization/onboarding">
-    自定义新用户引导流程
+  <Card title="数据库客户端" icon="database" href="/zh/database/use-client">
+    为 app 页面提供 tenant-scoped 数据访问。
   </Card>
-  <Card title="功能开发实战" icon="hammer" href="/zh/recipes/build-a-feature">
-    完整配方：分析仪表板端到端实现
+  <Card title="UI 组件" icon="component" href="/zh/components/overview">
+    共享原语与布局包。
   </Card>
 </CardGroup>

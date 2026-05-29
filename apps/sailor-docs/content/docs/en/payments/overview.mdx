@@ -1,136 +1,110 @@
 ---
 title: Payments Overview
-description: How Nebutra's billing system works — Stripe subscriptions, plan sync, and quota enforcement.
+description: Current billing architecture in Nebutra-Sailor: gateway routes, provider-specific checkout modules, subscriptions, credits, and entitlements.
 ---
 
-## Architecture
+Nebutra-Sailor's billing system is no longer a Stripe-only, single-file setup.
+The current package is a **provider-aware billing core** centered on
+`@nebutra/billing`.
 
-Nebutra's billing pipeline is built on three layers that work together to gate access by plan and enforce usage quotas in real time.
+## Current architecture
 
-```
-User
- └─▶ Stripe Checkout
-       └─▶ Stripe sends webhook
-             └─▶ /api/v1/webhooks/stripe
-                   └─▶ DB plan updated (tenant record)
-                         └─▶ @nebutra/metering enforces quotas
-```
-
-All Stripe integration code lives in `packages/commerce/billing/`. Application code calls helpers from `@nebutra/billing` — it never touches the Stripe SDK directly.
-
-## Plans
-
-<CardGroup cols={3}>
-  <Card title="FREE" icon="gift">
-    **$0 / month**
-
-    - 1,000 API calls / month
-    - 1 organization member
-    - Community support
-  </Card>
-  <Card title="PRO" icon="zap">
-    **$49 / month**
-
-    - 100,000 API calls / month
-    - 10 organization members
-    - Email support
-    - All features unlocked
-  </Card>
-  <Card title="ENTERPRISE" icon="building">
-    **Custom pricing**
-
-    - Unlimited API calls
-    - Unlimited members
-    - SSO / SAML
-    - SLA guarantee
-    - Custom contract
-  </Card>
-</CardGroup>
-
-## How plan sync works
-
-<Steps>
-  <Step title="Customer completes Stripe Checkout">
-    The user is redirected to a Stripe-hosted checkout page. On success, Stripe fires a `checkout.session.completed` event.
-  </Step>
-  <Step title="Webhook received and verified">
-    The API gateway endpoint `POST /api/v1/webhooks/stripe` receives the event, verifies the signature using `STRIPE_WEBHOOK_SECRET`, and routes it to the correct handler in `@nebutra/billing`.
-  </Step>
-  <Step title="Tenant plan record updated">
-    The handler updates the tenant's `plan` and `planExpiresAt` columns in the database, synchronizing the Stripe subscription state.
-  </Step>
-  <Step title="Quota enforcement activates">
-    On every subsequent API request, `@nebutra/metering` reads the tenant's current plan limits from the database and compares them against accumulated ClickHouse usage. Requests over quota receive a `429 Too Many Requests` response.
-  </Step>
-</Steps>
-
-## Where Stripe config lives
-
-| Location | Purpose |
-|----------|---------|
-| `packages/commerce/billing/src/stripe.ts` | Stripe client initialization |
-| `packages/commerce/billing/src/plans.ts` | Plan definitions and limit constants |
-| `packages/commerce/billing/src/handlers/` | Webhook event handlers |
-| `packages/commerce/billing/src/checkout.ts` | Checkout session creation helpers |
-| `packages/commerce/billing/src/portal.ts` | Stripe Customer Portal session helpers |
-
-## Environment variables
-
-Set the following in your `.env` file (or your deployment platform's secret manager):
-
-```bash
-# Stripe secret key — use sk_test_ in development, sk_live_ in production
-STRIPE_SECRET_KEY=sk_live_xxxxxxxxxxxxxxxxxxxx
-
-# Webhook signing secret — obtained from the Stripe Dashboard or Stripe CLI
-STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxx
-
-# Publishable key for the frontend (safe to expose)
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxxxxxxxxxxxxxxxxxxx
-
-# Price IDs for each paid plan (from Stripe Dashboard → Products → Prices)
-STRIPE_PRO_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
-STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
+```text
+apps/web billing surfaces
+  └─▶ typed gateway calls
+        └─▶ backends/gateway/src/routes/billing/*
+              ├─▶ @nebutra/billing/checkout
+              ├─▶ @nebutra/billing/subscriptions
+              ├─▶ @nebutra/billing/credits
+              ├─▶ @nebutra/billing/entitlements
+              └─▶ @nebutra/billing/usage
 ```
 
-<Warning>
-Never commit real Stripe keys to source control. Use `.env.local` locally and inject secrets through your CI/CD environment for production deployments.
-</Warning>
+Webhook handlers also live in the gateway under:
 
-## Stripe Dashboard setup
+```text
+backends/gateway/src/routes/webhooks/stripe.ts
+```
 
-<Steps>
-  <Step title="Create a Stripe account">
-    Sign up at [stripe.com](https://stripe.com) and activate your account.
-  </Step>
-  <Step title="Create products and prices">
-    Go to **Stripe Dashboard → Products → Add product**. Create one product for PRO ($49/month recurring) and one for ENTERPRISE (custom). Copy the Price IDs into your environment variables.
-  </Step>
-  <Step title="Register the webhook endpoint">
-    Go to **Developers → Webhooks → Add endpoint**. Set the URL to `https://api.yourdomain.com/api/v1/webhooks/stripe` and select the events listed in the [Webhooks](/payments/webhooks) page.
-  </Step>
-  <Step title="Copy the webhook signing secret">
-    After creating the endpoint, reveal and copy the **Signing secret** (`whsec_...`) into `STRIPE_WEBHOOK_SECRET`.
-  </Step>
-</Steps>
+## Package layout
 
-<Tip>
-During local development, use the [Stripe CLI](https://stripe.com/docs/stripe-cli) to forward live events to your local server instead of setting up a public endpoint.
-</Tip>
+The current billing package surface is split by concern:
+
+| Area | Current location |
+| --- | --- |
+| Provider checkout orchestration | `packages/commerce/billing/src/checkout/` |
+| Provider-specific Stripe helpers | `packages/commerce/billing/src/stripe/` |
+| Subscriptions | `packages/commerce/billing/src/subscriptions/` |
+| Credits | `packages/commerce/billing/src/credits/` |
+| Usage / metering | `packages/commerce/billing/src/usage/` |
+| Entitlements | `packages/commerce/billing/src/entitlements/` |
+| Plan configuration | `packages/commerce/billing/src/config/` |
+
+Earlier docs that pointed to `src/plans.ts`, `src/handlers/`, `src/portal.ts`,
+or a monolithic `src/checkout.ts` are stale.
+
+## Providers
+
+The codebase currently contains provider modules for:
+
+- Stripe
+- Polar
+- LemonSqueezy
+- ChinaPay
+- manual / credit purchase flows
+
+The active provider choice depends on runtime configuration and the gateway
+route invoking the checkout abstraction.
+
+## Web app surfaces
+
+The authenticated app already ships billing pages under:
+
+```text
+apps/web/src/app/[locale]/(app)/billing/
+apps/web/src/components/billing/
+```
+
+Use those surfaces as the source of truth for product behavior before updating
+documentation copy about plans, entitlements, or upgrade flows.
+
+## Entitlements and usage
+
+`@nebutra/billing` is responsible for more than checkout:
+
+- feature entitlements
+- credits
+- usage metering
+- overage calculations
+
+That means a plan change can affect UI gating, API limits, and background usage
+accounting, not just subscription state.
+
+## Configuration guidance
+
+Billing configuration now spans:
+
+- provider credentials
+- checkout readiness
+- plan/limit configuration
+- webhook secrets
+
+Review the package entrypoints and your deployment environment together instead
+of assuming a fixed pair of `STRIPE_*_PRICE_ID` variables is the whole story.
 
 ## Related
 
 <CardGroup cols={2}>
   <Card title="Manage Plans" icon="sliders" href="/payments/manage-plans">
-    Define plan limits and add new billing tiers.
+    Plan config and entitlement shape.
   </Card>
   <Card title="Subscriptions" icon="refresh-cw" href="/payments/subscriptions">
-    Checkout flow, subscription states, and trial periods.
-  </Card>
-  <Card title="Paywall" icon="lock" href="/payments/paywall">
-    Gate features and API routes by plan.
+    Subscription lifecycle and checkout-return handling.
   </Card>
   <Card title="Webhooks" icon="webhook" href="/payments/webhooks">
-    Handle Stripe webhook events reliably.
+    Gateway webhook routes and provider event handling.
+  </Card>
+  <Card title="Integrations" icon="plug" href="/integrations/overview">
+    How payment providers relate to the integrations surface.
   </Card>
 </CardGroup>

@@ -1,51 +1,91 @@
 ---
 title: 集成概览
-description: 将 Nebutra 与你团队已经在使用的工具连接起来。
+description: 当前由用户管理的 integration surface，以及围绕它们运作的平台服务。
 ---
 
-## 可用集成
+Nebutra-Sailor 当前会明确区分：
 
-<CardGroup cols={3}>
-  <Card title="Vercel" icon="triangle" href="/zh/integrations/vercel">
-    零配置部署到 Vercel，自动提供环境变量。
-  </Card>
+- **用户可管理的 integrations**：在产品 UI 中暴露
+- **平台服务**：支撑整个栈，但并不是通过某个通用 `defineIntegration()`
+  API 注册出来的
+
+## 用户可管理的 integrations
+
+当前 web app 的 integrations 页面围绕这些类型工作：
+
+- `SHOPIFY`
+- `SHOPLINE`
+- `STRIPE`
+- `CUSTOM`
+
+对应的产品页面位于：
+
+```text
+apps/web/src/app/[locale]/(app)/integrations/page.tsx
+```
+
+后端 API 位于：
+
+```text
+backends/gateway/src/routes/integrations/index.ts
+```
+
+## 平台服务
+
+这些服务很重要，但它们 **不是** 通过一个虚构的
+`@nebutra/integrations` 包注册出来的：
+
+| 服务 | 作用 |
+| --- | --- |
+| Resend / email | 事务性邮件基础设施 |
+| Sanity | 内容管理与编辑数据 |
+| Sentry | 错误监控 |
+| Vercel | 部署目标 |
+
+应把它们视为 platform dependency 或 provider-specific package，而不是一个
+抽象 integration registry 中的记录，除非代码里真的这样建模。
+
+## 当前 route / API 模型
+
+gateway 在 `/api/v1/integrations` 下暴露 integration CRUD，并通过加密的
+integration model 持久化 credentials / settings。
+
+浏览器调用示例：
+
+```typescript
+import { browserApiClient } from "@/lib/api/client";
+
+const { data } = await browserApiClient.GET("/api/v1/integrations");
+```
+
+## 添加新的 managed integration
+
+今天新增一个 integration，需要修改的是真实 gateway + UI surface：
+
+1. 扩展 `backends/gateway/src/routes/integrations/index.ts` 中的 schema/type
+2. 更新 `apps/web/src/app/[locale]/(app)/integrations/page.tsx` 中的 UI catalog
+3. 如果需要 secrets，使用 DB 层已支持的 `integration.credentials` /
+   `integration.settings` 加密字段
+
+不要继续文档化或导入以下旧接口：
+
+- `@nebutra/integrations`
+- `defineIntegration(...)`
+- 某个独立的 web app integration registry 文件
+
+## 相关内容
+
+<CardGroup cols={2}>
   <Card title="Stripe" icon="credit-card" href="/zh/integrations/stripe">
-    计费、订阅和支付 Webhook 预先接好线。
+    支付 provider 的集成说明。
   </Card>
-  <Card title="Slack" icon="slack" href="/zh/integrations/slack">
-    向 Slack 频道发送通知和告警。
+  <Card title="账单概览" icon="wallet" href="/zh/payments/overview">
+    计费 provider、checkout 流程与 gateway routes。
   </Card>
-  <Card title="GitHub" icon="github">
-    在 GitHub 事件上触发工作流。同步 Issues 和 PR。
+  <Card title="数据库客户端" icon="database" href="/zh/database/use-client">
+    加密 integration 凭证与 tenant-scoped 访问。
   </Card>
-  <Card title="Linear" icon="pencil">
-    从 Nebutra 事件创建并同步 Linear Issues。
-  </Card>
-  <Card title="Resend" icon="envelope">
-    事务性邮件——已配置。模板在 Sanity 中管理。
-  </Card>
-  <Card title="Sanity" icon="database">
-    博客、更新日志和邮件模板的内容管理。
-  </Card>
-  <Card title="Sentry" icon="bug">
-    含租户上下文的错误追踪，已预配置。
-  </Card>
-  <Card title="Supabase" icon="server">
-    PostgreSQL + pgvector，已为多租户预配置 RLS 策略。
+  <Card title="项目结构" icon="folders" href="/zh/development/project-structure">
+    真实 integration 路由与页面所在位置。
   </Card>
 </CardGroup>
-
-## 内置 vs 可配置
-
-部分集成已预先接好线，默认处于激活状态。其他需要 API 密钥才能激活。
-
-| 集成 | 状态 | 说明 |
-|------|------|------|
-| Vercel | 内置 | 零配置部署 |
-| Resend | 设置 `RESEND_API_KEY` 后激活 | 邮件模板已就绪 |
-| Stripe | 设置 `STRIPE_SECRET_KEY` 后激活 | Webhook 已预配置 |
-| Sentry | 设置 `SENTRY_DSN` 后激活 | 租户上下文自动标记 |
-| Sanity | 设置 `SANITY_API_TOKEN` 后激活 | Studio 在 studio.nebutra.com |
-| Slack | 需要 OAuth 配置 | 通过设置 → 集成 |
-| GitHub | 需要 OAuth 配置 | 通过设置 → 集成 |
-| Linear | 需要 API 密钥 | 通过设置 → 集成 |

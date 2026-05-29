@@ -1,113 +1,95 @@
 ---
 title: Node.js Quickstart
-description: Use the Nebutra SDK in a Node.js backend or serverless function in under 5 minutes.
+description: Compose Nebutra's current server-side packages in a Node.js or Hono backend.
 ---
 
-## Prerequisites
+There is no standalone `@nebutra/sdk` package for Node backends in this repo.
+Server integrations are built by composing focused packages such as
+`@nebutra/logger`, `@nebutra/agents`, `@nebutra/permissions`, and `@nebutra/db`.
 
-- Node.js 22+
-- A Nebutra account with an [OPC license](https://nebutra.com/en/get-license) (free)
+## Step 1: Install focused server packages
 
-## Step 1: Install the SDK
-
-<CodeGroup>
-
-```bash npm
-npm install @nebutra/sdk
+```bash
+pnpm add @nebutra/logger @nebutra/agents @nebutra/permissions @nebutra/db
 ```
 
-```bash pnpm
-pnpm add @nebutra/sdk
+Add only what your service actually needs.
+
+## Step 2: Start with structured logging
+
+```typescript
+import { logger } from "@nebutra/logger";
+
+logger.info("worker.started", { service: "reporting" });
 ```
 
-</CodeGroup>
+Avoid `console.log` in long-lived services so log routing and tenant metadata
+stay consistent with the rest of the platform.
 
-## Step 2: Configure environment variables
+## Step 3: Use the AI runtime where generation belongs
 
-```bash .env
-NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
-NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
-```
+```typescript
+import { generateText } from "@nebutra/agents";
 
-## Step 3: Initialize the client
-
-```typescript src/lib/nebutra.ts
-import { createClient } from "@nebutra/sdk";
-
-export const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
+const result = await generateText({
+  model: "openai/gpt-4.1-mini",
+  prompt: "Summarize the last 24 hours of usage anomalies.",
 });
 ```
 
-## Step 4: Verify a request token
+## Step 4: Resolve permissions explicitly
 
-If you're building an API that receives requests from Nebutra-authenticated users:
+```typescript
+import { createPermissionChecker } from "@nebutra/permissions";
 
-```typescript src/middleware/auth.ts
-import { verifyToken } from "@nebutra/sdk/server";
-
-export async function authMiddleware(req: Request) {
-  const token = req.headers.get("authorization")?.replace("Bearer ", "");
-  if (!token) throw new Error("Unauthorized");
-
-  const { userId, orgId, scopes } = await verifyToken(token, {
-    apiKey: process.env.NEBUTRA_API_KEY!,
-  });
-
-  return { userId, orgId, scopes };
-}
-```
-
-## Step 5: Send a webhook event
-
-```typescript src/events.ts
-import { nebutra } from "./lib/nebutra";
-
-await nebutra.webhooks.send({
-  eventType: "invoice.paid",
-  payload: {
-    invoiceId: "inv_123",
-    amount: 9900, // cents
-    currency: "usd",
-  },
-  tenantId: "org_123",
+const checker = createPermissionChecker({
+  role: "admin",
 });
+
+const allowed = checker.can("billing:manage");
 ```
 
-## Step 6: Check a user's permission
+Mirror the same permission model your UI exposes; do not rely on browser-only
+gates for server mutations.
 
-```typescript src/handlers/delete-resource.ts
-import { nebutra } from "./lib/nebutra";
+## Step 5: Choose tenant-scoped vs system-scoped database access
 
-export async function deleteResource(userId: string, resourceId: string) {
-  const allowed = await nebutra.permissions.check({
-    userId,
-    action: "delete",
-    resource: "Project",
-  });
+```typescript
+import { getSystemDb, getTenantDb } from "@nebutra/db";
 
-  if (!allowed) {
-    throw new Error("Forbidden: missing project:delete scope");
-  }
-
-  // proceed with deletion
-}
+const tenantDb = getTenantDb("org_123");
+const systemDb = getSystemDb();
 ```
 
-## Next steps
+- `getTenantDb()` for request-scoped tenant data
+- `getSystemDb()` for admin jobs, webhook bootstrap, or cross-tenant tasks
+
+## Step 6: Prefer Hono routes inside the gateway
+
+In this repo, new backend work defaults to `backends/gateway/`:
+
+```typescript
+import { OpenAPIHono } from "@hono/zod-openapi";
+
+const app = new OpenAPIHono();
+```
+
+The current gateway already owns auth, tenancy, billing, integrations, and
+webhook surfaces, so add server code there before inventing a parallel runtime.
+
+## Related
 
 <CardGroup cols={2}>
-  <Card title="Webhooks Guide" icon="webhook" href="/guides/webhooks">
-    Full webhook setup, event types, and signature verification.
+  <Card title="Backend Language Policy" icon="server" href="/architecture/backend-language-policy">
+    When to keep work in TypeScript vs escalate to Python.
   </Card>
-  <Card title="Rate Limits" icon="gauge" href="/guides/rate-limits">
-    Understand quotas and how to handle 429 responses.
+  <Card title="Database Client" icon="database" href="/database/use-client">
+    Tenant-scoped and system-scoped DB access.
   </Card>
-  <Card title="API Reference" icon="code" href="/api-reference/overview">
-    Complete REST API documentation.
+  <Card title="AI Overview" icon="sparkles" href="/ai/overview">
+    Current `@nebutra/agents` runtime surface.
   </Card>
-  <Card title="JavaScript SDK" icon="js" href="/sdks/javascript">
-    Full SDK reference.
+  <Card title="Monitoring Logs" icon="file-text" href="/monitoring/logs">
+    Structured logging with `@nebutra/logger`.
   </Card>
 </CardGroup>

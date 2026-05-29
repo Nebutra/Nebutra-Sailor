@@ -1,152 +1,156 @@
 ---
 title: Next.js Quickstart
-description: Integrate Nebutra with your Next.js 16 App Router project in under 5 minutes.
+description: Build a Nebutra-style Next.js 16 app using the current auth, UI, and typed API surfaces.
 ---
 
-## Prerequisites
+This quickstart reflects the **current** Nebutra-Sailor app shape. There is no
+single `@nebutra/sdk` browser package. A modern Next.js integration uses:
 
-- Node.js 22+
-- A Nebutra account with an [OPC license](https://nebutra.com/en/get-license) (free)
-- An existing Next.js 16 project, or create one:
+- `@nebutra/auth` for auth runtime
+- `@nebutra/ui` for UI primitives and layouts
+- the generated API client in `apps/web/src/lib/api/client.ts`
+- app-level helpers such as `requireAuth()` and `getTenantContext()`
 
-```bash
-npx create-next-app@latest my-app --typescript --tailwind --app
-cd my-app
+## Step 1: Start from the right structure
+
+Inside this monorepo, the authenticated app lives under:
+
+```text
+apps/web/src/app/[locale]/(app)/
 ```
 
-## Step 1: Install the SDK
+Protected pages are rendered inside the shared app shell at:
 
-<CodeGroup>
-
-```bash npm
-npm install @nebutra/sdk
+```text
+apps/web/src/app/[locale]/(app)/layout.tsx
 ```
 
-```bash pnpm
-pnpm add @nebutra/sdk
-```
+## Step 2: Use the shared auth helpers
 
-```bash yarn
-yarn add @nebutra/sdk
-```
+Server-side route protection is handled by `apps/web/src/lib/auth.ts`:
 
-</CodeGroup>
+```typescript
+import { requireAuth, getTenantContext } from "@/lib/auth";
 
-## Step 2: Configure environment variables
-
-Create a `.env.local` file at your project root:
-
-```bash .env.local
-# From your Nebutra dashboard → Settings → API Keys
-NEBUTRA_API_KEY=nbk_live_xxxxxxxxxxxxxxxxxxxx
-NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
-
-# Public key — safe to expose to the browser
-NEXT_PUBLIC_NEBUTRA_ORG_ID=org_xxxxxxxxxxxxxxxxxxxx
-```
-
-<Warning>
-  Never commit `.env.local` to source control. Add it to `.gitignore`.
-</Warning>
-
-## Step 3: Initialize the client
-
-Create a shared Nebutra client:
-
-```typescript lib/nebutra.ts
-import { createClient } from "@nebutra/sdk";
-
-export const nebutra = createClient({
-  apiKey: process.env.NEBUTRA_API_KEY!,
-  orgId: process.env.NEBUTRA_ORG_ID!,
-});
-```
-
-## Step 4: Protect a route with authentication
-
-Add auth to a Server Component using the Nebutra proxy (Next.js 16+ uses `proxy.ts` instead of `middleware.ts`):
-
-```typescript proxy.ts
-import { withNebutraAuth } from "@nebutra/sdk/next";
-
-export default withNebutraAuth({
-  publicRoutes: ["/", "/sign-in", "/sign-up"],
-});
-
-export const config = {
-  matcher: ["/((?!_next|favicon.ico).*)"],
-};
-```
-
-## Step 5: Read the current user in a Server Component
-
-```typescript app/dashboard/page.tsx
-import { getAuth } from "@nebutra/sdk/next/server";
-
-export default async function DashboardPage() {
-  const { user, org } = await getAuth();
-
-  if (!user) {
-    redirect("/sign-in");
-  }
+export default async function WorkspacePage() {
+  await requireAuth();
+  const { tenantId, plan } = await getTenantContext();
 
   return (
     <div>
-      <h1>Welcome, {user.firstName}</h1>
-      <p>Organization: {org.name}</p>
-      <p>Plan: {org.plan}</p>
+      <h1>Workspace</h1>
+      <p>Tenant: {tenantId}</p>
+      <p>Plan: {plan}</p>
     </div>
   );
 }
 ```
 
-## Step 6: Make your first API call
+## Step 3: Render with shared UI primitives
 
-```typescript app/api/projects/route.ts
-import { NextResponse } from "next/server";
-import { nebutra } from "@/lib/nebutra";
-import { getAuth } from "@nebutra/sdk/next/server";
+```tsx
+import { Card, PageHeader } from "@nebutra/ui/layout";
 
-export async function GET() {
-  const { org } = await getAuth();
-
-  const projects = await nebutra.projects.list({
-    orgId: org.id,
-    limit: 20,
-  });
-
-  return NextResponse.json(projects);
+export default function Example() {
+  return (
+    <div className="space-y-6">
+      <PageHeader title="Analytics" description="Growth and usage metrics." />
+      <Card className="p-6">Dashboard content</Card>
+    </div>
+  );
 }
 ```
 
-## Step 7: Check permissions before an action
+## Step 4: Call the gateway through the typed client
 
-```typescript app/actions/delete-project.ts
-"use server";
-import { requirePermission } from "@nebutra/sdk/next/server";
-import { nebutra } from "@/lib/nebutra";
+The supported client lives at `apps/web/src/lib/api/client.ts`:
 
-export async function deleteProject(projectId: string) {
-  // Throws 403 if user lacks the `project:delete` scope
-  await requirePermission("project:delete");
+```typescript
+import { getTypedApi } from "@/lib/api/client";
 
-  await nebutra.projects.delete(projectId);
+export default async function ModelsPage() {
+  const api = await getTypedApi();
+  const { data, error } = await api.GET("/api/v1/ai/models");
+
+  if (error) {
+    throw new Error("Failed to load models");
+  }
+
+  return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
 ```
 
-## You're ready
+For Client Components, use `browserApiClient` instead of calling a fictional
+SDK object:
+
+```typescript
+import { browserApiClient } from "@/lib/api/client";
+
+const response = await browserApiClient.GET("/api/v1/integrations");
+```
+
+## Step 5: Add a new app page in the current route group
+
+Create the page inside `[locale]/(app)`:
+
+```bash
+mkdir -p 'apps/web/src/app/[locale]/(app)/my-section'
+```
+
+```typescript
+// apps/web/src/app/[locale]/(app)/my-section/page.tsx
+import { PageHeader } from "@nebutra/ui/layout";
+import { requireAuth } from "@/lib/auth";
+
+export default async function MySectionPage() {
+  await requireAuth();
+
+  return (
+    <div className="space-y-6">
+      <PageHeader title="My Section" description="Built on the shared app shell." />
+    </div>
+  );
+}
+```
+
+## Step 6: Respect feature flags and tenant capabilities
+
+The app shell derives workspace, billing, and notifications behavior from
+`resolveWebProductCapabilities()`:
+
+```typescript
+import { resolveWebProductCapabilities } from "@/lib/product-capabilities";
+
+const capabilities = resolveWebProductCapabilities();
+```
+
+When you add a page that depends on billing, notifications, or workspace mode,
+make those assumptions explicit in the page logic rather than hardcoding a
+universal dashboard shape.
+
+## Step 7: Regenerate API types when gateway contracts change
+
+```bash
+pnpm --filter @nebutra/gateway generate:spec
+pnpm generate:api-types
+```
+
+This refreshes the client-side `paths` contract used by `getTypedApi()` and
+`browserApiClient`.
+
+## Related
 
 <CardGroup cols={2}>
-  <Card title="Core Concepts" icon="layers" href="/concepts/architecture">
-    Understand multi-tenancy and the permission model.
+  <Card title="Project Structure" icon="folders" href="/development/project-structure">
+    Current repo layout and app/package boundaries.
   </Card>
-  <Card title="Authentication Guide" icon="shield-check" href="/guides/authentication">
-    Deep dive into auth flows and session management.
+  <Card title="Database Client" icon="database" href="/database/use-client">
+    Tenant-scoped data access with `getTenantDb()`.
   </Card>
-  <Card title="Webhooks" icon="webhook" href="/guides/webhooks">
-    Listen to real-time events from your Nebutra tenant.
+  <Card title="Dashboard Customization" icon="layout-dashboard" href="/customization/dashboard">
+    Add new sections in the `[locale]/(app)` shell.
   </Card>
-  <Card title="API Reference" icon="code" href="/api-reference/overview">
-    Full REST API documentation.
+  <Card title="JavaScript Surfaces" icon="code" href="/sdks/javascript">
+    Current package-first integration model.
   </Card>
 </CardGroup>

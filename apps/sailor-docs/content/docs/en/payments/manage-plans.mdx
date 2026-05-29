@@ -1,169 +1,60 @@
 ---
 title: Manage Plans
-description: Create Stripe products, configure plan limits in code, and add new billing tiers to Nebutra.
+description: Update billing configuration, limits, and entitlements in the current provider-aware billing package.
 ---
 
-## Prerequisites
+Plan management is no longer centered on a single `packages/commerce/billing/src/plans.ts`
+file. The current billing package splits plan behavior across:
 
-- Stripe account with API access
-- Environment variables configured (see [Payments Overview](/payments/overview))
-- Stripe CLI installed: `npm install -g stripe`
+- `packages/commerce/billing/src/config/`
+- `packages/commerce/billing/src/entitlements/`
+- `packages/commerce/billing/src/usage/`
+- provider checkout modules under `packages/commerce/billing/src/checkout/`
 
-## Step 1: Create products in Stripe
+## What a plan change can affect
 
-Each billing tier maps to a Stripe product with one or more prices. Run the Stripe CLI to create them, or use the Dashboard UI.
+A plan change may update all of these at once:
 
-<Tabs>
-  <Tab title="Stripe CLI">
-    ```bash
-    # Create the PRO product
-    stripe products create \
-      --name="Nebutra PRO" \
-      --description="100,000 API calls/month, 10 members, email support"
+- checkout price mapping
+- feature entitlements
+- usage limits / overage behavior
+- billing page copy and upgrade prompts
 
-    # Create a monthly recurring price for PRO ($49/month)
-    stripe prices create \
-      --product=prod_REPLACE_WITH_PRO_ID \
-      --unit-amount=4900 \
-      --currency=usd \
-      --recurring[interval]=month \
-      --nickname="PRO Monthly"
+That is why plan work should be treated as a package-level billing change, not
+just an edit to one constants file.
 
-    # Create the ENTERPRISE product (custom pricing — set price manually)
-    stripe products create \
-      --name="Nebutra ENTERPRISE" \
-      --description="Unlimited, SSO, SLA, custom contract"
-    ```
-  </Tab>
-  <Tab title="Stripe Dashboard">
-    1. Go to **Stripe Dashboard → Products → Add product**.
-    2. Set the name, description, and pricing for each tier.
-    3. Copy the **Price ID** (`price_...`) for each tier into your `.env` file.
-  </Tab>
-</Tabs>
+## Recommended workflow
 
-## Step 2: Set price ID environment variables
+1. Update the plan configuration source in `packages/commerce/billing/src/config/`.
+2. Review entitlements in `packages/commerce/billing/src/entitlements/`.
+3. Review usage and metering behavior in `packages/commerce/billing/src/usage/`.
+4. Verify any provider-specific checkout assumptions in `packages/commerce/billing/src/checkout/`.
+5. Check the user-facing billing pages under `apps/web/src/app/[locale]/(app)/billing/`.
 
-After creating prices in Stripe, record their IDs:
+## When adding a new tier
 
-```bash
-STRIPE_PRO_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
-STRIPE_ENTERPRISE_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
-```
+For a new tier such as `teams` or `growth`, review:
 
-## Step 3: Configure plan limits in code
+- checkout provider price mapping
+- feature entitlements
+- usage limits
+- upgrade copy in the web app
+- any downstream analytics or provisioning assumptions
 
-Plan limits are defined in `packages/commerce/billing/src/plans.ts`. Each entry maps a plan name to its resource quotas.
+## Verification checklist
 
-```typescript packages/commerce/billing/src/plans.ts
-export const PLANS = {
-  free: {
-    id: "free",
-    name: "FREE",
-    stripePriceId: null,
-    limits: {
-      apiCallsPerMonth: 1_000,
-      orgMembers: 1,
-    },
-    features: {
-      emailSupport: false,
-      sso: false,
-    },
-  },
-  pro: {
-    id: "pro",
-    name: "PRO",
-    stripePriceId: process.env.STRIPE_PRO_PRICE_ID!,
-    limits: {
-      apiCallsPerMonth: 100_000,
-      orgMembers: 10,
-    },
-    features: {
-      emailSupport: true,
-      sso: false,
-    },
-  },
-  enterprise: {
-    id: "enterprise",
-    name: "ENTERPRISE",
-    stripePriceId: process.env.STRIPE_ENTERPRISE_PRICE_ID!,
-    limits: {
-      apiCallsPerMonth: Infinity,
-      orgMembers: Infinity,
-    },
-    features: {
-      emailSupport: true,
-      sso: true,
-    },
-  },
-} as const;
-
-export type PlanId = keyof typeof PLANS;
-export type Plan = (typeof PLANS)[PlanId];
-```
-
-## Step 4: Retrieve a plan by ID
-
-Use the `getPlan` helper anywhere in your backend code:
-
-```typescript
-import { getPlan } from "@nebutra/billing";
-
-const plan = getPlan("pro");
-// → { id: "pro", name: "PRO", limits: { apiCallsPerMonth: 100000, ... }, ... }
-
-const limit = plan.limits.apiCallsPerMonth;
-// → 100000
-```
-
-## Adding a new plan tier
-
-<Steps>
-  <Step title="Create the product and price in Stripe">
-    Use the Stripe CLI or Dashboard to create a new product and price. Copy the Price ID.
-  </Step>
-  <Step title="Add the price ID to environment variables">
-    ```bash
-    STRIPE_TEAMS_PRICE_ID=price_xxxxxxxxxxxxxxxxxxxx
-    ```
-  </Step>
-  <Step title="Add the plan entry to PLANS">
-    ```typescript packages/commerce/billing/src/plans.ts
-    teams: {
-      id: "teams",
-      name: "TEAMS",
-      stripePriceId: process.env.STRIPE_TEAMS_PRICE_ID!,
-      limits: {
-        apiCallsPerMonth: 500_000,
-        orgMembers: 50,
-      },
-      features: {
-        emailSupport: true,
-        sso: false,
-      },
-    },
-    ```
-  </Step>
-  <Step title="Update any plan-gating logic">
-    If you use `requirePlan('pro')` checks, update them to also accept the new tier where appropriate (see [Paywall](/payments/paywall)).
-  </Step>
-</Steps>
-
-## Updating plan limits
-
-Edit the `limits` object for the relevant plan in `packages/commerce/billing/src/plans.ts`. Changes take effect immediately after the next deployment — no database migration required, since limits are resolved at request time.
-
-<Note>
-Plan changes in the database take effect as soon as the Stripe webhook is received and processed. There is no polling delay. Quota enforcement uses the latest plan record on every request.
-</Note>
+- `pnpm --filter @nebutra/billing test`
+- `pnpm --filter @nebutra/billing typecheck`
+- verify the gateway billing routes under `backends/gateway/src/routes/billing/`
+- verify the billing UI under `apps/web/src/components/billing/`
 
 ## Related
 
 <CardGroup cols={2}>
   <Card title="Payments Overview" icon="credit-card" href="/payments/overview">
-    Architecture, environment variables, and Stripe Dashboard setup.
+    Current billing architecture and package layout.
   </Card>
   <Card title="Paywall" icon="lock" href="/payments/paywall">
-    Gate features and API routes by plan tier.
+    Gate features with current plan/entitlement logic.
   </Card>
 </CardGroup>
