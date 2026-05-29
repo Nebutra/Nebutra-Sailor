@@ -168,13 +168,16 @@ run_snapshot_once() {
 
   ensure_public_target_route "$snapshot_dir"
 
-  docker run --rm \
-    -v "$snapshot_dir:/workspace" \
-    -v "$OUTPUT_DIR:/out" \
-    -v "$STORE_DIR:/pnpm-store" \
-    -w /workspace \
-    "$CONTAINER_IMAGE" \
-    bash -lc "
+  local docker_attempt
+  for docker_attempt in 1 2 3; do
+    set +e
+    docker run --rm \
+      -v "$snapshot_dir:/workspace" \
+      -v "$OUTPUT_DIR:/out" \
+      -v "$STORE_DIR:/pnpm-store" \
+      -w /workspace \
+      "$CONTAINER_IMAGE" \
+      bash -lc "
       set -euo pipefail
       corepack enable
       corepack prepare pnpm@10.14.0 --activate
@@ -254,6 +257,21 @@ run_snapshot_once() {
       kill \$APP_PID >/dev/null 2>&1 || true
       wait \$APP_PID 2>/dev/null || true
     "
+    local docker_status=$?
+    set -e
+
+    if [[ "$docker_status" -eq 0 ]]; then
+      return 0
+    fi
+
+    if [[ "$docker_status" -eq 125 && "$docker_attempt" -lt 3 ]]; then
+      echo "Docker failed before container start (exit 125); retrying ${label} snapshot..." >&2
+      sleep $((docker_attempt * 10))
+      continue
+    fi
+
+    return "$docker_status"
+  done
 }
 
 for run in $(seq 1 "$RUNS"); do
