@@ -1481,6 +1481,7 @@
     },
     "faq": {
       "title": "Frequently Asked Questions",
+      "description": "Keep the license decision legible: pick AGPL for open-source distribution, or use a commercial exception when your product must stay closed-source.",
       "items": {
         "whyAgpl": {
           "q": "Why AGPL-3.0?",

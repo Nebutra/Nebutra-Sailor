@@ -1481,6 +1481,7 @@
     },
     "faq": {
       "title": "Questions fréquentes",
+      "description": "Gardez la décision de licence lisible : AGPL pour la distribution open source, ou exception commerciale quand le produit doit rester fermé.",
       "items": {
         "whyAgpl": {
           "q": "Pourquoi AGPL-3.0 ?",
