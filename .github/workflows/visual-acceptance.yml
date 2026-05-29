@@ -52,6 +52,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build visual app dependencies
+        run: |
+          pnpm turbo build \
+            --filter="@nebutra/design-docs^..." \
+            --filter="@nebutra/landing-page^..."
+
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
