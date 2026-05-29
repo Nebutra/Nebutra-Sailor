@@ -1,0 +1,57 @@
+---
+title: Primitives
+description: Choose the right governed UI primitive by product job before reaching for custom composition.
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-29"
+---
+
+Use this page as the stable entry point for the component system. The component catalog is organized by what a product surface needs to accomplish, not by visual novelty.
+
+<Cards>
+  <Card
+    title="Forms & Inputs"
+    href="/en/docs/components/input"
+    description="Capture user intent with inputs, textarea, select, checkbox, radio, switch, slider, and validation primitives."
+  />
+  <Card
+    title="Actions & Commands"
+    href="/en/docs/components/button"
+    description="Trigger actions through buttons, command menus, context menus, toggles, and grouped commands."
+  />
+  <Card
+    title="Overlays & Disclosure"
+    href="/en/docs/components/dialog"
+    description="Interrupt, disclose, or layer content with dialog, popover, sheet, tooltip, drawer, and disclosure primitives."
+  />
+  <Card
+    title="AI & Agent Surfaces"
+    href="/en/docs/components/message-content"
+    description="Render assistant output, tool calls, plans, and agent workflow state with governed AI surface primitives."
+  />
+</Cards>
+
+## Decision Model
+
+| Product job | Start with | Avoid |
+| --- | --- | --- |
+| Single-value text entry | [Input](/en/docs/components/input) | Reusing Textarea for one-line data because it looks larger. |
+| Multi-line authoring | [Textarea](/en/docs/components/textarea) | Custom editable divs without native form semantics. |
+| Bounded choice | [Select](/en/docs/components/select) | Command menus when the options are short and static. |
+| Destructive confirmation | [Alert Dialog](/en/docs/components/alert-dialog) | Generic Dialog without an explicit risk contract. |
+| Background task feedback | [Progress](/en/docs/components/progress) or [Status Dot](/en/docs/components/status-dot) | Decorative loaders when the state is known. |
+| Structured data | [Table](/en/docs/components/table) or [Description](/en/docs/components/description) | Card grids that make comparison harder. |
+
+## Governance Contract
+
+Every primitive in this section must make the same contract visible across source, docs, Storybook, and registry:
+
+1. Public API and type names match the behavior consumers need.
+2. Focus, keyboard, disabled, error, loading, empty, and dark-mode states are documented.
+3. Examples consume semantic or component tokens, not raw colors or one-off spacing.
+4. Registry previews demonstrate the real state matrix instead of a decorative demo.
+5. Product teams should extend existing primitives before creating adjacent components.
+
+## Deep Dive
+
+Read [Component System](/en/docs/components/introduction) for taxonomy, maturity labels, and contribution rules.

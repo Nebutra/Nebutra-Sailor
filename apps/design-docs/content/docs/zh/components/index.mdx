@@ -1,0 +1,57 @@
+---
+title: 原语
+description: 在自定义组合之前，先按产品任务选择受治理的 UI primitive。
+layer: guide
+owner: Design Systems
+lastVerified: "2026-05-29"
+---
+
+这里是组件系统的稳定入口。组件目录按产品界面要完成的任务组织，而不是按视觉新奇程度陈列。
+
+<Cards>
+  <Card
+    title="表单与输入"
+    href="/zh/docs/components/input"
+    description="用 Input、Textarea、Select、Checkbox、Radio、Switch、Slider 和校验 primitive 捕获用户意图。"
+  />
+  <Card
+    title="动作与命令"
+    href="/zh/docs/components/button"
+    description="用按钮、命令菜单、上下文菜单、开关和组合命令触发操作。"
+  />
+  <Card
+    title="浮层与披露"
+    href="/zh/docs/components/dialog"
+    description="用 Dialog、Popover、Sheet、Tooltip、Drawer 和 disclosure primitives 承载打断、披露和分层内容。"
+  />
+  <Card
+    title="AI 与 Agent 表面"
+    href="/zh/docs/components/message-content"
+    description="用受治理的 AI surface primitives 渲染助手输出、工具调用、计划和 agent 工作流状态。"
+  />
+</Cards>
+
+## 决策模型
+
+| 产品任务 | 优先使用 | 避免 |
+| --- | --- | --- |
+| 单值文本输入 | [Input](/zh/docs/components/input) | 因为想要更大的视觉面积而滥用 Textarea。 |
+| 多行内容编写 | [Textarea](/zh/docs/components/textarea) | 没有原生表单语义的自定义 editable div。 |
+| 有边界的选项选择 | [Select](/zh/docs/components/select) | 选项短且静态时使用 Command Menu。 |
+| 高风险确认 | [Alert Dialog](/zh/docs/components/alert-dialog) | 没有明确风险契约的通用 Dialog。 |
+| 后台任务反馈 | [Progress](/zh/docs/components/progress) 或 [Status Dot](/zh/docs/components/status-dot) | 状态已知时仍使用装饰性 loader。 |
+| 结构化数据 | [Table](/zh/docs/components/table) 或 [Description](/zh/docs/components/description) | 让比较更困难的卡片网格。 |
+
+## 治理契约
+
+本节每个 primitive 都必须在 source、docs、Storybook 和 registry 中暴露同一份契约：
+
+1. 公开 API 与类型命名能表达消费者真正需要的行为。
+2. 文档覆盖 focus、keyboard、disabled、error、loading、empty 与 dark mode 状态。
+3. 示例消费 semantic 或 component tokens，不使用 raw color 或一次性 spacing。
+4. Registry preview 展示真实状态矩阵，而不是装饰性 demo。
+5. 产品团队应该优先扩展已有 primitive，再考虑创建相邻组件。
+
+## 深入阅读
+
+阅读 [组件系统](/zh/docs/components/introduction) 了解分类法、成熟度标签和贡献规则。
