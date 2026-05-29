@@ -35,6 +35,11 @@ jobs:
       - name: Build Design Token Artifacts
         run: pnpm --config.verify-deps-before-run=false --filter @nebutra/design-tokens build
 
+      - name: Build Design Runtime Packages
+        run: |
+          pnpm --config.verify-deps-before-run=false --filter @nebutra/brand build
+          pnpm --config.verify-deps-before-run=false --filter @nebutra/icons build
+
       - name: Verify UI Governance Rules
         run: pnpm exec tsx scripts/verify-ui-governance.ts
 
