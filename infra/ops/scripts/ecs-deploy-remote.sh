@@ -33,6 +33,11 @@ DEPLOY_UPSTASH_REDIS_REST_URL="${UPSTASH_REDIS_REST_URL:-}"
 DEPLOY_UPSTASH_REDIS_REST_TOKEN="${UPSTASH_REDIS_REST_TOKEN:-}"
 DEPLOY_UPSTASH_REDIS_URL="${UPSTASH_REDIS_URL:-}"
 DEPLOY_UPSTASH_REDIS_TOKEN="${UPSTASH_REDIS_TOKEN:-}"
+DEPLOY_GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-}"
+DEPLOY_GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-}"
+DEPLOY_NEXT_PUBLIC_GOOGLE_CLIENT_ID="${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
+DEPLOY_GITHUB_CLIENT_ID="${GITHUB_CLIENT_ID:-}"
+DEPLOY_GITHUB_CLIENT_SECRET="${GITHUB_CLIENT_SECRET:-}"
 
 log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
@@ -140,6 +145,64 @@ persist_redis_runtime_env() {
   log "ensured Upstash Redis runtime env: $env_file"
 }
 
+persist_google_auth_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  local google_client_id="${DEPLOY_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
+  local google_client_secret="${DEPLOY_GOOGLE_CLIENT_SECRET:-${GOOGLE_CLIENT_SECRET:-}}"
+  local public_google_client_id="${DEPLOY_NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${google_client_id:-}}}"
+
+  if [ -z "$google_client_id$google_client_secret$public_google_client_id" ]; then
+    return 0
+  fi
+
+  if [ -n "$google_client_id" ] && [ -z "$public_google_client_id" ]; then
+    public_google_client_id="$google_client_id"
+  fi
+
+  if [ -z "$google_client_id" ] || [ -z "$google_client_secret" ]; then
+    fail "Google OAuth runtime env incomplete: configure both GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET"
+  fi
+
+  replace_env_assignment "$env_file" GOOGLE_CLIENT_ID "$google_client_id"
+  replace_env_assignment "$env_file" GOOGLE_CLIENT_SECRET "$google_client_secret"
+  replace_env_assignment "$env_file" NEXT_PUBLIC_GOOGLE_CLIENT_ID "$public_google_client_id"
+  log "ensured Google OAuth runtime env: $env_file"
+}
+
+persist_google_public_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  local google_client_id="${DEPLOY_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
+  local public_google_client_id="${DEPLOY_NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${google_client_id:-}}}"
+
+  if [ -z "$public_google_client_id" ]; then
+    return 0
+  fi
+
+  replace_env_assignment "$env_file" NEXT_PUBLIC_GOOGLE_CLIENT_ID "$public_google_client_id"
+  log "ensured Google public runtime env: $env_file"
+}
+
+persist_github_auth_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  local github_client_id="${DEPLOY_GITHUB_CLIENT_ID:-${GITHUB_CLIENT_ID:-}}"
+  local github_client_secret="${DEPLOY_GITHUB_CLIENT_SECRET:-${GITHUB_CLIENT_SECRET:-}}"
+
+  if [ -z "$github_client_id$github_client_secret" ]; then
+    return 0
+  fi
+
+  if [ -z "$github_client_id" ] || [ -z "$github_client_secret" ]; then
+    fail "GitHub OAuth runtime env incomplete: configure both GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET"
+  fi
+
+  replace_env_assignment "$env_file" GITHUB_CLIENT_ID "$github_client_id"
+  replace_env_assignment "$env_file" GITHUB_CLIENT_SECRET "$github_client_secret"
+  log "ensured GitHub OAuth runtime env: $env_file"
+}
+
 bootstrap_web_runtime_env() {
   local app_root="$1"
   local env_file="$app_root/.env"
@@ -164,6 +227,7 @@ bootstrap_web_runtime_env() {
   NEXT_PUBLIC_API_GATEWAY_URL="${NEXT_PUBLIC_API_GATEWAY_URL:-https://api.nebutra.com}"
   NEBUTRA_LANDING_ORIGIN="${NEBUTRA_LANDING_ORIGIN:-https://nebutra.com}"
   NEBUTRA_SESSION_HINT_DOMAIN="${NEBUTRA_SESSION_HINT_DOMAIN:-.nebutra.com}"
+  NEXT_PUBLIC_GOOGLE_CLIENT_ID="${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
 
   export AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_SECRET BETTER_AUTH_URL
   export NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL
@@ -196,8 +260,44 @@ bootstrap_web_runtime_env() {
   ensure_env_assignment "$env_file" NEXT_PUBLIC_API_GATEWAY_URL "$NEXT_PUBLIC_API_GATEWAY_URL"
   ensure_env_assignment "$env_file" NEBUTRA_LANDING_ORIGIN "$NEBUTRA_LANDING_ORIGIN"
   ensure_env_assignment "$env_file" NEBUTRA_SESSION_HINT_DOMAIN "$NEBUTRA_SESSION_HINT_DOMAIN"
+  ensure_env_assignment "$env_file" GOOGLE_CLIENT_ID "${GOOGLE_CLIENT_ID:-}"
+  ensure_env_assignment "$env_file" GOOGLE_CLIENT_SECRET "${GOOGLE_CLIENT_SECRET:-}"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_GOOGLE_CLIENT_ID "${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-}"
+  ensure_env_assignment "$env_file" GITHUB_CLIENT_ID "${GITHUB_CLIENT_ID:-}"
+  ensure_env_assignment "$env_file" GITHUB_CLIENT_SECRET "${GITHUB_CLIENT_SECRET:-}"
   chmod 600 "$env_file"
   log "ensured web runtime env: $env_file"
+}
+
+bootstrap_landing_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+
+  AUTH_PROVIDER="${AUTH_PROVIDER:-better-auth}"
+  NEXT_PUBLIC_AUTH_PROVIDER="${NEXT_PUBLIC_AUTH_PROVIDER:-$AUTH_PROVIDER}"
+  NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL:-https://app.nebutra.com}"
+  NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-https://api.nebutra.com}"
+  NEXT_PUBLIC_DOCS_URL="${NEXT_PUBLIC_DOCS_URL:-https://docs.nebutra.com}"
+  NEXT_PUBLIC_GOOGLE_CLIENT_ID="${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
+  NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP="${NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP:-true}"
+
+  export AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL
+  export NEXT_PUBLIC_DOCS_URL NEXT_PUBLIC_GOOGLE_CLIENT_ID NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP
+
+  mkdir -p "$app_root"
+  touch "$env_file"
+  chmod 600 "$env_file"
+  ensure_env_assignment "$env_file" NODE_ENV "production"
+  ensure_env_assignment "$env_file" PORT "3001"
+  ensure_env_assignment "$env_file" HOSTNAME "127.0.0.1"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_AUTH_PROVIDER "$NEXT_PUBLIC_AUTH_PROVIDER"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_APP_URL "$NEXT_PUBLIC_APP_URL"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_API_URL "$NEXT_PUBLIC_API_URL"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_DOCS_URL "$NEXT_PUBLIC_DOCS_URL"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_GOOGLE_CLIENT_ID "$NEXT_PUBLIC_GOOGLE_CLIENT_ID"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP "$NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP"
+  chmod 600 "$env_file"
+  log "ensured landing runtime env: $env_file"
 }
 
 load_runtime_env() {
@@ -254,7 +354,18 @@ load_runtime_env() {
     fi
   fi
 
+  if [ "$app" = "landing" ]; then
+    if [ ! -f "$app_root/.env" ]; then
+      bootstrap_landing_runtime_env "$app_root"
+      source_runtime_env_file "$app_root/.env"
+    fi
+    persist_google_public_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
   if [ "$app" = "web" ]; then
+    persist_google_auth_runtime_env "$app_root"
+    persist_github_auth_runtime_env "$app_root"
     persist_redis_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
@@ -420,7 +531,7 @@ load_existing_pm2_env() {
           | .pm2_env
           | to_entries[]
           | select(.value | type == "string" or type == "number" or type == "boolean")
-          | select(.key | test("^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"))
+          | select(.key | test("^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"))
           | "\(.key)=\(.value | tostring)"
         ' || true)
   elif command -v python3 >/dev/null 2>&1; then
@@ -431,7 +542,7 @@ import sys
 
 name = sys.argv[1]
 allow = re.compile(
-    r"^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|"
+    r"^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|"
     r"NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"
 )
 
