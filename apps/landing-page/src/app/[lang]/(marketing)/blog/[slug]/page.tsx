@@ -23,6 +23,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar, NewsletterForm } from "@/components/landing";
+import { BlogAuthorAvatar } from "@/components/landing/blog-author-avatar";
 import { BlogComments } from "@/components/landing/blog-comments";
 import { BlogCopyButton } from "@/components/landing/blog-copy-button";
 import { BlogImage } from "@/components/landing/blog-image";
@@ -77,6 +78,11 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 function getAuthorName(author: BlogPostWithSource["author"]): string | null {
   if (!author) return null;
   return typeof author === "string" ? author : (author.name ?? null);
+}
+
+function getAuthorAvatarUrl(author: BlogPostWithSource["author"]): string | null {
+  if (!author || typeof author === "string" || !author.image) return null;
+  return getImageUrl(author.image, { width: 96, height: 96, format: "webp" });
 }
 
 function localizedPostHref(locale: string, slug?: string): string {
@@ -292,6 +298,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
       })
     : null;
   const authorName = getAuthorName(post.author);
+  const authorAvatarUrl = getAuthorAvatarUrl(post.author);
   const articleCopyText = getPostCopyText(post);
   const tableOfContents = getBlogTableOfContents(post.body);
   const canonicalUrl = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}`;
@@ -357,9 +364,10 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     {authorName && (
                       <Link
                         href={`${localizedPostHref(lang)}/author/${getBlogUrlSegment(authorName)}`}
-                        className="font-medium text-[var(--neutral-12)] hover:text-[var(--blue-9)]"
+                        className="inline-flex items-center gap-2 font-medium text-[var(--neutral-12)] hover:text-[var(--blue-9)]"
                       >
-                        {authorName}
+                        <BlogAuthorAvatar name={authorName} src={authorAvatarUrl} size="md" />
+                        <span>{authorName}</span>
                       </Link>
                     )}
                     {date && (
