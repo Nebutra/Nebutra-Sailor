@@ -69,7 +69,7 @@ that period.
 
 If you cross the Startup threshold (FTE > 50 or you need white-label / SLA),
 you have 30 days to negotiate Enterprise terms. Contact
-[enterprise@nebutra.com](mailto:enterprise@nebutra.com) before the 30 days
+[sales@nebutra.com](mailto:sales@nebutra.com) before the 30 days
 expire to start the conversation — actual contract close can take longer.
 
 ---

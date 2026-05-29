@@ -39,7 +39,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     },
     {
       title: t("contact.contacts.founder.title"),
-      email: "tseka@nebutra.com",
+      email: "founders@nebutra.com",
       description: t("contact.contacts.founder.description"),
     },
     {

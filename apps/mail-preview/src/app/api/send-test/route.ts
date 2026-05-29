@@ -55,7 +55,7 @@ export async function POST(request: Request) {
     const rendered = renderTemplate(body.templateId, body.props);
     const provider = getEmailProvider();
     const result = await provider.send({
-      from: process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.ai>",
+      from: process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.com>",
       to: body.to,
       subject: rendered.subject,
       html: rendered.html,
