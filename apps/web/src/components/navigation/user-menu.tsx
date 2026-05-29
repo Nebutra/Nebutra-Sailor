@@ -13,8 +13,10 @@ import {
 import { useTheme } from "@nebutra/tokens";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 import { useAccountDialog } from "@/components/account/account-dialog";
+import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 
 type ThemeChoice = "system" | "light" | "dark";
 
@@ -50,20 +52,13 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
   const account = useAccountDialog();
   const [open, setOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    function onDocumentClick(event: MouseEvent) {
-      if (!containerRef.current) return;
-      if (!containerRef.current.contains(event.target as Node)) {
-        setOpen(false);
-        setThemeOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", onDocumentClick);
-    return () => document.removeEventListener("mousedown", onDocumentClick);
-  }, [open]);
+  const closeAll = useCallback(() => {
+    setOpen(false);
+    setThemeOpen(false);
+  }, []);
+
+  const { triggerRef, menuRef, style } = useAnchoredMenu(open, closeAll);
 
   const handleSignOut = useCallback(async () => {
     setOpen(false);
@@ -84,8 +79,9 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
   const activeTheme = (theme as ThemeChoice | undefined) ?? "system";
 
   return (
-    <div ref={containerRef} className="relative inline-block">
+    <>
       <button
+        ref={triggerRef}
         type="button"
         aria-label={t("ariaLabel")}
         aria-haspopup="menu"
@@ -106,104 +102,109 @@ export function UserMenu({ signOutRedirect = "/sign-in" }: UserMenuProps = {}) {
         )}
       </button>
 
-      {open && (
-        <div
-          role="menu"
-          aria-label={t("ariaLabel")}
-          className="absolute right-0 z-50 mt-2 w-60 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
-        >
-          <div className="px-3 py-2">
-            <p className="truncate text-sm font-medium text-neutral-12 dark:text-white">
-              {user.name ?? user.email}
-            </p>
-            {user.email && (
-              <p className="truncate text-xs text-neutral-11 dark:text-white/60">{user.email}</p>
-            )}
-          </div>
-          <div className="my-1 h-px bg-neutral-6 dark:bg-white/10" />
-
-          <button
-            type="button"
-            role="menuitem"
-            aria-label={t("profile")}
-            className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
-            onClick={() => {
-              setOpen(false);
-              account.openDialog("profile");
-            }}
+      {open &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            ref={menuRef}
+            role="menu"
+            aria-label={t("ariaLabel")}
+            style={style}
+            className="w-60 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
           >
-            <User className="h-4 w-4" aria-hidden />
-            <span>{t("profile")}</span>
-          </button>
-          <a
-            role="menuitem"
-            href="/settings"
-            aria-label={t("settings")}
-            className="flex items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
-            onClick={() => setOpen(false)}
-          >
-            <Settings className="h-4 w-4" aria-hidden />
-            <span>{t("settings")}</span>
-          </a>
-
-          <button
-            type="button"
-            role="menuitem"
-            aria-label={t("theme")}
-            aria-haspopup="menu"
-            aria-expanded={themeOpen}
-            onClick={() => setThemeOpen((prev) => !prev)}
-            className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
-          >
-            <span className="flex items-center gap-2">
-              <Sun className="h-4 w-4" aria-hidden />
-              <span>{t("theme")}</span>
-            </span>
-            <ChevronRight className="h-3.5 w-3.5" aria-hidden />
-          </button>
-
-          {themeOpen && (
-            <div role="menu" aria-label={t("theme")} className="mt-1 px-1">
-              {(["light", "dark", "system"] as const).map((choice) => {
-                const Icon = THEME_ICON[choice];
-                const isActive = activeTheme === choice;
-                return (
-                  <button
-                    key={choice}
-                    type="button"
-                    role="menuitemradio"
-                    aria-checked={isActive}
-                    aria-label={tTheme(choice)}
-                    onClick={() => setTheme(choice)}
-                    className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-xs text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
-                  >
-                    <span className="flex items-center gap-2">
-                      <Icon className="h-3.5 w-3.5" aria-hidden />
-                      <span>{tTheme(choice)}</span>
-                    </span>
-                    {isActive && <span aria-hidden>•</span>}
-                  </button>
-                );
-              })}
+            <div className="px-3 py-2">
+              <p className="truncate text-sm font-medium text-neutral-12 dark:text-white">
+                {user.name ?? user.email}
+              </p>
+              {user.email && (
+                <p className="truncate text-xs text-neutral-11 dark:text-white/60">{user.email}</p>
+              )}
             </div>
-          )}
+            <div className="my-1 h-px bg-neutral-6 dark:bg-white/10" />
 
-          <div className="my-1 h-px bg-neutral-6 dark:bg-white/10" />
+            <button
+              type="button"
+              role="menuitem"
+              aria-label={t("profile")}
+              className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+              onClick={() => {
+                setOpen(false);
+                account.openDialog("profile");
+              }}
+            >
+              <User className="h-4 w-4" aria-hidden />
+              <span>{t("profile")}</span>
+            </button>
+            <a
+              role="menuitem"
+              href="/settings"
+              aria-label={t("settings")}
+              className="flex items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+              onClick={() => setOpen(false)}
+            >
+              <Settings className="h-4 w-4" aria-hidden />
+              <span>{t("settings")}</span>
+            </a>
 
-          <button
-            type="button"
-            role="menuitem"
-            aria-label={t("signOut")}
-            onClick={() => {
-              void handleSignOut();
-            }}
-            className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
-          >
-            <LogOut className="h-4 w-4" aria-hidden />
-            <span>{t("signOut")}</span>
-          </button>
-        </div>
-      )}
-    </div>
+            <button
+              type="button"
+              role="menuitem"
+              aria-label={t("theme")}
+              aria-haspopup="menu"
+              aria-expanded={themeOpen}
+              onClick={() => setThemeOpen((prev) => !prev)}
+              className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+            >
+              <span className="flex items-center gap-2">
+                <Sun className="h-4 w-4" aria-hidden />
+                <span>{t("theme")}</span>
+              </span>
+              <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+            </button>
+
+            {themeOpen && (
+              <div role="menu" aria-label={t("theme")} className="mt-1 px-1">
+                {(["light", "dark", "system"] as const).map((choice) => {
+                  const Icon = THEME_ICON[choice];
+                  const isActive = activeTheme === choice;
+                  return (
+                    <button
+                      key={choice}
+                      type="button"
+                      role="menuitemradio"
+                      aria-checked={isActive}
+                      aria-label={tTheme(choice)}
+                      onClick={() => setTheme(choice)}
+                      className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-xs text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Icon className="h-3.5 w-3.5" aria-hidden />
+                        <span>{tTheme(choice)}</span>
+                      </span>
+                      {isActive && <span aria-hidden>•</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            <div className="my-1 h-px bg-neutral-6 dark:bg-white/10" />
+
+            <button
+              type="button"
+              role="menuitem"
+              aria-label={t("signOut")}
+              onClick={() => {
+                void handleSignOut();
+              }}
+              className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+            >
+              <LogOut className="h-4 w-4" aria-hidden />
+              <span>{t("signOut")}</span>
+            </button>
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }

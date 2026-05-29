@@ -2,7 +2,6 @@ import {
   ArrowRight,
   Check,
   type Icon as LucideIcon,
-  Message as MessageSquare,
   Connection as Plug,
   ShieldCheck,
   Users,
@@ -27,7 +26,6 @@ interface OrgState {
   members: number;
   apiKeys: number;
   integrations: number;
-  chatSessions: number;
 }
 
 /**
@@ -35,14 +33,13 @@ interface OrgState {
  * Each query is wrapped so a failed table read degrades to "not done"
  * for that task instead of breaking the whole component.
  */
-async function readOrgState(orgId: string, userId: string): Promise<OrgState> {
-  const [members, apiKeys, integrations, chatSessions] = await Promise.all([
+async function readOrgState(orgId: string): Promise<OrgState> {
+  const [members, apiKeys, integrations] = await Promise.all([
     db.organizationMember.count({ where: { organizationId: orgId } }).catch(() => 0),
     db.aPIKey.count({ where: { organizationId: orgId } }).catch(() => 0),
     db.integration.count({ where: { organizationId: orgId, isActive: true } }).catch(() => 0),
-    db.chatSession.count({ where: { organizationId: orgId, userId } }).catch(() => 0),
   ]);
-  return { members, apiKeys, integrations, chatSessions };
+  return { members, apiKeys, integrations };
 }
 
 /**
@@ -69,7 +66,7 @@ export async function GettingStarted() {
   if (!orgId || !userId) return null;
 
   const [state, t] = await Promise.all([
-    readOrgState(orgId, userId),
+    readOrgState(orgId),
     getTranslations("dashboard.gettingStarted"),
   ]);
 
@@ -97,15 +94,6 @@ export async function GettingStarted() {
       href: "/integrations",
       icon: Plug,
       done: state.integrations > 0,
-    },
-    {
-      id: "ai",
-      label: t("tasks.ai.label"),
-      description: t("tasks.ai.description"),
-      href: "/chat",
-      icon: MessageSquare,
-      // Sessions persisted via ChatSession table — real done signal now.
-      done: state.chatSessions > 0,
     },
   ];
 

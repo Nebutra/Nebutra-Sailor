@@ -1,7 +1,5 @@
 import { routing } from "@nebutra/i18n/routing";
 import {
-  Robot as Bot,
-  ChartTrendingUp as ChartSpline,
   CreditCard,
   FileText,
   Layout as LayoutDashboard,
@@ -28,14 +26,6 @@ export interface DashboardNavItem {
 
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
   { href: "/workspace", label: "Overview", icon: LayoutDashboard, group: "Product" },
-  { href: "/analytics", label: "Analytics", icon: ChartSpline, group: "Product" },
-  {
-    href: "/chat",
-    label: "AI Chat",
-    icon: Bot,
-    group: "Product",
-    badge: { label: "New", tone: "new" },
-  },
   {
     href: "/theme-playground",
     label: "Theme Playground",
@@ -121,6 +111,9 @@ export function buildBreadcrumbs(pathname: string) {
 
   segments.forEach((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join("/")}`;
+    // The "/workspace" root is already seeded above; skip re-adding it so the
+    // breadcrumb list never renders two crumbs with the same href (key).
+    if (href === "/workspace") return;
     const navItem = DASHBOARD_NAV_ITEMS.find((item) => item.href === href);
     crumbs.push({
       href,

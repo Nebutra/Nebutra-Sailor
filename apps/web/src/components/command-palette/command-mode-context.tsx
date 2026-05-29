@@ -1,15 +1,9 @@
 "use client";
 
-import {
-  Database,
-  type Icon as LucideIcon,
-  Message as MessageSquare,
-  MagnifyingGlass as Search,
-  Workflow,
-} from "@nebutra/icons";
+import { type Icon as LucideIcon, MagnifyingGlass as Search, Workflow } from "@nebutra/icons";
 import { createContext, type ReactNode, useContext, useMemo, useState } from "react";
 
-export type CommandMode = "chat" | "data" | "workflow" | "search";
+export type CommandMode = "workflow" | "search";
 
 export type ModeAccent = "blue" | "cyan" | "green" | "neutral";
 
@@ -30,24 +24,6 @@ export interface ModeMeta {
 
 export const MODES: ReadonlyArray<ModeMeta> = [
   {
-    id: "chat",
-    label: "Chat",
-    icon: MessageSquare,
-    placeholder: "Ask Sailor anything…",
-    description: "Open a Sailor AI chat session",
-    accent: "blue",
-    destination: "/chat",
-  },
-  {
-    id: "data",
-    label: "Data",
-    icon: Database,
-    placeholder: "Inspect events, conversions, or revenue…",
-    description: "Open analytics for this workspace",
-    accent: "cyan",
-    destination: "/analytics",
-  },
-  {
     id: "workflow",
     label: "Workflow",
     icon: Workflow,
@@ -67,7 +43,7 @@ export const MODES: ReadonlyArray<ModeMeta> = [
   },
 ] as const;
 
-const DEFAULT_MODE: CommandMode = "chat";
+const DEFAULT_MODE: CommandMode = "search";
 
 /**
  * Statically resolvable accent classes so Tailwind retains them.

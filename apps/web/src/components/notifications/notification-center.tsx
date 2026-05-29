@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Bell,
   BellSmall as BellDot,
@@ -14,10 +16,13 @@ import type {
   NotificationSettingsSnapshot,
 } from "@nebutra/notifications";
 import Link from "next/link";
+import { useState } from "react";
+import { createPortal } from "react-dom";
 import {
   markAllNotificationsRead,
   markNotificationRead,
 } from "@/app/[locale]/(app)/settings/notifications/actions";
+import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 
 interface NotificationCenterProps {
   locale: string;
@@ -136,81 +141,102 @@ export function NotificationCenter({
   const unreadBadge = getUnreadBadgeLabel(snapshot.unreadCount);
   const unreadItems = snapshot.inboxItems.filter((item) => !item.read);
   const canMarkAllRead = snapshot.runtime.canMarkInboxRead && unreadItems.length > 0;
+  const [open, setOpen] = useState(defaultOpen);
+  const { triggerRef, menuRef, style } = useAnchoredMenu(open, () => setOpen(false));
 
   return (
-    <details className="group relative" open={defaultOpen}>
-      <summary
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
         aria-label="Open notifications"
-        className="relative flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-7 dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white [&::-webkit-details-marker]:hidden"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((prev) => !prev)}
+        className="relative flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1"
       >
         <Bell className="h-4 w-4" aria-hidden />
         {unreadBadge ? (
-          <span className="-right-1.5 -top-1.5 absolute flex h-5 min-w-5 items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold leading-none text-white">
+          <span className="-right-1 -top-1 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold leading-none text-white">
             {unreadBadge}
           </span>
         ) : null}
-      </summary>
+      </button>
 
-      <div className="absolute right-0 z-50 mt-2 w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 shadow-2xl shadow-black/15 dark:border-white/10 dark:bg-neutral-12">
-        <div className="flex items-start justify-between gap-3 border-b border-neutral-7 px-4 py-3 dark:border-white/10">
-          <div>
-            <p className="text-sm font-semibold text-neutral-12 dark:text-white">Notifications</p>
-            <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/50">
-              {snapshot.unreadCount} unread
-            </p>
-          </div>
-
-          <form action={markAllNotificationsRead}>
-            <input data-allow-native type="hidden" name="locale" value={locale} />
-            <button
-              type="submit"
-              disabled={!canMarkAllRead}
-              className="rounded-[var(--radius-lg)] px-2.5 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50 dark:text-white/65 dark:hover:bg-white/10 dark:hover:text-white"
-              title={
-                snapshot.runtime.canMarkInboxRead
-                  ? "Mark every visible unread notification as read"
-                  : snapshot.runtime.reason
-              }
-            >
-              Mark all read
-            </button>
-          </form>
-        </div>
-
-        {snapshot.inboxSource === "unavailable" ? (
-          <div className="mx-3 mt-3 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 px-3 py-3 text-sm text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/65">
-            {snapshot.inboxReason ?? "No live inbox storage is connected yet for this environment."}
-          </div>
-        ) : null}
-
-        <div className="max-h-96 overflow-y-auto p-3">
-          {snapshot.inboxItems.length === 0 ? (
-            <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-2 px-4 py-8 text-center text-sm text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/65">
-              {getInboxEmptyCopy(snapshot.inboxSource)}
-            </div>
-          ) : (
-            <ul className="space-y-2">
-              {snapshot.inboxItems.map((item) => (
-                <NotificationCenterItem
-                  key={item.id}
-                  item={item}
-                  locale={locale}
-                  runtime={snapshot.runtime}
-                />
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="border-t border-neutral-7 px-4 py-3 dark:border-white/10">
-          <Link
-            href={`/${locale}/settings/notifications`}
-            className="text-xs font-medium text-blue-700 transition-colors hover:text-blue-800 dark:text-blue-200 dark:hover:text-blue-100"
+      {open &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            ref={menuRef}
+            role="menu"
+            aria-label="Notifications"
+            style={style}
+            className="w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 shadow-2xl shadow-black/15 dark:border-white/10 dark:bg-neutral-12"
           >
-            Notification settings
-          </Link>
-        </div>
-      </div>
-    </details>
+            <div className="flex items-start justify-between gap-3 border-b border-neutral-7 px-4 py-3 dark:border-white/10">
+              <div>
+                <p className="text-sm font-semibold text-neutral-12 dark:text-white">
+                  Notifications
+                </p>
+                <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/50">
+                  {snapshot.unreadCount} unread
+                </p>
+              </div>
+
+              <form action={markAllNotificationsRead}>
+                <input data-allow-native type="hidden" name="locale" value={locale} />
+                <button
+                  type="submit"
+                  disabled={!canMarkAllRead}
+                  className="rounded-[var(--radius-lg)] px-2.5 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50 dark:text-white/65 dark:hover:bg-white/10 dark:hover:text-white"
+                  title={
+                    snapshot.runtime.canMarkInboxRead
+                      ? "Mark every visible unread notification as read"
+                      : snapshot.runtime.reason
+                  }
+                >
+                  Mark all read
+                </button>
+              </form>
+            </div>
+
+            {snapshot.inboxSource === "unavailable" ? (
+              <div className="mx-3 mt-3 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 px-3 py-3 text-sm text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/65">
+                {snapshot.inboxReason ??
+                  "No live inbox storage is connected yet for this environment."}
+              </div>
+            ) : null}
+
+            <div className="max-h-96 overflow-y-auto p-3">
+              {snapshot.inboxItems.length === 0 ? (
+                <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-2 px-4 py-8 text-center text-sm text-neutral-11 dark:border-white/10 dark:bg-white/5 dark:text-white/65">
+                  {getInboxEmptyCopy(snapshot.inboxSource)}
+                </div>
+              ) : (
+                <ul className="space-y-2">
+                  {snapshot.inboxItems.map((item) => (
+                    <NotificationCenterItem
+                      key={item.id}
+                      item={item}
+                      locale={locale}
+                      runtime={snapshot.runtime}
+                    />
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div className="border-t border-neutral-7 px-4 py-3 dark:border-white/10">
+              <Link
+                href={`/${locale}/settings/notifications`}
+                className="text-xs font-medium text-blue-700 transition-colors hover:text-blue-800 dark:text-blue-200 dark:hover:text-blue-100"
+              >
+                Notification settings
+              </Link>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }

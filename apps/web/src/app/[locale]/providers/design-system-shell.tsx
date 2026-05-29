@@ -1,7 +1,7 @@
 "use client";
 
 // Use /client subpath — root entrypoint pulls server-only middleware.
-import { getConfiguredAuthProvider, isAuthFeatureEnabledSync, useAuth } from "@nebutra/auth/client";
+import { getConfiguredAuthProvider, useAuth } from "@nebutra/auth/client";
 import {
   Warning as AlertTriangle,
   ChevronRight,
@@ -20,7 +20,6 @@ import { useEffect, useState } from "react";
 import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
-import { OrgSwitcher } from "@/components/navigation/org-switcher";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
 import { ThemeToggle } from "@/components/navigation/theme-toggle";
 import { UserMenu } from "@/components/navigation/user-menu";
@@ -29,57 +28,6 @@ import { usePermission } from "@/hooks/usePermission";
 import type { WebProductCapabilities } from "@/lib/product-capabilities";
 import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
 import { buildBreadcrumbs, DASHBOARD_NAV_GROUPS, isActiveRoute, WORKSPACES } from "./dashboard-nav";
-
-function HeaderAuthControls({
-  supportsWorkspaceSwitching,
-}: {
-  supportsWorkspaceSwitching: boolean;
-}) {
-  const { isSignedIn } = useAuth();
-  const { openDialog: openFeedback } = useFeedbackDialog();
-  // Phase 2 dev rollout: gate the polished OrgSwitcher behind the
-  // `organizations` auth feature flag. When off, the legacy native <select>
-  // in the sidebar remains the only switcher (it still calls
-  // /api/organizations/active correctly).
-  const showOrgSwitcher = supportsWorkspaceSwitching && isAuthFeatureEnabledSync("organizations");
-
-  return (
-    <div className="hidden items-center gap-1 sm:flex">
-      {isSignedIn ? (
-        <>
-          {showOrgSwitcher && <OrgSwitcher />}
-          <button
-            type="button"
-            onClick={openFeedback}
-            aria-label="Open feedback dialog"
-            title="Feedback"
-            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-transparent px-2 text-[13px] font-medium text-muted-foreground transition-colors hover:border-neutral-5/80 hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
-          >
-            <LifeBuoy className="size-3.5" aria-hidden="true" />
-            <span className="hidden xl:inline">Feedback</span>
-          </button>
-          <LocaleSwitcher />
-          <UserMenu />
-        </>
-      ) : (
-        <div className="flex gap-2">
-          <Link
-            href="/sign-in"
-            className="rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/sign-up"
-            className="rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] px-3 py-1.5 text-sm font-medium text-white"
-          >
-            Sign Up
-          </Link>
-        </div>
-      )}
-    </div>
-  );
-}
 
 interface Props {
   children: React.ReactNode;
@@ -129,6 +77,7 @@ function renderNextLink({
 function DesignSystemShellInner({ children, notificationCenter, productCapabilities }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
+  const { openDialog: openFeedback } = useFeedbackDialog();
   const { collapsed, toggle } = useSidebar();
   const { can } = usePermission();
   const isAdmin = can("admin:access");
@@ -142,7 +91,6 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
   );
   const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
   const breadcrumbs = buildBreadcrumbs(pathname);
-  const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
 
   useEffect(() => {
@@ -286,18 +234,52 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
     </div>
   );
 
-  // ─── Sidebar footer slot — theme toggle + collapse ──────────────────────
-  const sidebarFooter = (
-    <div className={`flex items-center gap-1 ${collapsed ? "flex-col" : "justify-end"}`}>
-      <ThemeToggle compact />
+  // ─── Sidebar footer slot — relocated header controls (Lovable-style) ─────
+  // notifications · feedback · locale · theme · collapse, then the user menu.
+  const footerIconButton =
+    "inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1";
+
+  const utilityControls = (
+    <>
+      {notificationCenter}
       <button
         type="button"
-        onClick={toggle}
-        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        className="inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1"
+        onClick={openFeedback}
+        aria-label="Open feedback dialog"
+        title="Feedback"
+        className={footerIconButton}
       >
-        {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
+        <LifeBuoy className="size-4" aria-hidden="true" />
       </button>
+      <LocaleSwitcher />
+      <ThemeToggle compact />
+    </>
+  );
+
+  const collapseButton = (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+      className={footerIconButton}
+    >
+      {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
+    </button>
+  );
+
+  const sidebarFooter = collapsed ? (
+    <div className="flex flex-col items-center gap-1">
+      {utilityControls}
+      {collapseButton}
+      {isSignedIn ? <UserMenu /> : null}
+    </div>
+  ) : (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-between gap-0.5">
+        <div className="flex items-center gap-0.5">{utilityControls}</div>
+        {collapseButton}
+      </div>
+      {isSignedIn ? <UserMenu /> : null}
     </div>
   );
 
@@ -314,52 +296,37 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
   // ─── Dev-mode banner (only when @nebutra/auth is running the fixture provider) ─
   const isDevAuth = getConfiguredAuthProvider() === "dev";
 
-  // ─── Header slot — breadcrumbs + quick links + auth controls ─────────────
-  const headerContent = (
-    <div className="flex w-full min-w-0 items-center justify-between gap-3">
-      <div className="min-w-0 flex-1">
-        <p className="truncate font-medium text-[13px] text-foreground">
-          {currentBreadcrumb?.label ?? "Dashboard"}
-        </p>
-        <nav
-          aria-label="Breadcrumb"
-          className={cn("mt-0.5 hidden md:block", breadcrumbs.length <= 1 && "sr-only")}
-        >
-          <ol className="flex min-w-0 items-center gap-1 text-[11px] text-muted-foreground">
-            {breadcrumbs.map((crumb, index) => {
-              const isLast = index === breadcrumbs.length - 1;
-              return (
-                <li key={crumb.href} className="flex min-w-0 items-center gap-1">
-                  {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
-                  {isLast ? (
-                    <span className="truncate font-medium text-foreground">{crumb.label}</span>
-                  ) : (
-                    <ViewTransitionLink
-                      href={crumb.href}
-                      className="truncate transition-colors hover:text-foreground"
-                    >
-                      {crumb.label}
-                    </ViewTransitionLink>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-        </nav>
-      </div>
-
-      <div className="flex shrink-0 items-center gap-1.5">
-        {notificationCenter}
-        <HeaderAuthControls supportsWorkspaceSwitching={supportsWorkspaceSwitching} />
-      </div>
-    </div>
-  );
+  // ─── Content-area breadcrumb — replaces the removed top header bar ────────
+  // Only rendered on sub-pages (depth > 1); top-level pages start clean.
+  const contentHeader =
+    breadcrumbs.length > 1 ? (
+      <nav aria-label="Breadcrumb" className="mb-4 min-w-0">
+        <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
+          {breadcrumbs.map((crumb, index) => {
+            const isLast = index === breadcrumbs.length - 1;
+            return (
+              <li key={crumb.href} className="flex min-w-0 items-center gap-1">
+                {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
+                {isLast ? (
+                  <span className="truncate font-medium text-foreground">{crumb.label}</span>
+                ) : (
+                  <ViewTransitionLink
+                    href={crumb.href}
+                    className="truncate transition-colors hover:text-foreground"
+                  >
+                    {crumb.label}
+                  </ViewTransitionLink>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+    ) : null;
 
   return (
     <AppShell
       sidebar={sidebar}
-      header={headerContent}
-      headerHeight={52}
       collapsed={collapsed}
       contentClassName={
         isWorkspaceCanvasRoute
@@ -388,6 +355,7 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
           </span>
         </div>
       ) : null}
+      {contentHeader}
       <section id="main-content" aria-label="Main content" className="content-area">
         {children}
       </section>

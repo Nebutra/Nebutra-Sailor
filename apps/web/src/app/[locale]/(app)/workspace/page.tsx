@@ -1,19 +1,11 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
-import {
-  ChartActivity as Activity,
-  ArrowRight,
-  CreditCard,
-  Lightning as Rocket,
-  Users,
-} from "@nebutra/icons";
+import { ChartActivity as Activity, CreditCard, Lightning as Rocket, Users } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { DashboardCommandSurface, DashboardMetricTile, DashboardPanel } from "@nebutra/ui/patterns";
 import { connection } from "next/server";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
-import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { GettingStarted } from "@/components/onboarding/getting-started";
-import { RecentSessions } from "@/components/onboarding/recent-sessions";
 import { getAuth, getUser } from "@/lib/auth";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
 import { CommandSkeleton, MetricsSkeleton, RecentSessionsSkeleton } from "../_dashboard-skeletons";
@@ -95,23 +87,6 @@ async function CommandCenter() {
           </>
         }
         description={t("commandCenter.description")}
-        actions={
-          <>
-            <ViewTransitionLink
-              href="/chat"
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-2 text-[13px] font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
-            >
-              {t("commandCenter.openSailor")}
-              <ArrowRight className="size-3" aria-hidden="true" />
-            </ViewTransitionLink>
-            <ViewTransitionLink
-              href="/analytics"
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-5/80 bg-neutral-1/70 px-3 py-2 text-[13px] font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/10 dark:bg-white/[0.04] dark:text-white/60 dark:hover:bg-white/[0.08] dark:hover:text-white"
-            >
-              {t("commandCenter.viewAnalytics")}
-            </ViewTransitionLink>
-          </>
-        }
       />
     </AnimateIn>
   );
@@ -189,28 +164,18 @@ async function WorkspaceMetrics() {
           ))}
         </div>
       }
-      action={
-        <ViewTransitionLink
-          href="/analytics"
-          className="text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
-        >
-          {t("viewAnalytics")}
-        </ViewTransitionLink>
-      }
     >
       <AnimateInGroup stagger="fast" className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
         {metrics.map(({ label, value, detail, source, icon: Icon, tone }) => (
           <AnimateIn key={label} preset="fadeUp">
-            <ViewTransitionLink href="/analytics" className="block">
-              <DashboardMetricTile
-                label={label}
-                value={value}
-                detail={detail}
-                source={source}
-                icon={Icon}
-                tone={tone}
-              />
-            </ViewTransitionLink>
+            <DashboardMetricTile
+              label={label}
+              value={value}
+              detail={detail}
+              source={source}
+              icon={Icon}
+              tone={tone}
+            />
           </AnimateIn>
         ))}
       </AnimateInGroup>
@@ -239,11 +204,6 @@ export default function DashboardPage() {
 
         <Suspense fallback={<RecentSessionsSkeleton />}>
           <GettingStarted />
-        </Suspense>
-
-        {/* Fast: 1 indexed query on chat_sessions; hide until a real working queue exists. */}
-        <Suspense fallback={<RecentSessionsSkeleton />}>
-          <RecentSessions />
         </Suspense>
 
         {!isAuthConfigured && <NoAuthNotice />}
