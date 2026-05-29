@@ -185,8 +185,10 @@ run_snapshot_once() {
       export CI=1
       export SKIP_ENV_VALIDATION=true
       export NEBUTRA_SKIP_GIT_HOOKS=1
-      export AUTH_PROVIDER=clerk
-      export NEXT_PUBLIC_AUTH_PROVIDER=clerk
+      # The audited /demo route is public; keep Lighthouse independent from
+      # external auth provider keys while production-like CI covers Clerk builds.
+      export AUTH_PROVIDER=better-auth
+      export NEXT_PUBLIC_AUTH_PROVIDER=better-auth
       export NEXT_TELEMETRY_DISABLED=1
       # Next.js collect-page-data workers import server env modules even when
       # the audited public route does not touch the database.
