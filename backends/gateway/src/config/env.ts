@@ -60,6 +60,8 @@ const baseSchema = z.object({
   DATABASE_URL: z.string().url(),
 
   // Redis
+  UPSTASH_REDIS_REST_URL: z.string().optional(),
+  UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
   UPSTASH_REDIS_URL: z.string().optional(),
   UPSTASH_REDIS_TOKEN: z.string().optional(),
 

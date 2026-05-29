@@ -500,6 +500,11 @@ jobs:
             "${ECS_USER}@${ECS_HOST}:${ECS_DEPLOY_ROOT}/ecosystem.config.cjs"
 
       - name: Run remote deploy
+        env:
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL }}
+          UPSTASH_REDIS_TOKEN: ${{ secrets.UPSTASH_REDIS_TOKEN }}
         run: |
           set -euo pipefail
           APPS=""
@@ -515,12 +520,23 @@ jobs:
           # quoted string and quote any value containing spaces (APPS) — else
           # `env A=foo APPS=landing web api B=bar` is reparsed and `web` is
           # treated as a command. See run 25603759255 for the original bug.
-          REMOTE_CMD="env DEPLOY_ROOT='${ECS_DEPLOY_ROOT}' \
-                          APPS='${APPS}' \
-                          KEEP_RELEASES='${ECS_KEEP_RELEASES}' \
-                          PM2_CONFIG='${ECS_DEPLOY_ROOT}/ecosystem.config.cjs' \
-                          SHA='${{ github.sha }}' \
-                          bash /tmp/ecs-deploy-remote.sh"
+          shell_quote() { printf "%q" "$1"; }
+          add_remote_env() {
+            local key="$1" value="${2:-}"
+            [ -n "$value" ] || return 0
+            REMOTE_CMD="${REMOTE_CMD} ${key}=$(shell_quote "$value")"
+          }
+
+          REMOTE_CMD="env DEPLOY_ROOT=$(shell_quote "$ECS_DEPLOY_ROOT")"
+          add_remote_env APPS "$APPS"
+          add_remote_env KEEP_RELEASES "$ECS_KEEP_RELEASES"
+          add_remote_env PM2_CONFIG "$ECS_DEPLOY_ROOT/ecosystem.config.cjs"
+          add_remote_env SHA "${{ github.sha }}"
+          add_remote_env UPSTASH_REDIS_REST_URL "$UPSTASH_REDIS_REST_URL"
+          add_remote_env UPSTASH_REDIS_REST_TOKEN "$UPSTASH_REDIS_REST_TOKEN"
+          add_remote_env UPSTASH_REDIS_URL "${UPSTASH_REDIS_URL:-$UPSTASH_REDIS_REST_URL}"
+          add_remote_env UPSTASH_REDIS_TOKEN "${UPSTASH_REDIS_TOKEN:-$UPSTASH_REDIS_REST_TOKEN}"
+          REMOTE_CMD="${REMOTE_CMD} bash /tmp/ecs-deploy-remote.sh"
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \

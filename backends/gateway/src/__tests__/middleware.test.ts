@@ -140,6 +140,10 @@ beforeEach(() => {
 
   // Ensure SERVICE_SECRET is set for most tests
   process.env.SERVICE_SECRET = "test-secret-key-for-hmac-verification";
+  delete process.env.UPSTASH_REDIS_REST_URL;
+  delete process.env.UPSTASH_REDIS_REST_TOKEN;
+  delete process.env.UPSTASH_REDIS_URL;
+  delete process.env.UPSTASH_REDIS_TOKEN;
 });
 
 // ===========================================================================
@@ -388,6 +392,18 @@ describe("rateLimitMiddleware", () => {
     expect(res.headers.get("X-RateLimit-Limit")).toBeDefined();
     expect(res.headers.get("X-RateLimit-Remaining")).toBeDefined();
     expect(res.headers.get("X-RateLimit-Reset")).toBeDefined();
+  });
+
+  it("uses Redis rate limiting when Upstash REST aliases are configured", async () => {
+    process.env.UPSTASH_REDIS_REST_URL = "https://redis.example.com";
+    process.env.UPSTASH_REDIS_REST_TOKEN = "redis-token";
+
+    const app = createRateLimitApp();
+    const res = await app.request("/api/v1/test", { method: "GET" });
+
+    expect(res.status).toBe(200);
+    expect(mockRedisGet).toHaveBeenCalled();
+    expect(mockRedisSet).toHaveBeenCalled();
   });
 
   it("returns 429 when requests exceed limits", async () => {

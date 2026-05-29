@@ -29,6 +29,10 @@ APPS="${APPS:-landing web api design-docs sailor-docs}"
 KEEP_RELEASES="${KEEP_RELEASES:-1}"
 PM2_CONFIG="${PM2_CONFIG:-$DEPLOY_ROOT/ecosystem.config.cjs}"
 SHA="${SHA:?SHA env var required}"
+DEPLOY_UPSTASH_REDIS_REST_URL="${UPSTASH_REDIS_REST_URL:-}"
+DEPLOY_UPSTASH_REDIS_REST_TOKEN="${UPSTASH_REDIS_REST_TOKEN:-}"
+DEPLOY_UPSTASH_REDIS_URL="${UPSTASH_REDIS_URL:-}"
+DEPLOY_UPSTASH_REDIS_TOKEN="${UPSTASH_REDIS_TOKEN:-}"
 
 log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
@@ -93,6 +97,47 @@ ensure_env_assignment() {
     return 0
   fi
   append_env_assignment "$env_file" "$key" "$value"
+}
+
+replace_env_assignment() {
+  local env_file="$1" key="$2" value="$3"
+  [ -n "$value" ] || return 0
+  mkdir -p "$(dirname "$env_file")"
+  touch "$env_file"
+  chmod 600 "$env_file"
+  local tmp
+  tmp="$(mktemp)"
+  grep -vE "^${key}=" "$env_file" > "$tmp" || true
+  cat "$tmp" > "$env_file"
+  rm -f "$tmp"
+  append_env_assignment "$env_file" "$key" "$value"
+  chmod 600 "$env_file"
+}
+
+persist_redis_runtime_env() {
+  local app_root="$1"
+  local env_file="$app_root/.env"
+  local redis_url="${DEPLOY_UPSTASH_REDIS_REST_URL:-${DEPLOY_UPSTASH_REDIS_URL:-${UPSTASH_REDIS_REST_URL:-${UPSTASH_REDIS_URL:-}}}}"
+  local redis_token="${DEPLOY_UPSTASH_REDIS_REST_TOKEN:-${DEPLOY_UPSTASH_REDIS_TOKEN:-${UPSTASH_REDIS_REST_TOKEN:-${UPSTASH_REDIS_TOKEN:-}}}}"
+
+  if [ -z "$redis_url$redis_token" ]; then
+    return 0
+  fi
+
+  if [ -z "$redis_url" ] || [ -z "$redis_token" ]; then
+    fail "Redis runtime env incomplete: configure both Upstash Redis URL and token"
+  fi
+
+  export UPSTASH_REDIS_REST_URL="$redis_url"
+  export UPSTASH_REDIS_REST_TOKEN="$redis_token"
+  export UPSTASH_REDIS_URL="$redis_url"
+  export UPSTASH_REDIS_TOKEN="$redis_token"
+
+  replace_env_assignment "$env_file" UPSTASH_REDIS_REST_URL "$redis_url"
+  replace_env_assignment "$env_file" UPSTASH_REDIS_REST_TOKEN "$redis_token"
+  replace_env_assignment "$env_file" UPSTASH_REDIS_URL "$redis_url"
+  replace_env_assignment "$env_file" UPSTASH_REDIS_TOKEN "$redis_token"
+  log "ensured Upstash Redis runtime env: $env_file"
 }
 
 bootstrap_web_runtime_env() {
@@ -209,6 +254,11 @@ load_runtime_env() {
     fi
   fi
 
+  if [ "$app" = "web" ]; then
+    persist_redis_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
   if [ "$app" = "api" ]; then
     local missing=()
     [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
@@ -231,6 +281,8 @@ load_runtime_env() {
     fi
 
     refresh_bootstrapped_api_database_url "$app_root"
+    persist_redis_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 }
 
@@ -368,7 +420,7 @@ load_existing_pm2_env() {
           | .pm2_env
           | to_entries[]
           | select(.value | type == "string" or type == "number" or type == "boolean")
-          | select(.key | test("^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|NEXT_PUBLIC_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"))
+          | select(.key | test("^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"))
           | "\(.key)=\(.value | tostring)"
         ' || true)
   elif command -v python3 >/dev/null 2>&1; then
@@ -380,7 +432,7 @@ import sys
 name = sys.argv[1]
 allow = re.compile(
     r"^(DATABASE_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|SUPABASE_|STRIPE_|OPENAI_|"
-    r"NEXT_PUBLIC_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"
+    r"NEXT_PUBLIC_|UPSTASH_|REDIS_|RESEND_|SENTRY_|SANITY_|JWT_|COOKIE_|APP_|API_)"
 )
 
 try:
