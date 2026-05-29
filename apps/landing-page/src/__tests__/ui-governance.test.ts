@@ -15,12 +15,32 @@ const capabilityFolderShowcaseSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/features/CapabilityFolderShowcase.tsx"),
   "utf8",
 );
+const capabilityCardSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/capability-cards/CapabilityCard.tsx"),
+  "utf8",
+);
 const useCasesSectionSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/use-cases/UseCasesSection.tsx"),
   "utf8",
 );
+const aiConstellationMarqueeSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/AIConstellationMarquee.tsx"),
+  "utf8",
+);
+const commandInstallBoxSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/CommandInstallBox.tsx"),
+  "utf8",
+);
+const footerMinimalSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/FooterMinimal.tsx"),
+  "utf8",
+);
 const productDemoSectionSource = readFileSync(
   path.join(process.cwd(), "src/components/landing/ProductDemoSection.tsx"),
+  "utf8",
+);
+const designSystemSectionSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/DesignSystemSection.tsx"),
   "utf8",
 );
 const heroMockupSource = readFileSync(
@@ -59,6 +79,7 @@ const marketingHomePageSource = readFileSync(
   path.join(process.cwd(), "src/app/[lang]/(marketing)/page.tsx"),
   "utf8",
 );
+const EXTERNAL_TASTE_PREFIX = ["cu", "lt-"].join("");
 
 describe("landing UI governance", () => {
   it("keeps feature exploration CTAs semantic and localized", () => {
@@ -83,7 +104,38 @@ describe("landing UI governance", () => {
     expect(capabilityFolderShowcaseSource).toContain("<ArtifactShiftCardPreview");
     expect(capabilityFolderShowcaseSource).toContain("<ArtifactShiftCardFooter>");
     expect(capabilityFolderShowcaseSource).not.toContain("function CapabilityArtifactPreview");
-    expect(capabilityFolderShowcaseSource).not.toContain('data-taste="cult-shift-card"');
+    expect(capabilityFolderShowcaseSource).not.toContain(EXTERNAL_TASTE_PREFIX);
+  });
+
+  it("consumes design-system kinetic patterns for the live home capability, product, and design-system surfaces", () => {
+    expect(capabilityCardSource).toContain('from "@nebutra/ui/patterns"');
+    expect(capabilityCardSource).toContain("<KineticFeatureCard");
+    expect(capabilityCardSource).not.toContain(EXTERNAL_TASTE_PREFIX);
+
+    expect(productDemoSectionSource).toContain('from "@nebutra/ui/patterns"');
+    expect(productDemoSectionSource).toContain("<KineticConsoleFrame");
+    expect(productDemoSectionSource).not.toContain('from "./product-demo/FauxTerminal"');
+
+    expect(designSystemSectionSource).toContain('from "@nebutra/ui/patterns"');
+    expect(designSystemSectionSource).toContain("<KineticStepRail");
+    expect(designSystemSectionSource).not.toContain(EXTERNAL_TASTE_PREFIX);
+  });
+
+  it("consumes design-system kinetic patterns for use-case, AI provider, and command CTA surfaces", () => {
+    expect(useCasesSectionSource).toContain('from "@nebutra/ui/patterns"');
+    expect(useCasesSectionSource).toContain("<KineticMorphSurface");
+    expect(useCasesSectionSource).not.toContain(EXTERNAL_TASTE_PREFIX);
+
+    expect(aiConstellationMarqueeSource).toContain('from "@nebutra/ui/patterns"');
+    expect(aiConstellationMarqueeSource).toContain("<KineticSignalMarquee");
+    expect(aiConstellationMarqueeSource).not.toContain(EXTERNAL_TASTE_PREFIX);
+
+    expect(commandInstallBoxSource).toContain('from "@nebutra/ui/patterns"');
+    expect(commandInstallBoxSource).toContain("<KineticCommandBox");
+    expect(commandInstallBoxSource).not.toContain("navigator.clipboard.writeText");
+    expect(commandInstallBoxSource).not.toContain(EXTERNAL_TASTE_PREFIX);
+    expect(footerMinimalSource).toContain("<CommandInstallBox");
+    expect(footerMinimalSource).toContain("heroContent.command");
   });
 
   it("routes every large feature card to a canonical docs page", () => {

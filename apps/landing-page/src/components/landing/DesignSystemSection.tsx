@@ -1,5 +1,6 @@
 "use client";
 
+import { KineticStepRail } from "@nebutra/ui/patterns";
 import { AuroraBackground } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
@@ -41,7 +42,7 @@ export function DesignSystemSection() {
         </div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 relative z-10 w-full max-w-[1280px] mx-auto">
+        <KineticStepRail className="w-full max-w-[1280px] mx-auto p-3 sm:p-4 md:p-5">
           <AnimateInGroup
             stagger="normal"
             className="md:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-6 w-full"
@@ -90,7 +91,7 @@ export function DesignSystemSection() {
               <ThemeSelectorCard />
             </AnimateIn>
           </AnimateInGroup>
-        </div>
+        </KineticStepRail>
       </div>
     </section>
   );

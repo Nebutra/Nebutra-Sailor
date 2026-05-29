@@ -8,6 +8,7 @@ import {
   Users,
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { DashboardPanel } from "@nebutra/ui/patterns";
 import { getTranslations } from "next-intl/server";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getAuth } from "@/lib/auth";
@@ -117,44 +118,31 @@ export async function GettingStarted() {
   const percent = Math.round((doneCount / total) * 100);
 
   return (
-    <div
+    <DashboardPanel
       data-tour-id="getting-started"
-      className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.03]"
-    >
-      <AnimateIn preset="fadeUp">
-        <div className="mb-3 flex items-center justify-between gap-4">
-          <div className="min-w-0">
-            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{t("title")}</h2>
-            <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
-              {t("description", { done: doneCount, total })}
-            </p>
-          </div>
-
-          {/* Progress ring summary */}
-          <div className="flex shrink-0 items-center gap-2">
+      title={t("title")}
+      description={t("description", { done: doneCount, total })}
+      meta={
+        <div className="flex shrink-0 items-center gap-2">
+          <progress className="sr-only" value={percent} max={100} aria-label={t("progressLabel")} />
+          <div
+            className="h-1.5 w-24 overflow-hidden rounded-full bg-neutral-3 dark:bg-white/10"
+            aria-hidden="true"
+          >
             <div
-              className="h-1.5 w-24 overflow-hidden rounded-full bg-neutral-3 dark:bg-white/10"
-              role="progressbar"
-              aria-valuenow={percent}
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-label={t("progressLabel")}
-            >
-              <div
-                className="h-full rounded-full transition-all duration-500"
-                style={{ width: `${percent}%`, background: "var(--brand-gradient)" }}
-              />
-            </div>
-            <span className="text-xs font-medium tabular-nums text-neutral-11 dark:text-white/60">
-              {percent}%
-            </span>
+              className="h-full rounded-full transition-all duration-500"
+              style={{ width: `${percent}%`, background: "var(--brand-gradient)" }}
+            />
           </div>
+          <span className="text-xs font-medium tabular-nums text-neutral-11 dark:text-white/60">
+            {percent}%
+          </span>
         </div>
-      </AnimateIn>
-
+      }
+    >
       <AnimateInGroup
         stagger="fast"
-        className="divide-y divide-neutral-5 overflow-hidden rounded-[var(--radius-xl)] bg-neutral-2/60 dark:divide-white/10 dark:bg-white/[0.025]"
+        className="divide-y divide-neutral-5/80 overflow-hidden rounded-[var(--radius-md)] border border-neutral-5/80 bg-neutral-2/60 dark:divide-white/10 dark:border-white/10 dark:bg-white/[0.025]"
       >
         {tasks.map((task) => {
           const Icon = task.icon;
@@ -213,6 +201,6 @@ export async function GettingStarted() {
           );
         })}
       </AnimateInGroup>
-    </div>
+    </DashboardPanel>
   );
 }

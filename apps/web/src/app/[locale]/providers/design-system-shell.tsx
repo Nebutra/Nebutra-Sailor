@@ -16,7 +16,7 @@ import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type React from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
@@ -53,7 +53,7 @@ function HeaderAuthControls({
             onClick={openFeedback}
             aria-label="Open feedback dialog"
             title="Feedback"
-            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] px-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-transparent px-2 text-[13px] font-medium text-muted-foreground transition-colors hover:border-neutral-5/80 hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
           >
             <LifeBuoy className="size-3.5" aria-hidden="true" />
             <span className="hidden xl:inline">Feedback</span>
@@ -65,7 +65,7 @@ function HeaderAuthControls({
         <div className="flex gap-2">
           <Link
             href="/sign-in"
-            className="rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 dark:text-white/70 dark:hover:bg-white/10"
+            className="rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             Sign In
           </Link>
@@ -145,55 +145,61 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
   const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
 
-  const fetchWorkspaces = useCallback(async () => {
+  useEffect(() => {
     if (!isSignedIn || !supportsWorkspaceSwitching) return;
 
-    try {
-      const response = await fetch("/api/organizations", {
-        credentials: "include",
-      });
+    let cancelled = false;
 
-      if (!response.ok) {
-        return;
+    async function loadWorkspaces() {
+      try {
+        const response = await fetch("/api/organizations", {
+          credentials: "include",
+        });
+
+        if (!response.ok || cancelled) {
+          return;
+        }
+
+        const payload = (await response.json().catch(() => null)) as {
+          organizations?: Array<{ id: string; name: string; slug?: string | null }>;
+        } | null;
+        const organizations = Array.isArray(payload?.organizations) ? payload.organizations : [];
+
+        if (organizations.length === 0 || cancelled) {
+          return;
+        }
+
+        const options = organizations.map((organization) => ({
+          id: organization.id,
+          label: organization.name || organization.slug || "Untitled workspace",
+        }));
+
+        setWorkspaceOptions(options);
+
+        const lastWorkspace =
+          typeof window !== "undefined" ? window.localStorage.getItem("nebutra_active_org") : null;
+        const preferredWorkspaceId = resolvePreferredWorkspaceId({
+          options,
+          sessionOrganizationId: session?.organizationId,
+          storedOrganizationId: lastWorkspace,
+        });
+
+        if (preferredWorkspaceId && !cancelled) {
+          setWorkspace(preferredWorkspaceId);
+        }
+      } catch {
+        // Swallow — fallback workspace state remains usable.
       }
-
-      const payload = (await response.json().catch(() => null)) as {
-        organizations?: Array<{ id: string; name: string; slug?: string | null }>;
-      } | null;
-      const organizations = Array.isArray(payload?.organizations) ? payload.organizations : [];
-
-      if (organizations.length === 0) {
-        return;
-      }
-
-      const options = organizations.map((organization) => ({
-        id: organization.id,
-        label: organization.name || organization.slug || "Untitled workspace",
-      }));
-
-      setWorkspaceOptions(options);
-
-      const lastWorkspace =
-        typeof window !== "undefined" ? window.localStorage.getItem("nebutra_active_org") : null;
-      const preferredWorkspaceId = resolvePreferredWorkspaceId({
-        options,
-        sessionOrganizationId: session?.organizationId,
-        storedOrganizationId: lastWorkspace,
-      });
-
-      if (preferredWorkspaceId) {
-        setWorkspace(preferredWorkspaceId);
-      }
-    } catch {
-      // Swallow — fallback workspace state remains usable.
     }
+
+    void loadWorkspaces();
+
+    return () => {
+      cancelled = true;
+    };
   }, [isSignedIn, session?.organizationId, supportsWorkspaceSwitching]);
 
-  useEffect(() => {
-    void fetchWorkspaces();
-  }, [fetchWorkspaces]);
-
-  const handleWorkspaceChange = useCallback(async (nextWorkspaceId: string) => {
+  async function handleWorkspaceChange(nextWorkspaceId: string) {
     setWorkspace(nextWorkspaceId);
 
     if (typeof window !== "undefined") {
@@ -213,58 +219,52 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
     } catch {
       // Keep optimistic state locally; the settings/select-org flows remain the fallback.
     }
-  }, []);
+  }
 
   // ─── Map dashboard nav → SidebarNavSection[] ─────────────────────────────
-  const sidebarSections = useMemo<SidebarNavSection[]>(() => {
-    return DASHBOARD_NAV_GROUPS.flatMap((group) => {
-      if (group.title === "Admin" && !isAdmin) {
-        return [];
-      }
+  const sidebarSections: SidebarNavSection[] = DASHBOARD_NAV_GROUPS.flatMap((group) => {
+    if (group.title === "Admin" && !isAdmin) {
+      return [];
+    }
 
-      return [
-        {
-          id: group.title,
-          label: group.title,
-          items: group.items.map((item) => ({
-            id: item.href,
-            label: item.label,
-            href: item.href,
-            icon: item.icon,
-            badge: item.badge,
-            isActive: isActiveRoute(pathname, item.href),
-            children: item.children?.map((child) => ({
-              id: child.href,
-              label: child.label,
-              href: child.href,
-              icon: child.icon,
-              badge: child.badge,
-              isActive: isActiveRoute(pathname, child.href),
-            })),
+    return [
+      {
+        id: group.title,
+        label: group.title,
+        items: group.items.map((item) => ({
+          id: item.href,
+          label: item.label,
+          href: item.href,
+          icon: item.icon,
+          badge: item.badge,
+          isActive: isActiveRoute(pathname, item.href),
+          children: item.children?.map((child) => ({
+            id: child.href,
+            label: child.label,
+            href: child.href,
+            icon: child.icon,
+            badge: child.badge,
+            isActive: isActiveRoute(pathname, child.href),
           })),
-        },
-      ];
-    });
-  }, [isAdmin, pathname]);
+        })),
+      },
+    ];
+  });
 
   // ─── Workspaces mapped to WorkspaceSwitcher shape ────────────────────────
-  const workspacesForSwitcher = useMemo<Workspace[]>(
-    () =>
-      workspaceOptions.map((option) => ({
-        id: option.id,
-        name: option.label,
-      })),
-    [workspaceOptions],
-  );
+  const workspacesForSwitcher: Workspace[] = workspaceOptions.map((option) => ({
+    id: option.id,
+    name: option.label,
+  }));
 
   // ─── Sidebar header slot — logo + workspace switcher ─────────────────────
   const sidebarHeader = (
     <div className="flex flex-col gap-2">
-      <div className={`flex items-center ${collapsed ? "justify-center" : "justify-start px-2"}`}>
+      <div className="flex items-center justify-center px-2">
         <ViewTransitionLink
           href="/workspace"
           aria-label={webBrandLabels.homeLink}
-          className="inline-flex min-w-0 items-center rounded-[var(--radius-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="inline-flex min-w-0 items-center justify-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
         >
           <BrandLogo
             variant={collapsed ? "mark" : "horizontal"}
@@ -294,7 +294,7 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
         type="button"
         onClick={toggle}
         aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        className="inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        className="inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1"
       >
         {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
       </button>
@@ -359,9 +359,12 @@ function DesignSystemShellInner({ children, notificationCenter, productCapabilit
     <AppShell
       sidebar={sidebar}
       header={headerContent}
+      headerHeight={52}
       collapsed={collapsed}
       contentClassName={
-        isWorkspaceCanvasRoute ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6" : undefined
+        isWorkspaceCanvasRoute
+          ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
+          : "dashboard-app-content"
       }
     >
       {isDevAuth ? (

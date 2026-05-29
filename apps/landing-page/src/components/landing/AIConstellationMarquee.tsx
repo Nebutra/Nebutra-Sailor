@@ -25,6 +25,7 @@ import {
   Smithery,
   Vercel,
 } from "@nebutra/ui/icons";
+import { KineticSignalMarquee } from "@nebutra/ui/patterns";
 import { InfiniteSlider } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import type * as React from "react";
@@ -74,7 +75,7 @@ function IconChip({ icon, name }: AiIcon) {
       style={{ boxShadow: "var(--ring-hairline)" }}
       className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-[var(--neutral-6)] bg-background/80 backdrop-blur-sm hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)] hover:-translate-y-px transition-all duration-150 group select-none"
     >
-      <Component size={20} className="h-5 w-5 shrink-0" />
+      <Component size={20} className="size-5 shrink-0" />
       <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors whitespace-nowrap">
         {name}
       </span>
@@ -91,13 +92,14 @@ function IconChip({ icon, name }: AiIcon) {
  */
 export function AIConstellationMarquee() {
   return (
-    <div className="w-full max-w-[1400px] mx-auto mt-14 overflow-hidden">
-      <AnimateIn preset="emerge" inView>
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground mb-8 text-center">
+    <KineticSignalMarquee
+      className="w-full max-w-[1400px] mt-14"
+      eyebrow={
+        <AnimateIn preset="emerge" inView>
           INTEGRATED WITH 47 AI PROVIDERS
-        </p>
-      </AnimateIn>
-
+        </AnimateIn>
+      }
+    >
       <AnimateIn preset="fade" inView delay={0.15}>
         <div className="space-y-3">
           {/* Row 1 — forward */}
@@ -125,7 +127,7 @@ export function AIConstellationMarquee() {
           <span className="text-primary">→</span>
         </Link>
       </AnimateIn>
-    </div>
+    </KineticSignalMarquee>
   );
 }
 

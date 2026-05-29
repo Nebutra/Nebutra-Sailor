@@ -29,7 +29,7 @@ export function ArtifactShiftCard({
         "group/card relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[var(--radius-panel)] border bg-background/90 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:border-foreground/25 hover:shadow-[0_28px_90px_-64px_var(--foreground)] focus-within:-translate-y-1 focus-within:border-foreground/25",
         className,
       )}
-      data-taste="cult-shift-card"
+      data-taste="nebutra-shift-card"
       {...props}
     >
       <div

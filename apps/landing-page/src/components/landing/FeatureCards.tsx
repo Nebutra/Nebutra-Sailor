@@ -1,6 +1,7 @@
 "use client";
 
 import { CreditCard, Servers as Server, Lightning as Zap } from "@nebutra/icons";
+import { KineticCodePreview, KineticFeatureCard } from "@nebutra/ui/patterns";
 import { AuroraBackground } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
@@ -34,12 +35,19 @@ const featureCodes = [
 ] as const;
 
 const featureIcons = [Server, Zap, CreditCard] as const;
+const featurePreviewMeta = [
+  { filename: "tenant-isolation.sql", language: "sql" },
+  { filename: "ai-provider.ts", language: "ts" },
+  { filename: "plans.config.ts", language: "ts" },
+] as const;
 
 export function FeatureCards() {
   const t = useTranslations("features");
 
   const features = ([0, 1, 2] as const).map((i) => ({
+    id: featurePreviewMeta[i].filename,
     icon: featureIcons[i],
+    preview: featurePreviewMeta[i],
     title: t(`item${i}.title`),
     description: t(`item${i}.description`),
     code: featureCodes[i],
@@ -68,60 +76,20 @@ export function FeatureCards() {
           className="feature-cards-grid grid grid-cols-1 gap-8 lg:grid-cols-3"
         >
           {features.map((feature, idx) => {
-            const Icon = feature.icon;
             return (
-              <AnimateIn key={idx} preset="fadeUp" className="h-full">
-                <article
-                  className="group flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/60 dark:bg-background/40 backdrop-blur-2xl p-8 md:p-10 transition-all duration-500 hover:border-primary/20 hover:-translate-y-px"
-                  style={{ boxShadow: "var(--ring-hairline)" }}
+              <AnimateIn key={feature.id} preset="fadeUp" className="h-full">
+                <KineticFeatureCard
+                  eyebrow={`signal 0${idx + 1}`}
+                  icon={feature.icon}
+                  title={feature.title}
+                  description={feature.description}
                 >
-                  <div className="h-14 w-14 rounded-[var(--radius-2xl)] bg-primary/5 dark:bg-primary/10 flex items-center justify-center mb-8 ring-1 ring-primary/20 shadow-inner">
-                    <Icon className="h-7 w-7 text-primary" />
-                  </div>
-                  <h3 className="mb-4 text-2xl font-bold text-foreground tracking-tight">
-                    {feature.title}
-                  </h3>
-                  <p className="mb-10 text-lg leading-relaxed text-muted-foreground font-medium">
-                    {feature.description}
-                  </p>
-
-                  <div className="mt-auto pt-4 relative">
-                    {/* Faux Terminal Editor */}
-                    <div className="overflow-hidden rounded-[var(--radius-2xl)] border border-border/50 bg-muted/30 dark:bg-zinc-950/60 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]">
-                      {/* Window Controls */}
-                      <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-muted/50 dark:bg-zinc-900/40">
-                        <div className="w-3 h-3 rounded-full bg-border/80 dark:bg-zinc-700/80"></div>
-                        <div className="w-3 h-3 rounded-full bg-border/80 dark:bg-zinc-700/80"></div>
-                        <div className="w-3 h-3 rounded-full bg-border/80 dark:bg-zinc-700/80"></div>
-                      </div>
-                      {/* Code Area */}
-                      <div className="px-5 py-4">
-                        <pre className="overflow-x-auto font-mono text-[13px] sm:text-sm leading-relaxed text-foreground/80 dark:text-zinc-300">
-                          {feature.code.map((line, j) => {
-                            const isComment =
-                              line.trim().startsWith("//") || line.trim().startsWith("--");
-                            const isKeyword =
-                              line.includes("export") ||
-                              line.includes("const") ||
-                              line.includes("await") ||
-                              line.includes("ALTER") ||
-                              line.includes("CREATE");
-                            const isObjKey = line.includes(":") && !isComment;
-
-                            return (
-                              <span
-                                key={j}
-                                className={`block ${isComment ? "text-muted-foreground/50 italic" : isKeyword ? "text-blue-600 dark:text-blue-400 font-medium" : isObjKey ? "text-emerald-600 dark:text-emerald-400" : "text-foreground/80 dark:text-zinc-300"}`}
-                              >
-                                {line || "\u00a0"}
-                              </span>
-                            );
-                          })}
-                        </pre>
-                      </div>
-                    </div>
-                  </div>
-                </article>
+                  <KineticCodePreview
+                    filename={feature.preview.filename}
+                    language={feature.preview.language}
+                    lines={feature.code}
+                  />
+                </KineticFeatureCard>
               </AnimateIn>
             );
           })}

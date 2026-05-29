@@ -65,12 +65,14 @@ export interface SidebarNavProps {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const ITEM_BASE_CLASSES =
-  "flex items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-colors";
-const ITEM_DEFAULT_CLASSES = "text-foreground hover:bg-accent hover:text-accent-foreground";
-const ITEM_ACTIVE_CLASSES = "bg-accent text-accent-foreground font-medium";
+  "flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] border px-2.5 py-1.5 text-[13px] leading-5 transition-colors";
+const ITEM_DEFAULT_CLASSES =
+  "border-transparent text-sidebar-foreground/68 hover:border-sidebar-border hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
+const ITEM_ACTIVE_CLASSES =
+  "border-sidebar-primary/35 bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
 const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
-const ICON_CLASSES = "size-3.5 shrink-0";
+const ICON_CLASSES = "size-3.5 shrink-0 opacity-75";
 
 function defaultRenderLink({
   href,
@@ -129,7 +131,7 @@ function ItemContent({
       {showChevron ? (
         <ChevronRight
           className={cn(
-            "h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform",
+            "size-3.5 shrink-0 text-muted-foreground transition-transform",
             chevronOpen && "rotate-90",
           )}
           aria-hidden="true"
@@ -311,6 +313,7 @@ export function SidebarNav({
     <TooltipProvider delayDuration={200}>
       <nav
         aria-label="Sidebar"
+        data-ui="nebutra-sidebar-nav"
         className={cn(
           "flex h-full flex-col gap-4",
           collapsed ? "px-2 py-2.5" : "px-2.5 py-3",
@@ -323,7 +326,7 @@ export function SidebarNav({
           {sections.map((section) => (
             <div key={section.id}>
               {section.label && !collapsed ? (
-                <div className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                <div className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase text-sidebar-foreground/45">
                   {section.label}
                 </div>
               ) : null}
@@ -355,7 +358,9 @@ export function SidebarNav({
           ))}
         </div>
 
-        {footer ? <div className="shrink-0 border-t border-border pt-3">{footer}</div> : null}
+        {footer ? (
+          <div className="shrink-0 border-t border-sidebar-border pt-3">{footer}</div>
+        ) : null}
       </nav>
     </TooltipProvider>
   );
