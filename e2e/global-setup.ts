@@ -1,4 +1,4 @@
-const ROUTE_PREWARM_TIMEOUT_MS = 90_000;
+const ROUTE_PREWARM_TIMEOUT_MS = 180_000;
 const PREWARM_ROUTES = ["/", "/changelog"];
 
 async function fetchWithTimeout(url: URL) {
