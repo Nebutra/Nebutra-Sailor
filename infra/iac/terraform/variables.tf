@@ -161,7 +161,7 @@ variable "resend_api_key" {
 variable "email_from" {
   description = "Sender address for transactional emails."
   type        = string
-  default     = "noreply@nebutra.ai"
+  default     = "noreply@nebutra.com"
 }
 
 # ── Background jobs ───────────────────────────────────────────────────────────

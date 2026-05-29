@@ -37,7 +37,7 @@ describe("ConsoleEmailProvider", () => {
       to: "user@example.com",
       subject: "Test Subject",
       html: "<p>Hello</p>",
-      from: "noreply@nebutra.ai",
+      from: "noreply@nebutra.com",
     });
 
     expect(result.id).toBeDefined();
@@ -50,13 +50,13 @@ describe("ConsoleEmailProvider", () => {
       to: "user@example.com",
       subject: "Test Subject",
       html: "<p>Hello</p>",
-      from: "Nebutra <noreply@nebutra.ai>",
+      from: "Nebutra <noreply@nebutra.com>",
     });
 
     const output = stdoutSpy.mock.calls.map((c: unknown[]) => c[0]).join("");
     expect(output).toContain("user@example.com");
     expect(output).toContain("Test Subject");
-    expect(output).toContain("noreply@nebutra.ai");
+    expect(output).toContain("noreply@nebutra.com");
   });
 
   it("handles array recipients", async () => {
@@ -64,7 +64,7 @@ describe("ConsoleEmailProvider", () => {
       to: ["a@test.com", "b@test.com"],
       subject: "Multi",
       html: "<p>Hi</p>",
-      from: "noreply@nebutra.ai",
+      from: "noreply@nebutra.com",
     });
 
     const output = stdoutSpy.mock.calls.map((c: unknown[]) => c[0]).join("");
@@ -77,7 +77,7 @@ describe("ConsoleEmailProvider", () => {
       to: "user@example.com",
       subject: "Tagged",
       html: "<p>Hi</p>",
-      from: "noreply@nebutra.ai",
+      from: "noreply@nebutra.com",
       tags: [{ name: "type", value: "welcome" }],
     });
 

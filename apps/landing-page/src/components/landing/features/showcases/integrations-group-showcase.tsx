@@ -41,7 +41,7 @@ function seeded(slug: string, max: number, offset = 0): number {
 }
 
 const PAYLOAD_BY_SLUG: Record<string, string> = {
-  email: 'to: "user@nebutra.com", subject: "Welcome"',
+  email: 'to: "user@example.com", subject: "Welcome"',
   uploads: 'key: "demo.mp4", size: 18432000',
   storage: 'bucket: "assets", key: "logo.svg"',
   notifications: 'user: "usr_8c41", type: "invoice.paid"',

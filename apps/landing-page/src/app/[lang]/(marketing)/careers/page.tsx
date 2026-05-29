@@ -41,7 +41,7 @@ const ROLES: Role[] = [
     summary:
       "Own a vertical of the Sailor SaaS skeleton end-to-end — from Prisma schema through Hono APIs to RSC UI. Deep TypeScript, Postgres, and AI SDK expertise expected.",
     stack: ["TypeScript", "Next.js 16", "Prisma", "AI SDK", "Hono", "Tailwind v4"],
-    mailto: "mailto:jobs@nebutra.com?subject=Founding%20Engineer%20%E2%80%94%20GitHub%20Profile",
+    mailto: "mailto:careers@nebutra.com?subject=Founding%20Engineer%20%E2%80%94%20GitHub%20Profile",
   },
   {
     title: "Design Engineer",
@@ -49,7 +49,7 @@ const ROLES: Role[] = [
     summary:
       "Own the design system, brand, and component library. We ship Lobe UI + custom primitives + Geist icons + Framer Motion at scale across 7 locales.",
     stack: ["React", "Tailwind v4", "Storybook", "Figma / Penpot", "Framer Motion"],
-    mailto: "mailto:jobs@nebutra.com?subject=Design%20Engineer%20%E2%80%94%20GitHub%20Profile",
+    mailto: "mailto:careers@nebutra.com?subject=Design%20Engineer%20%E2%80%94%20GitHub%20Profile",
   },
 ];
 
@@ -123,7 +123,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
                 speaks for itself, we want to hear from you.
               </p>
               <Button asChild size="lg" className="rounded-full">
-                <a href="mailto:jobs@nebutra.com?subject=GitHub%20Profile%20Submission">
+                <a href="mailto:careers@nebutra.com?subject=GitHub%20Profile%20Submission">
                   Submit your GitHub profile <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>

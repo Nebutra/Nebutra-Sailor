@@ -101,7 +101,7 @@ product and **annual revenue under $1,000,000 USD**.
 
 ### Purchase & support
 
-- **Contact:** enterprise@nebutra.com
+- **Contact:** sales@nebutra.com
 - Schedule a call with our enterprise team to discuss your needs
 - Typical contract negotiation: 2–4 weeks
 

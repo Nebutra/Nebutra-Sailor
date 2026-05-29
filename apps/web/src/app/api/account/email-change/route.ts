@@ -130,7 +130,7 @@ export async function POST(request: Request) {
       const provider = emailModule.getEmailProvider();
       await provider.send({
         to: newEmail,
-        from: process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.ai>",
+        from: process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.com>",
         subject: "Confirm your new Nebutra email address",
         html: buildEmailChangeHtml({ recipientEmail: newEmail, confirmUrl }),
         tags: [{ name: "type", value: "email_change_verification" }],

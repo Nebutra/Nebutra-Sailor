@@ -33,7 +33,7 @@ type Story = StoryObj<typeof UserMenu>;
 const baseUser = {
   id: "user_01",
   name: "Ada Lovelace",
-  email: "ada@nebutra.com",
+  email: "ada@example.com",
   avatarUrl:
     "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face",
 };
@@ -179,7 +179,7 @@ export const Grouped: Story = {
     user: {
       ...baseUser,
       name: "Grace Hopper",
-      email: "grace@nebutra.com",
+      email: "grace@example.com",
       avatarUrl: undefined,
     },
     groups: [

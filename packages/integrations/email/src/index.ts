@@ -13,7 +13,7 @@
  *
  * Environment variables:
  *   EMAIL_PROVIDER  — explicit provider override (optional)
- *   EMAIL_FROM      — verified sender (e.g. "Nebutra <noreply@nebutra.ai>")
+ *   EMAIL_FROM      — verified sender (e.g. "Nebutra <noreply@nebutra.com>")
  *   RESEND_API_KEY  — for Resend provider
  *   SMTP_HOST       — for Nodemailer provider (+ SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE)
  */
@@ -26,7 +26,7 @@ export { ConsoleEmailProvider } from "./providers/console";
 export { NodemailerEmailProvider } from "./providers/nodemailer";
 export { ResendEmailProvider } from "./providers/resend";
 
-const FROM = process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.ai>";
+const FROM = process.env.EMAIL_FROM ?? "Nebutra <noreply@nebutra.com>";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 

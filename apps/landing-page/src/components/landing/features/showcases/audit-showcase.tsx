@@ -43,7 +43,7 @@ const COPY: Record<"en" | "zh", Copy> = {
         initials: "MK",
         actor: "maria.kim",
         action: "user.invite",
-        target: "alex@nebutra.co",
+        target: "alex@example.com",
         status: "info",
       },
       {
@@ -102,7 +102,7 @@ const COPY: Record<"en" | "zh", Copy> = {
         initials: "MK",
         actor: "maria.kim",
         action: "user.invite",
-        target: "alex@nebutra.co",
+        target: "alex@example.com",
         status: "info",
       },
       {

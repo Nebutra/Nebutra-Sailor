@@ -38,7 +38,7 @@ export const Default: Story = {
       exportId: "exp_demo_01",
       status: "ready" as const,
       inline: true,
-      data: { profile: { email: "demo@nebutra.com" }, audit: [] },
+      data: { profile: { email: "demo@example.com" }, audit: [] },
     }),
   },
 };
@@ -55,7 +55,7 @@ export const Pending: Story = {
         exportId: "exp_demo_02",
         status: "ready" as const,
         inline: true,
-        data: { profile: { email: "demo@nebutra.com" } },
+        data: { profile: { email: "demo@example.com" } },
       };
     },
   },

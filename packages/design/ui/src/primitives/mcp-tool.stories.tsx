@@ -40,7 +40,7 @@ const resourcesJson = JSON.stringify(
 const customerJson = JSON.stringify(
   {
     id: "cus_8sR2x9pK",
-    email: "ada@nebutra.com",
+    email: "ada@example.com",
     plan: "Pro",
     created_at: "2026-05-14T08:42:00Z",
   },

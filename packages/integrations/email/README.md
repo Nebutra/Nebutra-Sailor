@@ -54,4 +54,4 @@ await sendApiKeyCreatedEmail({
 | Environment Variable | Description |
 |---------------------|-------------|
 | `RESEND_API_KEY` | Resend API key from https://resend.com/api-keys |
-| `EMAIL_FROM` | Verified sender address (default: `Nebutra <noreply@nebutra.ai>`) |
+| `EMAIL_FROM` | Verified sender address (default: `Nebutra <noreply@nebutra.com>`) |
