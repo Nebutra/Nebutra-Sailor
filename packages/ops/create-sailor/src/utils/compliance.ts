@@ -148,7 +148,7 @@ const PSB_FOOTER_COMPONENT = `export function PublicSecurityFooter() {
 
 const COOKIE_BANNER_COMPONENT = `"use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type ConsentMode = "accepted" | "rejected" | "custom";
 
@@ -177,33 +177,64 @@ const DEFAULT_CATEGORIES: CustomConsent = {
   preferences: false,
 };
 
+const OPTIONAL_CATEGORIES: CustomConsent = {
+  necessary: true,
+  analytics: true,
+  marketing: true,
+  preferences: true,
+};
+
+function readStoredConsent(): StoredConsent | null {
+  if (typeof window === "undefined") return null;
+
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return null;
+
+  try {
+    return JSON.parse(stored) as StoredConsent;
+  } catch {
+    return null;
+  }
+}
+
+function shouldOpenInitially(): boolean {
+  if (typeof window === "undefined") return false;
+
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return true;
+
+  try {
+    JSON.parse(stored);
+    return false;
+  } catch {
+    return true;
+  }
+}
+
 function emitConsent(consent: StoredConsent): void {
   if (typeof window === "undefined") return;
   window.dispatchEvent(new CustomEvent(CONSENT_EVENT, { detail: consent }));
 }
 
 export function CookieBanner() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(shouldOpenInitially);
   const [showCustomize, setShowCustomize] = useState(false);
-  const [categories, setCategories] = useState<CustomConsent>(DEFAULT_CATEGORIES);
+  const [categories, setCategories] = useState<CustomConsent>(
+    () => readStoredConsent()?.categories ?? DEFAULT_CATEGORIES,
+  );
+  const optionalCookiesEnabled =
+    categories.analytics || categories.marketing || categories.preferences;
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) {
-        setIsOpen(true);
-        return;
-      }
-      const parsed = JSON.parse(stored) as StoredConsent;
-      // Re-emit so analytics/marketing scripts mounted after consent can read state
-      emitConsent(parsed);
-    } catch {
-      setIsOpen(true);
+    const stored = readStoredConsent();
+    if (stored) {
+      emitConsent(stored);
     }
   }, []);
 
   useEffect(() => {
     const handler = () => {
+      setCategories(readStoredConsent()?.categories ?? DEFAULT_CATEGORIES);
       setShowCustomize(true);
       setIsOpen(true);
     };
@@ -211,7 +242,7 @@ export function CookieBanner() {
     return () => window.removeEventListener(OPEN_EVENT, handler);
   }, []);
 
-  const persist = useCallback((mode: ConsentMode, cats: CustomConsent) => {
+  function persist(mode: ConsentMode, cats: CustomConsent) {
     const consent: StoredConsent = {
       mode,
       categories: cats,
@@ -222,24 +253,28 @@ export function CookieBanner() {
     emitConsent(consent);
     setIsOpen(false);
     setShowCustomize(false);
-  }, []);
+  }
 
-  const acceptAll = useCallback(() => {
+  function acceptAll() {
     persist("accepted", {
       necessary: true,
       analytics: true,
       marketing: true,
       preferences: true,
     });
-  }, [persist]);
+  }
 
-  const rejectNonEssential = useCallback(() => {
+  function saveNecessaryOnly() {
     persist("rejected", DEFAULT_CATEGORIES);
-  }, [persist]);
+  }
 
-  const saveCustom = useCallback(() => {
+  function saveCustom() {
     persist("custom", categories);
-  }, [persist, categories]);
+  }
+
+  function toggleOptionalCookies() {
+    setCategories(optionalCookiesEnabled ? DEFAULT_CATEGORIES : OPTIONAL_CATEGORIES);
+  }
 
   if (!isOpen) return null;
 
@@ -248,129 +283,100 @@ export function CookieBanner() {
       role="dialog"
       aria-modal="false"
       aria-labelledby="cookie-banner-title"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--neutral-7)] bg-[var(--neutral-1)] shadow-lg"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--neutral-6)] bg-[var(--neutral-1)]/95 text-[var(--neutral-12)] shadow-lg backdrop-blur-md"
     >
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-4 p-4 md:p-6">
-        <div>
-          <h2 id="cookie-banner-title" className="text-sm font-semibold text-[var(--neutral-12)]">
-            Cookie Preferences · Cookie 偏好设置
-          </h2>
-          <p className="mt-1 text-xs text-[var(--neutral-11)]">
-            We use cookies to provide essential functionality, analyze usage, and personalize content.
-            You can accept all, reject non-essential, or customize your choice. See our{" "}
-            <a href="/privacy" className="underline">
-              Privacy Policy
-            </a>
-            .
-            <br />
-            我们使用 Cookie 提供必要功能、分析使用情况并个性化内容。您可以接受全部、拒绝非必要，或自定义选择。详见
-            <a href="/privacy" className="underline">
-              隐私政策
-            </a>
-            。
-          </p>
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0 flex-1">
+            <h2 id="cookie-banner-title" className="text-base font-semibold text-[var(--neutral-12)]">
+              Your Privacy Choices / 隐私偏好
+            </h2>
+            <p className="mt-1 max-w-3xl text-sm leading-6 text-[var(--neutral-11)]">
+              Necessary cookies keep the site working. Optional cookies help us improve the product
+              and personalize content.{" "}
+              <a
+                href="/privacy"
+                className="font-medium text-[var(--brand-primary)] underline underline-offset-4 transition-colors hover:text-[var(--blue-10)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]"
+              >
+                Privacy Policy
+              </a>
+            </p>
+          </div>
+
+          <div className="flex w-full flex-col-reverse gap-2 sm:w-auto sm:flex-row sm:items-center">
+            <button
+              type="button"
+              onClick={saveNecessaryOnly}
+              className="inline-flex min-h-10 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]"
+            >
+              Only Necessary / 仅必要
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowCustomize((current) => !current)}
+              className="inline-flex min-h-10 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]"
+              aria-expanded={showCustomize}
+              aria-controls="cookie-preferences"
+            >
+              Manage Choices / 管理偏好
+            </button>
+            <button
+              type="button"
+              onClick={acceptAll}
+              className="inline-flex min-h-10 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 text-sm font-medium text-[var(--neutral-1)] transition-colors hover:bg-[var(--neutral-11)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]"
+            >
+              Accept All / 全部接受
+            </button>
+          </div>
         </div>
 
         {showCustomize ? (
-          <fieldset className="grid gap-3 md:grid-cols-2">
-            <CategoryRow
-              id="necessary"
-              title="Necessary / 必要"
-              description="Required for the site to function. Cannot be disabled. / 站点运行所必需，无法关闭。"
-              checked={true}
-              disabled
-              onChange={() => undefined}
-            />
-            <CategoryRow
-              id="analytics"
-              title="Analytics / 分析"
-              description="Helps us understand usage patterns. / 帮助我们了解使用模式。"
-              checked={categories.analytics}
-              onChange={(v) => setCategories((c) => ({ ...c, analytics: v }))}
-            />
-            <CategoryRow
-              id="marketing"
-              title="Marketing / 营销"
-              description="Used for targeted advertising. / 用于定向广告。"
-              checked={categories.marketing}
-              onChange={(v) => setCategories((c) => ({ ...c, marketing: v }))}
-            />
-            <CategoryRow
-              id="preferences"
-              title="Preferences / 偏好"
-              description="Remember your preferences (language, theme). / 记住您的偏好（语言、主题）。"
-              checked={categories.preferences}
-              onChange={(v) => setCategories((c) => ({ ...c, preferences: v }))}
-            />
-          </fieldset>
+          <div
+            id="cookie-preferences"
+            className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-3 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div className="min-w-0">
+              <p id="cookie-optional-label" className="text-sm font-medium text-[var(--neutral-12)]">
+                Optional Cookies / 可选 Cookie
+              </p>
+              <p
+                id="cookie-optional-description"
+                className="mt-1 text-sm leading-5 text-[var(--neutral-11)]"
+              >
+                Includes analytics, marketing, and saved preferences. / 包含分析、营销和偏好保存。
+              </p>
+            </div>
+            <div className="flex shrink-0 items-center gap-2">
+              <button
+                id="cookie-optional"
+                type="button"
+                onClick={toggleOptionalCookies}
+                className={\`relative inline-flex h-6 w-11 shrink-0 rounded-full border border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-2)] \${
+                  optionalCookiesEnabled ? "bg-[var(--neutral-12)]" : "bg-[var(--neutral-6)]"
+                }\`}
+                role="switch"
+                aria-checked={optionalCookiesEnabled}
+                aria-labelledby="cookie-optional-label"
+                aria-describedby="cookie-optional-description"
+              >
+                <span
+                  className={\`pointer-events-none inline-block size-5 rounded-full bg-[var(--neutral-1)] shadow transition-transform \${
+                    optionalCookiesEnabled ? "translate-x-5" : "translate-x-0"
+                  }\`}
+                />
+              </button>
+              <button
+                type="button"
+                onClick={saveCustom}
+                className="inline-flex min-h-10 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 text-sm font-medium text-[var(--neutral-1)] transition-colors hover:bg-[var(--neutral-11)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--blue-7)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]"
+              >
+                Save Choices / 保存选择
+              </button>
+            </div>
+          </div>
         ) : null}
-
-        <div className="flex flex-wrap gap-2 md:justify-end">
-          {showCustomize ? (
-            <button
-              type="button"
-              onClick={saveCustom}
-              className="rounded-md border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] shadow-sm hover:bg-[var(--neutral-11)]"
-            >
-              Save Preferences / 保存偏好
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setShowCustomize(true)}
-              className="rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
-            >
-              Customize / 自定义
-            </button>
-          )}
-          <button
-            type="button"
-            onClick={rejectNonEssential}
-            className="rounded-md border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] hover:bg-[var(--neutral-3)]"
-          >
-            Reject Non-Essential / 拒绝非必要
-          </button>
-          <button
-            type="button"
-            onClick={acceptAll}
-            className="rounded-md border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] shadow-sm hover:bg-[var(--neutral-11)]"
-          >
-            Accept All / 全部接受
-          </button>
-        </div>
       </div>
     </div>
-  );
-}
-
-interface CategoryRowProps {
-  id: string;
-  title: string;
-  description: string;
-  checked: boolean;
-  disabled?: boolean;
-  onChange: (value: boolean) => void;
-}
-
-function CategoryRow({ id, title, description, checked, disabled, onChange }: CategoryRowProps) {
-  return (
-    <label
-      htmlFor={id}
-      className="flex items-start gap-3 rounded-md border border-[var(--neutral-7)] p-3"
-    >
-      <input
-        id={id}
-        type="checkbox"
-        checked={checked}
-        disabled={disabled}
-        onChange={(e) => onChange(e.target.checked)}
-        className="mt-0.5 h-4 w-4"
-      />
-      <span className="flex flex-col">
-        <span className="text-sm font-medium text-[var(--neutral-12)]">{title}</span>
-        <span className="text-xs text-[var(--neutral-11)]">{description}</span>
-      </span>
-    </label>
   );
 }
 `;
