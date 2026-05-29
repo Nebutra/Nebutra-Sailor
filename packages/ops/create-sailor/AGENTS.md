@@ -1,4 +1,4 @@
-# AGENTS.md — packages/create-sailor
+# AGENTS.md — packages/ops/create-sailor
 
 Execution contract for Nebutra's published `create-sailor` scaffolding CLI.
 

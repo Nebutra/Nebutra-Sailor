@@ -72,7 +72,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
-    "directory": "packages/create-sailor"
+    "directory": "packages/ops/create-sailor"
   },
   "bugs": {
     "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"

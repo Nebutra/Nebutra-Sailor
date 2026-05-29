@@ -7,7 +7,7 @@ import ignore from "ignore";
 /**
  * Template source resolution (dual-repo strategy).
  *
- * Primary: nebutra/sailor-template — pre-stripped skeleton auto-synced from
+ * Primary: Nebutra/Sailor-Template — pre-stripped skeleton auto-synced from
  * the main repo via .github/workflows/sync-template.yml. Smaller, faster,
  * no runtime .templateignore application needed.
  *

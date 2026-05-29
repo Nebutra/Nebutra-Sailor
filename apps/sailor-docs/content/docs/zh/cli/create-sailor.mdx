@@ -3,7 +3,7 @@ title: create-sailor
 description: 交互式脚手架向导——几秒钟内引导你完成 Nebutra-Sailor 生产级项目的初始化。
 ---
 
-`create-sailor` 是一次性脚手架工具，它会克隆 Nebutra-Sailor 模板，通过配置问题引导你完成设置，并写入 `.env.local`——让你在不到一分钟内就能开始编码。
+`create-sailor` 是一次性脚手架工具，它会下载预剥离的 Sailor-Template 镜像，通过配置问题引导你完成设置，并写入 `.env.local`——让你在不到一分钟内就能开始编码。
 
 ## 用法
 
@@ -26,7 +26,7 @@ npx create-sailor [目录]
     自动生成随机 `AUTH_SECRET` / `JWT_SECRET`，并写入带服务商占位 Key 的 `.env.local`，稍后填入真实密钥即可。
   </Step>
   <Step title="克隆、配置并剪枝">
-    克隆 Nebutra-Sailor 仓库，在 `package.json` 中设置项目名称，写入 `nebutra.config.json`，裁剪未使用的模板功能，并注入环境变量。
+    下载 Sailor-Template，在 `package.json` 中设置项目名称，写入 `nebutra.config.json`，裁剪未使用的模板功能，并注入环境变量。
   </Step>
   <Step title="输出后续步骤">
     显示接下来要运行的命令：`cd my-saas-app && pnpm install && pnpm dev`。
@@ -56,7 +56,7 @@ npx create-sailor [目录]
 | `--payment` | `stripe`、`lemon`、`wechat`、`alipay`、`none` | `stripe`（global）/ `wechat`（cn） |
 | `--ai` | 拓扑速写（`gateway`、`direct`、`custom`、`none`）或逗号分隔的 Provider ID | `gateway` |
 | `--deploy` | `vercel`、`railway`、`cloudflare`、`selfhost`、`none` | `vercel` |
-| `--docs` | `fumadocs`、`none`（v1.x 中其他值会回退到 fumadocs） | `fumadocs` |
+| `--docs` | `fumadocs`、`mintlify`、`docusaurus`、`nextra`、`vitepress`、`none` | `fumadocs` |
 | `-y`, `--yes` | （开关）接受所有默认值，非交互模式 | 关 |
 | `--dry-run` | （开关）打印计划但不写入文件 | 关 |
 | `--json` | （开关）机器可读的事件流输出 | 关 |
@@ -77,7 +77,7 @@ npx create-sailor [目录]
 
 ### 合规 / Wave-3 开关
 
-均接受 `true` / `false`，默认 `true`；`--china-compliance` 在 `--region=cn` 时自动翻转为 `true`。
+均接受 `true` / `false`。除 `--audit-log` 在 `@nebutra/audit` 仍为 WIP 时默认 `false`、`--china-compliance` 在 `--region=cn` 时自动翻转为 `true` 以外，其余默认 `true`。
 
 `--cron-jobs`、`--audit-log`、`--api-keys`、`--command-palette`、`--cookie-consent`、`--legal-pages`、`--china-compliance`。
 

@@ -3,7 +3,7 @@ title: create-sailor
 description: Interactive scaffolding wizard — bootstrap a production-ready Nebutra-Sailor project in seconds.
 ---
 
-`create-sailor` is a one-time scaffolding tool that clones the Nebutra-Sailor template, walks you through configuration questions, and writes your `.env.local` — so you can start coding in under a minute.
+`create-sailor` is a one-time scaffolding tool that downloads the pre-stripped Sailor-Template mirror, walks you through configuration questions, and writes your `.env.local` — so you can start coding in under a minute.
 
 ## Usage
 
@@ -26,7 +26,7 @@ If you omit `[dir]`, the wizard prompts you for a directory name.
     Generates random `AUTH_SECRET` / `JWT_SECRET` and writes `.env.local` with provider-specific stub keys you fill in later.
   </Step>
   <Step title="Clone, configure, and prune">
-    Clones the Nebutra-Sailor monorepo, sets the project name in `package.json`, writes `nebutra.config.json`, prunes unused template features, and injects your env vars.
+    Downloads Sailor-Template, sets the project name in `package.json`, writes `nebutra.config.json`, prunes unused template features, and injects your env vars.
   </Step>
   <Step title="Print next steps">
     Outputs exactly what to run next: `cd my-saas-app && pnpm install && pnpm dev`.
@@ -56,7 +56,7 @@ Everything else (ORM, database, payment, email, storage, etc.) is flag-only.
 | `--payment` | `stripe`, `lemon`, `wechat`, `alipay`, `none` | `stripe` global / `wechat` cn |
 | `--ai` | topology shorthand (`gateway`, `direct`, `custom`, `none`) or comma-separated provider IDs | `gateway` |
 | `--deploy` | `vercel`, `railway`, `cloudflare`, `selfhost`, `none` | `vercel` |
-| `--docs` | `fumadocs`, `none` (others fall back to fumadocs in v1.x) | `fumadocs` |
+| `--docs` | `fumadocs`, `mintlify`, `docusaurus`, `nextra`, `vitepress`, `none` | `fumadocs` |
 | `-y`, `--yes` | (flag) — accept all defaults; non-interactive | off |
 | `--dry-run` | (flag) — print plan, write nothing | off |
 | `--json` | (flag) — machine-readable event stream | off |
@@ -77,7 +77,7 @@ For the full per-feature flag set (`--email`, `--storage`, `--monitoring`, `--an
 
 ### Compliance / wave-3 toggles
 
-All accept `true` / `false`. Defaults are `true` except `--china-compliance` which auto-flips to `true` when `--region=cn`.
+All accept `true` / `false`. Defaults are `true` except `--audit-log`, which defaults to `false` while `@nebutra/audit` is WIP, and `--china-compliance`, which auto-flips to `true` when `--region=cn`.
 
 `--cron-jobs`, `--audit-log`, `--api-keys`, `--command-palette`, `--cookie-consent`, `--legal-pages`, `--china-compliance`.
 

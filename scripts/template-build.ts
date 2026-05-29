@@ -3,7 +3,7 @@
  * template-build.ts
  *
  * Builds a clean, pre-stripped template source tree suitable for pushing to
- * the `nebutra/sailor-template` mirror repository.
+ * the `Nebutra/Sailor-Template` mirror repository.
  *
  * Workflow:
  *   1. Copy the entire repo (minus heavy dev-only dirs) to --out.
@@ -15,8 +15,9 @@
  *   tsx scripts/template-build.ts --out=/tmp/sailor-template
  *   tsx scripts/template-build.ts --out=/tmp/sailor-template --git
  *
- * The mirror repo is consumed by create-sailor when `SAILOR_TEMPLATE_REPO` is
- * set (default: nebutra/sailor-template). See packages/ops/create-sailor/src/utils/git.ts.
+ * The mirror repo is consumed by create-sailor by default. Override with
+ * `SAILOR_TEMPLATE_REPO` when testing another template source. See
+ * packages/ops/create-sailor/src/utils/git.ts.
  */
 import { execSync } from "node:child_process";
 import fs from "node:fs";
@@ -298,7 +299,7 @@ function main(): void {
   const copied = copyTree(REPO_ROOT, out, args.verbose);
   process.stdout.write(`  copied ${copied} files\n`);
 
-  process.stdout.write("Step 2/4: applying .templateignore…\n");
+  process.stdout.write("Step 2/5: applying .templateignore…\n");
   const stripped = applyTemplateIgnore(out, args.verbose);
   process.stdout.write(`  stripped ${stripped} paths\n`);
 

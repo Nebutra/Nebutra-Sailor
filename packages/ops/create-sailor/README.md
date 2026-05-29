@@ -80,24 +80,24 @@ npm create sailor@latest my-app \
 | `--analytics` | `posthog` · `plausible` · `umami` · `baidu` · `sensors` · `none` | region-based |
 | `--sms` | `twilio` · `aliyun-sms` · `tencent-sms` · `yunpian` · `none` | region-based |
 | `--deploy` | `vercel` · `railway` · `cloudflare` · `selfhost` | `vercel` |
-| `--docs` | `fumadocs` · `none` | `fumadocs` |
+| `--docs` | `fumadocs` · `mintlify` · `docusaurus` · `nextra` · `vitepress` · `none` | `fumadocs` |
 | `--orm` | `prisma` · `drizzle` · `none` | `prisma` |
 | `--db` | `postgres` · `mysql` · `sqlite` · `none` | `postgresql` |
-| `--queue` | `qstash` · `bullmq` · `upstash` · `sqs` · `none` | region-based |
-| `--search` | `meilisearch` · `typesense` · `algolia` · `pgvector` · `none` | region-based |
+| `--queue` | `qstash` · `bullmq` · `upstash` · `sqs` · `none` | `none` |
+| `--search` | `meilisearch` · `typesense` · `algolia` · `pgvector` · `none` | `none` |
 | `--cache` | `upstash-redis` · `vercel-kv` · `redis` · `dragonfly` · `none` | region-based |
 | `--notifications` | `novu` · `knock` · `custom` · `none` | `none` |
 | `--webhooks` | `svix` · `custom` · `none` | `none` |
 | `--cms` | `sanity` · `contentful` · `strapi` · `none` | `none` |
 | `--feature-flags` | `vercel-flags` · `growthbook` · `configcat` · `none` | `none` |
-| `--captcha` | `turnstile` · `hcaptcha` · `aliyun-slide` · `none` | region-based |
+| `--captcha` | `turnstile` · `hcaptcha` · `aliyun-slide` · `none` | `none` |
 | `--mcp` | `on` · `off` | `on` |
 | `--metering` | `auto` · `on` · `off` | `auto` |
 | `--billing-mode` | `usage` · `seat` · `credits` | `usage` |
 | `--idp` | `clerk` · `oauth-server` | `clerk` |
 | `--access-gate` | `none` · `invite` | `none` |
 | `--cron-jobs` | `true` · `false` — scaffold scheduled cron handlers | `true` |
-| `--audit-log` | `true` · `false` — enable `/settings/audit-log` + arch test | `true` |
+| `--audit-log` | `true` · `false` — enable `/settings/audit-log` + arch test | `false` |
 | `--api-keys` | `true` · `false` — enable `/settings/api-keys` page | `true` |
 | `--command-palette` | `true` · `false` — enable ⌘K command palette | `true` |
 | `--cookie-consent` | `true` · `false` — enable GDPR/CCPA cookie banner | `true` |

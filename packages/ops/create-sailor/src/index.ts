@@ -280,33 +280,18 @@ function resolveStorageChoice(raw: string | undefined, fallback: string): string
   return normalizeStorageProviderId(value) ?? value;
 }
 
-const DOCS_COMING_SOON: Record<string, string> = {
-  mintlify: "Mintlify",
-  docusaurus: "Docusaurus",
-  nextra: "Nextra",
-  vitepress: "VitePress",
-};
-
-function resolveDocs(raw: string | undefined, useJson: boolean): DocsFramework {
+function resolveDocs(raw: string | undefined, _useJson: boolean): DocsFramework {
   if (!raw) return "fumadocs";
   const v = raw.toLowerCase();
-  if (v === "fumadocs" || v === "none") return v;
-  if (v in DOCS_COMING_SOON) {
-    const label = DOCS_COMING_SOON[v];
-    if (!useJson) {
-      process.stdout.write(
-        pc.yellow(`⚠  ${label} support is coming in v1.2. Falling back to fumadocs.\n`) +
-          pc.dim("   Track progress: https://github.com/Nebutra/Nebutra-Sailor/issues\n"),
-      );
-    } else {
-      emitJson(true, {
-        event: "notice",
-        kind: "docs-fallback",
-        requested: v,
-        effective: "fumadocs",
-      });
-    }
-    return "fumadocs";
+  if (
+    v === "fumadocs" ||
+    v === "mintlify" ||
+    v === "docusaurus" ||
+    v === "nextra" ||
+    v === "vitepress" ||
+    v === "none"
+  ) {
+    return v;
   }
   return "fumadocs";
 }

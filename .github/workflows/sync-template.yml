@@ -1,10 +1,10 @@
 name: Sync to sailor-template
 
-# Mirrors Nebutra-Sailor main → nebutra/sailor-template (stripped skeleton)
+# Mirrors Nebutra-Sailor main → Nebutra/Sailor-Template (stripped skeleton)
 # Consumed by `create-sailor` at scaffold time for faster, cleaner cloning.
 #
 # Required repo secrets:
-#   TEMPLATE_PUSH_TOKEN   PAT with repo scope, authorized for nebutra/sailor-template
+#   SAILOR_TEMPLATE_SSH_KEY   deploy key authorized to push Nebutra/Sailor-Template
 
 on:
   push:

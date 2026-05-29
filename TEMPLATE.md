@@ -1,9 +1,9 @@
 # Template Architecture
 
-This repo is **both** Nebutra's live product codebase **and** the template that
-ships via `npm create sailor@latest`. A single `.templateignore` file separates
-the two concerns: when a user scaffolds a new project, Nebutra's business
-content is stripped and only the reusable skeleton remains.
+This repo is **both** Nebutra's live product codebase **and** the source used to
+sync the `Nebutra/Sailor-Template` mirror consumed by `create-sailor`. A single
+`.templateignore` file separates the two concerns: the sync workflow strips
+Nebutra's business content and publishes only the reusable skeleton.
 
 ## How it works
 
@@ -11,16 +11,16 @@ content is stripped and only the reusable skeleton remains.
 npm create sailor@latest my-app
    │
    ▼
-packages/create-sailor fetches the repo tarball (shallow, fast)
+packages/ops/create-sailor fetches Nebutra/Sailor-Template as an immutable tarball
    │
    ▼
-Reads .templateignore from the cloned dir
+If the mirror is unavailable, it falls back to Nebutra/Nebutra-Sailor main
    │
    ▼
-Deletes every path matched by the ignore patterns (gitignore syntax)
+Fallback only: reads .templateignore and deletes every matched path
    │
    ▼
-Removes .templateignore itself
+Removes .templateignore itself if fallback pruning was needed
    │
    ▼
 Runs configured prune step (ORM / i18n / app type)
@@ -99,9 +99,10 @@ The assertions live in `scripts/template-check.ts` under `MUST_PRESERVE` and
 `MUST_STRIP`. Add entries whenever you want to hard-guard a path against
 accidental drift.
 
-## Why not a separate template repo?
+## Why keep a mirror?
 
-A separate template repo drifts — it goes stale the moment Nebutra ships a
-real feature. By making the product repo itself the template source and
-letting `.templateignore` carve out the reusable subset, every change Nebutra
-ships to its own product also benefits scaffolded projects, and vice versa.
+The mirror is derived, not hand-maintained. `scripts/template-build.ts` builds a
+clean tree from this repo, `.github/workflows/sync-template.yml` pushes it to
+`Nebutra/Sailor-Template`, and `create-sailor` consumes that pre-stripped mirror
+for faster scaffolds. The fallback-to-main path exists only to keep scaffolding
+available if the mirror is temporarily unavailable.

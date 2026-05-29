@@ -644,8 +644,8 @@ If \`nebutra\` or \`create-sailor\` cannot be found:
 
 If \`nebutra create\` cannot start \`create-sailor\`:
 
-1. Ensure \`@nebutra/create-sailor\` is installed: \`npm install -g @nebutra/create-sailor\`
-2. Or install locally: \`pnpm install --save-dev @nebutra/create-sailor\`
+1. Ensure \`create-sailor\` is installed: \`npm install -g create-sailor\`
+2. Or install locally: \`pnpm add --save-dev create-sailor\`
 
 ### MCP server fails to start
 
