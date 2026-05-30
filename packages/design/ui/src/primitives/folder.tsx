@@ -309,7 +309,9 @@ export const Folder = function Folder({
     return (
       <LazyMotion features={domAnimation}>
         <m.button
-          ref={ref as React.Ref<HTMLButtonElement>}
+          // Double-cast bridges framer-motion's bundled React types vs @types/react.
+          // Both are Ref<HTMLButtonElement> nominally but TS treats them as distinct.
+          ref={ref as any}
           type="button"
           onClick={onClick}
           aria-label={label ?? "Open folder"}
@@ -328,7 +330,8 @@ export const Folder = function Folder({
   return (
     <LazyMotion features={domAnimation}>
       <m.div
-        ref={ref as React.Ref<HTMLDivElement>}
+        // Double-cast: framer-motion's React types ≠ @types/react despite same name.
+        ref={ref as any}
         aria-hidden="true"
         initial="rest"
         animate="rest"

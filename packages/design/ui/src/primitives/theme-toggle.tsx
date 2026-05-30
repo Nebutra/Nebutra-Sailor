@@ -234,7 +234,8 @@ export const ThemeToggle = ({
       )}
       disabled={disabled}
       onClick={handleClick}
-      ref={ref}
+      // Double-cast bridges framer-motion's bundled React types vs @types/react.
+      ref={ref as any}
       style={getThemeToggleStyle(size, style)}
       transition={pressTransition}
       type={type}
