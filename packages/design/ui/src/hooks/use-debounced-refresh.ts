@@ -1,14 +1,15 @@
 /**
  * Debounced Refresh Hook
  *
- * 使用 use-debounce 提供专业的防抖能力:
- * - 可取消
- * - 可配置延迟
- * - 支持 leading/trailing 模式
+ * Wraps usehooks-ts (already a workspace dependency) so the rest of the
+ * monorepo gets a single canonical debounced hook surface:
+ * - cancellable
+ * - configurable delay
+ * - leading / trailing modes
  */
 
 import { useCallback, useEffect, useRef } from "react";
-import { useDebounce, useDebouncedCallback } from "use-debounce";
+import { useDebounceCallback, useDebounceValue } from "usehooks-ts";
 
 type DebouncedRefreshResult = {
   schedule: () => void;
@@ -44,8 +45,8 @@ export function useDebouncedRefresh(callback: () => void, delay = 400): Debounce
     callbackRef.current = callback;
   }, [callback]);
 
-  // 使用 use-debounce 的 useDebouncedCallback
-  const debounced = useDebouncedCallback(
+  // 使用 usehooks-ts 的 useDebounceCallback
+  const debounced = useDebounceCallback(
     () => {
       callbackRef.current();
     },
@@ -78,7 +79,8 @@ export function useDebouncedRefresh(callback: () => void, delay = 400): Debounce
 /**
  * 防抖值 Hook
  *
- * 使用 use-debounce 库提供的专业实现
+ * Thin wrapper over usehooks-ts useDebounceValue so consumers can import
+ * the canonical hook from @nebutra/ui/hooks alongside useDebouncedRefresh.
  *
  * @param value - 要防抖的值
  * @param delay - 延迟时间 (毫秒)
@@ -95,6 +97,6 @@ export function useDebouncedRefresh(callback: () => void, delay = 400): Debounce
  * }, [debouncedSearch]);
  */
 export function useDebouncedValue<T>(value: T, delay = 500): T {
-  const [debouncedValue] = useDebounce(value, delay);
+  const [debouncedValue] = useDebounceValue(value, delay);
   return debouncedValue;
 }
