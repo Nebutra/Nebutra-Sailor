@@ -4,7 +4,7 @@
   "theme": "dark-dense",
   "color": {
     "primary": { "$value": "oklch(0.696 0.17 162.5)", "$type": "color" },
-    "primary-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
+    "primary-foreground": { "$value": "oklch(0.141 0.005 285.9)", "$type": "color" },
     "secondary": { "$value": "oklch(0.527 0.154 163.2)", "$type": "color" },
     "secondary-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
     "accent": { "$value": "oklch(0.765 0.163 163.4)", "$type": "color" },

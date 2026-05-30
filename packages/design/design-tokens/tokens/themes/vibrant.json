@@ -4,7 +4,7 @@
   "theme": "vibrant",
   "color": {
     "primary": { "$value": "oklch(0.705 0.213 47.6)", "$type": "color" },
-    "primary-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
+    "primary-foreground": { "$value": "oklch(0.141 0.005 285.9)", "$type": "color" },
     "secondary": { "$value": "oklch(0.769 0.189 70.1)", "$type": "color" },
     "secondary-foreground": { "$value": "oklch(0.141 0.005 285.9)", "$type": "color" },
     "accent": { "$value": "oklch(0.645 0.246 16.4)", "$type": "color" },
