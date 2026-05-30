@@ -118,7 +118,7 @@ const PersonalizationTab = dynamic(
   {
     loading: () => (
       <div className="flex min-h-[240px] items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-neutral-10 dark:text-white/40" />
+        <Loader2 className="h-5 w-5 animate-spin text-neutral-10" />
       </div>
     ),
     ssr: false,
@@ -147,9 +147,9 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           {/* Left rail — tabs */}
           <nav
             aria-label={t("navLabel")}
-            className="shrink-0 border-b border-neutral-6 bg-neutral-2/40 p-3 sm:w-[200px] sm:border-b-0 sm:border-r dark:border-white/10 dark:bg-white/[0.02]"
+            className="shrink-0 border-b border-neutral-6 bg-neutral-2/40 p-3 sm:w-[200px] sm:border-b-0 sm:border-r"
           >
-            <div className="mb-3 px-2 pt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/40">
+            <div className="mb-3 px-2 pt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
               {t("title")}
             </div>
             <ul className="flex gap-1 overflow-x-auto sm:flex-col sm:overflow-visible">
@@ -165,7 +165,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                       className={`flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2 text-left text-sm font-medium transition-colors ${
                         isActive
                           ? "bg-blue-3/60 text-blue-12 dark:bg-blue-3/20 dark:text-blue-9"
-                          : "text-neutral-11 hover:bg-neutral-3/60 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/[0.05] dark:hover:text-white"
+                          : "text-neutral-11 hover:bg-neutral-3/60 hover:text-neutral-12/[0.05]"
                       }`}
                     >
                       <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -179,12 +179,12 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
 
           {/* Right panel */}
           <div className="relative flex min-h-0 flex-1 flex-col">
-            <header className="flex items-start justify-between gap-4 border-b border-neutral-6 px-6 py-4 dark:border-white/10">
+            <header className="flex items-start justify-between gap-4 border-b border-neutral-6 px-6 py-4">
               <div className="min-w-0">
-                <h2 className="text-base font-semibold text-neutral-12 dark:text-white">
+                <h2 className="text-base font-semibold text-neutral-12">
                   {t(`${activeTab}.title`)}
                 </h2>
-                <p className="mt-0.5 truncate text-xs text-neutral-10 dark:text-white/50">
+                <p className="mt-0.5 truncate text-xs text-neutral-10">
                   {t(`${activeTab}.subtitle`)}
                 </p>
               </div>
@@ -224,7 +224,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
               )}
             </div>
 
-            <footer className="border-t border-neutral-6 px-6 py-3 text-[11px] text-neutral-10 dark:border-white/10 dark:text-white/40">
+            <footer className="border-t border-neutral-6 px-6 py-3 text-[11px] text-neutral-10">
               {t("tip", {
                 key: "⌘,",
               })}
@@ -260,7 +260,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                 alt=""
                 width={56}
                 height={56}
-                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6 dark:ring-white/10"
+                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6"
               />
             ) : (
               <img
@@ -268,16 +268,16 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                 alt=""
                 width={56}
                 height={56}
-                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6 dark:ring-white/10"
+                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6"
               />
             )}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-base font-semibold text-neutral-12 dark:text-white">
+            <p className="truncate text-base font-semibold text-neutral-12">
               {name ?? email ?? t("profile.unknown")}
             </p>
             {email && (
-              <p className="mt-0.5 flex items-center gap-1.5 truncate text-xs text-neutral-11 dark:text-white/60">
+              <p className="mt-0.5 flex items-center gap-1.5 truncate text-xs text-neutral-11">
                 <Mail className="h-3 w-3 shrink-0" aria-hidden="true" />
                 <span className="truncate">{email}</span>
               </p>
@@ -288,16 +288,13 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
         <button
           type="button"
           onClick={onOpenFull}
-          className="group flex items-center justify-between rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm transition-colors hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]"
+          className="group flex items-center justify-between rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm transition-colors hover:border-neutral-7 hover:bg-neutral-2"
         >
-          <span className="flex items-center gap-2.5 text-neutral-12 dark:text-white">
-            <SettingsIcon
-              className="h-4 w-4 text-neutral-10 dark:text-white/60"
-              aria-hidden="true"
-            />
+          <span className="flex items-center gap-2.5 text-neutral-12">
+            <SettingsIcon className="h-4 w-4 text-neutral-10" aria-hidden="true" />
             <span>{t("profile.manageCta")}</span>
           </span>
-          <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5 dark:text-white/60" />
+          <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5" />
         </button>
       </div>
     );
@@ -316,10 +313,10 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
   }) {
     return (
       <div className="flex flex-col gap-5">
-        <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-gradient-to-br from-blue-2/40 to-transparent p-4 dark:border-white/10 dark:from-blue-2/10">
+        <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-gradient-to-br from-blue-2/40 to-transparent p-4 dark:from-blue-2/10">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/40">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
                 {t("subscription.currentPlan")}
               </p>
               <div className="mt-2">{planBadge}</div>
@@ -343,16 +340,13 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           <button
             type="button"
             onClick={onManage}
-            className="group flex items-center justify-between rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm text-neutral-12 transition-colors hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:text-white dark:hover:border-white/20 dark:hover:bg-white/[0.05]"
+            className="group flex items-center justify-between rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 px-4 py-3 text-sm text-neutral-12 transition-colors hover:border-neutral-7 hover:bg-neutral-2"
           >
             <span className="flex items-center gap-2">
-              <CreditCard
-                className="h-4 w-4 text-neutral-10 dark:text-white/60"
-                aria-hidden="true"
-              />
+              <CreditCard className="h-4 w-4 text-neutral-10" aria-hidden="true" />
               {t("subscription.manageCta")}
             </span>
-            <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5 dark:text-white/60" />
+            <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5" />
           </button>
         </div>
       </div>
@@ -373,7 +367,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
     return (
       <div className="flex flex-col gap-5">
         <section>
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/40">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
             {t("preferences.theme")}
           </p>
           <div className="grid grid-cols-3 gap-2">
@@ -395,7 +389,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                   className={`flex flex-col items-center gap-1.5 rounded-[var(--radius-xl)] border px-3 py-3 text-xs font-medium transition-colors ${
                     isActive
                       ? "border-blue-7 bg-blue-2/60 text-blue-12 dark:border-blue-7/60 dark:bg-blue-2/20 dark:text-blue-9"
-                      : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:text-white/70 dark:hover:border-white/20"
+                      : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:border-neutral-7 hover:bg-neutral-2/[0.02]"
                   }`}
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
@@ -407,37 +401,31 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
         </section>
 
         <section>
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/40">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
             {t("preferences.help")}
           </p>
           <div className="flex flex-col gap-1.5">
             <button
               type="button"
               onClick={onReportIssue}
-              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/[0.05]"
+              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2/[0.05]"
             >
               <span className="flex items-center gap-2.5">
-                <LifeBuoy
-                  className="h-4 w-4 text-neutral-10 dark:text-white/60"
-                  aria-hidden="true"
-                />
+                <LifeBuoy className="h-4 w-4 text-neutral-10" aria-hidden="true" />
                 {t("preferences.reportIssue")}
               </span>
-              <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5 dark:text-white/40" />
+              <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5" />
             </button>
             <button
               type="button"
               onClick={onShortcuts}
-              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/[0.05]"
+              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2/[0.05]"
             >
               <span className="flex items-center gap-2.5">
-                <Keyboard
-                  className="h-4 w-4 text-neutral-10 dark:text-white/60"
-                  aria-hidden="true"
-                />
+                <Keyboard className="h-4 w-4 text-neutral-10" aria-hidden="true" />
                 {t("preferences.shortcuts")}
               </span>
-              <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5 dark:text-white/40" />
+              <ArrowRight className="h-3.5 w-3.5 text-neutral-10 transition-transform group-hover:translate-x-0.5" />
             </button>
           </div>
         </section>
