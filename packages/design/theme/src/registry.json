@@ -1,49 +1,17 @@
 {
   "$schema": "https://nebutra.com/schemas/theme-registry.json",
   "version": "2026.05",
-  "defaultTheme": "neon",
+  "defaultTheme": "nebutra",
   "themes": [
     {
-      "id": "neon",
-      "name": "Neon",
+      "id": "nebutra",
+      "name": "Nebutra",
       "category": "ai-native",
-      "mood": "AI SaaS default - dark, electric, high contrast",
-      "tokenPath": "tokens/themes/neon.json",
+      "mood": "Official Nebutra brand — 云毓蓝 → 云毓青, AI-native default",
+      "tokenPath": "tokens/themes/nebutra.json",
       "install": {
-        "command": "nebutra theme add neon",
-        "registryUrl": "https://ui.nebutra.com/themes/neon.json"
-      },
-      "compatibility": {
-        "tailwind": "4",
-        "cssVariables": true,
-        "figmaVariables": true,
-        "shadcnRegistry": true
-      },
-      "governance": {
-        "wcag": "AA",
-        "requiredTokens": [
-          "color.primary",
-          "color.primary-foreground",
-          "color.background",
-          "color.foreground",
-          "color.card",
-          "color.border",
-          "color.ring",
-          "radius.md",
-          "fontFamily.sans"
-        ],
-        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
-      }
-    },
-    {
-      "id": "gradient",
-      "name": "Gradient",
-      "category": "marketing",
-      "mood": "Growth and marketing - bright, polished, conversion-oriented",
-      "tokenPath": "tokens/themes/gradient.json",
-      "install": {
-        "command": "nebutra theme add gradient",
-        "registryUrl": "https://ui.nebutra.com/themes/gradient.json"
+        "command": "nebutra theme add nebutra",
+        "registryUrl": "https://ui.nebutra.com/themes/nebutra.json"
       },
       "compatibility": {
         "tailwind": "4",

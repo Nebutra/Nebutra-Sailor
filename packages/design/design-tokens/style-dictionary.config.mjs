@@ -313,7 +313,7 @@ const configs = [
   ...MULTI_THEMES.map((name) =>
     buildMode({
       mode: name,
-      selector: name === "neon" ? "@theme" : `[data-theme="${name}"]`,
+      selector: name === themeRegistry.defaultTheme ? "@theme" : `[data-theme="${name}"]`,
       sources: [`tokens/themes/${name}.json`],
       outputFile: `${name}.css`,
       nameTransform: "name/nebutra/css/multi-theme",
@@ -782,13 +782,13 @@ const themeFiles = await Promise.all(
     return `/* ─── ${name} theme ─── */\n${css}`;
   }),
 );
+const defaultThemeId = themeRegistry.defaultTheme;
 const themesHeader = `/**
  * @nebutra/theme — themes.generated.css
  * AUTO-GENERATED from packages/design/design-tokens/tokens/themes/*.json — DO NOT EDIT.
  *
  * Multi-theme engine — CSS-only:
- *   :root                         neon (default theme)
- *   [data-theme="gradient"]       Marketing/Growth
+ *   @theme                        ${defaultThemeId} (default theme, :root)
  *   [data-theme="dark-dense"]     DevOps Dashboard
  *   [data-theme="minimal"]        Blog/Portfolio
  *   [data-theme="vibrant"]        Creative UI/UX
@@ -796,7 +796,7 @@ const themesHeader = `/**
  *
  * Integration:
  *   1. Import this file in each app's globals.css AFTER @import "tailwindcss"
- *   2. Configure next-themes with attribute="data-theme" defaultTheme="neon"
+ *   2. Configure next-themes with attribute="data-theme" defaultTheme="${defaultThemeId}"
  */
 
 `;

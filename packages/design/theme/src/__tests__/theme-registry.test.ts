@@ -11,7 +11,7 @@ function getTokenAtPath(tokens: Record<string, unknown>, tokenPath: string): unk
 
 describe("@nebutra/theme registry contract", () => {
   it("exports deterministic theme ids from the registry", () => {
-    expect(THEME_IDS).toEqual(["neon", "gradient", "dark-dense", "minimal", "vibrant", "ocean"]);
+    expect(THEME_IDS).toEqual(["nebutra", "dark-dense", "minimal", "vibrant", "ocean"]);
   });
 
   it("exposes install and governance metadata for each built-in theme", () => {
@@ -43,7 +43,7 @@ describe("@nebutra/theme registry contract", () => {
   });
 
   it("supports lookup by id without callers hardcoding theme details", () => {
-    expect(getThemeById("neon")?.mood).toContain("AI");
+    expect(getThemeById("nebutra")?.mood).toContain("AI");
     expect(getThemeById("missing")).toBeUndefined();
   });
 });

@@ -3,8 +3,7 @@
  * AUTO-GENERATED from packages/design/design-tokens/tokens/themes/*.json — DO NOT EDIT.
  *
  * Multi-theme engine — CSS-only:
- *   :root                         neon (default theme)
- *   [data-theme="gradient"]       Marketing/Growth
+ *   @theme                        nebutra (default theme, :root)
  *   [data-theme="dark-dense"]     DevOps Dashboard
  *   [data-theme="minimal"]        Blog/Portfolio
  *   [data-theme="vibrant"]        Creative UI/UX
@@ -12,10 +11,10 @@
  *
  * Integration:
  *   1. Import this file in each app's globals.css AFTER @import "tailwindcss"
- *   2. Configure next-themes with attribute="data-theme" defaultTheme="neon"
+ *   2. Configure next-themes with attribute="data-theme" defaultTheme="nebutra"
  */
 
-/* ─── neon theme ─── */
+/* ─── nebutra theme ─── */
 /**
  * @nebutra/design-tokens — generated from W3C DTCG tokens.
  * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
@@ -66,42 +65,6 @@
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-/* ─── gradient theme ─── */
-/**
- * @nebutra/design-tokens — generated from W3C DTCG tokens.
- * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
- */
-
-[data-theme="gradient"] {
-  --color-primary: oklch(0.546 0.245 262.9);
-  --color-primary-foreground: oklch(1 0 0);
-  --color-secondary: oklch(0.707 0.165 254.6);
-  --color-secondary-foreground: oklch(1 0 0);
-  --color-accent: oklch(0.623 0.214 259.1);
-  --color-accent-foreground: oklch(1 0 0);
-  --color-background: oklch(1 0 0);
-  --color-foreground: oklch(0.141 0.005 285.9);
-  --color-card: oklch(0.985 0 0);
-  --color-card-foreground: oklch(0.141 0.005 285.9);
-  --color-popover: oklch(1 0 0);
-  --color-popover-foreground: oklch(0.141 0.005 285.9);
-  --color-muted: oklch(0.967 0.001 286);
-  --color-muted-foreground: oklch(0.552 0.016 286);
-  --color-border: oklch(0.922 0.004 286);
-  --color-input: oklch(0.922 0.004 286);
-  --color-ring: oklch(0.546 0.245 262.9);
-  --color-primary-hover: color-mix(in oklch, oklch(0.546 0.245 262.9), black 10%);
-  --color-primary-active: color-mix(in oklch, oklch(0.546 0.245 262.9), black 20%);
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
 }
 /* ─── dark-dense theme ─── */
 /**

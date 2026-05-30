@@ -1,7 +1,7 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Neon — default Nebutra AI SaaS theme. Brand-aligned: primary = #0033FE blue, accent = #0BF1C3 cyan (the gradient endpoints). Dark surfaces with slightly raised card to break the flat look.",
-  "theme": "neon",
+  "$description": "Nebutra — official VI brand theme. primary = 云毓蓝 #0033FE, accent = 云毓青 #0BF1C3 (gradient endpoints), WCAG AA. The product/CLI default.",
+  "theme": "nebutra",
   "color": {
     "primary": { "$value": "oklch(0.48 0.24 264.1)", "$type": "color" },
     "primary-foreground": { "$value": "oklch(1 0 0)", "$type": "color" },
