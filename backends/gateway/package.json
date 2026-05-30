@@ -37,6 +37,7 @@
     "@nebutra/feature-flags": "workspace:*",
     "@nebutra/gateway-core": "workspace:*",
     "@nebutra/notifications": "workspace:*",
+    "@nebutra/permissions": "workspace:*",
     "@nebutra/queue": "workspace:*",
     "@nebutra/event-bus": "workspace:*",
     "@nebutra/health": "workspace:*",

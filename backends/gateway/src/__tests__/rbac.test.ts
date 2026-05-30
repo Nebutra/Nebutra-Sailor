@@ -75,6 +75,11 @@ function adminRequest(headers?: Record<string, string>) {
 beforeEach(() => {
   vi.clearAllMocks();
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
+  // These tests mint legacy HMAC S2S tokens (see helpers/s2s-token.ts) to exercise
+  // requireRole. The jose migration made the legacy verify path opt-in, so enable it
+  // here. TODO: migrate the helper to jose signServiceToken when S2S_ALLOW_LEGACY is
+  // retired post-deploy (see project_wheel_governance_2026_05 memory).
+  process.env.S2S_ALLOW_LEGACY = "1";
 });
 
 // ===========================================================================

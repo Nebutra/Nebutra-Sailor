@@ -1405,6 +1405,9 @@ importers:
       '@nebutra/notifications':
         specifier: workspace:*
         version: link:../../packages/integrations/notifications
+      '@nebutra/permissions':
+        specifier: workspace:*
+        version: link:../../packages/iam/permissions
       '@nebutra/queue':
         specifier: workspace:*
         version: link:../../packages/integrations/queue
@@ -3382,6 +3385,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.4(@opentelemetry/api@1.9.0)(@types/node@25.3.5)(@vitest/coverage-v8@4.1.4)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@7.3.3(@types/node@25.3.5)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/integrations/collab:
     dependencies:

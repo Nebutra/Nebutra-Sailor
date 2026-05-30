@@ -18,11 +18,18 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { getTenantDb, type Prisma } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
-import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
+import { ADMIN_ROLES } from "../../config/roles.js";
+import { requirePermission } from "../../middlewares/permissions.js";
+import { requireAuth, requireOrganization, requireRole } from "../../middlewares/tenantContext.js";
 
 export const integrationRoutes = new OpenAPIHono();
 // Every route below issues tenant-scoped queries via getTenantDb() — we must
 // have a resolved organizationId on the Hono context before any handler runs.
+//
+// NOTE: the CRUD endpoints keep their existing `requireAuth + requireOrganization`
+// guards unchanged — any org member may manage their own integrations, and that
+// behaviour is preserved. We do NOT add a permission/role guard to those routes,
+// because doing so would change their authorization result for member/viewer.
 integrationRoutes.use("*", requireAuth, requireOrganization);
 
 // ── Schemas ───────────────────────────────────────────────────────────────────
@@ -296,6 +303,66 @@ integrationRoutes.openapi(deleteRoute, async (c) => {
     await db.integration.delete({ where: { id } });
 
     return c.json({ deleted: true, id });
+  } catch (err) {
+    const apiError = toApiError(err);
+    return c.json({ error: apiError.error.message }, 500);
+  }
+});
+
+// ── Admin overview (reference: requireRole + requirePermission in parallel) ─────
+//
+// This endpoint is the canonical example of the two guards composed on a single
+// route. It is intentionally an additive, admin-only surface and does NOT alter
+// the authorization of the CRUD endpoints above.
+//
+//   - `requireRole(ADMIN_ROLES)` — coarse-grained Clerk org-role check
+//     (org:owner | org:admin), reading `tenant.role` directly.
+//   - `requirePermission("manage", "Integration")` — fine-grained CASL check
+//     against the PermissionContext mapped onto `c.get("user")`. owner/admin
+//     resolve to the `manage` ability on `Integration`; member/viewer do not.
+//
+// Both guards agree (owner/admin pass, member/viewer are denied), demonstrating
+// that the new permission layer can run alongside the existing role guard with
+// no behavioural drift. New routes should prefer `requirePermission`.
+const adminOverviewRoute = createRoute({
+  method: "get",
+  path: "/admin/overview",
+  tags: ["Integrations"],
+  summary: "Admin-only integration overview (active count + types)",
+  responses: {
+    200: { description: "Integration overview" },
+    401: { description: "Unauthorized" },
+    403: { description: "Forbidden" },
+  },
+});
+
+// Compose both guards on this single path. Following the gateway convention of
+// `.use(path, ...)` rather than route-level `middleware`, the guards run before
+// the handler below.
+integrationRoutes.use(
+  "/admin/overview",
+  requireRole(...ADMIN_ROLES),
+  requirePermission("manage", "Integration"),
+);
+
+integrationRoutes.openapi(adminOverviewRoute, async (c) => {
+  const tenant = c.get("tenant");
+  const orgId = tenant.organizationId as string;
+  const db = getTenantDb(orgId);
+
+  try {
+    const integrations = await db.integration.findMany({
+      where: { organizationId: orgId },
+      select: { type: true, isActive: true },
+    });
+
+    const activeCount = integrations.filter((i) => i.isActive).length;
+    const byType = integrations.reduce<Record<string, number>>((acc, i) => {
+      acc[i.type] = (acc[i.type] ?? 0) + 1;
+      return acc;
+    }, {});
+
+    return c.json({ total: integrations.length, activeCount, byType });
   } catch (err) {
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 500);

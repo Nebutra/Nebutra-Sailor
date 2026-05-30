@@ -1,8 +1,10 @@
 import { createHmac } from "node:crypto";
 
 /**
- * Test helper: generates a valid S2S HMAC service token for the given tenant headers.
- * Sets SERVICE_SECRET env var if not already set.
+ * Test helper: generates a legacy HMAC S2S service token for the given tenant headers.
+ * Verifying these requires S2S_ALLOW_LEGACY=1 — the jose migration made the legacy HMAC
+ * path opt-in (callers set that flag in beforeEach). Migrate to jose `signServiceToken`
+ * when the legacy path is retired post-deploy.
  */
 export const TEST_SERVICE_SECRET = "test-secret-for-s2s-hmac";
 

@@ -1,6 +1,7 @@
 import { verifyServiceToken } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
+import type { PermissionContext, Role } from "@nebutra/permissions";
 import type { Context, Next } from "hono";
 import { getAuthProvider } from "../config/env.js";
 
@@ -15,7 +16,51 @@ export interface TenantContext {
 declare module "hono" {
   interface ContextVariableMap {
     tenant: TenantContext;
+    // PermissionContext for the route-layer `requirePermission` guard from
+    // @nebutra/permissions. Populated by `tenantContextMiddleware` whenever a
+    // tenant has both a userId and an organizationId. Optional because
+    // unauthenticated / org-less requests never get one.
+    user?: PermissionContext;
   }
+}
+
+// ── Role mapping (Clerk org_role → @nebutra/permissions Role) ───────────────
+
+/**
+ * Map a Clerk-style `org_role` claim (`org:owner`, `org:admin`, …) to the
+ * prefix-less role names used by the @nebutra/permissions CASL engine
+ * (`owner`, `admin`, `member`, `viewer`).
+ *
+ * Unknown / unprefixed values are passed through unchanged so custom roles
+ * keep working; an empty/undefined role yields an empty role list.
+ */
+export function mapTenantRoleToPermissionRoles(role: string | undefined): Role[] {
+  if (!role) return [];
+  const map: Record<string, Role> = {
+    "org:owner": "owner",
+    "org:admin": "admin",
+    "org:member": "member",
+    "org:viewer": "viewer",
+  };
+  return [map[role] ?? role];
+}
+
+/**
+ * Build the @nebutra/permissions PermissionContext from a resolved
+ * TenantContext. Returns `undefined` when the tenant is not fully resolved
+ * (missing userId or organizationId), so `requirePermission` can short-circuit
+ * to 401 exactly like before.
+ */
+export function tenantToPermissionContext(tenant: TenantContext): PermissionContext | undefined {
+  if (!tenant.userId || !tenant.organizationId) {
+    return undefined;
+  }
+  return {
+    userId: tenant.userId,
+    tenantId: tenant.organizationId,
+    roles: mapTenantRoleToPermissionRoles(tenant.role),
+    attributes: { plan: tenant.plan },
+  };
 }
 
 // ── Singleton auth provider ────────────────────────────────────────────────
@@ -148,6 +193,17 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   }
 
   c.set("tenant", tenant);
+
+  // Additive: expose a @nebutra/permissions PermissionContext for route-layer
+  // `requirePermission(action, resource)` guards (the preferred guard for new
+  // routes). This does NOT change the behaviour of `requireRole` / `requireAuth`
+  // / `requireOrganization`, which continue to read `tenant` directly. The
+  // mapping strips the Clerk `org:` prefix (org:owner → owner, …) so the CASL
+  // role definitions resolve. Only set when the tenant is fully resolved.
+  const permissionContext = tenantToPermissionContext(tenant);
+  if (permissionContext) {
+    c.set("user", permissionContext);
+  }
 
   // NOTE: The middleware no longer attaches a `prisma` client to the Hono
   // context. Route handlers must explicitly call `getTenantDb(orgId)` from
