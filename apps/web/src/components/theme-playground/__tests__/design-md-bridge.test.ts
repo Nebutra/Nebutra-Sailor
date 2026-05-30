@@ -136,12 +136,11 @@ describe("importDesignMdToThemeTokens", () => {
   describe("name derivation", () => {
     it("name is derived from the DESIGN.md front-matter name (strips themes/ prefix if present, kebab-cases)", () => {
       const { name } = importDesignMdToThemeTokens(VALID_FIXTURE);
-      // name comes from result.set.name which is "themes/<slug>"
-      // bridge strips "themes/" prefix if present
+      // importFromDesignMd slugifies the front-matter `name` field and stores it as
+      // "themes/<slug>" (e.g. "Test Brand" → "themes/test-brand").
+      // The bridge strips the "themes/" prefix, so the final name is "test-brand".
       expect(typeof name).toBe("string");
       expect(name.length).toBeGreaterThan(0);
-      // The original name is "Test Brand" → slug "test-brand"
-      // bridge strips "themes/" → "test-brand"
       expect(name).toBe("test-brand");
     });
 
@@ -159,35 +158,26 @@ colors:
   });
 
   describe("error handling", () => {
-    // The @google/design.md linter is designed to be robust — it MAY silently
-    // produce an empty-but-valid result for garbage/binary inputs rather than throw.
-    // The contract is: if it DOES throw, it must be a clear Error instance.
-    // This matches the upstream from-design-md.test.ts behavior documentation.
-    it("either returns a result or throws a clear Error for garbage/binary input", () => {
-      let threw = false;
-      try {
-        importDesignMdToThemeTokens("\x00\x01\x02garbage");
-      } catch (e) {
-        threw = true;
-        expect(e).toBeInstanceOf(Error);
-        expect((e as Error).message.length).toBeGreaterThan(0);
-      }
-      // Both outcomes are acceptable — but if it throws, must be a clear Error
-      expect(typeof threw).toBe("boolean");
+    // @google/design.md is designed to be robust — it does NOT throw on
+    // garbage or binary input. It returns an empty-but-valid ImportedTheme.
+    it("returns a valid ImportedTheme (does NOT throw) for garbage/binary input", () => {
+      const result = importDesignMdToThemeTokens("\x00\x01\x02garbage");
+      // tokenSet must be an object (may have no keys)
+      expect(typeof result.tokenSet).toBe("object");
+      expect(result.tokenSet).not.toBeNull();
+      // report.missingRequired is populated because no required tokens were found
+      expect(Array.isArray(result.report.missingRequired)).toBe(true);
+      expect(result.report.missingRequired.length).toBeGreaterThan(0);
     });
 
-    it("throws a clear Error for truly invalid YAML that the linter cannot handle", () => {
-      // Deeply malformed YAML may cause a parser throw — if it does, must be an Error
-      let threw = false;
-      try {
-        importDesignMdToThemeTokens("---\n: : : invalid-yaml\n---\n");
-      } catch (e) {
-        threw = true;
-        expect(e).toBeInstanceOf(Error);
-        expect((e as Error).message.length).toBeGreaterThan(0);
-      }
-      // Acceptable either way
-      expect(typeof threw).toBe("boolean");
+    it("returns a valid ImportedTheme (does NOT throw) for malformed YAML front-matter", () => {
+      // @google/design.md recovers gracefully from invalid YAML; all required
+      // tokens end up missing in the report.
+      const result = importDesignMdToThemeTokens("---\n: : : invalid-yaml\n---\n");
+      expect(typeof result.tokenSet).toBe("object");
+      expect(result.tokenSet).not.toBeNull();
+      expect(Array.isArray(result.report.missingRequired)).toBe(true);
+      expect(result.report.missingRequired.length).toBeGreaterThan(0);
     });
   });
 });

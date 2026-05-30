@@ -2,9 +2,10 @@
  * Server-only: imports @nebutra/design-sync (transitively the alpha @google/design.md).
  * Import this ONLY from server actions, never from a client component.
  *
- * NOTE: `import "server-only"` is intentionally omitted so vitest can run these
- * tests without hitting Next.js's server-only guard (the guard throws in a
- * non-Next.js environment). The server-only constraint is enforced by code review.
+ * The `import "server-only"` below is build-time enforced: Next.js will throw at
+ * bundle time if this module is imported from a Client Component. Under vitest the
+ * `server-only` module is aliased to `src/test/server-only.shim.ts` (an empty
+ * export) so tests run without hitting the guard.
  */
 
 // ── Import specifier adaptation note ─────────────────────────────────────────
@@ -18,6 +19,8 @@
 //
 // `serializeToDesignMd` and `serializeToPreviewHtml` are PURE (no alpha lib) and
 // are already exported from the main entry, so they are imported normally.
+
+import "server-only";
 
 import { serializeToDesignMd, serializeToPreviewHtml } from "@nebutra/design-sync";
 import {
