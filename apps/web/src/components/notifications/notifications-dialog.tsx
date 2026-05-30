@@ -63,10 +63,10 @@ function formatDate(iso: string): string {
 }
 
 /**
- * Manus-style in-shell notifications modal. The notification bell in the
- * content header opens this dialog instead of navigating to /notifications,
- * so users never lose page context. The /notifications page route remains
- * as a deep-link / SEO-safe fallback (rendered by another component).
+ * In-shell notifications modal. The notification bell in the content header
+ * opens this dialog instead of navigating to /notifications, so users never
+ * lose page context. The /notifications page route remains as a deep-link /
+ * SEO-safe fallback (rendered by another component).
  */
 export function NotificationsDialog() {
   const [open, setOpen] = useState(false);
@@ -126,7 +126,7 @@ export function NotificationsDialog() {
           <div className="border-b border-border px-6 pt-6 pb-4">
             <h2 className="text-center text-lg font-semibold text-foreground">通知</h2>
 
-            {/* Tab bar — Manus-style segmented control */}
+            {/* Tab bar — segmented control */}
             <div className="mt-4 flex justify-center">
               <div className="inline-flex rounded-[var(--radius-md)] border border-border bg-muted p-0.5">
                 {TABS.map((t) => (

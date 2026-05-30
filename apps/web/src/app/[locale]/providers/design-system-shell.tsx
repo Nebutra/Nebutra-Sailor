@@ -260,7 +260,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     </div>
   );
 
-  // ─── Sidebar footer slot — Lovable-style user row (Hybrid layout).
+  // ─── Sidebar footer slot — single user row.
   // The user menu absorbs Feedback / Language / Theme; notifications live in
   // the content header. Collapsed rail: avatar-only trigger.
   const sidebarFooter = isSignedIn ? (
@@ -329,8 +329,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       contentClassName={
         isWorkspaceCanvasRoute
           ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
-          : // Manus-style 2-tier surface: tint the outer main bg so the
-            // `bg-card` panels inside each page read as inset floating cards.
+          : // Two-tier surface: tint the outer main bg so the `bg-card`
+            // panels inside each page read as inset floating cards.
             "dashboard-app-content bg-muted/40"
       }
     >

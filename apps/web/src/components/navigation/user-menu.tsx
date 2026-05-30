@@ -37,8 +37,8 @@ interface UserMenuProps {
   signOutRedirect?: string;
   /**
    * `"icon"` (default) renders an avatar-only circular trigger. `"row"` renders
-   * a full-width Lovable-style row with avatar + name + chevron — used in the
-   * expanded sidebar footer where the menu absorbs Feedback / Language / Theme.
+   * a full-width row with avatar + name + chevron — used in the expanded
+   * sidebar footer where the menu absorbs Feedback / Language / Theme.
    */
   variant?: "icon" | "row";
 }

@@ -6,8 +6,8 @@
  * boolean "session exists somewhere on .nebutra.com"; the real HttpOnly
  * session cookie stays host-scoped on the web app for defense-in-depth.
  *
- * Pattern: Notion-style. Wide non-sensitive flag + narrow sensitive
- * session.
+ * Pattern: a wide non-sensitive flag cookie pairs with a narrow sensitive
+ * session cookie.
  *
  * Wiring:
  *  - `apps/web/src/app/api/auth/[...all]/route.ts` calls `applySessionHint`
