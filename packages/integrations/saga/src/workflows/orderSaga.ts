@@ -37,7 +37,11 @@ async function gatewayFetch(
     ...((options.headers as Record<string, string>) || {}),
   };
 
-  let serviceToken = SERVICE_SECRET;
+  // Always send a freshly-signed, short-lived JWT (with exp/jti) — NEVER the raw
+  // shared secret. When there is no tenant context, sign an empty-context token:
+  // it still carries a valid signature + exp, and the gateway's
+  // verifyServiceToken(token) with no expected fields verifies it cleanly.
+  let serviceToken: string;
   if (ctx) {
     const tokenContext: ServiceTokenContext = { organizationId: ctx.tenantId };
     if (ctx.userId) tokenContext.userId = ctx.userId;
@@ -45,6 +49,8 @@ async function gatewayFetch(
     serviceToken = await signServiceToken(tokenContext, SERVICE_SECRET);
     if (ctx.userId) headers["x-user-id"] = ctx.userId;
     headers["x-organization-id"] = ctx.tenantId;
+  } else {
+    serviceToken = await signServiceToken({}, SERVICE_SECRET);
   }
   headers["x-service-token"] = serviceToken;
 

@@ -238,7 +238,11 @@ describe("ci harness dependency closure", () => {
       "utf8",
     );
 
+    // Separator line testid must remain (E2E selectors depend on it).
     expect(footer).toContain('data-testid="footer-gradient-line"');
-    expect(footer).toContain("var(--brand-gradient)");
+    // Footer was refactored: the gradient-line div now uses the neutral border token
+    // and the vivid gradient effect is provided by AuroraBackground (opt-in via showFinalCta).
+    expect(footer).toContain("var(--neutral-7)");
+    expect(footer).toContain("AuroraBackground");
   });
 });
