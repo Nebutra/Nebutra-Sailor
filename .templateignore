@@ -159,6 +159,33 @@ e2e/sleptons-flow.spec.ts
 tests/load/
 
 # ---------------------------------------------------------------------------
+# Nebutra-internal CI/CD workflows — meaningless or guaranteed-failing in a
+# scaffolded repo (they need Nebutra secrets/infra/targets the consumer lacks):
+# AWS/ECS deploy, the sync-to-template mirror (would sync the template to
+# itself), Figma/Penpot design-sync, Chromatic, CLA bot, blog revalidate,
+# lighthouse dashboard, k6 load test, npm package-registry governance, release
+# (changeset publish), visual-acceptance baselines, Nebutra UI governance, and
+# the Nebutra container-registry push.
+# The template KEEPS the generic, secret-free workflows: ci, codeql,
+# secrets-scan, security-scan, dependency-review, dependabot-automerge,
+# scorecard, labeler, stale, dead-code.
+# ---------------------------------------------------------------------------
+.github/workflows/deploy-ecs.yml
+.github/workflows/deploy.yml
+.github/workflows/sync-template.yml
+.github/workflows/design-sync.yml
+.github/workflows/chromatic.yml
+.github/workflows/cla.yml
+.github/workflows/blog-revalidate.yml
+.github/workflows/lighthouse-dashboard.yml
+.github/workflows/load-test.yml
+.github/workflows/package-registry-governance.yml
+.github/workflows/release.yml
+.github/workflows/visual-acceptance.yml
+.github/workflows/ui-governance.yml
+.github/workflows/docker-build-push.yml
+
+# ---------------------------------------------------------------------------
 # Template meta files (strip the ignore file itself after apply)
 # ---------------------------------------------------------------------------
 .templateignore
