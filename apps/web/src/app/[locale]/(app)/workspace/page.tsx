@@ -56,8 +56,6 @@ export default async function WorkspaceHomePage() {
           {[
             { label: t("home.actions.connect"), href: "/integrations" },
             { label: t("home.actions.theme"), href: "/theme-playground" },
-            { label: t("home.actions.audit"), href: "/audit" },
-            { label: t("home.actions.billing"), href: "/billing" },
           ].map((a) => (
             <Link
               key={a.href}

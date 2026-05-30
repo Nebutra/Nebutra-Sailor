@@ -355,13 +355,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         // gymnastics — auto over auto wins by source order).
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in oklch, var(--blue-5), transparent 55%) 0%, transparent 60%), " +
-              "radial-gradient(ellipse 60% 50% at 30% 70%, color-mix(in oklch, var(--cyan-4), transparent 70%) 0%, transparent 70%), " +
-              "linear-gradient(180deg, color-mix(in oklch, var(--blue-2), transparent 40%) 0%, transparent 30%)",
-          }}
+          className="workspace-home-gradient pointer-events-none absolute inset-0"
         />
       ) : null}
       {isDevAuth ? (
@@ -369,7 +363,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           role="alert"
           aria-live="polite"
           className={cn(
-            "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
+            "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-amber-100",
             isWorkspaceHomeRoute
               ? // Home main has p-0; banner already runs edge-to-edge, no
                 // negative margin needed. relative+z keeps it above gradient.
@@ -380,7 +374,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />
           <span>
             DEV AUTH ACTIVE: synthetic "Dev User", no DB writes. Set{" "}
-            <code className="rounded bg-amber-200/50 px-1 font-mono text-[10px] dark:bg-amber-900/40">
+            <code className="rounded bg-amber-200/50 px-1 font-mono text-[10px] text-amber-950 dark:bg-amber-500/30 dark:text-amber-50">
               NEXT_PUBLIC_AUTH_PROVIDER
             </code>{" "}
             to a real provider to disable.
