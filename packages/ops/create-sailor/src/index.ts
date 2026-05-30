@@ -1,507 +1,179 @@
 #!/usr/bin/env node
 
+/**
+ * create-sailor — CLI entry point.
+ *
+ * Responsibilities:
+ *   1. Commander registration (via buildProgram)
+ *   2. Input validation / pre-checks (pnpm, --help, --dry-run)
+ *   3. Project-name prompt (the one TTY prompt outside the wizard)
+ *   4. Config resolution (interactive or non-interactive)
+ *   5. Progress summary table
+ *   6. Scaffold execution
+ *
+ * All domain logic lives in src/steps/*.
+ */
+
 import { execSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import * as p from "@clack/prompts";
-import { Command } from "commander";
 import pc from "picocolors";
-import updateNotifier from "update-notifier";
+import { buildProgram } from "./steps/cli-setup";
+import { detectPm } from "./steps/mappers";
+import { resolveConfig } from "./steps/resolve-config";
+import { runScaffold } from "./steps/scaffold";
+import type { CliOptions, JsonEvent } from "./steps/types";
 import { showBanner } from "./ui/banner";
-import { showDone } from "./ui/done";
 import { showHelp } from "./ui/help";
 import { printProgressLine } from "./ui/progress";
-import { PROVIDERS } from "./utils/ai-meta";
-import { type AiMode, resolveAiTopology } from "./utils/ai-topology";
-import { applyAnalyticsSelection } from "./utils/analytics";
-import { emitScaffoldCompleted } from "./utils/analytics-emit";
-import { type AuthChoice, applyAuthSelection } from "./utils/auth";
-import {
-  parseSocialLoginFlag,
-  SOCIAL_LOGIN_PROVIDERS,
-  type SocialLoginId,
-} from "./utils/auth-social";
-import { applySocialLoginProviders } from "./utils/auth-social-apply";
-import { applyCacheSelection } from "./utils/cache";
-import { applyCaptchaSelection } from "./utils/captcha";
-import { applyCmsSelection } from "./utils/cms";
-import { applyComplianceTemplates } from "./utils/compliance";
-import {
-  type DocsFramework,
-  type NebutraConfig,
-  type Region,
-  writeNebutraConfig,
-} from "./utils/config";
-import { applyDatabaseHostSelection, applyDatabaseSelection } from "./utils/database";
-import {
-  DATABASE_HOSTS,
-  type DatabaseHostId,
-  defaultDatabaseHost,
-  getDatabaseHost,
-} from "./utils/database-host-meta";
-import { applyDeployTarget } from "./utils/deploy";
-import { applyDocsTemplate } from "./utils/docs";
-import { applyEmailSelection } from "./utils/email";
-import { injectEnv } from "./utils/env";
-import { generateEnvSecrets } from "./utils/env-secrets";
-import { applyFeatureFlagsSelection } from "./utils/feature-flags";
+import { SOCIAL_LOGIN_PROVIDERS } from "./utils/auth-social";
 import { maybeShowFirstRunBanner } from "./utils/first-run";
-import { cloneTemplate } from "./utils/git";
-import { emitIndependentLicense } from "./utils/license-emit";
-import { applyMcpSwitch } from "./utils/mcp";
-import { applyMeteringSwitch } from "./utils/metering";
-import { applyMonitoringSelection } from "./utils/monitoring";
-import { applyNotificationsSelection } from "./utils/notifications";
-import { updatePackageJson } from "./utils/npm";
-import { applyOrmSelection } from "./utils/orm";
-import {
-  collectPreviewSelections,
-  describeStatus,
-  formatStatusBadge,
-  type PreviewSelection,
-} from "./utils/package-status";
-import { applyPaymentSelection, type PaymentChoice } from "./utils/payment";
-import { applyProviderSelection } from "./utils/providers";
-import { pruneTemplate, pruneWaveFeatures } from "./utils/prune";
-import { pruneMigrationsByFlags } from "./utils/prune-migrations";
-import { pruneSchemaByFlags } from "./utils/prune-schema";
-import { applyQueueSelection } from "./utils/queue";
-import { applyScaffoldExtras } from "./utils/scaffold-extras";
-import { applySearchSelection } from "./utils/search";
-import { generateSeedData } from "./utils/seed";
-import { applySmsSelection } from "./utils/sms";
-import { applyStorageSelection } from "./utils/storage";
-import { normalizeStorageProviderId } from "./utils/storage-meta";
-import { resolveWaveFeatureToggles } from "./utils/wave-features";
-import { applyWebhooksSelection } from "./utils/webhooks";
-import { generateWelcomePage } from "./utils/welcome";
 import { VERSION } from "./version";
 
-const PKG_NAME = "create-sailor";
-
-interface CliOptions {
-  pm?: string;
-  region?: string;
-  orm?: string;
-  db?: string;
-  dbHost?: string;
-  auth?: string;
-  socialLogin?: string;
-  payment?: string;
-  ai?: string;
-  deploy?: string;
-  docs?: string;
-  email?: string;
-  storage?: string;
-  monitoring?: string;
-  analytics?: string;
-  sms?: string;
-  queue?: string;
-  search?: string;
-  cache?: string;
-  notifications?: string;
-  webhooks?: string;
-  cms?: string;
-  featureFlags?: string;
-  captcha?: string;
-  mcp?: string;
-  metering?: string;
-  billingMode?: string;
-  idp?: string;
-  accessGate?: string;
-  // Wave 3-5 feature toggles. Each accepts `true` | `false`; we parse with
-  // `parseBoolFlag` so users can write `--cron-jobs=false` from CI scripts.
-  cronJobs?: string;
-  auditLog?: string;
-  apiKeys?: string;
-  commandPalette?: string;
-  cookieConsent?: string;
-  legalPages?: string;
-  chinaCompliance?: string;
-  i18n?: boolean;
-  withWorkflows?: boolean;
-  withPythonBackend?: boolean;
-  install?: boolean;
-  git?: boolean;
-  yes?: boolean;
-  dryRun?: boolean;
-  json?: boolean;
-  color?: boolean;
-  help?: boolean;
-}
-
-interface InteractiveAnswers {
-  region?: string;
-  auth?: string;
-  aiMode?: AiMode;
-  aiProviders?: string[];
-  customAiName?: string;
-  customAiBaseUrl?: string;
-  customAiApiKeyEnv?: string;
-}
-
-type PromptContext = {
-  results: InteractiveAnswers;
-};
-
-type PromptFactory = (context: PromptContext) => Promise<unknown>;
-
-type JsonEvent = {
-  event: string;
-  step?: string;
-  status?: "ok" | "error" | "skip" | "start";
-  message?: string;
-  [k: string]: unknown;
-};
+// ---------------------------------------------------------------------------
+// JSON event helper
+// ---------------------------------------------------------------------------
 
 function emitJson(useJson: boolean, payload: JsonEvent): void {
   if (useJson) process.stdout.write(JSON.stringify(payload) + "\n");
 }
 
-function detectPm(): "npm" | "pnpm" | "yarn" | "bun" {
-  const ua = process.env.npm_config_user_agent ?? "";
-  if (ua.startsWith("pnpm")) return "pnpm";
-  if (ua.startsWith("yarn")) return "yarn";
-  if (ua.startsWith("bun")) return "bun";
-  return "npm";
-}
+// ---------------------------------------------------------------------------
+// Dry-run plan printer
+// ---------------------------------------------------------------------------
 
-function mapDb(d: string | undefined): NebutraConfig["database"] {
-  switch (d) {
-    case "postgres":
-    case "postgresql":
-      return "postgresql";
-    case "mysql":
-      return "mysql";
-    case "sqlite":
-      return "sqlite";
-    case "none":
-      return "none";
-    default:
-      return "postgresql";
-  }
-}
+function printDryRunPlan(
+  useJson: boolean,
+  resolved: Awaited<ReturnType<typeof resolveConfig>>,
+  resolvedTarget: string,
+  resolvedPm: string,
+  opts: CliOptions,
+): void {
+  const {
+    region,
+    orm,
+    database,
+    paymentChoice,
+    docs,
+    socialLoginIds,
+    aiMode,
+    aiProviders,
+    customAiEndpoint,
+    deployTarget,
+    metering,
+    payment,
+    billingMode,
+    idp,
+    mcp,
+    waveToggles,
+    previewSelections,
+  } = resolved;
 
-/**
- * Resolve --db-host from CLI input + region fallback. If the host pins an
- * engine (PlanetScale = mysql), this returns BOTH host id and the engine
- * override the caller should apply to mapDb's result.
- */
-function resolveDatabaseHost(
-  hostArg: string | undefined,
-  region: string,
-  engineFromDb: NebutraConfig["database"],
-): {
-  hostId: DatabaseHostId;
-  engine: NebutraConfig["database"];
-} {
-  const candidateId = hostArg?.trim().toLowerCase() ?? defaultDatabaseHost(region);
-  const meta = getDatabaseHost(candidateId);
-  if (!meta) {
-    const validIds = DATABASE_HOSTS.map((h) => h.id).join(", ");
-    throw new Error(`Unknown --db-host="${candidateId}". Valid: ${validIds}`);
-  }
+  const {
+    email,
+    storage,
+    monitoring,
+    analytics,
+    sms,
+    queue,
+    search,
+    cache,
+    notifications,
+    webhooks,
+    cms,
+    featureFlags,
+    captcha,
+  } = resolved;
 
-  // Host forces engine? Override engineFromDb.
-  let engine = engineFromDb;
-  if (meta.forcedEngine && engine !== "none" && engine !== meta.forcedEngine) {
-    engine = meta.forcedEngine;
-  }
-  return { hostId: meta.id, engine };
-}
+  const aiCount = aiProviders.length;
+  const plan = [
+    `clone template → ${resolvedTarget}`,
+    `write nebutra.config.json`,
+    `prune template (orm=${orm}, i18n=${resolved.i18n})`,
+    `region → ${region}`,
+    `auth → ${resolved.auth === "none" ? "skip (remove packages/auth)" : `configure ${resolved.auth}`}`,
+    ...(socialLoginIds.length > 0
+      ? [
+          `social-login → generate ${socialLoginIds.length} callback route${socialLoginIds.length === 1 ? "" : "s"} + SocialLoginButtons.tsx (${socialLoginIds.join(", ")})`,
+        ]
+      : []),
+    `db → ${database === "none" ? "skip (remove packages/db)" : `configure Prisma for ${database}`}`,
+    `payment → ${paymentChoice === "none" ? "skip (remove packages/billing)" : `configure ${paymentChoice}`}`,
+    ...(docs !== "none"
+      ? [
+          `docs → scaffold apps/docs (${docs === "fumadocs" ? "fumadocs" : `${docs} → fumadocs fallback`})`,
+        ]
+      : []),
+    ...(aiCount > 0 || customAiEndpoint
+      ? [
+          `ai-providers → generate ${aiMode} registry seed + env (${aiCount}${customAiEndpoint ? " + custom" : ""} provider${aiCount === 1 && !customAiEndpoint ? "" : "s"})`,
+        ]
+      : []),
+    ...(email !== "none" ? [`email → configure ${email}`] : []),
+    ...(storage !== "none" ? [`storage → configure ${storage}`] : []),
+    ...(monitoring !== "none" ? [`monitoring → configure ${monitoring}`] : []),
+    ...(analytics !== "none" ? [`analytics → configure ${analytics}`] : []),
+    ...(sms !== "none" ? [`sms → configure ${sms}`] : []),
+    ...(queue !== "none" ? [`queue → configure ${queue}`] : []),
+    ...(search !== "none" ? [`search → configure ${search}`] : []),
+    ...(cache !== "none" ? [`cache → configure ${cache}`] : []),
+    ...(notifications !== "none" ? [`notifications → configure ${notifications}`] : []),
+    ...(webhooks !== "none" ? [`webhooks → configure ${webhooks}`] : []),
+    ...(cms !== "none" ? [`cms → configure ${cms}`] : []),
+    ...(featureFlags !== "none" ? [`feature-flags → configure ${featureFlags}`] : []),
+    ...(captcha !== "none" ? [`captcha → configure ${captcha}`] : []),
+    `mcp → ${mcp === "on" ? "enable MCP server" : "remove packages/mcp"}`,
+    `metering → ${metering === "off" ? "disabled" : metering === "auto" ? (payment !== "none" ? "enabled (auto: payment set)" : "disabled (auto: no payment)") : "enabled"}`,
+    ...(billingMode !== "usage" ? [`billing-mode → ${billingMode}`] : []),
+    ...(idp !== "clerk" ? [`idp → ${idp}`] : []),
+    `cron-jobs → ${waveToggles.cronJobs ? "enabled" : "disabled"}`,
+    `audit-log → ${waveToggles.auditLog ? "enabled" : "disabled"}`,
+    `api-keys → ${waveToggles.apiKeys ? "enabled" : "disabled"}`,
+    `command-palette → ${waveToggles.commandPalette ? "enabled" : "disabled"}`,
+    `cookie-consent → ${waveToggles.cookieConsent ? "enabled" : "disabled"}`,
+    `legal-pages → ${waveToggles.legalPages ? "enabled" : "disabled"}`,
+    `china-compliance → ${waveToggles.chinaCompliance ? "enabled (@nebutra/china-compliance + ICP footer)" : "disabled"}`,
+    `compliance → inject ${region} boilerplate (ICP/Cookie/AIGC/Privacy)`,
+    `welcome → generate dev welcome page`,
+    `env → generate random secrets (AUTH_SECRET, JWT_SECRET)`,
+    `seed → generate prisma/seed.ts (1 admin + 3 tenants)`,
+    ...(deployTarget !== "none" ? [`deploy → inject ${deployTarget} config`] : []),
+    `inject .env.local`,
+    opts.install === false ? "skip install" : `run ${resolvedPm} install`,
+    opts.git === false ? "skip git init" : "run git init",
+  ];
 
-function mapOrm(o: string | undefined): NebutraConfig["orm"] {
-  // `prisma` (default) = Prisma only, the historical scaffold shape.
-  // `drizzle`          = dual-ORM mode — Prisma stays primary, a second
-  //                      `db-drizzle` package is added alongside for new
-  //                      code that prefers the Drizzle DSL. See
-  //                      packages/ops/create-sailor/src/utils/orm.ts.
-  // `none`             = treated as prisma; we don't ship a no-ORM variant.
-  if (o === "drizzle") return "drizzle";
-  return "prisma";
-}
-
-function mapPayment(p: string | undefined): NebutraConfig["payment"] {
-  if (p === "lemon" || p === "lemonsqueezy") return "lemon";
-  if (p === "wechat") return "wechat";
-  if (p === "alipay") return "alipay";
-  if (p === "none") return "none";
-  return "stripe";
-}
-
-/**
- * Resolve the raw --payment CLI value to a PaymentChoice that preserves the
- * full provider granularity needed by `applyPaymentSelection` (wechat/alipay
- * are not collapsed into "stripe").
- */
-function resolvePaymentChoice(raw: string | undefined): PaymentChoice {
-  if (!raw) return "stripe";
-  const v = raw.toLowerCase();
-  if (v === "lemon" || v === "lemonsqueezy") return "lemon";
-  if (v === "wechat") return "wechat";
-  if (v === "alipay") return "alipay";
-  if (v === "none") return "none";
-  return "stripe";
-}
-
-/**
- * Resolve the raw --auth CLI value to an AuthChoice.
- */
-function resolveAuthChoice(raw: string | undefined): AuthChoice {
-  if (!raw) return "clerk";
-  const v = raw.toLowerCase();
-  if (v === "betterauth" || v === "better-auth") return "betterauth";
-  if (v === "nextauth" || v === "next-auth" || v === "authjs" || v === "auth.js") return "nextauth";
-  if (v === "supabase" || v === "supabase-auth") return "supabase";
-  if (v === "none") return "none";
-  return "clerk";
-}
-
-const AI_TOPOLOGY_MODES = new Set(["gateway", "direct", "custom", "none"]);
-
-/** Topology shorthand: `--ai=gateway|direct|custom|none` map to a mode, not provider IDs. */
-function isAiTopologyShorthand(value: string | undefined): boolean {
-  if (!value) return false;
-  const trimmed = value.trim().toLowerCase();
-  return AI_TOPOLOGY_MODES.has(trimmed);
-}
-
-function mapAi(ids: string | undefined): string[] {
-  if (!ids) return ["openai"];
-  // Topology shorthand: let resolveAiTopology pick the seed from defaults.
-  if (isAiTopologyShorthand(ids)) return [];
-  const list = ids.split(",").map((s) => s.trim().toLowerCase());
-  if (list.includes("none")) return [];
-  return list;
-}
-
-function resolveStorageChoice(raw: string | undefined, fallback: string): string {
-  const value = raw ?? fallback;
-  return normalizeStorageProviderId(value) ?? value;
-}
-
-const DOCS_COMING_SOON: Record<string, string> = {
-  mintlify: "Mintlify",
-  docusaurus: "Docusaurus",
-  nextra: "Nextra",
-  vitepress: "VitePress",
-};
-
-function resolveDocs(raw: string | undefined, useJson: boolean): DocsFramework {
-  if (!raw) return "fumadocs";
-  const v = raw.toLowerCase();
-  if (v === "fumadocs" || v === "none") return v;
-  if (v in DOCS_COMING_SOON) {
-    const label = DOCS_COMING_SOON[v];
-    if (!useJson) {
-      process.stdout.write(
-        pc.yellow(`⚠  ${label} support is coming in v1.2. Falling back to fumadocs.\n`) +
-          pc.dim("   Track progress: https://github.com/Nebutra/Nebutra-Sailor/issues\n"),
-      );
-    } else {
+  if (useJson) {
+    for (const action of plan) emitJson(true, { event: "plan", action });
+    for (const sel of previewSelections) {
       emitJson(true, {
-        event: "notice",
-        kind: "docs-fallback",
-        requested: v,
-        effective: "fumadocs",
+        event: "warn",
+        step: sel.flag,
+        provider: sel.provider,
+        packageStatus: sel.status,
       });
     }
-    return "fumadocs";
-  }
-  return "fumadocs";
-}
-
-function mapDeploy(d: string | undefined): NebutraConfig["deployTarget"] {
-  switch (d) {
-    case "vercel":
-      return "vercel";
-    case "railway":
-      return "railway";
-    case "cloudflare":
-      return "cloudflare";
-    case "selfhost":
-      return "selfhost";
-    case "none":
-      return "none";
-    default:
-      return "vercel";
+    emitJson(true, { event: "done", dryRun: true });
+  } else {
+    process.stdout.write("\n" + pc.bold("Dry run — planned actions:\n"));
+    for (const line of plan) process.stdout.write(`  • ${line}\n`);
+    if (previewSelections.length > 0) {
+      process.stdout.write("\n" + pc.bold(pc.yellow("Preview-status providers selected:\n")));
+      for (const sel of previewSelections) {
+        process.stdout.write(pc.yellow(`⚠  ${sel.flag}=${sel.provider}\n`));
+      }
+    }
+    process.stdout.write(pc.dim("\nNo files were written.\n"));
   }
 }
 
-function resolveRegion(raw: string | undefined): Region {
-  if (!raw) return "global";
-  const v = raw.toLowerCase();
-  if (v === "cn") return "cn";
-  if (v === "hybrid") return "hybrid";
-  return "global";
-}
-
-interface RegionDefaults {
-  email: string;
-  storage: string;
-  monitoring: string;
-  analytics: string;
-  sms: string;
-  queue: string;
-  search: string;
-  cache: string;
-  notifications: string;
-  webhooks: string;
-  cms: string;
-  featureFlags: string;
-  captcha: string;
-  mcp: string;
-  metering: string;
-  billingMode: string;
-  idp: string;
-  accessGate: string;
-}
-
-function regionDefaults(region: Region): RegionDefaults {
-  const base = (() => {
-    if (region === "cn") {
-      return {
-        email: "aliyun-dm",
-        storage: "aliyun-oss",
-        monitoring: "sentry",
-        analytics: "baidu",
-        sms: "aliyun-sms",
-      };
-    }
-    if (region === "hybrid") {
-      return {
-        email: "resend",
-        storage: "aliyun-oss",
-        monitoring: "sentry",
-        analytics: "posthog",
-        sms: "aliyun-sms",
-      };
-    }
-    // global
-    return {
-      email: "resend",
-      storage: "r2",
-      monitoring: "sentry",
-      analytics: "posthog",
-      sms: "twilio",
-    };
-  })();
-
-  return {
-    ...base,
-    queue: "none", // opt-in, no default
-    search: "none", // opt-in
-    cache: region === "global" ? "upstash-redis" : region === "cn" ? "redis" : "upstash-redis",
-    notifications: "none",
-    webhooks: "none",
-    cms: "none",
-    featureFlags: "none",
-    // `@nebutra/captcha` adapters (turnstile / hcaptcha / aliyun-slide) are
-    // still WIP per docs/package-status.md. Default to `none` so a fresh
-    // scaffold never ships an "[WIP]" surface the user did not opt into;
-    // they can flip it on explicitly via `--captcha=turnstile`.
-    captcha: "none",
-    mcp: "on", // Sailor core value
-    metering: "auto", // auto-enable if payment is set
-    billingMode: "usage", // all regions default to usage-based billing
-    idp: "clerk", // all regions default — users pick oauth-server explicitly if self-hosting IDP
-    accessGate: "none", // opt-in: do not ship cold-start business tables by default
-  };
-}
-
-function defaultPaymentForRegion(region: Region): string {
-  return region === "cn" ? "wechat" : "stripe";
-}
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
 
 async function run(): Promise<void> {
-  const program = new Command();
-  program
-    .name(PKG_NAME)
-    .description("Nebutra-Sailor — AI-Native SaaS template")
-    .version(VERSION, "-v, --version")
-    .helpOption(false) // we render our own help
-    .argument("[name]", "project directory", undefined)
-    .option("-p, --pm <id>", "npm | pnpm | yarn | bun")
-    .option("--region <id>", "global | cn | hybrid")
-    .option(
-      "--orm <id>",
-      "prisma (default, primary) | drizzle (dual-ORM: adds db-drizzle alongside Prisma — Postgres only)",
-    )
-    .option("--db <id>", "postgres | mysql | sqlite | none — engine (Prisma provider)")
-    .option(
-      "--db-host <id>",
-      "local | supabase | neon | vercel-postgres | planetscale | railway | aliyun-rds | tencent-cdb | none — managed-provider (region default: supabase global, local cn)",
-    )
-    .option("--auth <id>", "clerk | betterauth | nextauth | supabase | none")
-    .option(
-      "--social-login <ids>",
-      "CN social login providers — wechat | qq | dingtalk | workweixin | feishu | weibo (comma-separated)",
-    )
-    .option("--payment <id>", "stripe | lemon | wechat | alipay | none")
-    .option(
-      "--ai <mode-or-ids>",
-      "topology shorthand (gateway | direct | custom | none) OR comma-separated provider ids (e.g. openai,anthropic)",
-    )
-    .option("--deploy <target>", "vercel | railway | cloudflare | selfhost")
-    .option("--docs <id>", "fumadocs | mintlify | docusaurus | nextra | vitepress | none")
-    .option("--email <id>", "resend | postmark | ses | aliyun-dm | tencent-ses | netease | none")
-    .option(
-      "--storage <id>",
-      "r2 | s3 | supabase-storage | aliyun-oss | tencent-cos | qiniu | none",
-    )
-    .option("--monitoring <id>", "sentry | datadog | aliyun-arms | tingyun | none")
-    .option("--analytics <id>", "posthog | plausible | umami | baidu | sensors | none")
-    .option("--sms <id>", "twilio | aliyun-sms | tencent-sms | yunpian | none")
-    .option("--queue <id>", "qstash | bullmq | sqs | none")
-    .option("--search <id>", "meilisearch | typesense | algolia | pgvector | none")
-    .option("--cache <id>", "upstash-redis | vercel-kv | redis | dragonfly | none")
-    .option("--notifications <id>", "novu | knock | custom | none")
-    .option("--webhooks <id>", "svix | custom | none")
-    .option("--cms <id>", "sanity | contentful | strapi | none")
-    .option("--feature-flags <id>", "vercel-flags | growthbook | configcat | none")
-    .option("--captcha <id>", "turnstile | hcaptcha | aliyun-slide | none")
-    .option("--mcp <mode>", "on | off (default: on)")
-    .option("--metering <mode>", "auto | on | off (default: auto — auto-on when payment is set)")
-    .option("--billing-mode <mode>", "usage | seat | credits (default: usage)")
-    .option("--idp <id>", "clerk | oauth-server (default: clerk)")
-    .option("--access-gate <mode>", "none | invite (default: none)")
-    // Wave 3-5 feature toggles — accept `true|false`. Defaults are `true`
-    // except `--audit-log` (backing package is WIP, opt-in) and
-    // `--china-compliance` (auto-flips with --region=cn).
-    .option("--cron-jobs <bool>", "true | false — scaffold scheduled cron handlers (default: true)")
-    .option(
-      "--audit-log <bool>",
-      "true | false — enable /settings/audit-log + arch test (default: false — @nebutra/audit is WIP)",
-    )
-    .option("--api-keys <bool>", "true | false — enable /settings/api-keys page (default: true)")
-    .option("--command-palette <bool>", "true | false — enable ⌘K command palette (default: true)")
-    .option(
-      "--cookie-consent <bool>",
-      "true | false — enable GDPR/CCPA cookie banner (default: true)",
-    )
-    .option(
-      "--legal-pages <bool>",
-      "true | false — enable dynamic /legal/[slug] route (default: true)",
-    )
-    .option(
-      "--china-compliance <bool>",
-      "true | false — enable @nebutra/china-compliance + ICP footer (default: true when --region=cn, otherwise false)",
-    )
-    .option("--i18n", "enable i18n")
-    .option("--no-i18n", "disable i18n")
-    .option("--with-workflows", "scaffold workflows/ (inngest + n8n + pusher stubs)")
-    .option(
-      "--with-python-backend",
-      "scaffold backends/python/ (FastAPI stub — only when TS-by-Default ADR exception applies)",
-    )
-    .option("--no-install", "skip package install")
-    .option("--no-git", "skip git init")
-    .option("-y, --yes", "accept all defaults (non-interactive)")
-    .option("--dry-run", "preview actions without writing files")
-    .option("--json", "machine-readable output")
-    .option("--no-color", "disable color output")
-    .option("-h, --help", "show help");
-
+  const program = buildProgram();
   program.parse(process.argv);
   const opts = program.opts<CliOptions>();
   const [nameArg] = program.args;
@@ -546,6 +218,7 @@ async function run(): Promise<void> {
     }
   }
 
+  // ---- Project-name resolution ----
   const targetDir = nameArg ?? (autoYes ? "./my-saas-app" : undefined);
   let resolvedTarget: string;
 
@@ -579,379 +252,41 @@ async function run(): Promise<void> {
   }
 
   const projectName = path.basename(path.resolve(resolvedTarget));
-
-  // Resolve configuration — flags override prompts.
   const resolvedPm = opts.pm ?? detectPm();
-  const hasRegion = !!opts.region;
-  const hasAuth = !!opts.auth;
-  const hasPayment = !!opts.payment;
-  const hasAi = !!opts.ai;
-  const hasEmail = !!opts.email;
-  const hasStorage = !!opts.storage;
-  const hasMonitoring = !!opts.monitoring;
-  const hasAnalytics = !!opts.analytics;
-  const hasSms = !!opts.sms;
-  const hasI18n = opts.i18n !== undefined;
 
-  let region: Region;
-  let orm: NebutraConfig["orm"];
-  let database: NebutraConfig["database"];
-  let databaseHost: DatabaseHostId = "local";
-  let payment: NebutraConfig["payment"];
-  let paymentChoice: PaymentChoice;
-  let auth: AuthChoice;
-  const socialLoginIds: SocialLoginId[] = parseSocialLoginFlag(opts.socialLogin);
-  let aiMode: AiMode;
-  let aiRouting: NebutraConfig["aiRouting"];
-  let aiProviders: NebutraConfig["aiProviders"];
-  let customAiEndpoint: NebutraConfig["customAiEndpoint"];
-  let deployTarget: NebutraConfig["deployTarget"];
-  let docs: DocsFramework;
-  let i18n: boolean;
+  // ---- Config resolution (interactive or non-interactive) ----
+  const resolved = await resolveConfig(opts, useJson);
 
-  if (nonInteractive) {
-    region = resolveRegion(opts.region);
-    orm = mapOrm(opts.orm);
-    {
-      const engineFromDb = mapDb(opts.db);
-      const resolved = resolveDatabaseHost(opts.dbHost, region, engineFromDb);
-      database = resolved.engine;
-      databaseHost = resolved.hostId;
-    }
-    const rawPayment = hasPayment ? opts.payment : defaultPaymentForRegion(region);
-    payment = mapPayment(rawPayment);
-    paymentChoice = resolvePaymentChoice(rawPayment);
-    auth = resolveAuthChoice(opts.auth);
-    // Resolve AI mode from --ai flag:
-    //  - omitted → gateway (recommended default)
-    //  - "gateway"/"direct"/"custom"/"none" → that topology with default provider seed
-    //  - any other comma-separated string → direct mode with explicit providers
-    let aiResolvedMode: AiMode = "gateway";
-    if (hasAi) {
-      const rawAi = opts.ai?.trim().toLowerCase() ?? "";
-      if (isAiTopologyShorthand(rawAi)) {
-        aiResolvedMode = rawAi as AiMode;
-      } else {
-        aiResolvedMode = "direct";
-      }
-    }
-    const topology = resolveAiTopology({
-      mode: aiResolvedMode,
-      providerIds: hasAi ? mapAi(opts.ai) : undefined,
-    });
-    aiMode = topology.mode;
-    aiRouting = topology.routing;
-    aiProviders = topology.providerIds;
-    deployTarget = mapDeploy(opts.deploy);
-    docs = resolveDocs(opts.docs, useJson);
-    i18n = hasI18n ? Boolean(opts.i18n) : true;
-  } else {
-    // Interactive prompts — only 4 questions: project / region / auth / AI.
-    const promptGroup: Record<string, PromptFactory> = {};
-
-    if (!hasRegion) {
-      promptGroup.region = () =>
-        p.select({
-          message: "Target region?",
-          options: [
-            { value: "global", label: "global — 海外优先" },
-            { value: "cn", label: "cn     — 国内优先" },
-            { value: "hybrid", label: "hybrid — 双轨（国内+出海）" },
-          ],
-          initialValue: "global",
-        }) as Promise<unknown>;
-    }
-
-    if (!hasAuth) {
-      promptGroup.auth = () =>
-        p.select({
-          message: "Auth provider?",
-          options: [
-            { value: "clerk", label: "Clerk", hint: "managed, fastest setup" },
-            {
-              value: "betterauth",
-              label: "Better Auth",
-              hint: "self-hosted, modern (2FA / passkeys / RBAC)",
-            },
-            {
-              value: "nextauth",
-              label: "NextAuth (Auth.js v5)",
-              hint: "self-hosted, mature, large ecosystem",
-            },
-            {
-              value: "supabase",
-              label: "Supabase Auth",
-              hint: "managed auth with Supabase storage/realtime ecosystem",
-            },
-            { value: "none", label: "None" },
-          ],
-          initialValue: "clerk",
-        }) as Promise<unknown>;
-    }
-
-    if (!hasAi) {
-      promptGroup.aiMode = () =>
-        p.select({
-          message: "AI topology?",
-          options: [
-            {
-              value: "gateway",
-              label: "Multi-provider AI Gateway / router",
-              hint: "recommended",
-            },
-            { value: "direct", label: "Direct SDK/provider adapters" },
-            { value: "custom", label: "OpenAI-compatible endpoint" },
-            { value: "none", label: "Skip AI" },
-          ],
-          initialValue: "gateway",
-        }) as Promise<unknown>;
-
-      promptGroup.aiProviders = ({ results }: PromptContext) => {
-        if (results.aiMode !== "direct") return Promise.resolve([]);
-
-        const aiOptions = PROVIDERS.map((p) => ({
-          value: p.id,
-          label: `[${p.category}] ${p.name}`,
-        }));
-
-        return p.multiselect({
-          message: "Select direct AI provider adapters (expert path)",
-          options: aiOptions,
-          initialValues: ["openai"],
-          required: false,
-        });
-      };
-
-      promptGroup.customAiName = ({ results }: PromptContext) => {
-        if (results.aiMode === "custom") {
-          return p.text({
-            message: "Custom endpoint name (e.g. proxy, local):",
-            defaultValue: "custom",
-            placeholder: "custom",
-          });
-        }
-        return Promise.resolve(undefined);
-      };
-
-      promptGroup.customAiBaseUrl = ({ results }: PromptContext) => {
-        if (results.aiMode === "custom") {
-          return p.text({
-            message: "Custom endpoint base URL (e.g. https://api.proxy.com/v1):",
-            validate: (value) => {
-              if (value.length === 0) return "Base URL is required.";
-            },
-          });
-        }
-        return Promise.resolve(undefined);
-      };
-
-      promptGroup.customAiApiKeyEnv = ({ results }: PromptContext) => {
-        if (results.aiMode === "custom") {
-          return p.text({
-            message: "Environment variable name for the API Key:",
-            defaultValue: "CUSTOM_AI_API_KEY",
-            placeholder: "CUSTOM_AI_API_KEY",
-          });
-        }
-        return Promise.resolve(undefined);
-      };
-    }
-
-    const answers: InteractiveAnswers =
-      Object.keys(promptGroup).length > 0
-        ? ((await p.group(promptGroup, {
-            onCancel: () => {
-              process.stdout.write(pc.red("✘ Cancelled\n"));
-              process.exit(130);
-            },
-          })) as InteractiveAnswers)
-        : {};
-
-    region = resolveRegion(hasRegion ? opts.region : answers.region);
-
-    // Everything below is flag-only (no prompt); defaults are region-based.
-    orm = mapOrm(opts.orm);
-    {
-      const engineFromDb = mapDb(opts.db);
-      const resolved = resolveDatabaseHost(opts.dbHost, region, engineFromDb);
-      database = resolved.engine;
-      databaseHost = resolved.hostId;
-    }
-    const rawPayment = hasPayment ? opts.payment : defaultPaymentForRegion(region);
-    payment = mapPayment(rawPayment);
-    paymentChoice = resolvePaymentChoice(rawPayment);
-    auth = resolveAuthChoice(hasAuth ? opts.auth : answers.auth);
-    const customEndpoint =
-      answers.aiMode === "custom"
-        ? {
-            name: answers.customAiName ?? "custom",
-            baseURL: answers.customAiBaseUrl ?? "",
-            apiKeyEnvName: answers.customAiApiKeyEnv ?? "CUSTOM_AI_API_KEY",
-          }
-        : undefined;
-    const topology = resolveAiTopology({
-      mode: hasAi
-        ? opts.ai?.trim().toLowerCase() === "none"
-          ? "none"
-          : "direct"
-        : (answers.aiMode ?? "gateway"),
-      providerIds: hasAi ? mapAi(opts.ai) : answers.aiProviders,
-      customEndpoint,
-    });
-    aiMode = topology.mode;
-    aiRouting = topology.routing;
-    aiProviders = topology.providerIds;
-    if (topology.customEndpoint) {
-      customAiEndpoint = {
-        name: topology.customEndpoint.name,
-        baseURL: topology.customEndpoint.baseURL,
-        apiKeyEnvName: topology.customEndpoint.apiKeyEnvName,
-      };
-    }
-    deployTarget = mapDeploy(opts.deploy);
-    docs = resolveDocs(opts.docs, useJson);
-    i18n = hasI18n ? Boolean(opts.i18n) : true;
-  }
-
-  // Region-based smart defaults for feature flags.
-  const rDefaults = regionDefaults(region);
-  const email = hasEmail ? (opts.email as string) : rDefaults.email;
-  const storage = resolveStorageChoice(hasStorage ? opts.storage : undefined, rDefaults.storage);
-  const monitoring = hasMonitoring ? (opts.monitoring as string) : rDefaults.monitoring;
-  const analytics = hasAnalytics ? (opts.analytics as string) : rDefaults.analytics;
-  const sms = hasSms ? (opts.sms as string) : rDefaults.sms;
-
-  // v1.3.1 additions — flags override region defaults.
-  const queue = opts.queue ?? rDefaults.queue;
-  const search = opts.search ?? rDefaults.search;
-  const cache = opts.cache ?? rDefaults.cache;
-  const notifications = opts.notifications ?? rDefaults.notifications;
-  const webhooks = opts.webhooks ?? rDefaults.webhooks;
-  const cms = opts.cms ?? rDefaults.cms;
-  const featureFlags = opts.featureFlags ?? rDefaults.featureFlags;
-  const captcha = opts.captcha ?? rDefaults.captcha;
-  const mcp = opts.mcp ?? rDefaults.mcp;
-  const metering = opts.metering ?? rDefaults.metering;
-  const billingMode = (opts.billingMode ?? rDefaults.billingMode) as "usage" | "seat" | "credits";
-  const idp = (opts.idp ?? rDefaults.idp) as "clerk" | "oauth-server";
-  const accessGate = (opts.accessGate === "invite" ? "invite" : rDefaults.accessGate) as
-    | "none"
-    | "invite";
-
-  // Wave 3-5 feature toggles — region-aware defaults, flag overrides.
-  const waveToggles = resolveWaveFeatureToggles(
-    {
-      cronJobs: opts.cronJobs,
-      auditLog: opts.auditLog,
-      apiKeys: opts.apiKeys,
-      commandPalette: opts.commandPalette,
-      cookieConsent: opts.cookieConsent,
-      legalPages: opts.legalPages,
-      chinaCompliance: opts.chinaCompliance,
-    },
-    region,
-  );
-
-  // Detect any non-stable provider selections so we can warn the user
-  // before/after install and emit structured events for --json consumers.
-  const previewSelections: PreviewSelection[] = collectPreviewSelections([
-    { flag: "queue", provider: queue },
-    { flag: "search", provider: search },
-    { flag: "notifications", provider: notifications },
-    { flag: "webhooks", provider: webhooks },
-    { flag: "feature-flags", provider: featureFlags },
-    { flag: "captcha", provider: captcha },
-    { flag: "access-gate", provider: accessGate },
-  ]);
-
-  function emitPreviewWarnings(): void {
-    for (const sel of previewSelections) {
-      if (useJson) {
-        emitJson(true, {
-          event: "warn",
-          step: sel.flag,
-          provider: sel.provider,
-          packageStatus: sel.status,
-          message: describeStatus(sel.status),
-        });
-      } else {
-        const badge = formatStatusBadge(sel.status);
-        process.stdout.write(
-          pc.yellow(`⚠  ${sel.flag}=${sel.provider} ${badge} — ${describeStatus(sel.status)}\n`),
-        );
-      }
-    }
-  }
-
-  const config: NebutraConfig = {
-    region,
-    orm,
-    database,
-    payment,
-    aiMode,
-    aiRouting,
-    aiProviders,
-    customAiEndpoint,
-    deployTarget,
-    docs,
-    i18n,
-    email,
-    storage,
-    monitoring,
-    analytics,
-    sms,
-    queue: queue as NebutraConfig["queue"],
-    search: search as NebutraConfig["search"],
-    cache: cache as NebutraConfig["cache"],
-    notifications: notifications as NebutraConfig["notifications"],
-    webhooks: webhooks as NebutraConfig["webhooks"],
-    cms: cms as NebutraConfig["cms"],
-    featureFlags: featureFlags as NebutraConfig["featureFlags"],
-    captcha: captcha as NebutraConfig["captcha"],
-    mcp: mcp as NebutraConfig["mcp"],
-    metering: metering as NebutraConfig["metering"],
-    billingMode,
-    idp,
-    accessGate,
-    cronJobs: waveToggles.cronJobs,
-    auditLog: waveToggles.auditLog,
-    apiKeys: waveToggles.apiKeys,
-    commandPalette: waveToggles.commandPalette,
-    cookieConsent: waveToggles.cookieConsent,
-    legalPages: waveToggles.legalPages,
-    chinaCompliance: waveToggles.chinaCompliance,
-  };
-
-  // Progress summary of selections
+  // ---- Progress summary table ----
   const steps: Array<[string, string]> = [
     ["Project name", projectName],
-    ["Region", region],
-    ["Auth", auth],
+    ["Region", resolved.region],
+    ["Auth", resolved.auth],
     [
       "Social login",
-      socialLoginIds.length > 0
-        ? socialLoginIds
+      resolved.socialLoginIds.length > 0
+        ? resolved.socialLoginIds
             .map((id) => SOCIAL_LOGIN_PROVIDERS.find((p) => p.id === id)?.name ?? id)
             .join(", ")
         : "none",
     ],
-    ["ORM", orm],
-    ["Database", database],
-    ["Payment", paymentChoice],
+    ["ORM", resolved.orm],
+    ["Database", resolved.database],
+    ["Payment", resolved.paymentChoice],
     [
       "AI topology",
-      `${aiMode}${aiProviders.length > 0 ? ` (${aiProviders.join(", ")} seed)` : ""}${
-        customAiEndpoint ? " + custom endpoint" : ""
+      `${resolved.aiMode}${resolved.aiProviders.length > 0 ? ` (${resolved.aiProviders.join(", ")} seed)` : ""}${
+        resolved.customAiEndpoint ? " + custom endpoint" : ""
       }`,
     ],
-    ["Email", email],
-    ["Storage", storage],
-    ["Monitoring", monitoring],
-    ["Analytics", analytics],
-    ["SMS", sms],
-    ["Deploy Target", deployTarget],
-    ["Docs Framework", docs],
-    ["Access gate", accessGate],
+    ["Email", resolved.email],
+    ["Storage", resolved.storage],
+    ["Monitoring", resolved.monitoring],
+    ["Analytics", resolved.analytics],
+    ["SMS", resolved.sms],
+    ["Deploy Target", resolved.deployTarget],
+    ["Docs Framework", resolved.docs],
+    ["Access gate", resolved.accessGate],
   ];
   if (!useJson) {
     steps.forEach(([label, value], i) => {
@@ -963,92 +298,13 @@ async function run(): Promise<void> {
     });
   }
 
-  const envDefaults = {
-    databaseUrl: "postgresql://postgres:postgres@localhost:5432/nebutra",
-    clerkPublishable: "",
-    clerkSecret: "",
-  };
-
-  const startedAt = Date.now();
-
-  // Dry-run: print plan, exit.
+  // ---- Dry run ----
   if (isDry) {
-    const aiCount = aiProviders.length;
-    const plan = [
-      `clone template → ${resolvedTarget}`,
-      `write nebutra.config.json`,
-      `prune template (orm=${orm}, i18n=${i18n})`,
-      `region → ${region}`,
-      `auth → ${auth === "none" ? "skip (remove packages/auth)" : `configure ${auth}`}`,
-      ...(socialLoginIds.length > 0
-        ? [
-            `social-login → generate ${socialLoginIds.length} callback route${socialLoginIds.length === 1 ? "" : "s"} + SocialLoginButtons.tsx (${socialLoginIds.join(", ")})`,
-          ]
-        : []),
-      `db → ${database === "none" ? "skip (remove packages/db)" : `configure Prisma for ${database}`}`,
-      `payment → ${paymentChoice === "none" ? "skip (remove packages/billing)" : `configure ${paymentChoice}`}`,
-      ...(docs !== "none"
-        ? [
-            `docs → scaffold apps/docs (${docs === "fumadocs" ? "fumadocs" : `${docs} → fumadocs fallback`})`,
-          ]
-        : []),
-      ...(aiCount > 0 || customAiEndpoint
-        ? [
-            `ai-providers → generate ${aiMode} registry seed + env (${aiCount}${customAiEndpoint ? " + custom" : ""} provider${aiCount === 1 && !customAiEndpoint ? "" : "s"})`,
-          ]
-        : []),
-      ...(email !== "none" ? [`email → configure ${email}`] : []),
-      ...(storage !== "none" ? [`storage → configure ${storage}`] : []),
-      ...(monitoring !== "none" ? [`monitoring → configure ${monitoring}`] : []),
-      ...(analytics !== "none" ? [`analytics → configure ${analytics}`] : []),
-      ...(sms !== "none" ? [`sms → configure ${sms}`] : []),
-      ...(queue !== "none" ? [`queue → configure ${queue}`] : []),
-      ...(search !== "none" ? [`search → configure ${search}`] : []),
-      ...(cache !== "none" ? [`cache → configure ${cache}`] : []),
-      ...(notifications !== "none" ? [`notifications → configure ${notifications}`] : []),
-      ...(webhooks !== "none" ? [`webhooks → configure ${webhooks}`] : []),
-      ...(cms !== "none" ? [`cms → configure ${cms}`] : []),
-      ...(featureFlags !== "none" ? [`feature-flags → configure ${featureFlags}`] : []),
-      ...(captcha !== "none" ? [`captcha → configure ${captcha}`] : []),
-      `mcp → ${mcp === "on" ? "enable MCP server" : "remove packages/mcp"}`,
-      `metering → ${metering === "off" ? "disabled" : metering === "auto" ? (payment !== "none" ? "enabled (auto: payment set)" : "disabled (auto: no payment)") : "enabled"}`,
-      ...(billingMode !== "usage" ? [`billing-mode → ${billingMode}`] : []),
-      ...(idp !== "clerk" ? [`idp → ${idp}`] : []),
-      `cron-jobs → ${waveToggles.cronJobs ? "enabled" : "disabled"}`,
-      `audit-log → ${waveToggles.auditLog ? "enabled" : "disabled"}`,
-      `api-keys → ${waveToggles.apiKeys ? "enabled" : "disabled"}`,
-      `command-palette → ${waveToggles.commandPalette ? "enabled" : "disabled"}`,
-      `cookie-consent → ${waveToggles.cookieConsent ? "enabled" : "disabled"}`,
-      `legal-pages → ${waveToggles.legalPages ? "enabled" : "disabled"}`,
-      `china-compliance → ${waveToggles.chinaCompliance ? "enabled (@nebutra/china-compliance + ICP footer)" : "disabled"}`,
-      `compliance → inject ${region} boilerplate (ICP/Cookie/AIGC/Privacy)`,
-      `welcome → generate dev welcome page`,
-      `env → generate random secrets (AUTH_SECRET, JWT_SECRET)`,
-      `seed → generate prisma/seed.ts (1 admin + 3 tenants)`,
-      ...(deployTarget !== "none" ? [`deploy → inject ${deployTarget} config`] : []),
-      `inject .env.local`,
-      opts.install === false ? "skip install" : `run ${resolvedPm} install`,
-      opts.git === false ? "skip git init" : "run git init",
-    ];
-    if (useJson) {
-      for (const action of plan) {
-        emitJson(true, { event: "plan", action });
-      }
-      emitPreviewWarnings();
-      emitJson(true, { event: "done", dryRun: true });
-    } else {
-      process.stdout.write("\n" + pc.bold("Dry run — planned actions:\n"));
-      for (const line of plan) process.stdout.write(`  • ${line}\n`);
-      if (previewSelections.length > 0) {
-        process.stdout.write("\n" + pc.bold(pc.yellow("Preview-status providers selected:\n")));
-        emitPreviewWarnings();
-      }
-      process.stdout.write(pc.dim("\nNo files were written.\n"));
-    }
+    printDryRunPlan(useJson, resolved, resolvedTarget, resolvedPm, opts);
     process.exit(0);
   }
 
-  // SIGINT handler — offer to clean partial target (L2 — ask).
+  // ---- SIGINT handler ----
   const onInterrupt = async () => {
     process.stdout.write("\n" + pc.red("✘ Cancelled\n"));
     if (fs.existsSync(resolvedTarget)) {
@@ -1065,440 +321,17 @@ async function run(): Promise<void> {
   };
   process.on("SIGINT", onInterrupt);
 
+  // ---- Scaffold execution ----
   try {
-    emitJson(useJson, { event: "step", step: "clone", status: "start" });
-    await cloneTemplate(resolvedTarget);
-    emitJson(useJson, { event: "step", step: "clone", status: "ok" });
-
-    emitJson(useJson, { event: "step", step: "package", status: "start" });
-    await updatePackageJson(resolvedTarget, projectName);
-    emitJson(useJson, { event: "step", step: "package", status: "ok" });
-
-    emitJson(useJson, { event: "step", step: "config", status: "start" });
-    await writeNebutraConfig(resolvedTarget, config);
-    emitJson(useJson, { event: "step", step: "config", status: "ok" });
-
-    emitJson(useJson, { event: "step", step: "prune", status: "start" });
-    await pruneTemplate(resolvedTarget, config);
-    emitJson(useJson, { event: "step", step: "prune", status: "ok" });
-
-    // Schema-level conditional pruning — strips /// @conditional(flag=values)
-    // model blocks from the scaffolded project's prisma schema based on the
-    // CLI flag selection. See packages/ops/create-sailor/src/utils/prune-schema.ts.
-    const schemaPath = path.join(resolvedTarget, "packages/platform/db/prisma/schema.prisma");
-    if (fs.existsSync(schemaPath)) {
-      emitJson(useJson, { event: "step", step: "schema-prune", status: "start" });
-      try {
-        const raw = fs.readFileSync(schemaPath, "utf-8");
-        const schemaFlags = {
-          auth,
-          payment: paymentChoice,
-          "billing-mode": billingMode,
-          idp,
-          template: "saas", // TODO: wire up once --template flag returns
-          "access-gate": accessGate,
-          // community: intentionally not a template flag — Sleptons is Nebutra's own
-          // product, stripped from Sailor-Template at mirror-sync time.
-        };
-        const pruned = pruneSchemaByFlags(raw, schemaFlags);
-        fs.writeFileSync(schemaPath, pruned);
-        pruneMigrationsByFlags(path.join(path.dirname(schemaPath), "migrations"), schemaFlags);
-        emitJson(useJson, { event: "step", step: "schema-prune", status: "ok" });
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err);
-        emitJson(useJson, { event: "step", step: "schema-prune", status: "error", error: msg });
-        // Non-fatal — the schema stays as-is; user can manually trim later.
-      }
-    } else {
-      emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
-    }
-
-    emitJson(useJson, { event: "step", step: "auth", choice: auth, status: "start" });
-    await applyAuthSelection(resolvedTarget, auth);
-    emitJson(useJson, { event: "step", step: "auth", choice: auth, status: "ok" });
-
-    if (socialLoginIds.length > 0) {
-      emitJson(useJson, {
-        event: "step",
-        step: "social-login",
-        providers: socialLoginIds,
-        status: "start",
-      });
-      await applySocialLoginProviders(resolvedTarget, socialLoginIds, auth);
-      emitJson(useJson, {
-        event: "step",
-        step: "social-login",
-        providers: socialLoginIds,
-        status: "ok",
-      });
-    } else {
-      emitJson(useJson, { event: "step", step: "social-login", status: "skip" });
-    }
-
-    emitJson(useJson, { event: "step", step: "db", choice: database, status: "start" });
-    await applyDatabaseSelection(resolvedTarget, database, projectName);
-    if (database !== "none") {
-      const hostMeta = getDatabaseHost(databaseHost);
-      if (hostMeta) {
-        await applyDatabaseHostSelection(resolvedTarget, hostMeta, projectName);
-        emitJson(useJson, {
-          event: "step",
-          step: "db-host",
-          choice: databaseHost,
-          status: "ok",
-        });
-      }
-    }
-    emitJson(useJson, { event: "step", step: "db", choice: database, status: "ok" });
-
-    if (orm === "drizzle") {
-      emitJson(useJson, { event: "step", step: "orm", choice: "drizzle", status: "start" });
-      const result = await applyOrmSelection(resolvedTarget, "drizzle", database);
-      emitJson(useJson, {
-        event: "step",
-        step: "orm",
-        choice: "drizzle",
-        status: result.applied ? "ok" : "skip",
-        ...(result.reason ? { reason: result.reason } : {}),
-      });
-    }
-
-    emitJson(useJson, {
-      event: "step",
-      step: "payment",
-      choice: paymentChoice,
-      status: "start",
-    });
-    await applyPaymentSelection(resolvedTarget, paymentChoice);
-    emitJson(useJson, {
-      event: "step",
-      step: "payment",
-      choice: paymentChoice,
-      status: "ok",
-    });
-
-    // Region-aware feature selections.
-    await applyEmailSelection(resolvedTarget, email, region);
-    if (useJson) emitJson(true, { event: "step", step: "email", choice: email, status: "ok" });
-
-    await applyStorageSelection(resolvedTarget, storage, region);
-    if (useJson) emitJson(true, { event: "step", step: "storage", choice: storage, status: "ok" });
-
-    await applyMonitoringSelection(resolvedTarget, monitoring, region);
-    if (useJson)
-      emitJson(true, {
-        event: "step",
-        step: "monitoring",
-        choice: monitoring,
-        status: "ok",
-      });
-
-    await applyAnalyticsSelection(resolvedTarget, analytics, region);
-    if (useJson)
-      emitJson(true, {
-        event: "step",
-        step: "analytics",
-        choice: analytics,
-        status: "ok",
-      });
-
-    await applySmsSelection(resolvedTarget, sms, region);
-    if (useJson) emitJson(true, { event: "step", step: "sms", choice: sms, status: "ok" });
-
-    await applyQueueSelection(resolvedTarget, queue, region);
-    if (useJson) emitJson(true, { event: "step", step: "queue", choice: queue, status: "ok" });
-
-    await applySearchSelection(resolvedTarget, search, region);
-    if (useJson) emitJson(true, { event: "step", step: "search", choice: search, status: "ok" });
-
-    await applyCacheSelection(resolvedTarget, cache, region);
-    if (useJson) emitJson(true, { event: "step", step: "cache", choice: cache, status: "ok" });
-
-    await applyNotificationsSelection(resolvedTarget, notifications, region);
-    if (useJson)
-      emitJson(true, { event: "step", step: "notifications", choice: notifications, status: "ok" });
-
-    await applyWebhooksSelection(resolvedTarget, webhooks, region);
-    if (useJson)
-      emitJson(true, { event: "step", step: "webhooks", choice: webhooks, status: "ok" });
-
-    await applyCmsSelection(resolvedTarget, cms, region);
-    if (useJson) emitJson(true, { event: "step", step: "cms", choice: cms, status: "ok" });
-
-    await applyFeatureFlagsSelection(resolvedTarget, featureFlags, region);
-    if (useJson)
-      emitJson(true, { event: "step", step: "feature-flags", choice: featureFlags, status: "ok" });
-
-    await applyCaptchaSelection(resolvedTarget, captcha, region);
-    if (useJson) emitJson(true, { event: "step", step: "captcha", choice: captcha, status: "ok" });
-
-    await applyMcpSwitch(resolvedTarget, mcp);
-    if (useJson) emitJson(true, { event: "step", step: "mcp", mode: mcp, status: "ok" });
-
-    await applyMeteringSwitch(resolvedTarget, metering, payment);
-    if (useJson) emitJson(true, { event: "step", step: "metering", mode: metering, status: "ok" });
-
-    // Wave 3-5 feature pruning — physically remove files/dirs for any
-    // toggle set to `false`. Idempotent + safe-on-missing-paths.
-    emitJson(useJson, { event: "step", step: "prune-wave-features", status: "start" });
-    pruneWaveFeatures(resolvedTarget, waveToggles);
-    emitJson(useJson, {
-      event: "step",
-      step: "prune-wave-features",
-      status: "ok",
-      toggles: waveToggles,
-    });
-
-    // Schema prune — strip @conditional model/enum blocks and gated migrations
-    // that don't match the selection. Covers: auth, payment, billing-mode, idp,
-    // template, access-gate.
-    // (community flag was removed — Sleptons is Nebutra's own product, not a template
-    // choice. Sleptons models are stripped at mirror-sync time by template-build.ts.)
-    if (config.orm === "prisma" && config.database !== "none") {
-      const schemaPath = path.join(resolvedTarget, "packages/platform/db/prisma/schema.prisma");
-      if (fs.existsSync(schemaPath)) {
-        emitJson(useJson, { event: "step", step: "schema-prune", status: "start" });
-        try {
-          const raw = fs.readFileSync(schemaPath, "utf8");
-          const schemaFlags = {
-            auth,
-            payment: paymentChoice,
-            "billing-mode": billingMode,
-            idp,
-            template: "saas",
-            "access-gate": accessGate,
-          };
-          const pruned = pruneSchemaByFlags(raw, schemaFlags);
-          fs.writeFileSync(schemaPath, pruned);
-          pruneMigrationsByFlags(path.join(path.dirname(schemaPath), "migrations"), schemaFlags);
-          emitJson(useJson, { event: "step", step: "schema-prune", status: "ok" });
-        } catch (err) {
-          const msg = err instanceof Error ? err.message : String(err);
-          emitJson(useJson, { event: "step", step: "schema-prune", status: "error", error: msg });
-        }
-      } else {
-        emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
-      }
-    } else {
-      emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
-    }
-
-    // JSON events for flags whose "apply" effect is the schema prune above.
-    emitJson(useJson, {
-      event: "step",
-      step: "billing-mode",
-      choice: billingMode,
-      status: "ok",
-    });
-    emitJson(useJson, { event: "step", step: "idp", choice: idp, status: "ok" });
-
-    await applyComplianceTemplates(resolvedTarget, region);
-    if (useJson) emitJson(true, { event: "step", step: "compliance", region, status: "ok" });
-
-    await generateEnvSecrets(resolvedTarget);
-    await generateSeedData(resolvedTarget, auth);
-    await generateWelcomePage(resolvedTarget, {
+    await runScaffold({
+      resolvedTarget,
       projectName,
-      region,
-      previewSelections,
-      waveFeatures: waveToggles,
+      resolvedPm,
+      opts,
+      useJson,
+      resolved,
+      startedAt: Date.now(),
     });
-
-    if (config.aiMode !== "none") {
-      emitJson(useJson, { event: "step", step: "ai-providers", status: "start" });
-      const selection = {
-        providerIds: config.aiProviders,
-        customEndpoint: config.customAiEndpoint,
-      };
-      // Hardcode templateDir to the cloned repo's packages/ai/ai-providers/templates
-      const templateDir = path.join(resolvedTarget, "packages/ai/ai-providers/templates");
-      await applyProviderSelection(resolvedTarget, selection, templateDir);
-      emitJson(useJson, { event: "step", step: "ai-providers", status: "ok" });
-    } else {
-      emitJson(useJson, { event: "step", step: "ai-providers", status: "skip" });
-    }
-
-    emitJson(useJson, { event: "step", step: "docs", status: "start" });
-    if (docs !== "none") {
-      await applyDocsTemplate(resolvedTarget, {
-        framework: docs,
-        projectName,
-      });
-      emitJson(useJson, {
-        event: "step",
-        step: "docs",
-        framework: docs === "fumadocs" ? "fumadocs" : "fumadocs",
-        requested: docs,
-        status: "ok",
-      });
-    } else {
-      emitJson(useJson, { event: "step", step: "docs", status: "skip" });
-    }
-
-    emitJson(useJson, { event: "step", step: "deploy-target", status: "start" });
-    if (deployTarget !== "none") {
-      await applyDeployTarget(resolvedTarget, deployTarget);
-    }
-    emitJson(useJson, { event: "step", step: "deploy-target", status: "ok" });
-
-    emitJson(useJson, { event: "step", step: "env", status: "start" });
-    await injectEnv(resolvedTarget, envDefaults);
-    emitJson(useJson, { event: "step", step: "env", status: "ok" });
-
-    emitJson(useJson, { event: "step", step: "scaffold-extras", status: "start" });
-    const extras = await applyScaffoldExtras(resolvedTarget, {
-      projectName,
-      withWorkflows: Boolean(opts.withWorkflows),
-      withPythonBackend: Boolean(opts.withPythonBackend),
-    });
-    emitJson(useJson, {
-      event: "step",
-      step: "scaffold-extras",
-      status: "ok",
-      applied: extras.applied,
-      skipped: extras.skipped,
-    });
-
-    // Independent Developer License + scaffold marker. Replaces the upstream
-    // AGPL LICENSE inside the scaffolded project; the AGPL text is preserved
-    // as LICENSE-AGPL-REFERENCE.md so the fork-path grant remains visible.
-    emitJson(useJson, { event: "step", step: "license", status: "start" });
-    try {
-      const licenseEmit = emitIndependentLicense(resolvedTarget, {
-        projectName,
-        cliVersion: VERSION,
-      });
-      emitJson(useJson, {
-        event: "step",
-        step: "license",
-        status: "ok",
-        tier: "independent",
-        wrote: licenseEmit.wrote,
-      });
-      if (!useJson) {
-        process.stdout.write(
-          pc.dim(
-            `  License: Nebutra-Sailor Independent Developer License (free for ≤ 1 FTE, < $1M ARR).\n` +
-              `           Upstream AGPL preserved as LICENSE-AGPL-REFERENCE.md.\n`,
-          ),
-        );
-      }
-    } catch (err) {
-      // License emit must not block scaffolding. Log and continue so the
-      // user still gets a working project; they can re-run with --no-install
-      // and inspect the scaffold to recover.
-      emitJson(useJson, {
-        event: "step",
-        step: "license",
-        status: "warn",
-        message: err instanceof Error ? err.message : String(err),
-      });
-    }
-
-    // Install dependencies (non-fatal on failure).
-    const shouldInstall = opts.install !== false;
-    if (shouldInstall) {
-      const installCmd = resolvedPm === "bun" ? "bun install" : `${resolvedPm} install`;
-      if (useJson) {
-        emitJson(true, { event: "step", step: "install", pm: resolvedPm, status: "start" });
-      } else {
-        process.stdout.write(pc.dim(`  Installing dependencies with ${resolvedPm}…\n`));
-      }
-      try {
-        execSync(installCmd, {
-          cwd: resolvedTarget,
-          stdio: useJson ? "ignore" : "inherit",
-        });
-        emitJson(useJson, { event: "step", step: "install", status: "ok" });
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err);
-        if (useJson) {
-          emitJson(true, { event: "step", step: "install", status: "error", error: msg });
-        } else {
-          process.stdout.write(pc.yellow(`  ⚠ install failed — run '${installCmd}' manually.\n`));
-        }
-        // Non-fatal — project was still scaffolded.
-      }
-    } else {
-      emitJson(useJson, { event: "step", step: "install", status: "skip" });
-    }
-
-    // Initialise git repo + initial commit (non-fatal on failure).
-    const shouldGit = opts.git !== false;
-    if (shouldGit) {
-      if (useJson) {
-        emitJson(true, { event: "step", step: "git-init", status: "start" });
-      }
-      try {
-        execSync("git init -q", { cwd: resolvedTarget, stdio: "ignore" });
-        execSync("git add -A", { cwd: resolvedTarget, stdio: "ignore" });
-        execSync(
-          'git -c user.email=you@example.com -c user.name="You" commit -q -m "chore: initial scaffold from create-sailor"',
-          { cwd: resolvedTarget, stdio: "ignore" },
-        );
-        emitJson(useJson, { event: "step", step: "git-init", status: "ok" });
-      } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err);
-        if (useJson) {
-          emitJson(true, { event: "step", step: "git-init", status: "error", error: msg });
-        } else {
-          process.stdout.write(pc.yellow(`  ⚠ git init skipped — not fatal.\n`));
-        }
-        // Non-fatal — user can init git manually.
-      }
-    } else {
-      emitJson(useJson, { event: "step", step: "git-init", status: "skip" });
-    }
-
-    const elapsedSec = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
-
-    // Phase 0 telemetry — fire-and-forget. Respects NEBUTRA_TELEMETRY=0.
-    emitScaffoldCompleted({
-      template_version: VERSION,
-      package_manager: resolvedPm,
-      region,
-      auth,
-      payment: paymentChoice,
-      ai_providers: aiProviders,
-      deploy_target: deployTarget,
-      duration_ms: Date.now() - startedAt,
-    });
-
-    // Surface preview-status warnings before declaring success so the
-    // user doesn't miss them in install/git noise above.
-    if (previewSelections.length > 0) {
-      emitPreviewWarnings();
-    }
-
-    if (useJson) {
-      emitJson(true, {
-        event: "done",
-        status: "ok",
-        elapsedSec,
-        targetDir: resolvedTarget,
-        previewSelections,
-        waveFeatures: waveToggles,
-      });
-    } else {
-      showDone({
-        elapsedSec,
-        targetDir: resolvedTarget,
-        skippedInstall: opts.install === false,
-        previewSelections,
-        waveFeatures: waveToggles,
-      });
-    }
-
-    // Update notifier (non-blocking)
-    try {
-      updateNotifier({
-        pkg: { name: PKG_NAME, version: VERSION },
-        updateCheckInterval: 1000 * 60 * 60 * 24,
-      }).notify({ defer: false, isGlobal: true });
-    } catch {
-      // swallow — non-critical
-    }
-
     process.exit(0);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
