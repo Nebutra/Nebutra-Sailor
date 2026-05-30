@@ -101,4 +101,4 @@ const flags = {
 ## Related
 
 - [Config package](../config/)
-- [API Gateway](../../backends/gateway/)
+- [API Gateway](../../../backends/gateway/)

@@ -75,6 +75,16 @@
     "label": "Language",
     "ariaLabel": "Change language"
   },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP record number",
+      "publicSecurity": "Public security record"
+    },
+    "wechat": {
+      "signIn": "Sign in with WeChat",
+      "notConfigured": "WeChat login not configured"
+    }
+  },
   "onboarding": {
     "title": "Set up your workspace",
     "subtitle": "Three quick steps and you're ready to ship.",

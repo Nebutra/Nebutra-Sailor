@@ -102,7 +102,7 @@ Pick the tools that match your stage and follow the matching guide. They're cros
 - [`hex-setup.md`](./hex-setup.md) — Graduate from Metabase once you're past ~2k users and have a dedicated analyst.
 - [`retool-recipe.md`](./retool-recipe.md) — CS / ops console in 30 min. Free for ≤5 users. Start here for layer 2.
 
-For layer 4 (content) see [`apps/studio/README.md`](../../apps/studio/README.md). For layer 5 (observability) see the runbooks under `infra/runtime/`.
+For layer 4 (content) see [`apps/studio/`](../../apps/studio/). For layer 5 (observability) see the runbooks under `infra/runtime/`.
 
 ---
 

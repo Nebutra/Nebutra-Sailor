@@ -120,6 +120,17 @@ export const DOMAINS = {
 
 export type Env = z.infer<typeof envSchema>;
 
+function withRedisAliases(source: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+  const normalized = { ...source };
+
+  normalized.UPSTASH_REDIS_URL ??= source.UPSTASH_REDIS_REST_URL;
+  normalized.UPSTASH_REDIS_TOKEN ??= source.UPSTASH_REDIS_REST_TOKEN;
+  normalized.UPSTASH_REDIS_REST_URL ??= source.UPSTASH_REDIS_URL;
+  normalized.UPSTASH_REDIS_REST_TOKEN ??= source.UPSTASH_REDIS_TOKEN;
+
+  return normalized;
+}
+
 /**
  * Determine the active auth provider from environment variables.
  * Priority:
@@ -163,27 +174,29 @@ export function getAuthProvider(): "clerk" | "better-auth" | "nextauth" | "supab
 }
 
 export function validateEnv(): Env {
+  const normalizedEnv = withRedisAliases(process.env);
+
   if (process.env.SKIP_ENV_VALIDATION === "true") {
     return envSchema.parse({
-      ...process.env,
-      NODE_ENV: process.env.NODE_ENV ?? "development",
-      PORT: process.env.PORT ?? "3002",
-      DATABASE_URL: process.env.DATABASE_URL ?? "postgresql://localhost/dev",
-      AUTH_PROVIDER: process.env.AUTH_PROVIDER ?? "clerk",
-      CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? "sk_test_placeholder",
-      AUTH_SECRET: process.env.AUTH_SECRET ?? "dev_nextauth_secret_placeholder",
-      SUPABASE_URL: process.env.SUPABASE_URL ?? "http://localhost:54321",
+      ...normalizedEnv,
+      NODE_ENV: normalizedEnv.NODE_ENV ?? "development",
+      PORT: normalizedEnv.PORT ?? "3002",
+      DATABASE_URL: normalizedEnv.DATABASE_URL ?? "postgresql://localhost/dev",
+      AUTH_PROVIDER: normalizedEnv.AUTH_PROVIDER ?? "clerk",
+      CLERK_SECRET_KEY: normalizedEnv.CLERK_SECRET_KEY ?? "sk_test_placeholder",
+      AUTH_SECRET: normalizedEnv.AUTH_SECRET ?? "dev_nextauth_secret_placeholder",
+      SUPABASE_URL: normalizedEnv.SUPABASE_URL ?? "http://localhost:54321",
       SUPABASE_PUBLISHABLE_KEY:
-        process.env.SUPABASE_PUBLISHABLE_KEY ??
-        process.env.SUPABASE_ANON_KEY ??
+        normalizedEnv.SUPABASE_PUBLISHABLE_KEY ??
+        normalizedEnv.SUPABASE_ANON_KEY ??
         "dev_anon_placeholder",
-      SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? "dev_anon_placeholder",
+      SUPABASE_ANON_KEY: normalizedEnv.SUPABASE_ANON_KEY ?? "dev_anon_placeholder",
       SUPABASE_SERVICE_ROLE_KEY:
-        process.env.SUPABASE_SERVICE_ROLE_KEY ?? "dev_service_role_placeholder",
+        normalizedEnv.SUPABASE_SERVICE_ROLE_KEY ?? "dev_service_role_placeholder",
     });
   }
 
-  const result = envSchema.safeParse(process.env);
+  const result = envSchema.safeParse(normalizedEnv);
 
   if (!result.success) {
     process.stderr.write("❌ Invalid environment variables:\n");

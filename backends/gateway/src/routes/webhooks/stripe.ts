@@ -47,7 +47,7 @@ function emitCheckoutCompleted(props: Record<string, unknown>): void {
           host: process.env.NEBUTRA_POSTHOG_HOST ?? "https://analytics.nebutra.com",
         },
         onError: () => {
-          // Silent
+          log.warn("Stripe checkout telemetry sink reported an internal error");
         },
       });
 
@@ -55,12 +55,12 @@ function emitCheckoutCompleted(props: Record<string, unknown>): void {
 
       const result = client.track("checkout", { action: "completed", ...props });
       if (result && typeof (result as Promise<unknown>).then === "function") {
-        await (result as Promise<unknown>).catch(() => {
-          // Silent
+        await (result as Promise<unknown>).catch((error) => {
+          log.warn("Stripe checkout telemetry emit failed", { error });
         });
       }
-    } catch {
-      // Silent
+    } catch (error) {
+      log.warn("Stripe checkout telemetry bootstrap failed", { error });
     }
   })();
 }
@@ -197,8 +197,11 @@ stripeWebhookRoutes.openapi(stripeWebhookRoute, async (c) => {
             retryCount: { increment: 1 },
           },
         })
-        .catch(() => {
-          // Best-effort — do not throw inside catch
+        .catch((updateError) => {
+          log.warn("Failed to persist Stripe webhook handler failure state", {
+            error: updateError,
+            eventId: event.id,
+          });
         });
     });
 

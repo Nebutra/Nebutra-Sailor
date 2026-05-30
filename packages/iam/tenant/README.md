@@ -485,6 +485,6 @@ function AdvancedAnalytics() {
 
 ## See Also
 
-- [@nebutra/logger](../logger) — Structured logging
-- [@nebutra/queue](../queue) — Message queue with tenant support
+- [@nebutra/logger](../../platform/logger/) — Structured logging
+- [@nebutra/queue](../../integrations/queue/) — Message queue with tenant support
 - Prisma RLS [Documentation](https://www.prisma.io/docs/orm/prisma-client/queries/raw-database-access)

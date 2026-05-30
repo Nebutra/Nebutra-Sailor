@@ -119,4 +119,4 @@ OPENSTATUS_PAGE_ID=your-page-id
 
 - [Health package](../health/)
 - [Alerting package](../alerting/)
-- [Observability](../../infra/ops/observability/)
+- [Observability](../../../infra/ops/observability/)
