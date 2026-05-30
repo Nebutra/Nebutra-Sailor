@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { useAppearance } from "./store";
+import { CODE_FONT_STACKS, UI_FONT_STACKS, useAppearance } from "./store";
 
 export default function AppearanceVarsProvider(): null {
   const [state] = useAppearance();
@@ -14,9 +14,27 @@ export default function AppearanceVarsProvider(): null {
     root.style.setProperty("--user-ui-font-size", `${state.uiFontSize}px`);
     root.style.setProperty("--user-code-font-size", `${state.codeFontSize}px`);
 
-    root.classList.toggle("surface-translucent", state.transparency);
+    if (state.backgroundColor) {
+      root.style.setProperty("--user-background", state.backgroundColor);
+    } else {
+      root.style.removeProperty("--user-background");
+    }
+
+    if (state.foregroundColor) {
+      root.style.setProperty("--user-foreground", state.foregroundColor);
+    } else {
+      root.style.removeProperty("--user-foreground");
+    }
+
+    root.style.setProperty("--user-ui-font", UI_FONT_STACKS[state.uiFontFamily]);
+    root.style.setProperty("--user-code-font", CODE_FONT_STACKS[state.codeFontFamily]);
+    root.style.setProperty("--user-contrast", `${state.contrast}`);
 
     root.dataset.accent = state.accent;
+    root.classList.toggle("surface-translucent", state.transparency);
+    root.classList.toggle("cursor-pointer-interactive", state.pointerCursor);
+    root.classList.toggle("font-smoothing-mac", state.fontSmoothing);
+    root.classList.toggle("diff-markers-plusminus", state.diffMarkers === "plusminus");
 
     const prefersReduced =
       typeof window !== "undefined" &&

@@ -4,7 +4,7 @@ export type AppearanceSectionProps = {
   title: string;
   description?: string;
   action?: ReactNode;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 export function AppearanceSection({
@@ -22,7 +22,7 @@ export function AppearanceSection({
         </div>
         {action ? <div className="shrink-0">{action}</div> : null}
       </header>
-      <div className="mt-4 border-t border-border pt-4">{children}</div>
+      {children ? <div className="mt-4 border-t border-border pt-4">{children}</div> : null}
     </section>
   );
 }

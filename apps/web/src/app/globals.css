@@ -232,4 +232,47 @@
     /* biome-ignore lint/complexity/noImportantStyles: must defeat anchor scroll smoothing — standard WCAG 2.3.3 / prefers-reduced-motion override */
     scroll-behavior: auto !important;
   }
+
+  /* User-supplied background/foreground overrides — opt-in via inline CSS vars on <html>. Affects body only; component cards (bg-card) keep semantic token chroma. */
+  html[style*="--user-background"] body {
+    background-color: var(--user-background);
+  }
+  html[style*="--user-foreground"] body {
+    color: var(--user-foreground);
+  }
+
+  /* User-supplied font family stacks. Pairs with existing --user-{ui,code}-font-size vars. */
+  html[style*="--user-ui-font"] body {
+    font-family: var(--user-ui-font);
+  }
+  html[style*="--user-code-font"] pre,
+  html[style*="--user-code-font"] code,
+  html[style*="--user-code-font"] kbd,
+  html[style*="--user-code-font"] samp,
+  html[style*="--user-code-font"] [data-code-surface] {
+    font-family: var(--user-code-font);
+  }
+
+  /* Pointer cursor on interactive elements when user opts in. */
+  html.cursor-pointer-interactive button:not(:disabled),
+  html.cursor-pointer-interactive [role="button"]:not([aria-disabled="true"]),
+  html.cursor-pointer-interactive a[href] {
+    cursor: pointer;
+  }
+
+  /* macOS-style font smoothing opt-in (body already sets antialiased by default; this scopes the toggle for consistency). */
+  html.font-smoothing-mac body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Diff line markers — when user prefers +/- glyphs, render the data-diff-glyph attr as a leading pseudo. Consumers opt in via [data-diff-line][data-diff-glyph]. */
+  html.diff-markers-plusminus [data-diff-line]::before {
+    content: attr(data-diff-glyph);
+    margin-right: 0.5ch;
+    font-weight: 600;
+  }
+  html:not(.diff-markers-plusminus) [data-diff-line]::before {
+    content: "";
+  }
 }

@@ -27,7 +27,7 @@ export function AccentSwatchPicker() {
   const [state, update] = useAppearance();
 
   return (
-    <div className="flex flex-wrap items-center gap-3" aria-label={t("label")}>
+    <div className="flex flex-wrap items-center gap-3" role="toolbar" aria-label={t("label")}>
       {SWATCHES.map(({ value, color, ring }) => {
         const active = state.accent === value;
         return (
