@@ -1072,6 +1072,16 @@
     "collapseAll": "Collapse all",
     "sectionMore": "More options",
     "newProject": "New project",
-    "restoredGroups": "Restored previously expanded groups"
+    "restoredGroups": "Restored previously expanded groups",
+    "newProjectPlaceholder": "Project name",
+    "newProjectDefault": "Untitled",
+    "newProjectSuccess": "Project created",
+    "newProjectError": "Could not create project",
+    "sortBy": "Sort by",
+    "sortRecent": "Recently active",
+    "sortAlphabetical": "Alphabetical",
+    "sortCreated": "Date created",
+    "archiveAll": "Archive all",
+    "comingV2": "Coming in v2"
   }
 }

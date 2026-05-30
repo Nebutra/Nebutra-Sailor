@@ -1072,6 +1072,16 @@
     "collapseAll": "全部折叠",
     "sectionMore": "更多操作",
     "newProject": "新建项目",
-    "restoredGroups": "已恢复之前展开的分组"
+    "restoredGroups": "已恢复之前展开的分组",
+    "newProjectPlaceholder": "项目名称",
+    "newProjectDefault": "未命名",
+    "newProjectSuccess": "已创建项目",
+    "newProjectError": "未能创建项目",
+    "sortBy": "排序方式",
+    "sortRecent": "最近活动",
+    "sortAlphabetical": "按字母",
+    "sortCreated": "创建时间",
+    "archiveAll": "全部归档",
+    "comingV2": "将在 v2 推出"
   }
 }

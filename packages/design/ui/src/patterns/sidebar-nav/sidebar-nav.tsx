@@ -44,7 +44,12 @@ export interface SidebarNavSectionAction {
   icon: SidebarNavIcon;
   /** Accessible name (also used as title attribute). */
   label: string;
-  onClick: () => void;
+  /** Click handler — required unless `render` is provided. */
+  onClick?: () => void;
+  /** Optional wrapper to replace the default `<button>` rendering. Receives
+   * the default icon-button element so consumers can compose, e.g., a
+   * DropdownMenu trigger around it. When provided, `onClick` is ignored. */
+  render?: (defaultButton: React.ReactElement) => React.ReactNode;
 }
 
 export interface SidebarNavSection {
@@ -375,9 +380,8 @@ export function SidebarNav({
                       <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-150 group-hover/section:opacity-100 focus-within:opacity-100">
                         {visibleActions.map((action) => {
                           const ActionIcon = action.icon;
-                          return (
+                          const defaultButton = (
                             <button
-                              key={action.id}
                               type="button"
                               aria-label={action.label}
                               title={action.label}
@@ -386,6 +390,11 @@ export function SidebarNav({
                             >
                               <ActionIcon className="size-3" />
                             </button>
+                          );
+                          return (
+                            <span key={action.id} className="contents">
+                              {action.render ? action.render(defaultButton) : defaultButton}
+                            </span>
                           );
                         })}
                       </div>

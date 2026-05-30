@@ -21,13 +21,23 @@ import type {
   Workspace,
 } from "@nebutra/ui/patterns";
 import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
-import { toast } from "@nebutra/ui/primitives";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+  toast,
+} from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BrandLogo } from "@/components/brand/brand-assets";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
 import { UserMenu } from "@/components/navigation/user-menu";
@@ -207,45 +217,33 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   }, [isSignedIn, session?.organizationId, supportsWorkspaceSwitching]);
 
   // Load the 5 most-recent threads for the active workspace. Other workspaces
-  // expand on click to an empty state without prefetching (v1).
-  useEffect(() => {
+  // expand on click to an empty state without prefetching (v1). The loader is
+  // a stable callback so handleNewProject can re-fetch after a POST.
+  const loadThreads = useCallback(async (): Promise<void> => {
     if (!isSignedIn || !supportsWorkspaceSwitching || !workspace) {
       setActiveWorkspaceThreads([]);
       return;
     }
-
-    let cancelled = false;
-
-    async function loadThreads() {
-      try {
-        const response = await fetch(`/api/organizations/${workspace}/threads`, {
-          credentials: "include",
-        });
-
-        if (!response.ok || cancelled) {
-          if (!cancelled) setActiveWorkspaceThreads([]);
-          return;
-        }
-
-        const payload = (await response.json().catch(() => null)) as {
-          threads?: ThreadSummary[];
-        } | null;
-        const threads = Array.isArray(payload?.threads) ? payload.threads : [];
-
-        if (!cancelled) {
-          setActiveWorkspaceThreads(threads);
-        }
-      } catch {
-        if (!cancelled) setActiveWorkspaceThreads([]);
+    try {
+      const response = await fetch(`/api/organizations/${workspace}/threads`, {
+        credentials: "include",
+      });
+      if (!response.ok) {
+        setActiveWorkspaceThreads([]);
+        return;
       }
+      const payload = (await response.json().catch(() => null)) as {
+        threads?: ThreadSummary[];
+      } | null;
+      setActiveWorkspaceThreads(Array.isArray(payload?.threads) ? payload.threads : []);
+    } catch {
+      setActiveWorkspaceThreads([]);
     }
-
-    void loadThreads();
-
-    return () => {
-      cancelled = true;
-    };
   }, [isSignedIn, supportsWorkspaceSwitching, workspace]);
+
+  useEffect(() => {
+    void loadThreads();
+  }, [loadThreads]);
 
   async function handleWorkspaceChange(nextWorkspaceId: string) {
     setWorkspace(nextWorkspaceId);
@@ -293,15 +291,47 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     writeExpansionMap(next);
   };
 
-  // v1 stubs — wired so the UI is interactive without leaking console output
-  // into production. Replace with real menu / new-project flows in v2.
-  const handleSectionMore = () => {
-    /* TODO: open section more menu (v2) */
-  };
-  const handleNewProject = () => {
-    /* TODO: open new-project dialog (v2) */
+  // New-project flow — v1 uses window.prompt to avoid a new dialog component.
+  // POSTs to the existing /threads route, then re-fetches via loadThreads so
+  // the sidebar list reflects the canonical server order (no optimistic insert
+  // — keeps lastActivityAt sort honest with no rollback path).
+  const handleNewProject = async () => {
+    if (!supportsWorkspaceSwitching || !workspace) return;
+    const defaultTitle = tSidebar("newProjectDefault");
+    const input =
+      typeof window !== "undefined"
+        ? window.prompt(tSidebar("newProjectPlaceholder"), defaultTitle)
+        : null;
+    if (input === null) return; // user cancelled
+    const title = input.trim().length > 0 ? input.trim() : defaultTitle;
+    try {
+      const response = await fetch(`/api/organizations/${workspace}/threads`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title }),
+      });
+      if (!response.ok) {
+        toast.error(tSidebar("newProjectError"));
+        return;
+      }
+      toast.success(tSidebar("newProjectSuccess"));
+      // Ensure the Projects > active-workspace row is open so the user sees
+      // their new thread land in the list.
+      const activeItemId = `workspace:${workspace}`;
+      if (!expansionMap[activeItemId]) {
+        writeExpansionMap({ ...expansionMap, [activeItemId]: true });
+      }
+      await loadThreads();
+    } catch {
+      toast.error(tSidebar("newProjectError"));
+    }
   };
 
+  // note: section-more uses an inline DropdownMenu via the action's `render`
+  // hook (added to SidebarNavSectionAction). This keeps the SidebarNav API
+  // single-purpose (icon buttons in the gutter) and lets the shell own the
+  // menu's state without a `headerSlot` overhaul.
   const projectsActions: SidebarNavSectionAction[] = [
     {
       id: "expand-all-toggle",
@@ -313,13 +343,42 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       id: "section-more",
       icon: MoreHorizontal,
       label: tSidebar("sectionMore"),
-      onClick: handleSectionMore,
+      render: (defaultButton) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>{defaultButton}</DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-56">
+            <DropdownMenuItem onSelect={() => handleExpandAllToggle()}>
+              {projectsAllExpanded ? tSidebar("collapseAll") : tSidebar("expandAll")}
+            </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>{tSidebar("sortBy")}</DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                  {tSidebar("sortRecent")}
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled title={tSidebar("comingV2")}>
+                  {tSidebar("sortAlphabetical")}
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled title={tSidebar("comingV2")}>
+                  {tSidebar("sortCreated")}
+                </DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem disabled title={tSidebar("comingV2")}>
+              {tSidebar("archiveAll")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
     },
     {
       id: "new-project",
       icon: FolderPlus,
       label: tSidebar("newProject"),
-      onClick: handleNewProject,
+      onClick: () => {
+        void handleNewProject();
+      },
     },
   ];
 
