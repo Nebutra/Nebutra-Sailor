@@ -26,6 +26,7 @@ import { logger as honoLogger } from "hono/logger";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
 import { DOMAINS, env } from "./config/env.js";
+import { enabledOptionalProtocols, isOrpcEnabled, isTrpcEnabled } from "./config/protocols.js";
 import { captureRequestError, initSentry } from "./config/sentry.js";
 import { inngestHandler } from "./inngest/index.js";
 import { buildGatewayDeps } from "./lib/gateway-deps.js";
@@ -285,14 +286,14 @@ app.route("/api/queue", queueDeliveryRoutes);
 // Inngest background job handler (GET for SDK handshake, POST/PUT for execution)
 app.on(["GET", "POST", "PUT"], "/api/inngest", (c) => inngestHandler(c));
 
-// tRPC protocol (opt-in via ENABLE_TRPC=true)
-if (process.env.ENABLE_TRPC === "true") {
+// Optional API protocols. REST/OpenAPI is always on; tRPC + oRPC are opt-in via
+// API_PROTOCOLS (or legacy ENABLE_TRPC/ENABLE_ORPC). See config/protocols.ts.
+if (isTrpcEnabled) {
   const { trpcApp } = await import("./trpc/adapter.js");
   app.route("/api/trpc", trpcApp);
 }
 
-// oRPC protocol (opt-in via ENABLE_ORPC=true)
-if (process.env.ENABLE_ORPC === "true") {
+if (isOrpcEnabled) {
   const { orpcApp } = await import("./orpc/adapter.js");
   app.route("/api/rpc", orpcApp);
 }
@@ -345,7 +346,7 @@ app.onError((err, c) => {
 
 const port = parseInt(process.env.PORT || "3002", 10);
 
-logger.info("API Gateway started", { port });
+logger.info("API Gateway started", { port, optionalProtocols: enabledOptionalProtocols });
 
 const server = serve({ fetch: app.fetch, port }, (info) => {
   logger.info(`API Gateway listening on port ${info.port}`);
