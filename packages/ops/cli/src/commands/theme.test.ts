@@ -6,15 +6,16 @@ describe("theme command formatters", () => {
     const json = formatThemeList("json");
     const parsed = JSON.parse(json);
 
-    expect(parsed.count).toBe(5);
-    expect(parsed.themes.map((theme: { id: string }) => theme.id)).toEqual([
-      "nebutra",
-      "dark-dense",
-      "minimal",
-      "vibrant",
-      "ocean",
-    ]);
-    expect(parsed.themes[0].installCommand).toBe("nebutra theme add nebutra");
+    // Robust to theme-registry growth (community themes land continuously):
+    // assert self-consistency + presence of the core themes, not an exact list/count.
+    const CORE_THEMES = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean"];
+    expect(parsed.count).toBe(parsed.themes.length);
+    expect(parsed.count).toBeGreaterThanOrEqual(CORE_THEMES.length);
+    expect(parsed.themes.map((theme: { id: string }) => theme.id)).toEqual(
+      expect.arrayContaining(CORE_THEMES),
+    );
+    const nebutra = parsed.themes.find((theme: { id: string }) => theme.id === "nebutra");
+    expect(nebutra?.installCommand).toBe("nebutra theme add nebutra");
   });
 
   it("formats inspect output for a known theme", () => {
