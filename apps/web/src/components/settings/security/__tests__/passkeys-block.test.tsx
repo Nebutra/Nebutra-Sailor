@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactElement, ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 const messages: Record<string, string> = {
@@ -64,6 +65,23 @@ vi.mock("@nebutra/ui/components", () => ({
 import { type PasskeyRecord, PasskeysBlock } from "../passkeys-block";
 import type { SecurityCapabilities } from "../security-capabilities";
 
+/** Fresh per-test client: retries off (so error/empty states surface
+ *  deterministically) and staleTime 0 (so invalidations refetch). */
+function makeTestClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: { retry: false, staleTime: 0, gcTime: 0 },
+      mutations: { retry: false },
+    },
+  });
+}
+
+function renderWithClient(ui: ReactElement) {
+  const client = makeTestClient();
+  const utils = render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+  return { client, ...utils };
+}
+
 function buildCapability(
   overrides: Partial<SecurityCapabilities["passkeys"]> = {},
 ): SecurityCapabilities["passkeys"] {
@@ -89,24 +107,34 @@ const SAMPLE_PASSKEYS: PasskeyRecord[] = [
   },
 ];
 
-describe("PasskeysBlock", () => {
+describe("PasskeysBlock (react-query integration)", () => {
   afterEach(() => {
     cleanup();
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 
-  it("renders the unavailable stub when capability.available is false", () => {
-    render(
-      <PasskeysBlock capability={buildCapability({ available: false, reason: "Not wired." })} />,
+  it("renders the unavailable stub when capability.available is false (query never runs)", () => {
+    const onList = vi.fn();
+    renderWithClient(
+      <PasskeysBlock
+        capability={buildCapability({ available: false, reason: "Not wired." })}
+        onList={onList}
+      />,
     );
 
     expect(screen.getByText("Not wired.")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Add passkey/ })).not.toBeInTheDocument();
+    // `enabled: capability.available` gates the fetch — it must never fire.
+    expect(onList).not.toHaveBeenCalled();
   });
 
-  it("renders empty state when no passkeys registered", async () => {
+  it("transitions loading → empty: shows the empty state once the list resolves to []", async () => {
     const onList = vi.fn().mockResolvedValue([]);
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} />);
+    renderWithClient(<PasskeysBlock capability={buildCapability()} onList={onList} />);
+
+    // Before the query settles the empty-state copy is not yet shown (isPending).
+    expect(screen.queryByText("No passkeys registered yet")).not.toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText("No passkeys registered yet")).toBeInTheDocument();
@@ -114,9 +142,11 @@ describe("PasskeysBlock", () => {
     expect(screen.getByRole("button", { name: /Add passkey/ })).toBeInTheDocument();
   });
 
-  it("renders the list of registered passkeys", async () => {
+  it("transitions loading → data: renders the list of registered passkeys", async () => {
     const onList = vi.fn().mockResolvedValue(SAMPLE_PASSKEYS);
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} />);
+    renderWithClient(<PasskeysBlock capability={buildCapability()} onList={onList} />);
+
+    expect(screen.queryByText("MacBook Pro")).not.toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText("MacBook Pro")).toBeInTheDocument();
@@ -124,7 +154,18 @@ describe("PasskeysBlock", () => {
     expect(screen.getByText("YubiKey 5")).toBeInTheDocument();
   });
 
-  it("calls onAdd when Add passkey is clicked, then refreshes list", async () => {
+  it("renders the error state when the list fetch fails", async () => {
+    const onList = vi.fn().mockRejectedValue({ code: "NETWORK_ERROR" });
+    renderWithClient(<PasskeysBlock capability={buildCapability()} onList={onList} />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Network error. Check your connection and try again."),
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("calls onAdd when Add passkey is clicked, then invalidates + refetches the list", async () => {
     const user = userEvent.setup();
     const onList = vi
       .fn()
@@ -132,7 +173,9 @@ describe("PasskeysBlock", () => {
       .mockResolvedValueOnce(SAMPLE_PASSKEYS.slice(0, 1));
     const onAdd = vi.fn().mockResolvedValue(undefined);
 
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />);
+    renderWithClient(
+      <PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("No passkeys registered yet")).toBeInTheDocument();
@@ -144,9 +187,11 @@ describe("PasskeysBlock", () => {
     await waitFor(() => {
       expect(onAdd).toHaveBeenCalled();
     });
+    // onSettled invalidation triggers the second onList → the new key appears.
     await waitFor(() => {
       expect(screen.getByText("MacBook Pro")).toBeInTheDocument();
     });
+    expect(onList).toHaveBeenCalledTimes(2);
   });
 
   it("calls onRemove when Remove is clicked", async () => {
@@ -154,7 +199,9 @@ describe("PasskeysBlock", () => {
     const onList = vi.fn().mockResolvedValue(SAMPLE_PASSKEYS);
     const onRemove = vi.fn().mockResolvedValue(undefined);
 
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} onRemove={onRemove} />);
+    renderWithClient(
+      <PasskeysBlock capability={buildCapability()} onList={onList} onRemove={onRemove} />,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("MacBook Pro")).toBeInTheDocument();
@@ -168,12 +215,48 @@ describe("PasskeysBlock", () => {
     });
   });
 
+  it("optimistically removes a passkey, then rolls back when onRemove rejects", async () => {
+    const user = userEvent.setup();
+    const onList = vi.fn().mockResolvedValue(SAMPLE_PASSKEYS);
+    // Delay the rejection so the optimistic-removed window stays observable
+    // before onError rolls the row back.
+    const onRemove = vi.fn().mockImplementation(
+      () =>
+        new Promise<void>((_resolve, reject) => {
+          setTimeout(() => reject({ code: "NETWORK_ERROR" }), 60);
+        }),
+    );
+
+    renderWithClient(
+      <PasskeysBlock capability={buildCapability()} onList={onList} onRemove={onRemove} />,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("MacBook Pro")).toBeInTheDocument();
+    });
+
+    await user.click(screen.getAllByRole("button", { name: /Remove/ })[0]);
+
+    // Optimistic update removes the row immediately.
+    await waitFor(() => {
+      expect(screen.queryByText("MacBook Pro")).not.toBeInTheDocument();
+    });
+
+    // onError rollback (and onSettled refetch) restores the row.
+    await waitFor(() => {
+      expect(screen.getByText("MacBook Pro")).toBeInTheDocument();
+    });
+    expect(onRemove).toHaveBeenCalledWith("pk_1");
+  });
+
   it("displays an error message when onAdd rejects", async () => {
     const user = userEvent.setup();
     const onList = vi.fn().mockResolvedValue([]);
     const onAdd = vi.fn().mockRejectedValue({ code: "UNKNOWN" });
 
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />);
+    renderWithClient(
+      <PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("No passkeys registered yet")).toBeInTheDocument();
@@ -191,7 +274,9 @@ describe("PasskeysBlock", () => {
     const onList = vi.fn().mockResolvedValue(SAMPLE_PASSKEYS);
     const onAdd = vi.fn().mockResolvedValue(undefined);
 
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />);
+    renderWithClient(
+      <PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("MacBook Pro")).toBeInTheDocument();
@@ -217,7 +302,9 @@ describe("PasskeysBlock", () => {
     const onList = vi.fn().mockResolvedValue([]);
     const onAdd = vi.fn().mockResolvedValue(undefined);
 
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />);
+    renderWithClient(
+      <PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("No passkeys registered yet")).toBeInTheDocument();
@@ -238,7 +325,9 @@ describe("PasskeysBlock", () => {
     const onList = vi.fn().mockResolvedValue([]);
     const onAdd = vi.fn().mockRejectedValue({ code: "CANCELLED" });
 
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />);
+    renderWithClient(
+      <PasskeysBlock capability={buildCapability()} onList={onList} onAdd={onAdd} />,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("No passkeys registered yet")).toBeInTheDocument();
@@ -258,7 +347,9 @@ describe("PasskeysBlock", () => {
     const onList = vi.fn().mockResolvedValue(SAMPLE_PASSKEYS);
     const onRename = vi.fn().mockResolvedValue(undefined);
 
-    render(<PasskeysBlock capability={buildCapability()} onList={onList} onRename={onRename} />);
+    renderWithClient(
+      <PasskeysBlock capability={buildCapability()} onList={onList} onRename={onRename} />,
+    );
 
     await waitFor(() => {
       expect(screen.getByText("MacBook Pro")).toBeInTheDocument();

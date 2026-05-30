@@ -1,7 +1,9 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiKeysPageClient } from "@/app/[locale]/(app)/settings/api-keys/api-keys-client";
 
@@ -29,7 +31,24 @@ function jsonResponse(body: unknown, init: ResponseInit = {}) {
   });
 }
 
-describe("ApiKeysPageClient (integration)", () => {
+/** Fresh per-test client: retries off (so error/empty states surface
+ *  deterministically) and staleTime 0 (so invalidations refetch). */
+function makeTestClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: { retry: false, staleTime: 0, gcTime: 0 },
+      mutations: { retry: false },
+    },
+  });
+}
+
+function renderWithClient(ui: ReactElement) {
+  const client = makeTestClient();
+  const utils = render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+  return { client, ...utils };
+}
+
+describe("ApiKeysPageClient (react-query integration)", () => {
   beforeEach(() => {
     vi.useRealTimers();
   });
@@ -40,7 +59,7 @@ describe("ApiKeysPageClient (integration)", () => {
     vi.unstubAllGlobals();
   });
 
-  it("loads and renders the list from /api/api-keys", async () => {
+  it("transitions loading → data: shows Loading… then the list from /api/api-keys", async () => {
     const fetchMock = vi.fn().mockImplementation((url: string) => {
       if (url === "/api/api-keys") {
         return Promise.resolve(jsonResponse({ keys: [KEY_ROW] }));
@@ -49,18 +68,41 @@ describe("ApiKeysPageClient (integration)", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
 
-    render(<ApiKeysPageClient />);
+    renderWithClient(<ApiKeysPageClient />);
+
+    // Loading state appears first (isPending before the query resolves).
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText("Production")).toBeInTheDocument();
     });
+    expect(screen.queryByText("Loading…")).not.toBeInTheDocument();
     expect(fetchMock).toHaveBeenCalledWith("/api/api-keys", expect.any(Object));
   });
 
-  it("creates a key and shows the plaintext exactly once", async () => {
+  it("renders the error state when the list fetch fails", async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string) => {
+      if (url === "/api/api-keys") {
+        return Promise.resolve(jsonResponse({}, { status: 500 }));
+      }
+      return Promise.resolve(jsonResponse({}, { status: 404 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    renderWithClient(<ApiKeysPageClient />);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Failed to load API keys \(500\)/i)).toBeInTheDocument();
+    });
+  });
+
+  it("creates a key, shows the plaintext once, and invalidates the list", async () => {
+    let getCount = 0;
     const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
       if (url === "/api/api-keys" && (init?.method ?? "GET") === "GET") {
-        return Promise.resolve(jsonResponse({ keys: [] }));
+        getCount += 1;
+        // First load: empty; after create-invalidation: the new key appears.
+        return Promise.resolve(jsonResponse({ keys: getCount > 1 ? [KEY_ROW] : [] }));
       }
       if (url === "/api/api-keys" && init?.method === "POST") {
         return Promise.resolve(jsonResponse(CREATED_KEY, { status: 201 }));
@@ -70,32 +112,76 @@ describe("ApiKeysPageClient (integration)", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     const user = userEvent.setup();
-    render(<ApiKeysPageClient />);
+    renderWithClient(<ApiKeysPageClient />);
 
-    // Wait for initial empty load
     await waitFor(() => {
       expect(screen.getByText(/create your first api key/i)).toBeInTheDocument();
     });
 
-    // Open the dialog from header button
     await user.click(screen.getByRole("button", { name: /^create api key$/i }));
-
     expect(screen.getByRole("dialog")).toBeInTheDocument();
+
     await user.type(screen.getByLabelText(/name/i), "Prod");
     await user.click(screen.getByRole("button", { name: /create key/i }));
 
-    // Plaintext shown
     await waitFor(() => {
       expect(screen.getByText(/nbk_live_secretvalue123/)).toBeInTheDocument();
     });
     expect(screen.getByText(/will not be shown again/i)).toBeInTheDocument();
 
-    // POST was made with the right body
     const postCall = fetchMock.mock.calls.find(
       ([, init]) => (init as RequestInit | undefined)?.method === "POST",
     );
     expect(postCall).toBeDefined();
     const postedBody = JSON.parse((postCall?.[1] as RequestInit).body as string);
     expect(postedBody).toMatchObject({ name: "Prod" });
+
+    // List was invalidated → a second GET fired after the POST.
+    await waitFor(() => {
+      expect(getCount).toBeGreaterThan(1);
+    });
+  });
+
+  it("optimistically removes a revoked key, then rolls back on DELETE failure", async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+      if (url === "/api/api-keys" && (init?.method ?? "GET") === "GET") {
+        return Promise.resolve(jsonResponse({ keys: [KEY_ROW] }));
+      }
+      if (init?.method === "DELETE") {
+        // Revoke fails → optimistic removal must be rolled back. Delay the
+        // rejection so the optimistic-removed window stays observable before
+        // onError rolls back.
+        return new Promise<Response>((resolve) => {
+          setTimeout(() => resolve(jsonResponse({}, { status: 500 })), 60);
+        });
+      }
+      return Promise.resolve(jsonResponse({}, { status: 404 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const user = userEvent.setup();
+    renderWithClient(<ApiKeysPageClient />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Production")).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole("button", { name: /^revoke$/i }));
+
+    // Optimistic update removes the row immediately.
+    await waitFor(() => {
+      expect(screen.queryByText("Production")).not.toBeInTheDocument();
+    });
+
+    // onError rollback (and onSettled refetch) restores the row.
+    await waitFor(() => {
+      expect(screen.getByText("Production")).toBeInTheDocument();
+    });
+
+    expect(
+      fetchMock.mock.calls.some(
+        ([, init]) => (init as RequestInit | undefined)?.method === "DELETE",
+      ),
+    ).toBe(true);
   });
 });

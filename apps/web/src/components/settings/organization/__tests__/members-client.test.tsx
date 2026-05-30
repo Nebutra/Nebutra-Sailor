@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const messages: Record<string, string> = {
@@ -108,6 +109,50 @@ vi.mock("@nebutra/ui/primitives", () => ({
   ),
 }));
 
+// InviteDialog is a sibling component (own tests). Stub it to a minimal double
+// so this suite stays focused on MembersClient: the double posts to the same
+// endpoint and fires onSuccess, exercising MembersClient's success/invalidation
+// wiring without coupling to react-hook-form internals.
+vi.mock("../invite-dialog", () => ({
+  InviteDialog: ({
+    orgId,
+    open,
+    onClose,
+    onSuccess,
+  }: {
+    orgId: string;
+    open: boolean;
+    onClose: () => void;
+    onSuccess: () => void;
+  }) => {
+    if (!open) return null;
+    return (
+      <div role="dialog" aria-label="Invite a new member">
+        <label htmlFor="invite-email">Email address</label>
+        <input id="invite-email" type="email" defaultValue="new@acme.test" />
+        <button type="button" onClick={onClose}>
+          Cancel
+        </button>
+        <button
+          type="button"
+          onClick={async () => {
+            await fetch(`/api/organizations/${orgId}/members`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({ email: "new@acme.test", role: "member" }),
+            });
+            onSuccess();
+            onClose();
+          }}
+        >
+          Send invitation
+        </button>
+      </div>
+    );
+  },
+}));
+
 vi.mock("@nebutra/ui/components", () => ({
   AnimateIn: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   Button: ({
@@ -163,68 +208,213 @@ const sampleMembers = [
   },
 ];
 
+function jsonResponse(body: unknown, init: ResponseInit = {}) {
+  return new Response(JSON.stringify(body), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+    ...init,
+  });
+}
+
+/** Fresh per-test client: retries off (so error/empty states surface
+ *  deterministically) and staleTime 0 (so invalidations refetch). */
+function makeTestClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: { retry: false, staleTime: 0, gcTime: 0 },
+      mutations: { retry: false },
+    },
+  });
+}
+
+function renderWithClient(ui: ReactElement) {
+  const client = makeTestClient();
+  const utils = render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+  return { client, ...utils };
+}
+
+function membersOk() {
+  return jsonResponse({
+    currentUserId: "u_owner",
+    canManageRoles: true,
+    canRemoveMembers: true,
+    members: sampleMembers,
+  });
+}
+
 beforeEach(() => {
-  global.fetch = vi.fn((url: string, init?: RequestInit) => {
-    const method = init?.method ?? "GET";
-    if (url === "/api/organizations/org_1/members" && method === "GET") {
-      return Promise.resolve({
-        ok: true,
-        json: () =>
-          Promise.resolve({
-            currentUserId: "u_owner",
-            canManageRoles: true,
-            canRemoveMembers: true,
-            members: sampleMembers,
-          }),
-      } as Response);
-    }
-    if (url === "/api/organizations/org_1/members" && method === "POST") {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve({ ok: true }) } as Response);
-    }
-    if (url.startsWith("/api/organizations/org_1/members/") && method === "DELETE") {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve({ ok: true }) } as Response);
-    }
-    if (url.startsWith("/api/organizations/org_1/members/") && method === "PATCH") {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve({ ok: true }) } as Response);
-    }
-    return Promise.reject(new Error(`unexpected: ${method} ${url}`));
-  }) as unknown as typeof fetch;
+  vi.useRealTimers();
 });
 
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
 });
 
-describe("MembersClient", () => {
-  it("renders heading + invite button + a table with the org members", async () => {
-    render(<MembersClient orgId="org_1" />);
+describe("MembersClient (react-query integration)", () => {
+  it("transitions loading → data: shows the loading copy then the member table", async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+      const method = init?.method ?? "GET";
+      if (url === "/api/organizations/org_1/members" && method === "GET") {
+        return Promise.resolve(membersOk());
+      }
+      return Promise.resolve(jsonResponse({}, { status: 404 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
 
-    expect(screen.getByRole("heading", { level: 1, name: "Members" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Invite member" })).toBeInTheDocument();
+    renderWithClient(<MembersClient orgId="org_1" />);
+
+    // Loading state appears first (isPending before the query resolves).
+    expect(screen.getByText("Loading members…")).toBeInTheDocument();
 
     expect(await screen.findByText("Ada Lovelace")).toBeInTheDocument();
     expect(screen.getByText("Grace Hopper")).toBeInTheDocument();
+    expect(screen.queryByText("Loading members…")).not.toBeInTheDocument();
 
     const table = screen.getByRole("table");
     expect(within(table).getByRole("columnheader", { name: "Member" })).toBeInTheDocument();
     expect(within(table).getByRole("columnheader", { name: "Role" })).toBeInTheDocument();
     expect(within(table).getByRole("columnheader", { name: "Joined" })).toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledWith("/api/organizations/org_1/members", expect.any(Object));
+  });
+
+  it("renders the error state when the member fetch fails", async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+      const method = init?.method ?? "GET";
+      if (url === "/api/organizations/org_1/members" && method === "GET") {
+        return Promise.resolve(jsonResponse({}, { status: 500 }));
+      }
+      return Promise.resolve(jsonResponse({}, { status: 404 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    renderWithClient(<MembersClient orgId="org_1" />);
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Could not load members.");
+  });
+
+  it("shows the empty state when the org has no members", async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+      const method = init?.method ?? "GET";
+      if (url === "/api/organizations/org_1/members" && method === "GET") {
+        return Promise.resolve(
+          jsonResponse({ currentUserId: "u_owner", canManageRoles: true, members: [] }),
+        );
+      }
+      return Promise.resolve(jsonResponse({}, { status: 404 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    renderWithClient(<MembersClient orgId="org_1" />);
+    expect(await screen.findByText("No members yet")).toBeInTheDocument();
+  });
+
+  it("changes a member role and invalidates the list (background refetch)", async () => {
+    let getCount = 0;
+    const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+      const method = init?.method ?? "GET";
+      if (url === "/api/organizations/org_1/members" && method === "GET") {
+        getCount += 1;
+        return Promise.resolve(membersOk());
+      }
+      if (url === "/api/organizations/org_1/members/m_2" && method === "PATCH") {
+        return Promise.resolve(jsonResponse({ ok: true }));
+      }
+      return Promise.resolve(jsonResponse({}, { status: 404 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const user = userEvent.setup();
+    renderWithClient(<MembersClient orgId="org_1" />);
+    await screen.findByText("Grace Hopper");
+
+    const roleSelect = screen.getByLabelText(/Change role for Grace Hopper/i) as HTMLSelectElement;
+    await user.selectOptions(roleSelect, "admin");
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith(
+        "/api/organizations/org_1/members/m_2",
+        expect.objectContaining({
+          method: "PATCH",
+          body: expect.stringContaining("admin"),
+        }),
+      );
+    });
+
+    // onSettled invalidated the list → a second GET fired after the PATCH.
+    await waitFor(() => {
+      expect(getCount).toBeGreaterThan(1);
+    });
+  });
+
+  it("optimistically removes a member, then rolls back on DELETE failure", async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+      const method = init?.method ?? "GET";
+      if (url === "/api/organizations/org_1/members" && method === "GET") {
+        return Promise.resolve(membersOk());
+      }
+      if (url === "/api/organizations/org_1/members/m_2" && method === "DELETE") {
+        // Delay the rejection so the optimistic-removed window stays observable
+        // before onError rolls back.
+        return new Promise<Response>((resolve) => {
+          setTimeout(() => resolve(jsonResponse({}, { status: 500 })), 60);
+        });
+      }
+      return Promise.resolve(jsonResponse({}, { status: 404 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const user = userEvent.setup();
+    renderWithClient(<MembersClient orgId="org_1" />);
+    await screen.findByText("Grace Hopper");
+
+    // Owner row is not removable — the only Remove button targets the member row.
+    await user.click(screen.getByRole("button", { name: /^Remove Grace Hopper$/ }));
+
+    const confirmDialog = await screen.findByRole("dialog");
+    await user.click(within(confirmDialog).getByRole("button", { name: "Confirm" }));
+
+    // Optimistic update removes the row immediately.
+    await waitFor(() => {
+      expect(screen.queryByText("Grace Hopper")).not.toBeInTheDocument();
+    });
+
+    // onError rollback (and onSettled refetch) restores the row.
+    await waitFor(() => {
+      expect(screen.getByText("Grace Hopper")).toBeInTheDocument();
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/organizations/org_1/members/m_2",
+      expect.objectContaining({ method: "DELETE" }),
+    );
   });
 
   it("opens the invite dialog and posts the form to the members endpoint", async () => {
+    const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
+      const method = init?.method ?? "GET";
+      if (url === "/api/organizations/org_1/members" && method === "GET") {
+        return Promise.resolve(membersOk());
+      }
+      if (url === "/api/organizations/org_1/members" && method === "POST") {
+        return Promise.resolve(jsonResponse({ ok: true }));
+      }
+      return Promise.resolve(jsonResponse({}, { status: 404 }));
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
     const user = userEvent.setup();
-    render(<MembersClient orgId="org_1" />);
+    renderWithClient(<MembersClient orgId="org_1" />);
     await screen.findByText("Ada Lovelace");
 
     await user.click(screen.getByRole("button", { name: "Invite member" }));
     const dialog = await screen.findByRole("dialog");
-    const emailInput = within(dialog).getByLabelText("Email address");
-    await user.type(emailInput, "new@acme.test");
+    expect(within(dialog).getByLabelText("Email address")).toBeInTheDocument();
     await user.click(within(dialog).getByRole("button", { name: "Send invitation" }));
 
     await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith(
+      expect(fetchMock).toHaveBeenCalledWith(
         "/api/organizations/org_1/members",
         expect.objectContaining({
           method: "POST",
@@ -233,68 +423,5 @@ describe("MembersClient", () => {
       );
     });
     expect(await screen.findByText("Invitation sent.")).toBeInTheDocument();
-  });
-
-  it("removes a member after confirmation", async () => {
-    const user = userEvent.setup();
-    render(<MembersClient orgId="org_1" />);
-    await screen.findByText("Grace Hopper");
-
-    const removeBtns = screen.getAllByRole("button", { name: /Remove/ });
-    // Owner row should not be removable — second row is the member row.
-    await user.click(removeBtns[removeBtns.length - 1]);
-
-    const confirmDialog = await screen.findByRole("dialog");
-    await user.click(within(confirmDialog).getByRole("button", { name: "Confirm" }));
-
-    await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith(
-        "/api/organizations/org_1/members/m_2",
-        expect.objectContaining({ method: "DELETE" }),
-      );
-    });
-  });
-
-  it("changes a member role via the role select", async () => {
-    const user = userEvent.setup();
-    render(<MembersClient orgId="org_1" />);
-    await screen.findByText("Grace Hopper");
-
-    const roleSelect = screen.getByLabelText(/Change role for Grace Hopper/i) as HTMLSelectElement;
-    await user.selectOptions(roleSelect, "admin");
-
-    await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith(
-        "/api/organizations/org_1/members/m_2",
-        expect.objectContaining({
-          method: "PATCH",
-          body: expect.stringContaining("admin"),
-        }),
-      );
-    });
-  });
-
-  it("shows an error state when the member fetch fails", async () => {
-    (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
-      ok: false,
-      json: () => Promise.resolve({ error: "boom" }),
-    });
-
-    render(<MembersClient orgId="org_1" />);
-
-    expect(await screen.findByRole("alert")).toHaveTextContent("Could not load members.");
-  });
-
-  it("shows an empty state when the org has no members beyond viewer", async () => {
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: true,
-        json: () =>
-          Promise.resolve({ currentUserId: "u_owner", canManageRoles: true, members: [] }),
-      } as Response),
-    ) as unknown as typeof fetch;
-
-    render(<MembersClient orgId="org_1" />);
-    expect(await screen.findByText("No members yet")).toBeInTheDocument();
   });
 });

@@ -1,7 +1,9 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // next-intl mock — return the namespaced key (with optional ICU substitution).
@@ -15,6 +17,11 @@ vi.mock("next-intl", () => ({
     }
     return `${namespace}.${key}`;
   },
+  // InboxList consumes useFormatter (relative time / date) — stub minimally.
+  useFormatter: () => ({
+    relativeTime: () => "just now",
+    dateTime: () => "",
+  }),
 }));
 
 import type { InboxNotification } from "../inbox-list";
@@ -49,46 +56,39 @@ function jsonResponse(payload: unknown, status = 200): Response {
   });
 }
 
+/** Fresh per-test client: retries off (so error/empty states surface
+ *  deterministically) and staleTime 0 (so invalidations refetch). */
+function makeTestClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: { retry: false, staleTime: 0, gcTime: 0 },
+      mutations: { retry: false },
+    },
+  });
+}
+
+function renderWithClient(ui: ReactElement) {
+  const client = makeTestClient();
+  const utils = render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+  return { client, ...utils };
+}
+
 // =============================================================================
 // Tests
 // =============================================================================
 
-describe("NotificationsPageClient", () => {
-  afterEach(() => {
-    cleanup();
-    vi.restoreAllMocks();
-  });
-
+describe("NotificationsPageClient (react-query integration)", () => {
   beforeEach(() => {
     vi.useRealTimers();
   });
 
-  it("renders fetched notifications after initial load", async () => {
-    const items = [
-      makeNotification("n1", { title: "First note" }),
-      makeNotification("n2", { title: "Second note", read: true }),
-    ];
-    const fetcher = vi.fn().mockResolvedValue(
-      jsonResponse({
-        success: true,
-        data: { notifications: items, total: 2, unreadCount: 1, nextCursor: null },
-      }),
-    );
-
-    render(<NotificationsPageClient fetcher={fetcher} />);
-
-    await waitFor(() => {
-      expect(screen.getByText("First note")).toBeInTheDocument();
-      expect(screen.getByText("Second note")).toBeInTheDocument();
-    });
-
-    expect(fetcher).toHaveBeenCalledWith(
-      expect.stringContaining("/api/notifications/inbox?limit=50"),
-      expect.objectContaining({ credentials: "same-origin" }),
-    );
+  afterEach(() => {
+    cleanup();
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
   });
 
-  it("marks the inbox region busy and disables toolbar actions during initial load", async () => {
+  it("transitions loading → data: shows the inbox busy then renders fetched notifications", async () => {
     let resolveFetch!: (value: Response) => void;
     const fetcher = vi.fn(
       () =>
@@ -97,8 +97,9 @@ describe("NotificationsPageClient", () => {
         }),
     );
 
-    render(<NotificationsPageClient fetcher={fetcher} />);
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
 
+    // Loading window: region is busy and toolbar tabs/actions are disabled.
     expect(screen.getByTestId("notifications-page-client")).toHaveAttribute("aria-busy", "true");
     expect(screen.getByRole("tab", { name: /filter\.all/i })).toBeDisabled();
     expect(screen.getByRole("button", { name: /actions\.markAllRead/i })).toBeDisabled();
@@ -106,13 +107,28 @@ describe("NotificationsPageClient", () => {
     resolveFetch(
       jsonResponse({
         success: true,
-        data: { notifications: [], total: 0, unreadCount: 0, nextCursor: null },
+        data: {
+          notifications: [
+            makeNotification("n1", { title: "First note" }),
+            makeNotification("n2", { title: "Second note", read: true }),
+          ],
+          total: 2,
+          unreadCount: 1,
+          nextCursor: null,
+        },
       }),
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("notifications-page-client")).toHaveAttribute("aria-busy", "false");
+      expect(screen.getByText("First note")).toBeInTheDocument();
+      expect(screen.getByText("Second note")).toBeInTheDocument();
     });
+    expect(screen.getByTestId("notifications-page-client")).toHaveAttribute("aria-busy", "false");
+
+    expect(fetcher).toHaveBeenCalledWith(
+      expect.stringContaining("/api/notifications/inbox?limit=50"),
+      expect.objectContaining({ credentials: "same-origin" }),
+    );
   });
 
   it("shows the empty state when no notifications are returned", async () => {
@@ -123,14 +139,24 @@ describe("NotificationsPageClient", () => {
       }),
     );
 
-    render(<NotificationsPageClient fetcher={fetcher} />);
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByTestId("inbox-empty")).toBeInTheDocument();
     });
   });
 
-  it("changes the query when the Unread filter is selected", async () => {
+  it("renders the error banner when the inbox fetch fails", async () => {
+    const fetcher = vi.fn().mockResolvedValue(jsonResponse({ success: false }, 500));
+
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
+
+    await waitFor(() => {
+      expect(screen.getByRole("alert")).toHaveTextContent(/errors\.load/i);
+    });
+  });
+
+  it("re-queries with unreadOnly=true when the Unread filter is selected", async () => {
     const user = userEvent.setup();
 
     const fetcher = vi.fn().mockImplementation(async (url: string) => {
@@ -159,7 +185,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher} />);
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Mixed note")).toBeInTheDocument();
@@ -189,7 +215,7 @@ describe("NotificationsPageClient", () => {
       }),
     );
 
-    render(<NotificationsPageClient fetcher={fetcher} />);
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Pickable")).toBeInTheDocument();
@@ -197,8 +223,7 @@ describe("NotificationsPageClient", () => {
 
     expect(screen.queryByTestId("bulk-actions")).not.toBeInTheDocument();
 
-    const checkbox = screen.getByRole("checkbox", { name: /Pickable/i });
-    await user.click(checkbox);
+    await user.click(screen.getByRole("checkbox", { name: /Pickable/i }));
 
     await waitFor(() => {
       expect(screen.getByTestId("bulk-actions")).toBeInTheDocument();
@@ -223,7 +248,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher} />);
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Bulk one")).toBeInTheDocument();
@@ -263,7 +288,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher} />);
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Unread one")).toBeInTheDocument();
@@ -306,7 +331,7 @@ describe("NotificationsPageClient", () => {
       });
     });
 
-    render(<NotificationsPageClient fetcher={fetcher} />);
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Page one item")).toBeInTheDocument();
@@ -326,33 +351,91 @@ describe("NotificationsPageClient", () => {
     expect(screen.queryByRole("button", { name: /actions\.loadMore/i })).not.toBeInTheDocument();
   });
 
-  it("reverts optimistic mark-as-read when the PATCH call fails", async () => {
+  it("optimistically removes a row on bulk mark-as-read, then rolls it back when PATCH fails", async () => {
     const user = userEvent.setup();
     const items = [makeNotification("n1", { title: "Will fail" })];
 
-    const fetcher = vi.fn().mockImplementation(async (_url: string, init?: RequestInit) => {
+    const fetcher = vi.fn().mockImplementation((_url: string, init?: RequestInit) => {
       if (init?.method === "PATCH") {
-        return jsonResponse({ success: false }, 500);
+        // Delay the rejection so the optimistic "read" window (unread dot gone)
+        // stays observable before onError rolls back. Per phase-1 gotcha.
+        return new Promise<Response>((resolve) => {
+          setTimeout(() => resolve(jsonResponse({ success: false }, 500)), 60);
+        });
       }
-      return jsonResponse({
-        success: true,
-        data: { notifications: items, total: 1, unreadCount: 1, nextCursor: null },
-      });
+      return Promise.resolve(
+        jsonResponse({
+          success: true,
+          data: { notifications: items, total: 1, unreadCount: 1, nextCursor: null },
+        }),
+      );
     });
 
-    render(<NotificationsPageClient fetcher={fetcher} />);
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
 
     await waitFor(() => {
       expect(screen.getByText("Will fail")).toBeInTheDocument();
     });
 
+    // Initially unread → the unread dot is present.
+    expect(screen.getAllByLabelText("Unread").length).toBeGreaterThan(0);
+
     await user.click(screen.getByRole("checkbox", { name: /Will fail/i }));
     const bulkActions = await screen.findByTestId("bulk-actions");
     await user.click(within(bulkActions).getByRole("button", { name: /actions\.markRead/i }));
 
-    // After failure, the unread dot should remain (i.e. read state reverted).
+    // Optimistic window: the row is now marked read → unread dot disappears.
+    await waitFor(() => {
+      expect(screen.queryByLabelText("Unread")).not.toBeInTheDocument();
+    });
+
+    // onError rollback (+ onSettled refetch) restores the unread state and
+    // surfaces the bulk-mark-read error banner.
     await waitFor(() => {
       expect(screen.getAllByLabelText("Unread").length).toBeGreaterThan(0);
     });
+    expect(screen.getByRole("alert")).toHaveTextContent(/errors\.bulkMarkRead/i);
+  });
+
+  it("optimistically removes an archived row, then rolls it back when DELETE fails", async () => {
+    const user = userEvent.setup();
+    const items = [
+      makeNotification("n1", { title: "Archive me", read: true }),
+      makeNotification("n2", { title: "Keep me", read: true }),
+    ];
+
+    const fetcher = vi.fn().mockImplementation((_url: string, init?: RequestInit) => {
+      if (init?.method === "DELETE") {
+        return new Promise<Response>((resolve) => {
+          setTimeout(() => resolve(jsonResponse({}, 500)), 60);
+        });
+      }
+      return Promise.resolve(
+        jsonResponse({
+          success: true,
+          data: { notifications: items, total: 2, unreadCount: 0, nextCursor: null },
+        }),
+      );
+    });
+
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Archive me")).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole("button", { name: /Archive notification Archive me/i }));
+
+    // Optimistic removal.
+    await waitFor(() => {
+      expect(screen.queryByText("Archive me")).not.toBeInTheDocument();
+    });
+    expect(screen.getByText("Keep me")).toBeInTheDocument();
+
+    // Rollback restores the archived row + shows the archive error banner.
+    await waitFor(() => {
+      expect(screen.getByText("Archive me")).toBeInTheDocument();
+    });
+    expect(screen.getByRole("alert")).toHaveTextContent(/errors\.archive/i);
   });
 });

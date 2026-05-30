@@ -8,9 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@nebutra/ui/primitives";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { dicebearAvatarUrl } from "@/lib/avatar";
+import { queryKeys } from "@/lib/query-keys";
 
 type TeamRole = "owner" | "admin" | "member" | "viewer";
 
@@ -62,85 +64,161 @@ function formatJoinedAt(value: string) {
   }).format(date);
 }
 
+async function fetchMembers(orgId: string, signal?: AbortSignal): Promise<MembersPayload> {
+  const res = await fetch(`/api/organizations/${orgId}/members`, { signal });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error ?? "Failed to load members");
+  return data as MembersPayload;
+}
+
+async function patchMemberRole(
+  orgId: string,
+  memberId: string,
+  role: TeamRole,
+): Promise<{ member: { id: string; role: TeamRole } }> {
+  const res = await fetch(`/api/organizations/${orgId}/members/${memberId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ role }),
+    headers: { "content-type": "application/json" },
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error ?? "Failed to update member role");
+  return data as { member: { id: string; role: TeamRole } };
+}
+
+async function deleteMember(
+  orgId: string,
+  memberId: string,
+  failureMessage: string,
+): Promise<{ ok: boolean; action: string }> {
+  const res = await fetch(`/api/organizations/${orgId}/members/${memberId}`, {
+    method: "DELETE",
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error ?? failureMessage);
+  return data as { ok: boolean; action: string };
+}
+
 export function TeamMemberList({ orgId }: Props) {
-  const [payload, setPayload] = useState<MembersPayload | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const listKey = queryKeys.teamMembers.list(orgId);
+
+  // Pure client state — UI feedback message + per-row busy indicator.
+  // These are not server cache, so they stay local (NOT in react-query).
   const [notice, setNotice] = useState<string | null>(null);
   const [busyMemberId, setBusyMemberId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const res = await fetch(`/api/organizations/${orgId}/members`);
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(data.error ?? "Failed to load members");
-        setPayload(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load members");
-      } finally {
-        setIsLoaded(true);
+  const membersQuery = useQuery({
+    queryKey: listKey,
+    queryFn: ({ signal }) => fetchMembers(orgId, signal),
+  });
+
+  const roleMutation = useMutation({
+    mutationFn: (input: { member: TeamMember; role: TeamRole }) =>
+      patchMemberRole(orgId, input.member.id, input.role),
+    // Optimistically apply the new role to the cached list, mirroring the
+    // previous behaviour where the Select reflected the change immediately.
+    onMutate: async ({ member, role }) => {
+      setBusyMemberId(member.id);
+      setNotice(null);
+      await queryClient.cancelQueries({ queryKey: listKey });
+      const previous = queryClient.getQueryData<MembersPayload>(listKey);
+      queryClient.setQueryData<MembersPayload>(listKey, (current) =>
+        current
+          ? {
+              ...current,
+              members: current.members.map((item) =>
+                item.id === member.id ? { ...item, role } : item,
+              ),
+            }
+          : current,
+      );
+      return { previous };
+    },
+    onSuccess: (data, { member }) => {
+      const nextRole = data.member.role;
+      // Reconcile with the server-confirmed role (PATCH echoes it back).
+      queryClient.setQueryData<MembersPayload>(listKey, (current) =>
+        current
+          ? {
+              ...current,
+              members: current.members.map((item) =>
+                item.id === member.id ? { ...item, role: nextRole } : item,
+              ),
+            }
+          : current,
+      );
+      setNotice(`${memberDisplayName(member)} is now ${roleLabels[nextRole]}.`);
+    },
+    onError: (err, _input, context) => {
+      // Roll back to the snapshot taken in onMutate (strictly safer than the
+      // old code, which never reconciled on PATCH failure).
+      if (context?.previous !== undefined) {
+        queryClient.setQueryData<MembersPayload>(listKey, context.previous);
       }
-    };
-
-    fetchMembers();
-  }, [orgId]);
-
-  if (!isLoaded) return <LoadingState />;
-  if (error) return <ErrorState message={error} />;
-  if (!payload) return <ErrorState message="Failed to load members" />;
-
-  const memberCount = payload.members.length;
-  const memberCountLabel = `${memberCount} ${memberCount === 1 ? "member" : "members"}`;
-
-  const requestMemberMutation = async (
-    memberId: string,
-    options: RequestInit,
-    failureMessage: string,
-  ) => {
-    setBusyMemberId(memberId);
-    setNotice(null);
-
-    try {
-      const res = await fetch(`/api/organizations/${orgId}/members/${memberId}`, options);
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error ?? failureMessage);
-      return data;
-    } catch (err) {
-      const message = err instanceof Error ? err.message : failureMessage;
-      setNotice(message);
-      return null;
-    } finally {
+      setNotice(err instanceof Error ? err.message : "Failed to update member role");
+    },
+    onSettled: () => {
       setBusyMemberId(null);
-    }
-  };
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
 
-  const handleRoleChange = async (member: TeamMember, role: TeamRole) => {
+  const removeMutation = useMutation({
+    mutationFn: (input: { member: TeamMember; isSelf: boolean }) =>
+      deleteMember(
+        orgId,
+        input.member.id,
+        input.isSelf ? "Failed to leave organization" : "Failed to remove member",
+      ),
+    // Optimistically drop the row, mirroring the previous immediate removal.
+    onMutate: async ({ member }) => {
+      setBusyMemberId(member.id);
+      setNotice(null);
+      await queryClient.cancelQueries({ queryKey: listKey });
+      const previous = queryClient.getQueryData<MembersPayload>(listKey);
+      queryClient.setQueryData<MembersPayload>(listKey, (current) =>
+        current
+          ? {
+              ...current,
+              members: current.members.filter((item) => item.id !== member.id),
+            }
+          : current,
+      );
+      return { previous };
+    },
+    onSuccess: (_data, { member, isSelf }) => {
+      setNotice(
+        isSelf ? "You left this organization." : `${memberDisplayName(member)} was removed.`,
+      );
+    },
+    onError: (err, input, context) => {
+      // Roll back the optimistic removal (the old code never reconciled on
+      // DELETE failure).
+      if (context?.previous !== undefined) {
+        queryClient.setQueryData<MembersPayload>(listKey, context.previous);
+      }
+      const fallback = input.isSelf ? "Failed to leave organization" : "Failed to remove member";
+      setNotice(err instanceof Error ? err.message : fallback);
+    },
+    onSettled: () => {
+      setBusyMemberId(null);
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
+
+  if (membersQuery.isPending) return <LoadingState />;
+  if (membersQuery.error) {
+    const message =
+      membersQuery.error instanceof Error ? membersQuery.error.message : "Failed to load members";
+    return <ErrorState message={message} />;
+  }
+
+  const payload = membersQuery.data;
+
+  const handleRoleChange = (member: TeamMember, role: TeamRole) => {
     if (member.role === role || role === "owner") return;
-
-    const data = await requestMemberMutation(
-      member.id,
-      {
-        method: "PATCH",
-        body: JSON.stringify({ role }),
-        headers: { "content-type": "application/json" },
-      },
-      "Failed to update member role",
-    );
-
-    if (!data?.member) return;
-
-    setPayload((current) =>
-      current
-        ? {
-            ...current,
-            members: current.members.map((item) =>
-              item.id === member.id ? { ...item, role: data.member.role } : item,
-            ),
-          }
-        : current,
-    );
-    setNotice(`${memberDisplayName(member)} is now ${roleLabels[data.member.role as TeamRole]}.`);
+    roleMutation.mutate({ member, role });
   };
 
   const handleRemoveMember = (member: TeamMember) => {
@@ -152,24 +230,11 @@ export function TeamMemberList({ orgId }: Props) {
 
     if (!confirm(message)) return;
 
-    void requestMemberMutation(
-      member.id,
-      { method: "DELETE" },
-      isSelf ? "Failed to leave organization" : "Failed to remove member",
-    ).then((data) => {
-      if (!data?.ok) return;
-
-      setPayload((current) =>
-        current
-          ? {
-              ...current,
-              members: current.members.filter((item) => item.id !== member.id),
-            }
-          : current,
-      );
-      setNotice(isSelf ? "You left this organization." : `${label} was removed.`);
-    });
+    removeMutation.mutate({ member, isSelf });
   };
+
+  const memberCount = payload.members.length;
+  const memberCountLabel = `${memberCount} ${memberCount === 1 ? "member" : "members"}`;
 
   return (
     <div className="space-y-4">

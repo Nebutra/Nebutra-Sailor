@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { queryKeys } from "@/lib/query-keys";
 
 export interface WebhookDeliveryView {
   id: string;
@@ -18,14 +20,20 @@ export interface WebhookDeliveryView {
 export interface WebhookDeliveriesPanelProps {
   endpointId: string;
   /** Override loader; defaults to GET /api/webhooks/[id]/deliveries */
-  loadDeliveries?: (endpointId: string) => Promise<WebhookDeliveryView[]>;
+  loadDeliveries?: (endpointId: string, signal?: AbortSignal) => Promise<WebhookDeliveryView[]>;
   /** Override replay; defaults to POST /api/webhooks/[id]/deliveries */
   onReplay?: (endpointId: string, deliveryId: string) => Promise<void>;
   onClose?: () => void;
 }
 
-async function defaultLoad(endpointId: string): Promise<WebhookDeliveryView[]> {
-  const response = await fetch(`/api/webhooks/${endpointId}/deliveries`, { cache: "no-store" });
+async function defaultLoad(
+  endpointId: string,
+  signal?: AbortSignal,
+): Promise<WebhookDeliveryView[]> {
+  const response = await fetch(`/api/webhooks/${endpointId}/deliveries`, {
+    cache: "no-store",
+    signal,
+  });
   if (!response.ok) throw new Error("Failed to load deliveries");
   const json = (await response.json()) as { deliveries: WebhookDeliveryView[] };
   return json.deliveries;
@@ -61,49 +69,46 @@ export function WebhookDeliveriesPanel({
   onReplay,
   onClose,
 }: WebhookDeliveriesPanelProps) {
-  const [deliveries, setDeliveries] = useState<WebhookDeliveryView[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Pure UI state (which payload is expanded) stays local — not server cache.
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [replayingId, setReplayingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    let cancelled = false;
-    const load = loadDeliveries ?? defaultLoad;
-    setIsLoading(true);
-    setError(null);
-    load(endpointId)
-      .then((rows) => {
-        if (!cancelled) {
-          setDeliveries(rows);
-          setIsLoading(false);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setError("Failed to load deliveries");
-          setIsLoading(false);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [endpointId, loadDeliveries]);
+  const queryClient = useQueryClient();
+  const listKey = queryKeys.webhookDeliveries.list(endpointId);
+  const load = loadDeliveries ?? defaultLoad;
+  const replay = onReplay ?? defaultReplay;
 
-  async function handleReplay(deliveryId: string) {
-    setReplayingId(deliveryId);
-    setError(null);
-    try {
-      const replay = onReplay ?? defaultReplay;
-      const load = loadDeliveries ?? defaultLoad;
-      await replay(endpointId, deliveryId);
-      setDeliveries(await load(endpointId));
-    } catch {
-      setError("Failed to replay delivery");
-    } finally {
-      setReplayingId(null);
-    }
-  }
+  const deliveriesQuery = useQuery({
+    queryKey: listKey,
+    // useQuery's signal replaces the old `let cancelled` abort flag.
+    queryFn: ({ signal }) => load(endpointId, signal),
+  });
+
+  const replayMutation = useMutation({
+    mutationFn: (deliveryId: string) => replay(endpointId, deliveryId),
+    // Refetch the list after a successful replay — equivalent to the previous
+    // `setDeliveries(await load(...))` reload. onSettled also fires on failure,
+    // matching the old code which reloaded in the finally-less catch path only
+    // implicitly; invalidation here is strictly safe (reconciles either way).
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
+
+  const handleReplay = (deliveryId: string) => {
+    replayMutation.mutate(deliveryId);
+  };
+
+  const deliveries = deliveriesQuery.data ?? [];
+  const isLoading = deliveriesQuery.isPending;
+  const error =
+    deliveriesQuery.error || replayMutation.error
+      ? deliveriesQuery.error
+        ? "Failed to load deliveries"
+        : "Failed to replay delivery"
+      : null;
+  // Track the in-flight replay id so only its row shows the "Replaying…" label,
+  // mirroring the previous single-replay-at-a-time behaviour.
+  const replayingId = replayMutation.isPending ? replayMutation.variables : null;
 
   return (
     <aside

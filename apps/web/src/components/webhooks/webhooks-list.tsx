@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/query-keys";
 
 export interface WebhookEndpointView {
   id: string;
@@ -24,8 +25,8 @@ export interface WebhooksListProps {
   onEdit?: (endpoint: WebhookEndpointView) => void;
 }
 
-async function defaultLoad(): Promise<WebhookEndpointView[]> {
-  const response = await fetch("/api/webhooks", { cache: "no-store" });
+async function defaultLoad(signal?: AbortSignal): Promise<WebhookEndpointView[]> {
+  const response = await fetch("/api/webhooks", { cache: "no-store", signal });
   if (!response.ok) throw new Error("Failed to load webhooks");
   const json = (await response.json()) as { endpoints: WebhookEndpointView[] };
   return json.endpoints;
@@ -39,33 +40,69 @@ export function WebhooksList({
   onViewDeliveries,
   onEdit,
 }: WebhooksListProps) {
-  const [endpoints, setEndpoints] = useState<WebhookEndpointView[]>(initialEndpoints ?? []);
-  const [isLoading, setIsLoading] = useState(initialEndpoints === undefined);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const listKey = queryKeys.webhooks.list();
 
-  useEffect(() => {
-    if (initialEndpoints !== undefined) return;
-    let cancelled = false;
-    const load = loadEndpoints ?? defaultLoad;
-    load()
-      .then((rows) => {
-        if (!cancelled) {
-          setEndpoints(rows);
-          setIsLoading(false);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setError("Failed to load webhooks");
-          setIsLoading(false);
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [initialEndpoints, loadEndpoints]);
+  const endpointsQuery = useQuery({
+    queryKey: listKey,
+    queryFn: ({ signal }) => (loadEndpoints ? loadEndpoints() : defaultLoad(signal)),
+    // Preserve SSR behaviour: when the parent hands us server-rendered rows we
+    // seed the cache so no client fetch fires on mount (matches the old
+    // `useState(initialEndpoints)` + `isLoading=false` branch).
+    initialData: initialEndpoints,
+  });
 
-  if (isLoading) {
+  // Toggle active — optimistically flip the cached row, rollback on failure.
+  // Mirrors the previous local-state behaviour (immediate flip, revert on
+  // rejection) but reconciles against the cache instead of detached state.
+  const toggleMutation = useMutation({
+    mutationFn: async ({ id, next }: { id: string; next: boolean }) => {
+      if (onToggleActive) await onToggleActive(id, next);
+    },
+    onMutate: async ({ id, next }: { id: string; next: boolean }) => {
+      await queryClient.cancelQueries({ queryKey: listKey });
+      const previous = queryClient.getQueryData<WebhookEndpointView[]>(listKey);
+      queryClient.setQueryData<WebhookEndpointView[]>(listKey, (current) =>
+        (current ?? []).map((row) => (row.id === id ? { ...row, isActive: next } : row)),
+      );
+      return { previous };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous !== undefined) {
+        queryClient.setQueryData<WebhookEndpointView[]>(listKey, context.previous);
+      }
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
+
+  // Delete — optimistically drop the row, rollback on failure.
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      if (onDelete) await onDelete(id);
+    },
+    onMutate: async (id: string) => {
+      await queryClient.cancelQueries({ queryKey: listKey });
+      const previous = queryClient.getQueryData<WebhookEndpointView[]>(listKey);
+      queryClient.setQueryData<WebhookEndpointView[]>(listKey, (current) =>
+        (current ?? []).filter((row) => row.id !== id),
+      );
+      return { previous };
+    },
+    onError: (_err, _id, context) => {
+      if (context?.previous !== undefined) {
+        queryClient.setQueryData<WebhookEndpointView[]>(listKey, context.previous);
+      }
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
+
+  const endpoints = endpointsQuery.data ?? [];
+
+  if (endpointsQuery.isPending) {
     return (
       <p className="py-4 text-sm text-center text-[var(--neutral-11)]" role="status">
         Loading…
@@ -73,10 +110,10 @@ export function WebhooksList({
     );
   }
 
-  if (error) {
+  if (endpointsQuery.error) {
     return (
       <p className="py-4 text-center text-sm text-red-11" role="alert">
-        {error}
+        Failed to load webhooks
       </p>
     );
   }
@@ -89,30 +126,14 @@ export function WebhooksList({
     );
   }
 
-  async function handleToggle(endpoint: WebhookEndpointView) {
+  function handleToggle(endpoint: WebhookEndpointView) {
     if (!onToggleActive) return;
-    const next = !endpoint.isActive;
-    setEndpoints((prev) =>
-      prev.map((row) => (row.id === endpoint.id ? { ...row, isActive: next } : row)),
-    );
-    try {
-      await onToggleActive(endpoint.id, next);
-    } catch {
-      // revert
-      setEndpoints((prev) =>
-        prev.map((row) => (row.id === endpoint.id ? { ...row, isActive: !next } : row)),
-      );
-    }
+    toggleMutation.mutate({ id: endpoint.id, next: !endpoint.isActive });
   }
 
-  async function handleDelete(endpoint: WebhookEndpointView) {
+  function handleDelete(endpoint: WebhookEndpointView) {
     if (!onDelete) return;
-    setEndpoints((prev) => prev.filter((row) => row.id !== endpoint.id));
-    try {
-      await onDelete(endpoint.id);
-    } catch {
-      setEndpoints((prev) => [...prev, endpoint]);
-    }
+    deleteMutation.mutate(endpoint.id);
   }
 
   return (

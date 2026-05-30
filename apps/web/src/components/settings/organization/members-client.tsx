@@ -12,6 +12,14 @@
  *   - POST   /api/organizations/[orgId]/members            → invite
  *   - PATCH  /api/organizations/[orgId]/members/[memberId] → change role
  *   - DELETE /api/organizations/[orgId]/members/[memberId] → remove
+ *
+ * Server reads run through React Query (`useQuery` + the shared queryKey
+ * factory); writes are `useMutation`s. The role-change mutation invalidates the
+ * member list on settle (background refresh, mirroring the old `await
+ * loadMembers()`); the remove mutation is optimistic — it snapshots + drops the
+ * row from the cached list immediately, rolls back on failure, and refetches on
+ * settle. The query's `signal` replaces the old manual fetch lifecycle. Pure UI
+ * state (dialog open/close, pending row id, success toast) stays local.
  */
 
 import { Trash as Trash2 } from "@nebutra/icons";
@@ -23,8 +31,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@nebutra/ui/primitives";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
+import { queryKeys } from "@/lib/query-keys";
 import { InviteDialog } from "./invite-dialog";
 
 type Role = "owner" | "admin" | "member" | "viewer";
@@ -43,9 +53,9 @@ interface Member {
 }
 
 interface MembersResponse {
-  currentUserId: string;
-  canManageRoles?: boolean;
-  canRemoveMembers?: boolean;
+  currentUserId: string | null;
+  canManageRoles: boolean;
+  canRemoveMembers: boolean;
   members: Member[];
 }
 
@@ -61,93 +71,125 @@ function formatDate(iso: string): string {
   }
 }
 
+async function fetchMembers(orgId: string, signal?: AbortSignal): Promise<MembersResponse> {
+  const response = await fetch(`/api/organizations/${orgId}/members`, { signal });
+  if (!response.ok) {
+    throw new Error(`Failed to load members (${response.status})`);
+  }
+  const data = (await response.json()) as Partial<MembersResponse>;
+  return {
+    currentUserId: data.currentUserId ?? null,
+    canManageRoles: Boolean(data.canManageRoles),
+    canRemoveMembers: Boolean(data.canRemoveMembers),
+    members: data.members ?? [],
+  };
+}
+
+async function changeRole(orgId: string, memberId: string, role: Role): Promise<void> {
+  const response = await fetch(`/api/organizations/${orgId}/members/${memberId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ role }),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to change role (${response.status})`);
+  }
+}
+
+async function removeMember(orgId: string, memberId: string): Promise<void> {
+  const response = await fetch(`/api/organizations/${orgId}/members/${memberId}`, {
+    method: "DELETE",
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to remove member (${response.status})`);
+  }
+}
+
 export function MembersClient({ orgId }: MembersClientProps) {
   const t = useTranslations("settings.organization.members");
   const tInvite = useTranslations("settings.organization.invite");
   const confirmDialogId = useId();
+  const queryClient = useQueryClient();
+  const listKey = queryKeys.orgMembers.list(orgId);
 
-  const [members, setMembers] = useState<Member[]>([]);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const [canManageRoles, setCanManageRoles] = useState(false);
-  const [canRemoveMembers, setCanRemoveMembers] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
+  // Pure UI / client state stays local — not server cache.
   const [inviteOpen, setInviteOpen] = useState(false);
   const [confirmRemoveId, setConfirmRemoveId] = useState<string | null>(null);
   const [pendingMemberId, setPendingMemberId] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const loadMembers = useCallback(async () => {
-    setLoading(true);
-    setErrorMessage(null);
-    try {
-      const response = await fetch(`/api/organizations/${orgId}/members`);
-      if (!response.ok) {
-        setErrorMessage(t("errorLoad"));
-        return;
-      }
-      const data = (await response.json()) as MembersResponse;
-      setMembers(data.members ?? []);
-      setCurrentUserId(data.currentUserId ?? null);
-      setCanManageRoles(Boolean(data.canManageRoles));
-      setCanRemoveMembers(Boolean(data.canRemoveMembers));
-    } catch {
-      setErrorMessage(t("errorLoad"));
-    } finally {
-      setLoading(false);
-    }
-  }, [orgId, t]);
+  const membersQuery = useQuery({
+    queryKey: listKey,
+    queryFn: ({ signal }) => fetchMembers(orgId, signal),
+  });
 
-  useEffect(() => {
-    void loadMembers();
-  }, [loadMembers]);
+  const data = membersQuery.data;
+  const members = data?.members ?? [];
+  const currentUserId = data?.currentUserId ?? null;
+  const canManageRoles = data?.canManageRoles ?? false;
+  const canRemoveMembers = data?.canRemoveMembers ?? false;
 
-  const handleRoleChange = useCallback(
-    async (memberId: string, nextRole: Role) => {
-      if (pendingMemberId) return;
-      setPendingMemberId(memberId);
-      setErrorMessage(null);
-      try {
-        const response = await fetch(`/api/organizations/${orgId}/members/${memberId}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ role: nextRole }),
-        });
-        if (!response.ok) {
-          setErrorMessage(t("errorLoad"));
-          return;
-        }
-        await loadMembers();
-      } finally {
-        setPendingMemberId(null);
+  const roleMutation = useMutation({
+    mutationFn: ({ memberId, role }: { memberId: string; role: Role }) =>
+      changeRole(orgId, memberId, role),
+    // Background refresh after a successful PATCH — mirrors the old
+    // `await loadMembers()`.
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
+
+  const removeMutation = useMutation({
+    mutationFn: (memberId: string) => removeMember(orgId, memberId),
+    // Optimistically drop the row from the cached list, mirroring the
+    // immediate-row-removal the old confirm flow implied; with NEW rollback on
+    // failure (the old code never reconciled a failed DELETE).
+    onMutate: async (memberId: string) => {
+      await queryClient.cancelQueries({ queryKey: listKey });
+      const previous = queryClient.getQueryData<MembersResponse>(listKey);
+      queryClient.setQueryData<MembersResponse>(listKey, (current) =>
+        current
+          ? { ...current, members: current.members.filter((m) => m.id !== memberId) }
+          : current,
+      );
+      return { previous };
+    },
+    onError: (_err, _memberId, context) => {
+      if (context?.previous !== undefined) {
+        queryClient.setQueryData<MembersResponse>(listKey, context.previous);
       }
     },
-    [orgId, pendingMemberId, t, loadMembers],
-  );
-
-  const handleConfirmRemove = useCallback(
-    async (memberId: string) => {
-      setPendingMemberId(memberId);
-      setErrorMessage(null);
-      try {
-        const response = await fetch(`/api/organizations/${orgId}/members/${memberId}`, {
-          method: "DELETE",
-          credentials: "include",
-        });
-        if (!response.ok) {
-          setErrorMessage(t("errorLoad"));
-          return;
-        }
-        setConfirmRemoveId(null);
-        await loadMembers();
-      } finally {
-        setPendingMemberId(null);
-      }
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: listKey });
     },
-    [orgId, t, loadMembers],
-  );
+  });
+
+  const handleRoleChange = (memberId: string, nextRole: Role) => {
+    if (pendingMemberId) return;
+    setPendingMemberId(memberId);
+    roleMutation.mutate(
+      { memberId, role: nextRole },
+      {
+        onSettled: () => {
+          setPendingMemberId(null);
+        },
+      },
+    );
+  };
+
+  const handleConfirmRemove = (memberId: string) => {
+    setPendingMemberId(memberId);
+    setConfirmRemoveId(null);
+    removeMutation.mutate(memberId, {
+      onSettled: () => {
+        setPendingMemberId(null);
+      },
+    });
+  };
+
+  const errorMessage = membersQuery.error ? t("errorLoad") : null;
 
   return (
     <AnimateIn preset="fadeUp">
@@ -180,7 +222,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
           </p>
         )}
 
-        {loading ? (
+        {membersQuery.isPending ? (
           <p className="text-sm text-neutral-11">{t("loading")}</p>
         ) : members.length === 0 ? (
           <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-7 px-4 py-6 text-center text-sm text-neutral-11">
@@ -237,9 +279,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
                           <Select
                             disabled={pendingMemberId === member.id}
                             value={member.role}
-                            onValueChange={(value) =>
-                              void handleRoleChange(member.id, value as Role)
-                            }
+                            onValueChange={(value) => handleRoleChange(member.id, value as Role)}
                           >
                             <SelectTrigger aria-label={`${t("changeRole")} for ${displayName}`}>
                               <SelectValue />
@@ -286,7 +326,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
           onClose={() => setInviteOpen(false)}
           onSuccess={() => {
             setSuccessMessage(tInvite("success"));
-            void loadMembers();
+            void queryClient.invalidateQueries({ queryKey: listKey });
           }}
         />
 
@@ -307,7 +347,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
                 </Button>
                 <Button
                   htmlType="button"
-                  onClick={() => void handleConfirmRemove(confirmRemoveId)}
+                  onClick={() => handleConfirmRemove(confirmRemoveId)}
                   disabled={pendingMemberId === confirmRemoveId}
                 >
                   {t("confirm")}

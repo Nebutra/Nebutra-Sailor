@@ -2,8 +2,9 @@
 
 import { Button } from "@nebutra/ui/components";
 import { Input } from "@nebutra/ui/primitives";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { type FormEvent, useCallback, useEffect, useReducer } from "react";
+import { type FormEvent, useReducer } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
 import {
@@ -13,6 +14,7 @@ import {
   renamePasskey,
   revokePasskey,
 } from "@/lib/auth/passkey-client";
+import { queryKeys } from "@/lib/query-keys";
 import type { SecurityCapabilities } from "./security-capabilities";
 
 export type PasskeyRecord = {
@@ -63,10 +65,21 @@ function formatDate(value: string | undefined): string {
   return parsed.toLocaleDateString();
 }
 
-interface PasskeysState {
-  passkeys: PasskeyRecord[];
-  listLoaded: boolean;
-  pending: boolean;
+function isCancelled(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const code = "code" in error ? String((error as { code?: unknown }).code).toLowerCase() : "";
+  const message =
+    "message" in error ? String((error as { message?: unknown }).message).toLowerCase() : "";
+  return code === "cancelled" || message.includes("cancel");
+}
+
+/**
+ * Pure-UI flow state. The passkey *list* itself is server cache and now lives in
+ * React Query — this reducer only tracks the add/rename/remove UI flow (which
+ * dialog is open, the in-progress input values, and the surfaced error/status
+ * copy). It deliberately holds no `passkeys` array or loading flag.
+ */
+interface PasskeysUiState {
   removingId: string | null;
   renamingId: string | null;
   editingName: string;
@@ -76,10 +89,7 @@ interface PasskeysState {
   statusMessage: string;
 }
 
-const INITIAL_PASSKEYS_STATE: PasskeysState = {
-  passkeys: [],
-  listLoaded: false,
-  pending: false,
+const INITIAL_UI_STATE: PasskeysUiState = {
   removingId: null,
   renamingId: null,
   editingName: "",
@@ -89,40 +99,26 @@ const INITIAL_PASSKEYS_STATE: PasskeysState = {
   statusMessage: "",
 };
 
-type PasskeysAction =
-  | { type: "list.success"; passkeys: PasskeyRecord[] }
-  | { type: "list.failure"; errorKey: AuthErrorKey }
+type PasskeysUiAction =
   | { type: "add.open"; defaultName: string }
   | { type: "add.cancel" }
   | { type: "add.name"; name: string }
   | { type: "add.start" }
+  | { type: "add.success" }
   | { type: "add.cancelled"; message: string }
   | { type: "add.failure"; errorKey: AuthErrorKey }
   | { type: "rename.open"; id: string; name: string }
   | { type: "rename.cancel" }
   | { type: "rename.name"; name: string }
   | { type: "rename.start" }
+  | { type: "rename.success" }
   | { type: "rename.failure"; errorKey: AuthErrorKey }
   | { type: "remove.start"; id: string }
+  | { type: "remove.success" }
   | { type: "remove.failure"; errorKey: AuthErrorKey };
 
-function passkeysReducer(state: PasskeysState, action: PasskeysAction): PasskeysState {
+function passkeysUiReducer(state: PasskeysUiState, action: PasskeysUiAction): PasskeysUiState {
   switch (action.type) {
-    case "list.success":
-      return {
-        ...state,
-        passkeys: action.passkeys,
-        listLoaded: true,
-        pending: false,
-        removingId: null,
-        renamingId: null,
-        editingName: "",
-        adding: false,
-        newPasskeyName: "",
-        errorKey: null,
-      };
-    case "list.failure":
-      return { ...state, listLoaded: true, pending: false, errorKey: action.errorKey };
     case "add.open":
       return {
         ...state,
@@ -136,11 +132,13 @@ function passkeysReducer(state: PasskeysState, action: PasskeysAction): Passkeys
     case "add.name":
       return { ...state, newPasskeyName: action.name };
     case "add.start":
-      return { ...state, pending: true, errorKey: null, statusMessage: "" };
+      return { ...state, errorKey: null, statusMessage: "" };
+    case "add.success":
+      return { ...state, adding: false, newPasskeyName: "", errorKey: null };
     case "add.cancelled":
-      return { ...state, pending: false, adding: false, statusMessage: action.message };
+      return { ...state, adding: false, statusMessage: action.message };
     case "add.failure":
-      return { ...state, pending: false, errorKey: action.errorKey };
+      return { ...state, errorKey: action.errorKey };
     case "rename.open":
       return { ...state, renamingId: action.id, editingName: action.name };
     case "rename.cancel":
@@ -148,11 +146,15 @@ function passkeysReducer(state: PasskeysState, action: PasskeysAction): Passkeys
     case "rename.name":
       return { ...state, editingName: action.name };
     case "rename.start":
-      return { ...state, pending: true, errorKey: null, statusMessage: "" };
+      return { ...state, errorKey: null, statusMessage: "" };
+    case "rename.success":
+      return { ...state, renamingId: null, editingName: "", errorKey: null };
     case "rename.failure":
-      return { ...state, pending: false, errorKey: action.errorKey };
+      return { ...state, errorKey: action.errorKey };
     case "remove.start":
       return { ...state, removingId: action.id, errorKey: null };
+    case "remove.success":
+      return { ...state, removingId: null };
     case "remove.failure":
       return { ...state, removingId: null, errorKey: action.errorKey };
   }
@@ -168,24 +170,84 @@ export function PasskeysBlock({
   const t = useTranslations("auth.security.passkeys");
   const tErrors = useTranslations("auth.errors");
 
-  const [state, dispatch] = useReducer(passkeysReducer, INITIAL_PASSKEYS_STATE);
+  const [state, dispatch] = useReducer(passkeysUiReducer, INITIAL_UI_STATE);
+  const queryClient = useQueryClient();
+  const listKey = queryKeys.passkeys.list();
 
-  const refresh = useCallback(async () => {
-    if (!capability.available) {
-      return;
-    }
-    try {
-      const list = onList ?? defaultList;
-      const records = await list();
-      dispatch({ type: "list.success", passkeys: records });
-    } catch (error) {
-      dispatch({ type: "list.failure", errorKey: resolveAuthErrorKey(error) });
-    }
-  }, [capability.available, onList]);
+  // Server cache: the registered passkeys. Gated on `capability.available` so
+  // the network call never fires when the feature is delegated/disabled —
+  // replaces the old `if (!capability.available) return` guard in `refresh()`.
+  const passkeysQuery = useQuery({
+    queryKey: listKey,
+    queryFn: () => (onList ?? defaultList)(),
+    enabled: capability.available,
+  });
 
-  useEffect(() => {
-    void refresh();
-  }, [refresh]);
+  const addMutation = useMutation({
+    mutationFn: (name: string) => (onAdd ?? defaultAdd)({ name }),
+    onMutate: () => {
+      dispatch({ type: "add.start" });
+    },
+    onSuccess: () => {
+      dispatch({ type: "add.success" });
+    },
+    onError: (error: unknown) => {
+      if (isCancelled(error)) {
+        dispatch({ type: "add.cancelled", message: t("cancelled") });
+      } else {
+        dispatch({ type: "add.failure", errorKey: resolveAuthErrorKey(error) });
+      }
+    },
+    onSettled: () => {
+      // Background refresh — mirrors the old `await refresh()` after a successful add.
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
+
+  const renameMutation = useMutation({
+    mutationFn: ({ id, name }: { id: string; name: string }) =>
+      (onRename ?? defaultRename)(id, name),
+    onMutate: () => {
+      dispatch({ type: "rename.start" });
+    },
+    onSuccess: () => {
+      dispatch({ type: "rename.success" });
+    },
+    onError: (error: unknown) => {
+      dispatch({ type: "rename.failure", errorKey: resolveAuthErrorKey(error) });
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
+
+  const removeMutation = useMutation({
+    mutationFn: (id: string) => (onRemove ?? defaultRemove)(id),
+    // Optimistically drop the row from the cached list, mirroring the previous
+    // local-state behaviour where the row disappeared immediately on remove
+    // (`remove.start`). Adds onError rollback the old code lacked.
+    onMutate: async (id: string) => {
+      dispatch({ type: "remove.start", id });
+      await queryClient.cancelQueries({ queryKey: listKey });
+      const previous = queryClient.getQueryData<PasskeyRecord[]>(listKey);
+      queryClient.setQueryData<PasskeyRecord[]>(listKey, (current) =>
+        (current ?? []).filter((p) => p.id !== id),
+      );
+      return { previous };
+    },
+    onSuccess: () => {
+      dispatch({ type: "remove.success" });
+    },
+    onError: (error: unknown, _id, context) => {
+      if (context?.previous !== undefined) {
+        queryClient.setQueryData<PasskeyRecord[]>(listKey, context.previous);
+      }
+      dispatch({ type: "remove.failure", errorKey: resolveAuthErrorKey(error) });
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: listKey });
+    },
+  });
 
   if (!capability.available) {
     return (
@@ -204,69 +266,45 @@ export function PasskeysBlock({
     );
   }
 
+  const passkeys = passkeysQuery.data ?? [];
+  // The first successful (or failed) settle marks the list "loaded" — same gate
+  // the old `listLoaded` flag drove the empty-state on.
+  const listLoaded = !passkeysQuery.isPending;
+  const pending = addMutation.isPending || renameMutation.isPending;
+
   function defaultPasskeyName(records: PasskeyRecord[]): string {
     return t("defaultName", { number: records.length + 1 });
   }
 
   function startAdd() {
-    dispatch({ type: "add.open", defaultName: defaultPasskeyName(state.passkeys) });
+    dispatch({ type: "add.open", defaultName: defaultPasskeyName(passkeys) });
   }
 
   function cancelAdd() {
     dispatch({ type: "add.cancel" });
   }
 
-  function isCancelled(error: unknown): boolean {
-    if (!error || typeof error !== "object") return false;
-    const code = "code" in error ? String((error as { code?: unknown }).code).toLowerCase() : "";
-    const message =
-      "message" in error ? String((error as { message?: unknown }).message).toLowerCase() : "";
-    return code === "cancelled" || message.includes("cancel");
-  }
-
-  async function handleAdd(event?: FormEvent<HTMLFormElement>) {
+  function handleAdd(event?: FormEvent<HTMLFormElement>) {
     event?.preventDefault();
-    dispatch({ type: "add.start" });
-    try {
-      const add = onAdd ?? defaultAdd;
-      const name = state.newPasskeyName.trim() || defaultPasskeyName(state.passkeys);
-      await add({ name });
-      await refresh();
-    } catch (error) {
-      if (isCancelled(error)) {
-        dispatch({ type: "add.cancelled", message: t("cancelled") });
-      } else {
-        dispatch({ type: "add.failure", errorKey: resolveAuthErrorKey(error) });
-      }
-    }
+    const name = state.newPasskeyName.trim() || defaultPasskeyName(passkeys);
+    addMutation.mutate(name);
   }
 
-  async function handleRename(event: FormEvent<HTMLFormElement>, id: string) {
+  function handleRename(event: FormEvent<HTMLFormElement>, id: string) {
     event.preventDefault();
     const name = state.editingName.trim();
     if (!name) return;
-    dispatch({ type: "rename.start" });
-    try {
-      const rename = onRename ?? defaultRename;
-      await rename(id, name);
-      await refresh();
-    } catch (error) {
-      dispatch({ type: "rename.failure", errorKey: resolveAuthErrorKey(error) });
-    }
+    renameMutation.mutate({ id, name });
   }
 
-  async function handleRemove(id: string) {
-    dispatch({ type: "remove.start", id });
-    try {
-      const remove = onRemove ?? defaultRemove;
-      await remove(id);
-      await refresh();
-    } catch (error) {
-      dispatch({ type: "remove.failure", errorKey: resolveAuthErrorKey(error) });
-    }
+  function handleRemove(id: string) {
+    removeMutation.mutate(id);
   }
 
-  const errorMessage = state.errorKey ? tErrors(state.errorKey) : null;
+  // The list-load failure (old `list.failure`) and the mutation failures share
+  // the same red error box, keyed through the auth error catalog.
+  const errorKey = passkeysQuery.error ? resolveAuthErrorKey(passkeysQuery.error) : state.errorKey;
+  const errorMessage = errorKey ? tErrors(errorKey) : null;
 
   return (
     <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
@@ -292,13 +330,13 @@ export function PasskeysBlock({
         </p>
       )}
 
-      {state.listLoaded && state.passkeys.length === 0 ? (
+      {listLoaded && passkeys.length === 0 ? (
         <div className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
           <p className="text-sm text-[var(--neutral-11)]">{t("empty")}</p>
         </div>
       ) : (
         <ul className="space-y-3">
-          {state.passkeys.map((passkey) => (
+          {passkeys.map((passkey) => (
             <li
               key={passkey.id}
               className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] p-4 md:flex-row md:items-center md:justify-between"
@@ -322,11 +360,11 @@ export function PasskeysBlock({
                     value={state.editingName}
                   />
                   <div className="flex gap-2">
-                    <Button disabled={state.pending} htmlType="submit" type="primary">
+                    <Button disabled={pending} htmlType="submit" type="primary">
                       {t("saveRename")}
                     </Button>
                     <Button
-                      disabled={state.pending}
+                      disabled={pending}
                       htmlType="button"
                       onClick={() => dispatch({ type: "rename.cancel" })}
                       variant="outlined"
@@ -347,7 +385,7 @@ export function PasskeysBlock({
                   </div>
                   <div className="flex gap-2">
                     <Button
-                      disabled={state.pending || state.removingId === passkey.id}
+                      disabled={pending || state.removingId === passkey.id}
                       htmlType="button"
                       onClick={() =>
                         dispatch({ type: "rename.open", id: passkey.id, name: passkey.name })
@@ -393,21 +431,16 @@ export function PasskeysBlock({
               <p className="text-xs text-[var(--neutral-10)]">{t("nameHelp")}</p>
             </div>
             <div className="flex gap-2">
-              <Button disabled={state.pending} htmlType="submit" type="primary">
+              <Button disabled={pending} htmlType="submit" type="primary">
                 {t("addPasskey")}
               </Button>
-              <Button
-                disabled={state.pending}
-                htmlType="button"
-                onClick={cancelAdd}
-                variant="outlined"
-              >
+              <Button disabled={pending} htmlType="button" onClick={cancelAdd} variant="outlined">
                 {t("cancelAdd")}
               </Button>
             </div>
           </form>
         ) : (
-          <Button disabled={state.pending} htmlType="button" onClick={startAdd} type="primary">
+          <Button disabled={pending} htmlType="button" onClick={startAdd} type="primary">
             {t("addPasskey")}
           </Button>
         )}

@@ -1,8 +1,15 @@
 "use client";
 
 import { cn } from "@nebutra/ui/utils";
+import {
+  type InfiniteData,
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { queryKeys } from "@/lib/query-keys";
 import { InboxList, type InboxNotification } from "./inbox-list";
 
 // =============================================================================
@@ -12,6 +19,18 @@ import { InboxList, type InboxNotification } from "./inbox-list";
 // /notifications page with: filter tabs (All / Unread), multi-select bulk
 // actions, "mark all as read", cursor pagination ("Load more"), optimistic
 // updates with revert-on-error, and an initial loading skeleton.
+//
+// React Query migration (Wave-2 phase-2):
+//   - cursor pagination → useInfiniteQuery (filter lives in the queryKey, so
+//     switching tabs spins up an independent cached query; the old manual
+//     fetchPage/reducer page.append/page.replace plumbing is gone).
+//   - mark-read / archive / bulk* → useMutation with onMutate optimistic cache
+//     edits + onError rollback + onSettled invalidate. This replaces the old
+//     snapshot.restore reducer rollback with the canonical RQ pattern.
+//   - selection (Set<string>) stays pure client state in useState — it is UI
+//     selection, NOT server cache, so it never enters React Query.
+//   - useInfiniteQuery's `signal` (threaded into fetch) replaces the manual
+//     `let cancelled` abort flag from the old useEffect.
 //
 // All UI strings live under `notifications.page.*` in @nebutra/i18n.
 // =============================================================================
@@ -30,7 +49,13 @@ interface InboxApiResponse {
   };
 }
 
-type FetchPageResult = { data: FetchState } | { errorMessage: string };
+/** One page of inbox data, as returned by GET /api/notifications/inbox. */
+interface InboxPage {
+  items: InboxNotification[];
+  unreadCount: number;
+  total: number;
+  nextCursor: string | null;
+}
 
 interface NotificationsPageClientProps {
   /** Optional API base — primarily for tests. */
@@ -39,366 +64,291 @@ interface NotificationsPageClientProps {
   fetcher?: typeof fetch;
 }
 
-interface FetchState {
-  items: InboxNotification[];
-  unreadCount: number;
-  total: number;
-  nextCursor: string | null;
-}
-
-interface PageState extends FetchState {
-  filter: FilterTab;
-  loading: boolean;
-  loadingMore: boolean;
-  selectedIds: Set<string>;
-  errorMessage: string | null;
-}
-
-const EMPTY_STATE: FetchState = {
-  items: [],
-  unreadCount: 0,
-  total: 0,
-  nextCursor: null,
-};
-
-const INITIAL_PAGE_STATE: PageState = {
-  ...EMPTY_STATE,
-  filter: "all",
-  loading: true,
-  loadingMore: false,
-  selectedIds: new Set(),
-  errorMessage: null,
-};
-
-type PageAction =
-  | { type: "filter.change"; filter: FilterTab }
-  | { type: "page.replace"; payload: FetchState }
-  | { type: "page.fail"; errorMessage: string }
-  | { type: "page.loadingMore"; loadingMore: boolean }
-  | { type: "page.append"; payload: FetchState }
-  | { type: "error.set"; errorMessage: string }
-  | { type: "selection.toggle"; id: string }
-  | { type: "selection.clear" }
-  | { type: "notification.markRead"; id: string; readAt: string }
-  | { type: "notification.markReadMany"; ids: readonly string[]; readAt: string }
-  | { type: "notification.archive"; ids: readonly string[] }
-  | { type: "snapshot.restore"; snapshot: PageState; errorMessage: string };
-
-function pageReducer(state: PageState, action: PageAction): PageState {
-  switch (action.type) {
-    case "filter.change":
-      return {
-        ...state,
-        ...EMPTY_STATE,
-        filter: action.filter,
-        loading: true,
-        loadingMore: false,
-        selectedIds: new Set(),
-        errorMessage: null,
-      };
-    case "page.replace":
-      return {
-        ...state,
-        ...action.payload,
-        loading: false,
-        selectedIds: new Set(),
-        errorMessage: null,
-      };
-    case "page.fail":
-      return {
-        ...state,
-        ...EMPTY_STATE,
-        loading: false,
-        loadingMore: false,
-        errorMessage: action.errorMessage,
-      };
-    case "page.loadingMore":
-      return { ...state, loadingMore: action.loadingMore };
-    case "page.append":
-      return {
-        ...state,
-        items: [...state.items, ...action.payload.items],
-        unreadCount: action.payload.unreadCount,
-        total: action.payload.total,
-        nextCursor: action.payload.nextCursor,
-        loadingMore: false,
-        errorMessage: null,
-      };
-    case "error.set":
-      return { ...state, loadingMore: false, errorMessage: action.errorMessage };
-    case "selection.toggle": {
-      const selectedIds = new Set(state.selectedIds);
-      if (selectedIds.has(action.id)) {
-        selectedIds.delete(action.id);
-      } else {
-        selectedIds.add(action.id);
-      }
-      return { ...state, selectedIds };
-    }
-    case "selection.clear":
-      return { ...state, selectedIds: new Set() };
-    case "notification.markRead": {
-      const wasUnread = state.items.some((item) => item.id === action.id && !item.read);
-      return {
-        ...state,
-        items: state.items.map((item) =>
-          item.id === action.id ? { ...item, read: true, readAt: action.readAt } : item,
-        ),
-        unreadCount: wasUnread ? Math.max(0, state.unreadCount - 1) : state.unreadCount,
-      };
-    }
-    case "notification.markReadMany": {
-      const ids = new Set(action.ids);
-      const unreadCount = state.items.reduce(
-        (count, item) => count + (ids.has(item.id) && !item.read ? 1 : 0),
-        0,
-      );
-      return {
-        ...state,
-        items: state.items.map((item) =>
-          ids.has(item.id) ? { ...item, read: true, readAt: item.readAt ?? action.readAt } : item,
-        ),
-        unreadCount: Math.max(0, state.unreadCount - unreadCount),
-        selectedIds: new Set(),
-      };
-    }
-    case "notification.archive": {
-      const archivedIds = new Set(action.ids);
-      const archivedCount = state.items.reduce(
-        (count, item) => count + (archivedIds.has(item.id) ? 1 : 0),
-        0,
-      );
-      return {
-        ...state,
-        items: state.items.filter((item) => !archivedIds.has(item.id)),
-        total: Math.max(0, state.total - archivedCount),
-        selectedIds: new Set([...state.selectedIds].filter((id) => !archivedIds.has(id))),
-      };
-    }
-    case "snapshot.restore":
-      return { ...action.snapshot, errorMessage: action.errorMessage };
-  }
-}
-
 export function NotificationsPageClient({
   apiBase = "/api/notifications",
   fetcher,
 }: NotificationsPageClientProps): React.ReactElement {
   const t = useTranslations("notifications.page");
-  const tRef = useRef(t);
   const fetchImpl = fetcher ?? (typeof fetch !== "undefined" ? fetch : undefined);
 
-  const [state, dispatch] = useReducer(pageReducer, INITIAL_PAGE_STATE);
-  const { filter, loading, loadingMore, selectedIds, errorMessage } = state;
+  const queryClient = useQueryClient();
 
-  tRef.current = t;
+  // Pure client state — selection set and last mutation error. Neither is
+  // server cache, so both stay local (not in React Query).
+  const [filter, setFilter] = useState<FilterTab>("all");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
+  const [mutationError, setMutationError] = useState<string | null>(null);
 
-  // ---------------------------------------------------------------------------
-  // Fetching
-  // ---------------------------------------------------------------------------
-
-  const buildUrl = useCallback(
-    (cursor: string | null, currentFilter: FilterTab): string => {
-      const params = new URLSearchParams({ limit: String(PAGE_LIMIT) });
-      if (cursor) params.set("cursor", cursor);
-      if (currentFilter === "unread") params.set("unreadOnly", "true");
-      return `${apiBase}/inbox?${params.toString()}`;
-    },
-    [apiBase],
+  // filter scopes the cached query, so each tab keeps its own paginated cache
+  // and broad invalidation via `notificationsInbox.all` still matches.
+  const listKey = useMemo(
+    () => [...queryKeys.notificationsInbox.list(), filter] as const,
+    [filter],
   );
+
+  // ---------------------------------------------------------------------------
+  // Fetching (cursor pagination via useInfiniteQuery)
+  // ---------------------------------------------------------------------------
 
   const fetchPage = useCallback(
-    async (cursor: string | null, currentFilter: FilterTab): Promise<FetchPageResult> => {
-      if (!fetchImpl) return { errorMessage: tRef.current("errors.load") };
+    async (cursor: string | null, signal?: AbortSignal): Promise<InboxPage> => {
+      if (!fetchImpl) throw new Error(t("errors.load"));
+      const params = new URLSearchParams({ limit: String(PAGE_LIMIT) });
+      if (cursor) params.set("cursor", cursor);
+      if (filter === "unread") params.set("unreadOnly", "true");
+
+      let response: Response;
       try {
-        const response = await fetchImpl(buildUrl(cursor, currentFilter), {
+        response = await fetchImpl(`${apiBase}/inbox?${params.toString()}`, {
           credentials: "same-origin",
+          signal,
         });
-        if (!response.ok) {
-          return { errorMessage: tRef.current("errors.load") };
-        }
-        const json = (await response.json()) as InboxApiResponse;
-        if (!json.success) {
-          return { errorMessage: tRef.current("errors.load") };
-        }
-        return {
-          data: {
-            items: json.data.notifications,
-            unreadCount: json.data.unreadCount,
-            total: json.data.total,
-            nextCursor: json.data.nextCursor,
-          },
-        };
       } catch {
-        return { errorMessage: tRef.current("errors.network") };
+        throw new Error(t("errors.network"));
       }
+      if (!response.ok) throw new Error(t("errors.load"));
+      const json = (await response.json()) as InboxApiResponse;
+      if (!json.success) throw new Error(t("errors.load"));
+      return {
+        items: json.data.notifications,
+        unreadCount: json.data.unreadCount,
+        total: json.data.total,
+        nextCursor: json.data.nextCursor,
+      };
     },
-    [buildUrl, fetchImpl],
+    [apiBase, fetchImpl, filter, t],
   );
 
-  // Initial + filter-change fetch
-  useEffect(() => {
-    let cancelled = false;
-    void fetchPage(null, filter).then((result) => {
-      if (cancelled) return;
-      if ("data" in result) {
-        dispatch({ type: "page.replace", payload: result.data });
-      } else {
-        dispatch({ type: "page.fail", errorMessage: result.errorMessage });
-      }
-    });
+  const inboxQuery = useInfiniteQuery({
+    queryKey: listKey,
+    queryFn: ({ pageParam, signal }) => fetchPage(pageParam, signal),
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+  });
 
-    return () => {
-      cancelled = true;
-    };
-  }, [filter, fetchPage]);
+  // Flatten pages → items (preserves order / "Load more" append semantics).
+  // unreadCount + total mirror the OLD reducer's page.append behaviour, which
+  // overwrote both from the latest page — so read them off the last page.
+  const items = useMemo(
+    () => (inboxQuery.data?.pages ?? []).flatMap((page) => page.items),
+    [inboxQuery.data],
+  );
+  const lastPage = inboxQuery.data?.pages.at(-1);
+  const unreadCount = lastPage?.unreadCount ?? 0;
+
+  const loading = inboxQuery.isPending;
+  const loadingMore = inboxQuery.isFetchingNextPage;
 
   // ---------------------------------------------------------------------------
-  // Mutations
+  // Optimistic cache helpers
+  // ---------------------------------------------------------------------------
+
+  type InboxInfinite = InfiniteData<InboxPage, string | null>;
+
+  // Apply a pure transform to every page's items, recomputing unreadCount from
+  // the resulting items so the toolbar badge stays consistent.
+  const mapCachedItems = useCallback(
+    (transform: (items: InboxNotification[]) => InboxNotification[]) => {
+      queryClient.setQueryData<InboxInfinite>(listKey, (current) => {
+        if (!current) return current;
+        return {
+          ...current,
+          pages: current.pages.map((page) => {
+            const nextItems = transform(page.items);
+            return {
+              ...page,
+              items: nextItems,
+              unreadCount: nextItems.reduce((n, item) => n + (item.read ? 0 : 1), 0),
+            };
+          }),
+        };
+      });
+    },
+    [listKey, queryClient],
+  );
+
+  // Shared onMutate: cancel in-flight refetch, snapshot, apply optimistic edit.
+  const beginOptimistic = useCallback(
+    async (transform: (items: InboxNotification[]) => InboxNotification[]) => {
+      await queryClient.cancelQueries({ queryKey: listKey });
+      const previous = queryClient.getQueryData<InboxInfinite>(listKey);
+      mapCachedItems(transform);
+      return { previous };
+    },
+    [listKey, mapCachedItems, queryClient],
+  );
+
+  const rollback = useCallback(
+    (previous: InboxInfinite | undefined, message: string) => {
+      if (previous !== undefined) {
+        queryClient.setQueryData<InboxInfinite>(listKey, previous);
+      }
+      setMutationError(message);
+    },
+    [listKey, queryClient],
+  );
+
+  const settle = useCallback(() => {
+    void queryClient.invalidateQueries({ queryKey: listKey });
+  }, [listKey, queryClient]);
+
+  // ---------------------------------------------------------------------------
+  // Network calls
   // ---------------------------------------------------------------------------
 
   const patchRead = useCallback(
-    async (id: string): Promise<boolean> => {
-      if (!fetchImpl) return false;
-      try {
-        const response = await fetchImpl(`${apiBase}/${id}`, {
-          method: "PATCH",
-          headers: { "content-type": "application/json" },
-          credentials: "same-origin",
-          body: JSON.stringify({ read: true }),
-        });
-        return response.ok;
-      } catch {
-        return false;
-      }
+    async (id: string): Promise<void> => {
+      if (!fetchImpl) throw new Error(t("errors.markRead"));
+      const response = await fetchImpl(`${apiBase}/${id}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ read: true }),
+      });
+      if (!response.ok) throw new Error(t("errors.markRead"));
     },
-    [apiBase, fetchImpl],
+    [apiBase, fetchImpl, t],
   );
 
   const archiveOne = useCallback(
-    async (id: string): Promise<boolean> => {
-      if (!fetchImpl) return false;
-      try {
-        const response = await fetchImpl(`${apiBase}/${id}`, {
-          method: "DELETE",
-          credentials: "same-origin",
-        });
-        return response.ok;
-      } catch {
-        return false;
-      }
+    async (id: string): Promise<void> => {
+      if (!fetchImpl) throw new Error(t("errors.archive"));
+      const response = await fetchImpl(`${apiBase}/${id}`, {
+        method: "DELETE",
+        credentials: "same-origin",
+      });
+      if (!response.ok) throw new Error(t("errors.archive"));
     },
-    [apiBase, fetchImpl],
+    [apiBase, fetchImpl, t],
   );
+
+  // ---------------------------------------------------------------------------
+  // Mutations (optimistic + rollback)
+  // ---------------------------------------------------------------------------
+
+  const markReadMutation = useMutation({
+    mutationFn: (id: string) => patchRead(id),
+    onMutate: (id: string) => {
+      setMutationError(null);
+      const readAt = new Date().toISOString();
+      return beginOptimistic((current) =>
+        current.map((item) => (item.id === id ? { ...item, read: true, readAt } : item)),
+      );
+    },
+    onError: (_err, _id, context) => rollback(context?.previous, t("errors.markRead")),
+    onSettled: settle,
+  });
+
+  const archiveMutation = useMutation({
+    mutationFn: (id: string) => archiveOne(id),
+    onMutate: (id: string) => {
+      setMutationError(null);
+      setSelectedIds((current) => {
+        if (!current.has(id)) return current;
+        const next = new Set(current);
+        next.delete(id);
+        return next;
+      });
+      return beginOptimistic((current) => current.filter((item) => item.id !== id));
+    },
+    onError: (_err, _id, context) => rollback(context?.previous, t("errors.archive")),
+    onSettled: settle,
+  });
+
+  // Bulk mark-read: optimistically mark every id read, fire PATCH for each, roll
+  // back the whole batch if ANY request fails (matches old results.some(!ok)).
+  const bulkMarkReadMutation = useMutation({
+    mutationFn: async (ids: readonly string[]) => {
+      await Promise.all(ids.map((id) => patchRead(id)));
+    },
+    onMutate: (ids: readonly string[]) => {
+      setMutationError(null);
+      const readAt = new Date().toISOString();
+      const idSet = new Set(ids);
+      setSelectedIds(() => new Set());
+      return beginOptimistic((current) =>
+        current.map((item) =>
+          idSet.has(item.id) ? { ...item, read: true, readAt: item.readAt ?? readAt } : item,
+        ),
+      );
+    },
+    onError: (_err, _ids, context) => rollback(context?.previous, t("errors.bulkMarkRead")),
+    onSettled: settle,
+  });
+
+  const bulkArchiveMutation = useMutation({
+    mutationFn: async (ids: readonly string[]) => {
+      await Promise.all(ids.map((id) => archiveOne(id)));
+    },
+    onMutate: (ids: readonly string[]) => {
+      setMutationError(null);
+      const idSet = new Set(ids);
+      setSelectedIds(() => new Set());
+      return beginOptimistic((current) => current.filter((item) => !idSet.has(item.id)));
+    },
+    onError: (_err, _ids, context) => rollback(context?.previous, t("errors.archive")),
+    onSettled: settle,
+  });
+
+  // ---------------------------------------------------------------------------
+  // Action handlers
+  // ---------------------------------------------------------------------------
 
   const markRead = useCallback(
     async (id: string) => {
-      const previous = state;
-      dispatch({ type: "notification.markRead", id, readAt: new Date().toISOString() });
-
-      const ok = await patchRead(id);
-      if (!ok) {
-        dispatch({
-          type: "snapshot.restore",
-          snapshot: previous,
-          errorMessage: t("errors.markRead"),
-        });
-      }
+      await markReadMutation.mutateAsync(id).catch(() => undefined);
     },
-    [patchRead, state, t],
+    [markReadMutation],
   );
 
   const handleArchive = useCallback(
     async (id: string) => {
-      const previous = state;
-      dispatch({ type: "notification.archive", ids: [id] });
-
-      const ok = await archiveOne(id);
-      if (!ok) {
-        dispatch({
-          type: "snapshot.restore",
-          snapshot: previous,
-          errorMessage: t("errors.archive"),
-        });
-      }
+      await archiveMutation.mutateAsync(id).catch(() => undefined);
     },
-    [archiveOne, state, t],
+    [archiveMutation],
   );
 
   const bulkMarkRead = useCallback(async () => {
     if (selectedIds.size === 0) return;
-    const ids = Array.from(selectedIds);
-    const previous = state;
-    dispatch({ type: "notification.markReadMany", ids, readAt: new Date().toISOString() });
-
-    const results = await Promise.all(ids.map((id) => patchRead(id)));
-    if (results.some((ok) => !ok)) {
-      dispatch({
-        type: "snapshot.restore",
-        snapshot: previous,
-        errorMessage: t("errors.bulkMarkRead"),
-      });
-    }
-  }, [patchRead, selectedIds, state, t]);
+    await bulkMarkReadMutation.mutateAsync(Array.from(selectedIds)).catch(() => undefined);
+  }, [bulkMarkReadMutation, selectedIds]);
 
   const bulkArchive = useCallback(async () => {
     if (selectedIds.size === 0) return;
-    const ids = Array.from(selectedIds);
-    const previous = state;
-    dispatch({ type: "notification.archive", ids });
-
-    const results = await Promise.all(ids.map((id) => archiveOne(id)));
-    if (results.some((ok) => !ok)) {
-      dispatch({
-        type: "snapshot.restore",
-        snapshot: previous,
-        errorMessage: t("errors.archive"),
-      });
-    }
-  }, [archiveOne, selectedIds, state, t]);
+    await bulkArchiveMutation.mutateAsync(Array.from(selectedIds)).catch(() => undefined);
+  }, [bulkArchiveMutation, selectedIds]);
 
   const markAllAsRead = useCallback(async () => {
-    const unreadIds = state.items.flatMap((item) => (item.read ? [] : [item.id]));
+    const unreadIds = items.flatMap((item) => (item.read ? [] : [item.id]));
     if (unreadIds.length === 0) return;
-
-    const previous = state;
-    dispatch({
-      type: "notification.markReadMany",
-      ids: unreadIds,
-      readAt: new Date().toISOString(),
-    });
-
-    const results = await Promise.all(unreadIds.map((id) => patchRead(id)));
-    if (results.some((ok) => !ok)) {
-      dispatch({
-        type: "snapshot.restore",
-        snapshot: previous,
-        errorMessage: t("errors.bulkMarkRead"),
-      });
-    }
-  }, [patchRead, state, t]);
+    await bulkMarkReadMutation.mutateAsync(unreadIds).catch(() => undefined);
+  }, [bulkMarkReadMutation, items]);
 
   // ---------------------------------------------------------------------------
-  // Pagination
+  // Pagination + selection + filter
   // ---------------------------------------------------------------------------
 
-  const loadMore = useCallback(async () => {
-    if (!state.nextCursor || loadingMore) return;
-    dispatch({ type: "page.loadingMore", loadingMore: true });
-    const result = await fetchPage(state.nextCursor, filter);
-    if ("data" in result) {
-      dispatch({ type: "page.append", payload: result.data });
-    } else {
-      dispatch({ type: "error.set", errorMessage: result.errorMessage });
-    }
-  }, [fetchPage, filter, loadingMore, state.nextCursor]);
-
-  // ---------------------------------------------------------------------------
-  // Selection
-  // ---------------------------------------------------------------------------
+  const loadMore = useCallback(() => {
+    if (!inboxQuery.hasNextPage || inboxQuery.isFetchingNextPage) return;
+    void inboxQuery.fetchNextPage();
+  }, [inboxQuery]);
 
   const toggleSelect = useCallback((id: string) => {
-    dispatch({ type: "selection.toggle", id });
+    setSelectedIds((current) => {
+      const next = new Set(current);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }, []);
+
+  const changeFilter = useCallback((nextFilter: FilterTab) => {
+    setFilter(nextFilter);
+    setSelectedIds(() => new Set());
+    setMutationError(null);
   }, []);
 
   // ---------------------------------------------------------------------------
@@ -406,7 +356,9 @@ export function NotificationsPageClient({
   // ---------------------------------------------------------------------------
 
   const hasSelection = selectedIds.size > 0;
-  const hasUnread = useMemo(() => state.items.some((n) => !n.read), [state.items]);
+  const hasUnread = useMemo(() => items.some((n) => !n.read), [items]);
+  const errorMessage = mutationError ?? (inboxQuery.error ? t("errors.load") : null);
+  const hasMore = inboxQuery.hasNextPage;
 
   return (
     <div
@@ -416,13 +368,13 @@ export function NotificationsPageClient({
     >
       <NotificationsToolbar
         filter={filter}
-        unreadCount={state.unreadCount}
+        unreadCount={unreadCount}
         loading={loading}
         hasUnread={hasUnread}
         allLabel={t("filter.all")}
         unreadLabel={t("filter.unread")}
         markAllReadLabel={t("actions.markAllRead")}
-        onFilterChange={(nextFilter) => dispatch({ type: "filter.change", filter: nextFilter })}
+        onFilterChange={changeFilter}
         onMarkAllRead={markAllAsRead}
       />
 
@@ -439,7 +391,7 @@ export function NotificationsPageClient({
       {errorMessage ? <ErrorBanner message={errorMessage} /> : null}
 
       <NotificationsListPanel
-        notifications={state.items}
+        notifications={items}
         loading={loading}
         selectedIds={selectedIds}
         emptyMessage={filter === "unread" ? t("empty.unread") : t("empty.all")}
@@ -448,7 +400,7 @@ export function NotificationsPageClient({
         onToggleSelect={toggleSelect}
       />
 
-      {state.nextCursor ? (
+      {hasMore ? (
         <LoadMoreButton
           loading={loadingMore}
           label={t("actions.loadMore")}
