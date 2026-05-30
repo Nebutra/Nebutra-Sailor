@@ -75,8 +75,7 @@ export function BrandMark({
           sizes.box,
           variant === "gradient" && "text-white shadow-sm",
           variant === "soft" && "bg-blue-2 text-blue-11 dark:bg-blue-2/20 dark:text-blue-9",
-          variant === "outline" &&
-            "border border-neutral-7 bg-neutral-1 text-neutral-12 dark:border-white/10 dark:bg-white/[0.04] dark:text-white",
+          variant === "outline" && "border border-neutral-7 bg-neutral-1 text-neutral-12",
         )}
         style={variant === "gradient" ? { background: "var(--brand-gradient)" } : undefined}
       >

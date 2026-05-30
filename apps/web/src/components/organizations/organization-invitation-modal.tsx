@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
+import { dicebearAvatarUrl } from "@/lib/avatar";
 
 interface OrganizationInvitationModalProps {
   invitationId: string;
@@ -14,15 +15,6 @@ interface OrganizationInvitationModalProps {
 }
 
 type SubmittingState = false | "accept" | "decline";
-
-function getInitials(name: string): string {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join("");
-}
 
 async function postJson(url: string): Promise<void> {
   const response = await fetch(url, {
@@ -127,12 +119,13 @@ export function OrganizationInvitationModal({
             className="h-12 w-12 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] object-cover"
           />
         ) : (
-          <div
-            aria-hidden="true"
-            className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-3)] text-sm font-semibold text-[var(--neutral-12)]"
-          >
-            {getInitials(organizationName) || "?"}
-          </div>
+          <img
+            src={dicebearAvatarUrl(organizationName)}
+            alt=""
+            width={48}
+            height={48}
+            className="h-12 w-12 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] object-cover"
+          />
         )}
         <div className="min-w-0">
           <p className="truncate text-sm text-[var(--neutral-11)]">{t("title")}</p>

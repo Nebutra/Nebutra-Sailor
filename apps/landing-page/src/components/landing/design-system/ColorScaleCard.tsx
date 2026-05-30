@@ -28,7 +28,7 @@ export function ColorScaleCard() {
               <Tooltip key={step}>
                 <TooltipTrigger asChild>
                   <div
-                    className="relative flex h-7 sm:h-8 lg:h-7 xl:h-8 w-[85%] items-center rounded-[var(--radius-md)] px-3 cursor-pointer transition-all duration-300 hover:w-full hover:shadow-md border border-black/5 dark:border-white/5"
+                    className="relative flex h-7 sm:h-8 lg:h-7 xl:h-8 w-[85%] items-center rounded-[var(--radius-md)] px-3 cursor-pointer transition-all duration-300 hover:w-full hover:shadow-md border border-black/5"
                     style={{
                       backgroundColor: `var(--neutral-${step})`,
                     }}

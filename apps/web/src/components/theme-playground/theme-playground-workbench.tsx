@@ -299,7 +299,7 @@ function SegmentedControl<T extends string>({
   return (
     <div className="flex items-center gap-2">
       <span className="text-muted-foreground text-xs">{label}</span>
-      <div className="flex rounded-[var(--radius-md)] border border-border bg-card p-0.5">
+      <div className="flex rounded-[var(--radius-md)] border border-border bg-muted p-0.5">
         {options.map((option) => (
           <button
             key={option.value}
@@ -307,8 +307,8 @@ function SegmentedControl<T extends string>({
             className={cn(
               "inline-flex h-7 items-center gap-1.5 rounded-[calc(var(--radius-md)-2px)] px-2.5 font-medium text-xs transition",
               value === option.value
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground",
             )}
             onClick={() => onChange(option.value)}
           >
@@ -345,8 +345,10 @@ function CanvasHeader({
           <TabsList className="min-w-max border border-border bg-card/80">
             {suites.map((suite) => (
               <TabsTrigger key={suite.id} value={suite.id}>
-                {suite.icon}
-                {suite.label}
+                <span className="inline-flex items-center gap-1.5">
+                  {suite.icon}
+                  {suite.label}
+                </span>
               </TabsTrigger>
             ))}
           </TabsList>

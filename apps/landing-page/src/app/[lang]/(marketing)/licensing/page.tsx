@@ -360,30 +360,42 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
       </section>
 
       {/* FAQ Section */}
-      <section className="relative z-10 mx-auto max-w-4xl px-4 pb-32 sm:px-6 lg:px-8">
-        <AnimateIn preset="emerge" inView>
-          <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-12 text-center"
-            style={{
-              letterSpacing: "var(--tracking-heading)",
-              lineHeight: "var(--leading-heading)",
-            }}
-          >
-            {t("faq.title")}
-          </h2>
-        </AnimateIn>
+      <section className="relative z-10 mx-auto max-w-5xl px-4 pb-32 sm:px-6 lg:px-8">
+        <div className="border-t border-border pt-14">
+          <AnimateIn preset="emerge" inView>
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
+                FAQ
+              </p>
+              <h2
+                className="text-3xl font-semibold md:text-4xl"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
+              >
+                {t("faq.title")}
+              </h2>
+              <p className="mt-5 text-sm leading-6 text-muted-foreground">{t("faq.description")}</p>
+            </div>
+          </AnimateIn>
 
-        <div className="space-y-8">
-          <AnimateInGroup stagger="normal">
+          <div className="mt-12 divide-y divide-border rounded-[var(--radius-panel)] border border-border bg-card">
             {faqItems.map((item, idx) => (
-              <AnimateIn key={idx} preset="fadeUp" inView>
-                <div className="border border-border/50 rounded-[var(--radius-2xl)] p-6 bg-background/50 backdrop-blur-md hover:border-primary/30 transition-colors">
-                  <h3 className="text-lg font-bold mb-3">{item.q}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{item.a}</p>
+              <article
+                key={item.q}
+                className="grid gap-4 px-5 py-6 sm:grid-cols-[2.5rem_1fr] sm:px-7 md:px-8"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-muted font-mono text-xs text-muted-foreground">
+                  {String(idx + 1).padStart(2, "0")}
                 </div>
-              </AnimateIn>
+                <div>
+                  <h3 className="text-base font-semibold text-card-foreground">{item.q}</h3>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{item.a}</p>
+                </div>
+              </article>
             ))}
-          </AnimateInGroup>
+          </div>
         </div>
       </section>
 

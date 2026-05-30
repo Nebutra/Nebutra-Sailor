@@ -91,7 +91,7 @@ export function Awards({
           <path
             d={createSerratedPath()}
             strokeWidth="0.2"
-            className="fill-white stroke-black dark:fill-black dark:stroke-white"
+            className="fill-white stroke-black dark:fill-black"
           />
 
           {/* Inner circle */}
@@ -99,7 +99,7 @@ export function Awards({
             cx="96"
             cy="96"
             r="78"
-            className="fill-white stroke-black dark:fill-black dark:stroke-white"
+            className="fill-white stroke-black dark:fill-black"
             strokeWidth="0.2"
           />
 
@@ -109,7 +109,7 @@ export function Awards({
               href="#top-curve"
               startOffset="50%"
               textAnchor="middle"
-              className="fill-black dark:fill-white"
+              className="fill-black"
             >
               {title}
             </textPath>
@@ -121,7 +121,7 @@ export function Awards({
               href="#bottom-curve"
               startOffset="50%"
               textAnchor="middle"
-              className="fill-black dark:fill-white"
+              className="fill-black"
             >
               {subtitle}
             </textPath>

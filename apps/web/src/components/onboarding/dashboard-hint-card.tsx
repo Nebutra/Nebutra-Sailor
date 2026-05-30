@@ -49,17 +49,17 @@ export function DashboardHintCard({ cookieName }: Props) {
           </div>
 
           <div className="flex-1 pr-6">
-            <p className="text-sm font-semibold text-neutral-12 dark:text-white">
+            <p className="text-sm font-semibold text-neutral-12">
               Welcome to your Sailor workspace.
             </p>
-            <p className="mt-1 text-xs leading-relaxed text-neutral-11 dark:text-white/70">
+            <p className="mt-1 text-xs leading-relaxed text-neutral-11">
               Press{" "}
-              <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] text-neutral-12 dark:border-white/15 dark:bg-black/40 dark:text-white">
+              <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] text-neutral-12 dark:bg-black/40">
                 ⌘K
               </kbd>{" "}
               to open the command palette. Pick a{" "}
-              <span className="font-medium text-neutral-12 dark:text-white">mode</span> below to
-              focus your work: chat, data, workflow, or search.
+              <span className="font-medium text-neutral-12">mode</span> below to focus your work:
+              chat, data, workflow, or search.
             </p>
 
             <div className="mt-3 flex items-center gap-2">
@@ -75,7 +75,7 @@ export function DashboardHintCard({ cookieName }: Props) {
               <button
                 type="button"
                 onClick={dismiss}
-                className="rounded-full px-3 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+                className="rounded-full px-3 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
               >
                 Skip
               </button>
@@ -86,7 +86,7 @@ export function DashboardHintCard({ cookieName }: Props) {
             type="button"
             onClick={dismiss}
             aria-label="Dismiss hint"
-            className="absolute right-0 top-0 rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white"
+            className="absolute right-0 top-0 rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
           >
             <X className="size-3.5" />
           </button>

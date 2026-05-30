@@ -33,7 +33,7 @@ export function FeatureBentoCard({
         {/* Top Text Area - Vercel Style Minimal */}
         <div className="px-8 pt-10 sm:px-10 flex-none z-10 relative">
           <h2
-            className="text-[26px] sm:text-[32px] font-semibold text-foreground dark:text-white leading-tight"
+            className="text-[26px] sm:text-[32px] font-semibold text-foreground leading-tight"
             style={{ letterSpacing: "var(--tracking-heading)" }}
           >
             {title}
@@ -49,10 +49,10 @@ export function FeatureBentoCard({
             className="group/link mt-8 flex w-fit items-center gap-3 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             aria-label={`${ctaLabel}: ${title}`}
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border/50 bg-background/50 text-muted-foreground backdrop-blur-sm transition-colors group-hover/link:border-foreground group-hover/link:text-foreground dark:border-border dark:group-hover/link:border-border dark:group-hover/link:text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border/50 bg-background/50 text-muted-foreground backdrop-blur-sm transition-colors group-hover/link:border-foreground group-hover/link:text-foreground dark:border-border dark:group-hover/link:border-border">
               <ArrowRight className="h-4 w-4" />
             </span>
-            <span className="text-sm font-semibold text-muted-foreground transition-colors group-hover/link:text-foreground dark:group-hover/link:text-white">
+            <span className="text-sm font-semibold text-muted-foreground transition-colors group-hover/link:text-foreground">
               {ctaLabel}
             </span>
           </a>

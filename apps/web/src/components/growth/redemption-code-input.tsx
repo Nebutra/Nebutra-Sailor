@@ -68,17 +68,17 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
   return (
     <form
       onSubmit={submit}
-      className={`rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.02] ${padding}`}
+      className={`rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 ${padding}`}
       aria-labelledby={`${inputId}-label`}
     >
       <div className="flex items-center gap-2">
-        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-neutral-2 text-neutral-11 dark:bg-white/10 dark:text-white/60">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-neutral-2 text-neutral-11">
           <Gift className="h-3.5 w-3.5" />
         </div>
         <label
           id={`${inputId}-label`}
           htmlFor={inputId}
-          className="text-xs font-medium text-neutral-11 dark:text-white/70"
+          className="text-xs font-medium text-neutral-11"
         >
           Have a redemption code?
         </label>
@@ -120,7 +120,7 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
               ? "text-green-11 dark:text-green-9"
               : state === "error"
                 ? "text-red-11"
-                : "text-neutral-11 dark:text-white/70"
+                : "text-neutral-11"
           }`}
           role={state === "error" ? "alert" : "status"}
         >

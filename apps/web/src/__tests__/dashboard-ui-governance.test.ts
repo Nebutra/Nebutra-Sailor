@@ -26,8 +26,6 @@ describe("@nebutra/web dashboard UI governance", () => {
     const shellSource = readFileSync(SHELL, "utf8");
 
     expect(shellSource).toContain("dashboard-app-content");
-    expect(shellSource).toContain("headerHeight={52}");
-    expect(shellSource).toContain("border-neutral-5/80");
     expect(shellSource).toContain("items-center justify-center px-2");
     expect(shellSource).toContain("border-0 bg-transparent shadow-none");
     expect(shellSource).not.toContain('collapsed ? "justify-center" : "justify-start');
@@ -35,12 +33,7 @@ describe("@nebutra/web dashboard UI governance", () => {
   });
 
   it("keeps dashboard dark mode on semantic surfaces instead of raw black/white overlays", () => {
-    const dashboardChromeSources = [
-      SHELL,
-      join(APP_ROOT, "src/components/chat/chat-interface.tsx"),
-      join(APP_ROOT, "src/components/chat/chat-history-list.tsx"),
-      join(APP_ROOT, "src/components/chat/prompt-suggestions.tsx"),
-    ].map((filePath) => readFileSync(filePath, "utf8"));
+    const dashboardChromeSources = [SHELL].map((filePath) => readFileSync(filePath, "utf8"));
 
     for (const source of dashboardChromeSources) {
       expect(source).not.toMatch(/dark:(bg|border|text)-(black|white)(?:\b|\/|\[)/);

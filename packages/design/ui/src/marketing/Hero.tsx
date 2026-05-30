@@ -207,7 +207,7 @@ export function Hero({
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-[var(--neutral-3)] to-[var(--neutral-2)] flex items-center justify-center overflow-hidden">
                   {/* 3D Placeholder or generic fallback */}
-                  <div className="w-3/4 h-3/4 bg-white/50 dark:bg-[var(--neutral-1)]/70 backdrop-blur border border-white/20 dark:border-white/10 rounded-[var(--radius-xl)] shadow-[0_0_80px_rgba(0,0,0,0.1)] flex items-center justify-center -rotate-3 hover:rotate-0 transition-transform duration-700 cursor-pointer group">
+                  <div className="w-3/4 h-3/4 bg-white/50 dark:bg-[var(--neutral-1)]/70 backdrop-blur border border-white/20 rounded-[var(--radius-xl)] shadow-[0_0_80px_rgba(0,0,0,0.1)] flex items-center justify-center -rotate-3 hover:rotate-0 transition-transform duration-700 cursor-pointer group">
                     <Play className="h-16 w-16 text-[var(--brand-9)] group-hover:scale-110 transition-transform" />
                   </div>
                 </div>

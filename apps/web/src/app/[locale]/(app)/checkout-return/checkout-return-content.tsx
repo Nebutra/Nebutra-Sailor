@@ -82,7 +82,7 @@ export function CheckoutReturnContent({ organizationId }: CheckoutReturnContentP
         aria-label="Confirming your subscription"
         className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-[color:var(--blue-9)] border-r-transparent align-[-0.125em]"
       />
-      <p className="text-center text-[color:var(--neutral-11)] text-sm dark:text-white/70">
+      <p className="text-center text-[color:var(--neutral-11)] text-sm">
         Confirming your subscription...
       </p>
     </div>

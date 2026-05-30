@@ -77,7 +77,7 @@ function CopyButton({ value, label }: { value: string; label: string }) {
         setTimeout(() => setCopied(false), 1600);
       }}
       aria-label={`Copy ${label}`}
-      className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/15 dark:bg-black/40 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+      className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:bg-black/40"
     >
       {copied ? (
         <>
@@ -98,7 +98,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
   // Preview state — no live data yet.
   if (!stats) {
     return (
-      <section className="rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 p-6 dark:border-white/15 dark:bg-white/[0.02]">
+      <section className="rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 p-6/[0.02]">
         <div className="flex items-start gap-3">
           <div
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
@@ -107,10 +107,8 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
             <Gift className="h-4 w-4" />
           </div>
           <div>
-            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
-              Invitations & rewards
-            </h2>
-            <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">
+            <h2 className="text-sm font-semibold text-neutral-12">Invitations & rewards</h2>
+            <p className="mt-1 text-xs text-neutral-10">
               The referral pipeline ships behind a feature flag. Once enabled, your code, share
               link, and stats appear here.
             </p>
@@ -123,7 +121,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
   return (
     <section className="space-y-5">
       {/* Hero card */}
-      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 p-5 dark:border-white/10 dark:bg-white/[0.03]">
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 p-5/[0.03]">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 opacity-[0.16] blur-3xl"
@@ -132,35 +130,31 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
         <div className="relative">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-blue-9" />
-            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
-              Share Sailor, earn rewards
-            </h2>
+            <h2 className="text-sm font-semibold text-neutral-12">Share Sailor, earn rewards</h2>
           </div>
-          <p className="mt-1 max-w-xl text-xs text-neutral-10 dark:text-white/50">
+          <p className="mt-1 max-w-xl text-xs text-neutral-10">
             Friends get unlimited access · You earn credits and commission · Build a passive income
             stream as your network compounds.
           </p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-3 dark:border-white/10 dark:bg-black/30">
-              <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10 dark:text-white/40">
+            <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-3 dark:bg-black/30">
+              <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
                 Referral code
               </p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
-                <code className="truncate font-mono text-sm font-semibold text-neutral-12 dark:text-white">
+                <code className="truncate font-mono text-sm font-semibold text-neutral-12">
                   {stats.referralCode}
                 </code>
                 <CopyButton value={stats.referralCode} label="referral code" />
               </div>
             </div>
-            <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-3 dark:border-white/10 dark:bg-black/30">
-              <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10 dark:text-white/40">
+            <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-3 dark:bg-black/30">
+              <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
                 Share link
               </p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
-                <span className="truncate text-xs text-neutral-11 dark:text-white/70">
-                  {stats.shareUrl}
-                </span>
+                <span className="truncate text-xs text-neutral-11">{stats.shareUrl}</span>
                 <CopyButton value={stats.shareUrl} label="share link" />
               </div>
             </div>
@@ -180,14 +174,12 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
         ].map((cell) => (
           <div
             key={cell.label}
-            className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3 text-center dark:border-white/10 dark:bg-white/[0.03]"
+            className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3 text-center/[0.03]"
           >
-            <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10 dark:text-white/40">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
               {cell.label}
             </p>
-            <p className="mt-1 text-2xl font-semibold tabular-nums text-neutral-12 dark:text-white">
-              {cell.value}
-            </p>
+            <p className="mt-1 text-2xl font-semibold tabular-nums text-neutral-12">{cell.value}</p>
           </div>
         ))}
       </div>
@@ -203,12 +195,12 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
               className={`flex items-center justify-between gap-4 rounded-[var(--radius-xl)] border p-4 ${
                 isActive
                   ? "border-blue-7 bg-blue-2 dark:border-blue-7/60 dark:bg-blue-2/15"
-                  : "border-neutral-6 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.02]"
+                  : "border-neutral-6 bg-neutral-1"
               }`}
             >
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-semibold text-neutral-12 dark:text-white">
+                  <h3 className="text-sm font-semibold text-neutral-12">
                     Level {level.id} · {level.title}
                   </h3>
                   {isActive && (
@@ -217,9 +209,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
                     </span>
                   )}
                 </div>
-                <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/50">
-                  {level.description}
-                </p>
+                <p className="mt-0.5 text-xs text-neutral-10">{level.description}</p>
               </div>
               <div className="text-right">
                 <p
@@ -234,9 +224,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
                   {level.reward}
                 </p>
                 {!isActive && remaining > 0 && (
-                  <p className="mt-0.5 text-[11px] text-neutral-10 dark:text-white/40">
-                    {remaining} more to unlock
-                  </p>
+                  <p className="mt-0.5 text-[11px] text-neutral-10">{remaining} more to unlock</p>
                 )}
               </div>
             </div>
@@ -246,7 +234,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
 
       <a
         href="/legal/referral-terms"
-        className="inline-flex items-center gap-0.5 text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12 dark:text-white/50 dark:hover:text-white"
+        className="inline-flex items-center gap-0.5 text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12"
       >
         Referral terms
         <ArrowUpRight className="h-3 w-3" />

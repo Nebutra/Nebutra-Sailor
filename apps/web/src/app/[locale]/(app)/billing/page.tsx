@@ -40,7 +40,7 @@ function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
           <Link
             href={notice.primaryAction.href}
-            className="inline-flex items-center justify-center rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-11 dark:bg-white dark:text-black dark:hover:bg-white/90"
+            className="inline-flex items-center justify-center rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-11 dark:text-black"
           >
             {notice.primaryAction.label}
           </Link>
@@ -92,13 +92,10 @@ async function BillingContent({ journeyNotice }: { journeyNotice: BillingJourney
         <AnimateIn preset="fadeUp">
           <section aria-labelledby="change-plan-heading">
             <div className="mb-3">
-              <h2
-                id="change-plan-heading"
-                className="text-base font-semibold text-neutral-12 dark:text-white"
-              >
+              <h2 id="change-plan-heading" className="text-base font-semibold text-neutral-12">
                 Change plan
               </h2>
-              <p className="mt-1 text-sm text-neutral-11 dark:text-white/70">
+              <p className="mt-1 text-sm text-neutral-11">
                 Paid checkout is only active for plans with configured provider price ids.
               </p>
             </div>
@@ -108,31 +105,29 @@ async function BillingContent({ journeyNotice }: { journeyNotice: BillingJourney
 
         <AnimateIn preset="fadeUp">
           <Card className="p-4 sm:p-6">
-            <h2 className="text-base font-semibold text-neutral-12 dark:text-white">
-              Revenue Snapshot
-            </h2>
+            <h2 className="text-base font-semibold text-neutral-12">Revenue Snapshot</h2>
             {summary.day ? (
               <>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   <div>
-                    <p className="text-sm text-neutral-11 dark:text-white/70">Today</p>
-                    <p className="mt-1 text-2xl font-semibold text-neutral-12 dark:text-white">
+                    <p className="text-sm text-neutral-11">Today</p>
+                    <p className="mt-1 text-2xl font-semibold text-neutral-12">
                       {toCurrency(summary.revenue)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-neutral-11 dark:text-white/70">30-day Projection</p>
-                    <p className="mt-1 text-2xl font-semibold text-neutral-12 dark:text-white">
+                    <p className="text-sm text-neutral-11">30-day Projection</p>
+                    <p className="mt-1 text-2xl font-semibold text-neutral-12">
                       {toCurrency(projectedMonthlyRevenue)}
                     </p>
                   </div>
                 </div>
-                <p className="mt-4 text-xs text-neutral-10 dark:text-white/60">
+                <p className="mt-4 text-xs text-neutral-10">
                   Based on the latest daily warehouse snapshot ({summary.day}).
                 </p>
               </>
             ) : (
-              <p className="mt-3 text-sm text-neutral-11 dark:text-white/70">
+              <p className="mt-3 text-sm text-neutral-11">
                 Revenue widgets will appear once billing events are ingested.
               </p>
             )}

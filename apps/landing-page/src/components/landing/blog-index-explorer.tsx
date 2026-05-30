@@ -1,9 +1,9 @@
 "use client";
 
-import { Box, Calendar, Menu, MagnifyingGlass as Search, User } from "@nebutra/icons";
-import Image from "next/image";
+import { Box, Calendar, Menu, MagnifyingGlass as Search } from "@nebutra/icons";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { BlogAuthorAvatar } from "./blog-author-avatar";
 import { BlogImage } from "./blog-image";
 
 export type BlogIndexPost = {
@@ -31,50 +31,6 @@ type BlogIndexExplorerProps = {
 };
 
 type ViewMode = "grid" | "list";
-
-function getInitials(name: string | null): string {
-  if (!name) return "";
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "";
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return `${parts[0][0]}${parts.at(-1)?.[0] ?? ""}`.toUpperCase();
-}
-
-function AuthorAvatar({
-  name,
-  src,
-  size = "sm",
-}: {
-  name: string | null;
-  src: string | null;
-  size?: "sm" | "md";
-}) {
-  const className =
-    size === "md"
-      ? "size-8 rounded-full border border-[var(--neutral-7)]"
-      : "size-6 rounded-full border border-[var(--neutral-7)]";
-
-  if (src) {
-    return (
-      <Image
-        src={src}
-        alt={name ? `${name} avatar` : ""}
-        width={size === "md" ? 32 : 24}
-        height={size === "md" ? 32 : 24}
-        className={`${className} bg-[var(--neutral-2)] object-cover`}
-      />
-    );
-  }
-
-  return (
-    <span
-      className={`${className} inline-flex items-center justify-center bg-[var(--neutral-2)] text-[10px] font-semibold text-[var(--neutral-11)]`}
-      aria-hidden
-    >
-      {name ? getInitials(name) : <User className="size-3.5" />}
-    </span>
-  );
-}
 
 function PostMeta({ post }: { post: BlogIndexPost }) {
   return (
@@ -135,7 +91,7 @@ function GridCard({ post }: { post: BlogIndexPost }) {
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-5">
           <div className="flex min-w-0 items-center gap-2">
-            <AuthorAvatar name={post.authorName} src={post.authorAvatarUrl} />
+            <BlogAuthorAvatar name={post.authorName} src={post.authorAvatarUrl} />
             {post.authorName && (
               <span className="truncate text-xs font-medium text-[var(--neutral-11)]">
                 {post.authorName}
@@ -185,7 +141,7 @@ function ListCard({ post }: { post: BlogIndexPost }) {
         )}
         <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-5">
           <div className="flex min-w-0 items-center gap-2">
-            <AuthorAvatar name={post.authorName} src={post.authorAvatarUrl} size="md" />
+            <BlogAuthorAvatar name={post.authorName} src={post.authorAvatarUrl} size="md" />
             {post.authorName && (
               <span className="truncate text-sm font-medium text-[var(--neutral-11)]">
                 {post.authorName}

@@ -78,15 +78,15 @@ export function ActivePlanCard({
   if (!snapshot || !snapshot.planId) {
     return (
       <div
-        className={`rounded-[var(--radius-3xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-5 shadow-sm dark:border-white/10 dark:bg-black/40 ${className ?? ""}`}
+        className={`rounded-[var(--radius-3xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-5 shadow-sm dark:bg-black/40 ${className ?? ""}`}
       >
-        <p className="font-medium text-sm uppercase tracking-[0.18em] text-[color:var(--neutral-10)] dark:text-white/50">
+        <p className="font-medium text-sm uppercase tracking-[0.18em] text-[color:var(--neutral-10)]">
           {t("title")}
         </p>
-        <h2 className="mt-3 font-semibold text-2xl text-[color:var(--neutral-12)] dark:text-white">
+        <h2 className="mt-3 font-semibold text-2xl text-[color:var(--neutral-12)]">
           {t("noPlanTitle")}
         </h2>
-        <p className="mt-2 max-w-2xl text-[color:var(--neutral-11)] text-sm dark:text-white/70">
+        <p className="mt-2 max-w-2xl text-[color:var(--neutral-11)] text-sm">
           {t("noPlanDescription")}
         </p>
         <div className="mt-5">
@@ -118,21 +118,19 @@ export function ActivePlanCard({
 
   return (
     <div
-      className={`rounded-[var(--radius-3xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-5 shadow-sm dark:border-white/10 dark:bg-black/40 ${className ?? ""}`}
+      className={`rounded-[var(--radius-3xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-5 shadow-sm dark:bg-black/40 ${className ?? ""}`}
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="font-medium text-sm uppercase tracking-[0.18em] text-[color:var(--neutral-10)] dark:text-white/50">
+          <p className="font-medium text-sm uppercase tracking-[0.18em] text-[color:var(--neutral-10)]">
             {t("title")}
           </p>
-          <h2 className="mt-3 flex items-center gap-2 font-semibold text-2xl text-[color:var(--neutral-12)] dark:text-white">
+          <h2 className="mt-3 flex items-center gap-2 font-semibold text-2xl text-[color:var(--neutral-12)]">
             <Sparkles className="size-5 text-[color:var(--brand-primary)]" aria-hidden="true" />
             {planName}
           </h2>
           {periodCopy && (
-            <p className="mt-2 text-[color:var(--neutral-11)] text-sm dark:text-white/70">
-              {periodCopy}
-            </p>
+            <p className="mt-2 text-[color:var(--neutral-11)] text-sm">{periodCopy}</p>
           )}
         </div>
         <span
@@ -155,7 +153,7 @@ export function ActivePlanCard({
         ) : (
           <Link
             href="/billing"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-[color:var(--neutral-12)] px-4 py-2.5 font-medium text-sm text-white transition hover:bg-[color:var(--neutral-11)] dark:bg-white dark:text-black dark:hover:bg-white/90 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-[color:var(--neutral-12)] px-4 py-2.5 font-medium text-sm text-white transition hover:bg-[color:var(--neutral-11)] dark:text-black sm:w-auto"
           >
             <CreditCard className="size-4" aria-hidden="true" />
             {t("manage")}

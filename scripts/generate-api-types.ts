@@ -46,8 +46,12 @@ if (gatewayUrl) {
   formatGeneratedTypes();
 } else {
   // ── File mode: build gateway → export spec → generate types ───────────────
-  process.stdout.write("[generate:api-types] Building api-gateway…\n");
-  execSync("pnpm --filter @nebutra/gateway build", {
+  // Build via turbo so workspace dependencies (their dist/ outputs) are built
+  // first via `^build`. A bare `pnpm --filter @nebutra/gateway build` compiles
+  // only the gateway and fails with ERR_MODULE_NOT_FOUND when a dependency's
+  // dist/ is missing (the environmental cause of the contract-chain breakage).
+  process.stdout.write("[generate:api-types] Building api-gateway (+ workspace deps)…\n");
+  execSync("pnpm exec turbo run build --filter=@nebutra/gateway", {
     stdio: "inherit",
     cwd: ROOT,
     env: { ...process.env, SKIP_ENV_VALIDATION: "true" },
@@ -69,6 +73,12 @@ if (gatewayUrl) {
     process.stderr.write(`[generate:api-types] Spec file not found: ${specFile}\n`);
     process.exit(1);
   }
+
+  // export-spec.ts writes raw `JSON.stringify(spec, null, 2)` (arrays expanded),
+  // but the committed spec is Biome-formatted (short arrays collapsed). Format
+  // it here so the canonical artifact stays churn-free across regenerations.
+  process.stdout.write("[generate:api-types] Formatting OpenAPI spec with Biome\n");
+  execSync(`pnpm exec biome format --write ${specFile}`, { stdio: "inherit", cwd: ROOT });
 
   process.stdout.write(`[generate:api-types] Generating types from ${specFile}\n`);
   execSync(`pnpm exec openapi-typescript ${specFile} --output ${outFile}`, {

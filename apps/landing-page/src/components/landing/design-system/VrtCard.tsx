@@ -23,7 +23,7 @@ export function VrtCard() {
       </div>
 
       {/* VRT Slider Mockup */}
-      <div className="relative z-10 mt-auto flex h-[160px] w-full rounded-[var(--radius-xl)] border border-border/50 bg-black/5 dark:bg-white/5 overflow-hidden flex-col justify-center items-center group shadow-inner">
+      <div className="relative z-10 mt-auto flex h-[160px] w-full rounded-[var(--radius-xl)] border border-border/50 bg-black/5 overflow-hidden flex-col justify-center items-center group shadow-inner">
         <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-[var(--radius-lg)] mx-auto">
           {/* Left side (Base / Raw) */}
           <div className="absolute inset-y-0 left-0 w-1/2 flex items-center justify-center bg-background border-r border-border/50 overflow-hidden group-hover:w-[40%] transition-all duration-700 ease-in-out z-10 flex-col gap-2">

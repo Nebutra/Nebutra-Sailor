@@ -140,10 +140,10 @@ export function MessageContent({
         "prose-p:my-[var(--message-content-paragraph-margin)] prose-headings:my-[var(--message-content-heading-margin)] prose-pre:my-[var(--message-content-pre-margin)]",
         // Code blocks inherit our token system rather than prose defaults.
         "prose-pre:rounded-[var(--message-content-code-radius)] prose-pre:bg-neutral-2 prose-pre:p-[var(--message-content-code-padding)] prose-pre:text-xs",
-        "dark:prose-pre:bg-white/5",
+        "",
         "prose-code:rounded-[var(--message-content-inline-code-radius)] prose-code:bg-neutral-2 prose-code:px-[var(--message-content-inline-code-padding-x)] prose-code:py-[var(--message-content-inline-code-padding-y)]",
         "prose-code:text-[0.85em] prose-code:font-mono prose-code:before:content-none prose-code:after:content-none",
-        "dark:prose-code:bg-white/10",
+        "",
         "prose-table:block prose-table:w-full prose-table:overflow-x-auto prose-table:rounded-[var(--message-content-table-radius)]",
         className,
       )}

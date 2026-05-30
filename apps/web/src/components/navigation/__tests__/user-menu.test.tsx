@@ -12,10 +12,21 @@ vi.mock("@nebutra/auth/client", () => ({
 
 vi.mock("next-intl", () => ({
   useTranslations: (ns?: string) => (key: string) => (ns ? `${ns}.${key}` : key),
+  useLocale: () => "en",
 }));
 
 vi.mock("@nebutra/tokens", () => ({
   useTheme: () => ({ theme: "system", setTheme: vi.fn() }),
+}));
+
+vi.mock("@nebutra/i18n/routing", () => ({
+  useRouter: () => ({ replace: vi.fn() }),
+  usePathname: () => "/workspace",
+}));
+
+const openFeedbackMock = vi.fn();
+vi.mock("@/components/feedback/feedback-dialog-provider", () => ({
+  useFeedbackDialog: () => ({ openDialog: openFeedbackMock }),
 }));
 
 const openDialogMock = vi.fn();
@@ -24,6 +35,18 @@ vi.mock("@/components/account/account-dialog", () => ({
     open: false,
     activeTab: "profile" as const,
     openDialog: openDialogMock,
+    closeDialog: vi.fn(),
+    setOpen: vi.fn(),
+    setActiveTab: vi.fn(),
+  }),
+}));
+
+const openSettingsMock = vi.fn();
+vi.mock("@/components/settings/settings-dialog", () => ({
+  useSettingsDialog: () => ({
+    open: false,
+    activeTab: "general" as const,
+    openDialog: openSettingsMock,
     closeDialog: vi.fn(),
     setOpen: vi.fn(),
     setActiveTab: vi.fn(),
@@ -60,11 +83,15 @@ describe("UserMenu", () => {
     expect(decodeURIComponent(img?.getAttribute("src") ?? "")).toContain("https://x/y.png");
   });
 
-  it("falls back to initials when no imageUrl is set", () => {
+  it("falls back to a DiceBear avatar (not initials) when no imageUrl is set", () => {
     withUser({ name: "Bob Carter", email: "bob@example.com" });
     render(<UserMenu />);
     const trigger = screen.getByRole("button", { name: /userMenu\.ariaLabel/ });
-    expect(trigger.textContent).toMatch(/BC/);
+    const img = trigger.querySelector("img");
+    expect(img).not.toBeNull();
+    // Locally-generated DiceBear SVG data URI — never letter initials.
+    expect(img?.getAttribute("src") ?? "").toMatch(/^data:image\/svg\+xml/);
+    expect(trigger.textContent).not.toMatch(/BC/);
   });
 
   it("opens the dropdown menu on click and shows name + email", () => {

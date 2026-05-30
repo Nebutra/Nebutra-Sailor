@@ -82,16 +82,16 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
       aria-labelledby={titleId}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
     >
-      <div className="w-full max-w-md rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-5 shadow-xl dark:border-white/10 dark:bg-neutral-12">
+      <div className="w-full max-w-md rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-5 shadow-xl">
         <div className="mb-4 flex items-start justify-between gap-3">
-          <h2 id={titleId} className="text-base font-semibold text-neutral-12 dark:text-white">
+          <h2 id={titleId} className="text-base font-semibold text-neutral-12">
             {t("title")}
           </h2>
           <button
             type="button"
             aria-label={t("title")}
             onClick={onClose}
-            className="rounded-[var(--radius-md)] p-1 text-neutral-11 transition-colors hover:bg-neutral-2 dark:hover:bg-white/10"
+            className="rounded-[var(--radius-md)] p-1 text-neutral-11 transition-colors hover:bg-neutral-2"
           >
             <X className="h-4 w-4" aria-hidden />
           </button>
@@ -101,7 +101,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
           <div className="space-y-1.5">
             <label
               htmlFor={`${titleId}-email`}
-              className="block text-xs font-medium text-neutral-11 dark:text-white/70"
+              className="block text-xs font-medium text-neutral-11"
             >
               {t("emailLabel")}
             </label>
@@ -122,7 +122,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
           <div className="space-y-1.5">
             <label
               htmlFor={`${titleId}-role`}
-              className="block text-xs font-medium text-neutral-11 dark:text-white/70"
+              className="block text-xs font-medium text-neutral-11"
             >
               {t("roleLabel")}
             </label>

@@ -28,7 +28,7 @@ export function Card({ children, isInteractive = false, className }: CardProps) 
   return (
     <div
       className={cn(
-        "rounded-[var(--radius-lg)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-4 text-[color:var(--neutral-12)] shadow-sm dark:border-white/10 dark:bg-black/40 dark:text-white",
+        "rounded-[var(--radius-lg)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-4 text-[color:var(--neutral-12)] shadow-sm dark:bg-black/40",
         isInteractive && "cursor-pointer transition-shadow hover:shadow-md",
         className,
       )}

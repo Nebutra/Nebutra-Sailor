@@ -41,7 +41,6 @@ describe("public dashboard SEO and access boundaries", () => {
     expect(privateLayout).toContain("follow: false");
     expect(robots).toContain('allow: ["/", "/en", "/zh"');
     expect(robots).toContain('"/en/workspace"');
-    expect(robots).toContain('"/en/chat"');
     expect(robots).not.toContain('disallow: "/"');
     expect(existsSync(repoPath("apps/web/src/app/sitemap.ts"))).toBe(true);
   });

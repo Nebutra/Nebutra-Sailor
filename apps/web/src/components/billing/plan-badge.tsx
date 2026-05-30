@@ -74,14 +74,18 @@ export async function PlanBadge() {
   const shouldPromoteUpgrade = PROMOTE_UPGRADE_PLANS.has(plan);
   const planLabel = formatPlanLabel(plan);
 
-  // Dot color reflects usage pressure when quota is known.
+  // Dot color reflects usage pressure when quota is known. Use semantic
+  // tokens — bg-red-9 / bg-amber-9 / bg-green-9 are NOT defined in our
+  // token system (only blue/cyan/neutral 12-step scales exist), so the
+  // old classes rendered as an invisible 6×6 spacer which threw the
+  // pill off-center.
   const dotClass = quota
     ? quota.percent >= 90
-      ? "bg-red-9"
+      ? "bg-destructive"
       : quota.percent >= 70
-        ? "bg-amber-9"
-        : "bg-green-9"
-    : "bg-green-9";
+        ? "bg-warning"
+        : "bg-success"
+    : "bg-success";
 
   return (
     <div data-tour-id="plan-badge" className="flex flex-wrap items-center gap-2">
@@ -92,18 +96,18 @@ export async function PlanBadge() {
             ? `Current plan: ${planLabel}. API usage: ${quota.used} of ${quota.limit} (${quota.percent}%).`
             : `Current plan: ${planLabel}`
         }
-        className="inline-flex items-center gap-1.5 rounded-full border border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:border-white/10 dark:bg-white/[0.04] dark:text-white/70 dark:hover:bg-white/[0.08] dark:hover:text-white"
+        className="inline-flex items-center gap-1.5 rounded-full border border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
       >
         <span className={`h-1.5 w-1.5 rounded-full ${dotClass}`} aria-hidden />
         <span>{planLabel}</span>
         {quota && (
           <>
-            <span className="text-neutral-9 dark:text-white/30" aria-hidden>
+            <span className="text-neutral-9" aria-hidden>
               ·
             </span>
-            <span className="tabular-nums text-neutral-10 dark:text-white/50">
+            <span className="tabular-nums text-neutral-10">
               {fmtCompact(quota.used)}
-              <span className="text-neutral-9 dark:text-white/30">/{fmtCompact(quota.limit)}</span>
+              <span className="text-neutral-9">/{fmtCompact(quota.limit)}</span>
             </span>
           </>
         )}

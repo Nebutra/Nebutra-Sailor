@@ -163,7 +163,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center gap-2 rounded-full border border-neutral-7/60 bg-neutral-2/60 px-1.5 py-1 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3/80 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+        className="inline-flex items-center gap-2 rounded-full border border-neutral-7/60 bg-neutral-2/60 px-1.5 py-1 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3/80"
       >
         <span
           aria-hidden
@@ -186,14 +186,14 @@ export function UserAvatarMenu(): React.ReactElement | null {
             className="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-500 ring-2 ring-white dark:ring-black"
           />
         </span>
-        <ChevronDown className="h-3.5 w-3.5 text-neutral-11 dark:text-white/60" />
+        <ChevronDown className="h-3.5 w-3.5 text-neutral-11" />
       </button>
 
       {open && (
         <div
           role="menu"
           aria-label={t("ariaLabel")}
-          className="absolute right-0 top-full z-50 mt-2 w-72 origin-top-right rounded-[var(--radius-xl)] border border-neutral-7/70 bg-white p-1.5 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl dark:border-white/10 dark:bg-black/95"
+          className="absolute right-0 top-full z-50 mt-2 w-72 origin-top-right rounded-[var(--radius-xl)] border border-neutral-7/70 bg-white p-1.5 shadow-[0_24px_48px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl dark:bg-black/95"
         >
           <div className="flex items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2.5">
             <span
@@ -214,23 +214,19 @@ export function UserAvatarMenu(): React.ReactElement | null {
               )}
             </span>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-neutral-12 dark:text-white">
-                {displayName}
-              </p>
-              {subtitle && (
-                <p className="truncate text-xs text-neutral-11 dark:text-white/60">{subtitle}</p>
-              )}
+              <p className="truncate text-sm font-semibold text-neutral-12">{displayName}</p>
+              {subtitle && <p className="truncate text-xs text-neutral-11">{subtitle}</p>}
             </div>
           </div>
 
-          <div className="my-1 h-px bg-neutral-6 dark:bg-white/10" aria-hidden />
+          <div className="my-1 h-px bg-neutral-6" aria-hidden />
 
           <MenuLink href={`${APP_URL}/dashboard`} icon={User} label={t("dashboard")} />
           <MenuLink href={`${APP_URL}/settings/account`} icon={Settings} label={t("account")} />
           <MenuLink href={`${APP_URL}/settings/billing`} icon={CreditCard} label={t("billing")} />
           <MenuLink href="/docs" icon={BookOpen} label={t("docs")} external={false} />
 
-          <div className="my-1 h-px bg-neutral-6 dark:bg-white/10" aria-hidden />
+          <div className="my-1 h-px bg-neutral-6" aria-hidden />
 
           <button
             type="button"
@@ -259,7 +255,7 @@ interface MenuLinkProps {
 function MenuLink({ href, icon: Icon, label, external = true }: MenuLinkProps) {
   const isExternal = external && href.startsWith("http");
   const className =
-    "flex w-full items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/5";
+    "flex w-full items-center gap-3 rounded-[var(--radius-lg)] px-3 py-2 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-2";
   return (
     <a
       role="menuitem"
@@ -268,7 +264,7 @@ function MenuLink({ href, icon: Icon, label, external = true }: MenuLinkProps) {
       rel={isExternal ? "noreferrer" : undefined}
       className={className}
     >
-      <Icon className="h-4 w-4 text-neutral-11 dark:text-white/60" aria-hidden />
+      <Icon className="h-4 w-4 text-neutral-11" aria-hidden />
       <span>{label}</span>
     </a>
   );

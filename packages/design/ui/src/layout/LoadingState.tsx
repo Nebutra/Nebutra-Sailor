@@ -37,9 +37,7 @@ export function LoadingState({ message, size = "large" }: LoadingStateProps) {
         role="status"
         aria-label={message ?? "Loading"}
       />
-      {message && (
-        <p className="mt-3 text-sm text-[color:var(--neutral-11)] dark:text-white/70">{message}</p>
-      )}
+      {message && <p className="mt-3 text-sm text-[color:var(--neutral-11)]">{message}</p>}
     </div>
   );
 }

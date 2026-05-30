@@ -3,6 +3,7 @@
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
 import { useReducer, useRef } from "react";
+import { dicebearAvatarUrl } from "@/lib/avatar";
 
 const MAX_AVATAR_SIZE_BYTES = 2 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
@@ -14,6 +15,12 @@ interface UploadResult {
 interface AvatarUploadFormProps {
   initialAvatarUrl?: string | null;
   fallbackName?: string;
+  /**
+   * Canonical identity seed for the DiceBear fallback. Prefer email — the
+   * UserMenu uses email too, so the avatars match across the app. Falls back
+   * to `fallbackName` when undefined.
+   */
+  email?: string | null;
   /**
    * Override the upload pipeline for tests. Defaults to the three-step
    * presign / PUT / finalize sequence against `/api/account/avatar`.
@@ -126,16 +133,6 @@ async function centerCropSquareImage(file: File): Promise<File> {
   }
 }
 
-function initialsFor(name?: string | null): string {
-  const source = (name ?? "").trim();
-  if (!source) return "?";
-  const tokens = source.split(/\s+/).filter(Boolean);
-  if (tokens.length >= 2) {
-    return (tokens[0][0] + tokens[1][0]).toUpperCase();
-  }
-  return source.slice(0, 2).toUpperCase();
-}
-
 interface AvatarUploadState {
   avatarUrl: string | null;
   pending: boolean;
@@ -193,6 +190,7 @@ function avatarUploadReducer(
 export function AvatarUploadForm({
   initialAvatarUrl,
   fallbackName,
+  email,
   uploadPipeline,
   deletePipeline,
   onUpdated,
@@ -283,15 +281,13 @@ export function AvatarUploadForm({
             />
           </div>
         ) : (
-          <div
-            role="img"
-            aria-label="Avatar preview"
-            className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-3)]"
-          >
-            <span className="text-sm font-semibold text-[var(--neutral-11)]">
-              {initialsFor(fallbackName)}
-            </span>
-          </div>
+          <img
+            src={dicebearAvatarUrl(email ?? fallbackName)}
+            alt="Avatar preview"
+            width={80}
+            height={80}
+            className="size-20 rounded-full border border-[var(--neutral-6)] object-cover"
+          />
         )}
 
         <fieldset

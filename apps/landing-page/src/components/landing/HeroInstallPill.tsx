@@ -29,7 +29,7 @@ export function HeroInstallPill({ command, copiedLabel }: HeroInstallPillProps) 
   };
 
   return (
-    <div className="mx-auto flex w-fit items-center gap-2 rounded-full border border-black/5 bg-white/60 py-1 pr-1 pl-4 text-xs font-medium shadow-sm backdrop-blur-xl transition-all hover:bg-white/75 dark:border-white/10 dark:bg-white/8 dark:hover:bg-white/12">
+    <div className="mx-auto flex w-fit items-center gap-2 rounded-full border border-black/5 bg-white/60 py-1 pr-1 pl-4 text-xs font-medium shadow-sm backdrop-blur-xl transition-all hover:bg-white/75">
       <code className="font-mono text-[12px] tracking-tight text-zinc-700 dark:text-zinc-200">
         <span className="select-none text-zinc-400 dark:text-zinc-500">$ </span>
         {command}
@@ -38,7 +38,7 @@ export function HeroInstallPill({ command, copiedLabel }: HeroInstallPillProps) 
         type="button"
         onClick={handleCopy}
         aria-label={copied ? copiedLabel : `Copy: ${command}`}
-        className="flex size-11 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/5 hover:text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-1 dark:text-zinc-400 dark:hover:bg-white/10 dark:hover:text-white"
+        className="flex size-11 shrink-0 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-black/5 hover:text-zinc-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-1 dark:text-zinc-400"
       >
         {copied ? (
           <Check className="size-3.5" aria-hidden="true" />

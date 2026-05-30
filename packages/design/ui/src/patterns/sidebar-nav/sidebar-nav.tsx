@@ -65,11 +65,13 @@ export interface SidebarNavProps {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const ITEM_BASE_CLASSES =
-  "flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] border px-2.5 py-1.5 text-[13px] leading-5 transition-colors";
+  "flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-colors";
 const ITEM_DEFAULT_CLASSES =
-  "border-transparent text-sidebar-foreground/68 hover:border-sidebar-border hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
-const ITEM_ACTIVE_CLASSES =
-  "border-sidebar-primary/35 bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm";
+  "text-sidebar-foreground/68 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
+// Active = subtle neutral highlight (Lovable-style), NOT a solid brand-blue
+// fill. Uses the same sidebar-accent surface as hover, made persistent and
+// emphasized via font weight + full-strength foreground.
+const ITEM_ACTIVE_CLASSES = "bg-sidebar-accent font-medium text-sidebar-accent-foreground";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
 const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
 const ICON_CLASSES = "size-3.5 shrink-0 opacity-75";

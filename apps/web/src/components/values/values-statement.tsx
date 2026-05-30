@@ -94,15 +94,13 @@ export function ValuesStatement({
 
   return (
     <section
-      className={`rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.02] ${padding} ${className}`}
+      className={`rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 ${padding} ${className}`}
       aria-label="Our values commitment"
     >
       {heading && (
         <div className="mb-4">
-          <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{heading}</h2>
-          {description && (
-            <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">{description}</p>
-          )}
+          <h2 className="text-sm font-semibold text-neutral-12">{heading}</h2>
+          {description && <p className="mt-1 text-xs text-neutral-10">{description}</p>}
         </div>
       )}
 
@@ -110,7 +108,7 @@ export function ValuesStatement({
         {pillars.map(({ id, icon: Icon, title, description: desc, metric, linkLabel, href }) => (
           <div
             key={id}
-            className="flex h-full flex-col gap-2 rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-4 dark:border-white/10 dark:bg-white/[0.03]"
+            className="flex h-full flex-col gap-2 rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-4/[0.03]"
           >
             <div className="flex items-center justify-between">
               <div
@@ -133,8 +131,8 @@ export function ValuesStatement({
                 </span>
               )}
             </div>
-            <h3 className="text-sm font-semibold text-neutral-12 dark:text-white">{title}</h3>
-            <p className="text-xs leading-relaxed text-neutral-10 dark:text-white/50">{desc}</p>
+            <h3 className="text-sm font-semibold text-neutral-12">{title}</h3>
+            <p className="text-xs leading-relaxed text-neutral-10">{desc}</p>
             {href && linkLabel && (
               <ViewTransitionLink
                 href={href}

@@ -45,20 +45,20 @@ function UsageGauge({
   return (
     <Card className="p-4 sm:p-6">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-neutral-11 dark:text-white/70">{label}</h3>
+        <h3 className="text-sm font-medium text-neutral-11">{label}</h3>
         <span className={`text-xs font-semibold ${statusColor}`}>{percent.toFixed(1)}%</span>
       </div>
 
       {/* Large number */}
-      <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-12 dark:text-white">
+      <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-12">
         {used.toLocaleString()}
-        <span className="ml-1 text-sm font-normal text-neutral-10 dark:text-white/50">
+        <span className="ml-1 text-sm font-normal text-neutral-10">
           / {limit.toLocaleString()} {unit}
         </span>
       </p>
 
       {/* Progress bar */}
-      <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-neutral-3 dark:bg-white/10">
+      <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-neutral-3">
         <div
           className={`h-full rounded-full transition-all duration-500 ${barColor}`}
           style={{ width: `${percent}%` }}
@@ -66,7 +66,7 @@ function UsageGauge({
       </div>
 
       {/* Remaining */}
-      <p className="mt-2 text-xs text-neutral-10 dark:text-white/50">
+      <p className="mt-2 text-xs text-neutral-10">
         {Math.max(limit - used, 0).toLocaleString()} {unit} remaining this period
       </p>
 
@@ -88,11 +88,9 @@ function UsageGauge({
 function StatCard({ label, value, subLabel }: { label: string; value: string; subLabel?: string }) {
   return (
     <Card className="p-4 sm:p-6">
-      <h3 className="text-sm font-medium text-neutral-11 dark:text-white/70">{label}</h3>
-      <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-12 dark:text-white">
-        {value}
-      </p>
-      {subLabel && <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">{subLabel}</p>}
+      <h3 className="text-sm font-medium text-neutral-11">{label}</h3>
+      <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-12">{value}</p>
+      {subLabel && <p className="mt-1 text-xs text-neutral-10">{subLabel}</p>}
     </Card>
   );
 }
@@ -152,10 +150,8 @@ async function UsageContent() {
 
           {/* Usage Breakdown heading */}
           <AnimateIn preset="fadeUp">
-            <h2 className="mt-8 text-lg font-semibold text-neutral-12 dark:text-white">
-              Usage Breakdown
-            </h2>
-            <p className="mt-1 text-sm text-neutral-11 dark:text-white/70">
+            <h2 className="mt-8 text-lg font-semibold text-neutral-12">Usage Breakdown</h2>
+            <p className="mt-1 text-sm text-neutral-11">
               Detailed per-model and per-endpoint breakdown coming soon.
             </p>
           </AnimateIn>
@@ -164,10 +160,8 @@ async function UsageContent() {
           <AnimateInGroup stagger="fast" className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <AnimateIn preset="fadeUp">
               <Card className="group cursor-pointer p-4 transition-all hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
-                <h3 className="text-sm font-semibold text-neutral-12 dark:text-white">
-                  📊 Per-Model Breakdown
-                </h3>
-                <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">
+                <h3 className="text-sm font-semibold text-neutral-12">📊 Per-Model Breakdown</h3>
+                <p className="mt-1 text-xs text-neutral-10">
                   See token usage per AI model (GPT-4, Claude, Gemini).
                 </p>
               </Card>
@@ -175,10 +169,8 @@ async function UsageContent() {
 
             <AnimateIn preset="fadeUp">
               <Card className="group cursor-pointer p-4 transition-all hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
-                <h3 className="text-sm font-semibold text-neutral-12 dark:text-white">
-                  📈 Historical Trends
-                </h3>
-                <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">
+                <h3 className="text-sm font-semibold text-neutral-12">📈 Historical Trends</h3>
+                <p className="mt-1 text-xs text-neutral-10">
                   View daily/weekly/monthly usage trends over time.
                 </p>
               </Card>
@@ -186,10 +178,8 @@ async function UsageContent() {
 
             <AnimateIn preset="fadeUp">
               <Card className="group cursor-pointer p-4 transition-all hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
-                <h3 className="text-sm font-semibold text-neutral-12 dark:text-white">
-                  ⚙️ Quota Settings
-                </h3>
-                <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">
+                <h3 className="text-sm font-semibold text-neutral-12">⚙️ Quota Settings</h3>
+                <p className="mt-1 text-xs text-neutral-10">
                   Configure usage thresholds and alert notifications.
                 </p>
               </Card>

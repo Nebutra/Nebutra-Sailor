@@ -52,7 +52,7 @@ export function RBACCard() {
         className="w-full max-w-[440px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-transform duration-150 group-hover:-translate-y-px origin-bottom flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center gap-2 px-6 py-4 border-b border-border/60 dark:border-white/5 text-[11px] uppercase tracking-widest text-muted-foreground dark:text-zinc-500 font-semibold bg-muted/20 dark:bg-white/[0.02]">
+        <div className="flex items-center gap-2 px-6 py-4 border-b border-border/60 text-[11px] uppercase tracking-widest text-muted-foreground dark:text-zinc-500 font-semibold bg-muted/20/[0.02]">
           <Fingerprint className="w-4 h-4" />
           Access Matrix
           <span className="ml-auto text-[10px] font-semibold normal-case tracking-normal text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20 dark:border-emerald-400/20">
@@ -62,7 +62,7 @@ export function RBACCard() {
 
         <table className="w-full text-sm text-left flex-1 border-collapse">
           <thead className="bg-transparent">
-            <tr className="border-b border-border/50 dark:border-white/5">
+            <tr className="border-b border-border/50">
               <th className="py-3 px-6 text-[10px] font-semibold text-muted-foreground/80 dark:text-zinc-500 uppercase tracking-widest w-[38%]">
                 Resource
               </th>
@@ -91,8 +91,8 @@ export function RBACCard() {
             {PERMISSIONS.map((row, i) => (
               <tr
                 key={row.feature}
-                className={`transition-colors hover:bg-muted/40 dark:hover:bg-white/5 ${
-                  i < PERMISSIONS.length - 1 ? "border-b border-border/40 dark:border-white/5" : ""
+                className={`transition-colors hover:bg-muted/40 ${
+                  i < PERMISSIONS.length - 1 ? "border-b border-border/40" : ""
                 }`}
               >
                 <td className="py-3.5 px-6 text-sm font-semibold text-foreground dark:text-zinc-300">
@@ -106,7 +106,7 @@ export function RBACCard() {
                           <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                         </span>
                       ) : (
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-border/50 dark:border-white/10">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full border border-border/50">
                           <span className="w-2.5 h-[1.5px] rounded-full bg-border dark:bg-zinc-600" />
                         </span>
                       )}

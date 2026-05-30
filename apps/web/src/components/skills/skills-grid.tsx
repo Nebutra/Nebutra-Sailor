@@ -98,7 +98,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
       {/* Toolbar */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-10 dark:text-white/40" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-neutral-10" />
           <Input
             type="search"
             value={query}
@@ -106,9 +106,9 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
             placeholder="Search skills…"
           />
         </div>
-        <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 dark:border-white/15 dark:bg-black/40 dark:text-white/70">
+        <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 dark:bg-black/40">
           <BadgeCheck
-            className={`h-3.5 w-3.5 ${officialOnly ? "text-blue-9" : "text-neutral-10 dark:text-white/40"}`}
+            className={`h-3.5 w-3.5 ${officialOnly ? "text-blue-9" : "text-neutral-10"}`}
           />
           Official only
           <input
@@ -116,7 +116,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
             type="checkbox"
             checked={officialOnly}
             onChange={(e) => setOfficialOnly(e.target.checked)}
-            className="ml-1 h-3 w-3 rounded border-neutral-7 text-blue-9 dark:border-white/30 dark:bg-black/40"
+            className="ml-1 h-3 w-3 rounded border-neutral-7 text-blue-9 dark:bg-black/40"
           />
         </label>
       </div>
@@ -126,7 +126,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
         <button
           type="button"
           onClick={onAddCustom}
-          className="group flex w-full items-center justify-between gap-3 rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-1 p-4 text-left transition-colors hover:border-neutral-9 hover:bg-neutral-2 dark:border-white/15 dark:bg-white/[0.02] dark:hover:border-white/25 dark:hover:bg-white/[0.04]"
+          className="group flex w-full items-center justify-between gap-3 rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-1 p-4 text-left transition-colors hover:border-neutral-9 hover:bg-neutral-2"
         >
           <div className="flex items-center gap-3">
             <div
@@ -136,10 +136,8 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
               <Plus className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-neutral-12 dark:text-white">
-                Add a custom skill
-              </p>
-              <p className="text-xs text-neutral-10 dark:text-white/50">
+              <p className="text-sm font-semibold text-neutral-12">Add a custom skill</p>
+              <p className="text-xs text-neutral-10">
                 Author your own capability with markdown + JSON schema.
               </p>
             </div>
@@ -152,12 +150,10 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-10 text-center dark:border-white/15 dark:bg-white/[0.02]">
-          <Sparkles className="mx-auto h-6 w-6 text-neutral-9 dark:text-white/30" />
-          <p className="mt-3 text-sm font-medium text-neutral-12 dark:text-white">
-            No skills match
-          </p>
-          <p className="mt-1 text-xs text-neutral-10 dark:text-white/50">
+        <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-10 text-center/[0.02]">
+          <Sparkles className="mx-auto h-6 w-6 text-neutral-9" />
+          <p className="mt-3 text-sm font-medium text-neutral-12">No skills match</p>
+          <p className="mt-1 text-xs text-neutral-10">
             Try a different search or clear the Official-only filter.
           </p>
         </div>
@@ -172,12 +168,12 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
                 className={`flex h-full flex-col rounded-[var(--radius-xl)] border p-4 transition-colors ${
                   enabled
                     ? "border-blue-6 bg-blue-2/30 dark:border-blue-7/50 dark:bg-blue-2/10"
-                    : "border-neutral-6 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.02]"
+                    : "border-neutral-6 bg-neutral-1"
                 } ${isBusy ? "opacity-60" : ""}`}
               >
                 <div className="mb-2 flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-mono text-sm font-semibold text-neutral-12 dark:text-white">
+                    <h3 className="font-mono text-sm font-semibold text-neutral-12">
                       {skill.slug}
                     </h3>
                     {skill.isOfficial && (
@@ -195,25 +191,23 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
                   />
                 </div>
 
-                <p className="line-clamp-3 text-xs leading-relaxed text-neutral-10 dark:text-white/50">
+                <p className="line-clamp-3 text-xs leading-relaxed text-neutral-10">
                   {skill.description}
                 </p>
 
                 <div className="mt-auto flex items-center justify-between gap-2 pt-3">
                   <div className="flex flex-wrap items-center gap-1.5">
                     {skill.category && (
-                      <span className="rounded-full bg-neutral-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-11 dark:bg-white/10 dark:text-white/60">
+                      <span className="rounded-full bg-neutral-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-11">
                         {CATEGORY_LABELS[skill.category]}
                       </span>
                     )}
-                    <span className="font-mono text-[10px] text-neutral-10 dark:text-white/40">
-                      v{skill.version}
-                    </span>
+                    <span className="font-mono text-[10px] text-neutral-10">v{skill.version}</span>
                   </div>
                   <button
                     type="button"
                     aria-label={`${skill.name} actions`}
-                    className="rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/40 dark:hover:bg-white/10 dark:hover:text-white"
+                    className="rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
                   >
                     <MoreHorizontal className="h-3.5 w-3.5" />
                   </button>
@@ -244,7 +238,7 @@ function Toggle({ checked, onChange, disabled, label }: ToggleProps) {
       disabled={disabled}
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-8 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
-        checked ? "bg-blue-9" : "bg-neutral-6 dark:bg-white/15"
+        checked ? "bg-blue-9" : "bg-neutral-6"
       }`}
     >
       <span

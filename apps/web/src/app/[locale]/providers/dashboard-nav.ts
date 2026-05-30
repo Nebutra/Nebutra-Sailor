@@ -1,15 +1,10 @@
 import { routing } from "@nebutra/i18n/routing";
 import {
-  Robot as Bot,
-  ChartTrendingUp as ChartSpline,
-  CreditCard,
-  FileText,
-  Layout as LayoutDashboard,
+  Home as HomeIcon,
   type Icon as LucideIcon,
   BlendMode as Palette,
   Connection as Plug,
   Shield,
-  Users,
 } from "@nebutra/icons";
 
 export interface DashboardNavBadge {
@@ -21,21 +16,13 @@ export interface DashboardNavItem {
   href: string;
   label: string;
   icon: LucideIcon;
-  group: "Product" | "Operations" | "Admin";
+  group: "Product" | "Admin";
   badge?: DashboardNavBadge;
   children?: DashboardNavItem[];
 }
 
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
-  { href: "/workspace", label: "Overview", icon: LayoutDashboard, group: "Product" },
-  { href: "/analytics", label: "Analytics", icon: ChartSpline, group: "Product" },
-  {
-    href: "/chat",
-    label: "AI Chat",
-    icon: Bot,
-    group: "Product",
-    badge: { label: "New", tone: "new" },
-  },
+  { href: "/workspace", label: "Home", icon: HomeIcon, group: "Product" },
   {
     href: "/theme-playground",
     label: "Theme Playground",
@@ -44,9 +31,6 @@ export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
     badge: { label: "Beta", tone: "beta" },
   },
   { href: "/integrations", label: "Connectors", icon: Plug, group: "Product" },
-  { href: "/billing", label: "Billing", icon: CreditCard, group: "Operations" },
-  { href: "/tenants", label: "Tenants", icon: Users, group: "Operations" },
-  { href: "/audit", label: "Audit", icon: FileText, group: "Operations" },
   {
     href: "/admin",
     label: "Admin",
@@ -60,10 +44,6 @@ export const DASHBOARD_NAV_GROUPS = [
   {
     title: "Product",
     items: DASHBOARD_NAV_ITEMS.filter((item) => item.group === "Product"),
-  },
-  {
-    title: "Operations",
-    items: DASHBOARD_NAV_ITEMS.filter((item) => item.group === "Operations"),
   },
   {
     title: "Admin",
@@ -112,12 +92,7 @@ function formatSegment(segment: string) {
 
 export function buildBreadcrumbs(pathname: string) {
   const segments = stripLocalePrefix(pathname).split("/").filter(Boolean);
-
-  if (segments.length === 0) {
-    return [{ href: "/workspace", label: "Overview" }];
-  }
-
-  const crumbs = [{ href: "/workspace", label: "Overview" }];
+  const crumbs: Array<{ href: string; label: string }> = [];
 
   segments.forEach((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join("/")}`;

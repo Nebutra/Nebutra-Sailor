@@ -10,6 +10,7 @@ import {
 } from "@nebutra/ui/primitives";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { dicebearAvatarUrl } from "@/lib/avatar";
 
 type TeamRole = "owner" | "admin" | "member" | "viewer";
 
@@ -48,11 +49,6 @@ const editableRoles: Exclude<TeamRole, "owner">[] = ["admin", "member", "viewer"
 
 function memberDisplayName(member: TeamMember) {
   return member.user.name || member.user.email;
-}
-
-function initialsFor(member: TeamMember) {
-  const label = memberDisplayName(member).trim();
-  return label.slice(0, 2).toUpperCase() || "??";
 }
 
 function formatJoinedAt(value: string) {
@@ -230,9 +226,13 @@ export function TeamMemberList({ orgId }: Props) {
                           className="rounded-full object-cover"
                         />
                       ) : (
-                        <span className="flex size-10 items-center justify-center rounded-full bg-[var(--neutral-4)] text-xs font-semibold text-[var(--neutral-11)]">
-                          {initialsFor(member)}
-                        </span>
+                        <img
+                          src={dicebearAvatarUrl(member.user.email ?? member.user.name)}
+                          alt=""
+                          width={40}
+                          height={40}
+                          className="size-10 rounded-full object-cover"
+                        />
                       )}
                       <div className="min-w-0">
                         <p className="truncate font-medium text-[var(--neutral-12)]">

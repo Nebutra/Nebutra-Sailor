@@ -1,5 +1,7 @@
+// @vitest-environment jsdom
+
 import type { NotificationSettingsSnapshot } from "@nebutra/notifications";
-import { renderToStaticMarkup } from "react-dom/server";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { NotificationCenter } from "@/components/notifications/notification-center";
 
@@ -39,7 +41,7 @@ function buildSnapshot(
 
 describe("NotificationCenter", () => {
   it("renders an unread badge, linked inbox item, and mark-read controls", () => {
-    const html = renderToStaticMarkup(
+    render(
       <NotificationCenter
         locale="en"
         defaultOpen
@@ -61,16 +63,16 @@ describe("NotificationCenter", () => {
       />,
     );
 
-    expect(html).toContain(">3</span>");
-    expect(html).toContain("Invite accepted");
-    expect(html).toContain("Ada joined the workspace.");
-    expect(html).toContain('href="/en/team"');
-    expect(html).toContain("Mark read");
-    expect(html).toContain("Mark all read");
+    expect(screen.getByText("3")).toBeTruthy();
+    expect(screen.getByText("Invite accepted")).toBeTruthy();
+    expect(screen.getByText("Ada joined the workspace.")).toBeTruthy();
+    expect(screen.getByRole("link", { name: /Open/ }).getAttribute("href")).toBe("/en/team");
+    expect(screen.getByText("Mark read")).toBeTruthy();
+    expect(screen.getByText("Mark all read")).toBeTruthy();
   });
 
   it("caps large unread badges and shows degraded inbox state honestly", () => {
-    const html = renderToStaticMarkup(
+    render(
       <NotificationCenter
         locale="en"
         defaultOpen
@@ -93,11 +95,14 @@ describe("NotificationCenter", () => {
       />,
     );
 
-    expect(html).toContain("99+");
-    expect(html).toContain("Persistent inbox storage is not connected.");
-    expect(html).toContain(
-      "Inbox messages will appear here once a persistent notification backend is connected.",
-    );
-    expect(html).toContain("disabled=");
+    expect(screen.getByText("99+")).toBeTruthy();
+    expect(screen.getByText("Persistent inbox storage is not connected.")).toBeTruthy();
+    expect(
+      screen.getByText(
+        "Inbox messages will appear here once a persistent notification backend is connected.",
+      ),
+    ).toBeTruthy();
+    const markAll = screen.getByText("Mark all read");
+    expect(markAll.hasAttribute("disabled")).toBe(true);
   });
 });

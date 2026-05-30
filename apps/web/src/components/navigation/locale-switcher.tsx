@@ -3,7 +3,9 @@
 import { usePathname, useRouter } from "@nebutra/i18n/routing";
 import { Check, Globe } from "@nebutra/icons";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
+import { createPortal } from "react-dom";
+import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 
 const LOCALES = ["en", "zh"] as const;
 type LocaleCode = (typeof LOCALES)[number];
@@ -22,19 +24,7 @@ export function LocaleSwitcher() {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    function onDocumentClick(event: MouseEvent) {
-      if (!containerRef.current) return;
-      if (!containerRef.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", onDocumentClick);
-    return () => document.removeEventListener("mousedown", onDocumentClick);
-  }, [open]);
+  const { triggerRef, menuRef, style } = useAnchoredMenu(open, () => setOpen(false));
 
   const handleLocaleChange = useCallback(
     (next: LocaleCode) => {
@@ -48,44 +38,50 @@ export function LocaleSwitcher() {
   );
 
   return (
-    <div ref={containerRef} className="relative inline-block">
+    <>
       <button
+        ref={triggerRef}
         type="button"
         aria-label={t("ariaLabel")}
         aria-haspopup="menu"
         aria-expanded={open}
         disabled={isPending}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+        className="inline-flex items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
       >
         <Globe className="h-4 w-4" aria-hidden />
         <span className="uppercase">{locale}</span>
       </button>
 
-      {open && (
-        <div
-          role="menu"
-          aria-label={t("ariaLabel")}
-          className="absolute right-0 z-50 mt-1 w-36 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
-        >
-          {LOCALES.map((cur) => {
-            const isActive = locale === cur;
-            return (
-              <button
-                key={cur}
-                type="button"
-                role="menuitem"
-                aria-current={isActive ? "true" : undefined}
-                onClick={() => handleLocaleChange(cur)}
-                className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
-              >
-                <span>{t(cur)}</span>
-                {isActive && <Check className="h-3.5 w-3.5" aria-hidden />}
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
+      {open &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            ref={menuRef}
+            role="menu"
+            aria-label={t("ariaLabel")}
+            style={style}
+            className="w-36 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg"
+          >
+            {LOCALES.map((cur) => {
+              const isActive = locale === cur;
+              return (
+                <button
+                  key={cur}
+                  type="button"
+                  role="menuitem"
+                  aria-current={isActive ? "true" : undefined}
+                  onClick={() => handleLocaleChange(cur)}
+                  className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
+                >
+                  <span>{t(cur)}</span>
+                  {isActive && <Check className="h-3.5 w-3.5" aria-hidden />}
+                </button>
+              );
+            })}
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }

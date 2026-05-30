@@ -91,7 +91,7 @@ export function UpgradeBanner({
     <section
       aria-label={resolvedTitle}
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-6 bg-gradient-to-r from-blue-2/40 to-cyan-2/30 dark:border-white/10 dark:from-blue-2/10 dark:to-cyan-2/5",
+        "relative overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-6 bg-gradient-to-r from-blue-2/40 to-cyan-2/30 dark:from-blue-2/10 dark:to-cyan-2/5",
         variant === "inline" ? "px-4 py-3" : "px-5 py-4",
         className,
       )}
@@ -108,13 +108,9 @@ export function UpgradeBanner({
         </BrandMark>
 
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-neutral-12 dark:text-white">
-            {resolvedTitle}
-          </p>
+          <p className="truncate text-sm font-semibold text-neutral-12">{resolvedTitle}</p>
           {description && (
-            <p className="mt-0.5 line-clamp-2 text-xs text-neutral-11 dark:text-white/70">
-              {description}
-            </p>
+            <p className="mt-0.5 line-clamp-2 text-xs text-neutral-11">{description}</p>
           )}
         </div>
 
@@ -126,7 +122,7 @@ export function UpgradeBanner({
               type="button"
               onClick={handleDismiss}
               aria-label="Dismiss"
-              className="rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-3 hover:text-neutral-12 dark:text-white/50 dark:hover:bg-white/10 dark:hover:text-white"
+              className="rounded-[var(--radius-md)] p-1 text-neutral-10 transition-colors hover:bg-neutral-3 hover:text-neutral-12"
             >
               <X className="h-3.5 w-3.5" />
             </button>

@@ -98,6 +98,7 @@
     "ariaLabel": "打开用户菜单",
     "profile": "个人资料",
     "settings": "设置",
+    "feedback": "反馈",
     "theme": "主题",
     "language": "语言",
     "signOut": "退出登录",
@@ -877,6 +878,17 @@
       "morning": "早上好",
       "afternoon": "下午好",
       "evening": "晚上好"
+    },
+    "home": {
+      "connectorsPill": "用集成为应用加持",
+      "subtitle": "随手写句话，或在任意页面按 ⌘K，亦或直接跳到某个工作台界面。",
+      "promptPlaceholder": "在想点什么？",
+      "actions": {
+        "connect": "连接集成",
+        "theme": "主题工坊",
+        "audit": "审计日志",
+        "billing": "账单"
+      }
     },
     "commandSurface": {
       "noAuth": "当前认证提供商尚未配置完整。设置对应 provider 密钥后即可启用用户会话。"

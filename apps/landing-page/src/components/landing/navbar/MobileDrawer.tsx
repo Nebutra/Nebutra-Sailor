@@ -21,7 +21,7 @@ export function MobileDrawer() {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="relative z-[60] flex size-11 items-center justify-center rounded-[var(--radius-lg)] text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+        className="relative z-[60] flex size-11 items-center justify-center rounded-[var(--radius-lg)] text-neutral-11 transition-colors hover:text-neutral-12"
         aria-label="Toggle menu"
       >
         {open ? <Cross className="size-6" /> : <Menu className="size-6" />}
@@ -65,7 +65,7 @@ export function MobileDrawer() {
                                     target="_blank"
                                     rel="noreferrer"
                                     onClick={() => setOpen(false)}
-                                    className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+                                    className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12"
                                   >
                                     {content}
                                   </a>
@@ -77,7 +77,7 @@ export function MobileDrawer() {
                                   key={child.labelKey}
                                   href={child.href as LocalizedHref}
                                   onClick={() => setOpen(false)}
-                                  className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+                                  className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12"
                                 >
                                   {content}
                                 </Link>
@@ -105,7 +105,7 @@ export function MobileDrawer() {
                           target="_blank"
                           rel="noreferrer"
                           onClick={() => setOpen(false)}
-                          className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+                          className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12"
                         >
                           {content}
                         </a>
@@ -117,7 +117,7 @@ export function MobileDrawer() {
                         key={link.labelKey}
                         href={link.href as LocalizedHref}
                         onClick={() => setOpen(false)}
-                        className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+                        className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12"
                       >
                         {content}
                       </Link>
@@ -129,7 +129,7 @@ export function MobileDrawer() {
                   <a
                     href={`${APP_URL}/sign-in`}
                     onClick={() => setOpen(false)}
-                    className="w-full rounded-[var(--radius-lg)] border border-neutral-7 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border dark:text-white"
+                    className="w-full rounded-[var(--radius-lg)] border border-neutral-7 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border"
                   >
                     {t("signIn")}
                   </a>

@@ -82,7 +82,7 @@ export function PersonalizationTab() {
   if (loading) {
     return (
       <div className="flex min-h-[240px] items-center justify-center">
-        <Loader2 className="h-5 w-5 animate-spin text-neutral-10 dark:text-white/40" />
+        <Loader2 className="h-5 w-5 animate-spin text-neutral-10" />
       </div>
     );
   }

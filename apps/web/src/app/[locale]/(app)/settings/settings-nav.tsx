@@ -31,8 +31,8 @@ export function SettingsNav() {
                 aria-current={isActive ? "page" : undefined}
                 className={`block rounded-[var(--radius-md)] px-3 py-2 text-sm transition-colors ${
                   isActive
-                    ? "bg-neutral-2 font-medium text-neutral-12 dark:bg-white/10 dark:text-white"
-                    : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+                    ? "bg-neutral-2 font-medium text-neutral-12"
+                    : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12"
                 }`}
               >
                 {label}

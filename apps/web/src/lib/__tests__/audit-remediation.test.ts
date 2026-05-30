@@ -187,16 +187,6 @@ describe("UI/UX audit remediation invariants", () => {
     expect(dashboard).not.toContain("demo_org");
   });
 
-  it("hides recent dashboard sessions until real sessions exist", () => {
-    const recentSessions = readFromRepo("apps/web/src/components/onboarding/recent-sessions.tsx");
-
-    expect(recentSessions).toContain("if (sessions.length === 0) return null");
-    expect(recentSessions).toContain("space-y-2");
-    expect(recentSessions).not.toContain("emptyTitle");
-    expect(recentSessions).not.toContain("emptyDescription");
-    expect(recentSessions).not.toContain("border-dashed");
-  });
-
   it("keeps onboarding scaffolding off the dashboard overview", () => {
     const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
     const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
@@ -251,7 +241,6 @@ describe("UI/UX audit remediation invariants", () => {
     const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
     const navModel = readFromRepo("apps/web/src/app/[locale]/providers/dashboard-nav.ts");
 
-    expect(navModel).toContain('href: "/analytics"');
     expect(navModel).toContain('href: "/billing"');
     expect(navModel).toContain('href: "/tenants"');
     expect(navModel).toContain('href: "/audit"');
@@ -260,7 +249,7 @@ describe("UI/UX audit remediation invariants", () => {
     expect(navModel).toContain("const normalizedPathname = stripLocalePrefix(pathname)");
     expect(shell).toMatch(/aria-label="Breadcrumb"/);
     expect(shell).toMatch(/aria-current=/);
-    expect(shell).toContain('breadcrumbs.length <= 1 && "sr-only"');
+    expect(shell).toContain("breadcrumbs.length > 1");
     expect(shell).not.toContain("DASHBOARD_NAV_ITEMS.slice");
     expect(shell).not.toContain("Workspace</p>");
   });

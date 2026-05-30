@@ -23,9 +23,11 @@ describe("AvatarUploadForm", () => {
     vi.restoreAllMocks();
   });
 
-  it("renders fallback initials when no avatar is set", () => {
+  it("renders a DiceBear fallback (not initials) when no avatar is set", () => {
     render(<AvatarUploadForm initialAvatarUrl={null} fallbackName="Alice Bee" />);
-    expect(screen.getByLabelText(/avatar preview/i).textContent).toMatch(/AB/);
+    const preview = screen.getByAltText(/avatar preview/i);
+    expect(preview.getAttribute("src") ?? "").toMatch(/^data:image\/svg\+xml/);
+    expect(preview.textContent).not.toMatch(/AB/);
   });
 
   it("renders an image when initialAvatarUrl is provided", () => {
@@ -86,7 +88,7 @@ describe("AvatarUploadForm", () => {
     expect(onUpdated).toHaveBeenCalledWith({ avatarUrl: "https://cdn/avatars/1.png" });
   });
 
-  it("calls delete pipeline and returns to initials", async () => {
+  it("calls delete pipeline and returns to the DiceBear fallback", async () => {
     const deletePipeline = vi.fn().mockResolvedValue({ avatarUrl: null });
     const onUpdated = vi.fn();
     render(
@@ -101,7 +103,11 @@ describe("AvatarUploadForm", () => {
     fireEvent.click(screen.getByRole("button", { name: "account.avatar.removeButton" }));
 
     await waitFor(() => expect(deletePipeline).toHaveBeenCalled());
-    await waitFor(() => expect(screen.getByLabelText(/avatar preview/i).textContent).toMatch(/AB/));
+    await waitFor(() =>
+      expect(screen.getByAltText(/avatar preview/i).getAttribute("src") ?? "").toMatch(
+        /^data:image\/svg\+xml/,
+      ),
+    );
     expect(screen.getByRole("status").textContent).toBe("account.avatar.removed");
     expect(onUpdated).toHaveBeenCalledWith({ avatarUrl: null });
   });

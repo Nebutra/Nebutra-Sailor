@@ -184,9 +184,9 @@ export function TeamChat({
       {/* Header */}
       <header className="flex justify-between items-center border-b border-[var(--neutral-7)] pb-3 mb-6">
         <div className="flex items-center gap-3">
-          <Users className="w-8 h-8 text-black dark:text-white" />
+          <Users className="w-8 h-8 text-black" />
           <div>
-            <h2 className="text-2xl font-semibold text-black dark:text-white">{chatName}</h2>
+            <h2 className="text-2xl font-semibold text-black">{chatName}</h2>
             {tagline && <p className="italic text-sm text-[var(--neutral-10)]">{tagline}</p>}
           </div>
         </div>
@@ -214,7 +214,7 @@ export function TeamChat({
                 className={cn(
                   "flex items-center gap-3 w-full p-3 mb-3 rounded-[var(--radius-lg)] transition-colors",
                   isSelected
-                    ? "bg-black dark:bg-white text-white dark:text-black"
+                    ? "bg-black text-white dark:text-black"
                     : "hover:bg-[var(--neutral-4)] text-[var(--neutral-12)]",
                 )}
               >
@@ -238,9 +238,7 @@ export function TeamChat({
                 <div className="flex items-center gap-4 mb-2">
                   <Avatar src={message.sender.avatar} alt={message.sender.name} />
                   <div>
-                    <p className="font-semibold text-black dark:text-white">
-                      {message.sender.name}
-                    </p>
+                    <p className="font-semibold text-black">{message.sender.name}</p>
                     <span className="text-xs text-[var(--neutral-9)]">{message.timestamp}</span>
                   </div>
                 </div>
@@ -260,7 +258,7 @@ export function TeamChat({
                         className={cn(
                           "px-2 py-1 rounded-[var(--radius-md)] text-sm transition-colors",
                           reaction.reacted
-                            ? "bg-[var(--neutral-5)] text-black dark:text-white"
+                            ? "bg-[var(--neutral-5)] text-black"
                             : "bg-[var(--neutral-3)] text-[var(--neutral-11)]",
                           "hover:bg-[var(--neutral-4)]",
                         )}
@@ -296,7 +294,7 @@ export function TeamChat({
           type="button"
           aria-label="Send message"
           onClick={handleSend}
-          className="p-3 rounded-full bg-black dark:bg-white text-white dark:text-black hover:brightness-90 transition"
+          className="p-3 rounded-full bg-black text-white dark:text-black hover:brightness-90 transition"
         >
           <Send className="w-6 h-6" />
         </button>
