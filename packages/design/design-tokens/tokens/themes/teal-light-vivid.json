@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Teal primary, vivid chroma, light surface",
+  "$description": "Community theme — Teal primary, vivid chroma, dark surface",
   "theme": "teal-light-vivid",
   "color": {
     "primary": {
@@ -12,11 +12,11 @@
       "$type": "color"
     },
     "secondary": {
-      "$value": "oklch(0.860 0.106 188.9)",
+      "$value": "oklch(0.313 0.027 180.5)",
       "$type": "color"
     },
     "secondary-foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "accent": {
@@ -28,43 +28,43 @@
       "$type": "color"
     },
     "background": {
-      "$value": "#3cffd0",
+      "$value": "oklch(0.16 0.005 180.5)",
       "$type": "color"
     },
     "foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "#3cffd0",
       "$type": "color"
     },
     "card": {
-      "$value": "oklch(0.907 0.113 182.6)",
+      "$value": "oklch(0.206 0.012 180.5)",
       "$type": "color"
     },
     "card-foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "#3cffd0",
       "$type": "color"
     },
     "popover": {
-      "$value": "oklch(0.892 0.111 184.7)",
+      "$value": "oklch(0.221 0.014 180.5)",
       "$type": "color"
     },
     "popover-foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "#3cffd0",
       "$type": "color"
     },
     "muted": {
-      "$value": "oklch(0.876 0.108 186.8)",
+      "$value": "oklch(0.252 0.018 180.5)",
       "$type": "color"
     },
     "muted-foreground": {
-      "$value": "oklch(0.415 0.043 249.0)",
+      "$value": "oklch(0.656 0.077 180.5)",
       "$type": "color"
     },
     "border": {
-      "$value": "oklch(0.845 0.104 191.0)",
+      "$value": "oklch(0.328 0.029 180.5)",
       "$type": "color"
     },
     "input": {
-      "$value": "oklch(0.860 0.106 188.9)",
+      "$value": "oklch(0.297 0.025 180.5)",
       "$type": "color"
     },
     "ring": {

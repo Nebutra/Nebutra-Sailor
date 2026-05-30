@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Amber primary, vivid chroma, light surface",
+  "$description": "Community theme — Amber primary, vivid chroma, dark surface",
   "theme": "amber-light-vivid-3",
   "color": {
     "primary": {
@@ -12,11 +12,11 @@
       "$type": "color"
     },
     "secondary": {
-      "$value": "oklch(0.920 0.000 82.7)",
+      "$value": "oklch(0.328 0.004 85.8)",
       "$type": "color"
     },
     "secondary-foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "accent": {
@@ -28,43 +28,43 @@
       "$type": "color"
     },
     "background": {
-      "$value": "#ffffff",
+      "$value": "oklch(0.16 0.005 107.3)",
       "$type": "color"
     },
     "foreground": {
-      "$value": "#000000",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "card": {
-      "$value": "oklch(0.980 0.000 88.1)",
+      "$value": "oklch(0.210 0.005 100.9)",
       "$type": "color"
     },
     "card-foreground": {
-      "$value": "#000000",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "popover": {
-      "$value": "oklch(0.960 0.000 86.3)",
+      "$value": "oklch(0.227 0.005 98.7)",
       "$type": "color"
     },
     "popover-foreground": {
-      "$value": "#000000",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "muted": {
-      "$value": "oklch(0.940 0.000 84.5)",
+      "$value": "oklch(0.261 0.004 94.4)",
       "$type": "color"
     },
     "muted-foreground": {
-      "$value": "oklch(0.350 0.000 31.5)",
+      "$value": "oklch(0.706 0.002 37.6)",
       "$type": "color"
     },
     "border": {
-      "$value": "oklch(0.900 0.000 80.9)",
+      "$value": "oklch(0.345 0.004 83.7)",
       "$type": "color"
     },
     "input": {
-      "$value": "oklch(0.920 0.000 82.7)",
+      "$value": "oklch(0.311 0.004 88.0)",
       "$type": "color"
     },
     "ring": {

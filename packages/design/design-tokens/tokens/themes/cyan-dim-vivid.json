@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Cyan primary, vivid chroma, mid-tone surface",
+  "$description": "Community theme — Cyan primary, vivid chroma, light surface",
   "theme": "cyan-dim-vivid",
   "color": {
     "primary": {
@@ -12,7 +12,7 @@
       "$type": "color"
     },
     "secondary": {
-      "$value": "oklch(0.766 0.099 269.9)",
+      "$value": "oklch(0.970 0.012 262.1)",
       "$type": "color"
     },
     "secondary-foreground": {
@@ -28,43 +28,43 @@
       "$type": "color"
     },
     "background": {
-      "$value": "#3E6AE1",
+      "$value": "oklch(0.99 0.004 262.1)",
       "$type": "color"
     },
     "foreground": {
-      "$value": "oklch(1 0 0)",
+      "$value": "#3E6AE1",
       "$type": "color"
     },
     "card": {
-      "$value": "oklch(0.751 0.106 264.1)",
+      "$value": "oklch(0.985 0.006 262.1)",
       "$type": "color"
     },
     "card-foreground": {
-      "$value": "oklch(1 0 0)",
+      "$value": "#3E6AE1",
       "$type": "color"
     },
     "popover": {
-      "$value": "oklch(0.756 0.104 266.0)",
+      "$value": "oklch(0.980 0.008 262.1)",
       "$type": "color"
     },
     "popover-foreground": {
-      "$value": "oklch(1 0 0)",
+      "$value": "#3E6AE1",
       "$type": "color"
     },
     "muted": {
-      "$value": "oklch(0.761 0.102 268.0)",
+      "$value": "oklch(0.975 0.010 262.1)",
       "$type": "color"
     },
     "muted-foreground": {
-      "$value": "oklch(0.911 0.038 325.7)",
+      "$value": "oklch(0.831 0.072 262.1)",
       "$type": "color"
     },
     "border": {
-      "$value": "oklch(0.771 0.097 271.9)",
+      "$value": "oklch(0.966 0.014 262.1)",
       "$type": "color"
     },
     "input": {
-      "$value": "oklch(0.766 0.099 269.9)",
+      "$value": "oklch(0.970 0.012 262.1)",
       "$type": "color"
     },
     "ring": {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+  "$description": "Community theme — Crimson primary, low-saturation chroma, light surface",
   "theme": "crimson-dark-muted-5",
   "color": {
     "primary": {
@@ -12,11 +12,11 @@
       "$type": "color"
     },
     "secondary": {
-      "$value": "oklch(0.200 0.000 0.0)",
+      "$value": "oklch(0.911 0.004 0.0)",
       "$type": "color"
     },
     "secondary-foreground": {
-      "$value": "oklch(1 0 0)",
+      "$value": "oklch(0.141 0.005 285.9)",
       "$type": "color"
     },
     "accent": {
@@ -28,43 +28,43 @@
       "$type": "color"
     },
     "background": {
-      "$value": "#000000",
+      "$value": "oklch(0.99 0.004 0.0)",
       "$type": "color"
     },
     "foreground": {
-      "$value": "oklch(1 0 0)",
+      "$value": "#000000",
       "$type": "color"
     },
     "card": {
-      "$value": "oklch(0.060 0.000 0.0)",
+      "$value": "oklch(0.970 0.004 0.0)",
       "$type": "color"
     },
     "card-foreground": {
-      "$value": "oklch(1 0 0)",
+      "$value": "#000000",
       "$type": "color"
     },
     "popover": {
-      "$value": "oklch(0.080 0.000 0.0)",
+      "$value": "oklch(0.950 0.004 0.0)",
       "$type": "color"
     },
     "popover-foreground": {
-      "$value": "oklch(1 0 0)",
+      "$value": "#000000",
       "$type": "color"
     },
     "muted": {
-      "$value": "oklch(0.120 0.000 0.0)",
+      "$value": "oklch(0.931 0.004 0.0)",
       "$type": "color"
     },
     "muted-foreground": {
-      "$value": "oklch(0.650 0.000 0.0)",
+      "$value": "oklch(0.346 0.001 0.0)",
       "$type": "color"
     },
     "border": {
-      "$value": "oklch(0.220 0.000 0.0)",
+      "$value": "oklch(0.891 0.004 0.0)",
       "$type": "color"
     },
     "input": {
-      "$value": "oklch(0.180 0.000 0.0)",
+      "$value": "oklch(0.911 0.004 0.0)",
       "$type": "color"
     },
     "ring": {

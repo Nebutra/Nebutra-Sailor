@@ -212,6 +212,104 @@ function extractLightness(value: string): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
+// ─── Background usability helpers ─────────────────────────────────────────────
+
+/**
+ * Extract oklch chroma from any color string.
+ * For non-oklch colors, convert to oklch via toOklch-equivalent inline math.
+ * This is used early in synthesizeTheme before toOklch is defined, so we
+ * duplicate the extraction logic inline.
+ */
+function extractOklchChroma(value: string): number {
+  const v = value.trim();
+  // Direct oklch — extract C field
+  const oklchM = /oklch\(\s*[\d.]+\s+([\d.]+)/i.exec(v);
+  if (oklchM) return parseFloat(oklchM[1]!);
+
+  // For hex/rgb: convert to oklch and extract C
+  const rgb = parseColorToLinear(v);
+  if (!rgb) return 0;
+  const [r, g, b] = rgb;
+
+  const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
+  const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
+  const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
+  const l_ = Math.cbrt(l), m_ = Math.cbrt(m), s_ = Math.cbrt(s);
+  const A = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
+  const B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+  return Math.sqrt(A * A + B * B);
+}
+
+/**
+ * Extract oklch L (lightness, 0..1) from any color string.
+ * Uses proper sRGB gamma decoding before the oklab matrix so that hex/rgb
+ * colors match chroma-js oklch L values.
+ */
+function extractOklchLightness(value: string): number {
+  const v = value.trim();
+  const oklchM = /oklch\(\s*([\d.]+)/i.exec(v);
+  if (oklchM) return parseFloat(oklchM[1]!);
+
+  const rgb = parseColorToLinear(v);
+  if (!rgb) return 0.5;
+  // parseColorToLinear returns raw sRGB values (0..1, gamma-encoded).
+  // Decode gamma (sRGB → linear light) before applying the oklab matrix.
+  const rl = srgbToLinearChannel(rgb[0]);
+  const gl = srgbToLinearChannel(rgb[1]);
+  const bl = srgbToLinearChannel(rgb[2]);
+  const l = 0.4122214708 * rl + 0.5363325363 * gl + 0.0514459929 * bl;
+  const m = 0.2119034982 * rl + 0.6806995451 * gl + 0.1073969566 * bl;
+  const s = 0.0883024619 * rl + 0.2817188376 * gl + 0.6299787005 * bl;
+  const l_ = Math.cbrt(l), m_ = Math.cbrt(m), s_ = Math.cbrt(s);
+  return 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_;
+}
+
+/**
+ * Extract oklch H (hue, 0..360) from any color string. Returns null for achromatic.
+ */
+function extractOklchHue(value: string): number | null {
+  const v = value.trim();
+  const oklchM = /oklch\(\s*[\d.]+\s+[\d.]+\s+([\d.]+)/i.exec(v);
+  if (oklchM) return parseFloat(oklchM[1]!);
+
+  const rgb = parseColorToLinear(v);
+  if (!rgb) return null;
+  const [r, g, b] = rgb;
+  const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
+  const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
+  const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
+  const l_ = Math.cbrt(l), m_ = Math.cbrt(m), s_ = Math.cbrt(s);
+  const A = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
+  const B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+  const C = Math.sqrt(A * A + B * B);
+  if (C < 0.001) return null; // achromatic
+  return ((Math.atan2(B, A) * 180) / Math.PI + 360) % 360;
+}
+
+/**
+ * Returns true if two colors are perceptually too close to use together as
+ * background + primary. Uses oklch L distance as a proxy.
+ *
+ * Background is considered TOO CLOSE to primary when:
+ * - bgChroma ≤ 0.04 (background is low-saturation) AND
+ * - |bgL - primaryL| < 0.25 (background and primary are in the same lightness band)
+ *
+ * This covers:
+ * - bg === primary (deltaE=0, obviously fails)
+ * - Near-black bg vs near-black primary (#1a1a1a vs #000000, cjDE≈5)
+ * - Near-dark bg vs pure-black primary (oklch(0.141...) vs #000000, cjDE≈2)
+ *
+ * Calibrated against chroma-js CIEDE2000 threshold of 8: all known failing cases
+ * have |lDiff| < 0.25, while valid neutral backgrounds have |lDiff| ≥ 0.32.
+ */
+function bgTooCloseToPrimary(bgColor: string, primaryColor: string): boolean {
+  const bgChroma = extractOklchChroma(bgColor);
+  if (bgChroma > 0.04) return false; // saturated bg is caught by the chroma check
+  const bgL = extractOklchLightness(bgColor);
+  const primaryL = extractOklchLightness(primaryColor);
+  return Math.abs(bgL - primaryL) < 0.25;
+}
+
 // ─── Anonymous ID derivation ───────────────────────────────────────────────────
 
 type HueWord =
@@ -471,6 +569,54 @@ function synthesizeTheme(
     // If primary is a dark color we default to dark; else light
     const bgL = extractLightness(primary);
     background = bgL > 0.5 ? DEFAULT_BACKGROUND_LIGHT : DEFAULT_BACKGROUND_DARK;
+  }
+
+  // ── Background neutralization ─────────────────────────────────────────────
+  // The background must be a neutral surface, clearly distinct from primary.
+  // It is USABLE only if: chroma ≤ 0.04 AND it is perceptually distinct from primary.
+  {
+    const bgChroma = extractOklchChroma(background);
+    const bgIsUsable = bgChroma <= 0.04 && !bgTooCloseToPrimary(background, primary);
+
+    if (!bgIsUsable) {
+      // Determine a neutral surface that is perceptually distinct from primary.
+      // Light surface: L=0.99. Dark surface: L=0.16.
+      // Rule: prefer the surface whose L differs from primary L by ≥ 0.25.
+      //   - If primaryL > 0.74 → only dark surface is far enough (0.99 - 0.74 < 0.25)
+      //   - If primaryL < 0.41 → only light surface is far enough (0.41 - 0.16 < 0.25)
+      //   - Otherwise either works: honour source bg intent (L > 0.5 → light)
+      const primaryL = extractOklchLightness(primary);
+      const srcBgL = extractOklchLightness(background);
+
+      const LIGHT_BG_L = 0.99;
+      const DARK_BG_L = 0.16;
+      const MIN_L_DIFF = 0.25;
+
+      let isLightDesigned: boolean;
+      const lightFarEnough = Math.abs(LIGHT_BG_L - primaryL) >= MIN_L_DIFF; // 0.99 - pL ≥ 0.25 → pL ≤ 0.74
+      const darkFarEnough = Math.abs(DARK_BG_L - primaryL) >= MIN_L_DIFF;   // pL - 0.16 ≥ 0.25 → pL ≥ 0.41
+
+      if (lightFarEnough && darkFarEnough) {
+        // Both options work: honour source bg intent
+        isLightDesigned = srcBgL > 0.5;
+      } else if (lightFarEnough) {
+        // Only light bg is far enough from primary
+        isLightDesigned = true;
+      } else {
+        // Only dark bg is far enough (or fallback)
+        isLightDesigned = false;
+      }
+
+      // Extract primary hue for a subtle brand undertone in the neutral.
+      const primaryHue = extractOklchHue(primary);
+      const hueStr = primaryHue !== null ? primaryHue.toFixed(1) : "0.0";
+
+      background = isLightDesigned
+        ? `oklch(0.99 0.004 ${hueStr})`   // barely-tinted near-white
+        : `oklch(0.16 0.005 ${hueStr})`;  // near-charcoal
+
+      nudgedRoles.push("background");
+    }
   }
 
   // ── Foreground ────────────────────────────────────────────────────────────

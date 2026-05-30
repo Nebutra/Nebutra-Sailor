@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Rose primary, vivid chroma, light surface",
+  "$description": "Community theme — Rose primary, vivid chroma, dark surface",
   "theme": "rose-light-vivid-4",
   "color": {
     "primary": {
@@ -12,11 +12,11 @@
       "$type": "color"
     },
     "secondary": {
-      "$value": "oklch(0.941 0.005 114.4)",
+      "$value": "oklch(0.328 0.004 75.6)",
       "$type": "color"
     },
     "secondary-foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "accent": {
@@ -28,43 +28,43 @@
       "$type": "color"
     },
     "background": {
-      "$value": "#eeefe9",
+      "$value": "oklch(0.16 0.005 94.5)",
       "$type": "color"
     },
     "foreground": {
-      "$value": "#23251d",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "card": {
-      "$value": "oklch(0.969 0.004 114.2)",
+      "$value": "oklch(0.210 0.005 88.8)",
       "$type": "color"
     },
     "card-foreground": {
-      "$value": "#23251d",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "popover": {
-      "$value": "oklch(0.960 0.005 114.3)",
+      "$value": "oklch(0.227 0.005 86.9)",
       "$type": "color"
     },
     "popover-foreground": {
-      "$value": "#23251d",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "muted": {
-      "$value": "oklch(0.950 0.005 114.3)",
+      "$value": "oklch(0.261 0.004 83.2)",
       "$type": "color"
     },
     "muted-foreground": {
-      "$value": "oklch(0.680 0.013 116.6)",
+      "$value": "oklch(0.706 0.002 33.1)",
       "$type": "color"
     },
     "border": {
-      "$value": "oklch(0.932 0.005 114.5)",
+      "$value": "oklch(0.345 0.004 73.7)",
       "$type": "color"
     },
     "input": {
-      "$value": "oklch(0.941 0.005 114.4)",
+      "$value": "oklch(0.311 0.004 77.5)",
       "$type": "color"
     },
     "ring": {

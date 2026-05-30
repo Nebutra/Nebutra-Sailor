@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+  "$description": "Community theme — Crimson primary, low-saturation chroma, light surface",
   "theme": "crimson-dark-muted-4",
   "color": {
     "primary": {
@@ -12,11 +12,11 @@
       "$type": "color"
     },
     "secondary": {
-      "$value": "oklch(0.200 0.000 18.0)",
+      "$value": "oklch(0.922 0.004 354.1)",
       "$type": "color"
     },
     "secondary-foreground": {
-      "$value": "oklch(1 0 0)",
+      "$value": "oklch(0.141 0.005 285.9)",
       "$type": "color"
     },
     "accent": {
@@ -28,43 +28,43 @@
       "$type": "color"
     },
     "background": {
-      "$value": "#000000",
+      "$value": "oklch(0.99 0.004 0.0)",
       "$type": "color"
     },
     "foreground": {
-      "$value": "#ffffff",
+      "$value": "oklch(0.141 0.005 285.9)",
       "$type": "color"
     },
     "card": {
-      "$value": "oklch(0.060 0.000 5.4)",
+      "$value": "oklch(0.973 0.004 358.5)",
       "$type": "color"
     },
     "card-foreground": {
-      "$value": "#ffffff",
+      "$value": "oklch(0.141 0.005 285.9)",
       "$type": "color"
     },
     "popover": {
-      "$value": "oklch(0.080 0.000 7.2)",
+      "$value": "oklch(0.956 0.004 357.0)",
       "$type": "color"
     },
     "popover-foreground": {
-      "$value": "#ffffff",
+      "$value": "oklch(0.141 0.005 285.9)",
       "$type": "color"
     },
     "muted": {
-      "$value": "oklch(0.120 0.000 10.8)",
+      "$value": "oklch(0.939 0.004 355.6)",
       "$type": "color"
     },
     "muted-foreground": {
-      "$value": "oklch(0.650 0.000 58.4)",
+      "$value": "oklch(0.438 0.005 311.8)",
       "$type": "color"
     },
     "border": {
-      "$value": "oklch(0.220 0.000 19.8)",
+      "$value": "oklch(0.905 0.004 352.6)",
       "$type": "color"
     },
     "input": {
-      "$value": "oklch(0.180 0.000 16.2)",
+      "$value": "oklch(0.922 0.004 354.1)",
       "$type": "color"
     },
     "ring": {

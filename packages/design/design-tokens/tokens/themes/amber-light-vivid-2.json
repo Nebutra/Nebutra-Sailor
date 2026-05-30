@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Amber primary, vivid chroma, light surface",
+  "$description": "Community theme — Amber primary, vivid chroma, dark surface",
   "theme": "amber-light-vivid-2",
   "color": {
     "primary": {
@@ -12,11 +12,11 @@
       "$type": "color"
     },
     "secondary": {
-      "$value": "oklch(0.846 0.173 85.6)",
+      "$value": "oklch(0.328 0.004 97.6)",
       "$type": "color"
     },
     "secondary-foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "oklch(1 0 0)",
       "$type": "color"
     },
     "accent": {
@@ -28,43 +28,43 @@
       "$type": "color"
     },
     "background": {
-      "$value": "#FFC000",
+      "$value": "oklch(0.16 0.005 99.5)",
       "$type": "color"
     },
     "foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "#FFFFFF",
       "$type": "color"
     },
     "card": {
-      "$value": "oklch(0.892 0.184 96.0)",
+      "$value": "oklch(0.210 0.005 98.9)",
       "$type": "color"
     },
     "card-foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "#FFFFFF",
       "$type": "color"
     },
     "popover": {
-      "$value": "oklch(0.876 0.181 92.6)",
+      "$value": "oklch(0.227 0.005 98.7)",
       "$type": "color"
     },
     "popover-foreground": {
-      "$value": "oklch(0.141 0.005 285.9)",
+      "$value": "#FFFFFF",
       "$type": "color"
     },
     "muted": {
-      "$value": "oklch(0.861 0.177 89.1)",
+      "$value": "oklch(0.261 0.004 98.3)",
       "$type": "color"
     },
     "muted-foreground": {
-      "$value": "oklch(0.409 0.069 346.7)",
+      "$value": "oklch(0.706 0.002 93.3)",
       "$type": "color"
     },
     "border": {
-      "$value": "oklch(0.830 0.170 82.1)",
+      "$value": "oklch(0.345 0.004 97.4)",
       "$type": "color"
     },
     "input": {
-      "$value": "oklch(0.846 0.173 85.6)",
+      "$value": "oklch(0.311 0.004 97.8)",
       "$type": "color"
     },
     "ring": {
