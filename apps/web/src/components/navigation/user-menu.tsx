@@ -197,16 +197,19 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
               <User className="h-4 w-4" aria-hidden />
               <span>{t("profile")}</span>
             </button>
-            <a
+            <button
+              type="button"
               role="menuitem"
-              href="/settings"
               aria-label={t("settings")}
-              className="flex items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
-              onClick={() => setOpen(false)}
+              className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+              onClick={() => {
+                setOpen(false);
+                account.openDialog("preferences");
+              }}
             >
               <Settings className="h-4 w-4" aria-hidden />
               <span>{t("settings")}</span>
-            </a>
+            </button>
 
             <button
               type="button"
