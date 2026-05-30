@@ -13,12 +13,13 @@ import { z } from "zod";
 /**
  * Supported design-sync backend providers.
  *
- * - `figma`     — Figma + Tokens Studio plugin (DTCG via GitHub provider sync)
- * - `penpot`    — Penpot REST API (self-hostable, China-friendly)
- * - `git-only`  — No design tool; reads/writes local DTCG files directly
- * - `memory`    — In-memory test fixture (CI / unit tests only)
+ * - `figma`      — Figma + Tokens Studio plugin (DTCG via GitHub provider sync)
+ * - `penpot`     — Penpot REST API (self-hostable, China-friendly)
+ * - `git-only`   — No design tool; reads/writes local DTCG files directly
+ * - `memory`     — In-memory test fixture (CI / unit tests only)
+ * - `design-md`  — AI-native DESIGN.md format (@google/design.md) — markdown + YAML front matter
  */
-export type DesignSyncProviderType = "figma" | "penpot" | "git-only" | "memory";
+export type DesignSyncProviderType = "figma" | "penpot" | "git-only" | "memory" | "design-md";
 
 // ── DTCG Token Schema ───────────────────────────────────────────────────────
 
@@ -211,8 +212,15 @@ export interface MemoryProviderConfig extends BaseProviderConfig {
   initialSets?: DesignTokenSet[];
 }
 
+export interface DesignMdProviderConfig extends BaseProviderConfig {
+  provider: "design-md";
+  /** Absolute path to the DESIGN.md file. Defaults to `<cwd>/DESIGN.md`. */
+  designMdPath?: string;
+}
+
 export type DesignSyncConfig =
   | FigmaProviderConfig
   | PenpotProviderConfig
   | GitOnlyProviderConfig
-  | MemoryProviderConfig;
+  | MemoryProviderConfig
+  | DesignMdProviderConfig;

@@ -18,6 +18,7 @@ const VALID_PROVIDERS: ReadonlySet<DesignSyncProviderType> = new Set([
   "penpot",
   "git-only",
   "memory",
+  "design-md",
 ]);
 
 /**
@@ -76,6 +77,7 @@ export function describeEnv(env: NodeJS.ProcessEnv = process.env): {
     "PENPOT_TOKEN",
     "PENPOT_FILE_ID",
     "PENPOT_TEAM_ID",
+    "DESIGN_MD_PATH",
   ] as const;
 
   for (const key of known) {

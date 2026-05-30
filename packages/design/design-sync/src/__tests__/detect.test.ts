@@ -92,4 +92,37 @@ describe("detect.describeEnv", () => {
     expect(result.resolved).toBe("git-only");
     expect(result.detected).toEqual([]);
   });
+
+  it("includes DESIGN_MD_PATH in the missing bucket when not set", () => {
+    const result = describeEnv({});
+    expect(result.missing).toContain("DESIGN_MD_PATH");
+  });
+
+  it("includes DESIGN_MD_PATH in the detected bucket when set", () => {
+    const result = describeEnv({ DESIGN_MD_PATH: "/workspace/DESIGN.md" });
+    expect(result.detected).toContain("DESIGN_MD_PATH");
+  });
+});
+
+describe("detect — design-md provider", () => {
+  it("readConfiguredProvider returns design-md when DESIGN_SYNC_PROVIDER=design-md", () => {
+    expect(readConfiguredProvider({ DESIGN_SYNC_PROVIDER: "design-md" })).toBe("design-md");
+  });
+
+  it("detectProvider returns design-md when DESIGN_SYNC_PROVIDER=design-md", () => {
+    expect(detectProvider({ DESIGN_SYNC_PROVIDER: "design-md" })).toBe("design-md");
+  });
+
+  it("detectProvider does NOT auto-select design-md — figma creds still win", () => {
+    expect(
+      detectProvider({
+        FIGMA_PERSONAL_ACCESS_TOKEN: "tok",
+        FIGMA_FILE_ID: "file_xyz",
+      }),
+    ).toBe("figma");
+  });
+
+  it("detectProvider does NOT auto-select design-md — fallback is still git-only", () => {
+    expect(detectProvider({})).toBe("git-only");
+  });
 });
