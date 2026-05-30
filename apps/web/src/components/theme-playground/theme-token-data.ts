@@ -231,6 +231,21 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
     setVar(vars, `--shadow-${key}`, tokenValue(theme.shadow, key));
   }
 
+  // Edge tokens — mirror the global :root/.dark definitions (static/base.css)
+  // but injected as inline style so they work inside the playground canvas
+  // (which doesn't toggle the .dark class — it switches via inline colorScheme).
+  if (mode === "dark") {
+    vars["--edge-faint"] = "rgb(255 255 255 / 0.04)";
+    vars["--edge-soft"] = "rgb(255 255 255 / 0.06)";
+    vars["--edge-medium"] = "rgb(255 255 255 / 0.1)";
+    vars["--halo-faint"] = "rgb(255 255 255 / 0.03)";
+  } else {
+    vars["--edge-faint"] = "rgb(0 0 0 / 0.04)";
+    vars["--edge-soft"] = "rgb(0 0 0 / 0.07)";
+    vars["--edge-medium"] = "rgb(0 0 0 / 0.12)";
+    vars["--halo-faint"] = "rgb(0 0 0 / 0.03)";
+  }
+
   return vars as CSSProperties;
 }
 

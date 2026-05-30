@@ -719,10 +719,7 @@ function DashboardPanel({ active }: { active: boolean }) {
       <div className="mt-4">
         {["Nebutra Marketing", "Design System v2", "AI Assistant", "Analytics Pipeline"].map(
           (project, index) => (
-            <div
-              key={project}
-              className="grid grid-cols-[1fr_auto_auto] items-center gap-3 border-[color-mix(in_oklab,var(--color-foreground),transparent_94%)] border-b py-2.5 last:border-b-0"
-            >
+            <div key={project} className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-2.5">
               <span className="font-medium text-xs">{project}</span>
               <Badge variant={index === 3 ? "purple-subtle" : "green-subtle"} size="sm">
                 {index === 3 ? "Paused" : "Active"}
@@ -755,9 +752,9 @@ function AiChatPanel({ active }: { active: boolean }) {
       </div>
       {/* Assistant message bubble: foreground-mix at 6% — barely visible halo
           that hints "this is a bubble" without forming a hard rectangle. */}
-      <div className="mt-3 max-w-[78%] rounded-[var(--radius-lg)] bg-[color-mix(in_oklab,var(--color-foreground),transparent_94%)] p-3 text-xs">
+      <div className="mt-3 max-w-[78%] rounded-[var(--radius-lg)] bg-[var(--edge-faint)] p-3 text-xs">
         Sure. Growth improved across activation and retention. I attached the report.
-        <div className="mt-3 flex items-center justify-between rounded-[var(--radius-md)] bg-[color-mix(in_oklab,var(--color-foreground),transparent_92%)] p-2">
+        <div className="mt-3 flex items-center justify-between rounded-[var(--radius-md)] bg-[var(--edge-soft)] p-2">
           <span className="font-mono text-[11px]">growth-report.pdf</span>
           <Clipboard className="size-3 text-[color:var(--color-muted-foreground)]" />
         </div>
@@ -766,7 +763,7 @@ function AiChatPanel({ active }: { active: boolean }) {
         {["Retention", "Region", "Revenue"].map((item) => (
           <button
             key={item}
-            className="rounded-full bg-[color-mix(in_oklab,var(--color-foreground),transparent_94%)] px-3 py-1 text-[color:var(--color-muted-foreground)] text-[11px]"
+            className="rounded-full bg-[var(--edge-faint)] px-3 py-1 text-[color:var(--color-muted-foreground)] text-[11px]"
             type="button"
           >
             {item}
