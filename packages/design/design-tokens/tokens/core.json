@@ -176,19 +176,25 @@
     }
   },
   "fontFamily": {
-    "$description": "Geist + Geist Mono primary (Vercel typography) with Noto Sans SC / PingFang SC / Microsoft YaHei CJK fallbacks. Replaces Poppins per VI 2026 update.",
+    "$description": "Geist + Geist Mono primary (Vercel typography) with Noto Sans SC / PingFang SC / Microsoft YaHei CJK fallbacks. Replaces Poppins per VI 2026 update. Each stack prefixes the next/font variable (--font-geist-sans / --font-geist-mono) so the actual loaded face wins over the literal 'Geist' family name (which the browser cannot resolve directly when next/font assigns a generated unique font-family identifier).",
     "sans": {
-      "$value": "\"Geist\", \"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+      "$value": "var(--font-geist-sans), \"Geist\", \"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
       "$type": "fontFamily"
     },
     "cn": {
       "$value": "\"Noto Sans SC\", \"PingFang SC\", \"Microsoft YaHei\", \"vivo Sans\", sans-serif",
       "$type": "fontFamily"
     },
-    "display": { "$value": "\"Geist\", \"Noto Sans SC\", sans-serif", "$type": "fontFamily" },
-    "heading": { "$value": "\"Geist\", \"Noto Sans SC\", sans-serif", "$type": "fontFamily" },
+    "display": {
+      "$value": "var(--font-geist-sans), \"Geist\", \"Noto Sans SC\", sans-serif",
+      "$type": "fontFamily"
+    },
+    "heading": {
+      "$value": "var(--font-geist-sans), \"Geist\", \"Noto Sans SC\", sans-serif",
+      "$type": "fontFamily"
+    },
     "mono": {
-      "$value": "\"Geist Mono\", \"Fira Code\", ui-monospace, Consolas, \"Courier New\", monospace",
+      "$value": "var(--font-geist-mono), \"Geist Mono\", \"Fira Code\", ui-monospace, Consolas, \"Courier New\", monospace",
       "$type": "fontFamily"
     }
   },
