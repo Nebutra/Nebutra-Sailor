@@ -9,7 +9,7 @@ import {
   Sparkles,
   Users,
 } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AnimateIn } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
@@ -247,11 +247,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       <section className="relative pt-32 md:pt-48 pb-20 md:pb-28 overflow-hidden">
         <AuroraBackground variant="subtle" position="top" intensity={0.5} />
         <div className="container mx-auto px-4 max-w-[1400px]">
-          <AnimateIn preset="fadeUp">
-            <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-muted-foreground mb-8 block">
-              {hero.eyebrow}
-            </span>
-          </AnimateIn>
+          <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-muted-foreground mb-8 block">
+            {hero.eyebrow}
+          </span>
 
           <AnimateIn preset="emerge">
             <h1
@@ -265,75 +263,66 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
             </h1>
           </AnimateIn>
 
-          <AnimateIn preset="fade">
-            <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-16 md:mb-20">
-              {hero.sublead}
-            </p>
-          </AnimateIn>
+          <p className="text-lg md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-16 md:mb-20">
+            {hero.sublead}
+          </p>
 
           {/* Dual product split preview */}
-          <AnimateInGroup
-            stagger="normal"
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8"
-          >
-            <AnimateIn preset="fadeUp">
-              <article
-                className="group relative h-full rounded-[var(--radius-card)] bg-muted/20 p-10 md:p-12 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
-                style={{ boxShadow: "var(--ring-hairline)" }}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+            <article
+              className="group relative h-full rounded-[var(--radius-card)] bg-muted/20 p-10 md:p-12 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
+              <div className="flex items-center gap-3 mb-8">
+                <Layers className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
+                <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
+                  {hero.builderLabel}
+                </span>
+              </div>
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-6"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
               >
-                <div className="flex items-center gap-3 mb-8">
-                  <Layers className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
-                  <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
-                    {hero.builderLabel}
-                  </span>
-                </div>
-                <h2
-                  className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-6"
-                  style={{
-                    letterSpacing: "var(--tracking-heading)",
-                    lineHeight: "var(--leading-heading)",
-                  }}
-                >
-                  {builderCore.name}
-                </h2>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  {hero.builderCaption}
-                </p>
-                <div className="absolute right-8 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowRight className="h-5 w-5 text-foreground" />
-                </div>
-              </article>
-            </AnimateIn>
+                {builderCore.name}
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                {hero.builderCaption}
+              </p>
+              <div className="absolute right-8 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                <ArrowRight className="h-5 w-5 text-foreground" />
+              </div>
+            </article>
 
-            <AnimateIn preset="fadeUp">
-              <article
-                className="group relative h-full rounded-[var(--radius-card)] bg-muted/20 p-10 md:p-12 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
-                style={{ boxShadow: "var(--ring-hairline)" }}
+            <article
+              className="group relative h-full rounded-[var(--radius-card)] bg-muted/20 p-10 md:p-12 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
+              <div className="flex items-center gap-3 mb-8">
+                <Network className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
+                <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
+                  {hero.sleptonsLabel}
+                </span>
+              </div>
+              <h2
+                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-6"
+                style={{
+                  letterSpacing: "var(--tracking-heading)",
+                  lineHeight: "var(--leading-heading)",
+                }}
               >
-                <div className="flex items-center gap-3 mb-8">
-                  <Network className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
-                  <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
-                    {hero.sleptonsLabel}
-                  </span>
-                </div>
-                <h2
-                  className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground mb-6"
-                  style={{
-                    letterSpacing: "var(--tracking-heading)",
-                    lineHeight: "var(--leading-heading)",
-                  }}
-                >
-                  {sleptons.name}
-                </h2>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  {hero.sleptonsCaption}
-                </p>
-                <div className="absolute right-8 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowRight className="h-5 w-5 text-foreground" />
-                </div>
-              </article>
-            </AnimateIn>
-          </AnimateInGroup>
+                {sleptons.name}
+              </h2>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                {hero.sleptonsCaption}
+              </p>
+              <div className="absolute right-8 bottom-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                <ArrowRight className="h-5 w-5 text-foreground" />
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -341,11 +330,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       <section id="builder-core" className="py-24 md:py-32 border-t border-border/50 bg-muted/20">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="mb-16 md:mb-20 max-w-4xl">
-            <AnimateIn preset="fadeUp">
-              <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
-                {labels.builderEyebrow}
-              </span>
-            </AnimateIn>
+            <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
+              {labels.builderEyebrow}
+            </span>
             <AnimateIn preset="emerge">
               <h2
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8 text-foreground"
@@ -357,116 +344,100 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                 {builderCore.name}
               </h2>
             </AnimateIn>
-            <AnimateIn preset="fade">
-              <p className="text-xl md:text-3xl text-foreground/90 font-medium leading-relaxed text-balance max-w-3xl">
-                {builderCore.tagline}
-              </p>
-            </AnimateIn>
+            <p className="text-xl md:text-3xl text-foreground/90 font-medium leading-relaxed text-balance max-w-3xl">
+              {builderCore.tagline}
+            </p>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Description */}
             <div className="lg:col-span-5">
-              <AnimateIn preset="fadeUp">
-                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-5 block">
-                  {labels.overviewKicker}
-                </span>
-              </AnimateIn>
-              <AnimateIn preset="fade">
-                <p className="max-w-3xl text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
-                  {builderCore.description}
-                </p>
-              </AnimateIn>
-              <AnimateIn preset="fadeUp">
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild variant="ink" size="lg">
-                    <Link href="#">
-                      <BookOpen className="mr-2 h-4 w-4" />
-                      {labels.docsLabel}
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg">
-                    <Link href="#">
-                      <Github className="mr-2 h-4 w-4" />
-                      {labels.githubLabel}
-                    </Link>
-                  </Button>
-                </div>
-              </AnimateIn>
+              <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-5 block">
+                {labels.overviewKicker}
+              </span>
+              <p className="max-w-3xl text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
+                {builderCore.description}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild variant="ink" size="lg">
+                  <Link href="#">
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    {labels.docsLabel}
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="#">
+                    <Github className="mr-2 h-4 w-4" />
+                    {labels.githubLabel}
+                  </Link>
+                </Button>
+              </div>
             </div>
 
             {/* Highlights 2x2 */}
             <div className="lg:col-span-7">
-              <AnimateIn preset="fadeUp">
-                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-5 block">
-                  {labels.highlightsKicker}
-                </span>
-              </AnimateIn>
-              <AnimateInGroup
-                stagger="normal"
-                className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5"
-              >
+              <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-5 block">
+                {labels.highlightsKicker}
+              </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                 {builderCore.highlights.map((highlight, index) => (
-                  <AnimateIn key={highlight.title} preset="fadeUp">
-                    <article
-                      className="group h-full rounded-[var(--radius-card)] bg-background p-6 md:p-7 hover:-translate-y-px transition-transform duration-150"
-                      style={{ boxShadow: "var(--ring-hairline)" }}
+                  <article
+                    key={highlight.title}
+                    className="group h-full rounded-[var(--radius-card)] bg-background p-6 md:p-7 hover:-translate-y-px transition-transform duration-150"
+                    style={{ boxShadow: "var(--ring-hairline)" }}
+                  >
+                    <div className="mb-5 flex items-center justify-between">
+                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+                        S{String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="h-px flex-1 ml-4 bg-border/70" />
+                    </div>
+                    <h3
+                      className="text-lg md:text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors"
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
                     >
-                      <div className="mb-5 flex items-center justify-between">
-                        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
-                          S{String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="h-px flex-1 ml-4 bg-border/70" />
-                      </div>
-                      <h3
-                        className="text-lg md:text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors"
-                        style={{ letterSpacing: "var(--tracking-tight)" }}
-                      >
-                        {highlight.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {highlight.desc}
-                      </p>
-                    </article>
-                  </AnimateIn>
+                      {highlight.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {highlight.desc}
+                    </p>
+                  </article>
                 ))}
-              </AnimateInGroup>
+              </div>
             </div>
           </div>
 
           {/* Builder Core × Sailor relationship — one-face-of-two-identities block */}
-          <AnimateIn preset="fadeUp">
-            <div
-              className="mt-16 md:mt-20 rounded-[var(--radius-panel)] bg-background p-8 md:p-12"
-              style={{ boxShadow: "var(--ring-hairline)" }}
-            >
-              <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                <div className="lg:col-span-4">
-                  <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
-                    {labels.builderCoreRelationKicker}
+          <div
+            className="mt-16 md:mt-20 rounded-[var(--radius-panel)] bg-background p-8 md:p-12"
+            style={{ boxShadow: "var(--ring-hairline)" }}
+          >
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              <div className="lg:col-span-4">
+                <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
+                  {labels.builderCoreRelationKicker}
+                </span>
+                <h3
+                  className="text-2xl md:text-3xl font-semibold text-foreground leading-tight"
+                  style={{ letterSpacing: "var(--tracking-heading)" }}
+                >
+                  {labels.builderCoreRelationTitle}
+                </h3>
+              </div>
+              <div className="lg:col-span-8">
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-6">
+                  {labels.builderCoreRelationBody}
+                </p>
+                <Link href="#">
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                    <Github className="h-4 w-4" />
+                    {labels.githubLabel}
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </span>
-                  <h3
-                    className="text-2xl md:text-3xl font-semibold text-foreground leading-tight"
-                    style={{ letterSpacing: "var(--tracking-heading)" }}
-                  >
-                    {labels.builderCoreRelationTitle}
-                  </h3>
-                </div>
-                <div className="lg:col-span-8">
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed mb-6">
-                    {labels.builderCoreRelationBody}
-                  </p>
-                  <Link href="#">
-                    <span className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary transition-colors">
-                      <Github className="h-4 w-4" />
-                      {labels.githubLabel}
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </span>
-                  </Link>
-                </div>
+                </Link>
               </div>
             </div>
-          </AnimateIn>
+          </div>
         </div>
       </section>
 
@@ -474,11 +445,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       <section id="sleptons" className="py-24 md:py-32 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="mb-16 md:mb-20 max-w-4xl">
-            <AnimateIn preset="fadeUp">
-              <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
-                {labels.sleptonsEyebrow}
-              </span>
-            </AnimateIn>
+            <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
+              {labels.sleptonsEyebrow}
+            </span>
             <AnimateIn preset="emerge">
               <h2
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8 text-foreground"
@@ -490,131 +459,114 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                 {sleptons.name}
               </h2>
             </AnimateIn>
-            <AnimateIn preset="fade">
-              <p className="text-xl md:text-3xl text-foreground/90 font-medium leading-relaxed text-balance max-w-3xl">
-                {sleptons.tagline}
-              </p>
-            </AnimateIn>
+            <p className="text-xl md:text-3xl text-foreground/90 font-medium leading-relaxed text-balance max-w-3xl">
+              {sleptons.tagline}
+            </p>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Highlights 2x2 — left on desktop for layout alternation */}
             <div className="lg:col-span-7 lg:order-1">
-              <AnimateIn preset="fadeUp">
-                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-5 block">
-                  {labels.highlightsKicker}
-                </span>
-              </AnimateIn>
-              <AnimateInGroup
-                stagger="normal"
-                className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5"
-              >
+              <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-5 block">
+                {labels.highlightsKicker}
+              </span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                 {sleptons.highlights.map((highlight, index) => (
-                  <AnimateIn key={highlight.title} preset="fadeUp">
-                    <article
-                      className="group h-full rounded-[var(--radius-card)] bg-muted/20 p-6 md:p-7 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
-                      style={{ boxShadow: "var(--ring-hairline)" }}
+                  <article
+                    key={highlight.title}
+                    className="group h-full rounded-[var(--radius-card)] bg-muted/20 p-6 md:p-7 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
+                    style={{ boxShadow: "var(--ring-hairline)" }}
+                  >
+                    <div className="mb-5 flex items-center justify-between">
+                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+                        L{String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="h-px flex-1 ml-4 bg-border/70" />
+                    </div>
+                    <h3
+                      className="text-lg md:text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors"
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
                     >
-                      <div className="mb-5 flex items-center justify-between">
-                        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
-                          L{String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="h-px flex-1 ml-4 bg-border/70" />
-                      </div>
-                      <h3
-                        className="text-lg md:text-xl font-semibold mb-3 text-foreground group-hover:text-primary transition-colors"
-                        style={{ letterSpacing: "var(--tracking-tight)" }}
-                      >
-                        {highlight.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        {highlight.desc}
-                      </p>
-                    </article>
-                  </AnimateIn>
+                      {highlight.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {highlight.desc}
+                    </p>
+                  </article>
                 ))}
-              </AnimateInGroup>
+              </div>
             </div>
 
             {/* Description — right on desktop */}
             <div className="lg:col-span-5 lg:order-2">
-              <AnimateIn preset="fadeUp">
-                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-5 block">
-                  {labels.overviewKicker}
-                </span>
-              </AnimateIn>
-              <AnimateIn preset="fade">
-                <p className="max-w-3xl text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
-                  {sleptons.description}
-                </p>
-              </AnimateIn>
-              <AnimateIn preset="fadeUp">
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild variant="ink" size="lg">
-                    <Link href="#">
-                      <Users className="mr-2 h-4 w-4" />
-                      {labels.exploreLabel}
-                    </Link>
-                  </Button>
-                </div>
-              </AnimateIn>
+              <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-5 block">
+                {labels.overviewKicker}
+              </span>
+              <p className="max-w-3xl text-base md:text-lg text-muted-foreground leading-relaxed mb-10">
+                {sleptons.description}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild variant="ink" size="lg">
+                  <Link href="#">
+                    <Users className="mr-2 h-4 w-4" />
+                    {labels.exploreLabel}
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
 
           {/* The Launchpad submodule — explicit expansion */}
-          <AnimateIn preset="fadeUp">
-            <div
-              className="mt-16 md:mt-20 rounded-[var(--radius-panel)] bg-muted/20 p-8 md:p-12"
-              style={{ boxShadow: "var(--ring-hairline)" }}
-            >
-              <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                <div className="lg:col-span-5">
-                  <div className="flex items-center gap-3 mb-5">
-                    <Rocket className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
-                    <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                      {labels.launchpadKicker}
-                    </span>
-                  </div>
-                  <h3
-                    className="text-2xl md:text-3xl font-semibold text-foreground leading-tight mb-5"
-                    style={{ letterSpacing: "var(--tracking-heading)" }}
-                  >
-                    {labels.launchpadTitle}
-                  </h3>
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    {labels.launchpadBody}
-                  </p>
+          <div
+            className="mt-16 md:mt-20 rounded-[var(--radius-panel)] bg-muted/20 p-8 md:p-12"
+            style={{ boxShadow: "var(--ring-hairline)" }}
+          >
+            <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              <div className="lg:col-span-5">
+                <div className="flex items-center gap-3 mb-5">
+                  <Rocket className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
+                  <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+                    {labels.launchpadKicker}
+                  </span>
                 </div>
-                <div className="lg:col-span-7">
-                  <AnimateInGroup stagger="normal" className="grid grid-cols-1 gap-3 md:gap-4">
-                    {labels.launchpadBullets.map((bullet, index) => (
-                      <AnimateIn key={bullet.metric} preset="fadeUp">
-                        <article
-                          className="flex items-start gap-5 rounded-[var(--radius-card)] bg-background p-5 md:p-6 hover:-translate-y-px transition-transform duration-150"
-                          style={{ boxShadow: "var(--ring-hairline)" }}
+                <h3
+                  className="text-2xl md:text-3xl font-semibold text-foreground leading-tight mb-5"
+                  style={{ letterSpacing: "var(--tracking-heading)" }}
+                >
+                  {labels.launchpadTitle}
+                </h3>
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  {labels.launchpadBody}
+                </p>
+              </div>
+              <div className="lg:col-span-7">
+                <div className="grid grid-cols-1 gap-3 md:gap-4">
+                  {labels.launchpadBullets.map((bullet, index) => (
+                    <article
+                      key={bullet.metric}
+                      className="flex items-start gap-5 rounded-[var(--radius-card)] bg-background p-5 md:p-6 hover:-translate-y-px transition-transform duration-150"
+                      style={{ boxShadow: "var(--ring-hairline)" }}
+                    >
+                      <span className="shrink-0 font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-1">
+                        LP-{String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div className="flex-1">
+                        <h4
+                          className="text-base md:text-lg font-semibold text-foreground mb-1.5"
+                          style={{ letterSpacing: "var(--tracking-tight)" }}
                         >
-                          <span className="shrink-0 font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-1">
-                            LP-{String(index + 1).padStart(2, "0")}
-                          </span>
-                          <div className="flex-1">
-                            <h4
-                              className="text-base md:text-lg font-semibold text-foreground mb-1.5"
-                              style={{ letterSpacing: "var(--tracking-tight)" }}
-                            >
-                              {bullet.metric}
-                            </h4>
-                            <p className="text-sm text-muted-foreground leading-relaxed">
-                              {bullet.note}
-                            </p>
-                          </div>
-                        </article>
-                      </AnimateIn>
-                    ))}
-                  </AnimateInGroup>
+                          {bullet.metric}
+                        </h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {bullet.note}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
                 </div>
               </div>
             </div>
-          </AnimateIn>
+          </div>
         </div>
       </section>
 
@@ -622,11 +574,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       <section className="py-24 md:py-32 border-t border-border/50 bg-muted/20">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="mb-16 md:mb-20 max-w-4xl">
-            <AnimateIn preset="fadeUp">
-              <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
-                {labels.whySubtitle}
-              </span>
-            </AnimateIn>
+            <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
+              {labels.whySubtitle}
+            </span>
             <AnimateIn preset="emerge">
               <h2
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10 text-foreground"
@@ -638,76 +588,65 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                 {labels.whyTitle}
               </h2>
             </AnimateIn>
-            <AnimateIn preset="fade">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-                {labels.whyBody}
-              </p>
-            </AnimateIn>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
+              {labels.whyBody}
+            </p>
           </div>
 
           {/* Dual-column comparison */}
-          <AnimateInGroup
-            stagger="normal"
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12"
-          >
-            <AnimateIn preset="fadeUp">
-              <article
-                className="group h-full rounded-[var(--radius-card)] bg-background p-10 md:p-12 hover:-translate-y-px transition-transform duration-150"
-                style={{ boxShadow: "var(--ring-hairline)" }}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12">
+            <article
+              className="group h-full rounded-[var(--radius-card)] bg-background p-10 md:p-12 hover:-translate-y-px transition-transform duration-150"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Layers className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
+                <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+                  BUILDER CORE / L0
+                </span>
+              </div>
+              <h3
+                className="text-2xl md:text-3xl font-semibold mb-3 text-foreground"
+                style={{ letterSpacing: "var(--tracking-heading)" }}
               >
-                <div className="flex items-center gap-3 mb-6">
-                  <Layers className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
-                  <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                    BUILDER CORE / L0
-                  </span>
-                </div>
-                <h3
-                  className="text-2xl md:text-3xl font-semibold mb-3 text-foreground"
-                  style={{ letterSpacing: "var(--tracking-heading)" }}
-                >
-                  {labels.whyBuilderHead}
-                </h3>
-                <p className="text-sm md:text-base font-mono tracking-tight text-primary mb-5">
-                  {labels.whyBuilderTagline}
-                </p>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  {labels.whyBuilderText}
-                </p>
-              </article>
-            </AnimateIn>
+                {labels.whyBuilderHead}
+              </h3>
+              <p className="text-sm md:text-base font-mono tracking-tight text-primary mb-5">
+                {labels.whyBuilderTagline}
+              </p>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                {labels.whyBuilderText}
+              </p>
+            </article>
 
-            <AnimateIn preset="fadeUp">
-              <article
-                className="group h-full rounded-[var(--radius-card)] bg-background p-10 md:p-12 hover:-translate-y-px transition-transform duration-150"
-                style={{ boxShadow: "var(--ring-hairline)" }}
+            <article
+              className="group h-full rounded-[var(--radius-card)] bg-background p-10 md:p-12 hover:-translate-y-px transition-transform duration-150"
+              style={{ boxShadow: "var(--ring-hairline)" }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Network className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
+                <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+                  SLEPTONS / L1
+                </span>
+              </div>
+              <h3
+                className="text-2xl md:text-3xl font-semibold mb-3 text-foreground"
+                style={{ letterSpacing: "var(--tracking-heading)" }}
               >
-                <div className="flex items-center gap-3 mb-6">
-                  <Network className="h-5 w-5 text-foreground" strokeWidth={1.5} aria-hidden />
-                  <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                    SLEPTONS / L1
-                  </span>
-                </div>
-                <h3
-                  className="text-2xl md:text-3xl font-semibold mb-3 text-foreground"
-                  style={{ letterSpacing: "var(--tracking-heading)" }}
-                >
-                  {labels.whySleptonsHead}
-                </h3>
-                <p className="text-sm md:text-base font-mono tracking-tight text-primary mb-5">
-                  {labels.whySleptonsTagline}
-                </p>
-                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                  {labels.whySleptonsText}
-                </p>
-              </article>
-            </AnimateIn>
-          </AnimateInGroup>
+                {labels.whySleptonsHead}
+              </h3>
+              <p className="text-sm md:text-base font-mono tracking-tight text-primary mb-5">
+                {labels.whySleptonsTagline}
+              </p>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                {labels.whySleptonsText}
+              </p>
+            </article>
+          </div>
 
-          <AnimateIn preset="fade">
-            <p className="text-base md:text-lg text-foreground/90 leading-relaxed border-l-2 border-foreground pl-6 max-w-4xl">
-              {labels.whyCloser}
-            </p>
-          </AnimateIn>
+          <p className="text-base md:text-lg text-foreground/90 leading-relaxed border-l-2 border-foreground pl-6 max-w-4xl">
+            {labels.whyCloser}
+          </p>
         </div>
       </section>
 
@@ -715,11 +654,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       <section className="py-24 md:py-32 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="mb-16 md:mb-20 max-w-3xl">
-            <AnimateIn preset="fadeUp">
-              <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
-                {labels.pillarsKicker}
-              </span>
-            </AnimateIn>
+            <span className="text-xs font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
+              {labels.pillarsKicker}
+            </span>
             <AnimateIn preset="fadeUp">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 text-foreground"
@@ -731,46 +668,40 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                 {labels.pillarsTitle}
               </h2>
             </AnimateIn>
-            <AnimateIn preset="fade">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {labels.pillarsSubtitle}
-              </p>
-            </AnimateIn>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              {labels.pillarsSubtitle}
+            </p>
           </div>
 
-          <AnimateInGroup
-            stagger="normal"
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {PILLARS.map((pillar) => {
               const content = pick(lang, pillar);
               return (
-                <AnimateIn key={content.number} preset="fadeUp">
-                  <article
-                    className="group h-full flex flex-col rounded-[var(--radius-card)] bg-muted/20 p-8 md:p-10 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
-                    style={{ boxShadow: "var(--ring-hairline)" }}
+                <article
+                  key={content.number}
+                  className="group h-full flex flex-col rounded-[var(--radius-card)] bg-muted/20 p-8 md:p-10 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
+                  style={{ boxShadow: "var(--ring-hairline)" }}
+                >
+                  <span
+                    className="text-2xl md:text-3xl font-semibold text-foreground/30 mb-6 leading-none select-none group-hover:text-foreground/50 transition-colors"
+                    style={{ letterSpacing: "var(--tracking-tight)" }}
+                    aria-hidden="true"
                   >
-                    <span
-                      className="text-2xl md:text-3xl font-semibold text-foreground/30 mb-6 leading-none select-none group-hover:text-foreground/50 transition-colors"
-                      style={{ letterSpacing: "var(--tracking-tight)" }}
-                      aria-hidden="true"
-                    >
-                      {content.number}
-                    </span>
-                    <h3
-                      className="text-2xl md:text-3xl font-semibold mb-5 text-foreground"
-                      style={{ letterSpacing: "var(--tracking-heading)" }}
-                    >
-                      {content.title}
-                    </h3>
-                    <p className="text-base text-muted-foreground leading-relaxed">
-                      {content.description}
-                    </p>
-                  </article>
-                </AnimateIn>
+                    {content.number}
+                  </span>
+                  <h3
+                    className="text-2xl md:text-3xl font-semibold mb-5 text-foreground"
+                    style={{ letterSpacing: "var(--tracking-heading)" }}
+                  >
+                    {content.title}
+                  </h3>
+                  <p className="text-base text-muted-foreground leading-relaxed">
+                    {content.description}
+                  </p>
+                </article>
               );
             })}
-          </AnimateInGroup>
+          </div>
         </div>
       </section>
 
@@ -778,13 +709,11 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
       <section className="relative py-32 md:py-48 border-t border-border/50 bg-background overflow-hidden">
         <AuroraBackground variant="vivid" position="center" intensity={0.4} />
         <div className="container mx-auto px-4 max-w-4xl text-center relative">
-          <AnimateIn preset="fadeUp">
-            <div className="inline-block mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-              <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-primary">
-                {labels.ctaKicker}
-              </span>
-            </div>
-          </AnimateIn>
+          <div className="inline-block mb-8 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+            <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-primary">
+              {labels.ctaKicker}
+            </span>
+          </div>
           <AnimateIn preset="emerge">
             <h2
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8 text-foreground"
@@ -796,11 +725,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               {labels.ctaTitle}
             </h2>
           </AnimateIn>
-          <AnimateIn preset="fade">
-            <p className="text-lg md:text-xl text-muted-foreground mb-12 text-balance max-w-2xl mx-auto leading-relaxed">
-              {labels.ctaSubtitle}
-            </p>
-          </AnimateIn>
+          <p className="text-lg md:text-xl text-muted-foreground mb-12 text-balance max-w-2xl mx-auto leading-relaxed">
+            {labels.ctaSubtitle}
+          </p>
           <AnimateIn preset="fadeUp">
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild variant="ink" size="lg">

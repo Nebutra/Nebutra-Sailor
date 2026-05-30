@@ -40,7 +40,7 @@ export function FAQSection() {
         </div>
 
         <div
-          className="mx-auto mt-12 max-w-4xl divide-y divide-[var(--neutral-6)] rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 backdrop-blur"
+          className="mx-auto mt-12 max-w-4xl divide-y divide-[var(--neutral-6)] rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-[var(--neutral-2)]/40"
           style={{ boxShadow: "var(--ring-hairline)" }}
         >
           {FAQS.map((entry) => {

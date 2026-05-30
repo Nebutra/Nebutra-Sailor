@@ -12,7 +12,7 @@ import {
   Workflow,
   Lightning as Zap,
 } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AnimateIn } from "@nebutra/ui/components";
 import { AuroraBackground, Button } from "@nebutra/ui/primitives";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
@@ -353,11 +353,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="relative pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
         <AuroraBackground variant="vivid" position="top" intensity={0.6} />
         <div className="relative container mx-auto px-4 max-w-[1400px]">
-          <AnimateIn preset="emerge">
-            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
-              {hero.eyebrow}
-            </span>
-          </AnimateIn>
+          <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
+            {hero.eyebrow}
+          </span>
           <AnimateIn preset="fadeUp">
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10 max-w-4xl"
@@ -369,16 +367,12 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               {hero.heading}
             </h1>
           </AnimateIn>
-          <AnimateIn preset="fade">
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-8">
-              {hero.manifesto}
-            </p>
-          </AnimateIn>
-          <AnimateIn preset="fade">
-            <p className="text-base md:text-lg text-foreground/90 leading-relaxed max-w-3xl border-l-2 border-foreground pl-4 font-medium">
-              {hero.battlefield}
-            </p>
-          </AnimateIn>
+          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-8">
+            {hero.manifesto}
+          </p>
+          <p className="text-base md:text-lg text-foreground/90 leading-relaxed max-w-3xl border-l-2 border-foreground pl-4 font-medium">
+            {hero.battlefield}
+          </p>
         </div>
       </section>
 
@@ -387,11 +381,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <AuroraBackground variant="subtle" position="center" intensity={0.4} />
         <div className="relative container mx-auto px-4 max-w-[1400px]">
           <div className="max-w-3xl mb-16 md:mb-20">
-            <AnimateIn preset="fadeUp">
-              <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                {harnessCopy.eyebrow}
-              </span>
-            </AnimateIn>
+            <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+              {harnessCopy.eyebrow}
+            </span>
             <AnimateIn preset="fadeUp">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
@@ -403,11 +395,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 {harnessCopy.heading}
               </h2>
             </AnimateIn>
-            <AnimateIn preset="fade">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                {harnessCopy.intro}
-              </p>
-            </AnimateIn>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              {harnessCopy.intro}
+            </p>
           </div>
 
           {/* Nested "Russian doll" — Harness wraps Context wraps Weights.
@@ -418,109 +408,103 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             const harnessLayer = pick(lang, HARNESS_TIMELINE[2]);
 
             return (
-              <AnimateInGroup stagger="normal">
-                <AnimateIn preset="fadeUp">
-                  <div
-                    className="relative rounded-[var(--radius-panel)] bg-background p-6 md:p-10 lg:p-14"
-                    style={{ boxShadow: "var(--ring-hairline)" }}
+              <div
+                className="relative rounded-[var(--radius-panel)] bg-background p-6 md:p-10 lg:p-14"
+                style={{ boxShadow: "var(--ring-hairline)" }}
+              >
+                {/* Harness (outermost, highlighted) */}
+                <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
+                  <div className="flex items-baseline gap-4">
+                    <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
+                      Layer 03 · {harnessLayer.year}
+                    </span>
+                    <span className="text-[10px] font-mono tracking-widest uppercase rounded-full border border-foreground bg-foreground text-background px-2.5 py-1">
+                      {harnessCopy.currentTag}
+                    </span>
+                  </div>
+                  <span className="text-xs md:text-sm font-semibold tracking-tight text-foreground">
+                    {harnessCopy.battlefieldTag}
+                  </span>
+                </div>
+                <h3
+                  className="text-2xl md:text-3xl font-semibold text-foreground mb-5"
+                  style={{
+                    letterSpacing: "var(--tracking-heading)",
+                    lineHeight: "var(--leading-heading)",
+                  }}
+                >
+                  {harnessLayer.layer}
+                </h3>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {harnessLayer.themes.map((theme) => (
+                    <span
+                      key={theme}
+                      className="text-xs md:text-sm font-mono tracking-tight rounded-full border border-foreground bg-foreground text-background px-3 py-1.5"
+                    >
+                      {theme}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Context (middle) */}
+                <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-5 md:p-8 lg:p-10">
+                  <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
+                    <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
+                      Layer 02 · {contextLayer.year}
+                    </span>
+                  </div>
+                  <h3
+                    className="text-xl md:text-2xl font-semibold text-foreground/90 mb-4"
+                    style={{
+                      letterSpacing: "var(--tracking-heading)",
+                      lineHeight: "var(--leading-heading)",
+                    }}
                   >
-                    {/* Harness (outermost, highlighted) */}
-                    <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
-                      <div className="flex items-baseline gap-4">
-                        <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
-                          Layer 03 · {harnessLayer.year}
-                        </span>
-                        <span className="text-[10px] font-mono tracking-widest uppercase rounded-full border border-foreground bg-foreground text-background px-2.5 py-1">
-                          {harnessCopy.currentTag}
-                        </span>
-                      </div>
-                      <span className="text-xs md:text-sm font-semibold tracking-tight text-foreground">
-                        {harnessCopy.battlefieldTag}
+                    {contextLayer.layer}
+                  </h3>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {contextLayer.themes.map((theme) => (
+                      <span
+                        key={theme}
+                        className="text-xs font-mono tracking-tight rounded-full border border-border bg-background text-foreground/80 px-2.5 py-1"
+                      >
+                        {theme}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Weights (innermost) */}
+                  <div className="rounded-[var(--radius-card)] border border-border/70 bg-background p-4 md:p-6">
+                    <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
+                      <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
+                        Layer 01 · {weightsLayer.year}
                       </span>
                     </div>
                     <h3
-                      className="text-2xl md:text-3xl font-semibold text-foreground mb-5"
-                      style={{
-                        letterSpacing: "var(--tracking-heading)",
-                        lineHeight: "var(--leading-heading)",
-                      }}
+                      className="text-lg md:text-xl font-semibold text-foreground/70 mb-3"
+                      style={{ letterSpacing: "var(--tracking-tight)" }}
                     >
-                      {harnessLayer.layer}
+                      {weightsLayer.layer}
                     </h3>
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {harnessLayer.themes.map((theme) => (
+                    <div className="flex flex-wrap gap-1.5">
+                      {weightsLayer.themes.map((theme) => (
                         <span
                           key={theme}
-                          className="text-xs md:text-sm font-mono tracking-tight rounded-full border border-foreground bg-foreground text-background px-3 py-1.5"
+                          className="text-[11px] font-mono tracking-tight rounded-full border border-border/60 bg-muted/40 text-muted-foreground px-2 py-0.5"
                         >
                           {theme}
                         </span>
                       ))}
                     </div>
-
-                    {/* Context (middle) */}
-                    <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-5 md:p-8 lg:p-10">
-                      <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
-                        <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
-                          Layer 02 · {contextLayer.year}
-                        </span>
-                      </div>
-                      <h3
-                        className="text-xl md:text-2xl font-semibold text-foreground/90 mb-4"
-                        style={{
-                          letterSpacing: "var(--tracking-heading)",
-                          lineHeight: "var(--leading-heading)",
-                        }}
-                      >
-                        {contextLayer.layer}
-                      </h3>
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {contextLayer.themes.map((theme) => (
-                          <span
-                            key={theme}
-                            className="text-xs font-mono tracking-tight rounded-full border border-border bg-background text-foreground/80 px-2.5 py-1"
-                          >
-                            {theme}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Weights (innermost) */}
-                      <div className="rounded-[var(--radius-card)] border border-border/70 bg-background p-4 md:p-6">
-                        <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                          <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
-                            Layer 01 · {weightsLayer.year}
-                          </span>
-                        </div>
-                        <h3
-                          className="text-lg md:text-xl font-semibold text-foreground/70 mb-3"
-                          style={{ letterSpacing: "var(--tracking-tight)" }}
-                        >
-                          {weightsLayer.layer}
-                        </h3>
-                        <div className="flex flex-wrap gap-1.5">
-                          {weightsLayer.themes.map((theme) => (
-                            <span
-                              key={theme}
-                              className="text-[11px] font-mono tracking-tight rounded-full border border-border/60 bg-muted/40 text-muted-foreground px-2 py-0.5"
-                            >
-                              {theme}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                </AnimateIn>
-              </AnimateInGroup>
+                </div>
+              </div>
             );
           })()}
 
-          <AnimateIn preset="fade">
-            <p className="mt-10 md:mt-12 text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
-              {harnessCopy.outro}
-            </p>
-          </AnimateIn>
+          <p className="mt-10 md:mt-12 text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
+            {harnessCopy.outro}
+          </p>
         </div>
       </section>
 
@@ -529,11 +513,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-5">
-              <AnimateIn preset="fadeUp">
-                <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                  Pillar 01
-                </span>
-              </AnimateIn>
+              <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+                Pillar 01
+              </span>
               <AnimateIn preset="fadeUp">
                 <h2
                   className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
@@ -545,42 +527,39 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   {aiNativePillar.title}
                 </h2>
               </AnimateIn>
-              <AnimateIn preset="fade">
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  {aiNativePillar.description}
-                </p>
-              </AnimateIn>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                {aiNativePillar.description}
+              </p>
             </div>
 
             <div className="lg:col-span-7">
-              <AnimateInGroup stagger="normal" className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {AI_NATIVE_ITEMS.map((itemBi, i) => {
                   const item = pick(lang, itemBi);
                   const Icon = itemBi.icon;
                   return (
-                    <AnimateIn key={item.name} preset="fadeUp">
-                      <div
-                        className="h-full rounded-[var(--radius-card)] bg-muted/20 p-6 hover:bg-muted/40 hover:-translate-y-px transition-all duration-150"
-                        style={{ boxShadow: "var(--ring-hairline)" }}
-                      >
-                        <div className="flex items-center justify-between mb-4">
-                          <Icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
-                          <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
-                            H{(i + 1).toString().padStart(2, "0")}
-                          </span>
-                        </div>
-                        <h3
-                          className="text-lg font-semibold text-foreground mb-2"
-                          style={{ letterSpacing: "var(--tracking-tight)" }}
-                        >
-                          {item.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <div
+                      key={item.name}
+                      className="h-full rounded-[var(--radius-card)] bg-muted/20 p-6 hover:bg-muted/40 hover:-translate-y-px transition-all duration-150"
+                      style={{ boxShadow: "var(--ring-hairline)" }}
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <Icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
+                        <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
+                          H{(i + 1).toString().padStart(2, "0")}
+                        </span>
                       </div>
-                    </AnimateIn>
+                      <h3
+                        className="text-lg font-semibold text-foreground mb-2"
+                        style={{ letterSpacing: "var(--tracking-tight)" }}
+                      >
+                        {item.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    </div>
                   );
                 })}
-              </AnimateInGroup>
+              </div>
             </div>
           </div>
         </div>
@@ -591,11 +570,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-5 lg:order-2">
-              <AnimateIn preset="fadeUp">
-                <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                  Pillar 02
-                </span>
-              </AnimateIn>
+              <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+                Pillar 02
+              </span>
               <AnimateIn preset="fadeUp">
                 <h2
                   className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
@@ -607,42 +584,37 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   {ossPillar.title}
                 </h2>
               </AnimateIn>
-              <AnimateIn preset="fade">
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6">
-                  {ossPillar.description}
-                </p>
-              </AnimateIn>
-              <AnimateIn preset="fade">
-                <p className="text-base text-muted-foreground/90 leading-relaxed border-l-2 border-border pl-4">
-                  {oss}
-                </p>
-              </AnimateIn>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6">
+                {ossPillar.description}
+              </p>
+              <p className="text-base text-muted-foreground/90 leading-relaxed border-l-2 border-border pl-4">
+                {oss}
+              </p>
             </div>
 
             <div className="lg:col-span-7 lg:order-1">
-              <AnimateInGroup stagger="normal" className="grid grid-cols-2 gap-4 md:gap-6">
+              <div className="grid grid-cols-2 gap-4 md:gap-6">
                 {OSS_STATS.map((statBi) => {
                   const stat = pick(lang, statBi);
                   return (
-                    <AnimateIn key={stat.label} preset="fadeUp">
-                      <div
-                        className="rounded-[var(--radius-card)] bg-muted/10 p-8 md:p-10 h-full flex flex-col justify-between"
-                        style={{ boxShadow: "var(--ring-hairline)" }}
+                    <div
+                      key={stat.label}
+                      className="rounded-[var(--radius-card)] bg-muted/10 p-8 md:p-10 h-full flex flex-col justify-between"
+                      style={{ boxShadow: "var(--ring-hairline)" }}
+                    >
+                      <span
+                        className="text-2xl md:text-3xl font-semibold text-foreground"
+                        style={{ letterSpacing: "var(--tracking-tight)" }}
                       >
-                        <span
-                          className="text-2xl md:text-3xl font-semibold text-foreground"
-                          style={{ letterSpacing: "var(--tracking-tight)" }}
-                        >
-                          {stat.value}
-                        </span>
-                        <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mt-6">
-                          {stat.label}
-                        </span>
-                      </div>
-                    </AnimateIn>
+                        {stat.value}
+                      </span>
+                      <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mt-6">
+                        {stat.label}
+                      </span>
+                    </div>
                   );
                 })}
-              </AnimateInGroup>
+              </div>
             </div>
           </div>
         </div>
@@ -652,11 +624,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="py-24 md:py-32 border-y border-border/50 bg-muted/20">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="max-w-3xl mb-16 md:mb-20">
-            <AnimateIn preset="fadeUp">
-              <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                Pillar 03
-              </span>
-            </AnimateIn>
+            <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+              Pillar 03
+            </span>
             <AnimateIn preset="fadeUp">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
@@ -668,46 +638,38 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 {bestPracticesPillar.title}
               </h2>
             </AnimateIn>
-            <AnimateIn preset="fade">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                {bestPracticesPillar.description}
-              </p>
-            </AnimateIn>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              {bestPracticesPillar.description}
+            </p>
           </div>
 
-          <AnimateInGroup
-            stagger="fast"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {ENGINEERING_PRINCIPLES.map((principleBi, i) => {
               const principle = pick(lang, principleBi);
               const Icon = principleBi.icon;
               return (
-                <AnimateIn key={principle.name} preset="fadeUp">
-                  <div
-                    className="h-full rounded-[var(--radius-card)] bg-background p-7 hover:-translate-y-px transition-all duration-150"
-                    style={{ boxShadow: "var(--ring-hairline)" }}
-                  >
-                    <div className="flex items-center justify-between mb-5">
-                      <Icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
-                      <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
-                        P{(i + 1).toString().padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3
-                      className="text-xl font-semibold text-foreground mb-2"
-                      style={{ letterSpacing: "var(--tracking-tight)" }}
-                    >
-                      {principle.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {principle.desc}
-                    </p>
+                <div
+                  key={principle.name}
+                  className="h-full rounded-[var(--radius-card)] bg-background p-7 hover:-translate-y-px transition-all duration-150"
+                  style={{ boxShadow: "var(--ring-hairline)" }}
+                >
+                  <div className="flex items-center justify-between mb-5">
+                    <Icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
+                      P{(i + 1).toString().padStart(2, "0")}
+                    </span>
                   </div>
-                </AnimateIn>
+                  <h3
+                    className="text-xl font-semibold text-foreground mb-2"
+                    style={{ letterSpacing: "var(--tracking-tight)" }}
+                  >
+                    {principle.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{principle.desc}</p>
+                </div>
               );
             })}
-          </AnimateInGroup>
+          </div>
         </div>
       </section>
 
@@ -715,11 +677,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="py-24 md:py-32 border-b border-border/50 bg-background">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="max-w-3xl mb-16 md:mb-20">
-            <AnimateIn preset="fadeUp">
-              <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                {orgPrinciplesCopy.eyebrow}
-              </span>
-            </AnimateIn>
+            <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+              {orgPrinciplesCopy.eyebrow}
+            </span>
             <AnimateIn preset="fadeUp">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
@@ -731,48 +691,44 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 {orgPrinciplesCopy.heading}
               </h2>
             </AnimateIn>
-            <AnimateIn preset="fade">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                {orgPrinciplesCopy.intro}
-              </p>
-            </AnimateIn>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              {orgPrinciplesCopy.intro}
+            </p>
           </div>
 
-          <AnimateInGroup
-            stagger="normal"
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {ORGANIZATION_PRINCIPLES.map((principleBi) => {
               const principle = pick(lang, principleBi);
               return (
-                <AnimateIn key={principle.number} preset="fadeUp">
-                  <article className="relative h-full border-l-2 border-foreground bg-muted/20 pl-6 md:pl-8 pr-6 py-8 md:py-10 overflow-hidden">
-                    <span
-                      aria-hidden
-                      className="absolute right-4 top-2 text-[5rem] md:text-[7rem] font-semibold text-foreground/5 select-none pointer-events-none"
-                      style={{ letterSpacing: "var(--tracking-display)", lineHeight: "1" }}
-                    >
-                      {principle.number}
+                <article
+                  key={principle.number}
+                  className="relative h-full border-l-2 border-foreground bg-muted/20 pl-6 md:pl-8 pr-6 py-8 md:py-10 overflow-hidden"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute right-4 top-2 text-[5rem] md:text-[7rem] font-semibold text-foreground/5 select-none pointer-events-none"
+                    style={{ letterSpacing: "var(--tracking-display)", lineHeight: "1" }}
+                  >
+                    {principle.number}
+                  </span>
+                  <div className="relative">
+                    <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+                      Principle {principle.number}
                     </span>
-                    <div className="relative">
-                      <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                        Principle {principle.number}
-                      </span>
-                      <h3
-                        className="text-xl md:text-2xl font-semibold text-foreground mb-4 text-balance"
-                        style={{ letterSpacing: "var(--tracking-heading)" }}
-                      >
-                        {principle.title}
-                      </h3>
-                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                        {principle.description}
-                      </p>
-                    </div>
-                  </article>
-                </AnimateIn>
+                    <h3
+                      className="text-xl md:text-2xl font-semibold text-foreground mb-4 text-balance"
+                      style={{ letterSpacing: "var(--tracking-heading)" }}
+                    >
+                      {principle.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                      {principle.description}
+                    </p>
+                  </div>
+                </article>
               );
             })}
-          </AnimateInGroup>
+          </div>
         </div>
       </section>
 
@@ -780,11 +736,9 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="py-24 md:py-32">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="max-w-3xl mb-16">
-            <AnimateIn preset="fadeUp">
-              <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                {lang === "zh" ? "创新时间线" : "Innovation Timeline"}
-              </span>
-            </AnimateIn>
+            <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+              {lang === "zh" ? "创新时间线" : "Innovation Timeline"}
+            </span>
             <AnimateIn preset="fadeUp">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance"
@@ -807,36 +761,37 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               aria-hidden
             />
 
-            <AnimateInGroup stagger="normal" className="flex flex-col gap-10 md:gap-14">
+            <div className="flex flex-col gap-10 md:gap-14">
               {MILESTONES.map((msBi) => {
                 const ms = pick(lang, msBi);
                 return (
-                  <AnimateIn key={ms.date} preset="fadeUp">
-                    <div className="relative flex flex-col md:flex-row md:items-start gap-3 md:gap-10 pl-6 md:pl-0">
-                      {/* dot */}
-                      <span
-                        className="absolute left-[-4px] md:left-[11.5rem] top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-foreground"
-                        aria-hidden
-                      />
-                      <span className="w-full md:w-[11rem] text-sm font-mono tracking-widest uppercase text-muted-foreground md:pr-4">
-                        {ms.date}
-                      </span>
-                      <div className="md:pl-8 flex-1">
-                        <h3
-                          className="text-xl md:text-2xl font-semibold text-foreground mb-2"
-                          style={{ letterSpacing: "var(--tracking-tight)" }}
-                        >
-                          {ms.title}
-                        </h3>
-                        <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
-                          {ms.desc}
-                        </p>
-                      </div>
+                  <div
+                    key={ms.date}
+                    className="relative flex flex-col md:flex-row md:items-start gap-3 md:gap-10 pl-6 md:pl-0"
+                  >
+                    {/* dot */}
+                    <span
+                      className="absolute left-[-4px] md:left-[11.5rem] top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-foreground"
+                      aria-hidden
+                    />
+                    <span className="w-full md:w-[11rem] text-sm font-mono tracking-widest uppercase text-muted-foreground md:pr-4">
+                      {ms.date}
+                    </span>
+                    <div className="md:pl-8 flex-1">
+                      <h3
+                        className="text-xl md:text-2xl font-semibold text-foreground mb-2"
+                        style={{ letterSpacing: "var(--tracking-tight)" }}
+                      >
+                        {ms.title}
+                      </h3>
+                      <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
+                        {ms.desc}
+                      </p>
                     </div>
-                  </AnimateIn>
+                  </div>
                 );
               })}
-            </AnimateInGroup>
+            </div>
           </div>
         </div>
       </section>
@@ -845,13 +800,11 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="relative py-32 md:py-48 border-t border-border/50 overflow-hidden">
         <AuroraBackground variant="vivid" position="bottom" intensity={0.7} />
         <div className="relative container mx-auto px-4 text-center max-w-4xl">
-          <AnimateIn preset="emerge">
-            <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-              <span className="text-sm font-semibold tracking-widest uppercase text-primary">
-                {cta.eyebrow}
-              </span>
-            </div>
-          </AnimateIn>
+          <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+            <span className="text-sm font-semibold tracking-widest uppercase text-primary">
+              {cta.eyebrow}
+            </span>
+          </div>
           <AnimateIn preset="fadeUp">
             <h2
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-12"
@@ -863,13 +816,11 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               {cta.heading}
             </h2>
           </AnimateIn>
-          <AnimateIn preset="fade">
-            <Button asChild variant="ink" size="lg">
-              <Link href="mailto:careers@nebutra.com">
-                {cta.button} <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </AnimateIn>
+          <Button asChild variant="ink" size="lg">
+            <Link href="mailto:careers@nebutra.com">
+              {cta.button} <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
       </section>
 

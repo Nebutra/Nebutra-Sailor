@@ -49,7 +49,7 @@ export function VelocitySignalStrip() {
           >
             <Link
               href={stat.href}
-              className="group relative flex items-center gap-4 px-6 py-4 rounded-[var(--radius-2xl)] border border-border/40 bg-background/40 backdrop-blur-xl hover:bg-muted/20 hover:border-border/80 transition-all duration-300 w-full sm:w-auto"
+              className="group relative flex items-center gap-4 px-6 py-4 rounded-[var(--radius-2xl)] border border-border/40 bg-background/40 hover:bg-muted/20 hover:border-border/80 transition-all duration-300 w-full sm:w-auto"
             >
               <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 rounded-[var(--radius-2xl)] transition-opacity duration-300 pointer-events-none" />
 

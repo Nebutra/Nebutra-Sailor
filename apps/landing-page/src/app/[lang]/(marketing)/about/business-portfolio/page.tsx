@@ -1,5 +1,5 @@
 import { ArrowRight, Box as Boxes, Cpu, Database, Shield } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { AnimateIn } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
@@ -117,11 +117,9 @@ export default async function BusinessPortfolioPage({
       {/* ─── Section 1 · Hero ─────────────────────────────────────────────── */}
       <section className="pt-32 md:pt-48 pb-20 md:pb-24 border-b border-border/50">
         <div className="container mx-auto px-4 max-w-[1400px]">
-          <AnimateIn preset="emerge">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
-              {hero.kicker}
-            </span>
-          </AnimateIn>
+          <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
+            {hero.kicker}
+          </span>
 
           <AnimateIn preset="fadeUp">
             <h1
@@ -135,41 +133,32 @@ export default async function BusinessPortfolioPage({
             </h1>
           </AnimateIn>
 
-          <AnimateIn preset="fadeUp">
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-16">
-              {hero.lead}
-            </p>
-          </AnimateIn>
+          <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mb-16">
+            {hero.lead}
+          </p>
 
           {/* Stats row — capability counts per group */}
-          <AnimateInGroup
-            stagger="normal"
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-10 border-t border-border/50"
-          >
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-10 border-t border-border/50">
             {stats.map((s) => (
-              <AnimateIn key={s.key} preset="fadeUp">
-                <div className="flex flex-col gap-2">
-                  <span
-                    className="text-2xl md:text-3xl font-semibold text-foreground"
-                    style={{ letterSpacing: "var(--tracking-tight)" }}
-                  >
-                    {s.count}
-                  </span>
-                  <span className="text-xs md:text-sm font-mono tracking-wider uppercase text-muted-foreground">
-                    {s.label.replace(/^[A-D] · /, "")}
-                  </span>
-                </div>
-              </AnimateIn>
+              <div key={s.key} className="flex flex-col gap-2">
+                <span
+                  className="text-2xl md:text-3xl font-semibold text-foreground"
+                  style={{ letterSpacing: "var(--tracking-tight)" }}
+                >
+                  {s.count}
+                </span>
+                <span className="text-xs md:text-sm font-mono tracking-wider uppercase text-muted-foreground">
+                  {s.label.replace(/^[A-D] · /, "")}
+                </span>
+              </div>
             ))}
-          </AnimateInGroup>
+          </div>
 
-          <AnimateIn preset="fade">
-            <p className="mt-10 text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
-              {lang === "zh"
-                ? `总计 ${totalCount} 项核心能力 · 四大维度`
-                : `Total ${totalCount} capabilities · 4 dimensions`}
-            </p>
-          </AnimateIn>
+          <p className="mt-10 text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
+            {lang === "zh"
+              ? `总计 ${totalCount} 项核心能力 · 四大维度`
+              : `Total ${totalCount} capabilities · 4 dimensions`}
+          </p>
         </div>
       </section>
 
@@ -193,14 +182,12 @@ export default async function BusinessPortfolioPage({
             <div className="container mx-auto px-4 max-w-[1400px]">
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16 md:mb-20">
                 <div className="max-w-2xl">
-                  <AnimateIn preset="emerge">
-                    <div className="inline-flex items-center gap-3 mb-6 px-3 py-1.5 rounded-full border border-border bg-background">
-                      <Icon className="h-4 w-4 text-foreground" aria-hidden="true" />
-                      <span className="text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
-                        {`Group ${String.fromCharCode(65 + groupIdx)} · ${group.items.length} ${lang === "zh" ? "项" : "items"}`}
-                      </span>
-                    </div>
-                  </AnimateIn>
+                  <div className="inline-flex items-center gap-3 mb-6 px-3 py-1.5 rounded-full border border-border bg-background">
+                    <Icon className="h-4 w-4 text-foreground" aria-hidden="true" />
+                    <span className="text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
+                      {`Group ${String.fromCharCode(65 + groupIdx)} · ${group.items.length} ${lang === "zh" ? "项" : "items"}`}
+                    </span>
+                  </div>
 
                   <AnimateIn preset="fadeUp">
                     <h2
@@ -214,52 +201,46 @@ export default async function BusinessPortfolioPage({
                     </h2>
                   </AnimateIn>
 
-                  <AnimateIn preset="fadeUp">
-                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                      {meta.subtitle}
-                    </p>
-                  </AnimateIn>
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                    {meta.subtitle}
+                  </p>
                 </div>
 
-                <AnimateIn preset="fade">
-                  <div className="hidden lg:flex items-end text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/60">
-                    {String(groupIdx + 1).padStart(2, "0")} /{" "}
-                    {String(CAPABILITY_GROUPS.length).padStart(2, "0")}
-                  </div>
-                </AnimateIn>
+                <div className="hidden lg:flex items-end text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/60">
+                  {String(groupIdx + 1).padStart(2, "0")} /{" "}
+                  {String(CAPABILITY_GROUPS.length).padStart(2, "0")}
+                </div>
               </div>
 
-              <AnimateInGroup
-                stagger="normal"
-                className={`grid grid-cols-1 ${gridCols} gap-5 md:gap-6`}
-              >
+              <div className={`grid grid-cols-1 ${gridCols} gap-5 md:gap-6`}>
                 {group.items.map((item, idx) => {
                   const cap = pick(lang, item);
                   return (
-                    <AnimateIn key={`${group.key}-${idx}`} preset="fadeUp">
-                      <article className="group relative h-full flex flex-col gap-4 p-7 md:p-8 rounded-[var(--radius-2xl)] border border-border bg-background hover:border-foreground/40 hover:shadow-lg transition-all duration-300">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
-                            {String.fromCharCode(65 + groupIdx)}.{String(idx + 1).padStart(2, "0")}
-                          </span>
-                          <Icon
-                            className="h-4 w-4 text-muted-foreground/60 group-hover:text-foreground transition-colors"
-                            aria-hidden="true"
-                          />
-                        </div>
+                    <article
+                      key={`${group.key}-${idx}`}
+                      className="group relative h-full flex flex-col gap-4 p-7 md:p-8 rounded-[var(--radius-2xl)] border border-border bg-background hover:border-foreground/40 hover:shadow-lg transition-all duration-300"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
+                          {String.fromCharCode(65 + groupIdx)}.{String(idx + 1).padStart(2, "0")}
+                        </span>
+                        <Icon
+                          className="h-4 w-4 text-muted-foreground/60 group-hover:text-foreground transition-colors"
+                          aria-hidden="true"
+                        />
+                      </div>
 
-                        <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground leading-snug">
-                          {cap.category}
-                        </h3>
+                      <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground leading-snug">
+                        {cap.category}
+                      </h3>
 
-                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed mt-auto">
-                          {cap.description}
-                        </p>
-                      </article>
-                    </AnimateIn>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed mt-auto">
+                        {cap.description}
+                      </p>
+                    </article>
                   );
                 })}
-              </AnimateInGroup>
+              </div>
             </div>
           </section>
         );
@@ -269,11 +250,9 @@ export default async function BusinessPortfolioPage({
       <section className="py-24 md:py-32 bg-background border-b border-border/50">
         <div className="container mx-auto px-4 max-w-[1400px]">
           <div className="mb-16 md:mb-20 max-w-3xl">
-            <AnimateIn preset="emerge">
-              <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-                {copy.matrixKicker}
-              </span>
-            </AnimateIn>
+            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
+              {copy.matrixKicker}
+            </span>
             <AnimateIn preset="fadeUp">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-6"
@@ -285,67 +264,61 @@ export default async function BusinessPortfolioPage({
                 {copy.matrixHeading}
               </h2>
             </AnimateIn>
-            <AnimateIn preset="fadeUp">
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                {copy.matrixLead}
-              </p>
-            </AnimateIn>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              {copy.matrixLead}
+            </p>
           </div>
 
-          <AnimateInGroup
-            stagger="normal"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
             {CAPABILITY_GROUPS.map((group, groupIdx) => {
               const meta = pick(lang, group.meta);
               const Icon = GROUP_ICONS[group.key] ?? Boxes;
               return (
-                <AnimateIn key={group.key} preset="fadeUp">
-                  <div className="h-full flex flex-col gap-5 p-6 md:p-7 rounded-[var(--radius-2xl)] border border-border bg-muted/30">
-                    <div className="flex items-center gap-3 pb-5 border-b border-border/60">
-                      <Icon className="h-5 w-5 text-foreground" aria-hidden="true" />
-                      <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
-                        {String.fromCharCode(65 + groupIdx)} · {group.items.length}
-                      </span>
-                    </div>
-                    <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground leading-snug">
-                      {meta.title.replace(/^[A-D] · /, "")}
-                    </h3>
-                    <ul className="flex flex-col gap-2.5 mt-1">
-                      {group.items.map((item, idx) => {
-                        const cap = pick(lang, item);
-                        return (
-                          <li
-                            key={`${group.key}-sum-${idx}`}
-                            className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed"
-                          >
-                            <span
-                              className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-foreground/40"
-                              aria-hidden="true"
-                            />
-                            <span>{cap.category}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                <div
+                  key={group.key}
+                  className="h-full flex flex-col gap-5 p-6 md:p-7 rounded-[var(--radius-2xl)] border border-border bg-muted/30"
+                >
+                  <div className="flex items-center gap-3 pb-5 border-b border-border/60">
+                    <Icon className="h-5 w-5 text-foreground" aria-hidden="true" />
+                    <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
+                      {String.fromCharCode(65 + groupIdx)} · {group.items.length}
+                    </span>
                   </div>
-                </AnimateIn>
+                  <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground leading-snug">
+                    {meta.title.replace(/^[A-D] · /, "")}
+                  </h3>
+                  <ul className="flex flex-col gap-2.5 mt-1">
+                    {group.items.map((item, idx) => {
+                      const cap = pick(lang, item);
+                      return (
+                        <li
+                          key={`${group.key}-sum-${idx}`}
+                          className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed"
+                        >
+                          <span
+                            className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-foreground/40"
+                            aria-hidden="true"
+                          />
+                          <span>{cap.category}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               );
             })}
-          </AnimateInGroup>
+          </div>
         </div>
       </section>
 
       {/* ─── Section 4 · CTA ─────────────────────────────────────────────── */}
       <section className="py-32 md:py-40 bg-background">
         <div className="container mx-auto px-4 max-w-4xl text-center">
-          <AnimateIn preset="emerge">
-            <div className="inline-block mb-8 px-4 py-1.5 rounded-full border border-border bg-muted/30">
-              <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">
-                {copy.ctaKicker}
-              </span>
-            </div>
-          </AnimateIn>
+          <div className="inline-block mb-8 px-4 py-1.5 rounded-full border border-border bg-muted/30">
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">
+              {copy.ctaKicker}
+            </span>
+          </div>
 
           <AnimateIn preset="fadeUp">
             <h2
@@ -359,20 +332,16 @@ export default async function BusinessPortfolioPage({
             </h2>
           </AnimateIn>
 
-          <AnimateIn preset="fadeUp">
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-12">
-              {copy.ctaLead}
-            </p>
-          </AnimateIn>
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-12">
+            {copy.ctaLead}
+          </p>
 
-          <AnimateIn preset="fade">
-            <Button asChild variant="ink" size="lg">
-              <Link href="/contact">
-                {copy.ctaButton}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </AnimateIn>
+          <Button asChild variant="ink" size="lg">
+            <Link href="/contact">
+              {copy.ctaButton}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
         </div>
       </section>
 

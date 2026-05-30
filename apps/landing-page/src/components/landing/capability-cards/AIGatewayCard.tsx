@@ -106,7 +106,7 @@ export function AIGatewayCard() {
           <div className="flex flex-col gap-3 z-10">
             <div
               ref={openaiRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:bg-[var(--neutral-1)]"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm dark:bg-[var(--neutral-1)]"
             >
               <OpenAIIcon size={14} className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
@@ -115,7 +115,7 @@ export function AIGatewayCard() {
             </div>
             <div
               ref={anthropicRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:bg-[var(--neutral-1)]"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm dark:bg-[var(--neutral-1)]"
             >
               <AnthropicIcon size={14} className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
@@ -124,7 +124,7 @@ export function AIGatewayCard() {
             </div>
             <div
               ref={geminiRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:bg-[var(--neutral-1)]"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm dark:bg-[var(--neutral-1)]"
             >
               <GeminiIcon size={14} className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
@@ -133,7 +133,7 @@ export function AIGatewayCard() {
             </div>
             <div
               ref={deepseekRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:bg-[var(--neutral-1)]"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm dark:bg-[var(--neutral-1)]"
             >
               <DeepSeekIcon size={14} className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">

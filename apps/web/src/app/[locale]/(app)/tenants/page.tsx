@@ -28,7 +28,7 @@ async function TenantsContent() {
                   Healthy
                 </span>
               </div>
-              <dl className="mt-3 grid grid-cols-1 gap-x-3 gap-y-2 text-xs min-[420px]:grid-cols-2">
+              <dl className="mt-3 grid grid-cols-1 gap-x-3 gap-y-2 text-xs xs:grid-cols-2">
                 <div>
                   <dt className="text-neutral-10">Events</dt>
                   <dd className="font-medium text-neutral-12">
@@ -41,7 +41,7 @@ async function TenantsContent() {
                     {summary.activeUsers.toLocaleString()}
                   </dd>
                 </div>
-                <div className="min-[420px]:col-span-2">
+                <div className="xs:col-span-2">
                   <dt className="text-neutral-10">Revenue</dt>
                   <dd className="font-medium text-neutral-12">
                     $

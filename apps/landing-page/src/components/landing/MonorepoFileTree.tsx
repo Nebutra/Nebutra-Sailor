@@ -177,7 +177,7 @@ export function MonorepoFileTree() {
 
   return (
     <article
-      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-[var(--color-glass-panel,rgba(255,255,255,0.72))] p-6 backdrop-blur-2xl transition-[border-color,box-shadow,background-color] duration-300 hover:border-primary/40 dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.72))] md:p-8"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-[var(--color-glass-panel,rgba(255,255,255,0.72))] p-6 transition-[border-color,box-shadow,background-color] duration-300 hover:border-primary/40 dark:bg-[var(--color-glass-panel,rgba(24,24,27,0.72))] md:p-8"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-100" />
@@ -218,8 +218,8 @@ export function MonorepoFileTree() {
           </div>
         </AnimateIn>
 
-        <div className="relative flex min-h-[360px] flex-1 flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/55 shadow-inner backdrop-blur-sm dark:bg-[var(--neutral-2)]/80">
-          <div className="z-20 flex h-[42px] flex-none items-center border-black/5 border-b bg-white/55 px-4 backdrop-blur-md dark:bg-zinc-900/55">
+        <div className="relative flex min-h-[360px] flex-1 flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/55 shadow-inner dark:bg-[var(--neutral-2)]/80">
+          <div className="z-20 flex h-[42px] flex-none items-center border-black/5 border-b bg-white/55 px-4 dark:bg-zinc-900/55">
             <div className="flex gap-1.5 items-center">
               <div className="size-2.5 rounded-full bg-[#ff5f56] shadow-sm" />
               <div className="size-2.5 rounded-full bg-[#ffbd2e] shadow-sm" />

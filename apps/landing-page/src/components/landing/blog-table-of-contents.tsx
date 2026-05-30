@@ -129,7 +129,7 @@ export function BlogTableOfContents({ items, labels, variant = "both" }: BlogTab
   return (
     <>
       {showMobile && (
-        <section className="sticky top-16 z-30 mb-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]/95 p-3 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-[var(--neutral-1)]/80 xl:hidden">
+        <section className="sticky top-16 z-30 mb-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]/95 p-3 shadow-sm supports-[backdrop-filter]:bg-[var(--neutral-1)]/80 xl:hidden">
           <button
             type="button"
             aria-expanded={open}

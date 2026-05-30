@@ -143,7 +143,7 @@ export function UseCasesSection() {
               {/* Right Column: Sticky Mockup Viewport */}
               <div className="hidden w-full lg:w-8/12 relative lg:order-2 lg:block">
                 <div
-                  className="sticky top-32 w-full aspect-[4/5] sm:aspect-square lg:aspect-auto lg:h-[700px] rounded-[var(--radius-panel)] bg-background/88 border border-[var(--neutral-6)] overflow-hidden flex items-center justify-center p-3 sm:p-6 lg:p-8 group backdrop-blur-xl"
+                  className="sticky top-32 w-full aspect-[4/5] sm:aspect-square lg:aspect-auto lg:h-[700px] rounded-[var(--radius-panel)] bg-background/88 border border-[var(--neutral-6)] overflow-hidden flex items-center justify-center p-3 sm:p-6 lg:p-8 group"
                   style={{ boxShadow: "var(--ring-hairline)" }}
                 >
                   {/* Internal Glass glare reflection */}

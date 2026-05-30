@@ -30,7 +30,7 @@ export function GlobalEdgeMap() {
 
   return (
     <article
-      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-all hover:border-primary/40 overflow-hidden backdrop-blur-2xl"
+      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-all hover:border-primary/40 overflow-hidden"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
@@ -58,9 +58,9 @@ export function GlobalEdgeMap() {
         </AnimateIn>
 
         {/* Map container */}
-        <div className="flex-1 relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/40 dark:bg-[var(--neutral-2)]/80 min-h-[250px] shadow-inner mb-6 backdrop-blur-sm">
+        <div className="flex-1 relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/40 dark:bg-[var(--neutral-2)]/80 min-h-[250px] shadow-inner mb-6">
           {/* Faux Terminal Header */}
-          <div className="absolute top-0 inset-x-0 flex items-center px-4 h-10 border-b border-border/60 bg-muted/50 dark:bg-zinc-950/80 backdrop-blur-md z-20">
+          <div className="absolute top-0 inset-x-0 flex items-center px-4 h-10 border-b border-border/60 bg-muted/50 dark:bg-zinc-950/80 z-20">
             <div className="flex gap-1.5">
               <div className="w-2 h-2 rounded-full bg-border/80 dark:bg-zinc-700/80"></div>
               <div className="w-2 h-2 rounded-full bg-border/80 dark:bg-zinc-700/80"></div>
@@ -134,7 +134,7 @@ export function GlobalEdgeMap() {
           </div>
 
           {/* Bottom stats bar */}
-          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-background/90 dark:from-[#0a0a0a]/90 via-background/50 dark:via-[#0a0a0a]/50 to-transparent pt-12 pb-3 px-4 z-20 backdrop-blur-[2px]">
+          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-background/90 dark:from-[#0a0a0a]/90 via-background/50 dark:via-[#0a0a0a]/50 to-transparent pt-12 pb-3 px-4 z-20-[2px]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span

@@ -314,7 +314,7 @@ function TopBar({
   onSurfaceChange: (surface: Surface) => void;
 }) {
   return (
-    <header className="grid gap-3 border-border/80 border-b bg-background/85 p-3 backdrop-blur-xl sm:p-4 min-[1180px]:grid-cols-[minmax(0,1fr)_auto] min-[1180px]:items-center">
+    <header className="grid gap-3 border-border/80 border-b bg-background/85 p-3 backdrop-blur-xl sm:p-4 shell:grid-cols-[minmax(0,1fr)_auto] shell:items-center">
       <div className="flex min-w-0 items-center gap-3">
         <div className="min-w-0">
           <h1 className="truncate font-semibold text-base text-foreground">Theme Playground</h1>
@@ -327,7 +327,7 @@ function TopBar({
         </Badge>
       </div>
 
-      <div className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-3 min-[1180px]:col-span-2 min-[1180px]:justify-end">
+      <div className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-3 shell:col-span-2 shell:justify-end">
         <SegmentedControl
           label="Theme Mode"
           value={mode}
@@ -363,7 +363,7 @@ function TopBar({
         </label>
       </div>
 
-      <div className="flex items-center gap-2 min-[1180px]:col-start-2 min-[1180px]:row-start-1 min-[1180px]:justify-end">
+      <div className="flex items-center gap-2 shell:col-start-2 shell:row-start-1 shell:justify-end">
         {!viewingImported && (
           <DesignMdExport themeId={selectedTheme.id} themeName={selectedTheme.name} />
         )}
@@ -423,7 +423,7 @@ function CanvasHeader({
   onViewportChange: (viewport: ViewportId) => void;
 }) {
   return (
-    <div className="grid gap-3 border-border/70 border-b p-4 min-[1080px]:grid-cols-[minmax(0,1fr)_auto_auto] min-[1080px]:items-center">
+    <div className="grid gap-3 border-border/70 border-b p-4 tight:grid-cols-[minmax(0,1fr)_auto_auto] tight:items-center">
       <div>
         <h2 className="font-semibold text-foreground text-sm">Live Preview Canvas</h2>
         <p className="mt-1 text-muted-foreground text-xs">
@@ -541,19 +541,15 @@ function PreviewCard({
   return (
     <section
       className={cn(
-        // Per industry research (LogRocket "Shadows in UI", chyshkala Linear
-        // dark-mode breakdown): black drop-shadows DISAPPEAR on dark surfaces.
-        // Working pattern is a LIGHTER-COLOR multi-layer box-shadow that reads
-        // as a thick soft grey band, not a sharp 1px hairline:
-        //   Layer 1: 2px 0-blur ring at ~7% foreground — the "thick" part
-        //   Layer 2: 24px blur halo at ~3% foreground — the "soft" diffusion
-        //   Layer 3: subtle drop shadow                — depth for light mode
-        // color-mix(foreground, transparent N) auto-flips per mode: white on
-        // dark, black on light. Same "thick soft grey line" feel in both modes.
+        // Single-layer ring using pre-computed --edge-soft token (mode-aware).
+        // Replaced earlier 3-layer 24px-blur halo: that was perf-expensive
+        // (multiple GPU paints + 2 runtime color-mix calls per paint) AND
+        // contributed to overall "blur soup" subjective perception. One
+        // crisp ring + slight drop shadow reads as defined card without
+        // softening the whole UI.
         "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--playground-pad)] text-[color:var(--color-card-foreground)]",
-        "shadow-[0_0_0_2px_color-mix(in_oklab,var(--color-foreground),transparent_93%),0_0_24px_0_color-mix(in_oklab,var(--color-foreground),transparent_96%),0_6px_16px_-4px_rgb(0_0_0/0.15)]",
-        active &&
-          "shadow-[0_0_0_2px_color-mix(in_oklab,var(--color-foreground),transparent_86%),0_0_32px_0_color-mix(in_oklab,var(--color-foreground),transparent_92%),0_8px_24px_-6px_rgb(0_0_0/0.2)]",
+        "shadow-[0_0_0_1px_var(--edge-soft),0_2px_8px_-2px_rgb(0_0_0/0.08)]",
+        active && "shadow-[0_0_0_1px_var(--edge-medium),0_4px_12px_-2px_rgb(0_0_0/0.12)]",
         className,
       )}
     >

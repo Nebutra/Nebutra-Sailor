@@ -114,7 +114,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
 
         <div className="relative container mx-auto px-4 text-left">
           <div className="flex max-w-4xl flex-col gap-4">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/8 px-3 py-1 text-sm font-medium text-white/80 shadow-[0_12px_40px_-24px_rgba(11,241,195,0.8)] backdrop-blur-md">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/14 bg-white/8 px-3 py-1 text-sm font-medium text-white/80 shadow-[0_12px_40px_-24px_rgba(11,241,195,0.8)]">
               <GitPullRequest className="size-4" />
               <p>Changelog</p>
               <Link href="/api/changelog/rss" aria-label="Subscribe to changelog RSS">
@@ -134,7 +134,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
 
       {/* Filter and search bar — sticky, soft alpha border so it doesn't read
           as a hard rail when content scrolls beneath. */}
-      <div className="sticky top-0 z-40 w-full border-b border-[color-mix(in_oklab,var(--neutral-12),transparent_92%)] bg-[var(--neutral-1)]/85 backdrop-blur-md">
+      <div className="sticky top-0 z-40 w-full border-b border-[var(--edge-soft)] bg-[var(--neutral-1)]/90">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             {/* Search input */}
@@ -357,7 +357,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
 
                         {/* Dividing line connecting items — soft alpha so it
                             reads as a hint, not a hard rail across 200vw. */}
-                        <div className="absolute bottom-0 left-0 right-0 h-px w-[200vw] -translate-x-1/2 bg-[color-mix(in_oklab,var(--neutral-12),transparent_93%)]" />
+                        <div className="absolute bottom-0 left-0 right-0 h-px w-[200vw] -translate-x-1/2 bg-[var(--edge-faint)]" />
                       </article>
                     </AnimateIn>
 

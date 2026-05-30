@@ -110,13 +110,17 @@ const MODE_SURFACE_FALLBACKS: Record<ThemeMode, Record<string, string>> = {
     // white) to reduce eye strain. Four-tier surface system:
     //   canvas → card → popover → muted/overlay
     background: "oklch(0.16 0.005 285.9)", // ≈ #161616 — charcoal not pitch
-    foreground: "oklch(0.93 0 0)", // off-white, not 0.985 (which causes glow)
+    // 2026-05 perf governance: foreground restored to pure white (was 0.93
+    // off-white per "WCAG eye-strain" rationale). The off-white reads "soft"
+    // / "blurry" for dashboard surfaces where you want CRISP numbers/labels.
+    // Pure white on a 0.16 charcoal is plenty contrast without strain.
+    foreground: "oklch(0.985 0 0)",
     card: "oklch(0.215 0.005 285.9)", // +0.055 L = card lifts clearly
-    "card-foreground": "oklch(0.93 0 0)",
+    "card-foreground": "oklch(0.985 0 0)",
     popover: "oklch(0.265 0.005 285.9)", // +0.05 L = nested tier
-    "popover-foreground": "oklch(0.93 0 0)",
+    "popover-foreground": "oklch(0.985 0 0)",
     muted: "oklch(0.305 0.005 285.9)",
-    "muted-foreground": "oklch(0.7 0.012 286)",
+    "muted-foreground": "oklch(0.73 0.012 286)", // bumped from 0.7 for sharper secondary text
     // Dark mode: border INVISIBLE. The 5% L bg-tier step alone defines edges.
     // Stacking a 6% white hairline ON TOP of an already-visible bg-tier
     // transition reads as "doubled line" — the literal "硬白线" complaint.

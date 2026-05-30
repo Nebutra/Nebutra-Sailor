@@ -49,7 +49,7 @@ export function LiveMetricsChart() {
   const value = Math.floor(data[data.length - 1] * 12.3);
 
   return (
-    <div className="relative w-full rounded-[var(--radius-xl)] border border-border/40 bg-background/50 dark:bg-zinc-950/50 p-4 shadow-elevation-high backdrop-blur-md overflow-hidden">
+    <div className="relative w-full rounded-[var(--radius-xl)] border border-border/40 bg-background/50 dark:bg-zinc-950/50 p-4 shadow-elevation-high overflow-hidden">
       {/* Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--neutral-6)_1px,transparent_1px),linear-gradient(to_bottom,var(--neutral-6)_1px,transparent_1px)] bg-[size:24px_24px] opacity-50 pointer-events-none" />
 

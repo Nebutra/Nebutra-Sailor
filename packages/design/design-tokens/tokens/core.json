@@ -97,6 +97,29 @@
       "content": { "$value": "1152px", "$type": "dimension", "$description": "Pricing, blog" },
       "wide": { "$value": "1400px", "$type": "dimension", "$description": "Feature bento, navbar" }
     },
+    "breakpoint": {
+      "$description": "Named responsive breakpoints (2026-05 governance). xs/tight/shell/3xl supplement Tailwind defaults; lint-no-arbitrary-breakpoints.mjs bans inline min-[Npx]: usage.",
+      "xs": {
+        "$value": "26.25rem",
+        "$type": "dimension",
+        "$description": "420px — narrow-phone grid flip"
+      },
+      "tight": {
+        "$value": "67.5rem",
+        "$type": "dimension",
+        "$description": "1080px — dense dashboard header horizontal"
+      },
+      "shell": {
+        "$value": "73.75rem",
+        "$type": "dimension",
+        "$description": "1180px — three-pane shell threshold"
+      },
+      "3xl": {
+        "$value": "112.5rem",
+        "$type": "dimension",
+        "$description": "1800px — 4K / Studio Display friendliness"
+      }
+    },
     "radius": {
       "none": { "$value": "0", "$type": "dimension" },
       "sm": { "$value": "0.25rem", "$type": "dimension" },

@@ -46,7 +46,7 @@ export function BlogShowcase({ posts }: BlogShowcaseProps) {
             <AnimateIn key={post.slug} preset="fadeUp">
               <a
                 href={`/blog/${post.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/50 backdrop-blur-xl transition-colors hover:bg-muted/40 hover:border-primary/20"
+                className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background/50 transition-colors hover:bg-muted/40 hover:border-primary/20"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 {/* Thumbnail */}

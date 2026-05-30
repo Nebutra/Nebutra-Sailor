@@ -133,7 +133,7 @@ async function StatusPageContent() {
             </p>
           </div>
 
-          <div className="rounded-[2rem] border border-[color:var(--neutral-5)] bg-white/75 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur-xl/[0.04]">
+          <div className="rounded-[2rem] border border-[color:var(--neutral-5)] bg-white/75 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--neutral-9)]">
@@ -168,7 +168,7 @@ async function StatusPageContent() {
           {snapshot.services.map((service) => (
             <article
               key={service.id}
-              className="rounded-[1.5rem] border border-[color:var(--neutral-5)] bg-white/70 p-5 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur/[0.035]"
+              className="rounded-[1.5rem] border border-[color:var(--neutral-5)] bg-white/70 p-5 shadow-[0_18px_60px_rgba(15,23,42,0.06)]"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>

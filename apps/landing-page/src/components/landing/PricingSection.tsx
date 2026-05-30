@@ -82,8 +82,8 @@ export async function PricingSection({
               className={[
                 "p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-transform duration-150 hover:-translate-y-px",
                 tier.highlighted
-                  ? "border border-[var(--blue-9)]/40 bg-background/80 backdrop-blur-xl lg:-translate-y-2 z-10"
-                  : "border border-[var(--neutral-6)] bg-background/50 backdrop-blur-md",
+                  ? "border border-[var(--blue-9)]/40 bg-background/80 lg:-translate-y-2 z-10"
+                  : "border border-[var(--neutral-6)] bg-background/50",
               ].join(" ")}
               style={{ boxShadow: "var(--ring-hairline)" }}
             >

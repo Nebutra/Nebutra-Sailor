@@ -164,7 +164,7 @@ export default async function PublicDashboardPage({
 
   return (
     <main id="main-content" className="min-h-screen bg-neutral-1 text-neutral-12">
-      <header className="border-neutral-5 border-b bg-neutral-1/90 backdrop-blur dark:bg-neutral-12/90">
+      <header className="border-neutral-5 border-b bg-neutral-1/90 dark:bg-neutral-12/90">
         <div className="mx-auto flex h-14 w-full max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6">
           <Link
             href={localizedHref(currentLocale, "/")}

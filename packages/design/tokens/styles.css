@@ -69,6 +69,10 @@
   --nebutra-gray-800: #262626;
   --nebutra-gray-900: #171717;
   --nebutra-gray-950: #0a0a0a;
+  --breakpoint-xs: 26.25rem; /** 420px — narrow-phone grid flip */
+  --breakpoint-tight: 67.5rem; /** 1080px — dense dashboard header horizontal */
+  --breakpoint-shell: 73.75rem; /** 1180px — three-pane shell threshold */
+  --breakpoint-3xl: 112.5rem; /** 1800px — 4K / Studio Display friendliness */
   --radius-none: 0;
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
@@ -341,6 +345,10 @@
   --nebutra-gray-800: #262626;
   --nebutra-gray-900: #171717;
   --nebutra-gray-950: #0a0a0a;
+  --breakpoint-xs: 26.25rem; /** 420px — narrow-phone grid flip */
+  --breakpoint-tight: 67.5rem; /** 1080px — dense dashboard header horizontal */
+  --breakpoint-shell: 73.75rem; /** 1180px — three-pane shell threshold */
+  --breakpoint-3xl: 112.5rem; /** 1800px — 4K / Studio Display friendliness */
   --radius-none: 0;
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
@@ -752,6 +760,25 @@
    Base Styles — non-token CSS that complements the design-tokens output.
    This file is concatenated into styles.generated.css after the @theme block.
    ============================================ */
+
+/* ─── Edge tokens (2026-05 perf governance) ─────────────────
+   Pre-computed alpha values for borders / hairlines / outer glows.
+   Replaces ~70 runtime `color-mix(foreground, transparent N%)` calls per
+   page that re-evaluated on every paint. Mode-aware via CSS cascade.
+   Lives in static/ so it survives Style Dictionary rebuilds.
+   ─────────────────────────────────────────────────────────── */
+:root {
+  --edge-faint: rgb(0 0 0 / 0.04);
+  --edge-soft: rgb(0 0 0 / 0.07);
+  --edge-medium: rgb(0 0 0 / 0.12);
+  --halo-faint: rgb(0 0 0 / 0.03);
+}
+.dark {
+  --edge-faint: rgb(255 255 255 / 0.04);
+  --edge-soft: rgb(255 255 255 / 0.06);
+  --edge-medium: rgb(255 255 255 / 0.1);
+  --halo-faint: rgb(255 255 255 / 0.03);
+}
 
 *,
 *::before,
@@ -1379,10 +1406,13 @@ html {
 }
 
 /* ─── Reduced Motion ─────────────────────────────────────── */
+/* Honors OS preference EXCEPT for functional progress indicators
+ * (spinners / pulses / pings). Per WCAG 2.3.3, those are excluded
+ * from the "animation from interactions" reduction requirement. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping),
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping)::before,
+  *:not(.animate-spin):not(.animate-pulse):not(.animate-ping)::after {
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
     transition-duration: 0.01ms;

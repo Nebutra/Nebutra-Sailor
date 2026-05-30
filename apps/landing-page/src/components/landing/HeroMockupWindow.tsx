@@ -109,13 +109,13 @@ export function HeroMockupWindow() {
     <AnimateIn preset="fadeUp" className="w-full max-w-[1400px] mx-auto relative z-20 px-4 group">
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
-        className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/95 dark:bg-zinc-950/95 overflow-hidden backdrop-blur-2xl transition-all duration-500"
+        className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/95 dark:bg-zinc-950/95 overflow-hidden transition-all duration-500"
       >
         {/* Top highlight line */}
         <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
         {/* macOS Title Bar */}
-        <div className="relative z-20 flex h-11 w-full items-center justify-between border-b border-border/30 bg-muted/40 px-4 dark:bg-zinc-950/80 backdrop-blur-md">
+        <div className="relative z-20 flex h-11 w-full items-center justify-between border-b border-border/30 bg-muted/40 px-4 dark:bg-zinc-950/80">
           <div className="flex items-center gap-2">
             <div className="size-3 rounded-full bg-[#ff5f56] shadow-sm" />
             <div className="size-3 rounded-full bg-[#ffbd2e] shadow-sm" />

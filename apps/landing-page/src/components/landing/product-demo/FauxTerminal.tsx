@@ -1,8 +1,8 @@
 export function FauxTerminal({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-full w-full rounded-[2rem] overflow-hidden border border-border/60 bg-background/80 dark:bg-zinc-950/80 backdrop-blur-3xl shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)] ring-1 ring-black/5 flex flex-col transition-all duration-700">
+    <div className="h-full w-full rounded-[2rem] overflow-hidden border border-border/60 bg-background/80 dark:bg-zinc-950/80 shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)] ring-1 ring-black/5 flex flex-col transition-all duration-700">
       {/* macOS Control Header */}
-      <div className="flex flex-none items-center px-5 h-14 border-b border-border/60 bg-muted/40/[0.02] backdrop-blur-md">
+      <div className="flex flex-none items-center px-5 h-14 border-b border-border/60 bg-muted/40/[0.02]">
         <div className="flex gap-2">
           <div className="w-3 h-3 rounded-full bg-border/80 dark:bg-zinc-700/80 shadow-sm border border-black/5 hover:bg-red-400 transition-colors"></div>
           <div className="w-3 h-3 rounded-full bg-border/80 dark:bg-zinc-700/80 shadow-sm border border-black/5 hover:bg-amber-400 transition-colors"></div>
