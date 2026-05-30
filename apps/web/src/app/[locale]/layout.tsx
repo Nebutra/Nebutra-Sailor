@@ -8,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
+import { Inter, JetBrains_Mono, Playfair_Display, Space_Grotesk } from "next/font/google";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -22,6 +23,30 @@ import "../globals.css";
 // GeistMono → --font-geist-mono (variable font, 100–900)
 // Referenced in packages/design/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
 // CJK fallback is provided by @nebutra/tokens and @nebutra/ui without Google font fetches.
+//
+// Theme-preset webfonts — loaded once so that non-default themes (gradient,
+// dark-dense, minimal, vibrant, ocean) defined in @nebutra/theme/themes.css
+// render in their declared typeface instead of falling back to system fonts.
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair-display",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -95,7 +120,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable}`.trim()}
+      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable}`.trim()}
       suppressHydrationWarning
     >
       <body className="antialiased">

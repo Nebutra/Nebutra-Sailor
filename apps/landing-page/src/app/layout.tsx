@@ -1,11 +1,36 @@
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono, Playfair_Display, Space_Grotesk } from "next/font/google";
 import { seoContent } from "@/lib/landing-content";
 import "./globals.css";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
 // CJK fallback is provided by @nebutra/tokens --font-cn to avoid build-time font fetches.
+//
+// Theme-preset webfonts — loaded once so that non-default themes (gradient,
+// dark-dense, minimal, vibrant, ocean) defined in @nebutra/theme/themes.css
+// render in their declared typeface instead of falling back to system fonts.
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair-display",
+  display: "swap",
+});
 
 /**
  * Root layout metadata — locale-independent defaults only.
@@ -75,7 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen antialiased`}
+      className={`${GeistSans.variable} ${GeistMono.variable} ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} min-h-screen antialiased`}
       suppressHydrationWarning
     >
       <body className="antialiased">{children}</body>

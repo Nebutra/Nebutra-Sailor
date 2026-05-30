@@ -56,9 +56,9 @@
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
   --radius-full: 9999px;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
-  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --font-heading: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
@@ -97,7 +97,7 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
@@ -133,8 +133,8 @@
   --radius-md: 0.25rem;
   --radius-lg: 0.25rem;
   --radius-xl: 0.375rem;
-  --font-sans: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
-  --font-heading: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --font-sans: var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+  --font-heading: var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
 /* ─── minimal theme ─── */
 /**
@@ -166,8 +166,8 @@
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-playfair-display), "Playfair Display", ui-serif, Georgia, serif;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07);
@@ -203,8 +203,8 @@
   --radius-md: 1rem;
   --radius-lg: 1.5rem;
   --radius-xl: 9999px;
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-space-grotesk), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-space-grotesk), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --shadow-sm: 0 1px 3px 0 rgb(249 115 22 / 0.1);
   --shadow-md: 0 4px 6px -1px rgb(249 115 22 / 0.15);
   --shadow-lg: 0 10px 15px -3px rgb(249 115 22 / 0.15);
@@ -240,7 +240,7 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
   --shadow-sm: 0 1px 2px 0 rgb(8 145 178 / 0.08);
   --shadow-md: 0 4px 6px -1px rgb(8 145 178 / 0.12);
   --shadow-lg: 0 10px 15px -3px rgb(8 145 178 / 0.12);
