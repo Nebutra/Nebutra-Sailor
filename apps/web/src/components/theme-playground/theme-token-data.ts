@@ -1,17 +1,10 @@
-import {
-  MODE_TOKEN_SETS,
-  THEME_TOKEN_SETS,
-  type ThemeTokenSetId,
-} from "@nebutra/design-tokens/themes";
+import { THEME_TOKEN_SETS, type ThemeTokenSetId } from "@nebutra/design-tokens/themes";
 import type { CSSProperties } from "react";
 
 export type ThemeMode = "light" | "dark";
 export type ThemeId = ThemeTokenSetId;
 
-type DtcgLeaf = {
-  $value?: string;
-  $type?: string;
-};
+type DtcgLeaf = { $value?: string; $type?: string };
 
 type ThemeTokenSet = {
   color?: Record<string, DtcgLeaf | undefined>;
@@ -20,20 +13,12 @@ type ThemeTokenSet = {
   shadow?: Record<string, DtcgLeaf | undefined>;
 };
 
-type ModeTokenSet = {
-  shadcn: Record<string, DtcgLeaf | undefined>;
-  elevation?: Record<string, DtcgLeaf | undefined>;
-};
-
-export type TokenRow = {
-  name: string;
-  value: string;
-};
+export type TokenRow = { name: string; value: string };
 
 const themeTokenSets = THEME_TOKEN_SETS as Record<ThemeId, ThemeTokenSet>;
-const modeTokenSets = MODE_TOKEN_SETS as Record<ThemeMode, ModeTokenSet>;
 
-const STATUS_COLOR_FALLBACKS = {
+// Hard-coded status-color fallbacks for themes that don't declare them.
+const STATUS_COLOR_FALLBACKS: Record<string, string> = {
   destructive: "hsl(0 84% 45%)",
   "destructive-foreground": "hsl(0 0% 100%)",
   success: "hsl(142 71% 36%)",
@@ -42,6 +27,37 @@ const STATUS_COLOR_FALLBACKS = {
   "warning-foreground": "hsl(222 47% 4%)",
   info: "hsl(228 95% 67%)",
   "info-foreground": "hsl(222 47% 4%)",
+};
+
+// Mode-default surface colors so a theme that only declares brand colors still
+// renders sensibly in light/dark. All in oklch so they compose with theme tokens.
+const MODE_SURFACE_FALLBACKS: Record<ThemeMode, Record<string, string>> = {
+  light: {
+    background: "oklch(1 0 0)",
+    foreground: "oklch(0.141 0.005 285.9)",
+    card: "oklch(1 0 0)",
+    "card-foreground": "oklch(0.141 0.005 285.9)",
+    popover: "oklch(1 0 0)",
+    "popover-foreground": "oklch(0.141 0.005 285.9)",
+    muted: "oklch(0.967 0.001 286)",
+    "muted-foreground": "oklch(0.552 0.016 286)",
+    border: "oklch(0.922 0.004 286)",
+    input: "oklch(0.922 0.004 286)",
+    ring: "oklch(0.546 0.245 262.9)",
+  },
+  dark: {
+    background: "oklch(0.141 0.005 285.9)",
+    foreground: "oklch(0.985 0 0)",
+    card: "oklch(0.162 0.004 285.9)",
+    "card-foreground": "oklch(0.985 0 0)",
+    popover: "oklch(0.162 0.004 285.9)",
+    "popover-foreground": "oklch(0.985 0 0)",
+    muted: "oklch(0.215 0.006 285.9)",
+    "muted-foreground": "oklch(0.71 0.013 286)",
+    border: "oklch(0.215 0.006 285.9)",
+    input: "oklch(0.215 0.006 285.9)",
+    ring: "oklch(0.546 0.245 262.9)",
+  },
 };
 
 const SURFACE_COLOR_KEYS = [
@@ -79,57 +95,25 @@ function tokenValue(group: Record<string, DtcgLeaf | undefined> | undefined, key
   return group?.[key]?.$value;
 }
 
-function hslValue(tokens: ModeTokenSet, key: string) {
-  const value = tokenValue(tokens.shadcn, key);
-  return value ? `hsl(${value})` : undefined;
-}
-
-function modeSurface(mode: ThemeMode, key: string) {
-  return hslValue(modeTokenSets[mode], key);
-}
-
-function themeColor(theme: ThemeTokenSet, key: string) {
-  return tokenValue(theme.color, key);
-}
-
-function themeRadius(theme: ThemeTokenSet, key: string) {
-  return tokenValue(theme.radius, key);
-}
-
-function themeShadow(theme: ThemeTokenSet, key: string, mode: ThemeMode) {
-  return tokenValue(theme.shadow, key) ?? tokenValue(modeTokenSets[mode].elevation, key);
-}
-
 function setVar(target: Record<string, string>, name: string, value: string | undefined) {
-  if (value) {
-    target[name] = value;
-  }
+  if (value) target[name] = value;
 }
 
 export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSProperties {
   const theme = themeTokenSets[themeId as ThemeId] ?? themeTokenSets.neon;
-  const vars: Record<string, string> = {
-    colorScheme: mode,
-  };
+  const surfaceFallback = MODE_SURFACE_FALLBACKS[mode];
+  const vars: Record<string, string> = { colorScheme: mode };
 
   for (const key of SURFACE_COLOR_KEYS) {
-    setVar(vars, `--color-${key}`, modeSurface(mode, key) ?? themeColor(theme, key));
-    setVar(vars, `--${key}`, tokenValue(modeTokenSets[mode].shadcn, key));
+    setVar(vars, `--color-${key}`, tokenValue(theme.color, key) ?? surfaceFallback[key]);
   }
 
   for (const key of BRAND_COLOR_KEYS) {
-    setVar(
-      vars,
-      `--color-${key}`,
-      themeColor(theme, key) ??
-        modeSurface(mode, key) ??
-        STATUS_COLOR_FALLBACKS[key as keyof typeof STATUS_COLOR_FALLBACKS],
-    );
-    setVar(vars, `--${key}`, tokenValue(modeTokenSets[mode].shadcn, key));
+    setVar(vars, `--color-${key}`, tokenValue(theme.color, key) ?? STATUS_COLOR_FALLBACKS[key]);
   }
 
   for (const key of ["sm", "md", "lg", "xl", "full"]) {
-    setVar(vars, `--radius-${key}`, themeRadius(theme, key));
+    setVar(vars, `--radius-${key}`, tokenValue(theme.radius, key));
   }
 
   for (const key of ["sans", "mono", "heading"]) {
@@ -137,7 +121,7 @@ export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSPrope
   }
 
   for (const key of ["sm", "md", "lg", "xl"]) {
-    setVar(vars, `--shadow-${key}`, themeShadow(theme, key, mode));
+    setVar(vars, `--shadow-${key}`, tokenValue(theme.shadow, key));
   }
 
   return vars as CSSProperties;
@@ -146,12 +130,12 @@ export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSPrope
 export function getThemeSwatches(themeId: string): string[] {
   const theme = themeTokenSets[themeId as ThemeId] ?? themeTokenSets.neon;
   return [
-    themeColor(theme, "primary"),
-    themeColor(theme, "secondary"),
-    themeColor(theme, "accent"),
-    themeColor(theme, "background"),
-    themeColor(theme, "card"),
-    themeColor(theme, "border"),
+    tokenValue(theme.color, "primary"),
+    tokenValue(theme.color, "secondary"),
+    tokenValue(theme.color, "accent"),
+    tokenValue(theme.color, "background"),
+    tokenValue(theme.color, "card"),
+    tokenValue(theme.color, "border"),
   ].filter((value): value is string => Boolean(value));
 }
 

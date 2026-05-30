@@ -378,6 +378,11 @@ function PreviewCanvas({
 }) {
   const style = getThemePreviewStyle(theme.id, mode);
 
+  // Tailwind v4 in this app uses `@theme inline { --color-*: hsl(var(--*)) }`,
+  // which inlines the value into the utility — so `bg-background` reads `--background`
+  // directly, NOT `--color-background`. Theme JSON stores oklch values that can't live
+  // inside `hsl(...)`. Solution: inside the preview, bypass the indirection and read
+  // `var(--color-*)` straight from the wrapper's inline style.
   return (
     <section className="theme-preview-canvas min-h-0 min-w-0 bg-background/55">
       <CanvasHeader activeSuite={activeSuite} onSuiteChange={onSuiteChange} />
@@ -387,7 +392,7 @@ function PreviewCanvas({
         data-surface={surface}
         style={style}
         className={cn(
-          "h-full min-h-[680px] overflow-y-auto bg-background text-foreground",
+          "h-full min-h-[680px] overflow-y-auto bg-[var(--color-background)] text-[color:var(--color-foreground)]",
           densityScale[density],
         )}
       >
@@ -417,8 +422,10 @@ function PreviewCard({
   return (
     <section
       className={cn(
-        "rounded-[var(--radius-lg)] border bg-card p-[var(--playground-pad)] text-card-foreground shadow-[var(--shadow-sm)]",
-        active ? "border-primary/80 ring-2 ring-primary/20" : "border-border",
+        "rounded-[var(--radius-lg)] border bg-[var(--color-card)] p-[var(--playground-pad)] text-[color:var(--color-card-foreground)] shadow-[var(--shadow-sm)]",
+        active
+          ? "border-[var(--color-primary)] ring-2 ring-[color-mix(in_oklch,var(--color-primary),transparent_80%)]"
+          : "border-[var(--color-border)]",
         className,
       )}
     >
@@ -442,12 +449,12 @@ function FormInput({
 }) {
   return (
     <label className="grid gap-1.5">
-      <span className="font-medium text-[11px] text-foreground">{label}</span>
+      <span className="font-medium text-[11px] text-[color:var(--color-foreground)]">{label}</span>
       <input
         type={type}
         readOnly
         value={value}
-        className="h-9 rounded-[var(--radius-md)] border border-input bg-background px-3 text-foreground text-xs shadow-[var(--shadow-sm)] outline-none"
+        className="h-9 rounded-[var(--radius-md)] border border-[var(--color-input)] bg-[var(--color-background)] px-3 text-[color:var(--color-foreground)] text-xs shadow-[var(--shadow-sm)] outline-none"
       />
     </label>
   );
@@ -456,19 +463,21 @@ function FormInput({
 function FormsPanel({ active }: { active: boolean }) {
   return (
     <PreviewCard title="Create an account" active={active} className="theme-preview-span-5">
-      <p className="mb-4 text-muted-foreground text-xs">Start building in seconds.</p>
+      <p className="mb-4 text-[color:var(--color-muted-foreground)] text-xs">
+        Start building in seconds.
+      </p>
       <div className="grid gap-3">
         <FormInput label="Full name" value="Ava Johnson" />
         <FormInput label="Email" value="ava.johnson@example.com" />
         <FormInput label="Password" value="************" type="password" />
-        <div className="flex items-center gap-2 text-muted-foreground text-xs">
-          <span className="grid size-4 place-items-center rounded-[var(--radius-sm)] bg-primary text-primary-foreground">
+        <div className="flex items-center gap-2 text-[color:var(--color-muted-foreground)] text-xs">
+          <span className="grid size-4 place-items-center rounded-[var(--radius-sm)] bg-[var(--color-primary)] text-[color:var(--color-primary-foreground)]">
             <Check className="size-3" />
           </span>
           I agree to the Terms of Service and Privacy Policy
         </div>
         <button
-          className="h-10 rounded-[var(--radius-md)] bg-primary px-4 font-medium text-primary-foreground text-sm shadow-[var(--shadow-md)]"
+          className="h-10 rounded-[var(--radius-md)] bg-[var(--color-primary)] px-4 font-medium text-[color:var(--color-primary-foreground)] text-sm shadow-[var(--shadow-md)]"
           type="button"
         >
           Create account
@@ -501,8 +510,10 @@ function PricingPanel({ active }: { active: boolean }) {
           <div
             key={plan.name}
             className={cn(
-              "relative rounded-[var(--radius-lg)] border bg-background p-4",
-              plan.popular ? "border-primary shadow-[var(--shadow-md)]" : "border-border",
+              "relative rounded-[var(--radius-lg)] border bg-[var(--color-background)] p-4",
+              plan.popular
+                ? "border-[var(--color-primary)] shadow-[var(--shadow-md)]"
+                : "border-[var(--color-border)]",
             )}
           >
             {plan.popular && (
@@ -513,12 +524,15 @@ function PricingPanel({ active }: { active: boolean }) {
             <div className="font-semibold text-sm">{plan.name}</div>
             <div className="mt-3 flex items-end gap-1">
               <span className="font-bold text-2xl">{plan.price}</span>
-              <span className="text-muted-foreground text-xs">/month</span>
+              <span className="text-[color:var(--color-muted-foreground)] text-xs">/month</span>
             </div>
             <ul className="mt-4 space-y-2 text-xs">
               {plan.items.map((item) => (
-                <li key={item} className="flex items-center gap-2 text-muted-foreground">
-                  <Check className="size-3 text-primary" />
+                <li
+                  key={item}
+                  className="flex items-center gap-2 text-[color:var(--color-muted-foreground)]"
+                >
+                  <Check className="size-3 text-[color:var(--color-primary)]" />
                   {item}
                 </li>
               ))}
@@ -527,8 +541,8 @@ function PricingPanel({ active }: { active: boolean }) {
               className={cn(
                 "mt-5 min-h-9 w-full rounded-[var(--radius-md)] border px-2 py-1.5 text-center font-medium text-xs leading-tight",
                 plan.popular
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border bg-card text-card-foreground",
+                  ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-[color:var(--color-primary-foreground)]"
+                  : "border-[var(--color-border)] bg-[var(--color-card)] text-[color:var(--color-card-foreground)]",
               )}
               type="button"
             >
@@ -555,26 +569,30 @@ function DashboardPanel({ active }: { active: boolean }) {
         {stats.map(([label, value, delta]) => (
           <div
             key={label}
-            className="rounded-[var(--radius-md)] border border-border bg-background p-3"
+            className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-background)] p-3"
           >
-            <div className="text-muted-foreground text-[11px]">{label}</div>
+            <div className="text-[color:var(--color-muted-foreground)] text-[11px]">{label}</div>
             <div className="mt-1 font-bold text-lg">{value}</div>
-            <div className="mt-1 text-[11px] text-success">+{delta} vs last 7 days</div>
+            <div className="mt-1 text-[11px] text-[color:var(--color-success)]">
+              +{delta} vs last 7 days
+            </div>
           </div>
         ))}
       </div>
-      <div className="mt-3 overflow-hidden rounded-[var(--radius-md)] border border-border">
+      <div className="mt-3 overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-border)]">
         {["Nebutra Marketing", "Design System v2", "AI Assistant", "Analytics Pipeline"].map(
           (project, index) => (
             <div
               key={project}
-              className="grid grid-cols-[1fr_auto_auto] items-center gap-3 border-border border-b bg-background px-3 py-2 last:border-b-0"
+              className="grid grid-cols-[1fr_auto_auto] items-center gap-3 border-[var(--color-border)] border-b bg-[var(--color-background)] px-3 py-2 last:border-b-0"
             >
               <span className="font-medium text-xs">{project}</span>
               <Badge variant={index === 3 ? "purple-subtle" : "green-subtle"} size="sm">
                 {index === 3 ? "Paused" : "Active"}
               </Badge>
-              <span className="text-muted-foreground text-[11px]">{index + 1}d ago</span>
+              <span className="text-[color:var(--color-muted-foreground)] text-[11px]">
+                {index + 1}d ago
+              </span>
             </div>
           ),
         )}
@@ -587,29 +605,29 @@ function AiChatPanel({ active }: { active: boolean }) {
   return (
     <PreviewCard title="AI Assistant" active={active} className="theme-preview-span-5">
       <div className="mb-4 flex items-center gap-2">
-        <span className="grid size-7 place-items-center rounded-full bg-primary/15 text-primary">
+        <span className="grid size-7 place-items-center rounded-full bg-[color-mix(in_oklch,var(--color-primary),transparent_85%)] text-[color:var(--color-primary)]">
           <Sparkles className="size-4" />
         </span>
         <div>
           <div className="font-medium text-xs">Nebutra Agent</div>
-          <div className="text-[11px] text-success">Online</div>
+          <div className="text-[11px] text-[color:var(--color-success)]">Online</div>
         </div>
       </div>
-      <div className="ml-auto max-w-[72%] rounded-[var(--radius-lg)] bg-primary p-3 text-primary-foreground text-xs">
+      <div className="ml-auto max-w-[72%] rounded-[var(--radius-lg)] bg-[var(--color-primary)] p-3 text-[color:var(--color-primary-foreground)] text-xs">
         Can you help me analyze last month's growth?
       </div>
-      <div className="mt-3 max-w-[78%] rounded-[var(--radius-lg)] border border-border bg-background p-3 text-xs">
+      <div className="mt-3 max-w-[78%] rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-background)] p-3 text-xs">
         Sure. Growth improved across activation and retention. I attached the report.
-        <div className="mt-3 flex items-center justify-between rounded-[var(--radius-md)] border border-border bg-card p-2">
+        <div className="mt-3 flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-card)] p-2">
           <span className="font-mono text-[11px]">growth-report.pdf</span>
-          <Clipboard className="size-3 text-muted-foreground" />
+          <Clipboard className="size-3 text-[color:var(--color-muted-foreground)]" />
         </div>
       </div>
       <div className="mt-4 flex gap-2">
         {["Retention", "Region", "Revenue"].map((item) => (
           <button
             key={item}
-            className="rounded-full border border-border bg-background px-3 py-1 text-muted-foreground text-[11px]"
+            className="rounded-full border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-1 text-[color:var(--color-muted-foreground)] text-[11px]"
             type="button"
           >
             {item}
@@ -643,7 +661,7 @@ function MiniChart({
 }) {
   const bars = [42, 58, 46, 72, 64, 55];
   return (
-    <div className="rounded-[var(--radius-md)] border border-border bg-background p-4">
+    <div className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-background)] p-4">
       <div className="mb-4 flex items-start justify-between">
         <div>
           <div className="font-medium text-xs">{title}</div>
@@ -653,20 +671,20 @@ function MiniChart({
           +12.5%
         </Badge>
       </div>
-      <div className="relative h-28 overflow-hidden rounded-[var(--radius-sm)] border border-border bg-card p-3">
+      <div className="relative h-28 overflow-hidden rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-card)] p-3">
         {variant === "bar" ? (
           <div className="flex h-full items-end gap-3">
             {bars.map((height) => (
               <span
                 key={`${title}-${height}`}
-                className="flex-1 rounded-t-[var(--radius-sm)] bg-primary/80"
+                className="flex-1 rounded-t-[var(--radius-sm)] bg-[color-mix(in_oklch,var(--color-primary),transparent_20%)]"
                 style={{ height: `${height}%` }}
               />
             ))}
           </div>
         ) : (
           <>
-            <div className="absolute inset-x-3 bottom-3 h-[38%] rounded-t-full bg-primary/15 blur-sm" />
+            <div className="absolute inset-x-3 bottom-3 h-[38%] rounded-t-full bg-[color-mix(in_oklch,var(--color-primary),transparent_85%)] blur-sm" />
             <svg
               className="absolute inset-3 size-[calc(100%-1.5rem)]"
               viewBox="0 0 320 120"
