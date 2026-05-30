@@ -50,7 +50,8 @@ export function emitScaffoldCompleted(
   // Fire-and-forget — wrap in async IIFE so we never block.
   void (async () => {
     try {
-      // @ts-expect-error — optional peer; resolved at runtime, may be absent
+      // Optional peer — resolved at runtime; absence is handled by the
+      // surrounding try/catch and the `typeof createAnalyticsClient` guard below.
       const mod = (await import("@nebutra/analytics")) as unknown as {
         createAnalyticsClient?: (config: unknown) => {
           track: (event: string, props: Record<string, unknown>) => Promise<unknown> | unknown;
