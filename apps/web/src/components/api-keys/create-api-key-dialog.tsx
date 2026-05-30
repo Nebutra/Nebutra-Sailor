@@ -199,15 +199,11 @@ export function CreateApiKeyDialog({
                 name="name"
                 render={({ field }) => (
                   <FormItem className="space-y-0">
-                    <FormLabel
-                      htmlFor="api-key-name"
-                      className="mb-1 block text-sm font-medium text-[var(--neutral-12)]"
-                    >
+                    <FormLabel className="mb-1 block text-sm font-medium text-[var(--neutral-12)]">
                       {text.nameLabel}
                     </FormLabel>
                     <FormControl>
                       <Input
-                        id="api-key-name"
                         type="text"
                         required
                         maxLength={64}
