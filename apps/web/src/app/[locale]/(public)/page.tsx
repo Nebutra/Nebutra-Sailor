@@ -1,14 +1,5 @@
 import type { Icon as NebutraIcon } from "@nebutra/icons";
-import {
-  ArrowRight,
-  ChartActivity,
-  CheckCircle,
-  CreditCard,
-  Lightning,
-  Message,
-  Shield,
-  Users,
-} from "@nebutra/icons";
+import { ArrowRight, CheckCircle, CreditCard, Message, Users } from "@nebutra/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
@@ -24,7 +15,6 @@ interface PublicDashboardCopy {
   workspaceAction: string;
   nav: Array<{ href: string; label: string }>;
   metrics: Array<{ label: string; value: string; detail: string; icon: NebutraIcon }>;
-  briefs: Array<{ title: string; body: string; icon: NebutraIcon; tone: string }>;
   serviceTitle: string;
   serviceBody: string;
   gated: Array<string>;
@@ -34,139 +24,90 @@ interface PublicDashboardCopy {
 
 const COPY: Record<Locale, PublicDashboardCopy> = {
   en: {
-    badge: "Public intelligence console",
-    title: "Nebutra dashboard is readable before login.",
+    badge: "Live demo",
+    title: "See Nebutra in action — no sign-in required.",
     subtitle:
-      "Browse the platform map, sample operating signals, and public AI workflow briefs. Sign in when you need private workspaces, live data, and service execution.",
+      "Walk through a working console with sample data. Sign in when you're ready to bring your own team and connect real services.",
     primaryAction: "Open workspace",
-    secondaryAction: "View demo",
-    workspaceAction: "Sign in to use services",
+    secondaryAction: "Watch the demo",
+    workspaceAction: "Open workspace",
     nav: [
-      { href: "/#signals", label: "Signals" },
-      { href: "/#workflows", label: "Workflows" },
+      { href: "/#signals", label: "Overview" },
       { href: "/demo/embed", label: "Demo" },
-      { href: "/sign-in", label: "Log in" },
+      { href: "/sign-in", label: "Sign in" },
     ],
     metrics: [
       {
-        label: "Workspace model",
-        value: "Tenant-first",
-        detail: "Organizations, roles, audit, and usage stay behind account access.",
+        label: "Multi-tenant",
+        value: "One team, one space",
+        detail: "Orgs, roles, audit, and usage are isolated per tenant by default.",
         icon: Users,
       },
       {
-        label: "AI services",
-        value: "Previewable",
-        detail: "Public briefs explain the flow; execution requires a signed-in session.",
+        label: "AI built in",
+        value: "Chat, agents, tools",
+        detail: "Streaming chat, tool-calling, and agent orchestration on the Vercel AI SDK.",
         icon: Message,
       },
       {
-        label: "Governance",
-        value: "Indexed",
-        detail: "Public pages are crawlable; private app routes stay noindex.",
-        icon: Shield,
-      },
-      {
-        label: "Commercial flow",
-        value: "Gated",
-        detail: "Billing, seats, and plan controls remain private service surfaces.",
+        label: "Billing",
+        value: "End-to-end",
+        detail: "Subscriptions, seats, and usage metering wired up — no glue code required.",
         icon: CreditCard,
       },
     ],
-    briefs: [
-      {
-        title: "Ask without entering a workspace",
-        body: "Read public summaries and example workflows first; create private sessions after login.",
-        icon: Message,
-        tone: "text-blue-11 dark:text-blue-9",
-      },
-      {
-        title: "Compare operating signals",
-        body: "Use sample analytics to understand the product model without exposing tenant data.",
-        icon: ChartActivity,
-        tone: "text-cyan-11 dark:text-cyan-9",
-      },
-      {
-        title: "Activate service execution",
-        body: "Authenticated users get live chat, API keys, billing, notifications, and admin controls.",
-        icon: Lightning,
-        tone: "text-green-11 dark:text-green-9",
-      },
-    ],
-    serviceTitle: "Private services start after authentication",
+    serviceTitle: "What you unlock after signing in",
     serviceBody:
-      "The public dashboard is for discovery and search. Account-bound work stays inside the protected app shell.",
-    gated: ["Live AI chat", "Workspace analytics", "Billing and seats", "API keys", "Audit logs"],
-    seoTitle: "Nebutra public dashboard",
+      "Public pages are for browsing. Once you sign in, everything below is yours to use.",
+    gated: [
+      "Live AI chat",
+      "Workspace analytics",
+      "Subscriptions & seats",
+      "API keys",
+      "Audit log",
+    ],
+    seoTitle: "Nebutra — live demo",
     seoDescription:
-      "Explore Nebutra's AI-native SaaS dashboard before login. Sign in to use private workspaces, live AI services, analytics, billing, and administration.",
+      "Explore Nebutra's AI-native SaaS console with sample data. Sign in to bring your own team, connect real services, and unlock chat, billing, and analytics.",
   },
   zh: {
-    badge: "公开智能控制台",
-    title: "Nebutra dashboard 未登录也能阅读。",
-    subtitle:
-      "先浏览平台地图、示例运营信号和公开 AI 工作流摘要；需要私有工作区、实时数据和服务执行时再登录。",
+    badge: "实时演示",
+    title: "登录前先逛逛 Nebutra 控制台。",
+    subtitle: "用示例数据走通整套流程；准备好接入自己的团队和数据时，再登录创建工作区。",
     primaryAction: "进入工作区",
-    secondaryAction: "查看演示",
-    workspaceAction: "登录后使用服务",
+    secondaryAction: "观看演示",
+    workspaceAction: "进入工作区",
     nav: [
-      { href: "/#signals", label: "信号" },
-      { href: "/#workflows", label: "工作流" },
+      { href: "/#signals", label: "概览" },
       { href: "/demo/embed", label: "演示" },
       { href: "/sign-in", label: "登录" },
     ],
     metrics: [
       {
-        label: "工作区模型",
-        value: "租户优先",
-        detail: "组织、角色、审计和用量留在账号访问之后。",
+        label: "多租户",
+        value: "一团队 · 一空间",
+        detail: "组织、角色、审计、用量按租户自动隔离，不会互相串台。",
         icon: Users,
       },
       {
-        label: "AI 服务",
-        value: "可预览",
-        detail: "公开摘要解释流程；执行需要已登录会话。",
+        label: "原生 AI",
+        value: "聊天 · Agent · 工具",
+        detail: "基于 Vercel AI SDK，流式对话、工具调用、Agent 编排全部就位。",
         icon: Message,
       },
       {
-        label: "治理边界",
-        value: "可索引",
-        detail: "公开页面允许抓取；私有 app 路由保持 noindex。",
-        icon: Shield,
-      },
-      {
-        label: "商业流程",
-        value: "受保护",
-        detail: "账单、席位和计划控制仍是私有服务界面。",
+        label: "计费",
+        value: "端到端打通",
+        detail: "订阅、席位、用量计费一次配好，不用自己拼胶水代码。",
         icon: CreditCard,
       },
     ],
-    briefs: [
-      {
-        title: "不进工作区也能先了解",
-        body: "先阅读公开摘要和示例流程；登录后再创建私有会话。",
-        icon: Message,
-        tone: "text-blue-11 dark:text-blue-9",
-      },
-      {
-        title: "比较运营信号",
-        body: "通过示例 analytics 理解产品模型，不暴露租户数据。",
-        icon: ChartActivity,
-        tone: "text-cyan-11 dark:text-cyan-9",
-      },
-      {
-        title: "激活服务执行",
-        body: "登录用户可以使用实时聊天、API keys、账单、通知和管理控制。",
-        icon: Lightning,
-        tone: "text-green-11 dark:text-green-9",
-      },
-    ],
-    serviceTitle: "私有服务从登录后开始",
-    serviceBody: "公开 dashboard 用于发现和搜索；账号绑定工作留在受保护的 app shell 内。",
-    gated: ["实时 AI 聊天", "工作区 analytics", "账单和席位", "API keys", "审计日志"],
-    seoTitle: "Nebutra 公开 dashboard",
+    serviceTitle: "登录后才解锁",
+    serviceBody: "公开页面用来浏览；登录之后，下面这些就都归你用了。",
+    gated: ["实时 AI 聊天", "工作区分析", "订阅与席位", "API Key", "审计日志"],
+    seoTitle: "Nebutra · 在线演示",
     seoDescription:
-      "登录前探索 Nebutra 的 AI-native SaaS dashboard；登录后使用私有工作区、实时 AI 服务、analytics、账单和管理能力。",
+      "用示例数据浏览 Nebutra 的 AI 原生 SaaS 控制台；登录后可接入自己的团队和数据，使用聊天、计费、分析等完整服务。",
   },
 };
 
@@ -254,13 +195,13 @@ export default async function PublicDashboardPage({
       </header>
 
       <section className="mx-auto grid w-full max-w-[1280px] gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-10">
-        <div className="flex min-w-0 flex-col justify-between gap-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-5/[0.04]">
+        <div className="flex min-w-0 flex-col justify-between gap-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-6">
           <div>
             <div className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-neutral-1 px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-blue-11 dark:text-blue-8">
               <span className="size-1.5 rounded-full bg-green-9" aria-hidden="true" />
               {copy.badge}
             </div>
-            <h1 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-neutral-12 sm:text-4xl lg:text-5xl">
+            <h1 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-balance text-neutral-12 sm:text-4xl">
               {copy.title}
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-11">{copy.subtitle}</p>
@@ -282,11 +223,11 @@ export default async function PublicDashboardPage({
           </div>
         </div>
 
-        <div id="signals" className="grid gap-3 sm:grid-cols-2">
+        <div id="signals" className="grid gap-3">
           {copy.metrics.map(({ label, value, detail, icon: Icon }) => (
             <article
               key={label}
-              className="min-h-40 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4/[0.035]"
+              className="rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4"
             >
               <div className="flex items-center justify-between gap-3">
                 <p className="text-xs font-medium text-neutral-10">{label}</p>
@@ -299,24 +240,8 @@ export default async function PublicDashboardPage({
         </div>
       </section>
 
-      <section
-        id="workflows"
-        className="mx-auto grid w-full max-w-[1280px] gap-4 px-4 pb-8 sm:px-6 lg:grid-cols-3"
-      >
-        {copy.briefs.map(({ title, body, icon: Icon, tone }) => (
-          <article
-            key={title}
-            className="rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4/[0.03]"
-          >
-            <Icon className={`size-5 ${tone}`} aria-hidden="true" />
-            <h2 className="mt-3 text-base font-semibold text-neutral-12">{title}</h2>
-            <p className="mt-2 text-sm leading-6 text-neutral-10">{body}</p>
-          </article>
-        ))}
-      </section>
-
       <section className="mx-auto w-full max-w-[1280px] px-4 pb-10 sm:px-6">
-        <div className="grid gap-4 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-5/[0.04] lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid gap-4 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-6 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <h2 className="text-xl font-semibold tracking-tight text-neutral-12">
               {copy.serviceTitle}

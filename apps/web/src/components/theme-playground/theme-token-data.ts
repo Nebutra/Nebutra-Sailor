@@ -35,27 +35,30 @@ const MODE_SURFACE_FALLBACKS: Record<ThemeMode, Record<string, string>> = {
   light: {
     background: "oklch(1 0 0)",
     foreground: "oklch(0.141 0.005 285.9)",
-    card: "oklch(1 0 0)",
+    // Push card a hair darker than canvas so layering reads without a border.
+    card: "oklch(0.985 0 0)",
     "card-foreground": "oklch(0.141 0.005 285.9)",
     popover: "oklch(1 0 0)",
     "popover-foreground": "oklch(0.141 0.005 285.9)",
-    muted: "oklch(0.967 0.001 286)",
+    muted: "oklch(0.965 0.001 286)",
     "muted-foreground": "oklch(0.552 0.016 286)",
-    border: "oklch(0.922 0.004 286)",
-    input: "oklch(0.922 0.004 286)",
+    border: "oklch(0 0 0 / 0.06)",
+    input: "oklch(0 0 0 / 0.07)",
     ring: "oklch(0.546 0.245 262.9)",
   },
   dark: {
-    background: "oklch(0.141 0.005 285.9)",
+    // Three-tier dark surface (Manus / Linear): canvas → card → popover.
+    // 0.020–0.025 L per step is enough to feel layered without any outline.
+    background: "oklch(0.125 0.005 285.9)",
     foreground: "oklch(0.985 0 0)",
-    card: "oklch(0.162 0.004 285.9)",
+    card: "oklch(0.155 0.005 285.9)",
     "card-foreground": "oklch(0.985 0 0)",
-    popover: "oklch(0.162 0.004 285.9)",
+    popover: "oklch(0.18 0.005 285.9)",
     "popover-foreground": "oklch(0.985 0 0)",
-    muted: "oklch(0.215 0.006 285.9)",
-    "muted-foreground": "oklch(0.71 0.013 286)",
-    border: "oklch(0.215 0.006 285.9)",
-    input: "oklch(0.215 0.006 285.9)",
+    muted: "oklch(0.2 0.005 285.9)",
+    "muted-foreground": "oklch(0.66 0.012 286)",
+    border: "oklch(1 0 0 / 0.05)",
+    input: "oklch(1 0 0 / 0.05)",
     ring: "oklch(0.546 0.245 262.9)",
   },
 };
@@ -104,13 +107,25 @@ export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSPrope
   const surfaceFallback = MODE_SURFACE_FALLBACKS[mode];
   const vars: Record<string, string> = { colorScheme: mode };
 
+  // Mode wins on surface colors so the Light/Dark toggle actually does something
+  // even for themes that declare a full surface palette. Brand colors below stay
+  // theme-driven — picking Dark Ocean = Ocean's brand cyan on a dark surface.
   for (const key of SURFACE_COLOR_KEYS) {
-    setVar(vars, `--color-${key}`, tokenValue(theme.color, key) ?? surfaceFallback[key]);
+    setVar(vars, `--color-${key}`, surfaceFallback[key] ?? tokenValue(theme.color, key));
   }
 
   for (const key of BRAND_COLOR_KEYS) {
     setVar(vars, `--color-${key}`, tokenValue(theme.color, key) ?? STATUS_COLOR_FALLBACKS[key]);
   }
+
+  // Optional brand gradient — themes that define one get a real Nebutra-style
+  // gradient CTA; themes that don't fall back to flat primary via CSS var().
+  // Dark mode prefers a dimmed variant if defined, because the light-mode
+  // cyan endpoint reads almost white on dark surfaces (looks like a stray line).
+  const gradient =
+    (mode === "dark" ? tokenValue(theme.color, "brand-gradient-dark") : undefined) ??
+    tokenValue(theme.color, "brand-gradient");
+  setVar(vars, `--color-brand-gradient`, gradient);
 
   for (const key of ["sm", "md", "lg", "xl", "full"]) {
     setVar(vars, `--radius-${key}`, tokenValue(theme.radius, key));

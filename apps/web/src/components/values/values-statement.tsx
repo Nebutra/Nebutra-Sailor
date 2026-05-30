@@ -108,7 +108,7 @@ export function ValuesStatement({
         {pillars.map(({ id, icon: Icon, title, description: desc, metric, linkLabel, href }) => (
           <div
             key={id}
-            className="flex h-full flex-col gap-2 rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-4/[0.03]"
+            className="flex h-full flex-col gap-2 rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-2 p-4"
           >
             <div className="flex items-center justify-between">
               <div

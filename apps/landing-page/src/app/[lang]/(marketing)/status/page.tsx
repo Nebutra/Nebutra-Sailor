@@ -197,7 +197,7 @@ async function StatusPageContent() {
           ))}
         </div>
 
-        <section className="mt-12 rounded-[2rem] border border-[color:var(--neutral-5)] bg-[color:var(--neutral-2)] p-6/[0.03]">
+        <section className="mt-12 rounded-[2rem] border border-[color:var(--neutral-5)] bg-[color:var(--neutral-2)] p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--neutral-9)]">
             Incident history
           </p>
@@ -242,7 +242,7 @@ function Metric({ label, value }: { label: string; value: string }) {
 
 function StatusDatum({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-[var(--radius-2xl)] bg-[color:var(--neutral-2)] p-3/[0.04]">
+    <div className="rounded-[var(--radius-2xl)] bg-[color:var(--neutral-2)] p-3">
       <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[color:var(--neutral-9)]">
         {label}
       </dt>

@@ -278,7 +278,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
           >
             <AnimateIn preset="fadeUp">
               <article
-                className="group relative h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-10 md:p-12 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
+                className="group relative h-full rounded-[var(--radius-card)] bg-muted/20 p-10 md:p-12 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <div className="flex items-center gap-3 mb-8">
@@ -307,7 +307,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
 
             <AnimateIn preset="fadeUp">
               <article
-                className="group relative h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-10 md:p-12 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
+                className="group relative h-full rounded-[var(--radius-card)] bg-muted/20 p-10 md:p-12 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150 overflow-hidden"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <div className="flex items-center gap-3 mb-8">
@@ -409,7 +409,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                 {builderCore.highlights.map((highlight, index) => (
                   <AnimateIn key={highlight.title} preset="fadeUp">
                     <article
-                      className="group h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-6 md:p-7 hover:border-border hover:-translate-y-px transition-transform duration-150"
+                      className="group h-full rounded-[var(--radius-card)] bg-background p-6 md:p-7 hover:-translate-y-px transition-transform duration-150"
                       style={{ boxShadow: "var(--ring-hairline)" }}
                     >
                       <div className="mb-5 flex items-center justify-between">
@@ -437,7 +437,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
           {/* Builder Core × Sailor relationship — one-face-of-two-identities block */}
           <AnimateIn preset="fadeUp">
             <div
-              className="mt-16 md:mt-20 rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background p-8 md:p-12"
+              className="mt-16 md:mt-20 rounded-[var(--radius-panel)] bg-background p-8 md:p-12"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -512,7 +512,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                 {sleptons.highlights.map((highlight, index) => (
                   <AnimateIn key={highlight.title} preset="fadeUp">
                     <article
-                      className="group h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-6 md:p-7 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
+                      className="group h-full rounded-[var(--radius-card)] bg-muted/20 p-6 md:p-7 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
                       style={{ boxShadow: "var(--ring-hairline)" }}
                     >
                       <div className="mb-5 flex items-center justify-between">
@@ -564,7 +564,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
           {/* The Launchpad submodule — explicit expansion */}
           <AnimateIn preset="fadeUp">
             <div
-              className="mt-16 md:mt-20 rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-muted/20 p-8 md:p-12"
+              className="mt-16 md:mt-20 rounded-[var(--radius-panel)] bg-muted/20 p-8 md:p-12"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -590,7 +590,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
                     {labels.launchpadBullets.map((bullet, index) => (
                       <AnimateIn key={bullet.metric} preset="fadeUp">
                         <article
-                          className="flex items-start gap-5 rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-5 md:p-6 hover:border-border hover:-translate-y-px transition-transform duration-150"
+                          className="flex items-start gap-5 rounded-[var(--radius-card)] bg-background p-5 md:p-6 hover:-translate-y-px transition-transform duration-150"
                           style={{ boxShadow: "var(--ring-hairline)" }}
                         >
                           <span className="shrink-0 font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mt-1">
@@ -652,7 +652,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
           >
             <AnimateIn preset="fadeUp">
               <article
-                className="group h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-10 md:p-12 hover:border-border hover:-translate-y-px transition-transform duration-150"
+                className="group h-full rounded-[var(--radius-card)] bg-background p-10 md:p-12 hover:-translate-y-px transition-transform duration-150"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <div className="flex items-center gap-3 mb-6">
@@ -678,7 +678,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
 
             <AnimateIn preset="fadeUp">
               <article
-                className="group h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-10 md:p-12 hover:border-border hover:-translate-y-px transition-transform duration-150"
+                className="group h-full rounded-[var(--radius-card)] bg-background p-10 md:p-12 hover:-translate-y-px transition-transform duration-150"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <div className="flex items-center gap-3 mb-6">
@@ -747,7 +747,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ lang:
               return (
                 <AnimateIn key={content.number} preset="fadeUp">
                   <article
-                    className="group h-full flex flex-col rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-8 md:p-10 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
+                    className="group h-full flex flex-col rounded-[var(--radius-card)] bg-muted/20 p-8 md:p-10 hover:bg-muted/40 hover:-translate-y-px transition-transform duration-150"
                     style={{ boxShadow: "var(--ring-hairline)" }}
                   >
                     <span

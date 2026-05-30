@@ -22,23 +22,23 @@
  */
 
 @theme {
-  --color-primary: oklch(0.452 0.313 264.1);
+  --color-primary: oklch(0.48 0.24 264.1);
   --color-primary-foreground: oklch(1 0 0);
-  --color-secondary: oklch(0.715 0.143 215.2);
+  --color-secondary: oklch(0.62 0.16 220);
   --color-secondary-foreground: oklch(1 0 0);
-  --color-accent: oklch(0.714 0.203 264.1);
+  --color-accent: oklch(0.86 0.17 175);
   --color-accent-foreground: oklch(0.141 0.005 285.9);
-  --color-background: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.13 0.008 264);
   --color-foreground: oklch(0.985 0 0);
-  --color-card: oklch(0.212 0.006 285.9);
+  --color-card: oklch(0.185 0.012 264);
   --color-card-foreground: oklch(0.985 0 0);
-  --color-popover: oklch(0.212 0.006 285.9);
+  --color-popover: oklch(0.2 0.012 264);
   --color-popover-foreground: oklch(0.985 0 0);
-  --color-muted: oklch(0.274 0.006 286);
-  --color-muted-foreground: oklch(0.705 0.015 286);
-  --color-border: oklch(0.274 0.006 286);
-  --color-input: oklch(0.274 0.006 286);
-  --color-ring: oklch(0.452 0.313 264.1);
+  --color-muted: oklch(0.235 0.012 264);
+  --color-muted-foreground: oklch(0.71 0.018 264);
+  --color-border: oklch(0.28 0.014 264);
+  --color-input: oklch(0.235 0.012 264);
+  --color-ring: oklch(0.48 0.24 264.1);
   --color-destructive: oklch(0.577 0.245 27.3);
   --color-destructive-foreground: oklch(1 0 0);
   --color-success: oklch(0.723 0.219 149.6);
@@ -47,8 +47,10 @@
   --color-warning-foreground: oklch(0.141 0.005 285.9);
   --color-info: oklch(0.623 0.214 259.1);
   --color-info-foreground: oklch(1 0 0);
-  --color-primary-hover: color-mix(in oklch, oklch(0.452 0.313 264.1), white 15%);
-  --color-primary-active: color-mix(in oklch, oklch(0.452 0.313 264.1), black 10%);
+  --color-primary-hover: color-mix(in oklch, oklch(0.48 0.24 264.1), white 12%);
+  --color-primary-active: color-mix(in oklch, oklch(0.48 0.24 264.1), black 10%);
+  --color-brand-gradient: linear-gradient(135deg, oklch(0.48 0.24 264.1) 0%, oklch(0.86 0.17 175) 100%);
+  --color-brand-gradient-dark: linear-gradient(135deg, oklch(0.42 0.22 264.1) 0%, oklch(0.68 0.15 175) 100%);
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;

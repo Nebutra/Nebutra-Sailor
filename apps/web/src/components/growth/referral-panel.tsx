@@ -98,7 +98,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
   // Preview state — no live data yet.
   if (!stats) {
     return (
-      <section className="rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 p-6/[0.02]">
+      <section className="rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 p-6">
         <div className="flex items-start gap-3">
           <div
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-xl)] text-white"
@@ -121,7 +121,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
   return (
     <section className="space-y-5">
       {/* Hero card */}
-      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 p-5/[0.03]">
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 p-5">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 opacity-[0.16] blur-3xl"

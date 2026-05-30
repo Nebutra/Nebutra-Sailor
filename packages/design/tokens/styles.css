@@ -95,9 +95,7 @@
   --leading-heading: 1.15;
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.04); /** Etched-glass hairline (light mode value, dark mode override in themes/dark.json) */
   --overlay-faint: rgb(0 0 0 / 0.06); /** Light-mode faint overlay (6% black) */
-  --font-sans:
-    "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont,
-    system-ui, sans-serif;
+  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: "Geist", "Noto Sans SC", sans-serif;
   --font-heading: "Geist", "Noto Sans SC", sans-serif;
@@ -109,19 +107,11 @@
   --brand-tertiary: #8b5cf6;
   --brand-gradient-start: #2f5bff; /** Product action gradient start. Brighter than the locked VI blue while keeping white text contrast above WCAG AA. */
   --brand-gradient-end: #047c9a; /** Product action gradient end. Cyan-blue instead of green so compact CTAs stay crisp and luminous. */
-  --brand-gradient: linear-gradient(
-    135deg,
-    #2f5bff 0%,
-    #047c9a 100%
-  ); /** UI brand gradient for product actions — cleaner blue-to-cyan, calibrated for white-text contrast on compact controls. */
+  --brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%); /** UI brand gradient for product actions — cleaner blue-to-cyan, calibrated for white-text contrast on compact controls. */
   --brand-gradient-reverse: linear-gradient(135deg, #047c9a 0%, #2f5bff 100%);
   --brand-gradient-vertical: linear-gradient(180deg, #2f5bff 0%, #047c9a 100%);
   --brand-gradient-radial: radial-gradient(circle, #047c9a 0%, #2f5bff 100%);
-  --brand-gradient-logo: linear-gradient(
-    135deg,
-    #0033fe 0%,
-    #0bf1c3 100%
-  ); /** Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient. */
+  --brand-gradient-logo: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient. */
   --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
@@ -376,12 +366,8 @@
   --leading-display: 1.05;
   --leading-heading: 1.15;
   --ring-hairline: inset 0 0 0 1px rgb(255 255 255 / 0.06); /** Hairline override — more visible on dark background */
-  --overlay-faint: rgb(
-    255 255 255 / 0.06
-  ); /** Dark-mode faint overlay (6% white) — inverted from light */
-  --font-sans:
-    "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont,
-    system-ui, sans-serif;
+  --overlay-faint: rgb(255 255 255 / 0.06); /** Dark-mode faint overlay (6% white) — inverted from light */
+  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: "Geist", "Noto Sans SC", sans-serif;
   --font-heading: "Geist", "Noto Sans SC", sans-serif;
@@ -393,19 +379,11 @@
   --brand-tertiary: #8b5cf6;
   --brand-gradient-start: #2f5bff; /** Product action gradient start. Brighter than the locked VI blue while keeping white text contrast above WCAG AA. */
   --brand-gradient-end: #047c9a; /** Product action gradient end. Cyan-blue instead of green so compact CTAs stay crisp and luminous. */
-  --brand-gradient: linear-gradient(
-    135deg,
-    #2f5bff 0%,
-    #047c9a 100%
-  ); /** UI brand gradient for product actions — cleaner blue-to-cyan, calibrated for white-text contrast on compact controls. */
+  --brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%); /** UI brand gradient for product actions — cleaner blue-to-cyan, calibrated for white-text contrast on compact controls. */
   --brand-gradient-reverse: linear-gradient(135deg, #047c9a 0%, #2f5bff 100%);
   --brand-gradient-vertical: linear-gradient(180deg, #2f5bff 0%, #047c9a 100%);
   --brand-gradient-radial: radial-gradient(circle, #047c9a 0%, #2f5bff 100%);
-  --brand-gradient-logo: linear-gradient(
-    135deg,
-    #0033fe 0%,
-    #0bf1c3 100%
-  ); /** Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient. */
+  --brand-gradient-logo: linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%); /** Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient. */
   --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
@@ -456,12 +434,6 @@
   --cyan-10: #4dfcd4;
   --cyan-11: #80ffe0;
   --cyan-12: #b3ffec;
-  /* Dark mode (2026-05): governance-level refresh.
-   * Old palette was hue 222 sat 47% L 4% — near-black with a heavy blue
-   * cast; surfaces collapsed into a void and reads as "missing design".
-   * New palette: same hue family for brand continuity, but lower
-   * saturation + higher lightness, so surfaces have body and dimension
-   * (Manus charcoal / Lovable chrome territory). */
   --background: 222 14% 9%;
   --foreground: 210 18% 96%;
   --card: 222 12% 13%;
@@ -769,9 +741,7 @@
   --duration-cinematic: 500ms;
 
   /* Font family — Geist primary stack with CJK fallbacks */
-  --font-sans:
-    "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont,
-    system-ui, sans-serif;
+  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: "Geist", "Noto Sans SC", sans-serif;
   --font-heading: "Geist", "Noto Sans SC", sans-serif;
