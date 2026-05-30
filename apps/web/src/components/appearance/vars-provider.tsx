@@ -2,10 +2,17 @@
 
 import { useEffect } from "react";
 
-import { CODE_FONT_STACKS, UI_FONT_STACKS, useAppearance } from "./store";
+import { CODE_FONT_STACKS, UI_FONT_STACKS, useAppearance, useAppearanceStore } from "./store";
 
 export default function AppearanceVarsProvider(): null {
   const [state] = useAppearance();
+
+  // The store persists with skipHydration:true so SSR and the first client
+  // render share APPEARANCE_DEFAULTS. Rehydrate once on mount to pull the
+  // user's saved snapshot from localStorage without a hydration mismatch.
+  useEffect(() => {
+    void useAppearanceStore.persist.rehydrate();
+  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined") return;

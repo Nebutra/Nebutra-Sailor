@@ -1,6 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { useShallow } from "zustand/react/shallow";
 
 export type AppearanceAccent =
   | "default"
@@ -151,63 +153,46 @@ function sanitize(raw: unknown): AppearanceState {
   };
 }
 
-type Listener = (state: AppearanceState) => void;
-const listeners = new Set<Listener>();
-let current: AppearanceState = APPEARANCE_DEFAULTS;
-let hydrated = false;
+type AppearanceUpdate = (patch: Partial<AppearanceState>) => void;
 
-function readFromStorage(): AppearanceState {
-  if (typeof window === "undefined") return APPEARANCE_DEFAULTS;
-  try {
-    const raw = window.localStorage.getItem(APPEARANCE_STORAGE_KEY);
-    if (!raw) return APPEARANCE_DEFAULTS;
-    return sanitize(JSON.parse(raw));
-  } catch {
-    return APPEARANCE_DEFAULTS;
-  }
-}
+type AppearanceStore = AppearanceState & { update: AppearanceUpdate };
 
-function writeToStorage(state: AppearanceState): void {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.setItem(APPEARANCE_STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    // ignore quota / disabled storage
-  }
-}
+export const useAppearanceStore = create<AppearanceStore>()(
+  persist(
+    (set, get) => ({
+      ...APPEARANCE_DEFAULTS,
+      // Re-run sanitize on every patch so partial updates respect bounds + unions.
+      update: (patch) => set(sanitize({ ...get(), ...patch })),
+    }),
+    {
+      name: APPEARANCE_STORAGE_KEY,
+      version: 1,
+      storage: createJSONStorage(() => localStorage),
+      // Strip the action before persisting; sanitize the rest.
+      partialize: ({ update: _omit, ...state }) => state,
+      // Custom merge mirrors the old sanitize-on-read behavior — corrupt or
+      // partial snapshots fall back to defaults field-by-field.
+      merge: (persisted, current) => ({ ...current, ...sanitize(persisted) }),
+      // SSR-safe: defer rehydration to AppearanceVarsProvider's mount effect
+      // (it calls useAppearanceStore.persist.rehydrate()) so the server and
+      // first client render agree on APPEARANCE_DEFAULTS — no hydration flash.
+      skipHydration: true,
+    },
+  ),
+);
 
-function emit(): void {
-  for (const listener of listeners) listener(current);
-}
+const selectState = (s: AppearanceStore): AppearanceState => {
+  const { update: _omit, ...state } = s;
+  return state;
+};
 
-function setState(patch: Partial<AppearanceState>): void {
-  const merged: AppearanceState = { ...current, ...patch };
-  // Re-run sanitize so partial updates respect bounds + unions.
-  current = sanitize(merged);
-  writeToStorage(current);
-  emit();
-}
-
-export function useAppearance(): [AppearanceState, (patch: Partial<AppearanceState>) => void] {
-  const [local, setLocal] = useState<AppearanceState>(current);
-
-  useEffect(() => {
-    if (!hydrated) {
-      current = readFromStorage();
-      hydrated = true;
-      emit();
-    }
-    setLocal(current);
-    const listener: Listener = (state) => setLocal(state);
-    listeners.add(listener);
-    return () => {
-      listeners.delete(listener);
-    };
-  }, []);
-
-  const update = useCallback((patch: Partial<AppearanceState>) => {
-    setState(patch);
-  }, []);
-
-  return [local, update];
+/**
+ * Back-compat tuple hook. Returns [state, update] so the appearance
+ * primitives stay unchanged. `state` is shallow-memoized; `update` is a
+ * stable action reference.
+ */
+export function useAppearance(): [AppearanceState, AppearanceUpdate] {
+  const state = useAppearanceStore(useShallow(selectState));
+  const update = useAppearanceStore((s) => s.update);
+  return [state, update];
 }
