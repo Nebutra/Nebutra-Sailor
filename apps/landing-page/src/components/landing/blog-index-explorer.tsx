@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Calendar, Menu, MagnifyingGlass as Search } from "@nebutra/icons";
+import { Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { BlogAuthorAvatar } from "./blog-author-avatar";
@@ -212,12 +213,12 @@ export function BlogIndexExplorer({ posts, isZh }: BlogIndexExplorerProps) {
               className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--neutral-10)]"
               aria-hidden
             />
-            <input
+            <Input
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder={copy.search}
-              className="h-11 w-full rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-9 text-sm text-[var(--neutral-12)] outline-none transition-colors placeholder:text-[var(--neutral-9)] focus:border-[var(--blue-8)] focus:ring-2 focus:ring-[var(--blue-5)]"
+              className="h-11 w-full pl-9"
             />
           </label>
 

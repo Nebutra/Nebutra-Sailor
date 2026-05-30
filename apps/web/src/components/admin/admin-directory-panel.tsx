@@ -107,7 +107,13 @@ export function AdminDirectoryPanel({
         {/* biome-ignore lint/a11y/useSemanticElements: React/jsdom still warn on the HTML search element in tests. */}
         <form action="/admin" role="search" className="flex w-full gap-2 lg:max-w-md">
           {normalizedPageSize !== DEFAULT_PAGE_SIZE ? (
-            <input name="pageSize" type="hidden" value={String(normalizedPageSize)} />
+            // hidden form data
+            <input
+              data-allow-native
+              name="pageSize"
+              type="hidden"
+              value={String(normalizedPageSize)}
+            />
           ) : null}
           <input
             data-allow-native

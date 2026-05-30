@@ -1,6 +1,7 @@
 "use client";
 
 import { Heart, HeartFill, Message, PaperAirplane, Star, StarFill } from "@nebutra/icons";
+import { Textarea } from "@nebutra/ui/primitives";
 import type { ComponentType, SVGProps } from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -369,14 +370,14 @@ export function BlogComments({
             onSubmit={handleSubmit}
             className="rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] p-3"
           >
-            <textarea
+            <Textarea
               value={body}
               onChange={(event) => setBody(event.target.value)}
               maxLength={1200}
               rows={4}
               aria-label={labels.placeholder}
               placeholder={labels.placeholder}
-              className="min-h-28 w-full resize-y bg-transparent px-1 py-1 text-sm leading-6 text-[var(--neutral-12)] outline-none placeholder:text-[var(--neutral-10)]"
+              className="min-h-28 w-full resize-y border-0 bg-transparent px-1 py-1 text-sm leading-6 shadow-none focus-visible:ring-0"
             />
             <div className="flex items-center justify-between gap-4 border-t border-[var(--neutral-6)] pt-3">
               <span className="text-xs text-[var(--neutral-10)]">{body.trim().length}/1200</span>
