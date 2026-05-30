@@ -4,7 +4,6 @@
 import { getConfiguredAuthProvider, useAuth } from "@nebutra/auth/client";
 import {
   Warning as AlertTriangle,
-  Bell,
   ChevronRight,
   SidebarLeft as PanelLeftClose,
   SidebarLeft as PanelLeftOpen,
@@ -21,6 +20,7 @@ import { BrandLogo } from "@/components/brand/brand-assets";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
 import { UserMenu } from "@/components/navigation/user-menu";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
+import { NotificationsDialog } from "@/components/notifications/notifications-dialog";
 import { usePermission } from "@/hooks/usePermission";
 import type { WebProductCapabilities } from "@/lib/product-capabilities";
 import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
@@ -318,14 +318,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           </nav>
         )}
       </div>
-      <ViewTransitionLink
-        href="/notifications"
-        aria-label="Open notifications"
-        title="Notifications"
-        className="inline-flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
-      >
-        <Bell className="size-4" aria-hidden="true" />
-      </ViewTransitionLink>
+      <NotificationsDialog />
     </div>
   );
 
