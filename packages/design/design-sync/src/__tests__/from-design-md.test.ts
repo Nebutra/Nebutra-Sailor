@@ -6,7 +6,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { importFromDesignMd } from "../serialize/from-design-md";
+import { extractColorsFromProse, importFromDesignMd } from "../serialize/from-design-md";
 
 // ─── Fixtures ─────────────────────────────────────────────────────────────────
 
@@ -602,6 +602,222 @@ typography:
           expect((e as Error).message).toContain("[from-design-md]");
         }
       }
+    });
+  });
+
+  // ─── Prose-color fallback (VoltAgent extended DESIGN.md format) ──────────────
+
+  describe("prose-color fallback", () => {
+    /** Pure prose fixture — no front matter; colors live in ## Color Palette & Roles */
+    const PROSE_NO_FRONT_MATTER = `# Design System Inspired by Spotify
+
+## 1. Visual Theme & Atmosphere
+
+A dark, immersive music player.
+
+## 2. Color Palette & Roles
+
+### Primary Brand
+- **Spotify Green** (\`#1ed760\`): Primary brand accent — play buttons, active states
+- **Near Black** (\`#121212\`): Deepest background surface
+- **White** (\`#ffffff\`): Primary text on dark surfaces
+
+### Text
+- **Silver** (\`#b3b3b3\`): Secondary text, muted labels
+`;
+
+    /** Front matter present but colors: is empty; colors are in prose section */
+    const PROSE_EMPTY_FM_COLORS = `---
+name: EmptyColorsTest
+colors:
+typography:
+  body:
+    fontFamily: Inter
+    fontSize: 1rem
+---
+
+## Color Palette & Roles
+
+- **Brand Red** (\`#e30613\`): Primary CTA color
+- **Dark Canvas** (\`#0a0a0a\`): Background surface
+- **Text White** (\`#f0f0f0\`): Foreground text
+`;
+
+    it("prose fixture (no front matter) — color group is non-empty", () => {
+      const { set } = importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" });
+      const colorGroup = set.tokens["color"] as Record<string, unknown> | undefined;
+      expect(colorGroup).toBeDefined();
+      expect(Object.keys(colorGroup ?? {}).length).toBeGreaterThan(0);
+    });
+
+    it("prose fixture — extracts spotify-green with value #1ed760", () => {
+      const { set } = importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" });
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string; $type: string }>;
+      expect(colorGroup["spotify-green"]).toBeDefined();
+      expect(colorGroup["spotify-green"].$value.toLowerCase()).toBe("#1ed760");
+      expect(colorGroup["spotify-green"].$type).toBe("color");
+    });
+
+    it("prose fixture — extracts near-black with value #121212", () => {
+      const { set } = importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" });
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string; $type: string }>;
+      expect(colorGroup["near-black"]).toBeDefined();
+      expect(colorGroup["near-black"].$value.toLowerCase()).toBe("#121212");
+    });
+
+    it("prose fixture — assigns primary role (spotify-green matches brand/accent keywords)", () => {
+      const { set } = importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" });
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string } | undefined>;
+      // primary should be assigned — spotify-green is the first non-neutral brand accent
+      expect(colorGroup["primary"]).toBeDefined();
+      expect(colorGroup["primary"]?.$value?.toLowerCase()).toBe("#1ed760");
+    });
+
+    it("prose fixture — report.warnings includes prose fallback message", () => {
+      const { report } = importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" });
+      const allWarnings = report.warnings.join(" ").toLowerCase();
+      expect(allWarnings).toMatch(/prose fallback/);
+    });
+
+    it("prose fixture — produced DTCG tree is valid (all leaves have $value + $type)", () => {
+      expect(() =>
+        importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" }),
+      ).not.toThrow();
+      const { set } = importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" });
+      const colorGroup = set.tokens["color"] as Record<string, { $value: unknown; $type: unknown }>;
+      for (const [key, leaf] of Object.entries(colorGroup)) {
+        expect(leaf.$type, `color.${key} must have $type`).toBe("color");
+        expect(typeof leaf.$value, `color.${key}.$value must be string`).toBe("string");
+      }
+    });
+
+    it("empty-front-matter-colors fixture — colors extracted via prose fallback", () => {
+      const { set } = importFromDesignMd(PROSE_EMPTY_FM_COLORS);
+      const colorGroup = set.tokens["color"] as Record<string, unknown> | undefined;
+      expect(colorGroup).toBeDefined();
+      expect(Object.keys(colorGroup ?? {}).length).toBeGreaterThan(0);
+    });
+
+    it("empty-front-matter-colors fixture — extracts brand-red", () => {
+      const { set } = importFromDesignMd(PROSE_EMPTY_FM_COLORS);
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string }>;
+      expect(colorGroup["brand-red"]).toBeDefined();
+      expect(colorGroup["brand-red"].$value.toLowerCase()).toBe("#e30613");
+    });
+
+    it("empty-front-matter-colors fixture — report.warnings includes prose fallback message", () => {
+      const { report } = importFromDesignMd(PROSE_EMPTY_FM_COLORS);
+      const allWarnings = report.warnings.join(" ").toLowerCase();
+      expect(allWarnings).toMatch(/prose fallback/);
+    });
+
+    it("normal front-matter fixture — prose fallback does NOT run (no fallback warning)", () => {
+      // FULL_FIXTURE has non-empty colors in front matter — prose fallback must not apply
+      const { report, set } = importFromDesignMd(FULL_FIXTURE);
+      const allWarnings = report.warnings.join(" ").toLowerCase();
+      expect(allWarnings).not.toMatch(/prose fallback/);
+      // Front-matter colors must still be present
+      const colorGroup = set.tokens["color"] as Record<string, unknown>;
+      expect(colorGroup["primary"]).toBeDefined();
+    });
+
+    it("normal front-matter fixture — prose fallback does NOT override front-matter colors", () => {
+      // Front matter has primary: #0033FE — prose fallback must not clobber it
+      const { set } = importFromDesignMd(FULL_FIXTURE);
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string }>;
+      expect(colorGroup["primary"].$value.toLowerCase()).toContain("0033f");
+    });
+  });
+
+  describe("extractColorsFromProse unit tests", () => {
+    it("ignores non-color backtick values like CSS variables", () => {
+      const content = `## Color Palette
+- **Primary** (\`--text-base\`): Not a color
+- **Real Color** (\`#ff0000\`): A real hex
+`;
+      const result = extractColorsFromProse(content);
+      expect(result["primary"]).toBeUndefined(); // --text-base is not a valid CSS color
+      expect(result["real-color"]).toBe("#ff0000");
+    });
+
+    it("ignores font names in backticks", () => {
+      const content = `## Color Palette
+- **Body Font** (\`Inter\`): The font
+- **Accent** (\`#00ff00\`): Green accent
+`;
+      const result = extractColorsFromProse(content);
+      expect(result["body-font"]).toBeUndefined(); // Inter is not a color
+      expect(result["accent"]).toBe("#00ff00");
+    });
+
+    it("ignores pixel values in backticks", () => {
+      const content = `## Color Palette
+- **Size** (\`12px\`): Not a color
+- **Blue** (\`#0000ff\`): Blue
+`;
+      const result = extractColorsFromProse(content);
+      expect(result["size"]).toBeUndefined();
+      expect(result["blue"]).toBe("#0000ff");
+    });
+
+    it("accepts rgb() color values", () => {
+      const content = `## Colors
+- **Accent** (\`rgb(30, 215, 96)\`): Brand green
+`;
+      const result = extractColorsFromProse(content);
+      expect(result["accent"]).toBe("rgb(30, 215, 96)");
+    });
+
+    it("accepts rgba() color values", () => {
+      const content = `## Colors
+- **Overlay** (\`rgba(0, 0, 0, 0.5)\`): Dark overlay
+`;
+      const result = extractColorsFromProse(content);
+      expect(result["overlay"]).toBe("rgba(0, 0, 0, 0.5)");
+    });
+
+    it("de-duplicates by token name (first occurrence wins)", () => {
+      const content = `## Colors
+- **Blue** (\`#0000ff\`): First
+- **Blue** (\`#0033ff\`): Duplicate, should be ignored
+`;
+      const result = extractColorsFromProse(content);
+      expect(result["blue"]).toBe("#0000ff");
+    });
+
+    it("kebab-cases multi-word labels", () => {
+      const content = `## Colors
+- **Electric Blue** (\`#3E6AE1\`): CTA color
+- **Pure White** (\`#FFFFFF\`): Background
+`;
+      const result = extractColorsFromProse(content);
+      expect(result["electric-blue"]).toBe("#3E6AE1");
+      expect(result["pure-white"]).toBe("#FFFFFF");
+    });
+
+    it("returns empty object for content with no color entries", () => {
+      const content = `# Some doc
+No colors here at all.
+`;
+      const result = extractColorsFromProse(content);
+      expect(Object.keys(result).length).toBe(0);
+    });
+
+    it("scopes extraction to the color section when a matching heading exists", () => {
+      const content = `## Overview
+- **Something** (\`#aabbcc\`): This is before the color section, should NOT be included
+
+## Color Palette & Roles
+- **Brand Blue** (\`#0033fe\`): Main brand color
+
+## Typography
+- **Font Stack** (\`Inter\`): Not a color here
+`;
+      const result = extractColorsFromProse(content);
+      // Brand Blue should be found
+      expect(result["brand-blue"]).toBe("#0033fe");
+      // 'something' from Overview section should not be included when there's a dedicated color section
+      expect(result["something"]).toBeUndefined();
     });
   });
 });

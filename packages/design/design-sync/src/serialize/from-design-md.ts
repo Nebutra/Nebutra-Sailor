@@ -10,6 +10,11 @@
  *   - spacing.<x>  → spacing.<x>  ($type: "dimension",  $value: "<n><unit>" string)
  *   - body font    → fontFamily.sans ($type: "fontFamily", $value: string)
  *
+ * PROSE-COLOR FALLBACK: When @google/design.md extracts zero colors (e.g. the
+ * VoltAgent extended DESIGN.md format where colors are written as markdown prose
+ * rather than YAML front-matter), `extractColorsFromProse` is called to scrape
+ * labeled color literals of the form `**Label** (\`<value>\`)`.
+ *
  * NEVER import `@google/design.md` (main entry — auto-runs CLI). Only the
  * `@google/design.md/linter` subpath export is used here.
  *
@@ -105,6 +110,220 @@ function leafGroup(entries: Record<string, { $value: string; $type: string }>): 
   return entries as unknown as DesignTokenTree;
 }
 
+// ─── Prose-color fallback ─────────────────────────────────────────────────────
+
+/**
+ * Test whether a raw string looks like a CSS color value.
+ * Accepts: #rgb, #rrggbb, #rrggbbaa, rgb(...), rgba(...), hsl(...), hsla(...), oklch(...)
+ * Rejects: CSS variables (--*), font names, size values (12px, 1rem), etc.
+ */
+function isCssColor(value: string): boolean {
+  const v = value.trim();
+  // Hex: 3, 4, 6, or 8 hex digits
+  if (/^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(v)) return true;
+  // Functional notations
+  if (/^rgba?\s*\(/i.test(v)) return true;
+  if (/^hsla?\s*\(/i.test(v)) return true;
+  if (/^oklch\s*\(/i.test(v)) return true;
+  if (/^color\s*\(/i.test(v)) return true;
+  return false;
+}
+
+/** Internal tuple returned by prose scanning. */
+interface ProseColorMatch {
+  label: string;
+  slug: string;
+  value: string;
+}
+
+/**
+ * Scope the content to the color section (if one exists) and extract all
+ * labeled color matches as `{label, slug, value}` tuples.
+ *
+ * This is the single implementation of the prose-color extraction algorithm.
+ * Both the public `extractColorsFromProse` and the fallback wiring in
+ * `importFromDesignMd` delegate here.
+ */
+function extractProseColorMatches(content: string): ProseColorMatch[] {
+  // ── 1. Scope to the color section if one exists ──────────────────────────
+  const COLOR_HEADING = /^(#{1,3})\s+.*colou?r/im;
+  const headingMatch = COLOR_HEADING.exec(content);
+
+  let searchText: string;
+  if (headingMatch) {
+    const headingLevel = (headingMatch[1] ?? "").length;
+    const headingStart = headingMatch.index;
+    // Find the next heading at the same or higher level (fewer #'s) after this section
+    const afterHeading = content.slice(headingStart + headingMatch[0].length);
+    const closingHeadingPattern = new RegExp(`^#{1,${headingLevel}}\\s`, "m");
+    const closingMatch = closingHeadingPattern.exec(afterHeading);
+    searchText = closingMatch ? afterHeading.slice(0, closingMatch.index) : afterHeading;
+  } else {
+    searchText = content;
+  }
+
+  // ── 2. Match labeled color literals ──────────────────────────────────────
+  // Match `**Label** (` and the remainder of the line. We intentionally do NOT
+  // try to match the closing `)` of the outer parenthetical because backtick-
+  // wrapped functional colors like `rgb(30, 215, 96)` contain nested `)` which
+  // would trip a simple `[^)]` stop. Instead, we grab the full line fragment
+  // and extract the CSS color value from it.
+  //
+  // Handles all VoltAgent extended DESIGN.md formats:
+  //   (A) **Label** (`#hex`)                         — simple hex
+  //   (B) **Label** (`{colors.xxx}` — `#hex`)        — template-ref, backtick hex
+  //   (C) **Label** (`{colors.xxx}` — #hex)          — template-ref, unquoted hex
+  //   (D) **Label** (`rgb(...)`)                     — functional color in backticks
+  const BOLD_LABEL = /\*\*([^*\n]+)\*\*\s*[(][^\n]*/g;
+
+  // Reusable patterns (reset lastIndex before each use)
+  const BACKTICK_VALUE = /`([^`\n]+)`/g;
+  const UNQUOTED_HEX = /#[0-9a-fA-F]{3,8}\b/g;
+  const UNQUOTED_FN =
+    /rgba?\s*\([^)\n]+\)|hsla?\s*\([^)\n]+\)|oklch\s*\([^)\n]+\)|color\s*\([^)\n]+\)/gi;
+
+  const matches: ProseColorMatch[] = [];
+  const seenSlugs = new Set<string>();
+  let match: RegExpExecArray | null;
+
+  while ((match = BOLD_LABEL.exec(searchText)) !== null) {
+    if (matches.length >= 48) break;
+
+    const label = (match[1] ?? "").trim();
+    const lineFragment = match[0]; // **Label** (...rest of line)
+
+    // Priority 1: last backtick-wrapped value that is a valid CSS color
+    BACKTICK_VALUE.lastIndex = 0;
+    let colorValue: string | undefined;
+    let btm: RegExpExecArray | null;
+    while ((btm = BACKTICK_VALUE.exec(lineFragment)) !== null) {
+      const v = (btm[1] ?? "").trim();
+      if (isCssColor(v)) colorValue = v; // last valid wins (hex comes last in template-ref)
+    }
+
+    if (!colorValue) {
+      // Priority 2: unquoted hex (format C)
+      UNQUOTED_HEX.lastIndex = 0;
+      let hm: RegExpExecArray | null;
+      while ((hm = UNQUOTED_HEX.exec(lineFragment)) !== null) {
+        const v = hm[0].trim();
+        if (isCssColor(v)) colorValue = v;
+      }
+    }
+
+    if (!colorValue) {
+      // Priority 3: unquoted functional color not in backticks
+      UNQUOTED_FN.lastIndex = 0;
+      let fm: RegExpExecArray | null;
+      while ((fm = UNQUOTED_FN.exec(lineFragment)) !== null) {
+        const v = fm[0].trim();
+        if (isCssColor(v)) colorValue = v;
+      }
+    }
+
+    if (!colorValue) continue;
+
+    const slug = toKebabSlug(label);
+    if (!slug) continue;
+    if (seenSlugs.has(slug)) continue; // first occurrence wins
+
+    seenSlugs.add(slug);
+    matches.push({ label, slug, value: colorValue });
+  }
+
+  return matches;
+}
+
+/**
+ * Extract color entries from DESIGN.md prose content (VoltAgent extended format).
+ *
+ * Looks for labeled color literals matching: `**Label** (\`<value>\`)`
+ * where `<value>` is a valid CSS color (hex, rgb, rgba, hsl, hsla, oklch).
+ *
+ * Also handles the `{colors.xxx} — #hex` variant (backtick-quoted or unquoted hex).
+ *
+ * Scoping: if a heading matching `/^#{1,3}\s+.*colou?r/i` exists in the
+ * document, extraction is limited to the content under that heading (up to
+ * the next same-or-higher heading). Otherwise the whole document is scanned.
+ *
+ * Token naming: labels are kebab-cased (`"Spotify Green"` → `"spotify-green"`).
+ * De-duplicates by token name (first wins). Capped at 48 entries.
+ *
+ * Returns a plain `Record<string, string>` mapping slug → raw CSS color string.
+ *
+ * @public — exported so tests can unit-test the helper directly.
+ */
+export function extractColorsFromProse(content: string): Record<string, string> {
+  const matches = extractProseColorMatches(content);
+  const result: Record<string, string> = {};
+  for (const { slug, value } of matches) {
+    result[slug] = value;
+  }
+  return result;
+}
+
+/**
+ * Assign semantic roles to prose-extracted colors (best-effort, heuristic).
+ *
+ * Mutates `colorEntries` in place by adding role keys that are not already
+ * present. Role keywords are matched against the *original label* (lower-cased),
+ * not the slug. This is intentionally best-effort — no role is forced when no
+ * candidate matches.
+ */
+function assignSemanticRoles(
+  proseMatches: Array<{ label: string; slug: string; value: string }>,
+  colorEntries: Record<string, { $value: string; $type: "color" }>,
+): void {
+  // primary: first label containing primary|brand|accent|cta plus a non-neutral value,
+  //          OR the first label with green|signature (Spotify pattern), OR just the first entry
+  if (!("primary" in colorEntries)) {
+    const primaryCandidate =
+      proseMatches.find((m) => {
+        const l = m.label.toLowerCase();
+        return (
+          l.includes("primary") ||
+          l.includes("brand") ||
+          l.includes("accent") ||
+          l.includes("cta") ||
+          l.includes("green") ||
+          l.includes("signature")
+        );
+      }) ?? proseMatches[0];
+    if (primaryCandidate) {
+      colorEntries["primary"] = { $value: primaryCandidate.value, $type: "color" };
+    }
+  }
+
+  // background: first label containing background|canvas|surface|base
+  if (!("background" in colorEntries)) {
+    const bgCandidate = proseMatches.find((m) => {
+      const l = m.label.toLowerCase();
+      return (
+        l.includes("background") ||
+        l.includes("canvas") ||
+        l.includes("surface") ||
+        l.includes("base")
+      );
+    });
+    if (bgCandidate) {
+      colorEntries["background"] = { $value: bgCandidate.value, $type: "color" };
+    }
+  }
+
+  // foreground / text
+  if (!("foreground" in colorEntries)) {
+    const fgCandidate = proseMatches.find((m) => {
+      const l = m.label.toLowerCase();
+      return (
+        l.includes("text") || l.includes("ink") || l.includes("foreground") || l.includes("body")
+      );
+    });
+    if (fgCandidate) {
+      colorEntries["foreground"] = { $value: fgCandidate.value, $type: "color" };
+    }
+  }
+}
+
 // ─── Main export ──────────────────────────────────────────────────────────────
 
 /**
@@ -148,12 +367,28 @@ export function importFromDesignMd(
   const tokens: DesignTokenTree = {};
 
   // 3a. colors.<x> → color.<x> ($type: "color", $value: hex string)
+  // If @google/design.md extracts zero colors (VoltAgent extended prose format),
+  // fall back to scraping the prose content for labeled color literals.
+  let usedProseFallback = false;
   if (state.colors.size > 0) {
     const colorEntries: Record<string, { $value: string; $type: "color" }> = {};
     for (const [key, resolved] of state.colors.entries()) {
       colorEntries[key] = { $value: resolved.hex, $type: "color" };
     }
     tokens["color"] = leafGroup(colorEntries);
+  } else {
+    // Prose-color fallback: extract labeled color literals from markdown prose
+    const proseMatchList = extractProseColorMatches(content);
+    if (proseMatchList.length > 0) {
+      usedProseFallback = true;
+      const colorEntries: Record<string, { $value: string; $type: "color" }> = {};
+      for (const { slug, value } of proseMatchList) {
+        colorEntries[slug] = { $value: value, $type: "color" };
+      }
+      // Assign semantic roles (primary, background, foreground) heuristically
+      assignSemanticRoles(proseMatchList, colorEntries);
+      tokens["color"] = leafGroup(colorEntries);
+    }
   }
 
   // 3b. rounded.<x> → radius.<x> ($type: "dimension", $value: "<n><unit>" string)
@@ -234,6 +469,13 @@ export function importFromDesignMd(
   const unmapped = [...unmappedSet];
 
   const warnings: string[] = [];
+
+  // Prose fallback warning — emitted when colors were scraped from prose instead of front matter
+  if (usedProseFallback) {
+    warnings.push(
+      "colors extracted from prose fallback — source has no/empty front-matter colors block",
+    );
+  }
 
   // Emit a warning if linter found any errors/warnings about the input
   for (const finding of lintReport.findings) {
