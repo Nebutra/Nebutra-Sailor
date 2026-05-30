@@ -992,5 +992,9 @@
         }
       }
     }
+  },
+  "Sidebar": {
+    "projects": "项目",
+    "noThreads": "暂无对话"
   }
 }

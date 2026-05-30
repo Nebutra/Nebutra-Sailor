@@ -117,6 +117,7 @@ model Organization {
   apiKeys      APIKey[]
   oauthClients OAuthClient[]
   chatSessions ChatSession[]
+  threads      Thread[]
 
   @@map("organizations")
   @@schema("public")
@@ -162,6 +163,7 @@ model User {
   contents            Content[]
   orders              Order[]
   oauthAuthorizations OAuthAuthorization[]
+  threads             Thread[]
 
   @@map("users")
   @@schema("public")
@@ -1320,6 +1322,30 @@ model ChatSession {
   @@index([organizationId, lastMessageAt(sort: Desc)])
   @@index([userId, lastMessageAt(sort: Desc)])
   @@map("chat_sessions")
+  @@schema("public")
+}
+
+// ── Threads ──────────────────────────────────────────────────────────────────
+// Clean-slate conversation thread model for the new Projects sidebar group.
+// Intentionally not coupled to legacy ChatSession — Thread represents a
+// long-running, summarisable workspace conversation rather than a single
+// command-mode chat session.
+model Thread {
+  id             String   @id @default(cuid())
+  organizationId String   @map("organization_id")
+  userId         String   @map("user_id")
+  title          String   @default("Untitled") @db.VarChar(200)
+  summary        String?  @db.Text
+  lastActivityAt DateTime @default(now()) @map("last_activity_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, lastActivityAt(sort: Desc)])
+  @@index([userId, lastActivityAt(sort: Desc)])
+  @@map("threads")
   @@schema("public")
 }
 

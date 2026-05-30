@@ -95,6 +95,7 @@ export const ModelName = {
   OAuthAccessToken: 'OAuthAccessToken',
   AuthUser: 'AuthUser',
   ChatSession: 'ChatSession',
+  Thread: 'Thread',
   UserProfile: 'UserProfile',
   Skill: 'Skill',
   UserSkill: 'UserSkill',
@@ -889,6 +890,20 @@ export const ChatSessionScalarFieldEnum = {
 } as const
 
 export type ChatSessionScalarFieldEnum = (typeof ChatSessionScalarFieldEnum)[keyof typeof ChatSessionScalarFieldEnum]
+
+
+export const ThreadScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  title: 'title',
+  summary: 'summary',
+  lastActivityAt: 'lastActivityAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ThreadScalarFieldEnum = (typeof ThreadScalarFieldEnum)[keyof typeof ThreadScalarFieldEnum]
 
 
 export const UserProfileScalarFieldEnum = {

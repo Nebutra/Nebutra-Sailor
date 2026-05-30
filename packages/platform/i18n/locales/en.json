@@ -992,5 +992,9 @@
         }
       }
     }
+  },
+  "Sidebar": {
+    "projects": "Projects",
+    "noThreads": "No threads"
   }
 }

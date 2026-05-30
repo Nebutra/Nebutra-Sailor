@@ -262,6 +262,11 @@ export type AuthUser = Prisma.AuthUserModel
  */
 export type ChatSession = Prisma.ChatSessionModel
 /**
+ * Model Thread
+ * 
+ */
+export type Thread = Prisma.ThreadModel
+/**
  * Model UserProfile
  * 
  */

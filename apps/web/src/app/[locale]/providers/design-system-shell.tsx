@@ -5,6 +5,7 @@ import { getConfiguredAuthProvider, useAuth } from "@nebutra/auth/client";
 import {
   Warning as AlertTriangle,
   ChevronRight,
+  FolderClosed,
   SidebarLeft as PanelLeftClose,
   SidebarLeft as PanelLeftOpen,
 } from "@nebutra/icons";
@@ -14,6 +15,7 @@ import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { BrandLogo } from "@/components/brand/brand-assets";
@@ -34,6 +36,12 @@ interface Props {
 interface WorkspaceOption {
   id: string;
   label: string;
+}
+
+interface ThreadSummary {
+  id: string;
+  title: string;
+  lastActivityAt: string;
 }
 
 export function DesignSystemShell(props: Props) {
@@ -85,6 +93,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     })),
   );
   const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
+  const [activeWorkspaceThreads, setActiveWorkspaceThreads] = useState<ThreadSummary[]>([]);
+  const tSidebar = useTranslations("Sidebar");
   const breadcrumbs = buildBreadcrumbs(pathname);
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
   // /workspace home is a full-bleed gradient canvas — drop main padding and
@@ -146,6 +156,47 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     };
   }, [isSignedIn, session?.organizationId, supportsWorkspaceSwitching]);
 
+  // Load the 5 most-recent threads for the active workspace. Other workspaces
+  // expand on click to an empty state without prefetching (v1).
+  useEffect(() => {
+    if (!isSignedIn || !supportsWorkspaceSwitching || !workspace) {
+      setActiveWorkspaceThreads([]);
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadThreads() {
+      try {
+        const response = await fetch(`/api/organizations/${workspace}/threads`, {
+          credentials: "include",
+        });
+
+        if (!response.ok || cancelled) {
+          if (!cancelled) setActiveWorkspaceThreads([]);
+          return;
+        }
+
+        const payload = (await response.json().catch(() => null)) as {
+          threads?: ThreadSummary[];
+        } | null;
+        const threads = Array.isArray(payload?.threads) ? payload.threads : [];
+
+        if (!cancelled) {
+          setActiveWorkspaceThreads(threads);
+        }
+      } catch {
+        if (!cancelled) setActiveWorkspaceThreads([]);
+      }
+    }
+
+    void loadThreads();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isSignedIn, supportsWorkspaceSwitching, workspace]);
+
   async function handleWorkspaceChange(nextWorkspaceId: string) {
     setWorkspace(nextWorkspaceId);
 
@@ -169,33 +220,82 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   }
 
   // ─── Map dashboard nav → SidebarNavSection[] ─────────────────────────────
+  // Order: Product → Projects → Admin. Projects lists workspaces; the active
+  // workspace expands with its 5 most-recent threads pre-loaded. Inactive
+  // workspace parents act as workspace-switch triggers and do not prefetch.
+  const projectsSection: SidebarNavSection | null = supportsWorkspaceSwitching
+    ? {
+        id: "Projects",
+        label: tSidebar("projects"),
+        items: workspaceOptions.map((ws) => {
+          const isActiveWorkspace = ws.id === workspace;
+          let children: SidebarNavSection["items"][number]["children"];
+
+          if (isActiveWorkspace) {
+            children =
+              activeWorkspaceThreads.length > 0
+                ? activeWorkspaceThreads.map((thread) => ({
+                    id: `thread:${thread.id}`,
+                    label: thread.title,
+                    href: `/workspace?threadId=${thread.id}`,
+                    isActive: false,
+                  }))
+                : [
+                    {
+                      id: `empty:${ws.id}`,
+                      label: tSidebar("noThreads"),
+                      isActive: false,
+                      disabled: true,
+                    },
+                  ];
+          }
+
+          return {
+            id: `workspace:${ws.id}`,
+            label: ws.label,
+            icon: FolderClosed,
+            isActive: isActiveWorkspace,
+            // Non-active workspace parents switch workspace on click rather
+            // than navigating to an href.
+            onClick: isActiveWorkspace ? undefined : () => void handleWorkspaceChange(ws.id),
+            children,
+          };
+        }),
+      }
+    : null;
+
   const sidebarSections: SidebarNavSection[] = DASHBOARD_NAV_GROUPS.flatMap((group) => {
     if (group.title === "Admin" && !isAdmin) {
       return [];
     }
 
-    return [
-      {
-        id: group.title,
-        label: group.title,
-        items: group.items.map((item) => ({
-          id: item.href,
-          label: item.label,
-          href: item.href,
-          icon: item.icon,
-          badge: item.badge,
-          isActive: isActiveRoute(pathname, item.href),
-          children: item.children?.map((child) => ({
-            id: child.href,
-            label: child.label,
-            href: child.href,
-            icon: child.icon,
-            badge: child.badge,
-            isActive: isActiveRoute(pathname, child.href),
-          })),
+    const groupSection: SidebarNavSection = {
+      id: group.title,
+      label: group.title,
+      items: group.items.map((item) => ({
+        id: item.href,
+        label: item.label,
+        href: item.href,
+        icon: item.icon,
+        badge: item.badge,
+        isActive: isActiveRoute(pathname, item.href),
+        children: item.children?.map((child) => ({
+          id: child.href,
+          label: child.label,
+          href: child.href,
+          icon: child.icon,
+          badge: child.badge,
+          isActive: isActiveRoute(pathname, child.href),
         })),
-      },
-    ];
+      })),
+    };
+
+    // Insert Projects between Product and Admin.
+    if (group.title === "Product" && projectsSection) {
+      return [groupSection, projectsSection];
+    }
+
+    return [groupSection];
   });
 
   // ─── Workspaces mapped to WorkspaceSwitcher shape ────────────────────────
