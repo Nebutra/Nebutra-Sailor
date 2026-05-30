@@ -287,13 +287,13 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Dev-mode banner (only when @nebutra/auth is running the fixture provider) ─
   const isDevAuth = getConfiguredAuthProvider() === "dev";
 
-  // ─── Content header — breadcrumb (left, when depth > 1) + notification bell
-  // (right, micro top slot). Always renders so notifications are always one
-  // click away from any page.
+  // ─── Content header — breadcrumb (left, only when depth > 2 so shallow
+  // routes like /settings don't echo their own H1) + notification bell
+  // (right, micro top slot — always one click away from any page).
   const contentHeader = (
     <div className="mb-4 flex min-w-0 items-center justify-between gap-3">
       <div className="min-w-0">
-        {breadcrumbs.length > 1 && (
+        {breadcrumbs.length > 2 && (
           <nav aria-label="Breadcrumb">
             <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
               {breadcrumbs.map((crumb, index) => {

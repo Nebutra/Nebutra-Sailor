@@ -249,7 +249,7 @@ describe("UI/UX audit remediation invariants", () => {
     expect(navModel).toContain("const normalizedPathname = stripLocalePrefix(pathname)");
     expect(shell).toMatch(/aria-label="Breadcrumb"/);
     expect(shell).toMatch(/aria-current=/);
-    expect(shell).toContain("breadcrumbs.length > 1");
+    expect(shell).toContain("breadcrumbs.length > 2");
     expect(shell).not.toContain("DASHBOARD_NAV_ITEMS.slice");
     expect(shell).not.toContain("Workspace</p>");
   });
