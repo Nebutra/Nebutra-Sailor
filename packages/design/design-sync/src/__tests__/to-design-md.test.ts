@@ -127,17 +127,41 @@ describe("serializeToDesignMd — alias resolution", () => {
 });
 
 describe("serializeToDesignMd — $description propagation", () => {
-  it("includes the source $description in the Colors prose section", () => {
-    const md = serializeToDesignMd([coreSet, semanticSet]);
+  it("flows the source token $description (not a hardcoded constant) into the Colors prose", () => {
+    // Use a DISTINCT, unique string to prove the value comes from the token itself
+    const uniqueDesc = "UNIQUE-DESC-PRIMARY-xyz";
+    const setWithUniqueDesc: DesignTokenSet = {
+      name: "semantic-unique",
+      relativePath: "semantic-unique.json",
+      tokens: {
+        brand: {
+          primary: {
+            $value: "#0033fe",
+            $type: "color",
+            $description: uniqueDesc,
+          },
+        },
+      },
+    };
+    const md = serializeToDesignMd([setWithUniqueDesc]);
     const { body } = splitFrontMatter(md);
-    // The semantic token brand.primary has $description "Brand primary — 云毓蓝"
-    expect(body).toContain("Brand primary — 云毓蓝");
+    // The unique description must appear verbatim — it cannot come from any constant
+    expect(body).toContain(uniqueDesc);
   });
 
-  it("includes brand.accent description in Colors section", () => {
+  it("includes brand.accent description when the source token carries $description", () => {
     const md = serializeToDesignMd([coreSet, semanticSet]);
     const { body } = splitFrontMatter(md);
+    // semanticSet has brand.accent.$description = "Brand accent — 云毓青"
     expect(body).toContain("Brand accent — 云毓青");
+  });
+
+  it("renders a Colors bullet without trailing description when source token has no $description", () => {
+    // status.* tokens in the fixture carry no $description
+    const md = serializeToDesignMd([coreSet, semanticSet]);
+    const { body } = splitFrontMatter(md);
+    // Danger bullet should still render but must NOT end with " — undefined" or anything hardcoded
+    expect(body).toMatch(/\*\*Danger\*\* \(`#ef4444`\)(?!\s*—)/);
   });
 });
 
@@ -183,10 +207,11 @@ describe("serializeToDesignMd — front matter parseability", () => {
     expect(secondDelim).toBeGreaterThan(0);
   });
 
-  it("front matter contains version, name, colors keys", () => {
+  it("front matter contains version: alpha (exact value), name, and colors keys", () => {
     const md = serializeToDesignMd([coreSet, semanticSet]);
     const { frontMatter } = splitFrontMatter(md);
-    expect(frontMatter).toMatch(/^version:/m);
+    // Assert the literal line — not just the key prefix
+    expect(frontMatter).toMatch(/^version: alpha$/m);
     expect(frontMatter).toMatch(/^name:/m);
     expect(frontMatter).toMatch(/^colors:/m);
   });
@@ -310,5 +335,58 @@ describe("serializeToDesignMd — rounded section", () => {
     expect(frontMatter).toContain("sm:");
     expect(frontMatter).toContain("md:");
     expect(frontMatter).toContain("lg:");
+  });
+});
+
+describe("serializeToDesignMd — cycle detection", () => {
+  it("throws a clear error when a color role references a circular alias chain", () => {
+    // a = {b}, b = {a} — classic cycle
+    const cycleSet: DesignTokenSet = {
+      name: "cycle",
+      relativePath: "cycle.json",
+      tokens: {
+        a: { $value: "{b}", $type: "color" },
+        b: { $value: "{a}", $type: "color" },
+        brand: {
+          primary: { $value: "{a}", $type: "color" },
+        },
+      },
+    };
+    expect(() => serializeToDesignMd([cycleSet])).toThrow(/[Cc]ycle/);
+  });
+});
+
+describe("serializeToDesignMd — hex normalization", () => {
+  it("expands 3-char hex shorthand to 6-char lowercase in front matter", () => {
+    const shortHexSet: DesignTokenSet = {
+      name: "short-hex",
+      relativePath: "short-hex.json",
+      tokens: {
+        brand: {
+          primary: { $value: "#FFF", $type: "color" },
+        },
+      },
+    };
+    const md = serializeToDesignMd([shortHexSet]);
+    const { frontMatter } = splitFrontMatter(md);
+    // #FFF must be emitted as the expanded 6-digit lowercase form
+    expect(frontMatter).toContain('primary: "#ffffff"');
+    // The raw 3-char shorthand must not appear in the output
+    expect(frontMatter).not.toMatch(/"#[fF]{3}"/);
+  });
+
+  it("expands mixed-case 3-char hex to 6-char lowercase (#Abc → #aabbcc)", () => {
+    const mixedSet: DesignTokenSet = {
+      name: "mixed-hex",
+      relativePath: "mixed-hex.json",
+      tokens: {
+        brand: {
+          primary: { $value: "#Abc", $type: "color" },
+        },
+      },
+    };
+    const md = serializeToDesignMd([mixedSet]);
+    const { frontMatter } = splitFrontMatter(md);
+    expect(frontMatter).toContain('primary: "#aabbcc"');
   });
 });

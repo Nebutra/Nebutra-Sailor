@@ -54,7 +54,7 @@ export function serializeToDesignMd(sets: DesignTokenSet[], options?: ToDesignMd
       : new Map();
 
   // 3. Resolve roles to hex (skip if source absent; throw if alias is dangling)
-  const colors = resolveColorRoles(index, themeIndex);
+  const { roles: colors, descriptions: colorDescriptions } = resolveColorRoles(index, themeIndex);
   const typography = buildTypography(index);
   const rounded = buildRounded(index);
   const spacing = buildSpacing(index);
@@ -62,7 +62,7 @@ export function serializeToDesignMd(sets: DesignTokenSet[], options?: ToDesignMd
 
   // 4. Emit
   const frontMatter = buildFrontMatter({ name, description, colors, typography, rounded, spacing });
-  const prose = buildProse({ name, colors, typography, rounded, containers });
+  const prose = buildProse({ name, colors, colorDescriptions, typography, rounded, containers });
 
   return `---\n${frontMatter}---\n${prose}`;
 }
@@ -81,6 +81,9 @@ interface ColorRoles {
   background?: string;
   foreground?: string;
 }
+
+/** Per-role descriptions sourced from the source semantic token's $description field. */
+type ColorDescriptions = Partial<Record<keyof ColorRoles, string>>;
 
 interface TypographyEntry {
   fontFamily: string;
@@ -187,7 +190,15 @@ const HEX_RE = /^#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?$/;
 function toHex(value: string): string | null {
   const v = value.trim();
   if (!HEX_RE.test(v)) return null;
-  return v.toLowerCase();
+  const lower = v.toLowerCase();
+  // Expand 3-char shorthand (#abc → #aabbcc)
+  if (lower.length === 4) {
+    const r = lower[1]!;
+    const g = lower[2]!;
+    const b = lower[3]!;
+    return `#${r}${r}${g}${g}${b}${b}`;
+  }
+  return lower;
 }
 
 // ─── Color role mapping ────────────────────────────────────────────────────────
@@ -202,8 +213,14 @@ const COLOR_ROLE_PATHS: Array<[keyof ColorRoles, string]> = [
   ["success", "status.success"],
 ];
 
-function resolveColorRoles(index: FlatIndex, themeIndex: FlatIndex): ColorRoles {
+interface ResolvedColors {
+  roles: ColorRoles;
+  descriptions: ColorDescriptions;
+}
+
+function resolveColorRoles(index: FlatIndex, themeIndex: FlatIndex): ResolvedColors {
   const roles: ColorRoles = {};
+  const descriptions: ColorDescriptions = {};
 
   for (const [role, path] of COLOR_ROLE_PATHS) {
     // Skip gracefully if the token is absent
@@ -213,6 +230,11 @@ function resolveColorRoles(index: FlatIndex, themeIndex: FlatIndex): ColorRoles 
     const hex = toHex(resolved);
     if (!hex) continue; // non-hex (gradient etc.) — skip from colors group
     roles[role] = hex;
+    // Capture $description from the SOURCE semantic token leaf (not the resolved primitive)
+    const sourceLeaf = index.get(path);
+    if (sourceLeaf?.$description) {
+      descriptions[role] = sourceLeaf.$description;
+    }
   }
 
   // Theme-specific: background + foreground
@@ -227,10 +249,14 @@ function resolveColorRoles(index: FlatIndex, themeIndex: FlatIndex): ColorRoles 
       const hex = toHex(resolved);
       if (!hex) continue;
       roles[role] = hex;
+      const sourceLeaf = themeIndex.get(path);
+      if (sourceLeaf?.$description) {
+        descriptions[role] = sourceLeaf.$description;
+      }
     }
   }
 
-  return roles;
+  return { roles, descriptions };
 }
 
 // ─── Typography ────────────────────────────────────────────────────────────────
@@ -413,6 +439,7 @@ function buildFrontMatter(args: FmArgs): string {
 interface ProseArgs {
   name: string;
   colors: ColorRoles;
+  colorDescriptions: ColorDescriptions;
   typography: TypographyMap;
   rounded: RoundedMap;
   containers: ContainerInfo;
@@ -441,13 +468,6 @@ function buildProse(args: ProseArgs): string {
     foreground: "Foreground",
   };
 
-  // Re-collect $description from the semantic tokens mapping
-  const COLOR_DESCRIPTIONS: Partial<Record<keyof ColorRoles, string>> = {
-    primary: "Brand primary — 云毓蓝",
-    accent: "Brand accent — 云毓青",
-    tertiary: "Tertiary accent — data viz, infrastructure tags",
-  };
-
   const colorLines: string[] = [];
   const COLOR_ORDER: Array<keyof ColorRoles> = [
     "primary",
@@ -463,7 +483,8 @@ function buildProse(args: ProseArgs): string {
     const hex = args.colors[key];
     if (!hex) continue;
     const label = COLOR_LABELS[key];
-    const desc = COLOR_DESCRIPTIONS[key];
+    // Use the source token's own $description — no hardcoded fallback
+    const desc = args.colorDescriptions[key];
     colorLines.push(`- **${label}** (\`${hex}\`)${desc ? ` — ${desc}` : ""}`);
   }
 
