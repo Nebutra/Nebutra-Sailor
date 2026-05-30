@@ -4,6 +4,7 @@ import { Input, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/prim
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { HexColorPicker } from "react-colorful";
 import type { AppearanceState } from "./store";
 import { useAppearance } from "./store";
 
@@ -70,6 +71,11 @@ export function ColorPickerRow({ label, description, valueKey }: ColorPickerRowP
         </PopoverTrigger>
         <PopoverContent className="w-64 p-3">
           <div className="grid gap-3">
+            <HexColorPicker
+              color={HEX_RE.test(display) ? display : "#000000"}
+              onChange={commit}
+              className="appearance-color-picker"
+            />
             <div className="flex flex-wrap gap-2" role="toolbar" aria-label={label}>
               {PRESETS.map((preset) => (
                 <button
@@ -86,24 +92,14 @@ export function ColorPickerRow({ label, description, valueKey }: ColorPickerRowP
                 />
               ))}
             </div>
-            <div className="flex items-center gap-2">
-              <input
-                data-allow-native
-                type="color"
-                aria-label={label}
-                value={HEX_RE.test(display) ? display : "#000000"}
-                onChange={(e) => commit(e.currentTarget.value)}
-                className="h-8 w-10 cursor-pointer rounded-md border border-border bg-transparent p-0.5"
-              />
-              <Input
-                value={draft}
-                onChange={handleHexInput}
-                placeholder="#000000"
-                maxLength={7}
-                className="h-8 flex-1 font-mono text-xs"
-                aria-label={label}
-              />
-            </div>
+            <Input
+              value={draft}
+              onChange={handleHexInput}
+              placeholder="#000000"
+              maxLength={7}
+              className="h-8 font-mono text-xs"
+              aria-label={label}
+            />
             <button
               type="button"
               onClick={() => commit(null)}
