@@ -6,7 +6,6 @@ import {
   Warning as AlertTriangle,
   Bell,
   ChevronRight,
-  Lifebuoy as LifeBuoy,
   SidebarLeft as PanelLeftClose,
   SidebarLeft as PanelLeftOpen,
 } from "@nebutra/icons";
@@ -19,10 +18,7 @@ import { usePathname } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { BrandLogo } from "@/components/brand/brand-assets";
-import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
-import { LocaleSwitcher } from "@/components/navigation/locale-switcher";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
-import { ThemeToggle } from "@/components/navigation/theme-toggle";
 import { UserMenu } from "@/components/navigation/user-menu";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { usePermission } from "@/hooks/usePermission";
@@ -77,7 +73,6 @@ function renderNextLink({
 function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
-  const { openDialog: openFeedback } = useFeedbackDialog();
   const { collapsed, toggle } = useSidebar();
   const { can } = usePermission();
   const isAdmin = can("admin:access");
@@ -265,46 +260,18 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     </div>
   );
 
-  // ─── Sidebar footer slot — relocated header controls (Lovable-style) ─────
-  // notifications · feedback · locale · theme · collapse, then the user menu.
-  const footerIconButton =
-    "inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1";
-
-  const utilityControls = (
-    <>
-      <ViewTransitionLink
-        href="/notifications"
-        aria-label="Open notifications"
-        title="Notifications"
-        className={footerIconButton}
-      >
-        <Bell className="size-4" aria-hidden="true" />
-      </ViewTransitionLink>
-      <button
-        type="button"
-        onClick={openFeedback}
-        aria-label="Open feedback dialog"
-        title="Feedback"
-        className={footerIconButton}
-      >
-        <LifeBuoy className="size-4" aria-hidden="true" />
-      </button>
-      <LocaleSwitcher />
-      <ThemeToggle compact />
-    </>
-  );
-
-  const sidebarFooter = collapsed ? (
-    <div className="flex flex-col items-center gap-1">
-      {utilityControls}
-      {isSignedIn ? <UserMenu /> : null}
-    </div>
-  ) : (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-0.5">{utilityControls}</div>
-      {isSignedIn ? <UserMenu /> : null}
-    </div>
-  );
+  // ─── Sidebar footer slot — Lovable-style user row (Hybrid layout).
+  // The user menu absorbs Feedback / Language / Theme; notifications live in
+  // the content header. Collapsed rail: avatar-only trigger.
+  const sidebarFooter = isSignedIn ? (
+    collapsed ? (
+      <div className="flex justify-center">
+        <UserMenu />
+      </div>
+    ) : (
+      <UserMenu variant="row" />
+    )
+  ) : null;
 
   const sidebar = (
     <SidebarNav
@@ -320,33 +287,47 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Dev-mode banner (only when @nebutra/auth is running the fixture provider) ─
   const isDevAuth = getConfiguredAuthProvider() === "dev";
 
-  // ─── Content-area breadcrumb — replaces the removed top header bar ────────
-  // Only rendered on sub-pages (depth > 1); top-level pages start clean.
-  const contentHeader =
-    breadcrumbs.length > 1 ? (
-      <nav aria-label="Breadcrumb" className="mb-4 min-w-0">
-        <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
-          {breadcrumbs.map((crumb, index) => {
-            const isLast = index === breadcrumbs.length - 1;
-            return (
-              <li key={crumb.href} className="flex min-w-0 items-center gap-1">
-                {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
-                {isLast ? (
-                  <span className="truncate font-medium text-foreground">{crumb.label}</span>
-                ) : (
-                  <ViewTransitionLink
-                    href={crumb.href}
-                    className="truncate transition-colors hover:text-foreground"
-                  >
-                    {crumb.label}
-                  </ViewTransitionLink>
-                )}
-              </li>
-            );
-          })}
-        </ol>
-      </nav>
-    ) : null;
+  // ─── Content header — breadcrumb (left, when depth > 1) + notification bell
+  // (right, micro top slot). Always renders so notifications are always one
+  // click away from any page.
+  const contentHeader = (
+    <div className="mb-4 flex min-w-0 items-center justify-between gap-3">
+      <div className="min-w-0">
+        {breadcrumbs.length > 1 && (
+          <nav aria-label="Breadcrumb">
+            <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
+              {breadcrumbs.map((crumb, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                return (
+                  <li key={crumb.href} className="flex min-w-0 items-center gap-1">
+                    {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
+                    {isLast ? (
+                      <span className="truncate font-medium text-foreground">{crumb.label}</span>
+                    ) : (
+                      <ViewTransitionLink
+                        href={crumb.href}
+                        className="truncate transition-colors hover:text-foreground"
+                      >
+                        {crumb.label}
+                      </ViewTransitionLink>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
+        )}
+      </div>
+      <ViewTransitionLink
+        href="/notifications"
+        aria-label="Open notifications"
+        title="Notifications"
+        className="inline-flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+      >
+        <Bell className="size-4" aria-hidden="true" />
+      </ViewTransitionLink>
+    </div>
+  );
 
   return (
     <AppShell

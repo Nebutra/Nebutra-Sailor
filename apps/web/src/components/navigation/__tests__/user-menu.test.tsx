@@ -12,10 +12,21 @@ vi.mock("@nebutra/auth/client", () => ({
 
 vi.mock("next-intl", () => ({
   useTranslations: (ns?: string) => (key: string) => (ns ? `${ns}.${key}` : key),
+  useLocale: () => "en",
 }));
 
 vi.mock("@nebutra/tokens", () => ({
   useTheme: () => ({ theme: "system", setTheme: vi.fn() }),
+}));
+
+vi.mock("@nebutra/i18n/routing", () => ({
+  useRouter: () => ({ replace: vi.fn() }),
+  usePathname: () => "/workspace",
+}));
+
+const openFeedbackMock = vi.fn();
+vi.mock("@/components/feedback/feedback-dialog-provider", () => ({
+  useFeedbackDialog: () => ({ openDialog: openFeedbackMock }),
 }));
 
 const openDialogMock = vi.fn();
