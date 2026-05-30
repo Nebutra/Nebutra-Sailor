@@ -264,16 +264,23 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     </div>
   );
 
-  // ─── Sidebar footer slot — single user row.
-  // The user menu absorbs Feedback / Language / Theme; notifications live in
-  // the content header. Collapsed rail: avatar-only trigger.
+  // ─── Sidebar footer slot — user row + notification bell.
+  // The user menu absorbs Feedback / Language / Theme; the bell lives here
+  // next to the avatar so every route gets one-click access without a
+  // top content-header strip. Collapsed rail: stack avatar + bell.
   const sidebarFooter = isSignedIn ? (
     collapsed ? (
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center gap-1">
+        <NotificationsDialog />
         <UserMenu />
       </div>
     ) : (
-      <UserMenu variant="row" />
+      <div className="flex items-center gap-1">
+        <div className="min-w-0 flex-1">
+          <UserMenu variant="row" />
+        </div>
+        <NotificationsDialog />
+      </div>
     )
   ) : null;
 
@@ -291,40 +298,36 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Dev-mode banner (only when @nebutra/auth is running the fixture provider) ─
   const isDevAuth = getConfiguredAuthProvider() === "dev";
 
-  // ─── Content header — breadcrumb (left, only when depth > 1 so shallow
-  // routes don't echo their own H1) + notification bell (right, micro top
-  // slot — always one click away from any page).
-  const contentHeader = (
-    <div className="mb-4 flex min-w-0 items-center justify-between gap-3">
-      <div className="min-w-0">
-        {breadcrumbs.length > 1 && (
-          <nav aria-label="Breadcrumb">
-            <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
-              {breadcrumbs.map((crumb, index) => {
-                const isLast = index === breadcrumbs.length - 1;
-                return (
-                  <li key={crumb.href} className="flex min-w-0 items-center gap-1">
-                    {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
-                    {isLast ? (
-                      <span className="truncate font-medium text-foreground">{crumb.label}</span>
-                    ) : (
-                      <ViewTransitionLink
-                        href={crumb.href}
-                        className="truncate transition-colors hover:text-foreground"
-                      >
-                        {crumb.label}
-                      </ViewTransitionLink>
-                    )}
-                  </li>
-                );
-              })}
-            </ol>
-          </nav>
-        )}
+  // ─── Content header — breadcrumb only, and only when depth > 1 so shallow
+  // routes don't echo their own H1. The notification bell now lives in the
+  // sidebar footer, freeing the top strip entirely on shallow routes.
+  const contentHeader =
+    breadcrumbs.length > 1 ? (
+      <div className="mb-4 min-w-0">
+        <nav aria-label="Breadcrumb">
+          <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
+            {breadcrumbs.map((crumb, index) => {
+              const isLast = index === breadcrumbs.length - 1;
+              return (
+                <li key={crumb.href} className="flex min-w-0 items-center gap-1">
+                  {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
+                  {isLast ? (
+                    <span className="truncate font-medium text-foreground">{crumb.label}</span>
+                  ) : (
+                    <ViewTransitionLink
+                      href={crumb.href}
+                      className="truncate transition-colors hover:text-foreground"
+                    >
+                      {crumb.label}
+                    </ViewTransitionLink>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
       </div>
-      <NotificationsDialog />
-    </div>
-  );
+    ) : null;
 
   return (
     <AppShell
@@ -384,13 +387,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           </span>
         </div>
       ) : null}
-      {isWorkspaceHomeRoute ? (
-        // Re-inset the content header so the bell doesn't smash against
-        // edges (main has p-0). It floats above the gradient at z-10.
-        <div className="relative z-10 px-3 pt-4 sm:px-4 md:px-5 2xl:px-6">{contentHeader}</div>
-      ) : (
-        contentHeader
-      )}
+      {contentHeader}
       {isWorkspaceHomeRoute ? (
         // No `.content-area` wrapper on home: `contain: paint` would clip
         // the page's absolute gradient from filling main edge-to-edge.
