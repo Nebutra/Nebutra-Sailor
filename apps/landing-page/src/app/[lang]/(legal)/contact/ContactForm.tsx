@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Button,
   Field,
   Input,
   Select,
@@ -33,10 +34,8 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div className="rounded-[var(--radius-2xl)] border border-[color:var(--blue-8)] bg-[color:var(--blue-2)] p-8 text-center dark:border-[color:var(--blue-7)] dark:bg-[color:var(--blue-2)]">
-        <p className="text-lg font-semibold text-[color:var(--blue-11)] dark:text-[color:var(--blue-9)]">
-          {t("contact.form.successMessage")}
-        </p>
+      <div className="rounded-[var(--radius-2xl)] border border-blue-7 bg-blue-3 p-8 text-center">
+        <p className="text-lg font-semibold text-blue-11">{t("contact.form.successMessage")}</p>
       </div>
     );
   }
@@ -46,7 +45,7 @@ export function ContactForm() {
       {state.status === "error" && (
         <div
           role="alert"
-          className="rounded-[var(--radius-lg)] border border-[color:var(--red-8)] bg-[color:var(--red-2)] px-4 py-3 text-sm text-[color:var(--red-11)] dark:border-[color:var(--red-7)] dark:bg-[color:var(--red-2)] dark:text-[color:var(--red-9)]"
+          className="rounded-[var(--radius-lg)] border border-[color:var(--red-8)]/40 bg-[color:var(--red-2)] px-4 py-3 text-sm text-[color:var(--red-11)] dark:border-[color:var(--red-7)]/40 dark:bg-[color:var(--red-2)] dark:text-[color:var(--red-9)]"
         >
           {state.message}
         </div>
@@ -90,13 +89,9 @@ export function ContactForm() {
       </Field>
 
       <div>
-        <button
-          type="submit"
-          disabled={isPending}
-          className="w-full rounded-[var(--radius-lg)] bg-[color:var(--blue-9)] px-6 py-3 font-semibold text-white transition hover:bg-[color:var(--blue-10)] disabled:cursor-not-allowed disabled:opacity-60"
-        >
+        <Button type="submit" size="lg" disabled={isPending} className="w-full">
           {isPending ? t("contact.form.submitting") : t("contact.form.submit")}
-        </button>
+        </Button>
       </div>
 
       <p className="text-sm text-[var(--neutral-9)]">

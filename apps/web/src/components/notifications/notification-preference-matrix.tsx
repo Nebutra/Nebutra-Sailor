@@ -4,6 +4,8 @@ import type {
   NotificationPreferenceSource,
   NotificationRuntimeStatus,
 } from "@nebutra/notifications";
+import { Button } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import { updateNotificationPreference } from "@/app/[locale]/(app)/settings/notifications/actions";
 
 interface Props {
@@ -15,16 +17,19 @@ interface Props {
 
 const VISIBLE_CHANNELS = new Set(["in_app", "email", "push"]);
 
+// State-only overlay classes. Button outline variant supplies the base
+// border / background / text — these classes layer on top to encode
+// enabled / disabled visual state.
 function getCellButtonClasses(enabled: boolean, editable: boolean): string {
   if (!editable) {
-    return "cursor-not-allowed border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-9)]";
+    return "cursor-not-allowed border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-9)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-9)]";
   }
 
   if (enabled) {
-    return "border-green-6 bg-green-2 text-green-11 hover:bg-green-3";
+    return "border-green-6 bg-green-2 text-green-11 hover:bg-green-3 hover:text-green-11";
   }
 
-  return "border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-11)] hover:bg-[var(--neutral-2)]";
+  return "";
 }
 
 export function NotificationPreferenceMatrix({
@@ -121,19 +126,21 @@ export function NotificationPreferenceMatrix({
                                 name="enabled"
                                 value={String(!cell.enabled)}
                               />
-                              <button
+                              <Button
                                 type="submit"
+                                variant="outline"
+                                size="sm"
                                 disabled={!cell.editable}
                                 aria-pressed={cell.enabled}
                                 aria-label={`${cell.enabled ? "Turn off" : "Turn on"} ${row.label} via ${cell.channelLabel}`}
                                 title={cell.reason}
-                                className={`inline-flex min-w-20 items-center justify-center rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${getCellButtonClasses(
-                                  cell.enabled,
-                                  cell.editable,
-                                )}`}
+                                className={cn(
+                                  "min-w-20 rounded-full",
+                                  getCellButtonClasses(cell.enabled, cell.editable),
+                                )}
                               >
                                 {cell.enabled ? "On" : "Off"}
-                              </button>
+                              </Button>
                             </form>
                           ) : (
                             <span

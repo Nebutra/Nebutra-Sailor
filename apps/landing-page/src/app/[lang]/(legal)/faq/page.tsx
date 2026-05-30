@@ -1,3 +1,4 @@
+import { Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -93,12 +94,9 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
         <h2 className="text-xl font-bold text-[var(--neutral-12)]">{t("faq.ctaHeading")}</h2>
         <p className="mt-2 text-[var(--neutral-10)]">{t("faq.ctaDescription")}</p>
         <div className="mt-6 flex justify-center gap-4">
-          <Link
-            href="/contact"
-            className="rounded-[var(--radius-lg)] bg-[color:var(--blue-9)] px-6 py-3 font-semibold text-white transition hover:bg-[color:var(--blue-10)]"
-          >
-            {t("faq.ctaButton")}
-          </Link>
+          <Button asChild size="lg">
+            <Link href="/contact">{t("faq.ctaButton")}</Link>
+          </Button>
           <a
             href="mailto:support@nebutra.com"
             className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-11)] transition hover:bg-[var(--neutral-3)]"
