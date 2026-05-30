@@ -1,7 +1,18 @@
 "use client";
 
-import { Input } from "@nebutra/ui/primitives";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 /**
  * Standard webhook events surfaced in the UI. The full enum lives in
  * `@nebutra/webhooks` (`WebhookEventType`); this list is curated for the most
@@ -57,44 +68,40 @@ async function defaultSubmit(input: {
   return (await response.json()) as CreateWebhookResult;
 }
 
-type Status =
-  | { kind: "idle" }
-  | { kind: "submitting" }
-  | { kind: "error"; message: string }
-  | { kind: "success"; result: CreateWebhookResult };
+const webhookFormSchema = z.object({
+  url: z.string().url(),
+  events: z.array(z.string()).min(1, "Select at least one event."),
+});
+type WebhookFormValues = z.infer<typeof webhookFormSchema>;
 
 export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialogProps) {
-  const [url, setUrl] = useState("");
-  const [selected, setSelected] = useState<Set<string>>(() => new Set());
-  const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const form = useForm<WebhookFormValues>({
+    resolver: zodResolver(webhookFormSchema),
+    defaultValues: { url: "", events: [] },
+  });
+  const [result, setResult] = useState<CreateWebhookResult | null>(null);
   const [copied, setCopied] = useState(false);
 
-  function toggleEvent(id: string) {
-    setSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
+  const url = form.watch("url");
+  const events = form.watch("events");
+
+  function toggleEvent(id: string, currentEvents: string[]) {
+    const next = currentEvents.includes(id)
+      ? currentEvents.filter((value) => value !== id)
+      : [...currentEvents, id];
+    form.setValue("events", next, { shouldValidate: form.formState.isSubmitted });
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (selected.size === 0) {
-      setStatus({ kind: "error", message: "Select at least one event." });
-      return;
-    }
-    setStatus({ kind: "submitting" });
-    const submit = onSubmit ?? defaultSubmit;
+  async function submit(values: WebhookFormValues) {
+    const runSubmit = onSubmit ?? defaultSubmit;
     try {
-      const result = await submit({ url, events: Array.from(selected) });
-      setStatus({ kind: "success", result });
-      onCreated?.(result);
+      const created = await runSubmit({ url: values.url, events: values.events });
+      setResult(created);
+      onCreated?.(created);
     } catch (err) {
-      setStatus({ kind: "error", message: err instanceof Error ? err.message : "Unknown error" });
+      form.setError("root", {
+        message: err instanceof Error ? err.message : "Unknown error",
+      });
     }
   }
 
@@ -108,8 +115,8 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
     }
   }
 
-  if (status.kind === "success") {
-    const { signingSecret, endpoint } = status.result;
+  if (result) {
+    const { signingSecret, endpoint } = result;
     return (
       <div
         role="alert"
@@ -136,70 +143,91 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
     );
   }
 
+  const rootError = form.formState.errors.root?.message;
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label
-          htmlFor="webhook-url"
-          className="mb-1 block text-sm font-medium text-[var(--neutral-12)]"
-        >
-          Endpoint URL
-        </label>
-        <Input
-          id="webhook-url"
-          type="url"
-          required
-          value={url}
-          onChange={(event) => setUrl(event.target.value)}
-          placeholder="https://api.example.com/webhooks/nebutra"
-        />
-      </div>
-
-      <fieldset>
-        <legend className="mb-2 text-sm font-medium text-[var(--neutral-12)]">Events</legend>
-        <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
-          {STANDARD_WEBHOOK_EVENTS.map((eventDef) => {
-            const checked = selected.has(eventDef.id);
-            return (
-              <label
-                key={eventDef.id}
-                className="flex items-center gap-2 text-sm text-[var(--neutral-12)]"
-              >
-                <input
-                  data-allow-native
-                  type="checkbox"
-                  name="events"
-                  value={eventDef.id}
-                  checked={checked}
-                  onChange={() => toggleEvent(eventDef.id)}
-                  className="h-4 w-4 rounded border-[var(--neutral-7)]"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(submit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="url"
+          render={({ field }) => (
+            <FormItem className="space-y-0">
+              <FormLabel className="mb-1 block text-sm font-medium text-[var(--neutral-12)]">
+                Endpoint URL
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="url"
+                  required
+                  placeholder="https://api.example.com/webhooks/nebutra"
+                  {...field}
                 />
-                <span>
-                  <span className="font-mono text-xs text-[var(--neutral-11)]">{eventDef.id}</span>
-                  <span className="ml-2 text-[var(--neutral-12)]">{eventDef.label}</span>
-                </span>
-              </label>
-            );
-          })}
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="events"
+          render={({ field }) => (
+            <FormItem className="space-y-0">
+              <fieldset>
+                <legend className="mb-2 text-sm font-medium text-[var(--neutral-12)]">
+                  Events
+                </legend>
+                <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+                  {STANDARD_WEBHOOK_EVENTS.map((eventDef) => {
+                    const checked = field.value.includes(eventDef.id);
+                    return (
+                      <label
+                        key={eventDef.id}
+                        className="flex items-center gap-2 text-sm text-[var(--neutral-12)]"
+                      >
+                        <input
+                          data-allow-native
+                          type="checkbox"
+                          name="events"
+                          value={eventDef.id}
+                          checked={checked}
+                          onChange={() => toggleEvent(eventDef.id, field.value)}
+                          className="h-4 w-4 rounded border-[var(--neutral-7)]"
+                        />
+                        <span>
+                          <span className="font-mono text-xs text-[var(--neutral-11)]">
+                            {eventDef.id}
+                          </span>
+                          <span className="ml-2 text-[var(--neutral-12)]">{eventDef.label}</span>
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {rootError && (
+          <p role="alert" className="text-sm text-red-11">
+            {rootError}
+          </p>
+        )}
+
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            disabled={form.formState.isSubmitting || !url || events.length === 0}
+            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
+            style={{ background: "var(--brand-gradient)" }}
+          >
+            {form.formState.isSubmitting ? "Creating…" : "Create endpoint"}
+          </button>
         </div>
-      </fieldset>
-
-      {status.kind === "error" && (
-        <p role="alert" className="text-sm text-red-11">
-          {status.message}
-        </p>
-      )}
-
-      <div className="flex justify-end">
-        <button
-          type="submit"
-          disabled={status.kind === "submitting" || !url || selected.size === 0}
-          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
-          style={{ background: "var(--brand-gradient)" }}
-        >
-          {status.kind === "submitting" ? "Creating…" : "Create endpoint"}
-        </button>
-      </div>
-    </form>
+      </form>
+    </Form>
   );
 }

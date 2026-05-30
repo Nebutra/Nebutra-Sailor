@@ -1,12 +1,29 @@
 "use client";
 
-import { Input } from "@nebutra/ui/primitives";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 
 const MIN_LENGTH = 2;
 const MAX_LENGTH = 100;
+
+const schema = z.object({
+  name: z.string().trim().min(MIN_LENGTH).max(MAX_LENGTH),
+});
+type FormValues = z.infer<typeof schema>;
 
 interface ChangeOrganizationNameFormProps {
   orgId: string;
@@ -40,31 +57,31 @@ export function ChangeOrganizationNameForm({
   onUpdated,
 }: ChangeOrganizationNameFormProps) {
   const t = useTranslations();
-  const [name, setName] = useState(initialName);
-  const [pending, setPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const trimmed = name.trim();
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+    defaultValues: { name: initialName },
+  });
+
+  const watchedName = form.watch("name");
+  const trimmed = watchedName.trim();
+  const pending = form.formState.isSubmitting;
   const canSubmit =
-    !pending &&
-    trimmed.length >= MIN_LENGTH &&
-    trimmed.length <= MAX_LENGTH &&
-    trimmed !== initialName;
+    !pending && form.formState.isValid && trimmed.length > 0 && trimmed !== initialName;
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!canSubmit) return;
-
-    setPending(true);
+  async function submit(values: FormValues) {
     setErrorMessage("");
     setShowSuccess(false);
 
+    const next = { name: values.name.trim() };
     try {
       const submitter = onSubmit ?? ((input: { name: string }) => defaultOnSubmit(orgId, input));
-      const next = await submitter({ name: trimmed });
+      const result = await submitter(next);
       setShowSuccess(true);
-      onUpdated?.(next);
+      onUpdated?.(result);
     } catch (err) {
       const key = resolveAuthErrorKey(err);
       const fallback =
@@ -72,8 +89,6 @@ export function ChangeOrganizationNameForm({
           ? err.message
           : t(`auth.errors.${key}`);
       setErrorMessage(fallback);
-    } finally {
-      setPending(false);
     }
   }
 
@@ -86,50 +101,60 @@ export function ChangeOrganizationNameForm({
         {t("organizations.settings.name.description")}
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <div className="space-y-1.5">
-          <label
-            htmlFor="organization-name"
-            className="text-sm font-medium text-[var(--neutral-12)]"
-          >
-            {t("organizations.settings.name.label")}
-          </label>
-          <Input
-            id="organization-name"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(submit)} className="space-y-4" noValidate>
+          <FormField
+            control={form.control}
             name="name"
-            type="text"
-            autoComplete="off"
-            minLength={MIN_LENGTH}
-            maxLength={MAX_LENGTH}
-            value={name}
-            onChange={(event) => {
-              setName(event.target.value);
-              setShowSuccess(false);
-            }}
-            disabled={pending}
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel
+                  htmlFor="organization-name"
+                  className="text-sm font-medium text-[var(--neutral-12)]"
+                >
+                  {t("organizations.settings.name.label")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    id="organization-name"
+                    type="text"
+                    autoComplete="off"
+                    minLength={MIN_LENGTH}
+                    maxLength={MAX_LENGTH}
+                    disabled={pending}
+                    onChange={(event) => {
+                      field.onChange(event);
+                      setShowSuccess(false);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        {errorMessage && <p className="text-sm text-[var(--status-danger)]">{errorMessage}</p>}
-        {showSuccess && (
-          <p className="text-sm text-[color:var(--status-success)]">
-            {t("organizations.settings.name.success")}
-          </p>
-        )}
+          {errorMessage && <p className="text-sm text-[var(--status-danger)]">{errorMessage}</p>}
+          {showSuccess && (
+            <p className="text-sm text-[color:var(--status-success)]">
+              {t("organizations.settings.name.success")}
+            </p>
+          )}
 
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            disabled={!canSubmit}
-            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
-            style={{ background: "var(--brand-gradient)" }}
-          >
-            {pending
-              ? t("organizations.settings.name.saving")
-              : t("organizations.settings.name.submit")}
-          </button>
-        </div>
-      </form>
+          <div className="flex justify-end">
+            <Button
+              type="submit"
+              disabled={!canSubmit}
+              className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50"
+              style={{ background: "var(--brand-gradient)" }}
+            >
+              {pending
+                ? t("organizations.settings.name.saving")
+                : t("organizations.settings.name.submit")}
+            </Button>
+          </div>
+        </form>
+      </Form>
     </section>
   );
 }

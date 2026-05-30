@@ -1,9 +1,20 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nebutra/ui/components";
-import { Input, Label } from "@nebutra/ui/primitives";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 interface CreateWorkspaceStepProps {
   onComplete: () => void;
@@ -18,43 +29,50 @@ function slugify(name: string): string {
     .slice(0, 48);
 }
 
+const schema = z.object({
+  name: z.string().min(1),
+  slug: z
+    .string()
+    .refine((slug) => /^[a-z0-9][a-z0-9-]{1,46}[a-z0-9]$/.test(slug) || slug.length >= 3, {
+      message: "3–48 characters, lowercase letters, numbers, and hyphens only.",
+    }),
+});
+type Values = z.infer<typeof schema>;
+
 export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [slug, setSlug] = useState("");
-  const [slugEdited, setSlugEdited] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const workspaceNameRef = useRef<HTMLInputElement>(null);
+  const form = useForm<Values>({
+    resolver: zodResolver(schema),
+    defaultValues: { name: "", slug: "" },
+    mode: "onSubmit",
+  });
 
+  const { setError, watch, setValue, setFocus } = form;
+  const name = watch("name");
+
+  // Auto-derive the slug from the name until the user edits the slug directly.
+  const slugDirty = form.getFieldState("slug").isDirty;
   useEffect(() => {
-    if (!slugEdited) {
-      setSlug(slugify(name));
+    if (!slugDirty) {
+      setValue("slug", slugify(name));
     }
-  }, [name, slugEdited]);
+  }, [name, slugDirty, setValue]);
 
   useEffect(() => {
-    workspaceNameRef.current?.focus?.();
-  }, []);
+    setFocus("name");
+  }, [setFocus]);
 
-  const slugValid = /^[a-z0-9][a-z0-9-]{1,46}[a-z0-9]$/.test(slug) || slug.length >= 3;
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    setLoading(true);
-    setError("");
-
+  async function submit(values: Values) {
     try {
       const response = await fetch("/api/organizations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, slug }),
+        body: JSON.stringify({ name: values.name, slug: values.slug }),
       });
 
       if (!response.ok) {
         const data = await response.json();
-        setError(data.error || "Failed to create workspace.");
+        setError("root", { message: data.error || "Failed to create workspace." });
         return;
       }
 
@@ -66,11 +84,14 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
 
       onComplete();
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Failed to create workspace.");
-    } finally {
-      setLoading(false);
+      setError("root", {
+        message: err instanceof Error ? err.message : "Failed to create workspace.",
+      });
     }
   }
+
+  const loading = form.formState.isSubmitting;
+  const rootError = form.formState.errors.root?.message;
 
   return (
     <div className="flex flex-col gap-6">
@@ -81,50 +102,56 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="workspace-name">Workspace name</Label>
-          <Input
-            ref={workspaceNameRef}
-            id="workspace-name"
-            placeholder="e.g. Acme Corp"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(submit)} className="flex flex-col gap-5">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1.5 space-y-0">
+                <FormLabel>Workspace name</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. Acme Corp" required {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="workspace-slug">Workspace URL</Label>
-          <div className="flex items-center rounded-[var(--radius-md)] border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-            <span className="select-none border-r border-input px-3 py-2 text-sm text-muted-foreground">
-              nebutra.app /
-            </span>
-            <Input
-              id="workspace-slug"
-              placeholder="my-workspace"
-              value={slug}
-              onChange={(e) => {
-                setSlug(slugify(e.target.value) || e.target.value.toLowerCase());
-                setSlugEdited(true);
-              }}
-              pattern="[a-z0-9][a-z0-9\-]{1,46}[a-z0-9]"
-              required
-            />
-          </div>
-          {slug.length > 0 && !slugValid && (
-            <p className="text-xs text-muted-foreground">
-              3–48 characters, lowercase letters, numbers, and hyphens only.
-            </p>
-          )}
-        </div>
+          <FormField
+            control={form.control}
+            name="slug"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1.5 space-y-0">
+                <FormLabel>Workspace URL</FormLabel>
+                <div className="flex items-center rounded-[var(--radius-md)] border border-input bg-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+                  <span className="select-none border-r border-input px-3 py-2 text-sm text-muted-foreground">
+                    nebutra.app /
+                  </span>
+                  <FormControl>
+                    <Input
+                      placeholder="my-workspace"
+                      pattern="[a-z0-9][a-z0-9\-]{1,46}[a-z0-9]"
+                      required
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(slugify(e.target.value) || e.target.value.toLowerCase());
+                      }}
+                    />
+                  </FormControl>
+                </div>
+                <FormMessage className="text-xs text-muted-foreground" />
+              </FormItem>
+            )}
+          />
 
-        {error && <p className="text-sm text-destructive">{error}</p>}
+          {rootError && <p className="text-sm text-destructive">{rootError}</p>}
 
-        <Button htmlType="submit" className="w-full" disabled={loading || !name}>
-          {loading ? "Creating…" : "Create Workspace →"}
-        </Button>
-      </form>
+          <Button htmlType="submit" className="w-full" disabled={loading || !name}>
+            {loading ? "Creating…" : "Create Workspace →"}
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 }

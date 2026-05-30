@@ -1,12 +1,19 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle as Loader2, PaperAirplane as Send } from "@nebutra/icons";
 import {
+  Checkbox,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
   Select,
   SelectContent,
   SelectItem,
@@ -15,7 +22,9 @@ import {
   Textarea,
   toast,
 } from "@nebutra/ui/primitives";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { useFeedbackDialog } from "./feedback-dialog-provider";
 
 /**
@@ -47,6 +56,25 @@ const MODES = [
 const MIN_DESCRIPTION = 5;
 const MAX_DESCRIPTION = 10000;
 
+const feedbackSchema = z.object({
+  area: z.string(),
+  mode: z.string(),
+  description: z
+    .string()
+    .transform((value) => value.trim())
+    .pipe(z.string().min(MIN_DESCRIPTION).max(MAX_DESCRIPTION)),
+  followUp: z.boolean(),
+});
+
+type FeedbackValues = z.input<typeof feedbackSchema>;
+
+const DEFAULT_VALUES: FeedbackValues = {
+  area: "dashboard",
+  mode: "",
+  description: "",
+  followUp: true,
+};
+
 export function FeedbackDialog() {
   const { open, setOpen, closeDialog } = useFeedbackDialog();
   const areaId = useId();
@@ -54,43 +82,37 @@ export function FeedbackDialog() {
   const descId = useId();
   const emailId = useId();
 
-  const [area, setArea] = useState<string>("dashboard");
-  const [mode, setMode] = useState<string>("");
-  const [description, setDescription] = useState("");
-  const [followUp, setFollowUp] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
+  const form = useForm<FeedbackValues>({
+    resolver: zodResolver(feedbackSchema),
+    defaultValues: DEFAULT_VALUES,
+    mode: "onChange",
+  });
+
+  const submitting = form.formState.isSubmitting;
+  const description = form.watch("description");
+  const descLength = description.trim().length;
+  const canSubmit = !submitting && descLength >= MIN_DESCRIPTION && descLength <= MAX_DESCRIPTION;
 
   // Reset form when dialog closes — delay to avoid flash mid-transition.
   useEffect(() => {
     if (!open) {
       const t = setTimeout(() => {
-        setArea("dashboard");
-        setMode("");
-        setDescription("");
-        setFollowUp(true);
-        setSubmitting(false);
+        form.reset(DEFAULT_VALUES);
       }, 200);
       return () => clearTimeout(t);
     }
-  }, [open]);
+  }, [open, form]);
 
-  const descLength = description.trim().length;
-  const canSubmit = !submitting && descLength >= MIN_DESCRIPTION && descLength <= MAX_DESCRIPTION;
-
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    if (!canSubmit) return;
-    setSubmitting(true);
-
+  async function handleSubmit(values: FeedbackValues) {
     try {
       const res = await fetch("/api/feedback", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          area,
-          mode: mode || undefined,
-          description: description.trim(),
-          contactEmail: followUp ? "" : undefined,
+          area: values.area,
+          mode: values.mode || undefined,
+          description: values.description.trim(),
+          contactEmail: values.followUp ? "" : undefined,
           pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
         }),
       });
@@ -106,7 +128,6 @@ export function FeedbackDialog() {
       toast.error("Failed to submit feedback", {
         description: err instanceof Error ? err.message : "Please try again in a moment.",
       });
-      setSubmitting(false);
     }
   }
 
@@ -120,126 +141,158 @@ export function FeedbackDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4 px-5 py-4">
-          {/* Area + Mode */}
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div>
-              <label htmlFor={areaId} className="mb-1 block text-xs font-medium text-neutral-11">
-                Where did this happen?
-              </label>
-              <Select
-                value={area}
-                onValueChange={(value) => setArea(value ?? "")}
-                disabled={submitting}
-              >
-                <SelectTrigger id={areaId}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {AREAS.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4 px-5 py-4">
+            {/* Area + Mode */}
+            <div className="grid gap-3 sm:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="area"
+                render={({ field }) => (
+                  <FormItem className="space-y-0">
+                    <label
+                      htmlFor={areaId}
+                      className="mb-1 block text-xs font-medium text-neutral-11"
+                    >
+                      Where did this happen?
+                    </label>
+                    <Select
+                      value={field.value}
+                      onValueChange={(value) => field.onChange(value ?? "")}
+                      disabled={submitting}
+                    >
+                      <FormControl>
+                        <SelectTrigger id={areaId}>
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {AREAS.map((opt) => (
+                          <SelectItem key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="mode"
+                render={({ field }) => (
+                  <FormItem className="space-y-0">
+                    <label
+                      htmlFor={modeId}
+                      className="mb-1 block text-xs font-medium text-neutral-11"
+                    >
+                      Chat mode (optional)
+                    </label>
+                    <Select
+                      value={field.value}
+                      onValueChange={(value) => field.onChange(value ?? "")}
+                      disabled={submitting}
+                    >
+                      <FormControl>
+                        <SelectTrigger id={modeId}>
+                          <SelectValue />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {MODES.map((opt) => (
+                          <SelectItem key={opt.value} value={opt.value}>
+                            {opt.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
             </div>
 
-            <div>
-              <label htmlFor={modeId} className="mb-1 block text-xs font-medium text-neutral-11">
-                Chat mode (optional)
-              </label>
-              <Select
-                value={mode}
-                onValueChange={(value) => setMode(value ?? "")}
-                disabled={submitting}
-              >
-                <SelectTrigger id={modeId}>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {MODES.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Description */}
-          <div>
-            <label
-              htmlFor={descId}
-              className="mb-1 flex items-center justify-between text-xs font-medium text-neutral-11"
-            >
-              <span>What happened?</span>
-              <span
-                className={`tabular-nums ${
-                  descLength < MIN_DESCRIPTION || descLength > MAX_DESCRIPTION
-                    ? "text-red-11"
-                    : "text-neutral-10"
-                }`}
-              >
-                {descLength}/{MAX_DESCRIPTION}
-              </span>
-            </label>
-            <Textarea
-              id={descId}
-              rows={5}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              disabled={submitting}
-              placeholder="What did you expect? What actually happened? If you can, list the steps to reproduce."
-            />
-            <p className="mt-1 text-[11px] text-neutral-10">
-              Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}
-            </p>
-          </div>
-
-          {/* Email follow-up */}
-          <label
-            htmlFor={emailId}
-            className="flex cursor-pointer items-center gap-2 text-xs text-neutral-11"
-          >
-            <input
-              data-allow-native
-              id={emailId}
-              type="checkbox"
-              checked={followUp}
-              onChange={(e) => setFollowUp(e.target.checked)}
-              disabled={submitting}
-              className="h-3.5 w-3.5 rounded border-neutral-7 text-blue-9 dark:bg-black/40"
-            />
-            Allow us to follow up via the email on your account.
-          </label>
-
-          {/* Footer */}
-          <div className="flex items-center justify-end gap-2 border-t border-neutral-7 pt-3">
-            <button
-              type="button"
-              onClick={closeDialog}
-              disabled={submitting}
-              className="rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={!canSubmit}
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-              style={{ background: "var(--brand-gradient)" }}
-            >
-              {submitting ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
-              ) : (
-                <Send className="h-3 w-3" />
+            {/* Description */}
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="space-y-0">
+                  <label
+                    htmlFor={descId}
+                    className="mb-1 flex items-center justify-between text-xs font-medium text-neutral-11"
+                  >
+                    <span>What happened?</span>
+                    <span
+                      className={`tabular-nums ${
+                        descLength < MIN_DESCRIPTION || descLength > MAX_DESCRIPTION
+                          ? "text-red-11"
+                          : "text-neutral-10"
+                      }`}
+                    >
+                      {descLength}/{MAX_DESCRIPTION}
+                    </span>
+                  </label>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      id={descId}
+                      rows={5}
+                      disabled={submitting}
+                      placeholder="What did you expect? What actually happened? If you can, list the steps to reproduce."
+                    />
+                  </FormControl>
+                  <p className="mt-1 text-[11px] text-neutral-10">
+                    Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}
+                  </p>
+                  <FormMessage />
+                </FormItem>
               )}
-              {submitting ? "Submitting…" : "Submit report"}
-            </button>
-          </div>
-        </form>
+            />
+
+            {/* Email follow-up */}
+            <FormField
+              control={form.control}
+              name="followUp"
+              render={({ field }) => (
+                <Checkbox
+                  id={emailId}
+                  checked={field.value}
+                  onChange={(checked) => field.onChange(checked)}
+                  disabled={submitting}
+                  className="text-xs text-neutral-11"
+                >
+                  Allow us to follow up via the email on your account.
+                </Checkbox>
+              )}
+            />
+
+            {/* Footer */}
+            <div className="flex items-center justify-end gap-2 border-t border-neutral-7 pt-3">
+              <button
+                type="button"
+                onClick={closeDialog}
+                disabled={submitting}
+                className="rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={!canSubmit}
+                className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                style={{ background: "var(--brand-gradient)" }}
+              >
+                {submitting ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <Send className="h-3 w-3" />
+                )}
+                {submitting ? "Submitting…" : "Submit report"}
+              </button>
+            </div>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

@@ -66,6 +66,9 @@ catalogs:
     react-dom:
       specifier: ^19.2.4
       version: 19.2.4
+    react-hook-form:
+      specifier: ^7.71.2
+      version: 7.71.2
     tailwindcss:
       specifier: ^4.2.1
       version: 4.2.1
@@ -1120,6 +1123,9 @@ importers:
       '@dicebear/core':
         specifier: ^9.4.2
         version: 9.4.2
+      '@hookform/resolvers':
+        specifier: ^5.4.0
+        version: 5.4.0(react-hook-form@7.71.2(react@19.2.4))
       '@marsidev/react-turnstile':
         specifier: ^1.5.2
         version: 1.5.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1267,6 +1273,9 @@ importers:
       react-dom:
         specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
+      react-hook-form:
+        specifier: 'catalog:'
+        version: 7.71.2(react@19.2.4)
       recharts:
         specifier: ^2.15.3
         version: 2.15.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -6688,6 +6697,11 @@ packages:
     peerDependencies:
       hono: ^4.12.19
       zod: ^4.3.6
+
+  '@hookform/resolvers@5.4.0':
+    resolution: {integrity: sha512-EIsqr/t/qbinPIhGjMdtvutIN1Kk4uwbROE9/UQ93CAVGR7GkA7Y92+fX80OzXi/OB67jVFYwKGO1WzkxmkFZw==}
+    peerDependencies:
+      react-hook-form: ^7.55.0
 
   '@huggingface/blake3-jit@0.0.2':
     resolution: {integrity: sha512-Bq7B5qabyjrJfhBsl85Jd2QBtf+HzRD7h7A9GfN2lzrrsABhOa5evVPgzoCTxR7Ub0QFj7YDK1YkYRWBU25+2w==}
@@ -23251,6 +23265,11 @@ snapshots:
     dependencies:
       hono: 4.12.19
       zod: 4.3.6
+
+  '@hookform/resolvers@5.4.0(react-hook-form@7.71.2(react@19.2.4))':
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.71.2(react@19.2.4)
 
   '@huggingface/blake3-jit@0.0.2': {}
 

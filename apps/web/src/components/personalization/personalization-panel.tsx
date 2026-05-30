@@ -1,8 +1,22 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle as Loader2, FloppyDisk as Save, Sparkles } from "@nebutra/icons";
-import { Input, Textarea, toast } from "@nebutra/ui/primitives";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Textarea,
+  toast,
+} from "@nebutra/ui/primitives";
 import { useEffect, useId, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 /**
  * TEMPLATE — Personalization profile editor.
@@ -37,6 +51,13 @@ const CUSTOM_INSTRUCTIONS_MAX = 3000;
 const NICKNAME_MAX = 80;
 const OCCUPATION_MAX = 120;
 
+const profileSchema = z.object({
+  nickname: z.string().max(NICKNAME_MAX),
+  occupation: z.string().max(OCCUPATION_MAX),
+  bio: z.string().max(BIO_MAX),
+  customInstructions: z.string().max(CUSTOM_INSTRUCTIONS_MAX),
+});
+
 interface Props {
   /** Initial form state. Pass null for a fresh, empty form. */
   initialValue?: ProfileFormValue | null;
@@ -58,19 +79,26 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
   const bioId = useId();
   const instructionsId = useId();
 
-  const [value, setValue] = useState<ProfileFormValue>(initialValue ?? EMPTY_VALUE);
+  const form = useForm<ProfileFormValue>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: initialValue ?? EMPTY_VALUE,
+    mode: "onChange",
+  });
+
   const [savedValue, setSavedValue] = useState<ProfileFormValue>(initialValue ?? EMPTY_VALUE);
   const [isPending, startTransition] = useTransition();
-  const [submitting, setSubmitting] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
 
   // Reset when caller swaps initialValue (e.g. after refetch).
   useEffect(() => {
     if (initialValue) {
-      setValue(initialValue);
+      form.reset(initialValue);
       setSavedValue(initialValue);
     }
-  }, [initialValue]);
+  }, [initialValue, form]);
+
+  const value = form.watch();
+  const submitting = form.formState.isSubmitting;
 
   const dirty =
     value.nickname !== savedValue.nickname ||
@@ -78,19 +106,13 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
     value.bio !== savedValue.bio ||
     value.customInstructions !== savedValue.customInstructions;
 
-  function update<K extends keyof ProfileFormValue>(key: K, next: ProfileFormValue[K]) {
-    setValue((prev) => ({ ...prev, [key]: next }));
-  }
-
-  async function handleSave(event: React.FormEvent) {
-    event.preventDefault();
-    if (!dirty || submitting) return;
-    setSubmitting(true);
+  async function handleSave(values: ProfileFormValue) {
+    if (!dirty) return;
 
     try {
-      await onSave(value);
+      await onSave(values);
       startTransition(() => {
-        setSavedValue(value);
+        setSavedValue(values);
         setSavedAt(Date.now());
       });
       toast.success("Profile saved", {
@@ -100,157 +122,199 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
       toast.error("Failed to save profile", {
         description: err instanceof Error ? err.message : "Please try again.",
       });
-    } finally {
-      setSubmitting(false);
     }
   }
 
   function handleReset() {
-    setValue(savedValue);
+    form.reset(savedValue);
   }
 
   return (
-    <form onSubmit={handleSave} className="space-y-6">
-      <div>
-        <div className="mb-2 flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-blue-9" />
-          <h2 className="text-base font-semibold text-neutral-12">Personalization</h2>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSave)} className="space-y-6">
+        <div>
+          <div className="mb-2 flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-blue-9" />
+            <h2 className="text-base font-semibold text-neutral-12">Personalization</h2>
+          </div>
+          <p className="text-sm text-neutral-11">
+            Tell Sailor what you do and how you want it to respond. These details are injected into
+            every conversation as context.
+          </p>
         </div>
-        <p className="text-sm text-neutral-11">
-          Tell Sailor what you do and how you want it to respond. These details are injected into
-          every conversation as context.
-        </p>
-      </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field id={nicknameId} label="Nickname" hint={`${value.nickname.length}/${NICKNAME_MAX}`}>
-          <Input
-            id={nicknameId}
-            type="text"
-            value={value.nickname}
-            onChange={(e) => update("nickname", e.target.value.slice(0, NICKNAME_MAX))}
-            placeholder="What should Sailor call you?"
-            disabled={submitting}
-          />
-        </Field>
-        <Field
-          id={occupationId}
-          label="Occupation"
-          hint={`${value.occupation.length}/${OCCUPATION_MAX}`}
-        >
-          <Input
-            id={occupationId}
-            type="text"
-            value={value.occupation}
-            onChange={(e) => update("occupation", e.target.value.slice(0, OCCUPATION_MAX))}
-            placeholder="e.g. Product Designer, Software Engineer"
-            disabled={submitting}
-          />
-        </Field>
-      </div>
-
-      <Field
-        id={bioId}
-        label="More about you"
-        description="Background, preferences, location — anything that helps Sailor understand you better."
-        hint={`${value.bio.length}/${BIO_MAX}`}
-        overLimit={value.bio.length > BIO_MAX}
-      >
-        <Textarea
-          id={bioId}
-          rows={5}
-          value={value.bio}
-          onChange={(e) => update("bio", e.target.value)}
-          placeholder="I work in fintech, building infra for embedded payments. I prefer direct, technical answers without too many caveats…"
-          disabled={submitting}
-        />
-      </Field>
-
-      <Field
-        id={instructionsId}
-        label="Custom instructions"
-        description="How should Sailor respond? Style, tone, format, focus areas. These take precedence over its defaults."
-        hint={`${value.customInstructions.length}/${CUSTOM_INSTRUCTIONS_MAX}`}
-        overLimit={value.customInstructions.length > CUSTOM_INSTRUCTIONS_MAX}
-      >
-        <Textarea
-          id={instructionsId}
-          rows={6}
-          value={value.customInstructions}
-          onChange={(e) => update("customInstructions", e.target.value)}
-          placeholder={`e.g. "Focus on TypeScript best practices", "Maintain a professional tone", "Always cite sources for important conclusions"`}
-          disabled={submitting}
-        />
-      </Field>
-
-      <div className="flex items-center justify-between gap-3 border-t border-neutral-7 pt-4">
-        <p className="text-xs text-neutral-10">
-          {savedAt && !dirty
-            ? `Saved ${new Date(savedAt).toLocaleTimeString()}`
-            : dirty
-              ? "Unsaved changes"
-              : "Up to date"}
-        </p>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handleReset}
-            disabled={!dirty || submitting}
-            className="rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            Reset
-          </button>
-          <button
-            type="submit"
-            disabled={
-              !dirty ||
-              submitting ||
-              isPending ||
-              value.bio.length > BIO_MAX ||
-              value.customInstructions.length > CUSTOM_INSTRUCTIONS_MAX
-            }
-            className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-            style={{ background: "var(--brand-gradient)" }}
-          >
-            {submitting ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
-            ) : (
-              <Save className="h-3.5 w-3.5" />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="nickname"
+            render={({ field }) => (
+              <FormItem>
+                <FieldHeader
+                  id={nicknameId}
+                  label="Nickname"
+                  hint={`${value.nickname.length}/${NICKNAME_MAX}`}
+                />
+                <FormControl>
+                  <Input
+                    {...field}
+                    id={nicknameId}
+                    type="text"
+                    onChange={(e) => field.onChange(e.target.value.slice(0, NICKNAME_MAX))}
+                    placeholder="What should Sailor call you?"
+                    disabled={submitting}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
-            Save changes
-          </button>
+          />
+          <FormField
+            control={form.control}
+            name="occupation"
+            render={({ field }) => (
+              <FormItem>
+                <FieldHeader
+                  id={occupationId}
+                  label="Occupation"
+                  hint={`${value.occupation.length}/${OCCUPATION_MAX}`}
+                />
+                <FormControl>
+                  <Input
+                    {...field}
+                    id={occupationId}
+                    type="text"
+                    onChange={(e) => field.onChange(e.target.value.slice(0, OCCUPATION_MAX))}
+                    placeholder="e.g. Product Designer, Software Engineer"
+                    disabled={submitting}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-      </div>
-    </form>
+
+        <FormField
+          control={form.control}
+          name="bio"
+          render={({ field }) => (
+            <FormItem>
+              <FieldHeader
+                id={bioId}
+                label="More about you"
+                hint={`${value.bio.length}/${BIO_MAX}`}
+                overLimit={value.bio.length > BIO_MAX}
+              />
+              <FormControl>
+                <Textarea
+                  {...field}
+                  id={bioId}
+                  rows={5}
+                  placeholder="I work in fintech, building infra for embedded payments. I prefer direct, technical answers without too many caveats…"
+                  disabled={submitting}
+                />
+              </FormControl>
+              <FormDescription className="mt-1 text-[11px] text-neutral-10">
+                Background, preferences, location — anything that helps Sailor understand you
+                better.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="customInstructions"
+          render={({ field }) => (
+            <FormItem>
+              <FieldHeader
+                id={instructionsId}
+                label="Custom instructions"
+                hint={`${value.customInstructions.length}/${CUSTOM_INSTRUCTIONS_MAX}`}
+                overLimit={value.customInstructions.length > CUSTOM_INSTRUCTIONS_MAX}
+              />
+              <FormControl>
+                <Textarea
+                  {...field}
+                  id={instructionsId}
+                  rows={6}
+                  placeholder={`e.g. "Focus on TypeScript best practices", "Maintain a professional tone", "Always cite sources for important conclusions"`}
+                  disabled={submitting}
+                />
+              </FormControl>
+              <FormDescription className="mt-1 text-[11px] text-neutral-10">
+                How should Sailor respond? Style, tone, format, focus areas. These take precedence
+                over its defaults.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="flex items-center justify-between gap-3 border-t border-neutral-7 pt-4">
+          <p className="text-xs text-neutral-10">
+            {savedAt && !dirty
+              ? `Saved ${new Date(savedAt).toLocaleTimeString()}`
+              : dirty
+                ? "Unsaved changes"
+                : "Up to date"}
+          </p>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleReset}
+              disabled={!dirty || submitting}
+              className="rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Reset
+            </button>
+            <button
+              type="submit"
+              disabled={
+                !dirty ||
+                submitting ||
+                isPending ||
+                value.bio.length > BIO_MAX ||
+                value.customInstructions.length > CUSTOM_INSTRUCTIONS_MAX
+              }
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+              style={{ background: "var(--brand-gradient)" }}
+            >
+              {submitting ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Save className="h-3.5 w-3.5" />
+              )}
+              Save changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </Form>
   );
 }
 
-interface FieldProps {
+interface FieldHeaderProps {
   id: string;
   label: string;
-  description?: string;
   hint?: string;
   overLimit?: boolean;
-  children: React.ReactNode;
 }
 
-function Field({ id, label, description, hint, overLimit, children }: FieldProps) {
+function FieldHeader({ id, label, hint, overLimit }: FieldHeaderProps) {
   return (
-    <div>
-      <div className="mb-1 flex items-baseline justify-between gap-2">
-        <label htmlFor={id} className="text-xs font-medium text-neutral-11">
-          {label}
-        </label>
-        {hint && (
-          <span
-            className={`text-[10px] tabular-nums ${overLimit ? "text-red-11" : "text-neutral-10"}`}
-          >
-            {hint}
-          </span>
-        )}
-      </div>
-      {children}
-      {description && <p className="mt-1 text-[11px] text-neutral-10">{description}</p>}
+    <div className="mb-1 flex items-baseline justify-between gap-2">
+      <FormLabel htmlFor={id} className="text-xs font-medium text-neutral-11">
+        {label}
+      </FormLabel>
+      {hint && (
+        <span
+          className={`text-[10px] tabular-nums ${overLimit ? "text-red-11" : "text-neutral-10"}`}
+        >
+          {hint}
+        </span>
+      )}
     </div>
   );
 }
