@@ -39,6 +39,22 @@ const nextConfig: NextConfig = {
   // Produces a minimal standalone server bundle under .next/standalone.
   output: "standalone",
 
+  // Next.js 16 cross-origin protection — without this, accessing dev server
+  // from a non-localhost origin (LAN IP, ngrok, codespaces) silently blocks
+  // HMR client + Server Action calls, leaving React event handlers unbound
+  // (page renders but clicks do nothing). Whitelist private network ranges
+  // for dev, plus any tunnels the team commonly uses.
+  allowedDevOrigins: [
+    "localhost",
+    "127.0.0.1",
+    "10.0.0.0/8",
+    "172.16.0.0/12",
+    "192.168.0.0/16",
+    "*.local",
+    "*.ngrok.io",
+    "*.ngrok-free.app",
+  ],
+
   // Keep Prisma and bcryptjs out of the client bundle — they are Node-only.
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg", "bcryptjs"],
 

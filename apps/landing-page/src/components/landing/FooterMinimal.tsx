@@ -300,7 +300,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-12 flex flex-col items-center gap-3 border-t border-[color:var(--neutral-4)] pt-8/[0.06] sm:flex-row sm:justify-between">
+        <div className="mt-12 flex flex-col items-center gap-3 border-t border-[color:var(--neutral-4)] pt-8 sm:flex-row sm:justify-between">
           <p className="text-sm font-medium text-[color:var(--neutral-12)]">
             {t("newsletterTitle")}
           </p>
@@ -308,7 +308,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[color:var(--neutral-4)] pt-6/[0.06] md:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[color:var(--neutral-4)] pt-6 md:flex-row">
           <div className="flex flex-col items-center gap-1 md:items-start">
             <p className="text-xs text-[color:var(--neutral-9)]">{t("copyright")}</p>
             {/* ICP 备案 — required for websites operated in mainland China */}

@@ -125,7 +125,7 @@ export function CommunicationPreferences({
             return (
               <li
                 key={row.key}
-                className="flex items-start justify-between gap-4 bg-neutral-1 px-4 py-3/[0.02]"
+                className="flex items-start justify-between gap-4 bg-neutral-1 px-4 py-3"
               >
                 <div className="flex min-w-0 items-start gap-3">
                   <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-neutral-2 text-neutral-11">
