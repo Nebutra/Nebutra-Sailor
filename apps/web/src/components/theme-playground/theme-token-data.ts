@@ -182,8 +182,7 @@ export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSPrope
   );
 }
 
-export function getThemeSwatches(themeId: string): string[] {
-  const theme = themeTokenSets[themeId as ThemeId] ?? themeTokenSets.neon;
+export function getSwatchesFromTokenSet(theme: ThemeTokenSet): string[] {
   return [
     tokenValue(theme.color, "primary"),
     tokenValue(theme.color, "secondary"),
@@ -192,6 +191,11 @@ export function getThemeSwatches(themeId: string): string[] {
     tokenValue(theme.color, "card"),
     tokenValue(theme.color, "border"),
   ].filter((value): value is string => Boolean(value));
+}
+
+export function getThemeSwatches(themeId: string): string[] {
+  const theme = themeTokenSets[themeId as ThemeId] ?? themeTokenSets.neon;
+  return getSwatchesFromTokenSet(theme);
 }
 
 export function getTokenRows(themeId: string, mode: ThemeMode): TokenRow[] {

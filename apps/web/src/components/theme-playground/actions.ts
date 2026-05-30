@@ -1,11 +1,7 @@
 "use server";
 
-import {
-  type ExportedTheme,
-  exportThemeToDesignMd,
-  type ImportedTheme,
-  importDesignMdToThemeTokens,
-} from "./design-md-bridge";
+import { exportThemeToDesignMd, importDesignMdToThemeTokens } from "./design-md-bridge";
+import type { ExportedTheme, ImportedTheme } from "./design-md-types";
 
 export async function importDesignMdAction(
   content: string,

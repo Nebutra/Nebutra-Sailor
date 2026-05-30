@@ -39,22 +39,10 @@ import oceanJson from "@nebutra/design-tokens/tokens/themes/ocean.json" with { t
 import vibrantJson from "@nebutra/design-tokens/tokens/themes/vibrant.json" with { type: "json" };
 import { THEME_REGISTRY } from "@nebutra/theme/registry";
 
+import type { ExportedTheme, ImportedTheme } from "./design-md-types";
 import type { ThemeTokenSet } from "./theme-token-data";
 
-// ── Types ──────────────────────────────────────────────────────────────────────
-
-export interface ImportedTheme {
-  /** { color, radius, fontFamily } DTCG leaves — directly renderable via getPreviewStyleFromTokenSet */
-  tokenSet: ThemeTokenSet;
-  report: ImportReport;
-  /** Derived from DESIGN.md front-matter name (strips "themes/" prefix). Fallback: "imported" */
-  name: string;
-}
-
-export interface ExportedTheme {
-  designMd: string;
-  previewHtml: string;
-}
+export type { ExportedTheme, ImportedTheme };
 
 // ── Theme JSON lookup ─────────────────────────────────────────────────────────
 

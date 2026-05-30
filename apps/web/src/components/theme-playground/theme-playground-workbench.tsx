@@ -35,8 +35,13 @@ import {
   TabsTrigger,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { type ReactNode, useMemo, useState } from "react";
+import { type CSSProperties, type ReactNode, useMemo, useState } from "react";
+import { DesignMdExport } from "./design-md-export";
+import { DesignMdImport } from "./design-md-import";
+import type { ImportedTheme } from "./design-md-types";
 import {
+  getPreviewStyleFromTokenSet,
+  getSwatchesFromTokenSet,
   getThemePreviewStyle,
   getThemeSwatches,
   getTokenRows,
@@ -94,10 +99,19 @@ function CopyButton({ value, label = "Copy" }: { value: string; label?: string }
   );
 }
 
-function ThemeSwatches({ themeId, size = "md" }: { themeId: string; size?: "sm" | "md" }) {
+function ThemeSwatches({
+  themeId,
+  size = "md",
+  swatchColors,
+}: {
+  themeId: string;
+  size?: "sm" | "md";
+  swatchColors?: string[];
+}) {
+  const colors = swatchColors ?? getThemeSwatches(themeId);
   return (
     <div className="flex items-center gap-1.5" aria-hidden="true">
-      {getThemeSwatches(themeId).map((color) => (
+      {colors.map((color) => (
         <span
           key={`${themeId}-${color}`}
           className={cn(
@@ -111,14 +125,27 @@ function ThemeSwatches({ themeId, size = "md" }: { themeId: string; size?: "sm" 
   );
 }
 
+/** Sentinel ID for the transient imported theme. */
+const IMPORTED_THEME_ID = "__imported__";
+
 function ThemeRegistryPanel({
   themes,
   selectedTheme,
   onSelect,
+  importedEntry,
+  importedSwatches,
+  showImport,
+  onImportToggle,
+  onImported,
 }: {
   themes: ThemeRegistryEntry[];
   selectedTheme: ThemeRegistryEntry;
   onSelect: (theme: ThemeRegistryEntry) => void;
+  importedEntry: ThemeRegistryEntry | null;
+  importedSwatches: string[];
+  showImport: boolean;
+  onImportToggle: () => void;
+  onImported: (theme: ImportedTheme) => void;
 }) {
   const [query, setQuery] = useState("");
   const filteredThemes = useMemo(() => {
@@ -141,14 +168,25 @@ function ThemeRegistryPanel({
           </div>
           <Button
             size="sm"
-            variant="outline"
+            variant={showImport ? "secondary" : "outline"}
             className="h-8 border-border/80 bg-background/60"
             prefix={<Plus />}
             type="button"
+            onClick={onImportToggle}
+            aria-expanded={showImport}
+            aria-label="Import DESIGN.md theme"
           >
-            New
+            {showImport ? "Cancel" : "New"}
           </Button>
         </div>
+
+        {showImport && (
+          <div className="mb-3 rounded-[var(--radius-lg)] border border-border bg-background/60 p-3">
+            <p className="mb-2 font-medium text-foreground text-xs">Import DESIGN.md</p>
+            <DesignMdImport onImported={onImported} />
+          </div>
+        )}
+
         <Input
           aria-label="Search themes"
           placeholder="Search themes..."
@@ -161,6 +199,40 @@ function ThemeRegistryPanel({
       </div>
 
       <div className="min-h-0 flex-1 space-y-3 overflow-y-auto p-4">
+        {/* Transient imported theme — shown at the top when present */}
+        {importedEntry !== null && (
+          <button
+            key={importedEntry.id}
+            type="button"
+            className={cn(
+              "w-full rounded-[var(--radius-lg)] border p-4 text-left transition",
+              "bg-background/55 hover:border-primary/50 hover:bg-background/80",
+              selectedTheme.id === IMPORTED_THEME_ID
+                ? "border-primary/70 shadow-[0_0_0_1px_color-mix(in_oklch,var(--color-primary),transparent_35%)]"
+                : "border-border/75",
+            )}
+            onClick={() => onSelect(importedEntry)}
+          >
+            <div className="mb-3 flex items-start justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2 font-semibold text-foreground text-sm">
+                  {importedEntry.name}
+                  <Badge variant="blue-subtle" size="sm">
+                    imported
+                  </Badge>
+                </div>
+                <div className="mt-1 text-muted-foreground text-xs">Imported via DESIGN.md</div>
+              </div>
+              {selectedTheme.id === IMPORTED_THEME_ID && (
+                <span className="grid size-5 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
+                  <Check className="size-3" />
+                </span>
+              )}
+            </div>
+            <ThemeSwatches themeId={importedEntry.id} swatchColors={importedSwatches} />
+          </button>
+        )}
+
         {filteredThemes.map((theme) => {
           const active = theme.id === selectedTheme.id;
           return (
@@ -226,6 +298,8 @@ function TopBar({
   mode,
   density,
   surface,
+  selectedTheme,
+  viewingImported,
   onModeChange,
   onDensityChange,
   onSurfaceChange,
@@ -233,6 +307,8 @@ function TopBar({
   mode: ThemeMode;
   density: Density;
   surface: Surface;
+  selectedTheme: ThemeRegistryEntry;
+  viewingImported: boolean;
   onModeChange: (mode: ThemeMode) => void;
   onDensityChange: (density: Density) => void;
   onSurfaceChange: (surface: Surface) => void;
@@ -288,15 +364,9 @@ function TopBar({
       </div>
 
       <div className="flex items-center gap-2 min-[1180px]:col-start-2 min-[1180px]:row-start-1 min-[1180px]:justify-end">
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-8 border-border/80 bg-card/70"
-          suffix={<ChevronDown />}
-          type="button"
-        >
-          Export
-        </Button>
+        {!viewingImported && (
+          <DesignMdExport themeId={selectedTheme.id} themeName={selectedTheme.name} />
+        )}
         <Button size="sm" className="h-8" prefix={<CloudUpload />} type="button">
           Publish Theme
         </Button>
@@ -403,6 +473,7 @@ function PreviewCanvas({
   onSuiteChange,
   viewport,
   onViewportChange,
+  styleOverride,
 }: {
   theme: ThemeRegistryEntry;
   mode: ThemeMode;
@@ -412,8 +483,9 @@ function PreviewCanvas({
   onSuiteChange: (suite: PreviewSuite) => void;
   viewport: ViewportId;
   onViewportChange: (viewport: ViewportId) => void;
+  styleOverride?: CSSProperties;
 }) {
-  const style = getThemePreviewStyle(theme.id, mode);
+  const style = styleOverride ?? getThemePreviewStyle(theme.id, mode);
   const viewportWidth = viewportSpec[viewport].width;
 
   // Tailwind v4 in this app uses `@theme inline { --color-*: hsl(var(--*)) }`,
@@ -947,6 +1019,25 @@ function InspectorBlock({
   );
 }
 
+/** Build a ThemeRegistryEntry shell from an ImportedTheme so the panel can render swatches. */
+function makeImportedRegistryEntry(imported: ImportedTheme): ThemeRegistryEntry {
+  return {
+    id: IMPORTED_THEME_ID,
+    name: `Imported · ${imported.name}`,
+    mood: "Imported via DESIGN.md",
+    category: "imported",
+    tokenPath: "",
+    install: { command: "", registryUrl: "" },
+    compatibility: {
+      tailwind: "4",
+      cssVariables: true,
+      figmaVariables: false,
+      shadcnRegistry: false,
+    },
+    governance: { wcag: "AA", requiredTokens: [], visualSuites: [] },
+  };
+}
+
 export function ThemePlaygroundWorkbench() {
   const [selectedTheme, setSelectedTheme] = useState<ThemeRegistryEntry>(() => {
     const defaultTheme =
@@ -963,12 +1054,37 @@ export function ThemePlaygroundWorkbench() {
   const [activeSuite, setActiveSuite] = useState<PreviewSuite>("forms");
   const [viewport, setViewport] = useState<ViewportId>("1280x800");
 
+  // DESIGN.md import state
+  const [importedTheme, setImportedTheme] = useState<ImportedTheme | null>(null);
+  const [showImport, setShowImport] = useState(false);
+
+  const viewingImported = selectedTheme.id === IMPORTED_THEME_ID;
+
+  const importedEntry = importedTheme !== null ? makeImportedRegistryEntry(importedTheme) : null;
+
+  const importedSwatches =
+    importedTheme !== null ? getSwatchesFromTokenSet(importedTheme.tokenSet) : [];
+
+  // Compute override style when the imported theme is selected
+  const importedPreviewStyle =
+    viewingImported && importedTheme !== null
+      ? getPreviewStyleFromTokenSet(importedTheme.tokenSet, mode)
+      : undefined;
+
+  function handleImported(theme: ImportedTheme) {
+    setImportedTheme(theme);
+    setSelectedTheme(makeImportedRegistryEntry(theme));
+    setShowImport(false);
+  }
+
   return (
     <div className="theme-playground-frame flex min-h-[calc(100vh-7rem)] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background text-foreground shadow-sm">
       <TopBar
         mode={mode}
         density={density}
         surface={surface}
+        selectedTheme={selectedTheme}
+        viewingImported={viewingImported}
         onModeChange={setMode}
         onDensityChange={setDensity}
         onSurfaceChange={setSurface}
@@ -978,6 +1094,11 @@ export function ThemePlaygroundWorkbench() {
           themes={THEME_REGISTRY.themes}
           selectedTheme={selectedTheme}
           onSelect={setSelectedTheme}
+          importedEntry={importedEntry}
+          importedSwatches={importedSwatches}
+          showImport={showImport}
+          onImportToggle={() => setShowImport((v) => !v)}
+          onImported={handleImported}
         />
         <PreviewCanvas
           theme={selectedTheme}
@@ -988,6 +1109,7 @@ export function ThemePlaygroundWorkbench() {
           onSuiteChange={setActiveSuite}
           viewport={viewport}
           onViewportChange={setViewport}
+          styleOverride={importedPreviewStyle}
         />
         <TokenInspector theme={selectedTheme} mode={mode} onThemeChange={setSelectedTheme} />
       </main>
