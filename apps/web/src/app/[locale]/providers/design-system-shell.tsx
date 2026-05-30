@@ -87,6 +87,10 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
   const breadcrumbs = buildBreadcrumbs(pathname);
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
+  // /workspace home is a full-bleed gradient canvas — drop main padding and
+  // skip the `contain: paint` content-area wrapper so the gradient reaches
+  // the viewport edges.
+  const isWorkspaceHomeRoute = /^\/[a-z]{2}\/workspace\/?$/.test(pathname);
 
   useEffect(() => {
     if (!isSignedIn || !supportsWorkspaceSwitching) return;
@@ -327,21 +331,46 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       sidebar={sidebar}
       collapsed={collapsed}
       contentClassName={
-        isWorkspaceCanvasRoute
-          ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
-          : // Two-tier surface: tint the outer main bg so the `bg-card`
-            // panels inside each page read as inset floating cards.
-            "dashboard-app-content bg-muted/40"
+        isWorkspaceHomeRoute
+          ? // Full-bleed gradient canvas: drop padding at every breakpoint
+            // (AppShell's base sm/md/2xl:px-* would otherwise beat a plain
+            // p-0 via specificity), make main the positioned ancestor so
+            // the page's absolute gradient fills it edge-to-edge. Banner +
+            // content header sit on top of the gradient.
+            "relative p-0 sm:p-0 md:p-0 2xl:p-0"
+          : isWorkspaceCanvasRoute
+            ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
+            : // Two-tier surface: tint the outer main bg so the `bg-card`
+              // panels inside each page read as inset floating cards.
+              "dashboard-app-content bg-muted/40"
       }
     >
+      {isWorkspaceHomeRoute ? (
+        // First child of main: an absolute gradient canvas that fills the
+        // entire <main> (which is `relative`). Everything below renders
+        // later in DOM and therefore on top in flow order (no z-index
+        // gymnastics — auto over auto wins by source order).
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in oklch, var(--blue-5), transparent 55%) 0%, transparent 60%), " +
+              "radial-gradient(ellipse 60% 50% at 30% 70%, color-mix(in oklch, var(--cyan-4), transparent 70%) 0%, transparent 70%), " +
+              "linear-gradient(180deg, color-mix(in oklch, var(--blue-2), transparent 40%) 0%, transparent 30%)",
+          }}
+        />
+      ) : null}
       {isDevAuth ? (
         <div
           role="alert"
           aria-live="polite"
           className={cn(
             "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 dark:bg-amber-950/40 dark:text-amber-200",
-            isWorkspaceCanvasRoute
-              ? "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6"
+            isWorkspaceHomeRoute
+              ? // Home main has p-0; banner already runs edge-to-edge, no
+                // negative margin needed. relative+z keeps it above gradient.
+                "relative z-10"
               : "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6",
           )}
         >
@@ -355,10 +384,22 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           </span>
         </div>
       ) : null}
-      {contentHeader}
-      <section id="main-content" aria-label="Main content" className="content-area">
-        {children}
-      </section>
+      {isWorkspaceHomeRoute ? (
+        // Re-inset the content header so the bell doesn't smash against
+        // edges (main has p-0). It floats above the gradient at z-10.
+        <div className="relative z-10 px-3 pt-4 sm:px-4 md:px-5 2xl:px-6">{contentHeader}</div>
+      ) : (
+        contentHeader
+      )}
+      {isWorkspaceHomeRoute ? (
+        // No `.content-area` wrapper on home: `contain: paint` would clip
+        // the page's absolute gradient from filling main edge-to-edge.
+        children
+      ) : (
+        <section id="main-content" aria-label="Main content" className="content-area">
+          {children}
+        </section>
+      )}
     </AppShell>
   );
 }

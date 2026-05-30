@@ -28,25 +28,8 @@ export default async function WorkspaceHomePage() {
   const greeting = t(`greeting.${getGreetingKey()}`);
 
   return (
-    <div
-      data-dashboard-section="workspace-home"
-      className="relative -mx-3 -mt-20 -mb-4 min-h-[calc(100vh-2rem)] overflow-hidden sm:-mx-4 md:-mx-5 2xl:-mx-6"
-    >
-      {/* Brand gradient canvas — soft blue → cyan wash; sits at -z-10 so the
-          content header (bell) above renders on top with no white box. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse 140% 70% at 50% 0%, color-mix(in oklch, var(--blue-5), transparent 50%) 0%, transparent 75%), " +
-            "radial-gradient(ellipse 120% 60% at 15% 85%, color-mix(in oklch, var(--cyan-4), transparent 60%) 0%, transparent 80%), " +
-            "radial-gradient(ellipse 110% 55% at 95% 65%, color-mix(in oklch, var(--blue-4), transparent 65%) 0%, transparent 80%), " +
-            "linear-gradient(180deg, color-mix(in oklch, var(--blue-3), transparent 55%) 0%, color-mix(in oklch, var(--cyan-2), transparent 65%) 100%)",
-        }}
-      />
-
-      <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 pt-24 pb-24 text-center sm:pt-32">
+    <div data-dashboard-section="workspace-home" className="relative">
+      <div className="mx-auto flex max-w-3xl flex-col items-center px-4 pt-16 pb-24 text-center sm:pt-24">
         {/* Top pill — quick promo / context-setter */}
         <Link
           href="/integrations"
