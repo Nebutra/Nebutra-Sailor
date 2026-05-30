@@ -129,7 +129,7 @@ export function BlogTableOfContents({ items, labels, variant = "both" }: BlogTab
   return (
     <>
       {showMobile && (
-        <section className="mb-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 xl:hidden">
+        <section className="sticky top-16 z-30 mb-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]/95 p-3 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-[var(--neutral-1)]/80 xl:hidden">
           <button
             type="button"
             aria-expanded={open}
@@ -168,7 +168,10 @@ export function BlogTableOfContents({ items, labels, variant = "both" }: BlogTab
             />
           </div>
           {open && (
-            <nav aria-label={labels.title} className="mt-3 border-l border-[var(--neutral-6)] pl-4">
+            <nav
+              aria-label={labels.title}
+              className="mt-3 max-h-[60vh] space-y-0.5 overflow-y-auto border-l border-[var(--neutral-6)] pl-4 [scrollbar-width:thin]"
+            >
               {items.map((item) => (
                 <TocLink
                   key={item.id}
