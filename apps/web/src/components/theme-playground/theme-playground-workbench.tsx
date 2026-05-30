@@ -1074,7 +1074,9 @@ export function ThemePlaygroundWorkbench() {
   function handleImported(theme: ImportedTheme) {
     setImportedTheme(theme);
     setSelectedTheme(makeImportedRegistryEntry(theme));
-    setShowImport(false);
+    // Do NOT close the import panel — the report (missingRequired / unmapped /
+    // warnings) must remain visible so the user knows what was dropped.
+    // The user closes the panel manually via the "Cancel" / "New" toggle.
   }
 
   return (

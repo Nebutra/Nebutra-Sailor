@@ -9,6 +9,7 @@
 
 import { describe, expect, it } from "vitest";
 import {
+  estimateLightness,
   getPreviewStyleFromTokenSet,
   getThemePreviewStyle,
   type ThemeTokenSet,
@@ -20,6 +21,48 @@ import {
 function asRecord(style: React.CSSProperties): Record<string, string> {
   return style as Record<string, string>;
 }
+
+// ─── Suite: estimateLightness ─────────────────────────────────────────────────
+
+describe("estimateLightness", () => {
+  it("hex #fff7ed (warm white) is detected as light (> 0.5)", () => {
+    expect(estimateLightness("#fff7ed")).toBeGreaterThan(0.5);
+  });
+
+  it("hex #101014 (near-black) is detected as dark (< 0.5)", () => {
+    expect(estimateLightness("#101014")).toBeLessThan(0.5);
+  });
+
+  it("oklch(0.16 0.005 285.9) parses the L component correctly (≈ 0.16)", () => {
+    expect(estimateLightness("oklch(0.16 0.005 285.9)")).toBeCloseTo(0.16, 2);
+  });
+
+  it("oklch(0.98 0 0) parses the L component correctly (≈ 0.98)", () => {
+    expect(estimateLightness("oklch(0.98 0 0)")).toBeCloseTo(0.98, 2);
+  });
+
+  it("unknown/unrecognised value returns 0.5 fallback", () => {
+    expect(estimateLightness("hsl(200 50% 60%)")).toBe(0.5);
+    expect(estimateLightness("")).toBe(0.5);
+    expect(estimateLightness("transparent")).toBe(0.5);
+  });
+
+  it("short hex #fff is detected as light", () => {
+    expect(estimateLightness("#fff")).toBeGreaterThan(0.5);
+  });
+
+  it("short hex #000 is detected as dark", () => {
+    expect(estimateLightness("#000")).toBeLessThan(0.5);
+  });
+
+  it("rgb(255,255,255) is detected as light", () => {
+    expect(estimateLightness("rgb(255, 255, 255)")).toBeGreaterThan(0.5);
+  });
+
+  it("rgb(10,10,10) is detected as dark", () => {
+    expect(estimateLightness("rgb(10, 10, 10)")).toBeLessThan(0.5);
+  });
+});
 
 // ─── Suite: getPreviewStyleFromTokenSet ──────────────────────────────────────
 
@@ -175,6 +218,46 @@ describe("getPreviewStyleFromTokenSet", () => {
       // In dark mode, fallback wins for surface — so it gets the mode fallback value
       // which is "oklch(0.16 0.005 285.9)"
       expect(styleDark["--color-background"]).toBe("oklch(0.16 0.005 285.9)");
+    });
+
+    // ── Bug 1 regression: imported hex backgrounds ───────────────────────────
+
+    it("light mode + hex #fff7ed bg (luminance ≈ 0.97): theme wins, --color-background is #fff7ed", () => {
+      // Mimics a DESIGN.md import that uses a warm-white hex background.
+      const tokenSet: ThemeTokenSet = {
+        color: {
+          background: { $value: "#fff7ed", $type: "color" },
+          primary: { $value: "#ff5a1f", $type: "color" },
+        },
+      };
+      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
+      // The hex bg has high luminance → light-designed → theme wins in light mode
+      expect(style["--color-background"]).toBe("#fff7ed");
+      // Brand color is still applied
+      expect(style["--color-primary"]).toBe("#ff5a1f");
+    });
+
+    it("dark mode + hex #fff7ed bg: dark fallback still wins (unchanged precedence)", () => {
+      const tokenSet: ThemeTokenSet = {
+        color: {
+          background: { $value: "#fff7ed", $type: "color" },
+          primary: { $value: "#ff5a1f", $type: "color" },
+        },
+      };
+      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "dark"));
+      // In dark mode the fallback always wins regardless of theme bg
+      expect(style["--color-background"]).toBe("oklch(0.16 0.005 285.9)");
+    });
+
+    it("light mode + dark hex background (#101014): fallback wins (dark-designed theme)", () => {
+      const tokenSet: ThemeTokenSet = {
+        color: {
+          background: { $value: "#101014", $type: "color" },
+        },
+      };
+      const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
+      // Low luminance → dark-designed → light-mode fallback wins
+      expect(style["--color-background"]).toBe("oklch(1 0 0)");
     });
   });
 });

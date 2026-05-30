@@ -1,6 +1,64 @@
 import { THEME_TOKEN_SETS, type ThemeTokenSetId } from "@nebutra/design-tokens/themes";
 import type { CSSProperties } from "react";
 
+/**
+ * Estimate the perceptual lightness (0..1) of a CSS color value.
+ *
+ * Handles:
+ *   - `oklch(L ...)` — extracts the L component directly.
+ *   - `#rgb` / `#rrggbb` — converts to linear-light sRGB relative luminance.
+ *   - `rgb(...)`/`rgba(...)` — same luminance from the channel values.
+ *   - Anything else — returns 0.5 (neutral fallback).
+ *
+ * Exported so it can be unit-tested independently.
+ */
+export function estimateLightness(value: string): number {
+  const trimmed = value.trim();
+
+  // ── oklch(L C H) ────────────────────────────────────────────────────────────
+  const oklchMatch = trimmed.match(/^oklch\(\s*([0-9.]+)/i);
+  if (oklchMatch) {
+    return Number.parseFloat(oklchMatch[1] ?? "0.5");
+  }
+
+  // ── hex: #rgb or #rrggbb ────────────────────────────────────────────────────
+  const hex3 = trimmed.match(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i);
+  if (hex3) {
+    const r = parseInt(`${hex3[1]}${hex3[1]}`, 16) / 255;
+    const g = parseInt(`${hex3[2]}${hex3[2]}`, 16) / 255;
+    const b = parseInt(`${hex3[3]}${hex3[3]}`, 16) / 255;
+    return linearLuminance(r, g, b);
+  }
+  const hex6 = trimmed.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+  if (hex6) {
+    const r = parseInt(hex6[1] ?? "0", 16) / 255;
+    const g = parseInt(hex6[2] ?? "0", 16) / 255;
+    const b = parseInt(hex6[3] ?? "0", 16) / 255;
+    return linearLuminance(r, g, b);
+  }
+
+  // ── rgb(...) / rgba(...) ────────────────────────────────────────────────────
+  const rgbMatch = trimmed.match(/^rgba?\(\s*([0-9.]+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)/i);
+  if (rgbMatch) {
+    const r = Number.parseFloat(rgbMatch[1] ?? "0") / 255;
+    const g = Number.parseFloat(rgbMatch[2] ?? "0") / 255;
+    const b = Number.parseFloat(rgbMatch[3] ?? "0") / 255;
+    return linearLuminance(r, g, b);
+  }
+
+  return 0.5;
+}
+
+/** Linearise a single sRGB channel (0..1) and compute relative luminance. */
+function linearise(c: number): number {
+  return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+}
+
+/** WCAG relative luminance: 0 = black, 1 = white. */
+function linearLuminance(r: number, g: number, b: number): number {
+  return 0.2126 * linearise(r) + 0.7152 * linearise(g) + 0.0722 * linearise(b);
+}
+
 export type ThemeMode = "light" | "dark";
 export type ThemeId = ThemeTokenSetId;
 
@@ -126,10 +184,7 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
   //   3. LIGHT mode + theme is DARK-DESIGNED (Neon, Dark Dense): fallback wins
   //      so user can still preview the theme's brand colors on a light surface.
   const themeBgValue = tokenValue(theme.color, "background");
-  const themeBgL = themeBgValue
-    ? Number.parseFloat(themeBgValue.match(/oklch\(([0-9.]+)/)?.[1] ?? "0.5")
-    : 0.5;
-  const themeIsLightDesigned = themeBgL > 0.5;
+  const themeIsLightDesigned = estimateLightness(themeBgValue ?? "") > 0.5;
   const themeWinsSurface = mode === "light" && themeIsLightDesigned;
 
   for (const key of SURFACE_COLOR_KEYS) {
