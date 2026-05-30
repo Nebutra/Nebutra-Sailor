@@ -236,7 +236,7 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
 
 export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSProperties {
   return getPreviewStyleFromTokenSet(
-    themeTokenSets[themeId as ThemeId] ?? themeTokenSets.neon,
+    themeTokenSets[themeId as ThemeId] ?? themeTokenSets.nebutra,
     mode,
   );
 }
@@ -253,7 +253,7 @@ export function getSwatchesFromTokenSet(theme: ThemeTokenSet): string[] {
 }
 
 export function getThemeSwatches(themeId: string): string[] {
-  const theme = themeTokenSets[themeId as ThemeId] ?? themeTokenSets.neon;
+  const theme = themeTokenSets[themeId as ThemeId] ?? themeTokenSets.nebutra;
   return getSwatchesFromTokenSet(theme);
 }
 

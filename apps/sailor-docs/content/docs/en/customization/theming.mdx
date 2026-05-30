@@ -180,24 +180,23 @@ const { resolvedTheme } = useTheme();
 
 | Preset | Character |
 |--------|-----------|
-| `default` | Blue/cyan — the Nebutra brand |
-| `neon` | High-contrast electric accents on dark |
-| `gradient` | Gradient-heavy with vibrant mid-tones |
+| `nebutra` | Blue/cyan — the Nebutra brand (default) |
 | `dark-dense` | Dense information density, muted palette |
 | `minimal` | Near-monochrome, maximum whitespace |
 | `vibrant` | Saturated, playful, consumer-focused |
+| `ocean` | Deep blues and teals, calm and focused |
 
 ### Switching presets
 
 ```tsx
 // Static — set in layout
-<html data-theme="neon">
+<html data-theme="nebutra">
 
 // Dynamic — user preference stored in a cookie or localStorage
 "use client";
 import { useState } from "react";
 
-const PRESETS = ["default", "neon", "gradient", "dark-dense", "minimal", "vibrant"] as const;
+const PRESETS = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean"] as const;
 
 export function ThemePresetSelector() {
   const [preset, setPreset] = useState<string>("default");

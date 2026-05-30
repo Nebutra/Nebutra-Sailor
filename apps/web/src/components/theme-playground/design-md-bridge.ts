@@ -32,9 +32,8 @@ import semanticJson from "@nebutra/design-tokens/tokens/semantic.json" with { ty
 import darkDenseJson from "@nebutra/design-tokens/tokens/themes/dark-dense.json" with {
   type: "json",
 };
-import gradientJson from "@nebutra/design-tokens/tokens/themes/gradient.json" with { type: "json" };
 import minimalJson from "@nebutra/design-tokens/tokens/themes/minimal.json" with { type: "json" };
-import neonJson from "@nebutra/design-tokens/tokens/themes/neon.json" with { type: "json" };
+import nebutraJson from "@nebutra/design-tokens/tokens/themes/nebutra.json" with { type: "json" };
 import oceanJson from "@nebutra/design-tokens/tokens/themes/ocean.json" with { type: "json" };
 import vibrantJson from "@nebutra/design-tokens/tokens/themes/vibrant.json" with { type: "json" };
 import { THEME_REGISTRY } from "@nebutra/theme/registry";
@@ -50,8 +49,7 @@ export type { ExportedTheme, ImportedTheme };
 type AnyRecord = Record<string, any>;
 
 const THEME_JSON_LOOKUP: Record<string, AnyRecord> = {
-  neon: neonJson,
-  gradient: gradientJson,
+  nebutra: nebutraJson,
   "dark-dense": darkDenseJson,
   minimal: minimalJson,
   vibrant: vibrantJson,
@@ -88,7 +86,7 @@ export function importDesignMdToThemeTokens(content: string): ImportedTheme {
 /**
  * Export a built-in theme to DESIGN.md + preview HTML.
  *
- * @param themeId - One of the 6 registry theme IDs (neon, gradient, dark-dense,
+ * @param themeId - One of the 5 registry theme IDs (nebutra, dark-dense,
  *                  minimal, vibrant, ocean).
  * @throws Error for an unknown themeId (clear message includes the ID).
  */

@@ -16,16 +16,16 @@ import type { SubpackageGlyphProps } from "./types";
 const COPY = {
   en: {
     heading: "Theme",
-    footer: 'data-theme="neon" · oklch',
+    footer: 'data-theme="nebutra" · oklch',
   },
   zh: {
     heading: "主题",
-    footer: 'data-theme="neon" · oklch',
+    footer: 'data-theme="nebutra" · oklch',
   },
 } as const;
 
 type ThemeCard = {
-  id: "neon" | "gradient" | "dark-dense" | "minimal" | "vibrant" | "ocean";
+  id: "nebutra" | "dark-dense" | "minimal" | "vibrant" | "ocean";
   label: string;
   swatch: string;
   pillFg: string;
@@ -33,17 +33,10 @@ type ThemeCard = {
 
 const THEMES: readonly ThemeCard[] = [
   {
-    id: "neon",
-    label: "neon",
-    swatch: "linear-gradient(135deg, oklch(0.62 0.28 305), oklch(0.55 0.30 285))",
-    pillFg: "oklch(0.55 0.30 285)",
-  },
-  {
-    id: "gradient",
-    label: "gradient",
-    swatch:
-      "linear-gradient(135deg, oklch(0.72 0.19 25), oklch(0.74 0.16 195), oklch(0.65 0.22 285))",
-    pillFg: "oklch(0.55 0.22 285)",
+    id: "nebutra",
+    label: "nebutra",
+    swatch: "linear-gradient(135deg, oklch(0.45 0.22 255), oklch(0.70 0.18 185))",
+    pillFg: "oklch(0.45 0.22 255)",
   },
   {
     id: "dark-dense",
@@ -71,7 +64,7 @@ const THEMES: readonly ThemeCard[] = [
   },
 ] as const;
 
-const ACTIVE_ID = "neon";
+const ACTIVE_ID = "nebutra";
 
 export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
   const t = COPY[locale];
@@ -86,7 +79,7 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
             <span>{t.heading}</span>
           </div>
           <Badge variant="outline" size="sm" className="h-4 gap-1 px-1.5 font-mono text-[9px]">
-            <Droplet className="h-2 w-2" aria-hidden="true" />6
+            <Droplet className="h-2 w-2" aria-hidden="true" />5
           </Badge>
         </div>
 

@@ -180,24 +180,23 @@ const { resolvedTheme } = useTheme();
 
 | 预设 | 风格特点 |
 |------|---------|
-| `default` | 蓝/青——Nebutra 品牌色 |
-| `neon` | 深色背景上的高对比电光强调色 |
-| `gradient` | 渐变丰富，中色调鲜艳 |
+| `nebutra` | 蓝/青——Nebutra 品牌色（默认） |
 | `dark-dense` | 信息密度高，色调低饱和 |
 | `minimal` | 接近单色，留白充足 |
 | `vibrant` | 高饱和，活泼，面向消费者 |
+| `ocean` | 深蓝与青蓝，沉静专注 |
 
 ### 切换预设
 
 ```tsx
 // 静态方式——在 layout 中设置
-<html data-theme="neon">
+<html data-theme="nebutra">
 
 // 动态方式——用户偏好存储在 cookie 或 localStorage 中
 "use client";
 import { useState } from "react";
 
-const PRESETS = ["default", "neon", "gradient", "dark-dense", "minimal", "vibrant"] as const;
+const PRESETS = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean"] as const;
 
 export function ThemePresetSelector() {
   const [preset, setPreset] = useState<string>("default");

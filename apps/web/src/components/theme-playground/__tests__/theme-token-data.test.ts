@@ -265,15 +265,15 @@ describe("getPreviewStyleFromTokenSet", () => {
 // ─── Suite: getThemePreviewStyle delegation ───────────────────────────────────
 
 describe("getThemePreviewStyle", () => {
-  it("returns a populated style for the neon theme", () => {
-    const style = asRecord(getThemePreviewStyle("neon", "light"));
+  it("returns a populated style for the nebutra theme", () => {
+    const style = asRecord(getThemePreviewStyle("nebutra", "light"));
     expect(Object.keys(style).length).toBeGreaterThan(5);
     expect(style["--color-primary"]).toBeDefined();
     expect(style["--color-background"]).toBeDefined();
   });
 
-  it("returns a populated style for the neon theme in dark mode", () => {
-    const style = asRecord(getThemePreviewStyle("neon", "dark"));
+  it("returns a populated style for the nebutra theme in dark mode", () => {
+    const style = asRecord(getThemePreviewStyle("nebutra", "dark"));
     expect(style["colorScheme"]).toBe("dark");
     expect(style["--color-primary"]).toBeDefined();
   });
@@ -283,17 +283,17 @@ describe("getThemePreviewStyle", () => {
     expect(style["--color-primary"]).toBeDefined();
   });
 
-  it("falls back to neon for unknown themeId", () => {
-    const neonStyle = asRecord(getThemePreviewStyle("neon", "light"));
+  it("falls back to nebutra for unknown themeId", () => {
+    const nebutraStyle = asRecord(getThemePreviewStyle("nebutra", "light"));
     const unknownStyle = asRecord(getThemePreviewStyle("does-not-exist", "light"));
-    // Unknown falls back to neon — primary should match
-    expect(unknownStyle["--color-primary"]).toBe(neonStyle["--color-primary"]);
+    // Unknown falls back to nebutra — primary should match
+    expect(unknownStyle["--color-primary"]).toBe(nebutraStyle["--color-primary"]);
   });
 
   it("output is identical to getPreviewStyleFromTokenSet for same inputs (delegation integrity)", () => {
     // This verifies that getThemePreviewStyle just wraps getPreviewStyleFromTokenSet
-    // by checking a known token value that the neon theme explicitly declares
-    const style = asRecord(getThemePreviewStyle("neon", "dark"));
+    // by checking a known token value that the nebutra theme explicitly declares
+    const style = asRecord(getThemePreviewStyle("nebutra", "dark"));
     expect(typeof style["--color-primary"]).toBe("string");
     expect(style["--color-primary"]!.length).toBeGreaterThan(0);
   });

@@ -185,30 +185,30 @@ colors:
 // ─── Suite: exportThemeToDesignMd ─────────────────────────────────────────────
 
 describe("exportThemeToDesignMd", () => {
-  describe("neon theme export", () => {
+  describe("nebutra theme export", () => {
     it("designMd is a non-empty string", () => {
-      const { designMd } = exportThemeToDesignMd("neon");
+      const { designMd } = exportThemeToDesignMd("nebutra");
       expect(typeof designMd).toBe("string");
       expect(designMd.length).toBeGreaterThan(0);
     });
 
     it("designMd contains 'version: alpha' front matter", () => {
-      const { designMd } = exportThemeToDesignMd("neon");
+      const { designMd } = exportThemeToDesignMd("nebutra");
       expect(designMd).toContain("version: alpha");
     });
 
     it("designMd contains a 'colors:' block", () => {
-      const { designMd } = exportThemeToDesignMd("neon");
+      const { designMd } = exportThemeToDesignMd("nebutra");
       expect(designMd).toContain("colors:");
     });
 
     it("previewHtml starts with <!DOCTYPE html>", () => {
-      const { previewHtml } = exportThemeToDesignMd("neon");
+      const { previewHtml } = exportThemeToDesignMd("nebutra");
       expect(previewHtml.trimStart()).toMatch(/^<!DOCTYPE html>/i);
     });
 
     it("previewHtml is a non-empty string", () => {
-      const { previewHtml } = exportThemeToDesignMd("neon");
+      const { previewHtml } = exportThemeToDesignMd("nebutra");
       expect(typeof previewHtml).toBe("string");
       expect(previewHtml.length).toBeGreaterThan(100);
     });
@@ -216,7 +216,6 @@ describe("exportThemeToDesignMd", () => {
 
   describe("other built-in themes", () => {
     it.each([
-      "gradient",
       "dark-dense",
       "minimal",
       "vibrant",

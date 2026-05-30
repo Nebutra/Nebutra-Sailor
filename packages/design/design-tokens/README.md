@@ -16,8 +16,7 @@ packages/design/design-tokens/
 │   └── themes/
 │       ├── light.json          12-step scales + shadcn HSL + Geist DS + elevation (light)
 │       ├── dark.json           same shape, dark-mode values
-│       ├── neon.json           multi-theme: AI SaaS default
-│       ├── gradient.json       multi-theme: Marketing/Growth
+│       ├── nebutra.json        multi-theme: Nebutra default (blue/cyan brand)
 │       ├── dark-dense.json     multi-theme: DevOps Dashboard
 │       ├── minimal.json        multi-theme: Blog/Portfolio
 │       ├── vibrant.json        multi-theme: Creative UI/UX
@@ -102,16 +101,15 @@ This keeps the generated CSS interchangeable with the manually-maintained `packa
 
 The build emits one file per mode:
 
-| Mode         | Selector                  | Source files                                               |
-|--------------|---------------------------|------------------------------------------------------------|
-| `light`      | `:root`                   | core.json + semantic.json + themes/light.json              |
-| `dark`       | `.dark`                   | core.json + semantic.json + themes/dark.json               |
-| `neon`       | `:root` (default theme)   | core.json + semantic.json + themes/neon.json               |
-| `gradient`   | `[data-theme="gradient"]` | core.json + semantic.json + themes/gradient.json           |
-| `dark-dense` | `[data-theme="dark-dense"]` | core.json + semantic.json + themes/dark-dense.json       |
-| `minimal`    | `[data-theme="minimal"]`  | core.json + semantic.json + themes/minimal.json            |
-| `vibrant`    | `[data-theme="vibrant"]`  | core.json + semantic.json + themes/vibrant.json            |
-| `ocean`      | `[data-theme="ocean"]`    | core.json + semantic.json + themes/ocean.json              |
+| Mode         | Selector                    | Source files                                               |
+|--------------|-----------------------------|------------------------------------------------------------|
+| `light`      | `:root`                     | core.json + semantic.json + themes/light.json              |
+| `dark`       | `.dark`                     | core.json + semantic.json + themes/dark.json               |
+| `nebutra`    | `[data-theme="nebutra"]`    | core.json + semantic.json + themes/nebutra.json            |
+| `dark-dense` | `[data-theme="dark-dense"]` | core.json + semantic.json + themes/dark-dense.json         |
+| `minimal`    | `[data-theme="minimal"]`    | core.json + semantic.json + themes/minimal.json            |
+| `vibrant`    | `[data-theme="vibrant"]`    | core.json + semantic.json + themes/vibrant.json            |
+| `ocean`      | `[data-theme="ocean"]`      | core.json + semantic.json + themes/ocean.json              |
 
 `build/css/styles.generated.css` is the concatenation of `light.css` + `dark.css` and is the file that `verify-parity.ts` diffs against `packages/design/tokens/styles.css`.
 
