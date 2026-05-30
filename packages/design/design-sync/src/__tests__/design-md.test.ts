@@ -9,8 +9,8 @@ import { access, mkdir, mkdtemp, readFile, stat, writeFile } from "node:fs/promi
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { LintReport } from "@google/design.md/linter";
-import { beforeEach, describe, expect, it } from "vitest";
-import { assertLintClean, DesignMdProvider } from "../providers/design-md";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { assertLintClean, DesignMdProvider, runLintGate } from "../providers/design-md";
 
 // ─── Fixtures ─────────────────────────────────────────────────────────────────
 
@@ -72,7 +72,7 @@ const SEMANTIC_TOKENS = {
   },
 };
 
-// ─── Fixture Factory ──────────────────────────────────────────────────────────
+// ─── Fixture Factories ────────────────────────────────────────────────────────
 
 interface Fixture {
   tokensDir: string;
@@ -95,65 +95,51 @@ async function makeFixture(): Promise<Fixture> {
   return { tokensDir, designMdPath };
 }
 
+/**
+ * Build a minimal valid `LintReport` fixture. Override specific fields via
+ * `overrides` — only the provided keys are replaced (shallow merge at top level).
+ */
+function makeReport(overrides: Partial<LintReport> = {}): LintReport {
+  const base: LintReport = {
+    designSystem: {
+      colors: new Map(),
+      typography: new Map(),
+      rounded: new Map(),
+      spacing: new Map(),
+      components: new Map(),
+      symbolTable: new Map(),
+    },
+    findings: [],
+    summary: { errors: 0, warnings: 0, infos: 0 },
+    tailwindConfig: {
+      theme: { extend: {} },
+      safelist: [],
+    } as unknown as LintReport["tailwindConfig"],
+    sections: [],
+    documentSections: [],
+  };
+  return { ...base, ...overrides };
+}
+
 // ─── assertLintClean unit tests ───────────────────────────────────────────────
 
 describe("assertLintClean", () => {
   it("does NOT throw for a clean report (no findings)", () => {
-    const cleanReport: LintReport = {
-      designSystem: {
-        colors: new Map(),
-        typography: new Map(),
-        rounded: new Map(),
-        spacing: new Map(),
-        components: new Map(),
-        symbolTable: new Map(),
-      },
-      findings: [],
-      summary: { errors: 0, warnings: 0, infos: 0 },
-      tailwindConfig: {
-        theme: { extend: {} },
-        safelist: [],
-      } as unknown as LintReport["tailwindConfig"],
-      sections: [],
-      documentSections: [],
-    };
-    expect(() => assertLintClean(cleanReport, "TEST.md")).not.toThrow();
+    expect(() => assertLintClean(makeReport(), "TEST.md")).not.toThrow();
   });
 
   it("does NOT throw for a warnings-only report", () => {
-    const warnReport: LintReport = {
-      designSystem: {
-        colors: new Map(),
-        typography: new Map(),
-        rounded: new Map(),
-        spacing: new Map(),
-        components: new Map(),
-        symbolTable: new Map(),
-      },
+    const report = makeReport({
       findings: [
         { severity: "warning", path: "typography", message: "No typography tokens defined." },
       ],
       summary: { errors: 0, warnings: 1, infos: 0 },
-      tailwindConfig: {
-        theme: { extend: {} },
-        safelist: [],
-      } as unknown as LintReport["tailwindConfig"],
-      sections: [],
-      documentSections: [],
-    };
-    expect(() => assertLintClean(warnReport, "TEST.md")).not.toThrow();
+    });
+    expect(() => assertLintClean(report, "TEST.md")).not.toThrow();
   });
 
   it("throws when there is at least one error-severity finding", () => {
-    const errorReport: LintReport = {
-      designSystem: {
-        colors: new Map(),
-        typography: new Map(),
-        rounded: new Map(),
-        spacing: new Map(),
-        components: new Map(),
-        symbolTable: new Map(),
-      },
+    const report = makeReport({
       findings: [
         {
           severity: "error",
@@ -162,47 +148,27 @@ describe("assertLintClean", () => {
         },
       ],
       summary: { errors: 1, warnings: 0, infos: 0 },
-      tailwindConfig: {
-        theme: { extend: {} },
-        safelist: [],
-      } as unknown as LintReport["tailwindConfig"],
-      sections: [],
-      documentSections: [],
-    };
-    expect(() => assertLintClean(errorReport, "DESIGN.md")).toThrow(
+    });
+    expect(() => assertLintClean(report, "DESIGN.md")).toThrow(
       /\[design-md\] Lint failed for DESIGN\.md — 1 error\(s\)/u,
     );
-    expect(() => assertLintClean(errorReport, "DESIGN.md")).toThrow(
+    expect(() => assertLintClean(report, "DESIGN.md")).toThrow(
       /colors\.primary: 'not-a-color' is not a valid color\./u,
     );
   });
 
   it("includes all error findings in the thrown message", () => {
-    const multiErrorReport: LintReport = {
-      designSystem: {
-        colors: new Map(),
-        typography: new Map(),
-        rounded: new Map(),
-        spacing: new Map(),
-        components: new Map(),
-        symbolTable: new Map(),
-      },
+    const report = makeReport({
       findings: [
         { severity: "error", path: "colors.primary", message: "Invalid color." },
         { severity: "error", path: "colors.accent", message: "Another invalid color." },
         { severity: "warning", message: "Some warning — should not affect throw." },
       ],
       summary: { errors: 2, warnings: 1, infos: 0 },
-      tailwindConfig: {
-        theme: { extend: {} },
-        safelist: [],
-      } as unknown as LintReport["tailwindConfig"],
-      sections: [],
-      documentSections: [],
-    };
+    });
     let thrown = "";
     try {
-      assertLintClean(multiErrorReport, "my.md");
+      assertLintClean(report, "my.md");
     } catch (e) {
       thrown = (e as Error).message;
     }
@@ -211,6 +177,28 @@ describe("assertLintClean", () => {
     expect(thrown).toMatch(/colors\.accent: Another invalid color\./u);
     // Warning should NOT appear in the throw message
     expect(thrown).not.toMatch(/Some warning/u);
+  });
+});
+
+// ─── runLintGate catch-branch ─────────────────────────────────────────────────
+
+describe("runLintGate", () => {
+  it("rejects with a [design-md]-prefixed error when the linter throws", async () => {
+    // Mock the @google/design.md/linter module so lint() throws.
+    vi.doMock("@google/design.md/linter", () => ({
+      lint: () => {
+        throw new Error("simulated linter crash");
+      },
+    }));
+
+    // Re-import the function under test so it picks up the mock.
+    const { runLintGate: rg } = await import("../providers/design-md");
+
+    await expect(rg("some content", "DESIGN.md")).rejects.toThrow(
+      /\[design-md\] Lint gate failed to run on DESIGN\.md: simulated linter crash/u,
+    );
+
+    vi.doUnmock("@google/design.md/linter");
   });
 });
 

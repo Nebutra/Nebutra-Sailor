@@ -1,7 +1,8 @@
 import { access, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
+import type { LintReport } from "@google/design.md/linter";
 import { logger } from "@nebutra/logger";
-import { defaultTokensDir, readTokenSets } from "../io";
+import { defaultTokensDir, readTokenSets, writeTokenSet } from "../io";
 import { importFromDesignMd } from "../serialize/from-design-md";
 import { serializeToDesignMd } from "../serialize/to-design-md";
 import type {
@@ -38,32 +39,48 @@ function defaultDesignMdPath(cwd: string = process.cwd()): string {
 // ─── Lint Gate ────────────────────────────────────────────────────────────────
 
 /**
- * Import ONLY from `@google/design.md/linter` — never from the main entry
- * (it auto-runs a CLI). The `lint` function is synchronous and returns a
- * `LintReport` with `findings[]` and `summary.errors`.
- */
-import type { LintReport } from "@google/design.md/linter";
-
-/**
  * Throw if the LintReport contains any error-severity findings.
  * Warnings do not throw — they are surfaced in the push summary.
  * Used as the fail-closed gate before writing a DESIGN.md.
  *
+ * Fail-closed on either signal: error-severity findings in `findings[]`
+ * OR a non-zero `summary.errors` count.
+ *
  * @param report - The LintReport returned by `lint(content)`.
  * @param source - A human-readable label for the file (used in the error message).
- * @throws When `report.summary.errors > 0`.
+ * @throws When error-severity findings are present or `summary.errors > 0`.
  */
 export function assertLintClean(report: LintReport, source: string): void {
-  if (report.summary.errors === 0) return;
-
   const errorFindings = report.findings.filter((f) => f.severity === "error");
+  if (errorFindings.length === 0 && report.summary.errors === 0) return;
+
+  const count = errorFindings.length || report.summary.errors;
   const detail = errorFindings
     .map((f) => (f.path ? `  ${f.path}: ${f.message}` : `  ${f.message}`))
     .join("\n");
 
-  throw new Error(
-    `[design-md] Lint failed for ${source} — ${report.summary.errors} error(s):\n${detail}`,
-  );
+  throw new Error(`[design-md] Lint failed for ${source} — ${count} error(s):\n${detail}`);
+}
+
+// ─── Lint Runner ─────────────────────────────────────────────────────────────
+
+/**
+ * Dynamically imports the @google/design.md linter and runs it on `content`.
+ * Extracted as a named export so tests can verify the `[design-md]`-prefixed
+ * error thrown when the dynamic import or lint call itself fails.
+ *
+ * @throws When the linter import or invocation throws — error is wrapped with a
+ *   `[design-md] Lint gate failed to run on <label>:` prefix.
+ */
+export async function runLintGate(content: string, label: string): Promise<LintReport> {
+  try {
+    const { lint } = await import("@google/design.md/linter");
+    return lint(content);
+  } catch (err) {
+    throw new Error(
+      `[design-md] Lint gate failed to run on ${label}: ${(err as Error)?.message ?? String(err)}`,
+    );
+  }
 }
 
 // ─── Provider ────────────────────────────────────────────────────────────────
@@ -108,9 +125,7 @@ export class DesignMdProvider implements DesignSyncProvider {
 
     const dryRun = options.dryRun ?? false;
     if (!dryRun) {
-      const target = join(this.tokensDir, set.relativePath);
-      await mkdir(dirname(target), { recursive: true });
-      await writeFile(target, `${JSON.stringify(set.tokens, null, 2)}\n`, "utf8");
+      await writeTokenSet(this.tokensDir, set);
       logger.info("[design-sync:design-md] pull wrote token set", {
         relativePath: set.relativePath,
       });
@@ -142,16 +157,11 @@ export class DesignMdProvider implements DesignSyncProvider {
     // Serialize all sets into DESIGN.md content.
     const content = serializeToDesignMd(all);
 
+    // Compute a consistent, human-readable path label (relative preferred).
+    const mdLabel = relative(process.cwd(), this.designMdPath) || this.designMdPath;
+
     // Run the official lint gate — fail closed on any error finding.
-    let lintReport: LintReport;
-    try {
-      const { lint } = await import("@google/design.md/linter");
-      lintReport = lint(content);
-    } catch (err) {
-      throw new Error(
-        `[design-md] Lint gate failed to run on ${this.designMdPath}: ${(err as Error)?.message ?? String(err)}`,
-      );
-    }
+    const lintReport = await runLintGate(content, mdLabel);
 
     // Collect warnings for the summary (they don't block the write).
     const warnings = lintReport.findings
@@ -159,7 +169,7 @@ export class DesignMdProvider implements DesignSyncProvider {
       .map((f) => (f.path ? `${f.path}: ${f.message}` : f.message));
 
     // Throw if any error-severity findings are present.
-    assertLintClean(lintReport, relative(process.cwd(), this.designMdPath) || this.designMdPath);
+    assertLintClean(lintReport, mdLabel);
 
     const dryRun = options.dryRun ?? false;
     if (!dryRun) {
@@ -183,8 +193,8 @@ export class DesignMdProvider implements DesignSyncProvider {
       provider: "design-md",
       pushedAt: new Date().toISOString(),
       summary: dryRun
-        ? `design-md: dry-run — lint passed, would write ${this.designMdPath}${warnSuffix}`
-        : `design-md: wrote ${this.designMdPath} from ${all.length} DTCG set(s)${warnSuffix}`,
+        ? `design-md: dry-run — lint passed, would write ${mdLabel}${warnSuffix}`
+        : `design-md: wrote ${mdLabel} from ${all.length} DTCG set(s)${warnSuffix}`,
       dryRun,
     };
   }
@@ -196,9 +206,11 @@ export class DesignMdProvider implements DesignSyncProvider {
     const missing: string[] = [];
 
     // 1. Check tokensDir exists.
+    let tokensDirOk = false;
     try {
       const info = await stat(this.tokensDir);
       if (info.isDirectory()) {
+        tokensDirOk = true;
         detected.push("tokensDir");
       } else {
         missing.push("tokensDir (not a directory)");
@@ -208,44 +220,40 @@ export class DesignMdProvider implements DesignSyncProvider {
     }
 
     // 2. Check the @google/design.md lib is importable (it's a dep, should always be).
+    let lintLibOk = false;
     try {
       await import("@google/design.md/linter");
+      lintLibOk = true;
       detected.push("@google/design.md");
     } catch {
       missing.push("@google/design.md (lib not importable)");
     }
 
-    // 3. Check DESIGN_MD_PATH env var and designMdPath parent dir.
+    // 3. List DESIGN_MD_PATH in detectedEnv when it's set (it's optional, not required).
     const envPath = process.env.DESIGN_MD_PATH;
     if (envPath) {
       detected.push(`DESIGN_MD_PATH=${envPath}`);
-    } else {
-      missing.push("DESIGN_MD_PATH");
     }
 
-    // 4. Check the parent directory of designMdPath is writable.
+    // 4. Check the parent directory of designMdPath is accessible.
+    let mdDirOk = false;
     const mdDir = dirname(this.designMdPath);
     try {
       await access(mdDir);
+      mdDirOk = true;
       detected.push("designMdPath.parent");
     } catch {
       missing.push("designMdPath.parent (not accessible)");
     }
 
-    const ok = !missing.some(
-      (m) =>
-        m === "tokensDir (does not exist)" ||
-        m === "tokensDir (not a directory)" ||
-        m === "@google/design.md (lib not importable)" ||
-        m === "designMdPath.parent (not accessible)",
-    );
+    const ok = tokensDirOk && lintLibOk && mdDirOk;
 
     return {
       ok,
       provider: "design-md",
       message: ok
         ? `design-md: ready — tokensDir found, lint lib present, designMdPath=${this.designMdPath}`
-        : `design-md: not ready — missing: ${missing.filter((m) => m !== "DESIGN_MD_PATH").join(", ")}`,
+        : `design-md: not ready — missing: ${missing.join(", ")}`,
       detectedEnv: detected,
       missingEnv: missing,
     };
