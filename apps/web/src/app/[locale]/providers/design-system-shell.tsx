@@ -329,7 +329,9 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       contentClassName={
         isWorkspaceCanvasRoute
           ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
-          : "dashboard-app-content"
+          : // Manus-style 2-tier surface: tint the outer main bg so the
+            // `bg-card` panels inside each page read as inset floating cards.
+            "dashboard-app-content bg-muted/40"
       }
     >
       {isDevAuth ? (
