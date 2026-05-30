@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Crimson primary, vivid chroma, light surface",
+  "$description": "Hot coral-rose on white — lively, welcoming, approachable",
   "theme": "crimson-light-vivid",
   "color": {
     "primary": {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Crimson primary, vivid chroma, dark surface",
+  "$description": "Warm terracotta on charcoal night — earthy, expressive",
   "theme": "crimson-dark-vivid-3",
   "color": {
     "primary": {

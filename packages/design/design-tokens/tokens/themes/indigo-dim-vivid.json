@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Indigo primary, vivid chroma, dark surface",
+  "$description": "Electric violet on near-black — rich, complex, dark luxury",
   "theme": "indigo-dim-vivid",
   "color": {
     "primary": {

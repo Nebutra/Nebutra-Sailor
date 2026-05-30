@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Violet primary, vivid chroma, light surface",
+  "$description": "Deep plum on white — rich, intentional, confident",
   "theme": "violet-light-vivid",
   "color": {
     "primary": {

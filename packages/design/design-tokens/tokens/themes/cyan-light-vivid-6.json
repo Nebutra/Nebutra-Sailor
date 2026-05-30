@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Cyan primary, vivid chroma, light surface",
+  "$description": "Cornflower blue on warm canvas — friendly, accessible",
   "theme": "cyan-light-vivid-6",
   "color": {
     "primary": {

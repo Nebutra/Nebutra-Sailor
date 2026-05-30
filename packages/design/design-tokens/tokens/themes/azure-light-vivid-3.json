@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Azure primary, vivid chroma, light surface",
+  "$description": "Electric iris on bright white — bold, creative, wide-open",
   "theme": "azure-light-vivid-3",
   "color": {
     "primary": {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Rose primary, low-saturation chroma, dark surface",
+  "$description": "Warm cream on espresso brown — cozy, warm, editorial",
   "theme": "rose-dark-muted",
   "color": {
     "primary": {

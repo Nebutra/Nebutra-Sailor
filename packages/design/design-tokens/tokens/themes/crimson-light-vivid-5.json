@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Crimson primary, vivid chroma, light surface",
+  "$description": "Electric red on white — charged, high-stakes, decisive",
   "theme": "crimson-light-vivid-5",
   "color": {
     "primary": {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Rose primary, vivid chroma, light surface",
+  "$description": "Warm terracotta on cream — organic, considered, sun-baked",
   "theme": "rose-light-vivid",
   "color": {
     "primary": {

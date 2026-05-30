@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Cyan primary, low-saturation chroma, light surface",
+  "$description": "Deep navy on white — nautical precision, calm authority",
   "theme": "cyan-light-muted",
   "color": {
     "primary": {

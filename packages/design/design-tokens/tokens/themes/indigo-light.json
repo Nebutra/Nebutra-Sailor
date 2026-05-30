@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Indigo primary, balanced chroma, light surface",
+  "$description": "Deep midnight violet on pale lilac — contemplative dusk",
   "theme": "indigo-light",
   "color": {
     "primary": {

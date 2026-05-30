@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Cyan primary, vivid chroma, light surface",
+  "$description": "Medium cobalt on white — grounded, reliable, focused",
   "theme": "cyan-light-vivid-2",
   "color": {
     "primary": {

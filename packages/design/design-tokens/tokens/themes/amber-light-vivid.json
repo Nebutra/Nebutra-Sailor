@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Amber primary, vivid chroma, dark surface",
+  "$description": "Electric gold on charcoal — warm, high-energy, confident",
   "theme": "amber-light-vivid",
   "color": {
     "primary": {

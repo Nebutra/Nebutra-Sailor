@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Rose primary, vivid chroma, light surface",
+  "$description": "Deep vermilion on off-white — earthy, vivid, painterly",
   "theme": "rose-light-vivid-5",
   "color": {
     "primary": {

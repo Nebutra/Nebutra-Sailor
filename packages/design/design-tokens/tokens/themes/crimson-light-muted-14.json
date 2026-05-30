@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Crimson primary, low-saturation chroma, light surface",
+  "$description": "Black on alabaster — minimal, interior-design cool",
   "theme": "crimson-light-muted-14",
   "color": {
     "primary": {

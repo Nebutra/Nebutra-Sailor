@@ -74,7 +74,7 @@
 
 [data-theme="dark-dense"] {
   --color-primary: oklch(0.696 0.17 162.5);
-  --color-primary-foreground: oklch(1 0 0);
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
   --color-secondary: oklch(0.527 0.154 163.2);
   --color-secondary-foreground: oklch(1 0 0);
   --color-accent: oklch(0.765 0.163 163.4);
@@ -146,7 +146,7 @@
 
 [data-theme="vibrant"] {
   --color-primary: oklch(0.705 0.213 47.6);
-  --color-primary-foreground: oklch(1 0 0);
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
   --color-secondary: oklch(0.769 0.189 70.1);
   --color-secondary-foreground: oklch(0.141 0.005 285.9);
   --color-accent: oklch(0.645 0.246 16.4);
@@ -210,6 +210,3364 @@
   --shadow-md: 0 4px 6px -1px rgb(8 145 178 / 0.12);
   --shadow-lg: 0 10px 15px -3px rgb(8 145 178 / 0.12);
   --shadow-xl: 0 20px 25px -5px rgb(8 145 178 / 0.12);
+}
+/* ─── crimson-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-vivid"] {
+  --color-primary: #ff385c;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.961 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #e00b41;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #222222;
+  --color-card: oklch(0.990 0.000 89.9);
+  --color-card-foreground: #222222;
+  --color-popover: oklch(0.980 0.000 89.9);
+  --color-popover-foreground: #222222;
+  --color-muted: oklch(0.971 0.000 89.9);
+  --color-muted-foreground: oklch(0.682 0.000 89.9);
+  --color-border: oklch(0.951 0.000 89.9);
+  --color-input: oklch(0.961 0.000 89.9);
+  --color-ring: #ff385c;
+  --color-primary-hover: color-mix(in oklch, #ff385c, white 12%);
+  --color-primary-active: color-mix(in oklch, #ff385c, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ff385c 0%, #e00b41 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 56 92 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 56 92 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 56 92 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 56 92 / 0.12);
+}
+/* ─── cyan-light-muted theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-muted"] {
+  --color-primary: #181d26;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.959 0.002 103.5);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #aa2d00;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #181d26;
+  --color-card: oklch(0.990 0.000 93.3);
+  --color-card-foreground: #181d26;
+  --color-popover: oklch(0.979 0.001 96.7);
+  --color-popover-foreground: #181d26;
+  --color-muted: oklch(0.969 0.001 100.1);
+  --color-muted-foreground: oklch(0.663 0.015 200.1);
+  --color-border: oklch(0.948 0.002 106.9);
+  --color-input: oklch(0.959 0.002 103.5);
+  --color-ring: #181d26;
+  --color-primary-hover: color-mix(in oklch, #181d26, white 12%);
+  --color-primary-active: color-mix(in oklch, #181d26, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #181d26 0%, #aa2d00 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(24 29 38 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(24 29 38 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(24 29 38 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(24 29 38 / 0.12);
+}
+/* ─── cyan-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-vivid"] {
+  --color-primary: #0066cc;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.959 0.000 76.8);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0071e3;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #1d1d1f;
+  --color-card: oklch(0.990 0.000 86.6);
+  --color-card-foreground: #1d1d1f;
+  --color-popover: oklch(0.979 0.000 83.4);
+  --color-popover-foreground: #1d1d1f;
+  --color-muted: oklch(0.969 0.000 80.1);
+  --color-muted-foreground: oklch(0.666 0.003 343.5);
+  --color-border: oklch(0.949 0.001 73.5);
+  --color-input: oklch(0.959 0.000 76.8);
+  --color-ring: #0066cc;
+  --color-primary-hover: color-mix(in oklch, #0066cc, white 12%);
+  --color-primary-active: color-mix(in oklch, #0066cc, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0066cc 0%, #0071e3 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 11px;
+  --radius-lg: 18px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 102 204 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 102 204 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 102 204 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 102 204 / 0.12);
+}
+/* ─── amber-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="amber-light-vivid"] {
+  --color-primary: #fcd535;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.328 0.004 80.1);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #f0b90b;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.16 0.005 100.1);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.210 0.005 94.1);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.227 0.005 92.1);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.261 0.004 88.1);
+  --color-muted-foreground: oklch(0.706 0.002 35.0);
+  --color-border: oklch(0.345 0.004 78.1);
+  --color-input: oklch(0.311 0.004 82.1);
+  --color-ring: #fcd535;
+  --color-primary-hover: color-mix(in oklch, #fcd535, white 12%);
+  --color-primary-active: color-mix(in oklch, #fcd535, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #fcd535 0%, #f0b90b 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(252 213 53 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(252 213 53 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(252 213 53 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(252 213 53 / 0.12);
+}
+/* ─── crimson-dark-muted theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-muted"] {
+  --color-primary: #ffffff;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.200 0.000 18.0);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #0066b1;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-card: oklch(0.060 0.000 5.4);
+  --color-card-foreground: #ffffff;
+  --color-popover: oklch(0.080 0.000 7.2);
+  --color-popover-foreground: #ffffff;
+  --color-muted: oklch(0.120 0.000 10.8);
+  --color-muted-foreground: oklch(0.650 0.000 58.4);
+  --color-border: oklch(0.220 0.000 19.8);
+  --color-input: oklch(0.180 0.000 16.2);
+  --color-ring: #ffffff;
+  --color-primary-hover: color-mix(in oklch, #ffffff, white 12%);
+  --color-primary-active: color-mix(in oklch, #ffffff, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ffffff 0%, #0066b1 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 255 255 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 255 255 / 0.12);
+}
+/* ─── cyan-light-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-vivid-2"] {
+  --color-primary: #1c69d4;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.962 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0653b6;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #262626;
+  --color-card: oklch(0.991 0.000 89.9);
+  --color-card-foreground: #262626;
+  --color-popover: oklch(0.981 0.000 89.9);
+  --color-popover-foreground: #262626;
+  --color-muted: oklch(0.972 0.000 89.9);
+  --color-muted-foreground: oklch(0.695 0.000 89.9);
+  --color-border: oklch(0.953 0.000 89.9);
+  --color-input: oklch(0.962 0.000 89.9);
+  --color-ring: #1c69d4;
+  --color-primary-hover: color-mix(in oklch, #1c69d4, white 12%);
+  --color-primary-active: color-mix(in oklch, #1c69d4, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #1c69d4 0%, #0653b6 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(28 105 212 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(28 105 212 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(28 105 212 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(28 105 212 / 0.12);
+}
+/* ─── crimson-dark-muted-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-muted-2"] {
+  --color-primary: #ffffff;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.200 0.000 18.0);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #c3d9f3;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-card: oklch(0.060 0.000 5.4);
+  --color-card-foreground: #ffffff;
+  --color-popover: oklch(0.080 0.000 7.2);
+  --color-popover-foreground: #ffffff;
+  --color-muted: oklch(0.120 0.000 10.8);
+  --color-muted-foreground: oklch(0.650 0.000 58.4);
+  --color-border: oklch(0.220 0.000 19.8);
+  --color-input: oklch(0.180 0.000 16.2);
+  --color-ring: #ffffff;
+  --color-primary-hover: color-mix(in oklch, #ffffff, white 12%);
+  --color-primary-active: color-mix(in oklch, #ffffff, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ffffff 0%, #c3d9f3 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 255 255 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 255 255 / 0.12);
+}
+/* ─── crimson-light-muted theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted"] {
+  --color-primary: #111111;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.952 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #374151;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #111111;
+  --color-card: oklch(0.988 0.000 89.9);
+  --color-card-foreground: #111111;
+  --color-popover: oklch(0.976 0.000 89.9);
+  --color-popover-foreground: #111111;
+  --color-muted: oklch(0.964 0.000 89.9);
+  --color-muted-foreground: oklch(0.613 0.000 89.9);
+  --color-border: oklch(0.941 0.000 89.9);
+  --color-input: oklch(0.952 0.000 89.9);
+  --color-ring: #111111;
+  --color-primary-hover: color-mix(in oklch, #111111, white 12%);
+  --color-primary-active: color-mix(in oklch, #111111, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #111111 0%, #374151 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(17 17 17 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(17 17 17 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(17 17 17 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(17 17 17 / 0.12);
+}
+/* ─── rose-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="rose-light-vivid"] {
+  --color-primary: #cc785c;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.947 0.002 96.0);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #a9583e;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #faf9f5;
+  --color-foreground: #141413;
+  --color-card: oklch(0.981 0.002 95.3);
+  --color-card-foreground: #141413;
+  --color-popover: oklch(0.969 0.002 95.6);
+  --color-popover-foreground: #141413;
+  --color-muted: oklch(0.958 0.002 95.8);
+  --color-muted-foreground: oklch(0.625 0.003 102.5);
+  --color-border: oklch(0.935 0.002 96.2);
+  --color-input: oklch(0.947 0.002 96.0);
+  --color-ring: #cc785c;
+  --color-primary-hover: color-mix(in oklch, #cc785c, white 12%);
+  --color-primary-active: color-mix(in oklch, #cc785c, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #cc785c 0%, #a9583e 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(204 120 92 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(204 120 92 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(204 120 92 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(204 120 92 / 0.12);
+}
+/* ─── crimson-light-muted-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-2"] {
+  --color-primary: #0a0a0a;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.942 0.006 85.3);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #ff4d8b;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #fffaf0;
+  --color-foreground: #0a0a0a;
+  --color-card: oklch(0.981 0.006 85.0);
+  --color-card-foreground: #0a0a0a;
+  --color-popover: oklch(0.968 0.006 85.1);
+  --color-popover-foreground: #0a0a0a;
+  --color-muted: oklch(0.955 0.006 85.2);
+  --color-muted-foreground: oklch(0.569 0.002 88.1);
+  --color-border: oklch(0.929 0.005 85.4);
+  --color-input: oklch(0.942 0.006 85.3);
+  --color-ring: #0a0a0a;
+  --color-primary-hover: color-mix(in oklch, #0a0a0a, white 12%);
+  --color-primary-active: color-mix(in oklch, #0a0a0a, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0a0a0a 0%, #ff4d8b 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(10 10 10 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(10 10 10 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(10 10 10 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(10 10 10 / 0.12);
+}
+/* ─── gold-dark-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="gold-dark-vivid"] {
+  --color-primary: #faff69;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.472 0.000 89.9);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #e6eb52;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #0a0a0a;
+  --color-foreground: #ffffff;
+  --color-card: oklch(0.380 0.000 89.9);
+  --color-card-foreground: #ffffff;
+  --color-popover: oklch(0.393 0.000 89.9);
+  --color-popover-foreground: #ffffff;
+  --color-muted: oklch(0.419 0.000 89.9);
+  --color-muted-foreground: oklch(0.769 0.000 89.9);
+  --color-border: oklch(0.485 0.000 89.9);
+  --color-input: oklch(0.459 0.000 89.9);
+  --color-ring: #faff69;
+  --color-primary-hover: color-mix(in oklch, #faff69, white 12%);
+  --color-primary-active: color-mix(in oklch, #faff69, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #faff69 0%, #e6eb52 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(250 255 105 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(250 255 105 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(250 255 105 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(250 255 105 / 0.12);
+}
+/* ─── azure-light-muted theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="azure-light-muted"] {
+  --color-primary: #17171c;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.960 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #003c33;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #212121;
+  --color-card: oklch(0.990 0.000 89.9);
+  --color-card-foreground: #212121;
+  --color-popover: oklch(0.980 0.000 89.9);
+  --color-popover-foreground: #212121;
+  --color-muted: oklch(0.970 0.000 89.9);
+  --color-muted-foreground: oklch(0.679 0.000 89.9);
+  --color-border: oklch(0.951 0.000 89.9);
+  --color-input: oklch(0.960 0.000 89.9);
+  --color-ring: #17171c;
+  --color-primary-hover: color-mix(in oklch, #17171c, white 12%);
+  --color-primary-active: color-mix(in oklch, #17171c, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #17171c 0%, #003c33 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(23 23 28 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(23 23 28 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(23 23 28 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(23 23 28 / 0.12);
+}
+/* ─── cyan-light-vivid-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-vivid-3"] {
+  --color-primary: #0052ff;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.948 0.001 103.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #003ecc;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #0a0b0d;
+  --color-card: oklch(0.987 0.000 93.4);
+  --color-card-foreground: #0a0b0d;
+  --color-popover: oklch(0.974 0.000 96.8);
+  --color-popover-foreground: #0a0b0d;
+  --color-muted: oklch(0.961 0.001 100.3);
+  --color-muted-foreground: oklch(0.577 0.007 202.4);
+  --color-border: oklch(0.935 0.001 107.2);
+  --color-input: oklch(0.948 0.001 103.7);
+  --color-ring: #0052ff;
+  --color-primary-hover: color-mix(in oklch, #0052ff, white 12%);
+  --color-primary-active: color-mix(in oklch, #0052ff, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0052ff 0%, #003ecc 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 82 255 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 82 255 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 82 255 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 82 255 / 0.12);
+}
+/* ─── azure-dark-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="azure-dark-vivid"] {
+  --color-primary: #0007cd;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.922 0.004 265.8);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0005a3;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.99 0.004 264.1);
+  --color-foreground: oklch(0.141 0.005 285.9);
+  --color-card: oklch(0.973 0.004 264.5);
+  --color-card-foreground: oklch(0.141 0.005 285.9);
+  --color-popover: oklch(0.956 0.004 265.0);
+  --color-popover-foreground: oklch(0.141 0.005 285.9);
+  --color-muted: oklch(0.939 0.004 265.4);
+  --color-muted-foreground: oklch(0.438 0.005 278.3);
+  --color-border: oklch(0.905 0.004 266.3);
+  --color-input: oklch(0.922 0.004 265.8);
+  --color-ring: #0007cd;
+  --color-primary-hover: color-mix(in oklch, #0007cd, white 12%);
+  --color-primary-active: color-mix(in oklch, #0007cd, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0007cd 0%, #0005a3 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 7 205 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 7 205 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 7 205 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 7 205 / 0.12);
+}
+/* ─── rose-light-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="rose-light-vivid-2"] {
+  --color-primary: #f54e00;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.952 0.003 105.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #d04200;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #f7f7f4;
+  --color-foreground: #26251e;
+  --color-card: oklch(0.980 0.002 106.3);
+  --color-card-foreground: #26251e;
+  --color-popover: oklch(0.970 0.003 106.2);
+  --color-popover-foreground: #26251e;
+  --color-muted: oklch(0.961 0.003 106.1);
+  --color-muted-foreground: oklch(0.687 0.010 102.7);
+  --color-border: oklch(0.943 0.003 105.8);
+  --color-input: oklch(0.952 0.003 105.9);
+  --color-ring: #f54e00;
+  --color-primary-hover: color-mix(in oklch, #f54e00, white 12%);
+  --color-primary-active: color-mix(in oklch, #f54e00, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #f54e00 0%, #d04200 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(245 78 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(245 78 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(245 78 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(245 78 0 / 0.12);
+}
+/* ─── crimson-light-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-vivid-2"] {
+  --color-primary: #e91d2a;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.920 0.000 82.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #fcc20f;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: oklch(0.980 0.000 88.1);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.960 0.000 86.3);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.940 0.000 84.5);
+  --color-muted-foreground: oklch(0.350 0.000 31.5);
+  --color-border: oklch(0.900 0.000 80.9);
+  --color-input: oklch(0.920 0.000 82.7);
+  --color-ring: #e91d2a;
+  --color-primary-hover: color-mix(in oklch, #e91d2a, white 12%);
+  --color-primary-active: color-mix(in oklch, #e91d2a, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #e91d2a 0%, #fcc20f 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+  --shadow-sm: 0 1px 2px 0 rgb(233 29 42 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(233 29 42 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(233 29 42 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(233 29 42 / 0.12);
+}
+/* ─── crimson-light-muted-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-3"] {
+  --color-primary: #292524;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.950 0.001 85.5);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #16a34a;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #f5f5f5;
+  --color-foreground: #292524;
+  --color-card: oklch(0.978 0.000 88.8);
+  --color-card-foreground: #292524;
+  --color-popover: oklch(0.969 0.000 87.7);
+  --color-popover-foreground: #292524;
+  --color-muted: oklch(0.960 0.000 86.6);
+  --color-muted-foreground: oklch(0.690 0.005 54.1);
+  --color-border: oklch(0.941 0.001 84.4);
+  --color-input: oklch(0.950 0.001 85.5);
+  --color-ring: #292524;
+  --color-primary-hover: color-mix(in oklch, #292524, white 12%);
+  --color-primary-active: color-mix(in oklch, #292524, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #292524 0%, #16a34a 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(41 37 36 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(41 37 36 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(41 37 36 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(41 37 36 / 0.12);
+}
+/* ─── crimson-light-muted-4 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-4"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.956 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0d74ce;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-card: oklch(0.989 0.000 89.9);
+  --color-card-foreground: #171717;
+  --color-popover: oklch(0.978 0.000 89.9);
+  --color-popover-foreground: #171717;
+  --color-muted: oklch(0.967 0.000 89.9);
+  --color-muted-foreground: oklch(0.641 0.000 89.9);
+  --color-border: oklch(0.945 0.000 89.9);
+  --color-input: oklch(0.956 0.000 89.9);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #0d74ce 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── crimson-dark-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-vivid"] {
+  --color-primary: #da291c;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.564 0.000 89.9);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #b01e0a;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #181818;
+  --color-foreground: #ffffff;
+  --color-card: oklch(0.488 0.000 89.9);
+  --color-card-foreground: #ffffff;
+  --color-popover: oklch(0.499 0.000 89.9);
+  --color-popover-foreground: #ffffff;
+  --color-muted: oklch(0.520 0.000 89.9);
+  --color-muted-foreground: oklch(0.809 0.000 89.9);
+  --color-border: oklch(0.575 0.000 89.9);
+  --color-input: oklch(0.553 0.000 89.9);
+  --color-ring: #da291c;
+  --color-primary-hover: color-mix(in oklch, #da291c, white 12%);
+  --color-primary-active: color-mix(in oklch, #da291c, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #da291c 0%, #b01e0a 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(218 41 28 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(218 41 28 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(218 41 28 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(218 41 28 / 0.12);
+}
+/* ─── crimson-light-muted-5 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-5"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.920 0.000 82.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #dceeb1;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: oklch(0.980 0.000 88.1);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.960 0.000 86.3);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.940 0.000 84.5);
+  --color-muted-foreground: oklch(0.350 0.000 31.5);
+  --color-border: oklch(0.900 0.000 80.9);
+  --color-input: oklch(0.920 0.000 82.7);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #dceeb1 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── crimson-dark-muted-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-muted-3"] {
+  --color-primary: #ffffff;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.462 0.000 89.9);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #0099ff;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #090909;
+  --color-foreground: #ffffff;
+  --color-card: oklch(0.368 0.000 89.9);
+  --color-card-foreground: #ffffff;
+  --color-popover: oklch(0.382 0.000 89.9);
+  --color-popover-foreground: #ffffff;
+  --color-muted: oklch(0.409 0.000 89.9);
+  --color-muted-foreground: oklch(0.765 0.000 89.9);
+  --color-border: oklch(0.476 0.000 89.9);
+  --color-input: oklch(0.449 0.000 89.9);
+  --color-ring: #ffffff;
+  --color-primary-hover: color-mix(in oklch, #ffffff, white 12%);
+  --color-primary-active: color-mix(in oklch, #ffffff, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ffffff 0%, #0099ff 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 15px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 255 255 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 255 255 / 0.12);
+}
+/* ─── crimson-dark-muted-4 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-muted-4"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.922 0.004 354.1);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #2b89ff;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.99 0.004 0.0);
+  --color-foreground: oklch(0.141 0.005 285.9);
+  --color-card: oklch(0.973 0.004 358.5);
+  --color-card-foreground: oklch(0.141 0.005 285.9);
+  --color-popover: oklch(0.956 0.004 357.0);
+  --color-popover-foreground: oklch(0.141 0.005 285.9);
+  --color-muted: oklch(0.939 0.004 355.6);
+  --color-muted-foreground: oklch(0.438 0.005 311.8);
+  --color-border: oklch(0.905 0.004 352.6);
+  --color-input: oklch(0.922 0.004 354.1);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #2b89ff 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── cyan-light-vivid-4 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-vivid-4"] {
+  --color-primary: #024ad8;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.957 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #296ef9;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+  --color-card: oklch(0.989 0.000 89.9);
+  --color-card-foreground: #1a1a1a;
+  --color-popover: oklch(0.979 0.000 89.9);
+  --color-popover-foreground: #1a1a1a;
+  --color-muted: oklch(0.968 0.000 89.9);
+  --color-muted-foreground: oklch(0.654 0.000 89.9);
+  --color-border: oklch(0.947 0.000 89.9);
+  --color-input: oklch(0.957 0.000 89.9);
+  --color-ring: #024ad8;
+  --color-primary-hover: color-mix(in oklch, #024ad8, white 12%);
+  --color-primary-active: color-mix(in oklch, #024ad8, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #024ad8 0%, #296ef9 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(2 74 216 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(2 74 216 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(2 74 216 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(2 74 216 / 0.12);
+}
+/* ─── cyan-light-vivid-5 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-vivid-5"] {
+  --color-primary: #0f62fe;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.955 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0043ce;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #161616;
+  --color-card: oklch(0.989 0.000 89.9);
+  --color-card-foreground: #161616;
+  --color-popover: oklch(0.978 0.000 89.9);
+  --color-popover-foreground: #161616;
+  --color-muted: oklch(0.967 0.000 89.9);
+  --color-muted-foreground: oklch(0.637 0.000 89.9);
+  --color-border: oklch(0.944 0.000 89.9);
+  --color-input: oklch(0.955 0.000 89.9);
+  --color-ring: #0f62fe;
+  --color-primary-hover: color-mix(in oklch, #0f62fe, white 12%);
+  --color-primary-active: color-mix(in oklch, #0f62fe, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0f62fe 0%, #0043ce 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(15 98 254 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(15 98 254 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(15 98 254 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(15 98 254 / 0.12);
+}
+/* ─── crimson-light-muted-6 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-6"] {
+  --color-primary: #111111;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.936 0.004 75.4);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #ff5600;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #f5f1ec;
+  --color-foreground: #111111;
+  --color-card: oklch(0.970 0.004 74.4);
+  --color-card-foreground: #111111;
+  --color-popover: oklch(0.959 0.004 74.7);
+  --color-popover-foreground: #111111;
+  --color-muted: oklch(0.947 0.004 75.0);
+  --color-muted-foreground: oklch(0.607 0.001 84.4);
+  --color-border: oklch(0.924 0.004 75.7);
+  --color-input: oklch(0.936 0.004 75.4);
+  --color-ring: #111111;
+  --color-primary-hover: color-mix(in oklch, #111111, white 12%);
+  --color-primary-active: color-mix(in oklch, #111111, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #111111 0%, #ff5600 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(17 17 17 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(17 17 17 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(17 17 17 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(17 17 17 / 0.12);
+}
+/* ─── indigo-dim-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="indigo-dim-vivid"] {
+  --color-primary: #7132f5;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.313 0.004 300.7);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #5741d8;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.141 0.005 285.9);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.193 0.005 290.3);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.210 0.005 291.8);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.244 0.004 294.8);
+  --color-muted-foreground: oklch(0.699 0.002 334.1);
+  --color-border: oklch(0.330 0.004 302.2);
+  --color-input: oklch(0.296 0.004 299.2);
+  --color-ring: #7132f5;
+  --color-primary-hover: color-mix(in oklch, #7132f5, white 12%);
+  --color-primary-active: color-mix(in oklch, #7132f5, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #7132f5 0%, #5741d8 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(113 50 245 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(113 50 245 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(113 50 245 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(113 50 245 / 0.12);
+}
+/* ─── amber-light-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="amber-light-vivid-2"] {
+  --color-primary: #FFC000;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.328 0.004 97.6);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #917300;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.16 0.005 99.5);
+  --color-foreground: #FFFFFF;
+  --color-card: oklch(0.210 0.005 98.9);
+  --color-card-foreground: #FFFFFF;
+  --color-popover: oklch(0.227 0.005 98.7);
+  --color-popover-foreground: #FFFFFF;
+  --color-muted: oklch(0.261 0.004 98.3);
+  --color-muted-foreground: oklch(0.706 0.002 93.3);
+  --color-border: oklch(0.345 0.004 97.4);
+  --color-input: oklch(0.311 0.004 97.8);
+  --color-ring: #FFC000;
+  --color-primary-hover: color-mix(in oklch, #FFC000, white 12%);
+  --color-primary-active: color-mix(in oklch, #FFC000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #FFC000 0%, #917300 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 192 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 192 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 192 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 192 0 / 0.12);
+}
+/* ─── azure-dark-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="azure-dark-vivid-2"] {
+  --color-primary: #5e6ad2;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.328 0.015 266.7);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #828fff;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #010102;
+  --color-foreground: #f7f8f8;
+  --color-card: oklch(0.212 0.018 278.9);
+  --color-card-foreground: #f7f8f8;
+  --color-popover: oklch(0.228 0.017 277.1);
+  --color-popover-foreground: #f7f8f8;
+  --color-muted: oklch(0.261 0.017 273.7);
+  --color-muted-foreground: oklch(0.700 0.007 227.5);
+  --color-border: oklch(0.344 0.015 265.0);
+  --color-input: oklch(0.311 0.016 268.4);
+  --color-ring: #5e6ad2;
+  --color-primary-hover: color-mix(in oklch, #5e6ad2, white 12%);
+  --color-primary-active: color-mix(in oklch, #5e6ad2, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #5e6ad2 0%, #828fff 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(94 106 210 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(94 106 210 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(94 106 210 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(94 106 210 / 0.12);
+}
+/* ─── cyan-light-vivid-6 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-vivid-6"] {
+  --color-primary: #3b82f6;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.945 0.004 87.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #3b82f6;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #f7f4ed;
+  --color-foreground: #1c1c1c;
+  --color-card: oklch(0.976 0.004 87.7);
+  --color-card-foreground: #1c1c1c;
+  --color-popover: oklch(0.966 0.004 87.8);
+  --color-popover-foreground: #1c1c1c;
+  --color-muted: oklch(0.956 0.004 87.8);
+  --color-muted-foreground: oklch(0.656 0.001 89.1);
+  --color-border: oklch(0.935 0.004 87.9);
+  --color-input: oklch(0.945 0.004 87.9);
+  --color-ring: #3b82f6;
+  --color-primary-hover: color-mix(in oklch, #3b82f6, white 12%);
+  --color-primary-active: color-mix(in oklch, #3b82f6, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #3b82f6 0%, #3b82f6 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(59 130 246 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(59 130 246 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(59 130 246 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(59 130 246 / 0.12);
+}
+/* ─── crimson-dark-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-vivid-2"] {
+  --color-primary: #EB001B;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.542 0.002 85.2);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #F79E1B;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #141413;
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.461 0.003 100.1);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.473 0.003 98.0);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.496 0.003 93.7);
+  --color-muted-foreground: oklch(0.799 0.001 37.3);
+  --color-border: oklch(0.553 0.002 83.1);
+  --color-input: oklch(0.530 0.002 87.3);
+  --color-ring: #EB001B;
+  --color-primary-hover: color-mix(in oklch, #EB001B, white 12%);
+  --color-primary-active: color-mix(in oklch, #EB001B, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #EB001B 0%, #F79E1B 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(235 0 27 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(235 0 27 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(235 0 27 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(235 0 27 / 0.12);
+}
+/* ─── cyan-light-vivid-7 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-vivid-7"] {
+  --color-primary: #0064e0;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.959 0.001 103.3);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0457cb;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #1c1e21;
+  --color-card: oklch(0.990 0.000 93.2);
+  --color-card-foreground: #1c1e21;
+  --color-popover: oklch(0.980 0.000 96.6);
+  --color-popover-foreground: #1c1e21;
+  --color-muted: oklch(0.969 0.000 99.9);
+  --color-muted-foreground: oklch(0.668 0.005 198.6);
+  --color-border: oklch(0.949 0.001 106.6);
+  --color-input: oklch(0.959 0.001 103.3);
+  --color-ring: #0064e0;
+  --color-primary-hover: color-mix(in oklch, #0064e0, white 12%);
+  --color-primary-active: color-mix(in oklch, #0064e0, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0064e0 0%, #0457cb 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 16px;
+  --radius-full: 100px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 100 224 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 100 224 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 100 224 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 100 224 / 0.12);
+}
+/* ─── crimson-light-muted-7 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-7"] {
+  --color-primary: #0a0a0a;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.947 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #ff5530;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-card: oklch(0.987 0.000 89.9);
+  --color-card-foreground: #0a0a0a;
+  --color-popover: oklch(0.974 0.000 89.9);
+  --color-popover-foreground: #0a0a0a;
+  --color-muted: oklch(0.960 0.000 89.9);
+  --color-muted-foreground: oklch(0.571 0.000 89.9);
+  --color-border: oklch(0.934 0.000 89.9);
+  --color-input: oklch(0.947 0.000 89.9);
+  --color-ring: #0a0a0a;
+  --color-primary-hover: color-mix(in oklch, #0a0a0a, white 12%);
+  --color-primary-active: color-mix(in oklch, #0a0a0a, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0a0a0a 0%, #ff5530 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(10 10 10 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(10 10 10 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(10 10 10 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(10 10 10 / 0.12);
+}
+/* ─── crimson-light-muted-8 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-8"] {
+  --color-primary: #0a0a0a;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.947 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #00d4a4;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+  --color-card: oklch(0.987 0.000 89.9);
+  --color-card-foreground: #0a0a0a;
+  --color-popover: oklch(0.974 0.000 89.9);
+  --color-popover-foreground: #0a0a0a;
+  --color-muted: oklch(0.960 0.000 89.9);
+  --color-muted-foreground: oklch(0.571 0.000 89.9);
+  --color-border: oklch(0.934 0.000 89.9);
+  --color-input: oklch(0.947 0.000 89.9);
+  --color-ring: #0a0a0a;
+  --color-primary-hover: color-mix(in oklch, #0a0a0a, white 12%);
+  --color-primary-active: color-mix(in oklch, #0a0a0a, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0a0a0a 0%, #00d4a4 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(10 10 10 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(10 10 10 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(10 10 10 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(10 10 10 / 0.12);
+}
+/* ─── azure-light-muted-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="azure-light-muted-2"] {
+  --color-primary: #1c1c1e;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.958 0.000 76.8);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #ffd02f;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #1c1c1e;
+  --color-card: oklch(0.990 0.000 86.6);
+  --color-card-foreground: #1c1c1e;
+  --color-popover: oklch(0.979 0.000 83.4);
+  --color-popover-foreground: #1c1c1e;
+  --color-muted: oklch(0.969 0.000 80.1);
+  --color-muted-foreground: oklch(0.662 0.003 343.5);
+  --color-border: oklch(0.948 0.001 73.5);
+  --color-input: oklch(0.958 0.000 76.8);
+  --color-ring: #1c1c1e;
+  --color-primary-hover: color-mix(in oklch, #1c1c1e, white 12%);
+  --color-primary-active: color-mix(in oklch, #1c1c1e, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #1c1c1e 0%, #ffd02f 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(28 28 30 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(28 28 30 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(28 28 30 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(28 28 30 / 0.12);
+}
+/* ─── rose-light-vivid-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="rose-light-vivid-3"] {
+  --color-primary: #fa520f;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.960 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #cc3a05;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #1f1f1f;
+  --color-card: oklch(0.990 0.000 89.9);
+  --color-card-foreground: #1f1f1f;
+  --color-popover: oklch(0.980 0.000 89.9);
+  --color-popover-foreground: #1f1f1f;
+  --color-muted: oklch(0.970 0.000 89.9);
+  --color-muted-foreground: oklch(0.672 0.000 89.9);
+  --color-border: oklch(0.950 0.000 89.9);
+  --color-input: oklch(0.960 0.000 89.9);
+  --color-ring: #fa520f;
+  --color-primary-hover: color-mix(in oklch, #fa520f, white 12%);
+  --color-primary-active: color-mix(in oklch, #fa520f, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #fa520f 0%, #cc3a05 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(250 82 15 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(250 82 15 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(250 82 15 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(250 82 15 / 0.12);
+}
+/* ─── emerald-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="emerald-light-vivid"] {
+  --color-primary: #00ed64;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.328 0.004 129.0);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #00b545;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.16 0.005 161.2);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.210 0.005 151.5);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.227 0.005 148.3);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.261 0.004 141.9);
+  --color-muted-foreground: oklch(0.706 0.002 56.4);
+  --color-border: oklch(0.345 0.004 125.7);
+  --color-input: oklch(0.311 0.004 132.2);
+  --color-ring: #00ed64;
+  --color-primary-hover: color-mix(in oklch, #00ed64, white 12%);
+  --color-primary-active: color-mix(in oklch, #00ed64, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #00ed64 0%, #00b545 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 237 100 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 237 100 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 237 100 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 237 100 / 0.12);
+}
+/* ─── crimson-light-muted-9 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-9"] {
+  --color-primary: #111111;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.952 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #d30005;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #111111;
+  --color-card: oklch(0.988 0.000 89.9);
+  --color-card-foreground: #111111;
+  --color-popover: oklch(0.976 0.000 89.9);
+  --color-popover-foreground: #111111;
+  --color-muted: oklch(0.964 0.000 89.9);
+  --color-muted-foreground: oklch(0.613 0.000 89.9);
+  --color-border: oklch(0.941 0.000 89.9);
+  --color-input: oklch(0.952 0.000 89.9);
+  --color-ring: #111111;
+  --color-primary-hover: color-mix(in oklch, #111111, white 12%);
+  --color-primary-active: color-mix(in oklch, #111111, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #111111 0%, #d30005 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 18px;
+  --radius-md: 24px;
+  --radius-lg: 30px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(17 17 17 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(17 17 17 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(17 17 17 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(17 17 17 / 0.12);
+}
+/* ─── azure-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="azure-light-vivid"] {
+  --color-primary: #5645d4;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.957 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #4534b3;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+  --color-card: oklch(0.989 0.000 89.9);
+  --color-card-foreground: #1a1a1a;
+  --color-popover: oklch(0.979 0.000 89.9);
+  --color-popover-foreground: #1a1a1a;
+  --color-muted: oklch(0.968 0.000 89.9);
+  --color-muted-foreground: oklch(0.654 0.000 89.9);
+  --color-border: oklch(0.947 0.000 89.9);
+  --color-input: oklch(0.957 0.000 89.9);
+  --color-ring: #5645d4;
+  --color-primary-hover: color-mix(in oklch, #5645d4, white 12%);
+  --color-primary-active: color-mix(in oklch, #5645d4, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #5645d4 0%, #4534b3 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(86 69 212 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(86 69 212 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(86 69 212 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(86 69 212 / 0.12);
+}
+/* ─── lime-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="lime-light-vivid"] {
+  --color-primary: #76b900;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.920 0.000 82.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #5a8d00;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: oklch(0.980 0.000 88.1);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.960 0.000 86.3);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.940 0.000 84.5);
+  --color-muted-foreground: oklch(0.350 0.000 31.5);
+  --color-border: oklch(0.900 0.000 80.9);
+  --color-input: oklch(0.920 0.000 82.7);
+  --color-ring: #76b900;
+  --color-primary-hover: color-mix(in oklch, #76b900, white 12%);
+  --color-primary-active: color-mix(in oklch, #76b900, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #76b900 0%, #5a8d00 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 2px;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(118 185 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(118 185 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(118 185 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(118 185 0 / 0.12);
+}
+/* ─── crimson-light-muted-10 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-10"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.920 0.000 82.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #3b82f680;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: oklch(0.980 0.000 88.1);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.960 0.000 86.3);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.940 0.000 84.5);
+  --color-muted-foreground: oklch(0.350 0.000 31.5);
+  --color-border: oklch(0.900 0.000 80.9);
+  --color-input: oklch(0.920 0.000 82.7);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #3b82f680 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── crimson-light-muted-11 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-11"] {
+  --color-primary: #201d1d;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.955 0.000 17.2);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #007aff;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #fdfcfc;
+  --color-foreground: #201d1d;
+  --color-card: oklch(0.986 0.000 17.2);
+  --color-card-foreground: #201d1d;
+  --color-popover: oklch(0.976 0.000 17.2);
+  --color-popover-foreground: #201d1d;
+  --color-muted: oklch(0.966 0.000 17.2);
+  --color-muted-foreground: oklch(0.666 0.004 17.3);
+  --color-border: oklch(0.945 0.001 17.2);
+  --color-input: oklch(0.955 0.000 17.2);
+  --color-ring: #201d1d;
+  --color-primary-hover: color-mix(in oklch, #201d1d, white 12%);
+  --color-primary-active: color-mix(in oklch, #201d1d, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #201d1d 0%, #007aff 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+  --shadow-sm: 0 1px 2px 0 rgb(32 29 29 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(32 29 29 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(32 29 29 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(32 29 29 / 0.12);
+}
+/* ─── crimson-light-vivid-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-vivid-3"] {
+  --color-primary: #e60023;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.920 0.000 82.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #cc001f;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: oklch(0.980 0.000 88.1);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.960 0.000 86.3);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.940 0.000 84.5);
+  --color-muted-foreground: oklch(0.350 0.000 31.5);
+  --color-border: oklch(0.900 0.000 80.9);
+  --color-input: oklch(0.920 0.000 82.7);
+  --color-ring: #e60023;
+  --color-primary-hover: color-mix(in oklch, #e60023, white 12%);
+  --color-primary-active: color-mix(in oklch, #e60023, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #e60023 0%, #cc001f 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 32px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(230 0 35 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(230 0 35 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(230 0 35 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(230 0 35 / 0.12);
+}
+/* ─── cyan-light-vivid-8 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-light-vivid-8"] {
+  --color-primary: #0070d1;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.313 0.004 300.7);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #0064b7;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.141 0.005 285.9);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.193 0.005 290.3);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.210 0.005 291.8);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.244 0.004 294.8);
+  --color-muted-foreground: oklch(0.699 0.002 334.1);
+  --color-border: oklch(0.330 0.004 302.2);
+  --color-input: oklch(0.296 0.004 299.2);
+  --color-ring: #0070d1;
+  --color-primary-hover: color-mix(in oklch, #0070d1, white 12%);
+  --color-primary-active: color-mix(in oklch, #0070d1, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #0070d1 0%, #0064b7 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 112 209 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 112 209 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 112 209 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 112 209 / 0.12);
+}
+/* ─── rose-light-vivid-4 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="rose-light-vivid-4"] {
+  --color-primary: #f7a501;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.328 0.004 75.6);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #dd9001;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.16 0.005 94.5);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.210 0.005 88.8);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.227 0.005 86.9);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.261 0.004 83.2);
+  --color-muted-foreground: oklch(0.706 0.002 33.1);
+  --color-border: oklch(0.345 0.004 73.7);
+  --color-input: oklch(0.311 0.004 77.5);
+  --color-ring: #f7a501;
+  --color-primary-hover: color-mix(in oklch, #f7a501, white 12%);
+  --color-primary-active: color-mix(in oklch, #f7a501, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #f7a501 0%, #dd9001 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(247 165 1 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(247 165 1 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(247 165 1 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(247 165 1 / 0.12);
+}
+/* ─── crimson-light-muted-12 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-12"] {
+  --color-primary: #ffffff;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.328 0.004 0.0);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: rgba(87,193,255,0.15);
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.16 0.005 0.0);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.210 0.005 0.0);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.227 0.005 0.0);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.261 0.004 0.0);
+  --color-muted-foreground: oklch(0.706 0.002 0.0);
+  --color-border: oklch(0.345 0.004 0.0);
+  --color-input: oklch(0.311 0.004 0.0);
+  --color-ring: #ffffff;
+  --color-primary-hover: color-mix(in oklch, #ffffff, white 12%);
+  --color-primary-active: color-mix(in oklch, #ffffff, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ffffff 0%, rgba(87,193,255,0.15) 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 255 255 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 255 255 / 0.12);
+}
+/* ─── amber-light-vivid-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="amber-light-vivid-3"] {
+  --color-primary: #ffed00;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.328 0.004 85.8);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #e6d200;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.16 0.005 107.3);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.210 0.005 100.9);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.227 0.005 98.7);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.261 0.004 94.4);
+  --color-muted-foreground: oklch(0.706 0.002 37.6);
+  --color-border: oklch(0.345 0.004 83.7);
+  --color-input: oklch(0.311 0.004 88.0);
+  --color-ring: #ffed00;
+  --color-primary-hover: color-mix(in oklch, #ffed00, white 12%);
+  --color-primary-active: color-mix(in oklch, #ffed00, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ffed00 0%, #e6d200 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 237 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 237 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 237 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 237 0 / 0.12);
+}
+/* ─── crimson-light-vivid-4 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-vivid-4"] {
+  --color-primary: #ea2804;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.951 0.003 85.1);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #c01f00;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #f9f7f3;
+  --color-foreground: #202020;
+  --color-card: oklch(0.980 0.003 84.8);
+  --color-card-foreground: #202020;
+  --color-popover: oklch(0.970 0.003 84.9);
+  --color-popover-foreground: #202020;
+  --color-muted: oklch(0.961 0.003 85.0);
+  --color-muted-foreground: oklch(0.672 0.001 88.1);
+  --color-border: oklch(0.941 0.003 85.2);
+  --color-input: oklch(0.951 0.003 85.1);
+  --color-ring: #ea2804;
+  --color-primary-hover: color-mix(in oklch, #ea2804, white 12%);
+  --color-primary-active: color-mix(in oklch, #ea2804, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ea2804 0%, #c01f00 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(234 40 4 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(234 40 4 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(234 40 4 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(234 40 4 / 0.12);
+}
+/* ─── cyan-dark-muted theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-dark-muted"] {
+  --color-primary: #fcfdff;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.199 0.000 340.9);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #000033b3;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #000000;
+  --color-foreground: #fcfdff;
+  --color-card: oklch(0.060 0.000 354.3);
+  --color-card-foreground: #fcfdff;
+  --color-popover: oklch(0.080 0.000 352.4);
+  --color-popover-foreground: #fcfdff;
+  --color-muted: oklch(0.120 0.000 348.5);
+  --color-muted-foreground: oklch(0.648 0.001 297.9);
+  --color-border: oklch(0.219 0.000 339.0);
+  --color-input: oklch(0.179 0.000 342.8);
+  --color-ring: #fcfdff;
+  --color-primary-hover: color-mix(in oklch, #fcfdff, white 12%);
+  --color-primary-active: color-mix(in oklch, #fcfdff, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #fcfdff 0%, #000033b3 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(252 253 255 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(252 253 255 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(252 253 255 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(252 253 255 / 0.12);
+}
+/* ─── azure-light-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="azure-light-vivid-2"] {
+  --color-primary: #494fdf;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.313 0.004 300.7);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #4f55f1;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.141 0.005 285.9);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.193 0.005 290.3);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.210 0.005 291.8);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.244 0.004 294.8);
+  --color-muted-foreground: oklch(0.699 0.002 334.1);
+  --color-border: oklch(0.330 0.004 302.2);
+  --color-input: oklch(0.296 0.004 299.2);
+  --color-ring: #494fdf;
+  --color-primary-hover: color-mix(in oklch, #494fdf, white 12%);
+  --color-primary-active: color-mix(in oklch, #494fdf, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #494fdf 0%, #4f55f1 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(73 79 223 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(73 79 223 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(73 79 223 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(73 79 223 / 0.12);
+}
+/* ─── crimson-dark-muted-5 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-muted-5"] {
+  --color-primary: #1a1a1a;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.911 0.004 0.0);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #1a1a1a;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.99 0.004 0.0);
+  --color-foreground: #000000;
+  --color-card: oklch(0.970 0.004 0.0);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.950 0.004 0.0);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.931 0.004 0.0);
+  --color-muted-foreground: oklch(0.346 0.001 0.0);
+  --color-border: oklch(0.891 0.004 0.0);
+  --color-input: oklch(0.911 0.004 0.0);
+  --color-ring: #1a1a1a;
+  --color-primary-hover: color-mix(in oklch, #1a1a1a, white 12%);
+  --color-primary-active: color-mix(in oklch, #1a1a1a, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #1a1a1a 0%, #1a1a1a 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(26 26 26 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(26 26 26 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(26 26 26 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(26 26 26 / 0.12);
+}
+/* ─── crimson-dark-vivid-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-vivid-3"] {
+  --color-primary: #f36458;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.481 0.000 71.9);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #0052ef;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #0b0b0b;
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.390 0.000 84.5);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.403 0.000 82.7);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.429 0.000 79.1);
+  --color-muted-foreground: oklch(0.773 0.000 31.5);
+  --color-border: oklch(0.494 0.000 70.1);
+  --color-input: oklch(0.468 0.000 73.7);
+  --color-ring: #f36458;
+  --color-primary-hover: color-mix(in oklch, #f36458, white 12%);
+  --color-primary-active: color-mix(in oklch, #f36458, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #f36458 0%, #0052ef 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(243 100 88 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(243 100 88 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(243 100 88 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(243 100 88 / 0.12);
+}
+/* ─── indigo-light theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="indigo-light"] {
+  --color-primary: #150f23;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.949 0.009 300.2);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #1f1633;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.99 0.004 300.2);
+  --color-foreground: #1f1633;
+  --color-card: oklch(0.980 0.005 300.2);
+  --color-card-foreground: #1f1633;
+  --color-popover: oklch(0.969 0.007 300.2);
+  --color-popover-foreground: #1f1633;
+  --color-muted: oklch(0.959 0.008 300.2);
+  --color-muted-foreground: oklch(0.654 0.045 300.5);
+  --color-border: oklch(0.938 0.010 300.3);
+  --color-input: oklch(0.949 0.009 300.2);
+  --color-ring: #150f23;
+  --color-primary-hover: color-mix(in oklch, #150f23, white 12%);
+  --color-primary-active: color-mix(in oklch, #150f23, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #150f23 0%, #1f1633 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(21 15 35 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(21 15 35 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(21 15 35 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(21 15 35 / 0.12);
+}
+/* ─── crimson-light-muted-13 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-13"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.911 0.004 0.0);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #c1fbd4;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.99 0.004 0.0);
+  --color-foreground: #000000;
+  --color-card: oklch(0.970 0.004 0.0);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.950 0.004 0.0);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.931 0.004 0.0);
+  --color-muted-foreground: oklch(0.346 0.001 0.0);
+  --color-border: oklch(0.891 0.004 0.0);
+  --color-input: oklch(0.911 0.004 0.0);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #c1fbd4 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── violet-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="violet-light-vivid"] {
+  --color-primary: #4a154b;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.959 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #481a54;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #1d1d1d;
+  --color-card: oklch(0.990 0.000 89.9);
+  --color-card-foreground: #1d1d1d;
+  --color-popover: oklch(0.979 0.000 89.9);
+  --color-popover-foreground: #1d1d1d;
+  --color-muted: oklch(0.969 0.000 89.9);
+  --color-muted-foreground: oklch(0.665 0.000 89.9);
+  --color-border: oklch(0.948 0.000 89.9);
+  --color-input: oklch(0.959 0.000 89.9);
+  --color-ring: #4a154b;
+  --color-primary-hover: color-mix(in oklch, #4a154b, white 12%);
+  --color-primary-active: color-mix(in oklch, #4a154b, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #4a154b 0%, #481a54 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(74 21 75 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(74 21 75 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(74 21 75 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(74 21 75 / 0.12);
+}
+/* ─── crimson-light-muted-14 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-14"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.911 0.004 0.0);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0000ee;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.99 0.004 0.0);
+  --color-foreground: #000000;
+  --color-card: oklch(0.970 0.004 0.0);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.950 0.004 0.0);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.931 0.004 0.0);
+  --color-muted-foreground: oklch(0.346 0.001 0.0);
+  --color-border: oklch(0.891 0.004 0.0);
+  --color-input: oklch(0.911 0.004 0.0);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #0000ee 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── emerald-dark-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="emerald-dark-vivid"] {
+  --color-primary: #1ed760;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.530 0.000 89.9);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #f3727f;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #121212;
+  --color-foreground: #ffffff;
+  --color-card: oklch(0.448 0.000 89.9);
+  --color-card-foreground: #ffffff;
+  --color-popover: oklch(0.460 0.000 89.9);
+  --color-popover-foreground: #ffffff;
+  --color-muted: oklch(0.483 0.000 89.9);
+  --color-muted-foreground: oklch(0.795 0.000 89.9);
+  --color-border: oklch(0.542 0.000 89.9);
+  --color-input: oklch(0.519 0.000 89.9);
+  --color-ring: #1ed760;
+  --color-primary-hover: color-mix(in oklch, #1ed760, white 12%);
+  --color-primary-active: color-mix(in oklch, #1ed760, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #1ed760 0%, #f3727f 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(30 215 96 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(30 215 96 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(30 215 96 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(30 215 96 / 0.12);
+}
+/* ─── emerald-dark-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="emerald-dark-vivid-2"] {
+  --color-primary: #006241;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.328 0.004 139.8);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #00754A;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.16 0.005 174.8);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.210 0.005 164.3);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.227 0.005 160.8);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.261 0.004 153.8);
+  --color-muted-foreground: oklch(0.706 0.002 61.2);
+  --color-border: oklch(0.345 0.004 136.3);
+  --color-input: oklch(0.311 0.004 143.3);
+  --color-ring: #006241;
+  --color-primary-hover: color-mix(in oklch, #006241, white 12%);
+  --color-primary-active: color-mix(in oklch, #006241, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #006241 0%, #00754A 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 98 65 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 98 65 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 98 65 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 98 65 / 0.12);
+}
+/* ─── azure-light-vivid-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="azure-light-vivid-3"] {
+  --color-primary: #533afd;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.960 0.005 101.8);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #4434d4;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #0d253d;
+  --color-card: oklch(0.990 0.001 92.9);
+  --color-card-foreground: #0d253d;
+  --color-popover: oklch(0.980 0.003 95.8);
+  --color-popover-foreground: #0d253d;
+  --color-muted: oklch(0.970 0.004 98.8);
+  --color-muted-foreground: oklch(0.679 0.042 186.6);
+  --color-border: oklch(0.951 0.007 104.8);
+  --color-input: oklch(0.960 0.005 101.8);
+  --color-ring: #533afd;
+  --color-primary-hover: color-mix(in oklch, #533afd, white 12%);
+  --color-primary-active: color-mix(in oklch, #533afd, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #533afd 0%, #4434d4 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(83 58 253 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(83 58 253 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(83 58 253 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(83 58 253 / 0.12);
+}
+/* ─── emerald-light-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="emerald-light-vivid-2"] {
+  --color-primary: #3ecf8e;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.328 0.004 134.5);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #24b47e;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.16 0.005 168.1);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.210 0.005 158.0);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.227 0.005 154.7);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.261 0.004 147.9);
+  --color-muted-foreground: oklch(0.706 0.002 58.8);
+  --color-border: oklch(0.345 0.004 131.1);
+  --color-input: oklch(0.311 0.004 137.8);
+  --color-ring: #3ecf8e;
+  --color-primary-hover: color-mix(in oklch, #3ecf8e, white 12%);
+  --color-primary-active: color-mix(in oklch, #3ecf8e, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #3ecf8e 0%, #24b47e 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(62 207 142 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(62 207 142 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(62 207 142 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(62 207 142 / 0.12);
+}
+/* ─── azure-light theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="azure-light"] {
+  --color-primary: #1b1938;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.963 0.000 88.2);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #c9b4fa;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #ffffff;
+  --color-foreground: #292827;
+  --color-card: oklch(0.991 0.000 89.5);
+  --color-card-foreground: #292827;
+  --color-popover: oklch(0.982 0.000 89.0);
+  --color-popover-foreground: #292827;
+  --color-muted: oklch(0.972 0.000 88.6);
+  --color-muted-foreground: oklch(0.701 0.002 75.8);
+  --color-border: oklch(0.954 0.000 87.7);
+  --color-input: oklch(0.963 0.000 88.2);
+  --color-ring: #1b1938;
+  --color-primary-hover: color-mix(in oklch, #1b1938, white 12%);
+  --color-primary-active: color-mix(in oklch, #1b1938, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #1b1938 0%, #c9b4fa 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(27 25 56 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(27 25 56 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(27 25 56 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(27 25 56 / 0.12);
+}
+/* ─── cyan-dim-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="cyan-dim-vivid"] {
+  --color-primary: #3E6AE1;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.970 0.012 262.1);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #3E6AE1;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.99 0.004 262.1);
+  --color-foreground: #3E6AE1;
+  --color-card: oklch(0.985 0.006 262.1);
+  --color-card-foreground: #3E6AE1;
+  --color-popover: oklch(0.980 0.008 262.1);
+  --color-popover-foreground: #3E6AE1;
+  --color-muted: oklch(0.975 0.010 262.1);
+  --color-muted-foreground: oklch(0.831 0.072 262.1);
+  --color-border: oklch(0.966 0.014 262.1);
+  --color-input: oklch(0.970 0.012 262.1);
+  --color-ring: #3E6AE1;
+  --color-primary-hover: color-mix(in oklch, #3E6AE1, white 12%);
+  --color-primary-active: color-mix(in oklch, #3E6AE1, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #3E6AE1 0%, #3E6AE1 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(62 106 225 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(62 106 225 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(62 106 225 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(62 106 225 / 0.12);
+}
+/* ─── teal-light-vivid theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="teal-light-vivid"] {
+  --color-primary: #3cffd0;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.313 0.027 180.5);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #5200ff;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: oklch(0.16 0.005 180.5);
+  --color-foreground: #3cffd0;
+  --color-card: oklch(0.206 0.012 180.5);
+  --color-card-foreground: #3cffd0;
+  --color-popover: oklch(0.221 0.014 180.5);
+  --color-popover-foreground: #3cffd0;
+  --color-muted: oklch(0.252 0.018 180.5);
+  --color-muted-foreground: oklch(0.656 0.077 180.5);
+  --color-border: oklch(0.328 0.029 180.5);
+  --color-input: oklch(0.297 0.025 180.5);
+  --color-ring: #3cffd0;
+  --color-primary-hover: color-mix(in oklch, #3cffd0, white 12%);
+  --color-primary-active: color-mix(in oklch, #3cffd0, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #3cffd0 0%, #5200ff 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(60 255 208 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(60 255 208 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(60 255 208 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(60 255 208 / 0.12);
+}
+/* ─── crimson-light-muted-15 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-15"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.920 0.000 82.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #010120;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: oklch(0.980 0.000 88.1);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.960 0.000 86.3);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.940 0.000 84.5);
+  --color-muted-foreground: oklch(0.350 0.000 31.5);
+  --color-border: oklch(0.900 0.000 80.9);
+  --color-input: oklch(0.920 0.000 82.7);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #010120 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── crimson-light-muted-16 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-16"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.920 0.000 82.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0000ee;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: oklch(0.980 0.000 88.1);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.960 0.000 86.3);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.940 0.000 84.5);
+  --color-muted-foreground: oklch(0.350 0.000 31.5);
+  --color-border: oklch(0.900 0.000 80.9);
+  --color-input: oklch(0.920 0.000 82.7);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #0000ee 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── crimson-light-muted-17 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-17"] {
+  --color-primary: #171717;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.956 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #0070f3;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-card: oklch(0.989 0.000 89.9);
+  --color-card-foreground: #171717;
+  --color-popover: oklch(0.978 0.000 89.9);
+  --color-popover-foreground: #171717;
+  --color-muted: oklch(0.967 0.000 89.9);
+  --color-muted-foreground: oklch(0.641 0.000 89.9);
+  --color-border: oklch(0.945 0.000 89.9);
+  --color-input: oklch(0.956 0.000 89.9);
+  --color-ring: #171717;
+  --color-primary-hover: color-mix(in oklch, #171717, white 12%);
+  --color-primary-active: color-mix(in oklch, #171717, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #171717 0%, #0070f3 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(23 23 23 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(23 23 23 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(23 23 23 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(23 23 23 / 0.12);
+}
+/* ─── crimson-light-vivid-5 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-vivid-5"] {
+  --color-primary: #e60000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.963 0.001 102.5);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #e60000;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #25282b;
+  --color-card: oklch(0.991 0.000 93.0);
+  --color-card-foreground: #25282b;
+  --color-popover: oklch(0.981 0.000 96.2);
+  --color-popover-foreground: #25282b;
+  --color-muted: oklch(0.972 0.000 99.3);
+  --color-muted-foreground: oklch(0.699 0.005 191.9);
+  --color-border: oklch(0.954 0.001 105.6);
+  --color-input: oklch(0.963 0.001 102.5);
+  --color-ring: #e60000;
+  --color-primary-hover: color-mix(in oklch, #e60000, white 12%);
+  --color-primary-active: color-mix(in oklch, #e60000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #e60000 0%, #e60000 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(230 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(230 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(230 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(230 0 0 / 0.12);
+}
+/* ─── emerald-dark-vivid-3 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="emerald-dark-vivid-3"] {
+  --color-primary: #00d992;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.514 0.000 89.9);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #2fd6a1;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #101010;
+  --color-foreground: #f2f2f2;
+  --color-card: oklch(0.432 0.000 89.9);
+  --color-card-foreground: #f2f2f2;
+  --color-popover: oklch(0.444 0.000 89.9);
+  --color-popover-foreground: #f2f2f2;
+  --color-muted: oklch(0.467 0.000 89.9);
+  --color-muted-foreground: oklch(0.778 0.000 89.9);
+  --color-border: oklch(0.526 0.000 89.9);
+  --color-input: oklch(0.502 0.000 89.9);
+  --color-ring: #00d992;
+  --color-primary-hover: color-mix(in oklch, #00d992, white 12%);
+  --color-primary-active: color-mix(in oklch, #00d992, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #00d992 0%, #2fd6a1 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 217 146 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 217 146 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 217 146 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 217 146 / 0.12);
+}
+/* ─── rose-dark-muted theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="rose-dark-muted"] {
+  --color-primary: #f7f5f0;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.625 0.010 68.3);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #c9c0ad;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #2b2622;
+  --color-foreground: #f7f5f0;
+  --color-card: oklch(0.561 0.011 64.7);
+  --color-card-foreground: #f7f5f0;
+  --color-popover: oklch(0.570 0.011 65.2);
+  --color-popover-foreground: #f7f5f0;
+  --color-muted: oklch(0.588 0.011 66.3);
+  --color-muted-foreground: oklch(0.828 0.006 79.8);
+  --color-border: oklch(0.634 0.010 68.8);
+  --color-input: oklch(0.616 0.010 67.8);
+  --color-ring: #f7f5f0;
+  --color-primary-hover: color-mix(in oklch, #f7f5f0, white 12%);
+  --color-primary-active: color-mix(in oklch, #f7f5f0, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #f7f5f0 0%, #c9c0ad 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(247 245 240 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(247 245 240 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(247 245 240 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(247 245 240 / 0.12);
+}
+/* ─── crimson-light-muted-18 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-18"] {
+  --color-primary: #080808;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.945 0.000 89.9);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #7a3dff;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #080808;
+  --color-card: oklch(0.986 0.000 89.9);
+  --color-card-foreground: #080808;
+  --color-popover: oklch(0.973 0.000 89.9);
+  --color-popover-foreground: #080808;
+  --color-muted: oklch(0.959 0.000 89.9);
+  --color-muted-foreground: oklch(0.555 0.000 89.9);
+  --color-border: oklch(0.931 0.000 89.9);
+  --color-input: oklch(0.945 0.000 89.9);
+  --color-ring: #080808;
+  --color-primary-hover: color-mix(in oklch, #080808, white 12%);
+  --color-primary-active: color-mix(in oklch, #080808, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #080808 0%, #7a3dff 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(8 8 8 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(8 8 8 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(8 8 8 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(8 8 8 / 0.12);
+}
+/* ─── crimson-light-muted-19 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-light-muted-19"] {
+  --color-primary: #000000;
+  --color-primary-foreground: oklch(1 0 0);
+  --color-secondary: oklch(0.920 0.000 82.7);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #057dbc;
+  --color-accent-foreground: oklch(1 0 0);
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+  --color-card: oklch(0.980 0.000 88.1);
+  --color-card-foreground: #000000;
+  --color-popover: oklch(0.960 0.000 86.3);
+  --color-popover-foreground: #000000;
+  --color-muted: oklch(0.940 0.000 84.5);
+  --color-muted-foreground: oklch(0.350 0.000 31.5);
+  --color-border: oklch(0.900 0.000 80.9);
+  --color-input: oklch(0.920 0.000 82.7);
+  --color-ring: #000000;
+  --color-primary-hover: color-mix(in oklch, #000000, white 12%);
+  --color-primary-active: color-mix(in oklch, #000000, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #000000 0%, #057dbc 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12);
+}
+/* ─── lime-light-vivid-2 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="lime-light-vivid-2"] {
+  --color-primary: #9fe870;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.328 0.004 105.4);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #cdffad;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: oklch(0.16 0.005 131.7);
+  --color-foreground: oklch(1 0 0);
+  --color-card: oklch(0.210 0.005 123.8);
+  --color-card-foreground: oklch(1 0 0);
+  --color-popover: oklch(0.227 0.005 121.2);
+  --color-popover-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.261 0.004 115.9);
+  --color-muted-foreground: oklch(0.706 0.002 46.1);
+  --color-border: oklch(0.345 0.004 102.7);
+  --color-input: oklch(0.311 0.004 108.0);
+  --color-ring: #9fe870;
+  --color-primary-hover: color-mix(in oklch, #9fe870, white 12%);
+  --color-primary-active: color-mix(in oklch, #9fe870, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #9fe870 0%, #cdffad 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(159 232 112 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(159 232 112 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(159 232 112 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(159 232 112 / 0.12);
+}
+/* ─── crimson-dark-muted-6 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="crimson-dark-muted-6"] {
+  --color-primary: #ffffff;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.472 0.000 89.9);
+  --color-secondary-foreground: oklch(1 0 0);
+  --color-accent: #ff7a17;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #0a0a0a;
+  --color-foreground: #ffffff;
+  --color-card: oklch(0.380 0.000 89.9);
+  --color-card-foreground: #ffffff;
+  --color-popover: oklch(0.393 0.000 89.9);
+  --color-popover-foreground: #ffffff;
+  --color-muted: oklch(0.419 0.000 89.9);
+  --color-muted-foreground: oklch(0.769 0.000 89.9);
+  --color-border: oklch(0.485 0.000 89.9);
+  --color-input: oklch(0.459 0.000 89.9);
+  --color-ring: #ffffff;
+  --color-primary-hover: color-mix(in oklch, #ffffff, white 12%);
+  --color-primary-active: color-mix(in oklch, #ffffff, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ffffff 0%, #ff7a17 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 8px;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 255 255 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 255 255 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 255 255 / 0.12);
+}
+/* ─── rose-light-vivid-5 theme ─── */
+/**
+ * @nebutra/design-tokens — generated from W3C DTCG tokens.
+ * DO NOT EDIT — edit tokens/*.json and re-run `pnpm build`.
+ */
+
+[data-theme="rose-light-vivid-5"] {
+  --color-primary: #ff4f00;
+  --color-primary-foreground: oklch(0.141 0.005 285.9);
+  --color-secondary: oklch(0.955 0.004 85.6);
+  --color-secondary-foreground: oklch(0.141 0.005 285.9);
+  --color-accent: #ff4f00;
+  --color-accent-foreground: oklch(0.141 0.005 285.9);
+  --color-background: #fffefb;
+  --color-foreground: #201515;
+  --color-card: oklch(0.988 0.002 90.0);
+  --color-card-foreground: #201515;
+  --color-popover: oklch(0.977 0.003 88.6);
+  --color-popover-foreground: #201515;
+  --color-muted: oklch(0.966 0.003 87.1);
+  --color-muted-foreground: oklch(0.645 0.016 43.8);
+  --color-border: oklch(0.945 0.004 84.2);
+  --color-input: oklch(0.955 0.004 85.6);
+  --color-ring: #ff4f00;
+  --color-primary-hover: color-mix(in oklch, #ff4f00, white 12%);
+  --color-primary-active: color-mix(in oklch, #ff4f00, black 10%);
+  --color-brand-gradient: linear-gradient(135deg, #ff4f00 0%, #ff4f00 100%);
+  --color-destructive: oklch(0.577 0.245 27.3);
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-success: oklch(0.723 0.19 149.6);
+  --color-success-foreground: oklch(1 0 0);
+  --color-warning: oklch(0.795 0.184 86.0);
+  --color-warning-foreground: oklch(0.141 0.005 285.9);
+  --color-info: oklch(0.588 0.158 241.9);
+  --color-info-foreground: oklch(1 0 0);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 2px 0 rgb(255 79 0 / 0.08);
+  --shadow-md: 0 4px 6px -1px rgb(255 79 0 / 0.12);
+  --shadow-lg: 0 10px 15px -3px rgb(255 79 0 / 0.12);
+  --shadow-xl: 0 20px 25px -5px rgb(255 79 0 / 0.12);
 }
 /* ─── Shared Keyframe Animations ─── */
 /*

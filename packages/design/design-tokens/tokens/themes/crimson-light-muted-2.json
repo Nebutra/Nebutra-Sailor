@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Crimson primary, low-saturation chroma, light surface",
+  "$description": "Deep ink on warm parchment — warm, literary, timeless",
   "theme": "crimson-light-muted-2",
   "color": {
     "primary": {

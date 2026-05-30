@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Crimson primary, vivid chroma, light surface",
+  "$description": "Deep cinnabar on warm off-white — rich, earthy intensity",
   "theme": "crimson-light-vivid-4",
   "color": {
     "primary": {

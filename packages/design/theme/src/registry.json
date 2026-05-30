@@ -165,9 +165,9 @@
     },
     {
       "id": "crimson-light-vivid",
-      "name": "Crimson Light Vivid",
+      "name": "Coral Bloom",
       "category": "community",
-      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "mood": "Hot coral-rose on white — lively, welcoming, approachable",
       "tokenPath": "tokens/themes/crimson-light-vivid.json",
       "install": {
         "command": "nebutra theme add crimson-light-vivid",
@@ -197,9 +197,9 @@
     },
     {
       "id": "cyan-light-muted",
-      "name": "Cyan Light Muted",
+      "name": "Maritime",
       "category": "community",
-      "mood": "Community theme — Cyan primary, low-saturation chroma, light surface",
+      "mood": "Deep navy on white — nautical precision, calm authority",
       "tokenPath": "tokens/themes/cyan-light-muted.json",
       "install": {
         "command": "nebutra theme add cyan-light-muted",
@@ -229,9 +229,9 @@
     },
     {
       "id": "cyan-light-vivid",
-      "name": "Cyan Light Vivid",
+      "name": "Blueprint",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "mood": "Classic azure on white — architectural, clear-purpose",
       "tokenPath": "tokens/themes/cyan-light-vivid.json",
       "install": {
         "command": "nebutra theme add cyan-light-vivid",
@@ -261,9 +261,9 @@
     },
     {
       "id": "amber-light-vivid",
-      "name": "Amber Light Vivid",
+      "name": "Sunstruck",
       "category": "community",
-      "mood": "Community theme — Amber primary, vivid chroma, light surface",
+      "mood": "Electric gold on charcoal — warm, high-energy, confident",
       "tokenPath": "tokens/themes/amber-light-vivid.json",
       "install": {
         "command": "nebutra theme add amber-light-vivid",
@@ -293,9 +293,9 @@
     },
     {
       "id": "crimson-dark-muted",
-      "name": "Crimson Dark Muted",
+      "name": "Void",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "mood": "Pure white on black — maximum contrast, zero distraction",
       "tokenPath": "tokens/themes/crimson-dark-muted.json",
       "install": {
         "command": "nebutra theme add crimson-dark-muted",
@@ -325,9 +325,9 @@
     },
     {
       "id": "cyan-light-vivid-2",
-      "name": "Cyan Light Vivid 2",
+      "name": "Cobalt Dusk",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "mood": "Medium cobalt on white — grounded, reliable, focused",
       "tokenPath": "tokens/themes/cyan-light-vivid-2.json",
       "install": {
         "command": "nebutra theme add cyan-light-vivid-2",
@@ -357,9 +357,9 @@
     },
     {
       "id": "crimson-dark-muted-2",
-      "name": "Crimson Dark Muted 2",
+      "name": "Obsidian",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "mood": "White on deep black — high-contrast, stark monochrome",
       "tokenPath": "tokens/themes/crimson-dark-muted-2.json",
       "install": {
         "command": "nebutra theme add crimson-dark-muted-2",
@@ -389,9 +389,9 @@
     },
     {
       "id": "crimson-light-muted",
-      "name": "Crimson Light Muted",
+      "name": "Graphite",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Near-black on clean white — direct, no-nonsense",
       "tokenPath": "tokens/themes/crimson-light-muted.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted",
@@ -421,9 +421,9 @@
     },
     {
       "id": "rose-light-vivid",
-      "name": "Rose Light Vivid",
+      "name": "Sandstone",
       "category": "community",
-      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "mood": "Warm terracotta on cream — organic, considered, sun-baked",
       "tokenPath": "tokens/themes/rose-light-vivid.json",
       "install": {
         "command": "nebutra theme add rose-light-vivid",
@@ -453,9 +453,9 @@
     },
     {
       "id": "crimson-light-muted-2",
-      "name": "Crimson Light Muted 2",
+      "name": "Parchment",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Deep ink on warm parchment — warm, literary, timeless",
       "tokenPath": "tokens/themes/crimson-light-muted-2.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-2",
@@ -485,9 +485,9 @@
     },
     {
       "id": "gold-dark-vivid",
-      "name": "Gold Dark Vivid",
+      "name": "Neon Citrus",
       "category": "community",
-      "mood": "Community theme — Gold primary, vivid chroma, dark surface",
+      "mood": "Neon yellow-gold on near-black — maximum energy, studio glow",
       "tokenPath": "tokens/themes/gold-dark-vivid.json",
       "install": {
         "command": "nebutra theme add gold-dark-vivid",
@@ -517,9 +517,9 @@
     },
     {
       "id": "azure-light-muted",
-      "name": "Azure Light Muted",
+      "name": "Raven",
       "category": "community",
-      "mood": "Community theme — Azure primary, low-saturation chroma, light surface",
+      "mood": "Carbon charcoal on white — stark, editorial clarity",
       "tokenPath": "tokens/themes/azure-light-muted.json",
       "install": {
         "command": "nebutra theme add azure-light-muted",
@@ -549,9 +549,9 @@
     },
     {
       "id": "cyan-light-vivid-3",
-      "name": "Cyan Light Vivid 3",
+      "name": "Ultraviolet",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "mood": "Deep electric blue on white — bold, digital, forward",
       "tokenPath": "tokens/themes/cyan-light-vivid-3.json",
       "install": {
         "command": "nebutra theme add cyan-light-vivid-3",
@@ -581,9 +581,9 @@
     },
     {
       "id": "azure-dark-vivid",
-      "name": "Azure Dark Vivid",
+      "name": "Royal Linen",
       "category": "community",
-      "mood": "Community theme — Azure primary, vivid chroma, dark surface",
+      "mood": "Deep royal blue on bright linen — classic, structured, formal",
       "tokenPath": "tokens/themes/azure-dark-vivid.json",
       "install": {
         "command": "nebutra theme add azure-dark-vivid",
@@ -613,9 +613,9 @@
     },
     {
       "id": "rose-light-vivid-2",
-      "name": "Rose Light Vivid 2",
+      "name": "Tangerine",
       "category": "community",
-      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "mood": "Deep orange on near-white — warm, energetic, bold",
       "tokenPath": "tokens/themes/rose-light-vivid-2.json",
       "install": {
         "command": "nebutra theme add rose-light-vivid-2",
@@ -645,9 +645,9 @@
     },
     {
       "id": "crimson-light-vivid-2",
-      "name": "Crimson Light Vivid 2",
+      "name": "Scarlet",
       "category": "community",
-      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "mood": "Vivid scarlet on white — assertive, expressive, electric",
       "tokenPath": "tokens/themes/crimson-light-vivid-2.json",
       "install": {
         "command": "nebutra theme add crimson-light-vivid-2",
@@ -677,9 +677,9 @@
     },
     {
       "id": "crimson-light-muted-3",
-      "name": "Crimson Light Muted 3",
+      "name": "Pumice",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Warm dark on light gray — subtle, refined surface",
       "tokenPath": "tokens/themes/crimson-light-muted-3.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-3",
@@ -709,9 +709,9 @@
     },
     {
       "id": "crimson-light-muted-4",
-      "name": "Crimson Light Muted 4",
+      "name": "Flint",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Black on white — pure editorial, zero tonal interference",
       "tokenPath": "tokens/themes/crimson-light-muted-4.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-4",
@@ -741,9 +741,9 @@
     },
     {
       "id": "crimson-dark-vivid",
-      "name": "Crimson Dark Vivid",
+      "name": "Ember",
       "category": "community",
-      "mood": "Community theme — Crimson primary, vivid chroma, dark surface",
+      "mood": "Deep ember red on dark charcoal — intense, dramatic warmth",
       "tokenPath": "tokens/themes/crimson-dark-vivid.json",
       "install": {
         "command": "nebutra theme add crimson-dark-vivid",
@@ -773,9 +773,9 @@
     },
     {
       "id": "crimson-light-muted-5",
-      "name": "Crimson Light Muted 5",
+      "name": "Chalk Veil",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Black on soft white — gentle clarity, editorial calm",
       "tokenPath": "tokens/themes/crimson-light-muted-5.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-5",
@@ -805,9 +805,9 @@
     },
     {
       "id": "crimson-dark-muted-3",
-      "name": "Crimson Dark Muted 3",
+      "name": "Inkwell",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "mood": "Bright white on inky dark — typographic, print-inspired",
       "tokenPath": "tokens/themes/crimson-dark-muted-3.json",
       "install": {
         "command": "nebutra theme add crimson-dark-muted-3",
@@ -837,9 +837,9 @@
     },
     {
       "id": "crimson-dark-muted-4",
-      "name": "Crimson Dark Muted 4",
+      "name": "Ivory Press",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "mood": "Black ink on near-white — newspaper clarity, old-school type",
       "tokenPath": "tokens/themes/crimson-dark-muted-4.json",
       "install": {
         "command": "nebutra theme add crimson-dark-muted-4",
@@ -869,9 +869,9 @@
     },
     {
       "id": "cyan-light-vivid-4",
-      "name": "Cyan Light Vivid 4",
+      "name": "Lapis",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "mood": "Deep lapis blue on white — timeless, authoritative",
       "tokenPath": "tokens/themes/cyan-light-vivid-4.json",
       "install": {
         "command": "nebutra theme add cyan-light-vivid-4",
@@ -901,9 +901,9 @@
     },
     {
       "id": "cyan-light-vivid-5",
-      "name": "Cyan Light Vivid 5",
+      "name": "Cerulean",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "mood": "Cerulean on white — open sky, systematic clarity",
       "tokenPath": "tokens/themes/cyan-light-vivid-5.json",
       "install": {
         "command": "nebutra theme add cyan-light-vivid-5",
@@ -933,9 +933,9 @@
     },
     {
       "id": "crimson-light-muted-6",
-      "name": "Crimson Light Muted 6",
+      "name": "Atelier",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Dark ink on warm cream — handcrafted, studio-warm aesthetic",
       "tokenPath": "tokens/themes/crimson-light-muted-6.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-6",
@@ -965,9 +965,9 @@
     },
     {
       "id": "indigo-dim-vivid",
-      "name": "Indigo Dim Vivid",
+      "name": "Aubergine",
       "category": "community",
-      "mood": "Community theme — Indigo primary, vivid chroma, dark surface",
+      "mood": "Electric violet on near-black — rich, complex, dark luxury",
       "tokenPath": "tokens/themes/indigo-dim-vivid.json",
       "install": {
         "command": "nebutra theme add indigo-dim-vivid",
@@ -997,9 +997,9 @@
     },
     {
       "id": "amber-light-vivid-2",
-      "name": "Amber Light Vivid 2",
+      "name": "Harvest Noir",
       "category": "community",
-      "mood": "Community theme — Amber primary, vivid chroma, light surface",
+      "mood": "Deep amber on near-black — bold, harvested warmth in darkness",
       "tokenPath": "tokens/themes/amber-light-vivid-2.json",
       "install": {
         "command": "nebutra theme add amber-light-vivid-2",
@@ -1029,9 +1029,9 @@
     },
     {
       "id": "azure-dark-vivid-2",
-      "name": "Azure Dark Vivid 2",
+      "name": "Periwinkle Void",
       "category": "community",
-      "mood": "Community theme — Azure primary, vivid chroma, dark surface",
+      "mood": "Dusky periwinkle on true black — calm intelligence",
       "tokenPath": "tokens/themes/azure-dark-vivid-2.json",
       "install": {
         "command": "nebutra theme add azure-dark-vivid-2",
@@ -1061,9 +1061,9 @@
     },
     {
       "id": "cyan-light-vivid-6",
-      "name": "Cyan Light Vivid 6",
+      "name": "Cornflower",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "mood": "Cornflower blue on warm canvas — friendly, accessible",
       "tokenPath": "tokens/themes/cyan-light-vivid-6.json",
       "install": {
         "command": "nebutra theme add cyan-light-vivid-6",
@@ -1093,9 +1093,9 @@
     },
     {
       "id": "crimson-dark-vivid-2",
-      "name": "Crimson Dark Vivid 2",
+      "name": "Lacquer",
       "category": "community",
-      "mood": "Community theme — Crimson primary, vivid chroma, dark surface",
+      "mood": "Bold lacquer red on dark ground — assertive, polished",
       "tokenPath": "tokens/themes/crimson-dark-vivid-2.json",
       "install": {
         "command": "nebutra theme add crimson-dark-vivid-2",
@@ -1125,9 +1125,9 @@
     },
     {
       "id": "cyan-light-vivid-7",
-      "name": "Cyan Light Vivid 7",
+      "name": "Horizon",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "mood": "Deep sky blue on white — expansive, clear, optimistic",
       "tokenPath": "tokens/themes/cyan-light-vivid-7.json",
       "install": {
         "command": "nebutra theme add cyan-light-vivid-7",
@@ -1157,9 +1157,9 @@
     },
     {
       "id": "crimson-light-muted-7",
-      "name": "Crimson Light Muted 7",
+      "name": "Carbon",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Carbon black on white — precision engineering aesthetic",
       "tokenPath": "tokens/themes/crimson-light-muted-7.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-7",
@@ -1189,9 +1189,9 @@
     },
     {
       "id": "crimson-light-muted-8",
-      "name": "Crimson Light Muted 8",
+      "name": "Jet",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Jet black on pure white — crisp, high-definition",
       "tokenPath": "tokens/themes/crimson-light-muted-8.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-8",
@@ -1221,9 +1221,9 @@
     },
     {
       "id": "azure-light-muted-2",
-      "name": "Azure Light Muted 2",
+      "name": "Monolith",
       "category": "community",
-      "mood": "Community theme — Azure primary, low-saturation chroma, light surface",
+      "mood": "Near-black primary on pure white — minimal, decisive, uncluttered",
       "tokenPath": "tokens/themes/azure-light-muted-2.json",
       "install": {
         "command": "nebutra theme add azure-light-muted-2",
@@ -1253,9 +1253,9 @@
     },
     {
       "id": "rose-light-vivid-3",
-      "name": "Rose Light Vivid 3",
+      "name": "Blaze",
       "category": "community",
-      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "mood": "Vivid orange on white — bright, bold, full-spectrum warmth",
       "tokenPath": "tokens/themes/rose-light-vivid-3.json",
       "install": {
         "command": "nebutra theme add rose-light-vivid-3",
@@ -1285,9 +1285,9 @@
     },
     {
       "id": "emerald-light-vivid",
-      "name": "Emerald Light Vivid",
+      "name": "Acid Mint",
       "category": "community",
-      "mood": "Community theme — Emerald primary, vivid chroma, light surface",
+      "mood": "Neon mint on dark canvas — raw energy, dev-tool edge",
       "tokenPath": "tokens/themes/emerald-light-vivid.json",
       "install": {
         "command": "nebutra theme add emerald-light-vivid",
@@ -1317,9 +1317,9 @@
     },
     {
       "id": "crimson-light-muted-9",
-      "name": "Crimson Light Muted 9",
+      "name": "Slate Fog",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Soft dark on white — cool and composed, low-key depth",
       "tokenPath": "tokens/themes/crimson-light-muted-9.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-9",
@@ -1349,9 +1349,9 @@
     },
     {
       "id": "azure-light-vivid",
-      "name": "Azure Light Vivid",
+      "name": "Amethyst Chalk",
       "category": "community",
-      "mood": "Community theme — Azure primary, vivid chroma, light surface",
+      "mood": "Strong violet-blue on chalk — artful, composed, airy",
       "tokenPath": "tokens/themes/azure-light-vivid.json",
       "install": {
         "command": "nebutra theme add azure-light-vivid",
@@ -1381,9 +1381,9 @@
     },
     {
       "id": "lime-light-vivid",
-      "name": "Lime Light Vivid",
+      "name": "Viridian",
       "category": "community",
-      "mood": "Community theme — Lime primary, vivid chroma, light surface",
+      "mood": "Saturated tech-lime on white — charged, technical freshness",
       "tokenPath": "tokens/themes/lime-light-vivid.json",
       "install": {
         "command": "nebutra theme add lime-light-vivid",
@@ -1413,9 +1413,9 @@
     },
     {
       "id": "crimson-light-muted-10",
-      "name": "Crimson Light Muted 10",
+      "name": "Noir Blanc",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Pure black on white — photographic, stripped back",
       "tokenPath": "tokens/themes/crimson-light-muted-10.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-10",
@@ -1445,9 +1445,9 @@
     },
     {
       "id": "crimson-light-muted-11",
-      "name": "Crimson Light Muted 11",
+      "name": "Birch",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Warm dark on near-white — gentle, organic, Scandinavian",
       "tokenPath": "tokens/themes/crimson-light-muted-11.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-11",
@@ -1477,9 +1477,9 @@
     },
     {
       "id": "crimson-light-vivid-3",
-      "name": "Crimson Light Vivid 3",
+      "name": "Signal Red",
       "category": "community",
-      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "mood": "Pure signal red on white — urgent, direct, unmissable",
       "tokenPath": "tokens/themes/crimson-light-vivid-3.json",
       "install": {
         "command": "nebutra theme add crimson-light-vivid-3",
@@ -1509,9 +1509,9 @@
     },
     {
       "id": "cyan-light-vivid-8",
-      "name": "Cyan Light Vivid 8",
+      "name": "Cobalt Night",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, dark surface",
+      "mood": "Vivid cobalt on deep dark — bold night mode energy",
       "tokenPath": "tokens/themes/cyan-light-vivid-8.json",
       "install": {
         "command": "nebutra theme add cyan-light-vivid-8",
@@ -1541,9 +1541,9 @@
     },
     {
       "id": "rose-light-vivid-4",
-      "name": "Rose Light Vivid 4",
+      "name": "Marigold Noir",
       "category": "community",
-      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "mood": "Golden amber on deep dark — warm accent, dramatic contrast",
       "tokenPath": "tokens/themes/rose-light-vivid-4.json",
       "install": {
         "command": "nebutra theme add rose-light-vivid-4",
@@ -1573,9 +1573,9 @@
     },
     {
       "id": "crimson-light-muted-12",
-      "name": "Crimson Light Muted 12",
+      "name": "Anthracite",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "White on deep anthracite — modern, architectural",
       "tokenPath": "tokens/themes/crimson-light-muted-12.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-12",
@@ -1605,9 +1605,9 @@
     },
     {
       "id": "amber-light-vivid-3",
-      "name": "Amber Light Vivid 3",
+      "name": "Voltage",
       "category": "community",
-      "mood": "Community theme — Amber primary, vivid chroma, light surface",
+      "mood": "Neon yellow on dark canvas — electric, alert, studio-bright",
       "tokenPath": "tokens/themes/amber-light-vivid-3.json",
       "install": {
         "command": "nebutra theme add amber-light-vivid-3",
@@ -1637,9 +1637,9 @@
     },
     {
       "id": "crimson-light-vivid-4",
-      "name": "Crimson Light Vivid 4",
+      "name": "Cinnabar",
       "category": "community",
-      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "mood": "Deep cinnabar on warm off-white — rich, earthy intensity",
       "tokenPath": "tokens/themes/crimson-light-vivid-4.json",
       "install": {
         "command": "nebutra theme add crimson-light-vivid-4",
@@ -1669,9 +1669,9 @@
     },
     {
       "id": "cyan-dark-muted",
-      "name": "Cyan Dark Muted",
+      "name": "Moonbeam",
       "category": "community",
-      "mood": "Community theme — Cyan primary, low-saturation chroma, dark surface",
+      "mood": "Pale silver-white on black — cool night, lunar glow",
       "tokenPath": "tokens/themes/cyan-dark-muted.json",
       "install": {
         "command": "nebutra theme add cyan-dark-muted",
@@ -1701,9 +1701,9 @@
     },
     {
       "id": "azure-light-vivid-2",
-      "name": "Azure Light Vivid 2",
+      "name": "Cobalt Vault",
       "category": "community",
-      "mood": "Community theme — Azure primary, vivid chroma, dark surface",
+      "mood": "Vivid cobalt on deep slate — sharp, technical, midnight engineering",
       "tokenPath": "tokens/themes/azure-light-vivid-2.json",
       "install": {
         "command": "nebutra theme add azure-light-vivid-2",
@@ -1733,9 +1733,9 @@
     },
     {
       "id": "crimson-dark-muted-5",
-      "name": "Crimson Dark Muted 5",
+      "name": "Bone Script",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "mood": "Soft near-black on bone white — considered, understated",
       "tokenPath": "tokens/themes/crimson-dark-muted-5.json",
       "install": {
         "command": "nebutra theme add crimson-dark-muted-5",
@@ -1765,9 +1765,9 @@
     },
     {
       "id": "crimson-dark-vivid-3",
-      "name": "Crimson Dark Vivid 3",
+      "name": "Terracotta Noir",
       "category": "community",
-      "mood": "Community theme — Crimson primary, vivid chroma, dark surface",
+      "mood": "Warm terracotta on charcoal night — earthy, expressive",
       "tokenPath": "tokens/themes/crimson-dark-vivid-3.json",
       "install": {
         "command": "nebutra theme add crimson-dark-vivid-3",
@@ -1797,9 +1797,9 @@
     },
     {
       "id": "indigo-light",
-      "name": "Indigo Light",
+      "name": "Dusk Veil",
       "category": "community",
-      "mood": "Community theme — Indigo primary, balanced chroma, dark surface",
+      "mood": "Deep midnight violet on pale lilac — contemplative dusk",
       "tokenPath": "tokens/themes/indigo-light.json",
       "install": {
         "command": "nebutra theme add indigo-light",
@@ -1829,9 +1829,9 @@
     },
     {
       "id": "crimson-light-muted-13",
-      "name": "Crimson Light Muted 13",
+      "name": "Quartz Dawn",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "mood": "Black on quartz-white — clean surfaces, morning clarity",
       "tokenPath": "tokens/themes/crimson-light-muted-13.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-13",
@@ -1861,9 +1861,9 @@
     },
     {
       "id": "violet-light-vivid",
-      "name": "Violet Light Vivid",
+      "name": "Plum",
       "category": "community",
-      "mood": "Community theme — Violet primary, vivid chroma, light surface",
+      "mood": "Deep plum on white — rich, intentional, confident",
       "tokenPath": "tokens/themes/violet-light-vivid.json",
       "install": {
         "command": "nebutra theme add violet-light-vivid",
@@ -1893,9 +1893,9 @@
     },
     {
       "id": "crimson-light-muted-14",
-      "name": "Crimson Light Muted 14",
+      "name": "Alabaster",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "mood": "Black on alabaster — minimal, interior-design cool",
       "tokenPath": "tokens/themes/crimson-light-muted-14.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-14",
@@ -1925,9 +1925,9 @@
     },
     {
       "id": "emerald-dark-vivid",
-      "name": "Emerald Dark Vivid",
+      "name": "Neon Grove",
       "category": "community",
-      "mood": "Community theme — Emerald primary, vivid chroma, dark surface",
+      "mood": "Electric emerald on charcoal — vibrant, playful, alive",
       "tokenPath": "tokens/themes/emerald-dark-vivid.json",
       "install": {
         "command": "nebutra theme add emerald-dark-vivid",
@@ -1957,9 +1957,9 @@
     },
     {
       "id": "emerald-dark-vivid-2",
-      "name": "Emerald Dark Vivid 2",
+      "name": "Forest Vault",
       "category": "community",
-      "mood": "Community theme — Emerald primary, vivid chroma, dark surface",
+      "mood": "Deep forest green on dark — grounded, organic, premium",
       "tokenPath": "tokens/themes/emerald-dark-vivid-2.json",
       "install": {
         "command": "nebutra theme add emerald-dark-vivid-2",
@@ -1989,9 +1989,9 @@
     },
     {
       "id": "azure-light-vivid-3",
-      "name": "Azure Light Vivid 3",
+      "name": "Iris Flash",
       "category": "community",
-      "mood": "Community theme — Azure primary, vivid chroma, light surface",
+      "mood": "Electric iris on bright white — bold, creative, wide-open",
       "tokenPath": "tokens/themes/azure-light-vivid-3.json",
       "install": {
         "command": "nebutra theme add azure-light-vivid-3",
@@ -2021,9 +2021,9 @@
     },
     {
       "id": "emerald-light-vivid-2",
-      "name": "Emerald Light Vivid 2",
+      "name": "Lagoon",
       "category": "community",
-      "mood": "Community theme — Emerald primary, vivid chroma, light surface",
+      "mood": "Bright sea-green on deep dark — tropical, refreshing",
       "tokenPath": "tokens/themes/emerald-light-vivid-2.json",
       "install": {
         "command": "nebutra theme add emerald-light-vivid-2",
@@ -2053,9 +2053,9 @@
     },
     {
       "id": "azure-light",
-      "name": "Azure Light",
+      "name": "Midnight Quill",
       "category": "community",
-      "mood": "Community theme — Azure primary, balanced chroma, light surface",
+      "mood": "Midnight indigo on white — considered, literary, precise",
       "tokenPath": "tokens/themes/azure-light.json",
       "install": {
         "command": "nebutra theme add azure-light",
@@ -2085,9 +2085,9 @@
     },
     {
       "id": "cyan-dim-vivid",
-      "name": "Cyan Dim Vivid",
+      "name": "Sapphire Mist",
       "category": "community",
-      "mood": "Community theme — Cyan primary, vivid chroma, mid-tone surface",
+      "mood": "Vivid sapphire on pale mist — clear, open, airy",
       "tokenPath": "tokens/themes/cyan-dim-vivid.json",
       "install": {
         "command": "nebutra theme add cyan-dim-vivid",
@@ -2117,9 +2117,9 @@
     },
     {
       "id": "teal-light-vivid",
-      "name": "Teal Light Vivid",
+      "name": "Glacial",
       "category": "community",
-      "mood": "Community theme — Teal primary, vivid chroma, light surface",
+      "mood": "Electric teal-mint on deep dark — Arctic clarity, crisp",
       "tokenPath": "tokens/themes/teal-light-vivid.json",
       "install": {
         "command": "nebutra theme add teal-light-vivid",
@@ -2149,9 +2149,9 @@
     },
     {
       "id": "crimson-light-muted-15",
-      "name": "Crimson Light Muted 15",
+      "name": "Stencil",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Black on white — bold cutout, typographic",
       "tokenPath": "tokens/themes/crimson-light-muted-15.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-15",
@@ -2181,9 +2181,9 @@
     },
     {
       "id": "crimson-light-muted-16",
-      "name": "Crimson Light Muted 16",
+      "name": "Porcelain",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Soft black on porcelain white — refined, glaze-like surface",
       "tokenPath": "tokens/themes/crimson-light-muted-16.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-16",
@@ -2213,9 +2213,9 @@
     },
     {
       "id": "crimson-light-muted-17",
-      "name": "Crimson Light Muted 17",
+      "name": "Pewter",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Pewter dark on white — understated, functional elegance",
       "tokenPath": "tokens/themes/crimson-light-muted-17.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-17",
@@ -2245,9 +2245,9 @@
     },
     {
       "id": "crimson-light-vivid-5",
-      "name": "Crimson Light Vivid 5",
+      "name": "Flux Red",
       "category": "community",
-      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "mood": "Electric red on white — charged, high-stakes, decisive",
       "tokenPath": "tokens/themes/crimson-light-vivid-5.json",
       "install": {
         "command": "nebutra theme add crimson-light-vivid-5",
@@ -2277,9 +2277,9 @@
     },
     {
       "id": "emerald-dark-vivid-3",
-      "name": "Emerald Dark Vivid 3",
+      "name": "Jade Noir",
       "category": "community",
-      "mood": "Community theme — Emerald primary, vivid chroma, dark surface",
+      "mood": "Vivid jade on near-black — lush, technical, distinctive",
       "tokenPath": "tokens/themes/emerald-dark-vivid-3.json",
       "install": {
         "command": "nebutra theme add emerald-dark-vivid-3",
@@ -2309,9 +2309,9 @@
     },
     {
       "id": "rose-dark-muted",
-      "name": "Rose Dark Muted",
+      "name": "Truffle",
       "category": "community",
-      "mood": "Community theme — Rose primary, low-saturation chroma, dark surface",
+      "mood": "Warm cream on espresso brown — cozy, warm, editorial",
       "tokenPath": "tokens/themes/rose-dark-muted.json",
       "install": {
         "command": "nebutra theme add rose-dark-muted",
@@ -2341,9 +2341,9 @@
     },
     {
       "id": "crimson-light-muted-18",
-      "name": "Crimson Light Muted 18",
+      "name": "Basalt",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Deep basalt on white — volcanic, grounded, decisive",
       "tokenPath": "tokens/themes/crimson-light-muted-18.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-18",
@@ -2373,9 +2373,9 @@
     },
     {
       "id": "crimson-light-muted-19",
-      "name": "Crimson Light Muted 19",
+      "name": "Tundra",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "mood": "Black on white — vast, clear, utterly open",
       "tokenPath": "tokens/themes/crimson-light-muted-19.json",
       "install": {
         "command": "nebutra theme add crimson-light-muted-19",
@@ -2405,9 +2405,9 @@
     },
     {
       "id": "lime-light-vivid-2",
-      "name": "Lime Light Vivid 2",
+      "name": "Chartreuse Noir",
       "category": "community",
-      "mood": "Community theme — Lime primary, vivid chroma, light surface",
+      "mood": "Bright chartreuse on dark — bold, unconventional, vivid",
       "tokenPath": "tokens/themes/lime-light-vivid-2.json",
       "install": {
         "command": "nebutra theme add lime-light-vivid-2",
@@ -2437,9 +2437,9 @@
     },
     {
       "id": "crimson-dark-muted-6",
-      "name": "Crimson Dark Muted 6",
+      "name": "Pitch",
       "category": "community",
-      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "mood": "Clean white on near-black — dark mode minimalism",
       "tokenPath": "tokens/themes/crimson-dark-muted-6.json",
       "install": {
         "command": "nebutra theme add crimson-dark-muted-6",
@@ -2469,9 +2469,9 @@
     },
     {
       "id": "rose-light-vivid-5",
-      "name": "Rose Light Vivid 5",
+      "name": "Vermilion",
       "category": "community",
-      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "mood": "Deep vermilion on off-white — earthy, vivid, painterly",
       "tokenPath": "tokens/themes/rose-light-vivid-5.json",
       "install": {
         "command": "nebutra theme add rose-light-vivid-5",

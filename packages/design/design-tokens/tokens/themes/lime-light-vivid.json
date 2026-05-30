@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Lime primary, vivid chroma, light surface",
+  "$description": "Saturated tech-lime on white — charged, technical freshness",
   "theme": "lime-light-vivid",
   "color": {
     "primary": {

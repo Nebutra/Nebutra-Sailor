@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Amber primary, vivid chroma, dark surface",
+  "$description": "Deep amber on near-black — bold, harvested warmth in darkness",
   "theme": "amber-light-vivid-2",
   "color": {
     "primary": {

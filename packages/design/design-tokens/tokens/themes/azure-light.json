@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Azure primary, balanced chroma, light surface",
+  "$description": "Midnight indigo on white — considered, literary, precise",
   "theme": "azure-light",
   "color": {
     "primary": {

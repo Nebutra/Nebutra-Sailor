@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Lime primary, vivid chroma, dark surface",
+  "$description": "Bright chartreuse on dark — bold, unconventional, vivid",
   "theme": "lime-light-vivid-2",
   "color": {
     "primary": {

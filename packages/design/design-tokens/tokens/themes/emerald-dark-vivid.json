@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Emerald primary, vivid chroma, dark surface",
+  "$description": "Electric emerald on charcoal — vibrant, playful, alive",
   "theme": "emerald-dark-vivid",
   "color": {
     "primary": {

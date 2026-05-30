@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Rose primary, vivid chroma, dark surface",
+  "$description": "Golden amber on deep dark — warm accent, dramatic contrast",
   "theme": "rose-light-vivid-4",
   "color": {
     "primary": {

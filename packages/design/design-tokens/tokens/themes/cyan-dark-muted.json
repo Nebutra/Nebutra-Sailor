@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Cyan primary, low-saturation chroma, dark surface",
+  "$description": "Pale silver-white on black — cool night, lunar glow",
   "theme": "cyan-dark-muted",
   "color": {
     "primary": {

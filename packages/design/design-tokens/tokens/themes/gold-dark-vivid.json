@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Gold primary, vivid chroma, dark surface",
+  "$description": "Neon yellow-gold on near-black — maximum energy, studio glow",
   "theme": "gold-dark-vivid",
   "color": {
     "primary": {

@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Cyan primary, vivid chroma, dark surface",
+  "$description": "Vivid cobalt on deep dark — bold night mode energy",
   "theme": "cyan-light-vivid-8",
   "color": {
     "primary": {

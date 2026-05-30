@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Azure primary, vivid chroma, light surface",
+  "$description": "Deep royal blue on bright linen — classic, structured, formal",
   "theme": "azure-dark-vivid",
   "color": {
     "primary": {

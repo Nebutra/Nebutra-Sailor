@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Community theme — Teal primary, vivid chroma, dark surface",
+  "$description": "Electric teal-mint on deep dark — Arctic clarity, crisp",
   "theme": "teal-light-vivid",
   "color": {
     "primary": {
