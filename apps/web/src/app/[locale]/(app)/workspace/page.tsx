@@ -39,9 +39,10 @@ export default async function WorkspaceHomePage() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in oklch, var(--blue-5), transparent 55%) 0%, transparent 60%), " +
-            "radial-gradient(ellipse 60% 50% at 30% 70%, color-mix(in oklch, var(--cyan-4), transparent 70%) 0%, transparent 70%), " +
-            "linear-gradient(180deg, color-mix(in oklch, var(--blue-2), transparent 40%) 0%, transparent 30%)",
+            "radial-gradient(ellipse 140% 70% at 50% 0%, color-mix(in oklch, var(--blue-5), transparent 50%) 0%, transparent 75%), " +
+            "radial-gradient(ellipse 120% 60% at 15% 85%, color-mix(in oklch, var(--cyan-4), transparent 60%) 0%, transparent 80%), " +
+            "radial-gradient(ellipse 110% 55% at 95% 65%, color-mix(in oklch, var(--blue-4), transparent 65%) 0%, transparent 80%), " +
+            "linear-gradient(180deg, color-mix(in oklch, var(--blue-3), transparent 55%) 0%, color-mix(in oklch, var(--cyan-2), transparent 65%) 100%)",
         }}
       />
 
