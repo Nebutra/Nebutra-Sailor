@@ -90,10 +90,14 @@ export class DesignMdProvider implements DesignSyncProvider {
 
   private readonly tokensDir: string;
   private readonly designMdPath: string;
+  private readonly designSystemName: string | undefined;
+  private readonly designSystemDescription: string | undefined;
 
   constructor(config: DesignMdProviderConfig) {
     this.tokensDir = config.tokensDir ?? defaultTokensDir();
     this.designMdPath = config.designMdPath ?? process.env.DESIGN_MD_PATH ?? defaultDesignMdPath();
+    this.designSystemName = config.name;
+    this.designSystemDescription = config.description;
 
     logger.info("[design-sync:design-md] Provider initialised", {
       tokensDir: this.tokensDir,
@@ -122,6 +126,13 @@ export class DesignMdProvider implements DesignSyncProvider {
     }
 
     const { set, report } = importFromDesignMd(content);
+
+    if (report.warnings.length > 0 || report.missingRequired.length > 0) {
+      logger.warn("[design-sync:design-md] imported DESIGN.md has gaps", {
+        warnings: report.warnings.length,
+        missingRequired: report.missingRequired,
+      });
+    }
 
     const dryRun = options.dryRun ?? false;
     if (!dryRun) {
@@ -155,7 +166,12 @@ export class DesignMdProvider implements DesignSyncProvider {
     const all = await readTokenSets(this.tokensDir);
 
     // Serialize all sets into DESIGN.md content.
-    const content = serializeToDesignMd(all);
+    const content = serializeToDesignMd(all, {
+      ...(this.designSystemName !== undefined ? { name: this.designSystemName } : {}),
+      ...(this.designSystemDescription !== undefined
+        ? { description: this.designSystemDescription }
+        : {}),
+    });
 
     // Compute a consistent, human-readable path label (relative preferred).
     const mdLabel = relative(process.cwd(), this.designMdPath) || this.designMdPath;

@@ -1,7 +1,7 @@
 {
   "name": "@nebutra/design-sync",
   "version": "0.1.1",
-  "description": "Provider-agnostic design-tool sync. Figma + Tokens Studio | Penpot | git-only | memory.",
+  "description": "Provider-agnostic design-tool sync. Figma + Tokens Studio | Penpot | git-only | design-md | memory.",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -16,11 +16,12 @@
     "gaps": [
       "Figma push (Variables REST API) is dry-run; manual enable required",
       "Penpot adapter implements healthcheck + pull; push is dry-run scaffolding",
-      "No real-time webhook listeners (manual pull/push only)"
+      "No real-time webhook listeners (manual pull/push only)",
+      "design-md provider depends on @google/design.md (alpha v0.x); pinned exactly — a 0.x bump may change linter rules and require re-validating the serializer output"
     ],
     "featureId": "design-sync",
     "category": "design",
-    "summary": "Provider-agnostic design-tool sync (Figma | Penpot | git-only)"
+    "summary": "Provider-agnostic design-tool sync (Figma | Penpot | git-only | design-md)"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

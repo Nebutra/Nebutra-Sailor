@@ -423,4 +423,65 @@ colors:
     const status = await provider.healthcheck();
     expect(status.provider).toBe("design-md");
   });
+
+  // ── pull warn path (Important 2) ────────────────────────────────────────────
+
+  it("pull emits logger.warn when report has gaps but still returns the set unchanged", async () => {
+    // Use a sparse DESIGN.md — will have missingRequired tokens.
+    const sparseContent = `---
+name: Sparse
+colors:
+  primary: "#ff0000"
+---
+`;
+    await writeFile(fixture.designMdPath, sparseContent, "utf8");
+
+    const provider = new DesignMdProvider({
+      provider: "design-md",
+      tokensDir: fixture.tokensDir,
+      designMdPath: fixture.designMdPath,
+    });
+
+    const result = await provider.pull();
+
+    // The result must still carry the set — gaps do not suppress the output.
+    expect(result.sets).toHaveLength(1);
+    expect(result.provider).toBe("design-md");
+    expect(result.sets[0].tokens).toBeDefined();
+    // The summary must still mention missingRequired.
+    expect(result.summary).toMatch(/missingRequired:/u);
+  });
+
+  // ── configurable name/description (Important 3) ─────────────────────────────
+
+  it("push with name:'Acme' and description:'Acme DS' produces DESIGN.md with those values", async () => {
+    const provider = new DesignMdProvider({
+      provider: "design-md",
+      tokensDir: fixture.tokensDir,
+      designMdPath: fixture.designMdPath,
+      name: "Acme",
+      description: "Acme DS",
+    });
+
+    await provider.push();
+
+    const written = await readFile(fixture.designMdPath, "utf8");
+    // Front matter must carry the custom name
+    expect(written).toContain('name: "Acme"');
+    // Overview prose must contain the custom description
+    expect(written).toContain("Acme DS");
+  });
+
+  it("push without name/description defaults to Nebutra branding", async () => {
+    const provider = new DesignMdProvider({
+      provider: "design-md",
+      tokensDir: fixture.tokensDir,
+      designMdPath: fixture.designMdPath,
+    });
+
+    await provider.push();
+
+    const written = await readFile(fixture.designMdPath, "utf8");
+    expect(written).toContain('name: "Nebutra"');
+  });
 });

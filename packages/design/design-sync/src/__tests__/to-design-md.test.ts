@@ -338,6 +338,64 @@ describe("serializeToDesignMd — rounded section", () => {
   });
 });
 
+describe("serializeToDesignMd — non-hex color drop (v1 documented behavior)", () => {
+  it("does NOT throw when a brand color resolves to an oklch() value", () => {
+    const oklchSet: DesignTokenSet = {
+      name: "oklch-brand",
+      relativePath: "oklch-brand.json",
+      tokens: {
+        brand: {
+          primary: { $value: "oklch(0.6 0.2 250)", $type: "color" },
+        },
+      },
+    };
+    expect(() => serializeToDesignMd([oklchSet])).not.toThrow();
+  });
+
+  it("omits a non-hex color role from the colors: front matter block", () => {
+    const oklchSet: DesignTokenSet = {
+      name: "oklch-brand",
+      relativePath: "oklch-brand.json",
+      tokens: {
+        brand: {
+          primary: { $value: "oklch(0.6 0.2 250)", $type: "color" },
+        },
+      },
+    };
+    const md = serializeToDesignMd([oklchSet]);
+    const { frontMatter } = splitFrontMatter(md);
+    expect(frontMatter).not.toContain("primary:");
+  });
+
+  it("does NOT throw when a brand color resolves to an 8-char #rrggbbaa value", () => {
+    const rgbaSet: DesignTokenSet = {
+      name: "rgba-brand",
+      relativePath: "rgba-brand.json",
+      tokens: {
+        brand: {
+          primary: { $value: "#0033feff", $type: "color" },
+        },
+      },
+    };
+    expect(() => serializeToDesignMd([rgbaSet])).not.toThrow();
+  });
+
+  it("omits an 8-char #rrggbbaa color role from the colors: front matter block", () => {
+    const rgbaSet: DesignTokenSet = {
+      name: "rgba-brand",
+      relativePath: "rgba-brand.json",
+      tokens: {
+        brand: {
+          primary: { $value: "#0033feff", $type: "color" },
+        },
+      },
+    };
+    const md = serializeToDesignMd([rgbaSet]);
+    const { frontMatter } = splitFrontMatter(md);
+    expect(frontMatter).not.toContain("primary:");
+  });
+});
+
 describe("serializeToDesignMd — cycle detection", () => {
   it("throws a clear error when a color role references a circular alias chain", () => {
     // a = {b}, b = {a} — classic cycle

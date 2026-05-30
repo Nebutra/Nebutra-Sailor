@@ -6,6 +6,7 @@
 //   - Penpot                  (REST API, self-hostable, China-friendly)
 //   - git-only                (zero-config default — DTCG files only)
 //   - memory                  (test fixture)
+//   - design-md               (AI-native DESIGN.md, markdown + YAML front matter)
 //
 // Usage:
 //   import { getDesignSync } from "@nebutra/design-sync";
@@ -37,7 +38,14 @@ export {
   writeTokenSet,
 } from "./io";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
-export { DesignMdProvider } from "./providers/design-md";
+// NOTE: DesignMdProvider is type-only at the root so importing this package
+// never eagerly loads the alpha @google/design.md linter (which is 655 KB and
+// statically imported in from-design-md.ts).  Get the runtime class via the
+// `@nebutra/design-sync/design-md` subpath or `createDesignSync({ provider:
+// 'design-md' })`, both of which are already lazy/dynamic.  The sibling
+// providers below are value-exported because they carry no such heavyweight
+// static dependency.
+export type { DesignMdProvider } from "./providers/design-md";
 export { FigmaProvider } from "./providers/figma";
 export { GitOnlyProvider } from "./providers/git-only";
 export { MemoryProvider } from "./providers/memory";

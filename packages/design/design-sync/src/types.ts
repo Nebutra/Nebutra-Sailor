@@ -216,6 +216,16 @@ export interface DesignMdProviderConfig extends BaseProviderConfig {
   provider: "design-md";
   /** Absolute path to the DESIGN.md file. Defaults to `process.cwd()/DESIGN.md`. */
   designMdPath?: string;
+  /**
+   * Design-system name emitted into the generated DESIGN.md front matter +
+   * Overview. Defaults to Nebutra branding.
+   */
+  name?: string;
+  /**
+   * Design-system description emitted into the generated DESIGN.md front matter +
+   * Overview. Defaults to Nebutra branding.
+   */
+  description?: string;
 }
 
 export type DesignSyncConfig =
