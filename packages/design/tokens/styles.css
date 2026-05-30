@@ -434,39 +434,45 @@
   --cyan-10: #4dfcd4;
   --cyan-11: #80ffe0;
   --cyan-12: #b3ffec;
-  --background: 222 47% 4%;
-  --foreground: 210 40% 98%;
-  --card: 222 47% 7%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222 47% 7%;
-  --popover-foreground: 210 40% 98%;
+  /* Dark mode (2026-05): governance-level refresh.
+   * Old palette was hue 222 sat 47% L 4% — near-black with a heavy blue
+   * cast; surfaces collapsed into a void and reads as "missing design".
+   * New palette: same hue family for brand continuity, but lower
+   * saturation + higher lightness, so surfaces have body and dimension
+   * (Manus charcoal / Lovable chrome territory). */
+  --background: 222 14% 9%;
+  --foreground: 210 18% 96%;
+  --card: 222 12% 13%;
+  --card-foreground: 210 18% 96%;
+  --popover: 222 12% 13%;
+  --popover-foreground: 210 18% 96%;
   --primary: 228 90% 72%;
-  --primary-foreground: 222 47% 4%;
-  --secondary: 217 33% 17%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217 33% 17%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 228 100% 12%;
-  --accent-foreground: 228 95% 67%;
-  --destructive: 0 63% 31%;
-  --destructive-foreground: 210 40% 98%;
-  --success: 142 76% 36%;
-  --success-foreground: 222 47% 4%;
-  --warning: 38 80% 45%;
-  --warning-foreground: 222 47% 4%;
-  --info: 228 95% 67%;
-  --info-foreground: 222 47% 4%;
-  --border: 0 0% 14.9%;
-  --input: 0 0% 14.9%;
+  --primary-foreground: 222 14% 9%;
+  --secondary: 222 10% 18%;
+  --secondary-foreground: 210 18% 96%;
+  --muted: 222 10% 17%;
+  --muted-foreground: 220 8% 65%;
+  --accent: 228 38% 22%;
+  --accent-foreground: 228 95% 80%;
+  --destructive: 0 63% 38%;
+  --destructive-foreground: 210 18% 96%;
+  --success: 142 60% 42%;
+  --success-foreground: 222 14% 9%;
+  --warning: 38 80% 52%;
+  --warning-foreground: 222 14% 9%;
+  --info: 228 95% 72%;
+  --info-foreground: 222 14% 9%;
+  --border: 220 8% 22%;
+  --input: 220 8% 22%;
   --ring: 0 0% 88%; /** Focus ring (dark mode) — neutral light gray. Mirrors light-mode neutral foreground choice. */
-  --sidebar: 222 47% 6%;
-  --sidebar-foreground: 210 40% 96%;
-  --sidebar-primary: 228 95% 67%;
-  --sidebar-primary-foreground: 222 47% 4%;
-  --sidebar-accent: 228 100% 12%;
-  --sidebar-accent-foreground: 228 95% 67%;
-  --sidebar-border: 0 0% 14.9%;
-  --sidebar-ring: 228 95% 67%;
+  --sidebar: 222 16% 8%;
+  --sidebar-foreground: 210 18% 94%;
+  --sidebar-primary: 228 95% 72%;
+  --sidebar-primary-foreground: 222 14% 9%;
+  --sidebar-accent: 228 38% 22%;
+  --sidebar-accent-foreground: 228 95% 80%;
+  --sidebar-border: 220 8% 18%;
+  --sidebar-ring: 228 95% 72%;
   --chart-1: 228 95% 67%;
   --chart-2: 168 96% 54%;
   --chart-3: 228 100% 82%;
