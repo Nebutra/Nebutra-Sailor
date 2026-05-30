@@ -3,7 +3,7 @@ import { defineConfig } from "@nebutra/preset";
 
 export default defineConfig({
   preset: "ai-saas",
-  theme: "neon",
+  theme: "nebutra",
   locales: ["en", "zh"],
   defaultLocale: "en",
 });

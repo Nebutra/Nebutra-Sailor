@@ -77,7 +77,7 @@ const PRESETS: Record<string, PresetDefinition> = {
     description: "Creative portfolio and landing page builder",
     apps: ["landing-page"],
     features: ["blog", "growth"],
-    theme: "gradient",
+    theme: "nebutra",
     stack: ["Next.js 16", "Framer Motion"],
   },
   "blog-portfolio": {

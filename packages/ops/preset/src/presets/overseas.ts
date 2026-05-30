@@ -30,5 +30,5 @@ export const overseas: PresetDefinition = {
     realtime: false,
     upload: false,
   },
-  theme: "neon",
+  theme: "nebutra",
 };

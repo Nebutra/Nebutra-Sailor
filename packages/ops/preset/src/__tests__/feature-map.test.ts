@@ -30,7 +30,7 @@ const mockConfig: ResolvedConfig = {
     realtime: true,
     upload: true,
   },
-  theme: "neon",
+  theme: "nebutra",
   locales: ["en"],
   defaultLocale: "en",
   apiProtocols: ["rest"],
@@ -49,7 +49,7 @@ describe("getFeatureEnvVars", () => {
 
   it("includes theme and locale vars", () => {
     const vars = getFeatureEnvVars(mockConfig);
-    expect(vars.NEBUTRA_THEME).toBe("neon");
+    expect(vars.NEBUTRA_THEME).toBe("nebutra");
     expect(vars.NEBUTRA_LOCALES).toBe("en");
     expect(vars.NEBUTRA_DEFAULT_LOCALE).toBe("en");
   });

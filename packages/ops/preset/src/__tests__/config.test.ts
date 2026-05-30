@@ -13,7 +13,7 @@ describe("NebutraConfigSchema", () => {
   it("parses minimal config with defaults", () => {
     const result = NebutraConfigSchema.parse({});
     expect(result.preset).toBe("full");
-    expect(result.theme).toBe("neon");
+    expect(result.theme).toBe("nebutra");
     expect(result.locales).toEqual(["en"]);
     expect(result.defaultLocale).toBe("en");
   });
@@ -23,12 +23,12 @@ describe("NebutraConfigSchema", () => {
       preset: "ai-saas",
       apps: { web: true, blog: false },
       features: { billing: true, web3: false },
-      theme: "gradient",
+      theme: "vibrant",
       locales: ["en", "zh"],
       defaultLocale: "zh",
     });
     expect(result.preset).toBe("ai-saas");
-    expect(result.theme).toBe("gradient");
+    expect(result.theme).toBe("vibrant");
     expect(result.locales).toEqual(["en", "zh"]);
     expect(result.defaultLocale).toBe("zh");
     expect(result.apps).toEqual({ web: true, blog: false });
@@ -108,14 +108,7 @@ describe("FeatureId", () => {
 
 describe("ThemeId", () => {
   it("accepts built-in theme IDs from the shared registry and custom themes", () => {
-    expect(BUILT_IN_THEME_IDS).toEqual([
-      "neon",
-      "gradient",
-      "dark-dense",
-      "minimal",
-      "vibrant",
-      "ocean",
-    ]);
+    expect(BUILT_IN_THEME_IDS).toEqual(["nebutra", "dark-dense", "minimal", "vibrant", "ocean"]);
     for (const id of [...BUILT_IN_THEME_IDS, "custom"]) {
       expect(ThemeId.parse(id)).toBe(id);
     }
@@ -126,13 +119,13 @@ describe("defineConfig", () => {
   it("returns parsed config with defaults", () => {
     const config = defineConfig({});
     expect(config.preset).toBe("full");
-    expect(config.theme).toBe("neon");
+    expect(config.theme).toBe("nebutra");
   });
 
   it("accepts partial overrides", () => {
-    const config = defineConfig({ preset: "marketing", theme: "gradient" });
+    const config = defineConfig({ preset: "marketing", theme: "vibrant" });
     expect(config.preset).toBe("marketing");
-    expect(config.theme).toBe("gradient");
+    expect(config.theme).toBe("vibrant");
   });
 
   it("throws on invalid input", () => {

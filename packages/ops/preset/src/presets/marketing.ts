@@ -30,5 +30,5 @@ export const marketing: PresetDefinition = {
     realtime: false,
     upload: true,
   },
-  theme: "gradient",
+  theme: "nebutra",
 };

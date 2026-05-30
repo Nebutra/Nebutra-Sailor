@@ -67,7 +67,7 @@ describe("presets", () => {
       expect(p.apps["landing-page"]).toBe(true);
       expect(p.apps["api-gateway"]).toBe(true);
       expect(p.apps.blog).toBe(false);
-      expect(p.theme).toBe("neon");
+      expect(p.theme).toBe("nebutra");
     });
 
     it("marketing enables landing-page, blog, studio; disables web", () => {
@@ -76,7 +76,7 @@ describe("presets", () => {
       expect(p.apps.blog).toBe(true);
       expect(p.apps.studio).toBe(true);
       expect(p.apps.web).toBe(false);
-      expect(p.theme).toBe("gradient");
+      expect(p.theme).toBe("nebutra");
     });
 
     it("dashboard enables web, admin, api-gateway; enables sso", () => {

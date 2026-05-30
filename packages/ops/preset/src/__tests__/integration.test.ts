@@ -10,7 +10,7 @@ import {
 
 describe("preset → theme integration", () => {
   it("each preset resolves to a valid theme", () => {
-    const validThemes = ["neon", "gradient", "dark-dense", "minimal", "vibrant", "ocean", "custom"];
+    const validThemes = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean", "custom"];
     for (const [id, _preset] of Object.entries(presets)) {
       const config = defineConfig({ preset: id as NebutraConfig["preset"] });
       const resolved = resolveConfig(config);
@@ -21,7 +21,7 @@ describe("preset → theme integration", () => {
   it("full end-to-end: config → resolve → env vars", () => {
     const config = defineConfig({
       preset: "ai-saas",
-      theme: "neon",
+      theme: "nebutra",
       locales: ["en", "zh"],
     });
     const resolved = resolveConfig(config);
@@ -29,7 +29,7 @@ describe("preset → theme integration", () => {
     const activeApps = getActiveApps(resolved);
 
     // Theme
-    expect(envVars.NEBUTRA_THEME).toBe("neon");
+    expect(envVars.NEBUTRA_THEME).toBe("nebutra");
 
     // Apps
     expect(activeApps).toContain("web");
@@ -60,7 +60,7 @@ describe("preset → theme integration", () => {
     expect(resolved.apps.web).toBe(true);
     // Override: ai=true (was false in marketing)
     expect(resolved.features.ai).toBe(true);
-    // Override: theme=vibrant (was gradient in marketing)
+    // Override: theme=vibrant (was nebutra in marketing)
     expect(resolved.theme).toBe("vibrant");
   });
 });

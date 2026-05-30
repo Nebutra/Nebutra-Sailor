@@ -10,7 +10,7 @@ describe("resolveConfig", () => {
     expect(resolved.apps.blog).toBe(true);
     expect(resolved.features.billing).toBe(true);
     expect(resolved.features.ai).toBe(true);
-    expect(resolved.theme).toBe("neon");
+    expect(resolved.theme).toBe("nebutra");
   });
 
   it("resolves ai-saas preset", () => {

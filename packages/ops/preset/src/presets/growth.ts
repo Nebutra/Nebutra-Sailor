@@ -30,5 +30,5 @@ export const growth: PresetDefinition = {
     realtime: false,
     upload: false,
   },
-  theme: "gradient",
+  theme: "nebutra",
 };

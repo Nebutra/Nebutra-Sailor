@@ -30,5 +30,5 @@ export const full: PresetDefinition = {
     realtime: true,
     upload: true,
   },
-  theme: "neon",
+  theme: "nebutra",
 };

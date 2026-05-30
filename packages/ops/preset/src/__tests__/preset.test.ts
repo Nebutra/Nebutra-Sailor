@@ -9,7 +9,7 @@ describe("NebutraConfigSchema", () => {
       preset: "ai-saas",
       apps: { web: true, blog: false },
       features: { billing: true },
-      theme: "neon",
+      theme: "nebutra",
       locales: ["en", "ja"],
       defaultLocale: "en",
     };
@@ -17,7 +17,7 @@ describe("NebutraConfigSchema", () => {
     const result = NebutraConfigSchema.parse(input);
 
     expect(result.preset).toBe("ai-saas");
-    expect(result.theme).toBe("neon");
+    expect(result.theme).toBe("nebutra");
     expect(result.locales).toEqual(["en", "ja"]);
   });
 
@@ -25,7 +25,7 @@ describe("NebutraConfigSchema", () => {
     const result = NebutraConfigSchema.parse({});
 
     expect(result.preset).toBe("full");
-    expect(result.theme).toBe("neon");
+    expect(result.theme).toBe("nebutra");
     expect(result.locales).toEqual(["en"]);
     expect(result.defaultLocale).toBe("en");
   });
@@ -59,7 +59,7 @@ describe("NebutraConfigSchema", () => {
   });
 
   it("accepts all valid theme ids", () => {
-    const validThemes = ["neon", "gradient", "dark-dense", "minimal", "vibrant", "ocean", "custom"];
+    const validThemes = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean", "custom"];
 
     for (const theme of validThemes) {
       const result = NebutraConfigSchema.parse({ theme });
@@ -81,7 +81,7 @@ describe("defineConfig", () => {
     const config = defineConfig({});
 
     expect(config.preset).toBe("full");
-    expect(config.theme).toBe("neon");
+    expect(config.theme).toBe("nebutra");
   });
 
   it("throws for invalid input", () => {

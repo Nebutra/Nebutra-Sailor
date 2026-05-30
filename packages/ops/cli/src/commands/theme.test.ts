@@ -6,16 +6,15 @@ describe("theme command formatters", () => {
     const json = formatThemeList("json");
     const parsed = JSON.parse(json);
 
-    expect(parsed.count).toBe(6);
+    expect(parsed.count).toBe(5);
     expect(parsed.themes.map((theme: { id: string }) => theme.id)).toEqual([
-      "neon",
-      "gradient",
+      "nebutra",
       "dark-dense",
       "minimal",
       "vibrant",
       "ocean",
     ]);
-    expect(parsed.themes[0].installCommand).toBe("nebutra theme add neon");
+    expect(parsed.themes[0].installCommand).toBe("nebutra theme add nebutra");
   });
 
   it("formats inspect output for a known theme", () => {

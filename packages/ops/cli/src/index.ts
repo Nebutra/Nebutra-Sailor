@@ -319,7 +319,7 @@ Examples:
   $ nebutra generate app blog             Scaffold a new app
   $ nebutra brand palette --primary=#0047FF  Generate token-aligned blue palette
   $ nebutra theme list --format json    List registry-backed themes
-  $ nebutra theme inspect neon          Inspect a theme governance manifest
+  $ nebutra theme inspect nebutra       Inspect a theme governance manifest
   $ nebutra preset list --format json     List available presets
   $ nebutra infra up --lite               Start PostgreSQL + Redis
   $ nebutra test e2e                      Run Playwright E2E tests
