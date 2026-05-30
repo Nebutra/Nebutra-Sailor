@@ -68,6 +68,28 @@ const REQUIRED_TOKEN_PATHS = [
 /** Lowercase heading names that are prose/reference-only and cannot map to DTCG leaves. */
 const PROSE_ONLY_HEADINGS = new Set(["elevation", "components", "shapes"]);
 
+// ─── Effect label filter ──────────────────────────────────────────────────────
+
+/**
+ * Labels (lowercased) that describe visual effects rather than palette colors.
+ * These are excluded from extraction everywhere (scoped section and whole-doc scan).
+ */
+const EFFECT_LABEL_KEYWORDS = [
+  "shadow",
+  "overlay",
+  "glow",
+  "gradient",
+  "elevation",
+  "blur",
+  "scrim",
+  "inset",
+] as const;
+
+function isEffectLabel(label: string): boolean {
+  const lower = label.toLowerCase();
+  return EFFECT_LABEL_KEYWORDS.some((kw) => lower.includes(kw));
+}
+
 // ─── Slug helper ──────────────────────────────────────────────────────────────
 
 /**
@@ -115,36 +137,48 @@ function leafGroup(entries: Record<string, { $value: string; $type: string }>): 
 /**
  * Test whether a raw string looks like a CSS color value.
  * Accepts: #rgb, #rrggbb, #rrggbbaa, rgb(...), rgba(...), hsl(...), hsla(...), oklch(...)
- * Rejects: CSS variables (--*), font names, size values (12px, 1rem), etc.
+ * Rejects: CSS variables (--*), font names, size values (12px, 1rem), malformed functional
+ *          notations (must have a closing parenthesis), etc.
  */
 function isCssColor(value: string): boolean {
   const v = value.trim();
   // Hex: 3, 4, 6, or 8 hex digits
   if (/^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(v)) return true;
-  // Functional notations
-  if (/^rgba?\s*\(/i.test(v)) return true;
-  if (/^hsla?\s*\(/i.test(v)) return true;
-  if (/^oklch\s*\(/i.test(v)) return true;
-  if (/^color\s*\(/i.test(v)) return true;
+  // Functional notations — require closing paren to reject malformed inputs
+  if (/^rgba?\([^)]*\)$/i.test(v)) return true;
+  if (/^hsla?\([^)]*\)$/i.test(v)) return true;
+  if (/^oklch\([^)]*\)$/i.test(v)) return true;
+  if (/^color\([^)]*\)$/i.test(v)) return true;
   return false;
 }
 
-/** Internal tuple returned by prose scanning. */
+/** Internal tuple returned by prose scanning — includes description for role heuristics. */
 interface ProseColorMatch {
   label: string;
   slug: string;
   value: string;
+  /** The text after the color value on the same line (used for role heuristics). */
+  description: string;
+}
+
+/** Return value from the internal extractor, thread-safe for cap warnings. */
+interface ProseExtractionResult {
+  matches: ProseColorMatch[];
+  droppedCount: number;
 }
 
 /**
  * Scope the content to the color section (if one exists) and extract all
- * labeled color matches as `{label, slug, value}` tuples.
+ * labeled color matches as `{label, slug, value, description}` tuples.
+ *
+ * Effect labels (shadow, overlay, glow, gradient, elevation, blur, scrim) are
+ * excluded everywhere — they describe visual effects, not palette colors.
  *
  * This is the single implementation of the prose-color extraction algorithm.
  * Both the public `extractColorsFromProse` and the fallback wiring in
  * `importFromDesignMd` delegate here.
  */
-function extractProseColorMatches(content: string): ProseColorMatch[] {
+function extractProseColorMatches(content: string): ProseExtractionResult {
   // ── 1. Scope to the color section if one exists ──────────────────────────
   const COLOR_HEADING = /^(#{1,3})\s+.*colou?r/im;
   const headingMatch = COLOR_HEADING.exec(content);
@@ -184,12 +218,15 @@ function extractProseColorMatches(content: string): ProseColorMatch[] {
 
   const matches: ProseColorMatch[] = [];
   const seenSlugs = new Set<string>();
+  let droppedCount = 0;
   let match: RegExpExecArray | null;
 
   while ((match = BOLD_LABEL.exec(searchText)) !== null) {
-    if (matches.length >= 48) break;
-
     const label = (match[1] ?? "").trim();
+
+    // Skip effect labels everywhere (shadow, overlay, glow, gradient, etc.)
+    if (isEffectLabel(label)) continue;
+
     const lineFragment = match[0]; // **Label** (...rest of line)
 
     // Priority 1: last backtick-wrapped value that is a valid CSS color
@@ -227,11 +264,24 @@ function extractProseColorMatches(content: string): ProseColorMatch[] {
     if (!slug) continue;
     if (seenSlugs.has(slug)) continue; // first occurrence wins
 
+    // Cap at 48 entries — count dropped extras
+    if (matches.length >= 48) {
+      droppedCount++;
+      continue;
+    }
+
+    // Extract description: text after the closing `)` of the label's parens on the same line.
+    // The description is used by assignSemanticRoles for smarter primary detection.
+    // lineFragment shape: **Label** (...): description text...
+    // We grab everything after the first `)` that follows the label parens block.
+    const descMatch = /\)[^)]*:\s*(.*)$/.exec(lineFragment);
+    const description = descMatch ? (descMatch[1] ?? "").trim() : "";
+
     seenSlugs.add(slug);
-    matches.push({ label, slug, value: colorValue });
+    matches.push({ label, slug, value: colorValue, description });
   }
 
-  return matches;
+  return { matches, droppedCount };
 }
 
 /**
@@ -246,6 +296,9 @@ function extractProseColorMatches(content: string): ProseColorMatch[] {
  * document, extraction is limited to the content under that heading (up to
  * the next same-or-higher heading). Otherwise the whole document is scanned.
  *
+ * Effect labels (shadow, overlay, glow, gradient, elevation, blur, scrim) are
+ * excluded regardless of scoping — they describe visual effects, not palette colors.
+ *
  * Token naming: labels are kebab-cased (`"Spotify Green"` → `"spotify-green"`).
  * De-duplicates by token name (first wins). Capped at 48 entries.
  *
@@ -254,7 +307,7 @@ function extractProseColorMatches(content: string): ProseColorMatch[] {
  * @public — exported so tests can unit-test the helper directly.
  */
 export function extractColorsFromProse(content: string): Record<string, string> {
-  const matches = extractProseColorMatches(content);
+  const { matches } = extractProseColorMatches(content);
   const result: Record<string, string> = {};
   for (const { slug, value } of matches) {
     result[slug] = value;
@@ -262,66 +315,166 @@ export function extractColorsFromProse(content: string): Record<string, string> 
   return result;
 }
 
+// ─── Neutral color detector ───────────────────────────────────────────────────
+
+/**
+ * Return true if the CSS color is "neutral" — meaning it is near-black, near-white,
+ * or achromatic (low channel spread).
+ *
+ * Only operates on hex colors (#rgb / #rrggbb / #rrggbbaa) and rgb(...)/rgba(...).
+ * For oklch/hsl/color() values that cannot be trivially parsed, returns false
+ * (treats them as potentially chromatic — conservative to avoid silent omission).
+ *
+ * Neutral threshold: max(r,g,b) − min(r,g,b) < 25 (out of 255), OR
+ *                    all channels < 10 (near-black), OR
+ *                    all channels > 245 (near-white).
+ *
+ * The spread threshold of 25/255 ≈ 10% filters very low-saturation blue-grays
+ * (e.g. #767d88 cool-slate, #6b7280 tailwind-gray) that are perceptually neutral
+ * even if the raw channel spread is technically > 0.
+ */
+function isNeutralColor(value: string): boolean {
+  const v = value.trim();
+
+  // Parse hex
+  const hexMatch = /^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.exec(v);
+  if (hexMatch) {
+    const hex = hexMatch[1] ?? "";
+    let r: number, g: number, b: number;
+    if (hex.length === 3 || hex.length === 4) {
+      r = parseInt((hex[0] ?? "0") + (hex[0] ?? "0"), 16);
+      g = parseInt((hex[1] ?? "0") + (hex[1] ?? "0"), 16);
+      b = parseInt((hex[2] ?? "0") + (hex[2] ?? "0"), 16);
+    } else {
+      r = parseInt(hex.slice(0, 2), 16);
+      g = parseInt(hex.slice(2, 4), 16);
+      b = parseInt(hex.slice(4, 6), 16);
+    }
+    const spread = Math.max(r, g, b) - Math.min(r, g, b);
+    if (spread < 25) return true; // achromatic or very low saturation
+    if (r < 10 && g < 10 && b < 10) return true; // near-black
+    if (r > 245 && g > 245 && b > 245) return true; // near-white
+    return false;
+  }
+
+  // Parse rgb() / rgba()
+  const rgbMatch = /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i.exec(v);
+  if (rgbMatch) {
+    const r = parseInt(rgbMatch[1] ?? "0", 10);
+    const g = parseInt(rgbMatch[2] ?? "0", 10);
+    const b = parseInt(rgbMatch[3] ?? "0", 10);
+    const spread = Math.max(r, g, b) - Math.min(r, g, b);
+    if (spread < 25) return true;
+    if (r < 10 && g < 10 && b < 10) return true;
+    if (r > 245 && g > 245 && b > 245) return true;
+    return false;
+  }
+
+  // Unparseable (hsl, oklch, color()) — conservatively treat as chromatic
+  return false;
+}
+
+// ─── Semantic role assignment ─────────────────────────────────────────────────
+
+/** DTCG color leaf type. */
+type ColorLeaf = { $value: string; $type: "color" };
+
 /**
  * Assign semantic roles to prose-extracted colors (best-effort, heuristic).
  *
- * Mutates `colorEntries` in place by adding role keys that are not already
- * present. Role keywords are matched against the *original label* (lower-cased),
- * not the slug. This is intentionally best-effort — no role is forced when no
- * candidate matches.
+ * Returns a NEW object containing only the role entries that should be merged
+ * in — never modifies its inputs. Roles that already exist in `existingKeys`
+ * are not emitted.
+ *
+ * Role assignment logic:
+ *
+ * **primary**: Single document-order scan — first entry whose LABEL contains
+ *   primary|brand|accent|cta|signature OR whose DESCRIPTION contains cta|brand|signature wins.
+ *   "green" is excluded from label matching (too common in semantic success colors like
+ *   "#149e61 Green"). "primary" and "accent" are excluded from description matching:
+ *   "primary text"/"primary canvas" and "border accents"/"accent backgrounds" are common
+ *   phrases that do NOT indicate brand-primary hue. Scanning in document order ensures that
+ *   an earlier entry with a CTA/brand description beats a later entry with an Accent label.
+ *   Fallback — first NON-NEUTRAL (chromatic) color when no keyword match fires.
+ *   Omit — if ALL extracted colors are neutral (no chromatic fallback exists).
+ *
+ * **background**: keyword match (background|canvas|surface|base) against label or
+ * description; first match wins.
+ *
+ * **foreground**: keyword match (text|ink|foreground|body) against label or
+ * description; first match wins.
  */
 function assignSemanticRoles(
-  proseMatches: Array<{ label: string; slug: string; value: string }>,
-  colorEntries: Record<string, { $value: string; $type: "color" }>,
-): void {
-  // primary: first label containing primary|brand|accent|cta plus a non-neutral value,
-  //          OR the first label with green|signature (Spotify pattern), OR just the first entry
-  if (!("primary" in colorEntries)) {
-    const primaryCandidate =
-      proseMatches.find((m) => {
-        const l = m.label.toLowerCase();
-        return (
-          l.includes("primary") ||
-          l.includes("brand") ||
-          l.includes("accent") ||
-          l.includes("cta") ||
-          l.includes("green") ||
-          l.includes("signature")
-        );
-      }) ?? proseMatches[0];
-    if (primaryCandidate) {
-      colorEntries["primary"] = { $value: primaryCandidate.value, $type: "color" };
+  proseMatches: ProseColorMatch[],
+  existingKeys: ReadonlySet<string>,
+): Record<string, ColorLeaf> {
+  const roles: Record<string, ColorLeaf> = {};
+
+  // For label matching: deliberate label names that indicate brand-primary role.
+  // "green" intentionally excluded — it matches semantic success colors (e.g. Kraken's
+  // "#149e61 Green" is a success state, not the brand primary purple). Spotify Green and
+  // Starbucks Green carry "brand" / "cta" / "accent" in their descriptions, so they are
+  // correctly identified by the description pass below.
+  const PRIMARY_LABEL_KEYWORDS = ["primary", "brand", "accent", "cta", "signature"];
+  // For description matching: very narrow set — "primary" excluded (too common: "primary text",
+  // "primary canvas") and "accent" excluded ("border accents" is common but not brand-primary).
+  // Only "cta", "brand", and "signature" are specific enough to reliably indicate brand-primary.
+  const PRIMARY_DESC_KEYWORDS = ["cta", "brand", "signature"];
+  const BACKGROUND_KEYWORDS = ["background", "canvas", "surface", "base"];
+  const FOREGROUND_KEYWORDS = ["text", "ink", "foreground", "body"];
+
+  function labelMatches(match: ProseColorMatch, keywords: string[]): boolean {
+    const label = match.label.toLowerCase();
+    return keywords.some((kw) => label.includes(kw));
+  }
+
+  function descMatches(match: ProseColorMatch, keywords: string[]): boolean {
+    const desc = match.description.toLowerCase();
+    return keywords.some((kw) => desc.includes(kw));
+  }
+
+  function matchesAny(match: ProseColorMatch, keywords: string[]): boolean {
+    const label = match.label.toLowerCase();
+    const desc = match.description.toLowerCase();
+    return keywords.some((kw) => label.includes(kw) || desc.includes(kw));
+  }
+
+  // primary — scan in document order; first entry that hits label OR description keywords wins.
+  // This ensures a color whose description says "CTA" is preferred over a later one whose
+  // label happens to say "Accent" (e.g. Sanity Red via "brand CTA" desc beats Accent Magenta).
+  if (!existingKeys.has("primary")) {
+    const keywordMatch = proseMatches.find(
+      (m) => labelMatches(m, PRIMARY_LABEL_KEYWORDS) || descMatches(m, PRIMARY_DESC_KEYWORDS),
+    );
+    if (keywordMatch) {
+      roles["primary"] = { $value: keywordMatch.value, $type: "color" };
+    } else {
+      // Fall back to first NON-NEUTRAL (chromatic) color
+      const chromaticMatch = proseMatches.find((m) => !isNeutralColor(m.value));
+      if (chromaticMatch) {
+        roles["primary"] = { $value: chromaticMatch.value, $type: "color" };
+      }
+      // If ALL colors are neutral, omit primary entirely — do not force a near-black/white
     }
   }
 
-  // background: first label containing background|canvas|surface|base
-  if (!("background" in colorEntries)) {
-    const bgCandidate = proseMatches.find((m) => {
-      const l = m.label.toLowerCase();
-      return (
-        l.includes("background") ||
-        l.includes("canvas") ||
-        l.includes("surface") ||
-        l.includes("base")
-      );
-    });
-    if (bgCandidate) {
-      colorEntries["background"] = { $value: bgCandidate.value, $type: "color" };
+  // background
+  if (!existingKeys.has("background")) {
+    const bgMatch = proseMatches.find((m) => matchesAny(m, BACKGROUND_KEYWORDS));
+    if (bgMatch) {
+      roles["background"] = { $value: bgMatch.value, $type: "color" };
     }
   }
 
   // foreground / text
-  if (!("foreground" in colorEntries)) {
-    const fgCandidate = proseMatches.find((m) => {
-      const l = m.label.toLowerCase();
-      return (
-        l.includes("text") || l.includes("ink") || l.includes("foreground") || l.includes("body")
-      );
-    });
-    if (fgCandidate) {
-      colorEntries["foreground"] = { $value: fgCandidate.value, $type: "color" };
+  if (!existingKeys.has("foreground")) {
+    const fgMatch = proseMatches.find((m) => matchesAny(m, FOREGROUND_KEYWORDS));
+    if (fgMatch) {
+      roles["foreground"] = { $value: fgMatch.value, $type: "color" };
     }
   }
+
+  return roles;
 }
 
 // ─── Main export ──────────────────────────────────────────────────────────────
@@ -370,6 +523,8 @@ export function importFromDesignMd(
   // If @google/design.md extracts zero colors (VoltAgent extended prose format),
   // fall back to scraping the prose content for labeled color literals.
   let usedProseFallback = false;
+  const warnings: string[] = [];
+
   if (state.colors.size > 0) {
     const colorEntries: Record<string, { $value: string; $type: "color" }> = {};
     for (const [key, resolved] of state.colors.entries()) {
@@ -378,16 +533,26 @@ export function importFromDesignMd(
     tokens["color"] = leafGroup(colorEntries);
   } else {
     // Prose-color fallback: extract labeled color literals from markdown prose
-    const proseMatchList = extractProseColorMatches(content);
+    const { matches: proseMatchList, droppedCount } = extractProseColorMatches(content);
     if (proseMatchList.length > 0) {
       usedProseFallback = true;
-      const colorEntries: Record<string, { $value: string; $type: "color" }> = {};
-      for (const { slug, value } of proseMatchList) {
-        colorEntries[slug] = { $value: value, $type: "color" };
+
+      // Build base color entries (immutable — no direct mutation)
+      const baseEntries: Record<string, { $value: string; $type: "color" }> = {};
+      for (const { slug: s, value } of proseMatchList) {
+        baseEntries[s] = { $value: value, $type: "color" };
       }
-      // Assign semantic roles (primary, background, foreground) heuristically
-      assignSemanticRoles(proseMatchList, colorEntries);
-      tokens["color"] = leafGroup(colorEntries);
+
+      // Cap warning — emitted before roles assignment
+      if (droppedCount > 0) {
+        warnings.push(`prose fallback: capped at 48 colors (${droppedCount} more dropped)`);
+      }
+
+      // Assign semantic roles (returns new object, no mutation)
+      const roles = assignSemanticRoles(proseMatchList, new Set(Object.keys(baseEntries)));
+
+      // Merge immutably: base entries + roles (base entries take precedence for existing keys)
+      tokens["color"] = leafGroup({ ...roles, ...baseEntries });
     }
   }
 
@@ -467,8 +632,6 @@ export function importFromDesignMd(
   }
 
   const unmapped = [...unmappedSet];
-
-  const warnings: string[] = [];
 
   // Prose fallback warning — emitted when colors were scraped from prose instead of front matter
   if (usedProseFallback) {

@@ -680,11 +680,10 @@ typography:
     });
 
     it("prose fixture — produced DTCG tree is valid (all leaves have $value + $type)", () => {
-      expect(() =>
-        importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" }),
-      ).not.toThrow();
+      // Single call — no double-parse
       const { set } = importFromDesignMd(PROSE_NO_FRONT_MATTER, { brandName: "spotify" });
       const colorGroup = set.tokens["color"] as Record<string, { $value: unknown; $type: unknown }>;
+      expect(colorGroup).toBeDefined();
       for (const [key, leaf] of Object.entries(colorGroup)) {
         expect(leaf.$type, `color.${key} must have $type`).toBe("color");
         expect(typeof leaf.$value, `color.${key}.$value must be string`).toBe("string");
@@ -768,12 +767,13 @@ typography:
       expect(result["accent"]).toBe("rgb(30, 215, 96)");
     });
 
-    it("accepts rgba() color values", () => {
+    it("accepts rgba() color values with non-effect label", () => {
+      // "Overlay" is now excluded as an effect label; use a non-effect label instead
       const content = `## Colors
-- **Overlay** (\`rgba(0, 0, 0, 0.5)\`): Dark overlay
+- **Tint Layer** (\`rgba(0, 0, 0, 0.5)\`): Semi-transparent tint
 `;
       const result = extractColorsFromProse(content);
-      expect(result["overlay"]).toBe("rgba(0, 0, 0, 0.5)");
+      expect(result["tint-layer"]).toBe("rgba(0, 0, 0, 0.5)");
     });
 
     it("de-duplicates by token name (first occurrence wins)", () => {
@@ -818,6 +818,109 @@ No colors here at all.
       expect(result["brand-blue"]).toBe("#0033fe");
       // 'something' from Overview section should not be included when there's a dedicated color section
       expect(result["something"]).toBeUndefined();
+    });
+
+    it("excludes effect labels (shadow, overlay, glow, gradient) in whole-doc scan", () => {
+      // No color-section heading — entire doc is scanned.
+      // Effect labels must be excluded; real palette colors must be extracted.
+      const content = `# Brand System
+
+- **Drop Shadow** (\`rgba(0,0,0,0.3)\`): Card elevation shadow
+- **Overlay Dark** (\`rgba(0,0,0,0.5)\`): Modal backdrop overlay
+- **Glow Effect** (\`rgba(0,200,100,0.4)\`): Hover glow
+- **Brand Green** (\`#1ed760\`): Primary brand accent
+`;
+      const result = extractColorsFromProse(content);
+      // Real color must be present
+      expect(result["brand-green"]).toBe("#1ed760");
+      // Effect labels must be absent
+      expect(result["drop-shadow"]).toBeUndefined();
+      expect(result["overlay-dark"]).toBeUndefined();
+      expect(result["glow-effect"]).toBeUndefined();
+    });
+
+    it("whole-doc scan (no heading) correctly extracts real palette colors", () => {
+      // Verifies that whole-doc mode produces real results, not just empty output.
+      const content = `# Design Notes
+
+Some introductory prose here.
+
+- **Primary Red** (\`#e30613\`): Main CTA color
+- **Off White** (\`#fafafa\`): Background canvas
+- **Ink** (\`#111111\`): Primary text
+`;
+      const result = extractColorsFromProse(content);
+      expect(result["primary-red"]).toBe("#e30613");
+      expect(result["off-white"]).toBe("#fafafa");
+      expect(result["ink"]).toBe("#111111");
+      expect(Object.keys(result).length).toBe(3);
+    });
+  });
+
+  // ─── Semantic role assignment ─────────────────────────────────────────────────
+
+  describe("assignSemanticRoles (via importFromDesignMd prose path)", () => {
+    it("picks primary via description CTA keyword when label alone has no keyword (Tesla Electric Blue)", () => {
+      // Tesla: label = "Electric Blue" (no label keyword matches),
+      // description = "Primary CTA button background..." — "cta" fires the description pass.
+      // "primary" alone in description is NOT matched (too common: "primary text", "primary canvas").
+      const content = `## Color Palette
+
+- **Electric Blue** (\`#3E6AE1\`): Primary CTA button background — the sole chromatic color
+- **Pure White** (\`#FFFFFF\`): Page background
+- **Near Black** (\`#222222\`): Heading text
+`;
+      const { set } = importFromDesignMd(content, { brandName: "test-tesla" });
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string }> | undefined;
+      // Description "CTA" keyword match → Electric Blue selected as primary
+      expect(colorGroup?.["primary"]?.$value?.toLowerCase()).toBe("#3e6ae1");
+    });
+
+    it("falls back to first chromatic color when no keyword matches (not neutral)", () => {
+      // No keyword matches anywhere, but first entry is chromatic
+      const content = `## Colors
+
+- **Cobalt** (\`#0047AB\`): Navigation fill
+- **Charcoal** (\`#333333\`): Body text
+- **Pearl** (\`#F5F5F5\`): Background
+`;
+      const { set } = importFromDesignMd(content, { brandName: "test-chromatic" });
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string }> | undefined;
+      // Cobalt is chromatic → should be primary fallback
+      expect(colorGroup?.["primary"]?.$value?.toLowerCase()).toBe("#0047ab");
+    });
+
+    it("omits primary when ALL extracted colors are neutral (no neutral-as-primary)", () => {
+      // All-neutral palette: near-black, near-white, grays — no chromatic color.
+      // Descriptions must NOT contain role keywords (to avoid accidental keyword match).
+      const content = `## Colors
+
+- **Charcoal** (\`#222222\`): Dark neutral for text
+- **Silver** (\`#AAAAAA\`): Mid-tone neutral
+- **Pearl** (\`#F8F8F8\`): Light neutral surface
+- **Pure White** (\`#FFFFFF\`): Card fill
+`;
+      const { set } = importFromDesignMd(content, { brandName: "test-all-neutral" });
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string }> | undefined;
+      // All neutral → primary must be absent (no neutral forced as primary)
+      expect(colorGroup?.["primary"]).toBeUndefined();
+    });
+
+    it("does not mutate the extracted color entries (immutability rule)", () => {
+      // Verify that role assignment returns a merged result without mutating source data.
+      // Confirmed by checking that the slug-keyed entries coexist with role entries in output.
+      const content = `## Colors
+
+- **Brand Teal** (\`#00897B\`): Primary brand color
+- **Canvas** (\`#FAFAFA\`): Background
+`;
+      const { set } = importFromDesignMd(content, { brandName: "test-immutable" });
+      const colorGroup = set.tokens["color"] as Record<string, { $value: string }> | undefined;
+      // Both slug key and role key must be present — merge, not overwrite
+      expect(colorGroup?.["brand-teal"]).toBeDefined();
+      expect(colorGroup?.["canvas"]).toBeDefined();
+      // Primary should be assigned (brand-teal matches "brand" keyword)
+      expect(colorGroup?.["primary"]?.$value?.toLowerCase()).toBe("#00897b");
     });
   });
 });
