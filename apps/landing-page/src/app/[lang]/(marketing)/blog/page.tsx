@@ -121,7 +121,7 @@ function BlogHeroTopics({ isZh, lang, topics }: { isZh: boolean; lang: string; t
     <div className="border-y border-[var(--neutral-6)] py-12 sm:py-16">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)] lg:gap-16">
         <div className="flex flex-col gap-5">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--neutral-2)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
             <BookOpen className="size-3.5" aria-hidden />
             {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
           </div>
@@ -341,7 +341,7 @@ function BlogPageSkeleton() {
           <div className="mt-6 h-12 w-3/4 animate-pulse rounded bg-[var(--neutral-3)]" />
           <div className="mt-5 h-5 w-1/2 animate-pulse rounded bg-[var(--neutral-3)]" />
         </div>
-        <div className="mt-12 h-80 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)]" />
+        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-[var(--neutral-2)]" />
       </section>
       <div className="mx-auto max-w-6xl border-t border-[var(--neutral-6)] px-4 py-12 sm:px-6 lg:px-8">
         <div className="h-8 w-36 animate-pulse rounded bg-[var(--neutral-3)]" />

@@ -1,5 +1,5 @@
 const DASHBOARD_SKELETON_SURFACE =
-  "dashboard-skeleton-surface rounded-[var(--radius-lg)] border border-neutral-5/80 bg-neutral-1/90 p-3.5 shadow-sm sm:p-4";
+  "dashboard-skeleton-surface rounded-[var(--radius-lg)] bg-neutral-2/60 p-3.5 shadow-sm sm:p-4";
 
 export function CommandSkeleton() {
   return (
@@ -31,10 +31,7 @@ export function MetricsSkeleton() {
       </div>
       <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
         {metricCards.map((id) => (
-          <div
-            key={id}
-            className="h-28 animate-pulse rounded-[var(--radius-lg)] border border-neutral-5/80 bg-neutral-2/70"
-          />
+          <div key={id} className="h-28 animate-pulse rounded-[var(--radius-lg)] bg-neutral-3/60" />
         ))}
       </div>
     </div>
@@ -55,10 +52,7 @@ export function RecentSessionsSkeleton() {
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {sessionCards.map((id) => (
-          <div
-            key={id}
-            className="h-14 animate-pulse rounded-[var(--radius-lg)] border border-neutral-5/80 bg-neutral-2/70"
-          />
+          <div key={id} className="h-14 animate-pulse rounded-[var(--radius-lg)] bg-neutral-3/60" />
         ))}
       </div>
     </div>

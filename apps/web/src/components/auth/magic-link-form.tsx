@@ -1,15 +1,24 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nebutra/ui/components";
-import { Input } from "@nebutra/ui/primitives";
+import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { type FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
 
 const VERIFICATION_CODE_LENGTH = 6;
 const RESEND_COOLDOWN_SECONDS = 30;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const magicLinkSchema = z.object({
+  email: z.string().regex(EMAIL_REGEX),
+  code: z.string(),
+});
+type MagicLinkValues = z.infer<typeof magicLinkSchema>;
 
 export interface MagicLinkSendInput {
   email: string;
@@ -60,9 +69,14 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
   const t = useTranslations("auth.magicLink");
   const tErrors = useTranslations("auth.errors");
 
+  const form = useForm<MagicLinkValues>({
+    resolver: zodResolver(magicLinkSchema),
+    defaultValues: { email: "", code: "" },
+  });
+  const email = form.watch("email");
+  const code = form.watch("code");
+
   const [stage, setStage] = useState<"email" | "code">("email");
-  const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
   const [pending, setPending] = useState(false);
   const [errorKey, setErrorKey] = useState<AuthErrorKey | null>(null);
   const [cooldown, setCooldown] = useState(0);
@@ -76,19 +90,12 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
     return () => clearInterval(timer);
   }, [cooldown]);
 
-  async function handleSend(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function handleSend(values: MagicLinkValues) {
     setErrorKey(null);
-
-    if (!EMAIL_REGEX.test(email)) {
-      setErrorKey("invalidEmail");
-      return;
-    }
-
     setPending(true);
     try {
       const submit = onSendLink ?? defaultSendLink;
-      await submit({ email });
+      await submit({ email: values.email });
       setStage("code");
       setCooldown(RESEND_COOLDOWN_SECONDS);
     } catch (error) {
@@ -96,6 +103,10 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
     } finally {
       setPending(false);
     }
+  }
+
+  function handleInvalidSend() {
+    setErrorKey("invalidEmail");
   }
 
   async function handleVerify(submittedCode: string) {
@@ -117,7 +128,7 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
 
   function handleCodeChange(value: string) {
     const digitsOnly = value.replace(/\D+/g, "").slice(0, VERIFICATION_CODE_LENGTH);
-    setCode(digitsOnly);
+    form.setValue("code", digitsOnly);
     if (digitsOnly.length === VERIFICATION_CODE_LENGTH) {
       void handleVerify(digitsOnly);
     }
@@ -155,31 +166,40 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
       )}
 
       {stage === "email" && (
-        <form className="space-y-4" onSubmit={handleSend} noValidate>
-          <div className="space-y-1.5">
-            <label
-              className="block text-sm font-medium text-[var(--neutral-12)]"
-              htmlFor="magic-link-email"
-            >
-              {t("emailLabel")}
-            </label>
-            <Input
-              aria-describedby={errorMessage ? errorId : undefined}
-              aria-invalid={Boolean(errorMessage)}
-              autoComplete="email"
-              id="magic-link-email"
+        <Form {...form}>
+          <form
+            className="space-y-4"
+            noValidate
+            onSubmit={form.handleSubmit(handleSend, handleInvalidSend)}
+          >
+            <FormField
+              control={form.control}
               name="email"
-              onChange={(event) => setEmail(event.target.value)}
-              required
-              type="email"
-              value={email}
+              render={({ field }) => (
+                <FormItem className="space-y-1.5">
+                  <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                    {t("emailLabel")}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      aria-describedby={errorMessage ? errorId : undefined}
+                      aria-invalid={Boolean(errorMessage)}
+                      autoComplete="email"
+                      name="email"
+                      required
+                      type="email"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-          </div>
 
-          <Button disabled={pending} htmlType="submit" type="primary">
-            {t("send")}
-          </Button>
-        </form>
+            <Button disabled={pending} htmlType="submit" type="primary">
+              {t("send")}
+            </Button>
+          </form>
+        </Form>
       )}
 
       {stage === "code" && (

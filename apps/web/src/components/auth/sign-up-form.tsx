@@ -1,13 +1,33 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nebutra/ui/components";
-import { Label, Separator } from "@nebutra/ui/primitives";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Label,
+  Separator,
+} from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { OAuthButtons } from "./oauth-buttons";
 
 type Phase = "details" | "verify";
+
+const detailsSchema = z.object({
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+  email: z.string().email(),
+  password: z.string().min(1),
+  accessInviteCode: z.string(),
+});
+type DetailsValues = z.infer<typeof detailsSchema>;
 
 export function SignUpForm() {
   const router = useRouter();
@@ -16,18 +36,27 @@ export function SignUpForm() {
   const initialInviteCode = searchParams.get("invite") ?? "";
   const tenantId = searchParams.get("tenantId") ?? undefined;
 
+  const form = useForm<DetailsValues>({
+    resolver: zodResolver(detailsSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      accessInviteCode: initialInviteCode,
+    },
+  });
+
   const [phase, _setPhase] = useState<Phase>("details");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [accessInviteCode, setAccessInviteCode] = useState(initialInviteCode);
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [resending, setResending] = useState(false);
   // biome-ignore lint/suspicious/noExplicitAny: Lobehub v5 Input uses antd's InputRef, not HTMLInputElement.
   const codeInputRef = useRef<any>(null);
+
+  const accessInviteCode = form.watch("accessInviteCode");
+  const email = form.watch("email");
+  const loading = form.formState.isSubmitting;
 
   useEffect(() => {
     if (phase === "verify") {
@@ -35,10 +64,7 @@ export function SignUpForm() {
     }
   }, [phase]);
 
-  async function handleDetailsSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    setLoading(true);
+  async function handleDetailsSubmit(values: DetailsValues) {
     setError("");
 
     try {
@@ -46,10 +72,10 @@ export function SignUpForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: `${firstName} ${lastName}`.trim(),
-          email,
-          password,
-          ...(accessGateEnabled ? { accessInviteCode, tenantId } : {}),
+          name: `${values.firstName} ${values.lastName}`.trim(),
+          email: values.email,
+          password: values.password,
+          ...(accessGateEnabled ? { accessInviteCode: values.accessInviteCode, tenantId } : {}),
         }),
       });
 
@@ -68,15 +94,12 @@ export function SignUpForm() {
       router.push("/onboarding");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
     }
   }
 
   async function handleVerify(e: React.FormEvent) {
     e.preventDefault();
 
-    setLoading(true);
     setError("");
 
     try {
@@ -98,8 +121,6 @@ export function SignUpForm() {
       router.push("/onboarding");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Invalid code. Please try again.");
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -206,82 +227,96 @@ export function SignUpForm() {
         </>
       )}
 
-      <form onSubmit={handleDetailsSubmit} className="flex flex-col gap-4">
-        <div className="grid grid-cols-2 gap-3">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="first-name">First name</Label>
-            <Input
-              id="first-name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-              autoComplete="given-name"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleDetailsSubmit)} className="flex flex-col gap-4">
+          <div className="grid grid-cols-2 gap-3">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-1.5 space-y-0">
+                  <FormLabel>First name</FormLabel>
+                  <FormControl>
+                    <Input {...field} required autoComplete="given-name" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-1.5 space-y-0">
+                  <FormLabel>Last name</FormLabel>
+                  <FormControl>
+                    <Input {...field} required autoComplete="family-name" />
+                  </FormControl>
+                </FormItem>
+              )}
             />
           </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="last-name">Last name</Label>
-            <Input
-              id="last-name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-              autoComplete="family-name"
-            />
-          </div>
-        </div>
 
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="signup-email">Email</Label>
-          <Input
-            id="signup-email"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="email"
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1.5 space-y-0">
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                    autoComplete="email"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="signup-password">Password</Label>
-          <Input
-            id="signup-password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            autoComplete="new-password"
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1.5 space-y-0">
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input {...field} type="password" required autoComplete="new-password" />
+                </FormControl>
+              </FormItem>
+            )}
           />
-        </div>
 
-        {accessGateEnabled ? (
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="signup-access-invite">Invite code</Label>
-            <Input
-              id="signup-access-invite"
-              value={accessInviteCode}
-              onChange={(e) => setAccessInviteCode(e.target.value)}
-              required
-              autoComplete="off"
-              placeholder="neb_..."
+          {accessGateEnabled ? (
+            <FormField
+              control={form.control}
+              name="accessInviteCode"
+              render={({ field }) => (
+                <FormItem className="flex flex-col gap-1.5 space-y-0">
+                  <FormLabel>Invite code</FormLabel>
+                  <FormControl>
+                    <Input {...field} required autoComplete="off" placeholder="neb_..." />
+                  </FormControl>
+                  <p className="text-xs text-[var(--neutral-9)]">
+                    Nebutra is invite-only while the cold-start gate is enabled.
+                  </p>
+                </FormItem>
+              )}
             />
-            <p className="text-xs text-[var(--neutral-9)]">
-              Nebutra is invite-only while the cold-start gate is enabled.
-            </p>
-          </div>
-        ) : null}
+          ) : null}
 
-        {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
+          {error && <p className="text-sm text-[hsl(var(--destructive))]">{error}</p>}
 
-        <Button
-          htmlType="submit"
-          className="w-full"
-          disabled={loading || (accessGateEnabled && !accessInviteCode.trim())}
-        >
-          {loading ? "Creating account…" : "Create account"}
-        </Button>
-      </form>
+          <Button
+            htmlType="submit"
+            className="w-full"
+            disabled={loading || (accessGateEnabled && !accessInviteCode.trim())}
+          >
+            {loading ? "Creating account…" : "Create account"}
+          </Button>
+        </form>
+      </Form>
 
       <p className="text-center text-sm text-[var(--neutral-9)]">
         Already have an account?{" "}

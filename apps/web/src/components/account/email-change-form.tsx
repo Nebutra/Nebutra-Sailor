@@ -1,10 +1,21 @@
 "use client";
 
-import { Input } from "@nebutra/ui/primitives";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useId, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const emailChangeSchema = z.object({
+  newEmail: z
+    .string()
+    .transform((value) => value.trim().toLowerCase())
+    .refine((value) => EMAIL_REGEX.test(value), "errorInvalidEmail"),
+});
+type EmailChangeValues = z.input<typeof emailChangeSchema>;
 
 interface EmailChangePayload {
   newEmail: string;
@@ -40,21 +51,19 @@ export function EmailChangeForm({
   requestEmailChange = defaultRequestEmailChange,
 }: EmailChangeFormProps = {}) {
   const t = useTranslations("account.emailChange");
-  const inputId = useId();
-  const [value, setValue] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const form = useForm<EmailChangeValues>({
+    resolver: zodResolver(emailChangeSchema),
+    defaultValues: { newEmail: "" },
+  });
   const [error, setError] = useState<string | null>(null);
   const [sentTo, setSentTo] = useState<string | null>(null);
 
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
+  const newEmail = form.watch("newEmail");
+  const submitting = form.formState.isSubmitting;
+
+  async function onValidSubmit(values: EmailChangeValues) {
     setError(null);
-    const trimmed = value.trim().toLowerCase();
-    if (!EMAIL_REGEX.test(trimmed)) {
-      setError(t("errorInvalidEmail"));
-      return;
-    }
-    setSubmitting(true);
+    const trimmed = values.newEmail.trim().toLowerCase();
     try {
       const result = await requestEmailChange({ newEmail: trimmed });
       if (!result.ok) {
@@ -63,9 +72,11 @@ export function EmailChangeForm({
       setSentTo(trimmed);
     } catch (err) {
       setError(err instanceof Error ? err.message : t("error"));
-    } finally {
-      setSubmitting(false);
     }
+  }
+
+  function onInvalidSubmit() {
+    setError(t("errorInvalidEmail"));
   }
 
   return (
@@ -78,29 +89,41 @@ export function EmailChangeForm({
       </h2>
       <p className="mt-2 text-sm text-[var(--neutral-11)]">{t("description")}</p>
 
-      <form className="mt-5 space-y-4" onSubmit={handleSubmit} noValidate>
-        <div>
-          <label htmlFor={inputId} className="block text-sm font-medium text-[var(--neutral-12)]">
-            {t("newEmailLabel")}
-          </label>
-          <Input
-            id={inputId}
-            type="email"
-            autoComplete="email"
-            value={value}
-            onChange={(event) => setValue(event.target.value)}
-            placeholder={t("newEmailPlaceholder")}
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={submitting || value.trim() === ""}
-          className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-60"
+      <Form {...form}>
+        <form
+          className="mt-5 space-y-4"
+          onSubmit={form.handleSubmit(onValidSubmit, onInvalidSubmit)}
+          noValidate
         >
-          {submitting ? t("submitting") : t("submit")}
-        </button>
-      </form>
+          <FormField
+            control={form.control}
+            name="newEmail"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                  {t("newEmailLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    autoComplete="email"
+                    placeholder={t("newEmailPlaceholder")}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <button
+            type="submit"
+            disabled={submitting || newEmail.trim() === ""}
+            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {submitting ? t("submitting") : t("submit")}
+          </button>
+        </form>
+      </Form>
 
       {sentTo ? (
         <p className="mt-3 text-sm text-[color:var(--status-success)]" role="status">

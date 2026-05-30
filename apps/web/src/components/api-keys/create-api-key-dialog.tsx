@@ -1,7 +1,18 @@
 "use client";
 
-import { Input } from "@nebutra/ui/primitives";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 export interface CreatedApiKey {
   key: string;
   id: string;
@@ -42,6 +53,12 @@ interface CreateApiKeyDialogProps {
 
 const DEFAULT_SCOPES = ["read", "write", "admin"];
 
+const apiKeyFormSchema = z.object({
+  name: z.string().trim().min(1, "Name is required.").max(64),
+  scopes: z.array(z.string()),
+});
+type ApiKeyFormValues = z.infer<typeof apiKeyFormSchema>;
+
 export function CreateApiKeyDialog({
   open,
   onOpenChange,
@@ -49,23 +66,21 @@ export function CreateApiKeyDialog({
   availableScopes = DEFAULT_SCOPES,
   labels = {},
 }: CreateApiKeyDialogProps) {
-  const [name, setName] = useState("");
-  const [scopes, setScopes] = useState<string[]>([]);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const form = useForm<ApiKeyFormValues>({
+    resolver: zodResolver(apiKeyFormSchema),
+    defaultValues: { name: "", scopes: [] },
+  });
   const [created, setCreated] = useState<CreatedApiKey | null>(null);
   const [copied, setCopied] = useState(false);
 
   // Reset internal state when the dialog re-opens
   useEffect(() => {
     if (open) {
-      setName("");
-      setScopes([]);
-      setError(null);
+      form.reset({ name: "", scopes: [] });
       setCreated(null);
       setCopied(false);
     }
-  }, [open]);
+  }, [open, form]);
 
   if (!open) return null;
 
@@ -90,30 +105,24 @@ export function CreateApiKeyDialog({
       "Are you sure? Closing this dialog will hide the key forever — make sure you have copied it.",
   };
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (submitting) return;
-    setSubmitting(true);
-    setError(null);
+  const submitting = form.formState.isSubmitting;
+
+  async function submit(values: ApiKeyFormValues) {
     try {
-      const trimmed = name.trim();
-      if (!trimmed) {
-        setError("Name is required.");
-        return;
-      }
-      const result = await onCreate({ name: trimmed, scopes });
+      const result = await onCreate({ name: values.name.trim(), scopes: values.scopes });
       setCreated(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create key.");
-    } finally {
-      setSubmitting(false);
+      form.setError("root", {
+        message: err instanceof Error ? err.message : "Failed to create key.",
+      });
     }
   }
 
-  function toggleScope(scope: string) {
-    setScopes((prev) =>
-      prev.includes(scope) ? prev.filter((s) => s !== scope) : [...prev, scope],
-    );
+  function toggleScope(scope: string, currentScopes: string[]) {
+    const next = currentScopes.includes(scope)
+      ? currentScopes.filter((s) => s !== scope)
+      : [...currentScopes, scope];
+    form.setValue("scopes", next, { shouldValidate: form.formState.isSubmitted });
   }
 
   async function handleCopy() {
@@ -134,6 +143,8 @@ export function CreateApiKeyDialog({
     }
     onOpenChange(false);
   }
+
+  const rootError = form.formState.errors.root?.message;
 
   return (
     <div
@@ -181,74 +192,92 @@ export function CreateApiKeyDialog({
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label
-                htmlFor="api-key-name"
-                className="mb-1 block text-sm font-medium text-[var(--neutral-12)]"
-              >
-                {text.nameLabel}
-              </label>
-              <Input
-                id="api-key-name"
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(submit)} className="space-y-4">
+              <FormField
+                control={form.control}
                 name="name"
-                type="text"
-                required
-                maxLength={64}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={text.namePlaceholder}
-                disabled={submitting}
+                render={({ field }) => (
+                  <FormItem className="space-y-0">
+                    <FormLabel
+                      htmlFor="api-key-name"
+                      className="mb-1 block text-sm font-medium text-[var(--neutral-12)]"
+                    >
+                      {text.nameLabel}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        id="api-key-name"
+                        type="text"
+                        required
+                        maxLength={64}
+                        placeholder={text.namePlaceholder}
+                        disabled={submitting}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
 
-            <fieldset>
-              <legend className="mb-2 block text-sm font-medium text-[var(--neutral-12)]">
-                {text.scopesLabel}
-              </legend>
-              <div className="grid grid-cols-2 gap-2">
-                {availableScopes.map((scope) => (
-                  <label
-                    key={scope}
-                    className="flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-2 text-sm text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
-                  >
-                    <input
-                      data-allow-native
-                      type="checkbox"
-                      name="scopes"
-                      value={scope}
-                      checked={scopes.includes(scope)}
-                      onChange={() => toggleScope(scope)}
-                      disabled={submitting}
-                      className="h-4 w-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)]"
-                    />
-                    <span>{scope}</span>
-                  </label>
-                ))}
+              <FormField
+                control={form.control}
+                name="scopes"
+                render={({ field }) => (
+                  <FormItem className="space-y-0">
+                    <fieldset>
+                      <legend className="mb-2 block text-sm font-medium text-[var(--neutral-12)]">
+                        {text.scopesLabel}
+                      </legend>
+                      <div className="grid grid-cols-2 gap-2">
+                        {availableScopes.map((scope) => (
+                          <label
+                            key={scope}
+                            className="flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-2 text-sm text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                          >
+                            <input
+                              data-allow-native
+                              type="checkbox"
+                              name="scopes"
+                              value={scope}
+                              checked={field.value.includes(scope)}
+                              onChange={() => toggleScope(scope, field.value)}
+                              disabled={submitting}
+                              className="h-4 w-4 rounded border-[var(--neutral-7)] text-[var(--blue-9)]"
+                            />
+                            <span>{scope}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {rootError ? <p className="text-sm text-red-11">{rootError}</p> : null}
+
+              <div className="flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={attemptClose}
+                  disabled={submitting}
+                  className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:opacity-50"
+                >
+                  {text.close}
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+                  style={{ background: "var(--brand-gradient)" }}
+                >
+                  {submitting ? text.submitting : text.submit}
+                </button>
               </div>
-            </fieldset>
-
-            {error ? <p className="text-sm text-red-11">{error}</p> : null}
-
-            <div className="flex items-center justify-end gap-2">
-              <button
-                type="button"
-                onClick={attemptClose}
-                disabled={submitting}
-                className="rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] disabled:opacity-50"
-              >
-                {text.close}
-              </button>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
-                style={{ background: "var(--brand-gradient)" }}
-              >
-                {submitting ? text.submitting : text.submit}
-              </button>
-            </div>
-          </form>
+            </form>
+          </Form>
         )}
       </div>
     </div>

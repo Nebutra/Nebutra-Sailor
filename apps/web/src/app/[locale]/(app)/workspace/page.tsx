@@ -33,7 +33,7 @@ export default async function WorkspaceHomePage() {
         {/* Top pill — quick promo / context-setter */}
         <Link
           href="/integrations"
-          className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/80 px-3 py-1 text-xs font-medium text-foreground/80 backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
+          className="inline-flex items-center gap-1.5 rounded-full bg-background/80 px-3 py-1 text-xs font-medium text-foreground/80 backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
         >
           <Plug className="size-3.5" aria-hidden="true" />
           {t("home.connectorsPill")}
@@ -60,7 +60,7 @@ export default async function WorkspaceHomePage() {
             <Link
               key={a.href}
               href={a.href}
-              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/70 px-3 py-1.5 text-xs font-medium text-foreground/80 backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
+              className="inline-flex items-center gap-1.5 rounded-full bg-background/70 px-3 py-1.5 text-xs font-medium text-foreground/80 backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
             >
               <Sparkles className="size-3" aria-hidden="true" />
               {a.label}
@@ -77,7 +77,7 @@ export default async function WorkspaceHomePage() {
 function PromptCard({ placeholder }: { placeholder: string }) {
   return (
     <div className="mt-8 w-full max-w-2xl">
-      <div className="rounded-[var(--radius-2xl)] border border-border bg-background/90 p-4 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+      <div className="rounded-[var(--radius-2xl)] bg-background/90 p-4 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl">
         <p className="px-2 py-2 text-left text-[15px] text-muted-foreground">{placeholder}</p>
         <div className="mt-2 flex items-center justify-end gap-2">
           <button

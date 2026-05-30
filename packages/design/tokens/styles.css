@@ -741,11 +741,11 @@
   --duration-cinematic: 500ms;
 
   /* Font family — Geist primary stack with CJK fallbacks */
-  --font-sans: var(--font-geist-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
-  --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
-  --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
-  --font-mono: var(--font-geist-mono), "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  --font-display: "Geist", "Noto Sans SC", sans-serif;
+  --font-heading: "Geist", "Noto Sans SC", sans-serif;
+  --font-mono: "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
 }
 
 /* ============================================

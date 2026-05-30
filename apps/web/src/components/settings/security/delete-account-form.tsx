@@ -1,12 +1,21 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nebutra/ui/components";
-import { Input } from "@nebutra/ui/primitives";
+import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 
 const CONFIRM_PHRASE = "DELETE";
+
+const deleteAccountSchema = z.object({
+  password: z.string().trim().min(1),
+  confirm: z.literal(CONFIRM_PHRASE),
+});
+type DeleteAccountValues = z.infer<typeof deleteAccountSchema>;
 
 interface DeleteAccountFormProps {
   /**
@@ -49,39 +58,38 @@ async function defaultOnSubmit(input: { password: string }): Promise<void> {
 export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAccountFormProps) {
   const t = useTranslations();
   const [stage, setStage] = useState<1 | 2>(1);
-  const [password, setPassword] = useState("");
-  const [confirmText, setConfirmText] = useState("");
-  const [pending, setPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
+
+  const form = useForm<DeleteAccountValues>({
+    resolver: zodResolver(deleteAccountSchema),
+    defaultValues: { password: "", confirm: "" as DeleteAccountValues["confirm"] },
+  });
+
+  const password = form.watch("password");
+  const confirmText = form.watch("confirm");
+  const pending = form.formState.isSubmitting;
 
   const canSubmit = !pending && password.trim().length > 0 && confirmText === CONFIRM_PHRASE;
 
   function resetForm() {
     setStage(1);
-    setPassword("");
-    setConfirmText("");
     setErrorMessage("");
+    form.reset({ password: "", confirm: "" as DeleteAccountValues["confirm"] });
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!canSubmit) return;
-
-    setPending(true);
+  async function onValidSubmit(values: DeleteAccountValues) {
     setErrorMessage("");
     setSuccess(false);
 
     try {
       const submitter = onSubmit ?? defaultOnSubmit;
-      await submitter({ password });
+      await submitter({ password: values.password });
       setSuccess(true);
       onDeleted?.();
     } catch (err) {
       const key = resolveAuthErrorKey(err);
       setErrorMessage(t(`auth.errors.${key}`));
-    } finally {
-      setPending(false);
     }
   }
 
@@ -114,54 +122,55 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
           </Button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-          <div className="space-y-1.5">
-            <label
-              htmlFor="delete-account-password"
-              className="text-sm font-medium text-[var(--neutral-12)]"
-            >
-              {t("auth.security.deleteAccount.passwordPrompt")}
-            </label>
-            <Input
-              id="delete-account-password"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onValidSubmit)} className="space-y-4" noValidate>
+            <FormField
+              control={form.control}
               name="password"
-              type="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              disabled={pending}
+              render={({ field }) => (
+                <FormItem className="space-y-1.5">
+                  <FormLabel className="text-sm font-medium text-[var(--neutral-12)]">
+                    {t("auth.security.deleteAccount.passwordPrompt")}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="password"
+                      autoComplete="current-password"
+                      disabled={pending}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-          </div>
 
-          <div className="space-y-1.5">
-            <label
-              htmlFor="delete-account-confirm"
-              className="text-sm font-medium text-[var(--neutral-12)]"
-            >
-              {t("auth.security.deleteAccount.confirmTextLabel")}
-            </label>
-            <Input
-              id="delete-account-confirm"
+            <FormField
+              control={form.control}
               name="confirm"
-              type="text"
-              autoComplete="off"
-              value={confirmText}
-              onChange={(event) => setConfirmText(event.target.value)}
-              disabled={pending}
+              render={({ field }) => (
+                <FormItem className="space-y-1.5">
+                  <FormLabel className="text-sm font-medium text-[var(--neutral-12)]">
+                    {t("auth.security.deleteAccount.confirmTextLabel")}
+                  </FormLabel>
+                  <FormControl>
+                    <Input {...field} type="text" autoComplete="off" disabled={pending} />
+                  </FormControl>
+                </FormItem>
+              )}
             />
-          </div>
 
-          {errorMessage && <p className="text-sm text-[var(--status-danger)]">{errorMessage}</p>}
+            {errorMessage && <p className="text-sm text-[var(--status-danger)]">{errorMessage}</p>}
 
-          <div className="flex flex-col gap-2 md:flex-row md:justify-end">
-            <Button htmlType="button" onClick={resetForm} disabled={pending} variant="outlined">
-              {t("auth.security.deleteAccount.cancel")}
-            </Button>
-            <Button htmlType="submit" disabled={!canSubmit} variant="filled">
-              {t("auth.security.deleteAccount.submit")}
-            </Button>
-          </div>
-        </form>
+            <div className="flex flex-col gap-2 md:flex-row md:justify-end">
+              <Button htmlType="button" onClick={resetForm} disabled={pending} variant="outlined">
+                {t("auth.security.deleteAccount.cancel")}
+              </Button>
+              <Button htmlType="submit" disabled={!canSubmit} variant="filled">
+                {t("auth.security.deleteAccount.submit")}
+              </Button>
+            </div>
+          </form>
+        </Form>
       )}
     </section>
   );

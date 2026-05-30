@@ -1,12 +1,24 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@nebutra/icons";
-import { Button, Input, Label, Separator } from "@nebutra/ui/primitives";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Input,
+  Separator,
+} from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   enablePasskeyConditionalUI,
   isPasskeySupported,
@@ -22,6 +34,14 @@ interface SsoDiscoveryProvider {
   domain: string;
   loginUrl: string;
 }
+
+// Bounds mirror the original form: both fields were `required` (non-empty)
+// with no client-side format gate — the server owns credential validation.
+const signInSchema = z.object({
+  email: z.string().min(1),
+  password: z.string().min(1),
+});
+type SignInValues = z.infer<typeof signInSchema>;
 
 interface SignInFormProps {
   /** OAuth providers actually configured server-side. */
@@ -47,19 +67,22 @@ export function SignInForm({
   const t = useTranslations("auth.signIn");
   const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const form = useForm<SignInValues>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [passkeyLoading, setPasskeyLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [passkeyAvailable, setPasskeyAvailable] = useState(false);
+  const [passkeyLoading, setPasskeyLoading] = useState(false);
   const [ssoProvider, setSsoProvider] = useState<SsoDiscoveryProvider | null>(null);
   const { capsLockOn, onKeyEvent } = useCapsLock();
   const conditionalUIStartedRef = useRef(false);
   const ssoDiscoverySeqRef = useRef(0);
 
+  const loading = form.formState.isSubmitting;
   const fallbackTarget = returnUrl ?? "/";
   const shouldRenderOAuth = !accessGateEnabled && (enabledOAuthProviders?.length ?? 0) > 0;
 
@@ -85,41 +108,40 @@ export function SignInForm({
     return () => controller.abort();
   }, [passkeyEnabled, router, fallbackTarget]);
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
+  async function handleSubmit(values: SignInValues) {
     setError("");
 
     const headers: Record<string, string> = { "Content-Type": "application/json" };
     if (turnstileToken) headers["x-captcha-response"] = turnstileToken;
 
-    void fetch("/api/auth/sign-in/email", {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ email, password, returnUrl: fallbackTarget }),
-    })
-      .then(async (response) => {
-        if (!response.ok) {
-          const data = await response.json().catch((): { error?: string; code?: string } => ({}));
-          const code = data.code ?? data.error;
-          if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
-            setError(t("captchaError"));
-          } else {
-            setError(data.error ?? t("signInFailed"));
-          }
-          setLoading(false);
-          return;
-        }
-        router.push(fallbackTarget);
-      })
-      .catch((err: unknown) => {
-        setError(err instanceof Error ? err.message : t("genericError"));
-        setLoading(false);
+    try {
+      const response = await fetch("/api/auth/sign-in/email", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+          returnUrl: fallbackTarget,
+        }),
       });
+      if (!response.ok) {
+        const data = await response.json().catch((): { error?: string; code?: string } => ({}));
+        const code = data.code ?? data.error;
+        if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
+          setError(t("captchaError"));
+        } else {
+          setError(data.error ?? t("signInFailed"));
+        }
+        return;
+      }
+      router.push(fallbackTarget);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : t("genericError"));
+    }
   }
 
   async function discoverSsoProvider() {
-    const normalizedEmail = email.trim().toLowerCase();
+    const normalizedEmail = form.getValues("email").trim().toLowerCase();
     ssoDiscoverySeqRef.current += 1;
     const seq = ssoDiscoverySeqRef.current;
     setSsoProvider(null);
@@ -148,6 +170,7 @@ export function SignInForm({
     setPasskeyLoading(true);
     setError("");
     try {
+      const email = form.getValues("email");
       await signInWithPasskey(email ? { email } : undefined);
       router.push(fallbackTarget);
     } catch (err) {
@@ -190,125 +213,141 @@ export function SignInForm({
         </>
       )}
 
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-5"
-        aria-busy={loading}
-        aria-describedby={error ? "sign-in-error" : undefined}
-      >
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="email">{t("emailLabel")}</Label>
-          <Input
-            id="email"
-            type="email"
-            size="lg"
-            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
-            placeholder={t("emailPlaceholder")}
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              setSsoProvider(null);
-            }}
-            onBlur={() => {
-              void discoverSsoProvider();
-            }}
-            required
-            // Conditional UI: the browser uses these hints to surface passkey
-            // suggestions in the autocomplete dropdown.
-            autoComplete={passkeyEnabled ? "username webauthn" : "email"}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="flex flex-col gap-5"
+          aria-busy={loading}
+          aria-describedby={error ? "sign-in-error" : undefined}
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1.5">
+                <FormLabel>{t("emailLabel")}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    size="lg"
+                    className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+                    placeholder={t("emailPlaceholder")}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      setSsoProvider(null);
+                    }}
+                    onBlur={() => {
+                      field.onBlur();
+                      void discoverSsoProvider();
+                    }}
+                    required
+                    // Conditional UI: the browser uses these hints to surface passkey
+                    // suggestions in the autocomplete dropdown.
+                    autoComplete={passkeyEnabled ? "username webauthn" : "email"}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
           />
-        </div>
 
-        {ssoProvider && (
-          <Button
-            type="button"
-            variant="outline"
-            className="h-11 w-full justify-center border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
-            onClick={() => {
-              window.location.href = ssoProvider.loginUrl;
-            }}
-          >
-            {t("continueWithProvider", { provider: ssoProvider.name })}
-          </Button>
-        )}
-
-        <div className="flex flex-col gap-1.5">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="password">{t("passwordLabel")}</Label>
-            <Link
-              href={buildAltLink("/forgot-password")}
-              className="text-xs font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
-            >
-              {t("forgotPassword")}
-            </Link>
-          </div>
-          <div className="relative">
-            <Input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              size="lg"
-              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
-              placeholder={t("passwordPlaceholder")}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={onKeyEvent}
-              onKeyUp={onKeyEvent}
-              required
-              autoComplete="current-password"
-              aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
-            />
-            <button
+          {ssoProvider && (
+            <Button
               type="button"
-              onClick={() => setShowPassword((prev) => !prev)}
-              aria-label={showPassword ? t("hidePassword") : t("showPassword")}
-              aria-pressed={showPassword}
-              className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
+              variant="outline"
+              className="h-11 w-full justify-center border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none hover:bg-[var(--neutral-2)]"
+              onClick={() => {
+                window.location.href = ssoProvider.loginUrl;
+              }}
             >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
-          </div>
-          {capsLockOn && (
+              {t("continueWithProvider", { provider: ssoProvider.name })}
+            </Button>
+          )}
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <FormLabel>{t("passwordLabel")}</FormLabel>
+                  <Link
+                    href={buildAltLink("/forgot-password")}
+                    className="text-xs font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+                  >
+                    {t("forgotPassword")}
+                  </Link>
+                </div>
+                <div className="relative">
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type={showPassword ? "text" : "password"}
+                      size="lg"
+                      className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
+                      placeholder={t("passwordPlaceholder")}
+                      onKeyDown={onKeyEvent}
+                      onKeyUp={onKeyEvent}
+                      required
+                      autoComplete="current-password"
+                      aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
+                    />
+                  </FormControl>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={showPassword ? t("hidePassword") : t("showPassword")}
+                    aria-pressed={showPassword}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+                {capsLockOn && (
+                  <p
+                    id="caps-lock-warning"
+                    role="status"
+                    aria-live="polite"
+                    className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--amber-11,var(--neutral-11))]"
+                  >
+                    <AlertTriangle aria-hidden className="h-3.5 w-3.5" />
+                    {t("capsLockOn")}
+                  </p>
+                )}
+              </FormItem>
+            )}
+          />
+
+          {turnstileSiteKey && (
+            <Turnstile
+              siteKey={turnstileSiteKey}
+              options={{ size: "invisible", appearance: "interaction-only" }}
+              onSuccess={setTurnstileToken}
+              onError={() => setTurnstileToken(null)}
+              onExpire={() => setTurnstileToken(null)}
+            />
+          )}
+
+          {error && (
             <p
-              id="caps-lock-warning"
-              role="status"
+              id="sign-in-error"
+              className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+              role="alert"
               aria-live="polite"
-              className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--amber-11,var(--neutral-11))]"
             >
-              <AlertTriangle aria-hidden className="h-3.5 w-3.5" />
-              {t("capsLockOn")}
+              {error}
             </p>
           )}
-        </div>
 
-        {turnstileSiteKey && (
-          <Turnstile
-            siteKey={turnstileSiteKey}
-            options={{ size: "invisible", appearance: "interaction-only" }}
-            onSuccess={setTurnstileToken}
-            onError={() => setTurnstileToken(null)}
-            onExpire={() => setTurnstileToken(null)}
-          />
-        )}
-
-        {error && (
-          <p
-            id="sign-in-error"
-            className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
-            role="alert"
-            aria-live="polite"
+          <Button
+            type="submit"
+            className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+            disabled={loading}
           >
-            {error}
-          </p>
-        )}
-
-        <Button
-          type="submit"
-          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
-          disabled={loading}
-        >
-          {loading ? t("submitLoading") : t("submit")}
-        </Button>
-      </form>
+            {loading ? t("submitLoading") : t("submit")}
+          </Button>
+        </form>
+      </Form>
 
       {(magicLinkEnabled || (passkeyEnabled && passkeyAvailable)) && (
         <div className="mt-4 flex flex-col gap-2">

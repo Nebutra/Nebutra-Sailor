@@ -43,7 +43,8 @@ vi.mock("@nebutra/ui/components", () => ({
   Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
 }));
 
-vi.mock("@nebutra/ui/primitives", () => ({
+vi.mock("@nebutra/ui/primitives", async (importActual) => ({
+  ...(await importActual<typeof import("@nebutra/ui/primitives")>()),
   // biome-ignore lint/a11y/noLabelWithoutControl: this test double forwards htmlFor from the component under test.
   Label: (props: LabelHTMLAttributes<HTMLLabelElement>) => <label {...props} />,
   Separator: () => <hr />,

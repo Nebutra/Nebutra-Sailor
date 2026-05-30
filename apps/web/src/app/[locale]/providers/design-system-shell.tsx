@@ -40,6 +40,10 @@ import type React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { BrandLogo } from "@/components/brand/brand-assets";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
+import {
+  useSidebarExpansion,
+  useSidebarExpansionStore,
+} from "@/components/navigation/sidebar-expansion-store";
 import { UserMenu } from "@/components/navigation/user-menu";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { NotificationsDialog } from "@/components/notifications/notifications-dialog";
@@ -117,44 +121,19 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const tSidebar = useTranslations("Sidebar");
 
   // ─── Persistent Projects-section expansion ────────────────────────────────
-  // localStorage-backed map of workspace item id → open/closed. Hydrated in an
-  // effect (NOT initial state) so SSR stays deterministic. When the hydration
-  // picks up any "true" value, a transient `wasRestored` flag fires a toast.
-  const EXPANSION_STORAGE_KEY = "nebutra_sidebar_expansion";
-  const [expansionMap, setExpansionMapState] = useState<Record<string, boolean>>({});
+  // zustand persist store (localStorage). SSR-safe: rehydration is deferred to
+  // the mount effect below so SSR stays deterministic (empty map). When the
+  // rehydrated snapshot has any open group, fire the restored-groups toast once.
+  const { map: expansionMap, setOpen: setExpansionOpen } = useSidebarExpansion();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: mount-only hydration; toast copy is captured once
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const raw = window.localStorage.getItem(EXPANSION_STORAGE_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as unknown;
-      if (!parsed || typeof parsed !== "object") return;
-      const map: Record<string, boolean> = {};
-      for (const [k, v] of Object.entries(parsed as Record<string, unknown>)) {
-        if (typeof v === "boolean") map[k] = v;
-      }
-      setExpansionMapState(map);
-      if (Object.values(map).some((v) => v)) {
-        toast(tSidebar("restoredGroups"), { duration: 3000 });
-      }
-    } catch {
-      // Corrupt entry — drop silently and continue with empty map.
+    void useSidebarExpansionStore.persist.rehydrate();
+    if (useSidebarExpansionStore.getState().hasRestored()) {
+      toast(tSidebar("restoredGroups"), { duration: 3000 });
     }
     // Run once on mount; toast copy can't change after hydration.
   }, []);
-
-  const writeExpansionMap = (next: Record<string, boolean>) => {
-    setExpansionMapState(next);
-    if (typeof window !== "undefined") {
-      try {
-        window.localStorage.setItem(EXPANSION_STORAGE_KEY, JSON.stringify(next));
-      } catch {
-        // Quota / disabled storage — UI stays in-memory.
-      }
-    }
-  };
   const breadcrumbs = buildBreadcrumbs(pathname);
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
   // /workspace home is a full-bleed gradient canvas — drop main padding and
@@ -281,14 +260,10 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       .map((ws) => `workspace:${ws.id}`);
     if (projectsAllExpanded) {
       // Collapse all known entries.
-      const cleared: Record<string, boolean> = {};
-      for (const key of Object.keys(expansionMap)) cleared[key] = false;
-      writeExpansionMap(cleared);
+      for (const key of Object.keys(expansionMap)) setExpansionOpen(key, false);
       return;
     }
-    const next = { ...expansionMap };
-    for (const id of itemsWithChildren) next[id] = true;
-    writeExpansionMap(next);
+    for (const id of itemsWithChildren) setExpansionOpen(id, true);
   };
 
   // New-project flow — v1 uses window.prompt to avoid a new dialog component.
@@ -320,7 +295,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       // their new thread land in the list.
       const activeItemId = `workspace:${workspace}`;
       if (!expansionMap[activeItemId]) {
-        writeExpansionMap({ ...expansionMap, [activeItemId]: true });
+        setExpansionOpen(activeItemId, true);
       }
       await loadThreads();
     } catch {
@@ -428,8 +403,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
               ...(hasChildren
                 ? {
                     expanded: expansionMap[itemId] ?? isActiveWorkspace,
-                    onExpandedChange: (next: boolean) =>
-                      writeExpansionMap({ ...expansionMap, [itemId]: next }),
+                    onExpandedChange: (next: boolean) => setExpansionOpen(itemId, next),
                   }
                 : {}),
             };

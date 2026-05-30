@@ -11,6 +11,7 @@ import {
   MagnifyingGlass as Search,
 } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
+import { useDebouncedValue } from "@nebutra/ui/hooks";
 import {
   Button,
   Dialog,
@@ -62,25 +63,10 @@ const TAG_COLORS: Record<string, string> = {
 
 const FALLBACK_RELEASE_IMAGE = "/screenshots/demo-dashboard-command.webp";
 
-// Debounce utility
-function useDebounce<T>(value: T, delay: number) {
-  const [debouncedValue, setDebouncedValue] = React.useState(value);
-
-  React.useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => clearTimeout(handler);
-  }, [value, delay]);
-
-  return debouncedValue;
-}
-
 export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) => {
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
   const [searchQuery, setSearchQuery] = React.useState("");
-  const debouncedSearch = useDebounce(searchQuery, 300);
+  const debouncedSearch = useDebouncedValue(searchQuery, 300);
   const [reactions, setReactions] = React.useState<Record<string, Record<string, number>>>({});
 
   const uniqueTags = Array.from(
@@ -282,7 +268,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                 alt={item.title}
                                 width={1200}
                                 height={700}
-                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] dark:border-[var(--neutral-2)] object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
+                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)]/60 dark:border-[var(--neutral-2)]/60 object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
                                 unoptimized={item.image?.endsWith(".svg")}
                               />
                               <div className="absolute inset-0 rounded-[var(--radius-lg)] bg-gradient-to-b from-transparent to-black/50 opacity-100" />
@@ -305,7 +291,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                                       alt="Contributor"
                                       width={96}
                                       height={96}
-                                      className="size-6 rounded-full border border-[var(--neutral-7)] dark:border-[var(--neutral-2)] object-cover"
+                                      className="size-6 rounded-full border border-[var(--neutral-7)]/60 dark:border-[var(--neutral-2)]/60 object-cover"
                                     />
                                   ))}
                                 </div>
@@ -429,7 +415,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         alt={item.title}
                         width={1200}
                         height={700}
-                        className="max-h-96 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] dark:border-[var(--neutral-3)] object-cover"
+                        className="max-h-96 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)]/60 dark:border-[var(--neutral-3)]/60 object-cover"
                         unoptimized={item.image?.endsWith(".svg")}
                       />
                       {item.content}

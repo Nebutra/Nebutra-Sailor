@@ -1,10 +1,13 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nebutra/ui/components";
-import { Input } from "@nebutra/ui/primitives";
+import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 
 interface DeleteOrganizationFormProps {
@@ -37,38 +40,43 @@ export function DeleteOrganizationForm({
   const tErrors = useTranslations("auth.errors");
   const router = useRouter();
 
+  const confirmSchema = z.object({
+    confirmation: z.literal(organizationName),
+  });
+  type ConfirmValues = z.infer<typeof confirmSchema>;
+
+  const form = useForm<ConfirmValues>({
+    resolver: zodResolver(confirmSchema),
+    mode: "onChange",
+    defaultValues: { confirmation: "" },
+  });
+
   const [stage, setStage] = useState<"idle" | "confirm">("idle");
-  const [confirmText, setConfirmText] = useState("");
-  const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
+  const confirmText = form.watch("confirmation");
+  const pending = form.formState.isSubmitting;
   const canSubmit = !pending && confirmText === organizationName;
 
   function handleCancel() {
     setStage("idle");
-    setConfirmText("");
+    form.reset({ confirmation: "" });
     setError("");
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!canSubmit) return;
-
-    setPending(true);
+  async function handleValidSubmit(values: ConfirmValues) {
     setError("");
 
     try {
       const submit = onSubmit ?? ((input) => defaultOnSubmit(orgId, input));
-      await submit({ confirmation: confirmText });
+      await submit({ confirmation: values.confirmation });
       setSuccess(true);
       onDeleted?.();
       router.push("/");
     } catch (err) {
       const key = resolveAuthErrorKey(err);
       setError(tErrors(key));
-    } finally {
-      setPending(false);
     }
   }
 
@@ -94,44 +102,54 @@ export function DeleteOrganizationForm({
           {t("trigger")}
         </Button>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="delete-org-confirm"
-              className="block text-sm font-medium text-[var(--neutral-12)]"
-            >
-              {t("confirmLabel")}
-            </label>
-            <Input
-              id="delete-org-confirm"
-              type="text"
-              value={confirmText}
-              onChange={(event) => setConfirmText(event.target.value)}
-              autoComplete="off"
-              aria-invalid={Boolean(error) || undefined}
-              aria-describedby={error ? "delete-org-error" : undefined}
-              disabled={pending}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleValidSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="confirmation"
+              render={({ field }) => (
+                <FormItem className="space-y-0">
+                  <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                    {t("confirmLabel")}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="text"
+                      autoComplete="off"
+                      aria-invalid={Boolean(error) || undefined}
+                      aria-describedby={error ? "delete-org-error" : undefined}
+                      disabled={pending}
+                    />
+                  </FormControl>
+                  <p className="mt-1 text-xs text-[var(--neutral-11)]">
+                    <span className="font-mono">{organizationName}</span>
+                  </p>
+                </FormItem>
+              )}
             />
-            <p className="mt-1 text-xs text-[var(--neutral-11)]">
-              <span className="font-mono">{organizationName}</span>
-            </p>
-          </div>
 
-          {error && (
-            <p id="delete-org-error" role="alert" className="text-sm text-red-11">
-              {error}
-            </p>
-          )}
+            {error && (
+              <p id="delete-org-error" role="alert" className="text-sm text-red-11">
+                {error}
+              </p>
+            )}
 
-          <div className="flex flex-wrap gap-3">
-            <Button htmlType="submit" disabled={!canSubmit}>
-              {t("submit")}
-            </Button>
-            <Button htmlType="button" variant="outlined" onClick={handleCancel} disabled={pending}>
-              {t("cancel")}
-            </Button>
-          </div>
-        </form>
+            <div className="flex flex-wrap gap-3">
+              <Button htmlType="submit" disabled={!canSubmit}>
+                {t("submit")}
+              </Button>
+              <Button
+                htmlType="button"
+                variant="outlined"
+                onClick={handleCancel}
+                disabled={pending}
+              >
+                {t("cancel")}
+              </Button>
+            </div>
+          </form>
+        </Form>
       )}
     </section>
   );

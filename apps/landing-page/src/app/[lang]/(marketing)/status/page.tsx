@@ -100,7 +100,7 @@ async function StatusPageContent() {
       />
       <div
         aria-hidden="true"
-        className="absolute left-1/2 top-28 -z-10 h-[620px] w-[620px] -translate-x-1/2 rounded-full border border-[color:var(--neutral-5)] opacity-50"
+        className="absolute left-1/2 top-28 -z-10 h-[620px] w-[620px] -translate-x-1/2 rounded-full border border-[color:var(--neutral-5)]/40 opacity-50"
       />
 
       <div className="mx-auto max-w-[1120px]">

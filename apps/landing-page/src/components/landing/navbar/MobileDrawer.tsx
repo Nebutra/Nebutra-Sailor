@@ -125,11 +125,11 @@ export function MobileDrawer() {
                   })}
                 </div>
 
-                <div className="mt-auto flex flex-col gap-3 border-t border-neutral-7 pt-4 dark:border-border">
+                <div className="mt-auto flex flex-col gap-3 border-t border-neutral-6/60 pt-4 dark:border-border/60">
                   <a
                     href={`${APP_URL}/sign-in`}
                     onClick={() => setOpen(false)}
-                    className="w-full rounded-[var(--radius-lg)] border border-neutral-7 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border"
+                    className="w-full rounded-[var(--radius-lg)] border border-neutral-6/60 px-4 py-3 text-center text-sm font-medium text-neutral-12 dark:border-border/60"
                   >
                     {t("signIn")}
                   </a>

@@ -1,13 +1,21 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nebutra/ui/components";
-import { Input } from "@nebutra/ui/primitives";
+import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const forgotPasswordSchema = z.object({
+  email: z.string().regex(EMAIL_REGEX, "invalidEmail"),
+});
+type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
 
 export interface ForgotPasswordSubmitInput {
   email: string;
@@ -40,32 +48,32 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
   const t = useTranslations("auth.forgotPassword");
   const tErrors = useTranslations("auth.errors");
 
-  const [email, setEmail] = useState("");
-  const [pending, setPending] = useState(false);
-  const [errorKey, setErrorKey] = useState<AuthErrorKey | null>(null);
+  const form = useForm<ForgotPasswordValues>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: { email: "" },
+  });
+
+  const [serverErrorKey, setServerErrorKey] = useState<AuthErrorKey | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setErrorKey(null);
+  const pending = form.formState.isSubmitting;
 
-    if (!EMAIL_REGEX.test(email)) {
-      setErrorKey("invalidEmail");
-      return;
-    }
+  async function handleSubmit({ email }: ForgotPasswordValues) {
+    setServerErrorKey(null);
 
-    setPending(true);
     try {
       const submit = onSubmit ?? defaultSubmit;
       await submit({ email });
       setSubmitted(true);
     } catch (error) {
-      setErrorKey(resolveAuthErrorKey(error));
-    } finally {
-      setPending(false);
+      setServerErrorKey(resolveAuthErrorKey(error));
     }
   }
 
+  const validationErrorKey = form.formState.errors.email
+    ? (form.formState.errors.email.message as AuthErrorKey | undefined)
+    : undefined;
+  const errorKey = serverErrorKey ?? validationErrorKey ?? null;
   const errorMessage = errorKey ? tErrors(errorKey) : null;
   const errorId = "forgot-password-error";
 
@@ -94,31 +102,28 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
         </p>
       )}
 
-      <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-        <div className="space-y-1.5">
-          <label
-            className="block text-sm font-medium text-[var(--neutral-12)]"
-            htmlFor="forgot-password-email"
-          >
-            {t("emailLabel")}
-          </label>
-          <Input
-            aria-describedby={errorMessage ? errorId : undefined}
-            aria-invalid={Boolean(errorMessage)}
-            autoComplete="email"
-            id="forgot-password-email"
+      <Form {...form}>
+        <form className="space-y-4" onSubmit={form.handleSubmit(handleSubmit)} noValidate>
+          <FormField
+            control={form.control}
             name="email"
-            onChange={(event) => setEmail(event.target.value)}
-            required
-            type="email"
-            value={email}
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                  {t("emailLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} autoComplete="email" required type="email" />
+                </FormControl>
+              </FormItem>
+            )}
           />
-        </div>
 
-        <Button disabled={pending} htmlType="submit" type="primary">
-          {t("submit")}
-        </Button>
-      </form>
+          <Button disabled={pending} htmlType="submit" type="primary">
+            {t("submit")}
+          </Button>
+        </form>
+      </Form>
     </section>
   );
 }

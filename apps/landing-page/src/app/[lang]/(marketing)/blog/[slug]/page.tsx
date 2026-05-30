@@ -186,7 +186,7 @@ function BlogArticleFooter({
                 <Link
                   key={relatedPost.id}
                   href={localizedPostHref(lang, relatedPost.slug)}
-                  className="group overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className="group overflow-hidden rounded-[var(--radius-md)] bg-[var(--neutral-2)] transition-colors hover:bg-[var(--neutral-3)]"
                 >
                   <div className="relative h-36 overflow-hidden bg-[var(--neutral-3)]">
                     <BlogImage
@@ -215,7 +215,7 @@ function BlogArticleFooter({
             })}
           </div>
         </div>
-        <aside className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5">
+        <aside className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-5">
           <p className="text-sm font-semibold text-[var(--neutral-12)]">
             {isZh ? "订阅 Nebutra Originals" : "Subscribe to Nebutra Originals"}
           </p>

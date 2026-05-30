@@ -1,6 +1,23 @@
 "use client";
 
-import { type FormEvent, useCallback, useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@nebutra/ui/primitives";
+import { useCallback, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 interface IssuedInvite {
   attributionStatus: "canonical" | "dub" | "failed";
@@ -28,12 +45,39 @@ interface ManagedInvite {
   createdAt: string;
 }
 
+const issueSchema = z.object({
+  count: z.string().refine(
+    (value) => {
+      const parsed = Number(value);
+      return Number.isInteger(parsed) && parsed >= 1 && parsed <= 25;
+    },
+    { message: "Count must be between 1 and 25." },
+  ),
+  scope: z.enum(["platform", "tenant"]),
+  tenantId: z.string(),
+  issuedToEmail: z.string(),
+  expiresAt: z.string(),
+});
+type IssueValues = z.infer<typeof issueSchema>;
+
 export function AccessInviteIssuer() {
-  const [pending, setPending] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [issued, setIssued] = useState<IssuedInvite[]>([]);
   const [managedInvites, setManagedInvites] = useState<ManagedInvite[]>([]);
-  const [scope, setScope] = useState<"platform" | "tenant">("platform");
+
+  const form = useForm<IssueValues>({
+    resolver: zodResolver(issueSchema),
+    defaultValues: {
+      count: "1",
+      scope: "platform",
+      tenantId: "",
+      issuedToEmail: "",
+      expiresAt: "",
+    },
+  });
+
+  const scope = form.watch("scope");
+  const pending = form.formState.isSubmitting;
 
   const loadManagedInvites = useCallback(async () => {
     const response = await fetch("/api/admin/access-invites");
@@ -49,19 +93,16 @@ export function AccessInviteIssuer() {
     void loadManagedInvites().catch(() => undefined);
   }, [loadManagedInvites]);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setPending(true);
+  async function handleSubmit(values: IssueValues) {
     setMessage(null);
     setIssued([]);
 
-    const form = new FormData(event.currentTarget);
     const body = {
-      count: Number(form.get("count") ?? 1),
-      scope,
-      tenantId: scope === "tenant" ? String(form.get("tenantId") ?? "") : undefined,
-      issuedToEmail: String(form.get("issuedToEmail") ?? "") || undefined,
-      expiresAt: String(form.get("expiresAt") ?? "") || undefined,
+      count: Number(values.count ?? 1),
+      scope: values.scope,
+      tenantId: values.scope === "tenant" ? String(values.tenantId ?? "") : undefined,
+      issuedToEmail: String(values.issuedToEmail ?? "") || undefined,
+      expiresAt: String(values.expiresAt ?? "") || undefined,
     };
 
     try {
@@ -82,8 +123,6 @@ export function AccessInviteIssuer() {
       await loadManagedInvites().catch(() => undefined);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Failed to issue invites.");
-    } finally {
-      setPending(false);
     }
   }
 
@@ -118,77 +157,128 @@ export function AccessInviteIssuer() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-5 grid gap-3 lg:grid-cols-5">
-        <label className="text-xs font-medium text-[var(--neutral-11)]">
-          Count
-          <input
-            data-allow-native
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="mt-5 grid gap-3 lg:grid-cols-5">
+          <FormField
+            control={form.control}
             name="count"
-            type="number"
-            min={1}
-            max={25}
-            defaultValue={1}
-            className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
+                  Count
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="number"
+                    min={1}
+                    max={25}
+                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </label>
-        <label className="text-xs font-medium text-[var(--neutral-11)]">
-          Scope
-          <select
-            data-allow-native
+          <FormField
+            control={form.control}
             name="scope"
-            value={scope}
-            onChange={(event) => setScope(event.target.value as "platform" | "tenant")}
-            className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
-          >
-            <option value="platform">Platform</option>
-            <option value="tenant">Tenant</option>
-          </select>
-        </label>
-        <label className="text-xs font-medium text-[var(--neutral-11)]">
-          Tenant ID
-          <input
-            data-allow-native
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
+                  Scope
+                </FormLabel>
+                <Select name="scope" value={field.value} onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]">
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="platform">Platform</SelectItem>
+                    <SelectItem value="tenant">Tenant</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="tenantId"
-            disabled={scope !== "tenant"}
-            className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] disabled:opacity-50"
-            placeholder="org_..."
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
+                  Tenant ID
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled={scope !== "tenant"}
+                    placeholder="org_..."
+                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)] disabled:opacity-50"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </label>
-        <label className="text-xs font-medium text-[var(--neutral-11)]">
-          Email lock
-          <input
-            data-allow-native
+          <FormField
+            control={form.control}
             name="issuedToEmail"
-            type="email"
-            className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
-            placeholder="optional"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
+                  Email lock
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder="optional"
+                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </label>
-        <label className="text-xs font-medium text-[var(--neutral-11)]">
-          Expires at
-          <input
-            data-allow-native
+          <FormField
+            control={form.control}
             name="expiresAt"
-            type="datetime-local"
-            className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel className="text-xs font-medium text-[var(--neutral-11)]">
+                  Expires at
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="datetime-local"
+                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2 text-sm text-[var(--neutral-12)]"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </label>
 
-        <div className="flex items-end gap-3 lg:col-span-5">
-          <button
-            type="submit"
-            disabled={pending}
-            className="rounded-[var(--radius-lg)] bg-[color:var(--brand-primary)] px-3 py-2 font-medium text-[var(--neutral-1)] text-sm disabled:opacity-50"
-          >
-            {pending ? "Issuing..." : "Issue invite codes"}
-          </button>
-          {message ? (
-            <p role="status" className="text-sm text-[var(--neutral-11)]">
-              {message}
-            </p>
-          ) : null}
-        </div>
-      </form>
+          <div className="flex items-end gap-3 lg:col-span-5">
+            <button
+              type="submit"
+              disabled={pending}
+              className="rounded-[var(--radius-lg)] bg-[color:var(--brand-primary)] px-3 py-2 font-medium text-[var(--neutral-1)] text-sm disabled:opacity-50"
+            >
+              {pending ? "Issuing..." : "Issue invite codes"}
+            </button>
+            {message ? (
+              <p role="status" className="text-sm text-[var(--neutral-11)]">
+                {message}
+              </p>
+            ) : null}
+          </div>
+        </form>
+      </Form>
 
       {issued.length > 0 ? (
         <div className="mt-4 rounded-[var(--radius-2xl)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-3">

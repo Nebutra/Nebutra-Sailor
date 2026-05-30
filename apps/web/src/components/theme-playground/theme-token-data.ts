@@ -47,18 +47,24 @@ const MODE_SURFACE_FALLBACKS: Record<ThemeMode, Record<string, string>> = {
     ring: "oklch(0.546 0.245 262.9)",
   },
   dark: {
-    // Three-tier dark surface (Manus / Linear): canvas → card → popover.
-    // 0.020–0.025 L per step is enough to feel layered without any outline.
-    background: "oklch(0.125 0.005 285.9)",
-    foreground: "oklch(0.985 0 0)",
-    card: "oklch(0.155 0.005 285.9)",
-    "card-foreground": "oklch(0.985 0 0)",
-    popover: "oklch(0.18 0.005 285.9)",
-    "popover-foreground": "oklch(0.985 0 0)",
-    muted: "oklch(0.2 0.005 285.9)",
-    "muted-foreground": "oklch(0.66 0.012 286)",
-    border: "oklch(1 0 0 / 0.05)",
-    input: "oklch(1 0 0 / 0.05)",
+    // Linear / Vercel pattern (per industry research): 5–8% L step per
+    // elevation tier, hairline borders, OFF-white text (#E5E5E5 not pure
+    // white) to reduce eye strain. Four-tier surface system:
+    //   canvas → card → popover → muted/overlay
+    background: "oklch(0.16 0.005 285.9)", // ≈ #161616 — charcoal not pitch
+    foreground: "oklch(0.93 0 0)", // off-white, not 0.985 (which causes glow)
+    card: "oklch(0.215 0.005 285.9)", // +0.055 L = card lifts clearly
+    "card-foreground": "oklch(0.93 0 0)",
+    popover: "oklch(0.265 0.005 285.9)", // +0.05 L = nested tier
+    "popover-foreground": "oklch(0.93 0 0)",
+    muted: "oklch(0.305 0.005 285.9)",
+    "muted-foreground": "oklch(0.7 0.012 286)",
+    // Dark mode: border INVISIBLE. The 5% L bg-tier step alone defines edges.
+    // Stacking a 6% white hairline ON TOP of an already-visible bg-tier
+    // transition reads as "doubled line" — the literal "硬白线" complaint.
+    // Pick one edge cue, not both.
+    border: "transparent",
+    input: "oklch(1 0 0 / 0.06)",
     ring: "oklch(0.546 0.245 262.9)",
   },
 };
@@ -107,15 +113,37 @@ export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSPrope
   const surfaceFallback = MODE_SURFACE_FALLBACKS[mode];
   const vars: Record<string, string> = { colorScheme: mode };
 
-  // Mode wins on surface colors so the Light/Dark toggle actually does something
-  // even for themes that declare a full surface palette. Brand colors below stay
-  // theme-driven — picking Dark Ocean = Ocean's brand cyan on a dark surface.
+  // Surface precedence — three rules, in order:
+  //   1. DARK mode: fallback always wins (Linear-pattern dark uniform across themes).
+  //   2. LIGHT mode + theme is LIGHT-DESIGNED (theme.bg L > 0.5): theme wins
+  //      so its native multi-tier aesthetic (e.g. Vibrant cream/white/grey)
+  //      comes through.
+  //   3. LIGHT mode + theme is DARK-DESIGNED (Neon, Dark Dense): fallback wins
+  //      so user can still preview the theme's brand colors on a light surface.
+  const themeBgValue = tokenValue(theme.color, "background");
+  const themeBgL = themeBgValue
+    ? Number.parseFloat(themeBgValue.match(/oklch\(([0-9.]+)/)?.[1] ?? "0.5")
+    : 0.5;
+  const themeIsLightDesigned = themeBgL > 0.5;
+  const themeWinsSurface = mode === "light" && themeIsLightDesigned;
+
   for (const key of SURFACE_COLOR_KEYS) {
-    setVar(vars, `--color-${key}`, surfaceFallback[key] ?? tokenValue(theme.color, key));
+    const themeVal = tokenValue(theme.color, key);
+    const value = themeWinsSurface
+      ? (themeVal ?? surfaceFallback[key])
+      : (surfaceFallback[key] ?? themeVal);
+    setVar(vars, `--color-${key}`, value);
   }
 
+  // Brand colors stay theme-driven, but a theme can define a `-dark` variant
+  // (e.g. `primary-dark`) and that wins in dark mode — important for themes
+  // whose default primary was designed for one mode and disappears on the
+  // other (Minimal's near-black primary vanishes on a dark canvas).
   for (const key of BRAND_COLOR_KEYS) {
-    setVar(vars, `--color-${key}`, tokenValue(theme.color, key) ?? STATUS_COLOR_FALLBACKS[key]);
+    const themeValue =
+      (mode === "dark" ? tokenValue(theme.color, `${key}-dark`) : undefined) ??
+      tokenValue(theme.color, key);
+    setVar(vars, `--color-${key}`, themeValue ?? STATUS_COLOR_FALLBACKS[key]);
   }
 
   // Optional brand gradient — themes that define one get a real Nebutra-style

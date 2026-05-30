@@ -137,7 +137,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
           return (
             <article
               key={connector.id}
-              className={`group relative flex h-full flex-col rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-4 transition-colors hover:border-neutral-8 ${
+              className={`group relative flex h-full flex-col rounded-[var(--radius-xl)] bg-neutral-2 p-4 transition-colors hover:bg-neutral-3 ${
                 isBusy ? "opacity-60" : ""
               }`}
             >

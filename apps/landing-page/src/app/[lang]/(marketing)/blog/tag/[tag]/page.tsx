@@ -132,7 +132,7 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
           <div className="border-y border-[var(--neutral-6)] py-10 sm:py-14">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-[var(--neutral-2)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
               <BookOpen className="size-3.5" aria-hidden />
               {isZh ? "专题" : "Topic"}
             </div>
@@ -173,7 +173,7 @@ function BlogTagPageSkeleton() {
           <div className="mt-6 h-12 w-64 animate-pulse rounded bg-[var(--neutral-3)]" />
           <div className="mt-5 h-4 w-32 animate-pulse rounded bg-[var(--neutral-3)]" />
         </div>
-        <div className="mt-12 h-80 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)]" />
+        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-[var(--neutral-2)]" />
       </section>
     </main>
   );

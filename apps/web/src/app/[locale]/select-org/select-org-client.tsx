@@ -83,7 +83,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
                 key={org.id}
                 type="button"
                 onClick={() => handleSelectOrganization(org.id)}
-                className="flex w-full items-center gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-3 text-left transition-colors hover:bg-neutral-2"
+                className="flex w-full items-center gap-3 rounded-[var(--radius-lg)] bg-neutral-2 p-3 text-left transition-colors hover:bg-neutral-3"
               >
                 {org.image ? (
                   // biome-ignore lint/performance/noImgElement: Clerk organization avatars can be arbitrary remote URLs outside next/image remotePatterns.

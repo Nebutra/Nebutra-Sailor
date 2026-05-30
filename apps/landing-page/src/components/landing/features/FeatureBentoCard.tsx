@@ -49,7 +49,7 @@ export function FeatureBentoCard({
             className="group/link mt-8 flex w-fit items-center gap-3 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             aria-label={`${ctaLabel}: ${title}`}
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border/50 bg-background/50 text-muted-foreground backdrop-blur-sm transition-colors group-hover/link:border-foreground group-hover/link:text-foreground dark:border-border dark:group-hover/link:border-border">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border/50 bg-background/50 text-muted-foreground backdrop-blur-sm transition-colors group-hover/link:border-foreground/80 group-hover/link:text-foreground dark:border-border/50 dark:group-hover/link:border-foreground/60">
               <ArrowRight className="h-4 w-4" />
             </span>
             <span className="text-sm font-semibold text-muted-foreground transition-colors group-hover/link:text-foreground">

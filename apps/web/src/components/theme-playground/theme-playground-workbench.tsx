@@ -46,6 +46,13 @@ import {
 type Density = "compact" | "comfortable";
 type Surface = "neutral" | "brand" | "product";
 type PreviewSuite = "forms" | "pricing" | "dashboard" | "ai-chat" | "charts";
+type ViewportId = "1280x800" | "1440x1024" | "390x844";
+
+const viewportSpec: Record<ViewportId, { width: number; label: string }> = {
+  "1280x800": { width: 1280, label: "1280 × 800" },
+  "1440x1024": { width: 1440, label: "1440 × 1024" },
+  "390x844": { width: 390, label: "390 × 844" },
+};
 
 const suites: Array<{ id: PreviewSuite; label: string; icon: ReactNode }> = [
   { id: "forms", label: "Forms", icon: <Sparkles /> },
@@ -340,6 +347,8 @@ function CanvasHeader({
 }: {
   activeSuite: PreviewSuite;
   onSuiteChange: (suite: PreviewSuite) => void;
+  viewport: ViewportId;
+  onViewportChange: (viewport: ViewportId) => void;
 }) {
   return (
     <div className="grid gap-3 border-border/70 border-b p-4 min-[1080px]:grid-cols-[minmax(0,1fr)_auto_auto] min-[1080px]:items-center">
@@ -367,14 +376,16 @@ function CanvasHeader({
           </TabsList>
         </Tabs>
       </div>
-      <Select defaultValue="1280x800">
+      <Select value={viewport} onValueChange={(v) => onViewportChange(v as ViewportId)}>
         <SelectTrigger size="small" className="h-8 min-w-[120px]">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="1280x800">1280 × 800</SelectItem>
-          <SelectItem value="1440x1024">1440 × 1024</SelectItem>
-          <SelectItem value="390x844">390 × 844</SelectItem>
+          {(Object.keys(viewportSpec) as ViewportId[]).map((id) => (
+            <SelectItem key={id} value={id}>
+              {viewportSpec[id].label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>
@@ -388,6 +399,8 @@ function PreviewCanvas({
   surface,
   activeSuite,
   onSuiteChange,
+  viewport,
+  onViewportChange,
 }: {
   theme: ThemeRegistryEntry;
   mode: ThemeMode;
@@ -395,8 +408,11 @@ function PreviewCanvas({
   surface: Surface;
   activeSuite: PreviewSuite;
   onSuiteChange: (suite: PreviewSuite) => void;
+  viewport: ViewportId;
+  onViewportChange: (viewport: ViewportId) => void;
 }) {
   const style = getThemePreviewStyle(theme.id, mode);
+  const viewportWidth = viewportSpec[viewport].width;
 
   // Tailwind v4 in this app uses `@theme inline { --color-*: hsl(var(--*)) }`,
   // which inlines the value into the utility — so `bg-background` reads `--background`
@@ -405,23 +421,32 @@ function PreviewCanvas({
   // `var(--color-*)` straight from the wrapper's inline style.
   return (
     <section className="theme-preview-canvas min-h-0 min-w-0 bg-background/55">
-      <CanvasHeader activeSuite={activeSuite} onSuiteChange={onSuiteChange} />
-      <div
-        data-theme={theme.id}
-        data-mode={mode}
-        data-surface={surface}
-        style={style}
-        className={cn(
-          "h-full min-h-[680px] overflow-y-auto bg-[var(--color-background)] text-[color:var(--color-foreground)]",
-          densityScale[density],
-        )}
-      >
-        <div className="theme-preview-grid gap-[var(--playground-gap)] p-[var(--playground-pad)]">
-          <FormsPanel active={activeSuite === "forms"} />
-          <PricingPanel active={activeSuite === "pricing"} />
-          <DashboardPanel active={activeSuite === "dashboard"} />
-          <AiChatPanel active={activeSuite === "ai-chat"} />
-          <ChartsPanel active={activeSuite === "charts"} />
+      <CanvasHeader
+        activeSuite={activeSuite}
+        onSuiteChange={onSuiteChange}
+        viewport={viewport}
+        onViewportChange={onViewportChange}
+      />
+      <div className="h-full min-h-[680px] overflow-auto p-4">
+        {/* Viewport frame — centered, max-width clamps to selected device width.
+            Switching the dropdown actually resizes the inner canvas. */}
+        <div
+          data-theme={theme.id}
+          data-mode={mode}
+          data-surface={surface}
+          style={{ ...style, maxWidth: `${viewportWidth}px` }}
+          className={cn(
+            "mx-auto min-h-[640px] w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
+            densityScale[density],
+          )}
+        >
+          <div className="theme-preview-grid gap-[var(--playground-gap)] p-[var(--playground-pad)]">
+            <FormsPanel active={activeSuite === "forms"} />
+            <PricingPanel active={activeSuite === "pricing"} />
+            <DashboardPanel active={activeSuite === "dashboard"} />
+            <AiChatPanel active={activeSuite === "ai-chat"} />
+            <ChartsPanel active={activeSuite === "charts"} />
+          </div>
         </div>
       </div>
     </section>
@@ -442,13 +467,13 @@ function PreviewCard({
   return (
     <section
       className={cn(
-        // Manus/Linear style: card lifted purely by drop shadow + bg tier (no outline).
-        // The shadow IS the edge — feathered by definition, so no "hard line".
-        "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--playground-pad)] text-[color:var(--color-card-foreground)]",
-        "shadow-[0_1px_2px_0_rgb(0_0_0/0.18),0_8px_24px_-12px_rgb(0_0_0/0.35)]",
-        // Focused card: deeper shadow + faint neutral halo.
-        active &&
-          "shadow-[0_0_0_2px_color-mix(in_oklab,var(--color-foreground),transparent_92%),0_2px_4px_0_rgb(0_0_0/0.2),0_12px_32px_-12px_rgb(0_0_0/0.4)]",
+        // Linear-pattern card: hairline border (10% white in dark, 6% black in
+        // light, set in token-data) + visible bg-tier (5%+ L step) + soft drop
+        // shadow. NOT "borderless flat" — that fights how dark UIs actually
+        // communicate layering per industry practice.
+        "rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-card)] p-[var(--playground-pad)] text-[color:var(--color-card-foreground)]",
+        "shadow-[0_1px_2px_0_rgb(0_0_0/0.08),0_4px_12px_-2px_rgb(0_0_0/0.12)]",
+        active && "ring-1 ring-[color-mix(in_oklab,var(--color-foreground),transparent_82%)]",
         className,
       )}
     >
@@ -482,7 +507,11 @@ function FormInput({
         // Recessed well, not an outlined box — inset 1px hint + a tiny top inset
         // shadow simulates "input pressed into the surface". Reads as soft and
         // affordant; no hard outline anywhere.
-        className="h-9 rounded-[var(--radius-md)] bg-[var(--color-background)] px-3 text-[color:var(--color-foreground)] text-xs outline-none shadow-[inset_0_0_0_1px_rgb(255_255_255/0.04),inset_0_1px_2px_0_rgb(0_0_0/0.2)]"
+        // Input bg matches the card so there's NO color step at the edge —
+        // the inset top shadow alone signals "pressed well". Top shadow is
+        // visible on light (black on white) and reads as subtle depression on
+        // dark (black-on-dark gives a faint inner darkening at the top edge).
+        className="h-9 rounded-[var(--radius-md)] bg-[var(--color-card)] px-3 text-[color:var(--color-foreground)] text-xs outline-none shadow-[inset_0_1px_2px_0_rgb(0_0_0/0.18)]"
       />
     </label>
   );
@@ -538,11 +567,10 @@ function PricingPanel({ active }: { active: boolean }) {
           <div
             key={plan.name}
             className={cn(
-              // Sub-card on top of card surface — drop one tier (use popover, which
-              // is ~0.025 L above card) so layering is visible without an outline.
-              "relative rounded-[var(--radius-lg)] bg-[var(--color-popover)] p-4",
-              // Popular plan gets a slight elevation; badge already labels it.
-              plan.popular && "shadow-[var(--shadow-md)]",
+              // Sub-tier: hairline border + bg-popover (one tier up from card,
+              // ~0.05 L delta = visibly raised). Same Linear pattern.
+              "relative rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-popover)] p-4",
+              plan.popular && "shadow-[0_2px_8px_-2px_rgb(0_0_0/0.15)]",
             )}
           >
             {plan.popular && (
@@ -594,9 +622,10 @@ function DashboardPanel({ active }: { active: boolean }) {
 
   return (
     <PreviewCard title="Project Overview" active={active} className="theme-preview-span-7">
-      <div className="theme-stats-grid gap-3">
+      {/* Stat tiles: no own bg — blend into parent card. Spacing + typography hierarchy alone. */}
+      <div className="theme-stats-grid gap-x-6 gap-y-3">
         {stats.map(([label, value, delta]) => (
-          <div key={label} className="rounded-[var(--radius-md)] bg-[var(--color-background)] p-3">
+          <div key={label} className="p-1">
             <div className="text-[color:var(--color-muted-foreground)] text-[11px]">{label}</div>
             <div className="mt-1 font-bold text-lg">{value}</div>
             <div className="mt-1 text-[11px] text-[color:var(--color-success)]">
@@ -605,12 +634,13 @@ function DashboardPanel({ active }: { active: boolean }) {
           </div>
         ))}
       </div>
-      <div className="mt-3 overflow-hidden rounded-[var(--radius-md)] bg-[var(--color-background)]">
+      {/* Project list: no own bg — rows separated by faint divider lines only. */}
+      <div className="mt-4">
         {["Nebutra Marketing", "Design System v2", "AI Assistant", "Analytics Pipeline"].map(
           (project, index) => (
             <div
               key={project}
-              className="grid grid-cols-[1fr_auto_auto] items-center gap-3 border-[var(--color-border)] border-b px-3 py-2 last:border-b-0"
+              className="grid grid-cols-[1fr_auto_auto] items-center gap-3 border-[color-mix(in_oklab,var(--color-foreground),transparent_94%)] border-b py-2.5 last:border-b-0"
             >
               <span className="font-medium text-xs">{project}</span>
               <Badge variant={index === 3 ? "purple-subtle" : "green-subtle"} size="sm">
@@ -642,9 +672,11 @@ function AiChatPanel({ active }: { active: boolean }) {
       <div className="ml-auto max-w-[72%] rounded-[var(--radius-lg)] bg-[var(--color-primary)] p-3 text-[color:var(--color-primary-foreground)] text-xs">
         Can you help me analyze last month's growth?
       </div>
-      <div className="mt-3 max-w-[78%] rounded-[var(--radius-lg)] bg-[var(--color-background)] p-3 text-xs">
+      {/* Assistant message bubble: foreground-mix at 6% — barely visible halo
+          that hints "this is a bubble" without forming a hard rectangle. */}
+      <div className="mt-3 max-w-[78%] rounded-[var(--radius-lg)] bg-[color-mix(in_oklab,var(--color-foreground),transparent_94%)] p-3 text-xs">
         Sure. Growth improved across activation and retention. I attached the report.
-        <div className="mt-3 flex items-center justify-between rounded-[var(--radius-md)] bg-[var(--color-card)] p-2">
+        <div className="mt-3 flex items-center justify-between rounded-[var(--radius-md)] bg-[color-mix(in_oklab,var(--color-foreground),transparent_92%)] p-2">
           <span className="font-mono text-[11px]">growth-report.pdf</span>
           <Clipboard className="size-3 text-[color:var(--color-muted-foreground)]" />
         </div>
@@ -653,7 +685,7 @@ function AiChatPanel({ active }: { active: boolean }) {
         {["Retention", "Region", "Revenue"].map((item) => (
           <button
             key={item}
-            className="rounded-full bg-[var(--color-background)] px-3 py-1 text-[color:var(--color-muted-foreground)] text-[11px]"
+            className="rounded-full bg-[color-mix(in_oklab,var(--color-foreground),transparent_94%)] px-3 py-1 text-[color:var(--color-muted-foreground)] text-[11px]"
             type="button"
           >
             {item}
@@ -686,8 +718,10 @@ function MiniChart({
   variant: "line" | "bar" | "area";
 }) {
   const bars = [42, 58, 46, 72, 64, 55];
+  // Flat mini chart — no nested card frame, no inner well bg. Numbers +
+  // sparkline sit directly on the parent Charts card.
   return (
-    <div className="rounded-[var(--radius-md)] bg-[var(--color-popover)] p-4 shadow-[0_1px_2px_0_rgb(0_0_0/0.18)]">
+    <div className="p-1">
       <div className="mb-4 flex items-start justify-between">
         <div>
           <div className="font-medium text-xs">{title}</div>
@@ -697,7 +731,7 @@ function MiniChart({
           +12.5%
         </Badge>
       </div>
-      <div className="relative h-28 overflow-hidden rounded-[var(--radius-sm)] bg-[var(--color-background)] p-3">
+      <div className="relative h-28 overflow-hidden p-1">
         {variant === "bar" ? (
           <div className="flex h-full items-end gap-3">
             {bars.map((height) => (
@@ -919,6 +953,7 @@ export function ThemePlaygroundWorkbench() {
   const [density, setDensity] = useState<Density>("comfortable");
   const [surface, setSurface] = useState<Surface>("neutral");
   const [activeSuite, setActiveSuite] = useState<PreviewSuite>("forms");
+  const [viewport, setViewport] = useState<ViewportId>("1280x800");
 
   return (
     <div className="theme-playground-frame flex min-h-[calc(100vh-7rem)] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background text-foreground shadow-sm">
@@ -943,6 +978,8 @@ export function ThemePlaygroundWorkbench() {
           surface={surface}
           activeSuite={activeSuite}
           onSuiteChange={setActiveSuite}
+          viewport={viewport}
+          onViewportChange={setViewport}
         />
         <TokenInspector theme={selectedTheme} mode={mode} onThemeChange={setSelectedTheme} />
       </main>

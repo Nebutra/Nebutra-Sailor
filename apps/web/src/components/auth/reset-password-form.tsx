@@ -1,15 +1,29 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nebutra/ui/components";
-import { Input } from "@nebutra/ui/primitives";
+import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { type FormEvent, useState } from "react";
+import { useState } from "react";
+import { type FieldErrors, useForm } from "react-hook-form";
+import { z } from "zod";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
 
 const MIN_PASSWORD_LENGTH = 8;
+
+const resetPasswordSchema = z
+  .object({
+    newPassword: z.string().min(MIN_PASSWORD_LENGTH, "passwordTooShort"),
+    confirmPassword: z.string(),
+  })
+  .refine((values) => values.newPassword === values.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "passwordsDontMatch",
+  });
+type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
 
 export interface ResetPasswordSubmitInput {
   token: string;
@@ -42,35 +56,30 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
   const tErrors = useTranslations("auth.errors");
   const router = useRouter();
 
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [pending, setPending] = useState(false);
+  const form = useForm<ResetPasswordValues>({
+    resolver: zodResolver(resetPasswordSchema),
+    defaultValues: { newPassword: "", confirmPassword: "" },
+  });
+
   const [errorKey, setErrorKey] = useState<AuthErrorKey | null>(null);
   const [success, setSuccess] = useState(false);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const pending = form.formState.isSubmitting;
+
+  async function onValidSubmit(values: ResetPasswordValues) {
     setErrorKey(null);
-
-    if (newPassword.length < MIN_PASSWORD_LENGTH) {
-      setErrorKey("passwordTooShort");
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setErrorKey("passwordsDontMatch");
-      return;
-    }
-
-    setPending(true);
     try {
       const submit = onSubmit ?? defaultSubmit;
-      await submit({ token, newPassword });
+      await submit({ token, newPassword: values.newPassword });
       setSuccess(true);
     } catch (error) {
       setErrorKey(resolveAuthErrorKey(error));
-    } finally {
-      setPending(false);
     }
+  }
+
+  function onInvalidSubmit(errors: FieldErrors<ResetPasswordValues>) {
+    const message = errors.newPassword?.message ?? errors.confirmPassword?.message;
+    setErrorKey((message as AuthErrorKey | undefined) ?? null);
   }
 
   const errorMessage = errorKey ? tErrors(errorKey) : null;
@@ -110,53 +119,59 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
         </p>
       )}
 
-      <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-        <div className="space-y-1.5">
-          <label
-            className="block text-sm font-medium text-[var(--neutral-12)]"
-            htmlFor="reset-password-new"
-          >
-            {t("newPasswordLabel")}
-          </label>
-          <Input
-            aria-describedby={errorMessage ? errorId : undefined}
-            aria-invalid={Boolean(errorMessage)}
-            autoComplete="new-password"
-            id="reset-password-new"
-            minLength={MIN_PASSWORD_LENGTH}
+      <Form {...form}>
+        <form
+          className="space-y-4"
+          onSubmit={form.handleSubmit(onValidSubmit, onInvalidSubmit)}
+          noValidate
+        >
+          <FormField
+            control={form.control}
             name="newPassword"
-            onChange={(event) => setNewPassword(event.target.value)}
-            required
-            type="password"
-            value={newPassword}
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                  {t("newPasswordLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    autoComplete="new-password"
+                    minLength={MIN_PASSWORD_LENGTH}
+                    required
+                    type="password"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div className="space-y-1.5">
-          <label
-            className="block text-sm font-medium text-[var(--neutral-12)]"
-            htmlFor="reset-password-confirm"
-          >
-            {t("confirmPasswordLabel")}
-          </label>
-          <Input
-            aria-describedby={errorMessage ? errorId : undefined}
-            aria-invalid={Boolean(errorMessage)}
-            autoComplete="new-password"
-            id="reset-password-confirm"
-            minLength={MIN_PASSWORD_LENGTH}
+          <FormField
+            control={form.control}
             name="confirmPassword"
-            onChange={(event) => setConfirmPassword(event.target.value)}
-            required
-            type="password"
-            value={confirmPassword}
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="block text-sm font-medium text-[var(--neutral-12)]">
+                  {t("confirmPasswordLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    autoComplete="new-password"
+                    minLength={MIN_PASSWORD_LENGTH}
+                    required
+                    type="password"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
           />
-        </div>
 
-        <Button disabled={pending} htmlType="submit" type="primary">
-          {t("submit")}
-        </Button>
-      </form>
+          <Button disabled={pending} htmlType="submit" type="primary">
+            {t("submit")}
+          </Button>
+        </form>
+      </Form>
     </section>
   );
 }

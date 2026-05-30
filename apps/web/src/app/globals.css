@@ -224,7 +224,10 @@
     -webkit-backdrop-filter: blur(14px) saturate(140%);
   }
 
-  html.motion-reduce * {
+  /* WCAG 2.3.3 motion reduction — but EXEMPT functional progress indicators
+   * (spinners/pulses/pings). Loading affordances stay animated regardless of
+   * user motion preference; only decorative animations stop. */
+  html.motion-reduce *:not(.animate-spin):not(.animate-pulse):not(.animate-ping) {
     /* biome-ignore lint/complexity/noImportantStyles: must defeat component-level animation duration — standard WCAG 2.3.3 / prefers-reduced-motion override */
     animation-duration: 0.001ms !important;
     /* biome-ignore lint/complexity/noImportantStyles: must defeat component-level transition duration — standard WCAG 2.3.3 / prefers-reduced-motion override */

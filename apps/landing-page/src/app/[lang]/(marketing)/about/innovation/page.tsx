@@ -421,7 +421,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               <AnimateInGroup stagger="normal">
                 <AnimateIn preset="fadeUp">
                   <div
-                    className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background p-6 md:p-10 lg:p-14"
+                    className="relative rounded-[var(--radius-panel)] bg-background p-6 md:p-10 lg:p-14"
                     style={{ boxShadow: "var(--ring-hairline)" }}
                   >
                     {/* Harness (outermost, highlighted) */}
@@ -560,7 +560,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   return (
                     <AnimateIn key={item.name} preset="fadeUp">
                       <div
-                        className="h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/20 p-6 hover:border-border hover:bg-muted/40 hover:-translate-y-px transition-all duration-150"
+                        className="h-full rounded-[var(--radius-card)] bg-muted/20 p-6 hover:bg-muted/40 hover:-translate-y-px transition-all duration-150"
                         style={{ boxShadow: "var(--ring-hairline)" }}
                       >
                         <div className="flex items-center justify-between mb-4">
@@ -626,7 +626,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   return (
                     <AnimateIn key={stat.label} preset="fadeUp">
                       <div
-                        className="rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/10 p-8 md:p-10 h-full flex flex-col justify-between"
+                        className="rounded-[var(--radius-card)] bg-muted/10 p-8 md:p-10 h-full flex flex-col justify-between"
                         style={{ boxShadow: "var(--ring-hairline)" }}
                       >
                         <span
@@ -685,7 +685,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               return (
                 <AnimateIn key={principle.name} preset="fadeUp">
                   <div
-                    className="h-full rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background p-7 hover:border-border hover:-translate-y-px transition-all duration-150"
+                    className="h-full rounded-[var(--radius-card)] bg-background p-7 hover:-translate-y-px transition-all duration-150"
                     style={{ boxShadow: "var(--ring-hairline)" }}
                   >
                     <div className="flex items-center justify-between mb-5">

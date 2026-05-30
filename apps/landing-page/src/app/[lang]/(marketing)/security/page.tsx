@@ -195,7 +195,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
               {CAPABILITIES.map((cap) => (
                 <AnimateIn key={cap.title} preset="fadeUp">
                   <article
-                    className="rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-card/30 p-7 h-full hover:border-primary/40 transition-colors"
+                    className="rounded-[var(--radius-card)] bg-card/30 p-7 h-full transition-colors"
                     style={{ boxShadow: "var(--ring-hairline)" }}
                   >
                     <div className="flex items-start gap-4 mb-3">
@@ -239,7 +239,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
               No badges we have not earned.
             </p>
             <div
-              className="rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-card/20 divide-y divide-border overflow-hidden"
+              className="rounded-[var(--radius-card)] bg-card/20 divide-y divide-border overflow-hidden"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               {COMPLIANCE.map((row) => (
@@ -262,7 +262,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
           {/* CTAs */}
           <AnimateIn preset="fadeUp">
             <div
-              className="rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-muted/30 p-10 text-center"
+              className="rounded-[var(--radius-card)] bg-muted/30 p-10 text-center"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <FileLock className="h-10 w-10 mx-auto text-primary mb-4" />

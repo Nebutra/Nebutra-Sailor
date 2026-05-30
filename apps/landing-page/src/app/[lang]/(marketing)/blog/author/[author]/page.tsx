@@ -144,7 +144,7 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
         <AnimateIn preset="emerge" inView>
           <div className="border-y border-[var(--neutral-6)] py-10 sm:py-14">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-              <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-10)]">
+              <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-7)]/60 bg-[var(--neutral-2)] text-[var(--neutral-10)]">
                 {avatarUrl ? (
                   <Image
                     src={avatarUrl}
@@ -205,7 +205,7 @@ function BlogAuthorPageSkeleton() {
             </div>
           </div>
         </div>
-        <div className="mt-12 h-80 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)]" />
+        <div className="mt-12 h-80 rounded-[var(--radius-lg)] bg-[var(--neutral-2)]" />
       </section>
     </main>
   );

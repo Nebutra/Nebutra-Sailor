@@ -91,7 +91,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             {/* Image */}
             <div className="flex-1 w-full">
               <div
-                className="relative aspect-square md:aspect-[4/3] rounded-[var(--radius-panel)] overflow-hidden bg-muted/30 border border-[var(--neutral-6)]"
+                className="relative aspect-square md:aspect-[4/3] rounded-[var(--radius-panel)] overflow-hidden bg-muted/30"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <Image
@@ -138,7 +138,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           </div>
 
           <div
-            className="relative w-full aspect-video max-h-[700px] overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] group"
+            className="relative w-full aspect-video max-h-[700px] overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-5)]/60 group"
             style={{ boxShadow: "var(--ring-hairline)" }}
           >
             <Image
@@ -338,7 +338,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               return (
                 <div
                   key={item.id}
-                  className="group relative bg-muted/20 border border-[var(--neutral-6)] rounded-[var(--radius-card)] overflow-hidden hover:border-border hover:-translate-y-px transition-transform duration-150 flex flex-col h-full"
+                  className="group relative bg-muted/20 rounded-[var(--radius-card)] overflow-hidden hover:-translate-y-px transition-transform duration-150 flex flex-col h-full"
                   style={{ boxShadow: "var(--ring-hairline)" }}
                 >
                   {/* Top Image Slab */}
@@ -411,7 +411,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             {/* Right: Landscape Image */}
             <div className="flex-1 w-full order-1 lg:order-2">
               <div
-                className="relative aspect-square md:aspect-[4/5] rounded-[var(--radius-panel)] overflow-hidden border border-[var(--neutral-6)]"
+                className="relative aspect-square md:aspect-[4/5] rounded-[var(--radius-panel)] overflow-hidden border border-[var(--neutral-5)]/60"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <Image
@@ -496,7 +496,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
               <Link
                 key={card.href}
                 href={card.href}
-                className="group relative flex flex-col justify-between bg-muted/20 hover:bg-muted/40 border border-[var(--neutral-6)] hover:border-border rounded-[var(--radius-card)] p-10 md:p-12 hover:-translate-y-px transition-transform duration-150 min-h-[260px]"
+                className="group relative flex flex-col justify-between bg-muted/20 hover:bg-muted/40 rounded-[var(--radius-card)] p-10 md:p-12 hover:-translate-y-px transition-transform duration-150 min-h-[260px]"
                 style={{ boxShadow: "var(--ring-hairline)" }}
               >
                 <div>

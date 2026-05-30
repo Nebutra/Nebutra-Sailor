@@ -235,7 +235,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
               return (
                 <AnimateIn key={`pillar-${i}`} preset="fadeUp">
                   <div
-                    className="group h-full bg-muted/20 border border-[var(--neutral-6)] rounded-[var(--radius-card)] p-8 hover:border-border transition-all duration-500 flex flex-col"
+                    className="group h-full bg-muted/20 rounded-[var(--radius-card)] p-8 transition-all duration-500 flex flex-col"
                     style={{ boxShadow: "var(--ring-hairline)" }}
                   >
                     <div className="text-6xl mb-8" aria-hidden="true">

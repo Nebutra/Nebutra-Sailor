@@ -5,6 +5,7 @@
  */
 
 export { DwellHint, type DwellHintProps } from "./DwellHint";
+export { useDebouncedRefresh, useDebouncedValue } from "./use-debounced-refresh";
 export { useMediaQuery } from "./use-media-query";
 export { useReducedMotion } from "./use-reduced-motion";
 export {

@@ -20,6 +20,8 @@
     "border": { "$value": "oklch(0.922 0.004 286)", "$type": "color" },
     "input": { "$value": "oklch(0.922 0.004 286)", "$type": "color" },
     "ring": { "$value": "oklch(0.21 0.006 285.9)", "$type": "color" },
+    "primary-dark": { "$value": "oklch(0.985 0 0)", "$type": "color" },
+    "primary-foreground-dark": { "$value": "oklch(0.141 0.005 285.9)", "$type": "color" },
     "primary-hover": {
       "$value": "color-mix(in oklch, oklch(0.21 0.006 285.9), white 20%)",
       "$type": "color"

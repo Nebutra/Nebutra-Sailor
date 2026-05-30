@@ -628,7 +628,7 @@ export function LicenseWizard() {
               <div>
                 {step1.teamSize === "1" && (
                   <div className="space-y-4">
-                    <div className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] p-4">
+                    <div className="rounded-[var(--radius-lg)] bg-[var(--neutral-2)] p-4">
                       <p className="text-sm text-[var(--neutral-11)]">
                         If you operate as a single-seat business, you qualify for the Independent
                         Developer License below (≤ 1 FTE & &lt; $1M ARR, free).
@@ -896,7 +896,7 @@ export function LicenseWizard() {
                 <p className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
                   Your License Key
                 </p>
-                <div className="relative flex items-center rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-3">
+                <div className="relative flex items-center rounded-[var(--radius-lg)] bg-[var(--neutral-2)] px-4 py-3">
                   <code className="flex-1 font-mono text-sm text-[var(--neutral-12)]">
                     {step4.licenseKey}
                   </code>
