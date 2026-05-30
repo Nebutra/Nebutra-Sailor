@@ -223,46 +223,49 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // Order: Product → Projects → Admin. Projects lists workspaces; the active
   // workspace expands with its 5 most-recent threads pre-loaded. Inactive
   // workspace parents act as workspace-switch triggers and do not prefetch.
-  const projectsSection: SidebarNavSection | null = supportsWorkspaceSwitching
-    ? {
-        id: "Projects",
-        label: tSidebar("projects"),
-        items: workspaceOptions.map((ws) => {
-          const isActiveWorkspace = ws.id === workspace;
-          let children: SidebarNavSection["items"][number]["children"];
+  // Rendered whenever workspaces are available — including single-user / dev-auth
+  // modes where the seed WORKSPACES provide a meaningful project list.
+  const projectsSection: SidebarNavSection | null =
+    workspaceOptions.length > 0
+      ? {
+          id: "Projects",
+          label: tSidebar("projects"),
+          items: workspaceOptions.map((ws) => {
+            const isActiveWorkspace = ws.id === workspace;
+            let children: SidebarNavSection["items"][number]["children"];
 
-          if (isActiveWorkspace) {
-            children =
-              activeWorkspaceThreads.length > 0
-                ? activeWorkspaceThreads.map((thread) => ({
-                    id: `thread:${thread.id}`,
-                    label: thread.title,
-                    href: `/workspace?threadId=${thread.id}`,
-                    isActive: false,
-                  }))
-                : [
-                    {
-                      id: `empty:${ws.id}`,
-                      label: tSidebar("noThreads"),
+            if (isActiveWorkspace) {
+              children =
+                activeWorkspaceThreads.length > 0
+                  ? activeWorkspaceThreads.map((thread) => ({
+                      id: `thread:${thread.id}`,
+                      label: thread.title,
+                      href: `/workspace?threadId=${thread.id}`,
                       isActive: false,
-                      disabled: true,
-                    },
-                  ];
-          }
+                    }))
+                  : [
+                      {
+                        id: `empty:${ws.id}`,
+                        label: tSidebar("noThreads"),
+                        isActive: false,
+                        disabled: true,
+                      },
+                    ];
+            }
 
-          return {
-            id: `workspace:${ws.id}`,
-            label: ws.label,
-            icon: FolderClosed,
-            isActive: isActiveWorkspace,
-            // Non-active workspace parents switch workspace on click rather
-            // than navigating to an href.
-            onClick: isActiveWorkspace ? undefined : () => void handleWorkspaceChange(ws.id),
-            children,
-          };
-        }),
-      }
-    : null;
+            return {
+              id: `workspace:${ws.id}`,
+              label: ws.label,
+              icon: FolderClosed,
+              isActive: isActiveWorkspace,
+              // Non-active workspace parents switch workspace on click rather
+              // than navigating to an href.
+              onClick: isActiveWorkspace ? undefined : () => void handleWorkspaceChange(ws.id),
+              children,
+            };
+          }),
+        }
+      : null;
 
   const sidebarSections: SidebarNavSection[] = DASHBOARD_NAV_GROUPS.flatMap((group) => {
     if (group.title === "Admin" && !isAdmin) {
