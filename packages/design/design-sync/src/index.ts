@@ -37,6 +37,7 @@ export {
   writeTokenSet,
 } from "./io";
 // ── Providers (tree-shakable direct imports) ────────────────────────────────
+export { DesignMdProvider } from "./providers/design-md";
 export { FigmaProvider } from "./providers/figma";
 export { GitOnlyProvider } from "./providers/git-only";
 export { MemoryProvider } from "./providers/memory";

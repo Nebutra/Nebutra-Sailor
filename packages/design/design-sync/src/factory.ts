@@ -71,11 +71,11 @@ export async function createDesignSync(config?: DesignSyncConfig): Promise<Desig
       return new MemoryProvider(memConfig ?? { provider: "memory" });
     }
 
-    case "design-md":
-      throw new Error(
-        "[design-sync] design-md provider is not yet implemented. " +
-          "Set DESIGN_SYNC_PROVIDER to 'figma', 'penpot', 'git-only', or 'memory'.",
-      );
+    case "design-md": {
+      const { DesignMdProvider } = await import("./providers/design-md");
+      const mdConfig = config?.provider === "design-md" ? config : undefined;
+      return new DesignMdProvider(mdConfig ?? { provider: "design-md" });
+    }
 
     default:
       throw new Error(`Unknown design-sync provider: ${providerType as string}`);

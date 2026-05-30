@@ -29,6 +29,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./design-md": {
+      "types": "./dist/providers/design-md.d.ts",
+      "import": "./dist/providers/design-md.js"
+    },
     "./figma": {
       "types": "./dist/providers/figma.d.ts",
       "import": "./dist/providers/figma.js"

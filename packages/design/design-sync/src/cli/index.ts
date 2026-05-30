@@ -88,11 +88,11 @@ Commands:
   detect            Print the resolved provider + env diagnostics
   healthcheck       Run the provider's healthcheck()
   pull              Pull design-tool → repo (DTCG JSON)
-  push              Push repo → design-tool (defaults to dry-run on figma/penpot)
+  push              Push repo → design-tool (defaults to dry-run on figma/penpot/design-md)
   help              Show this message
 
 Options:
-  --provider <X>    Override provider (figma|penpot|git-only|memory)
+  --provider <X>    Override provider (figma|penpot|git-only|memory|design-md)
   --themes a,b      Restrict to specific token sets
   --dry-run         Force dry-run on push
   --json            Emit machine-readable JSON
