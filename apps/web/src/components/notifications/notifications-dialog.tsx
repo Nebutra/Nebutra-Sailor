@@ -7,7 +7,6 @@ import {
   Shield,
   Sparkles,
   Users,
-  Cross as X,
 } from "@nebutra/icons";
 import type { NotificationInboxItem, NotificationSettingsSnapshot } from "@nebutra/notifications";
 import { Dialog, DialogContent } from "@nebutra/ui/primitives";
@@ -122,17 +121,10 @@ export function NotificationsDialog() {
           className="max-w-3xl overflow-hidden p-0 sm:rounded-[var(--radius-2xl)]"
           aria-label="通知"
         >
-          {/* Header — centered title + close X */}
-          <div className="relative border-b border-border px-6 pt-6 pb-4">
+          {/* Header — centered title. DialogContent already provides its own
+              top-right close button; do NOT add another. */}
+          <div className="border-b border-border px-6 pt-6 pb-4">
             <h2 className="text-center text-lg font-semibold text-foreground">通知</h2>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Close"
-              className="absolute right-4 top-4 inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <X className="size-4" aria-hidden="true" />
-            </button>
 
             {/* Tab bar — Manus-style segmented control */}
             <div className="mt-4 flex justify-center">

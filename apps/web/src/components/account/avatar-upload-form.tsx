@@ -16,6 +16,12 @@ interface AvatarUploadFormProps {
   initialAvatarUrl?: string | null;
   fallbackName?: string;
   /**
+   * Canonical identity seed for the DiceBear fallback. Prefer email — the
+   * UserMenu uses email too, so the avatars match across the app. Falls back
+   * to `fallbackName` when undefined.
+   */
+  email?: string | null;
+  /**
    * Override the upload pipeline for tests. Defaults to the three-step
    * presign / PUT / finalize sequence against `/api/account/avatar`.
    */
@@ -184,6 +190,7 @@ function avatarUploadReducer(
 export function AvatarUploadForm({
   initialAvatarUrl,
   fallbackName,
+  email,
   uploadPipeline,
   deletePipeline,
   onUpdated,
@@ -275,7 +282,7 @@ export function AvatarUploadForm({
           </div>
         ) : (
           <img
-            src={dicebearAvatarUrl(fallbackName)}
+            src={dicebearAvatarUrl(email ?? fallbackName)}
             alt="Avatar preview"
             width={80}
             height={80}

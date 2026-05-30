@@ -14,6 +14,7 @@ export default async function SettingsPage() {
 
       <AvatarUploadForm
         initialAvatarUrl={user?.imageUrl ?? null}
+        email={user?.email ?? null}
         fallbackName={user?.name ?? user?.email ?? ""}
       />
 
