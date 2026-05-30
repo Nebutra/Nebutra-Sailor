@@ -47,6 +47,7 @@
     "@nebutra/repositories": "workspace:*",
     "@nebutra/vault": "workspace:*",
     "@opentelemetry/api": "^1.9.0",
+    "date-fns": "^4.1.0",
     "@orpc/server": "^1.13.13",
     "@orpc/zod": "^1.13.13",
     "@sentry/node": "^9.0.0",

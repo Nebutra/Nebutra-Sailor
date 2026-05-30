@@ -29,7 +29,8 @@
   "dependencies": {
     "@nebutra/graph-model": "workspace:*",
     "@nebutra/logger": "workspace:*",
-    "@nebutra/tenant-store": "workspace:*"
+    "@nebutra/tenant-store": "workspace:*",
+    "eventsource-parser": "^3.0.8"
   },
   "peerDependencies": {
     "@nebutra/agents": "workspace:*",

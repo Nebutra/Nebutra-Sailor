@@ -2,6 +2,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { getSystemDb, getTenantDb, type Prisma } from "@nebutra/db";
 import { DatabaseError, NotFoundError, toApiError } from "@nebutra/errors";
 import { logger } from "@nebutra/logger";
+import { addYears } from "date-fns";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 
@@ -427,8 +428,7 @@ consentRoutes.openapi(recordCookieConsentRoute, async (c) => {
   const userId = tenant?.userId;
   const db = dbForTenant(tenant?.organizationId);
 
-  const expiresAt = new Date();
-  expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+  const expiresAt = addYears(new Date(), 1);
 
   try {
     const createData: Parameters<typeof db.cookieConsent.upsert>[0]["create"] = {

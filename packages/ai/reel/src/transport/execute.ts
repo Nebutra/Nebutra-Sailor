@@ -7,8 +7,10 @@
  * never throws for transport-level failures (they surface as `ok:false`).
  */
 
+import { EventSourceParserStream } from "eventsource-parser/stream";
 import { normalizeTransportMode, normalizeTransportOptions, valueByPath } from "./capability";
 import type { TransportMode, TransportOptions, TransportRequest, TransportResult } from "./types";
+import { DEFAULT_TRANSPORT_OPTIONS } from "./types";
 
 export interface ExecuteDeps {
   /** Defaults to global `fetch`. */
@@ -46,7 +48,36 @@ function serializeBody(req: TransportRequest): BodyInit | undefined {
   return typeof req.body === "string" ? req.body : JSON.stringify(req.body);
 }
 
-function parseSseChunk(
+/** A frame's data payload is `[DONE]` → stop; else push parsed event + delta. */
+type SsePayloadResult = { done: boolean; event?: unknown; delta?: string };
+
+/**
+ * Apply the post-framing SSE semantics to one already-extracted `data` payload:
+ * done-token detection, JSON decode, and delta-path extraction. Shared by both
+ * the standard (eventsource-parser) path and the custom-delimiter fallback so
+ * `sseDoneToken` / `sseDeltaPath` behave identically regardless of framing.
+ */
+function applySsePayload(payload: string, options: TransportOptions): SsePayloadResult {
+  if (payload === options.sseDoneToken) return { done: true };
+  let parsed: unknown = payload;
+  try {
+    parsed = JSON.parse(payload);
+  } catch {
+    /* keep raw string */
+  }
+  const result: SsePayloadResult = { done: false, event: parsed };
+  const delta = valueByPath(parsed, options.sseDeltaPath);
+  if (typeof delta === "string") result.delta = delta;
+  else if (options.sseDeltaPath === "") result.delta = payload;
+  return result;
+}
+
+/**
+ * Custom-delimiter SSE framing fallback. Used only when `sseDelimiter` or
+ * `sseDataPrefix` deviate from the SSE spec (which `eventsource-parser`
+ * hard-codes); preserves the original arbitrary-string splitting behavior.
+ */
+function parseCustomSseChunk(
   buffer: string,
   options: TransportOptions,
 ): { events: unknown[]; deltas: string[]; done: boolean; rest: string } {
@@ -61,22 +92,79 @@ function parseSseChunk(
     const payload = line.startsWith(options.sseDataPrefix)
       ? line.slice(options.sseDataPrefix.length).trim()
       : line;
-    if (payload === options.sseDoneToken) {
+    const r = applySsePayload(payload, options);
+    if (r.done) {
       done = true;
       continue;
     }
-    let parsed: unknown = payload;
-    try {
-      parsed = JSON.parse(payload);
-    } catch {
-      /* keep raw string */
-    }
-    events.push(parsed);
-    const delta = valueByPath(parsed, options.sseDeltaPath);
-    if (typeof delta === "string") deltas.push(delta);
-    else if (options.sseDeltaPath === "" && typeof payload === "string") deltas.push(payload);
+    events.push(r.event);
+    if (r.delta !== undefined) deltas.push(r.delta);
   }
   return { events, deltas, done, rest };
+}
+
+/** True when SSE framing follows the spec and `eventsource-parser` can own it. */
+function usesStandardSseFraming(options: TransportOptions): boolean {
+  return (
+    options.sseDelimiter === DEFAULT_TRANSPORT_OPTIONS.sseDelimiter &&
+    options.sseDataPrefix === DEFAULT_TRANSPORT_OPTIONS.sseDataPrefix
+  );
+}
+
+/**
+ * Stream a spec-compliant SSE body through `eventsource-parser`'s
+ * `EventSourceParserStream`, applying the configurable done-token / delta-path
+ * semantics to each emitted event. Robust to chunk boundaries, multi-line
+ * `data:` fields, and `\n`/`\r\n` line endings — handled by the library.
+ */
+async function readStandardSse(
+  body: ReadableStream<Uint8Array>,
+  options: TransportOptions,
+): Promise<{ events: unknown[]; deltas: string[] }> {
+  const events: unknown[] = [];
+  const deltas: string[] = [];
+  const eventStream = body
+    // `TextDecoderStream.writable` is typed `WritableStream<BufferSource>`, which
+    // TS's strict lib refuses to unify with the source's `Uint8Array<ArrayBufferLike>`
+    // chunk type. The pairing is correct at runtime; narrow it to the stream's type.
+    .pipeThrough(new TextDecoderStream() as unknown as ReadableWritablePair<string, Uint8Array>)
+    .pipeThrough(new EventSourceParserStream());
+  const reader = eventStream.getReader();
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    const r = applySsePayload(value.data, options);
+    if (r.done) {
+      await reader.cancel();
+      break;
+    }
+    events.push(r.event);
+    if (r.delta !== undefined) deltas.push(r.delta);
+  }
+  return { events, deltas };
+}
+
+/** Custom-framing SSE reader: manual decode + buffer + arbitrary delimiter split. */
+async function readCustomSse(
+  body: ReadableStream<Uint8Array>,
+  options: TransportOptions,
+): Promise<{ events: unknown[]; deltas: string[] }> {
+  const reader = body.getReader();
+  const decoder = new TextDecoder();
+  let buf = "";
+  const events: unknown[] = [];
+  const deltas: string[] = [];
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    const chunk = parseCustomSseChunk(buf, options);
+    buf = chunk.rest;
+    events.push(...chunk.events);
+    deltas.push(...chunk.deltas);
+    if (chunk.done) break;
+  }
+  return { events, deltas };
 }
 
 export async function executeTransport(
@@ -118,21 +206,9 @@ export async function executeTransport(
   }
 
   if (mode === "http-sse" && res.body) {
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buf = "";
-    const events: unknown[] = [];
-    const deltas: string[] = [];
-    for (;;) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buf += decoder.decode(value, { stream: true });
-      const chunk = parseSseChunk(buf, options);
-      buf = chunk.rest;
-      events.push(...chunk.events);
-      deltas.push(...chunk.deltas);
-      if (chunk.done) break;
-    }
+    const { events, deltas } = usesStandardSseFraming(options)
+      ? await readStandardSse(res.body, options)
+      : await readCustomSse(res.body, options);
     const aggregateText = deltas.join("");
     return {
       ok: res.ok,

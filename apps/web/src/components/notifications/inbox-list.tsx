@@ -9,6 +9,7 @@ import {
   Trash as Trash2,
 } from "@nebutra/icons";
 import Link from "next/link";
+import { useFormatter } from "next-intl";
 
 // =============================================================================
 // InboxList: shared rendering for both the bell dropdown and the full page
@@ -44,22 +45,6 @@ function getIconForType(type: string): typeof Bell {
   if (type.startsWith("billing")) return Star;
   if (type.startsWith("security")) return BellRing;
   return Bell;
-}
-
-function relativeTime(iso: string): string {
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return "";
-  const seconds = Math.floor((Date.now() - then) / 1000);
-  if (seconds < 60) return `${seconds}s`;
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `${days}d`;
-  const months = Math.floor(days / 30);
-  if (months < 12) return `${months}mo`;
-  return `${Math.floor(months / 12)}y`;
 }
 
 export function InboxListSkeleton({ count = 3 }: { count?: number }): React.ReactElement {
@@ -107,6 +92,8 @@ export function InboxList({
   onToggleSelect,
   variant = "compact",
 }: InboxListProps): React.ReactElement {
+  const format = useFormatter();
+
   if (loading) {
     return <InboxListSkeleton />;
   }
@@ -163,7 +150,9 @@ export function InboxList({
                   className="shrink-0 text-xs text-[var(--neutral-11)]"
                   dateTime={item.createdAt}
                 >
-                  {relativeTime(item.createdAt)}
+                  {Number.isNaN(new Date(item.createdAt).getTime())
+                    ? ""
+                    : format.relativeTime(new Date(item.createdAt))}
                 </time>
               </div>
               {item.body ? (

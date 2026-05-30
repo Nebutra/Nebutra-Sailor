@@ -1,3 +1,5 @@
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
 import type { MCPServerRegistry } from "../registry/serverRegistry";
 import { serverRegistry } from "../registry/serverRegistry";
 import type { MCPContext, MCPServerConfig, ToolExecutionResult } from "../types";
@@ -7,6 +9,8 @@ import type { MCPContext, MCPServerConfig, ToolExecutionResult } from "../types"
  */
 export class MCPClient {
   private requestCounter = 0;
+  /** One SDK client per HTTP server id, reused across calls. */
+  private readonly httpClients = new Map<string, Client>();
 
   constructor(private readonly registry: MCPServerRegistry = serverRegistry) {}
 
@@ -82,7 +86,8 @@ export class MCPClient {
   }
 
   /**
-   * Execute via HTTP transport
+   * Execute via HTTP transport, using the official MCP SDK's
+   * StreamableHTTPClientTransport + Client to perform the `tools/call`.
    */
   private async executeHttp(
     server: MCPServerConfig,
@@ -90,14 +95,30 @@ export class MCPClient {
     args: Record<string, unknown>,
     requestId: string,
   ): Promise<unknown> {
+    const client = await this.getHttpClient(server, requestId);
+    const shortName = toolName.startsWith(`${server.id}:`)
+      ? toolName.slice(server.id.length + 1)
+      : toolName;
+    // SDK throws an McpError on JSON-RPC errors and a StreamableHTTPError on
+    // non-2xx responses; both propagate to executeTool's try/catch wrapper.
+    return client.callTool({ name: shortName, arguments: args });
+  }
+
+  /**
+   * Lazily create and cache an SDK Client connected over StreamableHTTP for a
+   * given server. Authentication headers are derived from the same env vars
+   * the previous hand-written transport used.
+   */
+  private async getHttpClient(server: MCPServerConfig, requestId: string): Promise<Client> {
+    const cached = this.httpClients.get(server.id);
+    if (cached) return cached;
+
     const headers: Record<string, string> = {
-      "Content-Type": "application/json",
       "X-Request-ID": requestId,
     };
 
-    // Add authentication if configured
+    // Add authentication if configured (same env-var contract as before).
     if (server.authentication?.type === "bearer") {
-      // In production, get token from secure storage
       const token = process.env[`MCP_${server.id.toUpperCase()}_TOKEN`];
       if (token) {
         headers.Authorization = `Bearer ${token}`;
@@ -110,31 +131,23 @@ export class MCPClient {
       }
     }
 
-    const response = await fetch(server.endpoint, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({
-        jsonrpc: "2.0",
-        id: requestId,
-        method: "tools/call",
-        params: {
-          name: toolName,
-          arguments: args,
-        },
-      }),
+    const transport = new StreamableHTTPClientTransport(new URL(server.endpoint), {
+      requestInit: { headers },
     });
+    const client = new Client({ name: "nebutra-mcp-client", version: "0.1.0" });
+    // Cast mirrors host.ts: the SDK's Transport type is incompatible with the
+    // repo's exactOptionalPropertyTypes (sessionId?: string).
+    await client.connect(transport as Parameters<Client["connect"]>[0]);
+    this.httpClients.set(server.id, client);
+    return client;
+  }
 
-    if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-
-    if (data.error) {
-      throw new Error(data.error.message || "Unknown MCP error");
-    }
-
-    return data.result;
+  /**
+   * Close all cached SDK HTTP clients and clear the cache.
+   */
+  async close(): Promise<void> {
+    await Promise.all(Array.from(this.httpClients.values()).map((client) => client.close()));
+    this.httpClients.clear();
   }
 
   /**

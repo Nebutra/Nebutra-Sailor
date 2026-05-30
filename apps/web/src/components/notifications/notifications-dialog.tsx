@@ -12,6 +12,7 @@ import type { NotificationInboxItem, NotificationSettingsSnapshot } from "@nebut
 import { Dialog, DialogContent } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
+import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 
 type Tab = "all" | "changelog" | "messages";
@@ -57,9 +58,9 @@ function getTypeLabel(groupId: NotificationInboxItem["groupId"]): string {
   }
 }
 
-function formatDate(iso: string): string {
+function formatDate(iso: string, locale: string): string {
   const d = new Date(iso);
-  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+  return new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(d);
 }
 
 /**
@@ -69,6 +70,7 @@ function formatDate(iso: string): string {
  * SEO-safe fallback (rendered by another component).
  */
 export function NotificationsDialog() {
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [loading, setLoading] = useState(false);
@@ -165,7 +167,7 @@ export function NotificationsDialog() {
                       {/* Left meta */}
                       <div className="text-xs text-muted-foreground">
                         <p className="font-medium text-foreground">{getTypeLabel(item.groupId)}</p>
-                        <p className="mt-1 tabular-nums">{formatDate(item.createdAt)}</p>
+                        <p className="mt-1 tabular-nums">{formatDate(item.createdAt, locale)}</p>
                       </div>
 
                       {/* Right rich card */}
