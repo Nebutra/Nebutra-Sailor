@@ -52,6 +52,16 @@ html {
   font-feature-settings:
     "calt" 1,
     "liga" 1;
+  /* Variable-font polish: */
+  /*  - font-synthesis: none → forbid faux-bold / faux-italic synthesis;
+       variable fonts already ship every weight/style, synthesised faces
+       look fuzzy at sub-pixel boundaries.
+     - font-optical-sizing: auto → tells the engine to use the opsz axis
+       on fonts that ship one (Geist Sans, Geist Mono, Inter, Playfair),
+       so glyphs are rendered with weights tuned to their display size
+       instead of being scaled uniformly. */
+  font-synthesis: none;
+  font-optical-sizing: auto;
 }
 
 /* ============================================
