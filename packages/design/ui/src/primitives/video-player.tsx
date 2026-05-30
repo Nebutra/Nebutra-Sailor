@@ -7,7 +7,7 @@ import {
   SpeakerVolumeLoud as Volume2,
   SpeakerOff as VolumeX,
 } from "@nebutra/icons";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import type React from "react";
 import { useCallback, useRef, useState } from "react";
 import { cn } from "../utils";

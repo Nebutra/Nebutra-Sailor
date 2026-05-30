@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "motion/react";
+import { motion, type Variants } from "framer-motion";
 import { cn } from "../utils";
 
 // =============================================================================

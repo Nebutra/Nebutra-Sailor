@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionTemplate, useScroll, useTransform } from "motion/react";
+import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import type * as React from "react";
 import { cn } from "../utils";
 

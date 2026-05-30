@@ -16,7 +16,7 @@ import { TextShimmer } from "./text-shimmer";
  *    - AgentPlan        → dashboard-level hierarchical planner with subtasks,
  *                         dependencies, motion animations, 5-state status enum
  *                         (`"in-progress"` hyphenated). Heavy (~18KB), uses
- *                         motion/react. Suited for /agents, /plans surfaces.
+ *                         framer-motion. Suited for /agents, /plans surfaces.
  *    - TodoTool (here)  → inline chat-level flat status list. 3-state enum
  *                         (`"in_progress"` underscored, matching the actual
  *                         Claude TodoWrite tool wire format). Read-only,

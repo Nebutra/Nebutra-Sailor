@@ -139,13 +139,7 @@ const config: StorybookConfig = {
         // Keep narrow. Broad include of @lobehub/ui (heavy + many "use client"
         // directives) caused rollup pre-bundle to abort. Apps that need it can
         // add per-package — design-system primitives don't import lobehub here.
-        include: [
-          "framer-motion",
-          "class-variance-authority",
-          "clsx",
-          "tailwind-merge",
-          "lucide-react",
-        ],
+        include: ["framer-motion", "class-variance-authority", "clsx", "tailwind-merge"],
       },
 
       // D1 — dev cold-start tuning.

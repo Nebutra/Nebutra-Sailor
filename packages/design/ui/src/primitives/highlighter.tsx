@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "motion/react";
+import { useInView } from "framer-motion";
 import type React from "react";
 import { useEffect, useRef } from "react";
 import { annotate } from "rough-notation";

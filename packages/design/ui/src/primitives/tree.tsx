@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronRight, File, FolderClosed as Folder, FolderOpen } from "@nebutra/icons";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   type ComponentProps,
   createContext,

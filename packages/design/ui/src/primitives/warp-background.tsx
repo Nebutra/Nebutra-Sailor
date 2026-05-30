@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import type React from "react";
 import { type HTMLAttributes, useCallback, useMemo } from "react";
 import { cn } from "../utils";

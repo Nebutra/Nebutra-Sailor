@@ -1,6 +1,6 @@
 "use client";
 
-import { type MotionProps, motion, useInView } from "motion/react";
+import { type MotionProps, motion, useInView } from "framer-motion";
 import { Children, createContext, use, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "../utils/cn";
 

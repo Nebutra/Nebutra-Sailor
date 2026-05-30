@@ -1,6 +1,6 @@
 "use client";
 
-import type { MotionValue } from "motion/react";
+import type { MotionValue } from "framer-motion";
 import {
   motion,
   useAnimationFrame,
@@ -9,7 +9,7 @@ import {
   useSpring,
   useTransform,
   useVelocity,
-} from "motion/react";
+} from "framer-motion";
 import React, { use, useEffect, useRef, useState } from "react";
 import { cn } from "../utils";
 

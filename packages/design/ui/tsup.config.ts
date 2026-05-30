@@ -139,7 +139,6 @@ export default defineConfig({
     "@nebutra/brand",
     "@nebutra/tokens",
     "@nebutra/icons",
-    "lucide-react",
     "recharts",
     "react-hook-form",
     "embla-carousel-react",
@@ -165,7 +164,7 @@ export default defineConfig({
     "@icons-pack/react-simple-icons",
     "@react-three/fiber",
     "three",
-    /^(react|react-dom|next|framer-motion|motion|@base-ui|@lobehub|antd|@paper-design|@number-flow|@react-types|@internationalized|@nebutra|lucide-react|recharts|react-hook-form|embla-carousel-react|cmdk|vaul|sonner|clsx|tailwind-merge|canvas-confetti|cobe|dotted-map|rough-notation|react-syntax-highlighter|react-tweet|react-use-measure|react-resizable-panels|input-otp|usehooks-ts|date-fns|class-variance-authority|piri|react-ascii-text|@icons-pack|@react-three|three)(\/.*)?$/,
+    /^(react|react-dom|next|framer-motion|@base-ui|@lobehub|antd|@paper-design|@number-flow|@react-types|@internationalized|@nebutra|recharts|react-hook-form|embla-carousel-react|cmdk|vaul|sonner|clsx|tailwind-merge|canvas-confetti|cobe|dotted-map|rough-notation|react-syntax-highlighter|react-tweet|react-use-measure|react-resizable-panels|input-otp|usehooks-ts|date-fns|class-variance-authority|piri|react-ascii-text|@icons-pack|@react-three|three)(\/.*)?$/,
   ],
   onSuccess: async () => {
     const cwd = process.cwd();
