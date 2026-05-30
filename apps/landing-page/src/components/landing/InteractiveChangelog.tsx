@@ -25,11 +25,11 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
+  toast,
 } from "@nebutra/ui/primitives";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
-import { toast } from "sonner";
 
 export interface Release {
   title: string;
@@ -67,7 +67,6 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
   const [searchQuery, setSearchQuery] = React.useState("");
   const debouncedSearch = useDebouncedValue(searchQuery, 300);
-  const [reactions, setReactions] = React.useState<Record<string, Record<string, number>>>({});
 
   const uniqueTags = Array.from(
     new Set(releases.map((release) => release.tag).filter((tag): tag is string => Boolean(tag))),
@@ -100,35 +99,17 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
     }
   };
 
-  const handleReaction = (version: string, emoji: string) => {
-    setReactions((prev) => {
-      const versionReactions = prev[version] || {};
-      const newCount = (versionReactions[emoji] || 0) + 1;
-      return {
-        ...prev,
-        [version]: {
-          ...versionReactions,
-          [emoji]: newCount,
-        },
-      };
-    });
-  };
-
   return (
-    <section className="relative w-full overflow-hidden bg-[var(--neutral-1)] dark:bg-black">
-      <div className="relative isolate w-full overflow-hidden border-b border-white/10 bg-[#030712] pt-28 pb-20 text-white sm:pt-32 md:pb-24">
+    <section className="relative w-full overflow-hidden bg-[var(--neutral-1)]">
+      {/* Hero — collapsed from 6 decoration layers to 2: subtle grid (faded
+          to edges via mask) + single brand-color radial. Brand colors via
+          tokens, not hardcoded RGB. */}
+      <div className="relative isolate w-full overflow-hidden bg-[#030712] pt-28 pb-20 text-white sm:pt-32 md:pb-24">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_24%,rgba(11,241,195,0.28),transparent_30%),radial-gradient(circle_at_76%_16%,rgba(0,51,254,0.36),transparent_34%),radial-gradient(circle_at_82%_88%,rgba(91,72,255,0.24),transparent_34%),linear-gradient(135deg,#020617_0%,#07111f_45%,#030712_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.055)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_78%_66%_at_50%_14%,#000_36%,transparent_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(255,255,255,0.2)_1px,transparent_1.4px)] bg-[size:20px_20px] opacity-25 [mask-image:linear-gradient(90deg,transparent_0%,#000_14%,#000_86%,transparent_100%)]" />
-          <div className="absolute -left-32 top-24 h-64 w-[48rem] -rotate-12 rounded-full bg-[linear-gradient(90deg,rgba(11,241,195,0.24),rgba(0,51,254,0.14),transparent)] blur-3xl" />
-          <div className="absolute right-[-18rem] top-[-12rem] h-[34rem] w-[34rem] rounded-full bg-[var(--blue-9)]/25 blur-[130px]" />
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          {/* Bottom fade-to-bg mask removed (2026-05-14): in light mode it created
-              a milky "smear" over the tagline; in dark mode it faded into the same
-              near-black so was visually inert. The hero's `border-b border-white/10`
-              already provides a clean hero→content seam — preferred Linear/Vercel
-              pattern of hard edge over soft gradient. */}
+          {/* Subtle faded-edge grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(255_255_255/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.04)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_30%,#000_30%,transparent_90%)]" />
+          {/* Single brand radial — blue→cyan halo via tokens */}
+          <div className="absolute inset-x-0 -top-32 h-[42rem] bg-[radial-gradient(ellipse_at_top,color-mix(in_oklab,var(--blue-9),transparent_70%)_0%,color-mix(in_oklab,var(--cyan-9),transparent_88%)_40%,transparent_75%)]" />
         </div>
 
         <div className="relative container mx-auto px-4 text-left">
@@ -151,8 +132,9 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
         </div>
       </div>
 
-      {/* Filter and search bar */}
-      <div className="sticky top-0 z-40 w-full bg-gradient-to-b from-[var(--neutral-1)] to-transparent dark:from-black/95 border-b border-[var(--neutral-7)] dark:border-[var(--neutral-2)] backdrop-blur-sm">
+      {/* Filter and search bar — sticky, soft alpha border so it doesn't read
+          as a hard rail when content scrolls beneath. */}
+      <div className="sticky top-0 z-40 w-full border-b border-[color-mix(in_oklab,var(--neutral-12),transparent_92%)] bg-[var(--neutral-1)]/85 backdrop-blur-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             {/* Search input */}
@@ -200,19 +182,14 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
         </div>
       </div>
 
-      {/* content */}
-      <div className="container mx-auto grid justify-center px-4 border-x border-[var(--neutral-7)] dark:border-[var(--neutral-2)]">
+      {/* content — dropped the vertical `border-x` rails (Vercel pattern)
+          because they read as two hard lines bleeding down the entire scroll
+          length, especially on dark surface. Cards stand on their own. */}
+      <div className="container mx-auto grid justify-center px-4">
         {filteredReleases.length > 0 ? (
           <ol aria-label="Changelog releases" className="contents">
             {filteredReleases.map((item, idx) => {
               const slug = getVersionSlug(item.version);
-              const versionReactions = reactions[item.version] || {};
-              const reactionsArray = [
-                { emoji: "🚀", label: "Rocket" },
-                { emoji: "🎉", label: "Celebrate" },
-                { emoji: "❤️", label: "Love" },
-                { emoji: "👍", label: "Thumbs Up" },
-              ];
 
               return (
                 <Dialog key={slug || idx}>
@@ -222,12 +199,10 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         id={slug}
                         className="relative flex w-full flex-col gap-6 py-16 lg:flex-row lg:gap-0 scroll-mt-32 group"
                       >
-                        {/* Timeline dot */}
+                        {/* Timeline dot — simple solid + thin halo, no 4px
+                            white ring + no animate-pulse (loud per-item glow). */}
                         <div className="absolute left-0 top-24 hidden lg:block">
-                          <div className="relative flex items-center justify-center">
-                            <div className="h-3 w-3 rounded-full bg-[var(--blue-9)] ring-4 ring-[var(--neutral-1)] dark:ring-black" />
-                            <div className="absolute inset-0 rounded-full bg-[var(--blue-9)] opacity-20 animate-pulse" />
-                          </div>
+                          <div className="h-2.5 w-2.5 rounded-full bg-[var(--blue-9)] shadow-[0_0_0_4px_color-mix(in_oklab,var(--blue-9),transparent_85%)]" />
                         </div>
 
                         <div className="h-fit lg:sticky lg:top-8">
@@ -237,27 +212,26 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                         </div>
 
                         <div className="flex max-w-prose flex-col gap-4 lg:mx-auto lg:pl-16">
-                          {/* Title with tag */}
-                          <div className="flex items-start gap-3">
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
-                                <h3 className="text-3xl font-medium lg:pt-10 lg:text-3xl text-[var(--neutral-12)]">
-                                  {item.title}
-                                </h3>
-                                {item.tag && (
-                                  <span
-                                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white mt-2 lg:mt-11"
-                                    style={{
-                                      backgroundColor: TAG_COLORS[item.tag] || "var(--blue-9)",
-                                    }}
-                                  >
-                                    {item.tag}
-                                  </span>
-                                )}
-                              </div>
-                              <span className="text-xs font-semibold text-[var(--neutral-11)] tracking-wide">
+                          {/* Title + version + tag. Tag now sits inline next to
+                              version on its own row, no magic mt-11 baseline align. */}
+                          <div className="flex flex-col gap-2 lg:pt-10">
+                            <h3 className="text-3xl font-medium text-[var(--neutral-12)]">
+                              {item.title}
+                            </h3>
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono text-xs font-semibold tracking-wide text-[var(--neutral-11)]">
                                 {item.version}
                               </span>
+                              {item.tag && (
+                                <span
+                                  className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
+                                  style={{
+                                    backgroundColor: TAG_COLORS[item.tag] || "var(--blue-9)",
+                                  }}
+                                >
+                                  {item.tag}
+                                </span>
+                              )}
                             </div>
                           </div>
 
@@ -366,25 +340,10 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                             </div>
                           </div>
 
-                          {/* Reaction buttons */}
-                          <div className="flex items-center gap-2 pt-2">
-                            {reactionsArray.map(({ emoji, label }) => (
-                              <button
-                                key={emoji}
-                                type="button"
-                                onClick={() => handleReaction(item.version, emoji)}
-                                className="flex items-center gap-1 px-2 py-1 rounded-full bg-[var(--neutral-2)] dark:bg-[var(--neutral-3)] hover:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)] transition-colors text-xs font-medium text-[var(--neutral-12)]"
-                                aria-label={`React with ${label}`}
-                              >
-                                <span>{emoji}</span>
-                                {versionReactions[emoji] && (
-                                  <span className="text-[var(--neutral-11)]">
-                                    {versionReactions[emoji]}
-                                  </span>
-                                )}
-                              </button>
-                            ))}
-                          </div>
+                          {/* Reactions removed — they used local React state
+                              with no persistence (refresh = back to 0). A fake
+                              interaction is worse than no interaction. When we
+                              ship a real reactions service this is the slot. */}
 
                           {/* View details link */}
                           <Link
@@ -396,8 +355,9 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                           </Link>
                         </div>
 
-                        {/* Dividing line connecting items */}
-                        <div className="absolute bottom-0 left-0 right-0 h-px w-[200vw] -translate-x-1/2 bg-[var(--neutral-7)] dark:bg-[var(--neutral-2)]" />
+                        {/* Dividing line connecting items — soft alpha so it
+                            reads as a hint, not a hard rail across 200vw. */}
+                        <div className="absolute bottom-0 left-0 right-0 h-px w-[200vw] -translate-x-1/2 bg-[color-mix(in_oklab,var(--neutral-12),transparent_93%)]" />
                       </article>
                     </AnimateIn>
 

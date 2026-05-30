@@ -249,7 +249,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
       });
 
   return (
-    <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
+    <main id="main-content" className="min-h-screen bg-[var(--neutral-1)]">
       <Navbar forceDarkTheme />
 
       <InteractiveChangelog releases={mappedReleases} />

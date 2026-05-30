@@ -469,13 +469,19 @@ function PreviewCard({
   return (
     <section
       className={cn(
-        // Linear-pattern card: hairline border (10% white in dark, 6% black in
-        // light, set in token-data) + visible bg-tier (5%+ L step) + soft drop
-        // shadow. NOT "borderless flat" — that fights how dark UIs actually
-        // communicate layering per industry practice.
-        "rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-card)] p-[var(--playground-pad)] text-[color:var(--color-card-foreground)]",
-        "shadow-[0_1px_2px_0_rgb(0_0_0/0.08),0_4px_12px_-2px_rgb(0_0_0/0.12)]",
-        active && "ring-1 ring-[color-mix(in_oklab,var(--color-foreground),transparent_82%)]",
+        // Per industry research (LogRocket "Shadows in UI", chyshkala Linear
+        // dark-mode breakdown): black drop-shadows DISAPPEAR on dark surfaces.
+        // Working pattern is a LIGHTER-COLOR multi-layer box-shadow that reads
+        // as a thick soft grey band, not a sharp 1px hairline:
+        //   Layer 1: 2px 0-blur ring at ~7% foreground — the "thick" part
+        //   Layer 2: 24px blur halo at ~3% foreground — the "soft" diffusion
+        //   Layer 3: subtle drop shadow                — depth for light mode
+        // color-mix(foreground, transparent N) auto-flips per mode: white on
+        // dark, black on light. Same "thick soft grey line" feel in both modes.
+        "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--playground-pad)] text-[color:var(--color-card-foreground)]",
+        "shadow-[0_0_0_2px_color-mix(in_oklab,var(--color-foreground),transparent_93%),0_0_24px_0_color-mix(in_oklab,var(--color-foreground),transparent_96%),0_6px_16px_-4px_rgb(0_0_0/0.15)]",
+        active &&
+          "shadow-[0_0_0_2px_color-mix(in_oklab,var(--color-foreground),transparent_86%),0_0_32px_0_color-mix(in_oklab,var(--color-foreground),transparent_92%),0_8px_24px_-6px_rgb(0_0_0/0.2)]",
         className,
       )}
     >
