@@ -64,6 +64,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@google/design.md": "0.2.0",
     "@nebutra/logger": "workspace:*",
     "zod": "catalog:"
   },
