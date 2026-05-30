@@ -41,6 +41,18 @@ vi.mock("@/components/account/account-dialog", () => ({
   }),
 }));
 
+const openSettingsMock = vi.fn();
+vi.mock("@/components/settings/settings-dialog", () => ({
+  useSettingsDialog: () => ({
+    open: false,
+    activeTab: "general" as const,
+    openDialog: openSettingsMock,
+    closeDialog: vi.fn(),
+    setOpen: vi.fn(),
+    setActiveTab: vi.fn(),
+  }),
+}));
+
 import { UserMenu } from "../user-menu";
 
 function withUser(user: { name?: string; email?: string; imageUrl?: string } | null) {

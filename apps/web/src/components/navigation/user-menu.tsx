@@ -21,6 +21,7 @@ import { useCallback, useState, useTransition } from "react";
 import { createPortal } from "react-dom";
 import { useAccountDialog } from "@/components/account/account-dialog";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
+import { useSettingsDialog } from "@/components/settings/settings-dialog";
 import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 import { dicebearAvatarUrl } from "@/lib/avatar";
 
@@ -61,6 +62,7 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
   const { isSignedIn, user, signOut } = useAuth();
   const { theme, setTheme } = useTheme();
   const account = useAccountDialog();
+  const settings = useSettingsDialog();
   const { openDialog: openFeedback } = useFeedbackDialog();
   const locale = useLocale() as LocaleCode;
   const router = useRouter();
@@ -204,7 +206,7 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
               className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
               onClick={() => {
                 setOpen(false);
-                account.openDialog("preferences");
+                settings.openDialog("general");
               }}
             >
               <Settings className="h-4 w-4" aria-hidden />

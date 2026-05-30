@@ -4,6 +4,7 @@ import { AccountDialogMount } from "@/components/account/account-dialog";
 import { PlanBadge } from "@/components/billing/plan-badge";
 import { FeedbackMount } from "@/components/feedback/feedback-mount";
 import { OnboardingMount } from "@/components/onboarding/onboarding-mount";
+import { SettingsDialogMount } from "@/components/settings/settings-dialog";
 import { requireAuth } from "@/lib/auth";
 import { resolveWebProductCapabilities } from "@/lib/product-capabilities";
 import { DesignSystemShell } from "../providers/design-system-shell";
@@ -36,11 +37,13 @@ export default async function AppLayout({
       <FeedbackMount>
         {/* PlanBadge depends on server-only modules; keep it in this Server Component. */}
         <AccountDialogMount planBadge={<PlanBadge />}>
-          <CommandPaletteMount>
-            <DesignSystemShell productCapabilities={resolveWebProductCapabilities()}>
-              {children}
-            </DesignSystemShell>
-          </CommandPaletteMount>
+          <SettingsDialogMount>
+            <CommandPaletteMount>
+              <DesignSystemShell productCapabilities={resolveWebProductCapabilities()}>
+                {children}
+              </DesignSystemShell>
+            </CommandPaletteMount>
+          </SettingsDialogMount>
         </AccountDialogMount>
       </FeedbackMount>
     </OnboardingMount>
