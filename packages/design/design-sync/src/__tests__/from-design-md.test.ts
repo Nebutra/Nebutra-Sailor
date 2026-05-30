@@ -330,5 +330,72 @@ rounded:
       const { set } = importFromDesignMd(SPARSE_FIXTURE, { brandName: "Hello World!" });
       expect(set.relativePath).toBe("themes/hello-world.json");
     });
+
+    it("falls back to 'imported' when brandName is all-symbol (slug degenerates to empty)", () => {
+      // "!!!" → toKebabSlug → "" → slug guard picks "imported"
+      // Previously the guard checked rawName.trim().length > 0, which let "!!!" pass
+      // and produced relativePath: "themes/.json". The fix computes the slug first.
+      const { set } = importFromDesignMd(EMPTY_FIXTURE, { brandName: "!!!" });
+      expect(set.relativePath).toBe("themes/imported.json");
+      expect(set.name).toBe("themes/imported");
+    });
+  });
+
+  describe("typography h1 fallback (Issue 2)", () => {
+    // @google/design.md 0.2.0 preserves exact YAML front-matter keys.
+    // When the front matter has "h1" but NOT "body", the old code silently dropped
+    // fontFamily.sans. The fix picks: body → body-md → h1 → first entry.
+    it("produces fontFamily.sans from a front-matter 'h1' typography entry when 'body' is absent", () => {
+      const h1OnlyFixture = `---
+name: H1Only
+typography:
+  h1:
+    fontFamily: Inter
+    fontSize: 2rem
+---
+`;
+      const { set } = importFromDesignMd(h1OnlyFixture);
+      expect("fontFamily" in set.tokens).toBe(true);
+      const ffGroup = set.tokens["fontFamily"] as Record<string, unknown>;
+      const leaf = ffGroup["sans"] as { $value: unknown; $type: string };
+      expect(leaf).toBeDefined();
+      expect(leaf.$type).toBe("fontFamily");
+      expect(leaf.$value).toBe("Inter");
+    });
+
+    it("prefers 'body' over 'h1' when both are present in front matter", () => {
+      const bothFixture = `---
+name: BothKeys
+typography:
+  h1:
+    fontFamily: Poppins
+    fontSize: 2rem
+  body:
+    fontFamily: Roboto
+    fontSize: 1rem
+---
+`;
+      const { set } = importFromDesignMd(bothFixture);
+      const ffGroup = set.tokens["fontFamily"] as Record<string, unknown>;
+      const leaf = ffGroup["sans"] as { $value: unknown; $type: string };
+      expect(leaf.$value).toBe("Roboto");
+    });
+
+    it("falls back to first available entry when key is none of the preferred names", () => {
+      const unknownKeyFixture = `---
+name: UnknownKey
+typography:
+  display-lg:
+    fontFamily: Georgia
+    fontSize: 3rem
+---
+`;
+      const { set } = importFromDesignMd(unknownKeyFixture);
+      const ffGroup = set.tokens["fontFamily"] as Record<string, unknown>;
+      const leaf = ffGroup?.["sans"] as { $value: unknown; $type: string } | undefined;
+      // Should pick the only entry ("display-lg") and produce fontFamily.sans
+      expect(leaf).toBeDefined();
+      expect(leaf?.$value).toBe("Georgia");
+    });
   });
 });

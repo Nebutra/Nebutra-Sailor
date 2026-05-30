@@ -112,8 +112,11 @@ export function importFromDesignMd(
   const state = lintReport.designSystem;
 
   // ── 2. Derive slug / name ──────────────────────────────────────────────────
+  // Compute the kebab slug FIRST; if it degenerates to "" (e.g. brandName:"!!!"),
+  // fall back to "imported" so relativePath is never "themes/.json".
   const rawName = options?.brandName ?? state.name ?? "";
-  const slug = rawName.trim().length > 0 ? toKebabSlug(rawName) : "imported";
+  const computedSlug = toKebabSlug(rawName);
+  const slug = computedSlug.length > 0 ? computedSlug : "imported";
   const relativePath = `themes/${slug}.json`;
   const name = `themes/${slug}`;
 
@@ -144,12 +147,18 @@ export function importFromDesignMd(
     tokens["radius"] = radiusGroup as unknown as DesignTokenTree;
   }
 
-  // 3c. typography body font-family → fontFamily.sans ($type: "fontFamily")
-  const bodyTypography = state.typography.get("body");
-  if (bodyTypography?.fontFamily) {
+  // 3c. typography body/h1 font-family → fontFamily.sans ($type: "fontFamily")
+  // @google/design.md 0.2.0 preserves the exact YAML front-matter key (e.g. "body",
+  // "body-md", "h1"). Markdown-section typography is NOT parsed into state.typography.
+  // Pick order: "body" → "body-md" → "h1" → first available entry → absent.
+  const FONT_FAMILY_PICK_ORDER = ["body", "body-md", "h1"] as const;
+  const pickedTypography =
+    FONT_FAMILY_PICK_ORDER.map((k) => state.typography.get(k)).find(Boolean) ??
+    (state.typography.size > 0 ? [...state.typography.values()][0] : undefined);
+  if (pickedTypography?.fontFamily) {
     tokens["fontFamily"] = {
       sans: {
-        $value: bodyTypography.fontFamily,
+        $value: pickedTypography.fontFamily,
         $type: "fontFamily",
       },
     } as unknown as DesignTokenTree;
