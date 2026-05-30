@@ -3,6 +3,7 @@ uvicorn[standard]==0.32.0
 pydantic==2.10.0
 pydantic-settings==2.6.0
 openai==1.57.0
+litellm>=1.55.0
 httpx==0.28.0
 redis==5.2.0
 python-dotenv==1.0.0

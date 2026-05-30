@@ -1,7 +1,9 @@
 """
 SiliconFlow Provider Implementation
 
-Uses OpenAI SDK with SiliconFlow base URL for compatibility.
+Wire protocol is delegated to litellm: chat + embeddings via the
+openai-compatible route (SiliconFlow base URL), reranking via litellm's
+``infinity`` provider (SiliconFlow exposes a Cohere-style ``/rerank``).
 Supports: Chat, Embeddings, Reranking, Image Generation
 """
 
@@ -9,8 +11,8 @@ import os
 from collections.abc import AsyncGenerator
 
 import httpx
-from openai import AsyncOpenAI
 
+from . import _litellm
 from .base import (
     BaseProvider,
     ChatCompletionRequest,
@@ -125,13 +127,6 @@ class SiliconFlowProvider(BaseProvider):
 
         super().__init__(config)
 
-        self.client = AsyncOpenAI(
-            api_key=self.config.api_key,
-            base_url=self.config.base_url,
-            timeout=self.config.timeout,
-            max_retries=self.config.max_retries,
-        )
-
         self._capabilities = {
             "chat",
             "chat-stream",
@@ -156,82 +151,22 @@ class SiliconFlowProvider(BaseProvider):
 
     async def chat(self, request: ChatCompletionRequest) -> ChatCompletionResponse:
         """Create a chat completion"""
-        messages = [
-            {"role": m.role, "content": m.content, "name": m.name}
-            for m in request.messages
-        ]
-
-        response = await self.client.chat.completions.create(
-            model=request.model,
-            messages=messages,  # type: ignore
-            temperature=request.temperature,
-            max_tokens=request.max_tokens,
-            top_p=request.top_p,
-            stop=request.stop,
-            tools=request.tools,  # type: ignore
-            response_format=request.response_format,  # type: ignore
-            stream=False,
-        )
-
-        choice = response.choices[0]
-        message = choice.message
-
-        # Extract tool calls if present
-        tool_calls = None
-        if message.tool_calls:
-            tool_calls = [
-                {
-                    "id": tc.id,
-                    "type": tc.type,
-                    "function": {
-                        "name": tc.function.name,
-                        "arguments": tc.function.arguments,
-                    },
-                }
-                for tc in message.tool_calls
-            ]
-
-        # Extract reasoning content for DeepSeek-R1
-        reasoning_content = getattr(message, "reasoning_content", None)
-
-        return ChatCompletionResponse(
-            id=response.id,
-            model=response.model,
-            content=message.content,
-            finish_reason=choice.finish_reason,
-            usage={
-                "prompt_tokens": response.usage.prompt_tokens if response.usage else 0,
-                "completion_tokens": response.usage.completion_tokens
-                if response.usage
-                else 0,
-                "total_tokens": response.usage.total_tokens if response.usage else 0,
-            },
-            tool_calls=tool_calls,
-            reasoning_content=reasoning_content,
+        return await _litellm.chat_completion(
+            request,
+            base_url=self.config.base_url,
+            api_key=self.config.api_key,
         )
 
     async def chat_stream(
         self, request: ChatCompletionRequest
     ) -> AsyncGenerator[str, None]:
         """Stream a chat completion"""
-        messages = [
-            {"role": m.role, "content": m.content, "name": m.name}
-            for m in request.messages
-        ]
-
-        stream = await self.client.chat.completions.create(
-            model=request.model,
-            messages=messages,  # type: ignore
-            temperature=request.temperature,
-            max_tokens=request.max_tokens,
-            top_p=request.top_p,
-            stop=request.stop,
-            stream=True,
-        )
-
-        async for chunk in stream:
-            if chunk.choices and chunk.choices[0].delta.content:
-                yield chunk.choices[0].delta.content
+        async for delta in _litellm.chat_completion_stream(
+            request,
+            base_url=self.config.base_url,
+            api_key=self.config.api_key,
+        ):
+            yield delta
 
     # ============================================
     # Embeddings
@@ -239,21 +174,10 @@ class SiliconFlowProvider(BaseProvider):
 
     async def embed(self, request: EmbeddingRequest) -> EmbeddingResponse:
         """Create embeddings for text"""
-        response = await self.client.embeddings.create(
-            model=request.model,
-            input=request.input,
-            encoding_format=request.encoding_format,  # type: ignore
-        )
-
-        embeddings = [d.embedding for d in response.data]
-
-        return EmbeddingResponse(
-            model=response.model,
-            embeddings=embeddings,
-            usage={
-                "prompt_tokens": response.usage.prompt_tokens,
-                "total_tokens": response.usage.total_tokens,
-            },
+        return await _litellm.embedding(
+            request,
+            api_base=self.config.base_url,
+            api_key=self.config.api_key,
         )
 
     # ============================================
@@ -261,7 +185,12 @@ class SiliconFlowProvider(BaseProvider):
     # ============================================
 
     async def rerank(self, request: RerankRequest) -> RerankResponse:
-        """Rerank documents by relevance to query"""
+        """Rerank documents by relevance to query.
+
+        Kept as a native httpx call: SiliconFlow's Cohere-variant /rerank
+        returns ``document`` as an object and usage under ``meta``/``usage``,
+        which no litellm rerank provider parses correctly (see _litellm.py).
+        """
         async with httpx.AsyncClient(timeout=self.config.timeout) as client:
             response = await client.post(
                 f"{self.config.base_url}/rerank",

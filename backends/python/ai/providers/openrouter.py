@@ -12,8 +12,8 @@ from dataclasses import dataclass
 from typing import Any, Literal
 
 import httpx
-from openai import AsyncOpenAI
 
+from . import _litellm
 from .base import (
     BaseProvider,
     ChatCompletionRequest,
@@ -58,6 +58,28 @@ class OpenRouterChatRequest(ChatCompletionRequest):
     models: list[str] | None = None  # Fallback models
     route: Literal["fallback"] | None = None
     transforms: list[str] | None = None
+
+
+def _clone_with_model(
+    request: ChatCompletionRequest, model: str
+) -> ChatCompletionRequest:
+    """Return a base ChatCompletionRequest with a re-routed model id.
+
+    Immutable: the original request is left untouched. Only the base chat
+    fields are carried over — OpenRouter-specific options are forwarded
+    separately via ``extra_body``.
+    """
+    return ChatCompletionRequest(
+        model=model,
+        messages=request.messages,
+        temperature=request.temperature,
+        max_tokens=request.max_tokens,
+        top_p=request.top_p,
+        stream=request.stream,
+        stop=request.stop,
+        tools=request.tools,
+        response_format=request.response_format,
+    )
 
 
 # ============================================
@@ -236,25 +258,21 @@ class OpenRouterProvider(BaseProvider):
         self._config = config
         self._validate_api_key()
 
-        base_url = config.base_url or OPENROUTER_BASE_URL
+        self.base_url = config.base_url or OPENROUTER_BASE_URL
 
-        # Build default headers for attribution
-        default_headers = {}
+        # Build default headers for attribution (HTTP-Referer / X-Title)
+        default_headers: dict[str, str] = {}
         if config.http_referer:
             default_headers["HTTP-Referer"] = config.http_referer
         if config.app_title:
             default_headers["X-Title"] = config.app_title
+        self._attribution_headers = default_headers
 
-        self.client = AsyncOpenAI(
-            api_key=config.api_key,
-            base_url=base_url,
-            timeout=config.timeout,
-            max_retries=config.max_retries,
-            default_headers=default_headers,
-        )
-
+        # Chat + streaming go through litellm's openrouter route. The httpx
+        # client is retained only for embeddings (proxied) and the
+        # OpenRouter-specific management APIs below.
         self.http_client = httpx.AsyncClient(
-            base_url=base_url,
+            base_url=self.base_url,
             headers={
                 "Authorization": f"Bearer {config.api_key}",
                 **default_headers,
@@ -287,119 +305,63 @@ class OpenRouterProvider(BaseProvider):
     # Chat Completions
     # ============================================
 
+    def _routed_model(self, request: ChatCompletionRequest) -> str:
+        """Prefix the model id with litellm's ``openrouter/`` route.
+
+        OpenRouter model ids are vendor-namespaced (``anthropic/claude-...``);
+        the ``openrouter/`` prefix tells litellm to dispatch through the
+        OpenRouter gateway (base_url) rather than the underlying vendor.
+        """
+        model = request.model
+        return model if model.startswith("openrouter/") else f"openrouter/{model}"
+
+    def _extra_body(
+        self, request: ChatCompletionRequest, *, include_transforms: bool
+    ) -> dict[str, Any]:
+        """Build OpenRouter-specific request fields (provider routing, model
+        fallbacks, transforms) forwarded verbatim into the request body."""
+        extra: dict[str, Any] = {}
+        if isinstance(request, OpenRouterChatRequest):
+            if request.provider or self.default_preferences:
+                extra["provider"] = {
+                    **(self.default_preferences or {}),
+                    **(request.provider or {}),
+                }
+            if request.models:
+                extra["models"] = request.models
+                extra["route"] = request.route or "fallback"
+            if include_transforms and request.transforms:
+                extra["transforms"] = request.transforms
+        elif self.default_preferences:
+            extra["provider"] = {**self.default_preferences}
+        return extra
+
     async def chat(self, request: ChatCompletionRequest) -> ChatCompletionResponse:
         """Create a chat completion"""
-        openrouter_request = request
-
-        body: dict[str, Any] = {
-            "model": request.model,
-            "messages": [
-                {"role": m.role, "content": m.content, "name": m.name}
-                for m in request.messages
-            ],
-            "stream": False,
-        }
-
-        if request.temperature is not None:
-            body["temperature"] = request.temperature
-        if request.max_tokens is not None:
-            body["max_tokens"] = request.max_tokens
-        if request.top_p is not None:
-            body["top_p"] = request.top_p
-        if request.stop:
-            body["stop"] = request.stop
-        if request.tools:
-            body["tools"] = request.tools
-        if request.response_format:
-            body["response_format"] = request.response_format
-
-        # OpenRouter-specific options
-        if isinstance(openrouter_request, OpenRouterChatRequest):
-            if openrouter_request.provider or self.default_preferences:
-                body["provider"] = {
-                    **(self.default_preferences or {}),
-                    **(openrouter_request.provider or {}),
-                }
-            if openrouter_request.models:
-                body["models"] = openrouter_request.models
-                body["route"] = openrouter_request.route or "fallback"
-            if openrouter_request.transforms:
-                body["transforms"] = openrouter_request.transforms
-
-        response = await self.client.chat.completions.create(**body)
-
-        return ChatCompletionResponse(
-            id=response.id,
-            model=response.model,
-            content=response.choices[0].message.content,
-            finish_reason=response.choices[0].finish_reason,
-            usage={
-                "prompt_tokens": response.usage.prompt_tokens if response.usage else 0,
-                "completion_tokens": response.usage.completion_tokens
-                if response.usage
-                else 0,
-                "total_tokens": response.usage.total_tokens if response.usage else 0,
-            },
-            tool_calls=[
-                {
-                    "id": tc.id,
-                    "type": "function",
-                    "function": {
-                        "name": tc.function.name,
-                        "arguments": tc.function.arguments,
-                    },
-                }
-                for tc in (response.choices[0].message.tool_calls or [])
-            ]
-            if response.choices[0].message.tool_calls
-            else None,
-            # Handle reasoning content from models like o1/DeepSeek-R1
-            reasoning_content=getattr(response.choices[0].message, "reasoning", None),
+        rerouted = _clone_with_model(request, self._routed_model(request))
+        return await _litellm.chat_completion(
+            rerouted,
+            base_url=self.base_url,
+            api_key=self.config.api_key,
+            route_model=False,
+            extra_headers=self._attribution_headers or None,
+            extra_body=self._extra_body(request, include_transforms=True) or None,
         )
 
     async def chat_stream(
         self, request: ChatCompletionRequest
     ) -> AsyncGenerator[str, None]:
         """Stream a chat completion"""
-        openrouter_request = request
-
-        body: dict[str, Any] = {
-            "model": request.model,
-            "messages": [
-                {"role": m.role, "content": m.content, "name": m.name}
-                for m in request.messages
-            ],
-            "stream": True,
-        }
-
-        if request.temperature is not None:
-            body["temperature"] = request.temperature
-        if request.max_tokens is not None:
-            body["max_tokens"] = request.max_tokens
-        if request.top_p is not None:
-            body["top_p"] = request.top_p
-        if request.stop:
-            body["stop"] = request.stop
-
-        # OpenRouter-specific options
-        if isinstance(openrouter_request, OpenRouterChatRequest):
-            if openrouter_request.provider or self.default_preferences:
-                body["provider"] = {
-                    **(self.default_preferences or {}),
-                    **(openrouter_request.provider or {}),
-                }
-            if openrouter_request.models:
-                body["models"] = openrouter_request.models
-                body["route"] = openrouter_request.route or "fallback"
-
-        stream = await self.client.chat.completions.create(**body)
-
-        async for chunk in stream:
-            # Skip OpenRouter comment payloads
-            if chunk.id == "":
-                continue
-            if chunk.choices and chunk.choices[0].delta.content:
-                yield chunk.choices[0].delta.content
+        rerouted = _clone_with_model(request, self._routed_model(request))
+        async for delta in _litellm.chat_completion_stream(
+            rerouted,
+            base_url=self.base_url,
+            api_key=self.config.api_key,
+            route_model=False,
+            extra_headers=self._attribution_headers or None,
+            extra_body=self._extra_body(request, include_transforms=False) or None,
+        ):
+            yield delta
 
     async def chat_with_fallback(
         self,
