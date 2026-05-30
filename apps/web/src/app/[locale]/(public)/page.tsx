@@ -222,11 +222,8 @@ export default async function PublicDashboardPage({
   const copy = COPY[currentLocale];
 
   return (
-    <main
-      id="main-content"
-      className="min-h-screen bg-neutral-1 text-neutral-12 dark:bg-neutral-12 dark:text-white"
-    >
-      <header className="border-neutral-5 border-b bg-neutral-1/90 backdrop-blur dark:border-white/10 dark:bg-neutral-12/90">
+    <main id="main-content" className="min-h-screen bg-neutral-1 text-neutral-12">
+      <header className="border-neutral-5 border-b bg-neutral-1/90 backdrop-blur dark:bg-neutral-12/90">
         <div className="mx-auto flex h-14 w-full max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6">
           <Link
             href={localizedHref(currentLocale, "/")}
@@ -240,7 +237,7 @@ export default async function PublicDashboardPage({
               <Link
                 key={item.href}
                 href={localizedHref(currentLocale, item.href)}
-                className="rounded-[var(--radius-md)] px-2.5 py-1.5 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+                className="rounded-[var(--radius-md)] px-2.5 py-1.5 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
               >
                 {item.label}
               </Link>
@@ -248,7 +245,7 @@ export default async function PublicDashboardPage({
           </nav>
           <Link
             href={localizedHref(currentLocale, "/workspace")}
-            className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-1.5 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
+            className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-1.5 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:text-neutral-12"
           >
             {copy.workspaceAction}
             <ArrowRight className="size-3.5" aria-hidden="true" />
@@ -257,18 +254,16 @@ export default async function PublicDashboardPage({
       </header>
 
       <section className="mx-auto grid w-full max-w-[1280px] gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-10">
-        <div className="flex min-w-0 flex-col justify-between gap-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-5 dark:border-white/10 dark:bg-white/[0.04]">
+        <div className="flex min-w-0 flex-col justify-between gap-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-5/[0.04]">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-neutral-1 px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-blue-11 dark:bg-white/10 dark:text-blue-8">
+            <div className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-neutral-1 px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-blue-11 dark:text-blue-8">
               <span className="size-1.5 rounded-full bg-green-9" aria-hidden="true" />
               {copy.badge}
             </div>
-            <h1 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-neutral-12 dark:text-white sm:text-4xl lg:text-5xl">
+            <h1 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-neutral-12 sm:text-4xl lg:text-5xl">
               {copy.title}
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-11 dark:text-white/65">
-              {copy.subtitle}
-            </p>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-neutral-11">{copy.subtitle}</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <Link
@@ -280,7 +275,7 @@ export default async function PublicDashboardPage({
             </Link>
             <Link
               href={localizedHref(currentLocale, "/demo/embed")}
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-7 px-3.5 py-2 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-1 hover:text-neutral-12 dark:border-white/15 dark:text-white/65 dark:hover:bg-white/10 dark:hover:text-white"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-7 px-3.5 py-2 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-1 hover:text-neutral-12"
             >
               {copy.secondaryAction}
             </Link>
@@ -291,16 +286,14 @@ export default async function PublicDashboardPage({
           {copy.metrics.map(({ label, value, detail, icon: Icon }) => (
             <article
               key={label}
-              className="min-h-40 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.035]"
+              className="min-h-40 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4/[0.035]"
             >
               <div className="flex items-center justify-between gap-3">
-                <p className="text-xs font-medium text-neutral-10 dark:text-white/45">{label}</p>
-                <Icon className="size-4 text-neutral-9 dark:text-white/30" aria-hidden="true" />
+                <p className="text-xs font-medium text-neutral-10">{label}</p>
+                <Icon className="size-4 text-neutral-9" aria-hidden="true" />
               </div>
-              <p className="mt-3 text-2xl font-semibold tracking-tight text-neutral-12 dark:text-white">
-                {value}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-neutral-10 dark:text-white/55">{detail}</p>
+              <p className="mt-3 text-2xl font-semibold tracking-tight text-neutral-12">{value}</p>
+              <p className="mt-2 text-sm leading-6 text-neutral-10">{detail}</p>
             </article>
           ))}
         </div>
@@ -313,32 +306,28 @@ export default async function PublicDashboardPage({
         {copy.briefs.map(({ title, body, icon: Icon, tone }) => (
           <article
             key={title}
-            className="rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-white/[0.03]"
+            className="rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-4/[0.03]"
           >
             <Icon className={`size-5 ${tone}`} aria-hidden="true" />
-            <h2 className="mt-3 text-base font-semibold text-neutral-12 dark:text-white">
-              {title}
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-neutral-10 dark:text-white/55">{body}</p>
+            <h2 className="mt-3 text-base font-semibold text-neutral-12">{title}</h2>
+            <p className="mt-2 text-sm leading-6 text-neutral-10">{body}</p>
           </article>
         ))}
       </section>
 
       <section className="mx-auto w-full max-w-[1280px] px-4 pb-10 sm:px-6">
-        <div className="grid gap-4 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-5 dark:border-white/10 dark:bg-white/[0.04] lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid gap-4 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-5/[0.04] lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <h2 className="text-xl font-semibold tracking-tight text-neutral-12 dark:text-white">
+            <h2 className="text-xl font-semibold tracking-tight text-neutral-12">
               {copy.serviceTitle}
             </h2>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-neutral-10 dark:text-white/55">
-              {copy.serviceBody}
-            </p>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-neutral-10">{copy.serviceBody}</p>
           </div>
           <div className="grid gap-2 sm:grid-cols-2">
             {copy.gated.map((item) => (
               <div
                 key={item}
-                className="flex items-center gap-2 rounded-[var(--radius-md)] bg-neutral-1 px-3 py-2 text-sm font-medium text-neutral-11 ring-1 ring-neutral-5 dark:bg-white/[0.05] dark:text-white/65 dark:ring-white/10"
+                className="flex items-center gap-2 rounded-[var(--radius-md)] bg-neutral-1 px-3 py-2 text-sm font-medium text-neutral-11 ring-1 ring-neutral-5"
               >
                 <CheckCircle
                   className="size-4 text-green-10 dark:text-green-8"
