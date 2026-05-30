@@ -5,6 +5,7 @@ import { logger } from "@nebutra/logger";
 import { defaultTokensDir, readTokenSets, writeTokenSet } from "../io";
 import { importFromDesignMd } from "../serialize/from-design-md";
 import { serializeToDesignMd } from "../serialize/to-design-md";
+import { serializeToPreviewHtml } from "../serialize/to-preview-html";
 import type {
   DesignMdProviderConfig,
   DesignSyncProvider,
@@ -34,6 +35,24 @@ import type {
  */
 function defaultDesignMdPath(cwd: string = process.cwd()): string {
   return join(cwd, "DESIGN.md");
+}
+
+/**
+ * Derive the preview file path from the DESIGN.md path.
+ *
+ * Replaces a trailing `.md` extension with `.preview.html`;
+ * if the path does not end in `.md`, appends `.preview.html`.
+ *
+ * Examples:
+ *   "/repo/DESIGN.md"        → "/repo/DESIGN.preview.html"
+ *   "/repo/design/tokens.md" → "/repo/design/tokens.preview.html"
+ *   "/repo/DESIGN"           → "/repo/DESIGN.preview.html"
+ */
+export function previewHtmlPathFor(mdPath: string): string {
+  if (mdPath.endsWith(".md")) {
+    return `${mdPath.slice(0, -3)}.preview.html`;
+  }
+  return `${mdPath}.preview.html`;
 }
 
 // ─── Lint Gate ────────────────────────────────────────────────────────────────
@@ -187,6 +206,9 @@ export class DesignMdProvider implements DesignSyncProvider {
     // Throw if any error-severity findings are present.
     assertLintClean(lintReport, mdLabel);
 
+    // Compute the sibling preview path (before the write, so it's always defined)
+    const previewPath = previewHtmlPathFor(this.designMdPath);
+
     const dryRun = options.dryRun ?? false;
     if (!dryRun) {
       await mkdir(dirname(this.designMdPath), { recursive: true });
@@ -195,9 +217,19 @@ export class DesignMdProvider implements DesignSyncProvider {
         designMdPath: this.designMdPath,
         sets: all.length,
       });
+
+      // Generate and write the sibling visual preview
+      const previewHtml = serializeToPreviewHtml(all, {
+        ...(this.designSystemName !== undefined ? { name: this.designSystemName } : {}),
+      });
+      await writeFile(previewPath, previewHtml, "utf8");
+      logger.info("[design-sync:design-md] push wrote preview", {
+        previewPath,
+      });
     } else {
-      logger.info("[design-sync:design-md] push dry-run — lint passed, file NOT written", {
+      logger.info("[design-sync:design-md] push dry-run — lint passed, files NOT written", {
         designMdPath: this.designMdPath,
+        previewPath,
       });
     }
 
@@ -205,7 +237,7 @@ export class DesignMdProvider implements DesignSyncProvider {
 
     return {
       pushed: !dryRun,
-      sets: [this.designMdPath],
+      sets: dryRun ? [this.designMdPath] : [this.designMdPath, previewPath],
       provider: "design-md",
       pushedAt: new Date().toISOString(),
       summary: dryRun

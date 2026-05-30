@@ -484,4 +484,57 @@ colors:
     const written = await readFile(fixture.designMdPath, "utf8");
     expect(written).toContain('name: "Nebutra"');
   });
+
+  // ── preview.html sibling ─────────────────────────────────────────────────────
+
+  it("push (non-dryRun) writes BOTH DESIGN.md AND DESIGN.preview.html", async () => {
+    const provider = new DesignMdProvider({
+      provider: "design-md",
+      tokensDir: fixture.tokensDir,
+      designMdPath: fixture.designMdPath,
+    });
+
+    await provider.push();
+
+    // DESIGN.md was written
+    const mdContent = await readFile(fixture.designMdPath, "utf8");
+    expect(mdContent).toMatch(/^---/u);
+
+    // DESIGN.preview.html sibling was written
+    const expectedPreviewPath = fixture.designMdPath.replace(/\.md$/, ".preview.html");
+    const previewContent = await readFile(expectedPreviewPath, "utf8");
+    expect(previewContent.trimStart()).toMatch(/^<!DOCTYPE html>/iu);
+  });
+
+  it("push (non-dryRun) includes the preview path in PushResult.sets", async () => {
+    const provider = new DesignMdProvider({
+      provider: "design-md",
+      tokensDir: fixture.tokensDir,
+      designMdPath: fixture.designMdPath,
+    });
+
+    const result = await provider.push();
+
+    // sets must include both the DESIGN.md path and the preview path
+    expect(result.sets).toHaveLength(2);
+    const mdEntry = result.sets.find((s) => s.endsWith(".md"));
+    const previewEntry = result.sets.find((s) => s.endsWith(".preview.html"));
+    expect(mdEntry).toBeDefined();
+    expect(previewEntry).toBeDefined();
+  });
+
+  it("push(dryRun:true) does NOT write the .preview.html sibling", async () => {
+    const provider = new DesignMdProvider({
+      provider: "design-md",
+      tokensDir: fixture.tokensDir,
+      designMdPath: fixture.designMdPath,
+    });
+
+    await provider.push({ dryRun: true });
+
+    // Neither DESIGN.md nor .preview.html should exist
+    await expect(stat(fixture.designMdPath)).rejects.toThrow();
+    const expectedPreviewPath = fixture.designMdPath.replace(/\.md$/, ".preview.html");
+    await expect(stat(expectedPreviewPath)).rejects.toThrow();
+  });
 });

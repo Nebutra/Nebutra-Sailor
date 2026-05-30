@@ -52,6 +52,11 @@ export { MemoryProvider } from "./providers/memory";
 export { PenpotProvider } from "./providers/penpot";
 // ── DTCG → DESIGN.md serializer ────────────────────────────────────────────
 export { serializeToDesignMd, type ToDesignMdOptions } from "./serialize/to-design-md";
+// ── DTCG → preview.html serializer ─────────────────────────────────────────
+export {
+  serializeToPreviewHtml,
+  type ToPreviewHtmlOptions,
+} from "./serialize/to-preview-html";
 export type {
   BaseProviderConfig,
   DesignMdProviderConfig,
