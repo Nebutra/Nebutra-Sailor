@@ -869,6 +869,17 @@
       "afternoon": "Good afternoon",
       "evening": "Good evening"
     },
+    "home": {
+      "connectorsPill": "Power your app with connectors",
+      "subtitle": "Drop a prompt, hit ⌘K from anywhere, or jump straight into a workspace surface.",
+      "promptPlaceholder": "What's on your mind?",
+      "actions": {
+        "connect": "Connect an integration",
+        "theme": "Theme Playground",
+        "audit": "Audit log",
+        "billing": "Billing"
+      }
+    },
     "commandSurface": {
       "noAuth": "Auth is not configured for the selected provider. Set the provider secrets to enable user sessions."
     },

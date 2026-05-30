@@ -1,34 +1,16 @@
-import { getConfiguredAuthProvider } from "@nebutra/auth";
-import { ChartActivity as Activity, CreditCard, Lightning as Rocket, Users } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { DashboardCommandSurface, DashboardMetricTile, DashboardPanel } from "@nebutra/ui/patterns";
-import { connection } from "next/server";
-import { getLocale, getTranslations } from "next-intl/server";
-import { Suspense } from "react";
-import { GettingStarted } from "@/components/onboarding/getting-started";
-import { getAuth, getUser } from "@/lib/auth";
-import { getGrowthSummary } from "@/lib/warehouse/gold";
-import { CommandSkeleton, MetricsSkeleton, RecentSessionsSkeleton } from "../_dashboard-skeletons";
+import { ArrowRight, Connection as Plug, Sparkles } from "@nebutra/icons";
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { getUser } from "@/lib/auth";
 
-const authProvider = getConfiguredAuthProvider();
-const isAuthConfigured =
-  authProvider === "dev"
-    ? process.env.NODE_ENV !== "production"
-    : authProvider === "clerk"
-      ? Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY)
-      : authProvider === "better-auth"
-        ? Boolean(process.env.BETTER_AUTH_SECRET)
-        : authProvider === "nextauth"
-          ? Boolean(process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET)
-          : authProvider === "supabase"
-            ? Boolean(
-                (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) &&
-                  (process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) &&
-                  process.env.SUPABASE_SERVICE_ROLE_KEY,
-              )
-            : false;
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// =============================================================================
+// /workspace — Home (hero landing inside the dashboard)
+// =============================================================================
+// A centered greeting + a faux prompt card sit on a soft brand-tinted gradient
+// canvas. Mirrors the visual rhythm of the marketing-app builder homes (big
+// title, single input, top utility pill). The prompt card is decorative for
+// now — clicking it opens the command palette.
+// =============================================================================
 
 type GreetingKey = "morning" | "afternoon" | "evening";
 
@@ -39,184 +21,93 @@ function getGreetingKey(): GreetingKey {
   return "evening";
 }
 
-function fmtCompact(n: number, locale: string) {
-  return n.toLocaleString(locale, {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  });
-}
+export default async function WorkspaceHomePage() {
+  const [t, user] = await Promise.all([getTranslations("dashboard"), getUser().catch(() => null)]);
 
-function fmtUSD(n: number, locale: string) {
-  return n.toLocaleString(locale, {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  });
-}
-
-function fmtDateLabel(date: Date, locale: string) {
-  return date.toLocaleDateString(locale, {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
-}
-
-// ── Streaming server components ───────────────────────────────────────────────
-
-async function CommandCenter() {
-  await connection();
-
-  const [t, locale, user] = await Promise.all([
-    getTranslations("dashboard"),
-    getLocale(),
-    getUser().catch(() => null),
-  ]);
-
-  const userName = user?.name?.split(" ")[0] || "there";
+  const firstName = user?.name?.split(" ")[0] || "there";
   const greeting = t(`greeting.${getGreetingKey()}`);
-  const dateLabel = fmtDateLabel(new Date(), locale);
 
   return (
-    <AnimateIn preset="fadeUp">
-      <DashboardCommandSurface
-        status={dateLabel}
-        title={
-          <>
-            {greeting}, {userName}.
-          </>
-        }
-        description={t("commandCenter.description")}
+    <div
+      data-dashboard-section="workspace-home"
+      className="relative -mx-3 -mt-20 -mb-4 min-h-[calc(100vh-2rem)] overflow-hidden sm:-mx-4 md:-mx-5 2xl:-mx-6"
+    >
+      {/* Brand gradient canvas — soft blue → cyan wash; sits at -z-10 so the
+          content header (bell) above renders on top with no white box. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in oklch, var(--blue-5), transparent 55%) 0%, transparent 60%), " +
+            "radial-gradient(ellipse 60% 50% at 30% 70%, color-mix(in oklch, var(--cyan-4), transparent 70%) 0%, transparent 70%), " +
+            "linear-gradient(180deg, color-mix(in oklch, var(--blue-2), transparent 40%) 0%, transparent 30%)",
+        }}
       />
-    </AnimateIn>
-  );
-}
 
-async function WorkspaceMetrics() {
-  const [t, locale, authState] = await Promise.all([
-    getTranslations("dashboard.workspaceSnapshot"),
-    getLocale(),
-    getAuth().catch(() => null),
-  ]);
+      <div className="relative mx-auto flex max-w-3xl flex-col items-center px-4 pt-24 pb-24 text-center sm:pt-32">
+        {/* Top pill — quick promo / context-setter */}
+        <Link
+          href="/integrations"
+          className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/80 px-3 py-1 text-xs font-medium text-foreground/80 backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
+        >
+          <Plug className="size-3.5" aria-hidden="true" />
+          {t("home.connectorsPill")}
+          <ArrowRight className="size-3" aria-hidden="true" />
+        </Link>
 
-  const tenantId = authState?.orgId || process.env.DEFAULT_DASHBOARD_TENANT_ID;
-  if (!tenantId) return null;
+        {/* Greeting */}
+        <h1 className="mt-10 text-balance font-semibold text-3xl text-foreground sm:text-4xl md:text-5xl">
+          {greeting}, {firstName}.
+        </h1>
+        <p className="mt-3 max-w-xl text-pretty text-sm text-muted-foreground sm:text-base">
+          {t("home.subtitle")}
+        </p>
 
-  const summary = await getGrowthSummary(tenantId).catch(() => null);
-  if (!summary?.day) return null;
+        {/* Faux prompt card — clicking opens ⌘K command palette */}
+        <PromptCard placeholder={t("home.promptPlaceholder")} />
 
-  const snapshotState = t("meta.latestDay", { day: summary.day });
-  const snapshotMeta = [
-    { label: t("meta.snapshot"), value: snapshotState },
-    { label: t("meta.cadence"), value: t("meta.daily") },
-    { label: t("meta.tenant"), value: tenantId },
-  ];
-
-  const metrics = [
-    {
-      label: t("metrics.activeUsers"),
-      value: fmtCompact(summary.activeUsers, locale),
-      detail: t("details.activeUsers"),
-      source: t("meta.users"),
-      icon: Users,
-      tone: "green" as const,
-    },
-    {
-      label: t("metrics.totalEvents"),
-      value: fmtCompact(summary.totalEvents, locale),
-      detail: t("details.totalEvents"),
-      source: t("meta.events"),
-      icon: Activity,
-      tone: "blue" as const,
-    },
-    {
-      label: t("metrics.conversions"),
-      value: fmtCompact(summary.conversions, locale),
-      detail: t("details.conversions"),
-      source: t("meta.funnel"),
-      icon: Rocket,
-      tone: "amber" as const,
-    },
-    {
-      label: t("metrics.revenue"),
-      value: fmtUSD(summary.revenue, locale),
-      detail: t("details.revenue"),
-      source: t("meta.billing"),
-      icon: CreditCard,
-      tone: "neutral" as const,
-    },
-  ];
-
-  return (
-    <DashboardPanel
-      title={t("title")}
-      description={t("description", { day: summary.day })}
-      meta={
-        <div className="flex max-w-full flex-wrap items-center gap-1.5">
-          {snapshotMeta.map((item) => (
-            <span
-              key={item.label}
-              className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] bg-neutral-2 px-1.5 py-0.5 text-[11px] text-neutral-10 dark:bg-white/[0.05] dark:text-white/45"
+        {/* Quick action chips */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+          {[
+            { label: t("home.actions.connect"), href: "/integrations" },
+            { label: t("home.actions.theme"), href: "/theme-playground" },
+            { label: t("home.actions.audit"), href: "/audit" },
+            { label: t("home.actions.billing"), href: "/billing" },
+          ].map((a) => (
+            <Link
+              key={a.href}
+              href={a.href}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/70 px-3 py-1.5 text-xs font-medium text-foreground/80 backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
             >
-              <span className="font-medium text-neutral-11 dark:text-white/65">{item.label}</span>
-              <span className="max-w-32 truncate tabular-nums">{item.value}</span>
-            </span>
+              <Sparkles className="size-3" aria-hidden="true" />
+              {a.label}
+            </Link>
           ))}
         </div>
-      }
-    >
-      <AnimateInGroup stagger="fast" className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
-        {metrics.map(({ label, value, detail, source, icon: Icon, tone }) => (
-          <AnimateIn key={label} preset="fadeUp">
-            <DashboardMetricTile
-              label={label}
-              value={value}
-              detail={detail}
-              source={source}
-              icon={Icon}
-              tone={tone}
-            />
-          </AnimateIn>
-        ))}
-      </AnimateInGroup>
-    </DashboardPanel>
-  );
-}
-
-// ── Page ──────────────────────────────────────────────────────────────────────
-
-export default function DashboardPage() {
-  return (
-    <section
-      data-dashboard-section="workspace-overview"
-      className="dashboard-overview-layout w-full space-y-5"
-    >
-      {/* Fast: command center and primary action. Keep the dashboard left-aligned and decision-led. */}
-      <Suspense fallback={<CommandSkeleton />}>
-        <CommandCenter />
-      </Suspense>
-
-      <div className="space-y-4">
-        {/* Slow: warehouse metrics query. Hide the module until a real warehouse snapshot exists. */}
-        <Suspense fallback={<MetricsSkeleton />}>
-          <WorkspaceMetrics />
-        </Suspense>
-
-        <Suspense fallback={<RecentSessionsSkeleton />}>
-          <GettingStarted />
-        </Suspense>
-
-        {!isAuthConfigured && <NoAuthNotice />}
       </div>
-    </section>
+    </div>
   );
 }
 
-async function NoAuthNotice() {
-  const t = await getTranslations("dashboard.commandSurface");
+// ─── Prompt card (client) ────────────────────────────────────────────────────
+
+function PromptCard({ placeholder }: { placeholder: string }) {
   return (
-    <div className="rounded-[var(--radius-xl)] border border-amber-6 bg-amber-2 px-4 py-3 text-sm text-amber-11">
-      {t("noAuth")}
+    <div className="mt-8 w-full max-w-2xl">
+      <div className="rounded-[var(--radius-2xl)] border border-border bg-background/90 p-4 shadow-[0_10px_30px_-12px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+        <p className="px-2 py-2 text-left text-[15px] text-muted-foreground">{placeholder}</p>
+        <div className="mt-2 flex items-center justify-end gap-2">
+          <button
+            type="button"
+            aria-label="Open command palette"
+            className="inline-flex h-9 items-center gap-1.5 rounded-[var(--radius-md)] bg-foreground px-3 text-xs font-medium text-background transition-opacity hover:opacity-90"
+          >
+            ⌘K
+            <ArrowRight className="size-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

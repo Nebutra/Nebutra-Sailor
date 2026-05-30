@@ -2,7 +2,7 @@ import { routing } from "@nebutra/i18n/routing";
 import {
   CreditCard,
   FileText,
-  Layout as LayoutDashboard,
+  Home as HomeIcon,
   type Icon as LucideIcon,
   BlendMode as Palette,
   Connection as Plug,
@@ -25,7 +25,7 @@ export interface DashboardNavItem {
 }
 
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
-  { href: "/workspace", label: "Overview", icon: LayoutDashboard, group: "Product" },
+  { href: "/workspace", label: "Home", icon: HomeIcon, group: "Product" },
   {
     href: "/theme-playground",
     label: "Theme Playground",
@@ -102,18 +102,10 @@ function formatSegment(segment: string) {
 
 export function buildBreadcrumbs(pathname: string) {
   const segments = stripLocalePrefix(pathname).split("/").filter(Boolean);
-
-  if (segments.length === 0) {
-    return [{ href: "/workspace", label: "Overview" }];
-  }
-
-  const crumbs = [{ href: "/workspace", label: "Overview" }];
+  const crumbs: Array<{ href: string; label: string }> = [];
 
   segments.forEach((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join("/")}`;
-    // The "/workspace" root is already seeded above; skip re-adding it so the
-    // breadcrumb list never renders two crumbs with the same href (key).
-    if (href === "/workspace") return;
     const navItem = DASHBOARD_NAV_ITEMS.find((item) => item.href === href);
     crumbs.push({
       href,
