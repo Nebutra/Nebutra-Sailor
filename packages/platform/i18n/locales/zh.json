@@ -755,6 +755,41 @@
           "retrying": "重试中"
         }
       }
+    },
+    "appearance": {
+      "title": "外观",
+      "theme": {
+        "title": "主题",
+        "description": "使用浅色、深色，或匹配系统设置。"
+      },
+      "themeMode": {
+        "light": "浅色",
+        "dark": "深色",
+        "system": "系统"
+      },
+      "accent": {
+        "title": "强调色",
+        "description": "选择品牌强调色，作用于全应用的激活态。"
+      },
+      "typography": {
+        "title": "字体大小",
+        "description": "UI 与代码面板的基础字号。",
+        "uiFontSize": "UI 字号",
+        "uiFontSizeDescription": "调整 UI 使用的基准字号。",
+        "codeFontSize": "代码字号",
+        "codeFontSizeDescription": "调整聊天和差异视图中代码使用的基础字号。"
+      },
+      "motion": {
+        "title": "减少动态效果",
+        "description": "减少动画或匹配系统设置。",
+        "system": "系统",
+        "on": "开启",
+        "off": "关闭"
+      },
+      "surface": {
+        "title": "半透明侧边栏",
+        "description": "为侧边栏应用半透明材质。"
+      }
     }
   },
   "legal": {

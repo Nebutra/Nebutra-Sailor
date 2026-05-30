@@ -765,6 +765,41 @@
           "retrying": "retrying"
         }
       }
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme": {
+        "title": "Theme",
+        "description": "Use light, dark, or match system preference."
+      },
+      "themeMode": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      },
+      "accent": {
+        "title": "Accent color",
+        "description": "Pick a brand accent that tints active states across the app."
+      },
+      "typography": {
+        "title": "Typography",
+        "description": "Base font sizes for UI and code surfaces.",
+        "uiFontSize": "UI font size",
+        "uiFontSizeDescription": "Adjust the base UI font size.",
+        "codeFontSize": "Code font size",
+        "codeFontSizeDescription": "Adjust the base code font size."
+      },
+      "motion": {
+        "title": "Reduce motion",
+        "description": "Reduce animations or match system preference.",
+        "system": "System",
+        "on": "On",
+        "off": "Off"
+      },
+      "surface": {
+        "title": "Translucent sidebar",
+        "description": "Apply a translucent material to the sidebar."
+      }
     }
   },
   "legal": {

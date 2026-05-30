@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { href: "/settings", label: "General" },
+  { href: "/settings/appearance", label: "Appearance" },
   { href: "/settings/security", label: "Security" },
   { href: "/settings/team", label: "Team" },
   { href: "/settings/api-keys", label: "API Keys" },
