@@ -390,3 +390,127 @@ describe("serializeToDesignMd — hex normalization", () => {
     expect(frontMatter).toContain('primary: "#aabbcc"');
   });
 });
+
+describe("serializeToDesignMd — YAML backslash escape", () => {
+  it("escapes backslash and double-quote in a description without corruption", () => {
+    // Description contains both a backslash and a double-quote — both must be
+    // properly escaped in YAML double-quoted scalar output.
+    const desc = 'path\\to\\"file"';
+    const md = serializeToDesignMd([coreSet, semanticSet], { description: desc });
+    const { frontMatter } = splitFrontMatter(md);
+    // The raw description value should be yaml-escaped:
+    // path\to\"file" → "path\\to\\\"file\""
+    // Verify it appears correctly escaped (backslash doubled, quote preceded by backslash)
+    expect(frontMatter).toContain('description: "path\\\\to\\\\\\"file\\""');
+    // The raw unescaped backslash must NOT appear as a lone \ in the YAML value
+    expect(frontMatter).not.toMatch(/description: ".*[^\\]\\[^\\"].*"/);
+  });
+
+  it("round-trips a description with backslash through YAML serialization intact", () => {
+    // A value with a Windows-style path — backslash must survive a round-trip
+    const desc = "C:\\Users\\Design\\tokens";
+    const md = serializeToDesignMd([coreSet, semanticSet], { description: desc });
+    const { frontMatter } = splitFrontMatter(md);
+    // Each \ must be doubled to \\ in the YAML output
+    expect(frontMatter).toContain("C:\\\\Users\\\\Design\\\\tokens");
+  });
+});
+
+describe("serializeToDesignMd — description in prose Overview", () => {
+  it("uses a custom description in the Overview prose section when provided", () => {
+    const customDesc = "My custom design system — built for speed.";
+    const md = serializeToDesignMd([coreSet, semanticSet], { description: customDesc });
+    const { body } = splitFrontMatter(md);
+    const overviewSection = body.slice(body.indexOf("## Overview"), body.indexOf("## Colors"));
+    expect(overviewSection).toContain(customDesc);
+  });
+
+  it("does NOT use the custom description as a hardcoded fallback — must come from option", () => {
+    // Without a description option, the default Nebutra paragraph is used
+    const md = serializeToDesignMd([coreSet, semanticSet]);
+    const { body } = splitFrontMatter(md);
+    expect(body).toContain("AI-native SaaS design system");
+  });
+
+  it("custom description replaces (not appends to) the default Nebutra paragraph", () => {
+    const customDesc = "Completely custom overview for Acme Corp.";
+    const md = serializeToDesignMd([coreSet, semanticSet], { description: customDesc });
+    const { body } = splitFrontMatter(md);
+    const overviewSection = body.slice(body.indexOf("## Overview"), body.indexOf("## Colors"));
+    // Custom text is present
+    expect(overviewSection).toContain(customDesc);
+    // Default Nebutra text must NOT also be present in the Overview
+    expect(overviewSection).not.toContain("AI-native SaaS design system");
+  });
+});
+
+describe("serializeToDesignMd — spacing section", () => {
+  /** Fixture with size.spacing.* tokens */
+  const spacingSet: DesignTokenSet = {
+    name: "spacing",
+    relativePath: "spacing.json",
+    tokens: {
+      size: {
+        spacing: {
+          sm: { $value: "0.5rem", $type: "dimension" },
+          md: { $value: "1rem", $type: "dimension" },
+          lg: { $value: "1.5rem", $type: "dimension" },
+        },
+      },
+    },
+  };
+
+  it("emits a spacing: block in front matter when size.spacing.* tokens are present", () => {
+    const md = serializeToDesignMd([spacingSet]);
+    const { frontMatter } = splitFrontMatter(md);
+    expect(frontMatter).toMatch(/^spacing:/m);
+    expect(frontMatter).toContain('sm: "0.5rem"');
+    expect(frontMatter).toContain('md: "1rem"');
+    expect(frontMatter).toContain('lg: "1.5rem"');
+  });
+
+  it("emits spacing keys in stable canonical order (sm before md before lg)", () => {
+    const md = serializeToDesignMd([spacingSet]);
+    const { frontMatter } = splitFrontMatter(md);
+    const smIdx = frontMatter.indexOf("  sm:");
+    const mdIdx = frontMatter.indexOf("  md:");
+    const lgIdx = frontMatter.indexOf("  lg:");
+    // All three must be present and in canonical order
+    expect(smIdx).toBeGreaterThan(-1);
+    expect(mdIdx).toBeGreaterThan(smIdx);
+    expect(lgIdx).toBeGreaterThan(mdIdx);
+  });
+
+  it("omits the spacing: block when no size.spacing.* tokens are present", () => {
+    // coreSet has only size.radius and size.container, no size.spacing
+    const md = serializeToDesignMd([coreSet]);
+    const { frontMatter } = splitFrontMatter(md);
+    expect(frontMatter).not.toMatch(/^spacing:/m);
+  });
+
+  it("emits deterministic spacing output on repeated calls", () => {
+    const first = serializeToDesignMd([spacingSet]);
+    const second = serializeToDesignMd([spacingSet]);
+    expect(first).toBe(second);
+  });
+});
+
+describe("serializeToDesignMd — cycle error includes originating token", () => {
+  it("includes the originating role path in the cycle error message", () => {
+    const cycleSet: DesignTokenSet = {
+      name: "cycle-origin",
+      relativePath: "cycle-origin.json",
+      tokens: {
+        a: { $value: "{b}", $type: "color" },
+        b: { $value: "{a}", $type: "color" },
+        brand: {
+          primary: { $value: "{a}", $type: "color" },
+        },
+      },
+    };
+    // The error must still mention "cycle" (keeps existing test compatible)
+    // AND must now mention the originating path
+    expect(() => serializeToDesignMd([cycleSet])).toThrow(/[Cc]ycle/);
+    expect(() => serializeToDesignMd([cycleSet])).toThrow(/brand\.primary/);
+  });
+});

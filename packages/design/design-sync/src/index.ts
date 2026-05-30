@@ -41,6 +41,8 @@ export { FigmaProvider } from "./providers/figma";
 export { GitOnlyProvider } from "./providers/git-only";
 export { MemoryProvider } from "./providers/memory";
 export { PenpotProvider } from "./providers/penpot";
+// ── DTCG → DESIGN.md serializer ────────────────────────────────────────────
+export { serializeToDesignMd, type ToDesignMdOptions } from "./serialize/to-design-md";
 export type {
   BaseProviderConfig,
   DesignMdProviderConfig,
