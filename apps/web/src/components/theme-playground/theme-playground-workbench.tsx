@@ -111,9 +111,9 @@ function ThemeSwatches({
   const colors = swatchColors ?? getThemeSwatches(themeId);
   return (
     <div className="flex items-center gap-1.5" aria-hidden="true">
-      {colors.map((color) => (
+      {colors.map((color, i) => (
         <span
-          key={`${themeId}-${color}`}
+          key={`${themeId}-${i}-${color}`}
           className={cn(
             "rounded-[var(--radius-sm)] border border-white/10 shadow-sm",
             size === "sm" ? "size-4" : "size-5",
