@@ -113,24 +113,19 @@ export async function GettingStarted() {
       meta={
         <div className="flex shrink-0 items-center gap-2">
           <progress className="sr-only" value={percent} max={100} aria-label={t("progressLabel")} />
-          <div
-            className="h-1.5 w-24 overflow-hidden rounded-full bg-neutral-3 dark:bg-white/10"
-            aria-hidden="true"
-          >
+          <div className="h-1.5 w-24 overflow-hidden rounded-full bg-neutral-3" aria-hidden="true">
             <div
               className="h-full rounded-full transition-all duration-500"
               style={{ width: `${percent}%`, background: "var(--brand-gradient)" }}
             />
           </div>
-          <span className="text-xs font-medium tabular-nums text-neutral-11 dark:text-white/60">
-            {percent}%
-          </span>
+          <span className="text-xs font-medium tabular-nums text-neutral-11">{percent}%</span>
         </div>
       }
     >
       <AnimateInGroup
         stagger="fast"
-        className="divide-y divide-neutral-5/80 overflow-hidden rounded-[var(--radius-md)] border border-neutral-5/80 bg-neutral-2/60 dark:divide-white/10 dark:border-white/10 dark:bg-white/[0.025]"
+        className="divide-y divide-neutral-5/80 overflow-hidden rounded-[var(--radius-md)] border border-neutral-5/80 bg-neutral-2/60"
       >
         {tasks.map((task) => {
           const Icon = task.icon;
@@ -144,14 +139,14 @@ export async function GettingStarted() {
                 className={`group flex items-start gap-3 px-3 py-3 transition-colors duration-150 ${
                   task.done
                     ? "bg-green-2/35 hover:bg-green-2/55 dark:bg-green-2/10 dark:hover:bg-green-2/20"
-                    : "hover:bg-neutral-3/70 dark:hover:bg-white/[0.05]"
+                    : "hover:bg-neutral-3/70"
                 }`}
               >
                 <div
                   className={`flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] ${
                     task.done
                       ? "bg-green-3 text-green-11 dark:bg-green-3/30 dark:text-green-9"
-                      : "bg-neutral-2 text-neutral-11 dark:bg-white/10 dark:text-white/60"
+                      : "bg-neutral-2 text-neutral-11"
                   }`}
                 >
                   {task.done ? (
@@ -164,25 +159,19 @@ export async function GettingStarted() {
                   <div className="flex items-center justify-between gap-2">
                     <p
                       className={`truncate text-sm font-medium ${
-                        task.done
-                          ? "text-green-12 dark:text-green-9"
-                          : "text-neutral-12 dark:text-white"
+                        task.done ? "text-green-12 dark:text-green-9" : "text-neutral-12"
                       }`}
                     >
                       {task.label}
                     </p>
                     <ArrowRight
                       className={`size-3.5 shrink-0 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 ${
-                        task.done
-                          ? "text-green-11 dark:text-green-9"
-                          : "text-neutral-11 dark:text-white/70"
+                        task.done ? "text-green-11 dark:text-green-9" : "text-neutral-11"
                       }`}
                       aria-hidden="true"
                     />
                   </div>
-                  <p className="mt-0.5 line-clamp-2 text-xs text-neutral-10 dark:text-white/50">
-                    {task.description}
-                  </p>
+                  <p className="mt-0.5 line-clamp-2 text-xs text-neutral-10">{task.description}</p>
                 </div>
               </ViewTransitionLink>
             </AnimateIn>

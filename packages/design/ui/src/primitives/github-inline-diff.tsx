@@ -104,7 +104,7 @@ function InlineThread({
   }, [onClose]);
 
   return (
-    <div className="rounded-[var(--radius-md)] border bg-card dark:border-white/10">
+    <div className="rounded-[var(--radius-md)] border bg-card">
       {/* Header with status chip */}
       <div className="flex items-center justify-between gap-2 px-2 py-1">
         <div className="flex items-center gap-2">
@@ -268,9 +268,9 @@ export function GithubInlineDiff({
       <div
         role="table"
         aria-label={`Diff of ${fileName}`}
-        className={cn("rounded-[var(--radius-md)] border bg-card dark:border-white/10", className)}
+        className={cn("rounded-[var(--radius-md)] border bg-card", className)}
       >
-        <div className="flex items-center justify-between border-b px-2 py-1 dark:border-white/10">
+        <div className="flex items-center justify-between border-b px-2 py-1">
           <div className="flex items-center gap-2">
             <span className="text-[13px] font-medium">{fileName}</span>
             <Badge variant="secondary" aria-label="File status" className="h-5 px-1.5 text-[11px]">
@@ -280,7 +280,7 @@ export function GithubInlineDiff({
         </div>
 
         {/* biome-ignore lint/a11y/useSemanticElements: ARIA custom grid */}
-        <ol role="rowgroup" className="divide-y dark:divide-white/10">
+        <ol role="rowgroup" className="divide-y">
           {rows.map((line, idx) => {
             const isChange = line.kind === "add" || line.kind === "del";
             const isOpen = openThreadAt === idx;
@@ -320,7 +320,7 @@ export function GithubInlineDiff({
                 <div
                   role="cell"
                   className={cn(
-                    "grid w-16 shrink-0 grid-cols-2 border-r text-[11px] text-muted-foreground dark:border-white/10",
+                    "grid w-16 shrink-0 grid-cols-2 border-r text-[11px] text-muted-foreground",
                   )}
                 >
                   <span className="px-2 py-1 text-right tabular-nums">
@@ -354,7 +354,7 @@ export function GithubInlineDiff({
                   </pre>
 
                   {isOpen && line.kind !== "hunk" && (
-                    <div className="border-t bg-background px-2 py-1.5 dark:border-white/10">
+                    <div className="border-t bg-background px-2 py-1.5">
                       <InlineThread
                         comments={lineComments}
                         resolved={isResolved}

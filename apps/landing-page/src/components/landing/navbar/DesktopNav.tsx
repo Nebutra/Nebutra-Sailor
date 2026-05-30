@@ -18,7 +18,7 @@ export function DesktopNav() {
             <div key={link.labelKey} className="group/nav relative inline-block py-4">
               <button
                 type="button"
-                className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+                className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12"
               >
                 {t(link.labelKey as NavTranslationKey)}
                 <ChevronDown className="h-3 w-3 opacity-60 transition-transform duration-300 group-hover/nav:-rotate-180" />
@@ -84,7 +84,7 @@ export function DesktopNav() {
               href={link.href}
               target="_blank"
               rel="noreferrer"
-              className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+              className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12"
             >
               {content}
             </a>
@@ -95,7 +95,7 @@ export function DesktopNav() {
           <Link
             key={link.labelKey}
             href={link.href as LocalizedHref}
-            className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+            className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12"
           >
             {content}
           </Link>

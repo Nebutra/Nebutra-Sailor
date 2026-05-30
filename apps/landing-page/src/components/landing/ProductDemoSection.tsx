@@ -64,7 +64,7 @@ export function ProductDemoSection() {
             {/* Left: Structural Stepper Navigation */}
             <div className="lg:col-span-5 flex flex-col relative w-full pt-4">
               {/* Continuous Vertical Tracking Line */}
-              <div className="absolute left-[27px] top-6 bottom-12 w-px bg-border/60 dark:bg-white/10 hidden md:block" />
+              <div className="absolute left-[27px] top-6 bottom-12 w-px bg-border/60 hidden md:block" />
 
               {PRODUCT_DEMO_TABS.map((tab, index) => {
                 const isActive = activeId === tab.id;

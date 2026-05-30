@@ -21,13 +21,13 @@ export function FinalCTA() {
       />
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <AnimateIn preset="emerge" inView>
-          <h2 className="text-3xl font-bold text-neutral-12 md:text-5xl lg:text-6xl dark:text-white">
+          <h2 className="text-3xl font-bold text-neutral-12 md:text-5xl lg:text-6xl">
             {t("heading")}
           </h2>
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView className="mt-6">
-          <p className="text-lg text-neutral-11 md:text-xl dark:text-white/70">{t("subheading")}</p>
+          <p className="text-lg text-neutral-11 md:text-xl">{t("subheading")}</p>
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView className="mx-auto mt-10 max-w-xl">

@@ -31,7 +31,7 @@ const CATEGORIES: ReadonlyArray<{ key: CategoryKey; alwaysOn: boolean }> = [
 const primaryActionClass =
   "min-w-36 rounded-[var(--radius-md)] border border-[var(--neutral-12)] bg-[var(--neutral-12)] px-4 py-2 text-sm font-semibold text-[var(--neutral-1)] shadow-sm transition-colors hover:border-[var(--neutral-11)] hover:bg-[var(--neutral-11)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)]";
 const secondaryActionClass =
-  "min-w-36 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] dark:text-white";
+  "min-w-36 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-2 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)]";
 
 function subscribeToConsentSnapshot() {
   return () => {};
@@ -126,7 +126,7 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
         <div className="flex-1">
           <h2
             id="cookie-consent-title"
-            className="text-base font-semibold text-[var(--neutral-12)] dark:text-white"
+            className="text-base font-semibold text-[var(--neutral-12)]"
           >
             {t("banner.title")}
           </h2>
@@ -154,7 +154,7 @@ export function CookieConsentBanner({ apiEndpoint }: CookieConsentBannerProps = 
                     className="mt-0.5 size-4 rounded border-[var(--neutral-7)]"
                   />
                   <span className="flex-1">
-                    <span className="block text-sm font-medium text-[var(--neutral-12)] dark:text-white">
+                    <span className="block text-sm font-medium text-[var(--neutral-12)]">
                       {t(`toggle.${key}.label`)}
                     </span>
                     <span className="block text-xs text-[var(--neutral-10)]">

@@ -37,13 +37,11 @@ export function PageHeader({ title, description, actions, className }: PageHeade
       )}
     >
       <div className="flex-1">
-        <h1 className="text-2xl font-semibold tracking-tight text-[color:var(--neutral-12)] dark:text-white">
+        <h1 className="text-2xl font-semibold tracking-tight text-[color:var(--neutral-12)]">
           {title}
         </h1>
         {description && (
-          <p className="mt-1 text-sm text-[color:var(--neutral-11)] dark:text-white/70">
-            {description}
-          </p>
+          <p className="mt-1 text-sm text-[color:var(--neutral-11)]">{description}</p>
         )}
       </div>
       {actions && <div className="mt-2 flex shrink-0 gap-2 sm:mt-0">{actions}</div>}

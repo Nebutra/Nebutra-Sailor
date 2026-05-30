@@ -104,13 +104,11 @@ export function FeaturesBentoSection({
             {/* Security Card */}
             <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2">
               <CardContent className="pt-6">
-                <div className="relative mx-auto flex aspect-square size-32 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
+                <div className="relative mx-auto flex aspect-square size-32 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border">
                   <SecurityDecorativeSvg />
                 </div>
                 <div className="relative z-10 mt-6 space-y-2 text-center">
-                  <h2 className="text-lg font-medium transition dark:text-white">
-                    {securityCard.title}
-                  </h2>
+                  <h2 className="text-lg font-medium transition">{securityCard.title}</h2>
                   <p className="text-foreground">{securityCard.description}</p>
                 </div>
               </CardContent>
@@ -133,11 +131,11 @@ export function FeaturesBentoSection({
             <Card className="relative col-span-full overflow-hidden lg:col-span-3">
               <CardContent className="grid pt-6 sm:grid-cols-2">
                 <div className="relative z-10 flex flex-col justify-between space-y-12 lg:space-y-6">
-                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
+                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border">
                     <LeftIcon className="m-auto size-5" strokeWidth={1} />
                   </div>
                   <div className="space-y-2">
-                    <h2 className="text-lg font-medium text-[var(--neutral-12)] transition dark:text-white">
+                    <h2 className="text-lg font-medium text-[var(--neutral-12)] transition">
                       {leftFeatureCard.title}
                     </h2>
                     <p className="text-foreground">{leftFeatureCard.description}</p>
@@ -145,9 +143,9 @@ export function FeaturesBentoSection({
                 </div>
                 <div className="rounded-tl-(--radius) relative -mb-6 -mr-6 mt-6 h-fit border-l border-t p-6 py-6 sm:ml-6">
                   <div className="absolute left-3 top-2 flex gap-1">
-                    <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-white/10" />
-                    <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-white/10" />
-                    <span className="block size-2 rounded-full border dark:border-white/10 dark:bg-white/10" />
+                    <span className="block size-2 rounded-full border" />
+                    <span className="block size-2 rounded-full border" />
+                    <span className="block size-2 rounded-full border" />
                   </div>
                   <FeatureChartSvg />
                 </div>
@@ -158,7 +156,7 @@ export function FeaturesBentoSection({
             <Card className="relative col-span-full overflow-hidden lg:col-span-3">
               <CardContent className="grid h-full pt-6 sm:grid-cols-2">
                 <div className="relative z-10 flex flex-col justify-between space-y-12 lg:space-y-6">
-                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
+                  <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border">
                     <RightIcon className="m-auto size-6" strokeWidth={1} />
                   </div>
                   <div className="space-y-2">

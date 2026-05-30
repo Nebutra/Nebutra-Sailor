@@ -48,7 +48,7 @@ export function AIGatewayCard() {
           style={{ boxShadow: "var(--ring-hairline)" }}
           className="w-full max-w-[340px] bg-background dark:bg-[var(--neutral-2)] border border-[var(--neutral-6)] rounded-[var(--radius-button)] overflow-hidden z-20 transition-transform duration-150 hover:-translate-y-px"
         >
-          <div className="flex items-center px-4 py-2.5 bg-muted/30 dark:bg-white/[0.02] border-b border-border/50 dark:border-white/5">
+          <div className="flex items-center px-4 py-2.5 bg-muted/30/[0.02] border-b border-border/50">
             <div className="flex gap-1.5">
               <div className="h-2.5 w-2.5 rounded-full bg-border/80 dark:bg-[var(--neutral-4)]" />
               <div className="h-2.5 w-2.5 rounded-full bg-border/80 dark:bg-[var(--neutral-4)]" />
@@ -89,7 +89,7 @@ export function AIGatewayCard() {
           {/* Source Node */}
           <div
             ref={appRef}
-            className="z-10 flex h-16 w-16 flex-shrink-0 flex-col items-center justify-center rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background dark:border-white/10 dark:bg-[var(--neutral-1)]"
+            className="z-10 flex h-16 w-16 flex-shrink-0 flex-col items-center justify-center rounded-[var(--radius-card)] border border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-1)]"
             style={{ boxShadow: "var(--ring-hairline)" }}
           >
             <span
@@ -106,7 +106,7 @@ export function AIGatewayCard() {
           <div className="flex flex-col gap-3 z-10">
             <div
               ref={openaiRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-[var(--neutral-1)]"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:bg-[var(--neutral-1)]"
             >
               <OpenAIIcon size={14} className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
@@ -115,7 +115,7 @@ export function AIGatewayCard() {
             </div>
             <div
               ref={anthropicRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-[var(--neutral-1)]"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:bg-[var(--neutral-1)]"
             >
               <AnthropicIcon size={14} className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
@@ -124,7 +124,7 @@ export function AIGatewayCard() {
             </div>
             <div
               ref={geminiRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-[var(--neutral-1)]"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:bg-[var(--neutral-1)]"
             >
               <GeminiIcon size={14} className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
@@ -133,7 +133,7 @@ export function AIGatewayCard() {
             </div>
             <div
               ref={deepseekRef}
-              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-[var(--neutral-1)]"
+              className="flex items-center gap-2.5 rounded-full border border-border/50 bg-background px-4 py-1.5 shadow-sm backdrop-blur-sm dark:bg-[var(--neutral-1)]"
             >
               <DeepSeekIcon size={14} className="h-3.5 w-3.5 shrink-0" />
               <span className="text-[11px] font-semibold tracking-wide text-foreground/80 dark:text-[var(--neutral-11)]">
@@ -152,7 +152,7 @@ export function AIGatewayCard() {
           delay={BEAM_DELAYS[0]}
           duration={4.5}
           pathColor="currentColor"
-          className="text-border dark:text-white/10"
+          className="text-border"
           pathWidth={1}
           pathOpacity={0.8}
           gradientStartColor="var(--brand-primary)"
@@ -166,7 +166,7 @@ export function AIGatewayCard() {
           delay={BEAM_DELAYS[1]}
           duration={4.5}
           pathColor="currentColor"
-          className="text-border dark:text-white/10"
+          className="text-border"
           pathWidth={1}
           pathOpacity={0.8}
           gradientStartColor="var(--brand-primary)"
@@ -180,7 +180,7 @@ export function AIGatewayCard() {
           delay={BEAM_DELAYS[2]}
           duration={4.5}
           pathColor="currentColor"
-          className="text-border dark:text-white/10"
+          className="text-border"
           pathWidth={1}
           pathOpacity={0.8}
           gradientStartColor="var(--brand-primary)"
@@ -194,7 +194,7 @@ export function AIGatewayCard() {
           delay={BEAM_DELAYS[3]}
           duration={4.5}
           pathColor="currentColor"
-          className="text-border dark:text-white/10"
+          className="text-border"
           pathWidth={1}
           pathOpacity={0.8}
           gradientStartColor="var(--brand-primary)"

@@ -56,7 +56,7 @@ function groupVisible(
 
 function KeyCap({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded border border-neutral-7 bg-neutral-1 px-1.5 font-mono text-[11px] font-medium text-neutral-12 shadow-[0_1px_0_var(--neutral-6)] dark:border-white/15 dark:bg-black/40 dark:text-white dark:shadow-[0_1px_0_rgba(255,255,255,0.05)]">
+    <kbd className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded border border-neutral-7 bg-neutral-1 px-1.5 font-mono text-[11px] font-medium text-neutral-12 shadow-[0_1px_0_var(--neutral-6)] dark:bg-black/40 dark:shadow-[0_1px_0_rgba(255,255,255,0.05)]">
       {children}
     </kbd>
   );
@@ -72,20 +72,18 @@ export default function ShortcutsPage() {
     <section className="space-y-8">
       <AnimateIn preset="fadeUp">
         <header>
-          <h1 className="text-base font-semibold text-neutral-12 dark:text-white">
-            Keyboard shortcuts
-          </h1>
-          <p className="mt-1 text-sm text-neutral-11 dark:text-white/70">
+          <h1 className="text-base font-semibold text-neutral-12">Keyboard shortcuts</h1>
+          <p className="mt-1 text-sm text-neutral-11">
             Press{" "}
-            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:border-white/15 dark:bg-black/40">
+            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
               ⌘K
             </kbd>{" "}
             anywhere to run any command. Use{" "}
-            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:border-white/15 dark:bg-black/40">
+            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
               ↑
             </kbd>
             /
-            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:border-white/15 dark:bg-black/40">
+            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] dark:bg-black/40">
               ↓
             </kbd>{" "}
             to navigate the list.
@@ -96,14 +94,14 @@ export default function ShortcutsPage() {
       {/* Global shortcuts */}
       <AnimateIn preset="fadeUp">
         <div>
-          <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/50">
+          <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
             Global
           </h2>
-          <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 dark:border-white/10">
+          <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7">
             <table className="w-full border-collapse text-left text-sm">
-              <tbody className="divide-y divide-neutral-6 dark:divide-white/10">
+              <tbody className="divide-y divide-neutral-6">
                 {GLOBAL_SHORTCUTS.map((row) => (
-                  <tr key={row.label} className="bg-neutral-1 dark:bg-white/[0.02]">
+                  <tr key={row.label} className="bg-neutral-1">
                     <td className="px-4 py-3 align-top">
                       <div className="flex items-center gap-1">
                         {row.keys.map((k, i) => (
@@ -113,19 +111,15 @@ export default function ShortcutsPage() {
                           >
                             <KeyCap>{k}</KeyCap>
                             {i < row.keys.length - 1 && (
-                              <span className="text-[10px] text-neutral-9 dark:text-white/30">
-                                +
-                              </span>
+                              <span className="text-[10px] text-neutral-9">+</span>
                             )}
                           </span>
                         ))}
                       </div>
                     </td>
                     <td className="px-4 py-3 align-top">
-                      <p className="font-medium text-neutral-12 dark:text-white">{row.label}</p>
-                      <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/50">
-                        {row.description}
-                      </p>
+                      <p className="font-medium text-neutral-12">{row.label}</p>
+                      <p className="mt-0.5 text-xs text-neutral-10">{row.description}</p>
                     </td>
                   </tr>
                 ))}
@@ -143,28 +137,25 @@ export default function ShortcutsPage() {
           return (
             <AnimateIn key={section} preset="fadeUp">
               <div>
-                <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10 dark:text-white/50">
+                <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
                   {t(`sections.${section}`)}
                 </h2>
-                <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 dark:border-white/10">
+                <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7">
                   <table className="w-full border-collapse text-left text-sm">
-                    <tbody className="divide-y divide-neutral-6 dark:divide-white/10">
+                    <tbody className="divide-y divide-neutral-6">
                       {items.map((cmd) => {
                         const Icon = cmd.icon;
                         return (
-                          <tr key={cmd.id} className="bg-neutral-1 dark:bg-white/[0.02]">
+                          <tr key={cmd.id} className="bg-neutral-1">
                             <td className="w-12 px-4 py-3 align-middle">
-                              <Icon
-                                className="h-4 w-4 text-neutral-11 dark:text-white/70"
-                                aria-hidden
-                              />
+                              <Icon className="h-4 w-4 text-neutral-11" aria-hidden />
                             </td>
                             <td className="px-4 py-3 align-middle">
-                              <p className="font-medium text-neutral-12 dark:text-white">
+                              <p className="font-medium text-neutral-12">
                                 {t(`commands.${cmd.titleKey}`)}
                               </p>
                               {cmd.tags && cmd.tags.length > 0 && (
-                                <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
+                                <p className="mt-0.5 text-xs text-neutral-10">
                                   {cmd.tags.join(" · ")}
                                 </p>
                               )}
@@ -177,9 +168,7 @@ export default function ShortcutsPage() {
                                   ))}
                                 </div>
                               ) : (
-                                <span className="text-[11px] text-neutral-10 dark:text-white/40">
-                                  via ⌘K
-                                </span>
+                                <span className="text-[11px] text-neutral-10">via ⌘K</span>
                               )}
                             </td>
                           </tr>

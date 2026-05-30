@@ -70,9 +70,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
           </div>
         ) : organizations.length === 0 ? (
           <div className="text-center">
-            <h2 className="text-base font-semibold text-neutral-12 dark:text-white">
-              {copy.emptyTitle}
-            </h2>
+            <h2 className="text-base font-semibold text-neutral-12">{copy.emptyTitle}</h2>
             <p className="mb-4 mt-2 text-sm text-muted-foreground">{copy.emptyDescription}</p>
             <Link href={copy.emptyActionHref}>
               <Button className="w-full">{copy.emptyActionLabel}</Button>
@@ -85,7 +83,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
                 key={org.id}
                 type="button"
                 onClick={() => handleSelectOrganization(org.id)}
-                className="flex w-full items-center gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-3 text-left transition-colors hover:bg-neutral-2 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+                className="flex w-full items-center gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-3 text-left transition-colors hover:bg-neutral-2"
               >
                 {org.image ? (
                   // biome-ignore lint/performance/noImgElement: Clerk organization avatars can be arbitrary remote URLs outside next/image remotePatterns.
@@ -96,8 +94,8 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
                   </div>
                 )}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-medium text-neutral-12 dark:text-white">{org.name}</p>
-                  <p className="truncate text-xs text-neutral-10 dark:text-white/60">{org.slug}</p>
+                  <p className="truncate font-medium text-neutral-12">{org.name}</p>
+                  <p className="truncate text-xs text-neutral-10">{org.slug}</p>
                 </div>
               </button>
             ))}

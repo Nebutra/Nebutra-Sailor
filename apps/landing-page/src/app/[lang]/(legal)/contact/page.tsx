@@ -73,7 +73,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     <div className="space-y-8 sm:space-y-12">
       {/* Header */}
       <section className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-[var(--neutral-12)] dark:text-white">
+        <h1 className="text-4xl font-bold tracking-tight text-[var(--neutral-12)]">
           {t("contact.heading")}
         </h1>
         <p className="mt-4 text-lg text-[var(--neutral-10)]">{t("contact.subheading")}</p>
@@ -86,9 +86,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             key={contact.email}
             className="rounded-[var(--radius-lg)] border border-[var(--neutral-6)] p-6 transition-colors hover:border-[color:var(--blue-8)] dark:hover:border-[color:var(--blue-7)]"
           >
-            <h3 className="font-semibold text-[var(--neutral-12)] dark:text-white">
-              {contact.title}
-            </h3>
+            <h3 className="font-semibold text-[var(--neutral-12)]">{contact.title}</h3>
             <p className="mt-1 text-sm text-[var(--neutral-10)]">{contact.description}</p>
             <a
               href={`mailto:${contact.email}`}
@@ -102,7 +100,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
 
       {/* Contact Form */}
       <section className="rounded-[var(--radius-2xl)] border border-[var(--neutral-6)] p-5 sm:p-8">
-        <h2 className="text-2xl font-bold text-[var(--neutral-12)] dark:text-white mb-6">
+        <h2 className="text-2xl font-bold text-[var(--neutral-12)] mb-6">
           {t("contact.formTitle")}
         </h2>
         <ContactForm />
@@ -110,21 +108,19 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
 
       {/* Office Info */}
       <section className="rounded-[var(--radius-2xl)] bg-[var(--neutral-2)] p-5 sm:p-8">
-        <h2 className="text-xl font-bold text-[var(--neutral-12)] dark:text-white mb-4">
+        <h2 className="text-xl font-bold text-[var(--neutral-12)] mb-4">
           {t("contact.companyInfoTitle")}
         </h2>
         <div className="space-y-4 text-[var(--neutral-10)]">
           <div>
-            <h3 className="font-semibold text-[var(--neutral-12)] dark:text-white">
+            <h3 className="font-semibold text-[var(--neutral-12)]">
               {t("contact.companyNameChinese")}
             </h3>
             <p className="text-sm text-[var(--neutral-10)]">{t("contact.companyNameEnglish")}</p>
             <p>{t("contact.companyAddress")}</p>
           </div>
           <div>
-            <h3 className="font-semibold text-[var(--neutral-12)] dark:text-white">
-              {t("contact.socialMedia")}
-            </h3>
+            <h3 className="font-semibold text-[var(--neutral-12)]">{t("contact.socialMedia")}</h3>
             <div className="flex gap-4 mt-2">
               <a
                 href="https://twitter.com/nebutra"

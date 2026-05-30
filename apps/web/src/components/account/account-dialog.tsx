@@ -165,7 +165,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                       className={`flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2 text-left text-sm font-medium transition-colors ${
                         isActive
                           ? "bg-blue-3/60 text-blue-12 dark:bg-blue-3/20 dark:text-blue-9"
-                          : "text-neutral-11 hover:bg-neutral-3/60 hover:text-neutral-12/[0.05]"
+                          : "text-neutral-11 hover:bg-neutral-3/60 hover:text-neutral-12"
                       }`}
                     >
                       <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -389,7 +389,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                   className={`flex flex-col items-center gap-1.5 rounded-[var(--radius-xl)] border px-3 py-3 text-xs font-medium transition-colors ${
                     isActive
                       ? "border-blue-7 bg-blue-2/60 text-blue-12 dark:border-blue-7/60 dark:bg-blue-2/20 dark:text-blue-9"
-                      : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:border-neutral-7 hover:bg-neutral-2/[0.02]"
+                      : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:border-neutral-7 hover:bg-neutral-2"
                   }`}
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
@@ -408,7 +408,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             <button
               type="button"
               onClick={onReportIssue}
-              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2/[0.05]"
+              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
             >
               <span className="flex items-center gap-2.5">
                 <LifeBuoy className="h-4 w-4 text-neutral-10" aria-hidden="true" />
@@ -419,7 +419,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
             <button
               type="button"
               onClick={onShortcuts}
-              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2/[0.05]"
+              className="group flex items-center justify-between rounded-[var(--radius-lg)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
             >
               <span className="flex items-center gap-2.5">
                 <Keyboard className="h-4 w-4 text-neutral-10" aria-hidden="true" />

@@ -110,16 +110,14 @@ export function CommunicationPreferences({
   return (
     <section className="space-y-3">
       <header>
-        <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
-          Communication preferences
-        </h2>
-        <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/50">
+        <h2 className="text-sm font-semibold text-neutral-12">Communication preferences</h2>
+        <p className="mt-0.5 text-xs text-neutral-10">
           Decide what reaches your inbox. You can change these anytime.
         </p>
       </header>
 
-      <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 dark:border-white/10">
-        <ul className="divide-y divide-neutral-6 dark:divide-white/10">
+      <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7">
+        <ul className="divide-y divide-neutral-6">
           {ROWS.map((row) => {
             const Icon = row.icon;
             const checked = current[row.key];
@@ -127,17 +125,15 @@ export function CommunicationPreferences({
             return (
               <li
                 key={row.key}
-                className="flex items-start justify-between gap-4 bg-neutral-1 px-4 py-3 dark:bg-white/[0.02]"
+                className="flex items-start justify-between gap-4 bg-neutral-1 px-4 py-3/[0.02]"
               >
                 <div className="flex min-w-0 items-start gap-3">
-                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-neutral-2 text-neutral-11 dark:bg-white/10 dark:text-white/60">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-neutral-2 text-neutral-11">
                     <Icon className="h-3.5 w-3.5" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-neutral-12 dark:text-white">
-                      {row.label}
-                    </p>
-                    <p className="mt-0.5 text-xs leading-relaxed text-neutral-10 dark:text-white/50">
+                    <p className="text-sm font-medium text-neutral-12">{row.label}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-neutral-10">
                       {row.description}
                     </p>
                   </div>
@@ -150,7 +146,7 @@ export function CommunicationPreferences({
                   disabled={isBusy}
                   onClick={() => void handleToggle(row.key)}
                   className={`relative mt-0.5 inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-8 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
-                    checked ? "bg-blue-9" : "bg-neutral-6 dark:bg-white/15"
+                    checked ? "bg-blue-9" : "bg-neutral-6"
                   }`}
                 >
                   {isBusy ? (

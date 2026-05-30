@@ -63,15 +63,15 @@ export function MultiTenantCard() {
         className="w-full max-w-[420px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-[var(--neutral-6)] bg-background dark:bg-[var(--neutral-2)] transition-transform duration-150 group-hover:-translate-y-px origin-bottom"
       >
         {/* Window Chrome */}
-        <div className="flex items-center gap-1.5 px-5 py-3 border-b border-border/60 dark:border-white/5 bg-muted/30 dark:bg-white/5">
+        <div className="flex items-center gap-1.5 px-5 py-3 border-b border-border/60 bg-muted/30">
           <div className="w-2.5 h-2.5 rounded-full bg-border dark:bg-zinc-700" />
           <div className="w-2.5 h-2.5 rounded-full bg-border dark:bg-zinc-700" />
           <div className="w-2.5 h-2.5 rounded-full bg-border dark:bg-zinc-700" />
         </div>
 
         {/* File Tabs */}
-        <div className="flex border-b border-border/60 dark:border-white/5 bg-muted/10 dark:bg-white/[0.02]">
-          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground dark:text-white bg-background dark:bg-[var(--neutral-2)] border-b-2 border-primary dark:border-[var(--cyan-9)]">
+        <div className="flex border-b border-border/60 bg-muted/10/[0.02]">
+          <div className="flex items-center gap-1.5 px-4 py-2 text-[11px] font-semibold text-foreground bg-background dark:bg-[var(--neutral-2)] border-b-2 border-primary dark:border-[var(--cyan-9)]">
             <span className="w-2 h-2 rounded-[var(--radius-sm)] bg-blue-500/60" />
             query.ts
           </div>
@@ -103,7 +103,7 @@ export function MultiTenantCard() {
         </div>
 
         {/* Mini Terminal Output */}
-        <div className="border-t border-border/60 dark:border-white/5 bg-muted/20 dark:bg-white/[0.02] px-4 py-3">
+        <div className="border-t border-border/60 bg-muted/20/[0.02] px-4 py-3">
           <div className="flex items-center gap-2 mb-1.5">
             <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground dark:text-zinc-500">
               Terminal

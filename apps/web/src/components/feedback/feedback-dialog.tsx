@@ -113,7 +113,7 @@ export function FeedbackDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-[560px] gap-0 p-0">
-        <DialogHeader className="space-y-1 border-b border-neutral-7 px-5 py-4 text-left dark:border-white/10">
+        <DialogHeader className="space-y-1 border-b border-neutral-7 px-5 py-4 text-left">
           <DialogTitle className="text-sm">Report an issue</DialogTitle>
           <DialogDescription className="text-xs">
             Help us understand and fix what you ran into.
@@ -124,10 +124,7 @@ export function FeedbackDialog() {
           {/* Area + Mode */}
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label
-                htmlFor={areaId}
-                className="mb-1 block text-xs font-medium text-neutral-11 dark:text-white/70"
-              >
+              <label htmlFor={areaId} className="mb-1 block text-xs font-medium text-neutral-11">
                 Where did this happen?
               </label>
               <Select
@@ -149,10 +146,7 @@ export function FeedbackDialog() {
             </div>
 
             <div>
-              <label
-                htmlFor={modeId}
-                className="mb-1 block text-xs font-medium text-neutral-11 dark:text-white/70"
-              >
+              <label htmlFor={modeId} className="mb-1 block text-xs font-medium text-neutral-11">
                 Chat mode (optional)
               </label>
               <Select
@@ -178,14 +172,14 @@ export function FeedbackDialog() {
           <div>
             <label
               htmlFor={descId}
-              className="mb-1 flex items-center justify-between text-xs font-medium text-neutral-11 dark:text-white/70"
+              className="mb-1 flex items-center justify-between text-xs font-medium text-neutral-11"
             >
               <span>What happened?</span>
               <span
                 className={`tabular-nums ${
                   descLength < MIN_DESCRIPTION || descLength > MAX_DESCRIPTION
                     ? "text-red-11"
-                    : "text-neutral-10 dark:text-white/40"
+                    : "text-neutral-10"
                 }`}
               >
                 {descLength}/{MAX_DESCRIPTION}
@@ -199,7 +193,7 @@ export function FeedbackDialog() {
               disabled={submitting}
               placeholder="What did you expect? What actually happened? If you can, list the steps to reproduce."
             />
-            <p className="mt-1 text-[11px] text-neutral-10 dark:text-white/40">
+            <p className="mt-1 text-[11px] text-neutral-10">
               Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}
             </p>
           </div>
@@ -207,7 +201,7 @@ export function FeedbackDialog() {
           {/* Email follow-up */}
           <label
             htmlFor={emailId}
-            className="flex cursor-pointer items-center gap-2 text-xs text-neutral-11 dark:text-white/70"
+            className="flex cursor-pointer items-center gap-2 text-xs text-neutral-11"
           >
             <input
               data-allow-native
@@ -216,18 +210,18 @@ export function FeedbackDialog() {
               checked={followUp}
               onChange={(e) => setFollowUp(e.target.checked)}
               disabled={submitting}
-              className="h-3.5 w-3.5 rounded border-neutral-7 text-blue-9 dark:border-white/30 dark:bg-black/40"
+              className="h-3.5 w-3.5 rounded border-neutral-7 text-blue-9 dark:bg-black/40"
             />
             Allow us to follow up via the email on your account.
           </label>
 
           {/* Footer */}
-          <div className="flex items-center justify-end gap-2 border-t border-neutral-7 pt-3 dark:border-white/10">
+          <div className="flex items-center justify-end gap-2 border-t border-neutral-7 pt-3">
             <button
               type="button"
               onClick={closeDialog}
               disabled={submitting}
-              className="rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+              className="rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Cancel
             </button>

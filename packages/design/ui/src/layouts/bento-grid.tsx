@@ -75,7 +75,7 @@ function BentoCard({ item }: BentoCardProps) {
     <div
       className={cn(
         "group relative p-4 rounded-[var(--radius-xl)] overflow-hidden transition-all duration-300",
-        "border border-[var(--neutral-6)] dark:border-white/10 bg-white dark:bg-black",
+        "border border-[var(--neutral-6)] bg-white dark:bg-black",
         "hover:shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:hover:shadow-[0_2px_12px_rgba(255,255,255,0.03)]",
         "hover:-translate-y-0.5 will-change-transform",
         item.colSpan === 2 ? "md:col-span-2" : "col-span-1",
@@ -98,14 +98,14 @@ function BentoCard({ item }: BentoCardProps) {
       <div className="relative flex flex-col space-y-3">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <div className="w-8 h-8 rounded-[var(--radius-lg)] flex items-center justify-center bg-black/5 dark:bg-white/10 group-hover:bg-gradient-to-br transition-all duration-300">
+          <div className="w-8 h-8 rounded-[var(--radius-lg)] flex items-center justify-center bg-black/5 group-hover:bg-gradient-to-br transition-all duration-300">
             {item.icon}
           </div>
           <span
             className={cn(
               "text-xs font-medium px-2 py-1 rounded-[var(--radius-lg)] backdrop-blur-sm",
-              "bg-black/5 dark:bg-white/10 text-[var(--neutral-10)]",
-              "transition-colors duration-300 group-hover:bg-black/10 dark:group-hover:bg-white/20",
+              "bg-black/5 text-[var(--neutral-10)]",
+              "transition-colors duration-300 group-hover:bg-black/10",
             )}
           >
             {item.status || "Active"}
@@ -131,7 +131,7 @@ function BentoCard({ item }: BentoCardProps) {
             {item.tags?.map((tag, i) => (
               <span
                 key={i}
-                className="px-2 py-1 rounded-[var(--radius-md)] bg-black/5 dark:bg-white/10 backdrop-blur-sm transition-all duration-200 hover:bg-black/10 dark:hover:bg-white/20"
+                className="px-2 py-1 rounded-[var(--radius-md)] bg-black/5 backdrop-blur-sm transition-all duration-200 hover:bg-black/10"
               >
                 #{tag}
               </span>

@@ -44,7 +44,7 @@ export function LocaleSwitcher() {
       <button
         type="button"
         onClick={() => setIsOpen((v) => !v)}
-        className="flex min-h-11 items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-2 text-sm text-[var(--neutral-9)] transition-colors hover:text-[var(--neutral-12)] dark:text-white/60 dark:hover:text-white"
+        className="flex min-h-11 items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-2 text-sm text-[var(--neutral-9)] transition-colors hover:text-[var(--neutral-12)]"
         aria-label={`Switch language, current language ${LOCALE_LABELS[locale] ?? locale.toUpperCase()}`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
@@ -57,7 +57,7 @@ export function LocaleSwitcher() {
         <div
           role="listbox"
           aria-label="Select language"
-          className="absolute right-0 top-full z-50 mt-1 min-w-[110px] rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] py-1 shadow-lg dark:border-white/10"
+          className="absolute right-0 top-full z-50 mt-1 min-w-[110px] rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] py-1 shadow-lg"
         >
           {locales.map((l) => (
             <button
@@ -70,7 +70,7 @@ export function LocaleSwitcher() {
                 "min-h-11 w-full px-3 py-2 text-left text-sm transition-colors",
                 l === locale
                   ? "font-medium text-[var(--blue-10)]"
-                  : "text-[var(--neutral-10)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)] dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white",
+                  : "text-[var(--neutral-10)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]",
               )}
             >
               {LOCALE_LABELS[l]}

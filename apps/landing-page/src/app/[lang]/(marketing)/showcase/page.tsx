@@ -69,10 +69,10 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
       <main className="mx-auto max-w-6xl px-4 pb-24 pt-32 sm:px-6">
         <AnimateIn preset="fadeUp">
           <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-neutral-12 sm:text-5xl dark:text-white">
+            <h1 className="text-4xl font-bold tracking-tight text-neutral-12 sm:text-5xl">
               Showcase
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-11 dark:text-white/70">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-11">
               See what developers and teams are building with Nebutra Sailor.
             </p>
           </div>
@@ -80,9 +80,9 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
 
         {projects.length === 0 ? (
           <AnimateIn preset="fadeUp">
-            <div className="mt-16 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 p-12 text-center dark:border-white/10 dark:bg-white/5">
-              <p className="text-lg font-medium text-neutral-12 dark:text-white">Coming soon</p>
-              <p className="mt-2 text-sm text-neutral-11 dark:text-white/70">
+            <div className="mt-16 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 p-12 text-center">
+              <p className="text-lg font-medium text-neutral-12">Coming soon</p>
+              <p className="mt-2 text-sm text-neutral-11">
                 Projects built with Nebutra Sailor will be featured here.
               </p>
             </div>
@@ -98,10 +98,10 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 transition-shadow hover:shadow-lg dark:border-white/10 dark:bg-white/5"
+                  className="group block overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 transition-shadow hover:shadow-lg"
                 >
                   {project.screenshot?.asset ? (
-                    <div className="relative aspect-video overflow-hidden bg-neutral-3 dark:bg-white/10">
+                    <div className="relative aspect-video overflow-hidden bg-neutral-3">
                       <Image
                         src={getImageUrl(project.screenshot, { width: 600, height: 340 })}
                         alt={project.name}
@@ -111,7 +111,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                       />
                     </div>
                   ) : (
-                    <div className="flex aspect-video items-center justify-center bg-neutral-3 dark:bg-white/10">
+                    <div className="flex aspect-video items-center justify-center bg-neutral-3">
                       {project.logo?.asset ? (
                         <Image
                           src={getImageUrl(project.logo, { width: 120, height: 120 })}
@@ -121,7 +121,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                           className="opacity-60"
                         />
                       ) : (
-                        <span className="text-3xl font-bold text-neutral-7 dark:text-white/20">
+                        <span className="text-3xl font-bold text-neutral-7">
                           {project.name[0]?.toUpperCase()}
                         </span>
                       )}
@@ -130,19 +130,17 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
 
                   <div className="p-4">
                     <div className="flex items-start justify-between gap-2">
-                      <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
-                        {project.name}
-                      </h2>
-                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-neutral-10 transition-colors group-hover:text-blue-10 dark:text-white/50 dark:group-hover:text-cyan-9" />
+                      <h2 className="text-sm font-semibold text-neutral-12">{project.name}</h2>
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-neutral-10 transition-colors group-hover:text-blue-10 dark:group-hover:text-cyan-9" />
                     </div>
                     {project.description && (
-                      <p className="mt-1.5 line-clamp-2 text-xs text-neutral-11 dark:text-white/70">
+                      <p className="mt-1.5 line-clamp-2 text-xs text-neutral-11">
                         {project.description}
                       </p>
                     )}
                     <div className="mt-3 flex items-center gap-2">
                       {project.category && (
-                        <span className="rounded-full bg-neutral-3 px-2 py-0.5 text-xs font-medium text-neutral-11 dark:bg-white/10 dark:text-white/70">
+                        <span className="rounded-full bg-neutral-3 px-2 py-0.5 text-xs font-medium text-neutral-11">
                           {CATEGORY_LABELS[project.category] ?? project.category}
                         </span>
                       )}

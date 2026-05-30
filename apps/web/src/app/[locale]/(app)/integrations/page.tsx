@@ -151,9 +151,7 @@ export default function IntegrationsPage() {
       {integrations.length > 0 && (
         <>
           <AnimateIn preset="fadeUp">
-            <h2 className="mt-8 text-lg font-semibold text-neutral-12 dark:text-white">
-              Connected
-            </h2>
+            <h2 className="mt-8 text-lg font-semibold text-neutral-12">Connected</h2>
           </AnimateIn>
 
           <AnimateInGroup stagger="fast" className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -180,10 +178,10 @@ export default function IntegrationsPage() {
                         <Icon className={`h-5 w-5 ${catalog?.color ?? "text-neutral-11"}`} />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-sm font-semibold text-neutral-12 dark:text-white">
+                        <h3 className="text-sm font-semibold text-neutral-12">
                           {integration.name}
                         </h3>
-                        <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/50">
+                        <p className="mt-0.5 text-xs text-neutral-10">
                           {integration.isActive ? "Active" : "Paused"}
                           {integration.lastSyncAt &&
                             ` · Last sync ${new Date(integration.lastSyncAt).toLocaleDateString()}`}
@@ -230,11 +228,11 @@ export default function IntegrationsPage() {
 
       {/* Available Integrations */}
       <AnimateIn preset="fadeUp">
-        <h2 className="mt-10 text-lg font-semibold text-neutral-12 dark:text-white">
+        <h2 className="mt-10 text-lg font-semibold text-neutral-12">
           {integrations.length > 0 ? "Available" : "Connect an Integration"}
         </h2>
         {integrations.length === 0 && !loading && (
-          <p className="mt-1 text-sm text-neutral-11 dark:text-white/70">
+          <p className="mt-1 text-sm text-neutral-11">
             Get started by connecting one of the services below.
           </p>
         )}
@@ -270,13 +268,11 @@ export default function IntegrationsPage() {
                       <Icon className={`h-5 w-5 ${item.color}`} />
                     </div>
                     <div>
-                      <h3 className="text-sm font-semibold text-neutral-12 dark:text-white">
-                        {item.name}
-                      </h3>
+                      <h3 className="text-sm font-semibold text-neutral-12">{item.name}</h3>
                     </div>
                   </div>
 
-                  <p className="mt-3 flex-1 text-xs leading-relaxed text-neutral-10 dark:text-white/50">
+                  <p className="mt-3 flex-1 text-xs leading-relaxed text-neutral-10">
                     {item.description}
                   </p>
 
@@ -304,7 +300,7 @@ export default function IntegrationsPage() {
                       href={item.docUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-xs text-neutral-10 transition-colors hover:text-neutral-12 dark:text-white/50 dark:hover:text-white"
+                      className="flex items-center gap-1 text-xs text-neutral-10 transition-colors hover:text-neutral-12"
                     >
                       <ExternalLink className="h-3 w-3" /> Docs
                     </a>

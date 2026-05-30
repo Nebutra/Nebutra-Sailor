@@ -42,7 +42,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
         "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
         isScrolled
           ? "border-b border-transparent bg-white/85 backdrop-blur-md dark:border-transparent dark:bg-black/80 shadow-sm"
-          : "bg-transparent max-lg:border-b max-lg:border-[var(--neutral-6)] max-lg:bg-[var(--neutral-1)]/90 max-lg:backdrop-blur-md dark:max-lg:border-white/10 dark:max-lg:bg-black/75",
+          : "bg-transparent max-lg:border-b max-lg:border-[var(--neutral-6)] max-lg:bg-[var(--neutral-1)]/90 max-lg:backdrop-blur-md dark:max-lg:bg-black/75",
         isForcedDark ? "dark" : "",
       )}
     >
@@ -76,7 +76,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
 
           <a
             href={`${APP_URL}/sign-in`}
-            className="whitespace-nowrap text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12 dark:text-white/70 dark:hover:text-white"
+            className="whitespace-nowrap text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12"
           >
             {t("signIn")}
           </a>

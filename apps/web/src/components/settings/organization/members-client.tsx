@@ -154,10 +154,8 @@ export function MembersClient({ orgId }: MembersClientProps) {
       <div className="space-y-6">
         <header className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1">
-            <h1 className="text-xl font-semibold text-neutral-12 dark:text-white">
-              {t("heading")}
-            </h1>
-            <p className="text-sm text-neutral-11 dark:text-white/60">{t("description")}</p>
+            <h1 className="text-xl font-semibold text-neutral-12">{t("heading")}</h1>
+            <p className="text-sm text-neutral-11">{t("description")}</p>
           </div>
           <Button htmlType="button" onClick={() => setInviteOpen(true)}>
             {t("invite")}
@@ -185,13 +183,13 @@ export function MembersClient({ orgId }: MembersClientProps) {
         {loading ? (
           <p className="text-sm text-neutral-11">{t("loading")}</p>
         ) : members.length === 0 ? (
-          <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-7 px-4 py-6 text-center text-sm text-neutral-11 dark:border-white/10">
+          <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-7 px-4 py-6 text-center text-sm text-neutral-11">
             {t("empty")}
           </p>
         ) : (
-          <div className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-7 dark:border-white/10">
+          <div className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-7">
             <table className="w-full text-left text-sm">
-              <thead className="bg-neutral-2 text-xs uppercase text-neutral-11 dark:bg-white/5 dark:text-white/60">
+              <thead className="bg-neutral-2 text-xs uppercase text-neutral-11">
                 <tr>
                   <th scope="col" className="px-3 py-2 font-medium">
                     {t("columnMember")}
@@ -207,7 +205,7 @@ export function MembersClient({ orgId }: MembersClientProps) {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-neutral-6 dark:divide-white/10">
+              <tbody className="divide-y divide-neutral-6">
                 {members.map((member) => {
                   const isSelf = member.userId === currentUserId;
                   const isOwner = member.role === "owner";
@@ -225,10 +223,10 @@ export function MembersClient({ orgId }: MembersClientProps) {
                             {(displayName?.[0] ?? "?").toUpperCase()}
                           </div>
                           <div className="min-w-0">
-                            <div className="truncate font-medium text-neutral-12 dark:text-white">
+                            <div className="truncate font-medium text-neutral-12">
                               {displayName}
                             </div>
-                            <div className="truncate text-xs text-neutral-11 dark:text-white/60">
+                            <div className="truncate text-xs text-neutral-11">
                               {member.user.email}
                             </div>
                           </div>
@@ -253,12 +251,12 @@ export function MembersClient({ orgId }: MembersClientProps) {
                             </SelectContent>
                           </Select>
                         ) : (
-                          <span className="text-xs text-neutral-11 dark:text-white/60">
+                          <span className="text-xs text-neutral-11">
                             {t(`role.${member.role}` as `role.${Role}`)}
                           </span>
                         )}
                       </td>
-                      <td className="px-3 py-2 text-xs text-neutral-11 dark:text-white/60">
+                      <td className="px-3 py-2 text-xs text-neutral-11">
                         {formatDate(member.joinedAt)}
                       </td>
                       <td className="px-3 py-2 text-right">
@@ -299,11 +297,8 @@ export function MembersClient({ orgId }: MembersClientProps) {
             aria-labelledby={confirmDialogId}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
           >
-            <div className="w-full max-w-sm rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-5 shadow-xl dark:border-white/10 dark:bg-neutral-12">
-              <h2
-                id={confirmDialogId}
-                className="text-sm font-semibold text-neutral-12 dark:text-white"
-              >
+            <div className="w-full max-w-sm rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-5 shadow-xl">
+              <h2 id={confirmDialogId} className="text-sm font-semibold text-neutral-12">
                 {t("confirmRemove")}
               </h2>
               <div className="mt-4 flex justify-end gap-2">

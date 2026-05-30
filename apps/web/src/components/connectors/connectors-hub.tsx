@@ -82,7 +82,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
   // Empty state.
   if (connectors.length === 0) {
     return (
-      <section className="flex flex-col items-center justify-center gap-4 rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-12 text-center dark:border-white/15 dark:bg-white/[0.02]">
+      <section className="flex flex-col items-center justify-center gap-4 rounded-[var(--radius-2xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-12 text-center/[0.02]">
         <div
           className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-2xl)] text-white"
           style={{ background: "var(--brand-gradient)" }}
@@ -90,10 +90,10 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
           <Cable className="h-4 w-4" />
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">
+          <h2 className="text-sm font-semibold text-neutral-12">
             Connect Sailor with your everyday apps, APIs, and MCPs
           </h2>
-          <p className="mt-1 max-w-md text-xs text-neutral-10 dark:text-white/50">
+          <p className="mt-1 max-w-md text-xs text-neutral-10">
             Connectors let Sailor read and write across your stack — Stripe, Slack, your own APIs,
             MCP servers. Credentials are encrypted at the application layer.
           </p>
@@ -116,7 +116,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between">
-        <p className="text-xs text-neutral-10 dark:text-white/50">
+        <p className="text-xs text-neutral-10">
           {connectors.length} active connector{connectors.length === 1 ? "" : "s"}
         </p>
         {onAdd && (
@@ -137,7 +137,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
           return (
             <article
               key={connector.id}
-              className={`group relative flex h-full flex-col rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-4 transition-colors hover:border-neutral-8 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 ${
+              className={`group relative flex h-full flex-col rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-4 transition-colors hover:border-neutral-8 ${
                 isBusy ? "opacity-60" : ""
               }`}
             >
@@ -150,12 +150,12 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
                     className="h-8 w-8 shrink-0 rounded-[var(--radius-lg)] object-contain"
                   />
                 ) : (
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-neutral-2 dark:bg-white/10">
-                    <Cable className="h-4 w-4 text-neutral-11 dark:text-white/60" />
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[var(--radius-lg)] bg-neutral-2">
+                    <Cable className="h-4 w-4 text-neutral-11" />
                   </div>
                 )}
                 <div className="min-w-0 flex-1">
-                  <h3 className="truncate text-sm font-semibold text-neutral-12 dark:text-white">
+                  <h3 className="truncate text-sm font-semibold text-neutral-12">
                     {connector.name}
                   </h3>
                   <span
@@ -170,12 +170,12 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
                   role="img"
                   aria-label={connector.isActive ? "Active" : "Inactive"}
                   className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-                    connector.isActive ? "bg-green-9" : "bg-neutral-9 dark:bg-white/30"
+                    connector.isActive ? "bg-green-9" : "bg-neutral-9"
                   }`}
                 />
               </div>
 
-              <p className="text-[11px] text-neutral-10 dark:text-white/40">
+              <p className="text-[11px] text-neutral-10">
                 {connector.lastUsedAt
                   ? `Last used ${new Date(connector.lastUsedAt).toLocaleDateString()}`
                   : "Not used yet"}
@@ -187,7 +187,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
                   onClick={() => setPendingRemove(connector)}
                   disabled={isBusy}
                   aria-label={`Remove ${connector.name}`}
-                  className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-all group-hover:opacity-100 hover:bg-red-2 hover:text-red-11 focus-visible:opacity-100 disabled:cursor-not-allowed dark:text-white/30 dark:hover:bg-red-2/30"
+                  className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-all group-hover:opacity-100 hover:bg-red-2 hover:text-red-11 focus-visible:opacity-100 disabled:cursor-not-allowed dark:hover:bg-red-2/30"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
@@ -217,10 +217,10 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
         }}
       />
 
-      <div className="border-t border-neutral-7 pt-3 dark:border-white/10">
+      <div className="border-t border-neutral-7 pt-3">
         <a
           href="/docs/connectors"
-          className="inline-flex items-center gap-0.5 text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12 dark:text-white/50 dark:hover:text-white"
+          className="inline-flex items-center gap-0.5 text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12"
         >
           Learn about Connectors security
           <ExternalLink className="h-3 w-3" />

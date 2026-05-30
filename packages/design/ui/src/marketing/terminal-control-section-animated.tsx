@@ -161,7 +161,7 @@ export function CodeDiff({ diff, className }: CodeDiffProps) {
       {/* Header */}
       <div className="flex items-center justify-between gap-3 border-b border-[var(--neutral-6)] px-4 py-2 text-sm">
         <div className="truncate text-[var(--neutral-11)]">
-          <span className="mr-2 inline-block rounded bg-[var(--neutral-3)] px-2 py-0.5 font-mono text-[11px] dark:text-white text-black tracking-tight">
+          <span className="mr-2 inline-block rounded bg-[var(--neutral-3)] px-2 py-0.5 font-mono text-[11px] text-black tracking-tight">
             {diff.fileTag}
           </span>
         </div>

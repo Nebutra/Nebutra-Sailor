@@ -66,7 +66,7 @@ function RetoolBanner() {
         background: "var(--brand-gradient)",
       }}
     >
-      <div className="rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-4 dark:bg-neutral-12">
+      <div className="rounded-[var(--radius-lg)] bg-[var(--neutral-1)] p-4">
         <div className="flex items-start gap-3">
           <ExternalLink
             aria-hidden="true"

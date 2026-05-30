@@ -61,13 +61,13 @@ export function BillingCard() {
             </span>
           </div>
           <p
-            className="text-2xl font-semibold text-foreground dark:text-white tabular-nums mb-3"
+            className="text-2xl font-semibold text-foreground tabular-nums mb-3"
             style={{ letterSpacing: "var(--tracking-tight)" }}
           >
             $12,400
           </p>
           {/* CSS-only sparkline chart */}
-          <div className="relative w-full h-16 rounded-[var(--radius-lg)] overflow-hidden bg-muted/20 dark:bg-white/[0.02]">
+          <div className="relative w-full h-16 rounded-[var(--radius-lg)] overflow-hidden bg-muted/20/[0.02]">
             {/* Gradient fill area */}
             <div
               className="absolute inset-0"
@@ -122,15 +122,15 @@ export function BillingCard() {
             </svg>
             {/* Grid lines */}
             <div className="absolute inset-0 flex flex-col justify-between pointer-events-none py-2">
-              <div className="border-b border-border/20 dark:border-white/5" />
-              <div className="border-b border-border/20 dark:border-white/5" />
-              <div className="border-b border-border/20 dark:border-white/5" />
+              <div className="border-b border-border/20" />
+              <div className="border-b border-border/20" />
+              <div className="border-b border-border/20" />
             </div>
           </div>
         </div>
 
         {/* Metric Cards Row */}
-        <div className="grid grid-cols-3 gap-px bg-border/40 dark:bg-white/5 border-t border-border/40 dark:border-white/5">
+        <div className="grid grid-cols-3 gap-px bg-border/40 border-t border-border/40">
           {BILLING_METRICS.map((metric) => (
             <div
               key={metric.label}
@@ -140,7 +140,7 @@ export function BillingCard() {
                 {metric.label}
               </p>
               <p
-                className="text-lg font-semibold text-foreground dark:text-white tabular-nums mb-1"
+                className="text-lg font-semibold text-foreground tabular-nums mb-1"
                 style={{ letterSpacing: "var(--tracking-tight)" }}
               >
                 {metric.value}

@@ -40,7 +40,7 @@ export function ActivityMatrix() {
   const data = ACTIVITY_DATA;
 
   return (
-    <div className="mt-6 p-5 rounded-[var(--radius-xl)] bg-muted/30 dark:bg-white/[0.02] border border-border/50 dark:border-white/5 relative overflow-hidden group">
+    <div className="mt-6 p-5 rounded-[var(--radius-xl)] bg-muted/30/[0.02] border border-border/50 relative overflow-hidden group">
       <div className="flex items-center justify-between mb-5">
         <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           Fleet Telemetry

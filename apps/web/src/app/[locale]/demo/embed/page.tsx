@@ -63,7 +63,7 @@ export default async function DemoEmbedPage({
                 className={`rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-medium transition-colors ${
                   activeTab === tab.id
                     ? "bg-[color:var(--blue-9)] text-white"
-                    : "bg-[color:var(--neutral-1)] text-[color:var(--neutral-11)] hover:text-[color:var(--neutral-12)] dark:bg-white/10 dark:text-white/70 dark:hover:text-white"
+                    : "bg-[color:var(--neutral-1)] text-[color:var(--neutral-11)] hover:text-[color:var(--neutral-12)]"
                 }`}
               >
                 {tab.label}
@@ -75,28 +75,28 @@ export default async function DemoEmbedPage({
         {activeTab === "analytics" && (
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Card className="p-4">
-              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
+              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)]">
                 <Database className="size-3.5" />
                 Total Events
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.totalEvents.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
-              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
+              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)]">
                 <Users className="size-3.5" />
                 Active Users
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.activeUsers.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
-              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
+              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)]">
                 <BarChart3 className="size-3.5" />
                 Signups
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.signups.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
-              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
+              <p className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)]">
                 <Coins className="size-3.5" />
                 Revenue
               </p>
@@ -109,27 +109,25 @@ export default async function DemoEmbedPage({
           <div className="grid gap-3 md:grid-cols-2">
             <Card className="p-4">
               <h2 className="text-sm font-semibold">Plan overview</h2>
-              <p className="mt-2 text-sm text-[color:var(--neutral-11)] dark:text-white/70">
+              <p className="mt-2 text-sm text-[color:var(--neutral-11)]">
                 Starter · Usage overage enabled · Monthly billing
               </p>
               <p className="mt-3 text-xl font-semibold">{toCurrency(summary.revenue * 30)}</p>
-              <p className="text-xs text-[color:var(--neutral-10)] dark:text-white/60">
-                30-day projected revenue
-              </p>
+              <p className="text-xs text-[color:var(--neutral-10)]">30-day projected revenue</p>
             </Card>
             <Card className="p-4">
               <h2 className="text-sm font-semibold">Today snapshot</h2>
               <dl className="mt-3 space-y-2 text-sm">
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-[color:var(--neutral-10)] dark:text-white/60">Revenue</dt>
+                  <dt className="text-[color:var(--neutral-10)]">Revenue</dt>
                   <dd className="font-medium">{toCurrency(summary.revenue)}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-[color:var(--neutral-10)] dark:text-white/60">Conversions</dt>
+                  <dt className="text-[color:var(--neutral-10)]">Conversions</dt>
                   <dd className="font-medium">{summary.conversions.toLocaleString()}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-[color:var(--neutral-10)] dark:text-white/60">Day</dt>
+                  <dt className="text-[color:var(--neutral-10)]">Day</dt>
                   <dd className="font-medium">{summary.day ?? "N/A"}</dd>
                 </div>
               </dl>
@@ -140,20 +138,20 @@ export default async function DemoEmbedPage({
         {activeTab === "tenants" && (
           <Card className="p-0">
             <div className="space-y-3 p-4 md:hidden">
-              <div className="rounded-[var(--radius-lg)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] p-3 dark:border-white/10 dark:bg-white/5">
+              <div className="rounded-[var(--radius-lg)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] p-3">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-semibold">{summary.tenantId}</p>
                   <span className="inline-flex rounded-full bg-[color:var(--cyan-3)] px-2.5 py-1 text-xs font-medium text-[color:var(--cyan-11)] dark:bg-[color:var(--cyan-9)]/20 dark:text-[color:var(--cyan-9)]">
                     Healthy
                   </span>
                 </div>
-                <p className="mt-1 text-xs text-[color:var(--neutral-10)] dark:text-white/60">
+                <p className="mt-1 text-xs text-[color:var(--neutral-10)]">
                   Snapshot: {summary.day ?? "N/A"}
                 </p>
               </div>
             </div>
             <div className="hidden md:block">
-              <div className="grid grid-cols-12 border-b border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] px-4 py-3 text-xs font-medium uppercase tracking-wide text-[color:var(--neutral-11)] dark:border-white/10 dark:bg-white/5 dark:text-white/60">
+              <div className="grid grid-cols-12 border-b border-[color:var(--neutral-7)] bg-[color:var(--neutral-2)] px-4 py-3 text-xs font-medium uppercase tracking-wide text-[color:var(--neutral-11)]">
                 <div className="col-span-4">Tenant</div>
                 <div className="col-span-2">Status</div>
                 <div className="col-span-2">Events</div>

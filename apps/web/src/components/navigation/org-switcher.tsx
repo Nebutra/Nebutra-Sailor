@@ -129,7 +129,7 @@ export function OrgSwitcher() {
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex h-8 items-center gap-2 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-2 px-3 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3 dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
+        className="inline-flex h-8 items-center gap-2 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-2 px-3 text-sm font-medium text-neutral-12 transition-colors hover:bg-neutral-3"
       >
         <Building2 className="h-4 w-4 text-neutral-11" aria-hidden />
         <span className="max-w-[12rem] truncate">{triggerLabel}</span>
@@ -141,11 +141,11 @@ export function OrgSwitcher() {
           <div
             role="menu"
             aria-label={t("ariaLabel")}
-            className="absolute right-0 z-50 mt-2 w-72 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg dark:border-white/10 dark:bg-neutral-12"
+            className="absolute right-0 z-50 mt-2 w-72 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 p-1 shadow-lg"
           >
             {orgs.length === 0 ? (
               <div className="px-3 py-3 text-sm">
-                <p className="mb-2 text-neutral-11 dark:text-white/60">{t("empty")}</p>
+                <p className="mb-2 text-neutral-11">{t("empty")}</p>
                 <Link
                   href="/onboarding"
                   className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-[var(--brand-primary)] px-3 py-1.5 text-xs font-medium text-white hover:opacity-90"
@@ -171,12 +171,12 @@ export function OrgSwitcher() {
                         onClick={() => {
                           void handleSelect(entry.id);
                         }}
-                        className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-left text-sm text-neutral-12 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-70 dark:text-white dark:hover:bg-white/10"
+                        className="flex w-full items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-left text-sm text-neutral-12 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-70"
                       >
                         <span className="min-w-0 flex-1">
                           <span className="block truncate font-medium">{entry.name}</span>
                           {entry.slug && (
-                            <span className="block truncate text-xs text-neutral-11 dark:text-white/60">
+                            <span className="block truncate text-xs text-neutral-11">
                               {entry.slug}
                             </span>
                           )}
@@ -190,12 +190,12 @@ export function OrgSwitcher() {
                     </li>
                   );
                 })}
-                <li className="my-1 h-px bg-neutral-6 dark:bg-white/10" aria-hidden />
+                <li className="my-1 h-px bg-neutral-6" aria-hidden />
                 <li>
                   <Link
                     href="/onboarding"
                     role="menuitem"
-                    className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2 dark:text-white dark:hover:bg-white/10"
+                    className="flex w-full items-center gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-sm text-neutral-12 transition-colors hover:bg-neutral-2"
                     onClick={() => setOpen(false)}
                   >
                     <Plus className="h-4 w-4 text-neutral-11" aria-hidden />

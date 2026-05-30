@@ -114,11 +114,9 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
       <div>
         <div className="mb-2 flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-blue-9" />
-          <h2 className="text-base font-semibold text-neutral-12 dark:text-white">
-            Personalization
-          </h2>
+          <h2 className="text-base font-semibold text-neutral-12">Personalization</h2>
         </div>
-        <p className="text-sm text-neutral-11 dark:text-white/70">
+        <p className="text-sm text-neutral-11">
           Tell Sailor what you do and how you want it to respond. These details are injected into
           every conversation as context.
         </p>
@@ -185,8 +183,8 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
         />
       </Field>
 
-      <div className="flex items-center justify-between gap-3 border-t border-neutral-7 pt-4 dark:border-white/10">
-        <p className="text-xs text-neutral-10 dark:text-white/50">
+      <div className="flex items-center justify-between gap-3 border-t border-neutral-7 pt-4">
+        <p className="text-xs text-neutral-10">
           {savedAt && !dirty
             ? `Saved ${new Date(savedAt).toLocaleTimeString()}`
             : dirty
@@ -198,7 +196,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
             type="button"
             onClick={handleReset}
             disabled={!dirty || submitting}
-            className="rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-40 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+            className="rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Reset
           </button>
@@ -240,21 +238,19 @@ function Field({ id, label, description, hint, overLimit, children }: FieldProps
   return (
     <div>
       <div className="mb-1 flex items-baseline justify-between gap-2">
-        <label htmlFor={id} className="text-xs font-medium text-neutral-11 dark:text-white/70">
+        <label htmlFor={id} className="text-xs font-medium text-neutral-11">
           {label}
         </label>
         {hint && (
           <span
-            className={`text-[10px] tabular-nums ${overLimit ? "text-red-11" : "text-neutral-10 dark:text-white/40"}`}
+            className={`text-[10px] tabular-nums ${overLimit ? "text-red-11" : "text-neutral-10"}`}
           >
             {hint}
           </span>
         )}
       </div>
       {children}
-      {description && (
-        <p className="mt-1 text-[11px] text-neutral-10 dark:text-white/40">{description}</p>
-      )}
+      {description && <p className="mt-1 text-[11px] text-neutral-10">{description}</p>}
     </div>
   );
 }

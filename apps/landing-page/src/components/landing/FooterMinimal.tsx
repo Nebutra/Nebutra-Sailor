@@ -119,7 +119,7 @@ export function FooterMinimal({
 function LegalFooter() {
   const t = useTranslations("footer");
   return (
-    <footer className="border-t border-[var(--neutral-7)] bg-[var(--neutral-1)] dark:border-white/[0.08] dark:bg-[var(--neutral-1)]">
+    <footer className="border-t border-[var(--neutral-7)] bg-[var(--neutral-1)]/[0.08] dark:bg-[var(--neutral-1)]">
       <div className="mx-auto max-w-[1400px] px-6 py-8">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <nav
@@ -171,7 +171,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
   const linkClassName = cn(
     "text-[13px] text-[color:var(--neutral-10)] transition-colors duration-200",
     "hover:text-[color:var(--neutral-12)]",
-    "dark:text-white/50 dark:hover:text-white/90",
+    "",
   );
 
   return (
@@ -182,18 +182,18 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
       <div
         aria-hidden="true"
         data-testid="footer-gradient-line"
-        className="h-px w-full bg-[color:var(--neutral-7)] dark:bg-white/[0.08]"
+        className="h-px w-full bg-[color:var(--neutral-7)]/[0.08]"
       />
       {/* Final CTA — opt-in via `showFinalCta`; default off to avoid polluting
           non-conversion pages (careers, legal, blog) with a product pitch. */}
       {showFinalCta && (
         <section
           data-testid="footer-final-cta"
-          className="relative overflow-hidden border-b border-[color:var(--neutral-4)] dark:border-white/[0.06]"
+          className="relative overflow-hidden border-b border-[color:var(--neutral-4)]/[0.06]"
         >
           <AuroraBackground variant="vivid" position="bottom" intensity={0.5} />
           <div className="relative mx-auto max-w-[1400px] px-6 py-24 text-center">
-            <p className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--neutral-11)] dark:text-white/60">
+            <p className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--neutral-11)]">
               {tCta("eyebrow")}
             </p>
             <h2
@@ -234,7 +234,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
           {/* Brand block — spans 2 cols on large */}
           <div className="flex flex-col gap-5">
             <Logo variant="en" size={120} inverted={isDark} />
-            <p className="max-w-xs text-[13px] leading-relaxed text-[color:var(--neutral-10)] dark:text-white/50">
+            <p className="max-w-xs text-[13px] leading-relaxed text-[color:var(--neutral-10)]">
               {t("brandDescription")}
             </p>
 
@@ -251,7 +251,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
                     className={cn(
                       "rounded-[var(--radius-md)] p-2.5 text-[color:var(--neutral-9)] transition-all duration-200",
                       "hover:bg-[color:var(--neutral-3)] hover:text-[color:var(--neutral-12)]",
-                      "dark:text-white/40 dark:hover:bg-white/[0.06] dark:hover:text-white/90",
+                      "/[0.06]",
                     )}
                     aria-label={SOCIAL_LABELS[item.platform] ?? item.platform}
                   >
@@ -269,7 +269,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
           >
             {FOOTER_COLUMNS.map((column) => (
               <div key={column.titleKey} className="flex flex-col gap-3">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--neutral-11)] dark:text-white/60">
+                <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[color:var(--neutral-11)]">
                   {t(`columns.${column.titleKey}` as FooterTranslationKey)}
                 </h3>
                 <ul className="flex flex-col gap-2.5">
@@ -300,26 +300,24 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-12 flex flex-col items-center gap-3 border-t border-[color:var(--neutral-4)] pt-8 dark:border-white/[0.06] sm:flex-row sm:justify-between">
-          <p className="text-sm font-medium text-[color:var(--neutral-12)] dark:text-white">
+        <div className="mt-12 flex flex-col items-center gap-3 border-t border-[color:var(--neutral-4)] pt-8/[0.06] sm:flex-row sm:justify-between">
+          <p className="text-sm font-medium text-[color:var(--neutral-12)]">
             {t("newsletterTitle")}
           </p>
           <NewsletterForm />
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[color:var(--neutral-4)] pt-6 dark:border-white/[0.06] md:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-[color:var(--neutral-4)] pt-6/[0.06] md:flex-row">
           <div className="flex flex-col items-center gap-1 md:items-start">
-            <p className="text-xs text-[color:var(--neutral-9)] dark:text-white/40">
-              {t("copyright")}
-            </p>
+            <p className="text-xs text-[color:var(--neutral-9)]">{t("copyright")}</p>
             {/* ICP 备案 — required for websites operated in mainland China */}
             {process.env.NEXT_PUBLIC_ICP_NUMBER && (
               <a
                 href="https://beian.miit.gov.cn/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-[color:var(--neutral-8)] transition-colors hover:text-[color:var(--neutral-11)] dark:text-white/30 dark:hover:text-white/60"
+                className="text-xs text-[color:var(--neutral-8)] transition-colors hover:text-[color:var(--neutral-11)]"
               >
                 {process.env.NEXT_PUBLIC_ICP_NUMBER}
               </a>
@@ -331,7 +329,7 @@ function DefaultFooter({ showFinalCta }: { showFinalCta: boolean }) {
             href={status.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] transition-colors hover:text-[color:var(--neutral-12)] dark:text-white/50 dark:hover:text-white/80"
+            className="flex items-center gap-2 text-xs text-[color:var(--neutral-10)] transition-colors hover:text-[color:var(--neutral-12)]"
           >
             <span
               data-testid="status-dot"

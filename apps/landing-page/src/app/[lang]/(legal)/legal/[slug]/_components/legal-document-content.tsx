@@ -32,7 +32,7 @@ export async function LegalDocumentContent({ slug, lang }: { slug: string; lang:
       <hr />
       {/* MVP: render body as preformatted text. Swap for markdown renderer
           once a dependency choice (react-markdown / shiki / etc.) is made. */}
-      <pre className="whitespace-pre-wrap break-words rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-4 text-sm font-sans text-[var(--neutral-12)] dark:text-white">
+      <pre className="whitespace-pre-wrap break-words rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-4 text-sm font-sans text-[var(--neutral-12)]">
         {doc.content}
       </pre>
     </article>

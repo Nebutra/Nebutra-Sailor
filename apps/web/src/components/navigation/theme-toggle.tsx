@@ -45,9 +45,7 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
         data-testid="theme-toggle-skeleton"
         aria-hidden
         className={
-          compact
-            ? "h-8 w-8 rounded-full bg-neutral-3 dark:bg-white/5"
-            : "h-8 w-[156px] rounded-full bg-neutral-3 dark:bg-white/5"
+          compact ? "h-8 w-8 rounded-full bg-neutral-3" : "h-8 w-[156px] rounded-full bg-neutral-3"
         }
       />
     );
@@ -64,7 +62,7 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
         onClick={() => setTheme(next)}
         className={
           className ??
-          "inline-flex h-8 w-8 items-center justify-center rounded-full text-neutral-11 transition-colors hover:bg-neutral-3 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
+          "inline-flex h-8 w-8 items-center justify-center rounded-full text-neutral-11 transition-colors hover:bg-neutral-3 hover:text-neutral-12"
         }
       >
         <Icon className="h-4 w-4" />
@@ -80,7 +78,7 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
       aria-label="Theme"
       className={
         className ??
-        "inline-flex items-center gap-0.5 rounded-full border border-neutral-7 bg-neutral-1 p-0.5 dark:border-white/10 dark:bg-white/5"
+        "inline-flex items-center gap-0.5 rounded-full border border-neutral-7 bg-neutral-1 p-0.5"
       }
     >
       {choices.map((choice) => {
@@ -97,8 +95,8 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
               "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-colors",
               "focus:outline-none focus:ring-2 focus:ring-offset-1",
               isActive
-                ? "bg-blue-2 text-blue-11 dark:bg-white/15 dark:text-white"
-                : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12 dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white",
+                ? "bg-blue-2 text-blue-11"
+                : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12",
             ].join(" ")}
           >
             <Icon className="h-3.5 w-3.5" aria-hidden />

@@ -39,13 +39,13 @@ export function BillingTerminal() {
       </div>
 
       <AnimatedSpan delay={5500} className="mt-auto relative z-20 pt-4">
-        <div className="flex items-center justify-between border-t border-border/20 dark:border-white/10 pt-4">
+        <div className="flex items-center justify-between border-t border-border/20 pt-4">
           <span className="text-[10px] text-muted-foreground/60 uppercase tracking-widest font-sans font-bold">
             End-to-End Encrypted
           </span>
           <button
             type="button"
-            className="px-4 py-1.5 rounded-full bg-background dark:bg-zinc-900 border border-border/50 dark:border-white/10 text-[10px] font-mono font-bold text-foreground shadow-sm flex items-center gap-2 cursor-default group"
+            className="px-4 py-1.5 rounded-full bg-background dark:bg-zinc-900 border border-border/50 text-[10px] font-mono font-bold text-foreground shadow-sm flex items-center gap-2 cursor-default group"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             Listening :4242

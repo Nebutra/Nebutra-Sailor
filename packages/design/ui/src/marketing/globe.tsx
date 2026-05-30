@@ -67,7 +67,7 @@ export function Globe({
         // Light mode
         "bg-white/90 border-neutral-200 text-black",
         // Dark mode
-        "dark:bg-neutral-900/90 dark:border-neutral-800 dark:text-white",
+        "dark:bg-neutral-900/90 dark:border-neutral-800",
         className,
       )}
     >

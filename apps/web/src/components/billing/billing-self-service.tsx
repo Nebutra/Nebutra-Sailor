@@ -317,25 +317,21 @@ export function BillingProviderNotice({ model }: { model: BillingSelfServiceMode
 
 export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
   return (
-    <div className="rounded-[var(--radius-3xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-5 shadow-sm dark:border-white/10 dark:bg-black/40">
+    <div className="rounded-[var(--radius-3xl)] border border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] p-5 shadow-sm dark:bg-black/40">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-10 dark:text-white/50">
+          <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-10">
             Active plan
           </p>
-          <h2 className="mt-3 flex items-center gap-2 text-2xl font-semibold text-neutral-12 dark:text-white">
+          <h2 className="mt-3 flex items-center gap-2 text-2xl font-semibold text-neutral-12">
             <Sparkles className="size-5 text-blue-9" aria-hidden="true" />
             {model.activePlan.name}
           </h2>
-          <p className="mt-2 max-w-2xl text-sm text-neutral-11 dark:text-white/70">
-            {model.activePlan.description}
-          </p>
+          <p className="mt-2 max-w-2xl text-sm text-neutral-11">{model.activePlan.description}</p>
         </div>
         <div className="rounded-[var(--radius-2xl)] border border-blue-500/20 bg-blue-500/10 px-4 py-3 text-right">
-          <p className="text-2xl font-semibold text-neutral-12 dark:text-white">
-            {model.activePlan.priceLabel}
-          </p>
-          <p className="text-xs uppercase tracking-[0.16em] text-neutral-10 dark:text-white/50">
+          <p className="text-2xl font-semibold text-neutral-12">{model.activePlan.priceLabel}</p>
+          <p className="text-xs uppercase tracking-[0.16em] text-neutral-10">
             {model.activePlan.cadence}
           </p>
         </div>
@@ -343,10 +339,7 @@ export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         {model.activePlan.features.map((feature) => (
-          <div
-            key={feature}
-            className="flex items-center gap-2 text-sm text-neutral-11 dark:text-white/70"
-          >
+          <div key={feature} className="flex items-center gap-2 text-sm text-neutral-11">
             <CheckCircle2 className="size-4 text-emerald-600" aria-hidden="true" />
             {feature}
           </div>
@@ -358,7 +351,7 @@ export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
           <form action="/api/billing/portal" method="post">
             <button
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-11 dark:bg-white dark:text-black dark:hover:bg-white/90 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-11 dark:text-black sm:w-auto"
             >
               <CreditCard className="size-4" aria-hidden="true" />
               {model.portal.label}
@@ -368,7 +361,7 @@ export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
           <button
             type="button"
             disabled
-            className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70 dark:border-white/10 dark:text-white/50"
+            className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70"
             title={model.portal.reason}
           >
             <CreditCard className="size-4" aria-hidden="true" />
@@ -391,37 +384,29 @@ export function PlanChoiceGrid({ plans }: { plans: BillingPlanOption[] }) {
             className={`flex min-h-full flex-col rounded-[var(--radius-3xl)] border p-5 shadow-sm ${
               plan.active
                 ? "border-blue-500/40 bg-blue-500/10"
-                : "border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] dark:border-white/10 dark:bg-black/40"
+                : "border-[color:var(--neutral-7)] bg-[color:var(--neutral-1)] dark:bg-black/40"
             }`}
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h3 className="text-lg font-semibold text-neutral-12 dark:text-white">
-                  {plan.name}
-                </h3>
-                <p className="mt-1 text-sm text-neutral-11 dark:text-white/70">
-                  {plan.description}
-                </p>
+                <h3 className="text-lg font-semibold text-neutral-12">{plan.name}</h3>
+                <p className="mt-1 text-sm text-neutral-11">{plan.description}</p>
               </div>
               {plan.badge && (
-                <span className="rounded-full bg-neutral-12 px-2.5 py-1 text-xs font-medium text-white dark:bg-white dark:text-black">
+                <span className="rounded-full bg-neutral-12 px-2.5 py-1 text-xs font-medium text-white dark:text-black">
                   {plan.badge}
                 </span>
               )}
             </div>
 
             <div className="mt-5">
-              <span className="text-3xl font-semibold text-neutral-12 dark:text-white">
-                {plan.priceLabel}
-              </span>
-              <span className="ml-2 text-sm text-neutral-10 dark:text-white/50">
-                {plan.cadence}
-              </span>
+              <span className="text-3xl font-semibold text-neutral-12">{plan.priceLabel}</span>
+              <span className="ml-2 text-sm text-neutral-10">{plan.cadence}</span>
             </div>
 
             <ul className="mt-5 flex-1 space-y-2">
               {plan.features.map((feature) => (
-                <li key={feature} className="flex gap-2 text-sm text-neutral-11 dark:text-white/70">
+                <li key={feature} className="flex gap-2 text-sm text-neutral-11">
                   <CheckCircle2
                     className="mt-0.5 size-4 shrink-0 text-emerald-600"
                     aria-hidden="true"
@@ -443,7 +428,7 @@ function PlanAction({ action }: { action: BillingPlanAction }) {
     return (
       <a
         href={action.href}
-        className="mt-6 inline-flex items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-12 transition hover:bg-neutral-3 dark:border-white/10 dark:text-white dark:hover:bg-white/10"
+        className="mt-6 inline-flex items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-12 transition hover:bg-neutral-3"
       >
         {action.label}
         <ExternalLink className="size-4" aria-hidden="true" />
@@ -469,7 +454,7 @@ function PlanAction({ action }: { action: BillingPlanAction }) {
     <button
       type="button"
       disabled
-      className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70 dark:border-white/10 dark:text-white/50"
+      className="mt-6 inline-flex w-full cursor-not-allowed items-center justify-center rounded-[var(--radius-xl)] border border-[color:var(--neutral-7)] px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70"
       title={action.reason}
     >
       {action.label}

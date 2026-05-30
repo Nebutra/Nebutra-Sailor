@@ -40,7 +40,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
     <div className="space-y-12">
       {/* Header */}
       <section className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-[var(--neutral-12)] dark:text-white">
+        <h1 className="text-4xl font-bold tracking-tight text-[var(--neutral-12)]">
           {t("faq.heading")}
         </h1>
         <p className="mt-4 text-lg text-[var(--neutral-10)]">{t("faq.subheading")}</p>
@@ -49,7 +49,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
       {/* FAQ Categories */}
       {faqStructure.map(({ cat, questions }) => (
         <section key={cat}>
-          <h2 className="text-2xl font-bold text-[var(--neutral-12)] dark:text-white mb-6">
+          <h2 className="text-2xl font-bold text-[var(--neutral-12)] mb-6">
             {t(`faq.categories.${cat}.name`)}
           </h2>
           <div className="space-y-4">
@@ -58,7 +58,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
                 key={qIdx}
                 className="group rounded-[var(--radius-lg)] border border-[var(--neutral-6)]"
               >
-                <summary className="flex cursor-pointer items-center justify-between p-4 font-medium text-[var(--neutral-12)] dark:text-white">
+                <summary className="flex cursor-pointer items-center justify-between p-4 font-medium text-[var(--neutral-12)]">
                   {t(`faq.categories.${cat}.questions.${qIdx}.q` as Parameters<typeof t>[0])}
                   <span className="ml-4 shrink-0 transition group-open:rotate-180">
                     <svg
@@ -90,9 +90,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
 
       {/* Contact CTA */}
       <section className="rounded-[var(--radius-2xl)] bg-[var(--neutral-2)] p-8 text-center">
-        <h2 className="text-xl font-bold text-[var(--neutral-12)] dark:text-white">
-          {t("faq.ctaHeading")}
-        </h2>
+        <h2 className="text-xl font-bold text-[var(--neutral-12)]">{t("faq.ctaHeading")}</h2>
         <p className="mt-2 text-[var(--neutral-10)]">{t("faq.ctaDescription")}</p>
         <div className="mt-6 flex justify-center gap-4">
           <Link

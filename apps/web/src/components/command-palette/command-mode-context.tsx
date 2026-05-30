@@ -56,14 +56,14 @@ export const ACCENT_ACTIVE_CLASSES: Record<ModeAccent, string> = {
   green:
     "border-green-7 bg-green-2 text-green-11 shadow-[0_0_0_3px_var(--green-3)] dark:border-green-7/60 dark:bg-green-2/25 dark:text-green-9 dark:shadow-[0_0_0_3px_rgba(16,185,129,0.12)]",
   neutral:
-    "border-neutral-8 bg-neutral-2 text-neutral-12 shadow-[0_0_0_3px_var(--neutral-3)] dark:border-white/30 dark:bg-white/10 dark:text-white dark:shadow-[0_0_0_3px_rgba(255,255,255,0.06)]",
+    "border-neutral-8 bg-neutral-2 text-neutral-12 shadow-[0_0_0_3px_var(--neutral-3)] dark:shadow-[0_0_0_3px_rgba(255,255,255,0.06)]",
 };
 
 export const ACCENT_ICON_CLASSES: Record<ModeAccent, string> = {
   blue: "text-blue-9",
   cyan: "text-cyan-9",
   green: "text-green-9",
-  neutral: "text-neutral-11 dark:text-white/70",
+  neutral: "text-neutral-11",
 };
 
 interface CommandModeContextValue {

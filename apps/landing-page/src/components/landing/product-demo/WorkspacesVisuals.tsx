@@ -48,7 +48,7 @@ export function RoleSwitcher() {
           {role === "Viewer" ? (
             <motion.div
               layoutId="roleIndicator"
-              className="w-16 h-full bg-white dark:bg-zinc-800 rounded-full shadow-sm border border-black/5 dark:border-white/5"
+              className="w-16 h-full bg-white dark:bg-zinc-800 rounded-full shadow-sm border border-black/5"
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
             />
           ) : (
