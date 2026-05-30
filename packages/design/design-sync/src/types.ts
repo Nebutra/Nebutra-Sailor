@@ -214,7 +214,7 @@ export interface MemoryProviderConfig extends BaseProviderConfig {
 
 export interface DesignMdProviderConfig extends BaseProviderConfig {
   provider: "design-md";
-  /** Absolute path to the DESIGN.md file. Defaults to `<cwd>/DESIGN.md`. */
+  /** Absolute path to the DESIGN.md file. Defaults to `process.cwd()/DESIGN.md`. */
   designMdPath?: string;
 }
 

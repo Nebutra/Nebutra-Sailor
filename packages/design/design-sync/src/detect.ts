@@ -9,8 +9,8 @@ import type { DesignSyncProviderType } from "./types";
 //   3. PENPOT_API_URL + PENPOT_TOKEN                → "penpot"
 //   4. fallback                                      → "git-only"
 //
-// `memory` is never auto-detected; it must be requested explicitly via the
-// DESIGN_SYNC_PROVIDER env var or a config object (used in tests).
+// `memory` and `design-md` are never auto-detected; they must be requested
+// explicitly via the DESIGN_SYNC_PROVIDER env var or a config object.
 // =============================================================================
 
 const VALID_PROVIDERS: ReadonlySet<DesignSyncProviderType> = new Set([

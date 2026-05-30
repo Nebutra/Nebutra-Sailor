@@ -43,6 +43,7 @@ export { MemoryProvider } from "./providers/memory";
 export { PenpotProvider } from "./providers/penpot";
 export type {
   BaseProviderConfig,
+  DesignMdProviderConfig,
   DesignSyncConfig,
   DesignSyncProvider,
   DesignSyncProviderType,
