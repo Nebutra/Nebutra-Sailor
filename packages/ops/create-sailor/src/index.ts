@@ -234,7 +234,7 @@ async function run(): Promise<void> {
               placeholder: "./my-saas-app",
               defaultValue: "./my-saas-app",
               validate: (value) => {
-                if (value.length === 0) return "Please enter a path.";
+                if (!value?.length) return "Please enter a path.";
               },
             }),
         },

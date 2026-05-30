@@ -22,12 +22,12 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@clack/prompts": "^0.7.0",
-    "@mrleebo/prisma-ast": "^0.15.0",
+    "@clack/prompts": "^1.5.0",
+    "@mrleebo/prisma-ast": "^0.16.0",
     "cfonts": "^3.3.0",
-    "commander": "^12.1.0",
+    "commander": "^15.0.0",
     "gradient-string": "^3.0.0",
-    "ignore": "^5.3.2",
+    "ignore": "^7.0.5",
     "picocolors": "^1.1.0",
     "update-notifier": "^7.3.1"
   },
@@ -39,7 +39,7 @@
     "vitest": "catalog:"
   },
   "engines": {
-    "node": ">=18.17.0"
+    "node": ">=20.9.0"
   },
   "keywords": [
     "sailor",

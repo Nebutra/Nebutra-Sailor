@@ -185,7 +185,7 @@ async function runInteractivePrompts(
         return p.text({
           message: "Custom endpoint base URL (e.g. https://api.proxy.com/v1):",
           validate: (value) => {
-            if (value.length === 0) return "Base URL is required.";
+            if (!value?.length) return "Base URL is required.";
           },
         });
       }
