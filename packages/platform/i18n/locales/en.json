@@ -773,13 +773,25 @@
         "description": "Use light, dark, or match system preference."
       },
       "themeMode": {
+        "label": "Theme mode",
         "light": "Light",
         "dark": "Dark",
         "system": "System"
       },
       "accent": {
         "title": "Accent color",
-        "description": "Pick a brand accent that tints active states across the app."
+        "description": "Pick a brand accent that tints active states across the app.",
+        "label": "Accent color",
+        "options": {
+          "default": "Default",
+          "blue": "Blue",
+          "cyan": "Cyan",
+          "violet": "Violet",
+          "pink": "Pink",
+          "amber": "Amber",
+          "green": "Green",
+          "red": "Red"
+        }
       },
       "typography": {
         "title": "Typography",
@@ -792,12 +804,17 @@
       "motion": {
         "title": "Reduce motion",
         "description": "Reduce animations or match system preference.",
+        "label": "Motion preference",
         "system": "System",
         "on": "On",
         "off": "Off"
       },
       "surface": {
         "title": "Translucent sidebar",
+        "description": "Apply a translucent material to the sidebar."
+      },
+      "transparency": {
+        "label": "Translucent sidebar",
         "description": "Apply a translucent material to the sidebar."
       }
     }

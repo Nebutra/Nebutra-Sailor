@@ -763,13 +763,25 @@
         "description": "使用浅色、深色，或匹配系统设置。"
       },
       "themeMode": {
+        "label": "主题模式",
         "light": "浅色",
         "dark": "深色",
         "system": "系统"
       },
       "accent": {
         "title": "强调色",
-        "description": "选择品牌强调色，作用于全应用的激活态。"
+        "description": "选择品牌强调色，作用于全应用的激活态。",
+        "label": "强调色",
+        "options": {
+          "default": "默认",
+          "blue": "蓝色",
+          "cyan": "青色",
+          "violet": "紫色",
+          "pink": "粉色",
+          "amber": "琥珀",
+          "green": "绿色",
+          "red": "红色"
+        }
       },
       "typography": {
         "title": "字体大小",
@@ -782,12 +794,17 @@
       "motion": {
         "title": "减少动态效果",
         "description": "减少动画或匹配系统设置。",
+        "label": "动效偏好",
         "system": "系统",
         "on": "开启",
         "off": "关闭"
       },
       "surface": {
         "title": "半透明侧边栏",
+        "description": "为侧边栏应用半透明材质。"
+      },
+      "transparency": {
+        "label": "半透明侧边栏",
         "description": "为侧边栏应用半透明材质。"
       }
     }
