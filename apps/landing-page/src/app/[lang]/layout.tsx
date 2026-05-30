@@ -1,3 +1,4 @@
+import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
@@ -156,6 +157,8 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
                 publicSecurityRecord={process.env.NEXT_PUBLIC_PUBLIC_SECURITY_RECORD}
               />
             ) : null}
+            {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
+            <Toaster />
           </NextIntlClientProvider>
         </ErrorBoundary>
       </Providers>

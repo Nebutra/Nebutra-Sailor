@@ -1,3 +1,4 @@
+import { z } from "zod";
 import type { TurnUsage } from "./model";
 
 export interface BudgetCap {
@@ -16,6 +17,29 @@ export interface Brief {
   readonly budget: BudgetCap;
   readonly dependsOn?: readonly string[];
 }
+
+/**
+ * Runtime shape + semantic validation for {@link Brief}. The public type keeps
+ * its `readonly` immutability contract (see project immutability rules), so we
+ * validate against this schema at the boundary rather than deriving the type
+ * from it. Each rule mirrors a tailored DX suggestion surfaced via {@link fail}.
+ */
+const budgetCapSchema = z.object({
+  durationMs: z.number().positive(),
+  costUsd: z.number().nonnegative(),
+  tokenLimit: z.number().positive(),
+});
+
+const briefSchema = z.object({
+  id: z.string().trim().min(1),
+  objective: z.string().trim().min(1),
+  outputFormat: z.record(z.string(), z.unknown()),
+  allowedTools: z.array(z.string()).min(1),
+  contextRefs: z.array(z.string()),
+  boundaries: z.array(z.string()).min(1),
+  budget: budgetCapSchema,
+  dependsOn: z.array(z.string()).optional(),
+});
 
 export type DispatchStrategy = "auto" | "sequential" | "fanout";
 
@@ -47,20 +71,52 @@ function fail(message: string, suggestion: string): never {
   throw new Error(`${message}. Suggestion: ${suggestion}`);
 }
 
+/**
+ * Per-top-level-field DX messages, keyed by the failing schema path. Keeps the
+ * exact "message. Suggestion: …" surface the callers (and tests) rely on while
+ * the heavy lifting (shape + bounds) moves into {@link briefSchema}.
+ */
+const BRIEF_FIELD_FAILURE: Record<string, { message: string; suggestion: string }> = {
+  id: { message: "brief.id is required", suggestion: "Use a stable role or task id." },
+  objective: {
+    message: "brief.objective is required",
+    suggestion: "Write a concrete objective before dispatching.",
+  },
+  outputFormat: {
+    message: "brief.outputFormat is invalid",
+    suggestion: "Provide an output schema object the worker must conform to.",
+  },
+  allowedTools: {
+    message: "brief.allowedTools is required",
+    suggestion: "Constrain each subagent to an explicit tool scope.",
+  },
+  contextRefs: {
+    message: "brief.contextRefs is invalid",
+    suggestion: "Pass an array of context references (may be empty).",
+  },
+  boundaries: {
+    message: "brief.boundaries is required",
+    suggestion: "State at least one boundary for the worker.",
+  },
+  budget: {
+    message: "brief.budget is invalid",
+    suggestion: "Set positive token/time caps and a non-negative cost cap.",
+  },
+  dependsOn: {
+    message: "brief.dependsOn is invalid",
+    suggestion: "List dependency brief ids as an array of strings.",
+  },
+};
+
 function validateBrief(brief: Brief): void {
-  if (!brief.id.trim()) fail("brief.id is required", "Use a stable role or task id.");
-  if (!brief.objective.trim()) {
-    fail("brief.objective is required", "Write a concrete objective before dispatching.");
-  }
-  if (brief.allowedTools.length === 0) {
-    fail("brief.allowedTools is required", "Constrain each subagent to an explicit tool scope.");
-  }
-  if (brief.boundaries.length === 0) {
-    fail("brief.boundaries is required", "State at least one boundary for the worker.");
-  }
-  if (brief.budget.tokenLimit <= 0 || brief.budget.durationMs <= 0 || brief.budget.costUsd < 0) {
-    fail("brief.budget is invalid", "Set positive token/time caps and a non-negative cost cap.");
-  }
+  const result = briefSchema.safeParse(brief);
+  if (result.success) return;
+
+  const topLevelField = result.error.issues[0]?.path[0];
+  const failure =
+    typeof topLevelField === "string" ? BRIEF_FIELD_FAILURE[topLevelField] : undefined;
+  if (failure) fail(failure.message, failure.suggestion);
+  fail("brief is invalid", "Provide every required brief field with valid values.");
 }
 
 function dependencySet(briefs: readonly Brief[]): Set<string> {

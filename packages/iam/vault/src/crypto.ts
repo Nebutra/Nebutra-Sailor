@@ -12,17 +12,34 @@ const AUTH_TAG_LENGTH = 16; // 128 bits
 
 /**
  * AES-256-GCM encryption.
+ *
  * @param plaintext Data to encrypt
  * @param key 32-byte encryption key
+ * @param aad Optional Additional Authenticated Data (AEAD context binding).
+ *   When provided, the AAD is folded into the GCM authentication tag — the
+ *   ciphertext can only be decrypted by supplying the identical AAD.
+ *   When omitted, NO `setAAD` call is made and the output is byte-for-byte
+ *   identical to the legacy (pre-AAD) format. Callers MUST pass the same `aad`
+ *   to {@link aesDecrypt}.
  * @returns Ciphertext, IV, and authentication tag (all as Buffers)
  */
-export function aesEncrypt(plaintext: string | Buffer, key: Buffer): AesEncryptResult {
+export function aesEncrypt(
+  plaintext: string | Buffer,
+  key: Buffer,
+  aad?: Buffer,
+): AesEncryptResult {
   if (key.length !== KEY_LENGTH) {
     throw new Error(`Key must be ${KEY_LENGTH} bytes, got ${key.length}`);
   }
 
   const iv = randomBytes(IV_LENGTH);
   const cipher = createCipheriv(ALGORITHM, key, iv, { authTagLength: AUTH_TAG_LENGTH });
+
+  // AAD must be set after createCipheriv and before any update/final call.
+  // Omitting it preserves the exact legacy GCM tag computation.
+  if (aad !== undefined) {
+    cipher.setAAD(aad);
+  }
 
   const plainBuf = typeof plaintext === "string" ? Buffer.from(plaintext, "utf-8") : plaintext;
   let ciphertext = cipher.update(plainBuf);
@@ -35,18 +52,34 @@ export function aesEncrypt(plaintext: string | Buffer, key: Buffer): AesEncryptR
 
 /**
  * AES-256-GCM decryption.
+ *
  * @param ciphertext Data to decrypt
  * @param key 32-byte encryption key
  * @param options IV and authentication tag
+ * @param aad Optional Additional Authenticated Data. MUST match exactly the
+ *   `aad` passed to {@link aesEncrypt}. When omitted, NO `setAAD` call is made —
+ *   this is the exact legacy decryption path and is required to decrypt
+ *   ciphertext produced without AAD. Supplying a non-matching (or unexpected)
+ *   AAD causes GCM tag verification to fail in `decipher.final()`.
  * @returns Decrypted plaintext as Buffer
  */
-export function aesDecrypt(ciphertext: Buffer, key: Buffer, options: AesDecryptOptions): Buffer {
+export function aesDecrypt(
+  ciphertext: Buffer,
+  key: Buffer,
+  options: AesDecryptOptions,
+  aad?: Buffer,
+): Buffer {
   if (key.length !== KEY_LENGTH) {
     throw new Error(`Key must be ${KEY_LENGTH} bytes, got ${key.length}`);
   }
 
   const decipher = createDecipheriv(ALGORITHM, key, options.iv);
+  // setAuthTag / setAAD ordering: AAD must precede update/final. Setting the
+  // auth tag first matches Node's documented flow for GCM verification.
   decipher.setAuthTag(options.authTag);
+  if (aad !== undefined) {
+    decipher.setAAD(aad);
+  }
 
   let plaintext = decipher.update(ciphertext);
   plaintext = Buffer.concat([plaintext, decipher.final()]);

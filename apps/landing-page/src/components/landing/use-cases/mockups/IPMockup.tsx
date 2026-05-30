@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock, Eye } from "@nebutra/icons";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const navItems = ["Blog", "About", "Projects"];
 const posts = [
@@ -26,12 +26,14 @@ const posts = [
 ];
 
 export function IPMockup() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
       <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
+        initial={shouldReduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.4 }}
         className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Top bar */}

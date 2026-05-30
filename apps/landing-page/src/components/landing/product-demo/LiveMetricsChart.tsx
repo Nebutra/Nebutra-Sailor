@@ -1,7 +1,7 @@
 "use client";
 
 import NumberFlow from "@number-flow/react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 /** Spline curve builder */
@@ -25,9 +25,12 @@ function generatePath(points: number[], width: number, height: number, max: numb
 }
 
 export function LiveMetricsChart() {
+  const shouldReduceMotion = useReducedMotion();
   const [data, setData] = useState<number[]>(() => Array.from({ length: 20 }, () => 100));
 
   useEffect(() => {
+    // Reduced motion: freeze the chart — no continuous data churn / path morphing.
+    if (shouldReduceMotion) return;
     const interval = setInterval(() => {
       setData((prev) => {
         const nextValue = Math.min(
@@ -38,7 +41,7 @@ export function LiveMetricsChart() {
       });
     }, 1500);
     return () => clearInterval(interval);
-  }, []);
+  }, [shouldReduceMotion]);
 
   const width = 300;
   const height = 80;
@@ -57,7 +60,9 @@ export function LiveMetricsChart() {
           </h4>
           <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              {!shouldReduceMotion && (
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              )}
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-medium">
@@ -94,7 +99,7 @@ export function LiveMetricsChart() {
             fill="url(#chartGlow)"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 1 }}
           />
           <motion.path
             d={path}
@@ -103,9 +108,11 @@ export function LiveMetricsChart() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0, opacity: 0 }}
+            initial={
+              shouldReduceMotion ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }
+            }
             animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            transition={{ duration: shouldReduceMotion ? 0 : 1.5, ease: "easeInOut" }}
             style={{ filter: "drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" }}
           />
         </svg>

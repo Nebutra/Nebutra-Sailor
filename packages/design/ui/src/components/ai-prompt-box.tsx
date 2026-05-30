@@ -18,9 +18,7 @@ import { Button } from "../primitives/button";
 import { Dialog, DialogContent, DialogTitle } from "../primitives/dialog";
 import { Textarea } from "../primitives/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../primitives/tooltip";
-
-// Utility function for className merging
-const cn = (...classes: (string | undefined | null | false)[]) => classes.filter(Boolean).join(" ");
+import { cn } from "../utils/cn";
 
 const MAX_VISUALIZER_BARS = 64;
 const VISUALIZER_BAR_STYLES = Array.from({ length: MAX_VISUALIZER_BARS }, (_, index) => ({

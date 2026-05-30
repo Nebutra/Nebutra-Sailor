@@ -266,11 +266,20 @@ export function creditsToDollars(credits: number): number {
 }
 
 /**
- * Format credits for display
+ * Format credits for display as a localized currency string.
+ *
+ * Credits are converted to major units (1 credit = $0.01), then formatted via
+ * Intl.NumberFormat. For USD amounts under 1000 the output matches the previous
+ * `$X.XX` form exactly; amounts >= 1000 gain a locale thousands separator
+ * (e.g. "$1,000.00"). Non-USD currencies render with the correct symbol/format.
+ *
+ * @param credits Integer credit balance (1 credit = $0.01)
+ * @param currency ISO 4217 currency code (default "USD")
+ * @param locale BCP 47 locale tag (default "en-US")
  */
-export function formatCredits(credits: number): string {
-  const dollars = creditsToDollars(credits);
-  return `$${dollars.toFixed(2)}`;
+export function formatCredits(credits: number, currency = "USD", locale = "en-US"): string {
+  const amount = creditsToDollars(credits);
+  return new Intl.NumberFormat(locale, { style: "currency", currency }).format(amount);
 }
 
 /**

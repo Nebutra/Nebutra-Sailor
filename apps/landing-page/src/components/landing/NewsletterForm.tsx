@@ -3,6 +3,11 @@
 import { Button, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
+import { z } from "zod";
+
+// Mirrors the server-side guard in app/api/newsletter/route.ts so malformed
+// addresses are rejected before the network round-trip.
+const emailSchema = z.string().email();
 
 export function NewsletterForm() {
   const t = useTranslations("footer");
@@ -12,7 +17,10 @@ export function NewsletterForm() {
 
   async function submitNewsletter() {
     if (!formRef.current?.reportValidity()) return;
-    if (!email.trim()) return;
+    if (!emailSchema.safeParse(email.trim()).success) {
+      setStatus("error");
+      return;
+    }
 
     setStatus("loading");
     try {

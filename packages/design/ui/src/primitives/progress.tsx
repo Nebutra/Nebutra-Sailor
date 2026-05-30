@@ -3,7 +3,8 @@
 import { Progress as BaseProgress } from "@base-ui/react/progress";
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion } from "motion/react";
-import * as React from "react";
+import type * as React from "react";
+import { useDebounceValue } from "usehooks-ts";
 import { easings, motionDurations } from "../tokens/motion";
 import { cn } from "../utils/cn";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
@@ -117,29 +118,20 @@ function pickThresholdColor(colors: ProgressColorMap, pct: number): string | und
 // Throttled aria-valuenow
 // ---------------------------------------------------------------------------
 
+/**
+ * Throttle a value to ~1Hz so assistive tech is not spammed with
+ * `aria-valuenow` updates on fast-moving progress bars.
+ *
+ * Implemented via `usehooks-ts` `useDebounceValue` with `maxWait === delay`,
+ * which is the lodash-canonical way to express a throttle: it emits on the
+ * leading edge and is guaranteed to flush a trailing value within `ms`.
+ */
 function useThrottled<T>(value: T, ms = 1000): T {
-  const [throttled, setThrottled] = React.useState<T>(value);
-  const lastEmit = React.useRef<number>(0);
-  const timer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  React.useEffect(() => {
-    const now = Date.now();
-    const since = now - lastEmit.current;
-    if (since >= ms) {
-      lastEmit.current = now;
-      setThrottled(value);
-      return;
-    }
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      lastEmit.current = Date.now();
-      setThrottled(value);
-    }, ms - since);
-    return () => {
-      if (timer.current) clearTimeout(timer.current);
-    };
-  }, [value, ms]);
-
+  const [throttled] = useDebounceValue(value, ms, {
+    leading: true,
+    trailing: true,
+    maxWait: ms,
+  });
   return throttled;
 }
 

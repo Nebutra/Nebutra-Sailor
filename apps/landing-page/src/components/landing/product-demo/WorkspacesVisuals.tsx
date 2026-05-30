@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 /** Animated Toggle Role Switcher */
@@ -82,6 +82,8 @@ export function RoleSwitcher() {
 
 /** Animated Tenant Diagram */
 export function TenantDiagram() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <div className="w-full flex items-center justify-center p-4">
       <div className="flex gap-4 items-center">
@@ -102,13 +104,15 @@ export function TenantDiagram() {
             <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
             <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
           </svg>
-          {/* Animated ripple circle */}
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0.8 }}
-            animate={{ scale: 1.5, opacity: 0 }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
-            className="absolute inset-0 rounded-[var(--radius-2xl)] border border-primary/40 pointer-events-none"
-          />
+          {/* Animated ripple circle — skipped under reduced-motion */}
+          {!shouldReduceMotion && (
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0.8 }}
+              animate={{ scale: 1.5, opacity: 0 }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeOut" }}
+              className="absolute inset-0 rounded-[var(--radius-2xl)] border border-primary/40 pointer-events-none"
+            />
+          )}
         </div>
 
         {/* Connections */}
@@ -116,12 +120,14 @@ export function TenantDiagram() {
           {/* Line 1 */}
           <div className="flex items-center gap-2">
             <div className="w-12 h-px bg-gradient-to-r from-border/50 to-primary/50 relative overflow-hidden">
-              <motion.div
-                initial={{ x: "-100%" }}
-                animate={{ x: "100%" }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                className="w-4 h-full bg-primary absolute top-0 left-0 blur-[2px]"
-              />
+              {!shouldReduceMotion && (
+                <motion.div
+                  initial={{ x: "-100%" }}
+                  animate={{ x: "100%" }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                  className="w-4 h-full bg-primary absolute top-0 left-0 blur-[2px]"
+                />
+              )}
             </div>
             <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-primary/20 bg-primary/10 text-primary text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Acme
@@ -131,12 +137,14 @@ export function TenantDiagram() {
           {/* Line 2 */}
           <div className="flex items-center gap-2 -ml-4">
             <div className="w-16 h-px bg-gradient-to-r from-border/50 to-emerald-500/50 relative overflow-hidden">
-              <motion.div
-                initial={{ x: "-100%" }}
-                animate={{ x: "100%" }}
-                transition={{ repeat: Infinity, duration: 1.5, delay: 0.75, ease: "linear" }}
-                className="w-4 h-full bg-emerald-500 absolute top-0 left-0 blur-[2px]"
-              />
+              {!shouldReduceMotion && (
+                <motion.div
+                  initial={{ x: "-100%" }}
+                  animate={{ x: "100%" }}
+                  transition={{ repeat: Infinity, duration: 1.5, delay: 0.75, ease: "linear" }}
+                  className="w-4 h-full bg-emerald-500 absolute top-0 left-0 blur-[2px]"
+                />
+              )}
             </div>
             <div className="px-3 py-1.5 rounded-[var(--radius-lg)] border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono tracking-wide shadow-sm">
               Schema: Globex

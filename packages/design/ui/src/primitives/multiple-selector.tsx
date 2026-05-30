@@ -5,6 +5,7 @@ import { Command as CommandPrimitive, useCommandState } from "cmdk";
 import * as React from "react";
 import { type Ref, useEffect } from "react";
 
+import { useDebouncedValue } from "../hooks/use-debounced-refresh";
 import { cn } from "../utils/cn";
 import { Command, CommandGroup, CommandItem, CommandList } from "./command";
 
@@ -86,17 +87,14 @@ export interface MultipleSelectorRef {
 }
 
 /**
- * Custom debounce hook
+ * Debounced value hook.
+ *
+ * @deprecated Re-export of the canonical {@link useDebouncedValue} from
+ * `@nebutra/ui/hooks` (backed by `usehooks-ts`). Kept for backwards-compat of
+ * the `@nebutra/ui/primitives` barrel; import `useDebouncedValue` directly.
  */
 export function useDebounce<T>(value: T, delay?: number): T {
-  const [debouncedValue, setDebouncedValue] = React.useState<T>(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay || 500);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-
-  return debouncedValue;
+  return useDebouncedValue(value, delay ?? 500);
 }
 
 function transToGroupOption(options: MultipleSelectorOption[], groupBy?: string): GroupOption {
@@ -243,7 +241,7 @@ const MultipleSelector = ({
     transToGroupOption(arrayDefaultOptions, groupBy),
   );
   const [inputValue, setInputValue] = React.useState("");
-  const debouncedSearchTerm = useDebounce(inputValue, delay || 500);
+  const debouncedSearchTerm = useDebouncedValue(inputValue, delay || 500);
 
   React.useImperativeHandle(
     ref,

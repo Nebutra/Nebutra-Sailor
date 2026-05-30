@@ -1,7 +1,7 @@
 "use client";
 
 import { DottedWorldMap } from "@nebutra/ui/primitives";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { AnimateIn } from "./AnimateIn";
@@ -26,6 +26,8 @@ const CDN_NODES = [
  * World map with animated CDN edge nodes. Uses semantic tokens for theme compat.
  */
 export function GlobalEdgeMap() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <article
       className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-all hover:border-primary/40 overflow-hidden backdrop-blur-2xl"
@@ -92,19 +94,21 @@ export function GlobalEdgeMap() {
                     transform: "translate(-50%, -50%)",
                   }}
                 >
-                  <motion.div
-                    className="absolute rounded-full border border-primary/20 dark:border-primary/40"
-                    initial={{ width: 4, height: 4, opacity: 0.8, x: "-50%", y: "-50%" }}
-                    animate={{ width: 32, height: 32, opacity: 0 }}
-                    transition={{
-                      duration: 3,
-                      delay: i * 0.4,
-                      repeat: Infinity,
-                      repeatDelay: 2,
-                      ease: "easeOut",
-                    }}
-                    style={{ left: "50%", top: "50%" }}
-                  />
+                  {!shouldReduceMotion && (
+                    <motion.div
+                      className="absolute rounded-full border border-primary/20 dark:border-primary/40"
+                      initial={{ width: 4, height: 4, opacity: 0.8, x: "-50%", y: "-50%" }}
+                      animate={{ width: 32, height: 32, opacity: 0 }}
+                      transition={{
+                        duration: 3,
+                        delay: i * 0.4,
+                        repeat: Infinity,
+                        repeatDelay: 2,
+                        ease: "easeOut",
+                      }}
+                      style={{ left: "50%", top: "50%" }}
+                    />
+                  )}
                   <div
                     className="absolute w-4 h-4 rounded-full bg-primary/10 dark:bg-primary/30 blur-[2px] dark:blur-[4px] -translate-x-1/2 -translate-y-1/2"
                     style={{ left: "50%", top: "50%" }}
@@ -112,13 +116,17 @@ export function GlobalEdgeMap() {
                   <motion.div
                     className="w-2 h-2 rounded-full bg-primary shadow-[0_0_4px_var(--color-primary)] dark:shadow-[0_0_8px_var(--color-primary)]"
                     initial={{ opacity: 0.6 }}
-                    animate={{ opacity: [0.6, 1, 0.6] }}
-                    transition={{
-                      duration: 2,
-                      delay: i * 0.3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: [0.6, 1, 0.6] }}
+                    transition={
+                      shouldReduceMotion
+                        ? { duration: 0 }
+                        : {
+                            duration: 2,
+                            delay: i * 0.3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }
+                    }
                   />
                 </div>
               ))}

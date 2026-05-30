@@ -10,11 +10,74 @@
  *   app.use("/oidc", provider.callback());
  */
 
+import { randomBytes } from "node:crypto";
 import type { PrismaClient } from "@nebutra/db";
 import type { Redis } from "ioredis";
 import Provider, { type AccountClaims } from "oidc-provider";
 import { createPrismaAdapter } from "./adapters/prisma-adapter";
 import { NEBUTRA_CLAIMS, SUPPORTED_SCOPES } from "./claims";
+
+/**
+ * Known-weak cookie signing keys that must NEVER reach production.
+ *
+ * These were either historic hardcoded package defaults or the IdP app's
+ * dev-only `OIDC_COOKIE_KEYS` fallback. If any of them show up at runtime it
+ * means a deployment forgot to provision real secrets — Keygrip-signed
+ * session/interaction cookies would then be forgeable by anyone who has read
+ * the source. We refuse to boot the provider in that state.
+ */
+const KNOWN_WEAK_COOKIE_KEYS = new Set<string>([
+  "nebutra-oidc-cookie-key-1",
+  "nebutra-oidc-cookie-key-2",
+  "dev-key-1",
+  "dev-key-2",
+]);
+
+/**
+ * Validates the cookie signing keys, refusing weak/missing values in
+ * production. The returned array always contains at least two strong keys
+ * (the first signs, the rest verify rotated cookies).
+ *
+ * @throws Error in production when keys are missing, empty, or known-weak.
+ */
+function resolveCookieKeys(cookieKeys: string[] | undefined): string[] {
+  const isProduction = process.env.NODE_ENV === "production";
+
+  const provided = (cookieKeys ?? []).map((k) => k.trim()).filter((k) => k.length > 0);
+
+  const hasWeakKey = provided.some((k) => KNOWN_WEAK_COOKIE_KEYS.has(k));
+  const missing = provided.length === 0;
+
+  if (isProduction && (missing || hasWeakKey)) {
+    const reason = missing
+      ? "no cookie signing keys were provided"
+      : "known-weak/default cookie signing keys were provided";
+    throw new Error(
+      `[@nebutra/oauth-server] Refusing to start the OIDC provider: ${reason}. ` +
+        "Set strong, secret cookie signing keys via the `cookieKeys` option " +
+        "(e.g. from the OIDC_COOKIE_KEYS env var, two or more high-entropy values). " +
+        "These keys sign session/interaction cookies — weak values let attackers forge them.",
+    );
+  }
+
+  if (missing || hasWeakKey) {
+    // Non-production: warn loudly and substitute ephemeral, clearly-labelled
+    // random keys so local/test runs keep working without shipping weak
+    // secrets. These rotate on every process start (sessions won't persist
+    // across restarts in dev — acceptable, and a signal to set real keys).
+    console.warn(
+      "[@nebutra/oauth-server] No strong cookie signing keys provided; " +
+        "using ephemeral dev-only random keys. Set `cookieKeys` (OIDC_COOKIE_KEYS) " +
+        "for stable sessions and before deploying to production.",
+    );
+    return [
+      `dev-only-ephemeral-${randomBytes(24).toString("hex")}`,
+      `dev-only-ephemeral-${randomBytes(24).toString("hex")}`,
+    ];
+  }
+
+  return provided;
+}
 
 export interface NebutraOIDCConfig {
   /** The issuer URL (e.g., "https://id.nebutra.com") */
@@ -30,8 +93,13 @@ export interface NebutraOIDCConfig {
   jwks?: { keys: Array<Record<string, unknown>> };
 
   /**
-   * Cookie signing keys (at least 2 for rotation).
+   * Cookie signing keys (at least 2 high-entropy secrets for rotation).
    * First key is used for signing, others for verification of old cookies.
+   *
+   * REQUIRED in production: if missing, empty, or set to a known-weak/default
+   * value, the provider throws at startup (NODE_ENV === "production").
+   * In non-production, missing/weak keys trigger a warning and ephemeral
+   * random keys are substituted (sessions won't persist across restarts).
    */
   cookieKeys?: string[];
 
@@ -69,11 +137,15 @@ export function createNebutraOIDCProvider(config: NebutraOIDCConfig): Provider {
     prisma,
     redis,
     jwks,
-    cookieKeys = ["nebutra-oidc-cookie-key-1", "nebutra-oidc-cookie-key-2"],
+    cookieKeys,
     loginUrl = "/oauth/login",
     consentUrl = "/oauth/authorize",
     debug = false,
   } = config;
+
+  // Validate cookie signing keys: throw in production on missing/weak values,
+  // warn + substitute ephemeral random keys in dev. No hardcoded weak default.
+  const resolvedCookieKeys = resolveCookieKeys(cookieKeys);
 
   const provider = new Provider(issuer, {
     // Storage adapters
@@ -84,7 +156,7 @@ export function createNebutraOIDCProvider(config: NebutraOIDCConfig): Provider {
 
     // Cookie configuration
     cookies: {
-      keys: cookieKeys,
+      keys: resolvedCookieKeys,
       long: { signed: true, httpOnly: true, sameSite: "lax" as const },
       short: { signed: true, httpOnly: true, sameSite: "lax" as const },
     },

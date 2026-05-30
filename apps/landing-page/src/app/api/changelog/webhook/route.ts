@@ -1,19 +1,23 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 /**
- * Sanity webhook payload shape for changelogEntry documents
+ * Sanity webhook payload shape for changelogEntry documents.
+ * Validated at the boundary via {@link sanityWebhookPayloadSchema}.
  */
-interface SanityWebhookPayload {
-  _id: string;
-  _type: string;
-  _rev: string;
-  version?: string;
-  title?: string;
-  publishedAt?: string;
-  type?: "feature" | "improvement" | "fix" | "breaking" | "security";
-  summary?: string;
-}
+const sanityWebhookPayloadSchema = z.object({
+  _id: z.string(),
+  _type: z.string(),
+  _rev: z.string(),
+  version: z.string().optional(),
+  title: z.string().optional(),
+  publishedAt: z.string().optional(),
+  type: z.enum(["feature", "improvement", "fix", "breaking", "security"]).optional(),
+  summary: z.string().optional(),
+});
+
+type SanityWebhookPayload = z.infer<typeof sanityWebhookPayloadSchema>;
 
 /**
  * POST /api/changelog/webhook
@@ -50,13 +54,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
   }
 
-  let payload: SanityWebhookPayload;
+  let parsedJson: unknown;
   try {
-    payload = JSON.parse(body);
+    parsedJson = JSON.parse(body);
   } catch (e) {
     console.error("[changelog-webhook] JSON parse error:", e);
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
+
+  const validation = sanityWebhookPayloadSchema.safeParse(parsedJson);
+  if (!validation.success) {
+    console.error("[changelog-webhook] Payload validation failed:", validation.error.issues);
+    return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+  }
+  const payload: SanityWebhookPayload = validation.data;
 
   // 2. FILTER FOR CHANGELOG ENTRIES ONLY
   if (payload._type !== "changelogEntry") {

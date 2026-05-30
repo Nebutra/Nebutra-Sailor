@@ -1,8 +1,20 @@
+import pRetry from "p-retry";
 import { getCacheClient } from "../client.js";
 import type { CacheClient } from "../types.js";
 
 async function getRedis(): Promise<CacheClient> {
   return getCacheClient();
+}
+
+/**
+ * Sentinel thrown when a SET NX attempt does not win the lock. Used to drive
+ * p-retry's backoff loop without conflating "lock contended" with a real error.
+ */
+class LockNotAcquiredError extends Error {
+  constructor() {
+    super("lock not acquired");
+    this.name = "LockNotAcquiredError";
+  }
 }
 
 export interface LockOptions {
@@ -33,7 +45,11 @@ export class DistributedLock {
     const retries = options.retries || 0;
     const retryDelay = options.retryDelay || 100;
 
-    for (let i = 0; i <= retries; i++) {
+    // One initial attempt + `retries` retries on contention, matching p-retry's
+    // attempt accounting (total attempts = retries + 1). The fixed `retryDelay`
+    // becomes the base delay, now grown with exponential backoff + jitter to
+    // avoid a thundering herd when many clients contend for the same lock.
+    const attempt = async (): Promise<string> => {
       // SET NX with TTL
       const result = await redis.set(this.key(lockKey), lockId, {
         nx: true,
@@ -44,12 +60,33 @@ export class DistributedLock {
         return lockId;
       }
 
-      if (i < retries) {
-        await new Promise((resolve) => setTimeout(resolve, retryDelay));
-      }
-    }
+      // Contended — signal p-retry to back off and retry.
+      throw new LockNotAcquiredError();
+    };
 
-    return null;
+    try {
+      return await pRetry(attempt, {
+        retries,
+        factor: 2,
+        minTimeout: retryDelay,
+        // Cap backoff growth so a large `retries` cannot push a single wait
+        // into the multi-second range; jitter spreads contenders out.
+        maxTimeout: Math.max(retryDelay, retryDelay * 2 ** 5),
+        randomize: true,
+        // A SET NX failure is the only retryable condition; let genuine Redis
+        // errors fail fast and propagate (matching the original loop, which
+        // never caught them).
+        shouldRetry: ({ error }) => error instanceof LockNotAcquiredError,
+      });
+    } catch (error) {
+      // Lock stayed contended through every attempt — preserve the original
+      // contract of returning null on exhaustion. Any other error (e.g. a real
+      // Redis failure) propagates, exactly as before.
+      if (error instanceof LockNotAcquiredError) {
+        return null;
+      }
+      throw error;
+    }
   }
 
   /**

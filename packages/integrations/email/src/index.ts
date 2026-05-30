@@ -204,9 +204,19 @@ export async function sendWelcomeEmail(opts: {
 export async function sendOrderConfirmationEmail(opts: {
   to: string;
   orderId: string;
+  /** Order total in minor units (integer cents). */
   totalAmount: number;
+  /** ISO 4217 currency code (default "USD"). */
+  currency?: string;
+  /** BCP 47 locale tag (default "en-US"). */
+  locale?: string;
   items: Array<{ productId: string; quantity: number | string }>;
 }): Promise<SendResult> {
+  const formattedTotal = new Intl.NumberFormat(opts.locale ?? "en-US", {
+    style: "currency",
+    currency: opts.currency ?? "USD",
+  }).format(opts.totalAmount / 100);
+
   const itemsHtml = opts.items
     .map(
       (item) =>
@@ -221,8 +231,8 @@ export async function sendOrderConfirmationEmail(opts: {
     `
     <h2 style="margin:0 0 16px;font-size:22px;color:#0f172a;">Order Confirmed!</h2>
     <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
-      Thank you for your order <strong>#${opts.orderId}</strong>. We've received your payment of 
-      <strong>$${(opts.totalAmount / 100).toFixed(2)}</strong> and your order is now being processed.
+      Thank you for your order <strong>#${opts.orderId}</strong>. We've received your payment of
+      <strong>${formattedTotal}</strong> and your order is now being processed.
     </p>
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;border-collapse:collapse;">
       ${itemsHtml}

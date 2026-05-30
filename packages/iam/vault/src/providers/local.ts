@@ -17,6 +17,9 @@ import type { EncryptedSecret, EncryptOptions, LocalProviderConfig, VaultProvide
 // 5. Store encrypted DEK + encrypted secret
 // =============================================================================
 
+/** Minimum master-key length in bytes (AES-256 key size). */
+const MASTER_KEY_MIN_BYTES = 32;
+
 export class LocalProvider implements VaultProvider {
   readonly name = "local" as const;
 
@@ -33,10 +36,34 @@ export class LocalProvider implements VaultProvider {
     }
 
     this.masterKey = Buffer.from(masterKeyStr, "utf-8");
+
+    // Entropy floor: the master key seeds HKDF for every derived KEK. A key
+    // shorter than the AES-256 key length (32 bytes) cannot carry 256 bits of
+    // entropy and dangerously weakens every secret. Fail fast at startup rather
+    // than silently encrypting under a weak key.
+    if (this.masterKey.length < MASTER_KEY_MIN_BYTES) {
+      throw new Error(
+        `Vault master key too short: ${this.masterKey.length} bytes, need at least ${MASTER_KEY_MIN_BYTES}. ` +
+          "Set VAULT_LOCAL_MASTER_KEY / VAULT_MASTER_KEY to a value with at least 32 bytes of entropy.",
+      );
+    }
+
     this.salt = config.salt ?? Buffer.from("nebutra-vault", "utf-8");
     this.keyVersion = config.keyVersion ?? 1;
 
     logger.debug("[vault:local] Initialized", { keyVersion: this.keyVersion });
+  }
+
+  /**
+   * Build the Additional Authenticated Data for a v2 envelope.
+   *
+   * Binds the tenant and KEK version into the GCM tag so a ciphertext cannot be
+   * replayed under a different tenant or key version. Stable, deterministic
+   * encoding — the same inputs must produce identical bytes on encrypt and
+   * decrypt. A missing tenant is encoded distinctly from an empty-string tenant.
+   */
+  private buildAad(tenantId: string | undefined, keyVersion: number): Buffer {
+    return Buffer.from(`v2|tenant=${tenantId ?? ""}|kek=${keyVersion}`, "utf-8");
   }
 
   /**
@@ -63,11 +90,16 @@ export class LocalProvider implements VaultProvider {
       // 2. Generate random DEK
       const plainDek = generateKey(32);
 
-      // 3. Encrypt DEK with KEK
-      const dekEncryptResult = aesEncrypt(plainDek, kek);
+      // New writes use the v2 envelope: bind tenantId + keyVersion as AAD on
+      // both GCM layers so a ciphertext (and its wrapped DEK) cannot be replayed
+      // under a different tenant or key version.
+      const aad = this.buildAad(options?.tenantId, this.keyVersion);
 
-      // 4. Encrypt secret with plaintext DEK
-      const secretEncryptResult = aesEncrypt(plaintext, plainDek);
+      // 3. Encrypt DEK with KEK (AAD-bound)
+      const dekEncryptResult = aesEncrypt(plainDek, kek, aad);
+
+      // 4. Encrypt secret with plaintext DEK (AAD-bound)
+      const secretEncryptResult = aesEncrypt(plaintext, plainDek, aad);
 
       // Construct encrypted secret
       const encrypted: EncryptedSecret = {
@@ -79,6 +111,7 @@ export class LocalProvider implements VaultProvider {
         dekIv: toBase64(dekEncryptResult.iv),
         dekAuthTag: toBase64(dekEncryptResult.authTag),
         keyVersion: this.keyVersion,
+        envelopeVersion: 2,
         algorithm: "aes-256-gcm",
         ...(options?.tenantId !== undefined ? { tenantId: options.tenantId } : {}),
         ...(options?.metadata !== undefined ? { metadata: options.metadata } : {}),
@@ -125,14 +158,28 @@ export class LocalProvider implements VaultProvider {
       const info = Buffer.from(`nebutra-vault-kek-v${encrypted.keyVersion}`, "utf-8");
       const kek = await deriveKey(this.masterKey, this.salt, info);
 
+      // Version dispatch: v2 envelopes bind tenantId + keyVersion as AAD; legacy
+      // envelopes (absent envelopeVersion) carry no AAD and MUST decrypt via the
+      // exact original no-AAD path. The AAD is recomputed from the values stored
+      // in the envelope itself (what `encrypt` wrote), not the caller's options.
+      const aad =
+        encrypted.envelopeVersion === 2
+          ? this.buildAad(encrypted.tenantId, encrypted.keyVersion)
+          : undefined;
+
       // 2. Decrypt DEK with KEK
       // For backward compatibility, support secrets without dekIv/dekAuthTag
       let plainDek: Buffer;
       if (encrypted.dekIv && encrypted.dekAuthTag) {
-        plainDek = aesDecrypt(fromBase64(encrypted.encryptedDek), kek, {
-          iv: fromBase64(encrypted.dekIv),
-          authTag: fromBase64(encrypted.dekAuthTag),
-        });
+        plainDek = aesDecrypt(
+          fromBase64(encrypted.encryptedDek),
+          kek,
+          {
+            iv: fromBase64(encrypted.dekIv),
+            authTag: fromBase64(encrypted.dekAuthTag),
+          },
+          aad,
+        );
       } else {
         // Fallback for older secrets — this shouldn't happen in production
         throw new Error(
@@ -141,10 +188,15 @@ export class LocalProvider implements VaultProvider {
       }
 
       // 3. Decrypt secret with DEK
-      const plaintext = aesDecrypt(fromBase64(encrypted.ciphertext), plainDek, {
-        iv: fromBase64(encrypted.iv),
-        authTag: fromBase64(encrypted.authTag),
-      });
+      const plaintext = aesDecrypt(
+        fromBase64(encrypted.ciphertext),
+        plainDek,
+        {
+          iv: fromBase64(encrypted.iv),
+          authTag: fromBase64(encrypted.authTag),
+        },
+        aad,
+      );
 
       logger.debug("[vault:local] Secret decrypted", {
         id: encrypted.id,

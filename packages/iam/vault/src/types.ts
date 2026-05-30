@@ -43,6 +43,19 @@ export const EncryptedSecretSchema = z.object({
   /** KEK version or rotation counter */
   keyVersion: z.number().int().min(1),
 
+  /**
+   * Envelope format version.
+   *
+   * Controls how the GCM layers are authenticated:
+   *   - absent / `1` — legacy envelope, NO Additional Authenticated Data (AAD).
+   *     Decrypted with the original no-AAD path; existing stored secrets MUST
+   *     remain decryptable, so this field is optional and never required.
+   *   - `2` — AAD-bound envelope. Both the DEK-wrap and the secret GCM layers
+   *     bind `tenantId` + `keyVersion` as AAD, so ciphertext cannot be replayed
+   *     across tenants or key versions. Only new writes use this.
+   */
+  envelopeVersion: z.literal(2).optional(),
+
   /** Encryption algorithm identifier */
   algorithm: z.literal("aes-256-gcm"),
 

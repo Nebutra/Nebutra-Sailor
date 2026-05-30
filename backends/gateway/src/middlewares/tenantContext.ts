@@ -95,9 +95,17 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   }
 
   if (serviceToken) {
-    // S2S call with explicit service token — verify HMAC before trusting headers
+    // S2S call with explicit service token — verify the signed JWT before
+    // trusting headers. `verifyServiceToken` is async (jose-based), so it MUST
+    // be awaited — a bare Promise is always truthy and would bypass auth.
     if (
-      verifyServiceToken(serviceToken, headerUserId, headerOrganizationId, headerRole, headerPlan)
+      await verifyServiceToken(
+        serviceToken,
+        headerUserId,
+        headerOrganizationId,
+        headerRole,
+        headerPlan,
+      )
     ) {
       if (headerUserId) tenant.userId = headerUserId;
       if (headerOrganizationId) tenant.organizationId = headerOrganizationId;

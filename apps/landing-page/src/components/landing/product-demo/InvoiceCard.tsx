@@ -1,9 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export function InvoiceCard() {
+  const shouldReduceMotion = useReducedMotion();
   const [status, setStatus] = useState<"pending" | "paid">("pending");
 
   useEffect(() => {
@@ -15,9 +16,15 @@ export function InvoiceCard() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, rotateX: 10 }}
+      initial={
+        shouldReduceMotion ? { opacity: 1, y: 0, rotateX: 0 } : { opacity: 0, y: 20, rotateX: 10 }
+      }
       animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      transition={{ delay: 2.2, duration: 0.8, type: "spring", bounce: 0.4 }}
+      transition={
+        shouldReduceMotion
+          ? { duration: 0 }
+          : { delay: 2.2, duration: 0.8, type: "spring", bounce: 0.4 }
+      }
       className="relative w-full max-w-sm mx-auto rounded-[var(--radius-card)] bg-white/90 dark:bg-[var(--neutral-2)]/90 border border-[var(--neutral-6)] backdrop-blur-xl p-5"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
@@ -80,9 +87,13 @@ export function InvoiceCard() {
           >
             <motion.span
               key={status}
-              initial={{ opacity: 0, y: 10 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 300, damping: 20 }
+              }
               className="text-[10px] font-bold tracking-widest uppercase flex items-center gap-1.5"
             >
               {status === "paid" && (
@@ -98,9 +109,11 @@ export function InvoiceCard() {
                   focusable="false"
                 >
                   <motion.polyline
-                    initial={{ pathLength: 0 }}
+                    initial={shouldReduceMotion ? { pathLength: 1 } : { pathLength: 0 }}
                     animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.5, delay: 0.1 }}
+                    transition={
+                      shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.1 }
+                    }
                     points="20 6 9 17 4 12"
                   />
                 </svg>

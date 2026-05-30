@@ -42,7 +42,7 @@ async function gatewayFetch(
     const tokenContext: ServiceTokenContext = { organizationId: ctx.tenantId };
     if (ctx.userId) tokenContext.userId = ctx.userId;
 
-    serviceToken = signServiceToken(tokenContext, SERVICE_SECRET);
+    serviceToken = await signServiceToken(tokenContext, SERVICE_SECRET);
     if (ctx.userId) headers["x-user-id"] = ctx.userId;
     headers["x-organization-id"] = ctx.tenantId;
   }
