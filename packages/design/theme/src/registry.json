@@ -162,6 +162,2342 @@
         ],
         "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
       }
+    },
+    {
+      "id": "crimson-light-vivid",
+      "name": "Crimson Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-muted",
+      "name": "Cyan Light Muted",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/cyan-light-muted.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-muted",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-muted.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-vivid",
+      "name": "Cyan Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/cyan-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "amber-light-vivid",
+      "name": "Amber Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Amber primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/amber-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add amber-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/amber-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-muted",
+      "name": "Crimson Dark Muted",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-muted.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-muted",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-muted.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-vivid-2",
+      "name": "Cyan Light Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/cyan-light-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-muted-2",
+      "name": "Crimson Dark Muted 2",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-muted-2.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-muted-2",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-muted-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted",
+      "name": "Crimson Light Muted",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "rose-light-vivid",
+      "name": "Rose Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/rose-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add rose-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/rose-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-2",
+      "name": "Crimson Light Muted 2",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-2.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-2",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "gold-dark-vivid",
+      "name": "Gold Dark Vivid",
+      "category": "community",
+      "mood": "Community theme — Gold primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/gold-dark-vivid.json",
+      "install": {
+        "command": "nebutra theme add gold-dark-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/gold-dark-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "azure-light-muted",
+      "name": "Azure Light Muted",
+      "category": "community",
+      "mood": "Community theme — Azure primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/azure-light-muted.json",
+      "install": {
+        "command": "nebutra theme add azure-light-muted",
+        "registryUrl": "https://ui.nebutra.com/themes/azure-light-muted.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-vivid-3",
+      "name": "Cyan Light Vivid 3",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/cyan-light-vivid-3.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-vivid-3",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-vivid-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "azure-dark-vivid",
+      "name": "Azure Dark Vivid",
+      "category": "community",
+      "mood": "Community theme — Azure primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/azure-dark-vivid.json",
+      "install": {
+        "command": "nebutra theme add azure-dark-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/azure-dark-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "rose-light-vivid-2",
+      "name": "Rose Light Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/rose-light-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add rose-light-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/rose-light-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-vivid-2",
+      "name": "Crimson Light Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-3",
+      "name": "Crimson Light Muted 3",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-3.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-3",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-4",
+      "name": "Crimson Light Muted 4",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-4.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-4",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-4.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-vivid",
+      "name": "Crimson Dark Vivid",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-vivid.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-5",
+      "name": "Crimson Light Muted 5",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-5.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-5",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-5.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-muted-3",
+      "name": "Crimson Dark Muted 3",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-muted-3.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-muted-3",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-muted-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-muted-4",
+      "name": "Crimson Dark Muted 4",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-muted-4.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-muted-4",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-muted-4.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-vivid-4",
+      "name": "Cyan Light Vivid 4",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/cyan-light-vivid-4.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-vivid-4",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-vivid-4.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-vivid-5",
+      "name": "Cyan Light Vivid 5",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/cyan-light-vivid-5.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-vivid-5",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-vivid-5.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-6",
+      "name": "Crimson Light Muted 6",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-6.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-6",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-6.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "indigo-dim-vivid",
+      "name": "Indigo Dim Vivid",
+      "category": "community",
+      "mood": "Community theme — Indigo primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/indigo-dim-vivid.json",
+      "install": {
+        "command": "nebutra theme add indigo-dim-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/indigo-dim-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "amber-light-vivid-2",
+      "name": "Amber Light Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Amber primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/amber-light-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add amber-light-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/amber-light-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "azure-dark-vivid-2",
+      "name": "Azure Dark Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Azure primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/azure-dark-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add azure-dark-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/azure-dark-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-vivid-6",
+      "name": "Cyan Light Vivid 6",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/cyan-light-vivid-6.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-vivid-6",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-vivid-6.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-vivid-2",
+      "name": "Crimson Dark Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-vivid-7",
+      "name": "Cyan Light Vivid 7",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/cyan-light-vivid-7.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-vivid-7",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-vivid-7.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-7",
+      "name": "Crimson Light Muted 7",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-7.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-7",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-7.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-8",
+      "name": "Crimson Light Muted 8",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-8.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-8",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-8.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "azure-light-muted-2",
+      "name": "Azure Light Muted 2",
+      "category": "community",
+      "mood": "Community theme — Azure primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/azure-light-muted-2.json",
+      "install": {
+        "command": "nebutra theme add azure-light-muted-2",
+        "registryUrl": "https://ui.nebutra.com/themes/azure-light-muted-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "rose-light-vivid-3",
+      "name": "Rose Light Vivid 3",
+      "category": "community",
+      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/rose-light-vivid-3.json",
+      "install": {
+        "command": "nebutra theme add rose-light-vivid-3",
+        "registryUrl": "https://ui.nebutra.com/themes/rose-light-vivid-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "emerald-light-vivid",
+      "name": "Emerald Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Emerald primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/emerald-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add emerald-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/emerald-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-9",
+      "name": "Crimson Light Muted 9",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-9.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-9",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-9.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "azure-light-vivid",
+      "name": "Azure Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Azure primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/azure-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add azure-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/azure-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "lime-light-vivid",
+      "name": "Lime Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Lime primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/lime-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add lime-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/lime-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-10",
+      "name": "Crimson Light Muted 10",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-10.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-10",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-10.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-11",
+      "name": "Crimson Light Muted 11",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-11.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-11",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-11.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-vivid-3",
+      "name": "Crimson Light Vivid 3",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-vivid-3.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-vivid-3",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-vivid-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-light-vivid-8",
+      "name": "Cyan Light Vivid 8",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/cyan-light-vivid-8.json",
+      "install": {
+        "command": "nebutra theme add cyan-light-vivid-8",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-light-vivid-8.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "rose-light-vivid-4",
+      "name": "Rose Light Vivid 4",
+      "category": "community",
+      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/rose-light-vivid-4.json",
+      "install": {
+        "command": "nebutra theme add rose-light-vivid-4",
+        "registryUrl": "https://ui.nebutra.com/themes/rose-light-vivid-4.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-12",
+      "name": "Crimson Light Muted 12",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-12.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-12",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-12.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "amber-light-vivid-3",
+      "name": "Amber Light Vivid 3",
+      "category": "community",
+      "mood": "Community theme — Amber primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/amber-light-vivid-3.json",
+      "install": {
+        "command": "nebutra theme add amber-light-vivid-3",
+        "registryUrl": "https://ui.nebutra.com/themes/amber-light-vivid-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-vivid-4",
+      "name": "Crimson Light Vivid 4",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-vivid-4.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-vivid-4",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-vivid-4.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-dark-muted",
+      "name": "Cyan Dark Muted",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/cyan-dark-muted.json",
+      "install": {
+        "command": "nebutra theme add cyan-dark-muted",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-dark-muted.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "azure-light-vivid-2",
+      "name": "Azure Light Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Azure primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/azure-light-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add azure-light-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/azure-light-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-muted-5",
+      "name": "Crimson Dark Muted 5",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-muted-5.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-muted-5",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-muted-5.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-vivid-3",
+      "name": "Crimson Dark Vivid 3",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-vivid-3.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-vivid-3",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-vivid-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "indigo-light",
+      "name": "Indigo Light",
+      "category": "community",
+      "mood": "Community theme — Indigo primary, balanced chroma, dark surface",
+      "tokenPath": "tokens/themes/indigo-light.json",
+      "install": {
+        "command": "nebutra theme add indigo-light",
+        "registryUrl": "https://ui.nebutra.com/themes/indigo-light.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-13",
+      "name": "Crimson Light Muted 13",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-13.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-13",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-13.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "violet-light-vivid",
+      "name": "Violet Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Violet primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/violet-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add violet-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/violet-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-14",
+      "name": "Crimson Light Muted 14",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-14.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-14",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-14.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "emerald-dark-vivid",
+      "name": "Emerald Dark Vivid",
+      "category": "community",
+      "mood": "Community theme — Emerald primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/emerald-dark-vivid.json",
+      "install": {
+        "command": "nebutra theme add emerald-dark-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/emerald-dark-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "emerald-dark-vivid-2",
+      "name": "Emerald Dark Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Emerald primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/emerald-dark-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add emerald-dark-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/emerald-dark-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "azure-light-vivid-3",
+      "name": "Azure Light Vivid 3",
+      "category": "community",
+      "mood": "Community theme — Azure primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/azure-light-vivid-3.json",
+      "install": {
+        "command": "nebutra theme add azure-light-vivid-3",
+        "registryUrl": "https://ui.nebutra.com/themes/azure-light-vivid-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "emerald-light-vivid-2",
+      "name": "Emerald Light Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Emerald primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/emerald-light-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add emerald-light-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/emerald-light-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "azure-light",
+      "name": "Azure Light",
+      "category": "community",
+      "mood": "Community theme — Azure primary, balanced chroma, light surface",
+      "tokenPath": "tokens/themes/azure-light.json",
+      "install": {
+        "command": "nebutra theme add azure-light",
+        "registryUrl": "https://ui.nebutra.com/themes/azure-light.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "cyan-dim-vivid",
+      "name": "Cyan Dim Vivid",
+      "category": "community",
+      "mood": "Community theme — Cyan primary, vivid chroma, mid-tone surface",
+      "tokenPath": "tokens/themes/cyan-dim-vivid.json",
+      "install": {
+        "command": "nebutra theme add cyan-dim-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/cyan-dim-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "teal-light-vivid",
+      "name": "Teal Light Vivid",
+      "category": "community",
+      "mood": "Community theme — Teal primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/teal-light-vivid.json",
+      "install": {
+        "command": "nebutra theme add teal-light-vivid",
+        "registryUrl": "https://ui.nebutra.com/themes/teal-light-vivid.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-15",
+      "name": "Crimson Light Muted 15",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-15.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-15",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-15.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-16",
+      "name": "Crimson Light Muted 16",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-16.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-16",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-16.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-17",
+      "name": "Crimson Light Muted 17",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-17.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-17",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-17.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-vivid-5",
+      "name": "Crimson Light Vivid 5",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-vivid-5.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-vivid-5",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-vivid-5.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "emerald-dark-vivid-3",
+      "name": "Emerald Dark Vivid 3",
+      "category": "community",
+      "mood": "Community theme — Emerald primary, vivid chroma, dark surface",
+      "tokenPath": "tokens/themes/emerald-dark-vivid-3.json",
+      "install": {
+        "command": "nebutra theme add emerald-dark-vivid-3",
+        "registryUrl": "https://ui.nebutra.com/themes/emerald-dark-vivid-3.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "rose-dark-muted",
+      "name": "Rose Dark Muted",
+      "category": "community",
+      "mood": "Community theme — Rose primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/rose-dark-muted.json",
+      "install": {
+        "command": "nebutra theme add rose-dark-muted",
+        "registryUrl": "https://ui.nebutra.com/themes/rose-dark-muted.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-18",
+      "name": "Crimson Light Muted 18",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-18.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-18",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-18.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-light-muted-19",
+      "name": "Crimson Light Muted 19",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, light surface",
+      "tokenPath": "tokens/themes/crimson-light-muted-19.json",
+      "install": {
+        "command": "nebutra theme add crimson-light-muted-19",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-light-muted-19.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "lime-light-vivid-2",
+      "name": "Lime Light Vivid 2",
+      "category": "community",
+      "mood": "Community theme — Lime primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/lime-light-vivid-2.json",
+      "install": {
+        "command": "nebutra theme add lime-light-vivid-2",
+        "registryUrl": "https://ui.nebutra.com/themes/lime-light-vivid-2.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "crimson-dark-muted-6",
+      "name": "Crimson Dark Muted 6",
+      "category": "community",
+      "mood": "Community theme — Crimson primary, low-saturation chroma, dark surface",
+      "tokenPath": "tokens/themes/crimson-dark-muted-6.json",
+      "install": {
+        "command": "nebutra theme add crimson-dark-muted-6",
+        "registryUrl": "https://ui.nebutra.com/themes/crimson-dark-muted-6.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
+    },
+    {
+      "id": "rose-light-vivid-5",
+      "name": "Rose Light Vivid 5",
+      "category": "community",
+      "mood": "Community theme — Rose primary, vivid chroma, light surface",
+      "tokenPath": "tokens/themes/rose-light-vivid-5.json",
+      "install": {
+        "command": "nebutra theme add rose-light-vivid-5",
+        "registryUrl": "https://ui.nebutra.com/themes/rose-light-vivid-5.json"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "figmaVariables": true,
+        "shadcnRegistry": true
+      },
+      "governance": {
+        "wcag": "AA",
+        "requiredTokens": [
+          "color.primary",
+          "color.primary-foreground",
+          "color.background",
+          "color.foreground",
+          "color.card",
+          "color.border",
+          "color.ring",
+          "radius.md",
+          "fontFamily.sans"
+        ],
+        "visualSuites": ["forms", "pricing", "dashboard", "ai-chat", "charts"]
+      }
     }
   ]
 }

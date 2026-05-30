@@ -11,7 +11,10 @@ function getTokenAtPath(tokens: Record<string, unknown>, tokenPath: string): unk
 
 describe("@nebutra/theme registry contract", () => {
   it("exports deterministic theme ids from the registry", () => {
-    expect(THEME_IDS).toEqual(["nebutra", "dark-dense", "minimal", "vibrant", "ocean"]);
+    // 5 built-in + 73 community = 78 total
+    expect(THEME_IDS.length).toBe(78);
+    // Built-in themes must remain first, in their canonical order
+    expect(THEME_IDS.slice(0, 5)).toEqual(["nebutra", "dark-dense", "minimal", "vibrant", "ocean"]);
   });
 
   it("exposes install and governance metadata for each built-in theme", () => {

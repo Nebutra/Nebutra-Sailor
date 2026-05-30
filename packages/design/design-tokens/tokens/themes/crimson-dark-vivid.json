@@ -1,0 +1,165 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Community theme — Crimson primary, vivid chroma, dark surface",
+  "theme": "crimson-dark-vivid",
+  "color": {
+    "primary": {
+      "$value": "#da291c",
+      "$type": "color"
+    },
+    "primary-foreground": {
+      "$value": "oklch(1 0 0)",
+      "$type": "color"
+    },
+    "secondary": {
+      "$value": "oklch(0.564 0.000 89.9)",
+      "$type": "color"
+    },
+    "secondary-foreground": {
+      "$value": "oklch(1 0 0)",
+      "$type": "color"
+    },
+    "accent": {
+      "$value": "#b01e0a",
+      "$type": "color"
+    },
+    "accent-foreground": {
+      "$value": "oklch(1 0 0)",
+      "$type": "color"
+    },
+    "background": {
+      "$value": "#181818",
+      "$type": "color"
+    },
+    "foreground": {
+      "$value": "#ffffff",
+      "$type": "color"
+    },
+    "card": {
+      "$value": "oklch(0.488 0.000 89.9)",
+      "$type": "color"
+    },
+    "card-foreground": {
+      "$value": "#ffffff",
+      "$type": "color"
+    },
+    "popover": {
+      "$value": "oklch(0.499 0.000 89.9)",
+      "$type": "color"
+    },
+    "popover-foreground": {
+      "$value": "#ffffff",
+      "$type": "color"
+    },
+    "muted": {
+      "$value": "oklch(0.520 0.000 89.9)",
+      "$type": "color"
+    },
+    "muted-foreground": {
+      "$value": "oklch(0.809 0.000 89.9)",
+      "$type": "color"
+    },
+    "border": {
+      "$value": "oklch(0.575 0.000 89.9)",
+      "$type": "color"
+    },
+    "input": {
+      "$value": "oklch(0.553 0.000 89.9)",
+      "$type": "color"
+    },
+    "ring": {
+      "$value": "#da291c",
+      "$type": "color"
+    },
+    "primary-hover": {
+      "$value": "color-mix(in oklch, #da291c, white 12%)",
+      "$type": "color"
+    },
+    "primary-active": {
+      "$value": "color-mix(in oklch, #da291c, black 10%)",
+      "$type": "color"
+    },
+    "brand-gradient": {
+      "$value": "linear-gradient(135deg, #da291c 0%, #b01e0a 100%)",
+      "$type": "color"
+    },
+    "destructive": {
+      "$value": "oklch(0.577 0.245 27.3)",
+      "$type": "color"
+    },
+    "destructive-foreground": {
+      "$value": "oklch(1 0 0)",
+      "$type": "color"
+    },
+    "success": {
+      "$value": "oklch(0.723 0.19 149.6)",
+      "$type": "color"
+    },
+    "success-foreground": {
+      "$value": "oklch(1 0 0)",
+      "$type": "color"
+    },
+    "warning": {
+      "$value": "oklch(0.795 0.184 86.0)",
+      "$type": "color"
+    },
+    "warning-foreground": {
+      "$value": "oklch(0.141 0.005 285.9)",
+      "$type": "color"
+    },
+    "info": {
+      "$value": "oklch(0.588 0.158 241.9)",
+      "$type": "color"
+    },
+    "info-foreground": {
+      "$value": "oklch(1 0 0)",
+      "$type": "color"
+    }
+  },
+  "radius": {
+    "sm": {
+      "$value": "4px",
+      "$type": "dimension"
+    },
+    "md": {
+      "$value": "6px",
+      "$type": "dimension"
+    },
+    "lg": {
+      "$value": "8px",
+      "$type": "dimension"
+    },
+    "xl": {
+      "$value": "12px",
+      "$type": "dimension"
+    },
+    "full": {
+      "$value": "9999px",
+      "$type": "dimension"
+    }
+  },
+  "fontFamily": {
+    "sans": {
+      "$value": "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif",
+      "$type": "fontFamily"
+    }
+  },
+  "shadow": {
+    "sm": {
+      "$value": "0 1px 2px 0 rgb(218 41 28 / 0.08)",
+      "$type": "shadow"
+    },
+    "md": {
+      "$value": "0 4px 6px -1px rgb(218 41 28 / 0.12)",
+      "$type": "shadow"
+    },
+    "lg": {
+      "$value": "0 10px 15px -3px rgb(218 41 28 / 0.12)",
+      "$type": "shadow"
+    },
+    "xl": {
+      "$value": "0 20px 25px -5px rgb(218 41 28 / 0.12)",
+      "$type": "shadow"
+    }
+  }
+}
