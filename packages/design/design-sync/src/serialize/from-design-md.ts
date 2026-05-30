@@ -3,11 +3,12 @@
  *
  * Parse approach: programmatic via `lint()` from `@google/design.md/linter`.
  * The `lint()` function parses the DESIGN.md content synchronously and returns
- * a `DesignSystemState` with typed Maps for colors, rounded, and typography.
- * We reshape that state into our DTCG naming convention:
- *   - colors.<x>  → color.<x>   ($type: "color",      $value: hex string)
- *   - rounded.<x> → radius.<x>  ($type: "dimension",  $value: "<n><unit>" string)
- *   - body font   → fontFamily.sans ($type: "fontFamily", $value: string)
+ * a `DesignSystemState` with typed Maps for colors, rounded, spacing, and
+ * typography. We reshape that state into our DTCG naming convention:
+ *   - colors.<x>   → color.<x>    ($type: "color",      $value: hex string)
+ *   - rounded.<x>  → radius.<x>   ($type: "dimension",  $value: "<n><unit>" string)
+ *   - spacing.<x>  → spacing.<x>  ($type: "dimension",  $value: "<n><unit>" string)
+ *   - body font    → fontFamily.sans ($type: "fontFamily", $value: string)
  *
  * NEVER import `@google/design.md` (main entry — auto-runs CLI). Only the
  * `@google/design.md/linter` subpath export is used here.
@@ -57,6 +58,11 @@ const REQUIRED_TOKEN_PATHS = [
   "fontFamily.sans",
 ] as const;
 
+// ─── Prose-only section headings (not emittable as DTCG leaves) ───────────────
+
+/** Lowercase heading names that are prose/reference-only and cannot map to DTCG leaves. */
+const PROSE_ONLY_HEADINGS = new Set(["elevation", "components", "shapes"]);
+
 // ─── Slug helper ──────────────────────────────────────────────────────────────
 
 /**
@@ -89,6 +95,16 @@ function hasToken(tree: DesignTokenTree, dotPath: string): boolean {
   return node !== null && typeof node === "object" && "$value" in (node as object);
 }
 
+// ─── DTCG leaf-group builder ──────────────────────────────────────────────────
+
+/**
+ * Cast a plain record of typed leaf objects to `DesignTokenTree`.
+ * Having the unsafe cast in one helper keeps the top-level code clean.
+ */
+function leafGroup(entries: Record<string, { $value: string; $type: string }>): DesignTokenTree {
+  return entries as unknown as DesignTokenTree;
+}
+
 // ─── Main export ──────────────────────────────────────────────────────────────
 
 /**
@@ -100,15 +116,23 @@ function hasToken(tree: DesignTokenTree, dotPath: string): boolean {
  * @param content - Raw DESIGN.md content (markdown + YAML front matter).
  * @param options - Optional: `brandName` to override the slug.
  * @returns `ImportResult` containing the token set and a diagnostic report.
- * @throws If the produced DTCG tree is invalid (invalid leaves). Empty input
- *         produces an empty-but-valid tree and does NOT throw.
+ * @throws If `@google/design.md` fails to parse the content, or if the produced
+ *         DTCG tree is invalid (invalid leaves). Empty input produces an
+ *         empty-but-valid tree and does NOT throw.
  */
 export function importFromDesignMd(
   content: string,
   options?: ImportFromDesignMdOptions,
 ): ImportResult {
   // ── 1. Parse via @google/design.md/linter ──────────────────────────────────
-  const lintReport = lint(content);
+  let lintReport;
+  try {
+    lintReport = lint(content);
+  } catch (err) {
+    throw new Error(
+      `[from-design-md] @google/design.md failed to parse content: ${(err as Error)?.message ?? String(err)}`,
+    );
+  }
   const state = lintReport.designSystem;
 
   // ── 2. Derive slug / name ──────────────────────────────────────────────────
@@ -125,43 +149,50 @@ export function importFromDesignMd(
 
   // 3a. colors.<x> → color.<x> ($type: "color", $value: hex string)
   if (state.colors.size > 0) {
-    const colorGroup: Record<string, { $value: string; $type: "color" }> = {};
+    const colorEntries: Record<string, { $value: string; $type: "color" }> = {};
     for (const [key, resolved] of state.colors.entries()) {
-      colorGroup[key] = {
-        $value: resolved.hex,
-        $type: "color",
-      };
+      colorEntries[key] = { $value: resolved.hex, $type: "color" };
     }
-    tokens["color"] = colorGroup as unknown as DesignTokenTree;
+    tokens["color"] = leafGroup(colorEntries);
   }
 
   // 3b. rounded.<x> → radius.<x> ($type: "dimension", $value: "<n><unit>" string)
   if (state.rounded.size > 0) {
-    const radiusGroup: Record<string, { $value: string; $type: "dimension" }> = {};
+    const radiusEntries: Record<string, { $value: string; $type: "dimension" }> = {};
     for (const [key, resolved] of state.rounded.entries()) {
-      radiusGroup[key] = {
+      radiusEntries[key] = {
         $value: `${resolved.value}${resolved.unit}`,
         $type: "dimension",
       };
     }
-    tokens["radius"] = radiusGroup as unknown as DesignTokenTree;
+    tokens["radius"] = leafGroup(radiusEntries);
   }
 
-  // 3c. typography body/h1 font-family → fontFamily.sans ($type: "fontFamily")
+  // 3c. spacing.<x> → spacing.<x> ($type: "dimension", $value: "<n><unit>" string)
+  if (state.spacing.size > 0) {
+    const spacingEntries: Record<string, { $value: string; $type: "dimension" }> = {};
+    for (const [key, resolved] of state.spacing.entries()) {
+      spacingEntries[key] = {
+        $value: `${resolved.value}${resolved.unit}`,
+        $type: "dimension",
+      };
+    }
+    tokens["spacing"] = leafGroup(spacingEntries);
+  }
+
+  // 3d. typography body/h1 font-family → fontFamily.sans ($type: "fontFamily")
   // @google/design.md 0.2.0 preserves the exact YAML front-matter key (e.g. "body",
   // "body-md", "h1"). Markdown-section typography is NOT parsed into state.typography.
-  // Pick order: "body" → "body-md" → "h1" → first available entry → absent.
+  // Pick order: "body" → "body-md" → "h1" → first available entry with fontFamily defined.
   const FONT_FAMILY_PICK_ORDER = ["body", "body-md", "h1"] as const;
   const pickedTypography =
-    FONT_FAMILY_PICK_ORDER.map((k) => state.typography.get(k)).find(Boolean) ??
-    (state.typography.size > 0 ? [...state.typography.values()][0] : undefined);
+    FONT_FAMILY_PICK_ORDER.map((k) => state.typography.get(k)).find(
+      (t) => t?.fontFamily !== undefined,
+    ) ?? [...state.typography.values()].find((t) => t?.fontFamily !== undefined);
   if (pickedTypography?.fontFamily) {
-    tokens["fontFamily"] = {
-      sans: {
-        $value: pickedTypography.fontFamily,
-        $type: "fontFamily",
-      },
-    } as unknown as DesignTokenTree;
+    tokens["fontFamily"] = leafGroup({
+      sans: { $value: pickedTypography.fontFamily, $type: "fontFamily" },
+    });
   }
 
   // ── 4. Validate DTCG tree ──────────────────────────────────────────────────
@@ -176,10 +207,27 @@ export function importFromDesignMd(
 
   const missingRequired = REQUIRED_TOKEN_PATHS.filter((path) => !hasToken(tokens, path));
 
-  const unmapped: string[] = [
-    "elevation (prose-only — no structured token in DESIGN.md spec)",
-    "components (prose/reference tokens — not imported as DTCG leaves)",
-  ];
+  // Derive unmapped from the top-level (#) headings actually present in this document.
+  // LintReport.sections / documentSections only expose h2-level sub-headings (the
+  // heading field is always an h2 key). The h1 section names (Typography, Elevation,
+  // Components …) are extracted via regex from the raw content — this is
+  // genuinely input-derived and correct for both FULL and SPARSE fixtures.
+  const unmapped: string[] = [];
+  const docSections: string[] = (content.match(/^#\s+(.+)$/gm) ?? []).map((h) =>
+    h.replace(/^#\s+/, ""),
+  );
+
+  for (const heading of docSections) {
+    const lower = heading.toLowerCase();
+    if (PROSE_ONLY_HEADINGS.has(lower)) {
+      const labels: Record<string, string> = {
+        elevation: "elevation (prose-only — no structured token in DESIGN.md spec)",
+        components: "components (prose/reference tokens — not imported as DTCG leaves)",
+        shapes: "shapes (prose-only — no structured token in DESIGN.md spec)",
+      };
+      unmapped.push(labels[lower] ?? `${heading} (prose-only — not imported as DTCG leaves)`);
+    }
+  }
 
   const warnings: string[] = [];
 
