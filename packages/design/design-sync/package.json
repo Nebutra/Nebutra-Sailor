@@ -34,6 +34,10 @@
       "types": "./dist/providers/design-md.d.ts",
       "import": "./dist/providers/design-md.js"
     },
+    "./serialize/from-design-md": {
+      "types": "./dist/serialize/from-design-md.d.ts",
+      "import": "./dist/serialize/from-design-md.js"
+    },
     "./figma": {
       "types": "./dist/providers/figma.d.ts",
       "import": "./dist/providers/figma.js"

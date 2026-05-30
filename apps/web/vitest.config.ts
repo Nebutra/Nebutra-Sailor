@@ -45,6 +45,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
       "server-only": path.resolve(__dirname, "./src/test/server-only.shim.ts"),
       "react-tweet": path.resolve(__dirname, "./src/test/react-tweet.shim.ts"),
+      // design-sync subpath export for the from-design-md serializer.
+      // Points directly at the source so vitest (which inlines @nebutra/*)
+      // can resolve and transform it without requiring a separate build step.
+      "@nebutra/design-sync/serialize/from-design-md": path.resolve(
+        __dirname,
+        "../../packages/design/design-sync/src/serialize/from-design-md.ts",
+      ),
     },
   },
 });

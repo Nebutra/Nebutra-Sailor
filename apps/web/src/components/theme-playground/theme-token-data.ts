@@ -6,7 +6,7 @@ export type ThemeId = ThemeTokenSetId;
 
 type DtcgLeaf = { $value?: string; $type?: string };
 
-type ThemeTokenSet = {
+export type ThemeTokenSet = {
   color?: Record<string, DtcgLeaf | undefined>;
   radius?: Record<string, DtcgLeaf | undefined>;
   fontFamily?: Record<string, DtcgLeaf | undefined>;
@@ -108,8 +108,13 @@ function setVar(target: Record<string, string>, name: string, value: string | un
   if (value) target[name] = value;
 }
 
-export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSProperties {
-  const theme = themeTokenSets[themeId as ThemeId] ?? themeTokenSets.neon;
+/**
+ * Build a CSS-variables style object from an arbitrary ThemeTokenSet.
+ * All surface/brand/radius/font/shadow logic lives here.
+ * Called by getThemePreviewStyle (built-in themes) and the DESIGN.md bridge
+ * (imported themes from Slice B onwards).
+ */
+export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMode): CSSProperties {
   const surfaceFallback = MODE_SURFACE_FALLBACKS[mode];
   const vars: Record<string, string> = { colorScheme: mode };
 
@@ -168,6 +173,13 @@ export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSPrope
   }
 
   return vars as CSSProperties;
+}
+
+export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSProperties {
+  return getPreviewStyleFromTokenSet(
+    themeTokenSets[themeId as ThemeId] ?? themeTokenSets.neon,
+    mode,
+  );
 }
 
 export function getThemeSwatches(themeId: string): string[] {
