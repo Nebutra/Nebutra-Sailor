@@ -106,6 +106,7 @@ export {
   type SidebarNavProps,
   type SidebarNavRenderLinkProps,
   type SidebarNavSection,
+  type SidebarNavSectionAction,
 } from "./sidebar-nav";
 export type {
   TerminalBodyProps,

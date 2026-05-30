@@ -30,6 +30,21 @@ export interface SidebarNavItem {
   /** Nested children — 1 level deep max */
   children?: SidebarNavItem[];
   disabled?: boolean;
+  /** Controlled expansion for parent items (with children). When provided
+   * together with onExpandedChange, the inner Collapsible runs as a
+   * controlled component. Falls back to uncontrolled otherwise. */
+  expanded?: boolean;
+  onExpandedChange?: (next: boolean) => void;
+}
+
+/** A single icon-button action rendered inline-right of the section label,
+ * revealed only on section hover/focus-within. Max 3 per section. */
+export interface SidebarNavSectionAction {
+  id: string;
+  icon: SidebarNavIcon;
+  /** Accessible name (also used as title attribute). */
+  label: string;
+  onClick: () => void;
 }
 
 export interface SidebarNavSection {
@@ -37,6 +52,9 @@ export interface SidebarNavSection {
   /** Group label, e.g. "MiniMax 实验室". Hidden when collapsed. */
   label?: string;
   items: SidebarNavItem[];
+  /** Hover/focus-revealed actions next to the section label. Skipped in
+   * collapsed mode and when empty. Limit to ≤ 3 to keep visual rhythm. */
+  actions?: SidebarNavSectionAction[];
 }
 
 export interface SidebarNavRenderLinkProps {
@@ -247,7 +265,23 @@ function ParentItem({
   renderLink,
 }: ParentItemProps): React.ReactElement {
   const hasActiveChild = item.children?.some((c) => c.isActive === true) ?? false;
-  const [open, setOpen] = React.useState<boolean>(item.isActive === true || hasActiveChild);
+  const [uncontrolledOpen, setUncontrolledOpen] = React.useState<boolean>(
+    item.isActive === true || hasActiveChild,
+  );
+  // Controlled when BOTH expanded + onExpandedChange are provided; otherwise
+  // fall back to the internal uncontrolled state.
+  const isControlled = item.expanded !== undefined && item.onExpandedChange !== undefined;
+  const open = isControlled ? (item.expanded as boolean) : uncontrolledOpen;
+  const setOpen = React.useCallback(
+    (next: boolean) => {
+      if (isControlled) {
+        item.onExpandedChange?.(next);
+      } else {
+        setUncontrolledOpen(next);
+      }
+    },
+    [isControlled, item.onExpandedChange],
+  );
 
   // If collapsed, render parent as a flat icon-only item with tooltip (no nested expansion).
   if (collapsed) {
@@ -325,39 +359,66 @@ export function SidebarNav({
         {header ? <div className="shrink-0">{header}</div> : null}
 
         <div className="flex-1 space-y-4 overflow-y-auto">
-          {sections.map((section) => (
-            <div key={section.id}>
-              {section.label && !collapsed ? (
-                <div className="mb-1.5 px-2.5 text-[10px] font-semibold uppercase text-sidebar-foreground/45">
-                  {section.label}
-                </div>
-              ) : null}
-              <ul className="flex flex-col gap-0.5">
-                {section.items.map((item) => {
-                  const hasChildren = Array.isArray(item.children) && item.children.length > 0;
-                  return (
-                    <li key={item.id}>
-                      {hasChildren ? (
-                        <ParentItem
-                          item={item}
-                          collapsed={collapsed}
-                          itemClassName={itemClassName}
-                          renderLink={renderLink}
-                        />
-                      ) : (
-                        <InteractiveItem
-                          item={item}
-                          collapsed={collapsed}
-                          itemClassName={itemClassName}
-                          renderLink={renderLink}
-                        />
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
+          {sections.map((section) => {
+            const visibleActions =
+              !collapsed && section.actions && section.actions.length > 0
+                ? section.actions.slice(0, 3)
+                : null;
+            return (
+              <section key={section.id} className="group/section">
+                {section.label && !collapsed ? (
+                  <div className="mb-1.5 flex items-center justify-between px-2.5">
+                    <span className="text-[10px] font-semibold uppercase text-sidebar-foreground/45">
+                      {section.label}
+                    </span>
+                    {visibleActions ? (
+                      <div className="flex items-center gap-0.5 opacity-0 transition-opacity duration-150 group-hover/section:opacity-100 focus-within:opacity-100">
+                        {visibleActions.map((action) => {
+                          const ActionIcon = action.icon;
+                          return (
+                            <button
+                              key={action.id}
+                              type="button"
+                              aria-label={action.label}
+                              title={action.label}
+                              onClick={action.onClick}
+                              className="inline-flex size-4 items-center justify-center rounded text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+                            >
+                              <ActionIcon className="size-3" />
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ) : null}
+                  </div>
+                ) : null}
+                <ul className="flex flex-col gap-0.5">
+                  {section.items.map((item) => {
+                    const hasChildren = Array.isArray(item.children) && item.children.length > 0;
+                    return (
+                      <li key={item.id}>
+                        {hasChildren ? (
+                          <ParentItem
+                            item={item}
+                            collapsed={collapsed}
+                            itemClassName={itemClassName}
+                            renderLink={renderLink}
+                          />
+                        ) : (
+                          <InteractiveItem
+                            item={item}
+                            collapsed={collapsed}
+                            itemClassName={itemClassName}
+                            renderLink={renderLink}
+                          />
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            );
+          })}
         </div>
 
         {footer ? (

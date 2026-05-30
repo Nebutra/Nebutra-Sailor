@@ -783,6 +783,61 @@
           "red": "红色"
         }
       },
+      "colors": {
+        "title": "色彩",
+        "description": "强调色、背景与前景。",
+        "background": {
+          "label": "背景",
+          "description": "覆盖应用背景色。"
+        },
+        "foreground": {
+          "label": "前景",
+          "description": "覆盖正文文字色。"
+        },
+        "resetToDefault": "恢复默认"
+      },
+      "fontFamily": {
+        "uiLabel": "UI 字体",
+        "uiDescription": "应用 UI 使用的字体。",
+        "codeLabel": "代码字体",
+        "codeDescription": "代码面板使用的字体。",
+        "options": {
+          "ui": {
+            "system": "系统",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "system": "系统等宽",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "对比度",
+        "description": "微调文字对比度（50 表示不调整）。",
+        "label": "对比度"
+      },
+      "pointerCursor": {
+        "title": "使用指针光标",
+        "description": "悬停交互元素时切换为指针光标。",
+        "label": "交互元素使用指针光标"
+      },
+      "diffMarkers": {
+        "title": "差异标记",
+        "description": "使用彩色色带和背景，或在每个更改行上显示 +/- 符号。",
+        "label": "差异标记样式",
+        "color": "颜色",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "字体平滑",
+        "description": "使用 macOS 原生字体抗锯齿。",
+        "label": "原生字体平滑"
+      },
       "typography": {
         "title": "字体大小",
         "description": "UI 与代码面板的基础字号。",
@@ -1012,6 +1067,11 @@
   },
   "Sidebar": {
     "projects": "项目",
-    "noThreads": "暂无对话"
+    "noThreads": "暂无对话",
+    "expandAll": "全部展开",
+    "collapseAll": "全部折叠",
+    "sectionMore": "更多操作",
+    "newProject": "新建项目",
+    "restoredGroups": "已恢复之前展开的分组"
   }
 }

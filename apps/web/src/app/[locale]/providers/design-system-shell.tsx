@@ -4,14 +4,24 @@
 import { getConfiguredAuthProvider, useAuth } from "@nebutra/auth/client";
 import {
   Warning as AlertTriangle,
+  ChevronDoubleDown,
+  ChevronDoubleUp,
   ChevronRight,
   FolderClosed,
+  FolderPlus,
+  MoreHorizontal,
   SidebarLeft as PanelLeftClose,
   SidebarLeft as PanelLeftOpen,
 } from "@nebutra/icons";
 import { AppShell } from "@nebutra/ui/layout";
-import type { SidebarNavRenderLinkProps, SidebarNavSection, Workspace } from "@nebutra/ui/patterns";
+import type {
+  SidebarNavRenderLinkProps,
+  SidebarNavSection,
+  SidebarNavSectionAction,
+  Workspace,
+} from "@nebutra/ui/patterns";
 import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
+import { toast } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -95,6 +105,46 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
   const [activeWorkspaceThreads, setActiveWorkspaceThreads] = useState<ThreadSummary[]>([]);
   const tSidebar = useTranslations("Sidebar");
+
+  // ─── Persistent Projects-section expansion ────────────────────────────────
+  // localStorage-backed map of workspace item id → open/closed. Hydrated in an
+  // effect (NOT initial state) so SSR stays deterministic. When the hydration
+  // picks up any "true" value, a transient `wasRestored` flag fires a toast.
+  const EXPANSION_STORAGE_KEY = "nebutra_sidebar_expansion";
+  const [expansionMap, setExpansionMapState] = useState<Record<string, boolean>>({});
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mount-only hydration; toast copy is captured once
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = window.localStorage.getItem(EXPANSION_STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as unknown;
+      if (!parsed || typeof parsed !== "object") return;
+      const map: Record<string, boolean> = {};
+      for (const [k, v] of Object.entries(parsed as Record<string, unknown>)) {
+        if (typeof v === "boolean") map[k] = v;
+      }
+      setExpansionMapState(map);
+      if (Object.values(map).some((v) => v)) {
+        toast(tSidebar("restoredGroups"), { duration: 3000 });
+      }
+    } catch {
+      // Corrupt entry — drop silently and continue with empty map.
+    }
+    // Run once on mount; toast copy can't change after hydration.
+  }, []);
+
+  const writeExpansionMap = (next: Record<string, boolean>) => {
+    setExpansionMapState(next);
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(EXPANSION_STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        // Quota / disabled storage — UI stays in-memory.
+      }
+    }
+  };
   const breadcrumbs = buildBreadcrumbs(pathname);
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
   // /workspace home is a full-bleed gradient canvas — drop main padding and
@@ -225,13 +275,63 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // workspace parents act as workspace-switch triggers and do not prefetch.
   // Rendered whenever workspaces are available — including single-user / dev-auth
   // modes where the seed WORKSPACES provide a meaningful project list.
+  const projectsAllExpanded = Object.values(expansionMap).some((v) => v);
+
+  const handleExpandAllToggle = () => {
+    const itemsWithChildren = workspaceOptions
+      .filter((ws) => ws.id === workspace) // only the active workspace item has children today
+      .map((ws) => `workspace:${ws.id}`);
+    if (projectsAllExpanded) {
+      // Collapse all known entries.
+      const cleared: Record<string, boolean> = {};
+      for (const key of Object.keys(expansionMap)) cleared[key] = false;
+      writeExpansionMap(cleared);
+      return;
+    }
+    const next = { ...expansionMap };
+    for (const id of itemsWithChildren) next[id] = true;
+    writeExpansionMap(next);
+  };
+
+  // v1 stubs — wired so the UI is interactive without leaking console output
+  // into production. Replace with real menu / new-project flows in v2.
+  const handleSectionMore = () => {
+    /* TODO: open section more menu (v2) */
+  };
+  const handleNewProject = () => {
+    /* TODO: open new-project dialog (v2) */
+  };
+
+  const projectsActions: SidebarNavSectionAction[] = [
+    {
+      id: "expand-all-toggle",
+      icon: projectsAllExpanded ? ChevronDoubleUp : ChevronDoubleDown,
+      label: projectsAllExpanded ? tSidebar("collapseAll") : tSidebar("expandAll"),
+      onClick: handleExpandAllToggle,
+    },
+    {
+      id: "section-more",
+      icon: MoreHorizontal,
+      label: tSidebar("sectionMore"),
+      onClick: handleSectionMore,
+    },
+    {
+      id: "new-project",
+      icon: FolderPlus,
+      label: tSidebar("newProject"),
+      onClick: handleNewProject,
+    },
+  ];
+
   const projectsSection: SidebarNavSection | null =
     workspaceOptions.length > 0
       ? {
           id: "Projects",
           label: tSidebar("projects"),
+          actions: projectsActions,
           items: workspaceOptions.map((ws) => {
             const isActiveWorkspace = ws.id === workspace;
+            const itemId = `workspace:${ws.id}`;
             let children: SidebarNavSection["items"][number]["children"];
 
             if (isActiveWorkspace) {
@@ -253,8 +353,10 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
                     ];
             }
 
+            const hasChildren = Array.isArray(children) && children.length > 0;
+
             return {
-              id: `workspace:${ws.id}`,
+              id: itemId,
               label: ws.label,
               icon: FolderClosed,
               isActive: isActiveWorkspace,
@@ -262,6 +364,15 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
               // than navigating to an href.
               onClick: isActiveWorkspace ? undefined : () => void handleWorkspaceChange(ws.id),
               children,
+              // Controlled expansion only when the item actually has children
+              // — leaves childless rows unaffected.
+              ...(hasChildren
+                ? {
+                    expanded: expansionMap[itemId] ?? isActiveWorkspace,
+                    onExpandedChange: (next: boolean) =>
+                      writeExpansionMap({ ...expansionMap, [itemId]: next }),
+                  }
+                : {}),
             };
           }),
         }

@@ -793,6 +793,61 @@
           "red": "Red"
         }
       },
+      "colors": {
+        "title": "Colors",
+        "description": "Accent, background, and foreground.",
+        "background": {
+          "label": "Background",
+          "description": "Override the surface background color."
+        },
+        "foreground": {
+          "label": "Foreground",
+          "description": "Override the body text color."
+        },
+        "resetToDefault": "Reset to default"
+      },
+      "fontFamily": {
+        "uiLabel": "UI font",
+        "uiDescription": "Font family used across the UI.",
+        "codeLabel": "Code font",
+        "codeDescription": "Font family used for code surfaces.",
+        "options": {
+          "ui": {
+            "system": "System",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "system": "System mono",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "Contrast",
+        "description": "Fine-tune text contrast (50 = no change).",
+        "label": "Contrast level"
+      },
+      "pointerCursor": {
+        "title": "Use pointer cursor",
+        "description": "Switch to a pointer cursor on hover-interactive elements.",
+        "label": "Pointer cursor on interactive elements"
+      },
+      "diffMarkers": {
+        "title": "Diff markers",
+        "description": "Show color bands, or +/- glyphs on each changed line.",
+        "label": "Diff marker style",
+        "color": "Color",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "Font smoothing",
+        "description": "Apply macOS native font antialiasing.",
+        "label": "Native font smoothing"
+      },
       "typography": {
         "title": "Typography",
         "description": "Base font sizes for UI and code surfaces.",
@@ -1012,6 +1067,11 @@
   },
   "Sidebar": {
     "projects": "Projects",
-    "noThreads": "No threads"
+    "noThreads": "No threads",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "sectionMore": "More options",
+    "newProject": "New project",
+    "restoredGroups": "Restored previously expanded groups"
   }
 }
