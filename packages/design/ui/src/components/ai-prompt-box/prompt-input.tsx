@@ -8,8 +8,8 @@ import {
   Microphone as Mic,
   Paperclip,
   StopCircle,
+  StopFill,
 } from "@nebutra/icons";
-import { Square } from "@phosphor-icons/react/dist/ssr";
 import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import React, { useEffectEvent } from "react";
 import { Button } from "../../primitives/button";
@@ -428,7 +428,7 @@ function PromptSubmitAction({
         disabled={isLoading && !hasContent}
       >
         {isLoading ? (
-          <Square className="h-4 w-4 fill-primary-foreground animate-pulse" />
+          <StopFill className="h-4 w-4 fill-primary-foreground animate-pulse" />
         ) : isRecording ? (
           <StopCircle className="h-5 w-5 text-destructive" />
         ) : hasContent ? (

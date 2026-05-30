@@ -94,10 +94,12 @@ import { PageHeader, EmptyState, LoadingState, ErrorState } from "@nebutra/ui/la
 
 // Icons — three-tier hierarchy (2026 governance, see also MEMORY.md):
 //   1. @nebutra/icons (Geist 541) — DEFAULT for product/app/dashboard surfaces (Vercel/v0 same visual)
-//   2. @phosphor-icons/react/light — ONLY in marketing/** for AI-brand thin/duotone weight
+//   2. @phosphor-icons/react/light — ONLY for AI-brand thin/duotone weight in marketing surfaces
+//      (apps/landing-page/** + packages/design/ui/src/marketing/**) — lint-enforced
 //   3. lucide-react — DEPRECATED, ZERO new imports allowed (lint-enforced)
 import { MagnifyingGlass, SettingsGear, ChevronRight, Sparkles } from "@nebutra/icons";
-// import { Brain } from "@phosphor-icons/react/dist/ssr"; // only inside packages/design/ui/src/marketing/**
+// import { Brain } from "@phosphor-icons/react/dist/ssr"; // only in apps/landing-page/** or packages/design/ui/src/marketing/**
+// CI guard: scripts/lint-phosphor-marketing-only.mjs (wired into `pnpm lint`) — Phosphor outside marketing = fail
 
 // Theme switching (light/dark) — from @nebutra/tokens
 import { ThemeProvider, useTheme } from "@nebutra/tokens";
