@@ -643,10 +643,15 @@ function PricingPanel({ active }: { active: boolean }) {
           <div
             key={plan.name}
             className={cn(
-              // Sub-tier: hairline border + bg-popover (one tier up from card,
-              // ~0.05 L delta = visibly raised). Same Linear pattern.
-              "relative rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-popover)] p-4",
-              plan.popular && "shadow-[0_2px_8px_-2px_rgb(0_0_0/0.15)]",
+              // Same edge recipe as outer PreviewCard: single 1px ring via
+              // --edge-soft (mode-aware) + soft drop shadow on the popular
+              // plan. NO bg-tier step (bg-popover on bg-card was the
+              // "rectangle 白线" — 0.05 L transition reads as visible edge
+              // step regardless of border alpha). Card stays same bg as
+              // parent; the ring + popular-shadow do the layering work.
+              "relative rounded-[var(--radius-lg)] p-4 shadow-[0_0_0_1px_var(--edge-soft)]",
+              plan.popular &&
+                "shadow-[0_0_0_1px_var(--edge-medium),0_4px_12px_-4px_rgb(0_0_0/0.18)]",
             )}
           >
             {plan.popular && (
