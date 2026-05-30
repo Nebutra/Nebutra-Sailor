@@ -207,27 +207,31 @@ export function importFromDesignMd(
 
   const missingRequired = REQUIRED_TOKEN_PATHS.filter((path) => !hasToken(tokens, path));
 
-  // Derive unmapped from the top-level (#) headings actually present in this document.
-  // LintReport.sections / documentSections only expose h2-level sub-headings (the
-  // heading field is always an h2 key). The h1 section names (Typography, Elevation,
-  // Components …) are extracted via regex from the raw content — this is
-  // genuinely input-derived and correct for both FULL and SPARSE fixtures.
-  const unmapped: string[] = [];
-  const docSections: string[] = (content.match(/^#\s+(.+)$/gm) ?? []).map((h) =>
-    h.replace(/^#\s+/, ""),
+  // Derive unmapped from the DESIGN.md section headings (h1–h3) present in this document.
+  // DESIGN.md canonical form uses ## (h2) for top-level sections, e.g. "## Elevation & Depth",
+  // "## Components", "## Shapes". We scan h1–h3 to be robust to minor spec drift.
+  // Matching is substring-based (lowercased heading CONTAINS the keyword) so that headings
+  // like "Elevation & Depth" still match the "elevation" keyword.
+  const unmappedSet = new Set<string>();
+  const docSections: string[] = (content.match(/^#{1,3}\s+(.+?)\s*$/gm) ?? []).map((h) =>
+    h.replace(/^#{1,3}\s+/, ""),
   );
+
+  const labels: Record<string, string> = {
+    elevation: "elevation (prose-only — no structured token in DESIGN.md spec)",
+    components: "components (prose/reference tokens — not imported as DTCG leaves)",
+    shapes: "shapes (prose-only — no structured token in DESIGN.md spec)",
+  };
 
   for (const heading of docSections) {
     const lower = heading.toLowerCase();
-    if (PROSE_ONLY_HEADINGS.has(lower)) {
-      const labels: Record<string, string> = {
-        elevation: "elevation (prose-only — no structured token in DESIGN.md spec)",
-        components: "components (prose/reference tokens — not imported as DTCG leaves)",
-        shapes: "shapes (prose-only — no structured token in DESIGN.md spec)",
-      };
-      unmapped.push(labels[lower] ?? `${heading} (prose-only — not imported as DTCG leaves)`);
+    const matched = [...PROSE_ONLY_HEADINGS].find((k) => lower.includes(k));
+    if (matched) {
+      unmappedSet.add(labels[matched] ?? `${heading} (prose-only — not imported as DTCG leaves)`);
     }
   }
+
+  const unmapped = [...unmappedSet];
 
   const warnings: string[] = [];
 

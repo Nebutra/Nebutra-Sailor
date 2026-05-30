@@ -22,25 +22,25 @@ rounded:
   md: "8px"
 ---
 
-# Typography
+## Typography
 
-## h1
+### h1
 - font-family: Inter
 - font-size: 2rem
 - font-weight: 700
 
-## body
+### body
 - font-family: Inter
 - font-size: 1rem
 - font-weight: 400
 
-# Elevation
+## Elevation & Depth
 
 Use subtle shadows to indicate depth. Cards use \`box-shadow: 0 2px 4px rgba(0,0,0,0.1)\`.
 
-# Components
+## Components
 
-## Button
+### Button
 - background: {colors.primary}
 - color: {colors.foreground}
 `;
@@ -52,7 +52,7 @@ colors:
   primary: "#ff0000"
 ---
 
-# Overview
+## Overview
 
 A minimal design system.
 `;
@@ -337,6 +337,69 @@ rounded:
       const { report } = importFromDesignMd(SPARSE_FIXTURE);
       // Sparse only has colors.primary — many required tokens are missing
       expect(report.missingRequired.length).toBeGreaterThan(4);
+    });
+
+    // ── Regression: canonical ## spec headings must be detected ──────────────
+
+    it("regression: ## Elevation & Depth → unmapped mentions elevation", () => {
+      const fixture = `---
+name: RegElevation
+colors:
+  primary: "#000000"
+---
+
+## Elevation & Depth
+
+Cards use box-shadow to indicate depth.
+`;
+      const { report } = importFromDesignMd(fixture);
+      const combined = report.unmapped.join(" ").toLowerCase();
+      expect(combined).toMatch(/elevation/);
+    });
+
+    it("regression: ## Components → unmapped mentions components", () => {
+      const fixture = `---
+name: RegComponents
+colors:
+  primary: "#000000"
+---
+
+## Components
+
+### Button
+- background: {colors.primary}
+`;
+      const { report } = importFromDesignMd(fixture);
+      const combined = report.unmapped.join(" ").toLowerCase();
+      expect(combined).toMatch(/component/);
+    });
+
+    it("regression: SPARSE fixture with ## Overview only — unmapped does NOT contain elevation or components", () => {
+      // SPARSE_FIXTURE has only ## Overview — prose-only keywords absent
+      const { report } = importFromDesignMd(SPARSE_FIXTURE);
+      const combined = report.unmapped.join(" ").toLowerCase();
+      expect(combined).not.toMatch(/elevation/);
+      expect(combined).not.toMatch(/component/);
+    });
+
+    it("regression: duplicate ## Elevation & Depth headings produce exactly one unmapped entry", () => {
+      const fixture = `---
+name: DupElevation
+colors:
+  primary: "#000000"
+---
+
+## Elevation & Depth
+
+First section.
+
+## Elevation & Depth
+
+Second section (duplicate).
+`;
+      const { report } = importFromDesignMd(fixture);
+      const elevationEntries = report.unmapped.filter((s) => s.toLowerCase().includes("elevation"));
+      expect(elevationEntries.length).toBe(1);
     });
   });
 
