@@ -344,6 +344,8 @@ function SegmentedControl<T extends string>({
 function CanvasHeader({
   activeSuite,
   onSuiteChange,
+  viewport,
+  onViewportChange,
 }: {
   activeSuite: PreviewSuite;
   onSuiteChange: (suite: PreviewSuite) => void;
