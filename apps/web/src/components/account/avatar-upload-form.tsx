@@ -3,6 +3,7 @@
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
 import { useReducer, useRef } from "react";
+import { dicebearAvatarUrl } from "@/lib/avatar";
 
 const MAX_AVATAR_SIZE_BYTES = 2 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
@@ -124,16 +125,6 @@ async function centerCropSquareImage(file: File): Promise<File> {
   } finally {
     URL.revokeObjectURL(objectUrl);
   }
-}
-
-function initialsFor(name?: string | null): string {
-  const source = (name ?? "").trim();
-  if (!source) return "?";
-  const tokens = source.split(/\s+/).filter(Boolean);
-  if (tokens.length >= 2) {
-    return (tokens[0][0] + tokens[1][0]).toUpperCase();
-  }
-  return source.slice(0, 2).toUpperCase();
 }
 
 interface AvatarUploadState {
@@ -283,15 +274,13 @@ export function AvatarUploadForm({
             />
           </div>
         ) : (
-          <div
-            role="img"
-            aria-label="Avatar preview"
-            className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-3)]"
-          >
-            <span className="text-sm font-semibold text-[var(--neutral-11)]">
-              {initialsFor(fallbackName)}
-            </span>
-          </div>
+          <img
+            src={dicebearAvatarUrl(fallbackName)}
+            alt="Avatar preview"
+            width={80}
+            height={80}
+            className="size-20 rounded-full border border-[var(--neutral-6)] object-cover"
+          />
         )}
 
         <fieldset

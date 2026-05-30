@@ -345,8 +345,10 @@ function CanvasHeader({
           <TabsList className="min-w-max border border-border bg-card/80">
             {suites.map((suite) => (
               <TabsTrigger key={suite.id} value={suite.id}>
-                {suite.icon}
-                {suite.label}
+                <span className="inline-flex items-center gap-1.5">
+                  {suite.icon}
+                  {suite.label}
+                </span>
               </TabsTrigger>
             ))}
           </TabsList>

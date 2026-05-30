@@ -229,8 +229,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
             </span>
           </button>
         ) : (
-          // Expanded: logo (home link) on the left, a separate collapse button
-          // on the right that reveals on sidebar hover — like Lovable.
+          // Expanded: logo (home link) on the left, an always-visible collapse
+          // button on the right — like Lovable.
           <>
             <ViewTransitionLink
               href="/workspace"
@@ -244,7 +244,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
               onClick={toggle}
               aria-label="Collapse sidebar"
               title="Collapse sidebar"
-              className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 opacity-0 transition-opacity duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring group-hover/sidebar:opacity-100"
+              className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
             >
               <PanelLeftClose className="size-4" aria-hidden="true" />
             </button>

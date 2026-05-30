@@ -10,7 +10,6 @@ import {
   Envelope as Mail,
   DeviceDesktop as Monitor,
   Moon,
-  Invoice as Receipt,
   SettingsGear as SettingsIcon,
   Sparkles,
   Sun,
@@ -18,7 +17,6 @@ import {
   Sparkles as Wand2,
 } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
-import { EmptyState } from "@nebutra/ui/layout";
 import { BrandMark, Dialog, DialogContent } from "@nebutra/ui/primitives";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -34,13 +32,13 @@ import {
   useState,
 } from "react";
 import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
+import { dicebearAvatarUrl } from "@/lib/avatar";
 
 /**
- * AccountDialog — unified account modal (Profile / Subscription / Billing / Preferences).
+ * AccountDialog — unified account modal (Profile / Subscription / Preferences).
  *
  * Replaces the previous theme-only QuickSettings template. Built on the
- * `@nebutra/ui/primitives` Dialog (focus trap + ESC + restore for free) and
- * the canonical EmptyState `tone="branded"` for first-touch panels.
+ * `@nebutra/ui/primitives` Dialog (focus trap + ESC + restore for free).
  *
  * Deep-link to `/settings/*` is preserved — every tab has an "Open full
  * settings" footer link. The dialog is a complement, not a replacement.
@@ -48,7 +46,7 @@ import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provide
  * Keyboard shortcut: ⌘, opens / toggles.
  */
 
-type TabId = "profile" | "personalization" | "subscription" | "billing" | "preferences";
+type TabId = "profile" | "personalization" | "subscription" | "preferences";
 
 interface AccountDialogContextValue {
   open: boolean;
@@ -109,7 +107,6 @@ const TABS: ReadonlyArray<TabConfig> = [
   { id: "profile", labelKey: "tabs.profile", icon: User },
   { id: "personalization", labelKey: "tabs.personalization", icon: Wand2 },
   { id: "subscription", labelKey: "tabs.subscription", icon: Sparkles },
-  { id: "billing", labelKey: "tabs.billing", icon: Receipt },
   { id: "preferences", labelKey: "tabs.preferences", icon: SettingsIcon },
 ];
 
@@ -127,14 +124,6 @@ const PersonalizationTab = dynamic(
     ssr: false,
   },
 );
-
-function initialsFor(name?: string | null, email?: string | null): string {
-  const source = (name ?? "").trim() || (email ?? "").trim();
-  if (!source) return "?";
-  const tokens = source.split(/\s+/).filter(Boolean);
-  if (tokens.length >= 2) return (tokens[0][0] + tokens[1][0]).toUpperCase();
-  return source.slice(0, 2).toUpperCase();
-}
 
 export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
   const t = useTranslations("account");
@@ -223,8 +212,6 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                 />
               )}
 
-              {activeTab === "billing" && <BillingPanel onOpenFull={() => go("/billing")} t={t} />}
-
               {activeTab === "preferences" && (
                 <PreferencesPanel
                   onReportIssue={() => {
@@ -276,9 +263,13 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                 className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6 dark:ring-white/10"
               />
             ) : (
-              <BrandMark size="lg" variant="gradient">
-                <span className="font-semibold text-base">{initialsFor(name, email)}</span>
-              </BrandMark>
+              <img
+                src={dicebearAvatarUrl(email ?? name)}
+                alt=""
+                width={56}
+                height={56}
+                className="h-14 w-14 rounded-[var(--radius-2xl)] object-cover ring-2 ring-neutral-6 dark:ring-white/10"
+              />
             )}
           </div>
           <div className="min-w-0 flex-1">
@@ -365,34 +356,6 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
           </button>
         </div>
       </div>
-    );
-  }
-
-  function BillingPanel({
-    onOpenFull,
-    t,
-  }: {
-    onOpenFull: () => void;
-    t: ReturnType<typeof useTranslations>;
-  }) {
-    return (
-      <EmptyState
-        tone="branded"
-        size="md"
-        title={t("billing.empty.title")}
-        description={t("billing.empty.description")}
-        action={
-          <button
-            type="button"
-            onClick={onOpenFull}
-            className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
-            style={{ background: "var(--brand-gradient)" }}
-          >
-            <Receipt className="h-3.5 w-3.5" aria-hidden="true" />
-            {t("billing.empty.cta")}
-          </button>
-        }
-      />
     );
   }
 
