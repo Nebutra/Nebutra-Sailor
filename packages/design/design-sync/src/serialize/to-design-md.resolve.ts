@@ -61,9 +61,12 @@ function flattenTree(node: DesignTokenTree, prefix: string, out: FlatIndex): voi
     const path = prefix ? `${prefix}.${key}` : key;
     if (isLeaf(value)) {
       out.set(path, value as DesignTokenLeaf);
-    } else {
+    } else if (value !== null && typeof value === "object" && !Array.isArray(value)) {
+      // Only recurse into plain objects — skip scalars (strings, numbers, booleans)
+      // that appear at the group level (e.g. a top-level "theme": "dark-dense" key).
       flattenTree(value as DesignTokenTree, path, out);
     }
+    // Scalar non-leaf values (e.g. "$schema" companions without "$type") are silently skipped.
   }
 }
 
@@ -245,7 +248,9 @@ function buildRounded(index: FlatIndex): RoundedMap {
   for (const key of found) {
     const resolved = resolveValue(`${prefix}${key}`, index);
     if (resolved != null) {
-      result[key] = resolved;
+      // DESIGN.md spec requires a unit suffix — normalize bare "0" to "0px"
+      // so the linter does not flag it as an invalid dimension.
+      result[key] = resolved === "0" ? "0px" : resolved;
     }
   }
 
