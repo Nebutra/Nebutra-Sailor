@@ -12,7 +12,7 @@
  *   - Light + dark rendering via CSS `prefers-color-scheme` + `[data-theme="dark"]`
  *
  * PURE: no filesystem I/O, no @google/design.md dependency.
- * Only imports from `../types` and `./to-design-md.resolve`.
+ * Only imports from `../types`, `./to-design-md.resolve`, and `./to-preview-html.template`.
  */
 
 import type { DesignTokenSet } from "../types";
@@ -24,6 +24,12 @@ import {
   type ResolvedColors,
   resolveColorRoles,
 } from "./to-design-md.resolve";
+import {
+  buildDocument,
+  type CssVarBlock,
+  cssAttrValue,
+  escapeHtml,
+} from "./to-preview-html.template";
 
 // ─── Public API ────────────────────────────────────────────────────────────────
 
@@ -36,13 +42,19 @@ export interface ToPreviewHtmlOptions {
    * mode CSS custom properties.
    */
   theme?: string;
+  /**
+   * Name of the dark-theme token set (e.g. "themes/dark").
+   * Defaults to the set named exactly "themes/dark".
+   * If not found, light values are used for dark mode (preview still renders).
+   */
+  darkTheme?: string;
 }
 
 /**
  * Serialize an array of DTCG token sets into a self-contained HTML preview.
  *
  * @param sets    All token sets to merge (e.g. core + semantic + theme).
- * @param options Optional overrides for name and theme.
+ * @param options Optional overrides for name, theme, and darkTheme.
  * @returns A deterministic, self-contained HTML string.
  */
 export function serializeToPreviewHtml(
@@ -59,14 +71,12 @@ export function serializeToPreviewHtml(
       ? buildIndexForSet(sets.find((s) => s.name === options.theme)?.tokens ?? {})
       : new Map();
 
-  // Find dark theme set — look for a set named "themes/dark" or containing "dark"
-  const darkThemeSet = sets.find(
-    (s) =>
-      s.name === "themes/dark" ||
-      s.name.includes("dark") ||
-      (s.name !== (options?.theme ?? "") && s.name.startsWith("themes/")),
-  );
-  const darkThemeIndex = darkThemeSet != null ? buildIndexForSet(darkThemeSet.tokens) : new Map();
+  // Find dark theme set: honour explicit darkTheme option, then fall back to
+  // the set named exactly "themes/dark".  Do NOT fall through to arbitrary
+  // themes/* sets — that caused silent mis-detection.
+  const darkThemeName = options?.darkTheme ?? "themes/dark";
+  const darkThemeSet = sets.find((s) => s.name === darkThemeName);
+  const darkThemeIndex = darkThemeSet != null ? buildIndexForSet(darkThemeSet.tokens) : themeIndex;
 
   // 2. Resolve tokens
   const { roles: resolvedLightColors } = resolveColorRoles(index, themeIndex);
@@ -95,29 +105,7 @@ export function serializeToPreviewHtml(
   });
 }
 
-// ─── HTML escaping ─────────────────────────────────────────────────────────────
-
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#x27;");
-}
-
 // ─── CSS variable builder ──────────────────────────────────────────────────────
-
-interface CssVarBlock {
-  primary: string;
-  accent: string;
-  tertiary: string;
-  danger: string;
-  warning: string;
-  success: string;
-  background: string;
-  foreground: string;
-}
 
 function buildCssVars(colors: ResolvedColors["roles"], _mode: "light" | "dark"): CssVarBlock {
   return {
@@ -190,7 +178,7 @@ function buildTypographySection(typography: ReturnType<typeof buildTypography>):
       return `
     <div class="type-sample">
       <div class="type-meta">${escapeHtml(variant)} &mdash; ${escapeHtml(entry.fontSize)} &mdash; ${escapeHtml(entry.fontFamily)}</div>
-      <${tag} class="type-preview" style="font-family:${entry.fontFamily};font-size:${entry.fontSize};margin:0;">${escapeHtml(sampleText)}</${tag}>
+      <${tag} class="type-preview" style="font-family:${cssAttrValue(entry.fontFamily)};font-size:${cssAttrValue(entry.fontSize)};margin:0;">${escapeHtml(sampleText)}</${tag}>
     </div>`;
     })
     .join("\n");
@@ -208,9 +196,9 @@ function buildComponentsSection(
   typography: ReturnType<typeof buildTypography>,
   rounded: ReturnType<typeof buildRounded>,
 ): string {
-  const fontFamily = typography["body-md"]?.fontFamily ?? "system-ui, sans-serif";
-  const radius = rounded["md"] ?? rounded["sm"] ?? "0.375rem";
-  const radiusLg = rounded["lg"] ?? rounded["md"] ?? "0.5rem";
+  const fontFamily = cssAttrValue(typography["body-md"]?.fontFamily ?? "system-ui, sans-serif");
+  const radius = cssAttrValue(rounded["md"] ?? rounded["sm"] ?? "0.375rem");
+  const radiusLg = cssAttrValue(rounded["lg"] ?? rounded["md"] ?? "0.5rem");
 
   const buttonHtml = `
     <div class="component-item">
@@ -318,7 +306,7 @@ function buildRadiusSection(rounded: ReturnType<typeof buildRounded>): string {
     .map(
       ([key, value]) => `
     <div class="radius-item">
-      <div class="radius-demo" style="border-radius:${value};"></div>
+      <div class="radius-demo" style="border-radius:${cssAttrValue(value)};"></div>
       <div class="radius-name">${escapeHtml(key)}</div>
       <div class="radius-value">${escapeHtml(value)}</div>
     </div>`,
@@ -331,224 +319,4 @@ function buildRadiusSection(rounded: ReturnType<typeof buildRounded>): string {
     ${items}
   </div>
 </section>`;
-}
-
-// ─── Document assembly ─────────────────────────────────────────────────────────
-
-interface DocumentArgs {
-  escapedName: string;
-  lightVars: CssVarBlock;
-  darkVars: CssVarBlock;
-  swatchesHtml: string;
-  typographyHtml: string;
-  componentsHtml: string;
-  radiusHtml: string;
-}
-
-function cssVarsDecl(vars: CssVarBlock): string {
-  return [
-    `  --color-primary: ${vars.primary};`,
-    `  --color-accent: ${vars.accent};`,
-    `  --color-tertiary: ${vars.tertiary};`,
-    `  --color-danger: ${vars.danger};`,
-    `  --color-warning: ${vars.warning};`,
-    `  --color-success: ${vars.success};`,
-    `  --color-background: ${vars.background};`,
-    `  --color-foreground: ${vars.foreground};`,
-    `  --preview-bg: ${vars.background};`,
-    `  --preview-fg: ${vars.foreground};`,
-  ].join("\n");
-}
-
-function buildDocument(args: DocumentArgs): string {
-  const { escapedName, lightVars, darkVars } = args;
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapedName} — Design System Preview</title>
-  <style>
-    /* ── Light mode tokens (default) ────────────────────────── */
-    :root {
-${cssVarsDecl(lightVars)}
-    }
-
-    /* ── Dark mode tokens ───────────────────────────────────── */
-    :root[data-theme="dark"],
-    @media (prefers-color-scheme: dark) {
-      :root {
-${cssVarsDecl(darkVars)}
-      }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-${cssVarsDecl(darkVars)}
-      }
-    }
-
-    /* ── Base reset ─────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      background: var(--color-background);
-      color: var(--color-foreground);
-      padding: 2rem;
-    }
-
-    /* ── Layout ─────────────────────────────────────────────── */
-    .preview-header {
-      border-bottom: 1.5px solid rgba(128,128,128,0.18);
-      padding-bottom: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-    .preview-title {
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 0 0 0.25rem;
-      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .preview-subtitle {
-      font-size: 0.875rem;
-      opacity: 0.6;
-      margin: 0;
-    }
-
-    .preview-section {
-      margin-bottom: 3rem;
-    }
-    .section-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin: 0 0 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(128,128,128,0.12);
-    }
-
-    /* ── Swatches ────────────────────────────────────────────── */
-    .swatch-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .swatch {
-      width: 120px;
-    }
-    .swatch-color {
-      width: 120px;
-      height: 80px;
-      border-radius: 8px;
-      display: flex;
-      align-items: flex-end;
-      padding: 0.4rem;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    .swatch-hex {
-      font-size: 0.65rem;
-      font-family: ui-monospace, monospace;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-    .swatch-label {
-      margin-top: 0.4rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-    }
-
-    /* ── Typography ──────────────────────────────────────────── */
-    .type-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .type-sample {
-      border-left: 3px solid var(--color-primary);
-      padding-left: 1rem;
-    }
-    .type-meta {
-      font-size: 0.7rem;
-      font-family: ui-monospace, monospace;
-      opacity: 0.55;
-      margin-bottom: 0.4rem;
-    }
-    .type-preview {
-      line-height: 1.3;
-    }
-
-    /* ── Components ──────────────────────────────────────────── */
-    .component-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      align-items: flex-start;
-    }
-    .component-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .component-label {
-      font-size: 0.7rem;
-      font-family: ui-monospace, monospace;
-      opacity: 0.55;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    /* ── Radius ──────────────────────────────────────────────── */
-    .radius-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      align-items: flex-end;
-    }
-    .radius-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.35rem;
-    }
-    .radius-demo {
-      width: 56px;
-      height: 56px;
-      background: var(--color-primary);
-      opacity: 0.8;
-    }
-    .radius-name {
-      font-size: 0.7rem;
-      font-weight: 600;
-    }
-    .radius-value {
-      font-size: 0.65rem;
-      font-family: ui-monospace, monospace;
-      opacity: 0.55;
-    }
-  </style>
-</head>
-<body>
-
-  <header class="preview-header">
-    <h1 class="preview-title">${escapedName}</h1>
-    <p class="preview-subtitle">Design System Preview &mdash; generated from DTCG token sets</p>
-  </header>
-
-  <main>
-    ${args.swatchesHtml}
-    ${args.typographyHtml}
-    ${args.componentsHtml}
-    ${args.radiusHtml}
-  </main>
-
-</body>
-</html>`;
 }

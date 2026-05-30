@@ -15,6 +15,7 @@
 
 import { describe, expect, it } from "vitest";
 import { serializeToPreviewHtml, type ToPreviewHtmlOptions } from "../serialize/to-preview-html";
+import { cssAttrValue, escapeHtml } from "../serialize/to-preview-html.template";
 import type { DesignTokenSet } from "../types";
 
 // ─── Fixtures (mirrors to-design-md.test.ts) ─────────────────────────────────
@@ -305,5 +306,204 @@ describe("serializeToPreviewHtml — empty token sets", () => {
     const html = serializeToPreviewHtml([]);
     expect(html.trimStart()).toMatch(/^<!DOCTYPE html>/iu);
     expect(html).toMatch(/<\/html>/iu);
+  });
+});
+
+// ─── cssAttrValue helper ──────────────────────────────────────────────────────
+
+describe("cssAttrValue — escaping helper", () => {
+  it("HTML-escapes double quotes so they survive inside style='' attributes", () => {
+    const result = cssAttrValue('"Geist", "Noto Sans SC", sans-serif');
+    // Raw double-quotes must not appear in the output
+    expect(result).not.toContain('"');
+    // They should be HTML-entity encoded
+    expect(result).toContain("&quot;");
+    // The font family content is preserved
+    expect(result).toContain("Geist");
+  });
+
+  it("strips semicolons to prevent CSS declaration injection", () => {
+    const result = cssAttrValue("red;display:none");
+    // The semicolon that would end the prior property and start a new one must be gone
+    expect(result).not.toContain(";");
+    // The colon and text are harmless — they are concatenated into the property value
+    // (font-family:reddisplay:none is safe; no new declaration can start without a ;)
+    // But the original semicolon injection vector is neutralised
+    expect(result).toBe("reddisplay:none");
+  });
+
+  it("strips curly braces", () => {
+    const result = cssAttrValue("value{injected}");
+    expect(result).not.toContain("{");
+    expect(result).not.toContain("}");
+  });
+
+  it("strips < and > to prevent HTML injection", () => {
+    const result = cssAttrValue("val<script>alert(1)</script>");
+    expect(result).not.toContain("<");
+    expect(result).not.toContain(">");
+  });
+
+  it("leaves safe values unchanged (apart from HTML entity encoding)", () => {
+    // A plain rem value has no special characters
+    expect(cssAttrValue("0.375rem")).toBe("0.375rem");
+    expect(cssAttrValue("0.5rem")).toBe("0.5rem");
+  });
+
+  it("escapeHtml converts & and < and > and quotes correctly", () => {
+    expect(escapeHtml("a & b")).toBe("a &amp; b");
+    expect(escapeHtml("<div>")).toBe("&lt;div&gt;");
+    expect(escapeHtml('"quoted"')).toBe("&quot;quoted&quot;");
+    expect(escapeHtml("'apostrophe'")).toBe("&#x27;apostrophe&#x27;");
+  });
+});
+
+// ─── CRITICAL: font-family escaping in style="" attributes ───────────────────
+
+describe("serializeToPreviewHtml — fontFamily injection safety", () => {
+  it("does NOT emit raw unescaped double-quotes inside style= attributes when fontFamily contains quotes", () => {
+    // The default coreSet fontFamily is '"Geist", "Noto Sans SC", ...' which
+    // contains embedded " that would break style="font-family:..." if not escaped.
+    const html = serializeToPreviewHtml(coreSets);
+    // Split by style=" occurrences and check each attribute value ends with "
+    // rather than being terminated early by an embedded quote.
+    // Strategy: assert there is no pattern of style="...<non-quote/=>..." where
+    // a raw " appears mid-value (i.e. style="...X"Y... where Y is not space/;/>).
+    // Simpler: assert the font-family value appears &quot;-escaped somewhere.
+    expect(html).toContain("&quot;Geist&quot;");
+  });
+
+  it("does NOT inject display:none as a separate CSS declaration when fontFamily contains a semicolon", () => {
+    // Build a set where the font-family token contains a malicious semicolon injection.
+    // The attack vector is:  font-family:Foo;display:none  — the ; ends the font-family
+    // value and starts a new `display:none` declaration.
+    // cssAttrValue() strips the ; so the output becomes font-family:Foodisplay:none
+    // (a harmless malformed font name), not a separate display property.
+    const maliciousSet: DesignTokenSet = {
+      name: "core-evil",
+      relativePath: "core-evil.json",
+      tokens: {
+        fontFamily: {
+          sans: {
+            $value: "system-ui;display:none",
+            $type: "fontFamily",
+          },
+        },
+      },
+    };
+    const html = serializeToPreviewHtml([maliciousSet]);
+    // The semicolon-separated injection pattern must NOT appear:
+    // i.e. no `;<whitespace>*display` sequence inside a style attribute value.
+    // The semicolon-separated injection pattern must NOT appear inside style="…":
+    // i.e. no `;<whitespace>*display` sequence inside a style attribute value.
+    expect(html).not.toMatch(/style="[^"]*;\s*display\s*:\s*none/u);
+    // Note: the raw token value may appear in .type-meta text content (as a
+    // display-only label via escapeHtml — harmless there), so we only assert
+    // it is NOT present inside a style= attribute.
+    expect(html).not.toMatch(/style="[^"]*system-ui;display:none/u);
+  });
+});
+
+// ─── Valid CSS: dark-mode rules ───────────────────────────────────────────────
+
+describe("serializeToPreviewHtml — dark-mode CSS validity", () => {
+  it("emits a separate :root[data-theme='dark'] rule (not comma-joined with @media)", () => {
+    const html = serializeToPreviewHtml(coreSets);
+    // The data-theme="dark" selector must appear as its own block
+    expect(html).toMatch(/\[data-theme\s*=\s*['"]dark['"]\]\s*\{/u);
+  });
+
+  it("emits a valid @media (prefers-color-scheme: dark) rule", () => {
+    const html = serializeToPreviewHtml(coreSets);
+    expect(html).toMatch(/@media\s*\(\s*prefers-color-scheme\s*:\s*dark\s*\)/u);
+  });
+
+  it("does NOT contain a comma immediately before @media (invalid CSS)", () => {
+    const html = serializeToPreviewHtml(coreSets);
+    // A comma followed by optional whitespace then @media is the invalid pattern
+    expect(html).not.toMatch(/,\s*@media/u);
+  });
+
+  it("does NOT duplicate the @media dark block (only one occurrence)", () => {
+    const html = serializeToPreviewHtml(coreSets);
+    const matches = html.match(/@media\s*\(\s*prefers-color-scheme\s*:\s*dark\s*\)/gu);
+    expect(matches).not.toBeNull();
+    expect(matches?.length).toBe(1);
+  });
+
+  it("uses :root:not([data-theme='light']) inside the @media block so explicit light wins", () => {
+    const html = serializeToPreviewHtml(coreSets);
+    expect(html).toMatch(/:root:not\(\[data-theme\s*=\s*['"]light['"]\]\)/u);
+  });
+});
+
+// ─── Dark-theme detection ─────────────────────────────────────────────────────
+
+describe("serializeToPreviewHtml — dark theme detection", () => {
+  it("picks dark vars from the set named 'themes/dark' by default", () => {
+    const html = serializeToPreviewHtml(allSets, { theme: "themes/light" });
+    // Dark background from darkThemeSet (#0a0a0a) must appear
+    expect(html).toContain("#0a0a0a");
+  });
+
+  it("respects an explicit darkTheme option to override the default name", () => {
+    const customDarkSet: DesignTokenSet = {
+      name: "themes/custom-dark",
+      relativePath: "themes/custom-dark.json",
+      tokens: {
+        color: {
+          background: { $value: "#111827", $type: "color" },
+          foreground: { $value: "#f9fafb", $type: "color" },
+        },
+      },
+    };
+    const html = serializeToPreviewHtml([coreSet, semanticSet, lightThemeSet, customDarkSet], {
+      theme: "themes/light",
+      darkTheme: "themes/custom-dark",
+    });
+    // Custom dark background must appear (not the standard #0a0a0a)
+    expect(html).toContain("#111827");
+  });
+
+  it("falls back to light values when no dark set is found (no throw)", () => {
+    // Only provide light theme — no dark set at all
+    expect(() =>
+      serializeToPreviewHtml([coreSet, semanticSet, lightThemeSet], { theme: "themes/light" }),
+    ).not.toThrow();
+  });
+
+  it("does NOT mis-detect an unrelated themes/* set as dark", () => {
+    // Two theme sets, neither named 'themes/dark'
+    const themeA: DesignTokenSet = {
+      name: "themes/ocean",
+      relativePath: "themes/ocean.json",
+      tokens: {
+        color: {
+          background: { $value: "#0c2340", $type: "color" },
+          foreground: { $value: "#e0f0ff", $type: "color" },
+        },
+      },
+    };
+    const themeB: DesignTokenSet = {
+      name: "themes/sand",
+      relativePath: "themes/sand.json",
+      tokens: {
+        color: {
+          background: { $value: "#fdf6e3", $type: "color" },
+          foreground: { $value: "#3a2a00", $type: "color" },
+        },
+      },
+    };
+    // No set named 'themes/dark' — should NOT pick themeA arbitrarily
+    // It should fall back to light (i.e. same as theme index), not throw
+    const html = serializeToPreviewHtml([coreSet, semanticSet, themeA, themeB], {
+      theme: "themes/ocean",
+    });
+    // Should not throw and should still produce valid HTML
+    expect(html.trimStart()).toMatch(/^<!DOCTYPE html>/iu);
+    // The ocean background used for light should appear (it's both light + dark fallback)
+    expect(html).toContain("#0c2340");
+    // The sand theme values must NOT appear (not arbitrarily selected)
+    expect(html).not.toContain("#fdf6e3");
   });
 });
