@@ -121,3 +121,34 @@ export function exportThemeToDesignMd(themeId: string): ExportedTheme {
 
   return { designMd, previewHtml };
 }
+
+// ── exportTokenSetToDesignMd ──────────────────────────────────────────────────
+
+/**
+ * Export an ARBITRARY theme token set (any of the 78 registry themes, or a
+ * user-imported DESIGN.md theme) to DESIGN.md + preview HTML.
+ *
+ * Unlike exportThemeToDesignMd — which is limited to the 5 themes hard-imported
+ * into THEME_JSON_LOOKUP — this takes the already-resolved DTCG token groups
+ * directly from the caller, so the appearance "Copy theme" action works for the
+ * full theme catalog plus custom imports.
+ *
+ * @param name  user-facing theme name (front-matter `name`)
+ * @param themeTokens  DTCG token groups (color, radius, fontFamily, …)
+ */
+export function exportTokenSetToDesignMd(name: string, themeTokens: AnyRecord): ExportedTheme {
+  const sets = [
+    { name: "core", relativePath: "core.json", tokens: coreJson as unknown as AnyRecord },
+    {
+      name: "semantic",
+      relativePath: "semantic.json",
+      tokens: semanticJson as unknown as AnyRecord,
+    },
+    { name: "themes/custom", relativePath: "themes/custom.json", tokens: themeTokens },
+  ];
+
+  const designMd = serializeToDesignMd(sets, { theme: "themes/custom", name });
+  const previewHtml = serializeToPreviewHtml(sets, { theme: "themes/custom", name });
+
+  return { designMd, previewHtml };
+}

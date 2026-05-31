@@ -39,7 +39,12 @@ export function FontFamilyPicker({ label, description, valueKey }: FontFamilyPic
         onValueChange={(next) => update({ [valueKey]: next } as Partial<AppearanceState>)}
       >
         <SelectTrigger className="h-8 w-44" aria-label={label}>
-          <SelectValue />
+          {/* Map the raw enum value to its localized label (e.g. "theme" → "跟随主题"). */}
+          <SelectValue>
+            {(selected) =>
+              typeof selected === "string" ? t(`${tNs}.${selected}`) : (selected ?? null)
+            }
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           {options.map((opt) => (

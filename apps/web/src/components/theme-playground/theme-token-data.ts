@@ -302,6 +302,11 @@ export function getThemeSwatches(themeId: string): string[] {
   return getSwatchesFromTokenSet(theme);
 }
 
+/** Resolve a registry preset's DTCG token groups by id (undefined if unknown). */
+export function getTokenSet(themeId: string): ThemeTokenSet | undefined {
+  return themeTokenSets[themeId as ThemeId];
+}
+
 export function getTokenRows(themeId: string, mode: ThemeMode): TokenRow[] {
   const style = getThemePreviewStyle(themeId, mode) as Record<string, string>;
   return [

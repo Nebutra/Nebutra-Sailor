@@ -12,12 +12,13 @@ import { CODE_FONT_STACKS, UI_FONT_STACKS, useAppearance, useAppearanceStore } f
 // Tailwind v4 @theme inline inlines --color-background at build time so writing
 // --color-background at runtime has no effect on compiled utility classes.
 //
-// Solution: convert every theme color to an HSL triple via a hidden DOM probe.
-// The browser resolves oklch / hex / color-mix through its own color engine —
-// getComputedStyle().color always returns rgb()/rgba() regardless of input syntax.
+// Solution: convert every theme color to an HSL triple by RASTERIZING it via a
+// 1×1 canvas (getImageData yields sRGB bytes for any syntax). NOTE: a DOM probe
+// + getComputedStyle().color is NOT enough on its own — modern engines preserve
+// oklch()/color() as-authored, so a regex for rgb() fails on built-in themes.
 //
-// The probe element is created once (module-scoped) and reused for all conversions
-// in a single theme-apply cycle.
+// The probe element + canvas are created once (module-scoped) and reused for all
+// conversions in a single theme-apply cycle.
 
 let colorProbe: HTMLSpanElement | null = null;
 let colorCanvas: HTMLCanvasElement | null = null;
@@ -158,8 +159,19 @@ export default function AppearanceVarsProvider(): null {
       root.style.removeProperty("--user-foreground");
     }
 
-    root.style.setProperty("--user-ui-font", UI_FONT_STACKS[state.uiFontFamily]);
-    root.style.setProperty("--user-code-font", CODE_FONT_STACKS[state.codeFontFamily]);
+    // "theme" defers to the active theme/DESIGN font (--font-sans / --font-mono):
+    // we REMOVE the user override so the theme value drives the UI. An explicit
+    // family pins its own stack on top, winning over the theme.
+    if (state.uiFontFamily === "theme") {
+      root.style.removeProperty("--user-ui-font");
+    } else {
+      root.style.setProperty("--user-ui-font", UI_FONT_STACKS[state.uiFontFamily]);
+    }
+    if (state.codeFontFamily === "theme") {
+      root.style.removeProperty("--user-code-font");
+    } else {
+      root.style.setProperty("--user-code-font", CODE_FONT_STACKS[state.codeFontFamily]);
+    }
     root.style.setProperty("--user-contrast", `${state.contrast}`);
 
     root.dataset.accent = state.accent;
@@ -270,12 +282,46 @@ export default function AppearanceVarsProvider(): null {
     }
 
     /**
-     * Radius — map --radius-md → --radius (shadcn's global rounding token).
-     * The value is already a length (e.g. "0.5rem"); no conversion needed.
+     * Radius — the app reads the full scale directly (e.g.
+     * rounded-[var(--radius-lg)]), so we copy every emitted step, not just one.
+     * Also mirror --radius-md → --radius (shadcn primitives' calc() base).
+     * Values are already lengths (e.g. "0.5rem"); no conversion needed.
      */
-    function applyRadius(style: Record<string, string>) {
+    function applyRadiusVars(style: Record<string, string>) {
+      for (const key of ["sm", "md", "lg", "xl", "full"]) {
+        set(`--radius-${key}`, style[`--radius-${key}`]);
+      }
       const radiusMd = style["--radius-md"];
       if (radiusMd) set("--radius", radiusMd);
+    }
+
+    /**
+     * Font family — set the theme's sans / heading / mono base vars. These layer
+     * UNDER the user's explicit font override (--user-ui-font / --user-code-font)
+     * and any locale CJK font rules, so a theme font shows wherever those don't
+     * shadow it (headings, code surfaces, font-sans utilities).
+     */
+    function applyFontVars(style: Record<string, string>) {
+      set("--font-sans", style["--font-sans"]);
+      set("--font-heading", style["--font-heading"]);
+      set("--font-mono", style["--font-mono"]);
+    }
+
+    /**
+     * Shadow / elevation — copy the emitted shadow scale so cards, popovers and
+     * any `box-shadow: var(--shadow-*)` consumer reflects the theme's elevation.
+     */
+    function applyShadowVars(style: Record<string, string>) {
+      for (const key of ["sm", "md", "lg", "xl"]) {
+        set(`--shadow-${key}`, style[`--shadow-${key}`]);
+      }
+    }
+
+    /** Apply every consumed non-color dimension a theme can carry. */
+    function applyNonColorVars(style: Record<string, string>) {
+      applyRadiusVars(style);
+      applyFontVars(style);
+      applyShadowVars(style);
     }
 
     // ── Branch 1: DESIGN.md imported theme ──────────────────────────────────
@@ -294,7 +340,7 @@ export default function AppearanceVarsProvider(): null {
 
           applyBaseHslVars(style);
           applySidebarHslVars(style);
-          applyRadius(style);
+          applyNonColorVars(style);
 
           appliedThemeVars.current = applied;
           root.setAttribute("data-theme-preset", "imported");
@@ -319,7 +365,7 @@ export default function AppearanceVarsProvider(): null {
 
         applyBaseHslVars(style);
         applySidebarHslVars(style);
-        applyRadius(style);
+        applyNonColorVars(style);
 
         appliedThemeVars.current = applied;
         root.setAttribute("data-theme-preset", state.theme);

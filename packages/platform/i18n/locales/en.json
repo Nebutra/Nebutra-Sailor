@@ -783,6 +783,16 @@
         "empty": "No themes match your search.",
         "count": "{count} themes"
       },
+      "themeEditor": {
+        "title": "Theme",
+        "description": "Pick a preset, import a DESIGN.md, then fine-tune the tokens below.",
+        "selectLabel": "Theme preset",
+        "import": "Import",
+        "copy": "Copy theme",
+        "copied": "Copied",
+        "copyError": "Copy failed",
+        "custom": "Custom"
+      },
       "designMd": {
         "title": "Import DESIGN.md",
         "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
@@ -830,12 +840,14 @@
         "codeDescription": "Font family used for code surfaces.",
         "options": {
           "ui": {
+            "theme": "Theme default",
             "system": "System",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
+            "theme": "Theme default",
             "system": "System mono",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",

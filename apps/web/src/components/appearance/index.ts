@@ -2,6 +2,7 @@ export { AccentSwatchPicker } from "./accent-swatch-picker";
 // new (phase 2)
 export { ColorPickerRow } from "./color-picker-row";
 export { ContrastSlider } from "./contrast-slider";
+export { CopyThemeButton } from "./copy-theme-button";
 export { DesignMdImportSection } from "./design-md-import-section";
 export { DiffMarkerSegmented } from "./diff-marker-segmented";
 export { FontFamilyPicker } from "./font-family-picker";
@@ -11,7 +12,10 @@ export { MotionSegmented } from "./motion-segmented";
 export { PointerCursorToggle } from "./pointer-cursor-toggle";
 export { AppearanceSection } from "./section";
 export * from "./store";
+export { ThemeEditorCard } from "./theme-editor-card";
+export { ThemeImportButton } from "./theme-import-button";
 export { ThemeModeSegmented } from "./theme-mode-segmented";
+export { ThemePresetDropdown } from "./theme-preset-dropdown";
 export { ThemePresetPicker } from "./theme-preset-picker";
 export { TransparencyToggle } from "./transparency-toggle";
 export { default as AppearanceVarsProvider } from "./vars-provider";

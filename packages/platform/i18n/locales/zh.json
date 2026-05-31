@@ -773,6 +773,16 @@
         "empty": "没有匹配的主题。",
         "count": "{count} 个主题"
       },
+      "themeEditor": {
+        "title": "主题",
+        "description": "选择预设、导入 DESIGN.md，然后在下方微调各项令牌。",
+        "selectLabel": "主题预设",
+        "import": "导入",
+        "copy": "复制主题",
+        "copied": "已复制",
+        "copyError": "复制失败",
+        "custom": "自定义"
+      },
       "designMd": {
         "title": "导入 DESIGN.md",
         "description": "粘贴或上传 DESIGN.md，将其颜色、圆角、字体、间距及阴影应用到整个应用，并在刷新后持久保留。",
@@ -820,12 +830,14 @@
         "codeDescription": "代码面板使用的字体。",
         "options": {
           "ui": {
+            "theme": "跟随主题",
             "system": "系统",
             "geist": "Geist",
             "inter": "Inter",
             "sf": "SF Pro"
           },
           "code": {
+            "theme": "跟随主题",
             "system": "系统等宽",
             "geist-mono": "Geist Mono",
             "sf-mono": "SF Mono",

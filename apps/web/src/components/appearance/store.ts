@@ -16,9 +16,16 @@ export type AppearanceAccent =
 
 export type AppearanceMotion = "system" | "on" | "off";
 
-export type AppearanceUiFontFamily = "system" | "geist" | "inter" | "sf";
+// "theme" = follow the active theme / imported DESIGN.md font (consume
+// var(--font-sans) / var(--font-mono)); the rest are explicit overrides.
+export type AppearanceUiFontFamily = "theme" | "system" | "geist" | "inter" | "sf";
 
-export type AppearanceCodeFontFamily = "system" | "geist-mono" | "sf-mono" | "jetbrains-mono";
+export type AppearanceCodeFontFamily =
+  | "theme"
+  | "system"
+  | "geist-mono"
+  | "sf-mono"
+  | "jetbrains-mono";
 
 export type AppearanceDiffMarkers = "color" | "plusminus";
 
@@ -83,8 +90,8 @@ export const APPEARANCE_DEFAULTS: AppearanceState = {
   transparency: false,
   backgroundColor: null,
   foregroundColor: null,
-  uiFontFamily: "system",
-  codeFontFamily: "geist-mono",
+  uiFontFamily: "theme",
+  codeFontFamily: "theme",
   contrast: 50,
   pointerCursor: false,
   diffMarkers: "color",
@@ -104,9 +111,10 @@ const ACCENT_VALUES: AppearanceAccent[] = [
 
 const MOTION_VALUES: AppearanceMotion[] = ["system", "on", "off"];
 
-const UI_FONT_FAMILY_VALUES: AppearanceUiFontFamily[] = ["system", "geist", "inter", "sf"];
+const UI_FONT_FAMILY_VALUES: AppearanceUiFontFamily[] = ["theme", "system", "geist", "inter", "sf"];
 
 const CODE_FONT_FAMILY_VALUES: AppearanceCodeFontFamily[] = [
+  "theme",
   "system",
   "geist-mono",
   "sf-mono",
@@ -115,7 +123,10 @@ const CODE_FONT_FAMILY_VALUES: AppearanceCodeFontFamily[] = [
 
 const DIFF_MARKER_VALUES: AppearanceDiffMarkers[] = ["color", "plusminus"];
 
+// "theme" resolves to the active theme/DESIGN font var so the picker can defer
+// to it; the explicit families pin a concrete stack regardless of theme.
 export const UI_FONT_STACKS: Record<AppearanceUiFontFamily, string> = {
+  theme: `var(--font-sans)`,
   system: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`,
   geist: `'Geist', -apple-system, sans-serif`,
   inter: `'Inter', -apple-system, sans-serif`,
@@ -123,6 +134,7 @@ export const UI_FONT_STACKS: Record<AppearanceUiFontFamily, string> = {
 };
 
 export const CODE_FONT_STACKS: Record<AppearanceCodeFontFamily, string> = {
+  theme: `var(--font-mono)`,
   system: `ui-monospace, SFMono-Regular, Menlo, monospace`,
   "geist-mono": `'Geist Mono', ui-monospace, monospace`,
   "sf-mono": `'SF Mono', ui-monospace, monospace`,
