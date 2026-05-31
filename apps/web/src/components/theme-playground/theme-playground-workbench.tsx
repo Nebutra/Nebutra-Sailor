@@ -521,6 +521,10 @@ function PreviewCanvas({
             // code/pre/kbd/samp are excluded so monospace stays intact.
             "[&_:not(:is(h1,h2,h3,h4,h5,h6,code,pre,kbd,samp))]:![font-family:var(--font-sans,ui-sans-serif,system-ui,sans-serif)]",
             "[&_:is(h1,h2,h3,h4,h5,h6)]:![font-family:var(--font-heading,var(--font-sans,ui-sans-serif,system-ui,sans-serif))]",
+            // Body font-size: apply --text-base to all <p> elements so an import
+            // with fontSize.base (e.g. 1.125rem) visibly scales body copy.
+            // Fallback 0.875rem matches the comfortable density text-sm baseline.
+            "[&_p]:[font-size:var(--text-base,0.875rem)]",
             densityScale[density],
           )}
         >
@@ -557,14 +561,23 @@ function PreviewCard({
         // contributed to overall "blur soup" subjective perception. One
         // crisp ring + slight drop shadow reads as defined card without
         // softening the whole UI.
+        // The theme's --shadow-md is layered on top of the hairline ring so
+        // an imported/built-in elevation token visibly takes effect on cards.
+        // Fallback mirrors the original soft drop so themes without shadow tokens look unchanged.
         "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--spacing-lg,var(--playground-pad))] text-[color:var(--color-card-foreground)]",
-        "shadow-[0_0_0_1px_var(--edge-soft),0_2px_8px_-2px_rgb(0_0_0/0.08)]",
-        active && "shadow-[0_0_0_1px_var(--edge-medium),0_4px_12px_-2px_rgb(0_0_0/0.12)]",
+        "shadow-[0_0_0_1px_var(--edge-soft),var(--shadow-md,0_2px_8px_-2px_rgb(0_0_0/0.08))]",
+        active &&
+          "shadow-[0_0_0_1px_var(--edge-medium),var(--shadow-md,0_4px_12px_-2px_rgb(0_0_0/0.12))]",
         className,
       )}
     >
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h3 className="font-semibold text-sm">{title}</h3>
+        {/* --font-weight-heading: an import with fontWeight.heading 300 visibly lightens titles.
+            --text-heading size is intentionally NOT applied here — card <h3>s are section labels,
+            not page-h1s. A 3rem import value would distort the card layout. */}
+        <h3 className="text-sm" style={{ fontWeight: "var(--font-weight-heading, 600)" }}>
+          {title}
+        </h3>
         {active && <Badge size="sm">Focused</Badge>}
       </div>
       {children}

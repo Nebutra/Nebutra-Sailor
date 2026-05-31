@@ -68,6 +68,8 @@ export type ThemeTokenSet = {
   color?: Record<string, DtcgLeaf | undefined>;
   radius?: Record<string, DtcgLeaf | undefined>;
   fontFamily?: Record<string, DtcgLeaf | undefined>;
+  fontSize?: Record<string, DtcgLeaf | undefined>;
+  fontWeight?: Record<string, DtcgLeaf | undefined>;
   shadow?: Record<string, DtcgLeaf | undefined>;
   spacing?: Record<string, DtcgLeaf | undefined>;
 };
@@ -247,6 +249,17 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
   for (const key of ["sm", "md", "lg", "xl"]) {
     setVar(vars, `--spacing-${key}`, tokenValue(theme.spacing, key));
   }
+
+  // Type-scale — emitted so the preview canvas consumes them.
+  // --text-base  → applied to body <p> text in the preview.
+  // --text-heading → NOT applied to card <h3> titles (they are section labels,
+  //   not page-h1s; a 3rem import value would distort the card layout).
+  //   The var is emitted for completeness so downstream uses can opt in.
+  // --font-weight-heading → applied to card <h3> titles so an import with
+  //   fontWeight.heading 300 visibly lightens all section headings.
+  setVar(vars, "--text-base", tokenValue(theme.fontSize, "base"));
+  setVar(vars, "--text-heading", tokenValue(theme.fontSize, "heading"));
+  setVar(vars, "--font-weight-heading", tokenValue(theme.fontWeight, "heading"));
 
   // Edge tokens — mirror the global :root/.dark definitions (static/base.css)
   // but injected as inline style so they work inside the playground canvas
