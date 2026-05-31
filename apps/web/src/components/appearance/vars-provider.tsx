@@ -92,6 +92,16 @@ function toHslTriple(cssColor: string): string | null {
   return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
 }
 
+/** Parse a CSS length ("1rem" / "16px" / "0.5") to a rem number, or null. */
+function parseLengthRem(value: string | undefined): number | null {
+  if (!value) return null;
+  const m = /^(-?[\d.]+)(rem|px)?$/.exec(value.trim());
+  if (!m?.[1]) return null;
+  const n = Number.parseFloat(m[1]);
+  if (!Number.isFinite(n)) return null;
+  return m[2] === "px" ? n / 16 : n; // px → rem; rem/unitless → rem
+}
+
 // ─── Shadcn role → base var mapping ─────────────────────────────────────────
 //
 // For each shadcn base var (--<role>), the corresponding theme color key is
@@ -317,11 +327,43 @@ export default function AppearanceVarsProvider(): null {
       }
     }
 
+    /**
+     * Type-scale — base/heading size + heading weight. body font-size consumes
+     * --text-base when the user defers (see globals.css); h1-h6 weight consumes
+     * --font-weight-heading. Built-in presets carry none of these (no-op); they
+     * arrive via DESIGN.md imports.
+     */
+    function applyTypeScaleVars(style: Record<string, string>) {
+      set("--text-base", style["--text-base"]);
+      set("--text-heading", style["--text-heading"]);
+      set("--font-weight-heading", style["--font-weight-heading"]);
+    }
+
+    /**
+     * Spacing density — expose the raw scale, then remap Tailwind's --spacing
+     * base from the theme's medium step so all p-/m-/gap- utilities scale with
+     * the theme's rhythm. Reference: a comfortable DESIGN.md spacing.md ≈ 1rem,
+     * matching Tailwind's default (--spacing 0.25rem → p-4 = 1rem). The factor
+     * is clamped to [0.75, 1.5] so an extreme import can't break the layout.
+     */
+    function applySpacingVars(style: Record<string, string>) {
+      for (const key of ["sm", "md", "lg", "xl"]) {
+        set(`--spacing-${key}`, style[`--spacing-${key}`]);
+      }
+      const mdRem = parseLengthRem(style["--spacing-md"]);
+      if (mdRem != null) {
+        const factor = Math.min(1.5, Math.max(0.75, mdRem)); // md(rem) vs 1rem ref
+        set("--spacing", `${(0.25 * factor).toFixed(4)}rem`);
+      }
+    }
+
     /** Apply every consumed non-color dimension a theme can carry. */
     function applyNonColorVars(style: Record<string, string>) {
       applyRadiusVars(style);
       applyFontVars(style);
       applyShadowVars(style);
+      applyTypeScaleVars(style);
+      applySpacingVars(style);
     }
 
     // ── Branch 1: DESIGN.md imported theme ──────────────────────────────────

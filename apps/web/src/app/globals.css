@@ -38,7 +38,8 @@
   h5,
   h6 {
     font-family: var(--font-sans);
-    font-weight: 600;
+    /* Theme/DESIGN can lighten headings via fontWeight.heading; default 600. */
+    font-weight: var(--font-weight-heading, 600);
   }
 }
 
