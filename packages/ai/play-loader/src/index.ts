@@ -73,12 +73,28 @@ function asRecord(value: unknown): Record<string, unknown> | undefined {
     : undefined;
 }
 
+function isPlayNameChar(char: string): boolean {
+  return (
+    (char >= "a" && char <= "z") || (char >= "0" && char <= "9") || char === "_" || char === "-"
+  );
+}
+
+function trimPlayNameSeparators(value: string): string {
+  let start = 0;
+  let end = value.length;
+  while (start < end && value[start] === "_") start++;
+  while (end > start && value[end - 1] === "_") end--;
+  return value.slice(start, end);
+}
+
 function normalizePlayName(name: string): string {
-  return name
+  const normalized = name
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9_-]+/g, "_")
-    .replace(/^_+|_+$/g, "");
+    .split("")
+    .map((char) => (isPlayNameChar(char) ? char : "_"))
+    .join("");
+  return trimPlayNameSeparators(normalized);
 }
 
 async function appendPlayDebug(entry: Record<string, unknown>): Promise<void> {

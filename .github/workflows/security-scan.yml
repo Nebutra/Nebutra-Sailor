@@ -12,8 +12,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
-  security-events: write
 
 jobs:
   # ── pnpm audit ──────────────────────────────────────────────────────────────
@@ -21,6 +19,9 @@ jobs:
     name: pnpm Dependency Audit
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
 
     steps:
       - name: Checkout
@@ -109,6 +110,9 @@ jobs:
     name: Python Dependency Audit
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
 
     steps:
       - name: Checkout

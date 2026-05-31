@@ -25,6 +25,9 @@ on:
         required: false
         default: "/tenants"
 
+permissions:
+  contents: read
+
 jobs:
   lighthouse-dashboard:
     name: Lighthouse Dashboard (Mobile)

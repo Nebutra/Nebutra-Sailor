@@ -10,12 +10,13 @@
  * Writes one JSON theme file per DESIGN.md to:
  *   packages/design/design-tokens/tokens/themes/<anonId>.json
  *
- * Also emits a manifest to /tmp/corpus-themes-manifest.json for Step 3 wiring.
+ * Also emits a manifest to a secure temporary directory for Step 3 wiring.
  */
 
-import { readFile, readdir, writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { join, basename, resolve, dirname } from "node:path";
+import { mkdir, mkdtemp, readdir, readFile, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { importFromDesignMd } from "../packages/design/design-sync/src/serialize/from-design-md.js";
 
@@ -38,7 +39,6 @@ const SEMANTIC_FIXED = {
   "info-foreground": { $value: "oklch(1 0 0)", $type: "color" },
 } as const;
 
-const DEFAULT_FOREGROUND = "oklch(0.141 0.005 285.9)";
 const DEFAULT_BACKGROUND_LIGHT = "oklch(1 0 0)";
 const DEFAULT_BACKGROUND_DARK = "oklch(0.141 0.005 285.9)";
 const NEAR_BLACK = "oklch(0.141 0.005 285.9)";
@@ -63,9 +63,9 @@ function hexToLinear(hex: string): [number, number, number] | null {
   const h = hex.replace(/^#/, "");
   let r: number, g: number, b: number;
   if (h.length === 3) {
-    r = parseInt((h[0]! + h[0]!), 16) / 255;
-    g = parseInt((h[1]! + h[1]!), 16) / 255;
-    b = parseInt((h[2]! + h[2]!), 16) / 255;
+    r = parseInt(h[0]! + h[0]!, 16) / 255;
+    g = parseInt(h[1]! + h[1]!, 16) / 255;
+    b = parseInt(h[2]! + h[2]!, 16) / 255;
   } else if (h.length >= 6) {
     r = parseInt(h.slice(0, 2), 16) / 255;
     g = parseInt(h.slice(2, 4), 16) / 255;
@@ -99,7 +99,7 @@ function oklchToLinear(value: string): [number, number, number] | null {
   // oklab → linear RGB (using the standard oklch→sRGB matrix)
   const l_ = Lv + 0.3963377774 * a_ + 0.2158037573 * b_;
   const m_ = Lv - 0.1055613458 * a_ - 0.0638541728 * b_;
-  const s_ = Lv - 0.0894841775 * a_ - 1.2914855480 * b_;
+  const s_ = Lv - 0.0894841775 * a_ - 1.291485548 * b_;
 
   const lv3 = l_ * l_ * l_;
   const mv3 = m_ * m_ * m_;
@@ -107,7 +107,7 @@ function oklchToLinear(value: string): [number, number, number] | null {
 
   let r = +4.0767416621 * lv3 - 3.3077115913 * mv3 + 0.2309699292 * sv3;
   let g = -1.2684380046 * lv3 + 2.6097574011 * mv3 - 0.3413193965 * sv3;
-  let bl = -0.0041960863 * lv3 - 0.7034186147 * mv3 + 1.7076147010 * sv3;
+  let bl = -0.0041960863 * lv3 - 0.7034186147 * mv3 + 1.707614701 * sv3;
 
   r = Math.max(0, Math.min(1, r));
   g = Math.max(0, Math.min(1, g));
@@ -118,7 +118,7 @@ function oklchToLinear(value: string): [number, number, number] | null {
 
 /** Convert sRGB [0..1] channel to linear for luminance calculation. */
 function srgbToLinearChannel(c: number): number {
-  return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
 }
 
 /** Relative luminance of an sRGB color. */
@@ -234,9 +234,11 @@ function extractOklchChroma(value: string): number {
   const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
   const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
   const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
-  const l_ = Math.cbrt(l), m_ = Math.cbrt(m), s_ = Math.cbrt(s);
-  const A = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
-  const B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+  const l_ = Math.cbrt(l),
+    m_ = Math.cbrt(m),
+    s_ = Math.cbrt(s);
+  const A = 1.9779984951 * l_ - 2.428592205 * m_ + 0.4505937099 * s_;
+  const B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.808675766 * s_;
   return Math.sqrt(A * A + B * B);
 }
 
@@ -260,8 +262,10 @@ function extractOklchLightness(value: string): number {
   const l = 0.4122214708 * rl + 0.5363325363 * gl + 0.0514459929 * bl;
   const m = 0.2119034982 * rl + 0.6806995451 * gl + 0.1073969566 * bl;
   const s = 0.0883024619 * rl + 0.2817188376 * gl + 0.6299787005 * bl;
-  const l_ = Math.cbrt(l), m_ = Math.cbrt(m), s_ = Math.cbrt(s);
-  return 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_;
+  const l_ = Math.cbrt(l),
+    m_ = Math.cbrt(m),
+    s_ = Math.cbrt(s);
+  return 0.2104542553 * l_ + 0.793617785 * m_ - 0.0040720468 * s_;
 }
 
 /**
@@ -278,9 +282,11 @@ function extractOklchHue(value: string): number | null {
   const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
   const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
   const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
-  const l_ = Math.cbrt(l), m_ = Math.cbrt(m), s_ = Math.cbrt(s);
-  const A = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
-  const B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+  const l_ = Math.cbrt(l),
+    m_ = Math.cbrt(m),
+    s_ = Math.cbrt(s);
+  const A = 1.9779984951 * l_ - 2.428592205 * m_ + 0.4505937099 * s_;
+  const B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.808675766 * s_;
   const C = Math.sqrt(A * A + B * B);
   if (C < 0.001) return null; // achromatic
   return ((Math.atan2(B, A) * 180) / Math.PI + 360) % 360;
@@ -342,8 +348,7 @@ function hueToWord(hue: number | null): HueWord {
   if (h < 255) return "azure"; // blue
   if (h < 285) return "indigo"; // blue-violet
   if (h < 315) return "violet"; // violet
-  if (h < 345) return "magenta"; // pink-magenta
-  return "crimson";
+  return "magenta"; // pink-magenta
 }
 
 function lightnessWord(bgLightness: number): "light" | "dim" | "dark" {
@@ -390,29 +395,6 @@ function deriveAnonId(primaryColor: string, bgColor: string, usedIds: Set<string
 
 // ─── Font family scrubbing ──────────────────────────────────────────────────────
 
-const BRAND_FONT_INDICATORS = [
-  // Common brand-specific font patterns
-  /airbnb\s*cereal/i,
-  /circular/i,
-  /inter\b/i, // Inter is almost-generic but we keep it as it's truly system-level
-  /sf\s*pro/i,
-  /helvetica\s*neue/i,
-  /graphik/i,
-  /gilroy/i,
-  /proxima/i,
-  /gotham/i,
-  /futura/i,
-  /neue\s*haas/i,
-  /aktiv\s*grotesk/i,
-  /söhne/i,
-  /sohne/i,
-  /dm\s*sans/i,
-  /plus\s*jakarta/i,
-  /satoshi/i,
-  /cabinet/i,
-  /geist/i,
-];
-
 /** Detect if a font family string has brand-specific fonts and return a generic stack. */
 function genericizeFontFamily(fontFamily: string): string {
   if (!fontFamily) return GENERIC_FONT_STACK;
@@ -434,7 +416,7 @@ function genericizeFontFamily(fontFamily: string): string {
 
   // Serif indicators
   if (
-    lower.includes("serif") && !lower.includes("sans") ||
+    (lower.includes("serif") && !lower.includes("sans")) ||
     lower.includes("georgia") ||
     lower.includes("times") ||
     lower.includes("playfair") ||
@@ -594,7 +576,7 @@ function synthesizeTheme(
 
       let isLightDesigned: boolean;
       const lightFarEnough = Math.abs(LIGHT_BG_L - primaryL) >= MIN_L_DIFF; // 0.99 - pL ≥ 0.25 → pL ≤ 0.74
-      const darkFarEnough = Math.abs(DARK_BG_L - primaryL) >= MIN_L_DIFF;   // pL - 0.16 ≥ 0.25 → pL ≥ 0.41
+      const darkFarEnough = Math.abs(DARK_BG_L - primaryL) >= MIN_L_DIFF; // pL - 0.16 ≥ 0.25 → pL ≥ 0.41
 
       if (lightFarEnough && darkFarEnough) {
         // Both options work: honour source bg intent
@@ -612,8 +594,8 @@ function synthesizeTheme(
       const hueStr = primaryHue !== null ? primaryHue.toFixed(1) : "0.0";
 
       background = isLightDesigned
-        ? `oklch(0.99 0.004 ${hueStr})`   // barely-tinted near-white
-        : `oklch(0.16 0.005 ${hueStr})`;  // near-charcoal
+        ? `oklch(0.99 0.004 ${hueStr})` // barely-tinted near-white
+        : `oklch(0.16 0.005 ${hueStr})`; // near-charcoal
 
       nudgedRoles.push("background");
     }
@@ -643,9 +625,7 @@ function synthesizeTheme(
 
   // ── Accent ────────────────────────────────────────────────────────────────
   let accent =
-    importedColors["accent"] ??
-    importedColors["secondary"] ??
-    importedColors["highlight"];
+    importedColors["accent"] ?? importedColors["secondary"] ?? importedColors["highlight"];
 
   if (!accent) {
     // Find a second chromatic color different from primary
@@ -653,9 +633,13 @@ function synthesizeTheme(
     for (const [key, val] of Object.entries(importedColors)) {
       if (val === primary) continue;
       if (
-        key === "background" || key === "foreground" || key === "canvas" ||
-        key === "text" || key === "ink"
-      ) continue;
+        key === "background" ||
+        key === "foreground" ||
+        key === "canvas" ||
+        key === "text" ||
+        key === "ink"
+      )
+        continue;
       if (!isNeutral(val)) {
         accent = val;
         foundSecond = true;
@@ -771,9 +755,18 @@ function synthesizeTheme(
     },
     shadow: {
       sm: { $value: `0 1px 2px 0 rgb(${shadowR} ${shadowG} ${shadowB} / 0.08)`, $type: "shadow" },
-      md: { $value: `0 4px 6px -1px rgb(${shadowR} ${shadowG} ${shadowB} / 0.12)`, $type: "shadow" },
-      lg: { $value: `0 10px 15px -3px rgb(${shadowR} ${shadowG} ${shadowB} / 0.12)`, $type: "shadow" },
-      xl: { $value: `0 20px 25px -5px rgb(${shadowR} ${shadowG} ${shadowB} / 0.12)`, $type: "shadow" },
+      md: {
+        $value: `0 4px 6px -1px rgb(${shadowR} ${shadowG} ${shadowB} / 0.12)`,
+        $type: "shadow",
+      },
+      lg: {
+        $value: `0 10px 15px -3px rgb(${shadowR} ${shadowG} ${shadowB} / 0.12)`,
+        $type: "shadow",
+      },
+      xl: {
+        $value: `0 20px 25px -5px rgb(${shadowR} ${shadowG} ${shadowB} / 0.12)`,
+        $type: "shadow",
+      },
     },
   };
 
@@ -800,9 +793,9 @@ function toOklch(value: string): string {
   const m_ = Math.cbrt(m);
   const s_ = Math.cbrt(s);
 
-  const L = 0.2104542553 * l_ + 0.7936177850 * m_ - 0.0040720468 * s_;
-  const A = 1.9779984951 * l_ - 2.4285922050 * m_ + 0.4505937099 * s_;
-  const B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.8086757660 * s_;
+  const L = 0.2104542553 * l_ + 0.793617785 * m_ - 0.0040720468 * s_;
+  const A = 1.9779984951 * l_ - 2.428592205 * m_ + 0.4505937099 * s_;
+  const B = 0.0259040371 * l_ + 0.7827717662 * m_ - 0.808675766 * s_;
 
   const C = Math.sqrt(A * A + B * B);
   const H = (Math.atan2(B, A) * 180) / Math.PI;
@@ -830,7 +823,7 @@ function mixOklch(colorA: string, colorB: string, ratio: number): string {
 
   const L = a[0] + (b[0] - a[0]) * t;
   const C = a[1] + (b[1] - a[1]) * t;
-  const H = ((a[2] + hDiff * t) + 360) % 360;
+  const H = (a[2] + hDiff * t + 360) % 360;
 
   return `oklch(${L.toFixed(3)} ${C.toFixed(3)} ${H.toFixed(1)})`;
 }
@@ -863,18 +856,53 @@ function loadBrandNames(corpusDir: string, files: string[]): Set<string> {
  */
 const GENERIC_VALUE_TOKENS = new Set([
   // System font stack tokens
-  "apple",       // -apple-system is a generic CSS font fallback
+  "apple", // -apple-system is a generic CSS font fallback
   "system",
   "segoe",
   // Color words that are both brand names and generic hue descriptors
-  "lime", "teal", "cyan", "rose", "amber", "slate", "emerald",
+  "lime",
+  "teal",
+  "cyan",
+  "rose",
+  "amber",
+  "slate",
+  "emerald",
   // Common product/UI words that are not brand identifiers
-  "card", "ring", "base", "full", "sans", "serif",
-  "light", "dark", "bold", "thin", "mono", "code",
-  "open", "warp", "notion", // notion → notion-like colors, generic
+  "card",
+  "ring",
+  "base",
+  "full",
+  "sans",
+  "serif",
+  "light",
+  "dark",
+  "bold",
+  "thin",
+  "mono",
+  "code",
+  "open",
+  "warp",
+  "notion", // notion → notion-like colors, generic
   // Short tokens that are too generic
-  "bmw", "hp", "ibm", "cal", // these are OK in the theme IDs themselves
+  "bmw",
+  "hp",
+  "ibm",
+  "cal", // these are OK in the theme IDs themselves
 ]);
+
+function containsDelimitedToken(value: string, token: string, delimiters: Set<string>): boolean {
+  let start = value.indexOf(token);
+  while (start !== -1) {
+    const before = start === 0 ? "" : (value[start - 1] ?? "");
+    const afterIndex = start + token.length;
+    const after = afterIndex >= value.length ? "" : (value[afterIndex] ?? "");
+    const hasLeftBoundary = before === "" || delimiters.has(before);
+    const hasRightBoundary = after === "" || delimiters.has(after);
+    if (hasLeftBoundary && hasRightBoundary) return true;
+    start = value.indexOf(token, start + 1);
+  }
+  return false;
+}
 
 /** Assert a generated theme contains no brand name leaks. */
 function assertNoBrandLeak(theme: ThemeJson, brandNames: Set<string>): void {
@@ -887,8 +915,7 @@ function assertNoBrandLeak(theme: ThemeJson, brandNames: Set<string>): void {
 
     // Compound check: only flag if the brand name appears as a word boundary
     // (not as part of a longer token like "linear-gradient")
-    const pattern = new RegExp(`(^|[-\\s])${brand}([-\\s]|$)`);
-    if (pattern.test(idAndDesc)) {
+    if (containsDelimitedToken(idAndDesc, brand, new Set(["-", " ", "\t", "\n"]))) {
       throw new Error(
         `BRAND LEAK: brand name "${brand}" found in id/description of theme "${theme.theme}": "${idAndDesc}"`,
       );
@@ -901,8 +928,7 @@ function assertNoBrandLeak(theme: ThemeJson, brandNames: Set<string>): void {
     if (brand.length < 5) continue;
     if (GENERIC_VALUE_TOKENS.has(brand)) continue;
     // Font stack check: look for the brand name as a word (hyphen/space boundary)
-    const pattern = new RegExp(`(^|[\\s'",])${brand}([\\s'",]|$)`);
-    if (pattern.test(fontValue)) {
+    if (containsDelimitedToken(fontValue, brand, new Set([" ", "\t", "\n", "'", '"', ","]))) {
       throw new Error(
         `BRAND LEAK: brand name "${brand}" found in font stack of theme "${theme.theme}": "${fontValue}"`,
       );
@@ -930,7 +956,10 @@ async function main(): Promise<void> {
 
   process.stdout.write(`Found ${files.length} corpus files\n`);
 
-  const brandNames = loadBrandNames(CORPUS_DIR, files.map((f) => basename(f)));
+  const brandNames = loadBrandNames(
+    CORPUS_DIR,
+    files.map((f) => basename(f)),
+  );
   process.stdout.write(`Loaded ${brandNames.size} brand name tokens for leak guard\n\n`);
 
   // 2. Ensure output directory exists
@@ -940,7 +969,15 @@ async function main(): Promise<void> {
 
   const usedIds = new Set<string>();
   // Pre-populate with existing theme IDs to avoid conflicts
-  for (const existingId of ["nebutra", "dark-dense", "minimal", "vibrant", "ocean", "dark", "light"]) {
+  for (const existingId of [
+    "nebutra",
+    "dark-dense",
+    "minimal",
+    "vibrant",
+    "ocean",
+    "dark",
+    "light",
+  ]) {
     usedIds.add(existingId);
   }
 
@@ -987,10 +1024,7 @@ async function main(): Promise<void> {
         "oklch(0.5 0.1 240)";
 
       const background =
-        rawColors["background"] ??
-        rawColors["canvas"] ??
-        rawColors["surface"] ??
-        "oklch(1 0 0)";
+        rawColors["background"] ?? rawColors["canvas"] ?? rawColors["surface"] ?? "oklch(1 0 0)";
 
       // Derive anonymous ID
       const anonId = deriveAnonId(primary, background, usedIds);
@@ -1040,7 +1074,8 @@ async function main(): Promise<void> {
   }
 
   // 3. Write manifest
-  const manifestPath = "/tmp/corpus-themes-manifest.json";
+  const manifestDir = await mkdtemp(join(tmpdir(), "nebutra-corpus-themes-"));
+  const manifestPath = join(manifestDir, "manifest.json");
   await writeFile(manifestPath, JSON.stringify(manifest, null, 2) + "\n", "utf8");
 
   process.stdout.write(`\n=== Summary ===\n`);

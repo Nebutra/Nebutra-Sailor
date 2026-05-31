@@ -47,12 +47,6 @@ export function DesignMdImport({ onImported }: DesignMdImportProps) {
     });
   }
 
-  const hasReport =
-    lastTheme !== null &&
-    (lastTheme.report.missingRequired.length > 0 ||
-      lastTheme.report.unmapped.length > 0 ||
-      lastTheme.report.warnings.length > 0);
-
   const isComplete =
     lastTheme !== null &&
     lastTheme.report.missingRequired.length === 0 &&

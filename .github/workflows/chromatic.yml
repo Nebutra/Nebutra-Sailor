@@ -20,6 +20,9 @@ on:
       - "apps/landing-page/src/app/**/page.tsx"
       - ".github/workflows/chromatic.yml"
 
+permissions:
+  contents: read
+
 jobs:
   chromatic:
     name: Run Chromatic

@@ -20,14 +20,12 @@ on:
 
 permissions:
   contents: read
-  # For uploading results to GitHub Actions artifacts
-  actions: write
 
 jobs:
   load-test:
     name: k6 Load Test (${{ inputs.scenario || 'ramp-up' }})
     runs-on: ubuntu-latest
-    timeout-minutes: 90  # accommodate 1h soak test
+    timeout-minutes: 90 # accommodate 1h soak test
 
     steps:
       - name: Checkout

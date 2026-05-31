@@ -71,12 +71,28 @@ function asRecord(value: unknown): Record<string, unknown> | undefined {
     : undefined;
 }
 
+function isSkillNameChar(char: string): boolean {
+  return (
+    (char >= "a" && char <= "z") || (char >= "0" && char <= "9") || char === "_" || char === "-"
+  );
+}
+
+function trimSkillNameSeparators(value: string): string {
+  let start = 0;
+  let end = value.length;
+  while (start < end && value[start] === "_") start++;
+  while (end > start && value[end - 1] === "_") end--;
+  return value.slice(start, end);
+}
+
 function normalizeSkillName(name: string): string {
-  return name
+  const normalized = name
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9_-]+/g, "_")
-    .replace(/^_+|_+$/g, "");
+    .split("")
+    .map((char) => (isSkillNameChar(char) ? char : "_"))
+    .join("");
+  return trimSkillNameSeparators(normalized);
 }
 
 async function appendSkillDebug(entry: Record<string, unknown>): Promise<void> {

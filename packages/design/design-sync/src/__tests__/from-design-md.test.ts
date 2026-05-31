@@ -60,25 +60,6 @@ A minimal design system.
 /** Empty content — should produce an error or empty-but-valid result. */
 const EMPTY_FIXTURE = ``;
 
-/** Fixture with an explicit brandName override. */
-const NAMED_FIXTURE = `---
-name: "My System"
-colors:
-  primary: "#123456"
-  accent: "#abcdef"
-  background: "#f0f0f0"
-  foreground: "#010101"
-rounded:
-  md: "4px"
----
-
-# Typography
-
-## body
-- font-family: Roboto
-- font-size: 1rem
-`;
-
 /** Fixture with a YAML-front-matter typography block. */
 const TYPOGRAPHY_FIXTURE = `---
 name: TypoTest
@@ -102,21 +83,6 @@ spacing:
   lg: "32px"
 ---
 `;
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-/** Required theme tokens per the registry contract. */
-const REQUIRED_THEME_TOKENS = [
-  "color.primary",
-  "color.primary-foreground",
-  "color.background",
-  "color.foreground",
-  "color.card",
-  "color.border",
-  "color.ring",
-  "radius.md",
-  "fontFamily.sans",
-] as const;
 
 // ─── Suite ────────────────────────────────────────────────────────────────────
 

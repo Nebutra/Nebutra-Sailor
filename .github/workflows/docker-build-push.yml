@@ -36,9 +36,6 @@ concurrency:
 
 permissions:
   contents: read
-  packages: write # push to ghcr.io
-  security-events: write # upload Trivy SARIF
-  id-token: write # OIDC token for AWS role assumption (keyless auth)
 
 env:
   # ── Turborepo remote cache ──────────────────────────────────────────────────
@@ -61,6 +58,11 @@ jobs:
   build-push-node-apps:
     name: "Build Node app: ${{ matrix.app }}"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC token for AWS role assumption (keyless auth)
+      packages: write # push to ghcr.io
+      security-events: write # upload Trivy SARIF
 
     strategy:
       fail-fast: false # Don't cancel sibling jobs if one app fails
@@ -229,6 +231,11 @@ jobs:
   build-push-python-services:
     name: "Build Python service: ${{ matrix.service }}"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # OIDC token for AWS role assumption (keyless auth)
+      packages: write # push to ghcr.io
+      security-events: write # upload Trivy SARIF
 
     strategy:
       fail-fast: false # Don't cancel sibling jobs if one service fails

@@ -6,7 +6,7 @@
  * emitting JSON events or human-readable output along the way.
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import pc from "picocolors";
@@ -63,6 +63,15 @@ function emitJson(useJson: boolean, payload: JsonEvent): void {
   if (useJson) process.stdout.write(JSON.stringify(payload) + "\n");
 }
 
+function isMissingFileError(err: unknown): boolean {
+  return (
+    err !== null &&
+    typeof err === "object" &&
+    "code" in err &&
+    (err as NodeJS.ErrnoException).code === "ENOENT"
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Preview warnings
 // ---------------------------------------------------------------------------
@@ -99,14 +108,21 @@ function runSchemaPrune(
   schemaFlags: Record<string, string>,
 ): void {
   const schemaPath = path.join(resolvedTarget, "packages/platform/db/prisma/schema.prisma");
-  if (!fs.existsSync(schemaPath)) {
-    emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
+  let raw: string;
+  try {
+    raw = fs.readFileSync(schemaPath, "utf8");
+  } catch (err) {
+    if (isMissingFileError(err)) {
+      emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
+      return;
+    }
+    const msg = err instanceof Error ? err.message : String(err);
+    emitJson(useJson, { event: "step", step: "schema-prune", status: "error", error: msg });
     return;
   }
 
   emitJson(useJson, { event: "step", step: "schema-prune", status: "start" });
   try {
-    const raw = fs.readFileSync(schemaPath, "utf8");
     const pruned = pruneSchemaByFlags(raw, schemaFlags);
     fs.writeFileSync(schemaPath, pruned);
     pruneMigrationsByFlags(path.join(path.dirname(schemaPath), "migrations"), schemaFlags);
@@ -143,9 +159,7 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
     paymentChoice,
     auth,
     socialLoginIds,
-    aiMode,
     aiProviders,
-    customAiEndpoint,
     deployTarget,
     docs,
     metering,
@@ -192,10 +206,20 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   // Schema-level conditional pruning (early pass — before auth/db apply steps)
   {
     const schemaPath = path.join(resolvedTarget, "packages/platform/db/prisma/schema.prisma");
-    if (fs.existsSync(schemaPath)) {
+    let raw: string | undefined;
+    try {
+      raw = fs.readFileSync(schemaPath, "utf-8");
+    } catch (err) {
+      if (isMissingFileError(err)) {
+        emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
+      } else {
+        const msg = err instanceof Error ? err.message : String(err);
+        emitJson(useJson, { event: "step", step: "schema-prune", status: "error", error: msg });
+      }
+    }
+    if (raw !== undefined) {
       emitJson(useJson, { event: "step", step: "schema-prune", status: "start" });
       try {
-        const raw = fs.readFileSync(schemaPath, "utf-8");
         const pruned = pruneSchemaByFlags(raw, schemaFlags);
         fs.writeFileSync(schemaPath, pruned);
         pruneMigrationsByFlags(path.join(path.dirname(schemaPath), "migrations"), schemaFlags);
@@ -205,8 +229,6 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
         emitJson(useJson, { event: "step", step: "schema-prune", status: "error", error: msg });
         // Non-fatal — the schema stays as-is; user can manually trim later.
       }
-    } else {
-      emitJson(useJson, { event: "step", step: "schema-prune", status: "skip" });
     }
   }
 
@@ -480,21 +502,27 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   // -- install --
   const shouldInstall = opts.install !== false;
   if (shouldInstall) {
-    const installCmd = resolvedPm === "bun" ? "bun install" : `${resolvedPm} install`;
+    const installProgram = resolvedPm === "bun" ? "bun" : resolvedPm;
+    const installArgs = ["install"];
     if (useJson) {
       emitJson(true, { event: "step", step: "install", pm: resolvedPm, status: "start" });
     } else {
       process.stdout.write(pc.dim(`  Installing dependencies with ${resolvedPm}…\n`));
     }
     try {
-      execSync(installCmd, { cwd: resolvedTarget, stdio: useJson ? "ignore" : "inherit" });
+      execFileSync(installProgram, installArgs, {
+        cwd: resolvedTarget,
+        stdio: useJson ? "ignore" : "inherit",
+      });
       emitJson(useJson, { event: "step", step: "install", status: "ok" });
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       if (useJson) {
         emitJson(true, { event: "step", step: "install", status: "error", error: msg });
       } else {
-        process.stdout.write(pc.yellow(`  ⚠ install failed — run '${installCmd}' manually.\n`));
+        process.stdout.write(
+          pc.yellow(`  ⚠ install failed — run '${resolvedPm} install' manually.\n`),
+        );
       }
       // Non-fatal — project was still scaffolded.
     }
@@ -507,10 +535,20 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   if (shouldGit) {
     if (useJson) emitJson(true, { event: "step", step: "git-init", status: "start" });
     try {
-      execSync("git init -q", { cwd: resolvedTarget, stdio: "ignore" });
-      execSync("git add -A", { cwd: resolvedTarget, stdio: "ignore" });
-      execSync(
-        'git -c user.email=you@example.com -c user.name="You" commit -q -m "chore: initial scaffold from create-sailor"',
+      execFileSync("git", ["init", "-q"], { cwd: resolvedTarget, stdio: "ignore" });
+      execFileSync("git", ["add", "-A"], { cwd: resolvedTarget, stdio: "ignore" });
+      execFileSync(
+        "git",
+        [
+          "-c",
+          "user.email=you@example.com",
+          "-c",
+          "user.name=You",
+          "commit",
+          "-q",
+          "-m",
+          "chore: initial scaffold from create-sailor",
+        ],
         { cwd: resolvedTarget, stdio: "ignore" },
       );
       emitJson(useJson, { event: "step", step: "git-init", status: "ok" });

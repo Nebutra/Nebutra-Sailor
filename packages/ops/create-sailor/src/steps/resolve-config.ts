@@ -11,14 +11,9 @@ import pc from "picocolors";
 import { PROVIDERS } from "../utils/ai-meta";
 import { type AiMode, resolveAiTopology } from "../utils/ai-topology";
 import type { AuthChoice } from "../utils/auth";
-import {
-  parseSocialLoginFlag,
-  SOCIAL_LOGIN_PROVIDERS,
-  type SocialLoginId,
-} from "../utils/auth-social";
+import { parseSocialLoginFlag, type SocialLoginId } from "../utils/auth-social";
 import type { DocsFramework, NebutraConfig, Region } from "../utils/config";
 import type { DatabaseHostId } from "../utils/database-host-meta";
-import { getDatabaseHost } from "../utils/database-host-meta";
 import { collectPreviewSelections, type PreviewSelection } from "../utils/package-status";
 import type { PaymentChoice } from "../utils/payment";
 import type { WaveFeatureToggles } from "../utils/wave-features";
@@ -89,7 +84,7 @@ export interface ResolvedConfig {
 // ---------------------------------------------------------------------------
 
 async function runInteractivePrompts(
-  opts: CliOptions,
+  _opts: CliOptions,
   hasRegion: boolean,
   hasAuth: boolean,
   hasAi: boolean,
@@ -237,7 +232,7 @@ export async function resolveConfig(opts: CliOptions, useJson: boolean): Promise
   let region: Region;
   let orm: NebutraConfig["orm"];
   let database: NebutraConfig["database"];
-  let databaseHost: DatabaseHostId = "local";
+  let databaseHost: DatabaseHostId;
   let payment: NebutraConfig["payment"];
   let paymentChoice: PaymentChoice;
   let auth: AuthChoice;

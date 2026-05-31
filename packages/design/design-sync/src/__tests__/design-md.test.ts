@@ -5,12 +5,12 @@
  * Mirrors penpot.test.ts structure and conventions.
  */
 
-import { access, mkdir, mkdtemp, readFile, stat, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { LintReport } from "@google/design.md/linter";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { assertLintClean, DesignMdProvider, runLintGate } from "../providers/design-md";
+import { assertLintClean, DesignMdProvider } from "../providers/design-md";
 
 // ─── Fixtures ─────────────────────────────────────────────────────────────────
 

@@ -315,7 +315,7 @@ const MultipleSelector = ({
 
   useEffect(() => {
     if (!arrayOptions || onSearch) return;
-    const newOption = transToGroupOption(arrayOptions || [], groupBy);
+    const newOption = transToGroupOption(arrayOptions, groupBy);
     if (JSON.stringify(newOption) !== JSON.stringify(options)) {
       setOptions(newOption);
     }

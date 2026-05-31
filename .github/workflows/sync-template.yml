@@ -24,6 +24,9 @@ concurrency:
   group: sync-template
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   sync:
     runs-on: ubuntu-latest

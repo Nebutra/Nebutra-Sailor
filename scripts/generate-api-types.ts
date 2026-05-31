@@ -15,7 +15,7 @@
  * Output: apps/web/src/lib/api/types.generated.ts
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -29,7 +29,7 @@ const gatewayUrl = process.env.API_GATEWAY_URL;
 
 function formatGeneratedTypes() {
   process.stdout.write("[generate:api-types] Formatting generated types with Biome\n");
-  execSync(`pnpm exec biome check --write ${outFile}`, {
+  execFileSync("pnpm", ["exec", "biome", "check", "--write", outFile], {
     stdio: "inherit",
     cwd: ROOT,
   });
@@ -39,7 +39,7 @@ if (gatewayUrl) {
   // ── URL mode: fetch from running gateway ───────────────────────────────────
   const specUrl = `${gatewayUrl}/openapi.json`;
   process.stdout.write(`[generate:api-types] Fetching spec from ${specUrl}\n`);
-  execSync(`pnpm exec openapi-typescript ${specUrl} --output ${outFile}`, {
+  execFileSync("pnpm", ["exec", "openapi-typescript", specUrl, "--output", outFile], {
     stdio: "inherit",
     cwd: ROOT,
   });
@@ -51,14 +51,14 @@ if (gatewayUrl) {
   // only the gateway and fails with ERR_MODULE_NOT_FOUND when a dependency's
   // dist/ is missing (the environmental cause of the contract-chain breakage).
   process.stdout.write("[generate:api-types] Building api-gateway (+ workspace deps)…\n");
-  execSync("pnpm exec turbo run build --filter=@nebutra/gateway", {
+  execFileSync("pnpm", ["exec", "turbo", "run", "build", "--filter=@nebutra/gateway"], {
     stdio: "inherit",
     cwd: ROOT,
     env: { ...process.env, SKIP_ENV_VALIDATION: "true" },
   });
 
   process.stdout.write("[generate:api-types] Exporting OpenAPI spec…\n");
-  execSync("pnpm --filter @nebutra/gateway generate:spec", {
+  execFileSync("pnpm", ["--filter", "@nebutra/gateway", "generate:spec"], {
     stdio: "inherit",
     cwd: ROOT,
     env: {
@@ -78,10 +78,13 @@ if (gatewayUrl) {
   // but the committed spec is Biome-formatted (short arrays collapsed). Format
   // it here so the canonical artifact stays churn-free across regenerations.
   process.stdout.write("[generate:api-types] Formatting OpenAPI spec with Biome\n");
-  execSync(`pnpm exec biome format --write ${specFile}`, { stdio: "inherit", cwd: ROOT });
+  execFileSync("pnpm", ["exec", "biome", "format", "--write", specFile], {
+    stdio: "inherit",
+    cwd: ROOT,
+  });
 
   process.stdout.write(`[generate:api-types] Generating types from ${specFile}\n`);
-  execSync(`pnpm exec openapi-typescript ${specFile} --output ${outFile}`, {
+  execFileSync("pnpm", ["exec", "openapi-typescript", specFile, "--output", outFile], {
     stdio: "inherit",
     cwd: ROOT,
   });

@@ -19,6 +19,9 @@ concurrency:
   group: dead-code-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   knip:
     name: Knip (unused exports & dependencies)

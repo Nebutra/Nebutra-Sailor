@@ -18,7 +18,9 @@ on:
     branches: [main]
   workflow_dispatch: {}
 
-permissions: read-all
+permissions:
+  actions: read
+  contents: read
 
 jobs:
   analysis:

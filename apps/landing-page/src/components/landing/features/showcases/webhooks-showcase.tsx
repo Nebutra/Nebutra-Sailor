@@ -1,15 +1,7 @@
 "use client";
 
 import { Bug, Check, Clock, Connection, RefreshClockwise } from "@nebutra/icons";
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  StatusBadge,
-  StatusDot,
-  Table,
-} from "@nebutra/ui/primitives";
+import { Badge, Card, CardHeader, StatusBadge, StatusDot, Table } from "@nebutra/ui/primitives";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
 

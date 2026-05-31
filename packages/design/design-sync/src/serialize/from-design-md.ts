@@ -76,20 +76,39 @@ const PROSE_ONLY_HEADINGS = new Set(["elevation", "components", "shapes"]);
  * Falls back to the entire `content` if no matching heading is found.
  */
 function scopeToSection(content: string, keywords: string[]): string {
-  const headingRe = /^(#{1,3})\s+(.+?)\s*$/gm;
-  let match: RegExpExecArray | null;
-  while ((match = headingRe.exec(content)) !== null) {
-    const headingText = (match[2] ?? "").toLowerCase();
-    if (keywords.some((kw) => headingText.includes(kw))) {
-      const level = (match[1] ?? "").length;
-      const start = match.index + match[0].length;
-      const afterSection = content.slice(start);
-      const closingRe = new RegExp(`^#{1,${level}}\\s`, "m");
-      const closingMatch = closingRe.exec(afterSection);
-      return closingMatch ? afterSection.slice(0, closingMatch.index) : afterSection;
+  const lines = content.split("\n");
+  let startLine = -1;
+  let headingLevel = 0;
+
+  for (let index = 0; index < lines.length; index++) {
+    const heading = parseMarkdownHeading(lines[index] ?? "");
+    if (!heading || heading.level > 3) continue;
+    const headingText = heading.text.toLowerCase();
+    if (!keywords.some((kw) => headingText.includes(kw))) continue;
+    startLine = index + 1;
+    headingLevel = heading.level;
+    break;
+  }
+
+  if (startLine === -1) return content;
+
+  let endLine = lines.length;
+  for (let index = startLine; index < lines.length; index++) {
+    const heading = parseMarkdownHeading(lines[index] ?? "");
+    if (heading && heading.level <= headingLevel) {
+      endLine = index;
+      break;
     }
   }
-  return content;
+
+  return lines.slice(startLine, endLine).join("\n");
+}
+
+function parseMarkdownHeading(line: string): { level: number; text: string } | undefined {
+  let level = 0;
+  while (level < line.length && line[level] === "#") level++;
+  if (level === 0 || level > 6 || line[level] !== " ") return undefined;
+  return { level, text: line.slice(level + 1).trim() };
 }
 
 /**
@@ -153,17 +172,71 @@ function extractShadowsFromProse(content: string): string[] {
  * (including the trailing prose word and period) is dropped.
  */
 function trimTrailingProse(raw: string): string {
-  // Find all matches for px/rem lengths and color tokens, track the end index of the last one.
-  const TOKEN_RE =
-    /-?\d+(?:\.\d+)?(?:px|rem)\b|rgba?\s*\([^)]*\)|hsla?\s*\([^)]*\)|oklch\s*\([^)]*\)|color\s*\([^)]*\)|#[0-9a-fA-F]{3,8}\b/gi;
-  let lastEnd = -1;
-  let m: RegExpExecArray | null;
-  TOKEN_RE.lastIndex = 0;
-  while ((m = TOKEN_RE.exec(raw)) !== null) {
-    lastEnd = m.index + m[0].length;
-  }
+  const lastEnd = findLastShadowTokenEnd(raw);
   if (lastEnd === -1) return raw; // no tokens found — return unchanged
   return raw.slice(0, lastEnd).trim();
+}
+
+function findLastShadowTokenEnd(raw: string): number {
+  let lastEnd = -1;
+  for (let index = 0; index < raw.length; index++) {
+    const char = raw[index] ?? "";
+    if (char === "#") {
+      let end = index + 1;
+      while (end < raw.length && isHexDigit(raw[end] ?? "")) end++;
+      const count = end - index - 1;
+      if (count >= 3 && count <= 8) lastEnd = end;
+      index = Math.max(index, end - 1);
+      continue;
+    }
+
+    const lower = raw.slice(index).toLowerCase();
+    const fnName = ["rgba", "rgb", "hsla", "hsl", "oklch", "color"].find((name) =>
+      lower.startsWith(`${name}(`),
+    );
+    if (fnName) {
+      const close = raw.indexOf(")", index + fnName.length + 1);
+      if (close !== -1) {
+        lastEnd = close + 1;
+        index = close;
+      }
+      continue;
+    }
+
+    const lengthEnd = readCssLengthEnd(raw, index);
+    if (lengthEnd !== -1) {
+      lastEnd = lengthEnd;
+      index = lengthEnd - 1;
+    }
+  }
+  return lastEnd;
+}
+
+function isHexDigit(char: string): boolean {
+  return (
+    (char >= "0" && char <= "9") || (char >= "a" && char <= "f") || (char >= "A" && char <= "F")
+  );
+}
+
+function readCssLengthEnd(value: string, start: number): number {
+  let index = start;
+  if (value[index] === "-") index++;
+  let hasDigit = false;
+  while (index < value.length && value[index] >= "0" && value[index] <= "9") {
+    hasDigit = true;
+    index++;
+  }
+  if (value[index] === ".") {
+    index++;
+    while (index < value.length && value[index] >= "0" && value[index] <= "9") {
+      hasDigit = true;
+      index++;
+    }
+  }
+  if (!hasDigit) return -1;
+  if (value.slice(index, index + 2) === "px") return index + 2;
+  if (value.slice(index, index + 3) === "rem") return index + 3;
+  return -1;
 }
 
 /**
@@ -172,7 +245,14 @@ function trimTrailingProse(raw: string): string {
  * Rejects values that are clearly not shadows (transition strings, border values without offset, etc.).
  */
 function isShadowValue(candidate: string): boolean {
-  const pxCount = (candidate.match(/-?\d+(?:\.\d+)?px/g) ?? []).length;
+  let pxCount = 0;
+  for (let index = 0; index < candidate.length; index++) {
+    const end = readCssLengthEnd(candidate, index);
+    if (end !== -1 && candidate.slice(end - 2, end) === "px") {
+      pxCount++;
+      index = end - 1;
+    }
+  }
   if (pxCount < 2) return false;
   const hasColor =
     /rgba?\s*\([^)]+\)/i.test(candidate) ||
@@ -189,8 +269,15 @@ function isShadowValue(candidate: string): boolean {
  * Used to sort shadows from smallest → largest for sm/md/lg assignment.
  */
 function shadowMagnitude(value: string): number {
-  const nums = value.match(/-?\d+(?:\.\d+)?px/g) ?? [];
-  return nums.reduce((sum, n) => sum + Math.abs(parseFloat(n)), 0);
+  let sum = 0;
+  for (let index = 0; index < value.length; index++) {
+    const end = readCssLengthEnd(value, index);
+    if (end !== -1 && value.slice(end - 2, end) === "px") {
+      sum += Math.abs(parseFloat(value.slice(index, end - 2)));
+      index = end - 1;
+    }
+  }
+  return sum;
 }
 
 /**
@@ -228,7 +315,7 @@ function extractRadiusFromProse(content: string): Record<string, string> {
         has50pct = true;
         continue;
       }
-      if (raw === "9999px" || parseInt(raw) >= 500) {
+      if (raw === "9999px" || parseInt(raw, 10) >= 500) {
         hasFull = true;
         continue;
       }
@@ -281,16 +368,8 @@ function extractRadiusFromProse(content: string): Record<string, string> {
 function extractFontFamilyFromProse(content: string): string | undefined {
   const searchText = scopeToSection(content, ["typography", "typeface", "font"]);
 
-  // Pattern 1: "**Font Name**" or "Font Name font" near font-related sentences
-  // Look for capitalized token after "uses", "font:", "typeface:", "family:", etc.
-  const FONT_CONTEXT_RE =
-    /(?:uses?|font(?:-family)?:|typeface:|family:|body.*?font|display.*?font|primary.*?font)[:\s]+([A-Z][A-Za-z0-9\s-]{1,40}?)(?:\s+(?:as|for|with|and|–|—|,|\n|font|typeface)|$)/gm;
-
-  let m: RegExpExecArray | null;
-  FONT_CONTEXT_RE.lastIndex = 0;
-  while ((m = FONT_CONTEXT_RE.exec(searchText)) !== null) {
-    const candidate = (m[1] ?? "").trim();
-    // Reject common non-font words
+  for (const line of searchText.split("\n")) {
+    const candidate = extractFontCandidateFromLine(line);
     if (isLikelyFontName(candidate)) {
       return candidate;
     }
@@ -298,6 +377,7 @@ function extractFontFamilyFromProse(content: string): string | undefined {
 
   // Pattern 2: bold-formatted font name `**FontName**` near "font"/"typeface"/"body"/"display"
   const BOLD_FONT_RE = /\*\*([A-Z][A-Za-z0-9\s-]{1,40}?)\*\*/g;
+  let m: RegExpExecArray | null;
   BOLD_FONT_RE.lastIndex = 0;
   while ((m = BOLD_FONT_RE.exec(searchText)) !== null) {
     const candidate = (m[1] ?? "").trim();
@@ -319,6 +399,25 @@ function extractFontFamilyFromProse(content: string): string | undefined {
   }
 
   return undefined;
+}
+
+function extractFontCandidateFromLine(line: string): string | undefined {
+  const lower = line.toLowerCase();
+  const markers = ["font-family:", "font:", "typeface:", "family:", "uses "];
+  const marker = markers.find((item) => lower.includes(item));
+  if (!marker) return undefined;
+
+  const start = lower.indexOf(marker) + marker.length;
+  const afterMarker = line.slice(start).trim();
+  const stopWords = new Set(["as", "for", "with", "and", "font", "typeface"]);
+  const words: string[] = [];
+  for (const rawWord of afterMarker.split(/\s+/)) {
+    const word = rawWord.replace(/^[`"']+|[`"',.;:]+$/g, "");
+    if (!word || stopWords.has(word.toLowerCase())) break;
+    words.push(word);
+    if (words.length >= 4) break;
+  }
+  return words.join(" ").trim() || undefined;
 }
 
 /** Common non-font words that might otherwise be mistaken for font names. */
@@ -611,21 +710,7 @@ interface ProseExtractionResult {
  */
 function extractProseColorMatches(content: string): ProseExtractionResult {
   // ── 1. Scope to the color section if one exists ──────────────────────────
-  const COLOR_HEADING = /^(#{1,3})\s+.*colou?r/im;
-  const headingMatch = COLOR_HEADING.exec(content);
-
-  let searchText: string;
-  if (headingMatch) {
-    const headingLevel = (headingMatch[1] ?? "").length;
-    const headingStart = headingMatch.index;
-    // Find the next heading at the same or higher level (fewer #'s) after this section
-    const afterHeading = content.slice(headingStart + headingMatch[0].length);
-    const closingHeadingPattern = new RegExp(`^#{1,${headingLevel}}\\s`, "m");
-    const closingMatch = closingHeadingPattern.exec(afterHeading);
-    searchText = closingMatch ? afterHeading.slice(0, closingMatch.index) : afterHeading;
-  } else {
-    searchText = content;
-  }
+  const searchText = scopeToSection(content, ["color", "colour"]);
 
   // ── 2. Match labeled color literals ──────────────────────────────────────
   // Match `**Label** (` and the remainder of the line. We intentionally do NOT
@@ -1157,9 +1242,13 @@ export function importFromDesignMd(
   // Matching is substring-based (lowercased heading CONTAINS the keyword) so that headings
   // like "Elevation & Depth" still match the "elevation" keyword.
   const unmappedSet = new Set<string>();
-  const docSections: string[] = (content.match(/^#{1,3}\s+(.+?)\s*$/gm) ?? []).map((h) =>
-    h.replace(/^#{1,3}\s+/, ""),
-  );
+  const docSections: string[] = [];
+  for (const line of content.split("\n")) {
+    const heading = parseMarkdownHeading(line);
+    if (heading && heading.level <= 3) {
+      docSections.push(heading.text);
+    }
+  }
 
   const labels: Record<string, string> = {
     elevation: "elevation (prose-only — no structured token in DESIGN.md spec)",
