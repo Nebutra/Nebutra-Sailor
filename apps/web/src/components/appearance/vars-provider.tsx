@@ -4,6 +4,102 @@ import { useEffect, useRef, useState } from "react";
 
 import { CODE_FONT_STACKS, UI_FONT_STACKS, useAppearance, useAppearanceStore } from "./store";
 
+// ─── Browser-probe CSS-color → HSL triple ────────────────────────────────────
+//
+// The theme resolvers emit --color-* values as oklch(), hex, or color-mix().
+// The app's shadcn base vars (--background, --primary, …) are consumed via
+// `hsl(var(--background))` — they must be HSL *channel triples*, e.g. "228 85% 56%".
+// Tailwind v4 @theme inline inlines --color-background at build time so writing
+// --color-background at runtime has no effect on compiled utility classes.
+//
+// Solution: convert every theme color to an HSL triple via a hidden DOM probe.
+// The browser resolves oklch / hex / color-mix through its own color engine —
+// getComputedStyle().color always returns rgb()/rgba() regardless of input syntax.
+//
+// The probe element is created once (module-scoped) and reused for all conversions
+// in a single theme-apply cycle.
+
+let colorProbe: HTMLSpanElement | null = null;
+
+/** Convert any CSS color string to an "H S% L%" triple, or null if unresolvable. */
+function toHslTriple(cssColor: string): string | null {
+  if (typeof document === "undefined") return null;
+  if (!colorProbe) {
+    colorProbe = document.createElement("span");
+    colorProbe.style.cssText =
+      "position:absolute;width:0;height:0;visibility:hidden;pointer-events:none;";
+    document.body.appendChild(colorProbe);
+  }
+
+  // Reset then assign — if the value is invalid the browser leaves it empty.
+  colorProbe.style.color = "";
+  colorProbe.style.color = cssColor;
+  const rgb = getComputedStyle(colorProbe).color; // always "rgb(r, g, b)" or "rgba(…)"
+
+  const m = rgb.match(/rgba?\(([^)]+)\)/);
+  if (!m?.[1]) return null;
+
+  const parts = m[1]
+    .split(",")
+    .slice(0, 3)
+    .map((n) => Number(n.trim()) / 255);
+  const r = parts[0] ?? 0;
+  const g = parts[1] ?? 0;
+  const b = parts[2] ?? 0;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+
+  let h = 0;
+  let s = 0;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    if (max === r) {
+      h = (g - b) / d + (g < b ? 6 : 0);
+    } else if (max === g) {
+      h = (b - r) / d + 2;
+    } else {
+      h = (r - g) / d + 4;
+    }
+    h /= 6;
+  }
+
+  return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
+}
+
+// ─── Shadcn role → base var mapping ─────────────────────────────────────────
+//
+// For each shadcn base var (--<role>), the corresponding theme color key is
+// --color-<role>. Writes to these triples make hsl(var(--<role>)) resolve
+// to the theme color everywhere in the app.
+
+const SHADCN_ROLES = [
+  "background",
+  "foreground",
+  "card",
+  "card-foreground",
+  "popover",
+  "popover-foreground",
+  "primary",
+  "primary-foreground",
+  "secondary",
+  "secondary-foreground",
+  "muted",
+  "muted-foreground",
+  "accent",
+  "accent-foreground",
+  "destructive",
+  "destructive-foreground",
+  "border",
+  "input",
+  "ring",
+] as const;
+
+// ─── Component ───────────────────────────────────────────────────────────────
+
 export default function AppearanceVarsProvider(): null {
   const [state] = useAppearance();
   // Dark-mode is owned by @nebutra/tokens ThemeProvider (toggles `.dark` on
@@ -78,6 +174,13 @@ export default function AppearanceVarsProvider(): null {
   // DESIGN.md token resolver are lazy-imported only when actually needed, so
   // neither path adds anything to the global bundle.
   // Precedence: importedTheme > theme preset > default (no-op).
+  //
+  // KEY FIX: instead of (only) writing --color-* vars (which Tailwind v4
+  // @theme inline inlines at build time and therefore ignores at runtime),
+  // we convert each theme color to an HSL triple and write the shadcn BASE
+  // vars (--background, --primary, …). The app consumes these as
+  // hsl(var(--background)) etc. — those are runtime var() calls that DO
+  // reflect property changes on <html>.
   useEffect(() => {
     if (typeof document === "undefined") return;
     const root = document.documentElement;
@@ -97,25 +200,61 @@ export default function AppearanceVarsProvider(): null {
     };
 
     /**
-     * Bridge the sidebar vars from the resolved style record — the playground
-     * canvas has no sidebar, so neither resolver emits these. Shared by both
-     * the preset path and the importedTheme path.
+     * Core helper: given the resolved --color-* style record from a theme
+     * resolver, write the shadcn base HSL triple vars on <html>.
+     *
+     * For every shadcn role (e.g. "background"), we:
+     *   1. Look up the resolved --color-background oklch/hex value.
+     *   2. Convert it to an HSL triple via the DOM probe.
+     *   3. Set --background (the base var) to that triple.
+     *
+     * This makes hsl(var(--background)) resolve to the theme color, which is
+     * what every Tailwind utility class and direct CSS reference reads.
      */
-    function applySidebarBridge(style: Record<string, string>) {
-      set("--color-sidebar", style["--color-card"] ?? style["--color-background"]);
-      set(
-        "--color-sidebar-foreground",
-        style["--color-card-foreground"] ?? style["--color-foreground"],
-      );
-      set("--color-sidebar-primary", style["--color-primary"]);
-      set("--color-sidebar-primary-foreground", style["--color-primary-foreground"]);
-      set("--color-sidebar-accent", style["--color-accent"] ?? style["--color-muted"]);
-      set(
-        "--color-sidebar-accent-foreground",
-        style["--color-accent-foreground"] ?? style["--color-foreground"],
-      );
-      set("--color-sidebar-border", style["--color-border"]);
-      set("--color-sidebar-ring", style["--color-ring"]);
+    function applyBaseHslVars(style: Record<string, string>) {
+      for (const role of SHADCN_ROLES) {
+        const colorValue = style[`--color-${role}`];
+        if (!colorValue) continue;
+        const triple = toHslTriple(colorValue);
+        if (triple) set(`--${role}`, triple);
+      }
+    }
+
+    /**
+     * Sidebar vars — the playground canvas has no sidebar, so neither resolver
+     * emits these. We derive them from the resolved brand/surface colors.
+     * Written as HSL triples (--sidebar, not --color-sidebar) to match the
+     * same pattern as the rest of the shadcn base vars.
+     */
+    function applySidebarHslVars(style: Record<string, string>) {
+      const pairs: Array<[string, string | undefined]> = [
+        ["--sidebar", style["--color-card"] ?? style["--color-background"]],
+        ["--sidebar-foreground", style["--color-card-foreground"] ?? style["--color-foreground"]],
+        ["--sidebar-primary", style["--color-primary"]],
+        ["--sidebar-primary-foreground", style["--color-primary-foreground"]],
+        ["--sidebar-accent", style["--color-accent"] ?? style["--color-muted"]],
+        [
+          "--sidebar-accent-foreground",
+          style["--color-accent-foreground"] ?? style["--color-foreground"],
+        ],
+        ["--sidebar-border", style["--color-border"]],
+        ["--sidebar-ring", style["--color-ring"]],
+      ];
+
+      for (const [varName, colorValue] of pairs) {
+        if (!colorValue) continue;
+        const triple = toHslTriple(colorValue);
+        if (triple) set(varName, triple);
+      }
+    }
+
+    /**
+     * Radius — map --radius-md → --radius (shadcn's global rounding token).
+     * The value is already a length (e.g. "0.5rem"); no conversion needed.
+     */
+    function applyRadius(style: Record<string, string>) {
+      const radiusMd = style["--radius-md"];
+      if (radiusMd) set("--radius", radiusMd);
     }
 
     // ── Branch 1: DESIGN.md imported theme ──────────────────────────────────
@@ -132,10 +271,9 @@ export default function AppearanceVarsProvider(): null {
             mode,
           ) as Record<string, string>;
 
-          for (const [key, value] of Object.entries(style)) {
-            if (key.startsWith("--")) set(key, value);
-          }
-          applySidebarBridge(style);
+          applyBaseHslVars(style);
+          applySidebarHslVars(style);
+          applyRadius(style);
 
           appliedThemeVars.current = applied;
           root.setAttribute("data-theme-preset", "imported");
@@ -158,10 +296,9 @@ export default function AppearanceVarsProvider(): null {
         if (cancelled || state.theme === "default") return;
         const style = getThemePreviewStyle(state.theme, mode) as Record<string, string>;
 
-        for (const [key, value] of Object.entries(style)) {
-          if (key.startsWith("--")) set(key, value);
-        }
-        applySidebarBridge(style);
+        applyBaseHslVars(style);
+        applySidebarHslVars(style);
+        applyRadius(style);
 
         appliedThemeVars.current = applied;
         root.setAttribute("data-theme-preset", state.theme);
