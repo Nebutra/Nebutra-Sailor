@@ -254,6 +254,69 @@ rounded:
       expect(leaf.$type).toBe("fontFamily");
       expect(leaf.$value).toBe("Lato");
     });
+
+    // Corpus reality (VoltAgent/awesome-design-md): real DESIGN.md files declare a
+    // distinct display/heading font and a code/mono font (e.g. sentry's code.fontFamily
+    // "Monaco", vercel's caption-mono "Geist Mono"). All three roles must map so the
+    // app can consume them — not only sans.
+    const FONT_ROLES_FIXTURE = `---
+name: FontRoles
+colors:
+  primary: "#000000"
+typography:
+  body:
+    fontFamily: Inter
+  display:
+    fontFamily: Space Grotesk
+  code:
+    fontFamily: "JetBrains Mono, ui-monospace, monospace"
+---
+`;
+
+    it("maps display → fontFamily.heading and code → fontFamily.mono", () => {
+      const { set } = importFromDesignMd(FONT_ROLES_FIXTURE);
+      const ff = set.tokens["fontFamily"] as Record<string, { $value: string; $type: string }>;
+      expect(ff.sans?.$value).toBe("Inter");
+      expect(ff.heading?.$value).toBe("Space Grotesk");
+      expect(ff.heading?.$type).toBe("fontFamily");
+      expect(ff.mono?.$value).toBe("JetBrains Mono, ui-monospace, monospace");
+      expect(ff.mono?.$type).toBe("fontFamily");
+    });
+
+    it("maps a *-mono typography key (e.g. caption-mono) → fontFamily.mono", () => {
+      const fixture = `---
+name: MonoKey
+colors:
+  primary: "#000000"
+typography:
+  body:
+    fontFamily: Geist
+  caption-mono:
+    fontFamily: "Geist Mono, monospace"
+---
+`;
+      const { set } = importFromDesignMd(fixture);
+      const ff = set.tokens["fontFamily"] as Record<string, { $value: string }>;
+      expect(ff.mono?.$value).toBe("Geist Mono, monospace");
+    });
+
+    it("omits fontFamily.heading when the heading font equals sans (avoids redundant noise)", () => {
+      const fixture = `---
+name: SameHeading
+colors:
+  primary: "#000000"
+typography:
+  body:
+    fontFamily: Inter
+  h1:
+    fontFamily: Inter
+---
+`;
+      const { set } = importFromDesignMd(fixture);
+      const ff = set.tokens["fontFamily"] as Record<string, unknown>;
+      expect(ff["sans"]).toBeDefined();
+      expect("heading" in ff).toBe(false);
+    });
   });
 
   describe("ImportReport", () => {

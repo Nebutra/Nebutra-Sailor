@@ -545,6 +545,12 @@ function isHeadingLikeKey(key: string): boolean {
   );
 }
 
+/** Return true if the typography key looks like a code/monospace entry. */
+function isMonoLikeKey(key: string): boolean {
+  const k = key.toLowerCase();
+  return k.includes("mono") || k.includes("code") || k === "kbd" || k === "pre";
+}
+
 function isLikelyFontName(candidate: string): boolean {
   if (!candidate || candidate.length < 2 || candidate.length > 60) return false;
   // Must start with a capital letter
@@ -1117,28 +1123,59 @@ export function importFromDesignMd(
     }
   }
 
-  // 3d. typography body/h1 font-family → fontFamily.sans ($type: "fontFamily")
+  // 3d. typography font-family → fontFamily.{sans,heading,mono} ($type: "fontFamily")
   // @google/design.md 0.2.0 preserves the exact YAML front-matter key (e.g. "body",
-  // "body-md", "h1"). Markdown-section typography is NOT parsed into state.typography.
-  // Pick order: "body" → "body-md" → "h1" → first available entry with fontFamily defined.
-  // Prose fallback: when front-matter typography is empty, scan prose for a font family name.
+  // "body-md", "h1", "display", "code", "caption-mono"). Markdown-section typography is
+  // NOT parsed into state.typography. Each role has its own pick order with a like-key
+  // fallback. sans also has a prose fallback when front-matter typography is empty.
   const FONT_FAMILY_PICK_ORDER = ["body", "body-md", "h1"] as const;
+  const HEADING_FONT_PICK_ORDER = ["display", "h1", "heading", "display-xl", "display-lg"] as const;
+  const MONO_FONT_PICK_ORDER = [
+    "code",
+    "mono",
+    "caption-mono",
+    "code-block",
+    "code-inline",
+  ] as const;
+
+  const typographyPairs = [...state.typography.entries()];
+  const pickFontFamily = (
+    order: readonly string[],
+    likeKey: (k: string) => boolean,
+  ): string | undefined => {
+    const byOrder = order
+      .map((k) => state.typography.get(k))
+      .find((t) => t?.fontFamily !== undefined)?.fontFamily;
+    if (byOrder) return byOrder;
+    return typographyPairs.find(([k, t]) => likeKey(k) && t?.fontFamily !== undefined)?.[1]
+      ?.fontFamily;
+  };
+
+  // sans — unchanged precedence (body → body-md → h1 → first available → prose fallback)
   const pickedTypography =
     FONT_FAMILY_PICK_ORDER.map((k) => state.typography.get(k)).find(
       (t) => t?.fontFamily !== undefined,
     ) ?? [...state.typography.values()].find((t) => t?.fontFamily !== undefined);
-  if (pickedTypography?.fontFamily) {
-    tokens["fontFamily"] = leafGroup({
-      sans: { $value: pickedTypography.fontFamily, $type: "fontFamily" },
-    });
-  } else {
-    // Prose fallback: extract font family from prose typography section
+  let sansValue: string | undefined = pickedTypography?.fontFamily;
+  if (!sansValue) {
     const proseFontFamily = extractFontFamilyFromProse(content);
-    if (proseFontFamily) {
-      tokens["fontFamily"] = leafGroup({
-        sans: { $value: `${proseFontFamily}, sans-serif`, $type: "fontFamily" },
-      });
-    }
+    if (proseFontFamily) sansValue = `${proseFontFamily}, sans-serif`;
+  }
+
+  const headingValue = pickFontFamily(HEADING_FONT_PICK_ORDER, isHeadingLikeKey);
+  const monoValue = pickFontFamily(MONO_FONT_PICK_ORDER, isMonoLikeKey);
+
+  const fontFamilyEntries: Record<string, { $value: string; $type: "fontFamily" }> = {};
+  if (sansValue) fontFamilyEntries["sans"] = { $value: sansValue, $type: "fontFamily" };
+  // Only emit heading when it differs from sans — the consumer falls back
+  // heading → sans, so a duplicate would be noise.
+  if (headingValue && headingValue !== sansValue) {
+    fontFamilyEntries["heading"] = { $value: headingValue, $type: "fontFamily" };
+  }
+  if (monoValue) fontFamilyEntries["mono"] = { $value: monoValue, $type: "fontFamily" };
+
+  if (Object.keys(fontFamilyEntries).length > 0) {
+    tokens["fontFamily"] = leafGroup(fontFamilyEntries);
   }
 
   // 3e. Type-scale: emit fontSize.base / fontSize.heading / fontWeight.heading
