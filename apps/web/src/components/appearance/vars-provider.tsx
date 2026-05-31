@@ -20,9 +20,20 @@ import { CODE_FONT_STACKS, UI_FONT_STACKS, useAppearance, useAppearanceStore } f
 // in a single theme-apply cycle.
 
 let colorProbe: HTMLSpanElement | null = null;
+let colorCanvas: HTMLCanvasElement | null = null;
+let colorCtx: CanvasRenderingContext2D | null = null;
 
-/** Convert any CSS color string to an "H S% L%" triple, or null if unresolvable. */
-function toHslTriple(cssColor: string): string | null {
+/**
+ * Resolve any CSS color (oklch / hex / rgb / hsl / color-mix) to sRGB [r,g,b] in 0-1.
+ *
+ * CRITICAL: getComputedStyle().color does NOT always normalize to rgb() — modern
+ * engines preserve oklch()/color() as-authored, so a regex for rgb() fails on
+ * built-in (oklch) themes. So we (1) resolve via a probe element (this composites
+ * color-mix / relative-color into a concrete computed color), then (2) RASTERIZE
+ * that to sRGB bytes via a 1×1 canvas — getImageData always returns rgb regardless
+ * of the source color syntax. This is what makes built-in oklch themes apply.
+ */
+function toSrgb(cssColor: string): [number, number, number] | null {
   if (typeof document === "undefined") return null;
   if (!colorProbe) {
     colorProbe = document.createElement("span");
@@ -30,22 +41,32 @@ function toHslTriple(cssColor: string): string | null {
       "position:absolute;width:0;height:0;visibility:hidden;pointer-events:none;";
     document.body.appendChild(colorProbe);
   }
-
-  // Reset then assign — if the value is invalid the browser leaves it empty.
   colorProbe.style.color = "";
   colorProbe.style.color = cssColor;
-  const rgb = getComputedStyle(colorProbe).color; // always "rgb(r, g, b)" or "rgba(…)"
+  const resolved = getComputedStyle(colorProbe).color || cssColor;
 
-  const m = rgb.match(/rgba?\(([^)]+)\)/);
-  if (!m?.[1]) return null;
+  if (!colorCtx) {
+    colorCanvas = document.createElement("canvas");
+    colorCanvas.width = 1;
+    colorCanvas.height = 1;
+    colorCtx = colorCanvas.getContext("2d", { willReadFrequently: true });
+  }
+  if (!colorCtx) return null;
+  colorCtx.clearRect(0, 0, 1, 1);
+  colorCtx.fillStyle = "#000";
+  colorCtx.fillStyle = resolved; // invalid color leaves fillStyle at #000
+  colorCtx.fillRect(0, 0, 1, 1);
+  const data = colorCtx.getImageData(0, 0, 1, 1).data;
+  return [(data[0] ?? 0) / 255, (data[1] ?? 0) / 255, (data[2] ?? 0) / 255];
+}
 
-  const parts = m[1]
-    .split(",")
-    .slice(0, 3)
-    .map((n) => Number(n.trim()) / 255);
-  const r = parts[0] ?? 0;
-  const g = parts[1] ?? 0;
-  const b = parts[2] ?? 0;
+/** Convert any CSS color string to an "H S% L%" triple, or null if unresolvable. */
+function toHslTriple(cssColor: string): string | null {
+  const srgb = toSrgb(cssColor);
+  if (!srgb) return null;
+  const r = srgb[0];
+  const g = srgb[1];
+  const b = srgb[2];
 
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
