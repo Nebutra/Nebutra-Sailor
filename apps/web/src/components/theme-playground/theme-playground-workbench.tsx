@@ -1078,7 +1078,7 @@ export function ThemePlaygroundWorkbench() {
   }
 
   return (
-    <div className="theme-playground-frame flex min-h-[calc(100vh-7rem)] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background text-foreground shadow-sm">
+    <div className="theme-playground-frame flex min-h-[calc(100vh-7rem)] flex-col overflow-hidden bg-background text-foreground">
       <TopBar
         mode={mode}
         density={density}
