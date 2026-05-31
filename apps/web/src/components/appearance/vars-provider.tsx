@@ -154,8 +154,19 @@ export default function AppearanceVarsProvider(): null {
     if (typeof document === "undefined") return;
     const root = document.documentElement;
 
-    root.style.setProperty("--user-ui-font-size", `${state.uiFontSize}px`);
-    root.style.setProperty("--user-code-font-size", `${state.codeFontSize}px`);
+    // "theme" defers to the theme/DESIGN type-scale (--text-base, consumed by
+    // @nebutra/ui fonts.css): REMOVE the user override so the var() fallback
+    // chain reaches it. A numeric size pins an explicit px value that wins.
+    if (state.uiFontSize === "theme") {
+      root.style.removeProperty("--user-ui-font-size");
+    } else {
+      root.style.setProperty("--user-ui-font-size", `${state.uiFontSize}px`);
+    }
+    if (state.codeFontSize === "theme") {
+      root.style.removeProperty("--user-code-font-size");
+    } else {
+      root.style.setProperty("--user-code-font-size", `${state.codeFontSize}px`);
+    }
 
     if (state.backgroundColor) {
       root.style.setProperty("--user-background", state.backgroundColor);

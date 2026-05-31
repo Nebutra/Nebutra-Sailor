@@ -201,21 +201,17 @@
 }
 
 @layer base {
-  :root {
-    --user-ui-font-size: 14px;
-    --user-code-font-size: 12px;
-  }
-
-  body {
-    font-size: var(--user-ui-font-size);
-  }
-
+  /* Body font-size is owned by @nebutra/ui fonts.css (var-driven:
+     --user-ui-font-size → --text-base → 1rem). Defaults are intentionally NOT
+     pinned on :root so the fallback chain can reach the theme/DESIGN type-scale
+     when the user defers to it (uiFontSize = "theme"). Here we only own the code
+     surfaces, which fonts.css doesn't style. */
   pre,
   code,
   kbd,
   samp,
   [data-code-surface] {
-    font-size: var(--user-code-font-size);
+    font-size: var(--user-code-font-size, 0.75rem);
   }
 
   html.surface-translucent [data-sidebar="sidebar"],

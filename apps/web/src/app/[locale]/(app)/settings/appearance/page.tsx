@@ -47,6 +47,7 @@ export default async function AppearancePage() {
               valueKey="uiFontSize"
               min={12}
               max={18}
+              defaultPx={14}
               label={t("typography.uiFontSize")}
               description={t("typography.uiFontSizeDescription")}
             />
@@ -54,6 +55,7 @@ export default async function AppearancePage() {
               valueKey="codeFontSize"
               min={10}
               max={18}
+              defaultPx={12}
               label={t("typography.codeFontSize")}
               description={t("typography.codeFontSizeDescription")}
             />

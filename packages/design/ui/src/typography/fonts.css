@@ -70,7 +70,12 @@ html {
 
 body {
   font-family: var(--font-sans);
-  font-size: 1rem;
+  /* An explicit user size (--user-ui-font-size) wins; otherwise the active
+     theme/DESIGN type-scale (--text-base); otherwise the 1rem default. This is
+     backward-compatible — with neither var set it resolves to exactly 1rem.
+     (Previously this was a hardcoded 1rem that, being unlayered, silently
+     overrode the app's --user-ui-font-size font-size control.) */
+  font-size: var(--user-ui-font-size, var(--text-base, 1rem));
   line-height: 1.5;
   font-weight: 400;
 }
@@ -83,7 +88,8 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  font-weight: 600;
+  /* Theme/DESIGN can lighten headings via fontWeight.heading; default 600. */
+  font-weight: var(--font-weight-heading, 600);
   line-height: 1.25;
 }
 

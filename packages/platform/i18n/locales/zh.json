@@ -875,6 +875,10 @@
         "codeFontSize": "代码字号",
         "codeFontSizeDescription": "调整聊天和差异视图中代码使用的基础字号。"
       },
+      "fontSize": {
+        "followTheme": "跟随主题",
+        "customize": "自定义"
+      },
       "motion": {
         "title": "减少动态效果",
         "description": "减少动画或匹配系统设置。",

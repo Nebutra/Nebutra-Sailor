@@ -1,6 +1,7 @@
 "use client";
 
-import { Input } from "@nebutra/ui/primitives";
+import { Button, Input } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import type { AppearanceState } from "./store";
 import { useAppearance } from "./store";
 
@@ -12,11 +13,22 @@ interface FontSizeStepperProps {
   min: number;
   max: number;
   valueKey: FontSizeKey;
+  /** px value used when switching from "follow theme" to an explicit size. */
+  defaultPx: number;
 }
 
-export function FontSizeStepper({ label, description, min, max, valueKey }: FontSizeStepperProps) {
+export function FontSizeStepper({
+  label,
+  description,
+  min,
+  max,
+  valueKey,
+  defaultPx,
+}: FontSizeStepperProps) {
+  const t = useTranslations("settings.appearance.fontSize");
   const [state, update] = useAppearance();
   const value = state[valueKey];
+  const isTheme = value === "theme";
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const next = Number(event.currentTarget.value);
@@ -32,18 +44,46 @@ export function FontSizeStepper({ label, description, min, max, valueKey }: Font
         {description && <span className="text-xs text-muted-foreground">{description}</span>}
       </div>
       <div className="flex items-center gap-2">
-        <Input
-          type="number"
-          inputMode="numeric"
-          min={min}
-          max={max}
-          step={1}
-          value={value}
-          onChange={handleChange}
-          className="h-8 w-20 text-right tabular-nums"
-          aria-label={label}
-        />
-        <span className="text-xs text-muted-foreground">px</span>
+        {isTheme ? (
+          <>
+            <span className="text-xs text-muted-foreground">{t("followTheme")}</span>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={() =>
+                update({
+                  [valueKey]: Math.min(max, Math.max(min, defaultPx)),
+                } as Partial<AppearanceState>)
+              }
+            >
+              {t("customize")}
+            </Button>
+          </>
+        ) : (
+          <>
+            <Input
+              type="number"
+              inputMode="numeric"
+              min={min}
+              max={max}
+              step={1}
+              value={value}
+              onChange={handleChange}
+              className="h-8 w-20 text-right tabular-nums"
+              aria-label={label}
+            />
+            <span className="text-xs text-muted-foreground">px</span>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={() => update({ [valueKey]: "theme" } as Partial<AppearanceState>)}
+            >
+              {t("followTheme")}
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

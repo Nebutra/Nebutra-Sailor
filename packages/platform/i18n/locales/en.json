@@ -885,6 +885,10 @@
         "codeFontSize": "Code font size",
         "codeFontSizeDescription": "Adjust the base code font size."
       },
+      "fontSize": {
+        "followTheme": "Theme",
+        "customize": "Customize"
+      },
       "motion": {
         "title": "Reduce motion",
         "description": "Reduce animations or match system preference.",

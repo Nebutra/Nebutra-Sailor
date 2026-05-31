@@ -16,6 +16,11 @@ export type AppearanceAccent =
 
 export type AppearanceMotion = "system" | "on" | "off";
 
+// A concrete px size, or "theme" = follow the active theme/DESIGN type-scale
+// (--text-base via @nebutra/ui fonts.css), falling back to the app default when
+// the theme defines none.
+export type AppearanceFontSize = number | "theme";
+
 // "theme" = follow the active theme / imported DESIGN.md font (consume
 // var(--font-sans) / var(--font-mono)); the rest are explicit overrides.
 export type AppearanceUiFontFamily = "theme" | "system" | "geist" | "inter" | "sf";
@@ -64,8 +69,8 @@ export type AppearanceState = {
    */
   importedTheme: ImportedThemeSnapshot | null;
   accent: AppearanceAccent;
-  uiFontSize: number;
-  codeFontSize: number;
+  uiFontSize: AppearanceFontSize;
+  codeFontSize: AppearanceFontSize;
   motion: AppearanceMotion;
   transparency: boolean;
   backgroundColor: string | null;
@@ -84,8 +89,8 @@ export const APPEARANCE_DEFAULTS: AppearanceState = {
   theme: "default",
   importedTheme: null,
   accent: "default",
-  uiFontSize: 14,
-  codeFontSize: 12,
+  uiFontSize: "theme",
+  codeFontSize: "theme",
   motion: "system",
   transparency: false,
   backgroundColor: null,
@@ -143,9 +148,10 @@ export const CODE_FONT_STACKS: Record<AppearanceCodeFontFamily, string> = {
 
 const HEX_RE = /^#[0-9a-fA-F]{6}$/;
 
-function clampFontSize(value: unknown, min: number, max: number, fallback: number): number {
+function sanitizeFontSize(value: unknown, min: number, max: number): AppearanceFontSize {
+  if (value === "theme") return "theme";
   const n = typeof value === "number" ? value : Number(value);
-  if (!Number.isFinite(n)) return fallback;
+  if (!Number.isFinite(n)) return "theme";
   return Math.min(max, Math.max(min, Math.round(n)));
 }
 
@@ -209,8 +215,8 @@ function sanitize(raw: unknown): AppearanceState {
     importedTheme: sanitizeImportedTheme(r.importedTheme),
     accent,
     motion,
-    uiFontSize: clampFontSize(r.uiFontSize, 12, 18, APPEARANCE_DEFAULTS.uiFontSize),
-    codeFontSize: clampFontSize(r.codeFontSize, 10, 18, APPEARANCE_DEFAULTS.codeFontSize),
+    uiFontSize: sanitizeFontSize(r.uiFontSize, 12, 18),
+    codeFontSize: sanitizeFontSize(r.codeFontSize, 10, 18),
     transparency:
       typeof r.transparency === "boolean" ? r.transparency : APPEARANCE_DEFAULTS.transparency,
     backgroundColor: sanitizeHexColor(r.backgroundColor),
