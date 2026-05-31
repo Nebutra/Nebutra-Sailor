@@ -77,9 +77,13 @@ interface DtcgSemantic {
     };
   };
 }
+interface ThemeRegistry {
+  themes: Array<{ id: string }>;
+}
 
 const core = readJson<DtcgCore>("packages/design/design-tokens/tokens/core.json");
 const semantic = readJson<DtcgSemantic>("packages/design/design-tokens/tokens/semantic.json");
+const themeRegistry = readJson<ThemeRegistry>("packages/design/theme/src/registry.json");
 
 const tokensCss = read("packages/design/tokens/styles.css");
 const themesCss = read("packages/design/theme/themes.css");
@@ -396,12 +400,30 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
   } else {
     ok("themes.css: --color-primary present");
   }
-  for (const themeName of ["gradient", "dark-dense", "minimal", "vibrant", "ocean"]) {
+
+  const expectedThemeSelectors = new Set(
+    themeRegistry.themes.map((theme) => theme.id).filter((themeId) => themeId !== "nebutra"),
+  );
+  const actualThemeSelectors = new Set(
+    [...themesCss.matchAll(/\[data-theme="([^"]+)"\]/g)]
+      .map((match) => match[1])
+      .filter((themeName): themeName is string => typeof themeName === "string"),
+  );
+  for (const themeName of expectedThemeSelectors) {
     const selector = `[data-theme="${themeName}"]`;
     if (!themesCss.includes(selector)) {
       fail("themes.css multi-theme", `Missing ${selector}`);
     }
   }
+  for (const themeName of actualThemeSelectors) {
+    if (!expectedThemeSelectors.has(themeName)) {
+      fail("themes.css multi-theme", `Unexpected [data-theme="${themeName}"] not in registry`);
+    }
+  }
+  if (expectedThemeSelectors.size === actualThemeSelectors.size) {
+    ok(`themes.css: ${actualThemeSelectors.size} data-theme selectors align with registry`);
+  }
+
   if (!themesCss.includes("@theme inline")) {
     fail("themes.css @theme inline", "Missing keyframe @theme inline block");
   } else {

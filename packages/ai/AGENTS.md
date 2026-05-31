@@ -23,7 +23,6 @@ files may add stricter rules; this file owns the cross-package boundaries.
 | Knowledge product layer | `@nebutra/knowledge-base` | Company cognition over connectors, memory, graph, citations, and explainable search. It consumes lower retrieval/ingestion primitives and must not redefine them. |
 | Play product layer | `@nebutra/brand-genesis`, `@nebutra/landing-builder`, `@nebutra/outreach-engine`, `@nebutra/support-deflector` | Complete user-story Plays over lower capabilities. Owns orchestration and SKILL.md assets only. |
 | Ecosystem product layer | `@nebutra/time-machine`, `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`, `@nebutra/cofounder-match`, `@nebutra/play-marketplace` | Network-effect product surfaces over lower persistence, knowledge, and Play primitives. They own explicit opt-in workflows, lineage, annotations, marketplace records, and consent gates, not event truth, content truth, runtime loops, transports, or billing credentials. |
-| Legacy local experiments | `@nebutra/llm-gateway`, `@nebutra/provider-registry` | `@nebutra/llm-gateway` is not the production gateway; `@nebutra/provider-registry` is a local-provider experiment. Do not add new production consumers. |
 
 The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 `@nebutra/*` package under `packages/ai` must declare `nebutra.featureId` and
@@ -129,14 +128,14 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
 
 ## Import Rules
 
-- New model execution code imports from `@nebutra/agents`, not
-  `@nebutra/llm-gateway` or `@nebutra/provider-registry`.
+- New model execution code imports from `@nebutra/agents`. The local
+  `@nebutra/llm-gateway` and `@nebutra/provider-registry` experiments have been
+  retired; route through `@nebutra/agents` and the production gateway instead.
 - `@nebutra/ai-providers` must remain metadata only and dependency-light.
 - `@nebutra/agent-runtime` may bridge to MCP/tool/sandbox contracts, but model
   calls stay injected or delegated to `@nebutra/agents`.
 - Execution capability packages must not import `@nebutra/agent-runtime`,
-  `@nebutra/agents`, `ai`, `@nebutra/llm-gateway`, or
-  `@nebutra/provider-registry` from production source. They expose tool-shaped
+  `@nebutra/agents`, or `ai` from production source. They expose tool-shaped
   ports; the runtime decides when to call them.
 - `@nebutra/agent-runtime` must not hard-import concrete execution capability
   packages. Composition happens through tool registry/adapters so execution
@@ -156,8 +155,7 @@ The complete surface registry lives in `packages/ai/PACKAGE_MAP.md`. Every
   validation because it guards channel dispatch and invocation boundaries, not
   package-local fallback selection.
 - Generation capability packages must not import `@nebutra/agent-runtime`,
-  `@nebutra/agents`, `ai`, `@nebutra/llm-gateway`, or
-  `@nebutra/provider-registry` from production source.
+  `@nebutra/agents`, or `ai` from production source.
 - `@nebutra/video-pipeline` must consume storyboard plan primitives from
   `@nebutra/reel/storyboard`; it should not define a parallel Storyboard model.
 - `@nebutra/code-execution` must consume command approval rules from

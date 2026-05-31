@@ -9,7 +9,7 @@ import { PostHogProvider as PHProvider } from "posthog-js/react";
  * with zero runtime cost. Configures pageview capture for Next.js App Router
  * (history_change captures client-side navigations).
  *
- * TODO(auth): once Clerk's useUser hook is reachable from this layer, identify
+ * TODO(#126 auth): once Clerk's useUser hook is reachable from this layer, identify
  * the user via posthog.identify(user.id, { email }). Skipped here to keep the
  * provider auth-agnostic.
  */

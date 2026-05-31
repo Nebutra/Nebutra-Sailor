@@ -13,7 +13,7 @@ import { hasPermission, resolveRole } from "@/lib/permissions";
  * POST { userId } → sets a signed HTTP-only cookie `nebutra-impersonate=<userId>.<signature>`
  * DELETE         → clears the cookie
  *
- * TODO(auth-layer-integration): The cookie set here is NOT yet consumed by the
+ * TODO(#126 auth-layer-integration): The cookie set here is NOT yet consumed by the
  * server-side auth layer. To complete the impersonation flow, `apps/web/src/lib/auth.ts`
  * (specifically the `getAuth()` resolver) must be wired to:
  *   1. Read `nebutra-impersonate` from the cookie store on each request.

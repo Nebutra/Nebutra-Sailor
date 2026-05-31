@@ -121,7 +121,7 @@ export async function POST(request: Request) {
 
     // Compose and dispatch the confirmation email. We use the generic email
     // provider instead of a typed helper because no `email-change` template
-    // exists in @nebutra/email yet — TODO: add `sendEmailChangeEmail` helper
+    // exists in @nebutra/email yet — TODO(#126): add `sendEmailChangeEmail` helper
     // there, and switch this call to use it.
     const origin = resolveServerRequestOrigin(new Headers(request.headers));
     const confirmUrl = `${origin}/email-change-confirm/${token}`;

@@ -25,8 +25,6 @@ the machine-readable source of truth; this file is the human map.
 | `product-orchestration` | `@nebutra/cinema`, `@nebutra/play-loader` | Declarative product workflows over lower runtime/tool/media surfaces. |
 | `play-product` | `@nebutra/brand-genesis`, `@nebutra/landing-builder`, `@nebutra/outreach-engine`, `@nebutra/support-deflector` | Complete user-story Plays that compose lower capabilities. Owns orchestration and SKILL.md assets, not primitive generation. |
 | `ecosystem-product` | `@nebutra/time-machine`, `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`, `@nebutra/cofounder-match`, `@nebutra/play-marketplace` | Network-effect product surfaces over lower persistence, knowledge, and Play primitives. Owns explicit opt-in workflows, lineage, annotations, marketplace records, and consent gates. |
-| `gateway-experiment` | `@nebutra/llm-gateway` | Local experiment only; production gateway is outside `packages/ai`. |
-| `legacy-experiment` | `@nebutra/provider-registry` | Local provider trait experiment only. New production consumers are forbidden. |
 
 ## Consolidation Rules
 

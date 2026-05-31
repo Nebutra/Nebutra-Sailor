@@ -121,7 +121,7 @@ export async function POST(request: Request, context: RouteContext) {
       );
     }
 
-    // TODO(schema): once `Organization.logo` is added to Prisma schema, swap the cast for
+    // TODO(#126 schema): once `Organization.logo` is added to Prisma schema, swap the cast for
     // typed `data: { logo: parsed.data.key }`. The migration intentionally lives outside
     // this subagent's allowed paths.
     const updateData = { logo: parsed.data.key } as unknown as Record<string, unknown>;

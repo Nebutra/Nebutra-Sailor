@@ -83,6 +83,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm turbo build --filter="@nebutra/design-sync^..."
 
       - name: Detect tokens presence
         id: detect
@@ -125,6 +126,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm turbo build --filter="@nebutra/design-sync^..."
 
       - name: design-sync healthcheck
         env:
@@ -275,6 +277,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm turbo build --filter="@nebutra/design-sync^..."
 
       - name: design-sync push
         env:

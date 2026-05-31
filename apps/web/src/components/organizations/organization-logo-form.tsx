@@ -251,7 +251,7 @@ export function OrganizationLogoForm({
         )}
 
         <div className="flex flex-col gap-2">
-          {/* TODO: replace with a crop dialog (see Supastarter CropImageDialog reference). */}
+          {/* TODO(#126): replace with a crop dialog (see Supastarter CropImageDialog reference). */}
           <input
             data-allow-native
             ref={inputRef}

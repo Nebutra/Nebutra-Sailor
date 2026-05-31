@@ -15,9 +15,7 @@ const ALLOWED_SURFACES = [
   "ecosystem-product",
   "execution-capability",
   "execution-router",
-  "gateway-experiment",
   "generation-capability",
-  "legacy-experiment",
   "knowledge-product",
   "media-graph",
   "model-runtime",
@@ -77,8 +75,6 @@ const EXECUTION_CAPABILITY_FORBIDDEN_IMPORTS = [
   "@nebutra/agent-runtime",
   "@nebutra/agents",
   "ai",
-  "@nebutra/llm-gateway",
-  "@nebutra/provider-registry",
 ] as const;
 
 const AGENT_RUNTIME_FORBIDDEN_IMPORTS = [
@@ -109,17 +105,9 @@ const GENERATION_CAPABILITY_FORBIDDEN_IMPORTS = [
   "@nebutra/agent-runtime",
   "@nebutra/agents",
   "ai",
-  "@nebutra/llm-gateway",
-  "@nebutra/provider-registry",
 ] as const;
 
-const PLAY_PRODUCT_FORBIDDEN_IMPORTS = [
-  "@nebutra/agent-runtime",
-  "@nebutra/agents",
-  "ai",
-  "@nebutra/llm-gateway",
-  "@nebutra/provider-registry",
-] as const;
+const PLAY_PRODUCT_FORBIDDEN_IMPORTS = ["@nebutra/agent-runtime", "@nebutra/agents", "ai"] as const;
 
 const ECOSYSTEM_PRODUCT_PACKAGES = [
   "@nebutra/time-machine",
@@ -133,8 +121,6 @@ const ECOSYSTEM_PRODUCT_FORBIDDEN_IMPORTS = [
   "@nebutra/agent-runtime",
   "@nebutra/agents",
   "ai",
-  "@nebutra/llm-gateway",
-  "@nebutra/provider-registry",
 ] as const;
 
 function readPackageJson(packageDir: string): PackageJson {
@@ -236,8 +222,6 @@ describe("AI package architecture governance", () => {
     expect(contract).toContain("runtime-local tenant admission");
     expect(contract).toContain("packages/ai/PACKAGE_MAP.md");
     expect(contract).toContain("Consolidation Rules");
-    expect(contract).toContain("@nebutra/llm-gateway");
-    expect(contract).toContain("not the production gateway");
   });
 
   it("requires every AI package to declare a unique featureId and governed surface", () => {
@@ -288,23 +272,18 @@ describe("AI package architecture governance", () => {
     expect(aiProviders?.dependencies ?? {}).toEqual({});
   });
 
-  it("marks legacy local provider experiments as non-production surfaces", () => {
-    for (const packageName of ["@nebutra/llm-gateway", "@nebutra/provider-registry"]) {
-      const manifest = byName.get(packageName)?.manifest;
-      expect(manifest?.nebutra?.status, packageName).toBe("wip");
-      expect(manifest?.nebutra?.productionReady, packageName).toBe(false);
-      expect(manifest?.nebutra?.gaps?.length ?? 0, packageName).toBeGreaterThan(0);
-    }
-  });
+  it("retires the legacy local provider experiments from packages/ai", () => {
+    expect(byName.has("@nebutra/llm-gateway")).toBe(false);
+    expect(byName.has("@nebutra/provider-registry")).toBe(false);
 
-  it("prevents new runtime packages from depending on the legacy local provider registry", () => {
     const violations: string[] = [];
-
     for (const { manifest } of packages) {
-      if (!manifest.name || manifest.name === "@nebutra/llm-gateway") continue;
+      if (!manifest.name) continue;
       const deps = { ...manifest.dependencies, ...manifest.devDependencies };
-      if (deps["@nebutra/provider-registry"] === "workspace:*") {
-        violations.push(`${manifest.name} -> @nebutra/provider-registry`);
+      for (const retired of ["@nebutra/llm-gateway", "@nebutra/provider-registry"]) {
+        if (deps[retired]) {
+          violations.push(`${manifest.name} -> ${retired}`);
+        }
       }
     }
 

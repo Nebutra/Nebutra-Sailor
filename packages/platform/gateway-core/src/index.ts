@@ -40,7 +40,7 @@ export {
   type WorkerDeps,
 } from "./worker/completion-worker";
 
-// TODO: These will be moved to @nebutra/provider-adapters later
+// TODO(#126): move these to @nebutra/provider-adapters later.
 interface UpstreamProviderConfig {
   baseUrl: string;
   apiKey: string;
@@ -149,7 +149,7 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
     logger.info("Gateway intercept triggered", { model, stream });
 
     // 2. Fetch healthy upstream channel & credentials from DB layer
-    // TODO: Connect this to @nebutra/key-pool
+    // TODO(#126): connect this to @nebutra/key-pool.
     // Mocking the channel selection for now (Step 1 requirement)
     const channel: UpstreamProviderConfig = {
       baseUrl: "https://api.openai.com/v1", // Replace with realistic base URL
@@ -158,7 +158,7 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
     };
 
     // 3. Construct the upstream request
-    // TODO: Connect this to @nebutra/provider-adapters if formatting differs (e.g. Anthropic)
+    // TODO(#126): connect this to @nebutra/provider-adapters if formatting differs.
     const upstreamUrl = `${channel.baseUrl}/chat/completions`;
     const upstreamOptions: RequestInit = {
       method: "POST",
@@ -181,7 +181,7 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
     if (!stream) {
       const rawJson = await upstreamResponse.json();
 
-      // TODO: Async trigger to @nebutra/metering (BullMQ) -> token deduction
+      // TODO(#126): async trigger to @nebutra/metering (BullMQ) -> token deduction.
       // e.g. sendBillingEvent(c.get('organizationId'), rawJson.usage)
 
       return c.json(rawJson);
@@ -233,7 +233,7 @@ export const aiGatewayMiddleware = (): MiddlewareHandler<{ Variables: LegacyCont
         reader.releaseLock();
 
         // 6. Streaming has finished! Now we calculate tokens and trigger the billing queue
-        // TODO: dispatch BullMQ job via @nebutra/metering
+        // TODO(#126): dispatch BullMQ job via @nebutra/metering.
         logger.info("Stream completed. Ready for token metering.", {
           responseLength: fullResponseContent.length,
           organizationId: c.get("organizationId"),

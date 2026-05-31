@@ -247,7 +247,7 @@ try {
       invalidateBalanceCache: async (orgId: string) => {
         await invalidateBalanceCache(orgId, gatewayDeps.redis);
       },
-      // TODO: wire @nebutra/metering.ingest here once ClickHouse pipeline is live.
+      // TODO(#126): wire @nebutra/metering.ingest here once ClickHouse pipeline is live.
       logger: {
         info: (...args: unknown[]) => logger.info(String(args[0] ?? ""), args[1] as never),
         warn: (...args: unknown[]) => logger.warn(String(args[0] ?? ""), args[1] as never),

@@ -9,7 +9,6 @@ on:
 permissions:
   contents: read
   pull-requests: read
-  security-events: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -91,8 +90,6 @@ jobs:
               - 'packages/design/theme/**'
               - 'packages/design/tokens/**'
               - 'packages/design/ui/**'
-
-
 
   # ── License compliance ───────────────────────────────────────────────────
   # Ensures no production dependency uses a copyleft license incompatible
@@ -499,7 +496,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build shared packages
-        run: pnpm turbo build --filter="./packages/*"
+        run: pnpm turbo build --filter="./packages/*/*"
         env:
           SKIP_ENV_VALIDATION: true
 
@@ -698,7 +695,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build workspace packages (required by landing-page webServer)
-        run: pnpm turbo build --filter="./packages/*"
+        run: pnpm turbo build --filter="./packages/*/*"
         env:
           SKIP_ENV_VALIDATION: true
       - name: Sync brand assets to app public directories

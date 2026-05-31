@@ -113,7 +113,7 @@ export async function flushUsageBuffer(organizationId?: string): Promise<UsageRe
   }
 
   if (flushed.length > 0) {
-    // TODO: migrate flushed entries to appendUsageLedgerEntry + metering.ingest.
+    // TODO(#126): migrate flushed entries to appendUsageLedgerEntry + metering.ingest.
     logger.warn(
       `[billing:flushUsageBuffer] Dropping ${flushed.length} buffered usage records — UsageRecord table removed; migrate callers to @nebutra/metering + UsageLedgerEntry.`,
     );

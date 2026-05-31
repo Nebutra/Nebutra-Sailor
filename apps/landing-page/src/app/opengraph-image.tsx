@@ -7,6 +7,9 @@ export const alt = seoContent.title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+const socialHeadline = "Ship your Startup";
+const socialSubheadline = "Powered by Nebutra Agent OS.";
+
 export default async function Image() {
   return new ImageResponse(
     <div
@@ -54,7 +57,7 @@ export default async function Image() {
           lineHeight: 1.05,
         }}
       >
-        Ship your SaaS faster
+        {socialHeadline}
       </span>
       <span
         style={{
@@ -64,7 +67,7 @@ export default async function Image() {
           marginTop: 10,
         }}
       >
-        Multi-tenant. AI-native. Production-ready.
+        {socialSubheadline}
       </span>
 
       <div
