@@ -314,10 +314,10 @@ function TopBar({
   onSurfaceChange: (surface: Surface) => void;
 }) {
   return (
-    <header className="grid gap-3 border-border/80 border-b bg-background/85 p-3 backdrop-blur-xl sm:p-4 shell:grid-cols-[minmax(0,1fr)_auto] shell:items-center">
-      <div className="flex min-w-0 items-center gap-3">
+    <header className="flex flex-col gap-3 border-border/80 border-b bg-background/85 p-3 backdrop-blur-xl sm:p-4 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+      <div className="flex shrink-0 items-center gap-3">
         <div className="min-w-0">
-          <h1 className="truncate font-semibold text-base text-foreground">Theme Playground</h1>
+          <h1 className="font-semibold text-base text-foreground">Theme Playground</h1>
           <p className="mt-0.5 hidden text-muted-foreground text-xs sm:block">
             Token governance workbench
           </p>
@@ -327,7 +327,7 @@ function TopBar({
         </Badge>
       </div>
 
-      <div className="flex min-w-0 flex-wrap items-center gap-2 sm:gap-3 shell:col-span-2 shell:justify-end">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 lg:justify-end">
         <SegmentedControl
           label="Theme Mode"
           value={mode}
@@ -346,8 +346,8 @@ function TopBar({
           ]}
           onChange={onDensityChange}
         />
-        <label className="flex items-center gap-2 text-muted-foreground text-xs">
-          <span>Surface</span>
+        <label className="flex shrink-0 items-center gap-2 text-muted-foreground text-xs">
+          <span className="whitespace-nowrap">Surface</span>
           <Select value={surface} onValueChange={(value) => onSurfaceChange(value as Surface)}>
             <SelectTrigger size="small" className="h-8 min-w-[120px]">
               <SelectValue />
@@ -361,15 +361,15 @@ function TopBar({
             </SelectContent>
           </Select>
         </label>
-      </div>
 
-      <div className="flex items-center gap-2 shell:col-start-2 shell:row-start-1 shell:justify-end">
-        {!viewingImported && (
-          <DesignMdExport themeId={selectedTheme.id} themeName={selectedTheme.name} />
-        )}
-        <Button size="sm" className="h-8" prefix={<CloudUpload />} type="button">
-          Publish Theme
-        </Button>
+        <div className="flex items-center gap-2 sm:border-border/60 sm:border-l sm:pl-2 md:pl-3">
+          {!viewingImported && (
+            <DesignMdExport themeId={selectedTheme.id} themeName={selectedTheme.name} />
+          )}
+          <Button size="sm" className="h-8" prefix={<CloudUpload />} type="button">
+            Publish Theme
+          </Button>
+        </div>
       </div>
     </header>
   );
