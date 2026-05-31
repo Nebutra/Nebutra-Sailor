@@ -223,9 +223,21 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
     setVar(vars, `--radius-${key}`, tokenValue(theme.radius, key));
   }
 
-  for (const key of ["sans", "mono", "heading"]) {
-    setVar(vars, `--font-${key}`, tokenValue(theme.fontFamily, key));
-  }
+  // Always emit --font-sans and --font-heading so the preview wrapper fully
+  // shadows the app-global definitions — if the theme/import doesn't declare
+  // them, fall back to safe generic stacks so var() resolution stays inside the
+  // preview subtree and never leaks to the app's Geist / Noto globals.
+  const resolvedSans =
+    tokenValue(theme.fontFamily, "sans") ?? "ui-sans-serif, system-ui, -apple-system, sans-serif";
+  vars["--font-sans"] = resolvedSans;
+
+  // --font-heading: use the theme value if present, otherwise mirror --font-sans
+  // so var(--font-heading) inside the preview resolves HERE and not to the
+  // app-global @layer base value.
+  const resolvedHeading = tokenValue(theme.fontFamily, "heading") ?? resolvedSans;
+  vars["--font-heading"] = resolvedHeading;
+
+  setVar(vars, "--font-mono", tokenValue(theme.fontFamily, "mono"));
 
   for (const key of ["sm", "md", "lg", "xl"]) {
     setVar(vars, `--shadow-${key}`, tokenValue(theme.shadow, key));

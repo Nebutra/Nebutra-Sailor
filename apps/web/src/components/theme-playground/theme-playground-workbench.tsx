@@ -511,10 +511,16 @@ function PreviewCanvas({
           style={{
             ...style,
             maxWidth: `${viewportWidth}px`,
-            fontFamily: "var(--font-sans, ui-sans-serif, system-ui, -apple-system, sans-serif)",
           }}
           className={cn(
             "mx-auto min-h-[640px] w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
+            // Force theme fonts onto ALL descendants, beating any intermediate CSS
+            // rule (e.g. globals.css @layer base h1-h6 / body font-family) that
+            // would otherwise re-declare font-family and break inheritance from
+            // the --font-sans / --font-heading vars we emit in the inline style.
+            // code/pre/kbd/samp are excluded so monospace stays intact.
+            "[&_:not(:is(h1,h2,h3,h4,h5,h6,code,pre,kbd,samp))]:![font-family:var(--font-sans,ui-sans-serif,system-ui,sans-serif)]",
+            "[&_:is(h1,h2,h3,h4,h5,h6)]:![font-family:var(--font-heading,var(--font-sans,ui-sans-serif,system-ui,sans-serif))]",
             densityScale[density],
           )}
         >
@@ -558,12 +564,7 @@ function PreviewCard({
       )}
     >
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h3
-          className="font-semibold text-sm"
-          style={{ fontFamily: "var(--font-heading, var(--font-sans, inherit))" }}
-        >
-          {title}
-        </h3>
+        <h3 className="font-semibold text-sm">{title}</h3>
         {active && <Badge size="sm">Focused</Badge>}
       </div>
       {children}
