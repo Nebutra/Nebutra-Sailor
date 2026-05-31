@@ -69,6 +69,7 @@ export type ThemeTokenSet = {
   radius?: Record<string, DtcgLeaf | undefined>;
   fontFamily?: Record<string, DtcgLeaf | undefined>;
   shadow?: Record<string, DtcgLeaf | undefined>;
+  spacing?: Record<string, DtcgLeaf | undefined>;
 };
 
 export type TokenRow = { name: string; value: string };
@@ -241,6 +242,10 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
 
   for (const key of ["sm", "md", "lg", "xl"]) {
     setVar(vars, `--shadow-${key}`, tokenValue(theme.shadow, key));
+  }
+
+  for (const key of ["sm", "md", "lg", "xl"]) {
+    setVar(vars, `--spacing-${key}`, tokenValue(theme.spacing, key));
   }
 
   // Edge tokens — mirror the global :root/.dark definitions (static/base.css)

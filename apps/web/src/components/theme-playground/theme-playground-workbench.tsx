@@ -524,7 +524,7 @@ function PreviewCanvas({
             densityScale[density],
           )}
         >
-          <div className="theme-preview-grid gap-[var(--playground-gap)] p-[var(--playground-pad)]">
+          <div className="theme-preview-grid gap-[var(--spacing-md,var(--playground-gap))] p-[var(--spacing-lg,var(--playground-pad))]">
             <FormsPanel active={activeSuite === "forms"} />
             <PricingPanel active={activeSuite === "pricing"} />
             <DashboardPanel active={activeSuite === "dashboard"} />
@@ -557,7 +557,7 @@ function PreviewCard({
         // contributed to overall "blur soup" subjective perception. One
         // crisp ring + slight drop shadow reads as defined card without
         // softening the whole UI.
-        "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--playground-pad)] text-[color:var(--color-card-foreground)]",
+        "rounded-[var(--radius-lg)] bg-[var(--color-card)] p-[var(--spacing-lg,var(--playground-pad))] text-[color:var(--color-card-foreground)]",
         "shadow-[0_0_0_1px_var(--edge-soft),0_2px_8px_-2px_rgb(0_0_0/0.08)]",
         active && "shadow-[0_0_0_1px_var(--edge-medium),0_4px_12px_-2px_rgb(0_0_0/0.12)]",
         className,
