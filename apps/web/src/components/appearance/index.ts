@@ -11,5 +11,6 @@ export { PointerCursorToggle } from "./pointer-cursor-toggle";
 export { AppearanceSection } from "./section";
 export * from "./store";
 export { ThemeModeSegmented } from "./theme-mode-segmented";
+export { ThemePresetPicker } from "./theme-preset-picker";
 export { TransparencyToggle } from "./transparency-toggle";
 export { default as AppearanceVarsProvider } from "./vars-provider";

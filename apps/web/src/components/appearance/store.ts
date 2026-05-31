@@ -23,6 +23,14 @@ export type AppearanceCodeFontFamily = "system" | "geist-mono" | "sf-mono" | "je
 export type AppearanceDiffMarkers = "color" | "plusminus";
 
 export type AppearanceState = {
+  /**
+   * Selected Theme Playground preset id (from @nebutra/theme registry), or
+   * "default" for the base Nebutra palette. Validated loosely (any short
+   * string) so the global appearance bundle never has to import the 74 KB
+   * theme registry — unknown ids degrade gracefully to the base palette when
+   * applied (AppearanceVarsProvider lazy-loads the token resolver).
+   */
+  theme: string;
   accent: AppearanceAccent;
   uiFontSize: number;
   codeFontSize: number;
@@ -41,6 +49,7 @@ export type AppearanceState = {
 export const APPEARANCE_STORAGE_KEY = "nebutra:appearance:v1";
 
 export const APPEARANCE_DEFAULTS: AppearanceState = {
+  theme: "default",
   accent: "default",
   uiFontSize: 14,
   codeFontSize: 12,
@@ -107,6 +116,15 @@ function sanitizeHexColor(value: unknown): string | null {
   return HEX_RE.test(value) ? value : null;
 }
 
+// Loose: accept any short id string (registry ids are kebab-case slugs). We do
+// NOT import the theme registry here to keep the global appearance bundle lean;
+// unknown ids resolve to the base palette when applied.
+const THEME_ID_RE = /^[a-z0-9-]{1,64}$/;
+function sanitizeTheme(value: unknown): string {
+  if (typeof value !== "string" || !THEME_ID_RE.test(value)) return APPEARANCE_DEFAULTS.theme;
+  return value;
+}
+
 function clampContrast(value: unknown): number {
   const n = typeof value === "number" ? value : Number(value);
   if (!Number.isFinite(n)) return APPEARANCE_DEFAULTS.contrast;
@@ -134,6 +152,7 @@ function sanitize(raw: unknown): AppearanceState {
     ? (r.diffMarkers as AppearanceDiffMarkers)
     : APPEARANCE_DEFAULTS.diffMarkers;
   return {
+    theme: sanitizeTheme(r.theme),
     accent,
     motion,
     uiFontSize: clampFontSize(r.uiFontSize, 12, 18, APPEARANCE_DEFAULTS.uiFontSize),

@@ -772,6 +772,17 @@
         "title": "Theme",
         "description": "Use light, dark, or match system preference."
       },
+      "themePreset": {
+        "title": "Theme preset",
+        "description": "Apply any Theme Playground theme across the whole app. The controls below layer on top to fine-tune it.",
+        "search": "Search themes…",
+        "searchLabel": "Search themes",
+        "default": "Default",
+        "defaultMood": "Nebutra base palette",
+        "active": "Active",
+        "empty": "No themes match your search.",
+        "count": "{count} themes"
+      },
       "themeMode": {
         "label": "Theme mode",
         "light": "Light",

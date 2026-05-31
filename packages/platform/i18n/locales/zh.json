@@ -762,6 +762,17 @@
         "title": "主题",
         "description": "使用浅色、深色，或匹配系统设置。"
       },
+      "themePreset": {
+        "title": "主题预设",
+        "description": "将任意 Theme Playground 主题应用到整个应用。下方的控件会叠加在其之上进行微调。",
+        "search": "搜索主题…",
+        "searchLabel": "搜索主题",
+        "default": "默认",
+        "defaultMood": "Nebutra 基础色板",
+        "active": "已启用",
+        "empty": "没有匹配的主题。",
+        "count": "{count} 个主题"
+      },
       "themeMode": {
         "label": "主题模式",
         "light": "浅色",

@@ -12,6 +12,7 @@ import {
   MotionSegmented,
   PointerCursorToggle,
   ThemeModeSegmented,
+  ThemePresetPicker,
   TransparencyToggle,
 } from "@/components/appearance";
 
@@ -28,6 +29,13 @@ export default async function AppearancePage() {
           description={t("theme.description")}
           action={<ThemeModeSegmented />}
         ></AppearanceSection>
+
+        <AppearanceSection
+          title={t("themePreset.title")}
+          description={t("themePreset.description")}
+        >
+          <ThemePresetPicker />
+        </AppearanceSection>
 
         <AppearanceSection title={t("colors.title")} description={t("colors.description")}>
           <div className="space-y-4">
