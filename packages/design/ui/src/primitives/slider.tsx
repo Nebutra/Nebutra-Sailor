@@ -129,6 +129,12 @@ export const Slider = ({
     onBlur,
     onPointerUp,
     onKeyUp,
+    // Slider's own callbacks + discriminant — pull them out so they are NOT
+    // spread onto the native <input> below (React warns "Unknown event handler
+    // property onValueChange"). The emit helpers still read props.onValueChange.
+    onValueChange: _onValueChange,
+    onValueCommit: _onValueCommit,
+    valueMode: _valueMode,
     ...inputProps
   } = props;
   const generatedId = React.useId();
