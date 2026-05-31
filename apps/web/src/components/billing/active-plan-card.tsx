@@ -30,10 +30,13 @@ export interface ActivePlanCardProps {
 }
 
 const STATUS_TONES: Record<SubscriptionStatus, string> = {
-  active: "bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/30 dark:text-emerald-300",
-  trialing: "bg-blue-500/10 text-blue-700 ring-1 ring-blue-500/30 dark:text-blue-300",
-  past_due: "bg-amber-500/10 text-amber-700 ring-1 ring-amber-500/30 dark:text-amber-300",
-  canceled: "bg-red-500/10 text-red-700 ring-1 ring-red-500/30 dark:text-red-300",
+  active:
+    "bg-[hsl(var(--success)/0.1)] text-[hsl(var(--success))] ring-1 ring-[hsl(var(--success)/0.3)]",
+  trialing: "bg-[hsl(var(--info)/0.1)] text-[hsl(var(--info))] ring-1 ring-[hsl(var(--info)/0.3)]",
+  past_due:
+    "bg-[hsl(var(--warning)/0.1)] text-[hsl(var(--warning))] ring-1 ring-[hsl(var(--warning)/0.3)]",
+  canceled:
+    "bg-[hsl(var(--destructive)/0.1)] text-[hsl(var(--destructive))] ring-1 ring-[hsl(var(--destructive)/0.3)]",
   free: "bg-[color:var(--neutral-3)] text-[color:var(--neutral-11)] ring-1 ring-[color:var(--neutral-7)]",
 };
 
@@ -68,7 +71,7 @@ export function ActivePlanCard({
     return (
       <div
         role="alert"
-        className={`rounded-[var(--radius-3xl)] border border-red-500/30 bg-red-500/10 p-5 text-sm text-red-800 dark:text-red-200 ${className ?? ""}`}
+        className={`rounded-[var(--radius-3xl)] border border-[hsl(var(--destructive)/0.3)] bg-[hsl(var(--destructive)/0.1)] p-5 text-[hsl(var(--destructive))] text-sm ${className ?? ""}`}
       >
         {t("errors.loadFailed")}
       </div>

@@ -207,7 +207,7 @@ describe("UI/UX audit remediation invariants", () => {
     expect(dashboard).not.toContain("type MetricMeta");
     expect(dashboard).not.toContain("dailyMeta");
     expect(dashboard).not.toContain("<dl");
-    expect(dashboard).toContain("text-xl font-semibold");
+    expect(dashboard).toContain("DashboardMetricTile");
     expect(dashboard).toContain("xl:grid-cols-4");
     expect(dashboard).not.toContain("text-3xl font-semibold tabular-nums");
     expect(dashboard).not.toContain("2xl:grid-cols-4");

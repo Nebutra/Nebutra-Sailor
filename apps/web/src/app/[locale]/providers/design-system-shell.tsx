@@ -9,6 +9,7 @@ import {
   ChevronRight,
   FolderClosed,
   FolderPlus,
+  Lifebuoy as LifeBuoy,
   MoreHorizontal,
   SidebarLeft as PanelLeftClose,
   SidebarLeft as PanelLeftOpen,
@@ -38,7 +39,8 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { BrandLogo } from "@/components/brand/brand-assets";
+import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
+import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
 import {
   useSidebarExpansion,
@@ -105,6 +107,7 @@ function renderNextLink({
 function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
+  const { openDialog: openFeedback } = useFeedbackDialog();
   const { collapsed, toggle } = useSidebar();
   const { can } = usePermission();
   const isAdmin = can("admin:access");
@@ -135,11 +138,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     // Run once on mount; toast copy can't change after hydration.
   }, []);
   const breadcrumbs = buildBreadcrumbs(pathname);
+  const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
-  // /workspace home is a full-bleed gradient canvas — drop main padding and
-  // skip the `contain: paint` content-area wrapper so the gradient reaches
-  // the viewport edges.
-  const isWorkspaceHomeRoute = /^\/[a-z]{2}\/workspace\/?$/.test(pathname);
 
   useEffect(() => {
     if (!isSignedIn || !supportsWorkspaceSwitching) return;
@@ -454,48 +454,17 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Sidebar header slot — logo + workspace switcher ─────────────────────
   const sidebarHeader = (
     <div className="flex flex-col gap-2">
-      <div
-        className={cn("flex items-center px-2", collapsed ? "justify-center" : "justify-between")}
-      >
-        {collapsed ? (
-          // Collapsed rail: the brand mark morphs into the expand icon on
-          // sidebar hover — no room for a separate button.
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label="Expand sidebar"
-            title="Expand sidebar"
-            className="relative inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
-          >
-            <span className="flex items-center justify-center transition-opacity duration-150 group-hover/sidebar:opacity-0">
-              <BrandLogo variant="mark" className="size-7" />
-            </span>
-            <span className="absolute inset-0 flex items-center justify-center text-sidebar-foreground/70 opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100">
-              <PanelLeftOpen className="size-5" aria-hidden="true" />
-            </span>
-          </button>
-        ) : (
-          // Expanded: logo (home link) on the left, an always-visible collapse
-          // button on the right — like Lovable.
-          <>
-            <ViewTransitionLink
-              href="/workspace"
-              aria-label="Home"
-              className="inline-flex items-center rounded-[var(--radius-sm)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
-            >
-              <BrandLogo variant="horizontal" className="h-6 w-[8.5rem]" />
-            </ViewTransitionLink>
-            <button
-              type="button"
-              onClick={toggle}
-              aria-label="Collapse sidebar"
-              title="Collapse sidebar"
-              className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-            >
-              <PanelLeftClose className="size-4" aria-hidden="true" />
-            </button>
-          </>
-        )}
+      <div className="flex items-center justify-center px-2">
+        <ViewTransitionLink
+          href="/workspace"
+          aria-label={webBrandLabels.homeLink}
+          className="inline-flex min-w-0 items-center justify-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
+        >
+          <BrandLogo
+            variant={collapsed ? "mark" : "horizontal"}
+            className={collapsed ? "size-7" : "h-6 w-[8.5rem]"}
+          />
+        </ViewTransitionLink>
       </div>
       {supportsWorkspaceSwitching && workspacesForSwitcher.length > 0 && (
         <div className={collapsed ? "flex justify-center" : "px-2"}>
@@ -519,6 +488,15 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     collapsed ? (
       <div className="flex flex-col items-center gap-1">
         <NotificationsDialog />
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label="Expand sidebar"
+          title="Expand sidebar"
+          className="inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+        >
+          <PanelLeftOpen className="size-4" aria-hidden="true" />
+        </button>
         <UserMenu />
       </div>
     ) : (
@@ -527,6 +505,15 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           <UserMenu variant="row" />
         </div>
         <NotificationsDialog />
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label="Collapse sidebar"
+          title="Collapse sidebar"
+          className="inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+        >
+          <PanelLeftClose className="size-4" aria-hidden="true" />
+        </button>
       </div>
     )
   ) : null;
@@ -545,12 +532,57 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Dev-mode banner (only when @nebutra/auth is running the fixture provider) ─
   const isDevAuth = getConfiguredAuthProvider() === "dev";
 
-  // ─── Content header — breadcrumb only, and only when depth > 1 so shallow
-  // routes don't echo their own H1. The notification bell now lives in the
-  // sidebar footer, freeing the top strip entirely on shallow routes.
+  const headerContent = (
+    <div className="flex w-full min-w-0 items-center justify-between gap-3">
+      <div className="min-w-0 flex-1">
+        <p className="truncate font-medium text-[13px] text-foreground">
+          {currentBreadcrumb?.label ?? "Dashboard"}
+        </p>
+        <nav
+          aria-label="Breadcrumb"
+          className={cn("mt-0.5 hidden md:block", breadcrumbs.length <= 1 && "sr-only")}
+        >
+          <ol className="flex min-w-0 items-center gap-1 text-[11px] text-muted-foreground">
+            {breadcrumbs.map((crumb, index) => {
+              const isLast = index === breadcrumbs.length - 1;
+              return (
+                <li key={crumb.href} className="flex min-w-0 items-center gap-1">
+                  {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
+                  {isLast ? (
+                    <span className="truncate font-medium text-foreground">{crumb.label}</span>
+                  ) : (
+                    <ViewTransitionLink
+                      href={crumb.href}
+                      className="truncate transition-colors hover:text-foreground"
+                    >
+                      {crumb.label}
+                    </ViewTransitionLink>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
+      </div>
+
+      <div className="flex shrink-0 items-center gap-1.5">
+        <button
+          type="button"
+          onClick={openFeedback}
+          aria-label="Open feedback dialog"
+          title="Feedback"
+          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] px-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+        >
+          <LifeBuoy className="size-3.5" aria-hidden="true" />
+          <span className="hidden xl:inline">Feedback</span>
+        </button>
+      </div>
+    </div>
+  );
+
   const contentHeader =
     breadcrumbs.length > 1 ? (
-      <div className="mb-4 min-w-0">
+      <div className="mb-4 min-w-0 lg:hidden">
         <nav aria-label="Breadcrumb">
           <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
             {breadcrumbs.map((crumb, index) => {
@@ -579,43 +611,24 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   return (
     <AppShell
       sidebar={sidebar}
+      header={headerContent}
+      headerHeight={52}
       collapsed={collapsed}
       contentClassName={
-        isWorkspaceHomeRoute
-          ? // Full-bleed gradient canvas: drop padding at every breakpoint
-            // (AppShell's base sm/md/2xl:px-* would otherwise beat a plain
-            // p-0 via specificity), make main the positioned ancestor so
-            // the page's absolute gradient fills it edge-to-edge. Banner +
-            // content header sit on top of the gradient.
-            "relative p-0 sm:p-0 md:p-0 2xl:p-0"
-          : isWorkspaceCanvasRoute
-            ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
-            : // Two-tier surface: tint the outer main bg so the `bg-card`
-              // panels inside each page read as inset floating cards.
-              "dashboard-app-content bg-muted/40"
+        isWorkspaceCanvasRoute
+          ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
+          : // Two-tier surface: tint the outer main bg so the `bg-card`
+            // panels inside each page read as inset floating cards.
+            "dashboard-app-content bg-muted/40"
       }
     >
-      {isWorkspaceHomeRoute ? (
-        // First child of main: an absolute gradient canvas that fills the
-        // entire <main> (which is `relative`). Everything below renders
-        // later in DOM and therefore on top in flow order (no z-index
-        // gymnastics — auto over auto wins by source order).
-        <div
-          aria-hidden="true"
-          className="workspace-home-gradient pointer-events-none absolute inset-0"
-        />
-      ) : null}
       {isDevAuth ? (
         <div
           role="alert"
           aria-live="polite"
           className={cn(
             "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-amber-100",
-            isWorkspaceHomeRoute
-              ? // Home main has p-0; banner already runs edge-to-edge, no
-                // negative margin needed. relative+z keeps it above gradient.
-                "relative z-10"
-              : "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6",
+            "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6",
           )}
         >
           <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />
@@ -629,15 +642,9 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         </div>
       ) : null}
       {contentHeader}
-      {isWorkspaceHomeRoute ? (
-        // No `.content-area` wrapper on home: `contain: paint` would clip
-        // the page's absolute gradient from filling main edge-to-edge.
-        children
-      ) : (
-        <section id="main-content" aria-label="Main content" className="content-area">
-          {children}
-        </section>
-      )}
+      <section id="main-content" aria-label="Main content" className="content-area">
+        {children}
+      </section>
     </AppShell>
   );
 }

@@ -16,7 +16,8 @@ describe("@nebutra/web dashboard UI governance", () => {
     expect(source).toContain("DashboardCommandSurface");
     expect(source).toContain("DashboardMetricTile");
     expect(source).toContain("DashboardPanel");
-    expect(source).toContain("GettingStarted");
+    expect(source).toContain("RecentSessions");
+    expect(source).not.toContain("GettingStarted");
     expect(source).toContain('from "@nebutra/ui/patterns"');
     expect(source).toContain('data-dashboard-section="workspace-overview"');
     expect(source).not.toContain(EXTERNAL_TASTE_PREFIX);

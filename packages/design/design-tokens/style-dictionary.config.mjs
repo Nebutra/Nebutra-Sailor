@@ -156,6 +156,53 @@ function skipName(token, sourceKey) {
   return `__skip__${source}-${token.path.join("-")}`;
 }
 
+function hexToRgb(hex) {
+  const match = /^#?([0-9a-f]{6})$/iu.exec(hex.trim());
+  if (!match) return null;
+  const value = match[1];
+  return [
+    Number.parseInt(value.slice(0, 2), 16) / 255,
+    Number.parseInt(value.slice(2, 4), 16) / 255,
+    Number.parseInt(value.slice(4, 6), 16) / 255,
+  ];
+}
+
+function srgbToLinear(channel) {
+  return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+}
+
+function formatNumber(value, precision) {
+  return Number(value.toFixed(precision)).toString();
+}
+
+function hexToOklch(hex) {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return hex;
+  const [r, g, b] = rgb.map(srgbToLinear);
+
+  const l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b;
+  const m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b;
+  const s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b;
+
+  const lRoot = Math.cbrt(l);
+  const mRoot = Math.cbrt(m);
+  const sRoot = Math.cbrt(s);
+
+  const lightness = 0.2104542553 * lRoot + 0.793617785 * mRoot - 0.0040720468 * sRoot;
+  const a = 1.9779984951 * lRoot - 2.428592205 * mRoot + 0.4505937099 * sRoot;
+  const bAxis = 0.0259040371 * lRoot + 0.7827717662 * mRoot - 0.808675766 * sRoot;
+
+  const chroma = Math.sqrt(a * a + bAxis * bAxis);
+  const hue = chroma < 0.00001 ? 0 : (Math.atan2(bAxis, a) * 180) / Math.PI;
+  const normalizedHue = hue < 0 ? hue + 360 : hue;
+
+  return `oklch(${formatNumber(lightness, 3)} ${formatNumber(chroma, 3)} ${formatNumber(normalizedHue, 1)})`;
+}
+
+function replaceHexWithOklch(css) {
+  return css.replace(/#[0-9a-f]{6}\b/giu, (hex) => hexToOklch(hex));
+}
+
 function registerLayeredNameTransform({ name, sources, nameForPath }) {
   const canonicalKeyByName = new Map();
   const canonicalPathByName = new Map();
@@ -801,7 +848,9 @@ const themesHeader = `/**
 
 `;
 const themesBaseCss = await readFile("static/themes-base.css", "utf8");
-const themesCombined = `${themesHeader}${themeFiles.join("\n")}\n${themesBaseCss}`;
+const themesCombined = replaceHexWithOklch(
+  `${themesHeader}${themeFiles.join("\n")}\n${themesBaseCss}`,
+);
 await writeFile("build/css/themes.generated.css", themesCombined, "utf8");
 
 process.stdout.write(

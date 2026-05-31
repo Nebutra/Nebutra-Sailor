@@ -218,17 +218,21 @@ function isHexDigit(char: string): boolean {
   );
 }
 
+function isAsciiDigit(char: string | undefined): char is string {
+  return char !== undefined && char >= "0" && char <= "9";
+}
+
 function readCssLengthEnd(value: string, start: number): number {
   let index = start;
   if (value[index] === "-") index++;
   let hasDigit = false;
-  while (index < value.length && value[index] >= "0" && value[index] <= "9") {
+  while (index < value.length && isAsciiDigit(value[index])) {
     hasDigit = true;
     index++;
   }
   if (value[index] === ".") {
     index++;
-    while (index < value.length && value[index] >= "0" && value[index] <= "9") {
+    while (index < value.length && isAsciiDigit(value[index])) {
       hasDigit = true;
       index++;
     }
@@ -370,7 +374,7 @@ function extractFontFamilyFromProse(content: string): string | undefined {
 
   for (const line of searchText.split("\n")) {
     const candidate = extractFontCandidateFromLine(line);
-    if (isLikelyFontName(candidate)) {
+    if (candidate !== undefined && isLikelyFontName(candidate)) {
       return candidate;
     }
   }

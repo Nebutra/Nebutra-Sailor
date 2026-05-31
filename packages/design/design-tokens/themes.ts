@@ -1,3 +1,5 @@
+import coreTokens from "./tokens/core.json";
+import semanticTokens from "./tokens/semantic.json";
 import amberLightVividTokens from "./tokens/themes/amber-light-vivid.json";
 import amberLightVivid2Tokens from "./tokens/themes/amber-light-vivid-2.json";
 import amberLightVivid3Tokens from "./tokens/themes/amber-light-vivid-3.json";
@@ -79,6 +81,11 @@ import roseLightVivid5Tokens from "./tokens/themes/rose-light-vivid-5.json";
 import tealLightVividTokens from "./tokens/themes/teal-light-vivid.json";
 import vibrantTokens from "./tokens/themes/vibrant.json";
 import violetLightVividTokens from "./tokens/themes/violet-light-vivid.json";
+
+export const BASE_TOKEN_SETS = {
+  core: coreTokens,
+  semantic: semanticTokens,
+} as const;
 
 export const THEME_TOKEN_SETS = {
   nebutra: nebutraTokens,

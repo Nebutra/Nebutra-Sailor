@@ -9,33 +9,16 @@
  */
 
 // ── Import specifier adaptation note ─────────────────────────────────────────
-// `importFromDesignMd` is intentionally NOT exported from the @nebutra/design-sync
-// main entry (to avoid eagerly loading the 655 KB @google/design.md alpha lib on
-// every import of the package). Instead we use the subpath export
-// `@nebutra/design-sync/serialize/from-design-md`, which is:
-//   - registered in design-sync/package.json `exports["./serialize/from-design-md"]`
-//   - resolved to source via tsconfig paths alias (apps/web/tsconfig.json)
-//   - resolved to source via vitest resolve.alias (apps/web/vitest.config.ts)
-//
-// `serializeToDesignMd` and `serializeToPreviewHtml` are PURE (no alpha lib) and
-// are already exported from the main entry, so they are imported normally.
+// `importFromDesignMd` stays off the @nebutra/design-sync root export to avoid
+// eagerly loading the 655 KB @google/design.md alpha lib on every package import.
+// App code reaches it through the stable one-level `design-md` public subpath,
+// which keeps UI governance dependency boundaries intact.
 
 import "server-only";
 
 import { serializeToDesignMd, serializeToPreviewHtml } from "@nebutra/design-sync";
-import {
-  type ImportReport,
-  importFromDesignMd,
-} from "@nebutra/design-sync/serialize/from-design-md";
-import coreJson from "@nebutra/design-tokens/tokens/core.json" with { type: "json" };
-import semanticJson from "@nebutra/design-tokens/tokens/semantic.json" with { type: "json" };
-import darkDenseJson from "@nebutra/design-tokens/tokens/themes/dark-dense.json" with {
-  type: "json",
-};
-import minimalJson from "@nebutra/design-tokens/tokens/themes/minimal.json" with { type: "json" };
-import nebutraJson from "@nebutra/design-tokens/tokens/themes/nebutra.json" with { type: "json" };
-import oceanJson from "@nebutra/design-tokens/tokens/themes/ocean.json" with { type: "json" };
-import vibrantJson from "@nebutra/design-tokens/tokens/themes/vibrant.json" with { type: "json" };
+import { importFromDesignMd } from "@nebutra/design-sync/design-md";
+import { BASE_TOKEN_SETS, THEME_TOKEN_SETS } from "@nebutra/design-tokens/themes";
 import { THEME_REGISTRY } from "@nebutra/theme/registry";
 
 import type { ExportedTheme, ImportedTheme } from "./design-md-types";
@@ -45,15 +28,18 @@ export type { ExportedTheme, ImportedTheme };
 
 // ── Theme JSON lookup ─────────────────────────────────────────────────────────
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyRecord = Record<string, any>;
+type DesignTokenTree = Parameters<typeof serializeToDesignMd>[0][number]["tokens"];
 
-const THEME_JSON_LOOKUP: Record<string, AnyRecord> = {
-  nebutra: nebutraJson,
-  "dark-dense": darkDenseJson,
-  minimal: minimalJson,
-  vibrant: vibrantJson,
-  ocean: oceanJson,
+function toDesignTokenTree(tokens: unknown): DesignTokenTree {
+  return tokens as DesignTokenTree;
+}
+
+const THEME_JSON_LOOKUP: Record<string, DesignTokenTree> = {
+  nebutra: toDesignTokenTree(THEME_TOKEN_SETS.nebutra),
+  "dark-dense": toDesignTokenTree(THEME_TOKEN_SETS["dark-dense"]),
+  minimal: toDesignTokenTree(THEME_TOKEN_SETS.minimal),
+  vibrant: toDesignTokenTree(THEME_TOKEN_SETS.vibrant),
+  ocean: toDesignTokenTree(THEME_TOKEN_SETS.ocean),
 };
 
 // ── importDesignMdToThemeTokens ───────────────────────────────────────────────
@@ -103,11 +89,11 @@ export function exportThemeToDesignMd(themeId: string): ExportedTheme {
   const name = registryEntry?.name ?? themeId;
 
   const sets = [
-    { name: "core", relativePath: "core.json", tokens: coreJson as unknown as AnyRecord },
+    { name: "core", relativePath: "core.json", tokens: toDesignTokenTree(BASE_TOKEN_SETS.core) },
     {
       name: "semantic",
       relativePath: "semantic.json",
-      tokens: semanticJson as unknown as AnyRecord,
+      tokens: toDesignTokenTree(BASE_TOKEN_SETS.semantic),
     },
     {
       name: `themes/${themeId}`,
@@ -136,15 +122,19 @@ export function exportThemeToDesignMd(themeId: string): ExportedTheme {
  * @param name  user-facing theme name (front-matter `name`)
  * @param themeTokens  DTCG token groups (color, radius, fontFamily, …)
  */
-export function exportTokenSetToDesignMd(name: string, themeTokens: AnyRecord): ExportedTheme {
+export function exportTokenSetToDesignMd(name: string, themeTokens: ThemeTokenSet): ExportedTheme {
   const sets = [
-    { name: "core", relativePath: "core.json", tokens: coreJson as unknown as AnyRecord },
+    { name: "core", relativePath: "core.json", tokens: toDesignTokenTree(BASE_TOKEN_SETS.core) },
     {
       name: "semantic",
       relativePath: "semantic.json",
-      tokens: semanticJson as unknown as AnyRecord,
+      tokens: toDesignTokenTree(BASE_TOKEN_SETS.semantic),
     },
-    { name: "themes/custom", relativePath: "themes/custom.json", tokens: themeTokens },
+    {
+      name: "themes/custom",
+      relativePath: "themes/custom.json",
+      tokens: toDesignTokenTree(themeTokens),
+    },
   ];
 
   const designMd = serializeToDesignMd(sets, { theme: "themes/custom", name });

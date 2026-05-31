@@ -20,8 +20,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@nebutra/design-sync/serialize/from-design-md": [
-        "../../packages/design/design-sync/src/serialize/from-design-md.ts"
+      "@nebutra/design-sync/design-md": [
+        "../../packages/design/design-sync/src/providers/design-md.ts"
       ],
       "@nebutra/design-sync": ["../../packages/design/design-sync/src/index.ts"],
       "@nebutra/design-tokens/*": ["../../packages/design/design-tokens/*"],

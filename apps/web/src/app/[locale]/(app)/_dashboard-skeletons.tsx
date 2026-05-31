@@ -1,5 +1,5 @@
 const DASHBOARD_SKELETON_SURFACE =
-  "dashboard-skeleton-surface rounded-[var(--radius-lg)] bg-neutral-2/60 p-3.5 shadow-sm sm:p-4";
+  "dashboard-skeleton-surface rounded-[var(--radius-lg)] bg-neutral-2/70 p-3.5 shadow-sm sm:p-4";
 
 export function CommandSkeleton() {
   return (

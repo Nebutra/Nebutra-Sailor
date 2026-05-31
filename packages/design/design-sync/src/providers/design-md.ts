@@ -16,6 +16,8 @@ import type {
   PushResult,
 } from "../types";
 
+export { type ImportReport, importFromDesignMd } from "../serialize/from-design-md";
+
 // =============================================================================
 // DesignMd Provider — AI-native DESIGN.md format (@google/design.md)
 // =============================================================================

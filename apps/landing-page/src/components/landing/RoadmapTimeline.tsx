@@ -11,7 +11,6 @@
 // sticky phase labels park in the viewport while their content scrolls past.
 
 import { CheckCircle, Status as Circle, Clock } from "@nebutra/icons";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 export type PhaseStatus = "done" | "active" | "upcoming";
@@ -54,22 +53,33 @@ export function RoadmapTimeline({ data }: { data: RoadmapPhase[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const update = () => {
-      if (ref.current) setHeight(ref.current.getBoundingClientRect().height);
+      const content = ref.current;
+      const container = containerRef.current;
+      if (content) setHeight(content.getBoundingClientRect().height);
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const startOffset = window.innerHeight * 0.15;
+      const endOffset = window.innerHeight * 0.6;
+      const travel = rect.height + startOffset - endOffset;
+      const nextProgress = travel > 0 ? (startOffset - rect.top) / travel : 0;
+      setProgress(Math.min(Math.max(nextProgress, 0), 1));
     };
     update();
     window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    window.addEventListener("scroll", update, { passive: true });
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update);
+    };
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 15%", "end 60%"],
-  });
-  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
-  const opacityTransform = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const beamHeight = height * progress;
+  const beamOpacity = Math.min(progress / 0.1, 1);
 
   return (
     <div ref={containerRef} className="w-full">
@@ -171,8 +181,8 @@ export function RoadmapTimeline({ data }: { data: RoadmapPhase[] }) {
           style={{ height: `${height}px` }}
           className="absolute left-8 top-0 w-[2px] overflow-hidden bg-[linear-gradient(to_bottom,transparent_0%,var(--neutral-5)_10%,var(--neutral-5)_90%,transparent_100%)] md:left-8"
         >
-          <motion.div
-            style={{ height: heightTransform, opacity: opacityTransform }}
+          <div
+            style={{ height: `${beamHeight}px`, opacity: beamOpacity }}
             // Brand gradient progress beam — blue → cyan, matches Nebutra VI.
             className="absolute inset-x-0 top-0 w-[2px] rounded-full bg-gradient-to-t from-[color:var(--blue-9)] via-[color:var(--cyan-9)] to-transparent"
           />
