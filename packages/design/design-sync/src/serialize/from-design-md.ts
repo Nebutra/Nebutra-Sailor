@@ -123,11 +123,14 @@ function extractShadowsFromProse(content: string): string[] {
 
   if (found.length < 3) {
     // Also scan for inline (non-backtick) box-shadow values
-    // Matches: box-shadow: <value> or just bare shadow-like patterns in sentences
+    // Matches: box-shadow: <value> — captures up to end of line, then trims to last valid token.
     const INLINE_SHADOW_RE = /box-shadow:\s*([^;\n`"]{8,120})/gi;
     INLINE_SHADOW_RE.lastIndex = 0;
     while ((m = INLINE_SHADOW_RE.exec(searchText)) !== null) {
-      const candidate = (m[1] ?? "").trim().replace(/[;,\s]+$/, "");
+      const raw = (m[1] ?? "").trim().replace(/[;,\s]+$/, "");
+      // Trim trailing prose: find the last px-length or color token and cut there.
+      // This handles "rgba(0,0,0,0.4) 0px 10px 30px for elevation." → "rgba(0,0,0,0.4) 0px 10px 30px"
+      const candidate = trimTrailingProse(raw);
       if (isShadowValue(candidate) && !seen.has(candidate)) {
         seen.add(candidate);
         found.push(candidate);
@@ -137,6 +140,30 @@ function extractShadowsFromProse(content: string): string[] {
   }
 
   return found;
+}
+
+/**
+ * Trim trailing prose words from an extracted inline box-shadow string.
+ *
+ * The INLINE_SHADOW_RE captures until a newline, so a value like:
+ *   `rgba(0,0,0,0.4) 0px 10px 30px for elevation.`
+ * must be cut back to the last valid CSS box-shadow token. A valid token is
+ * either a px/rem length (`-?\d+(?:\.\d+)?(?:px|rem)`) or a color function
+ * (rgba?/hsla?/oklch/color, or a #hex). Everything after the last such token
+ * (including the trailing prose word and period) is dropped.
+ */
+function trimTrailingProse(raw: string): string {
+  // Find all matches for px/rem lengths and color tokens, track the end index of the last one.
+  const TOKEN_RE =
+    /-?\d+(?:\.\d+)?(?:px|rem)\b|rgba?\s*\([^)]*\)|hsla?\s*\([^)]*\)|oklch\s*\([^)]*\)|color\s*\([^)]*\)|#[0-9a-fA-F]{3,8}\b/gi;
+  let lastEnd = -1;
+  let m: RegExpExecArray | null;
+  TOKEN_RE.lastIndex = 0;
+  while ((m = TOKEN_RE.exec(raw)) !== null) {
+    lastEnd = m.index + m[0].length;
+  }
+  if (lastEnd === -1) return raw; // no tokens found — return unchanged
+  return raw.slice(0, lastEnd).trim();
 }
 
 /**
@@ -1081,18 +1108,28 @@ export function importFromDesignMd(
   }
 
   // 3f. Shadow from prose (heuristic — no front-matter equivalent in the DESIGN.md spec)
-  // Scan prose for CSS box-shadow values; assign smallest=sm, mid=md, largest=lg.
+  // Scan prose for CSS box-shadow values; assign to md/sm/lg so the PRIMARY shadow
+  // always lands in `md` (which consumers read for `--shadow-md`).
+  //   1 shadow  → { md }
+  //   2 shadows → { sm: smaller, md: larger }
+  //   3 shadows → { sm, md, lg } (ascending by magnitude)
   {
     let shadowExtracted = false;
     const rawShadows = extractShadowsFromProse(content);
     if (rawShadows.length > 0) {
-      // Sort by magnitude: smallest → sm, largest → lg
+      // Sort ascending by magnitude (smallest → largest)
       const sorted = [...rawShadows].sort((a, b) => shadowMagnitude(a) - shadowMagnitude(b));
-      const keys = ["sm", "md", "lg"].slice(0, sorted.length);
       const shadowEntries: Record<string, { $value: string; $type: "shadow" }> = {};
-      for (let i = 0; i < sorted.length; i++) {
-        const key = keys[i] ?? `shadow-${i}`;
-        shadowEntries[key] = { $value: sorted[i] ?? "", $type: "shadow" };
+      if (sorted.length === 1) {
+        shadowEntries["md"] = { $value: sorted[0] ?? "", $type: "shadow" };
+      } else if (sorted.length === 2) {
+        shadowEntries["sm"] = { $value: sorted[0] ?? "", $type: "shadow" };
+        shadowEntries["md"] = { $value: sorted[1] ?? "", $type: "shadow" };
+      } else {
+        // 3 shadows → sm / md / lg
+        shadowEntries["sm"] = { $value: sorted[0] ?? "", $type: "shadow" };
+        shadowEntries["md"] = { $value: sorted[1] ?? "", $type: "shadow" };
+        shadowEntries["lg"] = { $value: sorted[2] ?? "", $type: "shadow" };
       }
       tokens["shadow"] = leafGroup(shadowEntries);
       shadowExtracted = true;

@@ -1122,6 +1122,128 @@ Cards use \`rgba(0,0,0,0.5) 0px 8px 24px\` for elevation.
       // This may or may not match — the key test is the result does not throw
       expect(() => importFromDesignMd(FULL_FIXTURE)).not.toThrow();
     });
+
+    // ── Bug 1: non-backtick shadow value must not capture trailing prose ──────
+
+    it("Bug 1 — non-backtick prose shadow: trailing 'for elevation.' is stripped", () => {
+      // Input: `box-shadow: rgba(0,0,0,0.4) 0px 10px 30px for elevation.`
+      // Bug: extractor captured "rgba(0,0,0,0.4) 0px 10px 30px for elevation." (invalid CSS)
+      // Fix: trimTrailingProse() cuts at the last px/color token boundary
+      const fixture = `---
+name: TrailingProseTest
+colors:
+  primary: "#000000"
+---
+
+## Elevation
+
+Cards use box-shadow: rgba(0,0,0,0.4) 0px 10px 30px for elevation.
+`;
+      const { set } = importFromDesignMd(fixture);
+      const shadowGroup = set.tokens["shadow"] as Record<string, { $value: string }> | undefined;
+      expect(shadowGroup).toBeDefined();
+      const values = Object.values(shadowGroup ?? {}).map((l) => l.$value);
+      expect(values.length).toBeGreaterThan(0);
+      // The extracted value must NOT contain trailing prose words
+      for (const v of values) {
+        expect(v).not.toMatch(/for\s+elevation/i);
+        expect(v).not.toMatch(/\bfor\b/);
+      }
+      // Must match exactly the clean shadow string (color + offsets only)
+      expect(values[0]).toBe("rgba(0,0,0,0.4) 0px 10px 30px");
+    });
+
+    it("Bug 1 — extractShadowsFromProse: non-backtick value without trailing prose is unchanged", () => {
+      // A clean non-backtick value should not be mutated
+      const fixture = `---
+name: CleanShadow
+colors:
+  primary: "#000000"
+---
+
+## Elevation
+
+Cards use box-shadow: rgba(0,0,0,0.2) 0px 4px 12px;
+`;
+      const { set } = importFromDesignMd(fixture);
+      const shadowGroup = set.tokens["shadow"] as Record<string, { $value: string }> | undefined;
+      expect(shadowGroup).toBeDefined();
+      const values = Object.values(shadowGroup ?? {}).map((l) => l.$value);
+      // Should be clean — ends at the last px token
+      expect(values[0]).toBe("rgba(0,0,0,0.2) 0px 4px 12px");
+    });
+
+    // ── Bug 2: single shadow → md (not sm) ───────────────────────────────────
+
+    it("Bug 2 — single shadow → tokens.shadow.md is set (NOT only sm)", () => {
+      // Previously 1 shadow → shadow.sm; consumers reading --shadow-md saw nothing.
+      // Fix: 1 shadow → shadow.md
+      const singleShadowFixture = `---
+name: SingleShadow
+colors:
+  primary: "#000000"
+---
+
+## Elevation
+
+The app uses box-shadow: rgba(0,0,0,0.15) 0px 4px 16px for card depth.
+`;
+      const { set } = importFromDesignMd(singleShadowFixture);
+      const shadowGroup = set.tokens["shadow"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(shadowGroup).toBeDefined();
+      // md must be present
+      expect(shadowGroup?.["md"]).toBeDefined();
+      expect(shadowGroup?.["md"]?.$type).toBe("shadow");
+      // sm must NOT be present (only 1 shadow)
+      expect(shadowGroup?.["sm"]).toBeUndefined();
+      // Value must be clean (no trailing prose)
+      expect(shadowGroup?.["md"]?.$value).toBe("rgba(0,0,0,0.15) 0px 4px 16px");
+    });
+
+    it("Bug 2 — two shadows → sm + md (ascending by magnitude), no lg", () => {
+      const twoShadowFixture = `---
+name: TwoShadows
+colors:
+  primary: "#000000"
+---
+
+## Elevation
+
+Tooltips use box-shadow: rgba(0,0,0,0.1) 0px 2px 4px for subtle lift.
+Modals use box-shadow: rgba(0,0,0,0.4) 0px 16px 48px for deep elevation.
+`;
+      const { set } = importFromDesignMd(twoShadowFixture);
+      const shadowGroup = set.tokens["shadow"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(shadowGroup).toBeDefined();
+      expect(shadowGroup?.["sm"]).toBeDefined();
+      expect(shadowGroup?.["md"]).toBeDefined();
+      expect(shadowGroup?.["lg"]).toBeUndefined();
+      // sm should be the smaller (2px 4px → magnitude 6), md the larger (16px 48px → magnitude 64)
+      expect(shadowGroup?.["sm"]?.$value).toContain("2px");
+      expect(shadowGroup?.["md"]?.$value).toContain("16px");
+    });
+
+    it("Bug 2 — three shadows → sm + md + lg (all present, ascending)", () => {
+      // SHADOW_PROSE_FIXTURE already has 3 shadows — verify all three keys now
+      const { set } = importFromDesignMd(SHADOW_PROSE_FIXTURE);
+      const shadowGroup = set.tokens["shadow"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(shadowGroup).toBeDefined();
+      expect(shadowGroup?.["sm"]).toBeDefined();
+      expect(shadowGroup?.["md"]).toBeDefined();
+      expect(shadowGroup?.["lg"]).toBeDefined();
+      // Ascending magnitude: sm has smallest px values, lg has largest
+      const smVal = shadowGroup?.["sm"]?.$value ?? "";
+      const lgVal = shadowGroup?.["lg"]?.$value ?? "";
+      // sm should contain 2px (from "0px 2px 4px"), lg should contain 48px
+      expect(smVal).toMatch(/2px|4px/);
+      expect(lgVal).toMatch(/16px|48px/);
+    });
   });
 
   // ─── Addition 3: Prose fallback for radius / fontFamily / spacing ─────────────
