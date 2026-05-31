@@ -69,7 +69,12 @@ html {
    ============================================ */
 
 body {
-  font-family: var(--font-sans);
+  /* Font precedence in ONE place: explicit user choice (--user-ui-font) →
+     active theme/DESIGN font (--font-sans) → default; the CJK stack is always
+     appended as a fallback so Chinese/Japanese/Korean glyphs render regardless
+     of the (often Latin-only) theme font. This replaces a blanket :lang(zh)
+     override that used to discard the theme font entirely. */
+  font-family: var(--user-ui-font, var(--font-sans)), var(--font-cjk);
   /* An explicit user size (--user-ui-font-size) wins; otherwise the active
      theme/DESIGN type-scale (--text-base); otherwise the 1rem default. This is
      backward-compatible — with neither var set it resolves to exactly 1rem.
@@ -87,7 +92,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), var(--font-cjk);
   /* Theme/DESIGN can lighten headings via fontWeight.heading; default 600. */
   font-weight: var(--font-weight-heading, 600);
   line-height: 1.25;
@@ -98,7 +103,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: var(--font-mono);
+  font-family: var(--user-code-font, var(--font-mono)), var(--font-cjk);
 }
 
 /* ============================================
@@ -119,8 +124,7 @@ samp {
    CJK Support
    ============================================ */
 
-:lang(zh),
-:lang(ja),
-:lang(ko) {
-  font-family: var(--font-cjk);
-}
+/* No blanket :lang(zh) font-family override here. The CJK stack is appended as
+   a fallback on the body / heading / code rules above, so the active theme or
+   DESIGN.md font drives Latin text on every locale while CJK glyphs still fall
+   back to --font-cjk. (A blanket override would discard the theme font.) */

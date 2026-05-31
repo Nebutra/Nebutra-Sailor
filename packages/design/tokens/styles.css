@@ -1389,19 +1389,20 @@ html {
   overflow-wrap: break-word;
 }
 
-/* ─── CJK Auto-Activation via :lang() ───────────────────────
-   When <html lang="zh|ja|ko"> is set by app layouts, body
-   automatically switches to the CJK font stack.
+/* ─── CJK locales: reading tweaks only ──────────────────────
+   When <html lang="zh|ja|ko"> is set, keep the CJK reading
+   adjustments (looser line-height, word-break) but DO NOT
+   override font-family — @nebutra/ui fonts.css owns it (active
+   theme / DESIGN.md font + --font-cjk fallback), so the theme
+   font applies to Latin text on CJK locales too.
    ─────────────────────────────────────────────────────────── */
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) body {
-  font-family: var(--font-cn);
   line-height: 1.75;
   word-break: break-all;
   overflow-wrap: break-word;
 }
 
 :is(html:lang(zh), html:lang(ja), html:lang(ko)) :is(code, kbd, pre, samp) {
-  font-family: var(--font-mono);
   word-break: normal;
 }
 

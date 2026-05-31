@@ -241,17 +241,12 @@
     color: var(--user-foreground);
   }
 
-  /* User-supplied font family stacks. Pairs with existing --user-{ui,code}-font-size vars. */
-  html[style*="--user-ui-font"] body {
-    font-family: var(--user-ui-font);
-  }
-  html[style*="--user-code-font"] pre,
-  html[style*="--user-code-font"] code,
-  html[style*="--user-code-font"] kbd,
-  html[style*="--user-code-font"] samp,
-  html[style*="--user-code-font"] [data-code-surface] {
-    font-family: var(--user-code-font);
-  }
+  /* User-supplied font family stacks are now owned by @nebutra/ui fonts.css,
+     which resolves var(--user-ui-font, var(--font-sans)), var(--font-cjk) (and
+     the code equivalent) in one unlayered rule — so the user override, the
+     theme/DESIGN font, and the CJK fallback all compose with correct
+     precedence. The previous @layer base rules here were shadowed by that
+     unlayered rule and dropped the CJK fallback, so they are removed. */
 
   /* Pointer cursor on interactive elements when user opts in. */
   html.cursor-pointer-interactive button:not(:disabled),
