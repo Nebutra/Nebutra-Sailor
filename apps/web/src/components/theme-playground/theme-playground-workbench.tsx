@@ -508,7 +508,11 @@ function PreviewCanvas({
           data-theme={theme.id}
           data-mode={mode}
           data-surface={surface}
-          style={{ ...style, maxWidth: `${viewportWidth}px` }}
+          style={{
+            ...style,
+            maxWidth: `${viewportWidth}px`,
+            fontFamily: "var(--font-sans, ui-sans-serif, system-ui, -apple-system, sans-serif)",
+          }}
           className={cn(
             "mx-auto min-h-[640px] w-full overflow-hidden rounded-[var(--radius-lg)] bg-[var(--color-background)] text-[color:var(--color-foreground)] transition-[max-width] duration-200",
             densityScale[density],
@@ -554,7 +558,12 @@ function PreviewCard({
       )}
     >
       <div className="mb-3 flex items-center justify-between gap-3">
-        <h3 className="font-semibold text-sm">{title}</h3>
+        <h3
+          className="font-semibold text-sm"
+          style={{ fontFamily: "var(--font-heading, var(--font-sans, inherit))" }}
+        >
+          {title}
+        </h3>
         {active && <Badge size="sm">Focused</Badge>}
       </div>
       {children}
