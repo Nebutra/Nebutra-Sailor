@@ -33,7 +33,11 @@ export const Slot = React.forwardRef<HTMLElement, SlotProps>(
       if (typeof ref === "function") ref(node);
       else if (ref) ref.current = node;
 
-      const childRef = (child as React.ReactElement & { ref?: React.Ref<HTMLElement> }).ref;
+      // React 19 removed `element.ref` — the ref is now a regular prop, so read
+      // it from the child's props (reading `child.ref` triggers the removal warning).
+      const childRef = (
+        childProps as React.HTMLAttributes<HTMLElement> & { ref?: React.Ref<HTMLElement> }
+      ).ref;
       if (typeof childRef === "function") childRef(node);
       else if (childRef && "current" in childRef) {
         (childRef as React.MutableRefObject<HTMLElement | null>).current = node;
