@@ -5,6 +5,7 @@ import {
   AppearanceSection,
   ColorPickerRow,
   ContrastSlider,
+  DesignMdImportSection,
   DiffMarkerSegmented,
   FontFamilyPicker,
   FontSizeStepper,
@@ -35,6 +36,10 @@ export default async function AppearancePage() {
           description={t("themePreset.description")}
         >
           <ThemePresetPicker />
+        </AppearanceSection>
+
+        <AppearanceSection title={t("designMd.title")} description={t("designMd.description")}>
+          <DesignMdImportSection />
         </AppearanceSection>
 
         <AppearanceSection title={t("colors.title")} description={t("colors.description")}>

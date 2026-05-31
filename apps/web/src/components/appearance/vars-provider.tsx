@@ -73,11 +73,11 @@ export default function AppearanceVarsProvider(): null {
     return () => observer.disconnect();
   }, []);
 
-  // Apply the selected Theme Playground preset across the whole app. The heavy
-  // theme token-sets (~78 themes) are lazy-imported only when a preset is
-  // actually active, so the default ("default") path adds nothing to the
-  // global bundle. Granular controls above (accent/background/fonts) layer on
-  // top because they use independent vars/attributes, not `--color-*`.
+  // Apply the selected Theme Playground preset (or imported DESIGN.md theme)
+  // across the whole app. The heavy theme token-sets (~78 themes) and the
+  // DESIGN.md token resolver are lazy-imported only when actually needed, so
+  // neither path adds anything to the global bundle.
+  // Precedence: importedTheme > theme preset > default (no-op).
   useEffect(() => {
     if (typeof document === "undefined") return;
     const root = document.documentElement;
@@ -86,6 +86,67 @@ export default function AppearanceVarsProvider(): null {
     for (const name of appliedThemeVars.current) root.style.removeProperty(name);
     appliedThemeVars.current = [];
 
+    const mode = isDark ? "dark" : "light";
+
+    /** Shared setter — records the var name so we can remove it next cycle. */
+    const applied: string[] = [];
+    const set = (name: string, value: string | undefined) => {
+      if (!value) return;
+      root.style.setProperty(name, value);
+      applied.push(name);
+    };
+
+    /**
+     * Bridge the sidebar vars from the resolved style record — the playground
+     * canvas has no sidebar, so neither resolver emits these. Shared by both
+     * the preset path and the importedTheme path.
+     */
+    function applySidebarBridge(style: Record<string, string>) {
+      set("--color-sidebar", style["--color-card"] ?? style["--color-background"]);
+      set(
+        "--color-sidebar-foreground",
+        style["--color-card-foreground"] ?? style["--color-foreground"],
+      );
+      set("--color-sidebar-primary", style["--color-primary"]);
+      set("--color-sidebar-primary-foreground", style["--color-primary-foreground"]);
+      set("--color-sidebar-accent", style["--color-accent"] ?? style["--color-muted"]);
+      set(
+        "--color-sidebar-accent-foreground",
+        style["--color-accent-foreground"] ?? style["--color-foreground"],
+      );
+      set("--color-sidebar-border", style["--color-border"]);
+      set("--color-sidebar-ring", style["--color-ring"]);
+    }
+
+    // ── Branch 1: DESIGN.md imported theme ──────────────────────────────────
+    if (state.importedTheme) {
+      const snapshot = state.importedTheme;
+      let cancelled = false;
+      void import("@/components/theme-playground/theme-token-data").then(
+        ({ getPreviewStyleFromTokenSet }) => {
+          if (cancelled) return;
+          const style = getPreviewStyleFromTokenSet(
+            // The snapshot tokenSet matches ThemeTokenSet shape at runtime.
+            // Cast through unknown to bridge the optional-value index signature gap.
+            snapshot.tokenSet as unknown as Parameters<typeof getPreviewStyleFromTokenSet>[0],
+            mode,
+          ) as Record<string, string>;
+
+          for (const [key, value] of Object.entries(style)) {
+            if (key.startsWith("--")) set(key, value);
+          }
+          applySidebarBridge(style);
+
+          appliedThemeVars.current = applied;
+          root.setAttribute("data-theme-preset", "imported");
+        },
+      );
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    // ── Branch 2: registry preset ────────────────────────────────────────────
     if (!state.theme || state.theme === "default") {
       root.removeAttribute("data-theme-preset");
       return;
@@ -95,36 +156,12 @@ export default function AppearanceVarsProvider(): null {
     void import("@/components/theme-playground/theme-token-data").then(
       ({ getThemePreviewStyle }) => {
         if (cancelled || state.theme === "default") return;
-        const mode = isDark ? "dark" : "light";
         const style = getThemePreviewStyle(state.theme, mode) as Record<string, string>;
-        const applied: string[] = [];
-        const set = (name: string, value: string | undefined) => {
-          if (!value) return;
-          root.style.setProperty(name, value);
-          applied.push(name);
-        };
 
-        // Theme palette → app surface/brand vars (skip non-custom-prop keys like colorScheme).
         for (const [key, value] of Object.entries(style)) {
           if (key.startsWith("--")) set(key, value);
         }
-
-        // Bridge the nav rail so the sidebar follows the theme — the playground
-        // canvas has no sidebar, so getThemePreviewStyle never emits these.
-        set("--color-sidebar", style["--color-card"] ?? style["--color-background"]);
-        set(
-          "--color-sidebar-foreground",
-          style["--color-card-foreground"] ?? style["--color-foreground"],
-        );
-        set("--color-sidebar-primary", style["--color-primary"]);
-        set("--color-sidebar-primary-foreground", style["--color-primary-foreground"]);
-        set("--color-sidebar-accent", style["--color-accent"] ?? style["--color-muted"]);
-        set(
-          "--color-sidebar-accent-foreground",
-          style["--color-accent-foreground"] ?? style["--color-foreground"],
-        );
-        set("--color-sidebar-border", style["--color-border"]);
-        set("--color-sidebar-ring", style["--color-ring"]);
+        applySidebarBridge(style);
 
         appliedThemeVars.current = applied;
         root.setAttribute("data-theme-preset", state.theme);
@@ -134,7 +171,7 @@ export default function AppearanceVarsProvider(): null {
     return () => {
       cancelled = true;
     };
-  }, [state.theme, isDark]);
+  }, [state.importedTheme, state.theme, isDark]);
 
   useEffect(() => {
     if (state.motion !== "system" || typeof window === "undefined") return;

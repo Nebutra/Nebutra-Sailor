@@ -783,6 +783,12 @@
         "empty": "No themes match your search.",
         "count": "{count} themes"
       },
+      "designMd": {
+        "title": "Import DESIGN.md",
+        "description": "Paste or upload a DESIGN.md to apply its colors, radius, fonts, spacing, and shadows across the entire app — persisted across reloads.",
+        "applied": "Applied:",
+        "remove": "Remove"
+      },
       "themeMode": {
         "label": "Theme mode",
         "light": "Light",

@@ -22,6 +22,25 @@ export type AppearanceCodeFontFamily = "system" | "geist-mono" | "sf-mono" | "je
 
 export type AppearanceDiffMarkers = "color" | "plusminus";
 
+/**
+ * Snapshot of an imported DESIGN.md theme persisted in localStorage.
+ *
+ * Intentionally mirrors the DTCG token-group shape from ThemeTokenSet but is
+ * declared inline so the global appearance bundle never imports
+ * @nebutra/design-sync or theme-token-data. The resolver is lazy-loaded in
+ * AppearanceVarsProvider.
+ */
+export type ImportedThemeSnapshot = {
+  name: string;
+  /**
+   * DTCG token groups (color, radius, fontFamily, etc.) — each group maps
+   * token keys to optional-leaf objects. Values may be undefined when a key
+   * exists in the group but has no $value (mirrors ThemeTokenSet's index
+   * signature).
+   */
+  tokenSet: Record<string, Record<string, { $value?: string; $type?: string } | undefined>>;
+};
+
 export type AppearanceState = {
   /**
    * Selected Theme Playground preset id (from @nebutra/theme registry), or
@@ -31,6 +50,12 @@ export type AppearanceState = {
    * applied (AppearanceVarsProvider lazy-loads the token resolver).
    */
   theme: string;
+  /**
+   * A DESIGN.md theme imported by the user and applied app-wide (persisted).
+   * When set, takes precedence over the `theme` preset. Cleared whenever the
+   * user picks a registry preset or clicks "Remove".
+   */
+  importedTheme: ImportedThemeSnapshot | null;
   accent: AppearanceAccent;
   uiFontSize: number;
   codeFontSize: number;
@@ -50,6 +75,7 @@ export const APPEARANCE_STORAGE_KEY = "nebutra:appearance:v1";
 
 export const APPEARANCE_DEFAULTS: AppearanceState = {
   theme: "default",
+  importedTheme: null,
   accent: "default",
   uiFontSize: 14,
   codeFontSize: 12,
@@ -125,6 +151,21 @@ function sanitizeTheme(value: unknown): string {
   return value;
 }
 
+/**
+ * Loose validation for ImportedThemeSnapshot.
+ * Requires a string `name` and a plain-object `tokenSet`. We don't validate
+ * each leaf shape — corrupt inner values simply won't match known keys in the
+ * resolver and will be silently skipped. This keeps the store lean (no deep
+ * parse or design-sync import).
+ */
+function sanitizeImportedTheme(value: unknown): ImportedThemeSnapshot | null {
+  if (!value || typeof value !== "object") return null;
+  const v = value as Record<string, unknown>;
+  if (typeof v.name !== "string" || !v.name) return null;
+  if (!v.tokenSet || typeof v.tokenSet !== "object" || Array.isArray(v.tokenSet)) return null;
+  return { name: v.name, tokenSet: v.tokenSet as ImportedThemeSnapshot["tokenSet"] };
+}
+
 function clampContrast(value: unknown): number {
   const n = typeof value === "number" ? value : Number(value);
   if (!Number.isFinite(n)) return APPEARANCE_DEFAULTS.contrast;
@@ -153,6 +194,7 @@ function sanitize(raw: unknown): AppearanceState {
     : APPEARANCE_DEFAULTS.diffMarkers;
   return {
     theme: sanitizeTheme(r.theme),
+    importedTheme: sanitizeImportedTheme(r.importedTheme),
     accent,
     motion,
     uiFontSize: clampFontSize(r.uiFontSize, 12, 18, APPEARANCE_DEFAULTS.uiFontSize),

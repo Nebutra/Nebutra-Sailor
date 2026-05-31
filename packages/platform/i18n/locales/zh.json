@@ -773,6 +773,12 @@
         "empty": "没有匹配的主题。",
         "count": "{count} 个主题"
       },
+      "designMd": {
+        "title": "导入 DESIGN.md",
+        "description": "粘贴或上传 DESIGN.md，将其颜色、圆角、字体、间距及阴影应用到整个应用，并在刷新后持久保留。",
+        "applied": "已应用：",
+        "remove": "移除"
+      },
       "themeMode": {
         "label": "主题模式",
         "light": "浅色",

@@ -97,7 +97,9 @@ export function ThemePresetPicker() {
     );
   }, [query]);
 
-  const defaultActive = !state.theme || state.theme === DEFAULT_ID;
+  // importedTheme takes precedence — no registry preset is "active" while one is loaded.
+  const hasImported = Boolean(state.importedTheme);
+  const defaultActive = !hasImported && (!state.theme || state.theme === DEFAULT_ID);
 
   return (
     <div className="space-y-3">
@@ -117,19 +119,19 @@ export function ThemePresetPicker() {
           mood={t("defaultMood")}
           swatches={getThemeSwatches(THEME_REGISTRY.defaultTheme)}
           tags={[]}
-          onSelect={() => update({ theme: DEFAULT_ID })}
+          onSelect={() => update({ theme: DEFAULT_ID, importedTheme: null })}
           activeLabel={t("active")}
         />
 
         {filtered.map((theme) => (
           <PresetCard
             key={theme.id}
-            active={state.theme === theme.id}
+            active={!hasImported && state.theme === theme.id}
             name={theme.name}
             mood={theme.mood}
             swatches={getThemeSwatches(theme.id)}
             tags={[theme.category, `WCAG ${theme.governance.wcag}`]}
-            onSelect={() => update({ theme: theme.id })}
+            onSelect={() => update({ theme: theme.id, importedTheme: null })}
             activeLabel={t("active")}
           />
         ))}
