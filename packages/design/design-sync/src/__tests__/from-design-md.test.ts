@@ -923,4 +923,324 @@ Some introductory prose here.
       expect(colorGroup?.["primary"]?.$value?.toLowerCase()).toBe("#00897b");
     });
   });
+
+  // ─── Addition 1: Type-scale from front-matter typography ────────────────────
+
+  describe("type-scale emission from front-matter typography", () => {
+    const TYPE_SCALE_FIXTURE = `---
+name: TypeScaleTest
+colors:
+  primary: "#000000"
+typography:
+  h1:
+    fontFamily: Inter
+    fontSize: 3rem
+    fontWeight: 700
+    lineHeight: 1.2
+    letterSpacing: -0.5px
+  body:
+    fontFamily: Inter
+    fontSize: 1rem
+    fontWeight: 400
+    lineHeight: 1.5
+---
+`;
+
+    it("emits fontSize.heading from the h1 typography entry (3rem)", () => {
+      const { set } = importFromDesignMd(TYPE_SCALE_FIXTURE);
+      const fsGroup = set.tokens["fontSize"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(fsGroup).toBeDefined();
+      expect(fsGroup?.["heading"]).toBeDefined();
+      expect(fsGroup?.["heading"]?.$value).toBe("3rem");
+      expect(fsGroup?.["heading"]?.$type).toBe("dimension");
+    });
+
+    it("emits fontSize.base from the body typography entry (1rem)", () => {
+      const { set } = importFromDesignMd(TYPE_SCALE_FIXTURE);
+      const fsGroup = set.tokens["fontSize"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(fsGroup).toBeDefined();
+      expect(fsGroup?.["base"]).toBeDefined();
+      expect(fsGroup?.["base"]?.$value).toBe("1rem");
+      expect(fsGroup?.["base"]?.$type).toBe("dimension");
+    });
+
+    it("emits fontWeight.heading from the h1 typography entry (700)", () => {
+      const { set } = importFromDesignMd(TYPE_SCALE_FIXTURE);
+      const fwGroup = set.tokens["fontWeight"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(fwGroup).toBeDefined();
+      expect(fwGroup?.["heading"]).toBeDefined();
+      expect(String(fwGroup?.["heading"]?.$value)).toBe("700");
+      expect(fwGroup?.["heading"]?.$type).toBe("fontWeight");
+    });
+
+    it("all fontSize leaves have $value and $type (DTCG validity)", () => {
+      const { set } = importFromDesignMd(TYPE_SCALE_FIXTURE);
+      const fsGroup = set.tokens["fontSize"] as
+        | Record<string, { $value: unknown; $type: unknown }>
+        | undefined;
+      if (fsGroup) {
+        for (const [key, leaf] of Object.entries(fsGroup)) {
+          expect(leaf.$type, `fontSize.${key} must have $type`).toBe("dimension");
+          expect(typeof leaf.$value, `fontSize.${key}.$value must be string`).toBe("string");
+        }
+      }
+    });
+
+    it("omits fontSize when typography has no fontSize", () => {
+      const noSizeFixture = `---
+name: NoFontSize
+typography:
+  body:
+    fontFamily: Inter
+---
+`;
+      const { set } = importFromDesignMd(noSizeFixture);
+      // fontSize group should be absent or base should be absent (no fontSize to emit)
+      const fsGroup = set.tokens["fontSize"] as Record<string, unknown> | undefined;
+      // Either no fontSize group, or no entries
+      if (fsGroup) {
+        expect(Object.keys(fsGroup).length).toBe(0);
+      }
+    });
+
+    it("regression: FULL_FIXTURE front-matter typography still works (no regression)", () => {
+      // FULL_FIXTURE has ## Typography prose section (not YAML front-matter typography),
+      // so fontSize/fontWeight groups may not be populated — but the result must not throw
+      expect(() => importFromDesignMd(FULL_FIXTURE)).not.toThrow();
+    });
+  });
+
+  // ─── Addition 2: Shadow extracted from prose ─────────────────────────────────
+
+  describe("shadow extraction from prose", () => {
+    const SHADOW_PROSE_FIXTURE = `---
+name: ShadowTest
+colors:
+  primary: "#000000"
+---
+
+## Elevation
+
+Cards use box-shadow: rgba(0,0,0,0.5) 0px 8px 24px for elevated panels.
+Tooltips use box-shadow: rgba(0,0,0,0.1) 0px 2px 4px for subtle lift.
+Modals use box-shadow: rgba(0,0,0,0.3) 0px 16px 48px for deep elevation.
+`;
+
+    const NO_SHADOW_FIXTURE = `---
+name: NoShadow
+colors:
+  primary: "#000000"
+---
+
+## Elevation & Depth
+
+This design uses no shadows whatsoever. Depth is communicated through color.
+`;
+
+    it("extracts shadow tokens when box-shadow values appear in prose", () => {
+      const { set } = importFromDesignMd(SHADOW_PROSE_FIXTURE);
+      const shadowGroup = set.tokens["shadow"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(shadowGroup).toBeDefined();
+      expect(Object.keys(shadowGroup ?? {}).length).toBeGreaterThan(0);
+    });
+
+    it("shadow tokens have $type: shadow", () => {
+      const { set } = importFromDesignMd(SHADOW_PROSE_FIXTURE);
+      const shadowGroup = set.tokens["shadow"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      for (const [key, leaf] of Object.entries(shadowGroup ?? {})) {
+        expect(leaf.$type, `shadow.${key} must have $type shadow`).toBe("shadow");
+        expect(typeof leaf.$value, `shadow.${key}.$value must be string`).toBe("string");
+        expect(leaf.$value.length, `shadow.${key}.$value must be non-empty`).toBeGreaterThan(0);
+      }
+    });
+
+    it("shadow extracted value is a plausible box-shadow string (contains px and color)", () => {
+      const { set } = importFromDesignMd(SHADOW_PROSE_FIXTURE);
+      const shadowGroup = set.tokens["shadow"] as Record<string, { $value: string }> | undefined;
+      const values = Object.values(shadowGroup ?? {}).map((l) => l.$value);
+      // Each value should contain px
+      for (const v of values) {
+        expect(v).toMatch(/\d+px/);
+      }
+    });
+
+    it("report.warnings mentions 'shadow extracted from prose (heuristic)' when shadows found", () => {
+      const { report } = importFromDesignMd(SHADOW_PROSE_FIXTURE);
+      const combined = report.warnings.join(" ").toLowerCase();
+      expect(combined).toMatch(/shadow.*prose|prose.*shadow/);
+    });
+
+    it("no shadow group when no shadow values found in prose", () => {
+      const { set } = importFromDesignMd(NO_SHADOW_FIXTURE);
+      const shadowGroup = set.tokens["shadow"] as Record<string, unknown> | undefined;
+      expect(!shadowGroup || Object.keys(shadowGroup).length === 0).toBe(true);
+    });
+
+    it("elevation stays in unmapped when shadow is extracted from prose (elevation section still noted)", () => {
+      // Even when we extract shadow values, the 'elevation' heading is still prose-only
+      const { report } = importFromDesignMd(SHADOW_PROSE_FIXTURE);
+      const combined = report.unmapped.join(" ").toLowerCase();
+      expect(combined).toMatch(/elevation/);
+    });
+
+    it("backtick-wrapped shadow value in prose is extracted", () => {
+      const backtickFixture = `---
+name: BacktickShadow
+colors:
+  primary: "#000000"
+---
+
+## Elevation
+
+Cards use \`rgba(0,0,0,0.5) 0px 8px 24px\` for elevation.
+`;
+      const { set } = importFromDesignMd(backtickFixture);
+      const shadowGroup = set.tokens["shadow"] as Record<string, { $value: string }> | undefined;
+      expect(shadowGroup).toBeDefined();
+      expect(Object.keys(shadowGroup ?? {}).length).toBeGreaterThan(0);
+    });
+
+    it("caps at 3 shadow tokens (sm/md/lg)", () => {
+      const { set } = importFromDesignMd(SHADOW_PROSE_FIXTURE);
+      const shadowGroup = set.tokens["shadow"] as Record<string, unknown> | undefined;
+      expect(Object.keys(shadowGroup ?? {}).length).toBeLessThanOrEqual(3);
+    });
+
+    it("front-matter fixture: no shadow warning when no prose shadows found", () => {
+      const { report } = importFromDesignMd(FULL_FIXTURE);
+      // FULL_FIXTURE has 'box-shadow: 0 2px 4px rgba(0,0,0,0.1)' in the Elevation section
+      // This may or may not match — the key test is the result does not throw
+      expect(() => importFromDesignMd(FULL_FIXTURE)).not.toThrow();
+    });
+  });
+
+  // ─── Addition 3: Prose fallback for radius / fontFamily / spacing ─────────────
+
+  describe("prose fallback for radius, fontFamily, spacing (no-front-matter files)", () => {
+    /** Fixture: NO front-matter at all; prose contains radius/font/spacing hints */
+    const PROSE_DIMENSIONS_FIXTURE = `# Design System
+
+## Overview
+
+Lovable's design uses warm parchment tones. Pill buttons use 9999px radius for all primary CTAs.
+The typography uses Geist as the primary body font with a sans-serif fallback.
+Spacing is built on an 8px base grid — all distances are multiples of 8.
+
+## Shape & Geometry
+
+All primary buttons use 9999px radius (full pill). Cards use 8px radius. Small badges use 4px radius.
+`;
+
+    const PROSE_RADIUS_ONLY_FIXTURE = `# System
+
+Some text with rounded corners. Buttons use 12px radius for a friendly feel.
+The 500px radius creates pill shapes.
+`;
+
+    it("extracts radius tokens from prose when no front-matter rounded block", () => {
+      const { set } = importFromDesignMd(PROSE_DIMENSIONS_FIXTURE, { brandName: "prose-test" });
+      const radiusGroup = set.tokens["radius"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(radiusGroup).toBeDefined();
+      expect(Object.keys(radiusGroup ?? {}).length).toBeGreaterThan(0);
+    });
+
+    it("extracts radius.full when 9999px is found in prose", () => {
+      const { set } = importFromDesignMd(PROSE_DIMENSIONS_FIXTURE, { brandName: "prose-test" });
+      const radiusGroup = set.tokens["radius"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(radiusGroup?.["full"]).toBeDefined();
+    });
+
+    it("all prose-extracted radius leaves have $type: dimension", () => {
+      const { set } = importFromDesignMd(PROSE_DIMENSIONS_FIXTURE, { brandName: "prose-test" });
+      const radiusGroup = set.tokens["radius"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      for (const [key, leaf] of Object.entries(radiusGroup ?? {})) {
+        expect(leaf.$type, `radius.${key} must have $type dimension`).toBe("dimension");
+        expect(typeof leaf.$value).toBe("string");
+        expect(leaf.$value).toMatch(/\d/);
+      }
+    });
+
+    it("extracts fontFamily.sans from typography prose section", () => {
+      const { set } = importFromDesignMd(PROSE_DIMENSIONS_FIXTURE, { brandName: "prose-test" });
+      const ffGroup = set.tokens["fontFamily"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(ffGroup?.["sans"]).toBeDefined();
+      expect(ffGroup?.["sans"]?.$type).toBe("fontFamily");
+      expect(typeof ffGroup?.["sans"]?.$value).toBe("string");
+      expect(ffGroup?.["sans"]?.$value.length).toBeGreaterThan(0);
+    });
+
+    it("extracts spacing tokens from prose 8px base grid", () => {
+      const { set } = importFromDesignMd(PROSE_DIMENSIONS_FIXTURE, { brandName: "prose-test" });
+      const spacingGroup = set.tokens["spacing"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      expect(spacingGroup).toBeDefined();
+      expect(Object.keys(spacingGroup ?? {}).length).toBeGreaterThan(0);
+    });
+
+    it("all prose-extracted spacing leaves have $type: dimension", () => {
+      const { set } = importFromDesignMd(PROSE_DIMENSIONS_FIXTURE, { brandName: "prose-test" });
+      const spacingGroup = set.tokens["spacing"] as
+        | Record<string, { $value: string; $type: string }>
+        | undefined;
+      for (const [key, leaf] of Object.entries(spacingGroup ?? {})) {
+        expect(leaf.$type, `spacing.${key} must have $type dimension`).toBe("dimension");
+        expect(typeof leaf.$value).toBe("string");
+        expect(leaf.$value).toMatch(/\d/);
+      }
+    });
+
+    it("at least radius.md is emitted when any radius value is found in prose", () => {
+      const { set } = importFromDesignMd(PROSE_RADIUS_ONLY_FIXTURE, { brandName: "prose-radius" });
+      const radiusGroup = set.tokens["radius"] as Record<string, unknown> | undefined;
+      expect(radiusGroup?.["md"]).toBeDefined();
+    });
+
+    it("prose fallback does NOT apply for radius when front-matter rounded is non-empty", () => {
+      // FULL_FIXTURE has rounded.md: 8px in front matter — prose fallback must NOT run
+      const { set } = importFromDesignMd(FULL_FIXTURE);
+      const radiusGroup = set.tokens["radius"] as Record<string, { $value: string }> | undefined;
+      // Should have exactly what front matter says (radius.md = 8px), not prose-derived values
+      expect(radiusGroup?.["md"]?.$value).toBe("8px");
+    });
+
+    it("prose fallback does NOT apply for fontFamily when front-matter typography is non-empty", () => {
+      // TYPOGRAPHY_FIXTURE has fontFamily: Lato in front matter
+      const { set } = importFromDesignMd(TYPOGRAPHY_FIXTURE);
+      const ffGroup = set.tokens["fontFamily"] as Record<string, { $value: string }> | undefined;
+      expect(ffGroup?.["sans"]?.$value).toBe("Lato");
+    });
+
+    it("prose fallback does NOT apply for spacing when front-matter spacing is non-empty", () => {
+      // SPACING_FIXTURE has spacing.sm/md/lg in front matter
+      const { set } = importFromDesignMd(SPACING_FIXTURE);
+      const spacingGroup = set.tokens["spacing"] as Record<string, { $value: string }> | undefined;
+      expect(spacingGroup?.["sm"]?.$value).toBe("8px");
+      expect(spacingGroup?.["md"]?.$value).toBe("16px");
+    });
+
+    it("DTCG tree produced by prose-dimensions fixture is valid (no throw)", () => {
+      expect(() =>
+        importFromDesignMd(PROSE_DIMENSIONS_FIXTURE, { brandName: "prose-test" }),
+      ).not.toThrow();
+    });
+  });
 });

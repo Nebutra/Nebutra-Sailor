@@ -68,6 +68,410 @@ const REQUIRED_TOKEN_PATHS = [
 /** Lowercase heading names that are prose/reference-only and cannot map to DTCG leaves. */
 const PROSE_ONLY_HEADINGS = new Set(["elevation", "components", "shapes"]);
 
+// ─── Prose dimension extraction helpers ──────────────────────────────────────
+
+/**
+ * Scope content to a named section. Returns the text under the first heading whose
+ * lowercased text contains any of `keywords`, up to the next same/higher-level heading.
+ * Falls back to the entire `content` if no matching heading is found.
+ */
+function scopeToSection(content: string, keywords: string[]): string {
+  const headingRe = /^(#{1,3})\s+(.+?)\s*$/gm;
+  let match: RegExpExecArray | null;
+  while ((match = headingRe.exec(content)) !== null) {
+    const headingText = (match[2] ?? "").toLowerCase();
+    if (keywords.some((kw) => headingText.includes(kw))) {
+      const level = (match[1] ?? "").length;
+      const start = match.index + match[0].length;
+      const afterSection = content.slice(start);
+      const closingRe = new RegExp(`^#{1,${level}}\\s`, "m");
+      const closingMatch = closingRe.exec(afterSection);
+      return closingMatch ? afterSection.slice(0, closingMatch.index) : afterSection;
+    }
+  }
+  return content;
+}
+
+/**
+ * Extract CSS box-shadow values from prose content.
+ * Matches both color-first (`rgba(…) x y blur`) and offset-first (`x y blur color`) forms.
+ * Returns de-duplicated list of raw shadow strings (trimmed, from backticks or inline).
+ * Capped at 3; returns empty array if none found.
+ */
+function extractShadowsFromProse(content: string): string[] {
+  // Prefer elevation/depth/shadow section if present
+  const searchText = scopeToSection(content, ["elevation", "depth", "shadow"]);
+
+  const found: string[] = [];
+  const seen = new Set<string>();
+
+  // Pattern for backtick-wrapped shadow values containing px lengths + a color
+  // Matches: `rgba(...) 0px 8px 24px` or `0px 8px 24px rgba(...)` etc.
+  const BACKTICK_RE = /`([^`\n]{8,120})`/g;
+  let m: RegExpExecArray | null;
+
+  // Extract from backticks first
+  BACKTICK_RE.lastIndex = 0;
+  while ((m = BACKTICK_RE.exec(searchText)) !== null) {
+    const candidate = (m[1] ?? "").trim();
+    if (isShadowValue(candidate) && !seen.has(candidate)) {
+      seen.add(candidate);
+      found.push(candidate);
+    }
+    if (found.length >= 3) break;
+  }
+
+  if (found.length < 3) {
+    // Also scan for inline (non-backtick) box-shadow values
+    // Matches: box-shadow: <value> or just bare shadow-like patterns in sentences
+    const INLINE_SHADOW_RE = /box-shadow:\s*([^;\n`"]{8,120})/gi;
+    INLINE_SHADOW_RE.lastIndex = 0;
+    while ((m = INLINE_SHADOW_RE.exec(searchText)) !== null) {
+      const candidate = (m[1] ?? "").trim().replace(/[;,\s]+$/, "");
+      if (isShadowValue(candidate) && !seen.has(candidate)) {
+        seen.add(candidate);
+        found.push(candidate);
+      }
+      if (found.length >= 3) break;
+    }
+  }
+
+  return found;
+}
+
+/**
+ * Validate that a string looks like a CSS box-shadow value.
+ * Must contain: ≥2 px-length tokens AND a color component (rgba/rgb/#hex/hsla).
+ * Rejects values that are clearly not shadows (transition strings, border values without offset, etc.).
+ */
+function isShadowValue(candidate: string): boolean {
+  const pxCount = (candidate.match(/-?\d+(?:\.\d+)?px/g) ?? []).length;
+  if (pxCount < 2) return false;
+  const hasColor =
+    /rgba?\s*\([^)]+\)/i.test(candidate) ||
+    /hsla?\s*\([^)]+\)/i.test(candidate) ||
+    /#[0-9a-fA-F]{3,8}\b/.test(candidate);
+  if (!hasColor) return false;
+  // Reject pure transition strings (contain "0.33s", "cubic-bezier", "ease", etc.)
+  if (/\d+\.?\d*s\b|cubic-bezier|ease/i.test(candidate)) return false;
+  return true;
+}
+
+/**
+ * Compute a shadow magnitude for sorting (sum of absolute px values in the value string).
+ * Used to sort shadows from smallest → largest for sm/md/lg assignment.
+ */
+function shadowMagnitude(value: string): number {
+  const nums = value.match(/-?\d+(?:\.\d+)?px/g) ?? [];
+  return nums.reduce((sum, n) => sum + Math.abs(parseFloat(n)), 0);
+}
+
+/**
+ * Extract radius dimension values from prose content.
+ * Returns a map of key → dimension string (e.g. `{ full: "9999px", md: "8px" }`).
+ * Prefers a Shape/Radius/Geometry/Border section; falls back to whole doc.
+ * Best-effort: always emits at least `radius.md` if any radius value found.
+ */
+function extractRadiusFromProse(content: string): Record<string, string> {
+  const searchText = scopeToSection(content, ["shape", "radius", "geometry", "border", "corner"]);
+
+  // Find sentences containing radius keywords
+  const RADIUS_SENTENCE_RE = /[^.!?\n]*(?:radius|rounded|pill|corner|border-radius)[^.!?\n]*/gi;
+
+  // Collect all radius dimension values from matching sentences
+  const DIMENSION_RE = /(\d+(?:\.\d+)?(?:px|rem|%)|9999px|full)/gi;
+  const values: number[] = []; // store numeric px values for categorization
+  const rawValues: string[] = [];
+  let hasFull = false;
+  let has50pct = false;
+
+  let m: RegExpExecArray | null;
+  RADIUS_SENTENCE_RE.lastIndex = 0;
+  while ((m = RADIUS_SENTENCE_RE.exec(searchText)) !== null) {
+    const sentence = m[0];
+    DIMENSION_RE.lastIndex = 0;
+    let dm: RegExpExecArray | null;
+    while ((dm = DIMENSION_RE.exec(sentence)) !== null) {
+      const raw = dm[1] ?? "";
+      if (raw.toLowerCase() === "full") {
+        hasFull = true;
+        continue;
+      }
+      if (raw === "50%") {
+        has50pct = true;
+        continue;
+      }
+      if (raw === "9999px" || parseInt(raw) >= 500) {
+        hasFull = true;
+        continue;
+      }
+      const numVal = parseFloat(raw);
+      if (!isNaN(numVal) && numVal > 0 && numVal < 500) {
+        values.push(numVal);
+        rawValues.push(raw);
+      }
+    }
+  }
+
+  // Deduplicate and sort ascending
+  const uniqueValues = [...new Set(values.map(String))].map(Number).sort((a, b) => a - b);
+
+  if (uniqueValues.length === 0 && !hasFull && !has50pct) {
+    return {};
+  }
+
+  const result: Record<string, string> = {};
+
+  if (hasFull || has50pct) {
+    result["full"] = hasFull ? "9999px" : "50%";
+  }
+
+  // Assign sm / md / lg from sorted unique values
+  if (uniqueValues.length >= 3) {
+    result["sm"] = `${uniqueValues[0]}px`;
+    result["md"] = `${uniqueValues[Math.floor(uniqueValues.length / 2)]}px`;
+    result["lg"] = `${uniqueValues[uniqueValues.length - 1]}px`;
+  } else if (uniqueValues.length === 2) {
+    result["sm"] = `${uniqueValues[0]}px`;
+    result["lg"] = `${uniqueValues[1]}px`;
+    // Always emit md — pick the smaller
+    result["md"] = `${uniqueValues[0]}px`;
+  } else if (uniqueValues.length === 1) {
+    result["md"] = `${uniqueValues[0]}px`;
+  } else {
+    // Only full/50% was found — emit a sensible md default
+    result["md"] = "9999px";
+  }
+
+  return result;
+}
+
+/**
+ * Extract a font family name from prose content.
+ * Scans the Typography section (preferred) or whole doc for mentions of a font family.
+ * Returns the first confidently-identified font name, or undefined if none found.
+ */
+function extractFontFamilyFromProse(content: string): string | undefined {
+  const searchText = scopeToSection(content, ["typography", "typeface", "font"]);
+
+  // Pattern 1: "**Font Name**" or "Font Name font" near font-related sentences
+  // Look for capitalized token after "uses", "font:", "typeface:", "family:", etc.
+  const FONT_CONTEXT_RE =
+    /(?:uses?|font(?:-family)?:|typeface:|family:|body.*?font|display.*?font|primary.*?font)[:\s]+([A-Z][A-Za-z0-9\s-]{1,40}?)(?:\s+(?:as|for|with|and|–|—|,|\n|font|typeface)|$)/gm;
+
+  let m: RegExpExecArray | null;
+  FONT_CONTEXT_RE.lastIndex = 0;
+  while ((m = FONT_CONTEXT_RE.exec(searchText)) !== null) {
+    const candidate = (m[1] ?? "").trim();
+    // Reject common non-font words
+    if (isLikelyFontName(candidate)) {
+      return candidate;
+    }
+  }
+
+  // Pattern 2: bold-formatted font name `**FontName**` near "font"/"typeface"/"body"/"display"
+  const BOLD_FONT_RE = /\*\*([A-Z][A-Za-z0-9\s-]{1,40}?)\*\*/g;
+  BOLD_FONT_RE.lastIndex = 0;
+  while ((m = BOLD_FONT_RE.exec(searchText)) !== null) {
+    const candidate = (m[1] ?? "").trim();
+    const context = searchText.slice(Math.max(0, (m.index ?? 0) - 100), (m.index ?? 0) + 200);
+    if (isLikelyFontName(candidate) && /font|typeface|body|display|family/i.test(context)) {
+      return candidate;
+    }
+  }
+
+  // Pattern 3: backtick-wrapped font name near font context
+  const BACKTICK_FONT_RE = /`([A-Z][A-Za-z0-9\s-]{1,40}?)`/g;
+  BACKTICK_FONT_RE.lastIndex = 0;
+  while ((m = BACKTICK_FONT_RE.exec(searchText)) !== null) {
+    const candidate = (m[1] ?? "").trim();
+    const context = searchText.slice(Math.max(0, (m.index ?? 0) - 100), (m.index ?? 0) + 200);
+    if (isLikelyFontName(candidate) && /font|typeface|body|family/i.test(context)) {
+      return candidate;
+    }
+  }
+
+  return undefined;
+}
+
+/** Common non-font words that might otherwise be mistaken for font names. */
+const NON_FONT_WORDS = new Set([
+  "The",
+  "This",
+  "Design",
+  "System",
+  "Brand",
+  "Color",
+  "Palette",
+  "Primary",
+  "Background",
+  "Foreground",
+  "Card",
+  "Border",
+  "Ring",
+  "Accent",
+  "Surface",
+  "Canvas",
+  "Dark",
+  "Light",
+  "White",
+  "Black",
+  "Gray",
+  "Grey",
+  "Blue",
+  "Red",
+  "Green",
+  "Orange",
+  "Purple",
+  "Yellow",
+  "Pink",
+  "Teal",
+  "Cyan",
+  "Neutral",
+  "Muted",
+  "Bold",
+  "Medium",
+  "Regular",
+  "Semibold",
+  "Typography",
+  "Spacing",
+  "Radius",
+  "Button",
+  "Input",
+  "Modal",
+  "Icon",
+  "Logo",
+  "Text",
+  "Display",
+  "Body",
+  "Heading",
+  "Caption",
+  "Label",
+  "Navigation",
+  "Footer",
+  "Header",
+  "Section",
+  "Content",
+  "Container",
+  "Grid",
+  "Column",
+  "Row",
+  "Layout",
+  "Page",
+  "View",
+  "Component",
+  "Element",
+  "Token",
+  "Variable",
+  "Style",
+  "Theme",
+  "Mode",
+  "Scale",
+  "Elevation",
+  "Shadow",
+  "Depth",
+  "Blur",
+  "Opacity",
+  "Gradient",
+  "Motion",
+  "Animation",
+  "Transition",
+  "Transform",
+  "Filter",
+  "Effect",
+  "Layer",
+  "Stack",
+  "Group",
+  "Set",
+  "Inspired",
+  "Interface",
+  "Experience",
+  "Platform",
+  "Product",
+  "Service",
+  "Feature",
+  "Base",
+  "Kit",
+  "Specimen",
+  "Circular",
+  "Universal",
+]);
+
+/** Return true if the typography key looks like a body/text entry. */
+function isBodyLikeKey(key: string): boolean {
+  const k = key.toLowerCase();
+  return k.startsWith("body") || k === "text" || k === "ui" || k.includes("body");
+}
+
+/** Return true if the typography key looks like a heading/display entry. */
+function isHeadingLikeKey(key: string): boolean {
+  const k = key.toLowerCase();
+  return (
+    k.startsWith("h1") ||
+    k.startsWith("display") ||
+    k.startsWith("heading") ||
+    k === "h1" ||
+    k === "h2" ||
+    k.includes("display") ||
+    k.includes("heading") ||
+    k.includes("title")
+  );
+}
+
+function isLikelyFontName(candidate: string): boolean {
+  if (!candidate || candidate.length < 2 || candidate.length > 60) return false;
+  // Must start with a capital letter
+  if (!/^[A-Z]/.test(candidate)) return false;
+  // Must not be an obviously non-font word
+  const words = candidate.trim().split(/\s+/);
+  if (words.length > 4) return false; // font names rarely exceed 4 words
+  // Each word must look like a proper noun token (mostly letters, maybe numbers/hyphens)
+  if (!words.every((w) => /^[A-Za-z][A-Za-z0-9-]*$/.test(w))) return false;
+  // Must not be a single common non-font word
+  if (words.length === 1 && NON_FONT_WORDS.has(words[0] ?? "")) return false;
+  // Multi-word: reject if all words are non-font words
+  if (words.every((w) => NON_FONT_WORDS.has(w))) return false;
+  return true;
+}
+
+/**
+ * Extract a base spacing unit from prose and return sm/md/lg entries derived from it.
+ * Scans for phrases like "8px base", "base unit: 8px", "spacing scale of 8px".
+ * Returns empty object if no base unit confidently found.
+ */
+function extractSpacingFromProse(content: string): Record<string, string> {
+  // Prefer spacing/layout section if present
+  const searchText = scopeToSection(content, ["spacing", "layout", "grid", "space"]);
+
+  // Patterns: "base unit: 8px", "8px base", "spacing scale of 8px", "anchored at 1.6rem"
+  const BASE_UNIT_PATTERNS = [
+    /base\s+unit[:\s]+(\d+(?:\.\d+)?(?:px|rem))/i,
+    /(\d+(?:\.\d+)?(?:px|rem))\s+base(?:\s+unit|\s+grid)?/i,
+    /spacing\s+(?:scale\s+)?(?:of|at|from|based\s+on)\s+(\d+(?:\.\d+)?(?:px|rem))/i,
+    /anchored\s+at\s+[\d.]+rem\s*\(~(\d+)px\)/i,
+    /(\d+(?:\.\d+)?(?:px|rem))\s+(?:base\s+)?(?:grid\s+)?(?:unit|scale|step)/i,
+  ];
+
+  for (const pattern of BASE_UNIT_PATTERNS) {
+    const match = pattern.exec(searchText);
+    if (match) {
+      const raw = match[1] ?? "";
+      const num = parseFloat(raw);
+      if (!isNaN(num) && num > 0 && num <= 32) {
+        const unit = raw.includes("rem") ? "rem" : "px";
+        // Derive sm / md / lg as base, 2×, 3×
+        return {
+          sm: `${num}${unit}`,
+          md: `${num * 2}${unit}`,
+          lg: `${num * 3}${unit}`,
+        };
+      }
+    }
+  }
+
+  return {};
+}
+
 // ─── Effect label filter ──────────────────────────────────────────────────────
 
 /**
@@ -557,6 +961,7 @@ export function importFromDesignMd(
   }
 
   // 3b. rounded.<x> → radius.<x> ($type: "dimension", $value: "<n><unit>" string)
+  // Prose fallback: when front-matter rounded is empty, scan prose for radius dimensions.
   if (state.rounded.size > 0) {
     const radiusEntries: Record<string, { $value: string; $type: "dimension" }> = {};
     for (const [key, resolved] of state.rounded.entries()) {
@@ -566,9 +971,19 @@ export function importFromDesignMd(
       };
     }
     tokens["radius"] = leafGroup(radiusEntries);
+  } else {
+    const proseRadius = extractRadiusFromProse(content);
+    if (Object.keys(proseRadius).length > 0) {
+      const radiusEntries: Record<string, { $value: string; $type: "dimension" }> = {};
+      for (const [key, val] of Object.entries(proseRadius)) {
+        radiusEntries[key] = { $value: val, $type: "dimension" };
+      }
+      tokens["radius"] = leafGroup(radiusEntries);
+    }
   }
 
   // 3c. spacing.<x> → spacing.<x> ($type: "dimension", $value: "<n><unit>" string)
+  // Prose fallback: when front-matter spacing is empty, scan prose for a base spacing unit.
   if (state.spacing.size > 0) {
     const spacingEntries: Record<string, { $value: string; $type: "dimension" }> = {};
     for (const [key, resolved] of state.spacing.entries()) {
@@ -578,12 +993,22 @@ export function importFromDesignMd(
       };
     }
     tokens["spacing"] = leafGroup(spacingEntries);
+  } else {
+    const proseSpacing = extractSpacingFromProse(content);
+    if (Object.keys(proseSpacing).length > 0) {
+      const spacingEntries: Record<string, { $value: string; $type: "dimension" }> = {};
+      for (const [key, val] of Object.entries(proseSpacing)) {
+        spacingEntries[key] = { $value: val, $type: "dimension" };
+      }
+      tokens["spacing"] = leafGroup(spacingEntries);
+    }
   }
 
   // 3d. typography body/h1 font-family → fontFamily.sans ($type: "fontFamily")
   // @google/design.md 0.2.0 preserves the exact YAML front-matter key (e.g. "body",
   // "body-md", "h1"). Markdown-section typography is NOT parsed into state.typography.
   // Pick order: "body" → "body-md" → "h1" → first available entry with fontFamily defined.
+  // Prose fallback: when front-matter typography is empty, scan prose for a font family name.
   const FONT_FAMILY_PICK_ORDER = ["body", "body-md", "h1"] as const;
   const pickedTypography =
     FONT_FAMILY_PICK_ORDER.map((k) => state.typography.get(k)).find(
@@ -593,6 +1018,88 @@ export function importFromDesignMd(
     tokens["fontFamily"] = leafGroup({
       sans: { $value: pickedTypography.fontFamily, $type: "fontFamily" },
     });
+  } else {
+    // Prose fallback: extract font family from prose typography section
+    const proseFontFamily = extractFontFamilyFromProse(content);
+    if (proseFontFamily) {
+      tokens["fontFamily"] = leafGroup({
+        sans: { $value: `${proseFontFamily}, sans-serif`, $type: "fontFamily" },
+      });
+    }
+  }
+
+  // 3e. Type-scale: emit fontSize.base / fontSize.heading / fontWeight.heading
+  // Only from front-matter typography (state.typography) — pick body entry for base,
+  // heading-ish entry for heading. Only emitted when fontSize/fontWeight fields exist.
+  // state.typography values have fontSize as ResolvedDimension ({type,value,unit}).
+  {
+    const BODY_PICK_ORDER = ["body", "body-md", "body-sm"] as const;
+    const HEADING_PICK_ORDER = ["h1", "display", "heading", "display-xl", "display-lg"] as const;
+
+    // Helper to format a ResolvedDimension to a string (same pattern as radius/spacing)
+    function fmtDim(dim: { value: number; unit: string }): string {
+      return `${dim.value}${dim.unit}`;
+    }
+
+    const typographyEntries = [...state.typography.entries()];
+
+    const bodyEntry =
+      BODY_PICK_ORDER.map((k) => state.typography.get(k)).find((t) => t?.fontSize !== undefined) ??
+      typographyEntries.find(([k, t]) => isBodyLikeKey(k) && t?.fontSize !== undefined)?.[1];
+
+    const headingEntry =
+      HEADING_PICK_ORDER.map((k) => state.typography.get(k)).find(
+        (t) => t?.fontSize !== undefined,
+      ) ??
+      typographyEntries.find(([k, t]) => isHeadingLikeKey(k) && t?.fontSize !== undefined)?.[1];
+
+    const fontSizeEntries: Record<string, { $value: string; $type: "dimension" }> = {};
+    const fontWeightEntries: Record<string, { $value: string; $type: "fontWeight" }> = {};
+
+    if (bodyEntry?.fontSize) {
+      fontSizeEntries["base"] = { $value: fmtDim(bodyEntry.fontSize), $type: "dimension" };
+    }
+    if (headingEntry?.fontSize) {
+      fontSizeEntries["heading"] = {
+        $value: fmtDim(headingEntry.fontSize),
+        $type: "dimension",
+      };
+    }
+    if (headingEntry?.fontWeight !== undefined && headingEntry.fontWeight !== null) {
+      fontWeightEntries["heading"] = {
+        $value: String(headingEntry.fontWeight),
+        $type: "fontWeight",
+      };
+    }
+
+    if (Object.keys(fontSizeEntries).length > 0) {
+      tokens["fontSize"] = leafGroup(fontSizeEntries);
+    }
+    if (Object.keys(fontWeightEntries).length > 0) {
+      tokens["fontWeight"] = leafGroup(fontWeightEntries);
+    }
+  }
+
+  // 3f. Shadow from prose (heuristic — no front-matter equivalent in the DESIGN.md spec)
+  // Scan prose for CSS box-shadow values; assign smallest=sm, mid=md, largest=lg.
+  {
+    let shadowExtracted = false;
+    const rawShadows = extractShadowsFromProse(content);
+    if (rawShadows.length > 0) {
+      // Sort by magnitude: smallest → sm, largest → lg
+      const sorted = [...rawShadows].sort((a, b) => shadowMagnitude(a) - shadowMagnitude(b));
+      const keys = ["sm", "md", "lg"].slice(0, sorted.length);
+      const shadowEntries: Record<string, { $value: string; $type: "shadow" }> = {};
+      for (let i = 0; i < sorted.length; i++) {
+        const key = keys[i] ?? `shadow-${i}`;
+        shadowEntries[key] = { $value: sorted[i] ?? "", $type: "shadow" };
+      }
+      tokens["shadow"] = leafGroup(shadowEntries);
+      shadowExtracted = true;
+    }
+    if (shadowExtracted) {
+      warnings.push("shadow extracted from prose (heuristic) — review shadow.sm/md/lg values");
+    }
   }
 
   // ── 4. Validate DTCG tree ──────────────────────────────────────────────────
