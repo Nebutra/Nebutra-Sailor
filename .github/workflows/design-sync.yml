@@ -205,6 +205,12 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: design-tokens-build
+          path: packages/design/design-tokens/build
+
       - run: pnpm --filter @nebutra/design-tokens verify:parity
 
   # ── 5. PR comment with diff summary ───────────────────────────────────

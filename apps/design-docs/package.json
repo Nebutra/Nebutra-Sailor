@@ -3,9 +3,9 @@
   "version": "0.1.2",
   "private": true,
   "scripts": {
-    "predev": "fumadocs-mdx && node scripts/build-registry.mjs && tsx ../../packages/design/ui/scripts/build-registry.ts && node scripts/repair-registry-manifests.mjs",
+    "predev": "pnpm --filter @nebutra/design-tokens build && fumadocs-mdx && node scripts/build-registry.mjs && tsx ../../packages/design/ui/scripts/build-registry.ts && node scripts/repair-registry-manifests.mjs",
     "dev": "next dev --port 3003",
-    "prebuild": "fumadocs-mdx && node scripts/build-registry.mjs && tsx ../../packages/design/ui/scripts/build-registry.ts && node scripts/repair-registry-manifests.mjs",
+    "prebuild": "pnpm --filter @nebutra/design-tokens build && fumadocs-mdx && node scripts/build-registry.mjs && tsx ../../packages/design/ui/scripts/build-registry.ts && node scripts/repair-registry-manifests.mjs",
     "build": "node scripts/ensure-pages-manifest.mjs && _FUMADOCS_MDX=1 next build --webpack",
     "start": "next start",
     "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 next typegen && tsc --noEmit",

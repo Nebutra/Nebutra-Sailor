@@ -29,6 +29,8 @@ const nextServerEnv = {
   ...nextDevWatcherEnv,
   NEXT_TELEMETRY_DISABLED: "1",
 };
+const productionDependencyBuild = (filter: string) =>
+  `pnpm --config.verify-deps-before-run=false turbo build --filter="${filter}^..."`;
 
 process.env.VISUAL_LANDING_BASE_URL ??= landingBaseUrl;
 process.env.VISUAL_DESIGN_DOCS_BASE_URL ??= designDocsBaseUrl;
@@ -85,7 +87,7 @@ export default defineConfig({
       ? [
           {
             command: shouldUseProductionServer
-              ? `rm -rf apps/landing-page/.next && pnpm --config.verify-deps-before-run=false --filter @nebutra/landing-page build && pnpm --dir apps/landing-page exec next start --port ${visualPorts.landing}`
+              ? `${productionDependencyBuild("@nebutra/landing-page")} && rm -rf apps/landing-page/.next && pnpm --config.verify-deps-before-run=false --filter @nebutra/landing-page build && pnpm --dir apps/landing-page exec next start --port ${visualPorts.landing}`
               : `pnpm --config.verify-deps-before-run=false --dir apps/landing-page exec next dev --webpack --port ${visualPorts.landing}`,
             url: `${landingBaseUrl}/api/e2e/health`,
             cwd: repoRoot,
@@ -103,7 +105,7 @@ export default defineConfig({
       ? [
           {
             command: shouldUseProductionServer
-              ? `pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs clean && pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs prebuild && cd apps/design-docs && node scripts/ensure-pages-manifest.mjs && _FUMADOCS_MDX=1 pnpm exec next build --webpack && pnpm exec next start --port ${visualPorts.designDocs}`
+              ? `${productionDependencyBuild("@nebutra/design-docs")} && pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs clean && pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs prebuild && cd apps/design-docs && node scripts/ensure-pages-manifest.mjs && _FUMADOCS_MDX=1 pnpm exec next build --webpack && pnpm exec next start --port ${visualPorts.designDocs}`
               : `pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs prebuild && pnpm --config.verify-deps-before-run=false --filter @nebutra/design-docs exec next dev --port ${visualPorts.designDocs}`,
             url: `${designDocsBaseUrl}/en/docs`,
             cwd: repoRoot,
