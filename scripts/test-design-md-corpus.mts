@@ -46,6 +46,10 @@ function run(file: string): Rec {
   rec.hasAnyColor = (rec.colorCount as number) > 0;
   rec.radiusCount = Object.keys((tokens.radius as Record<string, unknown>) ?? {}).length;
   rec.hasFontFamily = Boolean((tokens.fontFamily as Record<string, { $value?: string }>)?.sans?.$value);
+  // Every-dimension audit: what does the importer actually carry per file?
+  rec.spacingCount = Object.keys((tokens.spacing as Record<string, unknown>) ?? {}).length;
+  rec.shadowCount = Object.keys((tokens.shadow as Record<string, unknown>) ?? {}).length;
+  rec.tokenGroups = Object.keys(tokens).filter((g) => Object.keys(tokens[g] ?? {}).length > 0);
 
   // 3. Official linter on the raw source (informational — is the real file spec-clean?).
   try {
