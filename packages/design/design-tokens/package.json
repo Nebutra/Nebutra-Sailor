@@ -17,7 +17,6 @@
     "./tokens/themes/light.json": "./tokens/themes/light.json",
     "./tokens/themes/dark.json": "./tokens/themes/dark.json",
     "./tokens/themes/neon.json": "./tokens/themes/neon.json",
-    "./tokens/themes/gradient.json": "./tokens/themes/gradient.json",
     "./tokens/themes/dark-dense.json": "./tokens/themes/dark-dense.json",
     "./tokens/themes/minimal.json": "./tokens/themes/minimal.json",
     "./tokens/themes/vibrant.json": "./tokens/themes/vibrant.json",
