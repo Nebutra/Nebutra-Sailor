@@ -124,7 +124,7 @@ export const positioning = {
         "Build a multi-tenant AI SaaS product from MVP to production. " +
         "Auth, billing, AI services, and dashboard are pre-wired.",
       examples: ["AI writing tools", "AI data analysis", "AI copilots", "AI workflow automation"],
-      starterCommand: "pnpm dev:ai-saas",
+      starterCommand: "pnpm dev",
     },
     {
       id: "marketing-landing",
@@ -133,7 +133,7 @@ export const positioning = {
         "Launch performance-optimized marketing sites with built-in SEO, " +
         "Lighthouse CI gates, and analytics.",
       examples: ["Product landing pages", "Pricing pages", "Blog + SEO content"],
-      starterCommand: "pnpm dev:marketing",
+      starterCommand: "pnpm dev:landing",
     },
     {
       id: "design-system-standalone",

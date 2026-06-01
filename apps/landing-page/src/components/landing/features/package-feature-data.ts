@@ -486,8 +486,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "`create-sailor` 脚手架 — 一条命令,跑得起来的多租户 SaaS,自带 auth + billing + dashboard。",
   },
   preset: {
-    en: "Feature-based SaaS starter config system. Compose B2B SaaS, marketplace, or AI app stack via a single preset file.",
-    zh: "基于 feature 的 SaaS 启动配置;通过单个 preset 文件组合出 B2B SaaS / marketplace / AI 应用 各种 stack。",
+    en: "Feature-based SaaS config system. Toggle apps and features directly in one config file to shape your stack.",
+    zh: "基于 feature 的 SaaS 配置系统;在单个配置文件中直接开关 apps 与 features,组装你的 stack。",
   },
   sanity: {
     en: "Sanity Studio v4 helpers — schema generators, content-driven page builder, image pipeline integration.",
