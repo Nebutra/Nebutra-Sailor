@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { ChinaVcSolution } from "@/components/landing/solutions/china-vc/ChinaVcSolution";
+import { GlobalVcSolution } from "@/components/landing/solutions/global-vc/GlobalVcSolution";
 import { SolutionPage } from "@/components/landing/solutions/SolutionPage";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllSolutionSlugs, getSolution, pick } from "@/lib/constants/solutions-data";
@@ -44,7 +46,13 @@ export default async function SolutionDetailPage({ params }: SolutionDetailPageP
       className="relative min-h-screen overflow-hidden bg-background selection:bg-primary/30"
     >
       <Navbar />
-      <SolutionPage solution={solution} locale={lang as Locale} />
+      {solution.slug === "china-vc" ? (
+        <ChinaVcSolution locale={lang as Locale} />
+      ) : solution.slug === "global-vc" ? (
+        <GlobalVcSolution locale={lang as Locale} />
+      ) : (
+        <SolutionPage solution={solution} locale={lang as Locale} />
+      )}
       <FooterMinimal showFinalCta />
     </main>
   );

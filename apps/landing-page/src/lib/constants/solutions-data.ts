@@ -15,6 +15,7 @@
  * change here.
  */
 import {
+  Analytics,
   Brain,
   Compass,
   CreditCard,
@@ -103,7 +104,7 @@ export const SOLUTION_GROUPS: SolutionGroup[] = [
     id: "founder",
     label: { en: "Founder", zh: "创业" },
     auroraColors: ["#10b981", "#f59e0b", "#34d399", "#fbbf24"],
-    solutionSlugs: ["fundraising", "product-insights"],
+    solutionSlugs: ["china-vc", "global-vc", "fundraising", "product-insights"],
   },
 ];
 
@@ -537,6 +538,112 @@ export const SOLUTIONS: Solution[] = [
       },
     ],
     contentCategory: "frontier",
+  },
+  {
+    slug: "china-vc",
+    type: "content",
+    groupId: "founder",
+    icon: Analytics,
+    label: { en: "China VC Directory", zh: "中国 VC 解决方案" },
+    tagline: {
+      en: "China's direct-investment institutions, searchable by sector, type and deal activity.",
+      zh: "中国主流直投机构,按赛道、类型、投资体量可搜可筛。",
+    },
+    hero: {
+      eyebrow: { en: "China VC", zh: "中国 VC" },
+      title: { en: "Find the right", zh: "找到对的" },
+      titleAccent: { en: "China investors", zh: "中国投资人" },
+      summary: {
+        en: "A searchable directory of China's direct-investment institutions — filter by sector, type and deal volume, head funds with logos.",
+        zh: "覆盖中国主流直投机构的可搜索数据库——按赛道、类型、投资体量筛选,头部机构带 logo。",
+      },
+    },
+    useCases: [
+      {
+        title: { en: "Filter by sector", zh: "按赛道筛选" },
+        body: {
+          en: "Normalized sectors — narrow to investors active in your space.",
+          zh: "标准化赛道——快速锁定你所在领域的投资人。",
+        },
+      },
+      {
+        title: { en: "Read the activity signal", zh: "看活跃度信号" },
+        body: {
+          en: "Cumulative deal volume shows who deploys most.",
+          zh: "累计投资体量反映谁出手最多。",
+        },
+      },
+      {
+        title: { en: "Go straight to source", zh: "直达官方入口" },
+        body: {
+          en: "Each institution links straight to its official site.",
+          zh: "每家机构一键直达官网。",
+        },
+      },
+    ],
+    faq: [
+      {
+        q: { en: "Which institutions are included?", zh: "收录了哪些机构?" },
+        a: {
+          en: "China's mainstream direct-investment institutions across stages and sectors.",
+          zh: "覆盖中国主流直投机构,跨阶段与赛道。",
+        },
+      },
+    ],
+    contentCategory: "china-vc",
+  },
+  {
+    slug: "global-vc",
+    type: "content",
+    groupId: "founder",
+    icon: Globe,
+    label: { en: "Global VC Directory", zh: "全球 VC 解决方案" },
+    tagline: {
+      en: "Well-known global investors — from Y Combinator to multi-stage funds.",
+      zh: "全球知名投资机构——从 Y Combinator 到多阶段基金。",
+    },
+    hero: {
+      eyebrow: { en: "Global VC", zh: "全球 VC" },
+      title: { en: "Reach", zh: "对接" },
+      titleAccent: { en: "global investors", zh: "全球投资人" },
+      summary: {
+        en: "A curated directory of leading global investors — accelerators, seed, multi-stage and growth funds — filterable by sector, type and region.",
+        zh: "精选的全球头部投资机构目录——加速器、种子、多阶段与成长基金——按领域、类型、地区筛选。",
+      },
+    },
+    useCases: [
+      {
+        title: { en: "From accelerator to growth", zh: "从加速器到成长期" },
+        body: {
+          en: "Y Combinator, a16z, Sequoia, Accel and more — across every stage.",
+          zh: "Y Combinator、a16z、红杉、Accel 等——覆盖各个阶段。",
+        },
+      },
+      {
+        title: { en: "Filter by focus", zh: "按方向筛选" },
+        body: {
+          en: "Narrow by sector (AI, fintech, crypto, bio…), type and region.",
+          zh: "按领域(AI、金融科技、加密、生物…)、类型与地区收窄。",
+        },
+      },
+      {
+        title: { en: "Go straight to source", zh: "直达官方入口" },
+        body: {
+          en: "Each fund links straight to its official site.",
+          zh: "每家基金一键直达官网。",
+        },
+      },
+    ],
+    faq: [
+      {
+        q: { en: "How is this list chosen?", zh: "名单怎么选的?" },
+        a: {
+          en: "A hand-curated set of widely recognized global investors, compiled from public information.",
+          zh: "人工精选的全球公认投资机构,资料整理自公开信息。",
+        },
+      },
+    ],
+    contentCategory: "global-vc",
   },
   {
     slug: "fundraising",
