@@ -44,14 +44,10 @@ export const FONT_REGISTRY: Record<string, string> = {
 
 /** Normalize a single font-family token: strip quotes/whitespace, lowercase. */
 function normalizeFamily(name: string): string {
-  // Two anchored replaces (not /^…|…$/g) — the alternation form is flagged as
-  // polynomial ReDoS; separate anchored strips are linear.
-  return name
-    .trim()
-    .replace(/^['"]+/, "")
-    .replace(/['"]+$/, "")
-    .trim()
-    .toLowerCase();
+  // Strip ALL quotes with a quantifier-free global replace (quotes only appear
+  // at token boundaries in a font-family value). Avoids the end-anchored /['"]+$/
+  // form, which CodeQL flags as polynomial ReDoS (scanned from every position).
+  return name.replace(/['"]/g, "").trim().toLowerCase();
 }
 
 /** The first (primary) family in a CSS font-family list, normalized. */

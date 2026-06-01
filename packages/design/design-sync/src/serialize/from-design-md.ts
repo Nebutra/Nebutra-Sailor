@@ -759,13 +759,13 @@ function isEffectLabel(label: string): boolean {
  * hyphens and consecutive hyphens are collapsed.
  */
 function toKebabSlug(raw: string): string {
-  // Split anchored strips instead of /^-+|-+$/g — the alternation form is
-  // flagged as polynomial ReDoS; separate anchored replaces are linear.
+  // Split on runs of non-alphanumerics and drop empty segments, then join.
+  // Avoids the end-anchored /-+$/ trim, which CodeQL flags as polynomial ReDoS.
   return raw
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean)
+    .join("-");
 }
 
 function findBoldLabelColorFragments(content: string): Array<{ label: string; fragment: string }> {
