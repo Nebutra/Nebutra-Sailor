@@ -124,7 +124,7 @@ export const processGdprDeletion: InngestFunction.Any = inngest.createFunction(
             deletedCount += keys.length;
           }
           cursor = nextCursor;
-        } while (cursor !== "0" && cursor !== "0");
+        } while (cursor !== "0");
 
         logger.info("Redis GDPR state purged", { userId, count: deletedCount });
       } catch (e) {

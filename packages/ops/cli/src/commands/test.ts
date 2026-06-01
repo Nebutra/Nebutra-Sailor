@@ -163,7 +163,7 @@ export async function testE2eCommand(options: E2EOptions) {
   }
 
   try {
-    if ((options.ui && options.ci) || (options.ui && options.ci)) {
+    if (options.ui && options.ci) {
       p.log.error(pc.red("Cannot use --ui and --ci together"));
       process.exit(ExitCode.INVALID_ARGS);
     }
