@@ -8,7 +8,7 @@
  *
  * Two node types share one page template:
  *   - "content"  — methodology / best-practice pillar (top-of-funnel, dual CTA)
- *   - "offering" — a real service line like ScaleAI-style AI data ops (strong single CTA)
+ *   - "offering" — a real service line like managed AI data ops (strong single CTA)
  *
  * The best-practice article strip is sourced through `SolutionContentSource`
  * (see `@/lib/solutions/content-source`), so wiring Sanity in later needs no
@@ -440,8 +440,8 @@ export const SOLUTIONS: Solution[] = [
     icon: Database,
     label: { en: "AI Data Operations", zh: "AI 数据运营" },
     tagline: {
-      en: "ScaleAI-style data labeling, RLHF and eval pipelines — as a service.",
-      zh: "ScaleAI 式的数据标注、RLHF 与评测流水线——以服务交付。",
+      en: "Managed data labeling, RLHF and eval pipelines — as a service.",
+      zh: "托管式的数据标注、RLHF 与评测流水线——以服务交付。",
     },
     hero: {
       eyebrow: { en: "AI Data Ops", zh: "AI 数据运营" },
