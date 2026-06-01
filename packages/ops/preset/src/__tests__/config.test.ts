@@ -5,29 +5,28 @@ import {
   defineConfig,
   FeatureId,
   NebutraConfigSchema,
-  PresetId,
   ThemeId,
 } from "../config";
 
 describe("NebutraConfigSchema", () => {
   it("parses minimal config with defaults", () => {
     const result = NebutraConfigSchema.parse({});
-    expect(result.preset).toBe("full");
     expect(result.theme).toBe("nebutra");
     expect(result.locales).toEqual(["en"]);
     expect(result.defaultLocale).toBe("en");
+    // defaults = everything enabled
+    expect(Object.values(result.apps).every(Boolean)).toBe(true);
+    expect(Object.values(result.features).every(Boolean)).toBe(true);
   });
 
   it("parses full config", () => {
     const result = NebutraConfigSchema.parse({
-      preset: "ai-saas",
       apps: { web: true, blog: false },
       features: { billing: true, web3: false },
       theme: "vibrant",
       locales: ["en", "zh"],
       defaultLocale: "zh",
     });
-    expect(result.preset).toBe("ai-saas");
     expect(result.theme).toBe("vibrant");
     expect(result.locales).toEqual(["en", "zh"]);
     expect(result.defaultLocale).toBe("zh");
@@ -35,32 +34,8 @@ describe("NebutraConfigSchema", () => {
     expect(result.features).toEqual({ billing: true, web3: false });
   });
 
-  it("rejects invalid preset", () => {
-    expect(() => NebutraConfigSchema.parse({ preset: "invalid" })).toThrow();
-  });
-
   it("rejects invalid theme", () => {
     expect(() => NebutraConfigSchema.parse({ theme: "nope" })).toThrow();
-  });
-});
-
-describe("PresetId", () => {
-  it("accepts all 10 preset IDs", () => {
-    const ids = [
-      "ai-saas",
-      "marketing",
-      "dashboard",
-      "overseas",
-      "growth",
-      "creative",
-      "blog-portfolio",
-      "community",
-      "one-person",
-      "full",
-    ];
-    for (const id of ids) {
-      expect(PresetId.parse(id)).toBe(id);
-    }
   });
 });
 
@@ -118,17 +93,16 @@ describe("ThemeId", () => {
 describe("defineConfig", () => {
   it("returns parsed config with defaults", () => {
     const config = defineConfig({});
-    expect(config.preset).toBe("full");
     expect(config.theme).toBe("nebutra");
+    expect(Object.values(config.apps).every(Boolean)).toBe(true);
   });
 
   it("accepts partial overrides", () => {
-    const config = defineConfig({ preset: "marketing", theme: "vibrant" });
-    expect(config.preset).toBe("marketing");
+    const config = defineConfig({ theme: "vibrant" });
     expect(config.theme).toBe("vibrant");
   });
 
   it("throws on invalid input", () => {
-    expect(() => defineConfig({ preset: "bad" as never })).toThrow();
+    expect(() => defineConfig({ theme: "bad" as never })).toThrow();
   });
 });
