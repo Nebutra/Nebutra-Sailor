@@ -4,6 +4,7 @@ import { ChevronDown } from "@nebutra/icons";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
+import { SolutionsMegaMenu } from "./SolutionsMegaMenu";
 
 export function DesktopNav() {
   const t = useTranslations("nav");
@@ -13,6 +14,10 @@ export function DesktopNav() {
   return (
     <div className="hidden lg:flex items-center gap-3 xl:gap-5">
       {NAV_LINKS.map((link) => {
+        if ("mega" in link) {
+          return <SolutionsMegaMenu key={link.labelKey} />;
+        }
+
         if ("children" in link) {
           return (
             <div key={link.labelKey} className="group/nav relative inline-block py-4">

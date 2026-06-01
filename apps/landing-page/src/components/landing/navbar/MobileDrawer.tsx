@@ -1,20 +1,23 @@
 "use client";
 
 import { Cross, Menu } from "@nebutra/icons";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { AnimatePresence, domAnimation, LazyMotion, m, useReducedMotion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
+import { getGroupSolutions, pick, SOLUTION_GROUPS } from "@/lib/constants/solutions-data";
 import { env } from "@/lib/env";
 
 const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
 export function MobileDrawer() {
   const t = useTranslations("nav");
+  const locale = useLocale();
   type NavTranslationKey = Parameters<typeof t>[0];
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
   const [open, setOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="lg:hidden flex items-center">
@@ -31,16 +34,53 @@ export function MobileDrawer() {
         <AnimatePresence>
           {open && (
             <m.div
-              initial={{ opacity: 0, y: -20 }}
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              exit={shouldReduceMotion ? { opacity: 0, y: 0 } : { opacity: 0, y: -20 }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : { type: "spring", damping: 25, stiffness: 300 }
+              }
               className="fixed inset-x-0 top-[64px] z-50 h-[calc(100vh-64px)] overflow-y-auto border-t border-[var(--neutral-6)] bg-white/95 backdrop-blur-xl dark:border-border dark:bg-background/95"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <div className="flex h-full flex-col gap-4 p-6 pb-24">
                 <div className="flex-1 flex flex-col gap-4">
                   {NAV_LINKS.map((link) => {
+                    if ("mega" in link) {
+                      return (
+                        <div key={link.labelKey} className="flex flex-col gap-3 py-1">
+                          <span className="text-xs font-bold text-muted-foreground/60 uppercase tracking-widest">
+                            {t(link.labelKey as NavTranslationKey)}
+                          </span>
+                          <div className="flex flex-col gap-4 pl-4 border-l-2 border-border/40">
+                            {SOLUTION_GROUPS.map((group) => (
+                              <div key={group.id} className="flex flex-col gap-2.5">
+                                <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground/50">
+                                  {pick(group.label, locale)}
+                                </span>
+                                {getGroupSolutions(group).map((s) => {
+                                  const Icon = s.icon;
+                                  return (
+                                    <Link
+                                      key={s.slug}
+                                      href={`/solutions/${s.slug}` as LocalizedHref}
+                                      onClick={() => setOpen(false)}
+                                      className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12"
+                                    >
+                                      <Icon className="size-4 opacity-70" />
+                                      {pick(s.label, locale)}
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    }
+
                     if ("children" in link) {
                       return (
                         <div key={link.labelKey} className="flex flex-col gap-3 py-1">

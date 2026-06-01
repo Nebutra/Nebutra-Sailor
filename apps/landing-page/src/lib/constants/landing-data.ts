@@ -441,6 +441,7 @@ export const HARNESS_CARDS = [
 
 export const NAV_LINKS = [
   { labelKey: "features", href: "/features" },
+  { labelKey: "solutions", mega: true },
   { labelKey: "pricing", href: "/pricing" },
   { labelKey: "about", href: "/about" },
   {
