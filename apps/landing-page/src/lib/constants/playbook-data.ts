@@ -13,30 +13,29 @@
 import { Box, Brain, Code, Command, Droplet, Eye, Layers, Play, Sparkles } from "@nebutra/icons";
 import type { ComponentType } from "react";
 import { env } from "@/lib/env";
-
-type Bilingual = { en: string; zh: string };
+import type { LocalizedCopy } from "@/lib/i18n/localized";
 
 export type PlaybookCategoryId = "ai" | "design" | "compose" | "os";
 
 export interface PlaybookCategory {
   id: PlaybookCategoryId;
-  label: Bilingual;
-  description: Bilingual;
+  label: LocalizedCopy;
+  description: LocalizedCopy;
 }
 
 export interface PlaybookItem {
   id: string;
   category: PlaybookCategoryId;
   icon: ComponentType<{ className?: string }>;
-  title: Bilingual;
-  description: Bilingual;
+  title: LocalizedCopy;
+  description: LocalizedCopy;
   /** Absolute URL, or an app-relative path resolved against NEXT_PUBLIC_APP_URL. */
   href: string;
   /** When true, `href` is relative to the dashboard app domain. */
   app?: boolean;
   /** Opens in a new tab (always true for app + absolute links). */
   external?: boolean;
-  badge?: Bilingual;
+  badge?: LocalizedCopy;
 }
 
 export const PLAYBOOK_CATEGORIES: PlaybookCategory[] = [

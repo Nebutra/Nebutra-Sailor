@@ -28,10 +28,14 @@ import {
   TerminalWindow,
 } from "@nebutra/icons";
 import type { ComponentType } from "react";
+import { type LocalizedCopy, pick } from "@/lib/i18n/localized";
 
 export type SolutionType = "content" | "offering";
 export type CopyLocale = "en" | "zh";
-export type LocalizedCopy = { en: string; zh: string };
+// Localized-content primitive + resolver live in one shared module; re-exported
+// here so existing `@/lib/constants/solutions-data` importers keep working.
+export type { LocalizedCopy };
+export { pick };
 export type NebutraIcon = ComponentType<{ className?: string }>;
 
 export interface SolutionUseCase {
@@ -74,11 +78,6 @@ export interface SolutionGroup {
   /** Seed colors for the group's AuroraText / hero. */
   auroraColors: [string, string, string, string];
   solutionSlugs: string[];
-}
-
-/** Pick a locale-specific string, falling back to English. */
-export function pick(copy: LocalizedCopy, locale: string): string {
-  return locale === "zh" ? copy.zh : copy.en;
 }
 
 export const SOLUTION_GROUPS: SolutionGroup[] = [
