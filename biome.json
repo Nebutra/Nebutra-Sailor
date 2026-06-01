@@ -20,7 +20,8 @@
       "!**/.vscode",
       "!**/*.html",
       "!**/generated",
-      "!**/.source"
+      "!**/.source",
+      "!apps/landing-page/src/lib/constants/china-vc-data.json"
     ]
   },
   "formatter": {

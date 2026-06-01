@@ -79,6 +79,14 @@ const marketingHomePageSource = readFileSync(
   path.join(process.cwd(), "src/app/[lang]/(marketing)/page.tsx"),
   "utf8",
 );
+const blogPageSource = readFileSync(
+  path.join(process.cwd(), "src/app/[lang]/(marketing)/blog/page.tsx"),
+  "utf8",
+);
+const blogMotionShowcaseSource = readFileSync(
+  path.join(process.cwd(), "src/components/landing/blog-motion-showcase.tsx"),
+  "utf8",
+);
 const EXTERNAL_TASTE_PREFIX = ["cu", "lt-"].join("");
 
 describe("landing UI governance", () => {
@@ -188,6 +196,17 @@ describe("landing UI governance", () => {
     expect(marketingHomePageSource).not.toContain(
       '<section aria-hidden className="w-full" style={{ minHeight: minH }} />',
     );
+  });
+
+  it("keeps the blog index on branded motion selectors instead of static hover only", () => {
+    expect(blogPageSource).toContain("<BlogMotionHero");
+    expect(blogPageSource).toContain("<LatestPostMotionRail");
+    expect(blogMotionShowcaseSource).toContain("useAnimationFrame");
+    expect(blogMotionShowcaseSource).toContain("aria-expanded={open}");
+    expect(blogMotionShowcaseSource).toContain("copyPageAsMarkdown");
+    expect(blogMotionShowcaseSource).toContain("setActivePostId(post.id)");
+    expect(blogMotionShowcaseSource).toContain("motionDurationSec");
+    expect(blogMotionShowcaseSource).not.toContain(EXTERNAL_TASTE_PREFIX);
   });
 
   it("keeps the dense product demo desktop-only so mobile does not load hidden demo code", () => {

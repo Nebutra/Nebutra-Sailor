@@ -7,7 +7,6 @@ import {
   resolveBlogCover,
   toBlogLanguage,
 } from "@nebutra/blog";
-import { ArrowRight, BookOpen } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
@@ -19,6 +18,12 @@ import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
+import {
+  type BlogHeroTopic,
+  BlogMotionHero,
+  type BlogRailPost,
+  LatestPostMotionRail,
+} from "@/components/landing/blog-motion-showcase";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 
@@ -109,110 +114,34 @@ function localizedTagHref(lang: string, tag: string): string {
   return `${localizedBlogHref(lang)}/tag/${getBlogUrlSegment(tag)}`;
 }
 
-function BlogHeroTopics({ isZh, lang, topics }: { isZh: boolean; lang: string; topics: string[] }) {
-  const topicList =
-    topics.length > 0
-      ? topics
-      : isZh
-        ? ["AI SaaS", "平台工程", "设计系统", "治理"]
-        : ["AI SaaS", "Platform Engineering", "Design System", "Governance"];
-
-  return (
-    <div className="border-y border-[var(--neutral-6)] py-12 sm:py-16">
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,340px)] lg:gap-16">
-        <div className="flex flex-col gap-5">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--neutral-2)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
-            <BookOpen className="size-3.5" aria-hidden />
-            {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
-          </div>
-          <h1 className="text-balance text-4xl font-semibold tracking-tight text-[var(--neutral-12)] sm:text-5xl">
-            {isZh ? "工程、产品与治理笔记" : "Notes on engineering, product, and governance"}
-          </h1>
-          <p className="max-w-xl text-base leading-7 text-[var(--neutral-11)]">
-            {isZh
-              ? "少量、认真、可复用的文章：记录 Nebutra 在工程、产品、治理和 AI 原生交付中的真实取舍。"
-              : "Sparse, careful writing on Nebutra's engineering, product, governance, and AI-native delivery decisions."}
-          </p>
-        </div>
-
-        <nav
-          aria-label={isZh ? "博客主题" : "Blog topics"}
-          className="flex flex-col lg:border-l lg:border-[var(--neutral-6)] lg:pl-10"
-        >
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--neutral-10)]">
-            {isZh ? "按主题浏览" : "Browse by topic"}
-          </p>
-          {topicList.map((topic) => (
-            <Link
-              key={topic}
-              href={localizedTagHref(lang, topic)}
-              className="group flex items-center justify-between gap-3 border-b border-[var(--neutral-6)] py-3 text-lg font-medium tracking-tight text-[var(--neutral-12)] transition-colors last:border-b-0 hover:text-[var(--blue-9)] sm:text-xl"
-            >
-              <span className="min-w-0 truncate">{topic}</span>
-              <ArrowRight
-                className="size-4 shrink-0 text-[var(--neutral-9)] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--blue-9)]"
-                aria-hidden
-              />
-            </Link>
-          ))}
-        </nav>
-      </div>
-    </div>
-  );
+function getFallbackTopics(isZh: boolean): string[] {
+  return isZh
+    ? ["AI SaaS", "平台工程", "设计系统", "治理"]
+    : ["AI SaaS", "Platform Engineering", "Design System", "Governance"];
 }
 
-function LatestPostRail({
-  isZh,
-  lang,
-  posts,
-}: {
-  isZh: boolean;
-  lang: string;
-  posts: BlogPostWithSource[];
-}) {
-  if (posts.length === 0) return null;
+function toBlogHeroTopics(tags: string[], lang: string, isZh: boolean): BlogHeroTopic[] {
+  const topics = tags.length > 0 ? tags : getFallbackTopics(isZh);
 
-  return (
-    <section
-      aria-label={isZh ? "最新文章" : "Latest posts"}
-      className="relative -mx-4 border-b border-[var(--neutral-6)] sm:-mx-6 lg:-mx-8"
-    >
-      <div className="flex overflow-x-auto px-4 sm:px-6 lg:px-8">
-        {posts.slice(0, 5).map((post, index) => (
-          <Link
-            key={post.id}
-            href={localizedBlogHref(lang, post.slug)}
-            className="group flex min-w-[240px] flex-1 flex-col justify-between border-l border-[var(--neutral-6)] px-5 py-6 transition-colors first:border-l-0 hover:bg-[var(--neutral-2)] lg:min-w-0"
-          >
-            <div>
-              <p className="text-xs font-medium text-[var(--neutral-10)]">
-                {formatPostDate(post, isZh) ?? (isZh ? "未定日期" : "Undated")}
-              </p>
-              <h2
-                className={`mt-3 line-clamp-3 text-base font-semibold leading-snug text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)] ${
-                  index === 0 ? "sm:text-lg" : ""
-                }`}
-              >
-                {post.title}
-              </h2>
-            </div>
-            <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-[var(--neutral-10)]">
-              {estimateReadTime(post, isZh)}
-              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-            </span>
-          </Link>
-        ))}
-      </div>
-      <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[var(--neutral-1)] to-transparent sm:w-14"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[var(--neutral-1)] to-transparent sm:w-14"
-        aria-hidden
-      />
-    </section>
-  );
+  return topics.map((topic) => ({
+    href: localizedTagHref(lang, topic),
+    label: topic,
+  }));
+}
+
+function localizedContactHref(lang: string): string {
+  const prefix = lang === routing.defaultLocale ? "" : `/${lang}`;
+  return `${prefix}/contact`;
+}
+
+function toBlogRailPost(post: BlogPostWithSource, lang: string, isZh: boolean): BlogRailPost {
+  return {
+    dateLabel: formatPostDate(post, isZh),
+    href: localizedBlogHref(lang, post.slug),
+    id: post.id,
+    readTime: estimateReadTime(post, isZh),
+    title: post.title,
+  };
 }
 
 function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean): BlogIndexPost {
@@ -255,6 +184,8 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
   const blogLanguage = toBlogLanguage(lang);
   const posts = await getCachedAllPosts(blogLanguage);
   const topTags = getTopTags(posts);
+  const heroTopics = toBlogHeroTopics(topTags, lang, isZh);
+  const latestRailPosts = posts.map((post) => toBlogRailPost(post, lang, isZh));
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
@@ -262,7 +193,11 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
 
       <section className="mx-auto max-w-6xl px-4 pt-16 sm:px-6 lg:px-8">
         <AnimateIn preset="emerge" inView>
-          <BlogHeroTopics isZh={isZh} lang={lang} topics={topTags} />
+          <BlogMotionHero
+            contactHref={localizedContactHref(lang)}
+            isZh={isZh}
+            topics={heroTopics}
+          />
         </AnimateIn>
 
         {posts.length === 0 ? (
@@ -306,7 +241,7 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
         ) : (
           <div className="pb-20">
             <AnimateIn preset="fadeUp" inView>
-              <LatestPostRail isZh={isZh} lang={lang} posts={posts} />
+              <LatestPostMotionRail isZh={isZh} posts={latestRailPosts} />
             </AnimateIn>
 
             <AnimateIn preset="fadeUp" inView>
