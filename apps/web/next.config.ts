@@ -67,6 +67,7 @@ const nextConfig: NextConfig = {
     "@nebutra/db",
     "@nebutra/design-tokens",
     "@nebutra/feature-flags",
+    "@nebutra/fonts",
     "@nebutra/i18n",
     "@nebutra/icons",
     "@nebutra/logger",

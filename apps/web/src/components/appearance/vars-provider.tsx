@@ -1,5 +1,6 @@
 "use client";
 
+import { withRegistryFont } from "@nebutra/fonts";
 import { useEffect, useRef, useState } from "react";
 
 import { CODE_FONT_STACKS, UI_FONT_STACKS, useAppearance, useAppearanceStore } from "./store";
@@ -190,12 +191,14 @@ export default function AppearanceVarsProvider(): null {
     if (state.uiFontFamily === "theme") {
       root.style.removeProperty("--user-ui-font");
     } else {
-      root.style.setProperty("--user-ui-font", UI_FONT_STACKS[state.uiFontFamily]);
+      const stack = UI_FONT_STACKS[state.uiFontFamily];
+      root.style.setProperty("--user-ui-font", withRegistryFont(stack) ?? stack);
     }
     if (state.codeFontFamily === "theme") {
       root.style.removeProperty("--user-code-font");
     } else {
-      root.style.setProperty("--user-code-font", CODE_FONT_STACKS[state.codeFontFamily]);
+      const stack = CODE_FONT_STACKS[state.codeFontFamily];
+      root.style.setProperty("--user-code-font", withRegistryFont(stack) ?? stack);
     }
     root.style.setProperty("--user-contrast", `${state.contrast}`);
 
@@ -325,11 +328,17 @@ export default function AppearanceVarsProvider(): null {
      * UNDER the user's explicit font override (--user-ui-font / --user-code-font)
      * and any locale CJK font rules, so a theme font shows wherever those don't
      * shadow it (headings, code surfaces, font-sans utilities).
+     *
+     * withRegistryFont prepends the self-hosted `var(--font-*)` when the theme /
+     * DESIGN.md font's primary family is in the @nebutra/fonts registry, so a
+     * common OSS font (Inter, Space Grotesk, JetBrains Mono, …) actually renders
+     * — with zero runtime external requests. Unregistered (e.g. proprietary)
+     * families pass through unchanged and fall back gracefully.
      */
     function applyFontVars(style: Record<string, string>) {
-      set("--font-sans", style["--font-sans"]);
-      set("--font-heading", style["--font-heading"]);
-      set("--font-mono", style["--font-mono"]);
+      set("--font-sans", withRegistryFont(style["--font-sans"]));
+      set("--font-heading", withRegistryFont(style["--font-heading"]));
+      set("--font-mono", withRegistryFont(style["--font-mono"]));
     }
 
     /**

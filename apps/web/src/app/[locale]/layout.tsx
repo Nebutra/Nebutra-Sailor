@@ -1,5 +1,6 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
+import { fontRegistryClassName } from "@nebutra/fonts/next";
 import { THEME_STORAGE_KEY } from "@nebutra/tokens";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Toaster } from "@nebutra/ui/primitives";
@@ -8,7 +9,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Playfair_Display, Space_Grotesk } from "next/font/google";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -24,29 +24,11 @@ import "../globals.css";
 // Referenced in packages/design/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
 // CJK fallback is provided by @nebutra/tokens and @nebutra/ui without Google font fetches.
 //
-// Theme-preset webfonts — loaded once so that non-default themes (gradient,
-// dark-dense, minimal, vibrant, ocean) defined in @nebutra/theme/themes.css
-// render in their declared typeface instead of falling back to system fonts.
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair-display",
-  display: "swap",
-});
+// Theme / DESIGN.md webfonts — the self-hosted OSS font registry (@nebutra/fonts)
+// declares ~16 common faces via next/font (build-time self-host, ZERO runtime
+// external requests). `fontRegistryClassName` defines their --font-* variables on
+// <html>; the appearance layer prepends the matching var() when a theme or
+// imported DESIGN.md font matches (see @nebutra/fonts withRegistryFont).
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -120,7 +102,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable}`.trim()}
+      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${fontRegistryClassName}`.trim()}
       suppressHydrationWarning
     >
       <body className="antialiased">
