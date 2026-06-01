@@ -71,7 +71,7 @@ function extractScalar(raw: unknown): string | null {
     if (Array.isArray(rows) && rows.length > 0) {
       const first = rows[0] as Record<string, unknown>;
       const v = first.read_only ?? first.readOnly ?? Object.values(first)[0];
-      return typeof v === "string" ? v : v == null ? null : String(v);
+      return typeof v === "string" ? v : v === null || v === undefined ? null : String(v);
     }
   }
   // Prisma $queryRawUnsafe shape: [{ read_only: 'on' }]

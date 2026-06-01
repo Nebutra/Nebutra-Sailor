@@ -19,8 +19,6 @@ const GeminiIcon = getProviderIcon(Gemini as ProviderIcon);
 const DeepSeekIcon = getProviderIcon(DeepSeek as ProviderIcon);
 
 export function AIGatewayCard() {
-  "use no memo";
-
   const t = useTranslations("microLanding.capability");
 
   const containerRef = useRef<HTMLDivElement>(null);

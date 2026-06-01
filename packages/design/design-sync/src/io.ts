@@ -97,7 +97,7 @@ export async function readTokenSets(tokensDir: string): Promise<DesignTokenSet[]
     }
 
     const relativePath = relative(tokensDir, file).split(sep).join("/");
-    const name = relativePath.replace(/\.json$/u, "").replace(/\//gu, "/");
+    const name = relativePath.replace(/\.json$/u, "");
 
     sets.push({
       name,

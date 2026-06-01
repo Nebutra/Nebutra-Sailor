@@ -1,17 +1,32 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 
 import { Button } from "./button";
 import { Form, FormField, FormItem, FormMessage, useZodForm } from "./form";
 import { Input } from "./input";
 import { Label } from "./label";
 import { PasswordStrengthIndicator } from "./password-strength-indicator";
+
 // Schema defined inline for portability
+const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1),
+    newPassword: z.string().min(8),
+    confirmPassword: z.string().min(1),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
 
 export function ChangePasswordForm() {
-  const { t } = useI18n();
+  const t = useTranslations();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useZodForm({
