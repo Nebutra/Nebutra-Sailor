@@ -10,13 +10,13 @@
  * so demos that live on the authenticated dashboard open on the app domain.
  */
 
-import { Box, Brain, Code, Command, Compass, Layers, Play, Puzzle, Sparkles } from "@nebutra/icons";
+import { Box, Brain, Code, Command, Layers, Play, Sparkles } from "@nebutra/icons";
 import type { ComponentType } from "react";
 import { env } from "@/lib/env";
 
 type Bilingual = { en: string; zh: string };
 
-export type PlaybookCategoryId = "infra" | "fancy" | "tools" | "integrations" | "experimental";
+export type PlaybookCategoryId = "ai" | "design" | "compose" | "os";
 
 export interface PlaybookCategory {
   id: PlaybookCategoryId;
@@ -41,52 +41,44 @@ export interface PlaybookItem {
 
 export const PLAYBOOK_CATEGORIES: PlaybookCategory[] = [
   {
-    id: "infra",
-    label: { en: "Infrastructure Demos", zh: "基础设施 Demo" },
+    id: "ai",
+    label: { en: "AI & Agents", zh: "AI 与 Agent" },
     description: {
-      en: "See the building blocks that power Sailor running end-to-end.",
-      zh: "看 Sailor 底座的基础组件端到端跑起来。",
+      en: "Agentic runtimes and multi-step pipelines you can watch run end-to-end.",
+      zh: "可观察其端到端运行的 agent 运行时与多步流水线。",
     },
   },
   {
-    id: "fancy",
-    label: { en: "Showpiece Demos", zh: "Fancy Demo" },
+    id: "design",
+    label: { en: "Design & Theming", zh: "设计与主题" },
     description: {
-      en: "The flagship interactions we built to push the platform.",
-      zh: "为了把平台推到极限而打造的旗舰交互。",
+      en: "Shape the brand system — palette, type, motion — and preview it live.",
+      zh: "塑造品牌系统——调色板、字体、动效——并实时预览。",
     },
   },
   {
-    id: "tools",
-    label: { en: "Utilities", zh: "实用工具" },
+    id: "compose",
+    label: { en: "Embedding & Composition", zh: "嵌入与编排" },
     description: {
-      en: "Standalone tools you can use without writing any code.",
-      zh: "无需写代码即可直接上手的独立小工具。",
+      en: "Compose workflows visually and embed Sailor surfaces anywhere.",
+      zh: "可视化编排工作流,并把 Sailor 界面嵌入任意位置。",
     },
   },
   {
-    id: "integrations",
-    label: { en: "Integration Surfaces", zh: "集成能力" },
+    id: "os",
+    label: { en: "The OS", zh: "操作系统" },
     description: {
-      en: "The provider-agnostic packages you swap without rewrites.",
-      zh: "可无重写替换的 provider 无关能力包。",
-    },
-  },
-  {
-    id: "experimental",
-    label: { en: "Experimental", zh: "实验性功能" },
-    description: {
-      en: "Early-access work in progress — shapes may change.",
-      zh: "抢先体验、仍在打磨的功能——形态可能变化。",
+      en: "Opinionated operating surfaces built on top of the platform.",
+      zh: "构建在平台之上的一体化操作面板。",
     },
   },
 ];
 
 export const PLAYBOOK_ITEMS: PlaybookItem[] = [
-  // Infrastructure demos — live on the dashboard app
+  // AI & Agents
   {
     id: "layer0",
-    category: "infra",
+    category: "ai",
     icon: Layers,
     title: { en: "Layer 0 Capability Loop", zh: "Layer 0 能力回环" },
     description: {
@@ -98,7 +90,7 @@ export const PLAYBOOK_ITEMS: PlaybookItem[] = [
   },
   {
     id: "agent-runtime",
-    category: "infra",
+    category: "ai",
     icon: Brain,
     title: { en: "Agent Runtime Grammar", zh: "Agent Runtime 语法" },
     description: {
@@ -108,10 +100,9 @@ export const PLAYBOOK_ITEMS: PlaybookItem[] = [
     href: "/demo/agent-runtime",
     app: true,
   },
-  // Showpiece demos
   {
     id: "cinema",
-    category: "fancy",
+    category: "ai",
     icon: Play,
     title: { en: "Cinema — Film-Director Pipeline", zh: "Cinema 电影导演流水线" },
     description: {
@@ -121,22 +112,10 @@ export const PLAYBOOK_ITEMS: PlaybookItem[] = [
     href: "/demo/cinema",
     app: true,
   },
-  {
-    id: "canvas",
-    category: "fancy",
-    icon: Box,
-    title: { en: "Canvas — Node-Graph Editor", zh: "Canvas 节点图编辑器" },
-    description: {
-      en: "An infinite node-graph canvas for composing agent workflows visually.",
-      zh: "用于可视化编排 agent 工作流的无限节点图画布。",
-    },
-    href: "/demo/canvas",
-    app: true,
-  },
-  // Utilities
+  // Design & Theming
   {
     id: "theme-playground",
-    category: "tools",
+    category: "design",
     icon: Sparkles,
     title: { en: "Theme Playground", zh: "主题游乐场" },
     description: {
@@ -146,9 +125,22 @@ export const PLAYBOOK_ITEMS: PlaybookItem[] = [
     href: "/theme-playground",
     app: true,
   },
+  // Embedding & Composition
+  {
+    id: "canvas",
+    category: "compose",
+    icon: Box,
+    title: { en: "Canvas — Node-Graph Editor", zh: "Canvas 节点图编辑器" },
+    description: {
+      en: "An infinite node-graph canvas for composing agent workflows visually.",
+      zh: "用于可视化编排 agent 工作流的无限节点图画布。",
+    },
+    href: "/demo/canvas",
+    app: true,
+  },
   {
     id: "embed",
-    category: "tools",
+    category: "compose",
     icon: Code,
     title: { en: "Embed Demo", zh: "嵌入 Demo" },
     description: {
@@ -158,33 +150,10 @@ export const PLAYBOOK_ITEMS: PlaybookItem[] = [
     href: "/demo/embed",
     app: true,
   },
-  // Integration surfaces — public marketing routes
-  {
-    id: "packages",
-    category: "integrations",
-    icon: Puzzle,
-    title: { en: "Package Directory", zh: "能力包目录" },
-    description: {
-      en: "Browse every provider-agnostic package — auth, billing, queue, search, more.",
-      zh: "浏览全部 provider 无关能力包——鉴权、计费、队列、搜索等。",
-    },
-    href: "/features",
-  },
-  {
-    id: "solutions",
-    category: "integrations",
-    icon: Compass,
-    title: { en: "Solutions", zh: "解决方案" },
-    description: {
-      en: "How the pieces compose into end-to-end solutions for each use case.",
-      zh: "这些能力如何组合成面向各场景的端到端方案。",
-    },
-    href: "/solutions",
-  },
-  // Experimental
+  // The OS
   {
     id: "startup-os",
-    category: "experimental",
+    category: "os",
     icon: Command,
     title: { en: "Startup OS", zh: "Startup OS" },
     description: {
