@@ -20,9 +20,15 @@ export type PortableTextBlock = {
   style?: string;
   listItem?: string;
   level?: number;
+  referenceNumber?: number;
   children?: PortableTextSpan[];
   markDefs?: Array<Record<string, unknown>>;
+  title?: string | null;
+  body?: string | null;
+  ctaHref?: string | null;
+  ctaLabel?: string | null;
   rows?: Array<{ _key?: string; cells?: string[] }>;
+  items?: Array<{ _key?: string; title?: string | null; body?: string | null }>;
   asset?: { _ref?: string; _type?: string } | null;
   alt?: string | null;
   caption?: string | null;

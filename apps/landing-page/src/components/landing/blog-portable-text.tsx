@@ -120,6 +120,53 @@ function BlogMathBlock({ value }: { value: PortableTextBlock }) {
   );
 }
 
+function BlogCtaBlock({ value }: { value: PortableTextBlock }) {
+  const title = typeof value.title === "string" ? value.title : "";
+  const body = typeof value.body === "string" ? value.body : "";
+  const items = Array.isArray(value.items) ? value.items : [];
+  const ctaLabel = typeof value.ctaLabel === "string" ? value.ctaLabel : "";
+  const ctaHref = typeof value.ctaHref === "string" ? value.ctaHref : "";
+
+  if (!title && !body && !items.length && !ctaLabel) return null;
+
+  return (
+    <section className="my-12 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-12)] p-6 text-[var(--neutral-1)] shadow-[6px_6px_0_var(--blue-8)] sm:p-8">
+      {title && <h2 className="text-2xl font-semibold leading-tight text-inherit">{title}</h2>}
+      {body && <p className="mt-4 max-w-2xl leading-8 text-[var(--neutral-4)]">{body}</p>}
+      {items.length > 0 && (
+        <div className="mt-6 grid gap-3 md:grid-cols-3">
+          {items.map((item, index) => {
+            const itemRecord = item as Record<string, unknown>;
+            const itemTitle = typeof itemRecord.title === "string" ? itemRecord.title : "";
+            const itemBody = typeof itemRecord.body === "string" ? itemRecord.body : "";
+
+            return (
+              <div
+                key={typeof itemRecord._key === "string" ? itemRecord._key : `${title}-${index}`}
+                className="rounded-[var(--radius-md)] border border-white/15 bg-white/[0.04] p-4"
+              >
+                {itemTitle && <div className="font-semibold text-white">{itemTitle}</div>}
+                {itemBody && (
+                  <p className="mt-2 text-sm leading-6 text-[var(--neutral-4)]">{itemBody}</p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {ctaLabel && ctaHref && (
+        <a
+          href={ctaHref}
+          className="mt-7 inline-flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--blue-9)] px-4 py-2.5 font-semibold text-white text-sm transition-colors hover:bg-[var(--blue-10)]"
+        >
+          {ctaLabel}
+          <span aria-hidden="true">→</span>
+        </a>
+      )}
+    </section>
+  );
+}
+
 function createPortableTextComponents(
   copyLabel: string,
   copiedLabel: string,
@@ -209,7 +256,21 @@ function createPortableTextComponents(
     },
     listItem: {
       bullet: ({ children }) => <li className="leading-8">{children}</li>,
-      number: ({ children }) => <li className="leading-8">{children}</li>,
+      number: ({ children, value }) => {
+        const referenceNumber =
+          typeof (value as PortableTextBlock | undefined)?.referenceNumber === "number"
+            ? (value as PortableTextBlock).referenceNumber
+            : null;
+
+        return (
+          <li
+            id={referenceNumber ? `ref${referenceNumber}` : undefined}
+            className="scroll-mt-28 leading-8 target:rounded-[var(--radius-sm)] target:bg-[var(--blue-2)] target:px-2 target:py-1"
+          >
+            {children}
+          </li>
+        );
+      },
     },
     marks: {
       link: ({ children, value }) => {
@@ -233,6 +294,22 @@ function createPortableTextComponents(
         </code>
       ),
       mathInline: ({ children }) => <BlogInlineMath>{children}</BlogInlineMath>,
+      citation: ({ children, value }) => {
+        const href = typeof value?.href === "string" ? value.href : "#";
+
+        return (
+          <sup className="mx-0.5 font-mono font-semibold text-[0.68em] leading-none">
+            [
+            <a
+              href={href}
+              className="text-[var(--blue-11)] no-underline decoration-[var(--blue-7)] decoration-dotted hover:underline"
+            >
+              {children}
+            </a>
+            ]
+          </sup>
+        );
+      },
       strong: ({ children }) => (
         <strong className="font-semibold text-[var(--neutral-12)]">{children}</strong>
       ),
@@ -244,6 +321,7 @@ function createPortableTextComponents(
       ),
     },
     types: {
+      ctaBlock: ({ value }) => <BlogCtaBlock value={value as PortableTextBlock} />,
       mathBlock: ({ value }) => <BlogMathBlock value={value as PortableTextBlock} />,
       mermaid: ({ value }) => (
         <BlogMermaidDiagram chart={typeof value?.code === "string" ? value.code : ""} />

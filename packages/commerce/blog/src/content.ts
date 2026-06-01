@@ -237,6 +237,23 @@ export function getPortableBlockCopyText(block: PortableTextBlock): string | nul
     return [tableRows[0], separator, ...tableRows.slice(1)].join("\n");
   }
 
+  if (block._type === "ctaBlock") {
+    const title = block.title?.trim();
+    const body = block.body?.trim();
+    const items =
+      block.items
+        ?.map((item) => {
+          const itemTitle = item.title?.trim();
+          const itemBody = item.body?.trim();
+          if (!itemTitle && !itemBody) return null;
+          return `- ${[itemTitle, itemBody].filter(Boolean).join(": ")}`;
+        })
+        .filter((item): item is string => Boolean(item)) ?? [];
+    const cta = block.ctaLabel && block.ctaHref ? `[${block.ctaLabel}](${block.ctaHref})` : null;
+
+    return [title ? `## ${title}` : null, body, ...items, cta].filter(Boolean).join("\n\n");
+  }
+
   if (block._type !== "block") return null;
 
   const text =

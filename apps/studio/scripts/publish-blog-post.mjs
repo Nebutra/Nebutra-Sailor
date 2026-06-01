@@ -124,17 +124,48 @@ function makeSpan(text, marks = []) {
   };
 }
 
+function getBlockPlainText(value) {
+  return value?.children?.map((child) => child.text ?? "").join("") ?? "";
+}
+
+function pushTextWithCitations(children, markDefs, text, marks = []) {
+  const citationPattern = /\[(\d{1,2})\]/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = citationPattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      children.push(makeSpan(text.slice(lastIndex, match.index), marks));
+    }
+
+    const refNumber = Number.parseInt(match[1], 10);
+    const markKey = key();
+    markDefs.push({
+      _type: "citation",
+      _key: markKey,
+      refNumber,
+      href: `#ref${refNumber}`,
+    });
+    children.push(makeSpan(String(refNumber), [...marks, markKey]));
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    children.push(makeSpan(text.slice(lastIndex), marks));
+  }
+}
+
 function parseInline(text) {
   const children = [];
   const markDefs = [];
   const tokenPattern =
-    /(\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*|\$([^$\n]+)\$)/g;
+    /(\[([^\]]+)\]\(([^)\s]+)\)|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*|\$([^$\n]+)\$)/g;
   let lastIndex = 0;
   let match;
 
   while ((match = tokenPattern.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      children.push(makeSpan(text.slice(lastIndex, match.index)));
+      pushTextWithCitations(children, markDefs, text.slice(lastIndex, match.index));
     }
 
     if (match[2] && match[3]) {
@@ -148,9 +179,9 @@ function parseInline(text) {
     } else if (match[4]) {
       children.push(makeSpan(match[4], ["code"]));
     } else if (match[5]) {
-      children.push(makeSpan(match[5], ["strong"]));
+      pushTextWithCitations(children, markDefs, match[5], ["strong"]);
     } else if (match[6]) {
-      children.push(makeSpan(match[6], ["em"]));
+      pushTextWithCitations(children, markDefs, match[6], ["em"]);
     } else if (match[7]) {
       children.push(makeSpan(match[7], ["mathInline"]));
     }
@@ -159,7 +190,7 @@ function parseInline(text) {
   }
 
   if (lastIndex < text.length) {
-    children.push(makeSpan(text.slice(lastIndex)));
+    pushTextWithCitations(children, markDefs, text.slice(lastIndex));
   }
 
   return {
@@ -264,11 +295,110 @@ function mermaidBlock(code) {
   };
 }
 
+function ctaBlock({ title, body, items, ctaLabel, ctaHref }) {
+  return {
+    _type: "ctaBlock",
+    _key: key(),
+    title,
+    body,
+    items: items.map((item) => ({
+      _key: key(),
+      title: item.title,
+      body: item.body,
+    })),
+    ctaLabel,
+    ctaHref,
+  };
+}
+
+function maybePromoteCtaBlock(blocks) {
+  if (process.env.BLOG_DISABLE_CTA_PROMOTION === "1") return blocks;
+
+  const promoted = [];
+
+  for (let index = 0; index < blocks.length; index += 1) {
+    const blockValue = blocks[index];
+    const title = getBlockPlainText(blockValue);
+    const isCtaHeading =
+      blockValue?._type === "block" &&
+      blockValue.style === "h2" &&
+      /生产环境|production/i.test(title);
+
+    if (!isCtaHeading) {
+      promoted.push(blockValue);
+      continue;
+    }
+
+    const section = [];
+    let cursor = index + 1;
+    while (cursor < blocks.length) {
+      const nextBlock = blocks[cursor];
+      if (nextBlock?._type === "block" && /^h[2-6]$/.test(nextBlock.style ?? "")) break;
+      section.push(nextBlock);
+      cursor += 1;
+    }
+
+    const linkBlock = section.find((candidate) => {
+      const text = getBlockPlainText(candidate).trim();
+      return (
+        candidate?._type === "block" &&
+        candidate.style === "normal" &&
+        candidate.markDefs?.some((markDef) => typeof markDef.href === "string") &&
+        /架构评估|architecture assessment/i.test(text)
+      );
+    });
+    const linkMark = linkBlock?.markDefs?.find((markDef) => typeof markDef.href === "string");
+
+    if (!linkBlock || !linkMark) {
+      promoted.push(blockValue);
+      continue;
+    }
+
+    const body = section
+      .filter(
+        (candidate) =>
+          candidate?._type === "block" &&
+          candidate.style === "normal" &&
+          !candidate.listItem &&
+          candidate !== linkBlock,
+      )
+      .map((candidate) => getBlockPlainText(candidate).trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    const items = section
+      .filter((candidate) => candidate?._type === "block" && candidate.listItem === "bullet")
+      .map((candidate) => {
+        const text = getBlockPlainText(candidate).trim();
+        const [rawTitle, ...rest] = text.split(/[：:]\s*/);
+        return {
+          title: rawTitle || text,
+          body: rest.join(": ").trim(),
+        };
+      })
+      .filter((item) => item.title);
+
+    promoted.push(
+      ctaBlock({
+        title,
+        body,
+        items,
+        ctaLabel: getBlockPlainText(linkBlock).trim(),
+        ctaHref: linkMark.href,
+      }),
+    );
+    index = cursor - 1;
+  }
+
+  return promoted;
+}
+
 function markdownToPortableText(markdown, title) {
   const blocks = [];
   const paragraph = [];
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   let skippedTitle = false;
+  let inReferences = false;
 
   for (let index = 0; index < lines.length; index += 1) {
     const rawLine = lines[index];
@@ -350,6 +480,7 @@ function markdownToPortableText(markdown, title) {
           continue;
         }
       }
+      inReferences = /^(References|参考来源)$/.test(headingText);
       blocks.push(block(`h${Math.min(heading[1].length, 6)}`, headingText));
       continue;
     }
@@ -383,10 +514,16 @@ function markdownToPortableText(markdown, title) {
       continue;
     }
 
-    const numbered = line.match(/^\d+\.\s+(.+)$/);
+    const numbered = line.match(/^(\d+)\.\s+(.+)$/);
     if (numbered) {
       flushParagraph(paragraph, blocks);
-      blocks.push(block("normal", numbered[1].trim(), { listItem: "number", level: 1 }));
+      blocks.push(
+        block("normal", numbered[2].trim(), {
+          listItem: "number",
+          level: 1,
+          ...(inReferences ? { referenceNumber: Number.parseInt(numbered[1], 10) } : {}),
+        }),
+      );
       continue;
     }
 
@@ -394,7 +531,7 @@ function markdownToPortableText(markdown, title) {
   }
 
   flushParagraph(paragraph, blocks);
-  return blocks;
+  return maybePromoteCtaBlock(blocks);
 }
 
 function csv(value, fallback) {

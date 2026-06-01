@@ -90,8 +90,32 @@ export const post = defineType({
                 fields: [
                   defineField({
                     name: "href",
-                    title: "URL",
-                    type: "url",
+                    title: "URL or anchor",
+                    type: "string",
+                    validation: (Rule) =>
+                      Rule.required().custom((value) => {
+                        if (typeof value !== "string") return "Required";
+                        if (/^(https?:\/\/|\/|#)/.test(value)) return true;
+                        return "Use an absolute URL, root-relative URL, or #anchor.";
+                      }),
+                  }),
+                ],
+              },
+              {
+                name: "citation",
+                title: "Citation",
+                type: "object",
+                fields: [
+                  defineField({
+                    name: "refNumber",
+                    title: "Reference number",
+                    type: "number",
+                    validation: (Rule) => Rule.required().integer().positive(),
+                  }),
+                  defineField({
+                    name: "href",
+                    title: "Reference anchor",
+                    type: "string",
                     validation: (Rule) => Rule.required(),
                   }),
                 ],
@@ -202,6 +226,73 @@ export const post = defineType({
               return {
                 title: filename || `${language || "text"} code`,
                 subtitle: typeof code === "string" ? code.split("\n")[0]?.slice(0, 80) : "Code",
+              };
+            },
+          },
+        },
+        {
+          name: "ctaBlock",
+          title: "CTA",
+          type: "object",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "body",
+              title: "Body",
+              type: "text",
+              rows: 4,
+            }),
+            defineField({
+              name: "items",
+              title: "Items",
+              type: "array",
+              of: [
+                {
+                  name: "ctaItem",
+                  title: "CTA item",
+                  type: "object",
+                  fields: [
+                    defineField({
+                      name: "title",
+                      title: "Title",
+                      type: "string",
+                      validation: (Rule) => Rule.required(),
+                    }),
+                    defineField({
+                      name: "body",
+                      title: "Body",
+                      type: "text",
+                      rows: 2,
+                    }),
+                  ],
+                },
+              ],
+            }),
+            defineField({
+              name: "ctaLabel",
+              title: "Button label",
+              type: "string",
+            }),
+            defineField({
+              name: "ctaHref",
+              title: "Button href",
+              type: "string",
+            }),
+          ],
+          preview: {
+            select: {
+              title: "title",
+              ctaLabel: "ctaLabel",
+            },
+            prepare(selection) {
+              return {
+                title: selection.title || "CTA",
+                subtitle: selection.ctaLabel,
               };
             },
           },

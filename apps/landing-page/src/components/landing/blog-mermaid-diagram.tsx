@@ -25,22 +25,9 @@ export function BlogMermaidDiagram({ chart }: BlogMermaidDiagramProps) {
         const { default: mermaid } = await import("mermaid");
         mermaid.initialize({
           fontFamily: "var(--font-sans)",
-          securityLevel: "strict",
+          securityLevel: "loose",
           startOnLoad: false,
-          theme: "base",
-          themeVariables: {
-            background: "transparent",
-            edgeLabelBackground: "var(--neutral-1)",
-            lineColor: "var(--neutral-8)",
-            mainBkg: "var(--neutral-2)",
-            nodeBorder: "var(--neutral-7)",
-            primaryBorderColor: "var(--neutral-7)",
-            primaryColor: "var(--neutral-2)",
-            primaryTextColor: "var(--neutral-12)",
-            secondaryColor: "var(--blue-3)",
-            tertiaryColor: "var(--neutral-3)",
-            textColor: "var(--neutral-12)",
-          },
+          theme: "neutral",
         });
 
         const result = await mermaid.render(renderId, trimmedChart);
@@ -63,13 +50,21 @@ export function BlogMermaidDiagram({ chart }: BlogMermaidDiagramProps) {
 
   if (error) {
     return (
-      <figure className="my-8 rounded-[var(--radius-lg)] border border-[var(--red-6)] bg-[var(--red-2)] p-4">
-        <figcaption className="text-sm font-semibold text-[var(--red-11)]">
-          Mermaid diagram could not render
+      <figure className="my-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 shadow-sm">
+        <figcaption className="text-sm font-semibold text-[var(--neutral-12)]">
+          Diagram source
         </figcaption>
-        <pre className="mt-3 overflow-x-auto rounded-[var(--radius-md)] bg-[var(--neutral-1)] p-3 font-mono text-xs leading-6 text-[var(--neutral-11)]">
-          {trimmedChart}
-        </pre>
+        <p className="mt-2 text-sm leading-6 text-[var(--neutral-10)]">
+          The diagram renderer could not load, so the source is available below.
+        </p>
+        <details className="mt-3">
+          <summary className="cursor-pointer text-sm font-medium text-[var(--neutral-12)]">
+            Show Mermaid source
+          </summary>
+          <pre className="mt-3 overflow-x-auto rounded-[var(--radius-md)] bg-[var(--neutral-2)] p-3 font-mono text-xs leading-6 text-[var(--neutral-11)]">
+            {trimmedChart}
+          </pre>
+        </details>
       </figure>
     );
   }
