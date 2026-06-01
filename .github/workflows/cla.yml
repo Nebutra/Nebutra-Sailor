@@ -26,22 +26,23 @@ on:
     types: [opened, closed, synchronize]
 
 # Token permissions required by cla-assistant/github-action — keep tight.
-permissions:
-  actions: write
-  contents: write # write to the cla-signatures branch
-  pull-requests: write
-  statuses: write
+permissions: read-all
 
 jobs:
   cla-check:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write # write to the cla-signatures branch
+      pull-requests: write
+      statuses: write
     # Only run on the specific comment OR on any PR event.
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, 'I have read the CLA Document and I hereby sign the CLA')) ||
       (github.event_name == 'pull_request_target')
     steps:
       - name: "CLA Assistant"
-        uses: cla-assistant/github-action@v2.6.1
+        uses: cla-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08 # v2.6.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # If/when we want signatures stored in a different repo (e.g. a
