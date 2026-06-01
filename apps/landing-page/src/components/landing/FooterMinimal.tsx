@@ -53,6 +53,7 @@ const FOOTER_COLUMNS: FooterColumn[] = [
     titleKey: "resources",
     links: [
       { labelKey: "blog", href: "/blog" },
+      { labelKey: "playbook", href: "/playbook" },
       { labelKey: "changelog", href: "/changelog" },
       { labelKey: "roadmap", href: "/roadmap" },
       { labelKey: "docs", href: createPublicDocsUrl(), external: true },
