@@ -359,6 +359,18 @@ function markdownToPortableText(markdown, title) {
       flushParagraph(paragraph, blocks);
       const quoteText = quote[1].trim();
       if (quoteText) {
+        const quotedBullet = quoteText.match(/^[-*]\s+(.+)$/);
+        if (quotedBullet) {
+          blocks.push(block("normal", quotedBullet[1].trim(), { listItem: "bullet", level: 1 }));
+          continue;
+        }
+
+        const quotedNumbered = quoteText.match(/^\d+\.\s+(.+)$/);
+        if (quotedNumbered) {
+          blocks.push(block("normal", quotedNumbered[1].trim(), { listItem: "number", level: 1 }));
+          continue;
+        }
+
         blocks.push(block("blockquote", quoteText));
       }
       continue;
