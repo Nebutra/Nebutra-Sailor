@@ -84,6 +84,7 @@ export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
             types={CHINA_VC_TYPES}
             locale={copyLocale}
             variant="deals"
+            hrefBase="/solutions/china-vc"
           />
         </AnimateIn>
 

@@ -480,3 +480,8 @@ export const GLOBAL_VC_LOGO_IDS: ReadonlySet<number> = new Set<number>([
 export function globalVcLogoFor(org: VcOrg): string | null {
   return GLOBAL_VC_LOGO_IDS.has(org.id) ? `/logos/vc-global/${org.id}.png` : null;
 }
+
+const GLOBAL_BY_ID = new Map(GLOBAL_VC_ORGS.map((o) => [o.id, o]));
+export function getGlobalVc(id: number): VcOrg | undefined {
+  return GLOBAL_BY_ID.get(id);
+}

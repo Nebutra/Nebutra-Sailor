@@ -5,6 +5,7 @@ import { EmptyState } from "@nebutra/ui/layout";
 import { Badge, Button, Input } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useMemo, useState } from "react";
+import { Link } from "@/i18n/navigation";
 import type { VcOrg } from "@/lib/constants/vc";
 import { VcLogo } from "./VcLogo";
 
@@ -78,7 +79,11 @@ export interface VcDirectoryProps {
   types: string[];
   locale: "en" | "zh";
   variant: Variant;
+  /** Base path for per-institution profile links, e.g. "/solutions/china-vc". */
+  hrefBase: string;
 }
+
+type LocalizedHref = Parameters<typeof Link>[0]["href"];
 
 function Chip({
   active,
@@ -111,19 +116,26 @@ function VcCard({
   c,
   variant,
   logoSrc,
+  hrefBase,
 }: {
   org: VcOrg;
   c: Copy;
   variant: Variant;
   logoSrc: string | null;
+  hrefBase: string;
 }) {
   return (
-    <div className="flex h-full flex-col rounded-[var(--radius-2xl)] border border-border/60 p-5 transition-colors hover:border-foreground/30">
+    <div className="group relative flex h-full flex-col rounded-[var(--radius-2xl)] border border-border/60 p-5 transition-colors hover:border-foreground/30">
       <div className="flex items-start gap-3">
         <VcLogo src={logoSrc} name={org.name} />
         <div className="min-w-0 flex-1">
           <h3 className="truncate text-base font-semibold text-neutral-12" title={org.name}>
-            {org.name}
+            <Link
+              href={`${hrefBase}/${org.id}` as LocalizedHref}
+              className="outline-none after:absolute after:inset-0 after:content-['']"
+            >
+              {org.name}
+            </Link>
           </h3>
           <div className="mt-1 flex flex-wrap gap-1">
             {org.types.slice(0, 3).map((t) => (
@@ -179,7 +191,7 @@ function VcCard({
             href={org.website}
             target="_blank"
             rel="noreferrer nofollow"
-            className="inline-flex items-center gap-1 text-xs font-medium text-neutral-11 transition-colors hover:text-neutral-12"
+            className="relative z-10 inline-flex items-center gap-1 text-xs font-medium text-neutral-11 transition-colors hover:text-neutral-12"
           >
             {c.visitSite}
             <ArrowUpRight className="h-3 w-3" />
@@ -190,7 +202,7 @@ function VcCard({
   );
 }
 
-export function VcDirectory({ orgs, sectors, types, locale, variant }: VcDirectoryProps) {
+export function VcDirectory({ orgs, sectors, types, locale, variant, hrefBase }: VcDirectoryProps) {
   const c = COPY[locale];
   const [query, setQuery] = useState("");
   const [activeSectors, setActiveSectors] = useState<Set<string>>(new Set());
@@ -331,7 +343,14 @@ export function VcDirectory({ orgs, sectors, types, locale, variant }: VcDirecto
         <>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filtered.slice(0, visible).map((org) => (
-              <VcCard key={org.id} org={org} c={c} variant={variant} logoSrc={org.logo ?? null} />
+              <VcCard
+                key={org.id}
+                org={org}
+                c={c}
+                variant={variant}
+                logoSrc={org.logo ?? null}
+                hrefBase={hrefBase}
+              />
             ))}
           </div>
           {visible < filtered.length ? (

@@ -36,3 +36,8 @@ export const CHINA_VC_LOGO_IDS: ReadonlySet<number> = new Set<number>([
 export function chinaVcLogoFor(org: VcOrg): string | null {
   return CHINA_VC_LOGO_IDS.has(org.id) ? `/logos/vc/${org.id}.png` : null;
 }
+
+const CHINA_BY_ID = new Map(CHINA_VC_ORGS.map((o) => [o.id, o]));
+export function getChinaVc(id: number): VcOrg | undefined {
+  return CHINA_BY_ID.get(id);
+}

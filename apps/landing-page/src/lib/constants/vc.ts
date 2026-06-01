@@ -21,6 +21,32 @@ export interface VcOrg {
   /** Resolved logo path, or null for monogram. Precomputed server-side so no
    *  function crosses the server→client boundary. */
   logo?: string | null;
+
+  /** Enriched profile fields (head funds) — power the detail pages. */
+  nameEn?: string;
+  hq?: string;
+  thesis?: { en: string; zh: string };
+  stages?: string[];
+  checkSize?: string;
+  /** Notable portfolio company names. */
+  notable?: string[];
+  /** Notable recent (2025-2026) investments. */
+  recent?: string[];
+}
+
+/**
+ * Similar institutions by sector overlap (desc), tie-broken by activity.
+ * Derived — no extra data needed. Excludes the target itself.
+ */
+export function similarVcs(target: VcOrg, pool: VcOrg[], limit = 4): VcOrg[] {
+  const targetSectors = new Set(target.sectors);
+  return pool
+    .filter((o) => o.id !== target.id)
+    .map((o) => ({ o, score: o.sectors.filter((s) => targetSectors.has(s)).length }))
+    .filter((x) => x.score > 0)
+    .sort((a, b) => b.score - a.score || (b.o.total ?? 0) - (a.o.total ?? 0))
+    .slice(0, limit)
+    .map((x) => x.o);
 }
 
 /** 1–2 char monogram from the institution name (drops trailing parenthetical). */

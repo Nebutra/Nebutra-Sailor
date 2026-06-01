@@ -94,7 +94,30 @@
       "summary": "红杉中国基金创立于2005年。作为“创业者背后的创业者”，红杉中国专注于科技/传媒、医疗健康、消费品/服务等方向的投资机遇。\n红…",
       "website": "https://www.hongshan.com",
       "total": 1621,
-      "y2024": 34
+      "y2024": 34,
+      "nameEn": "HongShan (HongShan Capital Group / HSG)",
+      "hq": "香港",
+      "founded": 2005,
+      "thesis": {
+        "en": "A multi-stage venture capital and private equity firm — formerly the China arm of Sequoia Capital before its 2023 spin-off — that backs transformative companies from seed through buyout, with a heavy 2025 tilt toward AI, embodied intelligence/robotics, healthcare, and global consumer brands.",
+        "zh": "原为红杉资本中国业务，2023 年分拆独立。全阶段投资机构，从早期种子到成长期及并购均有布局，2025 年明显加码人工智能、具身智能/机器人、医疗健康与全球消费品牌。"
+      },
+      "stages": ["种子", "天使", "早期", "成长期", "并购/Buyout"],
+      "notable": [
+        "字节跳动 (ByteDance)",
+        "美团 (Meituan)",
+        "拼多多 (Pinduoduo)",
+        "京东 (JD.com)",
+        "阿里巴巴 (Alibaba)",
+        "Shein",
+        "Pony.ai",
+        "泡泡玛特 (Pop Mart)"
+      ],
+      "recent": [
+        "Marshall Group (音频设备，2025 年 1 月以约 11 亿美元收购多数股权)",
+        "它石智航 TARS (具身智能，2025 年 Pre-A 4.55 亿美元，与高瓴联合领投)",
+        "Golden Goose (意大利奢侈品牌，2025 年 12 月收购多数股权)"
+      ]
     },
     {
       "id": 36,
@@ -131,7 +154,21 @@
       "summary": "腾讯投资成立于2008年，是腾讯集团的投资部门与核心战略部门之一，主导集团投资相关业务。腾讯长期专注于全球范围内消费互联网和产业…",
       "website": "https://investment.tencent.com/",
       "total": 1461,
-      "y2024": 19
+      "y2024": 19,
+      "nameEn": "Tencent Investment",
+      "hq": "深圳",
+      "founded": 2011,
+      "thesis": {
+        "en": "As Tencent's corporate venture arm, it takes long-term, ecosystem-driven stakes in companies across the internet, gaming, e-commerce, content and AI, aiming to gain exposure to the most important trends shaping the global internet and to connect portfolio companies into Tencent's platform.",
+        "zh": "作为腾讯的战略投资部门，以长期、生态导向的方式布局互联网、游戏、电商、内容与人工智能等领域，借助腾讯的资本与平台资源连接被投企业，押注塑造全球互联网的关键趋势。"
+      },
+      "stages": ["成长期", "战略投资"],
+      "notable": ["京东", "美团", "Epic Games", "Riot Games", "Spotify", "Sea Limited", "Tesla"],
+      "recent": [
+        "MiniMax（AI 大模型）",
+        "月之暗面 Moonshot AI（AI 大模型）",
+        "智谱 Zhipu AI（AI 大模型）"
+      ]
     },
     {
       "id": 22,
@@ -155,7 +192,16 @@
       "summary": "IDG资本是全球领先的私募股权投资机构，于1993年起率先在中国开展风险投资业务。经过近30年的发展，公司累计管理资产超过150…",
       "website": "http://www.idgvc.com/",
       "total": 1411,
-      "y2024": 27
+      "y2024": 27,
+      "nameEn": "IDG Capital",
+      "hq": "北京",
+      "founded": 1992,
+      "thesis": {
+        "en": "A multi-strategy venture capital and private equity firm that backs visionary entrepreneurs as a committed long-term partner, with average holding periods around ten years. One of the earliest foreign-backed venture investors to operate in China.",
+        "zh": "多策略风险投资与私募股权机构，作为长期合伙人陪伴有远见的创业者，平均持有周期约十年，是最早在中国开展投资的外资背景创投机构之一。"
+      },
+      "stages": ["venture capital", "growth equity", "private equity", "M&A"],
+      "notable": ["Baidu", "Tencent", "Xiaomi", "Meituan", "Qihoo 360", "Bambu Lab"]
     },
     {
       "id": 1,
@@ -188,7 +234,28 @@
       "summary": "深圳市创新投资集团有限公司（简称“深创投”）1999年由深圳市政府出资并引导社会资本出资设立，公司以发现并成就伟大企业为使命，致…",
       "website": "http://www.szvc.com.cn",
       "total": 1352,
-      "y2024": 66
+      "y2024": 66,
+      "nameEn": "Shenzhen Capital Group Co., Ltd. (SCGC)",
+      "hq": "深圳",
+      "founded": 1999,
+      "thesis": {
+        "en": "State-backed venture and PE investor focused on \"hard technology\" — backing early-stage SMEs in nationally prioritized sectors (next-gen IT, high-end equipment, biotech/healthcare, new materials, new energy) and holding for the long term, connecting lab research to industrial application.",
+        "zh": "深圳市国资背景的创投/股权投资机构，坚持\"投早、投小、投长期、投硬科技\"，聚焦新一代信息技术、高端装备制造、生物医药健康、新材料与新能源等国家政策支持的硬科技领域。"
+      },
+      "stages": ["种子", "天使", "早期", "成长期"],
+      "notable": [
+        "中芯国际 (SMIC)",
+        "宁德时代 (CATL)",
+        "迈瑞医疗 (Mindray)",
+        "隆基绿能 (LONGi Green Energy)",
+        "潍柴动力 (Weichai Power)",
+        "澜起科技 (Montage Technology)",
+        "晶科能源 (JinkoSolar)",
+        "华大基因 (BGI Group)"
+      ],
+      "recent": [
+        "2025年5月：作为GP管理深圳50亿元（约6.925亿美元）半导体产业基金，资金主要来自深圳市级及龙岗区政府引导基金"
+      ]
     },
     {
       "id": 28,
@@ -233,7 +300,29 @@
       "summary": "经纬创投创立于2008年，规模超过700亿人民币，是行业内长期专注早期和早成长期投资的头部VC，专注智能制造、硬科技、航空航天、…",
       "website": "http://www.matrixpartners.com.cn/",
       "total": 1197,
-      "y2024": 24
+      "y2024": 24,
+      "nameEn": "MPCi (formerly Matrix Partners China)",
+      "hq": "北京",
+      "founded": 2008,
+      "thesis": {
+        "en": "Founder-first venture firm with strong conviction in early- and growth-stage investing in China, built on deep research and long-term founder relationships across new/hard technology, industrial digitalization, healthcare, frontier tech, and new consumer.",
+        "zh": "以创业者为先、长期主义的早期与成长期投资机构，依靠深度研究与长期陪伴的创始人关系，重点布局新科技、硬科技、产业数字化、医疗健康、前沿科技与新消费。"
+      },
+      "stages": ["天使", "A轮", "成长期"],
+      "notable": [
+        "小鹏汽车 (XPeng)",
+        "理想汽车 (Li Auto)",
+        "滴滴 (DiDi)",
+        "饿了么 (Ele.me)",
+        "蓝箭航天 (LandSpace)",
+        "星际荣耀 (iSpace)",
+        "36氪 (36Kr)"
+      ],
+      "recent": [
+        "微元合成 ~3亿元 (2026年1月)",
+        "艾里奥斯 Pre-B轮 >1亿元 (2026年1月)",
+        "诺亦腾机器人 Pre-A+轮 (2025年12月)"
+      ]
     },
     {
       "id": 75,
@@ -265,7 +354,31 @@
       "summary": "真格基金作为国内最早的天使投资机构之一，真格基金自从2011年起长期投身于支持年轻优秀的创业者追寻自己的创新创业梦想，十余年来投…",
       "website": "http://www.zhenfund.com/",
       "total": 1123,
-      "y2024": 11
+      "y2024": 11,
+      "nameEn": "ZhenFund",
+      "hq": "北京",
+      "founded": 2011,
+      "thesis": {
+        "en": "ZhenFund backs exceptional, often young founders with \"zero-to-one\" ambition at the seed and angel stage, prioritizing speed, technical capability, and founder support over directive guidance. Industry-agnostic but concentrated in AI, robotics, healthcare, enterprise software, consumer, and fintech.",
+        "zh": "真格基金专注种子与天使阶段，押注具备\"从0到1\"能力的优秀创业者（尤其年轻团队），看重执行速度与技术能力，以支持型条款陪伴创业者成长。行业不限，但集中于 AI、机器人、医疗、企业软件、消费与金融科技。"
+      },
+      "stages": ["种子", "天使", "A轮"],
+      "checkSize": "$2.5M–$15M (typically ~$5M)",
+      "notable": [
+        "小红书 (Xiaohongshu)",
+        "Momenta",
+        "禾赛科技 (Hesai Tech)",
+        "亿航 EHang",
+        "VIPKid",
+        "牛电科技 (Niu Technologies)",
+        "晶泰科技 (XtalPi)",
+        "Manus (蝴蝶效应)"
+      ],
+      "recent": [
+        "Manus (蝴蝶效应 / Butterfly Effect) — seed-stage investor; ZhenFund's 2025 retrospective cited ~200x returns before Meta's late-2025 acquisition",
+        "未来不远 (Future is Near) — home general-purpose robotics; RMB 200M angel round (2025), ZhenFund-incubated",
+        "Pollo.AI — participated in $14M seed round (2025)"
+      ]
     },
     {
       "id": 13,
@@ -295,7 +408,25 @@
       "summary": "顺为资本由雷军先生和许达来先生创立于2011年，目前管理近60亿美元规模的美元和人民币双币基金。出资人主要来自于主权基金、家族基…",
       "website": "http://www.shunwei.com",
       "total": 799,
-      "y2024": 34
+      "y2024": 34,
+      "nameEn": "Shunwei Capital",
+      "hq": "北京",
+      "founded": 2011,
+      "thesis": {
+        "en": "Backs internet and high-technology entrepreneurs across deep tech, smart manufacturing, smart hardware, consumer, enterprise services and the EV ecosystem, helping founders build respected, enduring companies. Founded by Xiaomi's Lei Jun and Tuck Lye Koh.",
+        "zh": "支持互联网与高科技创业者，聚焦深度科技、智能制造、智能硬件、消费、企业服务及电动车生态，助力创始人打造受人尊敬的伟大企业。由小米创始人雷军与许达来共同创立。"
+      },
+      "stages": ["早期", "成长期"],
+      "notable": [
+        "小米",
+        "字节跳动",
+        "快手",
+        "蔚来汽车",
+        "小鹏汽车",
+        "石头科技",
+        "九号公司",
+        "Boss直聘"
+      ]
     },
     {
       "id": 11,
@@ -324,7 +455,21 @@
       "summary": "达晨成立于2000年4月19日，总部位于深圳，是我国第一批按市场化运作设立的本土创投机构。自成立以来，达晨伴随着中国经济的快速增…",
       "website": "http://www.fortunevc.com",
       "total": 761,
-      "y2024": 35
+      "y2024": 35,
+      "nameEn": "Fortune Venture Capital",
+      "hq": "深圳",
+      "founded": 2000,
+      "thesis": {
+        "en": "One of China's first market-driven domestic VC firms, pursuing long-term value investing with roughly 75% of capital concentrated in hard tech — information technology, intelligent manufacturing, healthcare, new energy/materials, and defense.",
+        "zh": "中国第一批市场化运作的本土创投机构之一，坚持长线、专业、价值投资，约75%资金布局硬科技——信息技术、智能制造、医疗健康、新能源新材料与军工，并重点关注\"人工智能+应用\"。"
+      },
+      "stages": ["初创期", "成长期", "成熟期"],
+      "notable": ["智谱AI", "追觅科技", "中望软件", "凌云光", "爱诗科技", "无问芯穹"],
+      "recent": [
+        "智平方 (2025 数亿元 Pre-A 轮领投)",
+        "杉川谐波 (2025 A 轮跟投)",
+        "耳朵时间 (2025 AI 电台项目)"
+      ]
     },
     {
       "id": 29,
@@ -357,7 +502,29 @@
       "summary": "君联资本(联想投资)共管理五期美元基金、两期人民币基金，资金规模合计逾130亿元人民币，关注TMT、清洁技术、医疗健康、先进制造…",
       "website": "http://www.legendcapital.com.cn/",
       "total": 756,
-      "y2024": 23
+      "y2024": 23,
+      "nameEn": "Legend Capital",
+      "hq": "北京",
+      "founded": 2001,
+      "thesis": {
+        "en": "Legend Capital, spun out of Legend Holdings (Lenovo), focuses on early-stage venture and growth-stage private-equity investing in technology, healthcare, consumer, and advanced/intelligent manufacturing, backing \"specialized and innovative\" (专精特新) companies. It has invested in 700+ companies with 128 IPO exits.",
+        "zh": "君联资本脱胎于联想控股，专注于早期创业投资以及成长期私募股权投资，聚焦科技（TMT）、医疗健康、消费及先进/智能制造，重点布局\"专精特新\"企业，累计投资700余家公司、128家已IPO。"
+      },
+      "stages": ["早期/天使", "创业投资(VC)", "成长期私募股权(PE)"],
+      "notable": [
+        "科大讯飞 (iFlytek)",
+        "宁德时代 (CATL)",
+        "药明康德 (WuXi AppTec)",
+        "哔哩哔哩 (Bilibili)",
+        "小马智行 (Pony.ai)",
+        "玲珑轮胎 (Linglong Tire)",
+        "新华保险 (Xinhua Insurance)",
+        "简书 (Jianshu)"
+      ],
+      "recent": [
+        "智谱 (Zhipu AI) — 多轮持续投资，成为最大机构投资人之一 (含2025)",
+        "核心医疗 (CoreMed) — 超1亿美元D轮，2025年4月联合领投"
+      ]
     },
     {
       "id": 7,
@@ -393,7 +560,29 @@
       "summary": "启明创投成立于2006年，先后在中国上海、北京、苏州、香港及新加坡设立办公室。\n\n目前，启明创投旗下管理11只美元基金，7只人民…",
       "website": "http://www.qimingvc.com",
       "total": 735,
-      "y2024": 39
+      "y2024": 39,
+      "nameEn": "Qiming Venture Partners",
+      "hq": "上海",
+      "founded": 2006,
+      "thesis": {
+        "en": "Qiming backs great companies for the future across technology, internet/consumer, and healthcare in China, concentrating on a few sectors where it builds deep insight and networks; roughly 70% of its investments are made at the Series-A stage.",
+        "zh": "专注于科技、互联网/消费与医疗健康领域，寻找\"面向未来的伟大企业\"，在选定赛道上深耕行业研究与资源网络；约七成投资集中在A轮早期阶段。"
+      },
+      "stages": ["天使", "A轮", "早期", "成长期"],
+      "notable": [
+        "小米",
+        "美团",
+        "哔哩哔哩",
+        "知乎",
+        "石头科技",
+        "禾赛科技",
+        "优必选 (UBTech)",
+        "文远知行 (WeRide)"
+      ],
+      "recent": [
+        "微滔生物 (Weizhao Biotech) — 天使轮超 1 亿元人民币，启明领投（2025年11月）",
+        "它石智航 (TARS) — 具身智能天使轮，启明联合领投（2025年）"
+      ]
     },
     {
       "id": 39,
@@ -425,7 +614,21 @@
       "summary": "险峰（K2VC）专注于早期投资，致力于推动科技进步、产业升级、商业模式革新及人们生活方式的演进。险峰管理人民币和美元双币基金，截…",
       "website": "https://www.k2vc.com/",
       "total": 727,
-      "y2024": 18
+      "y2024": 18,
+      "nameEn": "K2VC",
+      "hq": "北京",
+      "founded": 2010,
+      "thesis": {
+        "en": "An early-stage / angel investor backing founders across technology innovation, advanced manufacturing, new energy, industrial digitalization, the new economy, and life sciences & healthcare. It positions itself as the founders' first institutional partner from seed through early rounds.",
+        "zh": "聚焦产业天使与早期投资，覆盖科技创新、先进制造、新能源、产业数字化、新经济及生命科学与医疗健康，致力于做创业者的第一家机构合伙人。"
+      },
+      "stages": ["种子", "天使", "Pre-A", "A轮", "B轮"],
+      "notable": ["聚美优品", "找钢网", "分期乐(乐信)", "墨迹天气", "懂球帝", "团车"],
+      "recent": [
+        "Fortitude Biomedicines (险峰淇云2025年领投Pre-A轮)",
+        "Cornerstone Robotics 康诺思腾 (2025年天使轮)",
+        "华亘控股 Richen Force (2025年天使轮)"
+      ]
     },
     {
       "id": 8,
@@ -459,7 +662,30 @@
       "summary": "深圳同创伟业成立于2000年，旗下已设立7支基金，管理资金规模达60亿人民币，致力于扶持新能源、新材料、通信电子、节能环保、生物…",
       "website": "http://www.cowincapital.com.cn",
       "total": 683,
-      "y2024": 37
+      "y2024": 37,
+      "nameEn": "Cowin Capital",
+      "hq": "深圳",
+      "founded": 2000,
+      "thesis": {
+        "en": "Cowin Capital targets \"hidden champions\" in emerging hard-tech sectors, backing high-growth companies with potential to lead their industries within 3-5 years and guiding them toward IPO exits. In 2025 its focus centered on AI, robotics and advanced manufacturing.",
+        "zh": "以产业链投资为切入点，聚焦新兴硬科技产业（人工智能、机器人、先进制造、半导体），深度挖掘行业\"隐形冠军\"，支持创新创业并助推被投企业上市。"
+      },
+      "stages": ["种子", "天使", "Pre-A", "A轮", "成长期", "Pre-IPO"],
+      "notable": [
+        "达安基因",
+        "欧菲光",
+        "当升科技",
+        "国机精工",
+        "博云新材",
+        "天智航",
+        "安培龙",
+        "埃科光电"
+      ],
+      "recent": [
+        "霞智科技 (商用服务机器人, 2025-03)",
+        "数字华夏 (仿人表情交互/具身智能, 2025-03)",
+        "中科第五纪 (具身智能大模型, 2025-03)"
+      ]
     },
     {
       "id": 49,
@@ -492,7 +718,27 @@
       "summary": "创新工场由李开复博士创办于2009年9月，是一家早期投资机构，同时为创业者提供全方位的创业服务。创新工场的投资方向立足于信息产业…",
       "website": "https://www.sinovationventures.com/",
       "total": 674,
-      "y2024": 14
+      "y2024": 14,
+      "nameEn": "Sinovation Ventures",
+      "hq": "北京",
+      "founded": 2009,
+      "thesis": {
+        "en": "Founded by Kai-Fu Lee, the firm backs technology startups built around artificial intelligence and deep tech, operating a \"VC+AI\" venture-building model to help founders build world-class companies.",
+        "zh": "由李开复创办，专注投资以人工智能与深科技为核心的技术创业公司，并以\"VC+AI\"投资孵化模式帮助创业者打造世界级企业。"
+      },
+      "stages": ["天使", "种子", "A轮", "成长期"],
+      "checkSize": "~$1M–$14M (angel ~$1.75M, seed ~$2.86M, Series A ~$14.1M); ~US$3B AUM",
+      "notable": [
+        "Megvii (旷视科技)",
+        "Momenta",
+        "WeRide (文远知行)",
+        "4Paradigm (第四范式)",
+        "01.AI (零一万物)",
+        "Meitu (美图)",
+        "Zhihu (知乎)",
+        "Bitmain (比特大陆)"
+      ],
+      "recent": ["Mootion (2025 first-time investment)", "HPC-AI (2025 follow-on round)"]
     },
     {
       "id": 229,
@@ -524,7 +770,30 @@
       "summary": "纪源资本是一家专注于全球早中期企业的风险投资公司，管理共16支基金，92亿美元及15亿人民币的资产，在硅谷、旧金山、上海、北京、…",
       "website": "https://graniteasia.com",
       "total": 651,
-      "y2024": 4
+      "y2024": 4,
+      "nameEn": "Granite Asia (formerly GGV Capital Asia)",
+      "hq": "新加坡",
+      "founded": 2000,
+      "thesis": {
+        "en": "A Pan-Asia multi-asset investment platform (venture, growth and private credit) backing high-growth companies across APAC, focused on consumer growth and transformation, enterprise workflow and supply chain, food systems and sustainability, health and wellness, and energy transition and automation.",
+        "zh": "面向泛亚洲的多元资产投资平台（涵盖创投、成长期与私募信贷），聚焦消费升级与转型、企业工作流与供应链、食品系统与可持续、健康与养老、以及能源转型与自动化五大主题，投资亚太地区高成长企业。"
+      },
+      "stages": ["天使/早期", "成长期", "私募信贷"],
+      "notable": [
+        "Alibaba",
+        "Xiaomi",
+        "Didi",
+        "Grab",
+        "ByteDance",
+        "HashiCorp",
+        "Xiaohongshu",
+        "Keep"
+      ],
+      "recent": [
+        "Neptune Robotics ($52M Series B, 2025)",
+        "Kuku FM ($85M, 2025)",
+        "Pan-Asia Private Credit Strategy first close >$350M anchored by Temasek (Dec 2025)"
+      ]
     },
     {
       "id": 41,
@@ -555,7 +824,30 @@
       "summary": "梅花创投成立于2014年5月，是国内最活跃、最懂互联网的投资机构之一，宗旨是帮助聪明的年轻人成为伟大的企业家，目前管理约70亿人…",
       "website": "http://www.plumventures.cn/",
       "total": 609,
-      "y2024": 16
+      "y2024": 16,
+      "nameEn": "Plum Ventures",
+      "hq": "北京",
+      "founded": 2014,
+      "thesis": {
+        "en": "An active early-stage Chinese fund founded by Wu Shichun that backs entrepreneurs at the angel and pre-A stages across hard-tech and new-economy sectors, including AI, intelligent manufacturing, new energy, semiconductors, robotics and commercial aerospace.",
+        "zh": "由吴世春创立的早期投资机构，专注天使及Pre-A轮，重点布局人工智能、智能制造、新能源、半导体、机器人与商业航天等硬科技及新经济领域，陪伴创业者从早期成长。"
+      },
+      "stages": ["天使", "Pre-A", "早期"],
+      "notable": [
+        "趣店 (Qudian, NYSE: QD)",
+        "小牛电动 (Niu Technologies, NASDAQ: NIU)",
+        "理想汽车 (Li Auto, NASDAQ: LI)",
+        "赤子城 (HK: 09911)",
+        "优客工场 (NASDAQ: UK)",
+        "星河动力 (Galactic Energy)",
+        "大掌门",
+        "转转"
+      ],
+      "recent": [
+        "纬钛机器人 (Weiti Robotics) 天使+轮跟投 (2025)",
+        "鹿明机器人 (Luming Robotics) 天使轮联合投资 (2025)",
+        "地瓜机器人 (Digua Robotics) A轮 (2025)"
+      ]
     },
     {
       "id": 6,
@@ -582,7 +874,30 @@
       "summary": "毅达资本由老牌知名创投机构----江苏高科技投资集团内部混合所有制改革组建，在行业研究能力、资产管理规模、投资专业化程度等方面稳…",
       "website": "http://www.addorcapital.com",
       "total": 593,
-      "y2024": 43
+      "y2024": 43,
+      "nameEn": "Addor Capital",
+      "hq": "南京",
+      "founded": 2014,
+      "thesis": {
+        "en": "Backs Chinese small-and-medium technology companies across hard-tech sectors — advanced manufacturing, new materials, semiconductors, healthcare, clean tech and TMT — investing from early stage through growth and supporting them toward IPO. About 90% of its portfolio are SME tech firms, including hundreds of national \"little giant\" specialized-and-innovative enterprises.",
+        "zh": "聚焦中小型科技企业，覆盖先进制造、新材料、半导体、医疗健康、清洁技术与TMT等硬科技领域，从初创期投到成长扩张期并助力企业IPO；组合中约90%为中小科技企业，含大量国家级专精特新\"小巨人\"。"
+      },
+      "stages": ["初创期", "成长期", "扩张期"],
+      "notable": [
+        "西安奕材",
+        "胜科纳米",
+        "丰倍生物",
+        "中慧生物",
+        "德力佳传动",
+        "夏禾科技",
+        "捷扬微电子",
+        "魅杰光电"
+      ],
+      "recent": [
+        "边界智控 A+轮 5000万元（毅达领投，2025）",
+        "捷扬微电子 亿元级 B轮（2025）",
+        "魅杰光电 近2亿元 A+/A++轮（2025）"
+      ]
     },
     {
       "id": 58,
@@ -613,7 +928,19 @@
       "summary": "深圳市东方富海投资管理股份有限公司（简称OFC或东方富海）是由数位在中国创业投资领域从业时间长、有丰富实战经验、优秀投资业绩、在…",
       "website": "http://www.ofcapital.com/",
       "total": 593,
-      "y2024": 13
+      "y2024": 13,
+      "nameEn": "Oriental Fortune Capital (OFC)",
+      "hq": "深圳",
+      "founded": 2006,
+      "thesis": {
+        "en": "Backs fast-growing, innovative businesses created by China's economic development, concentrating on a small set of major industries and covering the full value chain from upstream to downstream.",
+        "zh": "专注于投资具有成长性和上市潜力的创新型企业，围绕若干重点产业、覆盖产业链上下游进行布局，伴随中国经济与新兴产业的快速成长。"
+      },
+      "stages": ["天使/早期", "成长期", "Pre-IPO"],
+      "notable": ["欢创科技 (Camsense)"],
+      "recent": [
+        "欢创科技 (Camsense) — 作为第一大股东(持股约13.59%),该高精度空间感知公司于2025年9月递交IPO招股书"
+      ]
     },
     {
       "id": 33,
@@ -646,7 +973,28 @@
       "summary": "英诺天使基金是一个关注互联网及移动互联网相关领域的天使投资基金，重点关注手机游戏、在线教育、O2O、互联网金融、移动健康等领域。",
       "website": "http://www.innoangel.com/",
       "total": 575,
-      "y2024": 21
+      "y2024": 21,
+      "nameEn": "Inno Angel Fund (INNO Fund)",
+      "hq": "北京",
+      "founded": 2013,
+      "thesis": {
+        "en": "Early-stage (angel) investor in deep technology — semiconductors, robotics/embodied AI, AI software, new energy and advanced manufacturing — aiming to be the first to back technical founders. Grew out of the Tsinghua alumni TMT network; founded by Li Zhu.",
+        "zh": "专注早期（天使）科技投资的机构，覆盖半导体、机器人/具身智能、AI 应用、新能源与先进制造，主张\"敢为创业者写下第一张支票\"。脱胎于清华校友 TMT 协会，由李竹创立。"
+      },
+      "stages": ["天使", "种子", "早期科技"],
+      "notable": [
+        "文远知行 (WeRide)",
+        "推想医疗 (Infervision)",
+        "云深处 (Deeprobotics)",
+        "优艾智合 (Youibot)",
+        "自变量机器人",
+        "加速进化",
+        "松延动力"
+      ],
+      "recent": [
+        "如身机器人 (智能康养机器人天使轮领投, 2025)",
+        "自变量机器人 (2025 年多轮融资参与方)"
+      ]
     },
     {
       "id": 95,
@@ -681,7 +1029,24 @@
       "summary": "金沙江创业投资基金成立于2004年，现已成为全球最成功的早期风险投资机构之一，同时管理美元与人民币基金，管理资本量超过30亿美金…",
       "website": "https://gsrventureschina.com/",
       "total": 491,
-      "y2024": 9
+      "y2024": 9,
+      "nameEn": "GSR Ventures",
+      "hq": "北京",
+      "founded": 2004,
+      "thesis": {
+        "en": "An early-stage venture firm managing both USD and RMB funds with over $3 billion under management, backing disruptive founders in AI-enabled enterprise services, consumer internet, and healthcare technology across the US, China, and Asia.",
+        "zh": "成立于2004年的早期风险投资机构，同时管理美元与人民币基金，管理资本量超过30亿美金，专注于AI赋能企业服务、消费互联网和医疗科技领域，布局美国、中国和亚洲其他地区的早期投资机会。"
+      },
+      "stages": ["早期", "天使", "A轮"],
+      "notable": [
+        "滴滴出行 Didi Chuxing",
+        "饿了么 Ele.me",
+        "去哪儿 Qunar",
+        "小红书 Xiaohongshu",
+        "映客 Inke",
+        "ofo"
+      ],
+      "recent": ["俏妃云智护 (A轮投资项目，2025年12月董事总经理朱啸虎考察其广东研发中心)"]
     },
     {
       "id": 112,
@@ -711,7 +1076,28 @@
       "summary": "北极光创投创立于2005年，管理着4支美元基金和4支人民币基金，管理资产总额逾100亿人民币，长期关注早期科技创新型创业企业，关…",
       "website": "https://www.nlvc.com/",
       "total": 489,
-      "y2024": 8
+      "y2024": 8,
+      "nameEn": "Northern Light Venture Capital",
+      "hq": "北京",
+      "founded": 2005,
+      "thesis": {
+        "en": "A tech-centric venture firm investing at the intersection of enterprise, healthcare, and consumer opportunities, with a \"founders backing founders\" approach. Founded by former NetScreen executives, it focuses on technology and healthcare innovation across dual USD/RMB funds.",
+        "zh": "聚焦科技与医疗两大行业的创新投资，秉持\"创业者支持创业者\"理念，覆盖企业服务、半导体、先进制造、前沿科技、医疗健康等方向，管理美元与人民币双币基金。"
+      },
+      "stages": ["早期", "成长期"],
+      "notable": [
+        "美团 (Meituan)",
+        "华大基因 (BGI Genomics)",
+        "兆易创新 (GigaDevice)",
+        "山石网科 (Hillstone Networks)",
+        "展讯通信 (Spreadtrum)",
+        "燃石医学 (Burning Rock Biotech)",
+        "百合网 (Baihe.com)"
+      ],
+      "recent": [
+        "设立东疆QFLP基金（天津极创海源股权投资合伙企业，2025年11月）",
+        "诺洁贝近4000万美元B轮融资跟投（上海生物医药基金领投）"
+      ]
     },
     {
       "id": 45,
@@ -741,7 +1127,21 @@
       "summary": "高榕创投是中国最活跃的风险投资机构之一，致力于发现优秀创业者，与他们共建长期价值。高榕创投的愿景是「创」造美好生活，相信科技与创…",
       "website": "http://www.gaorongvc.com/",
       "total": 473,
-      "y2024": 15
+      "y2024": 15,
+      "nameEn": "Gaorong Capital",
+      "hq": "北京",
+      "founded": 2014,
+      "thesis": {
+        "en": "A leading China venture firm backing innovative founders from early to growth stage across new technology, internet/new consumer, and healthcare, aiming to build long-term value through an ecosystem of complementary companies plus industry resources and experience. (Founded as Banyan Capital, rebranded to Gaorong Capital in 2018.)",
+        "zh": "专注发现优秀创业者、与其共建长期价值的中国头部风险投资机构，覆盖早期到成长期，深耕新科技、互联网及新消费、医疗健康等领域，通过生态化布局为被投企业提供资金与产业资源。（原名 Banyan Capital，2018 年品牌升级为 Gaorong Capital。）"
+      },
+      "stages": ["早期", "成长期", "A轮"],
+      "notable": ["Meituan 美团", "Pinduoduo 拼多多", "Xiaomi 小米", "HashKey Group"],
+      "recent": [
+        "HashKey Group — US$30M investment (Feb 2025)",
+        "Allink Biotherapeutics 安领科生物 — follow-on in US$42M Series A (2025)",
+        "深圳想法流科技 — participated in tens-of-millions RMB Series A (2025)"
+      ]
     },
     {
       "id": 184,
@@ -773,7 +1173,30 @@
       "summary": "高瓴集团（以下简称“高瓴”）是一家专注于长期结构性价值投资的公司，由张磊先生于2005年创立。经过十余年的发展，高瓴现已成为亚洲…",
       "website": "https://www.hillhouseinvestment.com/",
       "total": 459,
-      "y2024": 6
+      "y2024": 6,
+      "nameEn": "Hillhouse Investment",
+      "hq": "新加坡",
+      "founded": 2005,
+      "thesis": {
+        "en": "Hillhouse backs high-quality businesses that can stand the test of time, partnering with strong management teams and investing with a long-term horizon across consumer, healthcare, technology, and financial services.",
+        "zh": "高瓴坚持长期主义，投资于能够经受时间考验的高质量企业，重仓消费、医疗健康、科技与金融服务等领域，并与优秀管理团队长期同行。"
+      },
+      "stages": ["成长期", "私募股权(PE)", "二级市场/公开市场", "风险投资(VC)"],
+      "notable": [
+        "Tencent 腾讯",
+        "JD.com 京东",
+        "BeiGene 百济神州",
+        "Belle International 百丽",
+        "Miniso 名创优品",
+        "Zoom",
+        "Global Logistic Properties",
+        "Philips Domestic Appliances"
+      ],
+      "recent": [
+        "2025年将三只公开市场基金合并为规模逾150亿美元的单一基金 (Bloomberg)",
+        "2025年以约6.82亿美元竞购韩国最大房地产资产管理公司 IGIS Asset Management (KED Global)",
+        "2025年向中东投资者募集至多80亿美元设立两只新基金 (DealStreetAsia)"
+      ]
     },
     {
       "id": 42,
@@ -802,7 +1225,29 @@
       "summary": "源码资本创立于2014年春，致力于发现并助力科技推动商业变革中的世界级领军企业。目前源码资本管理资金规模人民币和美元基金总计折合…",
       "website": "http://www.sourcecodecap.com",
       "total": 449,
-      "y2024": 16
+      "y2024": 16,
+      "nameEn": "Source Code Capital",
+      "hq": "北京",
+      "founded": 2014,
+      "thesis": {
+        "en": "Invests across the full lifecycle in technology-, product-, and business-model-driven entrepreneurs, organized around an \"AI+\" thesis (AI applications, compute infrastructure, and large-scale commercialization) and a \"Global+\" thesis (taking Chinese intelligent hardware and software capabilities to global markets), emphasizing bottoms-up fundamental research to create enduring real value.",
+        "zh": "围绕\"AI+\"（AI 应用、算力基础设施、规模化商业化）与\"Global+\"（中国智能软硬件能力出海）两条主线进行全周期投资，坚持自下而上的基础研究，致力于\"让商业更智慧、让生活更美好\"，为创业者创造长期真实价值。"
+      },
+      "stages": ["种子", "天使", "早期", "成长期"],
+      "notable": [
+        "字节跳动 (ByteDance)",
+        "美团 (Meituan)",
+        "贝壳找房 (KE Holdings)",
+        "理想汽车 (Li Auto)",
+        "牛电科技 (Niu Technologies)",
+        "宇树科技 (Unitree Robotics)",
+        "LiblibAI",
+        "月之暗面 (Moonshot AI)"
+      ],
+      "recent": [
+        "LiblibAI B 轮融资（2025 年 10 月，1.3 亿美元）作为老股东超额增持",
+        "2025 年 11 月完成约 6 亿美元双币种成长基金募集，聚焦 AI+ 与 Global+"
+      ]
     },
     {
       "id": 2,
@@ -824,7 +1269,28 @@
       "summary": "西安中科创星科技孵化器有限公司是由中科院西安光机所联合社会资本发起创办的专业从事\"高新技术产业孵化+创业投资\"的一站式硬科技创业…",
       "website": "http://www.casstar.com.cn/",
       "total": 444,
-      "y2024": 61
+      "y2024": 61,
+      "nameEn": "CAS Star (Casstar)",
+      "hq": "西安",
+      "founded": 2013,
+      "thesis": {
+        "en": "A pioneer of China's \"hard technology\" (硬科技) investing thesis, backing early-stage companies with high-barrier core technologies spun out of scientific research, across AI, photonic chips, aerospace, quantum, biotech, new materials, new energy and intelligent manufacturing.",
+        "zh": "\"硬科技\"理念的缔造者，专注投资孵化具备关键核心技术、高技术壁垒的早期科技企业，聚焦人工智能、光电芯片、航空航天、量子、生物技术、新材料、新能源与智能制造等领域。"
+      },
+      "stages": ["种子", "天使", "早期", "成长期"],
+      "notable": [
+        "智谱AI (Zhipu AI)",
+        "智元机器人 (AgiBot)",
+        "源杰科技 (Yuanjie Tech)",
+        "本源量子 (Origin Quantum)",
+        "驭势科技 (Uisee)",
+        "中科宇航 (CAS Space)",
+        "曦智科技 (Lightelligence)",
+        "中储国能"
+      ],
+      "recent": [
+        "先导创业投资基金 2025 年首关 26.17 亿元，70% 投向早期硬科技、重点聚焦'人工智能+'领域"
+      ]
     },
     {
       "id": 35,
@@ -854,7 +1320,29 @@
       "summary": "松禾资本管理有限公司是由深港产学研创业投资有限公司于2007年发起设立的专业化创业投资管理公司。松禾资本团队拥有15年以上创业投…",
       "website": "http://www.pinevc.com.cn/",
       "total": 437,
-      "y2024": 20
+      "y2024": 20,
+      "nameEn": "Pine Venture Capital (Songhe Capital)",
+      "hq": "深圳",
+      "founded": 2007,
+      "thesis": {
+        "en": "A technology-focused venture firm investing across the early and growth stages, concentrating on three hard-tech domains: digital technology, precision medicine, and innovative materials.",
+        "zh": "专注科技投资的创投机构，覆盖早期与成长期，重点布局数字科技、精准医疗、创新材料三大硬科技领域。"
+      },
+      "stages": ["早期", "成长期"],
+      "notable": [
+        "商汤科技 SenseTime",
+        "华大基因 BGI Genomics",
+        "大疆创新 DJI",
+        "德方纳米 Dynanonic",
+        "开拓药业 Kintor Pharma",
+        "壁仞科技 Biren",
+        "昂瑞微 Angruimicro"
+      ],
+      "recent": [
+        "昂瑞微 Angruimicro — STAR Market IPO Dec 2025 (early investor since 2020)",
+        "舜景生物 — led 300M RMB Series A, May 2025",
+        "中农种源 — led Series A, Nov 2025"
+      ]
     },
     {
       "id": 96,
@@ -883,7 +1371,24 @@
       "summary": "软银赛富基金成立于2001年，是一家领先的为亚太地区的高成长性企业提供资金支持的私募股权公司。赛富目前管理总规模近60亿人民币及…",
       "website": "http://www.saifpartners.com.cn",
       "total": 436,
-      "y2024": 9
+      "y2024": 9,
+      "nameEn": "SAIF Partners",
+      "hq": "北京",
+      "founded": 2001,
+      "thesis": {
+        "en": "A leading Asia-focused private equity / growth-capital firm (originally the SOFTBANK Asia Infrastructure Fund) that makes privately negotiated equity investments primarily in the greater China region, emphasizing deep local relationships and active involvement with portfolio companies.",
+        "zh": "赛富基金（前身为软银亚洲基础设施基金）是一家专注亚洲、以中国大陆为主的私募股权/成长资本机构，主要进行私下协商的股权投资，覆盖互联网+与TMT、医疗、新材料及清洁技术等领域，强调本地化深耕与对被投企业的主动赋能。"
+      },
+      "stages": ["成长期", "A轮", "Pre-IPO"],
+      "notable": [
+        "盛大网络 (Shanda)",
+        "完美世界 (Perfect World)",
+        "58同城 (58.com)",
+        "神州数码 (Digital China)",
+        "汇源果汁 (Huiyuan Juice)",
+        "探探 (Tantan)",
+        "MakeMyTrip"
+      ]
     },
     {
       "id": 4,
@@ -901,7 +1406,26 @@
       "summary": "中金公司于2017年3月6日正式成立中金资本，致力于成为一个拥有完善的中后台管理能力、强大的品牌影响力和出色的融资及投资能力的私…",
       "website": "https://www.cicccapital.com.cn",
       "total": 421,
-      "y2024": 53
+      "y2024": 53,
+      "nameEn": "CICC Capital",
+      "hq": "北京",
+      "founded": 2017,
+      "thesis": {
+        "en": "CICC Capital is the private-equity and fund-of-funds platform of China International Capital Corporation (CICC), positioning itself as patient capital that backs technology innovation and the commercialization of scientific results in service of national strategy. It operates the full fund lifecycle (raise-invest-manage-exit) across government guidance funds, FoFs, growth equity, and M&A funds.",
+        "zh": "中金资本是中金公司旗下的私募股权与母基金运营平台，定位为\"耐心资本\"，聚焦科技创新与科技成果转化、服务国家战略。其管理的基金涵盖政府引导基金、人民币/美元母基金、股权投资基金与并购基金，覆盖募投管退全链条。"
+      },
+      "stages": ["母基金（FoF）", "成长期", "私募股权（PE）", "并购"],
+      "notable": [
+        "每日优鲜 (Missfresh)",
+        "恒宇医疗 (Hengyu Medical)",
+        "傲意科技 (OYMotion)",
+        "极佳视界 (Extreme Vision)"
+      ],
+      "recent": [
+        "中金河钢（河北）发展股权投资基金 — RMB 32bn fund of funds, registered Sept 2025",
+        "极佳视界 (Extreme Vision) — Pre-B round, ~RMB 1bn (2026)",
+        "傲意科技 (OYMotion) — Series C, RMB 150M (2026)"
+      ]
     },
     {
       "id": 19,
@@ -929,7 +1453,30 @@
       "summary": "鼎晖投资成立于2002年，是中国最大的另类资产管理机构之一，截止到2016年12月，管理的资金规模达1200亿元人民币。鼎晖投资…",
       "website": "http://www.cdhfund.com/",
       "total": 417,
-      "y2024": 28
+      "y2024": 28,
+      "nameEn": "CDH Investments",
+      "hq": "北京",
+      "founded": 2002,
+      "thesis": {
+        "en": "A diversified alternative asset manager investing across private equity, venture capital, mezzanine/credit, real estate and public equities, with a stated philosophy of \"walking with strivers to create long-term value.\" Sector focus spans consumer, healthcare, hard tech, and new energy.",
+        "zh": "综合型另类资产管理机构，业务覆盖私募股权、创业投资、夹层信用、不动产与证券投资，秉持\"与奋斗者同行，创造长期价值\"理念，重点布局消费、医疗健康、硬科技与新能源。"
+      },
+      "stages": ["创业投资", "成长期", "私募股权(PE)", "并购", "夹层/信用", "不动产"],
+      "notable": [
+        "蒙牛乳业 (Mengniu Dairy)",
+        "李宁 (Li-Ning)",
+        "分众传媒 (Focus Media)",
+        "百丽国际 (Belle International)",
+        "双汇/万洲国际 (WH Group)",
+        "美的 (Midea)",
+        "天合光能 (Trina Solar)",
+        "阿特斯 (Canadian Solar/Atech)"
+      ],
+      "recent": [
+        "劲方医药 (GenFleet Therapeutics) — 2025年9月港股18A上市",
+        "新基建专项投资基金首关 (AI算力底座) — 2025年1月",
+        "机器人产业布局：优必选(UBTECH)、智元(AgiBot) — 2025年"
+      ]
     },
     {
       "id": 34,
@@ -963,7 +1510,20 @@
       "summary": "啟赋资本成立于2013年10月，是专注于早期投资和产业投资的创投机构。行业覆盖工业互联网、新服务、新消费等产业互联网，和以新材料…",
       "website": "http://www.qfvc.cn/",
       "total": 374,
-      "y2024": 21
+      "y2024": 21,
+      "nameEn": "Qifu Capital",
+      "hq": "深圳",
+      "founded": 2013,
+      "thesis": {
+        "en": "Early-stage and industry-focused VC backing technology-driven new industries, concentrated on two pillars: the industrial internet (industrial IoT, new services, new consumer) and new-materials-centered advanced manufacturing. Founded by Fu Zhekuan, an early Fortune Capital (Dachen) partner.",
+        "zh": "专注早期投资与产业投资的创投机构，致力于投资新技术驱动的新产业，聚焦\"以新材料为核心的先进制造\"和\"工业互联网/新服务/新消费\"两大方向。创始人傅哲宽为达晨创投早期合伙人。"
+      },
+      "stages": ["天使", "早期", "A轮", "成长期"],
+      "notable": ["食务链", "蓝星光域", "蕴硕物联", "江丰生物", "玩秘", "快金数据"],
+      "recent": [
+        "自变量机器人 (具身智能, Pre-A/Pre-A+ 轮投资方)",
+        "蓝星光域 (星载激光通信, 完成约1.5亿元 B1 轮)"
+      ]
     },
     {
       "id": 185,
@@ -992,7 +1552,29 @@
       "summary": "华创资本是一家为创业者提供初创期和成长期投资的专业投资机构，自2006年成立伊始，一直专注于新金融、新消费、新实业领域的早期投资…",
       "website": "http://www.cgcvc.com/",
       "total": 374,
-      "y2024": 5
+      "y2024": 5,
+      "nameEn": "China Growth Capital",
+      "hq": "北京",
+      "founded": 2006,
+      "thesis": {
+        "en": "An early-stage venture firm investing across \"new finance, new industry, and new consumption,\" with a long-running focus on fintech, enterprise software/SaaS, and consumer; one of the first Chinese VCs to build a dedicated post-investment team.",
+        "zh": "专注于新金融、新实业、新消费领域的早期投资机构，长期深耕金融科技、企业服务/SaaS 与消费赛道，是国内最早设立专业投后团队的 VC 之一。"
+      },
+      "stages": ["天使轮", "A轮", "B轮", "C轮", "成长期"],
+      "checkSize": "数百万元至亿元人民币",
+      "notable": [
+        "什么值得买 (SMZDM)",
+        "每日优鲜 (Missfresh)",
+        "Wish",
+        "同盾科技 (Tongdun)",
+        "老虎证券 (Tiger Brokers)",
+        "PingCAP",
+        "蓝箭航天 (LandSpace)",
+        "深鉴科技 (DeePhi)"
+      ],
+      "recent": [
+        "硅基流动 (SiliconFlow) — 亿元级 Pre-A 轮领投，2025年2月，AI 基础设施/大模型云服务"
+      ]
     },
     {
       "id": 97,
@@ -1027,7 +1609,27 @@
       "summary": "洪泰基金是中国打通早期创业和资本市场的专业投资机构之一。由著名企业家俞敏洪先生和资深投资银行家盛希泰先生在2014年11月共同发…",
       "website": "http://www.apluscap.com/",
       "total": 370,
-      "y2024": 9
+      "y2024": 9,
+      "nameEn": "Hongtai Capital (Hongtai Aplus)",
+      "hq": "北京",
+      "founded": 2014,
+      "thesis": {
+        "en": "A full-lifecycle investment platform built on a \"fund + incubator\" model, backing high-growth Chinese tech companies across advanced manufacturing, information technology, new materials & energy, life & health, and technology consumer sectors.",
+        "zh": "以\"基金+孵化器\"为核心模式的全生命周期投资平台，聚焦先进制造、信息技术、新材料新能源、生命健康与科技消费五大领域的高成长性科技企业。"
+      },
+      "stages": ["种子", "天使", "成长期", "VC", "PE", "母基金"],
+      "notable": [
+        "摩尔线程 (Moore Threads)",
+        "哪吒汽车/合众新能源 (Neta Auto)",
+        "KK集团 (KK Group)",
+        "深兰科技 (Deep Blue Technology)",
+        "小仙炖 (Xiaoxiandun)",
+        "Nreal"
+      ],
+      "recent": [
+        "斯北图 4亿元C轮融资 (2025年12月，洪泰基金联合投资)",
+        "飞行机器人公司微分智飞 (2025)"
+      ]
     },
     {
       "id": 130,
@@ -1060,7 +1662,24 @@
       "summary": "联想之星创立于2008年，目前管理着三支、总额约15亿人民币的天使投资基金，已投资近200个项目。\n作为联想控股的早期投资和孵化…",
       "website": "http://www.legendstar.com.cn",
       "total": 365,
-      "y2024": 7
+      "y2024": 7,
+      "nameEn": "Legend Star",
+      "hq": "北京",
+      "founded": 2008,
+      "thesis": {
+        "en": "An early-stage angel investor and incubator backed by Legend Holdings, focused on discovering and nurturing science-and-technology entrepreneurs across TMT and healthcare, with deep bets on AI, intelligent robotics, biotech, and medical devices. Pairs angel capital with deep incubation, including its free \"Startup CEO Training Program.\"",
+        "zh": "联想控股旗下的早期天使投资与孵化平台，聚焦 TMT 与医疗健康两大领域，重点布局人工智能、智能机器人、生物技术、医疗器械等前沿方向；以\"天使投资＋深度孵化\"为特色，并运营免费的\"创业CEO特训班\"。"
+      },
+      "stages": ["种子", "天使", "早期"],
+      "notable": [
+        "旷视科技 (Megvii / Face++)",
+        "思必驰 (AISpeech)",
+        "小马智行 (Pony.ai)",
+        "乐逗游戏 (iDreamSky)",
+        "燃石医学 (Burning Rock)",
+        "天仪研究院"
+      ],
+      "recent": ["智在无界 (Being Intelligent) — 数千万元天使轮，联想之星领投 (2025年6月)"]
     },
     {
       "id": 23,
@@ -1086,7 +1705,30 @@
       "summary": "FreesFund峰瑞资本成立于2015年，由IDG资本李丰和林中华等人联合创立，目前已经发展成全链条基金管理公司。资产管理规模…",
       "website": "http://www.freesvc.com/",
       "total": 360,
-      "y2024": 27
+      "y2024": 27,
+      "nameEn": "FreeS Fund",
+      "hq": "上海",
+      "founded": 2015,
+      "thesis": {
+        "en": "Founded by former IDG Capital partner Li Feng, FreeS Fund is an early- to growth-stage venture firm that backs founders building long-term value across consumer, deep/hard tech (AI, intelligent manufacturing, new energy and materials), and biomedicine/new-drug development, with a stated philosophy of \"doing what is right rather than what is easy.\"",
+        "zh": "由前 IDG 资本合伙人李丰创立，峰瑞资本秉持\"做正确而非容易的事\"，专注消费、硬科技（人工智能、智能制造、新能源新材料）与生物医疗/新药研发等方向，陪伴优秀创业者从早期到成长期成长为具长期社会价值的公司。"
+      },
+      "stages": ["天使", "种子", "早期", "A轮", "成长期"],
+      "notable": [
+        "三只松鼠",
+        "360数科",
+        "Unity",
+        "宁康瑞珠",
+        "逐际动力 (LimX Dynamics)",
+        "玛士撒拉",
+        "清湃科技",
+        "穹顶医疗"
+      ],
+      "recent": [
+        "宁康瑞珠 — 跟投超亿元 A 轮 (2025年12月)",
+        "玛士撒拉 — 持续加注，公司完成近 2 亿元 B 轮 (2025)",
+        "逐际动力 (LimX Dynamics) — 具身智能/人形机器人融资 (2025)"
+      ]
     },
     {
       "id": 43,
@@ -1114,7 +1756,21 @@
       "summary": "涌铧投资是涌金集团旗下专业从事私募股权投资的基金管理公司，前身是涌金集团的直接投资部。依托于集团强大的金融服务平台优势，涌铧投资…",
       "website": "http://www.yonghuacapital.com.cn/",
       "total": 357,
-      "y2024": 16
+      "y2024": 16,
+      "nameEn": "Shanghai Yonghua Investment Management Co., Ltd. (Yonghua Capital)",
+      "hq": "上海",
+      "founded": 2001,
+      "thesis": {
+        "en": "A private-equity arm of the Yongjin Group focused on discovering and growing the intrinsic value of Chinese enterprises, investing across medical/health, frontier technology, semiconductors, advanced manufacturing, and enterprise services. It backs companies from early through growth and pre-IPO stages.",
+        "zh": "涌金集团旗下专注股权投资的平台，致力于发现并提升中国企业的内在价值，重点布局医疗健康、前沿科技、半导体、先进制造与企业服务等领域，覆盖早期至成长及上市前阶段。"
+      },
+      "stages": ["早期", "A轮", "B轮", "成长期", "Pre-IPO"],
+      "notable": ["泉峰汽车", "维力医疗", "雪榕生物", "沪江网"],
+      "recent": [
+        "杉木生物 (A轮, 约1亿元, 2026年5月)",
+        "敏越科技 (Pre-B+轮, 2026年4月)",
+        "天鹜科技 (A+轮, 超2亿元, 2026年3月)"
+      ]
     },
     {
       "id": 30,
@@ -1149,7 +1805,30 @@
       "summary": "蓝驰创投于2005年设立，是一家专注于早期创业公司的风险投资机构。\n\n目前，蓝驰创投在中国管理多支美元及人民币双币基金，在管资金…",
       "website": "https://www.lanchivc.com",
       "total": 347,
-      "y2024": 23
+      "y2024": 23,
+      "nameEn": "Lanchi Ventures",
+      "hq": "北京",
+      "founded": 2005,
+      "thesis": {
+        "en": "An early-stage venture firm built \"for the next transformation,\" investing at the seed/Pre-A/A stage in technology- and model-innovation startups. In recent years it has gone all-in on AI, large models, and embodied AI/robotics, often as the first-round lead.",
+        "zh": "\"为下一个变革而生\"的早期创投机构，聚焦种子/Pre-A/A 轮，押注科技创新与模式创新型公司；近年全力布局 AI、大模型与具身智能/机器人，常以首轮领投方身份入局。"
+      },
+      "stages": ["种子", "Pre-A", "A轮", "早期"],
+      "notable": [
+        "理想汽车 (Li Auto)",
+        "月之暗面 Kimi (Moonshot AI)",
+        "银河通用 (Galbot)",
+        "智元机器人 (AgiBot)",
+        "水滴公司 (Waterdrop)",
+        "瓜子二手车 (Guazi)",
+        "怪兽充电 (Energy Monster)",
+        "Genspark"
+      ],
+      "recent": [
+        "银河通用 (Galbot) 战略轮/后续加注，2025 年具身智能赛道领投方",
+        "Genspark Series B 2.75 亿美元 (2025-11-20)，蓝驰为早期种子领投方",
+        "第四期双币基金约 39 亿元人民币/5.5-5.6 亿美元募集完成 (2026-04)，聚焦 AI 与具身智能"
+      ]
     },
     {
       "id": 98,
@@ -1182,7 +1861,29 @@
       "summary": "九合创投成立于2011年，由“百度七剑”之一王啸创立。作为国内顶级的本土基金品牌，我们着眼未来，脑冷心热，信奉「做有价值的事情，…",
       "website": "http://www.unityvc.com/",
       "total": 343,
-      "y2024": 9
+      "y2024": 9,
+      "nameEn": "Unity Ventures",
+      "hq": "北京",
+      "founded": 2011,
+      "thesis": {
+        "en": "An early-stage technology venture firm built around a \"Computing+\" thesis, backing structural shifts driven by the evolution of computing across hard tech, AI, advanced manufacturing, new energy/materials, and biotech. Founded by Wang Xiao, a member of Baidu's founding team.",
+        "zh": "以\"计算+\"为基础的早期科技投资机构，关注计算演进带来的结构性变革，重点布局硬科技、AI、先进制造、新能源/新材料与生物技术等赛道。由百度创始团队成员王啸创立。"
+      },
+      "stages": ["天使轮", "Pre-A轮", "A轮"],
+      "notable": [
+        "36氪",
+        "Momenta",
+        "青云科技",
+        "鹰瞳科技 (Airdoc)",
+        "下厨房",
+        "众合云科 (51社保)",
+        "探迹"
+      ],
+      "recent": [
+        "自变量机器人 (embodied AI, A+轮近10亿元, 2025)",
+        "松延动力 (商业机器人, A++轮数亿元, 2025)",
+        "尧唐生物 (基因编辑药物, B轮逾3亿元, 2025)"
+      ]
     },
     {
       "id": 16,
@@ -1210,7 +1911,17 @@
       "summary": "普华资本是一家专注于早中期项目的股权投资机构，目前管理资本超过10亿元，聚焦于互联网、大健康、泛文化、新科技四大领域。",
       "website": "http://www.puhuacapital.com",
       "total": 338,
-      "y2024": 30
+      "y2024": 30,
+      "nameEn": "Puhua Capital",
+      "hq": "杭州",
+      "founded": 2004,
+      "thesis": {
+        "en": "One of China's earliest VC firms, focused on early-to-mid-stage equity investment across high tech, healthcare, culture and consumer, and new energy, backing technically-driven founders building category-defining companies.",
+        "zh": "国内最早的创投机构之一，以早中期股权投资为主，聚焦高新科技、医疗健康、文化消费、新能源四大领域，长期支持技术驱动型创业团队。"
+      },
+      "stages": ["初创期", "成长期/扩张期", "成熟期", "Pre-IPO"],
+      "notable": ["奇虎360", "喜马拉雅FM", "墨迹天气", "创业黑马", "星河动力", "得一微电子"],
+      "recent": ["硅基流动 (SiliconFlow) Pre-A轮 (跟投，华创资本领投)"]
     },
     {
       "id": 20,
@@ -1233,7 +1944,22 @@
       "summary": "元禾控股是一家由苏州工业园区管委会控股，江苏省国信集团参股的国有投资控股企业，自2001年成立以来，始终聚焦股权投资领域，围绕创…",
       "website": "https://www.oriza.com",
       "total": 321,
-      "y2024": 28
+      "y2024": 28,
+      "nameEn": "Oriza Holdings",
+      "hq": "苏州",
+      "founded": 2001,
+      "thesis": {
+        "en": "State-owned investment arm of Suzhou Industrial Park that backs technology, healthcare and advanced-materials companies through direct equity, debt financing and a fund-of-funds platform. Deep focus on integrated circuits, biopharmaceuticals, AI and advanced manufacturing, with roughly two-thirds of 2025 deals at early (Pre-A/A) stage.",
+        "zh": "苏州工业园区旗下的国资投资控股平台，通过股权直投、债权融资和母基金体系投资科技、医疗健康与先进材料企业；重点布局集成电路、生物医药、人工智能与先进制造，2025 年约三分之二的投资集中在 Pre-A/A 轮等早期阶段。"
+      },
+      "stages": ["天使", "Pre-A轮", "A轮", "成长期", "母基金(FOF)"],
+      "notable": [
+        "顺丰速运 (SF Express)",
+        "阿特斯阳光电力 (CSI Solar)",
+        "City Football Group",
+        "元禾璞华 (semiconductor platform, 200+ projects)"
+      ],
+      "recent": ["科悦医疗 Pre-A轮 (无创神经调控治疗设备，禾丰厚艾/亿生一期基金领投，2025年4月)"]
     },
     {
       "id": 25,
@@ -1243,7 +1969,30 @@
       "summary": "金浦产业投资基金管理有限公司是上海金融发展投资基金的管理人，由上海国际集团资产管理有限公司、江苏沙钢集团有限公司、华泰证券股份有…",
       "website": "http://www.gpcapital.com.cn/",
       "total": 321,
-      "y2024": 26
+      "y2024": 26,
+      "nameEn": "GP Capital (Jinpu Investment)",
+      "hq": "上海",
+      "founded": 2009,
+      "thesis": {
+        "en": "A Shanghai government-backed private-equity manager founded by Shanghai International Group, pursuing deep integration of \"finance + technology + industry.\" It concentrates on semiconductors/integrated circuits, healthcare, advanced manufacturing, and fintech, and is a leading domestic IC investor (110+ semiconductor projects).",
+        "zh": "由上海国际集团发起、上海市政府主导设立的私募股权投资机构，聚焦\"金融+科技+产业\"深度融合，重点布局半导体/集成电路、医疗健康、先进制造与金融科技，在国内集成电路投资领域处于领先地位（已投半导体项目超110家）。"
+      },
+      "stages": ["A轮", "B轮", "成长期", "产业基金"],
+      "notable": [
+        "华海清科",
+        "天岳先进",
+        "盛美上海",
+        "金海通",
+        "伟测科技",
+        "新洁能",
+        "盛合精微",
+        "龙旗科技"
+      ],
+      "recent": [
+        "武汉颐思谱科技 A轮 (2025年2月，光谱仪器)",
+        "零重力飞机工业 Pre-B 1.5亿元 (2026年3月)",
+        "韶光铬版 C+轮 (2026年4月)"
+      ]
     },
     {
       "id": 154,
@@ -1262,7 +2011,28 @@
       "summary": "钟鼎资本成立于2010年，是一家专注“以供应链为核心能力提升产业效率”的生态型基金。我们聚焦的投资领域包括物流、供应链、零售&品…",
       "website": "http://ebvc.com.cn/",
       "total": 311,
-      "y2024": 6
+      "y2024": 6,
+      "nameEn": "Eastern Bell Capital",
+      "hq": "上海",
+      "founded": 2010,
+      "thesis": {
+        "en": "A supply-chain-focused venture firm making early- and growth-stage investments across logistics, supply chain, retail and branding, enterprise services, and technology. It has backed 260+ companies, with more than 30 reaching unicorn status, and manages roughly US$4 billion across RMB and USD funds.",
+        "zh": "以供应链为长期主线的创投机构，专注物流、供应链、零售品牌、企业服务与科技领域的早期与成长期投资。已投资 260 多家企业，其中逾 30 家成长为独角兽，管理规模约 40 亿美元（人民币与美元基金）。"
+      },
+      "stages": ["早期", "成长期"],
+      "notable": [
+        "满帮 (Full Truck Alliance)",
+        "货拉拉 (Lalamove)",
+        "京东物流 (JD Logistics)",
+        "小鹏汽车 (XPeng)",
+        "德邦快递 (Deppon)",
+        "G7",
+        "震坤行 (ZKH)"
+      ],
+      "recent": [
+        "惠每科技 (Huimei Technology) — 约2亿元新一轮融资 (2025年6月)",
+        "丹耐克尔自动化 (Dannikier Automation) — 超1亿元战略融资 (2025年5月)"
+      ]
     },
     {
       "id": 186,
@@ -1294,7 +2064,23 @@
       "summary": "德同资本是一家专注于投资中国企业的私募股权投资集团。针对节能环保、先进制造、消费连锁、信息科技和医疗健康领域里的不同阶段进行投资…",
       "website": "http://www.dtcap.com",
       "total": 311,
-      "y2024": 5
+      "y2024": 5,
+      "nameEn": "DT Capital Partners",
+      "hq": "上海",
+      "founded": 2006,
+      "thesis": {
+        "en": "A China-focused venture and growth-equity firm investing across stages in advanced manufacturing, healthcare, innovative consumer, and next-generation information technology, backing companies with large markets, strong teams, and clear operating models.",
+        "zh": "立足中国的创投与成长期投资机构，长期聚焦先进制造、医疗健康、创新消费与新一代信息技术，投资具备广阔市场、优秀团队和清晰商业模式的企业。"
+      },
+      "stages": ["天使", "早期", "成长期"],
+      "notable": [
+        "禾赛科技 (Hesai Technology)",
+        "联影医疗 (United Imaging)",
+        "微芯生物 (Chipscreen Biosciences)",
+        "百度 (Baidu)",
+        "迈百瑞 (Maibairui)",
+        "极视角 (Extreme Vision)"
+      ]
     },
     {
       "id": 288,
@@ -1326,7 +2112,24 @@
       "summary": "软银中国资本(SBCVC)成立于2000年，是一家领先的风险投资和私募股权基金管理公司，致力于在大中华地区投资优秀的高成长、高科…",
       "website": "http://www.sbcvc.com",
       "total": 306,
-      "y2024": 3
+      "y2024": 3,
+      "nameEn": "SB China Venture Capital (SBCVC)",
+      "hq": "上海",
+      "founded": 2000,
+      "thesis": {
+        "en": "A leading venture capital and private equity firm managing both USD and RMB funds, investing across all stages in high-tech, high-growth companies in TMT, healthcare, energy and advanced manufacturing across the greater China region.",
+        "zh": "同时管理美元与人民币基金的领先创投与私募股权机构，覆盖大中华区，投资于 TMT、医疗健康、新能源与高端制造等高科技高成长企业，覆盖企业各个发展阶段。"
+      },
+      "stages": ["种子/初创期", "成长期", "扩张期", "全阶段"],
+      "notable": [
+        "Alibaba (阿里巴巴)",
+        "Taobao (淘宝)",
+        "Focus Media (分众传媒)",
+        "GDS (万国数据)",
+        "BGI (华大基因)",
+        "Di'an Diagnostics (迪安诊断)",
+        "Edan Instruments (理邦仪器)"
+      ]
     },
     {
       "id": 24,
@@ -1350,7 +2153,30 @@
       "summary": "深圳市基石资产管理股份有限公司（简称：基石资本），核心团队发端于2001年，是中国最早一批创业投资管理机构。管理团队由中国本土最…",
       "website": "http://www.stonevc.com/",
       "total": 304,
-      "y2024": 27
+      "y2024": 27,
+      "nameEn": "CoStone Capital",
+      "hq": "深圳",
+      "founded": 2001,
+      "thesis": {
+        "en": "Tracks the dominant direction of China's economic development, concentrating capital on hard technology, emerging industries, and life sciences/health—especially semiconductors, AI, robotics, and advanced manufacturing—where China seeks to close technology gaps.",
+        "zh": "围绕中国经济发展主线布局，重仓硬科技、新兴产业与生命科学健康，尤其是半导体、人工智能、机器人与高端制造等需要补齐技术差距的赛道。"
+      },
+      "stages": ["天使", "创业投资(VC)", "成长期(PE Growth)", "并购(PE Buyout)"],
+      "notable": [
+        "商汤科技 (SenseTime)",
+        "迈瑞医疗 (Mindray)",
+        "华大智造 (MGI)",
+        "第四范式 (4Paradigm)",
+        "云从科技 (CloudWalk)",
+        "长鑫科技 (ChangXin Memory)",
+        "长江存储 (YMTC)",
+        "埃夫特 (Efort)"
+      ],
+      "recent": [
+        "收购高创运动控制（工业伺服系统，2025年12月）",
+        "跟投众擎机器人 B轮（2亿美元，2026年4月）",
+        "投资智元机器人 (AgiBot)"
+      ]
     },
     {
       "id": 21,
@@ -1360,7 +2186,21 @@
       "summary": "深圳市高新投集团有限公司成立于1994年12月29日，前身为深圳市高新技术投资担保有限公司，是国内最早设立的专业担保机构之一。注…",
       "website": "http://www.szhti.com.cn",
       "total": 292,
-      "y2024": 28
+      "y2024": 28,
+      "nameEn": "Shenzhen High-Tech Investment Group Co., Ltd.",
+      "hq": "深圳",
+      "founded": 1994,
+      "thesis": {
+        "en": "A Shenzhen state-owned innovation-finance group whose venture arm acts as \"patient capital\" — investing early, small, long-term and in hard tech — to back specialized \"little giant\" and 20+8 industrial-cluster companies through equity plus debt/guarantee financing.",
+        "zh": "深圳市属国资创新型金融综合服务集团，创投业务以\"耐心资本\"自居，坚持投早、投小、投长期、投硬科技，以股权加融资担保等组合方式支持专精特新及深圳\"20+8\"产业集群企业。"
+      },
+      "stages": ["天使", "Pre-A", "A轮", "成长期", "早期硬科技"],
+      "notable": ["大族激光", "比亚迪", "华为", "欧菲科技", "东江环保", "科信技术", "鲲云科技"],
+      "recent": [
+        "2025年推出超20亿元AI与机器人产业专项综合金融支持（专项ABS）",
+        "鲲云科技（AI芯片）通过知识产权证券化获融资支持",
+        "2025年6月被投企业优优绿能在深交所创业板上市"
+      ]
     },
     {
       "id": 76,
@@ -1384,7 +2224,30 @@
       "summary": "光速光合创业投资基金是一家专注于中国市场的创业投资基金，覆盖早期和成长期，聚焦绿色科技、硬科技、企业服务、医疗科技和消费领域，在…",
       "website": "https://www.luminousvc.com",
       "total": 292,
-      "y2024": 11
+      "y2024": 11,
+      "nameEn": "Luminous Ventures",
+      "hq": "上海",
+      "founded": 2011,
+      "thesis": {
+        "en": "Early-stage and emerging-growth technology investor focused on China, backing founders in AI, deep/hard tech, green tech, enterprise software, semiconductors, robotics and med tech; positions itself as patient capital and an ecosystem co-builder rather than just a capital provider. Formerly operated as Lightspeed China Partners; rebranded to Luminous Ventures in October 2025.",
+        "zh": "深耕中国的早期及成长期科技投资机构，聚焦人工智能、硬科技、绿色科技、企业软件、半导体、具身机器人与医疗科技等赛道；自我定位为\"耐心资本\"与创新生态的共建者。前身为光速中国/光速光合，2025年10月正式启用\"光合创投\"品牌。"
+      },
+      "stages": ["早期", "天使", "A轮", "成长期"],
+      "notable": [
+        "拼多多 (Pinduoduo)",
+        "美团 (Meituan)",
+        "中际旭创 (Innolight)",
+        "禾赛科技 (Hesai)",
+        "宇树科技 (Unitree)",
+        "智谱 (Zhipu AI)",
+        "沐曦股份 (MetaX)",
+        "Boss直聘 (Kanzhun)"
+      ],
+      "recent": [
+        "沐曦股份 (MetaX GPU chips) — IPO on STAR Market Dec 2025",
+        "智谱 (Zhipu AI large models) — Hong Kong IPO Jan 2026",
+        "Closed new funds ~US$460M + ¥2B RMB (>¥5B total), April 2026"
+      ]
     },
     {
       "id": 37,
@@ -1411,7 +2274,16 @@
       "summary": "广发信德投资管理有限公司成立于2008年12月，是经中国证监会批准开展直接投资业务试点的公司之一，公司注册资本28亿元，是广发证…",
       "website": "http://www.gfinvestment.cn/",
       "total": 278,
-      "y2024": 19
+      "y2024": 19,
+      "nameEn": "Guangfa Xinde Investment Management (GF Xinde / GF Investment)",
+      "hq": "广州",
+      "founded": 2008,
+      "thesis": {
+        "en": "The wholly-owned private-equity subsidiary of GF Securities, investing across healthcare, consumption upgrade, industrial innovation and TMT through PE, VC, buyout and mezzanine strategies, leveraging its parent brokerage's IPO and M&A capital-markets pipeline.",
+        "zh": "广发证券全资私募基金子公司，围绕医疗健康、消费升级、工业创新升级、TMT 等领域，开展 PE、VC、并购及夹层投资，依托母公司券商的 IPO/并购资本市场通道实现项目退出。"
+      },
+      "stages": ["VC", "成长期", "PE", "并购", "夹层"],
+      "notable": ["华大智造", "一道新能源", "精锋医疗", "智行者", "博奥信", "爱科诺生物医药"]
     },
     {
       "id": 26,
@@ -1434,7 +2306,26 @@
       "summary": "2016年，联想创投集团正式成立，作为联想旗下的全球科技产业基金，旨在融汇联想全球资源，以投资和孵化为手段，布局科技的未来。联想…",
       "website": "http://capital.lenovo.com",
       "total": 274,
-      "y2024": 26
+      "y2024": 26,
+      "nameEn": "Lenovo Capital & Incubator Group",
+      "hq": "北京",
+      "founded": 2016,
+      "thesis": {
+        "en": "A corporate venture arm of Lenovo investing in and incubating future-facing technology companies across IoT, edge computing, cloud, big data, AI, semiconductors, robotics and embodied intelligence, leveraging Lenovo's global manufacturing and supply-chain ecosystem to support portfolio companies.",
+        "zh": "联想旗下的全球科技产业基金，以投资加孵化的方式布局面向未来的硬科技，聚焦 IoT、边缘计算、云、大数据、人工智能、半导体、机器人与具身智能，并依托联想的全球制造与供应链生态赋能被投企业。"
+      },
+      "stages": ["早期", "成长期"],
+      "notable": [
+        "美团点评",
+        "宁德时代 (CATL)",
+        "蔚来汽车 (NIO)",
+        "旷视科技 (Megvii)",
+        "寒武纪 (Cambricon)",
+        "每日优鲜",
+        "途虎养车",
+        "星动纪元 (Starunion)"
+      ],
+      "recent": ["跨维智能 (Crosswise Robotics) — A1+A2 轮数亿元人民币 (2025年7月)"]
     },
     {
       "id": 15,
@@ -1456,7 +2347,23 @@
       "summary": "深圳市力合科创股份有限公司是深圳清华大学研究院控股的高科技企业和A股上市公司，是深投控的重要成员单位。以服务国家创新驱动发展、践…",
       "website": "https://www.leaguer.com.cn/",
       "total": 269,
-      "y2024": 31
+      "y2024": 31,
+      "nameEn": "Leaguer (Shenzhen) Innovation / Leaguer Technology Innovation",
+      "hq": "深圳",
+      "founded": 1999,
+      "thesis": {
+        "en": "A Shenzhen SASAC-controlled, Tsinghua-rooted \"technology innovation services + tech industry\" platform that commercializes scientific research at scale, incubating and investing in early-stage hard-tech startups (new materials, new energy, AI, digital economy, semiconductors) through a nationwide network of incubators, accelerators and innovation bases.",
+        "zh": "深圳市国资委控股、源自清华研究院的\"科技创新服务+科技产业\"平台，以产业应用为导向推进批量科技成果转化，依托遍布全国的孵化器与创新基地，投资孵化新材料、新能源、人工智能、数字经济、半导体等领域的早期硬科技企业。"
+      },
+      "stages": ["种子", "天使", "早期", "孵化", "成长期"],
+      "notable": [
+        "拓邦股份 (Topband)",
+        "力合微电子 (Leaguer Microelectronics, 688589)",
+        "芯海科技 (Chipsea)",
+        "清研环境 (Tsinghua Environment)",
+        "江波龙 (Longsys)"
+      ],
+      "recent": ["2026年6月在武汉发起设立湖北科技供应链概念验证基金，聚焦'从0到1'早期科技项目"]
     },
     {
       "id": 187,
@@ -1491,7 +2398,25 @@
       "summary": "戈壁创投成立于 2002年，是中国领先的风险投资机构，主要专注于数字媒体、IT、TMT等领域的早期投资，其总部位于上海，同时在大…",
       "website": "https://www.gobi.vc/",
       "total": 265,
-      "y2024": 5
+      "y2024": 5,
+      "nameEn": "Gobi Partners (Gobi China)",
+      "hq": "上海",
+      "founded": 2002,
+      "thesis": {
+        "en": "A leading Pan-Asian early-stage venture firm and one of the earliest VCs to back China's technology companies; the China team invests in enterprise services, digital infrastructure, clean energy/carbon neutrality, and frontier tech such as AI, robotics, semiconductors, and commercial space.",
+        "zh": "泛亚洲领先的早期风险投资机构，也是最早投资中国科技公司的创投之一；中国团队聚焦企业服务、数字基础设施、清洁能源与碳中和，以及人工智能、机器人、半导体、商业航天等前沿科技领域。"
+      },
+      "stages": ["种子", "天使", "早期", "成长期"],
+      "notable": [
+        "途牛 (Tuniu)",
+        "36氪 (36Kr)",
+        "Teambition",
+        "Airwallex",
+        "e签宝 (Esign)",
+        "云智慧 (Cloudwise)",
+        "镁伽机器人 (Megarobo)",
+        "WaveOptics"
+      ]
     },
     {
       "id": 77,
@@ -1519,7 +2444,29 @@
       "summary": "线性资本 (Linear Venture) 由Facebook早期员工王淮和京东、天猫原高管张川共同创立，关注泛智能、大数据领域…",
       "website": "http://www.linear.vc/",
       "total": 262,
-      "y2024": 11
+      "y2024": 11,
+      "nameEn": "Linear Capital",
+      "hq": "上海",
+      "founded": 2014,
+      "thesis": {
+        "en": "Linear Capital invests in Frontier Technology Applications, focusing on AI software and applications, AI hardware and embodied intelligence, and AI for science and manufacturing (energy, materials, biotech). It backs technology startups at their earliest stages and aims for nonlinear growth from a focused, data-driven thesis.",
+        "zh": "线性资本专注于\"前沿科技应用\"投资，核心方向包括 AI 软件与应用、AI 硬件与具身智能，以及 AI for Science 与智能制造（能源、材料、生物科技）。主要在最早期阶段（天使到 A 轮）布局技术型创业公司。"
+      },
+      "stages": ["天使", "A轮", "早期"],
+      "checkSize": "$1M–$10M",
+      "notable": [
+        "Horizon Robotics (地平线)",
+        "Agile Robots (思灵机器人)",
+        "Manycore Tech (群核科技)",
+        "EHang (亿航)",
+        "Rokid",
+        "Tezign (特赞)",
+        "Deep Principle",
+        "TARS (它石智航)"
+      ],
+      "recent": [
+        "TARS (它石智航) — participated in 2025 Pre-A round (sector-record financing for Chinese embodied intelligence)"
+      ]
     },
     {
       "id": 59,
@@ -1547,7 +2494,28 @@
       "summary": "华盖资本成立于2012年，是由一批来自境内外业界知名投资机构的专业人士共同创立的私募股权投资机构，专注于中国市场的私募股权投资业…",
       "website": "http://www.hgcapital.cn/",
       "total": 260,
-      "y2024": 13
+      "y2024": 13,
+      "nameEn": "Huagai Capital",
+      "hq": "北京",
+      "founded": 2012,
+      "thesis": {
+        "en": "A private equity firm focused on China, investing across three core industries: healthcare/medicine, TMT/digital innovation, and culture, with healthcare as its anchor sector built on its founder's experience launching China's first RMB medical industry fund.",
+        "zh": "专注中国市场的私募股权投资机构，以医疗健康为核心，布局医疗、TMT/数字科技、文化三大产业，依托创始人在医疗产业基金领域的深厚积累。"
+      },
+      "stages": ["成长期", "私募股权（PE）"],
+      "notable": [
+        "华大智造",
+        "复宏汉霖",
+        "康泰生物",
+        "成大生物",
+        "数坤科技",
+        "海吉亚医疗",
+        "映恩生物",
+        "舶望制药"
+      ],
+      "recent": [
+        "2025年10月与华夏视觉科技、优达尚融共同出资设立天津数赢华盖智能科技基金（认缴8100万元，投向AI及数字科技）"
+      ]
     },
     {
       "id": 50,
@@ -1557,7 +2525,17 @@
       "summary": "中芯聚源股权投资管理（上海）有限公司（简称\"聚源资本\"，China Fortune-Tech Capital Co., Ltd）…",
       "website": "http://www.cftcapital.com/",
       "total": 258,
-      "y2024": 14
+      "y2024": 14,
+      "nameEn": "China Fortune-Tech Capital (CFT Capital)",
+      "hq": "上海",
+      "founded": 2014,
+      "thesis": {
+        "en": "Semiconductor-focused investment firm founded by SMIC, investing across the entire integrated-circuit supply chain — materials, design, equipment, IP, and services — while providing portfolio companies with industrial value-added support.",
+        "zh": "由中芯国际发起设立的半导体产业投资机构，聚焦集成电路全产业链，覆盖材料、设计、装备、IP 与服务等环节，并为被投企业提供产业增值服务。"
+      },
+      "stages": ["天使", "VC", "成长期", "PE", "并购"],
+      "notable": ["安集科技", "韦尔股份", "澜起科技", "芯海科技", "博通集成", "帝科股份"],
+      "recent": ["思朗科技 D轮跟投（2025，宁德时代溥泉资本领投）"]
     },
     {
       "id": 46,
@@ -1581,7 +2559,30 @@
       "summary": "元璟资本创立于2015年，团队成员由来自于一线互联网公司核心岗位的专家和国内一线VC的资深投资人组成，为创业公司提供实战经验和团…",
       "website": "http://www.vplus.vc/",
       "total": 256,
-      "y2024": 15
+      "y2024": 15,
+      "nameEn": "Vision Plus Capital",
+      "hq": "杭州",
+      "founded": 2015,
+      "thesis": {
+        "en": "An \"industry + investment\" DNA early-stage firm founded by Alibaba co-founder Wu Yongming, investing dual-currency (RMB and USD) across hard technology, intelligent manufacturing, industry digitalization, and medical technology. It aims to be entrepreneurs' \"strongest support,\" offering operational experience, industry networks, and resources alongside capital.",
+        "zh": "由阿里巴巴联合创始人吴泳铭创立、具有\"产业+投资\"基因的早期投资机构，人民币和美元双币种投资，聚焦硬科技、智能制造、产业数字化与医疗科技，强调以运营经验、产业资源做创业者最强后盾。"
+      },
+      "stages": ["早期", "天使", "A轮", "成长期"],
+      "notable": [
+        "理想汽车",
+        "涂鸦智能",
+        "每日优鲜",
+        "探探",
+        "聚水潭",
+        "法大大",
+        "MINIEYE",
+        "傅利叶智能"
+      ],
+      "recent": [
+        "历正科技 C轮（低空无人机侦测反制，元璟领投，数亿元，2025）",
+        "微脉 2亿元 D轮（数字医疗，老股东追投，2025）",
+        "亿格云 近亿元融资（企业安全，红杉中国领投，元璟加码，2025）"
+      ]
     },
     {
       "id": 3,
@@ -1609,7 +2610,27 @@
       "summary": "奇绩创坛的前身是YC中国，由陆奇博士于2018年创立，为创业公司提供初创期融资。我们的目标是帮助创业者迈出第一步，并帮助创业公司…",
       "website": "https://www.miracleplus.com/",
       "total": 255,
-      "y2024": 54
+      "y2024": 54,
+      "nameEn": "MiraclePlus",
+      "hq": "北京",
+      "founded": 2018,
+      "thesis": {
+        "en": "An early-stage accelerator (successor to Y Combinator China) founded by Lu Qi that backs idea-to-Series-A founders across 38 frontier technology domains—most heavily AI (large models and agents), robotics/embodied intelligence, and AI infrastructure—via twice-yearly cohorts pairing capital with intensive partner mentorship.",
+        "zh": "由陆奇创立、脱胎于 YC 中国的早期创业加速器，覆盖人工智能（大模型与 Agent）、机器人/具身智能、AI Infra 等 38 个前沿技术领域，以每年两期创业营的形式，为 idea 至 A 轮阶段的创始人提供资金加高强度合伙人陪伴式辅导。"
+      },
+      "stages": ["种子", "天使", "Pre-A", "A轮"],
+      "checkSize": "约 30 万美元（或等值人民币）换 7% 股权（标准创业营条款）",
+      "notable": [
+        "影眸科技 (Yingmu Tech / Rodin 3D)",
+        "清程极智 (Qingcheng Jizhi)",
+        "日行迹智能",
+        "朗毅机器人"
+      ],
+      "recent": [
+        "影眸科技 — 红杉中国种子基金及奇绩创坛跟投其数千万美元 A 轮（2025-02 报道）",
+        "日行迹智能 — 数千万美元天使轮，奇绩创坛参投（2025-07）",
+        "清程极智 — 过亿元融资，奇绩创坛跟投（2025-07）"
+      ]
     },
     {
       "id": 99,
@@ -1635,7 +2656,22 @@
       "summary": "青松基金由刘晓松、董占斌、苏蔚三位互联网及投资界资深人士于2012年6月创办，是一家主要致力于早期投资的风险投资机构，专注于投资…",
       "website": "http://www.qingsongfund.com",
       "total": 253,
-      "y2024": 9
+      "y2024": 9,
+      "nameEn": "Qingsong Fund",
+      "hq": "北京/深圳",
+      "founded": 2012,
+      "thesis": {
+        "en": "Early-stage (angel-focused) venture firm backing internet and technology startups, concentrated in cultural education, mass consumption, and innovative technology and applications.",
+        "zh": "专注早期（尤其天使阶段）的创投机构，聚焦文化教育、大消费、创新科技及应用等方向，以独家投资和领投为主。"
+      },
+      "stages": ["天使", "早期", "种子"],
+      "notable": [
+        "掌门1对1",
+        "哒哒英语 (DaDa English)",
+        "松鼠AI (Squirrel AI)",
+        "映客 (Inke)",
+        "麒砺创新 (KIRI Innovation)"
+      ]
     },
     {
       "id": 78,
@@ -1665,7 +2701,25 @@
       "summary": "百度成立于2000年，是一家搜索引擎起家的互联网公司，全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求，2005年…",
       "website": "http://home.baidu.com/",
       "total": 246,
-      "y2024": 11
+      "y2024": 11,
+      "nameEn": "Baidu Ventures (BV)",
+      "hq": "北京",
+      "founded": 2017,
+      "thesis": {
+        "en": "An independent, technology-driven early-stage venture arm launched by Baidu, dedicated to becoming a leading investment institution of the AI era. It backs founders across AIGC, embodied intelligence, autonomous driving, advanced computing, and life sciences.",
+        "zh": "百度集团发起的独立风险投资机构，以技术驱动、专注早期，致力于成为人工智能时代的领先投资机构，投资方向覆盖AIGC、具身智能、自动驾驶、先进计算、生命科学等领域。"
+      },
+      "stages": ["种子", "天使", "Pre-A", "A轮", "B轮"],
+      "notable": [
+        "Atomwise",
+        "Pony.ai",
+        "Civitai",
+        "生数科技 (Shengshu)",
+        "西湖心辰",
+        "Layla AI",
+        "Ex-Human"
+      ],
+      "recent": ["VAST（3D生成/世界模型）5000万美元A轮跟投"]
     },
     {
       "id": 131,
@@ -1698,7 +2752,30 @@
       "summary": "华映资本创立于2008年，是中国领先的综合性私募股权投资机构。\n\n自成立以来，华映资本一直坚持数字化为投资主线，基于行业本质的独…",
       "website": "http://www.meridiancapital.com.cn",
       "total": 246,
-      "y2024": 7
+      "y2024": 7,
+      "nameEn": "Meridian Capital",
+      "hq": "上海",
+      "founded": 2008,
+      "thesis": {
+        "en": "Founded by Joey Ji in 2008, Meridian Capital is a dual-currency (RMB + USD) fund managing roughly RMB 12 billion, leading A- and B-round deals while extending into early and later stages. It backs technology, consumer, enterprise-service and TMT companies, with a recent push into embodied AI and advanced materials.",
+        "zh": "华映资本由季薇于2008年创立，人民币与美元双币管理规模近120亿元，以A、B轮领投为主并向早期和中后期延伸，覆盖科技、消费、企业服务与TMT领域，近年重点布局具身智能与新材料赛道。"
+      },
+      "stages": ["天使", "A轮", "B轮", "成长期"],
+      "notable": [
+        "微盟集团 (Weimob)",
+        "BOSS直聘",
+        "壁仞科技 (Biren)",
+        "和府捞面",
+        "黄天鹅",
+        "界面·财联社",
+        "本源量子",
+        "微念 (李子柒)"
+      ],
+      "recent": [
+        "微分智飞 (flying embodied-AI) — Pre-A+ lead, Sept 2025; A1 follow-on, March 2026",
+        "挪瓦咖啡 NOWWA Coffee — C round (2025)",
+        "具身智能组合：自变量机器人、星动纪元、云深处科技 (2025H1)"
+      ]
     },
     {
       "id": 155,
@@ -1722,7 +2799,30 @@
       "summary": "天图投资创始于2002年，是国内最早从事股权投资的专业机构之一。天图投资率先专注于消费品领域的投资，走聚焦和专业化之路，\n所投项…",
       "website": "http://www.tiantu.com.cn",
       "total": 244,
-      "y2024": 6
+      "y2024": 6,
+      "nameEn": "Tiantu Capital",
+      "hq": "深圳",
+      "founded": 2002,
+      "thesis": {
+        "en": "One of China's earliest consumer-focused VC/PE firms, dedicated to backing and growing Chinese consumer brands across food and beverage, beauty and health, and new retail. Increasingly favors mid-to-high-end differentiated brands over scale-competing value brands.",
+        "zh": "中国最早专注消费赛道的VC/PE机构之一，长期投资并陪伴中国消费品牌成长，覆盖食品饮料、美妆健康、新零售等领域，近年更倾向中高端、差异化的消费品牌而非拼规模的性价比品牌。"
+      },
+      "stages": ["天使", "早期", "成长期", "Pre-IPO"],
+      "notable": [
+        "周黑鸭",
+        "奈雪的茶",
+        "百果园",
+        "小红书",
+        "中国飞鹤",
+        "茶颜悦色",
+        "万物新生 (ATRenew)",
+        "江小白"
+      ],
+      "recent": [
+        "与欧莱雅、紫燕食品达成战略合作 (2025上半年)",
+        "BeBeBus 母公司 Different Group 港股上市 (2025年9月)",
+        "白马茶业港股上市 (2025年10月)"
+      ]
     },
     {
       "id": 31,
@@ -1744,7 +2844,24 @@
       "summary": "启迪之星培育计划是由清华科技园启迪控股发起，面向全球征集“拥有领先的行业创新技术或基于技术的商业模式”的创业项目，立足启迪创业孵…",
       "website": "http://www.tusstar.com/",
       "total": 242,
-      "y2024": 23
+      "y2024": 23,
+      "nameEn": "TusStar (Tsinghua Science Park Incubator / Qidi Zhi Xing)",
+      "hq": "北京",
+      "founded": 1999,
+      "thesis": {
+        "en": "Early-stage hard-tech investor and incubator backing the commercialization of scientific and technological achievements, focused on next-generation information technology, high-end equipment, biomedicine, new energy/new materials, and enterprise services.",
+        "zh": "专注硬科技早期投资与孵化，依托清华科技园资源推动科技成果转化，重点布局新一代信息技术、高端装备、生物医疗、新能源新材料与企业服务等领域。"
+      },
+      "stages": ["种子", "天使", "初创期", "扩张期", "成熟期"],
+      "notable": [
+        "寒武纪 (Cambricon)",
+        "兆易创新 (GigaDevice)",
+        "海博思创 (Hyperstrong)",
+        "蓝晶微生物 (Bluepha)",
+        "芯来科技",
+        "知存科技",
+        "第四范式 (4Paradigm)"
+      ]
     },
     {
       "id": 79,
@@ -1765,7 +2882,30 @@
       "summary": "蚂蚁金服是一家旨在为世界带来普惠金融服务的科技企业。蚂蚁金服起步于 2004 年成立的支付宝。2014 年 10 月，蚂蚁金服正…",
       "website": "http://www.antgroup.com/",
       "total": 240,
-      "y2024": 11
+      "y2024": 11,
+      "nameEn": "Ant Group",
+      "hq": "杭州",
+      "founded": 2014,
+      "thesis": {
+        "en": "Ant Group is a Chinese fintech operator (Alipay, MYbank, wealth and credit services) rather than a pure venture firm; its investing is strategic/corporate, backing digital-payments, financial-services, AI and infrastructure companies that extend its global wallet and embedded-finance ecosystem, especially across Asia.",
+        "zh": "蚂蚁集团本质是中国金融科技运营商（支付宝、网商银行、财富与信贷服务），而非纯粹的风险投资机构；其投资以战略性/产业资本为主，布局数字支付、金融服务、人工智能及基础设施企业，以扩展其全球钱包与嵌入式金融生态，尤其聚焦亚洲市场。"
+      },
+      "stages": ["成长期", "战略投资", "并购"],
+      "notable": [
+        "GCash",
+        "Ascend Money",
+        "bKash",
+        "KakaoPay",
+        "2C2P",
+        "WorldFirst",
+        "Orbbec (奥比中光)",
+        "Shengshu Technology (生数科技)"
+      ],
+      "recent": [
+        "Bright Smart Securities (耀才证券) controlling stake, ~$362M (2025)",
+        "Haodf.com (好大夫在线) acquisition for AI in healthcare (2025)",
+        "R2 (Latin America embedded-lending fintech) strategic investment (2025)"
+      ]
     },
     {
       "id": 156,

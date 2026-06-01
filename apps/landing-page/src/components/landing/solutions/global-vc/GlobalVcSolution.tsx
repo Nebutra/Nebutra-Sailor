@@ -84,6 +84,7 @@ export function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
             types={GLOBAL_VC_TYPES}
             locale={copyLocale}
             variant="global"
+            hrefBase="/solutions/global-vc"
           />
         </AnimateIn>
 
