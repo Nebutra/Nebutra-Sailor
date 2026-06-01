@@ -317,6 +317,45 @@ typography:
       expect(ff["sans"]).toBeDefined();
       expect("heading" in ff).toBe(false);
     });
+
+    it("falls back to a prose-mentioned mono font when no structured code entry exists", () => {
+      const fixture = `---
+name: ProseMono
+colors:
+  primary: "#000000"
+typography:
+  body:
+    fontFamily: Inter
+---
+
+## Typography
+
+Body copy uses Inter. Code blocks and inline code use **JetBrains Mono**, a
+monospaced typeface, for technical labels.
+`;
+      const { set } = importFromDesignMd(fixture);
+      const ff = set.tokens["fontFamily"] as Record<string, { $value: string }>;
+      expect(ff.mono?.$value).toBe("JetBrains Mono, monospace");
+    });
+
+    it("does NOT mistake a prose-mentioned sans font for the mono font", () => {
+      const fixture = `---
+name: NoMono
+colors:
+  primary: "#000000"
+typography:
+  body:
+    fontFamily: Inter
+---
+
+## Typography
+
+The brand uses **Satoshi** for all display and body copy. No code surfaces.
+`;
+      const { set } = importFromDesignMd(fixture);
+      const ff = set.tokens["fontFamily"] as Record<string, unknown>;
+      expect("mono" in ff).toBe(false);
+    });
   });
 
   describe("ImportReport", () => {

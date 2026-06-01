@@ -402,6 +402,68 @@ function extractFontFamilyFromProse(content: string): string | undefined {
   return undefined;
 }
 
+/** Recognisable monospace family names (lowercased substrings). */
+const KNOWN_MONO_FONTS = [
+  "jetbrains mono",
+  "fira code",
+  "fira mono",
+  "sf mono",
+  "roboto mono",
+  "ibm plex mono",
+  "source code pro",
+  "space mono",
+  "ubuntu mono",
+  "cascadia",
+  "geist mono",
+  "monaco",
+  "menlo",
+  "consolas",
+  "courier",
+  "inconsolata",
+  "overpass mono",
+  "anonymous pro",
+  "iosevka",
+  "commit mono",
+];
+
+/** A name is "mono-like" if it literally says mono or matches a known mono family. */
+function isMonoFontName(name: string): boolean {
+  const n = name.toLowerCase();
+  return n.includes("mono") || KNOWN_MONO_FONTS.some((f) => n.includes(f));
+}
+
+/**
+ * Conservative prose fallback for the CODE/mono font. Only returns a candidate
+ * whose NAME is itself mono-identifying (contains "mono" or is a known mono
+ * family) — this keeps the false-positive rate low (a sans font mentioned in
+ * prose is never mistaken for the code font). Used only when no structured
+ * `typography.<code|*-mono>.fontFamily` entry exists.
+ */
+function extractMonoFromProse(content: string): string | undefined {
+  const searchText = scopeToSection(content, ["typography", "code", "mono", "monospace", "font"]);
+
+  for (const line of searchText.split("\n")) {
+    const candidate = extractFontCandidateFromLine(line);
+    if (candidate && isLikelyFontName(candidate) && isMonoFontName(candidate)) {
+      return candidate;
+    }
+  }
+
+  // Bold **Name** or backtick `Name` that is itself a mono family.
+  for (const re of [/\*\*([A-Z][A-Za-z0-9\s-]{1,40}?)\*\*/g, /`([A-Z][A-Za-z0-9\s-]{1,40}?)`/g]) {
+    re.lastIndex = 0;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(searchText)) !== null) {
+      const candidate = (m[1] ?? "").trim();
+      if (isLikelyFontName(candidate) && isMonoFontName(candidate)) {
+        return candidate;
+      }
+    }
+  }
+
+  return undefined;
+}
+
 function extractFontCandidateFromLine(line: string): string | undefined {
   const lower = line.toLowerCase();
   const markers = ["font-family:", "font:", "typeface:", "family:", "uses "];
@@ -1163,7 +1225,12 @@ export function importFromDesignMd(
   }
 
   const headingValue = pickFontFamily(HEADING_FONT_PICK_ORDER, isHeadingLikeKey);
-  const monoValue = pickFontFamily(MONO_FONT_PICK_ORDER, isMonoLikeKey);
+  // Structured typography first; conservative prose fallback (mono-named fonts only).
+  let monoValue = pickFontFamily(MONO_FONT_PICK_ORDER, isMonoLikeKey);
+  if (!monoValue) {
+    const proseMono = extractMonoFromProse(content);
+    if (proseMono) monoValue = /,/.test(proseMono) ? proseMono : `${proseMono}, monospace`;
+  }
 
   const fontFamilyEntries: Record<string, { $value: string; $type: "fontFamily" }> = {};
   if (sansValue) fontFamilyEntries["sans"] = { $value: sansValue, $type: "fontFamily" };
