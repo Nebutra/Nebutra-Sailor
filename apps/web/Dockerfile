@@ -1,7 +1,7 @@
 # ── Stage 1: Install dependencies ────────────────────────────────────────────
 # Only package manifests are copied here so Docker can cache the layer
 # and skip re-installing when only source code changes.
-FROM node:22-alpine@sha256:92d51e5f20b7ff58faa5a969af1a1cec6cbec3fbff7e0f523242b9b5c85ad887 AS deps
+FROM node:22-alpine@sha256:968df39aedcea65eeb078fb336ed7191baf48f972b4479711397108be0966920 AS deps
 WORKDIR /app
 
 RUN corepack enable pnpm
@@ -28,7 +28,7 @@ COPY packages/platform/db/package.json          ./packages/platform/db/
 RUN pnpm install --frozen-lockfile --filter @nebutra/web... --filter @nebutra/db...
 
 # ── Stage 2: Build ────────────────────────────────────────────────────────────
-FROM node:22-alpine@sha256:92d51e5f20b7ff58faa5a969af1a1cec6cbec3fbff7e0f523242b9b5c85ad887 AS builder
+FROM node:22-alpine@sha256:968df39aedcea65eeb078fb336ed7191baf48f972b4479711397108be0966920 AS builder
 WORKDIR /app
 
 RUN corepack enable pnpm
@@ -51,7 +51,7 @@ RUN pnpm --filter @nebutra/brand build
 RUN pnpm --filter @nebutra/web build
 
 # ── Stage 3: Runtime ──────────────────────────────────────────────────────────
-FROM node:22-alpine@sha256:92d51e5f20b7ff58faa5a969af1a1cec6cbec3fbff7e0f523242b9b5c85ad887 AS runner
+FROM node:22-alpine@sha256:968df39aedcea65eeb078fb336ed7191baf48f972b4479711397108be0966920 AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
