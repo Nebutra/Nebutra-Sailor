@@ -83,7 +83,12 @@ describe("FeatureId", () => {
 
 describe("ThemeId", () => {
   it("accepts built-in theme IDs from the shared registry and custom themes", () => {
-    expect(BUILT_IN_THEME_IDS).toEqual(["nebutra", "dark-dense", "minimal", "vibrant", "ocean"]);
+    // Don't hardcode the full registry list — it grows as themes are added
+    // (e.g. the 70+ community themes). Assert the registry is non-empty, still
+    // contains the core brand themes, and that every registered id + "custom"
+    // validates through ThemeId.
+    expect(BUILT_IN_THEME_IDS.length).toBeGreaterThan(0);
+    expect(BUILT_IN_THEME_IDS).toEqual(expect.arrayContaining(["nebutra", "dark-dense"]));
     for (const id of [...BUILT_IN_THEME_IDS, "custom"]) {
       expect(ThemeId.parse(id)).toBe(id);
     }
