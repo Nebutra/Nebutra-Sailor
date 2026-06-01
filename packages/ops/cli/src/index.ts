@@ -28,7 +28,6 @@ import { registerLicenseCommand } from "./commands/license";
 import { registerLinkCommand } from "./commands/link";
 import { registerLogoutCommand } from "./commands/logout";
 import { registerMcpCommand } from "./commands/mcp-server";
-import { registerPresetCommand } from "./commands/preset";
 import { registerSchemaCommand } from "./commands/schema";
 import { registerSearchCommand } from "./commands/search-mgmt";
 import { registerSecretsCommand } from "./commands/secrets";
@@ -142,7 +141,6 @@ async function main() {
   registerStatsCommand(program);
   registerDbCommand(program);
   registerGenerateCommand(program);
-  registerPresetCommand(program);
   registerDevCommand(program);
   registerTestCommand(program);
   registerWorkflowCommand(program);
@@ -314,13 +312,12 @@ Examples:
   $ nebutra init                          Initialize a new project
   $ nebutra add cache --provider upstash-redis --yes  Install a registry feature
   $ nebutra create ./my-app               Scaffold a new project
-  $ nebutra dev --preset=ai-saas          Start dev for AI SaaS preset
+  $ nebutra dev --app=web                 Start dev for the web app
   $ nebutra db migrate                    Run pending database migrations
   $ nebutra generate app blog             Scaffold a new app
   $ nebutra brand palette --primary=#0047FF  Generate token-aligned blue palette
   $ nebutra theme list --format json    List registry-backed themes
   $ nebutra theme inspect nebutra       Inspect a theme governance manifest
-  $ nebutra preset list --format json     List available presets
   $ nebutra infra up --lite               Start PostgreSQL + Redis
   $ nebutra test e2e                      Run Playwright E2E tests
   $ nebutra stats                         Monorepo overview

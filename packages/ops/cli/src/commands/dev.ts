@@ -6,7 +6,6 @@ import { dryRunOutput } from "../utils/output";
 
 interface DevOptions {
   app?: string;
-  preset?: string;
   dryRun?: boolean;
   verbose?: boolean;
   quiet?: boolean;
@@ -42,11 +41,6 @@ const VALID_APPS = [
 ];
 
 /**
- * List of valid preset names for pnpm dev:<preset>
- */
-const VALID_PRESETS = ["ai-saas", "marketing", "dashboard", "growth", "enterprise"];
-
-/**
  * Validate app filter
  */
 function validateApp(app: string): string {
@@ -56,17 +50,6 @@ function validateApp(app: string): string {
     throw new Error(`Invalid app: ${pc.red(app)}\n${suggestion}`);
   }
   return appName;
-}
-
-/**
- * Validate preset name
- */
-function validatePreset(preset: string): string {
-  if (!VALID_PRESETS.includes(preset)) {
-    const suggestion = pc.yellow(`Valid presets: ${VALID_PRESETS.join(", ")}`);
-    throw new Error(`Invalid preset: ${pc.red(preset)}\n${suggestion}`);
-  }
-  return preset;
 }
 
 /**
@@ -81,9 +64,8 @@ export async function devCommand(options: DevOptions) {
         command: "dev",
         options: {
           app: options.app,
-          preset: options.preset,
         },
-        task: options.app ? "turbo dev" : options.preset ? "pnpm dev" : "turbo dev (all apps)",
+        task: options.app ? "turbo dev" : "turbo dev (all apps)",
       },
       { format: options.format as any },
     );
@@ -91,11 +73,6 @@ export async function devCommand(options: DevOptions) {
   }
 
   try {
-    if (options.app && options.preset) {
-      p.log.error(pc.red("Cannot specify both --app and --preset"));
-      process.exit(ExitCode.INVALID_ARGS);
-    }
-
     if (options.app) {
       validateApp(options.app);
       const appName = `@nebutra/${options.app}`;
@@ -103,17 +80,6 @@ export async function devCommand(options: DevOptions) {
         p.log.info(pc.cyan(`Starting dev server for ${pc.bold(appName)}...`));
       }
       const result = await turboRun("dev", { filter: appName });
-      process.exit(result.exitCode);
-    }
-
-    if (options.preset) {
-      validatePreset(options.preset);
-      if (!options.quiet) {
-        p.log.info(pc.cyan(`Starting dev with preset ${pc.bold(options.preset)}...`));
-      }
-      const result = await pnpmRun(`dev:${options.preset}`, {
-        interactive: true,
-      });
       process.exit(result.exitCode);
     }
 
@@ -304,7 +270,6 @@ export function registerDevCommand(program: any) {
     .command("dev")
     .description("Start development servers (turbo dev)")
     .option("--app <name>", `App to run: ${VALID_APPS.join(", ")}`)
-    .option("--preset <name>", `Preset to use: ${VALID_PRESETS.join(", ")}`)
     .option("--dry-run", "Preview what would run (exit code 10)")
     .action(async (options: any) => {
       const globalOptions = options.optsWithGlobals ? options.optsWithGlobals() : options;
