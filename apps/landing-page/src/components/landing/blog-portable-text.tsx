@@ -139,6 +139,7 @@ function createPortableTextComponents(
   copyLabel: string,
   copiedLabel: string,
   headingIds?: Record<string, string>,
+  resolveCtaHref: (href: string) => string = (href) => href,
 ): PortableTextComponents {
   return {
     block: {
@@ -294,7 +295,7 @@ function createPortableTextComponents(
         return (
           <BlogCtaBlock
             body={typeof block.body === "string" ? block.body : undefined}
-            ctaHref={typeof block.ctaHref === "string" ? block.ctaHref : undefined}
+            ctaHref={typeof block.ctaHref === "string" ? resolveCtaHref(block.ctaHref) : undefined}
             ctaLabel={typeof block.ctaLabel === "string" ? block.ctaLabel : undefined}
             items={getCtaItems(block)}
             title={typeof block.title === "string" ? block.title : undefined}
@@ -346,11 +347,13 @@ export async function BlogPortableText({
   copyLabel = "Copy original",
   copiedLabel = "Copied",
   headingIds,
+  resolveCtaHref,
 }: {
   body: PortableTextBlock[] | null | undefined;
   copyLabel?: string;
   copiedLabel?: string;
   headingIds?: Record<string, string>;
+  resolveCtaHref?: (href: string) => string;
 }) {
   if (!body?.length) return null;
   const visibleBody = await prepareBlogPortableTextBlocks(
@@ -404,7 +407,12 @@ export async function BlogPortableText({
       `}</style>
       <PortableText
         value={visibleBody}
-        components={createPortableTextComponents(copyLabel, copiedLabel, headingIds)}
+        components={createPortableTextComponents(
+          copyLabel,
+          copiedLabel,
+          headingIds,
+          resolveCtaHref,
+        )}
       />
     </div>
   );

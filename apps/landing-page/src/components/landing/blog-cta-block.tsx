@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle } from "@nebutra/icons";
+import { ArrowRight } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
 
 export type BlogCtaBlockItem = {
@@ -30,51 +30,55 @@ export function BlogCtaBlock({
   if (!title && !body && !visibleItems.length && !hasCta) return null;
 
   return (
-    <section
-      className={cn(
-        "my-12 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-5 py-6 shadow-sm sm:px-6 sm:py-7",
-        className,
-      )}
+    <aside
+      className={cn("my-14 border-y border-[var(--neutral-6)] py-7", className)}
+      aria-label={title ?? ctaLabel ?? undefined}
     >
-      <div className="grid gap-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
-        <div>
+      <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
+        <div className="relative pl-5 before:absolute before:left-0 before:top-1 before:h-[calc(100%-0.25rem)] before:w-px before:bg-[linear-gradient(180deg,var(--blue-9),var(--neutral-6))]">
           {title && (
             <h2 className="text-xl font-semibold leading-tight text-[var(--neutral-12)]">
               {title}
             </h2>
           )}
-          {body && <p className="mt-3 max-w-2xl leading-7 text-[var(--neutral-11)]">{body}</p>}
+          {body && (
+            <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-[var(--neutral-11)]">
+              {body}
+            </p>
+          )}
         </div>
         {hasCta && (
           <a
             href={ctaHref}
-            className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--blue-9)] px-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--blue-10)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-8)]"
+            className="group inline-flex h-10 w-full shrink-0 items-center justify-center gap-2 rounded-[var(--radius-md)] bg-[var(--neutral-12)] px-4 text-sm font-semibold text-[var(--neutral-1)] transition-colors hover:bg-[var(--blue-9)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-8)] sm:w-auto"
           >
             {ctaLabel}
-            <ArrowRight className="size-4" aria-hidden />
+            <ArrowRight
+              className="size-4 transition-transform group-hover:translate-x-0.5"
+              aria-hidden
+            />
           </a>
         )}
       </div>
       {visibleItems.length > 0 && (
-        <div className="mt-6 grid gap-0 border-t border-[var(--neutral-6)] pt-5 sm:grid-cols-3 sm:divide-x sm:divide-[var(--neutral-6)]">
+        <dl className="mt-6 grid gap-5 sm:grid-cols-[repeat(auto-fit,minmax(10rem,1fr))]">
           {visibleItems.map((item, index) => (
-            <div
-              key={item.key ?? `${title ?? "cta"}-${index}`}
-              className="py-3 first:pt-0 last:pb-0 sm:px-4 sm:py-0 sm:first:pl-0 sm:first:pt-0 sm:last:pr-0"
-            >
+            <div key={item.key ?? `${title ?? "cta"}-${index}`} className="min-w-0">
               {item.title && (
-                <div className="flex items-center gap-2 font-semibold text-[var(--neutral-12)]">
-                  <CheckCircle className="size-4 shrink-0 text-[var(--blue-9)]" aria-hidden />
+                <dt className="flex items-baseline gap-2 text-sm font-semibold text-[var(--neutral-12)]">
+                  <span className="font-mono text-[11px] text-[var(--blue-10)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   <span>{item.title}</span>
-                </div>
+                </dt>
               )}
               {item.body && (
-                <p className="mt-2 text-sm leading-6 text-[var(--neutral-11)]">{item.body}</p>
+                <dd className="mt-1.5 text-sm leading-6 text-[var(--neutral-11)]">{item.body}</dd>
               )}
             </div>
           ))}
-        </div>
+        </dl>
       )}
-    </section>
+    </aside>
   );
 }

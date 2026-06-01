@@ -90,6 +90,11 @@ function localizedPostHref(locale: string, slug?: string): string {
   return slug ? `${prefix}/blog/${slug}` : `${prefix}/blog`;
 }
 
+function localizedPageHref(locale: string, path: string): string {
+  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  return `${prefix}${path}`;
+}
+
 function languageSwitchPostHref(locale: Locale, slug: string): string {
   return `/${locale}/blog/${slug}`;
 }
@@ -451,6 +456,9 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                 copyLabel={isZh ? "复制此段" : "Copy block"}
                 copiedLabel={isZh ? "已复制" : "Copied"}
                 headingIds={tableOfContents.headingIds}
+                resolveCtaHref={(href) =>
+                  href === "#contact" ? localizedPageHref(lang, "/contact") : href
+                }
               />
             </div>
             <div aria-hidden className="hidden xl:block" />
