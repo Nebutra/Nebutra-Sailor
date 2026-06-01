@@ -165,7 +165,7 @@ export function detectMedium(utmMedium?: string, referrer?: string): string {
  * Generate a unique session ID
  */
 export function generateSessionId(): string {
-  return `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+  return `${Date.now()}-${crypto.randomUUID().replace(/-/g, "").substring(0, 9)}`;
 }
 
 /**

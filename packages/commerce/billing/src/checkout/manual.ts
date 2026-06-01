@@ -12,7 +12,7 @@ export class ManualCheckoutProvider implements CheckoutProvider {
   readonly name = "manual" as const;
 
   async createCreditPurchase(input: CreditPurchaseInput): Promise<CreditPurchaseSession> {
-    const sessionId = `manual_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    const sessionId = `manual_${Date.now()}_${crypto.randomUUID().replace(/-/g, "").slice(0, 8)}`;
     const separator = input.successUrl.includes("?") ? "&" : "?";
     return {
       url: `${input.successUrl}${separator}manual_session=${sessionId}`,
