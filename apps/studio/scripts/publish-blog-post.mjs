@@ -344,11 +344,12 @@ function markdownToPortableText(markdown, title) {
     if (heading) {
       flushParagraph(paragraph, blocks);
       const headingText = heading[2].trim();
-      if (!skippedTitle && title && heading[1] === "#" && headingText === title) {
+      if (!skippedTitle) {
         skippedTitle = true;
-        continue;
+        if (title && heading[1] === "#" && headingText === title) {
+          continue;
+        }
       }
-      skippedTitle = true;
       blocks.push(block(`h${Math.min(heading[1].length, 6)}`, headingText));
       continue;
     }

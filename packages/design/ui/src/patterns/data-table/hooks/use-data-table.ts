@@ -135,8 +135,8 @@ export function useDataTable<TData>(props: DataTableProps<TData>) {
       return Object.values(row as Record<string, unknown>).some((val) => {
         if (typeof val === "string") return val.toLowerCase().includes(query);
         if (typeof val === "number") return String(val).includes(query);
-        if (typeof val === "boolean" && val) return query === "true" || query === "yes";
-        if (typeof val === "boolean" && !val) return query === "false" || query === "no";
+        if (typeof val === "boolean")
+          return val ? query === "true" || query === "yes" : query === "false" || query === "no";
         return false;
       });
     });

@@ -20,7 +20,7 @@ export function resolveAuthErrorKey(error: unknown): AuthErrorKey {
 function extractCode(error: unknown): string | null {
   if (typeof error === "string") return error.toUpperCase();
 
-  if (error && typeof error === "object") {
+  if (typeof error === "object" && error !== null) {
     const obj = error as Record<string, unknown>;
 
     if (typeof obj.code === "string") return obj.code.toUpperCase();

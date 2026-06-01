@@ -114,7 +114,7 @@ async function resolveClerkActiveOrganizationId(userId: string, sessionOrgId?: s
   const memberships = await client.users.getOrganizationMembershipList({ userId });
 
   return resolveActiveOrganizationSelection({
-    sessionOrganizationId: sessionOrgId ?? null,
+    sessionOrganizationId: sessionOrgId != null ? sessionOrgId : null,
     cookieOrganizationId: selectedOrganizationId,
     organizations: normalizeClerkOrganizationCandidates(memberships),
   });

@@ -126,8 +126,9 @@ export class AtlassianStatuspageProvider implements StatusProvider {
         ? (data.status as Record<string, unknown>)
         : {};
     const overallStatus =
-      mapIndicatorStatus(String(rawStatus.indicator ?? "")) ??
-      calculateOverallStatus(monitors, activeIncidents);
+      rawStatus.indicator != null
+        ? mapIndicatorStatus(String(rawStatus.indicator))
+        : calculateOverallStatus(monitors, activeIncidents);
 
     return {
       status: overallStatus,
