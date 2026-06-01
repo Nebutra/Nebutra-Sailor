@@ -135,6 +135,11 @@ export interface CreateOrgInput {
   slug?: string;
   plan?: string;
   createdByUserId: string;
+  /**
+   * Provider request context for auth systems that bind organization creation
+   * to the current session cookie.
+   */
+  request?: Request;
 }
 
 // ─── Optional Capability Shapes (per ADR D5 / Phase 1.3) ───
@@ -186,7 +191,7 @@ export interface OrganizationCapability {
     metadata?: Record<string, unknown>;
   }): Promise<Organization>;
   /** List organizations a user belongs to. */
-  list(userId: string): Promise<Organization[]>;
+  list(userId: string, request?: Request): Promise<Organization[]>;
   /**
    * Set the active organization on a request's session.
    *
@@ -275,10 +280,10 @@ export interface AuthProvider {
   // ── Organizations (multi-tenant) ──
 
   /** Fetch an organization by ID. */
-  getOrganization(orgId: string): Promise<Organization | null>;
+  getOrganization(orgId: string, request?: Request): Promise<Organization | null>;
 
   /** List all organizations a user belongs to. */
-  getUserOrganizations(userId: string): Promise<Organization[]>;
+  getUserOrganizations(userId: string, request?: Request): Promise<Organization[]>;
 
   /** Create a new organization. */
   createOrganization(data: CreateOrgInput): Promise<Organization>;

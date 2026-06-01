@@ -38,16 +38,23 @@ export function mapUser(raw: Record<string, unknown> | null): User | null {
  * present, falling back to "FREE".
  */
 export function normalizeOrganization(raw: Record<string, unknown>): Organization {
+  const data =
+    raw.organization && typeof raw.organization === "object" && !Array.isArray(raw.organization)
+      ? (raw.organization as Record<string, unknown>)
+      : raw.data && typeof raw.data === "object" && !Array.isArray(raw.data)
+        ? (raw.data as Record<string, unknown>)
+        : raw;
+
   return {
-    id: String(raw.id),
-    name: String(raw.name ?? ""),
-    slug: String(raw.slug ?? ""),
+    id: String(data.id),
+    name: String(data.name ?? ""),
+    slug: String(data.slug ?? ""),
     plan:
-      typeof raw.metadata === "string"
-        ? raw.metadata
-        : typeof raw.plan === "string"
-          ? raw.plan
+      typeof data.metadata === "string"
+        ? data.metadata
+        : typeof data.plan === "string"
+          ? data.plan
           : "FREE",
-    createdAt: raw.createdAt ? new Date(raw.createdAt as string | number) : new Date(),
+    createdAt: data.createdAt ? new Date(data.createdAt as string | number) : new Date(),
   };
 }

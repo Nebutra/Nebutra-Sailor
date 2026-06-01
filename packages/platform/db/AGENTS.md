@@ -39,6 +39,11 @@ the client in the same change.
 - Start schema changes in `prisma/schema.prisma`.
 - For durable schema changes, create or update a migration under
   `prisma/migrations/` and keep the SQL aligned with the schema change.
+- Treat this package as template source code: new template-facing migrations
+  should be fail-loud under Prisma migration history. Do not add SQL-level
+  `IF NOT EXISTS` / `DO ... IF NOT EXISTS` guards to hide pre-existing drift
+  unless an ADR or migration test documents why that migration must be
+  idempotent.
 - Do not silently rewrite existing shipped migrations unless the task is
   explicitly about repairing migration history.
 - When changing tenant-scoped tables or policies, review the RLS implications as

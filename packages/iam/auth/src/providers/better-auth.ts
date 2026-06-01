@@ -28,7 +28,6 @@ import type {
   CreateOrgInput,
   CreateUserInput,
   MagicLinkCapability,
-  Organization,
   OrganizationCapability,
   PasskeyCapability,
   SignInMethod,
@@ -37,7 +36,7 @@ import type {
 } from "../types";
 import { ALL_FALSE_CAPABILITIES, probeBetterAuthCapabilities } from "./better-auth/capabilities";
 import { buildMagicLinkCapability } from "./better-auth/magic-link";
-import { mapSession, mapUser } from "./better-auth/mappers";
+import { mapSession, mapUser, normalizeOrganization } from "./better-auth/mappers";
 import { buildOrganizationsCapability } from "./better-auth/organization";
 import { buildPasskeysCapability } from "./better-auth/passkey";
 import { loadBetterAuthOneTapPlugin, loadOptionalPlugin } from "./better-auth/plugin-loaders";
@@ -440,7 +439,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       }
     },
 
-    async getOrganization(orgId) {
+    async getOrganization(orgId, request) {
       const auth = await getAuth();
       try {
         if (!("getFullOrganization" in auth.api)) {
@@ -456,25 +455,19 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         >;
         const getFullOrg = api.getFullOrganization;
         if (!getFullOrg) return null;
-        const raw = (await getFullOrg({ query: { organizationId: orgId } })) as Record<
-          string,
-          unknown
-        > | null;
+        const raw = (await getFullOrg({
+          query: { organizationId: orgId },
+          ...(request ? { headers: request.headers } : {}),
+        })) as Record<string, unknown> | null;
         if (!raw) return null;
-        return {
-          id: String(raw.id),
-          name: String(raw.name ?? ""),
-          slug: String(raw.slug ?? ""),
-          plan: String(raw.metadata ?? "FREE"),
-          createdAt: raw.createdAt ? new Date(raw.createdAt as string | number) : new Date(),
-        } satisfies Organization;
+        return normalizeOrganization(raw);
       } catch (error) {
         logger.error("Better Auth getOrganization failed", { orgId, error });
         return null;
       }
     },
 
-    async getUserOrganizations(userId) {
+    async getUserOrganizations(userId, request) {
       const auth = await getAuth();
       try {
         if (!("listOrganizations" in auth.api)) {
@@ -490,17 +483,25 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         >;
         const listOrgs = api.listOrganizations;
         if (!listOrgs) return [];
-        const raw = (await listOrgs({ query: { userId } })) as Array<
-          Record<string, unknown>
-        > | null;
-        if (!raw) return [];
-        return raw.map((org) => ({
-          id: String(org.id),
-          name: String(org.name ?? ""),
-          slug: String(org.slug ?? ""),
-          plan: String(org.metadata ?? "FREE"),
-          createdAt: org.createdAt ? new Date(org.createdAt as string | number) : new Date(),
-        })) satisfies Organization[];
+        const raw = (await listOrgs({
+          query: { userId },
+          ...(request ? { headers: request.headers } : {}),
+        })) as unknown;
+        const rawRecord = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : null;
+        const items = Array.isArray(raw)
+          ? raw
+          : rawRecord &&
+              "data" in rawRecord &&
+              Array.isArray((rawRecord as Record<string, unknown>).data)
+            ? ((rawRecord as Record<string, unknown>).data as unknown[])
+            : rawRecord &&
+                "organizations" in rawRecord &&
+                Array.isArray((rawRecord as Record<string, unknown>).organizations)
+              ? ((rawRecord as Record<string, unknown>).organizations as unknown[])
+              : [];
+        return items
+          .filter((org): org is Record<string, unknown> => Boolean(org) && typeof org === "object")
+          .map(normalizeOrganization);
       } catch (error) {
         logger.error("Better Auth getUserOrganizations failed", { userId, error });
         return [];
@@ -527,18 +528,14 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
           );
         }
         const raw = (await createOrg({
+          ...(data.request ? { headers: data.request.headers } : {}),
           body: {
             name: data.name,
             slug: data.slug ?? data.name.toLowerCase().replace(/\s+/g, "-"),
           },
         })) as Record<string, unknown>;
-        return {
-          id: String(raw.id),
-          name: String(raw.name ?? ""),
-          slug: String(raw.slug ?? ""),
-          plan: data.plan ?? "FREE",
-          createdAt: raw.createdAt ? new Date(raw.createdAt as string | number) : new Date(),
-        } satisfies Organization;
+        const organization = normalizeOrganization(raw);
+        return { ...organization, plan: data.plan ?? organization.plan };
       } catch (error) {
         logger.error("Better Auth createOrganization failed", { error });
         throw error instanceof Error

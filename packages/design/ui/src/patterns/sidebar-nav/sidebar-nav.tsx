@@ -88,16 +88,14 @@ export interface SidebarNavProps {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const ITEM_BASE_CLASSES =
-  "flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-colors";
+  "group flex min-h-9 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 py-2 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform]";
 const ITEM_DEFAULT_CLASSES =
-  "text-sidebar-foreground/68 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
-// Active = subtle neutral highlight (Lovable-style), NOT a solid brand-blue
-// fill. Uses the same sidebar-accent surface as hover, made persistent and
-// emphasized via font weight + full-strength foreground.
-const ITEM_ACTIVE_CLASSES = "bg-sidebar-accent font-medium text-sidebar-accent-foreground";
+  "text-neutral-11 hover:bg-neutral-1 hover:text-neutral-12 dark:text-white/62 dark:hover:bg-white/[0.06] dark:hover:text-white";
+const ITEM_ACTIVE_CLASSES =
+  "bg-neutral-12 text-neutral-1 font-medium shadow-sm shadow-neutral-12/10 hover:bg-neutral-12 hover:text-neutral-1 dark:bg-white dark:text-neutral-12 dark:hover:bg-white";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
-const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
-const ICON_CLASSES = "size-3.5 shrink-0 opacity-75";
+const ITEM_COLLAPSED_CLASSES = "mx-auto size-9 justify-center px-0 py-0";
+const ICON_CLASSES = "size-4 shrink-0";
 
 function defaultRenderLink({
   href,
@@ -356,8 +354,8 @@ export function SidebarNav({
         aria-label="Sidebar"
         data-ui="nebutra-sidebar-nav"
         className={cn(
-          "flex h-full flex-col gap-4",
-          collapsed ? "px-2 py-2.5" : "px-2.5 py-3",
+          "flex h-full flex-col",
+          collapsed ? "gap-3 px-2 py-3" : "gap-5 px-3 py-4",
           className,
         )}
       >
@@ -373,7 +371,7 @@ export function SidebarNav({
               <section key={section.id} className="group/section">
                 {section.label && !collapsed ? (
                   <div className="mb-1.5 flex items-center justify-between px-2.5">
-                    <span className="text-[10px] font-semibold uppercase text-sidebar-foreground/45">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-9 dark:text-white/32">
                       {section.label}
                     </span>
                     {visibleActions ? (
@@ -386,7 +384,7 @@ export function SidebarNav({
                               aria-label={action.label}
                               title={action.label}
                               onClick={action.onClick}
-                              className="inline-flex size-4 items-center justify-center rounded text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+                              className="inline-flex size-4 items-center justify-center rounded text-neutral-9 transition-colors hover:bg-neutral-3 hover:text-neutral-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-white/45 dark:hover:bg-white/10 dark:hover:text-white"
                             >
                               <ActionIcon className="size-3" />
                             </button>
@@ -431,7 +429,9 @@ export function SidebarNav({
         </div>
 
         {footer ? (
-          <div className="shrink-0 border-t border-sidebar-border pt-3">{footer}</div>
+          <div className="shrink-0 border-t border-neutral-5 pt-3 dark:border-white/10">
+            {footer}
+          </div>
         ) : null}
       </nav>
     </TooltipProvider>

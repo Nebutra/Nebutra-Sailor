@@ -28,13 +28,29 @@ export function buildOrganizationsCapability(
       return normalizeOrganization(raw);
     },
 
-    async list(userId) {
+    async list(userId, request) {
       const api = await getApi();
       const fn = api.listOrganizations;
       if (!fn) return [];
-      const raw = (await fn({ query: { userId } })) as Array<Record<string, unknown>> | null;
-      if (!raw) return [];
-      return raw.map(normalizeOrganization);
+      const raw = (await fn({
+        query: { userId },
+        ...(request ? { headers: request.headers } : {}),
+      })) as unknown;
+      const rawRecord = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : null;
+      const items = Array.isArray(raw)
+        ? raw
+        : rawRecord &&
+            "data" in rawRecord &&
+            Array.isArray((rawRecord as Record<string, unknown>).data)
+          ? ((rawRecord as Record<string, unknown>).data as unknown[])
+          : rawRecord &&
+              "organizations" in rawRecord &&
+              Array.isArray((rawRecord as Record<string, unknown>).organizations)
+            ? ((rawRecord as Record<string, unknown>).organizations as unknown[])
+            : [];
+      return items
+        .filter((org): org is Record<string, unknown> => Boolean(org) && typeof org === "object")
+        .map(normalizeOrganization);
     },
 
     async setActive(req, organizationId): Promise<SetActiveResult> {

@@ -90,7 +90,7 @@ export function AppShell({
       <aside
         aria-label="Primary"
         className={cn(
-          "hidden h-screen shrink-0 overflow-hidden border-r border-sidebar-border bg-sidebar text-sidebar-foreground md:block",
+          "hidden h-screen shrink-0 overflow-hidden border-r border-neutral-5 bg-neutral-2/75 text-sidebar-foreground md:block dark:border-white/10 dark:bg-neutral-12/96",
           "transition-[width] duration-200 ease-out",
         )}
         style={{ width: railWidth }}

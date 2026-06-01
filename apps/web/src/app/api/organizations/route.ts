@@ -81,7 +81,7 @@ async function getOrganizationsForRequest(request: Request): Promise<Organizatio
   if (!session?.userId) return null;
   if (!auth.capabilities.organizations) return [];
 
-  const organizations = await auth.getUserOrganizations(session.userId);
+  const organizations = await auth.getUserOrganizations(session.userId, request);
   return organizations.map((organization) => ({
     id: organization.id,
     name: organization.name,
@@ -127,6 +127,7 @@ async function createOrganizationForRequest(
     name: input.name,
     slug: input.slug,
     createdByUserId: session.userId,
+    request,
   });
 
   return {

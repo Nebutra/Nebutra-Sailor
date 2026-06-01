@@ -62,6 +62,7 @@ async function buildServerRequest(): Promise<Request> {
 async function resolveActiveOrganizationId(
   session: Session | null,
   auth: Awaited<ReturnType<typeof createAuth>>,
+  request?: Request,
 ): Promise<string | null> {
   if (!session?.userId) {
     return null;
@@ -73,7 +74,7 @@ async function resolveActiveOrganizationId(
 
   const cookieStore = await cookies();
   const selectedOrganizationId = cookieStore.get(ACTIVE_ORG_COOKIE)?.value ?? null;
-  const organizations = await auth.getUserOrganizations(session.userId);
+  const organizations = await auth.getUserOrganizations(session.userId, request);
   return resolveActiveOrganizationSelection({
     sessionOrganizationId: session.organizationId ?? null,
     cookieOrganizationId: selectedOrganizationId,
@@ -164,8 +165,9 @@ export async function getAuth(request?: Request) {
   }
 
   const auth = await getAuthInstance();
-  const session = await auth.getSession(request ?? (await buildServerRequest()));
-  const orgId = await resolveActiveOrganizationId(session, auth);
+  const requestContext = request ?? (await buildServerRequest());
+  const session = await auth.getSession(requestContext);
+  const orgId = await resolveActiveOrganizationId(session, auth, requestContext);
 
   return {
     userId: session?.userId ?? null,
@@ -226,7 +228,8 @@ export async function requireOrg() {
  * Get tenant context from organization
  */
 export async function getTenantContext() {
-  const { orgId, sessionClaims } = await getAuth();
+  const request = await buildServerRequest();
+  const { orgId, sessionClaims } = await getAuth(request);
 
   if (getConfiguredAuthProvider() === "clerk") {
     return {
@@ -238,7 +241,7 @@ export async function getTenantContext() {
   let plan = "FREE";
   if (orgId) {
     const auth = await getAuthInstance();
-    const org = await auth.getOrganization(orgId);
+    const org = await auth.getOrganization(orgId, request);
     if (org?.plan) {
       plan = org.plan;
     }

@@ -93,6 +93,7 @@ describe("/api/organizations", () => {
       name: "Acme Labs",
       slug: "acme-labs",
       createdByUserId: "user_alpha",
+      request: expect.any(Request),
     });
     await expect(response.json()).resolves.toEqual({
       organizationId: "org_alpha",
@@ -104,6 +105,45 @@ describe("/api/organizations", () => {
       },
     });
     expect(response.headers.get("set-cookie")).toContain("nebutra_active_org=org_alpha");
+  });
+
+  it("passes request context when listing better-auth organizations", async () => {
+    const getUserOrganizationsMock = vi.fn().mockResolvedValue([
+      {
+        id: "org_alpha",
+        name: "Acme Labs",
+        slug: "acme-labs",
+        plan: "FREE",
+        createdAt: new Date("2026-04-29T00:00:00.000Z"),
+      },
+    ]);
+    createAuthMock.mockResolvedValue({
+      capabilities: { organizations: true },
+      getSession: vi.fn().mockResolvedValue({
+        userId: "user_alpha",
+        expiresAt: new Date("2026-04-29T01:00:00.000Z"),
+      }),
+      getUserOrganizations: getUserOrganizationsMock,
+    });
+
+    const { GET } = await loadRoute();
+    const request = new Request("http://localhost/api/organizations", {
+      headers: { cookie: "better-auth.session_token=session_alpha" },
+    });
+    const response = await GET(request);
+
+    expect(response.status).toBe(200);
+    expect(getUserOrganizationsMock).toHaveBeenCalledWith("user_alpha", request);
+    await expect(response.json()).resolves.toEqual({
+      organizations: [
+        {
+          id: "org_alpha",
+          name: "Acme Labs",
+          slug: "acme-labs",
+          image: null,
+        },
+      ],
+    });
   });
 
   it("does not route NextAuth organization creation through Better Auth", async () => {

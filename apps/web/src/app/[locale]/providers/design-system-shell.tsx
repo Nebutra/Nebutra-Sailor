@@ -624,7 +624,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           className="workspace-home-gradient pointer-events-none absolute inset-0"
         />
       ) : null}
-      {isDevAuth ? (
+      {isDevAuth && !isStartupOSRoute ? (
         <div
           role="alert"
           aria-live="polite"
