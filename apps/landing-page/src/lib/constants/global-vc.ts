@@ -4,11 +4,13 @@
  * going global. Hand-authored from public information; renders through the
  * same `<VcDirectory>` as the China directory.
  */
+
+import profiles from "./global-vc-profiles.json";
 import type { VcOrg } from "./vc";
 
 export type { VcOrg } from "./vc";
 
-export const GLOBAL_VC_ORGS: VcOrg[] = [
+const GLOBAL_VC_BASE: VcOrg[] = [
   {
     id: 1,
     name: "Y Combinator",
@@ -451,6 +453,12 @@ export const GLOBAL_VC_ORGS: VcOrg[] = [
     founded: 2017,
   },
 ];
+
+/** Base profiles overlaid with researched enrichment (thesis, stages, notable…). */
+export const GLOBAL_VC_ORGS: VcOrg[] = GLOBAL_VC_BASE.map((o) => ({
+  ...o,
+  ...((profiles as Record<string, Partial<VcOrg>>)[String(o.id)] ?? {}),
+}));
 
 function uniqueOrdered(values: string[]): string[] {
   const seen = new Set<string>();
