@@ -1,6 +1,6 @@
 # @nebutra/design-sync — DESIGN.md
 
-> Companion: [`README.md`](./README.md) (operator-facing) · cross-reference: [`packages/integrations/queue/AGENTS.md`](../queue/AGENTS.md), [`packages/integrations/search/AGENTS.md`](../search/AGENTS.md), [`packages/iam/permissions/AGENTS.md`](../permissions/AGENTS.md), [`packages/integrations/webhooks/AGENTS.md`](../webhooks/AGENTS.md). Same multi-provider pattern, different domain.
+> Companion: [`README.md`](./README.md) (operator-facing) · cross-reference: [`packages/integrations/queue/AGENTS.md`](../../integrations/queue/AGENTS.md), [`packages/integrations/search/AGENTS.md`](../../integrations/search/AGENTS.md), [`packages/iam/permissions/AGENTS.md`](../../iam/permissions/AGENTS.md), [`packages/integrations/webhooks/AGENTS.md`](../../integrations/webhooks/AGENTS.md). Same multi-provider pattern, different domain.
 
 ## Why this package exists
 

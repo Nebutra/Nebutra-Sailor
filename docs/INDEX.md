@@ -86,10 +86,10 @@ Complete navigation to all project documentation.
 
 | Document                                                  | Description                      |
 | --------------------------------------------------------- | -------------------------------- |
-| [UI Guidelines](./UI-GUIDELINES.md)                       | Design tokens, styles, usage     |
-| [Typography](./TYPOGRAPHY.md)                             | Font stacks, type scale, loading |
-| [Component Library Policy](./COMPONENT-LIBRARY-POLICY.md) | External component governance    |
-| [Marketing Infrastructure](./MARKETING-INFRASTRUCTURE.md) | Landing page & marketing spec    |
+| [UI Registry Blueprint](./design-system/ui-registry-blueprint.md) | Design tokens, styles, component registry |
+| [Token Drift Audit](./design-system/token-drift-audit.md)         | Token audit and drift analysis            |
+| [Figma Sync](./design-system/figma-sync.md)                       | Figma ↔ repo token sync                   |
+| [Figma Onboarding](./design-system/figma-onboarding.md)           | Getting started with Figma                |
 
 ## Security
 

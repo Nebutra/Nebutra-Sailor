@@ -76,7 +76,7 @@ OTEL_EXPORTER_OTLP_HEADERS=Authorization=Bearer ...
 
 ## OpenStatus Setup
 
-See [infra/openstatus/](../openstatus/) for uptime monitoring configuration.
+OpenStatus uptime monitoring is configured via `openstatus.lock` at the repository root and `packages/platform/status/src/providers/openstatus.ts`.
 
 ## Logging Best Practices
 
@@ -109,5 +109,4 @@ logger.info("User created", {
 
 ## Related
 
-- [OpenStatus config](../openstatus/)
-- [Cloudflare config](../cloudflare/)
+- [Cloudflare config](../../iac/cloudflare/)

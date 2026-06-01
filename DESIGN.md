@@ -27,10 +27,10 @@ Layered package map:
 
 Sub-specs (per package):
 
-- [`packages/brand/DESIGN.md`](./packages/brand/DESIGN.md) — brand identity layer
-- [`packages/tokens/DESIGN.md`](./packages/tokens/DESIGN.md) — runtime token layer
-- [`packages/theme/DESIGN.md`](./packages/theme/DESIGN.md) — multi-theme engine
-- [`packages/ui/DESIGN.md`](./packages/ui/DESIGN.md) — component library
+- [`packages/design/brand/DESIGN.md`](./packages/design/brand/DESIGN.md) — brand identity layer
+- [`packages/design/tokens/DESIGN.md`](./packages/design/tokens/DESIGN.md) — runtime token layer
+- [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md) — multi-theme engine
+- [`packages/design/ui/DESIGN.md`](./packages/design/ui/DESIGN.md) — component library
 
 ---
 
@@ -214,7 +214,7 @@ Dark mode glow uses `#5C7CFA` (nebutra-blue-400) for visibility on `#020617`.
 
 ## 3. Components
 
-The component library lives in `@nebutra/ui` (~250 components across primitives, patterns, marketing, layout). Browse the full inventory in [`packages/ui/DESIGN.md`](./packages/ui/DESIGN.md).
+The component library lives in `@nebutra/ui` (~250 components across primitives, patterns, marketing, layout). Browse the full inventory in [`packages/design/ui/DESIGN.md`](./packages/design/ui/DESIGN.md).
 
 ### 3.1 Import map
 
@@ -392,7 +392,7 @@ import { ThemeProvider } from "@nebutra/tokens";
 | `vibrant` | Saturated multicolor | Creator / consumer apps |
 | `ocean` | Cool teal/blue | B2B finance, infra |
 
-See [`packages/theme/DESIGN.md`](./packages/theme/DESIGN.md) for full token tables per theme.
+See [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md) for full token tables per theme.
 
 ### 6.3 Rebranding
 
