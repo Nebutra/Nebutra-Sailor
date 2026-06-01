@@ -137,7 +137,13 @@ export function AuroraBackground({
   return (
     <div
       aria-hidden="true"
-      className={cn("pointer-events-none absolute inset-0 -z-10 overflow-hidden", className)}
+      className={cn(
+        "pointer-events-none absolute inset-0 -z-10 overflow-hidden",
+        // Dark mode: the saturated blue/cyan blobs read as harsh neon on a near-black
+        // canvas. Dampen opacity + saturation so the halo stays ambient, not garish.
+        "dark:opacity-50 dark:saturate-[0.65]",
+        className,
+      )}
     >
       <div
         className="absolute inset-0"
