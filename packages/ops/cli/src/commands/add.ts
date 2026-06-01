@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import * as p from "@clack/prompts";
@@ -100,7 +100,7 @@ function isExitSignal(error: unknown): error is Error {
 
 function componentExists(componentName: string): boolean {
   try {
-    execSync(`npm list ${componentName}`, { stdio: "pipe" });
+    execFileSync("npm", ["list", componentName], { stdio: "pipe" });
     return true;
   } catch {
     return false;
@@ -638,7 +638,7 @@ export async function addCommand(components: string[], options: AddOptions) {
         ? componentId
         : `https://21st.dev/r/${componentId}`;
 
-      execSync(`pnpm dlx shadcn@latest add "${resolvedUrl}"`, { stdio: "inherit" });
+      execFileSync("pnpm", ["dlx", "shadcn@latest", "add", resolvedUrl], { stdio: "inherit" });
       logger.success(`Successfully installed ${componentId}`);
       process.exit(ExitCode.SUCCESS);
     } catch (error: unknown) {
@@ -668,7 +668,7 @@ export async function addCommand(components: string[], options: AddOptions) {
     p.log.info(pc.cyan(`Invoking shadcn integration for v0 URL: ${options.v0}...`));
 
     try {
-      execSync(`pnpm dlx shadcn@latest add "${options.v0}"`, { stdio: "inherit" });
+      execFileSync("pnpm", ["dlx", "shadcn@latest", "add", options.v0], { stdio: "inherit" });
       logger.success("Successfully installed v0 component");
       process.exit(ExitCode.SUCCESS);
     } catch (error: unknown) {
