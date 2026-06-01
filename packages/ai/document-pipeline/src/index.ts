@@ -339,14 +339,14 @@ function serializeForContentStore(
 
 function htmlToText(html: string): string {
   return html
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<script[\s\S]{0,200000}?<\/script>/gi, " ")
+    .replace(/<style[\s\S]{0,200000}?<\/style>/gi, " ")
     .replace(/<\/(h[1-6]|p|li|tr|div)>/gi, "\n\n")
-    .replace(/<[^>]+>/g, " ")
+    .replace(/<[^>]{0,2000}>/g, " ")
     .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
     .replace(/[ \t]+/g, " ")
     .replace(/\n\s+/g, "\n")
     .trim();

@@ -56,14 +56,15 @@ const DEFAULT_MAX_CHARS = 4000;
 const COLOR_RE = /^(#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})|(?:rgb|rgba|hsl|hsla)\([^)]+\))$/i;
 
 function stripTags(html: string): string {
-  const withoutTags = html.replace(/<[^>]*>/g, " ");
+  // Use a bounded pattern to avoid polynomial ReDoS and handle > inside attribute values.
+  const withoutTags = html.replace(/<[^>]{0,2000}>/g, " ");
   const decoded = withoutTags
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/&nbsp;/g, " ");
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
   return decoded.replace(/\s+/g, " ").trim();
 }
 

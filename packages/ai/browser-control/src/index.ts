@@ -414,13 +414,13 @@ export class BrowserControl {
 
 function htmlToText(html: string): string {
   return html
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
+    .replace(/<script[\s\S]{0,200000}?<\/script>/gi, " ")
+    .replace(/<style[\s\S]{0,200000}?<\/style>/gi, " ")
+    .replace(/<[^>]{0,2000}>/g, " ")
     .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
     .replace(/\s+/g, " ")
     .trim();
 }
