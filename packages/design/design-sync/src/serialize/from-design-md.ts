@@ -883,11 +883,12 @@ function extractProseColorMatches(content: string): ProseExtractionResult {
   //   (B) **Label** (`{colors.xxx}` — `#hex`)        — template-ref, backtick hex
   //   (C) **Label** (`{colors.xxx}` — #hex)          — template-ref, unquoted hex
   //   (D) **Label** (`rgb(...)`)                     — functional color in backticks
-  // Reusable patterns (reset lastIndex before each use)
-  const BACKTICK_VALUE = /`([^`\n]+)`/g;
+  // Reusable patterns (reset lastIndex before each use).
+  // Quantifiers are bounded to prevent polynomial backtracking on adversarial input.
+  const BACKTICK_VALUE = /`([^`\n]{1,500})`/g;
   const UNQUOTED_HEX = /#[0-9a-fA-F]{3,8}\b/g;
   const UNQUOTED_FN =
-    /rgba?\s*\([^)\n]+\)|hsla?\s*\([^)\n]+\)|oklch\s*\([^)\n]+\)|color\s*\([^)\n]+\)/gi;
+    /rgba?\s*\([^)\n]{1,200}\)|hsla?\s*\([^)\n]{1,200}\)|oklch\s*\([^)\n]{1,200}\)|color\s*\([^)\n]{1,200}\)/gi;
 
   const matches: ProseColorMatch[] = [];
   const seenSlugs = new Set<string>();
