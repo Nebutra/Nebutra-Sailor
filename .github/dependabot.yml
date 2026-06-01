@@ -114,3 +114,17 @@ updates:
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 2
+
+  # Python AI backend
+  - package-ecosystem: "docker"
+    directory: "/backends/python/ai"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+
+  # create-sailor scaffold template — keeps the pinned node SHA current
+  - package-ecosystem: "docker"
+    directory: "/packages/ops/create-sailor/templates/deploy"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2

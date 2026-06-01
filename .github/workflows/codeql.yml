@@ -47,18 +47,10 @@ jobs:
         uses: github/codeql-action/init@03e4368ac7daa2bd82b3e85262f3bf87ee112f57 # v3
         with:
           languages: ${{ matrix.language }}
-          # Use the extended query suite for security-and-quality checks
           queries: security-extended,security-and-quality
-          # Exclude generated files and third-party code
-          config: |
-            paths-ignore:
-              - "**/node_modules/**"
-              - "**/.next/**"
-              - "**/dist/**"
-              - "**/build/**"
-              - "**/*.min.js"
-              - "**/coverage/**"
-              - "apps/storybook/**"
+          # Dedicated config file owns all path exclusions and query filters
+          # so they're version-controlled, reviewed on PR, and not buried inline.
+          config-file: .github/codeql/codeql-config.yml
 
       # ── TypeScript: build for analysis ────────────────────────────────────
       - name: Setup pnpm
