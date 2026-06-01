@@ -111,6 +111,74 @@ function parseMarkdownHeading(line: string): { level: number; text: string } | u
   return { level, text: line.slice(level + 1).trim() };
 }
 
+function splitSentences(content: string): string[] {
+  const sentences: string[] = [];
+  for (const line of content.split("\n")) {
+    let start = 0;
+    for (let index = 0; index < line.length; index++) {
+      if (line[index] !== "." && line[index] !== "!" && line[index] !== "?") continue;
+      const prev = line[index - 1];
+      const next = line[index + 1];
+      if (line[index] === "." && prev && next && /[0-9]/.test(prev) && /[0-9]/.test(next)) {
+        continue;
+      }
+      const sentence = line.slice(start, index + 1).trim();
+      if (sentence) sentences.push(sentence);
+      start = index + 1;
+    }
+    const rest = line.slice(start).trim();
+    if (rest) sentences.push(rest);
+  }
+  return sentences;
+}
+
+function readDimensionTokens(value: string, units: readonly string[]): string[] {
+  const tokens: string[] = [];
+  for (let index = 0; index < value.length; index++) {
+    const lower = value.slice(index).toLowerCase();
+    if (lower.startsWith("full")) {
+      const before = value[index - 1];
+      const after = value[index + 4];
+      const hasWordBoundaryBefore = !before || !/[a-z0-9-]/i.test(before);
+      const hasWordBoundaryAfter = !after || !/[a-z0-9-]/i.test(after);
+      if (hasWordBoundaryBefore && hasWordBoundaryAfter) {
+        tokens.push("full");
+        index += 3;
+      }
+      continue;
+    }
+
+    const end = readNumberEnd(value, index);
+    if (end === -1) continue;
+    const unit = units.find(
+      (candidate) => value.slice(end, end + candidate.length).toLowerCase() === candidate,
+    );
+    if (!unit) continue;
+    tokens.push(`${value.slice(index, end)}${unit}`);
+    index = end + unit.length - 1;
+  }
+  return tokens;
+}
+
+function readNumberEnd(value: string, start: number): number {
+  const isDigit = (ch: string | undefined): boolean => ch !== undefined && ch >= "0" && ch <= "9";
+  let index = start;
+  if (value[index] === "-") index++;
+  let hasDigit = false;
+  while (isDigit(value[index])) {
+    hasDigit = true;
+    index++;
+  }
+  if (value[index] === ".") {
+    index++;
+    while (isDigit(value[index])) {
+      hasDigit = true;
+      index++;
+    }
+  }
+  return hasDigit ? index : -1;
+}
+
 /**
  * Extract CSS box-shadow values from prose content.
  * Matches both color-first (`rgba(…) x y blur`) and offset-first (`x y blur color`) forms.
@@ -141,15 +209,18 @@ function extractShadowsFromProse(content: string): string[] {
   }
 
   if (found.length < 3) {
-    // Also scan for inline (non-backtick) box-shadow values
-    // Matches: box-shadow: <value> — captures up to end of line, then trims to last valid token.
-    const INLINE_SHADOW_RE = /box-shadow:\s*([^;\n`"]{8,120})/gi;
-    INLINE_SHADOW_RE.lastIndex = 0;
-    while ((m = INLINE_SHADOW_RE.exec(searchText)) !== null) {
-      const raw = (m[1] ?? "").trim().replace(/[;,\s]+$/, "");
+    // Also scan for inline (non-backtick) box-shadow values, line by line.
+    for (const line of searchText.split("\n")) {
+      const markerIndex = line.toLowerCase().indexOf("box-shadow:");
+      if (markerIndex === -1) continue;
+      const raw = line.slice(markerIndex + "box-shadow:".length).split(/[;`"]/)[0] ?? "";
+      const candidateSource = raw
+        .slice(0, 120)
+        .trim()
+        .replace(/[;,\s]+$/, "");
       // Trim trailing prose: find the last px-length or color token and cut there.
       // This handles "rgba(0,0,0,0.4) 0px 10px 30px for elevation." → "rgba(0,0,0,0.4) 0px 10px 30px"
-      const candidate = trimTrailingProse(raw);
+      const candidate = trimTrailingProse(candidateSource);
       if (isShadowValue(candidate) && !seen.has(candidate)) {
         seen.add(candidate);
         found.push(candidate);
@@ -290,24 +361,20 @@ function shadowMagnitude(value: string): number {
 function extractRadiusFromProse(content: string): Record<string, string> {
   const searchText = scopeToSection(content, ["shape", "radius", "geometry", "border", "corner"]);
 
-  // Find sentences containing radius keywords
-  const RADIUS_SENTENCE_RE = /[^.!?\n]*(?:radius|rounded|pill|corner|border-radius)[^.!?\n]*/gi;
-
-  // Collect all radius dimension values from matching sentences
-  const DIMENSION_RE = /(\d+(?:\.\d+)?(?:px|rem|%)|9999px|full)/gi;
   const values: number[] = []; // store numeric px values for categorization
-  const rawValues: string[] = [];
   let hasFull = false;
   let has50pct = false;
 
-  let m: RegExpExecArray | null;
-  RADIUS_SENTENCE_RE.lastIndex = 0;
-  while ((m = RADIUS_SENTENCE_RE.exec(searchText)) !== null) {
-    const sentence = m[0];
-    DIMENSION_RE.lastIndex = 0;
-    let dm: RegExpExecArray | null;
-    while ((dm = DIMENSION_RE.exec(sentence)) !== null) {
-      const raw = dm[1] ?? "";
+  for (const sentence of splitSentences(searchText)) {
+    const lower = sentence.toLowerCase();
+    if (
+      !["radius", "rounded", "pill", "corner", "border-radius"].some((keyword) =>
+        lower.includes(keyword),
+      )
+    ) {
+      continue;
+    }
+    for (const raw of readDimensionTokens(sentence, ["px", "rem", "%"])) {
       if (raw.toLowerCase() === "full") {
         hasFull = true;
         continue;
@@ -323,7 +390,6 @@ function extractRadiusFromProse(content: string): Record<string, string> {
       const numVal = parseFloat(raw);
       if (!isNaN(numVal) && numVal > 0 && numVal < 500) {
         values.push(numVal);
-        rawValues.push(raw);
       }
     }
   }
@@ -637,20 +703,16 @@ function isLikelyFontName(candidate: string): boolean {
 function extractSpacingFromProse(content: string): Record<string, string> {
   // Prefer spacing/layout section if present
   const searchText = scopeToSection(content, ["spacing", "layout", "grid", "space"]);
-
-  // Patterns: "base unit: 8px", "8px base", "spacing scale of 8px", "anchored at 1.6rem"
-  const BASE_UNIT_PATTERNS = [
-    /base\s+unit[:\s]+(\d+(?:\.\d+)?(?:px|rem))/i,
-    /(\d+(?:\.\d+)?(?:px|rem))\s+base(?:\s+unit|\s+grid)?/i,
-    /spacing\s+(?:scale\s+)?(?:of|at|from|based\s+on)\s+(\d+(?:\.\d+)?(?:px|rem))/i,
-    /anchored\s+at\s+[\d.]+rem\s*\(~(\d+)px\)/i,
-    /(\d+(?:\.\d+)?(?:px|rem))\s+(?:base\s+)?(?:grid\s+)?(?:unit|scale|step)/i,
-  ];
-
-  for (const pattern of BASE_UNIT_PATTERNS) {
-    const match = pattern.exec(searchText);
-    if (match) {
-      const raw = match[1] ?? "";
+  for (const sentence of splitSentences(searchText)) {
+    const lower = sentence.toLowerCase();
+    if (
+      !["base", "unit", "grid", "scale", "step", "spacing", "anchored"].some((keyword) =>
+        lower.includes(keyword),
+      )
+    ) {
+      continue;
+    }
+    for (const raw of readDimensionTokens(sentence, ["px", "rem"])) {
       const num = parseFloat(raw);
       if (!isNaN(num) && num > 0 && num <= 32) {
         const unit = raw.includes("rem") ? "rem" : "px";
@@ -701,6 +763,34 @@ function toKebabSlug(raw: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+function findBoldLabelColorFragments(content: string): Array<{ label: string; fragment: string }> {
+  const fragments: Array<{ label: string; fragment: string }> = [];
+  for (const line of content.split("\n")) {
+    let searchStart = 0;
+    while (searchStart < line.length) {
+      const labelStart = line.indexOf("**", searchStart);
+      if (labelStart === -1) break;
+      const labelEnd = line.indexOf("**", labelStart + 2);
+      if (labelEnd === -1) break;
+      const label = line.slice(labelStart + 2, labelEnd).trim();
+      let cursor = labelEnd + 2;
+      while (line[cursor] === " " || line[cursor] === "\t") cursor++;
+      if (label && line[cursor] === "(") {
+        fragments.push({ label, fragment: line.slice(labelStart) });
+      }
+      searchStart = labelEnd + 2;
+    }
+  }
+  return fragments;
+}
+
+function extractDescriptionAfterParen(fragment: string): string {
+  const closeIndex = fragment.indexOf(")");
+  if (closeIndex === -1) return "";
+  const colonIndex = fragment.indexOf(":", closeIndex + 1);
+  return colonIndex === -1 ? "" : fragment.slice(colonIndex + 1).trim();
 }
 
 // ─── Token presence checker ───────────────────────────────────────────────────
@@ -793,8 +883,6 @@ function extractProseColorMatches(content: string): ProseExtractionResult {
   //   (B) **Label** (`{colors.xxx}` — `#hex`)        — template-ref, backtick hex
   //   (C) **Label** (`{colors.xxx}` — #hex)          — template-ref, unquoted hex
   //   (D) **Label** (`rgb(...)`)                     — functional color in backticks
-  const BOLD_LABEL = /\*\*([^*\n]+)\*\*\s*[(][^\n]*/g;
-
   // Reusable patterns (reset lastIndex before each use)
   const BACKTICK_VALUE = /`([^`\n]+)`/g;
   const UNQUOTED_HEX = /#[0-9a-fA-F]{3,8}\b/g;
@@ -804,21 +892,20 @@ function extractProseColorMatches(content: string): ProseExtractionResult {
   const matches: ProseColorMatch[] = [];
   const seenSlugs = new Set<string>();
   let droppedCount = 0;
-  let match: RegExpExecArray | null;
 
-  while ((match = BOLD_LABEL.exec(searchText)) !== null) {
-    const label = (match[1] ?? "").trim();
+  for (const lineFragment of findBoldLabelColorFragments(searchText)) {
+    const label = lineFragment.label;
 
     // Skip effect labels everywhere (shadow, overlay, glow, gradient, etc.)
     if (isEffectLabel(label)) continue;
 
-    const lineFragment = match[0]; // **Label** (...rest of line)
+    const fragment = lineFragment.fragment; // **Label** (...rest of line)
 
     // Priority 1: last backtick-wrapped value that is a valid CSS color
     BACKTICK_VALUE.lastIndex = 0;
     let colorValue: string | undefined;
     let btm: RegExpExecArray | null;
-    while ((btm = BACKTICK_VALUE.exec(lineFragment)) !== null) {
+    while ((btm = BACKTICK_VALUE.exec(fragment)) !== null) {
       const v = (btm[1] ?? "").trim();
       if (isCssColor(v)) colorValue = v; // last valid wins (hex comes last in template-ref)
     }
@@ -827,7 +914,7 @@ function extractProseColorMatches(content: string): ProseExtractionResult {
       // Priority 2: unquoted hex (format C)
       UNQUOTED_HEX.lastIndex = 0;
       let hm: RegExpExecArray | null;
-      while ((hm = UNQUOTED_HEX.exec(lineFragment)) !== null) {
+      while ((hm = UNQUOTED_HEX.exec(fragment)) !== null) {
         const v = hm[0].trim();
         if (isCssColor(v)) colorValue = v;
       }
@@ -837,7 +924,7 @@ function extractProseColorMatches(content: string): ProseExtractionResult {
       // Priority 3: unquoted functional color not in backticks
       UNQUOTED_FN.lastIndex = 0;
       let fm: RegExpExecArray | null;
-      while ((fm = UNQUOTED_FN.exec(lineFragment)) !== null) {
+      while ((fm = UNQUOTED_FN.exec(fragment)) !== null) {
         const v = fm[0].trim();
         if (isCssColor(v)) colorValue = v;
       }
@@ -857,10 +944,9 @@ function extractProseColorMatches(content: string): ProseExtractionResult {
 
     // Extract description: text after the closing `)` of the label's parens on the same line.
     // The description is used by assignSemanticRoles for smarter primary detection.
-    // lineFragment shape: **Label** (...): description text...
+    // fragment shape: **Label** (...): description text...
     // We grab everything after the first `)` that follows the label parens block.
-    const descMatch = /\)[^)]*:\s*(.*)$/.exec(lineFragment);
-    const description = descMatch ? (descMatch[1] ?? "").trim() : "";
+    const description = extractDescriptionAfterParen(fragment);
 
     seenSlugs.add(slug);
     matches.push({ label, slug, value: colorValue, description });

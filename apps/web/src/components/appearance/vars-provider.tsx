@@ -54,8 +54,12 @@ function toSrgb(cssColor: string): [number, number, number] | null {
   }
   if (!colorCtx) return null;
   colorCtx.clearRect(0, 0, 1, 1);
-  colorCtx.fillStyle = "#000";
-  colorCtx.fillStyle = resolved; // invalid color leaves fillStyle at #000
+  colorCtx.fillStyle = "rgba(1, 2, 3, 0.5)";
+  const fallbackFillStyle = colorCtx.fillStyle;
+  colorCtx.fillStyle = resolved; // invalid color leaves fillStyle unchanged
+  if (colorCtx.fillStyle === fallbackFillStyle) {
+    return null;
+  }
   colorCtx.fillRect(0, 0, 1, 1);
   const data = colorCtx.getImageData(0, 0, 1, 1).data;
   return [(data[0] ?? 0) / 255, (data[1] ?? 0) / 255, (data[2] ?? 0) / 255];
