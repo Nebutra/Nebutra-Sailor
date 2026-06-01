@@ -397,7 +397,7 @@
     },
     {
       "id": 39,
-      "name": "险峰",
+      "name": "险峰 (K2VC)",
       "types": ["天使机构", "LP"],
       "sectors": [
         "SNS社交网络",
@@ -423,7 +423,7 @@
         "物流"
       ],
       "summary": "险峰（K2VC）专注于早期投资，致力于推动科技进步、产业升级、商业模式革新及人们生活方式的演进。险峰管理人民币和美元双币基金，截…",
-      "website": "http://www.pinevc.com.cn/",
+      "website": "https://www.k2vc.com/",
       "total": 727,
       "y2024": 18
     },
@@ -650,7 +650,7 @@
     },
     {
       "id": 95,
-      "name": "金沙江创投",
+      "name": "金沙江创投 (GSR Ventures)",
       "types": ["VC"],
       "sectors": [
         "SNS社交网络",
@@ -679,7 +679,7 @@
         "物流"
       ],
       "summary": "金沙江创业投资基金成立于2004年，现已成为全球最成功的早期风险投资机构之一，同时管理美元与人民币基金，管理资本量超过30亿美金…",
-      "website": "http://www.gsrventures.cn",
+      "website": "https://gsrventureschina.com/",
       "total": 491,
       "y2024": 9
     },
@@ -709,7 +709,7 @@
         "教育"
       ],
       "summary": "北极光创投创立于2005年，管理着4支美元基金和4支人民币基金，管理资产总额逾100亿人民币，长期关注早期科技创新型创业企业，关…",
-      "website": "http://www.nlightvc.com",
+      "website": "https://www.nlvc.com/",
       "total": 489,
       "y2024": 8
     },
@@ -771,7 +771,7 @@
         "物流"
       ],
       "summary": "高瓴集团（以下简称“高瓴”）是一家专注于长期结构性价值投资的公司，由张磊先生于2005年创立。经过十余年的发展，高瓴现已成为亚洲…",
-      "website": "http://www.hillhousecap.com",
+      "website": "https://www.hillhouseinvestment.com/",
       "total": 459,
       "y2024": 6
     },
@@ -1489,7 +1489,7 @@
         "物流"
       ],
       "summary": "戈壁创投成立于 2002年，是中国领先的风险投资机构，主要专注于数字媒体、IT、TMT等领域的早期投资，其总部位于上海，同时在大…",
-      "website": "http://www.gobivc.com",
+      "website": "https://www.gobi.vc/",
       "total": 265,
       "y2024": 5
     },
@@ -1607,7 +1607,7 @@
         "教育"
       ],
       "summary": "奇绩创坛的前身是YC中国，由陆奇博士于2018年创立，为创业公司提供初创期融资。我们的目标是帮助创业者迈出第一步，并帮助创业公司…",
-      "website": "http://www.ycchina.com/",
+      "website": "https://www.miracleplus.com/",
       "total": 255,
       "y2024": 54
     },
@@ -6883,7 +6883,7 @@
       "types": ["政府引导基金", "LP"],
       "sectors": ["环保能源", "医疗健康", "制造业", "农业"],
       "summary": "江苏省高科技产业投资股份有限公司（江苏高投）成立于1997年，是国内较早成立的专业创业投资公司。经过十八年的创业发展，公司在创业…",
-      "website": "http://www.jsvc.com.cn",
+      "website": "http://www.govtor.com/",
       "total": 25,
       "y2024": 2
     },
@@ -8036,7 +8036,7 @@
         "硬件"
       ],
       "summary": "湖州市产业投资发展集团有限公司（简称“湖州市产业集团”）成立于2016年5月，注册资本18亿元，为湖州市属国有独资企业，主要负责…",
-      "website": "https://www1.hucyjt.com:8802/",
+      "website": "https://www.hucyjt.com/",
       "total": 12,
       "y2024": 3
     },
@@ -8270,7 +8270,7 @@
       "types": ["VC"],
       "sectors": ["消费升级", "智能制造", "人工智能", "企业服务", "制造业", "快消", "硬件"],
       "summary": "羲融善道（羲融创投）成立于2019年12月，由资深的早期投资人、金融元老和公益领袖、头部VC，大型金融机构及世界500强高管联合…",
-      "website": "http://www.heroad.group/about.html",
+      "website": "https://www.heroadinvestments.com/en",
       "total": 11,
       "y2024": 2
     },
