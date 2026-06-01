@@ -1,14 +1,6 @@
 "use client";
 
-import { brandEasing, motionDurationSec } from "@nebutra/brand";
 import { ArrowRight, BookOpen, ChevronDown, Copy, Message } from "@nebutra/icons";
-import {
-  AnimatePresence,
-  m,
-  useAnimationFrame,
-  useMotionValue,
-  useReducedMotion,
-} from "framer-motion";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -40,16 +32,6 @@ type LatestPostMotionRailProps = {
   isZh: boolean;
   posts: BlogRailPost[];
 };
-
-const stateTransition = {
-  duration: motionDurationSec.flow,
-  ease: brandEasing.brand,
-} as const;
-
-const menuTransition = {
-  duration: motionDurationSec.reveal,
-  ease: brandEasing.brand,
-} as const;
 
 function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
   const [open, setOpen] = useState(false);
@@ -109,50 +91,38 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
         />
       </button>
 
-      <AnimatePresence>
-        {open ? (
-          <m.div
-            id={menuId}
-            role="menu"
-            initial={{ opacity: 0, y: -8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.98 }}
-            transition={menuTransition}
-            className="absolute right-0 top-full mt-2 w-72 rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2 shadow-[var(--shadow-lg)]"
+      {open ? (
+        <div
+          id={menuId}
+          role="menu"
+          className="absolute right-0 top-full mt-2 w-72 rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-2 shadow-[var(--shadow-lg)]"
+        >
+          <Link
+            href={contactHref}
+            role="menuitem"
+            onClick={() => setOpen(false)}
+            className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)]"
           >
-            <Link
-              href={contactHref}
-              role="menuitem"
-              onClick={() => setOpen(false)}
-              className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)]"
-            >
-              <Message
-                className="size-4 shrink-0 text-[var(--neutral-10)] transition-colors group-hover:text-[var(--blue-9)]"
-                aria-hidden
-              />
-              {isZh ? "询问这个页面" : "Ask questions about this page"}
-            </Link>
-            <button
-              type="button"
-              role="menuitem"
-              onClick={copyPageAsMarkdown}
-              className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)]"
-            >
-              <Copy
-                className="size-4 shrink-0 text-[var(--neutral-10)] transition-colors group-hover:text-[var(--blue-9)]"
-                aria-hidden
-              />
-              {copied
-                ? isZh
-                  ? "已复制"
-                  : "Copied"
-                : isZh
-                  ? "复制为 Markdown"
-                  : "Copy as markdown"}
-            </button>
-          </m.div>
-        ) : null}
-      </AnimatePresence>
+            <Message
+              className="size-4 shrink-0 text-[var(--neutral-10)] transition-colors group-hover:text-[var(--blue-9)]"
+              aria-hidden
+            />
+            {isZh ? "询问这个页面" : "Ask questions about this page"}
+          </Link>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={copyPageAsMarkdown}
+            className="group flex w-full items-center gap-3 rounded-[calc(var(--radius-xl)-4px)] px-3 py-2.5 text-left text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)]"
+          >
+            <Copy
+              className="size-4 shrink-0 text-[var(--neutral-10)] transition-colors group-hover:text-[var(--blue-9)]"
+              aria-hidden
+            />
+            {copied ? (isZh ? "已复制" : "Copied") : isZh ? "复制为 Markdown" : "Copy as markdown"}
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -195,20 +165,20 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
                   onPointerEnter={() => setActiveTopicIndex(index)}
                   className="group relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)]"
                 >
-                  <m.span
-                    animate={{ opacity: active ? 1 : 0.36, x: active ? 0 : -8 }}
-                    transition={stateTransition}
-                    className="flex min-w-0 items-center gap-3 text-3xl font-semibold leading-[1.05] text-[var(--neutral-12)] sm:text-4xl lg:text-5xl"
+                  <span
+                    className={`flex min-w-0 items-center gap-3 text-3xl font-semibold leading-[1.05] text-[var(--neutral-12)] transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:text-4xl lg:text-5xl ${
+                      active ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-40"
+                    }`}
                   >
                     <span className="min-w-0 text-balance">{topic.label}</span>
-                    <m.span
-                      animate={{ opacity: active ? 1 : 0.5, x: active ? 6 : 0 }}
-                      transition={stateTransition}
-                      className="shrink-0"
+                    <span
+                      className={`shrink-0 transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none ${
+                        active ? "translate-x-1.5 opacity-100" : "translate-x-0 opacity-50"
+                      }`}
                     >
                       <ArrowRight className="size-8 sm:size-9 lg:size-10" aria-hidden />
-                    </m.span>
-                  </m.span>
+                    </span>
+                  </span>
                 </Link>
               );
             })}
@@ -234,13 +204,10 @@ function BlogRailPostCard({
   const dimmed = activePostId !== null && !active;
 
   return (
-    <m.article
-      animate={{
-        opacity: dimmed ? 0.34 : 1,
-        y: active ? -8 : 0,
-      }}
-      transition={stateTransition}
-      className="min-w-[18rem] max-w-[18rem] border-l border-[var(--neutral-6)] px-5 py-6 sm:min-w-[22rem] sm:max-w-[22rem]"
+    <article
+      className={`min-w-[18rem] max-w-[18rem] border-l border-[var(--neutral-6)] px-5 py-6 transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:min-w-[22rem] sm:max-w-[22rem] ${
+        active ? "-translate-y-2" : "translate-y-0"
+      } ${dimmed ? "opacity-35" : "opacity-100"}`}
     >
       <Link
         href={post.href}
@@ -261,17 +228,16 @@ function BlogRailPostCard({
           <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
         </span>
       </Link>
-    </m.article>
+    </article>
   );
 }
 
 export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps) {
-  const shouldReduce = useReducedMotion();
-  const x = useMotionValue(0);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [activePostId, setActivePostId] = useState<string | null>(null);
   const [halfWidth, setHalfWidth] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [trackX, setTrackX] = useState(0);
   const railPosts = posts.slice(0, 8);
 
   useEffect(() => {
@@ -287,12 +253,26 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
     return () => observer.disconnect();
   }, []);
 
-  useAnimationFrame((_, delta) => {
-    if (shouldReduce || paused || halfWidth <= 0) return;
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduceMotion.matches || paused || halfWidth <= 0) return;
 
-    const next = x.get() - delta * 0.022;
-    x.set(Math.abs(next) >= halfWidth ? next + halfWidth : next);
-  });
+    let frameId = 0;
+    let previousTime = performance.now();
+
+    const tick = (time: number) => {
+      const delta = time - previousTime;
+      previousTime = time;
+      setTrackX((current) => {
+        const next = current - delta * 0.022;
+        return Math.abs(next) >= halfWidth ? next + halfWidth : next;
+      });
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    frameId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [halfWidth, paused]);
 
   if (railPosts.length === 0) return null;
 
@@ -318,9 +298,9 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
     >
       <div className="border-t border-[var(--neutral-6)]" />
       <div className="relative overflow-hidden">
-        <m.div
+        <div
           ref={trackRef}
-          style={{ x }}
+          style={{ transform: `translate3d(${trackX}px, 0, 0)` }}
           className="flex w-max will-change-transform motion-reduce:transform-none"
         >
           {renderedPosts.map((post, index) => (
@@ -332,7 +312,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
               setActivePostId={setActivePostId}
             />
           ))}
-        </m.div>
+        </div>
       </div>
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[var(--neutral-1)] to-transparent sm:w-24"
