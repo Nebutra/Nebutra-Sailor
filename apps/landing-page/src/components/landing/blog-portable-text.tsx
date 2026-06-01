@@ -15,6 +15,7 @@ import type { ReactNode } from "react";
 import { prepareBlogPortableTextBlocks } from "@/lib/blog-code-highlighting";
 import { BlogCodeBlock } from "./blog-code-block";
 import { BlogCopyButton } from "./blog-copy-button";
+import { BlogCtaBlock, type BlogCtaBlockItem } from "./blog-cta-block";
 import { BlogMermaidDiagram } from "./blog-mermaid-diagram";
 
 function BlogTable({ value }: { value: PortableTextBlock }) {
@@ -120,51 +121,18 @@ function BlogMathBlock({ value }: { value: PortableTextBlock }) {
   );
 }
 
-function BlogCtaBlock({ value }: { value: PortableTextBlock }) {
-  const title = typeof value.title === "string" ? value.title : "";
-  const body = typeof value.body === "string" ? value.body : "";
-  const items = Array.isArray(value.items) ? value.items : [];
-  const ctaLabel = typeof value.ctaLabel === "string" ? value.ctaLabel : "";
-  const ctaHref = typeof value.ctaHref === "string" ? value.ctaHref : "";
+function getCtaItems(value: PortableTextBlock): BlogCtaBlockItem[] {
+  if (!Array.isArray(value.items)) return [];
 
-  if (!title && !body && !items.length && !ctaLabel) return null;
-
-  return (
-    <section className="my-12 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-12)] p-6 text-[var(--neutral-1)] shadow-[6px_6px_0_var(--blue-8)] sm:p-8">
-      {title && <h2 className="text-2xl font-semibold leading-tight text-inherit">{title}</h2>}
-      {body && <p className="mt-4 max-w-2xl leading-8 text-[var(--neutral-4)]">{body}</p>}
-      {items.length > 0 && (
-        <div className="mt-6 grid gap-3 md:grid-cols-3">
-          {items.map((item, index) => {
-            const itemRecord = item as Record<string, unknown>;
-            const itemTitle = typeof itemRecord.title === "string" ? itemRecord.title : "";
-            const itemBody = typeof itemRecord.body === "string" ? itemRecord.body : "";
-
-            return (
-              <div
-                key={typeof itemRecord._key === "string" ? itemRecord._key : `${title}-${index}`}
-                className="rounded-[var(--radius-md)] border border-white/15 bg-white/[0.04] p-4"
-              >
-                {itemTitle && <div className="font-semibold text-white">{itemTitle}</div>}
-                {itemBody && (
-                  <p className="mt-2 text-sm leading-6 text-[var(--neutral-4)]">{itemBody}</p>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
-      {ctaLabel && ctaHref && (
-        <a
-          href={ctaHref}
-          className="mt-7 inline-flex items-center gap-2 rounded-[var(--radius-md)] bg-[var(--blue-9)] px-4 py-2.5 font-semibold text-white text-sm transition-colors hover:bg-[var(--blue-10)]"
-        >
-          {ctaLabel}
-          <span aria-hidden="true">→</span>
-        </a>
-      )}
-    </section>
-  );
+  return value.items.map((item, index) => {
+    const itemRecord = item as Record<string, unknown>;
+    return {
+      body: typeof itemRecord.body === "string" ? itemRecord.body : undefined,
+      key:
+        typeof itemRecord._key === "string" ? itemRecord._key : `${value._key ?? "cta"}-${index}`,
+      title: typeof itemRecord.title === "string" ? itemRecord.title : undefined,
+    };
+  });
 }
 
 function createPortableTextComponents(
@@ -321,7 +289,18 @@ function createPortableTextComponents(
       ),
     },
     types: {
-      ctaBlock: ({ value }) => <BlogCtaBlock value={value as PortableTextBlock} />,
+      ctaBlock: ({ value }) => {
+        const block = value as PortableTextBlock;
+        return (
+          <BlogCtaBlock
+            body={typeof block.body === "string" ? block.body : undefined}
+            ctaHref={typeof block.ctaHref === "string" ? block.ctaHref : undefined}
+            ctaLabel={typeof block.ctaLabel === "string" ? block.ctaLabel : undefined}
+            items={getCtaItems(block)}
+            title={typeof block.title === "string" ? block.title : undefined}
+          />
+        );
+      },
       mathBlock: ({ value }) => <BlogMathBlock value={value as PortableTextBlock} />,
       mermaid: ({ value }) => (
         <BlogMermaidDiagram chart={typeof value?.code === "string" ? value.code : ""} />

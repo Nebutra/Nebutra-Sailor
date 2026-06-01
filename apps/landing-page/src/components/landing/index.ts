@@ -4,6 +4,7 @@
 
 export { AIConstellationMarquee } from "./AIConstellationMarquee";
 export { BlogShowcase, type BlogShowcaseProps } from "./BlogShowcase";
+export { BlogCtaBlock, type BlogCtaBlockItem, type BlogCtaBlockProps } from "./blog-cta-block";
 export { CapabilityMatrixSection } from "./CapabilityMatrixSection";
 export { DesignSystemSection } from "./DesignSystemSection";
 // Legacy components (kept for backwards compat)
