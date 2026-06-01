@@ -2,9 +2,11 @@
 
 import { useOrganization } from "@nebutra/auth/client";
 import { Button } from "@nebutra/ui/components";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { queryKeys } from "@/lib/query-keys";
 import { resolveSelectOrgJourneyCopy, type SelectOrgSearchParams } from "./journey-state";
 
 interface Organization {
@@ -18,33 +20,38 @@ interface SelectOrgClientProps {
   initialJourneyParams: SelectOrgSearchParams;
 }
 
+async function fetchOrganizations(signal?: AbortSignal): Promise<Organization[]> {
+  const response = await fetch("/api/organizations", { signal });
+  if (!response.ok) {
+    throw new Error(`Failed to load workspaces (${response.status})`);
+  }
+  const data = (await response.json()) as { organizations?: Organization[] };
+  return data.organizations ?? [];
+}
+
 export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) {
   const router = useRouter();
   const { organization, setActive } = useOrganization();
-  const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [loading, setLoading] = useState(true);
   const copy = resolveSelectOrgJourneyCopy(initialJourneyParams);
 
+  // Redirect is a navigation side effect, not server cache — keep it in an
+  // effect. When an organization is already active there is nothing to choose.
   useEffect(() => {
-    async function fetchOrganizations() {
-      try {
-        const response = await fetch("/api/organizations");
-        if (response.ok) {
-          const data = await response.json();
-          setOrganizations(data.organizations || []);
-        }
-      } finally {
-        setLoading(false);
-      }
-    }
-
     if (organization) {
       router.push("/");
-    } else {
-      void fetchOrganizations();
     }
   }, [organization, router]);
 
+  // Only fetch when there is no active organization (mirrors the original
+  // conditional fetch). useQuery's `signal` replaces the manual fetch lifecycle.
+  const orgsQuery = useQuery({
+    queryKey: queryKeys.organizations.list(),
+    queryFn: ({ signal }) => fetchOrganizations(signal),
+    enabled: !organization,
+  });
+
+  // Selecting a workspace is a navigation action (setActive + redirect), not a
+  // query or mutation — it stays a plain handler.
   async function handleSelectOrganization(orgId: string) {
     try {
       await setActive(orgId);
@@ -53,6 +60,17 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
       // Keep the user on the selector so they can retry another workspace.
     }
   }
+
+  // Show the skeleton while the query is in flight, and also while an active
+  // organization triggers the redirect above (matches the original behaviour
+  // where `loading` started true and stayed true through the redirect).
+  const loading = Boolean(organization) || orgsQuery.isPending;
+  const organizations = orgsQuery.data ?? [];
+  const error = orgsQuery.error
+    ? orgsQuery.error instanceof Error
+      ? orgsQuery.error.message
+      : "Failed to load workspaces."
+    : null;
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
@@ -67,6 +85,15 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
             {[1, 2, 3].map((i) => (
               <div key={i} className="h-12 animate-pulse rounded-[var(--radius-lg)] bg-neutral-2" />
             ))}
+          </div>
+        ) : error ? (
+          <div className="text-center">
+            <p className="mb-4 rounded-[var(--radius-md)] border border-red-6 bg-red-2 px-3 py-2 text-sm text-red-11">
+              {error}
+            </p>
+            <Link href={copy.emptyActionHref}>
+              <Button className="w-full">{copy.emptyActionLabel}</Button>
+            </Link>
           </div>
         ) : organizations.length === 0 ? (
           <div className="text-center">

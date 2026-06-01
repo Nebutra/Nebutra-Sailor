@@ -1,7 +1,5 @@
 import { ContentStore } from "@nebutra/content-store";
 import { EventLog } from "@nebutra/event-log";
-import { LlmGateway } from "@nebutra/llm-gateway";
-import { ProviderRegistry } from "@nebutra/provider-registry";
 import { SandboxRuntime } from "@nebutra/sandbox-runtime";
 import { TraceStore } from "@nebutra/trace-store";
 
@@ -17,8 +15,6 @@ const threadId = "layer0_demo_thread";
 const root = ".nebutra/layer0-demo";
 
 async function main() {
-  const provider = ProviderRegistry.default().get("local");
-  const gateway = new LlmGateway({ providers: [provider] });
   const trace = TraceStore.default();
   const runtime = SandboxRuntime.fromConfig();
   const store = await ContentStore.open(root, { tenantId });
@@ -27,12 +23,6 @@ async function main() {
   const span = trace.start("agent", "layer0_demo", { traceId: threadId, tenantId });
 
   try {
-    const response = await gateway.complete({
-      capability: "local",
-      budgetUsd: 0.05,
-      messages: [{ role: "user", content: "Write a hello.md saying hi." }],
-    });
-
     await store.write("hello.md", "hi");
 
     const eventId = await log.commit({
@@ -54,7 +44,6 @@ async function main() {
     const rollback = await log.rollbackTo(eventId);
 
     span.end({
-      responseLength: response.text.length,
       sandbox: sandbox.executedOn,
       hits: hits.length,
       eventId,
@@ -64,9 +53,6 @@ async function main() {
     process.stdout.write(
       `${JSON.stringify(
         {
-          provider: provider.id,
-          gatewayUsage: gateway.usageReport(),
-          response: response.text,
           sandbox,
           hits,
           eventId,

@@ -3,8 +3,6 @@ import { Card } from "@nebutra/ui/layout";
 import { connection } from "next/server";
 
 const rows = [
-  ["provider-registry", "provider:doctor", ".nebutra/debug/provider-registry.jsonl"],
-  ["llm-gateway", "gateway:doctor", ".nebutra/debug/llm-gateway.jsonl"],
   ["trace-store", "trace:doctor", ".nebutra/debug/trace-store.jsonl"],
   ["sandbox-runtime", "sandbox:doctor", ".nebutra/debug/sandbox-runtime.jsonl"],
   ["content-store", "content:doctor", ".nebutra/debug/content-store.jsonl"],

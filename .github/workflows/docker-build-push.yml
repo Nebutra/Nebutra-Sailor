@@ -75,20 +75,16 @@ jobs:
     steps:
       # ── Checkout ─────────────────────────────────────────────────────────────
       - name: Checkout repository
-        uses: actions/checkout@v6
-
-      # Docker registry names must be all-lowercase; bash ,, expansion lowercases.
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Set lowercase owner
         id: lowercase
         run: echo "owner=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_OUTPUT
 
       # ── QEMU (required for linux/arm64 cross-compilation on amd64 runners) ──
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      # ── Docker Buildx (multi-platform builder) ───────────────────────────────
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
         with:
           driver-opts: |
             image=moby/buildkit:latest
@@ -97,7 +93,7 @@ jobs:
 
       # GitHub Container Registry — always available via GITHUB_TOKEN
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -110,7 +106,7 @@ jobs:
       #   3. Set AWS_ECR_ROLE_ARN secret to arn:aws:iam::<account>:role/<role-name>
       - name: Configure AWS credentials (OIDC)
         if: env.AWS_ACCOUNT_ID != '' && vars.AWS_REGION != ''
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
         with:
           role-to-assume: ${{ secrets.AWS_ECR_ROLE_ARN }}
           role-session-name: github-actions-ecr-push-${{ github.run_id }}
@@ -118,12 +114,10 @@ jobs:
 
       - name: Log in to AWS ECR
         if: env.AWS_ACCOUNT_ID != '' && vars.AWS_REGION != ''
-        uses: aws-actions/amazon-ecr-login@v2
-
-      # Alibaba Cloud ACR — requires ALIYUN_ACR_USERNAME + ALIYUN_ACR_PASSWORD
+        uses: aws-actions/amazon-ecr-login@fa648b43de3d4d023bcb3f89ed6940096949c419 # v2
       - name: Log in to Aliyun Container Registry
         if: env.ALIYUN_ACR_USERNAME != ''
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: registry.cn-hangzhou.aliyuncs.com
           username: ${{ secrets.ALIYUN_ACR_USERNAME }}
@@ -132,7 +126,7 @@ jobs:
       # Tencent TCR — requires TENCENT_TCR_HOST + TENCENT_TCR_USERNAME + TENCENT_TCR_PASSWORD
       - name: Log in to Tencent Container Registry
         if: env.TENCENT_TCR_HOST != ''
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ secrets.TENCENT_TCR_HOST }}
           username: ${{ secrets.TENCENT_TCR_USERNAME }}
@@ -144,7 +138,7 @@ jobs:
       #   - On semver tag: the tag itself (e.g. v1.2.3)
       - name: Generate image metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         with:
           images: |
             ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.app }}
@@ -165,12 +159,10 @@ jobs:
 
       # ── Install cosign (keyless signing via Sigstore OIDC) ───────────────────
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3
-
-      # ── Build & push ─────────────────────────────────────────────────────────
+        uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
       - name: Build and push image
         id: build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
         with:
           context: .
           file: apps/${{ matrix.app }}/Dockerfile
@@ -252,7 +244,7 @@ jobs:
     steps:
       # ── Checkout ─────────────────────────────────────────────────────────────
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Set lowercase owner
         id: lowercase
@@ -260,11 +252,9 @@ jobs:
 
       # ── QEMU (required for linux/arm64 cross-compilation on amd64 runners) ──
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      # ── Docker Buildx (multi-platform builder) ───────────────────────────────
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
         with:
           driver-opts: |
             image=moby/buildkit:latest
@@ -272,7 +262,7 @@ jobs:
       # ── Registry logins (conditional — only when secrets are present) ────────
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -280,7 +270,7 @@ jobs:
 
       - name: Configure AWS credentials (OIDC)
         if: env.AWS_ACCOUNT_ID != '' && vars.AWS_REGION != ''
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
         with:
           role-to-assume: ${{ secrets.AWS_ECR_ROLE_ARN }}
           role-session-name: github-actions-ecr-push-${{ github.run_id }}
@@ -288,11 +278,11 @@ jobs:
 
       - name: Log in to AWS ECR
         if: env.AWS_ACCOUNT_ID != '' && vars.AWS_REGION != ''
-        uses: aws-actions/amazon-ecr-login@v2
+        uses: aws-actions/amazon-ecr-login@fa648b43de3d4d023bcb3f89ed6940096949c419 # v2
 
       - name: Log in to Aliyun Container Registry
         if: env.ALIYUN_ACR_USERNAME != ''
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: registry.cn-hangzhou.aliyuncs.com
           username: ${{ secrets.ALIYUN_ACR_USERNAME }}
@@ -300,7 +290,7 @@ jobs:
 
       - name: Log in to Tencent Container Registry
         if: env.TENCENT_TCR_HOST != ''
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ secrets.TENCENT_TCR_HOST }}
           username: ${{ secrets.TENCENT_TCR_USERNAME }}
@@ -309,7 +299,7 @@ jobs:
       # ── Image metadata ───────────────────────────────────────────────────────
       - name: Generate image metadata
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         with:
           images: |
             ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.service }}
@@ -327,14 +317,12 @@ jobs:
 
       # ── Install cosign (keyless signing via Sigstore OIDC) ───────────────────
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3
-
-      # ── Build & push ─────────────────────────────────────────────────────────
+        uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
       # Uses the shared Dockerfile.python with SERVICE build arg to select
       # the correct service directory inside backends/python/<SERVICE>/
       - name: Build and push image
         id: build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5
         with:
           context: .
           file: infra/runtime/docker/Dockerfile.python

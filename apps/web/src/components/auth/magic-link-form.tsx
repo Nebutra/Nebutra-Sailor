@@ -12,10 +12,9 @@ import type { AuthErrorKey } from "@/lib/auth/error-keys";
 
 const VERIFICATION_CODE_LENGTH = 6;
 const RESEND_COOLDOWN_SECONDS = 30;
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const magicLinkSchema = z.object({
-  email: z.string().regex(EMAIL_REGEX),
+  email: z.string().email(),
   code: z.string(),
 });
 type MagicLinkValues = z.infer<typeof magicLinkSchema>;

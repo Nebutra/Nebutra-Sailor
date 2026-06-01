@@ -1,13 +1,11 @@
 import { routing } from "@nebutra/i18n/routing";
 import {
-  CreditCard,
-  FileText,
   Home as HomeIcon,
+  Lightning,
   type Icon as LucideIcon,
   BlendMode as Palette,
   Connection as Plug,
   Shield,
-  Users,
 } from "@nebutra/icons";
 
 export interface DashboardNavBadge {
@@ -19,13 +17,26 @@ export interface DashboardNavItem {
   href: string;
   label: string;
   icon: LucideIcon;
-  group: "Product" | "Operations" | "Admin";
+  group: "Product" | "Admin";
   badge?: DashboardNavBadge;
   children?: DashboardNavItem[];
 }
 
+export interface DashboardNavCapabilities {
+  readonly startupAgentOS?: boolean;
+}
+
+const STARTUP_OS_NAV_ITEM: DashboardNavItem = {
+  href: "/startup-os",
+  label: "Startup OS",
+  icon: Lightning,
+  group: "Product",
+  badge: { label: "Alpha", tone: "beta" },
+};
+
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
   { href: "/workspace", label: "Home", icon: HomeIcon, group: "Product" },
+  STARTUP_OS_NAV_ITEM,
   {
     href: "/theme-playground",
     label: "Theme Playground",
@@ -34,9 +45,6 @@ export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
     badge: { label: "Beta", tone: "beta" },
   },
   { href: "/integrations", label: "Connectors", icon: Plug, group: "Product" },
-  { href: "/billing", label: "Billing", icon: CreditCard, group: "Operations" },
-  { href: "/tenants", label: "Tenants", icon: Users, group: "Operations" },
-  { href: "/audit", label: "Audit", icon: FileText, group: "Operations" },
   {
     href: "/admin",
     label: "Admin",
@@ -46,20 +54,27 @@ export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
   },
 ];
 
-export const DASHBOARD_NAV_GROUPS = [
-  {
-    title: "Product",
-    items: DASHBOARD_NAV_ITEMS.filter((item) => item.group === "Product"),
-  },
-  {
-    title: "Operations",
-    items: DASHBOARD_NAV_ITEMS.filter((item) => item.group === "Operations"),
-  },
-  {
-    title: "Admin",
-    items: DASHBOARD_NAV_ITEMS.filter((item) => item.group === "Admin"),
-  },
-];
+export function getDashboardNavItems(capabilities?: DashboardNavCapabilities) {
+  return capabilities?.startupAgentOS === false
+    ? DASHBOARD_NAV_ITEMS.filter((item) => item.href !== STARTUP_OS_NAV_ITEM.href)
+    : DASHBOARD_NAV_ITEMS;
+}
+
+export function getDashboardNavGroups(capabilities?: DashboardNavCapabilities) {
+  const items = getDashboardNavItems(capabilities);
+  return [
+    {
+      title: "Product",
+      items: items.filter((item) => item.group === "Product"),
+    },
+    {
+      title: "Admin",
+      items: items.filter((item) => item.group === "Admin"),
+    },
+  ];
+}
+
+export const DASHBOARD_NAV_GROUPS = getDashboardNavGroups();
 
 export const WORKSPACES = [
   { id: "starter", label: "Starter Workspace" },
@@ -100,13 +115,14 @@ function formatSegment(segment: string) {
     .join(" ");
 }
 
-export function buildBreadcrumbs(pathname: string) {
+export function buildBreadcrumbs(pathname: string, capabilities?: DashboardNavCapabilities) {
   const segments = stripLocalePrefix(pathname).split("/").filter(Boolean);
+  const navItems = getDashboardNavItems(capabilities);
   const crumbs: Array<{ href: string; label: string }> = [];
 
   segments.forEach((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join("/")}`;
-    const navItem = DASHBOARD_NAV_ITEMS.find((item) => item.href === href);
+    const navItem = navItems.find((item) => item.href === href);
     crumbs.push({
       href,
       label: navItem?.label ?? formatSegment(segment),

@@ -3,7 +3,7 @@
 ## Depends On
 
 - `content-store`
-- `llm-gateway`
+- `@nebutra/agents`
 
 ## Decision Matrix
 

@@ -23,6 +23,9 @@ export interface WebProductCapabilities {
     preferences: boolean;
     channels: WebNotificationChannel[];
   };
+  prototypes: {
+    startupAgentOS: boolean;
+  };
 }
 
 type EnvLike = Record<string, string | undefined>;
@@ -93,6 +96,9 @@ export function resolveWebProductCapabilities(env: EnvLike = process.env): WebPr
       inbox: isEnabled(env.NEBUTRA_NOTIFICATIONS_INBOX),
       preferences: isEnabled(env.NEBUTRA_NOTIFICATIONS_PREFERENCES),
       channels: parseChannels(env.NEBUTRA_NOTIFICATION_CHANNELS),
+    },
+    prototypes: {
+      startupAgentOS: env.NODE_ENV !== "production" || isEnabled(env.STARTUP_AGENT_OS_PROTOTYPE),
     },
   };
 }

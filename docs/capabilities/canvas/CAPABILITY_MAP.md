@@ -18,7 +18,7 @@ re-expression in Sailor's own design system (see `ANTI_PATTERNS.md`).
 | 2 | Interactive infinite canvas editor UI | **PORT** | `@nebutra/ui` → `NodeGraphCanvas` (`@xyflow/react`, bound verbatim to the reel model) |
 | 3 | Vibe-mode NL→workflow compilation | **WRAP** | skill on `@nebutra/agent-runtime` emitting a reel graph (not rebuilt) |
 | 4 | Intervenable runtime (mid-run steering/audit) | **SKIP** | `@nebutra/agent-runtime` policy/approval/hooks/event-sourced rollout |
-| 5 | Multi-vendor LLM + fallback + token metering | **SKIP** | `@nebutra/agents` + provider-registry |
+| 5 | Multi-vendor LLM + fallback + token metering | **SKIP** | `@nebutra/agents` (Vercel AI SDK provider routing) |
 | 6 | Hybrid RAG (chunk + vector + keyword + rerank) | **PORT** | `@nebutra/knowledge-rag` (WRAPs `@nebutra/search` + `@nebutra/agents` embeddings) |
 | 7 | Real-time collaborative CRDT | **PORT** | `@nebutra/collab` (Yjs, multi-tenant, on `@nebutra/tenant-store`) |
 | 8 | Code-artifact execution sandbox | **WRAP** | `@nebutra/agent-runtime` external-sandbox seam |

@@ -23,11 +23,11 @@ import { z } from "zod";
 const SUPPORTED_LOCALES = ["en", "zh"] as const;
 type LocaleCode = (typeof SUPPORTED_LOCALES)[number];
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailSchema = z.string().trim().email("errorInvalidEmail");
 
 const profileSchema = z.object({
   name: z.string().trim().min(1, "errorRequiredName"),
-  email: z.string().trim().regex(EMAIL_REGEX, "errorInvalidEmail"),
+  email: emailSchema,
 });
 type ProfileValues = z.infer<typeof profileSchema>;
 
@@ -144,7 +144,7 @@ export function ProfileForm({
     setStatusMessage("");
     const next = email.trim();
 
-    if (!EMAIL_REGEX.test(next)) {
+    if (!emailSchema.safeParse(next).success) {
       setErrorMessage(t("errorInvalidEmail"));
       return;
     }

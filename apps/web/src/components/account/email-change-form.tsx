@@ -7,13 +7,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 const emailChangeSchema = z.object({
   newEmail: z
     .string()
     .transform((value) => value.trim().toLowerCase())
-    .refine((value) => EMAIL_REGEX.test(value), "errorInvalidEmail"),
+    .pipe(z.string().email("errorInvalidEmail")),
 });
 type EmailChangeValues = z.input<typeof emailChangeSchema>;
 

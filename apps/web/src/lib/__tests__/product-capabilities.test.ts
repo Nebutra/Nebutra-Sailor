@@ -9,6 +9,7 @@ describe("resolveWebProductCapabilities", () => {
     expect(capabilities.workspace.requireOrganization).toBe(false);
     expect(capabilities.billing.enabled).toBe(false);
     expect(capabilities.notifications.inbox).toBe(false);
+    expect(capabilities.prototypes.startupAgentOS).toBe(true);
   });
 
   it("parses organization billing and notification capability env from preset output", () => {
@@ -42,6 +43,28 @@ describe("resolveWebProductCapabilities", () => {
       inbox: true,
       preferences: true,
       channels: ["in_app", "email", "push"],
+    });
+  });
+
+  it("keeps Startup Agent OS behind a private production flag", () => {
+    expect(resolveWebProductCapabilities({ NODE_ENV: "production" }).prototypes).toEqual({
+      startupAgentOS: false,
+    });
+    expect(
+      resolveWebProductCapabilities({
+        NODE_ENV: "production",
+        NEXT_PUBLIC_STARTUP_AGENT_OS_PROTOTYPE: "1",
+      }).prototypes,
+    ).toEqual({
+      startupAgentOS: false,
+    });
+    expect(
+      resolveWebProductCapabilities({
+        NODE_ENV: "production",
+        STARTUP_AGENT_OS_PROTOTYPE: "1",
+      }).prototypes,
+    ).toEqual({
+      startupAgentOS: true,
     });
   });
 

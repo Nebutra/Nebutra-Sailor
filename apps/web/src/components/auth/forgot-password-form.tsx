@@ -10,10 +10,8 @@ import { z } from "zod";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 const forgotPasswordSchema = z.object({
-  email: z.string().regex(EMAIL_REGEX, "invalidEmail"),
+  email: z.string().email("invalidEmail"),
 });
 type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
 

@@ -9,7 +9,6 @@ import {
   ChevronRight,
   FolderClosed,
   FolderPlus,
-  Lifebuoy as LifeBuoy,
   MoreHorizontal,
   SidebarLeft as PanelLeftClose,
   SidebarLeft as PanelLeftOpen,
@@ -34,13 +33,13 @@ import {
   toast,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type React from "react";
-import { useCallback, useEffect, useState } from "react";
-import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
-import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
+import { useEffect, useState } from "react";
+import { BrandLogo } from "@/components/brand/brand-assets";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
 import {
   useSidebarExpansion,
@@ -51,8 +50,49 @@ import { ViewTransitionLink } from "@/components/navigation/view-transition-link
 import { NotificationsDialog } from "@/components/notifications/notifications-dialog";
 import { usePermission } from "@/hooks/usePermission";
 import type { WebProductCapabilities } from "@/lib/product-capabilities";
+import { queryKeys } from "@/lib/query-keys";
 import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
-import { buildBreadcrumbs, DASHBOARD_NAV_GROUPS, isActiveRoute, WORKSPACES } from "./dashboard-nav";
+import {
+  buildBreadcrumbs,
+  getDashboardNavGroups,
+  isActiveRoute,
+  WORKSPACES,
+} from "./dashboard-nav";
+
+interface OrganizationSummary {
+  id: string;
+  name: string;
+  slug?: string | null;
+}
+
+// ─── Server reads (replaces manual useEffect + AbortController/`cancelled`) ───
+// The queryFn `signal` cancels the fetch on unmount / key change, exactly as
+// the old `let cancelled` flag did. JSON parse failures and non-ok responses
+// surface as thrown errors so React Query exposes them via `query.error`.
+async function fetchOrganizations(signal?: AbortSignal): Promise<OrganizationSummary[]> {
+  const response = await fetch("/api/organizations", { credentials: "include", signal });
+  if (!response.ok) {
+    throw new Error(`Failed to load organizations (${response.status})`);
+  }
+  const payload = (await response.json().catch(() => null)) as {
+    organizations?: OrganizationSummary[];
+  } | null;
+  return Array.isArray(payload?.organizations) ? payload.organizations : [];
+}
+
+async function fetchThreads(workspaceId: string, signal?: AbortSignal): Promise<ThreadSummary[]> {
+  const response = await fetch(`/api/organizations/${workspaceId}/threads`, {
+    credentials: "include",
+    signal,
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to load threads (${response.status})`);
+  }
+  const payload = (await response.json().catch(() => null)) as {
+    threads?: ThreadSummary[];
+  } | null;
+  return Array.isArray(payload?.threads) ? payload.threads : [];
+}
 
 interface Props {
   children: React.ReactNode;
@@ -107,21 +147,79 @@ function renderNextLink({
 function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
-  const { openDialog: openFeedback } = useFeedbackDialog();
   const { collapsed, toggle } = useSidebar();
   const { can } = usePermission();
   const isAdmin = can("admin:access");
   const workspaceMode = productCapabilities?.workspace.mode ?? "organization";
+  const startupAgentOSEnabled = productCapabilities?.prototypes?.startupAgentOS ?? true;
+  const navCapabilities = { startupAgentOS: startupAgentOSEnabled };
+  const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
+  const isStartupOSRoute = pathname.includes("/startup-os");
+  // /workspace home is a full-bleed gradient canvas — drop main padding and
+  // skip the `contain: paint` content-area wrapper so the gradient reaches
+  // the viewport edges.
+  const isWorkspaceHomeRoute = /^\/[a-z]{2}\/workspace\/?$/.test(pathname);
   const supportsWorkspaceSwitching = workspaceMode === "organization";
-  const [workspaceOptions, setWorkspaceOptions] = useState<WorkspaceOption[]>(() =>
-    WORKSPACES.map((workspace) => ({
-      id: workspace.id,
-      label: workspace.label,
-    })),
-  );
+  const queryClient = useQueryClient();
+  // Active-workspace selection is PURE CLIENT STATE (driven by localStorage /
+  // session preference) — kept local, never in React Query cache.
   const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
-  const [activeWorkspaceThreads, setActiveWorkspaceThreads] = useState<ThreadSummary[]>([]);
   const tSidebar = useTranslations("Sidebar");
+
+  // ─── Server read: organization list (replaces loadWorkspaces useEffect) ────
+  const organizationsQuery = useQuery({
+    queryKey: queryKeys.organizations.list(),
+    queryFn: ({ signal }) => fetchOrganizations(signal),
+    enabled: isSignedIn && supportsWorkspaceSwitching,
+  });
+
+  // Startup OS must not render seed workspaces: its project list is backed by
+  // the Startup OS API, so sidebar workspaces only appear after real orgs load.
+  const organizations = organizationsQuery.data ?? [];
+  const workspaceOptions: WorkspaceOption[] =
+    organizations.length > 0
+      ? organizations.map((organization) => ({
+          id: organization.id,
+          label: organization.name || organization.slug || "Untitled workspace",
+        }))
+      : isStartupOSRoute
+        ? []
+        : WORKSPACES.map((ws) => ({ id: ws.id, label: ws.label }));
+  const activeWorkspaceId = workspaceOptions.some((option) => option.id === workspace)
+    ? workspace
+    : null;
+
+  // Resolve the preferred active workspace once real orgs land. This is the
+  // localStorage/session-driven selection the old loadWorkspaces effect did
+  // inline — it stays LOCAL (pure client preference, not server cache).
+  useEffect(() => {
+    const organizations = organizationsQuery.data;
+    if (!organizations || organizations.length === 0) return;
+
+    const options = organizations.map((organization) => ({ id: organization.id }));
+    const lastWorkspace =
+      typeof window !== "undefined" ? window.localStorage.getItem("nebutra_active_org") : null;
+    const preferredWorkspaceId = resolvePreferredWorkspaceId({
+      options,
+      sessionOrganizationId: session?.organizationId,
+      storedOrganizationId: lastWorkspace,
+    });
+
+    if (preferredWorkspaceId) {
+      setWorkspace(preferredWorkspaceId);
+    }
+  }, [organizationsQuery.data, session?.organizationId]);
+
+  // ─── Server read: active workspace threads (replaces loadThreads useEffect) ─
+  // The 5 most-recent threads for the active workspace. Other workspaces expand
+  // on click to an empty state without prefetching (v1). handleNewProject
+  // invalidates this key to refresh after a POST.
+  const threadsQuery = useQuery({
+    queryKey: queryKeys.orgThreads.list(activeWorkspaceId ?? "__none__"),
+    queryFn: ({ signal }) => fetchThreads(activeWorkspaceId ?? "", signal),
+    enabled: isSignedIn && supportsWorkspaceSwitching && Boolean(activeWorkspaceId),
+  });
+  const activeWorkspaceThreads = threadsQuery.data ?? [];
 
   // ─── Persistent Projects-section expansion ────────────────────────────────
   // zustand persist store (localStorage). SSR-safe: rehydration is deferred to
@@ -137,92 +235,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     }
     // Run once on mount; toast copy can't change after hydration.
   }, []);
-  const breadcrumbs = buildBreadcrumbs(pathname);
-  const currentBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
-  const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
-
-  useEffect(() => {
-    if (!isSignedIn || !supportsWorkspaceSwitching) return;
-
-    let cancelled = false;
-
-    async function loadWorkspaces() {
-      try {
-        const response = await fetch("/api/organizations", {
-          credentials: "include",
-        });
-
-        if (!response.ok || cancelled) {
-          return;
-        }
-
-        const payload = (await response.json().catch(() => null)) as {
-          organizations?: Array<{ id: string; name: string; slug?: string | null }>;
-        } | null;
-        const organizations = Array.isArray(payload?.organizations) ? payload.organizations : [];
-
-        if (organizations.length === 0 || cancelled) {
-          return;
-        }
-
-        const options = organizations.map((organization) => ({
-          id: organization.id,
-          label: organization.name || organization.slug || "Untitled workspace",
-        }));
-
-        setWorkspaceOptions(options);
-
-        const lastWorkspace =
-          typeof window !== "undefined" ? window.localStorage.getItem("nebutra_active_org") : null;
-        const preferredWorkspaceId = resolvePreferredWorkspaceId({
-          options,
-          sessionOrganizationId: session?.organizationId,
-          storedOrganizationId: lastWorkspace,
-        });
-
-        if (preferredWorkspaceId && !cancelled) {
-          setWorkspace(preferredWorkspaceId);
-        }
-      } catch {
-        // Swallow — fallback workspace state remains usable.
-      }
-    }
-
-    void loadWorkspaces();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [isSignedIn, session?.organizationId, supportsWorkspaceSwitching]);
-
-  // Load the 5 most-recent threads for the active workspace. Other workspaces
-  // expand on click to an empty state without prefetching (v1). The loader is
-  // a stable callback so handleNewProject can re-fetch after a POST.
-  const loadThreads = useCallback(async (): Promise<void> => {
-    if (!isSignedIn || !supportsWorkspaceSwitching || !workspace) {
-      setActiveWorkspaceThreads([]);
-      return;
-    }
-    try {
-      const response = await fetch(`/api/organizations/${workspace}/threads`, {
-        credentials: "include",
-      });
-      if (!response.ok) {
-        setActiveWorkspaceThreads([]);
-        return;
-      }
-      const payload = (await response.json().catch(() => null)) as {
-        threads?: ThreadSummary[];
-      } | null;
-      setActiveWorkspaceThreads(Array.isArray(payload?.threads) ? payload.threads : []);
-    } catch {
-      setActiveWorkspaceThreads([]);
-    }
-  }, [isSignedIn, supportsWorkspaceSwitching, workspace]);
-
-  useEffect(() => {
-    void loadThreads();
-  }, [loadThreads]);
+  const breadcrumbs = buildBreadcrumbs(pathname, navCapabilities);
 
   async function handleWorkspaceChange(nextWorkspaceId: string) {
     setWorkspace(nextWorkspaceId);
@@ -267,8 +280,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   };
 
   // New-project flow — v1 uses window.prompt to avoid a new dialog component.
-  // POSTs to the existing /threads route, then re-fetches via loadThreads so
-  // the sidebar list reflects the canonical server order (no optimistic insert
+  // POSTs to the existing /threads route, then invalidates the threads query so
+  // the sidebar list refetches the canonical server order (no optimistic insert
   // — keeps lastActivityAt sort honest with no rollback path).
   const handleNewProject = async () => {
     if (!supportsWorkspaceSwitching || !workspace) return;
@@ -297,7 +310,9 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       if (!expansionMap[activeItemId]) {
         setExpansionOpen(activeItemId, true);
       }
-      await loadThreads();
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.orgThreads.list(workspace),
+      });
     } catch {
       toast.error(tSidebar("newProjectError"));
     }
@@ -411,39 +426,41 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         }
       : null;
 
-  const sidebarSections: SidebarNavSection[] = DASHBOARD_NAV_GROUPS.flatMap((group) => {
-    if (group.title === "Admin" && !isAdmin) {
-      return [];
-    }
+  const sidebarSections: SidebarNavSection[] = getDashboardNavGroups(navCapabilities).flatMap(
+    (group) => {
+      if (group.title === "Admin" && !isAdmin) {
+        return [];
+      }
 
-    const groupSection: SidebarNavSection = {
-      id: group.title,
-      label: group.title,
-      items: group.items.map((item) => ({
-        id: item.href,
-        label: item.label,
-        href: item.href,
-        icon: item.icon,
-        badge: item.badge,
-        isActive: isActiveRoute(pathname, item.href),
-        children: item.children?.map((child) => ({
-          id: child.href,
-          label: child.label,
-          href: child.href,
-          icon: child.icon,
-          badge: child.badge,
-          isActive: isActiveRoute(pathname, child.href),
+      const groupSection: SidebarNavSection = {
+        id: group.title,
+        label: group.title,
+        items: group.items.map((item) => ({
+          id: item.href,
+          label: item.label,
+          href: item.href,
+          icon: item.icon,
+          badge: item.badge,
+          isActive: isActiveRoute(pathname, item.href),
+          children: item.children?.map((child) => ({
+            id: child.href,
+            label: child.label,
+            href: child.href,
+            icon: child.icon,
+            badge: child.badge,
+            isActive: isActiveRoute(pathname, child.href),
+          })),
         })),
-      })),
-    };
+      };
 
-    // Insert Projects between Product and Admin.
-    if (group.title === "Product" && projectsSection) {
-      return [groupSection, projectsSection];
-    }
+      // Insert Projects between Product and Admin.
+      if (group.title === "Product" && projectsSection) {
+        return [groupSection, projectsSection];
+      }
 
-    return [groupSection];
-  });
+      return [groupSection];
+    },
+  );
 
   // ─── Workspaces mapped to WorkspaceSwitcher shape ────────────────────────
   const workspacesForSwitcher: Workspace[] = workspaceOptions.map((option) => ({
@@ -454,17 +471,48 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Sidebar header slot — logo + workspace switcher ─────────────────────
   const sidebarHeader = (
     <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-center px-2">
-        <ViewTransitionLink
-          href="/workspace"
-          aria-label={webBrandLabels.homeLink}
-          className="inline-flex min-w-0 items-center justify-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
-        >
-          <BrandLogo
-            variant={collapsed ? "mark" : "horizontal"}
-            className={collapsed ? "size-7" : "h-6 w-[8.5rem]"}
-          />
-        </ViewTransitionLink>
+      <div
+        className={cn("flex items-center px-2", collapsed ? "justify-center" : "justify-between")}
+      >
+        {collapsed ? (
+          // Collapsed rail: the brand mark morphs into the expand icon on
+          // sidebar hover — no room for a separate button.
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label="Expand sidebar"
+            title="Expand sidebar"
+            className="relative inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
+          >
+            <span className="flex items-center justify-center transition-opacity duration-150 group-hover/sidebar:opacity-0">
+              <BrandLogo variant="mark" className="size-7" />
+            </span>
+            <span className="absolute inset-0 flex items-center justify-center text-sidebar-foreground/70 opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100">
+              <PanelLeftOpen className="size-5" aria-hidden="true" />
+            </span>
+          </button>
+        ) : (
+          // Expanded: logo (home link) on the left, an always-visible collapse
+          // button on the right — like Lovable.
+          <>
+            <ViewTransitionLink
+              href="/workspace"
+              aria-label="Home"
+              className="inline-flex items-center rounded-[var(--radius-sm)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
+            >
+              <BrandLogo variant="horizontal" className="h-6 w-[8.5rem]" />
+            </ViewTransitionLink>
+            <button
+              type="button"
+              onClick={toggle}
+              aria-label="Collapse sidebar"
+              title="Collapse sidebar"
+              className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+            >
+              <PanelLeftClose className="size-4" aria-hidden="true" />
+            </button>
+          </>
+        )}
       </div>
       {supportsWorkspaceSwitching && workspacesForSwitcher.length > 0 && (
         <div className={collapsed ? "flex justify-center" : "px-2"}>
@@ -488,15 +536,6 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     collapsed ? (
       <div className="flex flex-col items-center gap-1">
         <NotificationsDialog />
-        <button
-          type="button"
-          onClick={toggle}
-          aria-label="Expand sidebar"
-          title="Expand sidebar"
-          className="inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-        >
-          <PanelLeftOpen className="size-4" aria-hidden="true" />
-        </button>
         <UserMenu />
       </div>
     ) : (
@@ -505,15 +544,6 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           <UserMenu variant="row" />
         </div>
         <NotificationsDialog />
-        <button
-          type="button"
-          onClick={toggle}
-          aria-label="Collapse sidebar"
-          title="Collapse sidebar"
-          className="inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-        >
-          <PanelLeftClose className="size-4" aria-hidden="true" />
-        </button>
       </div>
     )
   ) : null;
@@ -532,57 +562,12 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Dev-mode banner (only when @nebutra/auth is running the fixture provider) ─
   const isDevAuth = getConfiguredAuthProvider() === "dev";
 
-  const headerContent = (
-    <div className="flex w-full min-w-0 items-center justify-between gap-3">
-      <div className="min-w-0 flex-1">
-        <p className="truncate font-medium text-[13px] text-foreground">
-          {currentBreadcrumb?.label ?? "Dashboard"}
-        </p>
-        <nav
-          aria-label="Breadcrumb"
-          className={cn("mt-0.5 hidden md:block", breadcrumbs.length <= 1 && "sr-only")}
-        >
-          <ol className="flex min-w-0 items-center gap-1 text-[11px] text-muted-foreground">
-            {breadcrumbs.map((crumb, index) => {
-              const isLast = index === breadcrumbs.length - 1;
-              return (
-                <li key={crumb.href} className="flex min-w-0 items-center gap-1">
-                  {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
-                  {isLast ? (
-                    <span className="truncate font-medium text-foreground">{crumb.label}</span>
-                  ) : (
-                    <ViewTransitionLink
-                      href={crumb.href}
-                      className="truncate transition-colors hover:text-foreground"
-                    >
-                      {crumb.label}
-                    </ViewTransitionLink>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-        </nav>
-      </div>
-
-      <div className="flex shrink-0 items-center gap-1.5">
-        <button
-          type="button"
-          onClick={openFeedback}
-          aria-label="Open feedback dialog"
-          title="Feedback"
-          className="inline-flex h-8 items-center justify-center gap-1.5 rounded-[var(--radius-md)] px-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
-        >
-          <LifeBuoy className="size-3.5" aria-hidden="true" />
-          <span className="hidden xl:inline">Feedback</span>
-        </button>
-      </div>
-    </div>
-  );
-
+  // ─── Content header — breadcrumb only, and only when depth > 1 so shallow
+  // routes don't echo their own H1. The notification bell now lives in the
+  // sidebar footer, freeing the top strip entirely on shallow routes.
   const contentHeader =
     breadcrumbs.length > 1 ? (
-      <div className="mb-4 min-w-0 lg:hidden">
+      <div className="mb-4 min-w-0">
         <nav aria-label="Breadcrumb">
           <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
             {breadcrumbs.map((crumb, index) => {
@@ -611,24 +596,45 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   return (
     <AppShell
       sidebar={sidebar}
-      header={headerContent}
-      headerHeight={52}
       collapsed={collapsed}
       contentClassName={
-        isWorkspaceCanvasRoute
-          ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
-          : // Two-tier surface: tint the outer main bg so the `bg-card`
-            // panels inside each page read as inset floating cards.
-            "dashboard-app-content bg-muted/40"
+        isWorkspaceHomeRoute
+          ? // Full-bleed gradient canvas: drop padding at every breakpoint
+            // (AppShell's base sm/md/2xl:px-* would otherwise beat a plain
+            // p-0 via specificity), make main the positioned ancestor so
+            // the page's absolute gradient fills it edge-to-edge. Banner +
+            // content header sit on top of the gradient.
+            "relative p-0 sm:p-0 md:p-0 2xl:p-0"
+          : isWorkspaceCanvasRoute
+            ? "mx-0 max-w-none px-3 py-3 sm:px-4 md:px-5 2xl:px-6"
+            : isStartupOSRoute
+              ? "mx-0 max-w-none p-0 sm:p-0 md:p-0 2xl:p-0"
+              : // Two-tier surface: tint the outer main bg so the `bg-card`
+                // panels inside each page read as inset floating cards.
+                "dashboard-app-content bg-muted/40"
       }
     >
+      {isWorkspaceHomeRoute ? (
+        // First child of main: an absolute gradient canvas that fills the
+        // entire <main> (which is `relative`). Everything below renders
+        // later in DOM and therefore on top in flow order (no z-index
+        // gymnastics — auto over auto wins by source order).
+        <div
+          aria-hidden="true"
+          className="workspace-home-gradient pointer-events-none absolute inset-0"
+        />
+      ) : null}
       {isDevAuth ? (
         <div
           role="alert"
           aria-live="polite"
           className={cn(
             "mb-4 flex items-center justify-center gap-2 border-b border-amber-500/40 bg-amber-50/80 px-4 py-1.5 text-[11px] font-medium text-amber-900 dark:border-amber-400/50 dark:bg-amber-500/15 dark:text-amber-100",
-            "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6",
+            isWorkspaceHomeRoute
+              ? // Home main has p-0; banner already runs edge-to-edge, no
+                // negative margin needed. relative+z keeps it above gradient.
+                "relative z-10"
+              : "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6",
           )}
         >
           <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />
@@ -642,9 +648,15 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         </div>
       ) : null}
       {contentHeader}
-      <section id="main-content" aria-label="Main content" className="content-area">
-        {children}
-      </section>
+      {isWorkspaceHomeRoute || isStartupOSRoute ? (
+        // No `.content-area` wrapper on full-bleed workspaces: `contain: paint`
+        // would clip edge-to-edge canvases and add an unnecessary route shell.
+        children
+      ) : (
+        <section id="main-content" aria-label="Main content" className="content-area">
+          {children}
+        </section>
+      )}
     </AppShell>
   );
 }

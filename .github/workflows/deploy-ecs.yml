@@ -89,13 +89,13 @@ jobs:
       sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
       any:         ${{ steps.resolve.outputs.any }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 2
 
       - name: Path filter
         id: filter
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3
         with:
           # NOTE: include `.github/workflows/deploy-ecs.yml` in every app's
           # filter. Without it, edits to this workflow (e.g. build env, deploy
@@ -207,13 +207,13 @@ jobs:
         if: matrix.condition != 'true'
         run: echo "Skipping ${{ matrix.app }} — no relevant changes."
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         if: matrix.condition == 'true'
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
         if: matrix.condition == 'true'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         if: matrix.condition == 'true'
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -284,7 +284,7 @@ jobs:
 
       - name: Upload artifact
         if: matrix.condition == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: bundle-${{ matrix.app }}
           path: ${{ runner.temp }}/nebutra-${{ matrix.app }}-${{ github.sha }}.tar.gz
@@ -300,9 +300,9 @@ jobs:
     if: needs.detect-changes.outputs.api == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
@@ -331,7 +331,7 @@ jobs:
           tar -czf "$RUNNER_TEMP/nebutra-api-${{ github.sha }}.tar.gz" -C "$STAGE" .
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: bundle-api
           path: ${{ runner.temp }}/nebutra-api-${{ github.sha }}.tar.gz
@@ -364,7 +364,7 @@ jobs:
           [ -n "${ECS_HOST:-}" ] || { echo "::error::ECS_HOST repository variable is not set"; exit 1; }
           [ -n "${ECS_USER:-}" ] || { echo "::error::ECS_USER repository variable is not set"; exit 1; }
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           sparse-checkout: |
             infra/iac/ecs/ecosystem.config.cjs
@@ -372,35 +372,35 @@ jobs:
 
       - name: Download landing bundle
         if: needs.detect-changes.outputs.landing == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: bundle-landing
           path: ${{ runner.temp }}/bundles
 
       - name: Download web bundle
         if: needs.detect-changes.outputs.web == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: bundle-web
           path: ${{ runner.temp }}/bundles
 
       - name: Download design-docs bundle
         if: needs.detect-changes.outputs['design-docs'] == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: bundle-design-docs
           path: ${{ runner.temp }}/bundles
 
       - name: Download sailor-docs bundle
         if: needs.detect-changes.outputs['sailor-docs'] == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: bundle-sailor-docs
           path: ${{ runner.temp }}/bundles
 
       - name: Download api bundle
         if: needs.detect-changes.outputs.api == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: bundle-api
           path: ${{ runner.temp }}/bundles

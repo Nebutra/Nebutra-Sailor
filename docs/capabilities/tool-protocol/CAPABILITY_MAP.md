@@ -6,7 +6,7 @@ WRAP. The protocol layer upgrades the existing `@nebutra/mcp` package instead of
 
 ## Depends on
 
-- `llm-gateway`
+- `@nebutra/agents`
 - `trace-store`
 - `event-log`
 
