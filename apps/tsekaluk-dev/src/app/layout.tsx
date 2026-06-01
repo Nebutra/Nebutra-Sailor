@@ -1,3 +1,4 @@
+import { fontRegistryClassName } from "@nebutra/fonts/next";
 import type { Metadata, Viewport } from "next";
 import { getLocale } from "next-intl/server";
 import "@/lib/env"; // validate required env vars at startup
@@ -33,7 +34,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await getLocale();
 
   return (
-    <html lang={locale} className="scroll-smooth" suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`scroll-smooth ${fontRegistryClassName}`.trim()}
+      suppressHydrationWarning
+    >
       <body className="antialiased overflow-x-hidden text-gray-900 relative bg-[#fafafa] dark:bg-[#0a0a0a] dark:text-white">
         {children}
       </body>

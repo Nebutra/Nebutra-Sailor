@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@nebutra/fonts": ["../../packages/design/fonts/src/index.ts"],
+      "@nebutra/fonts/next": ["../../packages/design/fonts/src/next.ts"]
     }
   },
   "include": [
