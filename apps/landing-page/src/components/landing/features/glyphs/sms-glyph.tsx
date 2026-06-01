@@ -7,7 +7,7 @@ import type { SubpackageGlyphProps } from "./types";
 /**
  * SmsGlyph — mini conversation card for the `sms` sub-package.
  *
- * Shows a single iMessage-style OTP bubble with a delivery metadata row
+ * Shows a single chat-bubble OTP message with a delivery metadata row
  * and a Twilio provider chip. Composed entirely from @nebutra/ui
  * primitives + @nebutra/icons — no hand-rolled SVG geometry.
  */

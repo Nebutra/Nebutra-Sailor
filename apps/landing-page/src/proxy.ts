@@ -16,8 +16,8 @@ const STATUS_HOST = "status.nebutra.com";
  * landing-page proxy can read it and redirect signed-in users to the app
  * without leaking real session material.
  *
- * Pattern: Notion-style. Flag only encodes "session exists somewhere",
- * never the session itself.
+ * Pattern: a presence-only hint cookie. The flag only encodes "session
+ * exists somewhere", never the session itself.
  */
 const SESSION_HINT_COOKIE = "nebutra_session_hint";
 const APP_REDIRECT_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.nebutra.com";

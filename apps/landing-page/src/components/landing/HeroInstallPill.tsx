@@ -9,7 +9,7 @@ interface HeroInstallPillProps {
 }
 
 /**
- * Compact one-click-to-copy CLI pill — Flowith-style.
+ * Compact one-click-to-copy CLI pill.
  *
  * Renders a single rounded-full pill: monospace command on the left,
  * copy-icon button on the right. Clicking the icon copies the command
