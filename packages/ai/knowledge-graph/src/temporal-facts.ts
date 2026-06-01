@@ -174,7 +174,10 @@ export function normalizeMetric(raw: string): string {
   const lower = trimmed.toLowerCase();
   const seeded = METRIC_NORMALIZATION_MAP[lower];
   if (seeded !== undefined) return seeded;
-  return lower.replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+  return lower
+    .slice(0, 200)
+    .replace(/[^a-z0-9]{1,200}/g, "_")
+    .replace(/^_{1,200}|_{1,200}$/g, "");
 }
 
 // ─── Fence parsing ──────────────────────────────────────────────────────────

@@ -94,9 +94,10 @@ export interface FounderCemeteryOptions {
 
 function slugify(value: string): string {
   return value
+    .slice(0, 200)
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
+    .replace(/[^a-z0-9]{1,200}/g, "-")
+    .replace(/^-{1,200}|-{1,200}$/g, "")
     .slice(0, 64);
 }
 

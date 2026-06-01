@@ -106,9 +106,10 @@ const CHECKPOINTS = [
 
 function normalizeBrandId(name: string): string {
   return name
+    .slice(0, 200)
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "")
+    .replace(/[^a-z0-9]{1,200}/g, "_")
+    .replace(/^_{1,200}|_{1,200}$/g, "")
     .slice(0, 32);
 }
 

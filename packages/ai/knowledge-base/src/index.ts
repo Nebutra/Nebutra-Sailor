@@ -268,10 +268,11 @@ const selfWiringResolver: EntityResolver = {
 
 function pageIdFromSource(sourceRef: string): PageId {
   const slug = sourceRef
-    .replace(/\.[^.]+$/, "")
+    .slice(0, 500)
+    .replace(/\.[^.]{0,20}$/, "")
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
+    .replace(/[^a-z0-9]{1,200}/g, "_")
+    .replace(/^_{1,200}|_{1,200}$/g, "");
   return `documents/${slug || "source"}`;
 }
 
