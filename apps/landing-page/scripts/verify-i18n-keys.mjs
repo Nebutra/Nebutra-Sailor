@@ -191,6 +191,123 @@ const ALLOWED_IDENTICAL_VALUES = new Set([
   "Ⅰ. Identity",
   "Ⅱ. Infrastructure",
   "Ⅲ. Routing",
+  // Legal company names — never translated, used verbatim in legal documents
+  "Nebutra Co., Ltd.",
+  "Wuxi Nebutra Intelligence Technology Co., Ltd.",
+  "无锡云毓智能科技有限公司",
+  // Numeric metrics — locale-neutral display values
+  "47+",
+  "104",
+  // Cookie technical names — spec-defined identifiers, must not be translated
+  "_ga",
+  "ph_*",
+  "_fbp",
+  "_gcl_au",
+  "__session",
+  "__clerk_db_jwt",
+  "cookie_consent",
+  "locale",
+  "theme",
+  // Analytics / ad vendor names — proper nouns
+  "PostHog",
+  "Facebook",
+  "Google Ads",
+  // Browser names — proper nouns
+  "Chrome",
+  "Firefox",
+  "Safari",
+  "Edge",
+  // Web standard storage terms — industry-standard English across all locales
+  "Local Storage",
+  "Session Storage",
+  "Session",
+  // Cookie policy table header — standard web term
+  "Cookie",
+  // Regulatory acronym — kept as-is per GDPR / legal convention
+  "DPO",
+  // Platform / distribution names
+  "Product Hunt",
+  "Vercel",
+  // CLI command — must not be translated
+  "npx create-sailor",
+  // Pricing — numeric, currency-prefixed
+  "$799",
+  // Plan tier badges — all-caps design tokens, not prose
+  "ENTERPRISE",
+  "STARTUP",
+  "INDEPENDENT",
+  // Tech stack identifiers with version — proper nouns
+  "PostgreSQL + Prisma v7",
+  "Clerk Multi-Tenant / Custom Identity",
+  // Technical security / DB terms kept in English across B2B SaaS
+  "Native Row-Level Security",
+  "Row-Level Security",
+  // Design system single-word tokens — context is the design tool UI
+  "oklch Multi-Theme",
+  "Theme",
+  "Tokens",
+  // Payment provider list — all proper nouns
+  "Stripe, LemonSqueezy, Polar & China Pay",
+  // SaaS plan tier names — conventionally kept in English
+  "Startup",
+  "Enterprise",
+  "Independent",
+  // Standard B2B SaaS nav/footer labels kept in English by convention
+  "Marketing",
+  "Community",
+  "Legal",
+  "Support",
+  "Contact",
+  "Ideas",
+  "Cookies",
+  "Documentation",
+  "Solutions",
+  "Infrastructure",
+  "Developer Experience",
+  "Observability",
+  "Communications",
+  "Open Source",
+  "Startup & Enterprise",
+  // Security / legal section labels
+  "Security Disclosures",
+  // Billing section titles — standard accounting terms
+  "Downgrades",
+  "Upgrades",
+  // microLanding speedometer — single-word phase labels, unit abbreviation, and all-caps heading
+  "Init",
+  "Core",
+  "Scale",
+  "Deploy",
+  "TIME TO MARKET",
+  "mins",
+  "Velocity",
+  // microLanding speedometer CTAs — short imperative English
+  "Skip months of platform work.",
+  "Start your timer",
+  // microLanding numbered step titles — format "N. Verb" is a design pattern, not prose
+  "1. Clone",
+  "2. Configure",
+  "3. Build",
+  "4. Deploy",
+  // microLanding step descriptions — contain product-name-dense technical copy
+  "Instantly clone the Nebutra monorepo and run pnpm install.",
+  "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes.",
+  "Focus on product logic and UI while the platform baseline is already wired.",
+  "Push to Vercel and AWS for instant global distribution.",
+  // microLanding hero tagline — brand marketing line, kept consistent in EN
+  "From zero to production in record time.",
+  // Blog / changelog meta titles — brand-name in title, kept consistent
+  "Blog — Nebutra",
+  "Changelog — Nebutra",
+  "Nebutra Changelog",
+  // nav brand CTA — "Get Sailed" is Nebutra-specific brand language, not a generic phrase
+  "Get Sailed",
+  // Legal FAQ heading — intentional EN executive-audience label
+  "Executive Deep Dive",
+  // Privacy section labels — standard English legal terminology
+  "Communications",
+  // legalPages.cookies.necessary.cookies.0.duration
+  "Session",
 ]);
 
 // Per-locale untranslated-phrases ceiling (Tier 3 summary). A locale whose
