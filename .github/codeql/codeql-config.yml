@@ -31,10 +31,11 @@ paths-ignore:
   - "**/src/generated/**"
   - "**/__generated__/**"
 
-  # Dev-only tooling: Storybook, docs preview, test fixtures
+  # Dev-only tooling: Storybook, docs preview, mail preview, test fixtures
   - "apps/storybook/**"
   - "apps/design-docs/**"
   - "apps/sailor-docs/**"
+  - "apps/mail-preview/**"
 
   # Infrastructure shell scripts — TOCTOU / curl|bash patterns are standard
   # ops tooling, not production request handlers
