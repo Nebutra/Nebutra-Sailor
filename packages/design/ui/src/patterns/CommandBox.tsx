@@ -38,7 +38,15 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
         setCopied(true);
         onCopy?.();
         setTimeout(() => setCopied(false), 2000);
-      } catch (_err) {}
+      } catch (err) {
+        // Clipboard write can fail due to browser permissions (e.g. non-HTTPS,
+        // permissions policy, or user denial). This is expected in some
+        // environments — log in dev so developers know, but do not surface
+        // an error to the end user since the UI already shows no "Copied!" state.
+        if (process.env.NODE_ENV !== "production") {
+          console.error("[CommandBox] clipboard write failed:", err);
+        }
+      }
     }, [command, onCopy]);
     const variantStyles = {
       default: "bg-[var(--neutral-2)] border border-[var(--neutral-7)] rounded-[var(--radius-lg)]",

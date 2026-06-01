@@ -140,7 +140,11 @@ export const Confetti = ({
     async (opts: ConfettiOptions = {}) => {
       try {
         await instanceRef.current?.({ ...options, ...opts });
-      } catch (_error) {}
+      } catch (err) {
+        if (process.env.NODE_ENV !== "production") {
+          console.error("[confetti] fire() failed:", err);
+        }
+      }
     },
     [options],
   );
@@ -151,7 +155,11 @@ export const Confetti = ({
 
   useEffect(() => {
     if (!manualstart) {
-      fire().catch(console.error);
+      fire().catch((err) => {
+        if (process.env.NODE_ENV !== "production") {
+          console.error("[confetti] auto-fire failed:", err);
+        }
+      });
     }
   }, [manualstart, fire]);
 
@@ -211,7 +219,11 @@ export const ConfettiButton: React.FC<ConfettiButtonProps> = ({
 
       // Call original onClick if provided
       onClick?.(event);
-    } catch (_error) {}
+    } catch (err) {
+      if (process.env.NODE_ENV !== "production") {
+        console.error("[confetti] ConfettiButton fire() failed:", err);
+      }
+    }
   };
 
   return (
