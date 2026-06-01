@@ -7,7 +7,7 @@ import {
 import {
   createPrismaRolloutPersistence,
   type PrismaRolloutDelegate,
-} from "@nebutra/agent-runtime/adapters/prisma-rollout";
+} from "@nebutra/agent-runtime/adapters";
 import type { StartupOSProject } from "./compiler";
 import type { StartupOSEventInput } from "./store";
 
