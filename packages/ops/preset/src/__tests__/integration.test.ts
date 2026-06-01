@@ -3,24 +3,20 @@ import {
   defineConfig,
   getActiveApps,
   getFeatureEnvVars,
-  type NebutraConfig,
-  presets,
   resolveConfig,
 } from "../index";
 
-describe("preset → theme integration", () => {
-  it("each preset resolves to a valid theme", () => {
+describe("config → theme integration", () => {
+  it("default config resolves to a valid theme", () => {
     const validThemes = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean", "custom"];
-    for (const [id, _preset] of Object.entries(presets)) {
-      const config = defineConfig({ preset: id as NebutraConfig["preset"] });
-      const resolved = resolveConfig(config);
-      expect(validThemes).toContain(resolved.theme);
-    }
+    const resolved = resolveConfig(defineConfig({}));
+    expect(validThemes).toContain(resolved.theme);
   });
 
   it("full end-to-end: config → resolve → env vars", () => {
     const config = defineConfig({
-      preset: "ai-saas",
+      apps: { blog: false },
+      features: { web3: false },
       theme: "nebutra",
       locales: ["en", "zh"],
     });
@@ -45,22 +41,21 @@ describe("preset → theme integration", () => {
     expect(envVars.NEBUTRA_LOCALES).toBe("en,zh");
   });
 
-  it("user overrides merge correctly", () => {
+  it("user overrides merge correctly on top of defaults", () => {
     const config = defineConfig({
-      preset: "marketing",
-      apps: { web: true },
-      features: { ai: true },
+      apps: { web: false },
+      features: { ai: false },
       theme: "vibrant",
     });
     const resolved = resolveConfig(config);
 
-    // From preset: landing-page=true
+    // Default (unchanged): landing-page=true
     expect(resolved.apps["landing-page"]).toBe(true);
-    // Override: web=true (was false in marketing)
-    expect(resolved.apps.web).toBe(true);
-    // Override: ai=true (was false in marketing)
-    expect(resolved.features.ai).toBe(true);
-    // Override: theme=vibrant (was nebutra in marketing)
+    // Override: web=false
+    expect(resolved.apps.web).toBe(false);
+    // Override: ai=false
+    expect(resolved.features.ai).toBe(false);
+    // Override: theme=vibrant
     expect(resolved.theme).toBe("vibrant");
   });
 });

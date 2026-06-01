@@ -19,8 +19,6 @@ export {
   FeatureId,
   type NebutraConfig,
   NebutraConfigSchema,
-  type PresetDefinition,
-  PresetId,
   type ResolvedConfig,
   resolveConfig,
   ThemeId,
@@ -31,5 +29,3 @@ export {
   getActivePackages,
   getFeatureEnvVars,
 } from "./feature-map";
-// Presets
-export { getPreset, presets } from "./presets";

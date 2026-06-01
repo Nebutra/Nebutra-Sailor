@@ -36,21 +36,12 @@ export interface ProductCapabilities {
   };
 }
 
-const ORGANIZATION_WORKSPACE_PRESETS = new Set<ResolvedConfig["preset"]>([
-  "ai-saas",
-  "dashboard",
-  "community",
-  "growth",
-  "overseas",
-  "full",
-]);
-
 function resolveWorkspaceMode(config: ResolvedConfig): WorkspaceMode {
   if (!config.apps.web) {
     return "none";
   }
 
-  if (ORGANIZATION_WORKSPACE_PRESETS.has(config.preset) || config.features.sso) {
+  if (config.features.sso) {
     return "organization";
   }
 

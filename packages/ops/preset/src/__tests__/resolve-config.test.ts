@@ -2,10 +2,9 @@ import { describe, expect, it } from "vitest";
 import { defineConfig, resolveConfig } from "../config";
 
 describe("resolveConfig", () => {
-  it("resolves minimal config using full preset defaults", () => {
+  it("resolves minimal config using defaults (everything enabled)", () => {
     const config = defineConfig({});
     const resolved = resolveConfig(config);
-    // "full" preset = everything enabled
     expect(resolved.apps.web).toBe(true);
     expect(resolved.apps.blog).toBe(true);
     expect(resolved.features.billing).toBe(true);
@@ -13,35 +12,24 @@ describe("resolveConfig", () => {
     expect(resolved.theme).toBe("nebutra");
   });
 
-  it("resolves ai-saas preset", () => {
-    const config = defineConfig({ preset: "ai-saas" });
-    const resolved = resolveConfig(config);
-    expect(resolved.apps.web).toBe(true);
-    expect(resolved.apps.blog).toBe(false);
-    expect(resolved.features.ai).toBe(true);
-    expect(resolved.features.web3).toBe(false);
-  });
-
-  it("applies user overrides on top of preset", () => {
+  it("applies user overrides on top of defaults", () => {
     const config = defineConfig({
-      preset: "ai-saas",
-      apps: { blog: true },
-      features: { web3: true },
+      apps: { blog: false },
+      features: { web3: false },
     });
     const resolved = resolveConfig(config);
-    // From preset: web=true
+    // Default: web=true (unchanged)
     expect(resolved.apps.web).toBe(true);
-    // Override: blog=true (was false in ai-saas)
-    expect(resolved.apps.blog).toBe(true);
-    // Override: web3=true (was false in ai-saas)
-    expect(resolved.features.web3).toBe(true);
-    // From preset: ai=true (unchanged)
+    // Override: blog=false
+    expect(resolved.apps.blog).toBe(false);
+    // Override: web3=false
+    expect(resolved.features.web3).toBe(false);
+    // Default: ai=true (unchanged)
     expect(resolved.features.ai).toBe(true);
   });
 
   it("preserves locales and theme", () => {
     const config = defineConfig({
-      preset: "marketing",
       theme: "vibrant",
       locales: ["en", "zh", "ja"],
       defaultLocale: "zh",

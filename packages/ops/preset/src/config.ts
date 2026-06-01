@@ -1,21 +1,7 @@
 import { THEME_IDS as BUILT_IN_THEME_IDS, isThemeId } from "@nebutra/theme/registry";
 import { z } from "zod";
-import { getPreset } from "./presets";
 
 // ─── Enum Schemas ───
-
-export const PresetId = z.enum([
-  "ai-saas",
-  "marketing",
-  "dashboard",
-  "overseas",
-  "growth",
-  "creative",
-  "blog-portfolio",
-  "community",
-  "one-person",
-  "full",
-]);
 
 export const AppId = z.enum([
   "web",
@@ -59,12 +45,41 @@ export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 
 export const AuthProviderId = z.enum(["clerk", "better-auth", "nextauth", "supabase"]);
 
+// ─── Defaults (everything on — the former "full" baseline) ───
+
+const DEFAULT_APPS: Record<z.infer<typeof AppId>, boolean> = {
+  web: true,
+  "landing-page": true,
+  blog: true,
+  admin: true,
+  "api-gateway": true,
+  studio: true,
+  storybook: true,
+  "sailor-docs": true,
+};
+
+const DEFAULT_FEATURES: Record<z.infer<typeof FeatureId>, boolean> = {
+  billing: true,
+  ai: true,
+  ecommerce: true,
+  web3: true,
+  community: true,
+  blog: true,
+  growth: true,
+  search: true,
+  sso: true,
+  admin: true,
+  analytics: true,
+  newsletter: true,
+  realtime: true,
+  upload: true,
+};
+
 // ─── Config Schema ───
 
 export const NebutraConfigSchema = z.object({
-  preset: PresetId.default("full"),
-  apps: z.record(z.string(), z.boolean()).optional(),
-  features: z.record(z.string(), z.boolean()).optional(),
+  apps: z.record(z.string(), z.boolean()).default(DEFAULT_APPS),
+  features: z.record(z.string(), z.boolean()).default(DEFAULT_FEATURES),
   theme: ThemeId.default("nebutra"),
   locales: z.array(z.string()).default(["en"]),
   defaultLocale: z.string().default("en"),
@@ -74,21 +89,9 @@ export const NebutraConfigSchema = z.object({
 
 export type NebutraConfig = z.infer<typeof NebutraConfigSchema>;
 
-// ─── Preset Definition Type ───
-
-export interface PresetDefinition {
-  id: z.infer<typeof PresetId>;
-  name: string;
-  description: string;
-  apps: Record<z.infer<typeof AppId>, boolean>;
-  features: Record<z.infer<typeof FeatureId>, boolean>;
-  theme: z.infer<typeof ThemeId>;
-}
-
 // ─── Resolved Config ───
 
 export interface ResolvedConfig {
-  preset: z.infer<typeof PresetId>;
   apps: Record<z.infer<typeof AppId>, boolean>;
   features: Record<z.infer<typeof FeatureId>, boolean>;
   theme: z.infer<typeof ThemeId>;
@@ -105,11 +108,9 @@ export function defineConfig(config: Partial<NebutraConfig>): NebutraConfig {
 }
 
 export function resolveConfig(config: NebutraConfig): ResolvedConfig {
-  const preset = getPreset(config.preset);
   return {
-    preset: config.preset,
-    apps: { ...preset.apps, ...config.apps },
-    features: { ...preset.features, ...config.features },
+    apps: { ...DEFAULT_APPS, ...config.apps },
+    features: { ...DEFAULT_FEATURES, ...config.features },
     theme: config.theme,
     locales: config.locales,
     defaultLocale: config.defaultLocale,
