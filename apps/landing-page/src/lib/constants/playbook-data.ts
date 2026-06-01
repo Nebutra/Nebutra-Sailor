@@ -10,7 +10,7 @@
  * so demos that live on the authenticated dashboard open on the app domain.
  */
 
-import { Box, Brain, Code, Command, Layers, Play, Sparkles } from "@nebutra/icons";
+import { Box, Brain, Code, Command, Droplet, Eye, Layers, Play, Sparkles } from "@nebutra/icons";
 import type { ComponentType } from "react";
 import { env } from "@/lib/env";
 
@@ -124,6 +124,30 @@ export const PLAYBOOK_ITEMS: PlaybookItem[] = [
     },
     href: "/theme-playground",
     app: true,
+  },
+  {
+    id: "color-tokens",
+    category: "design",
+    icon: Droplet,
+    title: { en: "Color & Tokens", zh: "色彩与 Token" },
+    description: {
+      en: "Browse the 12-step brand color scales and the live design-token reference.",
+      zh: "浏览 12 阶品牌色阶与实时设计 token 参考。",
+    },
+    href: "https://design.nebutra.com/en/docs/foundations/brand-colors",
+    external: true,
+  },
+  {
+    id: "icon-library",
+    category: "design",
+    icon: Eye,
+    title: { en: "Icon Library", zh: "图标库" },
+    description: {
+      en: "Browse all 541 Geist icons as tree-shakable, single-weight TSX components.",
+      zh: "浏览全部 541 个 Geist 图标——tree-shakable、单字重 TSX 组件。",
+    },
+    href: "https://design.nebutra.com/en/docs/foundations/icons",
+    external: true,
   },
   // Embedding & Composition
   {
