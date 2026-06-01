@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpRight, MagnifyingGlass } from "@nebutra/icons";
+import { EmptyState } from "@nebutra/ui/layout";
 import { Badge, Button, Input } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useMemo, useState } from "react";
@@ -77,7 +78,6 @@ export interface VcDirectoryProps {
   types: string[];
   locale: "en" | "zh";
   variant: Variant;
-  logoFor: (org: VcOrg) => string | null;
 }
 
 function Chip({
@@ -190,7 +190,7 @@ function VcCard({
   );
 }
 
-export function VcDirectory({ orgs, sectors, types, locale, variant, logoFor }: VcDirectoryProps) {
+export function VcDirectory({ orgs, sectors, types, locale, variant }: VcDirectoryProps) {
   const c = COPY[locale];
   const [query, setQuery] = useState("");
   const [activeSectors, setActiveSectors] = useState<Set<string>>(new Set());
@@ -322,12 +322,16 @@ export function VcDirectory({ orgs, sectors, types, locale, variant, logoFor }: 
       </div>
 
       {filtered.length === 0 ? (
-        <p className="py-16 text-center text-sm text-muted-foreground/80">{c.noResults}</p>
+        <EmptyState
+          className="py-16"
+          icon={<MagnifyingGlass className="h-6 w-6" />}
+          title={c.noResults}
+        />
       ) : (
         <>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filtered.slice(0, visible).map((org) => (
-              <VcCard key={org.id} org={org} c={c} variant={variant} logoSrc={logoFor(org)} />
+              <VcCard key={org.id} org={org} c={c} variant={variant} logoSrc={org.logo ?? null} />
             ))}
           </div>
           {visible < filtered.length ? (

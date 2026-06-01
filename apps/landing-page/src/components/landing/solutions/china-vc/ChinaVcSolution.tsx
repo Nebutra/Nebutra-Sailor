@@ -1,7 +1,10 @@
 import { Analytics } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
-import type { FeatureGroupTokens } from "@/components/landing/features/feature-group-tokens";
+import {
+  DEFAULT_GROUP_TOKENS,
+  type FeatureGroupTokens,
+} from "@/components/landing/features/feature-group-tokens";
 import { VcDirectory } from "@/components/landing/solutions/vc/VcDirectory";
 import type { Locale } from "@/i18n/routing";
 import {
@@ -37,7 +40,7 @@ export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
   const text = (key: keyof typeof COPY) => (locale === "zh" ? COPY[key].zh : COPY[key].en);
 
   const tokens: FeatureGroupTokens = {
-    auroraColors: group?.auroraColors ?? ["#10b981", "#f59e0b", "#34d399", "#fbbf24"],
+    auroraColors: group?.auroraColors ?? DEFAULT_GROUP_TOKENS.auroraColors,
     ambient: "subtle",
     icon: Analytics,
     docsPath: "",
@@ -76,12 +79,11 @@ export function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
       <section className="pb-20 pt-4 md:pb-28">
         <AnimateIn preset="fadeUp" inView>
           <VcDirectory
-            orgs={CHINA_VC_ORGS}
+            orgs={CHINA_VC_ORGS.map((o) => ({ ...o, logo: chinaVcLogoFor(o) }))}
             sectors={CHINA_VC_SECTORS}
             types={CHINA_VC_TYPES}
             locale={copyLocale}
             variant="deals"
-            logoFor={chinaVcLogoFor}
           />
         </AnimateIn>
 

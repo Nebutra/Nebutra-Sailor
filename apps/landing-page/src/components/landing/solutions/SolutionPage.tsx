@@ -2,7 +2,10 @@ import { ArrowRight, ArrowUpRight } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Badge, MagicCard } from "@nebutra/ui/primitives";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
-import type { FeatureGroupTokens } from "@/components/landing/features/feature-group-tokens";
+import {
+  DEFAULT_GROUP_TOKENS,
+  type FeatureGroupTokens,
+} from "@/components/landing/features/feature-group-tokens";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { getSolutionGroup, pick, type Solution } from "@/lib/constants/solutions-data";
@@ -43,7 +46,7 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
   const isOffering = solution.type === "offering";
 
   const tokens: FeatureGroupTokens = {
-    auroraColors: group?.auroraColors ?? ["#3b82f6", "#06b6d4", "#0ea5e9", "#38bdf8"],
+    auroraColors: group?.auroraColors ?? DEFAULT_GROUP_TOKENS.auroraColors,
     ambient: "subtle",
     icon: solution.icon,
     docsPath: "",

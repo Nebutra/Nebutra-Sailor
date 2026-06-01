@@ -18,6 +18,9 @@ export interface VcOrg {
   /** Profile attributes (Global dataset). */
   region?: string;
   founded?: number;
+  /** Resolved logo path, or null for monogram. Precomputed server-side so no
+   *  function crosses the server→client boundary. */
+  logo?: string | null;
 }
 
 /** 1–2 char monogram from the institution name (drops trailing parenthetical). */

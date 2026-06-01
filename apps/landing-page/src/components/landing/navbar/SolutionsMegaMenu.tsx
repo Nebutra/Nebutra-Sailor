@@ -19,13 +19,14 @@ export function SolutionsMegaMenu() {
     <div className="group/nav relative inline-block py-4">
       <button
         type="button"
+        aria-haspopup="true"
         className="whitespace-nowrap flex items-center gap-1.5 text-[0.8rem] xl:text-sm font-medium text-neutral-11 transition-colors hover:text-neutral-12"
       >
         {t("solutions")}
-        <ChevronDown className="h-3 w-3 opacity-60 transition-transform duration-300 group-hover/nav:-rotate-180" />
+        <ChevronDown className="h-3 w-3 opacity-60 transition-transform duration-300 group-hover/nav:-rotate-180 group-focus-within/nav:-rotate-180" />
       </button>
 
-      <div className="absolute left-1/2 top-12 mt-1 w-[min(56rem,90vw)] -translate-x-1/2 opacity-0 invisible group-hover/nav:visible group-hover/nav:opacity-100 transition-all duration-300 origin-top">
+      <div className="fixed left-1/2 top-16 w-[min(56rem,calc(100vw-2rem))] -translate-x-1/2 opacity-0 invisible group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100 transition-all duration-300 origin-top">
         <div className="rounded-[var(--radius-2xl)] border border-border/60 bg-white/95 p-5 shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] backdrop-blur-xl dark:bg-background/95 dark:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.5)]">
           <div className="grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-4">
             {SOLUTION_GROUPS.map((group) => (

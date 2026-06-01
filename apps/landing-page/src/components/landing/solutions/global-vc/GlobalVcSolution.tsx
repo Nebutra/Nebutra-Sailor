@@ -1,7 +1,10 @@
 import { Globe } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
-import type { FeatureGroupTokens } from "@/components/landing/features/feature-group-tokens";
+import {
+  DEFAULT_GROUP_TOKENS,
+  type FeatureGroupTokens,
+} from "@/components/landing/features/feature-group-tokens";
 import { VcDirectory } from "@/components/landing/solutions/vc/VcDirectory";
 import type { Locale } from "@/i18n/routing";
 import {
@@ -37,7 +40,7 @@ export function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
   const text = (key: keyof typeof COPY) => (locale === "zh" ? COPY[key].zh : COPY[key].en);
 
   const tokens: FeatureGroupTokens = {
-    auroraColors: group?.auroraColors ?? ["#0033FE", "#0BF1C3", "#06b6d4", "#38bdf8"],
+    auroraColors: group?.auroraColors ?? DEFAULT_GROUP_TOKENS.auroraColors,
     ambient: "subtle",
     icon: Globe,
     docsPath: "",
@@ -76,12 +79,11 @@ export function GlobalVcSolution({ locale }: GlobalVcSolutionProps) {
       <section className="pb-20 pt-4 md:pb-28">
         <AnimateIn preset="fadeUp" inView>
           <VcDirectory
-            orgs={GLOBAL_VC_ORGS}
+            orgs={GLOBAL_VC_ORGS.map((o) => ({ ...o, logo: globalVcLogoFor(o) }))}
             sectors={GLOBAL_VC_SECTORS}
             types={GLOBAL_VC_TYPES}
             locale={copyLocale}
             variant="global"
-            logoFor={globalVcLogoFor}
           />
         </AnimateIn>
 
