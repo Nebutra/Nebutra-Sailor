@@ -17,6 +17,8 @@
   "dependencies": {
     "@chenglou/pretext": "^0.0.5",
     "@clerk/nextjs": "^7.3.7",
+    "@dicebear/collection": "^9.4.2",
+    "@dicebear/core": "^9.4.2",
     "@lottiefiles/dotlottie-react": "^0.18.3",
     "@nebutra/ai-providers": "workspace:*",
     "@nebutra/auth": "workspace:*",
