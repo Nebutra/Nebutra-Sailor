@@ -206,7 +206,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        service: [ai, billing, content, ecommerce, event-ingest, recsys, web3]
+        service: [ai]
     defaults:
       run:
         working-directory: backends/python/${{ matrix.service }}

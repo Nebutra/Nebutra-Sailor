@@ -234,12 +234,6 @@ jobs:
       matrix:
         service:
           - ai
-          - billing
-          - content
-          - ecommerce
-          - recsys
-          - event-ingest
-          - web3
 
     steps:
       # ── Checkout ─────────────────────────────────────────────────────────────

@@ -149,7 +149,7 @@ jobs:
           NAMESPACE="nebutra-$DEPLOY_ENV"
           REGISTRY="ghcr.io/${{ github.repository_owner }}"
 
-          for SVC in ai billing content ecommerce recsys event-ingest web3; do
+          for SVC in ai; do
             DEPLOYMENT="$(echo "$SVC" | tr '[:upper:]' '[:lower:]')"
             IMAGE="$REGISTRY/nebutra-$SVC:$IMAGE_TAG"
 
@@ -179,7 +179,7 @@ jobs:
       - name: Wait for rollouts — Python services
         run: |
           NAMESPACE="nebutra-$DEPLOY_ENV"
-          for SVC in ai billing content ecommerce recsys event-ingest web3; do
+          for SVC in ai; do
             DEPLOYMENT="$(echo "$SVC" | tr '[:upper:]' '[:lower:]')"
             echo "Waiting for rollout: deployment/$DEPLOYMENT …"
             kubectl rollout status \
