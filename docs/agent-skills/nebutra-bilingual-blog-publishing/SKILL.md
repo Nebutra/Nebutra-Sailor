@@ -99,7 +99,9 @@ Default image planning:
 - comparison/review: cover plus comparison plate or matrix visual
 - authorized repost: use original media only if rights allow; otherwise create Nebutra editorial cover and clearly mark as repost
 
-Never hardcode random SVG art as the creative deliverable. SVG or deterministic placeholders are temporary fallbacks only; the intended art direction must be image2-based and semantic.
+Do not use SVG for blog cover or inline editorial graphics unless the user explicitly asks for SVG output. This includes generated SVG art, handcoded SVG art, SVG logo assets, and SVG intermediate files. Use raster image assets (`.png`, `.jpg`, `.webp`) or image2 output for publishable visuals.
+
+Treat image2 as the primary visual synthesis engine for original editorial art. When brand marks, icons, product surfaces, or visual references matter, provide image2 with clear multimodal inputs and constraints instead of hand-merging weak external approximations. Manual raster composition is allowed only for deterministic layout, crop, export, or exact asset placement after the image2 direction is selected.
 
 ### 4. Dry-Run Sanity Publishing
 
