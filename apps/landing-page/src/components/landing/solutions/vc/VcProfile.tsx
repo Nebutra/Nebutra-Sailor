@@ -135,9 +135,12 @@ export function VcProfile({
 
       {/* Facts */}
       {facts.length ? (
-        <section className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-border/40 sm:grid-cols-3">
+        <section className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {facts.map((f) => (
-            <div key={f.label} className="flex flex-col gap-0.5 bg-background p-4">
+            <div
+              key={f.label}
+              className="flex flex-col gap-0.5 rounded-[var(--radius-xl)] border border-border/60 p-4"
+            >
               <span className="text-xs text-muted-foreground/70">{f.label}</span>
               <span className="font-semibold text-neutral-12 text-sm">{f.value}</span>
             </div>
