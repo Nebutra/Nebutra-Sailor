@@ -12,9 +12,10 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  # Cancel in-flight runs on PR branches to save runner minutes;
-  # never cancel on main/develop to avoid interrupting deployments.
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  # Cancel in-flight runs on PR branches to save runner minutes. The public
+  # template mirror is also cancelable on main because every sync is a complete
+  # mirror snapshot and older template CI runs only block fresher evidence.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.repository == 'Nebutra/Sailor-Template' }}
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
