@@ -73,8 +73,8 @@ apps/docs/
 # ---------------------------------------------------------------------------
 # Marketing, PR, and changelog content
 # ---------------------------------------------------------------------------
-marketing/
-changelog/
+/marketing/
+/changelog/
 WHITELABEL.md
 BRAND_GUIDELINES.md
 TRADEMARK.md
@@ -83,6 +83,8 @@ TRADEMARK.md
 README.ja.md
 README.zh-CN.md
 brand.config.example.ts
+tests/architecture/ci-harness-closure.test.ts
+tests/architecture/readme-template-drift.test.ts
 
 # ---------------------------------------------------------------------------
 # CI/build/test artifacts — should never ship in a fresh scaffold
