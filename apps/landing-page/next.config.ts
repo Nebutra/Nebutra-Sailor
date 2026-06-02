@@ -47,6 +47,28 @@ const nextConfig: NextConfig = {
   // deploy-ecs.yml relies on .next/standalone/ existing.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
 
+  // ECS deploy headroom (#141): the standalone trace pulls native binaries for
+  // EVERY OS/arch of sharp, esbuild and swc (~750 MB combined), but the ECS host
+  // is a single Linux arch. Exclude the binaries it can never load — non-Linux
+  // platforms and exotic Linux arches. Keeps linux x64/arm64 (gnu + musl), which
+  // covers ECS on Graviton or x86. This is pure dead weight removal, not a
+  // behavioural change. Trims ~280 MB+ from the compressed artifact.
+  outputFileTracingExcludes: {
+    "*": [
+      // sharp (next/image runtime) — keep linux x64/arm64 only
+      "**/@img/sharp-{darwin,win32,wasm32}*/**",
+      "**/@img/sharp-libvips-{darwin,win32}*/**",
+      "**/@img/sharp-libvips-linux-{ppc64,s390x,riscv64,arm}/**",
+      "**/@img/sharp-libvips-linuxmusl-arm/**",
+      // esbuild (build-time only) — drop all non-linux + exotic linux
+      "**/@esbuild/{darwin,win32,android,openharmony,aix,sunos,freebsd,openbsd,netbsd}*/**",
+      "**/@esbuild/linux-{ppc64,s390x,riscv64,mips64el,loong64,ia32,arm}/**",
+      // swc (build-time only) — drop all non-linux
+      "**/@swc/core-{darwin,win32}*/**",
+      "**/@swc/core-linux-arm-gnueabihf/**",
+    ],
+  },
+
   // Enable Partial Prerendering — Next.js 16 merged experimental.ppr into cacheComponents.
   cacheComponents: true,
   experimental: {
