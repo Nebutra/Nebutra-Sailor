@@ -16,26 +16,105 @@ export type PublicSeoRoute = {
   readonly path: `/${string}`;
   readonly changeFrequency: "always" | "daily" | "weekly" | "monthly" | "yearly";
   readonly priority: number;
-  readonly sitelinkCandidate?: true;
+  readonly sitelinkCandidate?: {
+    readonly label: string;
+  };
+};
+
+export type PublicSitelinkCandidateRoute = PublicSeoRoute & {
+  readonly sitelinkCandidate: {
+    readonly label: string;
+  };
 };
 
 export const PUBLIC_SEO_ROUTES: ReadonlyArray<PublicSeoRoute> = [
-  { path: "/", changeFrequency: "weekly", priority: 1.0, sitelinkCandidate: true },
-  { path: "/features", changeFrequency: "weekly", priority: 0.9, sitelinkCandidate: true },
-  { path: "/pricing", changeFrequency: "weekly", priority: 0.9, sitelinkCandidate: true },
-  { path: "/get-license", changeFrequency: "weekly", priority: 0.9, sitelinkCandidate: true },
-  { path: "/licensing", changeFrequency: "monthly", priority: 0.8, sitelinkCandidate: true },
-  { path: "/ai/models", changeFrequency: "monthly", priority: 0.8, sitelinkCandidate: true },
-  { path: "/blog", changeFrequency: "weekly", priority: 0.8, sitelinkCandidate: true },
-  { path: "/changelog", changeFrequency: "weekly", priority: 0.7, sitelinkCandidate: true },
-  { path: "/roadmap", changeFrequency: "monthly", priority: 0.6, sitelinkCandidate: true },
-  { path: "/status", changeFrequency: "always", priority: 0.6, sitelinkCandidate: true },
-  { path: "/security", changeFrequency: "monthly", priority: 0.7, sitelinkCandidate: true },
-  { path: "/about", changeFrequency: "monthly", priority: 0.7, sitelinkCandidate: true },
+  {
+    path: "/",
+    changeFrequency: "weekly",
+    priority: 1.0,
+    sitelinkCandidate: { label: "Nebutra Agent OS" },
+  },
+  {
+    path: "/features",
+    changeFrequency: "weekly",
+    priority: 0.9,
+    sitelinkCandidate: { label: "Features" },
+  },
+  {
+    path: "/solutions",
+    changeFrequency: "weekly",
+    priority: 0.9,
+    sitelinkCandidate: { label: "Solutions" },
+  },
+  {
+    path: "/pricing",
+    changeFrequency: "weekly",
+    priority: 0.9,
+    sitelinkCandidate: { label: "Pricing" },
+  },
+  {
+    path: "/get-license",
+    changeFrequency: "weekly",
+    priority: 0.9,
+    sitelinkCandidate: { label: "Get License" },
+  },
+  {
+    path: "/licensing",
+    changeFrequency: "monthly",
+    priority: 0.8,
+    sitelinkCandidate: { label: "Licensing" },
+  },
+  {
+    path: "/ai/models",
+    changeFrequency: "monthly",
+    priority: 0.8,
+    sitelinkCandidate: { label: "AI Models" },
+  },
+  {
+    path: "/blog",
+    changeFrequency: "weekly",
+    priority: 0.8,
+    sitelinkCandidate: { label: "Blog" },
+  },
+  {
+    path: "/changelog",
+    changeFrequency: "weekly",
+    priority: 0.7,
+    sitelinkCandidate: { label: "Changelog" },
+  },
+  {
+    path: "/roadmap",
+    changeFrequency: "monthly",
+    priority: 0.6,
+    sitelinkCandidate: { label: "Roadmap" },
+  },
+  {
+    path: "/status",
+    changeFrequency: "always",
+    priority: 0.6,
+    sitelinkCandidate: { label: "Status" },
+  },
+  {
+    path: "/security",
+    changeFrequency: "monthly",
+    priority: 0.7,
+    sitelinkCandidate: { label: "Security" },
+  },
+  {
+    path: "/about",
+    changeFrequency: "monthly",
+    priority: 0.7,
+    sitelinkCandidate: { label: "About Nebutra" },
+  },
   { path: "/careers", changeFrequency: "weekly", priority: 0.6 },
   { path: "/ideas", changeFrequency: "weekly", priority: 0.6 },
   { path: "/about/products", changeFrequency: "monthly", priority: 0.6 },
-  { path: "/contact", changeFrequency: "monthly", priority: 0.5, sitelinkCandidate: true },
+  {
+    path: "/contact",
+    changeFrequency: "monthly",
+    priority: 0.5,
+    sitelinkCandidate: { label: "Contact" },
+  },
   { path: "/faq", changeFrequency: "monthly", priority: 0.5 },
   { path: "/privacy", changeFrequency: "monthly", priority: 0.2 },
   { path: "/terms", changeFrequency: "monthly", priority: 0.2 },
@@ -86,6 +165,8 @@ export function buildHreflangAlternates(baseUrl: string, path: string): Record<s
   return languages;
 }
 
-export function getSitelinkCandidateRoutes(): ReadonlyArray<PublicSeoRoute> {
-  return PUBLIC_SEO_ROUTES.filter((route) => "sitelinkCandidate" in route);
+export function getSitelinkCandidateRoutes(): ReadonlyArray<PublicSitelinkCandidateRoute> {
+  return PUBLIC_SEO_ROUTES.filter((route): route is PublicSitelinkCandidateRoute =>
+    Boolean(route.sitelinkCandidate),
+  );
 }

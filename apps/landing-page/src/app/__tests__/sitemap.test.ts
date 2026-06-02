@@ -34,4 +34,21 @@ describe("sitemap", () => {
       "x-default": "https://nebutra.com",
     });
   });
+
+  it("publishes solutions index and detail pages as crawlable public URLs", async () => {
+    process.env.NEXT_PUBLIC_SITE_URL = "https://nebutra.com/";
+
+    const entries = await sitemap();
+    const urls = entries.map((entry) => entry.url);
+
+    expect(urls).toEqual(
+      expect.arrayContaining([
+        "https://nebutra.com/solutions",
+        "https://nebutra.com/solutions/go-global",
+        "https://nebutra.com/solutions/architecture",
+        "https://nebutra.com/solutions/ai-data-ops",
+        "https://nebutra.com/solutions/global-vc",
+      ]),
+    );
+  });
 });

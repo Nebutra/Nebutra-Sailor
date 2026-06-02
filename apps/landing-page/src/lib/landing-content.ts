@@ -191,9 +191,9 @@ export const footerContent = {
 // =============================================================================
 
 export const seoContent = {
-  title: "云毓智能官网 — 综合门户与产品矩阵",
+  title: "Nebutra Agent OS | The Startup Agent OS",
   description:
-    "提供产品介绍、用户登录及SaaS服务平台。云毓智能致力于提供企业级的解决方案与全栈式的 AI 技术支持。",
+    "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, i18n, and SEO-ready public pages.",
   keywords: [
     "saas framework",
     "multi-tenant",

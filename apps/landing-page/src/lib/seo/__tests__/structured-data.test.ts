@@ -5,6 +5,7 @@ import {
   buildFaqPageSchema,
   buildOrganizationSchema,
   buildProductSchema,
+  buildSiteNavigationSchema,
   buildWebSiteSchema,
 } from "../structured-data";
 
@@ -72,6 +73,24 @@ describe("buildBreadcrumbListSchema", () => {
       item: "https://nebutra.com",
     });
     expect(schema.itemListElement[1].position).toBe(2);
+  });
+});
+
+describe("buildSiteNavigationSchema", () => {
+  it("builds compact navigation entries for sitelink candidates", () => {
+    const schema = buildSiteNavigationSchema([
+      { name: "Features", url: "https://nebutra.com/features" },
+      { name: "Pricing", url: "https://nebutra.com/pricing" },
+    ]);
+
+    expect(schema["@type"]).toBe("ItemList");
+    expect(schema.itemListElement).toHaveLength(2);
+    expect(schema.itemListElement[0]).toMatchObject({
+      "@type": "SiteNavigationElement",
+      position: 1,
+      name: "Features",
+      url: "https://nebutra.com/features",
+    });
   });
 });
 

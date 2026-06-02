@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { PACKAGE_FEATURE_ENTRIES } from "@/components/landing/features/package-feature-data";
 import { routing } from "@/i18n/routing";
 import { type BlogLanguage, getAllPosts } from "@/lib/blog";
+import { getAllSolutionSlugs } from "@/lib/constants/solutions-data";
 import {
   buildHreflangAlternates,
   canonicalUrlForLocale,
@@ -77,6 +78,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: entry.kind === "package" ? 0.35 : 0.6,
+      alternates: { languages: buildHreflangAlternates(baseUrl, `/features/${entry.slug}`) },
+    }));
+  });
+
+  const solutionDetailEntries = getAllSolutionSlugs().flatMap((slug) => {
+    return routing.locales.map((locale) => ({
+      url: canonicalUrlForLocale(baseUrl, locale, `/solutions/${slug}`),
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.65,
+      alternates: { languages: buildHreflangAlternates(baseUrl, `/solutions/${slug}`) },
     }));
   });
 
@@ -102,6 +114,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...docsEntries,
     ...changelogEntries,
     ...featureDetailEntries,
+    ...solutionDetailEntries,
     ...blogEntries,
   ];
 }

@@ -119,6 +119,39 @@ export function buildBreadcrumbListSchema(
   };
 }
 
+export interface SiteNavigationItem {
+  readonly name: string;
+  readonly url: string;
+}
+
+export interface SiteNavigationSchema {
+  readonly "@context": SchemaContext;
+  readonly "@type": "ItemList";
+  readonly name: "Primary site navigation";
+  readonly itemListElement: ReadonlyArray<{
+    readonly "@type": "SiteNavigationElement";
+    readonly position: number;
+    readonly name: string;
+    readonly url: string;
+  }>;
+}
+
+export function buildSiteNavigationSchema(
+  items: ReadonlyArray<SiteNavigationItem>,
+): SiteNavigationSchema {
+  return {
+    "@context": SCHEMA_CONTEXT,
+    "@type": "ItemList",
+    name: "Primary site navigation",
+    itemListElement: items.map((item, index) => ({
+      "@type": "SiteNavigationElement",
+      position: index + 1,
+      name: item.name,
+      url: item.url,
+    })),
+  };
+}
+
 export interface FaqEntry {
   readonly question: string;
   readonly answer: string;
@@ -286,6 +319,7 @@ export function buildProductSchema(input: ProductSchemaInput): ProductSchema {
 export type AnyStructuredData =
   | OrganizationSchema
   | WebSiteSchema
+  | SiteNavigationSchema
   | BreadcrumbListSchema
   | FaqPageSchema
   | ArticleSchema

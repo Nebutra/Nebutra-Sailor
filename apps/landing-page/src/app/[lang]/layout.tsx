@@ -12,6 +12,12 @@ import { IcpFooter } from "@/components/icp-footer";
 import { type Locale, routing } from "@/i18n/routing";
 import { seoContent } from "@/lib/landing-content";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import {
+  canonicalUrlForLocale,
+  getSitelinkCandidateRoutes,
+  getSiteUrl,
+} from "@/lib/seo/site-routes";
+import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
 import { Providers } from "../providers";
 
 interface LangLayoutProps {
@@ -81,6 +87,12 @@ const jsonLd = [
       availability: "https://schema.org/InStock",
     },
   },
+  buildSiteNavigationSchema(
+    getSitelinkCandidateRoutes().map((route) => ({
+      name: route.sitelinkCandidate.label,
+      url: canonicalUrlForLocale(getSiteUrl(), routing.defaultLocale, route.path),
+    })),
+  ),
 ];
 
 function toSafeJsonLd(value: unknown): string {
