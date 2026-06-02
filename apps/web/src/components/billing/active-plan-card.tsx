@@ -2,7 +2,7 @@
 
 import { CreditCard, Sparkles } from "@nebutra/icons";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import type { SubscriptionStatus } from "@/lib/billing/active-plan";
 
 /**
@@ -40,17 +40,6 @@ const STATUS_TONES: Record<SubscriptionStatus, string> = {
   free: "bg-[color:var(--neutral-3)] text-[color:var(--neutral-11)] ring-1 ring-[color:var(--neutral-7)]",
 };
 
-function formatDate(iso: string | null): string {
-  if (!iso) return "";
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
-
 /**
  * Renders the active subscription summary for an organization.
  *
@@ -66,6 +55,7 @@ export function ActivePlanCard({
   className,
 }: ActivePlanCardProps) {
   const t = useTranslations("billing.activePlan");
+  const format = useFormatter();
 
   if (error) {
     return (
@@ -106,7 +96,11 @@ export function ActivePlanCard({
   }
 
   const { planName, status, currentPeriodEnd } = snapshot;
-  const dateLabel = formatDate(currentPeriodEnd);
+  const periodDate = currentPeriodEnd ? new Date(currentPeriodEnd) : null;
+  const dateLabel =
+    periodDate && !Number.isNaN(periodDate.getTime())
+      ? format.dateTime(periodDate, { year: "numeric", month: "short", day: "numeric" })
+      : "";
   const statusLabel = t(`status.${status}`);
   const statusTone = STATUS_TONES[status] ?? STATUS_TONES.free;
 

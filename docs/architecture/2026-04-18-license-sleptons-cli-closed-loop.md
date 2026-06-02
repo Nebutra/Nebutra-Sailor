@@ -464,7 +464,7 @@ Reasoning (the long-termist "hard + correct" path):
 
 **Start shared (default)**:
 - One `DATABASE_URL` per Nebutra deployment, all orgs share schema
-- RLS already set up via `app.current_org_id` (done in earlier fix, survived audit)
+- RLS already set up via `app.current_tenant_id` (done in earlier fix, survived audit)
 - `getTenantDb(orgId)` enforces tenancy — no cross-tenant bleed possible
 - Zero additional ops for 99% of customers (Individual/OPC/Startup)
 - Cost: ~$30/mo for all of them combined vs $30+/mo per customer if dedicated

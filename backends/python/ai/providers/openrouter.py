@@ -389,30 +389,16 @@ class OpenRouterProvider(BaseProvider):
     # ============================================
 
     async def embed(self, request: EmbeddingRequest) -> EmbeddingResponse:
-        """Create embeddings (proxied through OpenRouter)"""
-        response = await self.http_client.post(
-            "/embeddings",
-            json={
-                "model": request.model,
-                "input": request.input,
-                "encoding_format": request.encoding_format,
-            },
-        )
+        """Create embeddings via OpenRouter (delegated to litellm openai-compatible route).
 
-        if response.status_code != 200:
-            raise Exception(
-                f"OpenRouter embeddings error: {response.status_code} {response.text}"
-            )
-
-        data = response.json()
-
-        return EmbeddingResponse(
-            model=data["model"],
-            embeddings=[d["embedding"] for d in data["data"]],
-            usage={
-                "prompt_tokens": data["usage"]["prompt_tokens"],
-                "total_tokens": data["usage"]["total_tokens"],
-            },
+        OpenRouter's ``/embeddings`` endpoint is OpenAI wire-protocol compatible.
+        Routing through litellm keeps the same error-handling, retry, and usage
+        normalisation logic as every other provider in this package.
+        """
+        return await _litellm.embedding(
+            request,
+            api_base=self.base_url,
+            api_key=self.config.api_key,
         )
 
     # ============================================

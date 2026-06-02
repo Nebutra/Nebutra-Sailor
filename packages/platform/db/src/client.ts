@@ -199,7 +199,7 @@ const baseClient: PrismaClient = new Proxy({} as PrismaClient, {
  * Get a tenant-scoped Prisma client for the given `organizationId`.
  *
  * Every query issued through the returned client runs inside a transaction
- * that first sets the PostgreSQL session variable `app.current_org_id`, which
+ * that first sets the PostgreSQL session variable `app.current_tenant_id`, which
  * the row-level security (RLS) policies in migration `20260313000000_enable_rls`
  * use to filter tenant-scoped tables. This guarantees that even a query that
  * forgets to include `where: { organizationId }` cannot read or mutate rows
@@ -231,7 +231,7 @@ export function getTenantDb(organizationId: string): PrismaClient {
   const client = getClient();
 
   // Prisma v5+ $extends hook. Each query runs inside a short-lived transaction
-  // whose first statement sets `app.current_org_id` so RLS policies filter
+  // whose first statement sets `app.current_tenant_id` so RLS policies filter
   // rows to this tenant for the remainder of the transaction. The session
   // variable is transaction-local (3rd arg = true), so it clears automatically.
   return client.$extends({
@@ -239,7 +239,7 @@ export function getTenantDb(organizationId: string): PrismaClient {
       $allModels: {
         async $allOperations({ args, query }) {
           const [, result] = await client.$transaction([
-            client.$executeRaw`SELECT set_config('app.current_org_id', ${organizationId}, true)`,
+            client.$executeRaw`SELECT set_config('app.current_tenant_id', ${organizationId}, true)`,
             query(args),
           ]);
           return result as unknown;

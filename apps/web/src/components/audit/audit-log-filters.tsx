@@ -2,7 +2,8 @@
 
 import { Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDebounceCallback } from "usehooks-ts";
 
 export interface AuditLogFilterValues {
   action?: string;
@@ -47,15 +48,12 @@ function pruneFilters(input: AuditLogFilterValues): AuditLogFilterValues {
 export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
   const t = useTranslations("settings.auditLog.filters");
   const [filters, setFilters] = useState<AuditLogFilterValues>(emptyFilters());
-  const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
+
+  const debouncedOnChange = useDebounceCallback(onChange, DEBOUNCE_MS);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onChangeRef.current(pruneFilters(filters));
-    }, DEBOUNCE_MS);
-    return () => clearTimeout(timer);
-  }, [filters]);
+    debouncedOnChange(pruneFilters(filters));
+  }, [filters, debouncedOnChange]);
 
   function setField<K extends keyof AuditLogFilterValues>(
     key: K,

@@ -16,7 +16,7 @@
  * Use @nebutra/tenant + Postgres RLS for multi-tenancy instead.
  */
 
-import { createHmac } from "node:crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import { logger } from "@nebutra/logger";
 import type {
   AuthCapabilities,
@@ -255,7 +255,13 @@ export function createSupabaseAuthProvider(_config: AuthConfig): AuthProvider {
       if (secret) {
         const signature = request.headers.get("x-supabase-signature") ?? "";
         const expected = createHmac("sha256", secret).update(body).digest("hex");
-        if (signature !== expected) {
+        // Constant-time comparison to avoid signature timing side-channels (mirrors s2s.ts).
+        const signatureBuffer = Buffer.from(signature, "hex");
+        const expectedBuffer = Buffer.from(expected, "hex");
+        if (
+          signatureBuffer.length !== expectedBuffer.length ||
+          !timingSafeEqual(signatureBuffer, expectedBuffer)
+        ) {
           throw new Error("Supabase webhook: signature verification failed");
         }
       }

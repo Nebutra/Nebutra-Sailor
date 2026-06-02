@@ -2,9 +2,22 @@
 Resilience patterns for Nebutra Python microservices.
 
 Provides:
-  - retry()          decorator — exponential backoff with jitter
-  - CircuitBreaker   class    — open/half-open/closed state machine
+  - retry()          decorator — exponential backoff with jitter (tenacity)
+  - CircuitBreaker   class    — open/half-open/closed state machine (self-maintained;
+                                tenacity does not cover circuit breaking — see note below)
   - timeout()        decorator — wraps an async function with asyncio.wait_for
+
+Retry/backoff responsibility split:
+  - tenacity (@retry)  handles: attempt counting, exponential backoff, jitter,
+                                retryable-exception filtering, per-attempt logging.
+  - CircuitBreaker     handles: failure-rate tracking, open/half-open/closed state,
+                                fast-fail while OPEN, recovery probing.
+  Both can be stacked: apply @retry on the inner call, wrap with `async with breaker`
+  outside — tenacity retries within a single circuit-breaker invocation.
+
+  NOTE: if the `circuitbreaker` PyPI package (https://pypi.org/project/circuitbreaker/)
+  is ever evaluated to replace the self-maintained CircuitBreaker below, that decision
+  should be tracked as a separate governance item; it is NOT part of this migration.
 
 Usage:
     from _shared.resilience import retry, CircuitBreaker, timeout
@@ -29,62 +42,76 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import random
 import time
 from enum import Enum
 from functools import wraps
-from typing import Any, Callable, Type, Sequence
+from typing import Any, Callable, Sequence, Type
+
+from tenacity import (
+    RetryCallState,
+    retry as tenacity_retry,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential_jitter,
+)
 
 logger = logging.getLogger(__name__)
 
 
-# ── Retry ─────────────────────────────────────────────────────────────────────
+# ── Retry (tenacity) ──────────────────────────────────────────────────────────
 
 
 def retry(
     max_attempts: int = 3,
     base_delay: float = 0.5,
     max_delay: float = 30.0,
-    backoff: float = 2.0,
-    jitter: bool = True,
+    backoff: float = 2.0,  # kept for API compatibility; tenacity uses its own factor
+    jitter: bool = True,   # kept for API compatibility; tenacity always adds jitter here
     retryable_exceptions: Sequence[Type[Exception]] = (Exception,),
 ) -> Callable:
     """
-    Async retry decorator with exponential backoff and optional jitter.
+    Async retry decorator with exponential backoff and jitter (backed by tenacity).
 
     Args:
         max_attempts: Total attempts (1 = no retry).
-        base_delay: Initial wait in seconds.
-        max_delay: Cap on wait time.
-        backoff: Exponential base (2.0 = doubles each attempt).
-        jitter: Add ±25% random variation to avoid thundering herd.
+        base_delay: Initial wait in seconds (tenacity `initial` + `exp_base` control).
+        max_delay: Cap on wait time in seconds.
+        backoff: Exponential base — retained for signature compatibility; tenacity
+                 uses `exp_base` which mirrors this value.
+        jitter: Retained for signature compatibility; tenacity's
+                wait_exponential_jitter always adds random jitter up to `max`.
         retryable_exceptions: Only retry on these exception types.
     """
 
+    def _before_sleep(retry_state: RetryCallState) -> None:
+        exc = retry_state.outcome.exception() if retry_state.outcome else None
+        logger.warning(
+            "Retry attempt %d/%d for %s after %.2fs: %s",
+            retry_state.attempt_number,
+            max_attempts,
+            retry_state.fn.__qualname__ if retry_state.fn else "unknown",
+            retry_state.next_action.sleep if retry_state.next_action else 0.0,
+            exc,
+        )
+
     def decorator(fn: Callable) -> Callable:
+        # Build the tenacity-decorated variant at decoration time so the wrapping
+        # overhead is paid once, not on every call.
+        decorated = tenacity_retry(
+            stop=stop_after_attempt(max_attempts),
+            wait=wait_exponential_jitter(
+                initial=base_delay,
+                exp_base=backoff,
+                max=max_delay,
+            ),
+            retry=retry_if_exception_type(tuple(retryable_exceptions)),  # type: ignore[arg-type]
+            before_sleep=_before_sleep,
+            reraise=True,
+        )(fn)
+
         @wraps(fn)
         async def wrapper(*args: Any, **kwargs: Any) -> Any:
-            last_exc: Exception | None = None
-            for attempt in range(1, max_attempts + 1):
-                try:
-                    return await fn(*args, **kwargs)
-                except tuple(retryable_exceptions) as exc:  # type: ignore[misc]
-                    last_exc = exc
-                    if attempt == max_attempts:
-                        break
-                    delay = min(base_delay * (backoff ** (attempt - 1)), max_delay)
-                    if jitter:
-                        delay *= 1 + random.uniform(-0.25, 0.25)
-                    logger.warning(
-                        "Retry attempt %d/%d for %s after %.2fs: %s",
-                        attempt,
-                        max_attempts,
-                        fn.__qualname__,
-                        delay,
-                        exc,
-                    )
-                    await asyncio.sleep(delay)
-            raise last_exc  # type: ignore[misc]
+            return await decorated(*args, **kwargs)
 
         return wrapper
 

@@ -1,30 +1,36 @@
 import os
 
-from openai import AsyncOpenAI
+from providers.base import ChatCompletionRequest, ChatMessage
+from providers.factory import get_default_provider
 
-client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+_DEFAULT_MODEL = os.environ.get("DEFAULT_MODEL", "Qwen/Qwen2.5-72B-Instruct")
 
 
 async def generate_text(
     prompt: str,
     max_tokens: int = 1000,
     temperature: float = 0.7,
-    model: str = "gpt-5.2",
+    model: str | None = None,
 ) -> dict:
-    """Generate text using OpenAI API"""
+    """Generate text using the configured AI provider (via provider abstraction layer).
 
-    response = await client.chat.completions.create(
-        model=model,
-        messages=[{"role": "user", "content": prompt}],
+    The default model is resolved from the ``DEFAULT_MODEL`` environment variable
+    so that callers do not need to hard-code a vendor-specific model name.
+    """
+    provider = get_default_provider()
+    resolved_model = model or _DEFAULT_MODEL
+
+    chat_req = ChatCompletionRequest(
+        model=resolved_model,
+        messages=[ChatMessage(role="user", content=prompt)],
         max_tokens=max_tokens,
         temperature=temperature,
     )
 
-    text = response.choices[0].message.content or ""
-    tokens_used = response.usage.total_tokens if response.usage else 0
+    resp = await provider.chat(chat_req)
 
     return {
-        "text": text,
-        "model": model,
-        "tokens_used": tokens_used,
+        "text": resp.content or "",
+        "model": resp.model,
+        "tokens_used": resp.usage.get("total_tokens", 0),
     }

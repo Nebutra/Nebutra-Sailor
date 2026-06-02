@@ -1,7 +1,7 @@
 "use client";
 
-import { Input } from "@nebutra/ui/primitives";
-import { useActionState, useState } from "react";
+import { Input, useCopyToClipboard } from "@nebutra/ui/primitives";
+import { useActionState } from "react";
 import { type CreateKeyState, createApiKey } from "./actions";
 
 interface Props {
@@ -12,13 +12,7 @@ const INITIAL: CreateKeyState = { status: "idle" };
 
 export function CreateApiKeyForm({ orgId }: Props) {
   const [state, action, isPending] = useActionState(createApiKey, INITIAL);
-  const [copied, setCopied] = useState(false);
-
-  async function handleCopy(key: string) {
-    await navigator.clipboard.writeText(key);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  }
+  const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
 
   if (state.status === "success") {
     return (
@@ -32,7 +26,7 @@ export function CreateApiKeyForm({ orgId }: Props) {
           </code>
           <button
             type="button"
-            onClick={() => handleCopy(state.key)}
+            onClick={() => copy(state.key)}
             className="rounded-[var(--radius-md)] border border-amber-300/70 px-3 py-2 text-xs font-medium text-amber-800 transition-colors hover:bg-amber-100"
           >
             {copied ? "Copied!" : "Copy"}

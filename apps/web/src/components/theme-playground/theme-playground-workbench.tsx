@@ -33,6 +33,7 @@ import {
   Tabs,
   TabsList,
   TabsTrigger,
+  useCopyToClipboard,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { type CSSProperties, type ReactNode, useMemo, useState } from "react";
@@ -79,7 +80,7 @@ const densityScale: Record<Density, string> = {
 };
 
 function CopyButton({ value, label = "Copy" }: { value: string; label?: string }) {
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard({ timeout: 1200, showToast: false });
 
   return (
     <Button
@@ -87,11 +88,7 @@ function CopyButton({ value, label = "Copy" }: { value: string; label?: string }
       variant="tertiary"
       className="h-7 border-border/70 bg-card/70 px-2 text-[11px]"
       prefix={copied ? <Check /> : <Copy />}
-      onClick={async () => {
-        await navigator.clipboard.writeText(value);
-        setCopied(true);
-        window.setTimeout(() => setCopied(false), 1200);
-      }}
+      onClick={() => copy(value)}
       type="button"
     >
       {copied ? "Copied" : label}

@@ -32,7 +32,7 @@ import {
   SelectValue,
 } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { queryKeys } from "@/lib/query-keys";
 import { InviteDialog } from "./invite-dialog";
@@ -61,14 +61,6 @@ interface MembersResponse {
 
 interface MembersClientProps {
   orgId: string;
-}
-
-function formatDate(iso: string): string {
-  try {
-    return new Date(iso).toLocaleDateString();
-  } catch {
-    return iso;
-  }
 }
 
 async function fetchMembers(orgId: string, signal?: AbortSignal): Promise<MembersResponse> {
@@ -110,6 +102,7 @@ async function removeMember(orgId: string, memberId: string): Promise<void> {
 export function MembersClient({ orgId }: MembersClientProps) {
   const t = useTranslations("settings.organization.members");
   const tInvite = useTranslations("settings.organization.invite");
+  const format = useFormatter();
   const confirmDialogId = useId();
   const queryClient = useQueryClient();
   const listKey = queryKeys.orgMembers.list(orgId);
@@ -297,7 +290,13 @@ export function MembersClient({ orgId }: MembersClientProps) {
                         )}
                       </td>
                       <td className="px-3 py-2 text-xs text-neutral-11">
-                        {formatDate(member.joinedAt)}
+                        {Number.isNaN(new Date(member.joinedAt).getTime())
+                          ? member.joinedAt
+                          : format.dateTime(new Date(member.joinedAt), {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })}
                       </td>
                       <td className="px-3 py-2 text-right">
                         {canRemove && (

@@ -9,6 +9,8 @@ import {
 } from "@nebutra/blog";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
+import { format as formatDate } from "date-fns";
+import { zhCN } from "date-fns/locale";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
@@ -87,13 +89,10 @@ async function getCachedAllPosts(language: ReturnType<typeof toBlogLanguage>) {
 }
 
 function formatPostDate(post: BlogPostWithSource, isZh: boolean): string | null {
-  return post.date
-    ? new Date(post.date).toLocaleDateString(isZh ? "zh-CN" : "en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
+  if (!post.date) return null;
+  const d = new Date(post.date);
+  if (Number.isNaN(d.getTime())) return null;
+  return formatDate(d, isZh ? "yyyy年M月d日" : "MMMM d, yyyy", isZh ? { locale: zhCN } : undefined);
 }
 
 function getTopTags(posts: BlogPostWithSource[], limit = 4): string[] {

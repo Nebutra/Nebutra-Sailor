@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Copy, Download, Warning } from "@nebutra/icons";
-import { Button, Spinner } from "@nebutra/ui/primitives";
+import { Button, Spinner, useCopyToClipboard } from "@nebutra/ui/primitives";
 import { useState, useTransition } from "react";
 import { exportThemeAction } from "./actions";
 
@@ -22,7 +22,7 @@ function downloadText(filename: string, content: string, type: string) {
 
 export function DesignMdExport({ themeId, themeName }: DesignMdExportProps) {
   const [error, setError] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard({ timeout: 1500, showToast: false });
   const [isPending, startTransition] = useTransition();
 
   function handleExport() {
@@ -46,9 +46,7 @@ export function DesignMdExport({ themeId, themeName }: DesignMdExportProps) {
         setError(res.error);
         return;
       }
-      await navigator.clipboard.writeText(res.export.designMd);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1500);
+      await copy(res.export.designMd);
     });
   }
 

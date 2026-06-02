@@ -4,7 +4,7 @@ import { brandSpring } from "@nebutra/brand";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useLocale } from "next-intl";
+import { useFormatter, useLocale } from "next-intl";
 import * as React from "react";
 import { EndorsementDialog } from "./endorsement-dialog";
 
@@ -31,26 +31,6 @@ const RELATIONSHIP_LABELS: Record<string, { en: string; zh: string }> = {
   other: { en: "Other", zh: "其他" },
 };
 
-function formatRelativeTime(dateStr: string, locale: string): string {
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-  const diffMs = new Date(dateStr).getTime() - Date.now();
-  const diffSeconds = Math.round(diffMs / 1000);
-  const diffMinutes = Math.round(diffSeconds / 60);
-  const diffHours = Math.round(diffMinutes / 60);
-  const diffDays = Math.round(diffHours / 24);
-  const diffWeeks = Math.round(diffDays / 7);
-  const diffMonths = Math.round(diffDays / 30);
-  const diffYears = Math.round(diffDays / 365);
-
-  if (Math.abs(diffSeconds) < 60) return rtf.format(diffSeconds, "second");
-  if (Math.abs(diffMinutes) < 60) return rtf.format(diffMinutes, "minute");
-  if (Math.abs(diffHours) < 24) return rtf.format(diffHours, "hour");
-  if (Math.abs(diffDays) < 7) return rtf.format(diffDays, "day");
-  if (Math.abs(diffWeeks) < 5) return rtf.format(diffWeeks, "week");
-  if (Math.abs(diffMonths) < 12) return rtf.format(diffMonths, "month");
-  return rtf.format(diffYears, "year");
-}
-
 function stringToColor(str: string) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -61,7 +41,9 @@ function stringToColor(str: string) {
   return `linear-gradient(135deg, ${c1}, ${c2})`;
 }
 
-function EndorsementCard({ entry, locale }: { entry: Endorsement; locale: string }) {
+function EndorsementCard({ entry }: { entry: Endorsement }) {
+  const format = useFormatter();
+  const locale = useLocale();
   const initial = entry.nickname.charAt(0).toUpperCase();
   const rel = RELATIONSHIP_LABELS[entry.relationship];
   const gradient = stringToColor(entry.nickname + entry.id);
@@ -115,7 +97,11 @@ function EndorsementCard({ entry, locale }: { entry: Endorsement; locale: string
                 {rel ? (locale === "zh" ? rel.zh : rel.en) : entry.relationship}
               </span>
               <span className="h-1 w-1 rounded-full bg-gray-300 dark:bg-gray-700" />
-              <span>{formatRelativeTime(entry.createdAt, locale)}</span>
+              <span>
+                {Number.isNaN(new Date(entry.createdAt).getTime())
+                  ? entry.createdAt
+                  : format.relativeTime(new Date(entry.createdAt))}
+              </span>
             </p>
           </div>
         </div>
@@ -125,7 +111,6 @@ function EndorsementCard({ entry, locale }: { entry: Endorsement; locale: string
 }
 
 export function GuestbookClient({ initialEntries }: { initialEntries: Endorsement[] }) {
-  const locale = useLocale();
   const [entries] = React.useState<Endorsement[]>(initialEntries);
   const [submitted, setSubmitted] = React.useState(false);
 
@@ -179,7 +164,7 @@ export function GuestbookClient({ initialEntries }: { initialEntries: Endorsemen
         <AnimateInGroup stagger="fast" className="columns-1 gap-6 sm:columns-2">
           {entries.map((entry) => (
             <div key={entry.id} className="mb-6 break-inside-avoid">
-              <EndorsementCard entry={entry} locale={locale} />
+              <EndorsementCard entry={entry} />
             </div>
           ))}
         </AnimateInGroup>

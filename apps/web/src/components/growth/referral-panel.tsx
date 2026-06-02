@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, Check, Copy, Sparkles as Gift, Sparkles } from "@nebutra/icons";
-import { useState } from "react";
+import { useCopyToClipboard } from "@nebutra/ui/primitives";
 
 /**
  * TEMPLATE — Referral panel.
@@ -67,15 +67,11 @@ interface Props {
 }
 
 function CopyButton({ value, label }: { value: string; label: string }) {
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard({ timeout: 1600, showToast: false });
   return (
     <button
       type="button"
-      onClick={() => {
-        navigator.clipboard?.writeText(value);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1600);
-      }}
+      onClick={() => copy(value)}
       aria-label={`Copy ${label}`}
       className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-1 px-2.5 py-1 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 dark:bg-black/40"
     >

@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/components";
+import { useFormatter } from "next-intl";
 import { useEffect, useReducer } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
@@ -84,54 +85,13 @@ function resolveErrorMessage(error: unknown): string {
 }
 
 /**
- * Format a timestamp as a relative-time string with sensible thresholds.
- * - <60s          → "just now"
- * - <60min        → "X minutes ago"
- * - <24h          → "X hours ago"
- * - <7d           → "X days ago"
- * - otherwise     → "Mar 5, 14:32" (locale-aware short date)
- *
- * The unit words are intentionally English-only here. When this component is
- * lifted into a next-intl tree we should swap to the `auth.security.sessions.*`
- * keys for "minutes ago", "hours ago", etc.
+ * Exported for tests. Returns the parsed Date or null for invalid input.
+ * Formatting now happens inside the component via next-intl useFormatter
+ * so that locale + time-zone are sourced from the i18n context.
  */
-export function formatRelativeTime(value: string, nowMs: number = Date.now()): string {
-  const then = new Date(value).getTime();
-  if (Number.isNaN(then)) return "Unknown time";
-
-  const deltaMs = Math.max(0, nowMs - then);
-  const seconds = Math.floor(deltaMs / 1000);
-
-  if (seconds < 60) return "just now";
-
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) {
-    return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
-  }
-
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) {
-    return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
-  }
-
-  const days = Math.floor(hours / 24);
-  if (days < 7) {
-    return `${days} ${days === 1 ? "day" : "days"} ago`;
-  }
-
-  const date = new Date(then);
-  return date.toLocaleString(undefined, {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
-function formatAbsolute(value: string): string {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Unknown time";
-  return date.toLocaleString();
+export function parseSessionDate(value: string): Date | null {
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? null : d;
 }
 
 const SUCCESS_DISMISS_MS = 3000;
@@ -203,6 +163,7 @@ export function ActiveSessionsBlock({
   onRevoke,
   onRevokeAllOthers,
 }: ActiveSessionsBlockProps) {
+  const format = useFormatter();
   const [state, dispatch] = useReducer(activeSessionsReducer, INITIAL_ACTIVE_SESSIONS_STATE);
 
   // Auto-clear success message after a few seconds.
@@ -369,7 +330,10 @@ export function ActiveSessionsBlock({
                     )}
                   </p>
                   <p className="mt-1 text-xs text-[var(--neutral-10)]">
-                    {SESSION_STRINGS.lastActiveLabel}: {formatRelativeTime(session.updatedAt)}
+                    {SESSION_STRINGS.lastActiveLabel}:{" "}
+                    {parseSessionDate(session.updatedAt)
+                      ? format.relativeTime(parseSessionDate(session.updatedAt) as Date)
+                      : "Unknown time"}
                   </p>
                   {session.userAgent && (
                     <p className="mt-2 break-words text-xs text-[var(--neutral-11)]">
@@ -377,7 +341,13 @@ export function ActiveSessionsBlock({
                     </p>
                   )}
                   <p className="mt-2 text-xs text-[var(--neutral-10)]">
-                    {SESSION_STRINGS.expiresLabel}: {formatAbsolute(session.expiresAt)}
+                    {SESSION_STRINGS.expiresLabel}:{" "}
+                    {parseSessionDate(session.expiresAt)
+                      ? format.dateTime(parseSessionDate(session.expiresAt) as Date, {
+                          dateStyle: "medium",
+                          timeStyle: "short",
+                        })
+                      : "Unknown time"}
                   </p>
                 </div>
 

@@ -1,5 +1,6 @@
 import { logger } from "@nebutra/logger";
 import { getMetering, type PeriodType } from "@nebutra/metering";
+import { format } from "date-fns";
 import type { Plan, RecordUsageInput, UsageType } from "../types";
 import { DEFAULT_USAGE_PRICING } from "../types";
 
@@ -231,8 +232,7 @@ export async function getUsage(
  * Get current period string (YYYY-MM)
  */
 export function getCurrentPeriod(): string {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  return format(new Date(), "yyyy-MM");
 }
 
 /**

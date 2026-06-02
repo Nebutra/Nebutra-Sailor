@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { notFound } from "next/navigation";
 import { getLegalDocument } from "@/lib/legal-documents";
 
@@ -57,9 +58,7 @@ export function LegalDocumentSkeleton() {
 }
 
 function formatDate(iso: string): string {
-  try {
-    return new Date(iso).toISOString().slice(0, 10);
-  } catch {
-    return iso;
-  }
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return format(d, "yyyy-MM-dd");
 }

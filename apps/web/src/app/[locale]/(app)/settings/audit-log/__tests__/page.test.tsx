@@ -10,6 +10,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 // rather than localized strings (mirrors the audit-log-table unit test).
 vi.mock("next-intl", () => ({
   useTranslations: (namespace: string) => (key: string) => `${namespace}.${key}`,
+  useFormatter: () => ({
+    relativeTime: (_d: Date) => "just now",
+    dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",
+  }),
 }));
 
 // PermissionGate is Clerk-backed; grant the scope so the page body renders.

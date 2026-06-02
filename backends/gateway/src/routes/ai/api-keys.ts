@@ -6,11 +6,12 @@
  * at creation time. Cached lookups in Redis are invalidated on revoke/update.
  */
 
-import { createHash, randomBytes } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { getRedis } from "@nebutra/cache";
 import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
+import { hashApiKey } from "../../lib/api-key.js";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 
 const log = logger.child({ service: "api-keys" });
@@ -24,10 +25,6 @@ const KEY_CACHE_PREFIX = "apikey:";
 
 function generateFullKey(): string {
   return `sk-sailor-${randomBytes(32).toString("hex")}`;
-}
-
-function hashKey(fullKey: string): string {
-  return createHash("sha256").update(fullKey).digest("hex");
 }
 
 /**
@@ -114,7 +111,7 @@ apiKeysRoutes.openapi(createRouteDef, async (c) => {
   const db = getTenantDb(organizationId);
 
   const fullKey = generateFullKey();
-  const keyHash = hashKey(fullKey);
+  const keyHash = hashApiKey(fullKey);
   const keyPrefix = fullKey.slice(0, 12);
 
   const expiresAt = body.expiresInDays

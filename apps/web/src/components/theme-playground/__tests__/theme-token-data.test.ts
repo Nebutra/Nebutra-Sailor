@@ -174,10 +174,15 @@ describe("getPreviewStyleFromTokenSet", () => {
       expect(style["--font-sans"]).toBe("Inter, sans-serif");
     });
 
-    it("omits font vars when absent", () => {
+    it("emits --font-sans fallback even when absent from token set", () => {
+      // Since be56cb7b, getPreviewStyleFromTokenSet always emits --font-sans
+      // with a system-font fallback stack so the preview subtree never leaks
+      // to the app-global Geist variable. An empty token set gets the fallback.
       const tokenSet: ThemeTokenSet = {};
       const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "light"));
-      expect(style["--font-sans"]).toBeUndefined();
+      expect(style["--font-sans"]).toBeDefined();
+      expect(typeof style["--font-sans"]).toBe("string");
+      expect((style["--font-sans"] as string).length).toBeGreaterThan(0);
     });
   });
 

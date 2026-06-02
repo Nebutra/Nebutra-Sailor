@@ -19,6 +19,7 @@ dependencies = [
     "opentelemetry-exporter-otlp-proto-grpc>=1.27.0",
     "opentelemetry-instrumentation-fastapi>=0.48b0",
     "e2b-code-interpreter>=1.0.0",
+    "tenacity>=9.1",
 ]
 
 [tool.uv]

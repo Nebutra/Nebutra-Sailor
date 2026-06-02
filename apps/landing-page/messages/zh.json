@@ -1625,7 +1625,7 @@
         },
         "multi-tenancy": {
           "question": "多租户怎么实现？",
-          "answer": "两层。请求级租户上下文通过 @nebutra/tenant 实现（AsyncLocalStorage 在每次服务端调用中传播当前组织，含 DB 查询与出站 Webhook）；数据库级隔离通过 Postgres Row-Level Security 策略（infra/data/database/policies/rls.sql）绑定到 session-local 的 app.current_org_id。Service-role 连接仅在受信任的内部服务中绕过 RLS；所有面向用户的路由都走 tenant-scoped 客户端。"
+          "answer": "两层。请求级租户上下文通过 @nebutra/tenant 实现（AsyncLocalStorage 在每次服务端调用中传播当前组织，含 DB 查询与出站 Webhook）；数据库级隔离通过 Postgres Row-Level Security 策略（infra/data/database/policies/rls.sql）绑定到 session-local 的 app.current_tenant_id。Service-role 连接仅在受信任的内部服务中绕过 RLS；所有面向用户的路由都走 tenant-scoped 客户端。"
         },
         "swap-clerk": {
           "question": "可以把 Clerk 换成其他认证服务吗？",

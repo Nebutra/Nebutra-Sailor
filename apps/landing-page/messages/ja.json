@@ -1635,7 +1635,7 @@
         },
         "multi-tenancy": {
           "question": "マルチテナントはどのように処理されますか？",
-          "answer": "2 層構造です。@nebutra/tenant によるリクエストスコープのテナントコンテキスト（AsyncLocalStorage が DB クエリや送信 Webhook を含むすべてのサーバーコールにアクティブ組織を伝播）と、Postgres Row-Level Security ポリシー（infra/data/database/policies/rls.sql）による DB 強制分離（セッションローカルの app.current_org_id にバインド）です。"
+          "answer": "2 層構造です。@nebutra/tenant によるリクエストスコープのテナントコンテキスト（AsyncLocalStorage が DB クエリや送信 Webhook を含むすべてのサーバーコールにアクティブ組織を伝播）と、Postgres Row-Level Security ポリシー（infra/data/database/policies/rls.sql）による DB 強制分離（セッションローカルの app.current_tenant_id にバインド）です。"
         },
         "swap-clerk": {
           "question": "Clerk を別の認証プロバイダーに交換できますか？",

@@ -1,7 +1,11 @@
-import * as React from "react";
+import { useMediaQuery as useMediaQueryBase } from "usehooks-ts";
 
 /**
- * Hook to detect media query matches
+ * Hook to detect media query matches.
+ *
+ * Delegates to usehooks-ts `useMediaQuery` with `initializeWithValue: false`
+ * so the initial render always returns `false` — SSR-safe, matching the
+ * previous hand-rolled behaviour (no `window` access during SSR/hydration).
  *
  * @example
  * ```tsx
@@ -10,29 +14,5 @@ import * as React from "react";
  * ```
  */
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = React.useState(false);
-
-  React.useEffect(() => {
-    const media = window.matchMedia(query);
-
-    // Set initial value
-    if (media.matches !== matches) {
-      setMatches(media.matches);
-    }
-
-    // Create listener
-    const listener = (event: MediaQueryListEvent) => {
-      setMatches(event.matches);
-    };
-
-    // Add listener
-    media.addEventListener("change", listener);
-
-    // Cleanup
-    return () => {
-      media.removeEventListener("change", listener);
-    };
-  }, [matches, query]);
-
-  return matches;
+  return useMediaQueryBase(query, { initializeWithValue: false });
 }

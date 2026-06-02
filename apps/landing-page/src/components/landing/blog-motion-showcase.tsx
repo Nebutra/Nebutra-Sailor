@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, BookOpen, ChevronDown, Copy, Message } from "@nebutra/icons";
+import { useCopyToClipboard } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -35,7 +36,7 @@ type LatestPostMotionRailProps = {
 
 function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
   const [open, setOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard({ timeout: 1600, showToast: false });
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -63,14 +64,7 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
     const title = document.title || (isZh ? "Nebutra 博客" : "Nebutra Blog");
     const href = window.location.href;
     const markdown = `[${title}](${href})`;
-
-    try {
-      await navigator.clipboard.writeText(markdown);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1600);
-    } catch {
-      setCopied(false);
-    }
+    await copy(markdown);
   }
 
   return (

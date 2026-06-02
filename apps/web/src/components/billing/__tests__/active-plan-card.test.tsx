@@ -32,6 +32,10 @@ vi.mock("next-intl", () => ({
     const template = messages[fullKey];
     return template ? interpolate(template, vars) : fullKey;
   },
+  useFormatter: () => ({
+    relativeTime: (_d: Date) => "just now",
+    dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",
+  }),
 }));
 
 import type { ActivePlanCardSnapshot } from "../active-plan-card";

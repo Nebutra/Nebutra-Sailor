@@ -1,6 +1,7 @@
 "use server";
 
 import { logger } from "@nebutra/logger";
+import pRetry, { AbortError } from "p-retry";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -77,58 +78,64 @@ export async function submitContactForm(
 
   // Exponential backoff retry: 3 attempts with 500ms → 1s → 2s delays.
   // Retries only on transient errors (network failure or 5xx from Resend).
-  const MAX_ATTEMPTS = 3;
-  let lastError: unknown;
-
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    try {
-      const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: payload,
-        signal: AbortSignal.timeout(10_000),
-      });
-
-      // 4xx errors are permanent failures — don't retry
-      if (res.status >= 400 && res.status < 500) {
-        const body = await res.text().catch(() => "");
-        logger.error("Resend API client error (no retry)", undefined, { status: res.status, body });
-        return { status: "error", message: "Failed to send message. Please try again." };
-      }
-
-      if (!res.ok) {
-        // 5xx — transient, retry after backoff
-        const body = await res.text().catch(() => "");
-        logger.warn(`Resend API server error (attempt ${attempt}/${MAX_ATTEMPTS})`, {
-          status: res.status,
-          body,
+  // 4xx client errors are permanent — aborted immediately via AbortError.
+  try {
+    await pRetry(
+      async () => {
+        const res = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: payload,
+          signal: AbortSignal.timeout(10_000),
         });
-        lastError = new Error(`HTTP ${res.status}`);
-      } else {
+
+        // 4xx errors are permanent failures — abort retrying immediately
+        if (res.status >= 400 && res.status < 500) {
+          const body = await res.text().catch(() => "");
+          logger.error("Resend API client error (no retry)", undefined, {
+            status: res.status,
+            body,
+          });
+          throw new AbortError(`HTTP ${res.status}`);
+        }
+
+        if (!res.ok) {
+          // 5xx — transient, let p-retry apply backoff
+          const body = await res.text().catch(() => "");
+          logger.warn("Resend API server error", { status: res.status, body });
+          throw new Error(`HTTP ${res.status}`);
+        }
+
         logger.info("Contact form submitted", {
           category,
           email: email.replace(/(.{2}).*@/, "$1***@"),
         });
-        return { status: "success" };
-      }
-    } catch (err) {
-      logger.warn(`Contact form fetch failed (attempt ${attempt}/${MAX_ATTEMPTS})`, {
-        error: err instanceof Error ? err.message : String(err),
-      });
-      lastError = err;
-    }
+      },
+      {
+        retries: 2, // 1 initial + 2 retries = 3 total attempts
+        minTimeout: 500,
+        maxTimeout: 2_000,
+        factor: 2,
+        onFailedAttempt: ({ error, attemptNumber, retriesLeft }) => {
+          logger.warn(`Contact form fetch failed (attempt ${attemptNumber}, ${retriesLeft} left)`, {
+            error: error.message,
+          });
+        },
+      },
+    );
 
-    if (attempt < MAX_ATTEMPTS) {
-      // 500ms, 1000ms — capped at 2s
-      await new Promise((r) => setTimeout(r, Math.min(500 * 2 ** (attempt - 1), 2_000)));
+    return { status: "success" };
+  } catch (err) {
+    // AbortError means a 4xx permanent failure — user-facing message already logged
+    if (err instanceof AbortError) {
+      return { status: "error", message: "Failed to send message. Please try again." };
     }
+    logger.error("Contact form submission failed after all retries", undefined, {
+      error: err instanceof Error ? err.message : String(err),
+    });
+    return { status: "error", message: "Network error. Please try again later." };
   }
-
-  logger.error("Contact form submission failed after all retries", undefined, {
-    error: lastError instanceof Error ? lastError.message : String(lastError),
-  });
-  return { status: "error", message: "Network error. Please try again later." };
 }

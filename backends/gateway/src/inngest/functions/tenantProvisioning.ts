@@ -23,6 +23,7 @@ import { ClerkOrganizationDataSchema } from "@nebutra/event-bus";
 import { logger } from "@nebutra/logger";
 import { eventType, type InngestFunction } from "inngest";
 import Stripe from "stripe";
+import { hashApiKey } from "../../lib/api-key.js";
 import { inngest } from "../client.js";
 
 // AUDIT(no-tenant): tenant-provisioning creates the Organization record and
@@ -30,17 +31,12 @@ import { inngest } from "../client.js";
 // context for the new tenant exists — the tenant is being bootstrapped here.
 const prisma = getSystemDb();
 
-/** SHA-256 hash of plaintext key (same as API key creation in settings). */
-function hashKey(plaintext: string): string {
-  return crypto.createHash("sha256").update(plaintext).digest("hex");
-}
-
 /** Generate a prefixed API key: nbtr_live_<32-char random hex> */
 function generateApiKey(): { plaintext: string; prefix: string; hash: string } {
   const random = crypto.randomBytes(24).toString("hex");
   const plaintext = `nbtr_live_${random}`;
   const prefix = plaintext.slice(0, 16);
-  const hash = hashKey(plaintext);
+  const hash = hashApiKey(plaintext);
   return { plaintext, prefix, hash };
 }
 

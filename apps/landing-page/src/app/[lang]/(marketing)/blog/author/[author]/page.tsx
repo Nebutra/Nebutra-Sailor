@@ -10,6 +10,8 @@ import {
 import { User } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
+import { format as formatDate } from "date-fns";
+import { zhCN } from "date-fns/locale";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import Image from "next/image";
@@ -72,13 +74,10 @@ function getPostCover(post: BlogPostWithSource) {
 }
 
 function formatPostDate(post: BlogPostWithSource, isZh: boolean): string | null {
-  return post.date
-    ? new Date(post.date).toLocaleDateString(isZh ? "zh-CN" : "en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
+  if (!post.date) return null;
+  const d = new Date(post.date);
+  if (Number.isNaN(d.getTime())) return null;
+  return formatDate(d, isZh ? "yyyy年M月d日" : "MMMM d, yyyy", isZh ? { locale: zhCN } : undefined);
 }
 
 function toBlogIndexPost(post: BlogPostWithSource, lang: string, isZh: boolean): BlogIndexPost {

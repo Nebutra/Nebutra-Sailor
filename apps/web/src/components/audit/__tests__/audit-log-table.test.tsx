@@ -11,6 +11,10 @@ vi.mock("next-intl", () => ({
     }
     return full;
   },
+  useFormatter: () => ({
+    relativeTime: (_d: Date) => "just now",
+    dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",
+  }),
 }));
 
 import { AuditLogTable } from "../audit-log-table";

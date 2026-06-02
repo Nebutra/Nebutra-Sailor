@@ -40,6 +40,10 @@ vi.mock("next-intl", () => ({
     const fullKey = `${namespace}.${key}`;
     return messages[fullKey] ?? fullKey;
   },
+  useFormatter: () => ({
+    relativeTime: (_d: Date) => "just now",
+    dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",
+  }),
 }));
 
 vi.mock("@nebutra/ui/primitives", () => ({

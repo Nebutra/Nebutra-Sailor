@@ -3,6 +3,16 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
+
+// ApiKeysList uses useFormatter() for date formatting (W1 governance change).
+vi.mock("next-intl", () => ({
+  useFormatter: () => ({
+    dateTime: (d: Date, _opts?: unknown) =>
+      d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
+    relativeTime: (_d: Date) => "just now",
+  }),
+}));
+
 import { type ApiKey, ApiKeysList } from "@/components/api-keys/api-keys-list";
 
 const KEYS: ApiKey[] = [

@@ -1,5 +1,6 @@
 "use client";
 
+import { useFormatter } from "next-intl";
 import { useState } from "react";
 
 export interface ApiKey {
@@ -30,13 +31,6 @@ interface ApiKeysListProps {
     revoking?: string;
     never?: string;
   };
-}
-
-function formatDate(value: string | null, never: string): string {
-  if (!value) return never;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return never;
-  return date.toLocaleDateString();
 }
 
 function RevokeButton({
@@ -81,6 +75,15 @@ export function ApiKeysList({
   emptyCta = "Create your first API key",
   columnLabels = {},
 }: ApiKeysListProps) {
+  const format = useFormatter();
+
+  function formatDate(value: string | null, neverLabel: string): string {
+    if (!value) return neverLabel;
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return neverLabel;
+    return format.dateTime(date, { year: "numeric", month: "short", day: "numeric" });
+  }
+
   const labels = {
     name: columnLabels.name ?? "Name",
     prefix: columnLabels.prefix ?? "Prefix",

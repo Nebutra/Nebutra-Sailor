@@ -1,25 +1,31 @@
 import os
 
-from openai import AsyncOpenAI
+from providers.base import EmbeddingRequest
+from providers.factory import get_default_provider
 
-client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+_DEFAULT_EMBEDDING_MODEL = os.environ.get("DEFAULT_EMBEDDING_MODEL", "BAAI/bge-m3")
 
 
 async def create_embedding(
     text: str,
-    model: str = "text-embedding-3-small",
+    model: str | None = None,
 ) -> dict:
-    """Create text embedding using OpenAI API"""
+    """Create a text embedding using the configured AI provider (via provider abstraction layer).
 
-    response = await client.embeddings.create(
-        model=model,
-        input=text,
-    )
+    The default model is resolved from the ``DEFAULT_EMBEDDING_MODEL`` environment
+    variable so that callers do not need to hard-code a vendor-specific model name.
+    """
+    provider = get_default_provider()
+    resolved_model = model or _DEFAULT_EMBEDDING_MODEL
 
-    embedding = response.data[0].embedding
+    embed_req = EmbeddingRequest(model=resolved_model, input=text)
+    resp = await provider.embed(embed_req)
+
+    # embed() always returns at least one embedding for single-text input
+    embedding = resp.embeddings[0]
 
     return {
         "embedding": embedding,
-        "model": model,
+        "model": resp.model,
         "dimensions": len(embedding),
     }

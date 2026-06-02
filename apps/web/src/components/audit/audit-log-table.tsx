@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
 
 export interface AuditLogEntry {
@@ -24,20 +24,6 @@ export interface AuditLogEntry {
 interface AuditLogTableProps {
   logs: AuditLogEntry[];
   isLoading: boolean;
-}
-
-function formatRelative(iso: string): string {
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return iso;
-  const diffMs = Date.now() - then;
-  const sec = Math.round(diffMs / 1000);
-  if (sec < 60) return `${sec}s ago`;
-  const min = Math.round(sec / 60);
-  if (min < 60) return `${min}m ago`;
-  const hr = Math.round(min / 60);
-  if (hr < 24) return `${hr}h ago`;
-  const day = Math.round(hr / 24);
-  return `${day}d ago`;
 }
 
 function outcomePillClass(outcome: string | null): string {
@@ -64,6 +50,7 @@ function safeStringify(value: unknown): string {
 
 export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
   const t = useTranslations("settings.auditLog");
+  const format = useFormatter();
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   if (isLoading) {
@@ -115,7 +102,9 @@ export function AuditLogTable({ logs, isLoading }: AuditLogTableProps) {
                   className="cursor-pointer hover:bg-[var(--neutral-2)]"
                 >
                   <td className="px-4 py-3 text-[var(--neutral-12)]" title={log.createdAt}>
-                    {formatRelative(log.createdAt)}
+                    {Number.isNaN(new Date(log.createdAt).getTime())
+                      ? log.createdAt
+                      : format.relativeTime(new Date(log.createdAt))}
                   </td>
                   <td className="px-4 py-3 text-[var(--neutral-11)]">
                     {log.userId ?? log.actorType ?? "—"}

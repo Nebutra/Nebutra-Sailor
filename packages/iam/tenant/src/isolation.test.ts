@@ -13,15 +13,15 @@ describe("generateRlsPolicySql", () => {
       ALTER TABLE "audit_logs" FORCE ROW LEVEL SECURITY;
       DROP POLICY IF EXISTS "tenant_isolation_audit_logs" ON "audit_logs";
       CREATE POLICY "tenant_isolation_audit_logs" ON "audit_logs"
-        USING ("tenant_id" = current_setting('app.current_tenant_id', true))
-        WITH CHECK ("tenant_id" = current_setting('app.current_tenant_id', true));
+        USING ("organization_id" = current_setting('app.current_tenant_id', true))
+        WITH CHECK ("organization_id" = current_setting('app.current_tenant_id', true));
 
       ALTER TABLE "users" ENABLE ROW LEVEL SECURITY;
       ALTER TABLE "users" FORCE ROW LEVEL SECURITY;
       DROP POLICY IF EXISTS "tenant_isolation_users" ON "users";
       CREATE POLICY "tenant_isolation_users" ON "users"
-        USING ("tenant_id" = current_setting('app.current_tenant_id', true))
-        WITH CHECK ("tenant_id" = current_setting('app.current_tenant_id', true));"
+        USING ("organization_id" = current_setting('app.current_tenant_id', true))
+        WITH CHECK ("organization_id" = current_setting('app.current_tenant_id', true));"
     `);
   });
 

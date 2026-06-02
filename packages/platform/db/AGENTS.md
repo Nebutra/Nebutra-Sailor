@@ -27,7 +27,7 @@ the client in the same change.
 
 - Prefer `getTenantDb()` for request-scoped application code. Treat
   `getSystemDb()` as an explicit escape hatch.
-- Preserve the RLS contract around `app.current_org_id` when changing tenant
+- Preserve the RLS contract around `app.current_tenant_id` when changing tenant
   access code or migration SQL.
 - Keep package exports intentional. If runtime access patterns change, update
   `src/index.ts` and consuming types together.

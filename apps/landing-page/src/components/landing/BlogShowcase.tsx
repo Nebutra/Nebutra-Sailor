@@ -2,7 +2,7 @@
 
 import { ArrowRight } from "@nebutra/icons";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import type { BlogPost } from "@/lib/blog-fallback";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 
@@ -10,16 +10,9 @@ export interface BlogShowcaseProps {
   posts: BlogPost[];
 }
 
-function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
-
 export function BlogShowcase({ posts }: BlogShowcaseProps) {
   const t = useTranslations("blogShowcase");
+  const format = useFormatter();
 
   if (posts.length === 0) return null;
 
@@ -72,7 +65,13 @@ export function BlogShowcase({ posts }: BlogShowcaseProps) {
                     dateTime={post.date}
                     className="text-xs font-medium text-muted-foreground/80"
                   >
-                    {formatDate(post.date)}
+                    {Number.isNaN(new Date(post.date).getTime())
+                      ? post.date
+                      : format.dateTime(new Date(post.date), {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
                   </time>
 
                   <h3 className="mt-2 text-base font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">

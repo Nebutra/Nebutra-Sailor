@@ -1,5 +1,6 @@
 import { logger } from "@nebutra/logger";
 import { Inngest } from "inngest";
+import pRetry from "p-retry";
 import { z } from "zod";
 
 // Base event schema
@@ -74,29 +75,25 @@ export class EventBus {
 
     await Promise.all(
       allHandlers.map(async (handler) => {
-        const MAX_ATTEMPTS = 3;
-        let lastError: unknown;
-
-        for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-          try {
-            await handler(validated);
-            return; // success — exit retry loop
-          } catch (error) {
-            lastError = error;
-            logger.warn(
-              `Event handler error for ${event.type} (attempt ${attempt}/${MAX_ATTEMPTS})`,
-              { error: error instanceof Error ? error.message : String(error) },
-            );
-            if (attempt < MAX_ATTEMPTS) {
-              // Exponential backoff: 100ms, 200ms
-              await new Promise((r) => setTimeout(r, 100 * 2 ** (attempt - 1)));
-            }
-          }
+        try {
+          // Exponential backoff: 3 total attempts (1 initial + 2 retries),
+          // 100ms → 200ms delays — matching the original hand-rolled loop.
+          await pRetry(() => handler(validated), {
+            retries: 2, // 1 initial + 2 retries = 3 total attempts
+            minTimeout: 100,
+            factor: 2,
+            onFailedAttempt: ({ error, attemptNumber, retriesLeft }) => {
+              logger.warn(
+                `Event handler error for ${event.type} (attempt ${attemptNumber}, ${retriesLeft} left)`,
+                { error: error instanceof Error ? error.message : String(error) },
+              );
+            },
+          });
+        } catch (lastError) {
+          // All retries exhausted — send to DLQ
+          const { recordDeadLetter } = await import("./dlq");
+          recordDeadLetter(validated, handler.name || "anonymous", lastError, 3);
         }
-
-        // All retries exhausted — send to DLQ
-        const { recordDeadLetter } = await import("./dlq");
-        recordDeadLetter(validated, handler.name || "anonymous", lastError, MAX_ATTEMPTS);
       }),
     );
   }

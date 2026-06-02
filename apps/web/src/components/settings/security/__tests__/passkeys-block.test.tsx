@@ -37,6 +37,10 @@ vi.mock("next-intl", () => ({
         template,
       );
     },
+  useFormatter: () => ({
+    relativeTime: (_d: Date) => "just now",
+    dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",
+  }),
 }));
 
 vi.mock("@nebutra/ui/components", () => ({

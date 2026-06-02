@@ -15,6 +15,8 @@ import {
 import { ArrowLeft, ArrowRight, BookOpen, Calendar, Clock, Globe, Message } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
+import { format as dateFnsFormat } from "date-fns";
+import { zhCN } from "date-fns/locale";
 import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
@@ -284,13 +286,16 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   const imageUrl = cover.src;
   const imageAlt = cover.alt;
 
-  const date = post.date
-    ? new Date(post.date).toLocaleDateString(isZh ? "zh-CN" : "en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
+  const date = (() => {
+    if (!post.date) return null;
+    const d = new Date(post.date);
+    if (Number.isNaN(d.getTime())) return null;
+    return dateFnsFormat(
+      d,
+      isZh ? "yyyy年M月d日" : "MMMM d, yyyy",
+      isZh ? { locale: zhCN } : undefined,
+    );
+  })();
   const authorName = getAuthorName(post.author);
   const authorAvatarUrl = getAuthorAvatarUrl(post.author);
   const articleCopyText = getPostCopyText(post);

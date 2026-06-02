@@ -4,6 +4,16 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+// Mock next-intl — ActiveSessionsBlock uses useFormatter() for relative time
+// and dateTime formatting. Return deterministic strings so render tests don't
+// depend on locale / wall-clock.
+vi.mock("next-intl", () => ({
+  useFormatter: () => ({
+    relativeTime: (_d: Date) => "just now",
+    dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",
+  }),
+}));
+
 // Mock @nebutra/ui/components so we don't transitively import @emoji-mart/data
 // (which Vitest cannot import without a "type: json" attribute) via the heroui
 // barrel. The Button stub mirrors the props this component actually uses.
@@ -28,7 +38,7 @@ vi.mock("@nebutra/ui/components", () => ({
 import {
   type ActiveSession,
   ActiveSessionsBlock,
-  formatRelativeTime,
+  parseSessionDate,
 } from "../active-sessions-block";
 import type { SecurityCapabilities } from "../security-capabilities";
 
@@ -50,41 +60,37 @@ function makeSession(overrides: Partial<ActiveSession>): ActiveSession {
   return { ...baseSession, ...overrides };
 }
 
-describe("formatRelativeTime", () => {
-  it("returns minutes-ago for recent timestamps", () => {
-    const now = new Date("2026-05-09T12:00:00.000Z").getTime();
-    const ts = new Date(now - 5 * 60 * 1000).toISOString();
-    expect(formatRelativeTime(ts, now)).toBe("5 minutes ago");
+describe("parseSessionDate", () => {
+  it("returns a Date for a valid ISO 8601 string", () => {
+    const result = parseSessionDate("2026-05-09T10:00:00.000Z");
+    expect(result).toBeInstanceOf(Date);
+    expect(result!.toISOString()).toBe("2026-05-09T10:00:00.000Z");
   });
 
-  it("returns hours-ago when older than 60 minutes", () => {
-    const now = new Date("2026-05-09T12:00:00.000Z").getTime();
-    const ts = new Date(now - 3 * 60 * 60 * 1000).toISOString();
-    expect(formatRelativeTime(ts, now)).toBe("3 hours ago");
-  });
-
-  it("returns days-ago when older than 24 hours", () => {
-    const now = new Date("2026-05-09T12:00:00.000Z").getTime();
-    const ts = new Date(now - 4 * 24 * 60 * 60 * 1000).toISOString();
-    expect(formatRelativeTime(ts, now)).toBe("4 days ago");
-  });
-
-  it("returns absolute date for older than 7 days", () => {
-    const now = new Date("2026-05-09T12:00:00.000Z").getTime();
+  it("returns a Date for any parseable timestamp", () => {
     const ts = new Date("2026-03-05T14:32:00.000Z").toISOString();
-    const result = formatRelativeTime(ts, now);
-    expect(result).toMatch(/Mar/);
-    expect(result).not.toContain("ago");
+    const result = parseSessionDate(ts);
+    expect(result).toBeInstanceOf(Date);
+    expect(result!.getFullYear()).toBe(2026);
   });
 
-  it("returns 'just now' for sub-minute deltas", () => {
-    const now = new Date("2026-05-09T12:00:00.000Z").getTime();
-    const ts = new Date(now - 5 * 1000).toISOString();
-    expect(formatRelativeTime(ts, now)).toBe("just now");
+  it("returns null for an empty string", () => {
+    expect(parseSessionDate("")).toBeNull();
   });
 
-  it("returns Unknown time for invalid input", () => {
-    expect(formatRelativeTime("not-a-date")).toBe("Unknown time");
+  it("returns null for a non-date string", () => {
+    expect(parseSessionDate("not-a-date")).toBeNull();
+  });
+
+  it("returns null for 'invalid' literal", () => {
+    expect(parseSessionDate("invalid")).toBeNull();
+  });
+
+  it("returns a valid Date for a recent timestamp", () => {
+    const ts = new Date(Date.now() - 5 * 60 * 1000).toISOString();
+    const result = parseSessionDate(ts);
+    expect(result).toBeInstanceOf(Date);
+    expect(Number.isNaN(result!.getTime())).toBe(false);
   });
 });
 

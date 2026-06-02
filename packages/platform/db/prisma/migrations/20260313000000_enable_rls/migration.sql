@@ -2,7 +2,7 @@
 -- Enable Row-Level Security (RLS) for multi-tenant data isolation
 --
 -- Strategy:
---   • Application code sets `app.current_org_id` at the start of each request
+--   • Application code sets `app.current_tenant_id` at the start of each request
 --     via a Prisma middleware / connection-level SET.
 --   • Each tenant-scoped table has a USING policy that compares
 --     organization_id to the session variable.
@@ -11,7 +11,7 @@
 --
 -- Usage in Prisma middleware (packages/db/src/middleware/rls.ts):
 --   await prisma.$executeRaw`
---     SELECT set_config('app.current_org_id', ${orgId}, true)
+--     SELECT set_config('app.current_tenant_id', ${orgId}, true)
 --   `;
 -- =============================================================================
 
@@ -20,7 +20,7 @@
 CREATE OR REPLACE FUNCTION current_org_id() RETURNS text
   LANGUAGE sql STABLE
 AS $$
-  SELECT COALESCE(current_setting('app.current_org_id', true), '')
+  SELECT COALESCE(current_setting('app.current_tenant_id', true), '')
 $$;
 
 -- =============================================================================

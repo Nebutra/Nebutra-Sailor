@@ -1625,7 +1625,7 @@
         },
         "multi-tenancy": {
           "question": "¿Cómo se gestiona el multi-tenancy?",
-          "answer": "Dos capas. Contexto de tenant a nivel de solicitud a través de @nebutra/tenant (AsyncLocalStorage propaga la organización activa a través de cada llamada del servidor, incluyendo consultas DB y webhooks de salida), y aislamiento aplicado por la base de datos a través de políticas de Seguridad a Nivel de Fila de Postgres (infra/data/database/policies/rls.sql) vinculadas a un app.current_org_id local de sesión. Las conexiones de rol de servicio evitan RLS solo dentro de servicios internos de confianza; todas las rutas orientadas al usuario pasan por el cliente con scope de tenant."
+          "answer": "Dos capas. Contexto de tenant a nivel de solicitud a través de @nebutra/tenant (AsyncLocalStorage propaga la organización activa a través de cada llamada del servidor, incluyendo consultas DB y webhooks de salida), y aislamiento aplicado por la base de datos a través de políticas de Seguridad a Nivel de Fila de Postgres (infra/data/database/policies/rls.sql) vinculadas a un app.current_tenant_id local de sesión. Las conexiones de rol de servicio evitan RLS solo dentro de servicios internos de confianza; todas las rutas orientadas al usuario pasan por el cliente con scope de tenant."
         },
         "swap-clerk": {
           "question": "¿Puedo cambiar Clerk por otro proveedor de autenticación?",

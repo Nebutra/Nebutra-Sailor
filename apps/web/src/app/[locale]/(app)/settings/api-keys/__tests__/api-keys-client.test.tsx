@@ -5,6 +5,17 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+// ApiKeysList (rendered inside ApiKeysPageClient) uses useFormatter() after
+// the W1 governance change. Provide a minimal stub.
+vi.mock("next-intl", () => ({
+  useFormatter: () => ({
+    dateTime: (d: Date, _opts?: unknown) =>
+      d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
+    relativeTime: (_d: Date) => "just now",
+  }),
+}));
+
 import { ApiKeysPageClient } from "@/app/[locale]/(app)/settings/api-keys/api-keys-client";
 
 const KEY_ROW = {

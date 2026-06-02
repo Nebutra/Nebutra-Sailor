@@ -3,7 +3,7 @@
 import { Button } from "@nebutra/ui/components";
 import { Input } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { type FormEvent, useReducer } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
 import type { AuthErrorKey } from "@/lib/auth/error-keys";
@@ -56,13 +56,6 @@ async function defaultRename(id: string, name: string): Promise<void> {
 
 async function defaultRemove(id: string): Promise<void> {
   await revokePasskey(id);
-}
-
-function formatDate(value: string | undefined): string {
-  if (!value) return "";
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return "";
-  return parsed.toLocaleDateString();
 }
 
 function isCancelled(error: unknown): boolean {
@@ -169,6 +162,7 @@ export function PasskeysBlock({
 }: PasskeysBlockProps) {
   const t = useTranslations("auth.security.passkeys");
   const tErrors = useTranslations("auth.errors");
+  const format = useFormatter();
 
   const [state, dispatch] = useReducer(passkeysUiReducer, INITIAL_UI_STATE);
   const queryClient = useQueryClient();
@@ -378,7 +372,16 @@ export function PasskeysBlock({
                   <div>
                     <p className="text-sm font-medium text-[var(--neutral-12)]">{passkey.name}</p>
                     <p className="mt-1 text-xs text-[var(--neutral-10)]">
-                      {[passkey.deviceType, formatDate(passkey.createdAt)]
+                      {[
+                        passkey.deviceType,
+                        passkey.createdAt && !Number.isNaN(new Date(passkey.createdAt).getTime())
+                          ? format.dateTime(new Date(passkey.createdAt), {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })
+                          : undefined,
+                      ]
                         .filter(Boolean)
                         .join(" · ")}
                     </p>

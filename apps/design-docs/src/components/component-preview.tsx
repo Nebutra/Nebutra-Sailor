@@ -1,10 +1,16 @@
 "use client";
 
 import { Check, Copy, Message as MessageSquare, Moon, Sun, Terminal } from "@nebutra/icons";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  useCopyToClipboard,
+} from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import type { ReactNode } from "react";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 
 const REGISTRY_BASE = "https://ui.nebutra.com/r";
 
@@ -60,40 +66,8 @@ Steps to integrate:
 5. Verify the component renders correctly in both light and dark modes`;
 }
 
-function useClipboard() {
-  const [hasCopied, setHasCopied] = useState(false);
-
-  useEffect(() => {
-    if (!hasCopied) return;
-    const t = setTimeout(() => setHasCopied(false), 2000);
-    return () => clearTimeout(t);
-  }, [hasCopied]);
-
-  async function copy(value: string) {
-    try {
-      await navigator.clipboard.writeText(value);
-      setHasCopied(true);
-    } catch {
-      try {
-        const textarea = document.createElement("textarea");
-        textarea.value = value;
-        textarea.style.cssText = "position: fixed; opacity: 0;";
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-        setHasCopied(true);
-      } catch {
-        // Both methods failed
-      }
-    }
-  }
-
-  return { hasCopied, copy };
-}
-
 function CopyButton({ value }: { value: string }) {
-  const { hasCopied, copy } = useClipboard();
+  const { copied: hasCopied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
   return (
     <button
       type="button"
@@ -107,7 +81,7 @@ function CopyButton({ value }: { value: string }) {
 }
 
 function InstallButton({ name }: { name: string }) {
-  const { hasCopied, copy } = useClipboard();
+  const { copied: hasCopied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
   const cmd = `npx shadcn@latest add ${REGISTRY_BASE}/${name}.json`;
   return (
     <button
@@ -131,8 +105,14 @@ function getRegistryItemName(previewName: string): string {
 function InstallTab({ name }: { name: string }) {
   const cmd = `npx shadcn@latest add ${REGISTRY_BASE}/${name}.json`;
   const depCmd = `pnpm add @nebutra/ui @nebutra/tokens @nebutra/icons`;
-  const { hasCopied: cmdCopied, copy: copyCmd } = useClipboard();
-  const { hasCopied: depCopied, copy: copyDep } = useClipboard();
+  const { copied: cmdCopied, copy: copyCmd } = useCopyToClipboard({
+    timeout: 2000,
+    showToast: false,
+  });
+  const { copied: depCopied, copy: copyDep } = useCopyToClipboard({
+    timeout: 2000,
+    showToast: false,
+  });
   return (
     <div className="space-y-5 p-6 text-sm">
       <div className="space-y-2">
@@ -180,7 +160,7 @@ function InstallTab({ name }: { name: string }) {
 }
 
 function PromptButton({ name, code }: { name: string; code: string }) {
-  const { hasCopied, copy } = useClipboard();
+  const { copied: hasCopied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
   return (
     <button
       type="button"

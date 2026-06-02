@@ -12,6 +12,7 @@ import {
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+import { useDebounceValue } from "usehooks-ts";
 
 /* eslint-disable react-hooks/incompatible-library */
 
@@ -41,14 +42,7 @@ export function useDataTable<TData>(props: DataTableProps<TData>) {
   } = props;
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearchQuery(searchQuery);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
+  const [debouncedSearchQuery] = useDebounceValue(searchQuery, 300);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});

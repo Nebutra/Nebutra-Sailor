@@ -1655,7 +1655,7 @@
         },
         "multi-tenancy": {
           "question": "멀티테넌시는 어떻게 처리됩니까?",
-          "answer": "두 가지 레이어가 있습니다. @nebutra/tenant를 통한 요청 범위 테넌트 컨텍스트(AsyncLocalStorage가 DB 쿼리 및 아웃바운드 웹훅을 포함한 모든 서버 호출에서 활성 조직을 전파), 그리고 세션 로컬 app.current_org_id에 바인딩된 Postgres Row-Level Security 정책(infra/data/database/policies/rls.sql)을 통한 데이터베이스 강제 격리. 서비스 역할 연결은 신뢰할 수 있는 내부 서비스 내부에서만 RLS를 우회하며, 모든 사용자 대면 라우트는 테넌트 범위 클라이언트를 통과합니다."
+          "answer": "두 가지 레이어가 있습니다. @nebutra/tenant를 통한 요청 범위 테넌트 컨텍스트(AsyncLocalStorage가 DB 쿼리 및 아웃바운드 웹훅을 포함한 모든 서버 호출에서 활성 조직을 전파), 그리고 세션 로컬 app.current_tenant_id에 바인딩된 Postgres Row-Level Security 정책(infra/data/database/policies/rls.sql)을 통한 데이터베이스 강제 격리. 서비스 역할 연결은 신뢰할 수 있는 내부 서비스 내부에서만 RLS를 우회하며, 모든 사용자 대면 라우트는 테넌트 범위 클라이언트를 통과합니다."
         },
         "security": {
           "question": "보안은 어떻게 처리됩니까?",

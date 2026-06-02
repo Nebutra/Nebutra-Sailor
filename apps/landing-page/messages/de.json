@@ -1625,7 +1625,7 @@
         },
         "multi-tenancy": {
           "question": "Wie wird Multi-Tenancy gehandhabt?",
-          "answer": "Zwei Ebenen. Request-scoped Tenant-Kontext via @nebutra/tenant (AsyncLocalStorage propagiert die aktive Organisation durch jeden Server-Call, einschließlich DB-Abfragen und ausgehende Webhooks) und datenbankerzwungene Isolierung via Postgres Row-Level Security-Richtlinien (infra/data/database/policies/rls.sql), gebunden an eine session-lokale app.current_org_id."
+          "answer": "Zwei Ebenen. Request-scoped Tenant-Kontext via @nebutra/tenant (AsyncLocalStorage propagiert die aktive Organisation durch jeden Server-Call, einschließlich DB-Abfragen und ausgehende Webhooks) und datenbankerzwungene Isolierung via Postgres Row-Level Security-Richtlinien (infra/data/database/policies/rls.sql), gebunden an eine session-lokale app.current_tenant_id."
         },
         "swap-clerk": {
           "question": "Kann ich Clerk gegen einen anderen Auth-Anbieter tauschen?",

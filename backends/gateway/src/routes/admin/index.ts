@@ -22,6 +22,7 @@ import { getSystemDb } from "@nebutra/db";
 import { ackDeadLetter, getDeadLetterQueue } from "@nebutra/event-bus";
 import { logger } from "@nebutra/logger";
 import { env } from "../../config/env.js";
+import { hashApiKey } from "../../lib/api-key.js";
 import { getUsageSnapshot } from "../../middlewares/usageMetering.js";
 
 // AUDIT(no-tenant): the /admin/* surface is platform-operator-only and
@@ -184,7 +185,7 @@ adminRoutes.openapi(
     const random = crypto.randomBytes(24).toString("hex");
     const plaintext = `nbtr_live_${random}`;
     const prefix = plaintext.slice(0, 16);
-    const hash = crypto.createHash("sha256").update(plaintext).digest("hex");
+    const hash = hashApiKey(plaintext);
 
     await adminDb.aPIKey.create({
       data: {

@@ -63,6 +63,7 @@
     "@nebutra/metering": "workspace:*",
     "@polar-sh/sdk": "^0.46.7",
     "@prisma/client": "^7.4.2",
+    "date-fns": "^4.1.0",
     "stripe": "^20.4.0",
     "zod": "catalog:"
   },

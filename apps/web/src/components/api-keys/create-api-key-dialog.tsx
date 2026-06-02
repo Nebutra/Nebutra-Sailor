@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  useCopyToClipboard,
 } from "@nebutra/ui/primitives";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -71,14 +72,15 @@ export function CreateApiKeyDialog({
     defaultValues: { name: "", scopes: [] },
   });
   const [created, setCreated] = useState<CreatedApiKey | null>(null);
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
 
   // Reset internal state when the dialog re-opens
   useEffect(() => {
     if (open) {
       form.reset({ name: "", scopes: [] });
       setCreated(null);
-      setCopied(false);
+      // Note: copied state from useCopyToClipboard auto-resets after 2000ms;
+      // a manual reset is not available from the hook.
     }
   }, [open, form]);
 
@@ -127,13 +129,7 @@ export function CreateApiKeyDialog({
 
   async function handleCopy() {
     if (!created) return;
-    try {
-      await navigator.clipboard.writeText(created.key);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Clipboard may be unavailable; ignore silently.
-    }
+    await copy(created.key);
   }
 
   function attemptClose() {

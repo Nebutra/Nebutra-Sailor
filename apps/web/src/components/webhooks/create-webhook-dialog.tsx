@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  useCopyToClipboard,
 } from "@nebutra/ui/primitives";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -80,7 +81,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
     defaultValues: { url: "", events: [] },
   });
   const [result, setResult] = useState<CreateWebhookResult | null>(null);
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
 
   const url = form.watch("url");
   const events = form.watch("events");
@@ -106,13 +107,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
   }
 
   async function copySecret(secret: string) {
-    try {
-      await navigator.clipboard.writeText(secret);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // ignore
-    }
+    await copy(secret);
   }
 
   if (result) {

@@ -11,6 +11,7 @@ interface PrismaLikeClient {
   $extends?: (extension: unknown) => unknown;
   $executeRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<number>;
   $queryRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<unknown[]>;
+  $transaction?: (operations: unknown[]) => Promise<unknown[]>;
 }
 
 export type RlsPolicyCommand = "ALL" | "SELECT" | "INSERT" | "UPDATE" | "DELETE";
@@ -32,7 +33,7 @@ export interface RlsPolicySqlOptions {
   forceRls?: boolean;
 }
 
-const DEFAULT_TENANT_COLUMN = "tenant_id";
+const DEFAULT_TENANT_COLUMN = "organization_id";
 const DEFAULT_POLICY_PREFIX = "tenant_isolation";
 const DEFAULT_TENANT_EXPRESSION = "current_setting('app.current_tenant_id', true)";
 
@@ -169,24 +170,41 @@ export function generateRlsPolicySql(options: RlsPolicySqlOptions): string {
  *
  * // All queries now include RLS enforcement:
  * const users = await client.user.findMany();
- * // SQL: SELECT * FROM users WHERE current_setting('app.current_tenant_id') = user.tenant_id
+ * // SQL: SELECT * FROM users WHERE current_setting('app.current_tenant_id') = user.organization_id
  * ```
  */
 export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string): P {
   try {
     // Check if Prisma client supports $extends (v5+)
     if (typeof prisma.$extends === "function") {
-      // Create a Prisma client extension that sets RLS context on each query
+      // Create a Prisma client extension that scopes every query to the tenant.
       const extended = prisma.$extends({
         query: {
-          $allOperations: {
-            async $before() {
-              // Execute SET command to set application variable
-              if (typeof prisma.$executeRaw === "function") {
-                await prisma.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, false)`;
-              }
+          async $allOperations({
+            args,
+            query,
+          }: {
+            args: unknown;
+            query: (a: unknown) => Promise<unknown>;
+          }) {
+            // Run the RLS setting and the operation in ONE transaction so they
+            // share a connection, and set it transaction-local (third arg
+            // `true`) so it is cleared at transaction end. A session-level SET
+            // would leak across pooled/reused connections; running the SET
+            // outside a transaction does not guarantee the query lands on the
+            // same connection at all.
+            if (
+              typeof prisma.$transaction === "function" &&
+              typeof prisma.$executeRaw === "function"
+            ) {
+              const [, result] = (await prisma.$transaction([
+                prisma.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
+                query(args),
+              ])) as [unknown, unknown];
               logger.debug("RLS context set", { tenantId });
-            },
+              return result;
+            }
+            return query(args);
           },
         },
       });
@@ -340,13 +358,16 @@ export class TenantAwarePrismaClient {
   }
 
   /**
-   * Execute a raw SQL query with tenant context.
+   * Execute a raw SQL statement with tenant context.
+   *
+   * Tagged-template only — interpolated values are bound as parameters by
+   * Prisma, never concatenated into the SQL string:
+   *   client.executeRaw`UPDATE users SET active = ${flag} WHERE id = ${id}`
    */
-  async executeRaw(query: string): Promise<number> {
+  async executeRaw(query: TemplateStringsArray, ...values: unknown[]): Promise<number> {
     try {
-      logger.debug("Executing raw query with tenant context", {
+      logger.debug("Executing raw statement with tenant context", {
         tenantId: this.tenantId,
-        queryLength: query.length,
       });
 
       const client = this.client as PrismaLikeClient;
@@ -356,7 +377,7 @@ export class TenantAwarePrismaClient {
           "shared_schema",
         );
       }
-      return await client.$executeRaw`${query}`;
+      return await client.$executeRaw(query, ...values);
     } catch (err) {
       logger.error("Failed to execute raw query", err, { tenantId: this.tenantId });
       throw new TenantIsolationError(
@@ -367,20 +388,22 @@ export class TenantAwarePrismaClient {
   }
 
   /**
-   * Execute a raw query and return results.
+   * Execute a raw SQL query with tenant context and return rows.
+   *
+   * Tagged-template only — interpolated values are bound as parameters:
+   *   client.queryRaw`SELECT * FROM users WHERE id = ${id}`
    */
-  async queryRaw(query: string): Promise<unknown[]> {
+  async queryRaw(query: TemplateStringsArray, ...values: unknown[]): Promise<unknown[]> {
     try {
-      logger.debug("Executing query with tenant context", {
+      logger.debug("Executing raw query with tenant context", {
         tenantId: this.tenantId,
-        queryLength: query.length,
       });
 
       const client = this.client as PrismaLikeClient;
       if (!client.$queryRaw) {
         throw new TenantIsolationError("Prisma client does not support $queryRaw", "shared_schema");
       }
-      return await client.$queryRaw`${query}`;
+      return await client.$queryRaw(query, ...values);
     } catch (err) {
       logger.error("Failed to execute query", err, { tenantId: this.tenantId });
       throw new TenantIsolationError(

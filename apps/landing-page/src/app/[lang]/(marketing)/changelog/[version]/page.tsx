@@ -2,6 +2,8 @@
 
 import { getChangelogEntries } from "@nebutra/sanity/queries";
 import { AnimateIn } from "@nebutra/ui/components";
+import { format as dateFnsFormat } from "date-fns";
+import { zhCN } from "date-fns/locale";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -371,11 +373,14 @@ export default async function ChangelogVersionPage({
 
   if (cmsEntry) {
     const date = new Date(cmsEntry.publishedAt);
-    const formattedDate = date.toLocaleDateString(lang, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    const isZh = lang === "zh";
+    const formattedDate = Number.isNaN(date.getTime())
+      ? cmsEntry.publishedAt
+      : dateFnsFormat(
+          date,
+          isZh ? "yyyy年M月d日" : "MMMM d, yyyy",
+          isZh ? { locale: zhCN } : undefined,
+        );
 
     return (
       <main
@@ -488,11 +493,14 @@ export default async function ChangelogVersionPage({
   }
 
   const date = new Date(staticRelease.date);
-  const formattedDate = date.toLocaleDateString(lang, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const isZhStatic = lang === "zh";
+  const formattedDate = Number.isNaN(date.getTime())
+    ? staticRelease.date
+    : dateFnsFormat(
+        date,
+        isZhStatic ? "yyyy年M月d日" : "MMMM d, yyyy",
+        isZhStatic ? { locale: zhCN } : undefined,
+      );
 
   // Find previous and next in static releases
   const currentIdx = STATIC_RELEASES.findIndex((r) => r.version === version);
