@@ -431,17 +431,22 @@ jobs:
         # extracted node_modules tree.
         run: |
           set -euo pipefail
+          remote_root=$(printf '%q' "${ECS_DEPLOY_ROOT:-/var/www/nebutra}")
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
               "${ECS_USER}@${ECS_HOST}" \
-              "bash -s" <<'PREFLIGHT'
+              "ECS_DEPLOY_ROOT=${remote_root} bash -s" <<'PREFLIGHT'
           set -euo pipefail
+          incoming="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/.incoming"
           echo "--- disk before cleanup ---"
           df -h / 2>/dev/null || df -h
           echo "--- /tmp tarballs ---"
           find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -ls 2>/dev/null || true
           find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -delete 2>/dev/null || true
+          echo "--- incoming bundle staging ---"
+          mkdir -p "$incoming"
+          find "$incoming" -mindepth 1 -maxdepth 1 -type d -mtime +1 -print -exec rm -rf {} + 2>/dev/null || true
           echo "--- pruning old releases (keep latest 2 per app) ---"
           for app in landing web api design-docs sailor-docs; do
             dir="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app/releases"
@@ -480,17 +485,24 @@ jobs:
                     -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
                     -C)
           BUNDLES_DIR="${RUNNER_TEMP}/bundles"
+          REMOTE_BUNDLE_DIR="${ECS_DEPLOY_ROOT}/.incoming/${{ github.sha }}"
           if [ ! -d "$BUNDLES_DIR" ] || [ -z "$(ls -A "$BUNDLES_DIR" 2>/dev/null)" ]; then
             echo "::warning::No bundle artifacts to upload"; exit 1
           fi
+
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "mkdir -p $(printf '%q' "$REMOTE_BUNDLE_DIR")"
 
           # Upload bundles one at a time so a stalled transfer surfaces
           # quickly and the failure points at a specific tarball.
           for bundle in "$BUNDLES_DIR"/*.tar.gz; do
             base=$(basename "$bundle")
             size=$(du -h "$bundle" | cut -f1)
-            echo "→ scp $base ($size)"
-            scp "${SCP_OPTS[@]}" "$bundle" "${ECS_USER}@${ECS_HOST}:/tmp/"
+            echo "→ scp $base ($size) -> $REMOTE_BUNDLE_DIR/"
+            scp "${SCP_OPTS[@]}" "$bundle" "${ECS_USER}@${ECS_HOST}:${REMOTE_BUNDLE_DIR}/"
           done
 
           # Always re-upload the helper + ecosystem config so the box stays in sync.
@@ -651,6 +663,7 @@ jobs:
           add_remote_env KEEP_RELEASES "$ECS_KEEP_RELEASES"
           add_remote_env PM2_CONFIG "$ECS_DEPLOY_ROOT/ecosystem.config.cjs"
           add_remote_env SHA "${{ github.sha }}"
+          add_remote_env BUNDLE_DIR "$ECS_DEPLOY_ROOT/.incoming/${{ github.sha }}"
           add_remote_envs \
             DATABASE_URL DIRECT_URL SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
             AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_SECRET BETTER_AUTH_URL \

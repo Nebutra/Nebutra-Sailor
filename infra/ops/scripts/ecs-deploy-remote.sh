@@ -2,7 +2,7 @@
 # Remote-side helper for the ECS deploy workflow.
 #
 # Invoked over SSH by .github/workflows/deploy-ecs.yml after bundles have been
-# uploaded to /tmp on the ECS box. Unpacks each bundle into a timestamped
+# uploaded to BUNDLE_DIR on the ECS box. Unpacks each bundle into a timestamped
 # release directory, atomically swaps the `current` symlink, and reloads PM2.
 #
 # Inputs (env vars):
@@ -11,9 +11,11 @@
 #   KEEP_RELEASES — number of past releases to retain (default 5)
 #   PM2_CONFIG    — absolute path to ecosystem.config.cjs that should be loaded
 #                   on first run; subsequent runs use `pm2 reload` for zero downtime.
+#   BUNDLE_DIR    — directory containing uploaded tarballs
+#                   (default /tmp for backwards compatibility).
 #
-# Tarball naming convention (uploaded by the workflow to /tmp):
-#   /tmp/nebutra-<app>-<sha>.tar.gz
+# Tarball naming convention:
+#   $BUNDLE_DIR/nebutra-<app>-<sha>.tar.gz
 #
 # Exits non-zero on any failure so the GH Actions step fails loudly.
 
@@ -29,6 +31,7 @@ APPS="${APPS:-landing web api design-docs sailor-docs}"
 KEEP_RELEASES="${KEEP_RELEASES:-1}"
 PM2_CONFIG="${PM2_CONFIG:-$DEPLOY_ROOT/ecosystem.config.cjs}"
 SHA="${SHA:?SHA env var required}"
+BUNDLE_DIR="${BUNDLE_DIR:-/tmp}"
 
 capture_deploy_runtime_env() {
   local key value
@@ -86,9 +89,10 @@ esac
 
 mkdir -p "$DEPLOY_ROOT"
 
-# Clean stale bundles from prior failed runs so /tmp doesn't fill the disk.
+# Clean stale bundles from prior failed runs so the staging directory doesn't fill the disk.
 # Anything not matching the current SHA is from a previous run; safe to drop.
-find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' \
+mkdir -p "$BUNDLE_DIR"
+find "$BUNDLE_DIR" -maxdepth 1 -name 'nebutra-*.tar.gz' \
      ! -name "nebutra-*-${SHA}.tar.gz" -mtime +0 -delete 2>/dev/null || true
 
 preserve_runtime_env() {
@@ -771,7 +775,7 @@ for proc in procs:
 
 deploy_one() {
   local app="$1" pm2_name="$2"
-  local tarball="/tmp/nebutra-${app}-${SHA}.tar.gz"
+  local tarball="$BUNDLE_DIR/nebutra-${app}-${SHA}.tar.gz"
   if [ ! -f "$tarball" ]; then
     log "skip $app — no tarball at $tarball"
     return 0
@@ -801,8 +805,8 @@ deploy_one() {
     fi
   fi
 
-  # Also reclaim any free space hiding in /tmp from earlier failed runs.
-  find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' \
+  # Also reclaim any free space hiding in bundle staging from earlier failed runs.
+  find "$BUNDLE_DIR" -maxdepth 1 -name 'nebutra-*.tar.gz' \
        ! -name "nebutra-${app}-${SHA}.tar.gz" -mmin +5 -delete 2>/dev/null || true
 
   mkdir -p "$release"
