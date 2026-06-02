@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { defineConfig, devices } from "@playwright/test";
 
 /**
@@ -23,6 +25,8 @@ const nextDevWatcherEnv = {
   WATCHPACK_POLLING: "true",
   CHOKIDAR_USEPOLLING: "true",
 };
+const hasSleptonsApp = existsSync(path.join(process.cwd(), "apps/sleptons/package.json"));
+const envOr = (value: string | undefined, fallback: string) => (value?.trim() ? value : fallback);
 
 process.env.PLAYWRIGHT_BASE_URL ??= landingBaseUrl;
 process.env.APP_BASE_URL ??= appBaseUrl;
@@ -93,25 +97,34 @@ export default defineConfig({
         NEXT_PUBLIC_APP_URL: appBaseUrl,
         NEXT_PUBLIC_API_URL: apiBaseUrl,
         NEXT_PUBLIC_API_GATEWAY_URL: apiBaseUrl,
-        BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET ?? "placeholder_secret_32_chars_long_xx",
-        CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? "sk_test_placeholder",
-        DATABASE_URL: process.env.DATABASE_URL ?? "postgresql://localhost/dev_placeholder",
-        UPSTASH_REDIS_REST_URL:
-          process.env.UPSTASH_REDIS_REST_URL ?? "https://placeholder.upstash.io",
-        UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN ?? "placeholder_token",
+        BETTER_AUTH_SECRET: envOr(
+          process.env.BETTER_AUTH_SECRET,
+          "placeholder_secret_32_chars_long_xx",
+        ),
+        CLERK_SECRET_KEY: envOr(process.env.CLERK_SECRET_KEY, "sk_test_placeholder"),
+        DATABASE_URL: envOr(process.env.DATABASE_URL, "postgresql://localhost/dev_placeholder"),
+        UPSTASH_REDIS_REST_URL: envOr(
+          process.env.UPSTASH_REDIS_REST_URL,
+          "https://placeholder.upstash.io",
+        ),
+        UPSTASH_REDIS_REST_TOKEN: envOr(process.env.UPSTASH_REDIS_REST_TOKEN, "placeholder_token"),
       },
     },
-    {
-      command: `pnpm --filter @nebutra/sleptons exec next dev --webpack --port ${e2ePorts.sleptons}`,
-      url: `${sleptonsBaseUrl}${e2eHealthPath}`,
-      reuseExistingServer: !process.env.CI,
-      timeout: webServerTimeout,
-      env: {
-        ...nextDevWatcherEnv,
-        SKIP_ENV_VALIDATION: "true",
-        NEXT_PUBLIC_SITE_URL: landingBaseUrl,
-        NEXT_PUBLIC_APP_URL: appBaseUrl,
-      },
-    },
+    ...(hasSleptonsApp
+      ? [
+          {
+            command: `pnpm --filter @nebutra/sleptons exec next dev --webpack --port ${e2ePorts.sleptons}`,
+            url: `${sleptonsBaseUrl}${e2eHealthPath}`,
+            reuseExistingServer: !process.env.CI,
+            timeout: webServerTimeout,
+            env: {
+              ...nextDevWatcherEnv,
+              SKIP_ENV_VALIDATION: "true",
+              NEXT_PUBLIC_SITE_URL: landingBaseUrl,
+              NEXT_PUBLIC_APP_URL: appBaseUrl,
+            },
+          },
+        ]
+      : []),
   ],
 });

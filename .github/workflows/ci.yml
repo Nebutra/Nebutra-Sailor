@@ -366,6 +366,7 @@ jobs:
           AUTH_PROVIDER: "clerk"
           NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
           NEXT_TELEMETRY_DISABLED: "1"
+          DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
       - name: Upload web release logs
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -746,8 +747,8 @@ jobs:
           AUTH_PROVIDER: "clerk"
           NEXT_PUBLIC_AUTH_PROVIDER: "clerk"
           NEXT_TELEMETRY_DISABLED: "1"
-          DATABASE_URL: ${{ secrets.CI_DATABASE_URL || '' }}
-          CLERK_SECRET_KEY: ${{ secrets.CI_CLERK_SECRET_KEY || '' }}
+          DATABASE_URL: ${{ secrets.CI_DATABASE_URL || 'postgresql://stub:stub@localhost:5432/stub' }}
+          CLERK_SECRET_KEY: ${{ secrets.CI_CLERK_SECRET_KEY || 'sk_test_placeholder' }}
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
