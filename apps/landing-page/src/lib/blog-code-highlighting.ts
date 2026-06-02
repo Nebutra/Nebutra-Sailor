@@ -1,10 +1,32 @@
 import type { PortableTextBlock } from "@nebutra/blog";
-import { codeToHtml } from "shiki";
+import goLang from "@shikijs/langs/go";
+import rustLang from "@shikijs/langs/rust";
+import { type BundledLanguage, createHighlighter, type Highlighter } from "shiki/bundle/web";
 
 const SHIKI_THEMES = {
   dark: "github-dark",
   light: "github-light",
 } as const;
+
+// Bundle hygiene (#141): import from `shiki/bundle/web` (78 curated languages)
+// instead of the full `shiki` entry (332 languages). The full bundle's dynamic
+// `lang` made Next.js trace every `@shikijs/langs` grammar (~9.9 MB / 254 files)
+// into the standalone ECS artifact. The web bundle covers every realistic blog
+// language; `go`/`rust` are the only common dev languages it omits, so we
+// register their grammars explicitly to avoid degrading those posts to plain
+// text. Any language outside this set still renders (unhighlighted) via the
+// `text` fallback below.
+const PRELOADED_LANGUAGES = ["javascript", "typescript", "tsx", "jsx", "bash", "json"] as const;
+
+let highlighterPromise: Promise<Highlighter> | null = null;
+
+function getHighlighter(): Promise<Highlighter> {
+  highlighterPromise ??= createHighlighter({
+    themes: [SHIKI_THEMES.dark, SHIKI_THEMES.light],
+    langs: [...PRELOADED_LANGUAGES, goLang, rustLang],
+  });
+  return highlighterPromise;
+}
 
 function normalizeLanguage(language: string | null | undefined): string {
   const value = language?.trim().toLowerCase();
@@ -42,8 +64,21 @@ async function highlightCodeBlock(block: PortableTextBlock): Promise<PortableTex
     };
   }
 
+  const highlighter = await getHighlighter();
+
+  // Lazy-load any web-bundle language not preloaded; fall back to plain `text`
+  // for anything the curated bundle does not ship.
+  let lang = language;
+  if (!highlighter.getLoadedLanguages().includes(lang)) {
+    try {
+      await highlighter.loadLanguage(lang as BundledLanguage);
+    } catch {
+      lang = "text";
+    }
+  }
+
   const highlighterOptions = {
-    lang: language,
+    lang,
     themes: SHIKI_THEMES,
     transformers: [
       {
@@ -57,13 +92,13 @@ async function highlightCodeBlock(block: PortableTextBlock): Promise<PortableTex
         },
       },
     ],
-  } satisfies Parameters<typeof codeToHtml>[1];
+  } satisfies Parameters<Highlighter["codeToHtml"]>[1];
 
   let html: string;
   try {
-    html = await codeToHtml(code, highlighterOptions);
+    html = highlighter.codeToHtml(code, highlighterOptions);
   } catch {
-    html = await codeToHtml(code, { ...highlighterOptions, lang: "text" });
+    html = highlighter.codeToHtml(code, { ...highlighterOptions, lang: "text" });
   }
 
   return {
