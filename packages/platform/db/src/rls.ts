@@ -7,10 +7,10 @@
  *
  * Usage in API route handlers:
  *
- *   import { withOrgContext } from "@nebutra/db/rls";
+ *   import { withTenantContext } from "@nebutra/db/rls";
  *
- *   // All queries inside the callback are automatically scoped to orgId.
- *   const result = await withOrgContext(prisma, orgId, async (tx) => {
+ *   // All queries inside the callback are automatically scoped to tenantId.
+ *   const result = await withTenantContext(prisma, tenantId, async (tx) => {
  *     return tx.content.findMany();
  *   });
  *
@@ -36,13 +36,13 @@ type InteractiveTransaction = Omit<
 
 /**
  * Run `callback` inside a Prisma transaction with `app.current_tenant_id` set to
- * `orgId` for the duration of the transaction.
+ * `tenantId` for the duration of the transaction.
  *
- * All tenant-scoped RLS policies compare `organization_id` to this value.
+ * All tenant-scoped RLS policies compare `tenant_id` to this value.
  */
-export async function withOrgContext<T>(
+export async function withTenantContext<T>(
   prisma: PrismaClient,
-  orgId: string,
+  tenantId: string,
   callback: (tx: InteractiveTransaction) => Promise<T>,
 ): Promise<T> {
   return prisma.$transaction(async (tx) => {
@@ -52,10 +52,16 @@ export async function withOrgContext<T>(
       await tx.$executeRawUnsafe(`SET LOCAL ROLE "${RLS_ROLE}"`);
     }
     // transaction-local: cleared automatically when tx commits or rolls back
-    await tx.$executeRaw`SELECT set_config('app.current_tenant_id', ${orgId}, true)`;
+    await tx.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`;
     return callback(tx);
   });
 }
+
+/**
+ * Compatibility alias for organization-tenant callers during the Model-2
+ * cutover. New code should call `withTenantContext`.
+ */
+export const withOrgContext = withTenantContext;
 
 /**
  * Bypass helper for admin / migration operations that need all rows.
@@ -67,7 +73,7 @@ export async function withAdminContext<T>(
   callback: (tx: InteractiveTransaction) => Promise<T>,
 ): Promise<T> {
   return prisma.$transaction(async (tx) => {
-    // Empty string → no org filter; policies with TO postgres bypass RLS.
+    // Empty string → no tenant filter; policies with TO postgres bypass RLS.
     // This is a no-op for normal app roles but documents the intent clearly.
     await tx.$executeRaw`SELECT set_config('app.current_tenant_id', '', true)`;
     return callback(tx);

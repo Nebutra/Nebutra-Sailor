@@ -6,7 +6,7 @@
 CREATE TABLE "public"."atelier_canvas" (
   "pk" TEXT NOT NULL,
   "id" TEXT NOT NULL,
-  "organization_id" TEXT NOT NULL,
+  "tenant_id" TEXT NOT NULL,
   "name" TEXT NOT NULL,
   "scene" JSONB NOT NULL DEFAULT '{"elements":[],"files":[]}'::jsonb,
   "thumbnail" TEXT,
@@ -15,11 +15,11 @@ CREATE TABLE "public"."atelier_canvas" (
   CONSTRAINT "atelier_canvas_pkey" PRIMARY KEY ("pk")
 );
 
-CREATE UNIQUE INDEX "atelier_canvas_organization_id_id_key"
-  ON "public"."atelier_canvas" ("organization_id", "id");
+CREATE UNIQUE INDEX "atelier_canvas_tenant_id_id_key"
+  ON "public"."atelier_canvas" ("tenant_id", "id");
 
-CREATE INDEX "atelier_canvas_organization_id_updated_at_idx"
-  ON "public"."atelier_canvas" ("organization_id", "updated_at");
+CREATE INDEX "atelier_canvas_tenant_id_updated_at_idx"
+  ON "public"."atelier_canvas" ("tenant_id", "updated_at");
 
 ALTER TABLE "public"."atelier_canvas" ENABLE ROW LEVEL SECURITY;
 
@@ -31,5 +31,5 @@ CREATE POLICY "atelier_canvas_bypass" ON "public"."atelier_canvas"
 
 CREATE POLICY "atelier_canvas_tenant" ON "public"."atelier_canvas"
   AS PERMISSIVE FOR ALL
-  USING ("organization_id" = current_org_id())
-  WITH CHECK ("organization_id" = current_org_id());
+  USING ("tenant_id" = current_org_id())
+  WITH CHECK ("tenant_id" = current_org_id());

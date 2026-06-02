@@ -196,35 +196,35 @@ const baseClient: PrismaClient = new Proxy({} as PrismaClient, {
 // =============================================================================
 
 /**
- * Get a tenant-scoped Prisma client for the given `organizationId`.
+ * Get a tenant-scoped Prisma client for the given `tenantId`.
  *
  * Every query issued through the returned client runs inside a transaction
  * that first sets the PostgreSQL session variable `app.current_tenant_id`, which
  * the row-level security (RLS) policies in migration `20260313000000_enable_rls`
  * use to filter tenant-scoped tables. This guarantees that even a query that
- * forgets to include `where: { organizationId }` cannot read or mutate rows
+ * forgets to include `where: { tenantId }` cannot read or mutate rows
  * belonging to another tenant.
  *
- * Callers should derive `organizationId` from the request-scoped tenant
- * context (e.g. `c.get("tenant").organizationId` in Hono) — never from
- * client-controlled input.
+ * Callers should derive `tenantId` from the request-scoped tenant context,
+ * compatibility organization sessions, or trusted service-token claims — never
+ * from client-controlled input.
  *
  * @example
  * ```ts
  * import { getTenantDb } from "@nebutra/db";
  *
  * app.get("/projects", async (c) => {
- *   const orgId = c.get("tenant").organizationId;
- *   const db = getTenantDb(orgId);
+ *   const tenantId = c.get("tenant").tenantId;
+ *   const db = getTenantDb(tenantId);
  *   const projects = await db.project.findMany();
  *   return c.json(projects);
  * });
  * ```
  */
-export function getTenantDb(organizationId: string): PrismaClient {
-  if (!organizationId || typeof organizationId !== "string") {
+export function getTenantDb(tenantId: string): PrismaClient {
+  if (!tenantId || typeof tenantId !== "string") {
     throw new Error(
-      "[db] getTenantDb() requires a non-empty organizationId. Did you mean to call getSystemDb()?",
+      "[db] getTenantDb() requires a non-empty tenantId. Did you mean to call getSystemDb()?",
     );
   }
 
@@ -239,7 +239,7 @@ export function getTenantDb(organizationId: string): PrismaClient {
       $allModels: {
         async $allOperations({ args, query }) {
           const [, result] = await client.$transaction([
-            client.$executeRaw`SELECT set_config('app.current_tenant_id', ${organizationId}, true)`,
+            client.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
             query(args),
           ]);
           return result as unknown;

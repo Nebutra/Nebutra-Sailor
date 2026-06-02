@@ -1983,8 +1983,8 @@ model BAPasskey {
 
 // One row per canvas. The scene (Excalidraw-subset elements + files) is a
 // single JSON column — the source product's one-blob-per-canvas shape, but
-// with an organization_id + RLS instead of an implicit single user. The
-// logical canvas id is unique *within* an organization, not globally.
+// with a tenant_id + RLS instead of an implicit single user. The logical canvas
+// id is unique *within* a tenant, not globally.
 model AtelierCanvas {
   pk             String   @id @default(cuid())
   id             String

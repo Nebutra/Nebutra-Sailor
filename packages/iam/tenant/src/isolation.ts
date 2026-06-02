@@ -43,7 +43,7 @@ export interface RlsPolicySqlOptions {
   forceRls?: boolean;
 }
 
-const DEFAULT_TENANT_COLUMN = "organization_id";
+const DEFAULT_TENANT_COLUMN = "tenant_id";
 const DEFAULT_POLICY_PREFIX = "tenant_isolation";
 const DEFAULT_TENANT_EXPRESSION = "current_setting('app.current_tenant_id', true)";
 
@@ -180,7 +180,7 @@ export function generateRlsPolicySql(options: RlsPolicySqlOptions): string {
  *
  * // All queries now include RLS enforcement:
  * const users = await client.user.findMany();
- * // SQL: SELECT * FROM users WHERE current_setting('app.current_tenant_id') = user.organization_id
+ * // SQL: SELECT * FROM users WHERE current_setting('app.current_tenant_id') = user.tenant_id
  * ```
  */
 export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string): P {

@@ -191,6 +191,7 @@ describe("tenantContextMiddleware", () => {
       expect(res.status).toBe(200);
       expect(body.userId).toBe(userId);
       expect(body.organizationId).toBe(orgId);
+      expect(body.tenantId).toBe(orgId);
       expect(body.role).toBe(role);
       expect(body.plan).toBe(plan);
     });
@@ -211,6 +212,7 @@ describe("tenantContextMiddleware", () => {
       // Headers should NOT be trusted — tenant should have defaults
       expect(body.userId).toBeUndefined();
       expect(body.organizationId).toBeUndefined();
+      expect(body.tenantId).toBeUndefined();
       expect(body.plan).toBe("FREE");
     });
   });
@@ -230,6 +232,7 @@ describe("tenantContextMiddleware", () => {
       expect(res.status).toBe(200);
       expect(body.userId).toBeUndefined();
       expect(body.organizationId).toBeUndefined();
+      expect(body.tenantId).toBeUndefined();
       expect(body.plan).toBe("FREE");
     });
 
@@ -247,6 +250,7 @@ describe("tenantContextMiddleware", () => {
       expect(res.status).toBe(200);
       expect(body.userId).toBeUndefined();
       expect(body.organizationId).toBeUndefined();
+      expect(body.tenantId).toBeUndefined();
       expect(body.plan).toBe("FREE");
     });
 
@@ -275,6 +279,7 @@ describe("tenantContextMiddleware", () => {
       // but organizationId must NOT be populated from x-tenant-id.
       expect(body.userId).toBe("user-1");
       expect(body.organizationId).toBeUndefined();
+      expect(body.tenantId).toBeUndefined();
     });
   });
 
@@ -302,6 +307,7 @@ describe("tenantContextMiddleware", () => {
       expect(res.status).toBe(200);
       expect(body.userId).toBe("user-jwt-789");
       expect(body.organizationId).toBe("org-jwt-101");
+      expect(body.tenantId).toBe("org-jwt-101");
       expect(body.role).toBe("org:member");
     });
 
@@ -323,6 +329,7 @@ describe("tenantContextMiddleware", () => {
       expect(res.status).toBe(200);
       expect(body.userId).toBeUndefined();
       expect(body.organizationId).toBeUndefined();
+      expect(body.tenantId).toBeUndefined();
       expect(body.plan).toBe("FREE");
     });
 
