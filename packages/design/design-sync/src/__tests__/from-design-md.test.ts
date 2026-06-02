@@ -296,7 +296,7 @@ typography:
 ---
 `;
       const { set } = importFromDesignMd(fixture);
-      const ff = set.tokens["fontFamily"] as Record<string, { $value: string }>;
+      const ff = set.tokens.fontFamily as Record<string, { $value: string }>;
       expect(ff.mono?.$value).toBe("Geist Mono, monospace");
     });
 
