@@ -16,15 +16,13 @@ describe("ci harness dependency closure", () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
     const turboBaseRef = "$" + "{TURBO_BASE_REF}";
 
-    expect(workflow).toContain(
-      `run: |\n          pnpm turbo build --filter="...[${turboBaseRef}]..."`,
-    );
+    expect(workflow).toContain(`filters=(--filter="...[${turboBaseRef}]...")`);
     // Path-glob filters (tolerate stripped apps in the template build).
-    expect(workflow).toContain("--filter='!./apps/design-docs'");
-    expect(workflow).toContain("--filter='!./apps/sailor-docs'");
-    expect(workflow).toContain("--filter='!./apps/storybook'");
-    expect(workflow).toContain("--filter='!./apps/studio'");
-    expect(workflow).toContain("--filter='!./apps/tsekaluk-dev'");
+    expect(workflow).toContain(
+      "apps/design-docs apps/sailor-docs apps/storybook apps/studio apps/tsekaluk-dev",
+    );
+    expect(workflow).toContain('filters+=(--filter="!./$app")');
+    expect(workflow).toContain('pnpm turbo build "${filters[@]}"');
   });
 
   it("runs bundle analysis through the webpack analyzer path", async () => {
@@ -86,7 +84,7 @@ describe("ci harness dependency closure", () => {
     expect(rootPackage.scripts?.["check:e2e-env"]).toBe("node scripts/check-e2e-prereqs.mjs");
     expect(workflow).toContain("pnpm check:e2e-env");
     expect(workflow.indexOf("pnpm check:e2e-env")).toBeLessThan(
-      workflow.indexOf("pnpm exec playwright test --config=e2e/playwright.config.ts"),
+      workflow.lastIndexOf("pnpm exec playwright test --config=e2e/playwright.config.ts"),
     );
     expect(e2ePreflight).toContain("loadBindings");
     expect(e2ePreflight).toContain("NEXT_PUBLIC_AUTH_PROVIDER");
