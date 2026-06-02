@@ -476,7 +476,10 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const sidebarHeader = (
     <div className="flex flex-col gap-2">
       <div
-        className={cn("flex items-center px-2", collapsed ? "justify-center" : "justify-between")}
+        className={cn(
+          "flex",
+          collapsed ? "items-center justify-center px-2" : "items-center justify-between px-2",
+        )}
       >
         {collapsed ? (
           // Collapsed rail: the brand mark morphs into the expand icon on
@@ -504,14 +507,14 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
               aria-label={webBrandLabels.homeLink}
               className="inline-flex items-center rounded-[var(--radius-sm)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
             >
-              <BrandLogo variant="horizontal" className="h-6 w-[8.5rem]" />
+              <BrandLogo variant="horizontal" className={collapsed ? "size-7" : "h-6 w-[8.5rem]"} />
             </ViewTransitionLink>
             <button
               type="button"
               onClick={toggle}
               aria-label="Collapse sidebar"
               title="Collapse sidebar"
-              className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+              className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] border-0 bg-transparent shadow-none text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
             >
               <PanelLeftClose className="size-4" aria-hidden="true" />
             </button>

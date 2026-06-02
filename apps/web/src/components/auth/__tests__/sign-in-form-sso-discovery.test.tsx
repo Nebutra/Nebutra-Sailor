@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
+  HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
@@ -68,26 +69,48 @@ vi.mock("@nebutra/icons", () => ({
   Envelope: () => <span aria-hidden />,
 }));
 
-vi.mock("@nebutra/ui/primitives", () => ({
-  Button: ({
-    children,
-    type,
-    variant: _variant,
-    ...props
-  }: {
-    children?: ReactNode;
-    type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-    variant?: string;
-  } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
-    <button type={type ?? "button"} {...props}>
-      {children}
-    </button>
-  ),
-  Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
-  // biome-ignore lint/a11y/noLabelWithoutControl: test double forwards htmlFor from the component.
-  Label: (props: LabelHTMLAttributes<HTMLLabelElement>) => <label {...props} />,
-  Separator: () => <hr />,
-}));
+vi.mock("@nebutra/ui/primitives", async () => {
+  const React = await vi.importActual<typeof import("react")>("react");
+  const { Controller } = await vi.importActual<typeof import("react-hook-form")>("react-hook-form");
+  const FieldNameContext = React.createContext<string | undefined>(undefined);
+
+  return {
+    Button: ({
+      children,
+      type,
+      variant: _variant,
+      ...props
+    }: {
+      children?: ReactNode;
+      type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+      variant?: string;
+    } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
+      <button type={type ?? "button"} {...props}>
+        {children}
+      </button>
+    ),
+    Form: ({ children }: { children: ReactNode }) => <>{children}</>,
+    FormControl: ({ children }: { children: ReactNode }) => <>{children}</>,
+    FormField: ({ name, ...props }: React.ComponentProps<typeof Controller>) => (
+      <FieldNameContext.Provider value={name}>
+        <Controller name={name} {...props} />
+      </FieldNameContext.Provider>
+    ),
+    FormItem: ({ children, ...props }: HTMLAttributes<HTMLDivElement>) => (
+      <div {...props}>{children}</div>
+    ),
+    FormLabel: ({ htmlFor, ...props }: LabelHTMLAttributes<HTMLLabelElement>) => {
+      const fieldName = React.useContext(FieldNameContext);
+      return React.createElement("label", { htmlFor: htmlFor ?? fieldName, ...props });
+    },
+    Input: ({ id, name, ...props }: InputHTMLAttributes<HTMLInputElement>) => (
+      <input id={id ?? name} name={name} {...props} />
+    ),
+    // biome-ignore lint/a11y/noLabelWithoutControl: test double forwards htmlFor from the component.
+    Label: (props: LabelHTMLAttributes<HTMLLabelElement>) => <label {...props} />,
+    Separator: () => <hr />,
+  };
+});
 
 vi.mock("@/lib/auth/passkey-client", () => ({
   enablePasskeyConditionalUI: vi.fn(),

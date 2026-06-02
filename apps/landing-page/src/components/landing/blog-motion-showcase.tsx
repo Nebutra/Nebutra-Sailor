@@ -3,6 +3,7 @@
 import { ArrowRight, BookOpen, ChevronDown, Copy, Message } from "@nebutra/icons";
 import { useCopyToClipboard } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import type { DependencyList } from "react";
 import { useEffect, useId, useRef, useState } from "react";
 
 export type BlogHeroTopic = {
@@ -33,6 +34,35 @@ type LatestPostMotionRailProps = {
   isZh: boolean;
   posts: BlogRailPost[];
 };
+
+function useAnimationFrame(
+  enabled: boolean,
+  callback: (deltaMs: number) => void,
+  dependencies: DependencyList,
+) {
+  const callbackRef = useRef(callback);
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    let frameId = 0;
+    let previousTime = performance.now();
+
+    const tick = (time: number) => {
+      const delta = time - previousTime;
+      previousTime = time;
+      callbackRef.current(delta);
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    frameId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [enabled, ...dependencies]);
+}
 
 function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
   const [open, setOpen] = useState(false);
@@ -233,6 +263,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   const [paused, setPaused] = useState(false);
   const [trackX, setTrackX] = useState(0);
   const railPosts = posts.slice(0, 8);
+  const motionDurationSec = 45;
 
   useEffect(() => {
     const track = trackRef.current;
@@ -247,26 +278,25 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduceMotion.matches || paused || halfWidth <= 0) return;
-
-    let frameId = 0;
-    let previousTime = performance.now();
-
-    const tick = (time: number) => {
-      const delta = time - previousTime;
-      previousTime = time;
+  useAnimationFrame(
+    typeof window !== "undefined" &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+      !paused &&
+      halfWidth > 0,
+    (delta) => {
+      const pixelsPerMs = halfWidth / (motionDurationSec * 1000);
       setTrackX((current) => {
-        const next = current - delta * 0.022;
+        const next = current - delta * pixelsPerMs;
         return Math.abs(next) >= halfWidth ? next + halfWidth : next;
       });
-      frameId = window.requestAnimationFrame(tick);
-    };
+    },
+    [halfWidth, motionDurationSec, paused],
+  );
 
-    frameId = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(frameId);
-  }, [halfWidth, paused]);
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduceMotion.matches) setTrackX(0);
+  }, []);
 
   if (railPosts.length === 0) return null;
 

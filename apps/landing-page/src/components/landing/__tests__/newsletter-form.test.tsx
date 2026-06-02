@@ -2,7 +2,7 @@
 // @vitest-environment jsdom
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { act, type InputHTMLAttributes } from "react";
+import { act, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 expect.extend(matchers);
@@ -22,6 +22,18 @@ vi.mock("next-intl", () => ({
 }));
 
 vi.mock("@nebutra/ui/primitives", () => ({
+  Button: ({
+    children,
+    type,
+    ...props
+  }: {
+    children?: ReactNode;
+    type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
+    <button type={type ?? "button"} {...props}>
+      {children}
+    </button>
+  ),
   Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
 }));
 
