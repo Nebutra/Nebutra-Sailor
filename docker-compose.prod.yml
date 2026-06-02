@@ -177,66 +177,6 @@ services:
           cpus: "1.0"
           memory: 1G
 
-  content-service:
-    <<: *restart-policy
-    ports: []
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
-      <<: *healthcheck-defaults
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 512M
-        reservations:
-          cpus: "0.25"
-          memory: 128M
-
-  recsys-service:
-    <<: *restart-policy
-    ports: []
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
-      <<: *healthcheck-defaults
-    deploy:
-      resources:
-        limits:
-          cpus: "2.0"
-          memory: 2G
-        reservations:
-          cpus: "0.5"
-          memory: 512M
-
-  ecommerce-service:
-    <<: *restart-policy
-    ports: []
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
-      <<: *healthcheck-defaults
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 512M
-        reservations:
-          cpus: "0.25"
-          memory: 128M
-
-  web3-service:
-    <<: *restart-policy
-    ports: []
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
-      <<: *healthcheck-defaults
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 512M
-        reservations:
-          cpus: "0.25"
-          memory: 128M
-
   billing-service:
     <<: *restart-policy
     ports: []
@@ -252,26 +192,6 @@ services:
           cpus: "0.25"
           memory: 128M
 
-  event-ingest-service:
-    <<: *restart-policy
-    ports: []
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
-      <<: *healthcheck-defaults
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 512M
-        reservations:
-          cpus: "0.25"
-          memory: 128M
-
-  # ===========================================================================
-  # One-shot Prisma migrate runner (defined in base file).
-  # NOTE: do NOT inherit *restart-policy — one-shot containers must stay
-  # `restart: "no"` so they exit cleanly after `migrate deploy` completes.
-  # ===========================================================================
   db-migrate:
     deploy:
       resources:

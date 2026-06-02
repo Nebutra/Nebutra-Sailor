@@ -182,93 +182,6 @@ services:
         condition: service_completed_successfully
     profiles: ["ai", "core"]
 
-  content-service:
-    build:
-      context: .
-      dockerfile: infra/runtime/docker/Dockerfile.python
-      args:
-        SERVICE: content
-    container_name: nebutra-content
-    ports:
-      - "127.0.0.1:8002:8000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      db-migrate:
-        condition: service_completed_successfully
-    profiles: ["content", "core"]
-
-  recsys-service:
-    build:
-      context: .
-      dockerfile: infra/runtime/docker/Dockerfile.python
-      args:
-        SERVICE: recsys
-    container_name: nebutra-recsys
-    ports:
-      - "127.0.0.1:8003:8000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
-      - REDIS_URL=redis://redis:6379
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      db-migrate:
-        condition: service_completed_successfully
-    profiles: ["recsys", "core"]
-
-  ecommerce-service:
-    build:
-      context: .
-      dockerfile: infra/runtime/docker/Dockerfile.python
-      args:
-        SERVICE: ecommerce
-    container_name: nebutra-ecommerce
-    ports:
-      - "127.0.0.1:8004:8000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
-      - REDIS_URL=redis://redis:6379
-      - SHOPIFY_API_KEY=${SHOPIFY_API_KEY}
-      - SHOPIFY_API_SECRET=${SHOPIFY_API_SECRET}
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      db-migrate:
-        condition: service_completed_successfully
-    profiles: ["ecommerce", "core"]
-
-  web3-service:
-    build:
-      context: .
-      dockerfile: infra/runtime/docker/Dockerfile.python
-      args:
-        SERVICE: web3
-    container_name: nebutra-web3
-    ports:
-      - "127.0.0.1:8005:8000"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/nebutra
-      - REDIS_URL=redis://redis:6379
-      - ALCHEMY_API_KEY=${ALCHEMY_API_KEY}
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      db-migrate:
-        condition: service_completed_successfully
-    profiles: ["web3"]
-
   billing-service:
     build:
       context: .
@@ -295,31 +208,6 @@ services:
       db-migrate:
         condition: service_completed_successfully
     profiles: ["billing", "core"]
-
-  event-ingest-service:
-    build:
-      context: .
-      dockerfile: infra/runtime/docker/Dockerfile.python
-      args:
-        SERVICE: event-ingest
-    container_name: nebutra-event-ingest
-    ports:
-      - "127.0.0.1:8008:8000"
-    environment:
-      - CLICKHOUSE_HOST=clickhouse
-      - CLICKHOUSE_PORT=8123
-      - CLICKHOUSE_USER=default
-      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-}
-      - CLICKHOUSE_DATABASE=nebutra
-      - DEDUPE_TTL_SECONDS=3600
-    depends_on:
-      clickhouse:
-        condition: service_healthy
-    profiles: ["analytics"]
-
-  # ============================================
-  # Identity Provider (OAuth 2.0 / OIDC)
-  # ============================================
 
   idp:
     build:
