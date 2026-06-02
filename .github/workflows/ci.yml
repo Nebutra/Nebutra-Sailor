@@ -27,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
+      template: ${{ steps.profile.outputs.template }}
       web: ${{ steps.filter.outputs.web }}
       api-gateway: ${{ steps.filter.outputs.api-gateway }}
       landing-page: ${{ steps.filter.outputs.landing-page }}
@@ -39,6 +40,17 @@ jobs:
       e2e: ${{ steps.filter.outputs.e2e }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Detect repository profile
+        id: profile
+        run: |
+          if [ -f ".sailor-template.json" ]; then
+            echo "template=true" >> "$GITHUB_OUTPUT"
+            echo "Repository profile: sailor-template"
+          else
+            echo "template=false" >> "$GITHUB_OUTPUT"
+            echo "Repository profile: source"
+          fi
 
       - uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3
         id: filter
@@ -91,6 +103,64 @@ jobs:
               - 'packages/design/tokens/**'
               - 'packages/design/ui/**'
 
+  # ── Sailor-Template contract ─────────────────────────────────────────────
+  # The public template mirror is a stripped repository profile. It should not
+  # run the full Nebutra-Sailor monorepo CI surface on every sync; that makes
+  # template pushes slow and exposes source-only drift after the mirror step.
+  # This contract proves the template-specific invariants that matter instead.
+  template-contract:
+    name: Template Contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: detect-changes
+    if: needs.detect-changes.outputs.template == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Verify supply-chain policy
+        run: node scripts/verify-supply-chain-policy.mjs
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Assert template mirror shape
+        run: |
+          node -e "const fs = require('fs'); const marker = JSON.parse(fs.readFileSync('.sailor-template.json', 'utf8')); if (marker.type !== 'sailor-template-mirror') { console.error('Invalid template marker type: ' + marker.type); process.exit(1); } const forbidden = ['.templateignore', '.github/workflows/sync-template.yml', '.github/workflows/deploy-ecs.yml', '.github/workflows/deploy.yml', '.github/workflows/chromatic.yml', '.github/workflows/visual-acceptance.yml']; for (const file of forbidden) { if (fs.existsSync(file)) { console.error('Source-only file leaked into template: ' + file); process.exit(1); } }"
+
+      - name: Check template governance files
+        run: |
+          pnpm exec biome check \
+            e2e/playwright.config.ts \
+            apps/web/src/lib/api/types.generated.ts \
+            backends/gateway/openapi.json \
+            package.json \
+            pnpm-lock.yaml
+
+      - name: Assert template CI profile gates
+        run: |
+          node -e "const fs = require('fs'); const workflow = fs.readFileSync('.github/workflows/ci.yml', 'utf8'); const required = ['template-contract:', '.sailor-template.json', \"needs.detect-changes.outputs.template != 'true'\", \"needs.detect-changes.outputs.template == 'true'\"]; for (const marker of required) { if (!workflow.includes(marker)) { console.error('Missing template CI guard: ' + marker); process.exit(1); } }"
+
+      - name: Validate API artifacts are readable
+        run: |
+          node -e "const fs = require('fs'); const spec = JSON.parse(fs.readFileSync('backends/gateway/openapi.json', 'utf8')); if (!String(spec.openapi).startsWith('3.')) { console.error('Unexpected OpenAPI version: ' + spec.openapi); process.exit(1); } const types = fs.readFileSync('apps/web/src/lib/api/types.generated.ts', 'utf8'); for (const marker of ['export interface paths', '/api/misc/health', '/api/v1/integrations/admin/overview']) { if (!types.includes(marker)) { console.error('Generated API types missing marker: ' + marker); process.exit(1); } }"
+
+      - name: Validate Playwright template config
+        run: pnpm exec playwright test --config=e2e/playwright.config.ts --list
+        env:
+          CI: true
+          DATABASE_URL: "postgresql://stub:stub@localhost:5432/stub"
+          CLERK_SECRET_KEY: "sk_test_placeholder"
+
   # ── License compliance ───────────────────────────────────────────────────
   # Ensures no production dependency uses a copyleft license incompatible
   # with the project's AGPL-3.0 license.  Runs on every push/PR.
@@ -122,6 +192,8 @@ jobs:
     name: Lint & Typecheck
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    needs: detect-changes
+    if: needs.detect-changes.outputs.template != 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -202,7 +274,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: detect-changes
-    if: needs.detect-changes.outputs.services == 'true'
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.services == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -262,7 +334,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: lint-typecheck
+    needs: [detect-changes, lint-typecheck]
+    if: needs.detect-changes.outputs.template != 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -331,7 +404,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: [detect-changes, build]
-    if: needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true'
+    if: |
+      needs.detect-changes.outputs.template != 'true' &&
+      (needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true')
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -381,7 +456,8 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: lint-typecheck
+    needs: [detect-changes, lint-typecheck]
+    if: needs.detect-changes.outputs.template != 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -425,7 +501,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [detect-changes, test]
-    if: needs.detect-changes.outputs.packages == 'true'
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.packages == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -481,7 +557,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     needs: [detect-changes, build]
-    if: needs.detect-changes.outputs.packages == 'true'
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.packages == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -512,7 +588,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: detect-changes
-    if: needs.detect-changes.outputs.db == 'true'
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.db == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -643,6 +719,7 @@ jobs:
     needs: [detect-changes, build]
     # Only run on PRs and only when landing-page or shared packages changed
     if: |
+      needs.detect-changes.outputs.template != 'true' &&
       github.event_name == 'pull_request' &&
       (needs.detect-changes.outputs.landing-page == 'true' || needs.detect-changes.outputs.packages == 'true')
     steps:
@@ -682,7 +759,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: [detect-changes, build]
-    if: needs.detect-changes.outputs.e2e == 'true'
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.e2e == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -769,7 +846,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     needs: [detect-changes, build]
-    if: needs.detect-changes.outputs.openapi == 'true'
+    if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.openapi == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -854,6 +931,7 @@ jobs:
       issues: write
       pull-requests: write
     if: |
+      needs.detect-changes.outputs.template != 'true' &&
       github.event_name == 'pull_request' &&
       (needs.detect-changes.outputs.web == 'true' || needs.detect-changes.outputs.packages == 'true')
     steps:
