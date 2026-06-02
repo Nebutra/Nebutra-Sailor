@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import type { Command } from "commander";
 import pc from "picocolors";
 import { findMonorepoRoot } from "../utils/delegate";
@@ -62,9 +63,14 @@ async function ecosystemFetch(
 function _loadEcosystemConfig() {
   try {
     const monorepoRoot = findMonorepoRoot();
-    const _configPath = `${monorepoRoot}/.nebutra/ecosystem.json`;
-    // In real implementation, would use fs.readFileSync
-    return { connected: false, orgId: "", projectId: "" };
+    const configPath = `${monorepoRoot}/.nebutra/ecosystem.json`;
+    try {
+      const raw = readFileSync(configPath, "utf8");
+      return JSON.parse(raw) as Record<string, unknown>;
+    } catch {
+      // File absent or invalid JSON — fall back to disconnected state
+      return { connected: false, orgId: "", projectId: "" };
+    }
   } catch {
     return null;
   }
@@ -97,10 +103,14 @@ async function handleStatus(options: { format?: string }) {
 
   try {
     const response = await ecosystemFetch("/status");
-    const _data = (await response.json()) as Record<string, unknown>;
+    const data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
+      logger.info(JSON.stringify(data, null, 2));
     } else {
+      for (const [key, value] of Object.entries(data)) {
+        logger.info(`${pc.bold(key)}: ${pc.cyan(String(value))}`);
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -243,6 +253,26 @@ async function handlePublish(options: {
 // ECOSYSTEM TEMPLATES
 // ============================================================================
 
+// Helper: render a single template row in human-readable form
+function renderTemplate(t: Record<string, unknown>) {
+  const name = (t.name as string) ?? (t.id as string) ?? "(unnamed)";
+  logger.info(`${pc.bold(name)} ${t.id ? pc.dim(`(${t.id as string})`) : ""}`.trim());
+  if (t.description) logger.info(`  ${t.description as string}`);
+  const meta: string[] = [];
+  if (t.category) meta.push(`category: ${t.category as string}`);
+  if (t.stars !== undefined) meta.push(`★ ${t.stars as number}`);
+  if (t.downloads !== undefined) meta.push(`↓ ${t.downloads as number}`);
+  if (meta.length) logger.info(pc.dim(`  ${meta.join("  ")}`));
+}
+
+// Helper: extract an array of rows from a list response
+function extractList(data: Record<string, unknown>, key: string): Record<string, unknown>[] {
+  if (Array.isArray(data)) return data as Record<string, unknown>[];
+  const value = data[key];
+  if (Array.isArray(value)) return value as Record<string, unknown>[];
+  return [];
+}
+
 async function handleTemplatesList(options: { category?: string; sort?: string; format?: string }) {
   logger.info(pc.cyan("📚 Template Marketplace\n"));
 
@@ -250,11 +280,20 @@ async function handleTemplatesList(options: { category?: string; sort?: string; 
     const response = await ecosystemFetch(
       `/templates?category=${options.category || ""}&sort=${options.sort || "downloads"}`,
     );
-    const _data = (await response.json()) as Record<string, unknown>;
+    const data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
+      logger.info(JSON.stringify(data, null, 2));
     } else {
-      logger.info(`Run ${pc.yellow("nebutra ecosystem templates info <id>")} for details`);
+      const templates = extractList(data, "templates");
+      if (templates.length === 0) {
+        logger.info("No templates found");
+      } else {
+        for (const t of templates) {
+          renderTemplate(t);
+        }
+        logger.info(`\nRun ${pc.yellow("nebutra ecosystem templates info <id>")} for details`);
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -269,10 +308,19 @@ async function handleTemplatesSearch(query: string, options: { format?: string }
 
   try {
     const response = await ecosystemFetch(`/templates/search?q=${encodeURIComponent(query)}`);
-    const _data = (await response.json()) as Record<string, unknown>;
+    const data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
+      logger.info(JSON.stringify(data, null, 2));
     } else {
+      const results = extractList(data, "results");
+      if (results.length === 0) {
+        logger.info(`No templates matched "${query}"`);
+      } else {
+        for (const t of results) {
+          renderTemplate(t);
+        }
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -287,9 +335,16 @@ async function handleTemplatesInfo(id: string) {
 
   try {
     const response = await ecosystemFetch(`/templates/${id}`);
-    const _data = (await response.json()) as Record<string, unknown>;
+    const data = (await response.json()) as Record<string, unknown>;
 
-    logger.info(`Install: ${pc.yellow("nebutra ecosystem templates install multi-tenant-saas")}`);
+    renderTemplate(data);
+    if (data.repository) logger.info(`  repository: ${pc.blue(data.repository as string)}`);
+    if (data.author) logger.info(`  author: ${data.author as string}`);
+    if (Array.isArray(data.tags) && data.tags.length) {
+      logger.info(`  tags: ${(data.tags as string[]).join(", ")}`);
+    }
+
+    logger.info(`\nInstall: ${pc.yellow(`nebutra ecosystem templates install ${id}`)}`);
 
     return ExitCode.SUCCESS;
   } catch (error) {
@@ -328,6 +383,18 @@ async function handleTemplatesInstall(id: string, options: { dryRun?: boolean })
 // ECOSYSTEM IDEAS
 // ============================================================================
 
+// Helper: render a single idea row in human-readable form
+function renderIdea(i: Record<string, unknown>) {
+  const title = (i.title as string) ?? (i.id as string) ?? "(untitled)";
+  logger.info(`${pc.bold(title)} ${i.id ? pc.dim(`(${i.id as string})`) : ""}`.trim());
+  if (i.description) logger.info(`  ${i.description as string}`);
+  const meta: string[] = [];
+  if (i.status) meta.push(`status: ${i.status as string}`);
+  if (i.votes !== undefined) meta.push(`👍 ${i.votes as number}`);
+  if (Array.isArray(i.tags) && i.tags.length) meta.push(`tags: ${(i.tags as string[]).join(", ")}`);
+  if (meta.length) logger.info(pc.dim(`  ${meta.join("  ")}`));
+}
+
 async function handleIdeasList(options: { status?: string; sort?: string; format?: string }) {
   logger.info(pc.cyan("💡 Ideas Marketplace\n"));
 
@@ -335,12 +402,21 @@ async function handleIdeasList(options: { status?: string; sort?: string; format
     const response = await ecosystemFetch(
       `/ideas?status=${options.status || ""}&sort=${options.sort || "recent"}`,
     );
-    const _data = (await response.json()) as Record<string, unknown>;
+    const data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
+      logger.info(JSON.stringify(data, null, 2));
     } else {
-      logger.info(`Vote: ${pc.yellow("nebutra ecosystem ideas vote <id>")}`);
-      logger.info(`Claim: ${pc.yellow("nebutra ecosystem ideas claim <id>")}`);
+      const ideas = extractList(data, "ideas");
+      if (ideas.length === 0) {
+        logger.info("No ideas found");
+      } else {
+        for (const idea of ideas) {
+          renderIdea(idea);
+        }
+        logger.info(`\nVote: ${pc.yellow("nebutra ecosystem ideas vote <id>")}`);
+        logger.info(`Claim: ${pc.yellow("nebutra ecosystem ideas claim <id>")}`);
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -473,6 +549,19 @@ async function handleIdeasComment(id: string, options: { message?: string; dryRu
 // LEGACY MEMBER DIRECTORY
 // ============================================================================
 
+// Helper: render a single member row in human-readable form
+function renderMember(m: Record<string, unknown>) {
+  const name = (m.name as string) ?? (m.handle as string) ?? "(unknown)";
+  logger.info(`${pc.bold(name)} ${m.handle ? pc.dim(`@${m.handle as string}`) : ""}`.trim());
+  if (m.bio) logger.info(`  ${m.bio as string}`);
+  const meta: string[] = [];
+  if (m.industry) meta.push(`industry: ${m.industry as string}`);
+  if (Array.isArray(m.skills) && m.skills.length) {
+    meta.push(`skills: ${(m.skills as string[]).join(", ")}`);
+  }
+  if (meta.length) logger.info(pc.dim(`  ${meta.join("  ")}`));
+}
+
 async function handleOpcList(options: {
   skill?: string;
   industry?: string;
@@ -485,12 +574,21 @@ async function handleOpcList(options: {
     const response = await ecosystemFetch(
       `/opc?skill=${options.skill || ""}&industry=${options.industry || ""}&sort=${options.sort || "active"}`,
     );
-    const _data = (await response.json()) as Record<string, unknown>;
+    const data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
+      logger.info(JSON.stringify(data, null, 2));
     } else {
-      logger.info(`View profile: ${pc.yellow("nebutra ecosystem opc profile <handle>")}`);
-      logger.info(`Register: ${pc.yellow("nebutra ecosystem opc register")}`);
+      const members = extractList(data, "members");
+      if (members.length === 0) {
+        logger.info("No members found");
+      } else {
+        for (const member of members) {
+          renderMember(member);
+        }
+        logger.info(`\nView profile: ${pc.yellow("nebutra ecosystem opc profile <handle>")}`);
+        logger.info(`Register: ${pc.yellow("nebutra ecosystem opc register")}`);
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -505,9 +603,11 @@ async function handleOpcProfile() {
 
   try {
     const response = await ecosystemFetch("/opc/me");
-    const _data = (await response.json()) as Record<string, unknown>;
+    const data = (await response.json()) as Record<string, unknown>;
 
-    logger.info(`Edit profile: ${pc.yellow("nebutra ecosystem opc register")}`);
+    renderMember(data);
+
+    logger.info(`\nEdit profile: ${pc.yellow("nebutra ecosystem opc register")}`);
 
     return ExitCode.SUCCESS;
   } catch (error) {
@@ -559,6 +659,23 @@ async function handleOpcRegister(options: { yes?: boolean; dryRun?: boolean }) {
 // ECOSYSTEM SHOWCASE
 // ============================================================================
 
+// Helper: render a single showcase project row in human-readable form
+function renderProject(p: Record<string, unknown>) {
+  const name = (p.projectName as string) ?? (p.name as string) ?? (p.id as string) ?? "(unnamed)";
+  logger.info(`${pc.bold(name)} ${p.id ? pc.dim(`(${p.id as string})`) : ""}`.trim());
+  if (p.description) logger.info(`  ${p.description as string}`);
+  if (p.url) logger.info(`  ${pc.blue(p.url as string)}`);
+  const meta: string[] = [];
+  if (p.category) meta.push(`category: ${p.category as string}`);
+  if (p.featured) meta.push("⭐ featured");
+  if (p.votes !== undefined) meta.push(`👍 ${p.votes as number}`);
+  if (p.monthlyVisitors !== undefined) meta.push(`${p.monthlyVisitors as number} visitors/mo`);
+  if (Array.isArray(p.builtWith) && p.builtWith.length) {
+    meta.push(`built with: ${(p.builtWith as string[]).join(", ")}`);
+  }
+  if (meta.length) logger.info(pc.dim(`  ${meta.join("  ")}`));
+}
+
 async function handleShowcaseList(options: {
   category?: string;
   featured?: boolean;
@@ -570,12 +687,21 @@ async function handleShowcaseList(options: {
     const response = await ecosystemFetch(
       `/showcase?category=${options.category || ""}&featured=${options.featured ? "true" : ""}`,
     );
-    const _data = (await response.json()) as Record<string, unknown>;
+    const data = (await response.json()) as Record<string, unknown>;
 
     if (options.format === "json") {
+      logger.info(JSON.stringify(data, null, 2));
     } else {
-      logger.info(`Vote: ${pc.yellow("nebutra ecosystem showcase vote <id>")}`);
-      logger.info(`Submit yours: ${pc.yellow("nebutra ecosystem showcase submit")}`);
+      const projects = extractList(data, "projects");
+      if (projects.length === 0) {
+        logger.info("No showcase projects found");
+      } else {
+        for (const project of projects) {
+          renderProject(project);
+        }
+        logger.info(`\nVote: ${pc.yellow("nebutra ecosystem showcase vote <id>")}`);
+        logger.info(`Submit yours: ${pc.yellow("nebutra ecosystem showcase submit")}`);
+      }
     }
 
     return ExitCode.SUCCESS;

@@ -57,7 +57,7 @@ function computeHealthScore(metrics: Record<string, number>): {
 /**
  * Format showcase status badge
  */
-function _formatStatusBadge(status: string): string {
+function formatStatusBadge(status: string): string {
   const badges: Record<string, string> = {
     pending: pc.yellow("● pending"),
     approved: pc.green("✓ approved"),
@@ -70,7 +70,7 @@ function _formatStatusBadge(status: string): string {
 /**
  * Format content type badge
  */
-function _formatTypeBadge(type: string): string {
+function formatTypeBadge(type: string): string {
   const badges: Record<string, string> = {
     article: pc.blue("📄 article"),
     discussion: pc.green("💬 discussion"),
@@ -97,7 +97,16 @@ async function handleShowcaseList(options: any) {
     }
 
     logger.info(`\nShowcase Submissions (${data.submissions.length})\n`);
-    for (const _submission of data.submissions) {
+    for (const submission of data.submissions) {
+      logger.info(
+        `${formatStatusBadge(String(submission.status))} ${pc.bold(String(submission.title))} ${pc.dim(`(${submission.id})`)}`,
+      );
+      if (submission.category) {
+        logger.info(`  ${pc.dim("category:")} ${submission.category}`);
+      }
+      if (submission.author) {
+        logger.info(`  ${pc.dim("author:")} ${submission.author}`);
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -173,9 +182,13 @@ async function handleShowcaseFeature(id: string, options: any) {
 async function handleShowcaseStats(_options: any) {
   try {
     logger.info("Fetching showcase statistics...");
-    const _data = await adminFetch("/community/showcase/stats");
+    const data = await adminFetch("/community/showcase/stats");
 
     logger.info("\nShowcase Statistics\n");
+    for (const [key, value] of Object.entries(data)) {
+      const label = key.replace(/_/g, " ");
+      logger.info(`  ${pc.dim(label)}: ${pc.bold(String(value))}`);
+    }
 
     return ExitCode.SUCCESS;
   } catch (error) {
@@ -202,7 +215,16 @@ async function handleContentList(options: any) {
     }
 
     logger.info(`\nCommunity Content (${data.items.length})\n`);
-    for (const _item of data.items) {
+    for (const item of data.items) {
+      logger.info(
+        `${formatTypeBadge(String(item.type))} ${pc.bold(String(item.title))} ${pc.dim(`(${item.id})`)}`,
+      );
+      if (item.status) {
+        logger.info(`  ${pc.dim("status:")} ${formatStatusBadge(String(item.status))}`);
+      }
+      if (item.author) {
+        logger.info(`  ${pc.dim("author:")} ${item.author}`);
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -266,10 +288,15 @@ async function handleContentAnalytics(options: any) {
 
     logger.info("\nContent Performance Metrics\n");
 
-    for (const _item of data.topContent.slice(0, 5)) {
+    for (const item of data.topContent.slice(0, 5)) {
+      logger.info(`${pc.bold(String(item.title))} ${pc.dim(`(${item.id})`)}`);
+      logger.info(
+        `  ${pc.dim("views:")} ${item.views ?? 0}  ${pc.dim("engagement:")} ${item.engagement ?? 0}`,
+      );
     }
 
     if (options.format === "json") {
+      console.log(JSON.stringify(data, null, 2));
     }
     return ExitCode.SUCCESS;
   } catch (error) {
@@ -303,7 +330,16 @@ async function handleMembersList(options: any) {
         moderator: pc.blue,
         member: pc.gray,
       };
-      const _roleColor = roleColorMap[String(member.role)] ?? pc.gray;
+      const roleColor = roleColorMap[String(member.role)] ?? pc.gray;
+      logger.info(
+        `${roleColor(`[${member.role}]`)} ${pc.bold(String(member.name))} ${pc.dim(`(${member.id})`)}`,
+      );
+      if (member.email) {
+        logger.info(`  ${pc.dim("email:")} ${member.email}`);
+      }
+      if (member.engagement !== undefined) {
+        logger.info(`  ${pc.dim("engagement:")} ${member.engagement}`);
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -316,9 +352,30 @@ async function handleMembersList(options: any) {
 async function handleMemberProfile(userId: string, _options: any) {
   try {
     logger.info(`Fetching profile for ${userId}...`);
-    const _data = await adminFetch(`/community/members/${userId}`);
+    const data = await adminFetch(`/community/members/${userId}`);
 
     logger.info(`\nMember Profile\n`);
+    logger.info(`  ${pc.bold(String(data.name))} ${pc.dim(`(${data.id})`)}`);
+    if (data.role) {
+      logger.info(`  ${pc.dim("role:")} ${data.role}`);
+    }
+    if (data.email) {
+      logger.info(`  ${pc.dim("email:")} ${data.email}`);
+    }
+    if (data.joinedAt) {
+      logger.info(`  ${pc.dim("joined:")} ${data.joinedAt}`);
+    }
+    if (data.engagement !== undefined) {
+      logger.info(`  ${pc.dim("engagement:")} ${data.engagement}`);
+    }
+    if (Array.isArray(data.activity)) {
+      logger.info(`\n  ${pc.dim("Recent Activity")}`);
+      for (const entry of data.activity) {
+        logger.info(
+          `    ${pc.dim(String(entry.timestamp ?? ""))} ${entry.description ?? entry.type ?? ""}`,
+        );
+      }
+    }
 
     return ExitCode.SUCCESS;
   } catch (error) {
@@ -406,12 +463,16 @@ async function handleCommunityHealth(options: any) {
     const { score, breakdown } = computeHealthScore(data.metrics);
 
     logger.info(`\nCommunity Health Report (${period})\n`);
+    logger.info(`  ${pc.bold("Overall Score")}: ${pc.bold(String(score))}/100\n`);
     for (const [key, value] of Object.entries(breakdown)) {
-      const _label = key.replace(/_/g, " ").toLowerCase();
-      const _bar = "█".repeat(Math.round(value / 5)) + "░".repeat(20 - Math.round(value / 5));
+      const label = key.replace(/_/g, " ").toLowerCase();
+      const filled = Math.round(value / 5);
+      const bar = "█".repeat(filled) + "░".repeat(20 - filled);
+      logger.info(`  ${label.padEnd(20)} ${bar} ${Math.round(value)}`);
     }
 
     if (options.format === "json") {
+      console.log(JSON.stringify({ score, breakdown, metrics: data.metrics }, null, 2));
     }
 
     return ExitCode.SUCCESS;
@@ -441,7 +502,16 @@ async function handleModerationQueue(_options: any) {
         medium: pc.yellow("●"),
         high: pc.red("●"),
       };
-      const _severity = severityMap[String(item.severity)] ?? "●";
+      const severity = severityMap[String(item.severity)] ?? "●";
+      logger.info(
+        `${severity} ${pc.bold(String(item.type ?? "item"))} ${pc.dim(`(${item.id})`)} — ${item.reason ?? ""}`,
+      );
+      if (item.reportedBy) {
+        logger.info(`  ${pc.dim("reported by:")} ${item.reportedBy}`);
+      }
+      if (item.createdAt) {
+        logger.info(`  ${pc.dim("created:")} ${item.createdAt}`);
+      }
     }
 
     return ExitCode.SUCCESS;
@@ -459,12 +529,24 @@ async function handleModerationAuto(options: any) {
       logger.warn("DRY RUN MODE - no changes will be made");
     }
 
-    const _result = await adminFetch("/community/moderation/auto", {
+    const result = await adminFetch("/community/moderation/auto", {
       method: "POST",
       body: JSON.stringify({ dryRun: options.dryRun || false }),
     });
 
     logger.info("\nModeration Results\n");
+    if (Array.isArray(result.actions)) {
+      for (const action of result.actions) {
+        logger.info(
+          `  ${pc.bold(String(action.action ?? "action"))} → ${action.target ?? action.id ?? ""} ${pc.dim(action.reason ? `(${action.reason})` : "")}`,
+        );
+      }
+    }
+    if (result.summary) {
+      for (const [key, value] of Object.entries(result.summary as Record<string, unknown>)) {
+        logger.info(`  ${pc.dim(key.replace(/_/g, " "))}: ${pc.bold(String(value))}`);
+      }
+    }
 
     if (options.dryRun) {
       logger.info("DRY RUN COMPLETE - no changes committed");

@@ -100,21 +100,21 @@ async function growthFetch<T>(
 }
 
 /** Format a metric delta as a colored indicator */
-function _formatDelta(delta: number, prefix = ""): string {
+function formatDelta(delta: number, prefix = ""): string {
   if (delta > 0) return pc.green(`▲ +${delta}${prefix}`);
   if (delta < 0) return pc.red(`▼ ${delta}${prefix}`);
   return pc.gray(`→ 0${prefix}`);
 }
 
 /** Format a percentage with color coding */
-function _formatPercent(value: number, threshold = 0.5): string {
+function formatPercent(value: number, threshold = 0.5): string {
   const pct = (value * 100).toFixed(1);
   if (value >= threshold) return pc.green(`${pct}%`);
   return pc.yellow(`${pct}%`);
 }
 
 /** Generate a mini sparkline-style indicator */
-function _sparkline(value: number, max: number): string {
+function sparkline(value: number, max: number): string {
   const bars = "▁▂▃▄▅▆▇█";
   const index = Math.floor((value / max) * (bars.length - 1));
   return bars[index];
@@ -128,9 +128,42 @@ async function dashboardCommand(options: Record<string, unknown>): Promise<numbe
 
     logger.info(`Fetching growth metrics for ${period}...`);
 
-    const _metrics = await growthFetch<GrowthMetrics>("/summary", {
+    const metrics = await growthFetch<GrowthMetrics>("/summary", {
       query: { period, compare: compare ? "true" : "false" },
     });
+
+    if (options.format === "json") {
+      console.log(JSON.stringify(metrics, null, 2));
+      return ExitCode.SUCCESS;
+    }
+
+    const maxValue = Math.max(
+      metrics.signups,
+      metrics.activations,
+      metrics.conversions,
+      metrics.active_users,
+      1,
+    );
+
+    console.log(`\n${pc.cyan(`Growth Metrics — ${metrics.period}`)}\n`);
+    const rows: Array<[string, number, number]> = [
+      ["Signups", metrics.signups, metrics.signups_delta],
+      ["Activations", metrics.activations, metrics.activations_delta],
+      ["Conversions", metrics.conversions, metrics.conversions_delta],
+      ["Active users", metrics.active_users, metrics.active_users_delta],
+      ["Total events", metrics.total_events, metrics.total_events_delta],
+    ];
+    rows.forEach(([label, value, delta]) => {
+      const spark = sparkline(value, maxValue);
+      const deltaStr = compare ? ` ${formatDelta(delta)}` : "";
+      console.log(
+        `  ${pc.blue(label.padEnd(14))} ${spark} ${String(value).padStart(10)}${deltaStr}`,
+      );
+    });
+    const revenueStr = `$${metrics.revenue.toLocaleString()}`;
+    const revenueDelta = compare ? ` ${formatDelta(metrics.revenue_delta)}` : "";
+    console.log(`  ${pc.blue("Revenue".padEnd(14))}   ${revenueStr.padStart(10)}${revenueDelta}`);
+    console.log("");
     return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Dashboard error: ${error instanceof Error ? error.message : String(error)}`);
@@ -150,11 +183,23 @@ async function funnelCommand(options: Record<string, unknown>): Promise<number> 
       query: { period, segment },
     });
 
+    if (options.format === "json") {
+      console.log(JSON.stringify(funnel, null, 2));
+      return ExitCode.SUCCESS;
+    }
+
+    console.log(`\n${pc.cyan(`Conversion Funnel — ${period} (${segment})`)}\n`);
     funnel.forEach((step, idx) => {
-      const _bars = "█".repeat(Math.ceil(step.rate * 20));
-      const _empty = "░".repeat(20 - Math.ceil(step.rate * 20));
-      const _dropoff =
-        idx < funnel.length - 1 ? pc.red(`↓ ${(step.dropoff_rate * 100).toFixed(1)}% drop`) : "";
+      const filled = Math.ceil(step.rate * 20);
+      const bars = "█".repeat(filled);
+      const empty = "░".repeat(Math.max(0, 20 - filled));
+      const dropoff =
+        idx < funnel.length - 1 ? pc.red(`  ↓ ${(step.dropoff_rate * 100).toFixed(1)}% drop`) : "";
+      console.log(
+        `  ${pc.blue(step.name.padEnd(18))} ${bars}${empty} ${formatPercent(step.rate)} ${String(
+          step.count,
+        ).padStart(8)}${dropoff}`,
+      );
     });
 
     // Suggestion for highest dropoff
@@ -162,7 +207,13 @@ async function funnelCommand(options: Record<string, unknown>): Promise<number> 
       step.dropoff_rate > max.dropoff_rate ? step : max,
     );
     if (maxDropoff.dropoff_rate > 0.2) {
+      console.log(
+        `\n${pc.yellow("⚠")} Largest drop-off at ${pc.blue(maxDropoff.name)} — ${pc.red(
+          `${(maxDropoff.dropoff_rate * 100).toFixed(1)}%`,
+        )}. Consider optimizing this step.`,
+      );
     }
+    console.log("");
     return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Funnel error: ${error instanceof Error ? error.message : String(error)}`);
@@ -183,22 +234,33 @@ async function cohortCommand(options: Record<string, unknown>): Promise<number> 
     });
 
     if (cohorts.length === 0) {
+      logger.info("No cohort data available.");
+      return ExitCode.SUCCESS;
+    }
+
+    if (options.format === "json") {
+      console.log(JSON.stringify(cohorts, null, 2));
       return ExitCode.SUCCESS;
     }
 
     // Print header
     const headers = Object.keys(cohorts[0]).slice(1);
 
+    console.log(`\n${pc.cyan(`Cohort Retention — ${period}`)}\n`);
+    console.log(
+      `  ${pc.dim("Cohort".padEnd(15))}${headers.map((h) => pc.dim(h.padEnd(9))).join("")}`,
+    );
+
     // Print each cohort row with color-coded retention
     cohorts.forEach((row) => {
       const cohortName = String(row.cohort);
-      let _line = cohortName.padEnd(15);
+      let line = cohortName.padEnd(15);
 
       headers.forEach((h) => {
         const val = row[h];
         if (typeof val === "number") {
           const retention = val / 100;
-          let colored = String(Math.round(val)).padEnd(8);
+          let colored = `${String(Math.round(val))}%`.padEnd(8);
 
           if (retention >= 0.7) {
             colored = pc.green(colored);
@@ -207,10 +269,12 @@ async function cohortCommand(options: Record<string, unknown>): Promise<number> 
           } else {
             colored = pc.red(colored);
           }
-          _line += colored + " ";
+          line += colored + " ";
         }
       });
+      console.log(`  ${line}`);
     });
+    console.log("");
     return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Cohort error: ${error instanceof Error ? error.message : String(error)}`);
@@ -227,7 +291,21 @@ async function newsletterCommand(
     if (subcommand === "stats") {
       logger.info("Fetching newsletter stats...");
 
-      const _stats = await growthFetch<NewsletterStats>("/newsletter/stats");
+      const stats = await growthFetch<NewsletterStats>("/newsletter/stats");
+
+      if (options.format === "json") {
+        console.log(JSON.stringify(stats, null, 2));
+        return ExitCode.SUCCESS;
+      }
+
+      console.log(`\n${pc.cyan("Newsletter Stats")}\n`);
+      console.log(`  ${pc.blue("Subscribers".padEnd(16))} ${stats.subscribers.toLocaleString()}`);
+      console.log(`  ${pc.blue("Open rate".padEnd(16))} ${formatPercent(stats.open_rate)}`);
+      console.log(`  ${pc.blue("Click rate".padEnd(16))} ${formatPercent(stats.click_rate, 0.1)}`);
+      console.log(
+        `  ${pc.blue("Unsubscribe".padEnd(16))} ${formatPercent(stats.unsubscribe_rate, 0)}`,
+      );
+      console.log("");
       return ExitCode.SUCCESS;
     }
 
@@ -243,7 +321,17 @@ async function newsletterCommand(
           query: { limit: String(limit), offset: String(offset) },
         },
       );
-      subscribers.forEach((_sub) => {});
+
+      if (options.format === "json") {
+        console.log(JSON.stringify(subscribers, null, 2));
+        return ExitCode.SUCCESS;
+      }
+
+      console.log(`\n${pc.cyan(`Newsletter Subscribers`)} (${subscribers.length})\n`);
+      subscribers.forEach((sub) => {
+        console.log(`  ${pc.blue(sub.email.padEnd(36))} ${pc.dim(sub.subscribed_at)}`);
+      });
+      console.log("");
       return ExitCode.SUCCESS;
     }
 
@@ -279,13 +367,29 @@ async function newsletterCommand(
 /** Referral subcommand — Referral program management */
 async function referralCommand(
   subcommand: string,
-  _options: Record<string, unknown>,
+  options: Record<string, unknown>,
 ): Promise<number> {
   try {
     if (subcommand === "status") {
       logger.info("Fetching referral program status...");
 
-      const _referral = await growthFetch<ReferralMetrics>("/referral/status");
+      const referral = await growthFetch<ReferralMetrics>("/referral/status");
+
+      if (options.format === "json") {
+        console.log(JSON.stringify(referral, null, 2));
+        return ExitCode.SUCCESS;
+      }
+
+      console.log(`\n${pc.cyan("Referral Program")}\n`);
+      console.log(`  ${pc.blue("Invites sent".padEnd(18))} ${referral.invites_sent}`);
+      console.log(`  ${pc.blue("Invites converted".padEnd(18))} ${referral.invites_converted}`);
+      console.log(
+        `  ${pc.blue("Viral coefficient".padEnd(18))} ${referral.viral_coefficient.toFixed(2)}`,
+      );
+      console.log(
+        `  ${pc.blue("Reward".padEnd(18))} ${referral.reward_amount} (${referral.reward_type})`,
+      );
+      console.log("");
       return ExitCode.SUCCESS;
     }
 
@@ -293,7 +397,17 @@ async function referralCommand(
       logger.info("Fetching referral config...");
 
       const config = await growthFetch<Record<string, unknown>>("/referral/config");
-      Object.entries(config).forEach(([_key, _value]) => {});
+
+      if (options.format === "json") {
+        console.log(JSON.stringify(config, null, 2));
+        return ExitCode.SUCCESS;
+      }
+
+      console.log(`\n${pc.cyan("Referral Config")}\n`);
+      Object.entries(config).forEach(([key, value]) => {
+        console.log(`  ${pc.blue(key.padEnd(20))} ${String(value)}`);
+      });
+      console.log("");
       return ExitCode.SUCCESS;
     }
 
@@ -304,9 +418,29 @@ async function referralCommand(
         await growthFetch<Array<{ rank: number; name: string; referrals: number }>>(
           "/referral/leaderboard",
         );
+
+      if (options.format === "json") {
+        console.log(JSON.stringify(leaderboard, null, 2));
+        return ExitCode.SUCCESS;
+      }
+
+      console.log(`\n${pc.cyan("Referral Leaderboard")}\n`);
       leaderboard.forEach((entry) => {
-        const _medal = entry.rank === 1 ? "🥇" : entry.rank === 2 ? "🥈" : "🥉";
+        const medal =
+          entry.rank === 1
+            ? "🥇"
+            : entry.rank === 2
+              ? "🥈"
+              : entry.rank === 3
+                ? "🥉"
+                : `#${entry.rank}`;
+        console.log(
+          `  ${medal} ${pc.blue(entry.name.padEnd(24))} ${String(entry.referrals).padStart(
+            5,
+          )} referrals`,
+        );
       });
+      console.log("");
       return ExitCode.SUCCESS;
     }
 
@@ -330,11 +464,26 @@ async function experimentCommand(
       const experiments = await growthFetch<ExperimentResult[]>("/experiment");
 
       if (experiments.length === 0) {
+        logger.info("No active experiments.");
         return ExitCode.SUCCESS;
       }
+
+      if (options.format === "json") {
+        console.log(JSON.stringify(experiments, null, 2));
+        return ExitCode.SUCCESS;
+      }
+
+      console.log(`\n${pc.cyan("Experiments")} (${experiments.length})\n`);
       experiments.forEach((exp) => {
-        const _status = exp.status === "running" ? pc.yellow("●") : pc.green("✓");
+        const status = exp.status === "running" ? pc.yellow("●") : pc.green("✓");
+        const winner = exp.winner ? pc.green(` → winner: ${exp.winner}`) : "";
+        console.log(
+          `  ${status} ${pc.blue(exp.name.padEnd(28))} ${pc.dim(exp.id)} [${exp.variants.join(
+            ", ",
+          )}] metric=${exp.metric}${winner}`,
+        );
       });
+      console.log("");
       return ExitCode.SUCCESS;
     }
 
@@ -367,10 +516,26 @@ async function experimentCommand(
       logger.info(`Fetching results for experiment ${id}...`);
 
       const result = await growthFetch<ExperimentResult>(`/experiment/${id}`);
+
+      if (options.format === "json") {
+        console.log(JSON.stringify(result, null, 2));
+        return ExitCode.SUCCESS;
+      }
+
+      console.log(`\n${pc.cyan(`Experiment — ${result.name}`)}\n`);
+      console.log(`  ${pc.blue("ID".padEnd(14))} ${result.id}`);
+      console.log(`  ${pc.blue("Status".padEnd(14))} ${result.status}`);
+      console.log(`  ${pc.blue("Variants".padEnd(14))} ${result.variants.join(", ")}`);
+      console.log(`  ${pc.blue("Metric".padEnd(14))} ${result.metric}`);
       if (result.winner) {
+        console.log(`  ${pc.blue("Winner".padEnd(14))} ${pc.green(result.winner)}`);
       }
       if (result.significance) {
+        console.log(
+          `  ${pc.blue("Significance".padEnd(14))} ${(result.significance * 100).toFixed(1)}%`,
+        );
       }
+      console.log("");
       return ExitCode.SUCCESS;
     }
 
@@ -416,8 +581,26 @@ async function pulseCommand(options: Record<string, unknown>): Promise<number> {
     const insight = await growthFetch<GrowthInsight>("/pulse", {
       query: { focus, depth },
     });
-    insight.insights.forEach((_i) => {});
-    insight.recommendations.forEach((_r) => {});
+
+    if (options.format === "json") {
+      console.log(JSON.stringify(insight, null, 2));
+      return ExitCode.SUCCESS;
+    }
+
+    console.log(
+      `\n${pc.cyan(`Growth Pulse — ${insight.focus}`)} ${pc.dim(
+        `(confidence ${(insight.confidence * 100).toFixed(0)}%)`,
+      )}\n`,
+    );
+    console.log(pc.blue("Insights"));
+    insight.insights.forEach((i) => {
+      console.log(`  • ${i}`);
+    });
+    console.log(`\n${pc.blue("Recommendations")}`);
+    insight.recommendations.forEach((r) => {
+      console.log(`  ${pc.green("→")} ${r}`);
+    });
+    console.log("");
     return ExitCode.SUCCESS;
   } catch (error) {
     logger.error(`Pulse error: ${error instanceof Error ? error.message : String(error)}`);
