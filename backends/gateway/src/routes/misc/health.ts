@@ -1,4 +1,5 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import pTimeout from "p-timeout";
 
 export const healthRoutes = new OpenAPIHono();
 
@@ -63,10 +64,10 @@ async function withTimeout(
 ): Promise<{ status: "up" | "down"; latencyMs: number }> {
   const start = Date.now();
   try {
-    await Promise.race([
-      fn(),
-      new Promise<never>((_, r) => setTimeout(() => r(new Error("timeout")), ms)),
-    ]);
+    await pTimeout(fn(), {
+      milliseconds: ms,
+      message: new Error(`Dependency check timed out after ${ms}ms`),
+    });
     return { status: "up", latencyMs: Date.now() - start };
   } catch {
     return { status: "down", latencyMs: Date.now() - start };
