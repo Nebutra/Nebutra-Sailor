@@ -10,6 +10,8 @@
     "preserveSymlinks": false,
     "paths": {
       "@/*": ["../web/src/*"],
+      "@nebutra/brand": ["../../packages/design/brand/src/index.ts"],
+      "@nebutra/brand/*": ["../../packages/design/brand/src/*"],
       "@nebutra/ui": ["../../packages/design/ui/src/index.ts"],
       "@nebutra/ui/*": ["../../packages/design/ui/src/*"]
     }

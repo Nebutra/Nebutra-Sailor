@@ -1,4 +1,5 @@
-import { existsSync, readdirSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -11,19 +12,21 @@ function flattenTree(nodes: FileNode[]): FileNode[] {
   return nodes.flatMap((node) => [node, ...flattenTree(node.children ?? [])]);
 }
 
-function collectFiles(dir: string): string[] {
-  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
-    if ([".next", "dist", "node_modules"].includes(entry.name)) {
-      return [];
-    }
+function collectCommittedFiles(sourcePath: string): string[] {
+  const output = execFileSync("git", ["ls-tree", "-r", "--name-only", "HEAD", "--", sourcePath], {
+    cwd: repoRoot,
+    encoding: "utf8",
+  }).trim();
 
-    const entryPath = path.join(dir, entry.name);
-    return entry.isDirectory() ? collectFiles(entryPath) : [entryPath];
-  });
+  if (!output) {
+    return [];
+  }
+
+  return output.split(/\r?\n/).map((file) => path.join(repoRoot, file));
 }
 
 function sourceStatsFor(sourcePath: string) {
-  const files = collectFiles(path.join(repoRoot, sourcePath));
+  const files = collectCommittedFiles(sourcePath);
   const tsSourceFiles = files.filter(
     (file) => file.includes(`${path.sep}src${path.sep}`) && /\.[tj]sx?$/.test(file),
   );

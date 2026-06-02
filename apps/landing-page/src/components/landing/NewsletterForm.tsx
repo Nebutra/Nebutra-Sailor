@@ -70,9 +70,9 @@ export function NewsletterForm() {
         placeholder={t("newsletterPlaceholder")}
         aria-label={t("newsletterPlaceholder")}
         required
-        className="sm:w-48"
+        className="min-h-11 sm:w-48"
       />
-      <Button type="submit" size="sm" disabled={status === "loading"}>
+      <Button type="submit" size="sm" disabled={status === "loading"} className="min-h-11">
         {status === "loading" ? "…" : t("newsletterSubscribe")}
       </Button>
       {status === "error" && (

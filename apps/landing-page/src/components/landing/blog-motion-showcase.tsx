@@ -3,7 +3,6 @@
 import { motionDurationSec } from "@nebutra/brand";
 import { ArrowRight, BookOpen, ChevronDown, Copy, Message } from "@nebutra/icons";
 import { useCopyToClipboard } from "@nebutra/ui/primitives";
-import { motion, useAnimationFrame, useMotionValue } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -35,6 +34,31 @@ type LatestPostMotionRailProps = {
   isZh: boolean;
   posts: BlogRailPost[];
 };
+
+function useAnimationFrame(callback: (deltaMs: number) => void, enabled: boolean) {
+  const callbackRef = useRef(callback);
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    let frameId = 0;
+    let previousTime = performance.now();
+
+    const tick = (time: number) => {
+      const delta = time - previousTime;
+      previousTime = time;
+      callbackRef.current(delta);
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    frameId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [enabled]);
+}
 
 function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
   const [open, setOpen] = useState(false);
@@ -244,7 +268,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   const [halfWidth, setHalfWidth] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const trackX = useMotionValue(0);
+  const [trackX, setTrackX] = useState(0);
   const railPosts = posts.slice(0, RAIL_POST_COUNT);
 
   useEffect(() => {
@@ -261,6 +285,8 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sync = () => setReduceMotion(query.matches);
     sync();
@@ -270,11 +296,12 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
 
   const running = !reduceMotion && !paused && halfWidth > 0;
 
-  useAnimationFrame((_time, delta) => {
-    if (!running) return;
-    const next = trackX.get() - delta * RAIL_SPEED_PX_PER_MS;
-    trackX.set(Math.abs(next) >= halfWidth ? next + halfWidth : next);
-  });
+  useAnimationFrame((delta) => {
+    setTrackX((current) => {
+      const next = current - delta * RAIL_SPEED_PX_PER_MS;
+      return Math.abs(next) >= halfWidth ? next + halfWidth : next;
+    });
+  }, running);
 
   if (railPosts.length === 0) return null;
 
@@ -300,9 +327,9 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
     >
       <div className="border-t border-[var(--neutral-6)]" />
       <div className="relative overflow-hidden">
-        <motion.div
+        <div
           ref={trackRef}
-          style={{ x: trackX }}
+          style={{ transform: `translate3d(${trackX}px, 0, 0)` }}
           className="flex w-max will-change-transform motion-reduce:transform-none"
         >
           {renderedPosts.map((post, index) => (
@@ -314,7 +341,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
               setActivePostId={setActivePostId}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[var(--neutral-1)] to-transparent sm:w-24"
