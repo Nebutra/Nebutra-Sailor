@@ -12,7 +12,6 @@ on:
     paths-ignore:
       - "docs/**"
       - "**/*.md"
-      - ".github/**"
   workflow_dispatch:
     inputs:
       dry_run:
