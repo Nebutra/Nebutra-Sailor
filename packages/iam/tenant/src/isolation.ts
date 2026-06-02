@@ -12,7 +12,17 @@ interface PrismaLikeClient {
   $executeRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<number>;
   $queryRaw?: (query: TemplateStringsArray, ...values: unknown[]) => Promise<unknown[]>;
   $transaction?: (operations: unknown[]) => Promise<unknown[]>;
+  $executeRawUnsafe?: (query: string) => Promise<number>;
 }
+
+// Optional non-bypassrls role to assume for tenant-scoped queries — e.g. "app_user"
+// on Supabase, whose `postgres` connection role bypasses RLS entirely. Env-driven so
+// other backends opt in (or leave unset); validated as a bare SQL identifier before
+// interpolation since role names cannot be bound as parameters.
+const RLS_ROLE = (() => {
+  const r = process.env.APP_DB_ROLE;
+  return r && /^[a-z_][a-z0-9_]*$/.test(r) ? r : null;
+})();
 
 export type RlsPolicyCommand = "ALL" | "SELECT" | "INSERT" | "UPDATE" | "DELETE";
 
@@ -197,12 +207,19 @@ export function withRls<P extends PrismaLikeClient>(prisma: P, tenantId: string)
               typeof prisma.$transaction === "function" &&
               typeof prisma.$executeRaw === "function"
             ) {
-              const [, result] = (await prisma.$transaction([
+              const ops: unknown[] = [];
+              // Switch to the non-bypassrls role first (when configured) so RLS
+              // policies apply; role names can't be bound, hence validated raw.
+              if (RLS_ROLE && typeof prisma.$executeRawUnsafe === "function") {
+                ops.push(prisma.$executeRawUnsafe(`SET LOCAL ROLE "${RLS_ROLE}"`));
+              }
+              ops.push(
                 prisma.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
-                query(args),
-              ])) as [unknown, unknown];
+              );
+              ops.push(query(args));
+              const results = (await prisma.$transaction(ops)) as unknown[];
               logger.debug("RLS context set", { tenantId });
-              return result;
+              return results[results.length - 1];
             }
             return query(args);
           },

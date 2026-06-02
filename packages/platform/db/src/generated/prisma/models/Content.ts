@@ -222,7 +222,7 @@ export type ContentWhereInput = {
   publishedAt?: Prisma.DateTimeNullableFilter<"Content"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Content"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Content"> | Date | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   embeddings?: Prisma.ContentEmbeddingListRelationFilter
   translations?: Prisma.ContentTranslationListRelationFilter
@@ -239,7 +239,7 @@ export type ContentOrderByWithRelationInput = {
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  organization?: Prisma.OrganizationOrderByWithRelationInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
   author?: Prisma.UserOrderByWithRelationInput
   embeddings?: Prisma.ContentEmbeddingOrderByRelationAggregateInput
   translations?: Prisma.ContentTranslationOrderByRelationAggregateInput
@@ -260,7 +260,7 @@ export type ContentWhereUniqueInput = Prisma.AtLeast<{
   publishedAt?: Prisma.DateTimeNullableFilter<"Content"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Content"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Content"> | Date | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   embeddings?: Prisma.ContentEmbeddingListRelationFilter
   translations?: Prisma.ContentTranslationListRelationFilter
@@ -307,7 +307,7 @@ export type ContentCreateInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutContentsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutContentsInput
   author: Prisma.UserCreateNestedOneWithoutContentsInput
   embeddings?: Prisma.ContentEmbeddingCreateNestedManyWithoutContentInput
   translations?: Prisma.ContentTranslationCreateNestedManyWithoutContentInput
@@ -337,7 +337,7 @@ export type ContentUpdateInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutContentsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutContentsNestedInput
   author?: Prisma.UserUpdateOneRequiredWithoutContentsNestedInput
   embeddings?: Prisma.ContentEmbeddingUpdateManyWithoutContentNestedInput
   translations?: Prisma.ContentTranslationUpdateManyWithoutContentNestedInput
@@ -454,45 +454,45 @@ export type ContentScalarRelationFilter = {
   isNot?: Prisma.ContentWhereInput
 }
 
-export type ContentCreateNestedManyWithoutOrganizationInput = {
-  create?: Prisma.XOR<Prisma.ContentCreateWithoutOrganizationInput, Prisma.ContentUncheckedCreateWithoutOrganizationInput> | Prisma.ContentCreateWithoutOrganizationInput[] | Prisma.ContentUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutOrganizationInput | Prisma.ContentCreateOrConnectWithoutOrganizationInput[]
-  createMany?: Prisma.ContentCreateManyOrganizationInputEnvelope
+export type ContentCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutTenantInput, Prisma.ContentUncheckedCreateWithoutTenantInput> | Prisma.ContentCreateWithoutTenantInput[] | Prisma.ContentUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutTenantInput | Prisma.ContentCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.ContentCreateManyTenantInputEnvelope
   connect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
 }
 
-export type ContentUncheckedCreateNestedManyWithoutOrganizationInput = {
-  create?: Prisma.XOR<Prisma.ContentCreateWithoutOrganizationInput, Prisma.ContentUncheckedCreateWithoutOrganizationInput> | Prisma.ContentCreateWithoutOrganizationInput[] | Prisma.ContentUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutOrganizationInput | Prisma.ContentCreateOrConnectWithoutOrganizationInput[]
-  createMany?: Prisma.ContentCreateManyOrganizationInputEnvelope
+export type ContentUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutTenantInput, Prisma.ContentUncheckedCreateWithoutTenantInput> | Prisma.ContentCreateWithoutTenantInput[] | Prisma.ContentUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutTenantInput | Prisma.ContentCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.ContentCreateManyTenantInputEnvelope
   connect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
 }
 
-export type ContentUpdateManyWithoutOrganizationNestedInput = {
-  create?: Prisma.XOR<Prisma.ContentCreateWithoutOrganizationInput, Prisma.ContentUncheckedCreateWithoutOrganizationInput> | Prisma.ContentCreateWithoutOrganizationInput[] | Prisma.ContentUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutOrganizationInput | Prisma.ContentCreateOrConnectWithoutOrganizationInput[]
-  upsert?: Prisma.ContentUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.ContentUpsertWithWhereUniqueWithoutOrganizationInput[]
-  createMany?: Prisma.ContentCreateManyOrganizationInputEnvelope
+export type ContentUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutTenantInput, Prisma.ContentUncheckedCreateWithoutTenantInput> | Prisma.ContentCreateWithoutTenantInput[] | Prisma.ContentUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutTenantInput | Prisma.ContentCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.ContentUpsertWithWhereUniqueWithoutTenantInput | Prisma.ContentUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.ContentCreateManyTenantInputEnvelope
   set?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
   disconnect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
   delete?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
   connect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
-  update?: Prisma.ContentUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.ContentUpdateWithWhereUniqueWithoutOrganizationInput[]
-  updateMany?: Prisma.ContentUpdateManyWithWhereWithoutOrganizationInput | Prisma.ContentUpdateManyWithWhereWithoutOrganizationInput[]
+  update?: Prisma.ContentUpdateWithWhereUniqueWithoutTenantInput | Prisma.ContentUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.ContentUpdateManyWithWhereWithoutTenantInput | Prisma.ContentUpdateManyWithWhereWithoutTenantInput[]
   deleteMany?: Prisma.ContentScalarWhereInput | Prisma.ContentScalarWhereInput[]
 }
 
-export type ContentUncheckedUpdateManyWithoutOrganizationNestedInput = {
-  create?: Prisma.XOR<Prisma.ContentCreateWithoutOrganizationInput, Prisma.ContentUncheckedCreateWithoutOrganizationInput> | Prisma.ContentCreateWithoutOrganizationInput[] | Prisma.ContentUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutOrganizationInput | Prisma.ContentCreateOrConnectWithoutOrganizationInput[]
-  upsert?: Prisma.ContentUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.ContentUpsertWithWhereUniqueWithoutOrganizationInput[]
-  createMany?: Prisma.ContentCreateManyOrganizationInputEnvelope
+export type ContentUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.ContentCreateWithoutTenantInput, Prisma.ContentUncheckedCreateWithoutTenantInput> | Prisma.ContentCreateWithoutTenantInput[] | Prisma.ContentUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.ContentCreateOrConnectWithoutTenantInput | Prisma.ContentCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.ContentUpsertWithWhereUniqueWithoutTenantInput | Prisma.ContentUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.ContentCreateManyTenantInputEnvelope
   set?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
   disconnect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
   delete?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
   connect?: Prisma.ContentWhereUniqueInput | Prisma.ContentWhereUniqueInput[]
-  update?: Prisma.ContentUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.ContentUpdateWithWhereUniqueWithoutOrganizationInput[]
-  updateMany?: Prisma.ContentUpdateManyWithWhereWithoutOrganizationInput | Prisma.ContentUpdateManyWithWhereWithoutOrganizationInput[]
+  update?: Prisma.ContentUpdateWithWhereUniqueWithoutTenantInput | Prisma.ContentUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.ContentUpdateManyWithWhereWithoutTenantInput | Prisma.ContentUpdateManyWithWhereWithoutTenantInput[]
   deleteMany?: Prisma.ContentScalarWhereInput | Prisma.ContentScalarWhereInput[]
 }
 
@@ -564,7 +564,7 @@ export type ContentUpdateOneRequiredWithoutEmbeddingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ContentUpdateToOneWithWhereWithoutEmbeddingsInput, Prisma.ContentUpdateWithoutEmbeddingsInput>, Prisma.ContentUncheckedUpdateWithoutEmbeddingsInput>
 }
 
-export type ContentCreateWithoutOrganizationInput = {
+export type ContentCreateWithoutTenantInput = {
   id?: string
   title: string
   slug?: string | null
@@ -578,7 +578,7 @@ export type ContentCreateWithoutOrganizationInput = {
   translations?: Prisma.ContentTranslationCreateNestedManyWithoutContentInput
 }
 
-export type ContentUncheckedCreateWithoutOrganizationInput = {
+export type ContentUncheckedCreateWithoutTenantInput = {
   id?: string
   authorId: string
   title: string
@@ -592,30 +592,30 @@ export type ContentUncheckedCreateWithoutOrganizationInput = {
   translations?: Prisma.ContentTranslationUncheckedCreateNestedManyWithoutContentInput
 }
 
-export type ContentCreateOrConnectWithoutOrganizationInput = {
+export type ContentCreateOrConnectWithoutTenantInput = {
   where: Prisma.ContentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ContentCreateWithoutOrganizationInput, Prisma.ContentUncheckedCreateWithoutOrganizationInput>
+  create: Prisma.XOR<Prisma.ContentCreateWithoutTenantInput, Prisma.ContentUncheckedCreateWithoutTenantInput>
 }
 
-export type ContentCreateManyOrganizationInputEnvelope = {
-  data: Prisma.ContentCreateManyOrganizationInput | Prisma.ContentCreateManyOrganizationInput[]
+export type ContentCreateManyTenantInputEnvelope = {
+  data: Prisma.ContentCreateManyTenantInput | Prisma.ContentCreateManyTenantInput[]
   skipDuplicates?: boolean
 }
 
-export type ContentUpsertWithWhereUniqueWithoutOrganizationInput = {
+export type ContentUpsertWithWhereUniqueWithoutTenantInput = {
   where: Prisma.ContentWhereUniqueInput
-  update: Prisma.XOR<Prisma.ContentUpdateWithoutOrganizationInput, Prisma.ContentUncheckedUpdateWithoutOrganizationInput>
-  create: Prisma.XOR<Prisma.ContentCreateWithoutOrganizationInput, Prisma.ContentUncheckedCreateWithoutOrganizationInput>
+  update: Prisma.XOR<Prisma.ContentUpdateWithoutTenantInput, Prisma.ContentUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.ContentCreateWithoutTenantInput, Prisma.ContentUncheckedCreateWithoutTenantInput>
 }
 
-export type ContentUpdateWithWhereUniqueWithoutOrganizationInput = {
+export type ContentUpdateWithWhereUniqueWithoutTenantInput = {
   where: Prisma.ContentWhereUniqueInput
-  data: Prisma.XOR<Prisma.ContentUpdateWithoutOrganizationInput, Prisma.ContentUncheckedUpdateWithoutOrganizationInput>
+  data: Prisma.XOR<Prisma.ContentUpdateWithoutTenantInput, Prisma.ContentUncheckedUpdateWithoutTenantInput>
 }
 
-export type ContentUpdateManyWithWhereWithoutOrganizationInput = {
+export type ContentUpdateManyWithWhereWithoutTenantInput = {
   where: Prisma.ContentScalarWhereInput
-  data: Prisma.XOR<Prisma.ContentUpdateManyMutationInput, Prisma.ContentUncheckedUpdateManyWithoutOrganizationInput>
+  data: Prisma.XOR<Prisma.ContentUpdateManyMutationInput, Prisma.ContentUncheckedUpdateManyWithoutTenantInput>
 }
 
 export type ContentScalarWhereInput = {
@@ -643,7 +643,7 @@ export type ContentCreateWithoutAuthorInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutContentsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutContentsInput
   embeddings?: Prisma.ContentEmbeddingCreateNestedManyWithoutContentInput
   translations?: Prisma.ContentTranslationCreateNestedManyWithoutContentInput
 }
@@ -697,7 +697,7 @@ export type ContentCreateWithoutTranslationsInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutContentsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutContentsInput
   author: Prisma.UserCreateNestedOneWithoutContentsInput
   embeddings?: Prisma.ContentEmbeddingCreateNestedManyWithoutContentInput
 }
@@ -741,7 +741,7 @@ export type ContentUpdateWithoutTranslationsInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutContentsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutContentsNestedInput
   author?: Prisma.UserUpdateOneRequiredWithoutContentsNestedInput
   embeddings?: Prisma.ContentEmbeddingUpdateManyWithoutContentNestedInput
 }
@@ -769,7 +769,7 @@ export type ContentCreateWithoutEmbeddingsInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutContentsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutContentsInput
   author: Prisma.UserCreateNestedOneWithoutContentsInput
   translations?: Prisma.ContentTranslationCreateNestedManyWithoutContentInput
 }
@@ -813,7 +813,7 @@ export type ContentUpdateWithoutEmbeddingsInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutContentsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutContentsNestedInput
   author?: Prisma.UserUpdateOneRequiredWithoutContentsNestedInput
   translations?: Prisma.ContentTranslationUpdateManyWithoutContentNestedInput
 }
@@ -832,7 +832,7 @@ export type ContentUncheckedUpdateWithoutEmbeddingsInput = {
   translations?: Prisma.ContentTranslationUncheckedUpdateManyWithoutContentNestedInput
 }
 
-export type ContentCreateManyOrganizationInput = {
+export type ContentCreateManyTenantInput = {
   id?: string
   authorId: string
   title: string
@@ -844,7 +844,7 @@ export type ContentCreateManyOrganizationInput = {
   updatedAt?: Date | string
 }
 
-export type ContentUpdateWithoutOrganizationInput = {
+export type ContentUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -858,7 +858,7 @@ export type ContentUpdateWithoutOrganizationInput = {
   translations?: Prisma.ContentTranslationUpdateManyWithoutContentNestedInput
 }
 
-export type ContentUncheckedUpdateWithoutOrganizationInput = {
+export type ContentUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -872,7 +872,7 @@ export type ContentUncheckedUpdateWithoutOrganizationInput = {
   translations?: Prisma.ContentTranslationUncheckedUpdateManyWithoutContentNestedInput
 }
 
-export type ContentUncheckedUpdateManyWithoutOrganizationInput = {
+export type ContentUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -905,7 +905,7 @@ export type ContentUpdateWithoutAuthorInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutContentsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutContentsNestedInput
   embeddings?: Prisma.ContentEmbeddingUpdateManyWithoutContentNestedInput
   translations?: Prisma.ContentTranslationUpdateManyWithoutContentNestedInput
 }
@@ -987,7 +987,7 @@ export type ContentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   embeddings?: boolean | Prisma.Content$embeddingsArgs<ExtArgs>
   translations?: boolean | Prisma.Content$translationsArgs<ExtArgs>
@@ -1005,7 +1005,7 @@ export type ContentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["content"]>
 
@@ -1020,7 +1020,7 @@ export type ContentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   publishedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["content"]>
 
@@ -1039,25 +1039,25 @@ export type ContentSelectScalar = {
 
 export type ContentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "authorId" | "title" | "slug" | "body" | "status" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["content"]>
 export type ContentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   embeddings?: boolean | Prisma.Content$embeddingsArgs<ExtArgs>
   translations?: boolean | Prisma.Content$translationsArgs<ExtArgs>
   _count?: boolean | Prisma.ContentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ContentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ContentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ContentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Content"
   objects: {
-    organization: Prisma.$OrganizationPayload<ExtArgs>
+    tenant: Prisma.$TenantPayload<ExtArgs>
     author: Prisma.$UserPayload<ExtArgs>
     embeddings: Prisma.$ContentEmbeddingPayload<ExtArgs>[]
     translations: Prisma.$ContentTranslationPayload<ExtArgs>[]
@@ -1467,7 +1467,7 @@ readonly fields: ContentFieldRefs;
  */
 export interface Prisma__ContentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   author<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   embeddings<T extends Prisma.Content$embeddingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Content$embeddingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   translations<T extends Prisma.Content$translationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Content$translationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>

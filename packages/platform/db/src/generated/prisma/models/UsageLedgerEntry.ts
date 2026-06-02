@@ -324,6 +324,7 @@ export type UsageLedgerEntryWhereInput = {
   recordedAt?: Prisma.DateTimeFilter<"UsageLedgerEntry"> | Date | string
   ingestVersion?: Prisma.StringFilter<"UsageLedgerEntry"> | string
   metadata?: Prisma.JsonFilter<"UsageLedgerEntry">
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
 }
 
@@ -346,6 +347,7 @@ export type UsageLedgerEntryOrderByWithRelationInput = {
   recordedAt?: Prisma.SortOrder
   ingestVersion?: Prisma.SortOrder
   metadata?: Prisma.SortOrder
+  tenant?: Prisma.TenantOrderByWithRelationInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
 }
 
@@ -372,6 +374,7 @@ export type UsageLedgerEntryWhereUniqueInput = Prisma.AtLeast<{
   recordedAt?: Prisma.DateTimeFilter<"UsageLedgerEntry"> | Date | string
   ingestVersion?: Prisma.StringFilter<"UsageLedgerEntry"> | string
   metadata?: Prisma.JsonFilter<"UsageLedgerEntry">
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
 }, "id" | "organizationId_idempotencyKey">
 
@@ -427,7 +430,6 @@ export type UsageLedgerEntryScalarWhereWithAggregatesInput = {
 
 export type UsageLedgerEntryCreateInput = {
   id?: string
-  organizationId: string
   userId?: string | null
   idempotencyKey: string
   eventId?: string | null
@@ -443,6 +445,7 @@ export type UsageLedgerEntryCreateInput = {
   recordedAt?: Date | string
   ingestVersion?: string
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  tenant: Prisma.TenantCreateNestedOneWithoutUsageLedgerEntriesInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsageLedgerEntriesInput
 }
 
@@ -469,7 +472,6 @@ export type UsageLedgerEntryUncheckedCreateInput = {
 
 export type UsageLedgerEntryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -485,6 +487,7 @@ export type UsageLedgerEntryUpdateInput = {
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ingestVersion?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutUsageLedgerEntriesNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutUsageLedgerEntriesNestedInput
 }
 
@@ -532,7 +535,6 @@ export type UsageLedgerEntryCreateManyInput = {
 
 export type UsageLedgerEntryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -659,6 +661,48 @@ export type UsageLedgerEntrySumOrderByAggregateInput = {
   totalCost?: Prisma.SortOrder
 }
 
+export type UsageLedgerEntryCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.UsageLedgerEntryCreateWithoutTenantInput, Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput> | Prisma.UsageLedgerEntryCreateWithoutTenantInput[] | Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UsageLedgerEntryCreateOrConnectWithoutTenantInput | Prisma.UsageLedgerEntryCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.UsageLedgerEntryCreateManyTenantInputEnvelope
+  connect?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+}
+
+export type UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.UsageLedgerEntryCreateWithoutTenantInput, Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput> | Prisma.UsageLedgerEntryCreateWithoutTenantInput[] | Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UsageLedgerEntryCreateOrConnectWithoutTenantInput | Prisma.UsageLedgerEntryCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.UsageLedgerEntryCreateManyTenantInputEnvelope
+  connect?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+}
+
+export type UsageLedgerEntryUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.UsageLedgerEntryCreateWithoutTenantInput, Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput> | Prisma.UsageLedgerEntryCreateWithoutTenantInput[] | Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UsageLedgerEntryCreateOrConnectWithoutTenantInput | Prisma.UsageLedgerEntryCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.UsageLedgerEntryUpsertWithWhereUniqueWithoutTenantInput | Prisma.UsageLedgerEntryUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.UsageLedgerEntryCreateManyTenantInputEnvelope
+  set?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+  disconnect?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+  delete?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+  connect?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+  update?: Prisma.UsageLedgerEntryUpdateWithWhereUniqueWithoutTenantInput | Prisma.UsageLedgerEntryUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.UsageLedgerEntryUpdateManyWithWhereWithoutTenantInput | Prisma.UsageLedgerEntryUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.UsageLedgerEntryScalarWhereInput | Prisma.UsageLedgerEntryScalarWhereInput[]
+}
+
+export type UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.UsageLedgerEntryCreateWithoutTenantInput, Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput> | Prisma.UsageLedgerEntryCreateWithoutTenantInput[] | Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UsageLedgerEntryCreateOrConnectWithoutTenantInput | Prisma.UsageLedgerEntryCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.UsageLedgerEntryUpsertWithWhereUniqueWithoutTenantInput | Prisma.UsageLedgerEntryUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.UsageLedgerEntryCreateManyTenantInputEnvelope
+  set?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+  disconnect?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+  delete?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+  connect?: Prisma.UsageLedgerEntryWhereUniqueInput | Prisma.UsageLedgerEntryWhereUniqueInput[]
+  update?: Prisma.UsageLedgerEntryUpdateWithWhereUniqueWithoutTenantInput | Prisma.UsageLedgerEntryUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.UsageLedgerEntryUpdateManyWithWhereWithoutTenantInput | Prisma.UsageLedgerEntryUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.UsageLedgerEntryScalarWhereInput | Prisma.UsageLedgerEntryScalarWhereInput[]
+}
+
 export type UsageLedgerEntryCreateNestedManyWithoutSubscriptionInput = {
   create?: Prisma.XOR<Prisma.UsageLedgerEntryCreateWithoutSubscriptionInput, Prisma.UsageLedgerEntryUncheckedCreateWithoutSubscriptionInput> | Prisma.UsageLedgerEntryCreateWithoutSubscriptionInput[] | Prisma.UsageLedgerEntryUncheckedCreateWithoutSubscriptionInput[]
   connectOrCreate?: Prisma.UsageLedgerEntryCreateOrConnectWithoutSubscriptionInput | Prisma.UsageLedgerEntryCreateOrConnectWithoutSubscriptionInput[]
@@ -709,9 +753,8 @@ export type EnumUsageTypeFieldUpdateOperationsInput = {
   set?: $Enums.UsageType
 }
 
-export type UsageLedgerEntryCreateWithoutSubscriptionInput = {
+export type UsageLedgerEntryCreateWithoutTenantInput = {
   id?: string
-  organizationId: string
   userId?: string | null
   idempotencyKey: string
   eventId?: string | null
@@ -727,6 +770,97 @@ export type UsageLedgerEntryCreateWithoutSubscriptionInput = {
   recordedAt?: Date | string
   ingestVersion?: string
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutUsageLedgerEntriesInput
+}
+
+export type UsageLedgerEntryUncheckedCreateWithoutTenantInput = {
+  id?: string
+  subscriptionId?: string | null
+  userId?: string | null
+  idempotencyKey: string
+  eventId?: string | null
+  source?: $Enums.UsageLedgerSource
+  type: $Enums.UsageType
+  resource?: string | null
+  quantity: bigint | number
+  unit?: string
+  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
+  occurredAt: Date | string
+  recordedAt?: Date | string
+  ingestVersion?: string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type UsageLedgerEntryCreateOrConnectWithoutTenantInput = {
+  where: Prisma.UsageLedgerEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsageLedgerEntryCreateWithoutTenantInput, Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput>
+}
+
+export type UsageLedgerEntryCreateManyTenantInputEnvelope = {
+  data: Prisma.UsageLedgerEntryCreateManyTenantInput | Prisma.UsageLedgerEntryCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type UsageLedgerEntryUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.UsageLedgerEntryWhereUniqueInput
+  update: Prisma.XOR<Prisma.UsageLedgerEntryUpdateWithoutTenantInput, Prisma.UsageLedgerEntryUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.UsageLedgerEntryCreateWithoutTenantInput, Prisma.UsageLedgerEntryUncheckedCreateWithoutTenantInput>
+}
+
+export type UsageLedgerEntryUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.UsageLedgerEntryWhereUniqueInput
+  data: Prisma.XOR<Prisma.UsageLedgerEntryUpdateWithoutTenantInput, Prisma.UsageLedgerEntryUncheckedUpdateWithoutTenantInput>
+}
+
+export type UsageLedgerEntryUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.UsageLedgerEntryScalarWhereInput
+  data: Prisma.XOR<Prisma.UsageLedgerEntryUpdateManyMutationInput, Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type UsageLedgerEntryScalarWhereInput = {
+  AND?: Prisma.UsageLedgerEntryScalarWhereInput | Prisma.UsageLedgerEntryScalarWhereInput[]
+  OR?: Prisma.UsageLedgerEntryScalarWhereInput[]
+  NOT?: Prisma.UsageLedgerEntryScalarWhereInput | Prisma.UsageLedgerEntryScalarWhereInput[]
+  id?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  organizationId?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  subscriptionId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
+  userId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
+  idempotencyKey?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  eventId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
+  source?: Prisma.EnumUsageLedgerSourceFilter<"UsageLedgerEntry"> | $Enums.UsageLedgerSource
+  type?: Prisma.EnumUsageTypeFilter<"UsageLedgerEntry"> | $Enums.UsageType
+  resource?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
+  quantity?: Prisma.BigIntFilter<"UsageLedgerEntry"> | bigint | number
+  unit?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  unitCost?: Prisma.DecimalNullableFilter<"UsageLedgerEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.DecimalNullableFilter<"UsageLedgerEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  occurredAt?: Prisma.DateTimeFilter<"UsageLedgerEntry"> | Date | string
+  recordedAt?: Prisma.DateTimeFilter<"UsageLedgerEntry"> | Date | string
+  ingestVersion?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  metadata?: Prisma.JsonFilter<"UsageLedgerEntry">
+}
+
+export type UsageLedgerEntryCreateWithoutSubscriptionInput = {
+  id?: string
+  userId?: string | null
+  idempotencyKey: string
+  eventId?: string | null
+  source?: $Enums.UsageLedgerSource
+  type: $Enums.UsageType
+  resource?: string | null
+  quantity: bigint | number
+  unit?: string
+  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
+  occurredAt: Date | string
+  recordedAt?: Date | string
+  ingestVersion?: string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  tenant: Prisma.TenantCreateNestedOneWithoutUsageLedgerEntriesInput
 }
 
 export type UsageLedgerEntryUncheckedCreateWithoutSubscriptionInput = {
@@ -775,28 +909,84 @@ export type UsageLedgerEntryUpdateManyWithWhereWithoutSubscriptionInput = {
   data: Prisma.XOR<Prisma.UsageLedgerEntryUpdateManyMutationInput, Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutSubscriptionInput>
 }
 
-export type UsageLedgerEntryScalarWhereInput = {
-  AND?: Prisma.UsageLedgerEntryScalarWhereInput | Prisma.UsageLedgerEntryScalarWhereInput[]
-  OR?: Prisma.UsageLedgerEntryScalarWhereInput[]
-  NOT?: Prisma.UsageLedgerEntryScalarWhereInput | Prisma.UsageLedgerEntryScalarWhereInput[]
-  id?: Prisma.StringFilter<"UsageLedgerEntry"> | string
-  organizationId?: Prisma.StringFilter<"UsageLedgerEntry"> | string
-  subscriptionId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
-  userId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
-  idempotencyKey?: Prisma.StringFilter<"UsageLedgerEntry"> | string
-  eventId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
-  source?: Prisma.EnumUsageLedgerSourceFilter<"UsageLedgerEntry"> | $Enums.UsageLedgerSource
-  type?: Prisma.EnumUsageTypeFilter<"UsageLedgerEntry"> | $Enums.UsageType
-  resource?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
-  quantity?: Prisma.BigIntFilter<"UsageLedgerEntry"> | bigint | number
-  unit?: Prisma.StringFilter<"UsageLedgerEntry"> | string
-  unitCost?: Prisma.DecimalNullableFilter<"UsageLedgerEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  totalCost?: Prisma.DecimalNullableFilter<"UsageLedgerEntry"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  currency?: Prisma.StringFilter<"UsageLedgerEntry"> | string
-  occurredAt?: Prisma.DateTimeFilter<"UsageLedgerEntry"> | Date | string
-  recordedAt?: Prisma.DateTimeFilter<"UsageLedgerEntry"> | Date | string
-  ingestVersion?: Prisma.StringFilter<"UsageLedgerEntry"> | string
-  metadata?: Prisma.JsonFilter<"UsageLedgerEntry">
+export type UsageLedgerEntryCreateManyTenantInput = {
+  id?: string
+  subscriptionId?: string | null
+  userId?: string | null
+  idempotencyKey: string
+  eventId?: string | null
+  source?: $Enums.UsageLedgerSource
+  type: $Enums.UsageType
+  resource?: string | null
+  quantity: bigint | number
+  unit?: string
+  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
+  occurredAt: Date | string
+  recordedAt?: Date | string
+  ingestVersion?: string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type UsageLedgerEntryUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.EnumUsageLedgerSourceFieldUpdateOperationsInput | $Enums.UsageLedgerSource
+  type?: Prisma.EnumUsageTypeFieldUpdateOperationsInput | $Enums.UsageType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantity?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ingestVersion?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  subscription?: Prisma.SubscriptionUpdateOneWithoutUsageLedgerEntriesNestedInput
+}
+
+export type UsageLedgerEntryUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.EnumUsageLedgerSourceFieldUpdateOperationsInput | $Enums.UsageLedgerSource
+  type?: Prisma.EnumUsageTypeFieldUpdateOperationsInput | $Enums.UsageType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantity?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ingestVersion?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+}
+
+export type UsageLedgerEntryUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source?: Prisma.EnumUsageLedgerSourceFieldUpdateOperationsInput | $Enums.UsageLedgerSource
+  type?: Prisma.EnumUsageTypeFieldUpdateOperationsInput | $Enums.UsageType
+  resource?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quantity?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  unit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  totalCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  occurredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ingestVersion?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
 }
 
 export type UsageLedgerEntryCreateManySubscriptionInput = {
@@ -821,7 +1011,6 @@ export type UsageLedgerEntryCreateManySubscriptionInput = {
 
 export type UsageLedgerEntryUpdateWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -837,6 +1026,7 @@ export type UsageLedgerEntryUpdateWithoutSubscriptionInput = {
   recordedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ingestVersion?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutUsageLedgerEntriesNestedInput
 }
 
 export type UsageLedgerEntryUncheckedUpdateWithoutSubscriptionInput = {
@@ -900,6 +1090,7 @@ export type UsageLedgerEntrySelect<ExtArgs extends runtime.Types.Extensions.Inte
   recordedAt?: boolean
   ingestVersion?: boolean
   metadata?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs>
 }, ExtArgs["result"]["usageLedgerEntry"]>
 
@@ -922,6 +1113,7 @@ export type UsageLedgerEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   recordedAt?: boolean
   ingestVersion?: boolean
   metadata?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs>
 }, ExtArgs["result"]["usageLedgerEntry"]>
 
@@ -944,6 +1136,7 @@ export type UsageLedgerEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   recordedAt?: boolean
   ingestVersion?: boolean
   metadata?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs>
 }, ExtArgs["result"]["usageLedgerEntry"]>
 
@@ -970,18 +1163,22 @@ export type UsageLedgerEntrySelectScalar = {
 
 export type UsageLedgerEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "subscriptionId" | "userId" | "idempotencyKey" | "eventId" | "source" | "type" | "resource" | "quantity" | "unit" | "unitCost" | "totalCost" | "currency" | "occurredAt" | "recordedAt" | "ingestVersion" | "metadata", ExtArgs["result"]["usageLedgerEntry"]>
 export type UsageLedgerEntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs>
 }
 export type UsageLedgerEntryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs>
 }
 export type UsageLedgerEntryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs>
 }
 
 export type $UsageLedgerEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UsageLedgerEntry"
   objects: {
+    tenant: Prisma.$TenantPayload<ExtArgs>
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1397,6 +1594,7 @@ readonly fields: UsageLedgerEntryFieldRefs;
  */
 export interface Prisma__UsageLedgerEntryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   subscription<T extends Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

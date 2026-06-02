@@ -18,7 +18,7 @@ interface ApiKeyPrisma {
   aPIKey: {
     findUnique: (args: {
       where: { keyHash: string };
-      include?: { organization?: { select?: { plan?: boolean } } };
+      include?: { tenant?: { include?: { organization?: { select?: { plan?: boolean } } } } };
     }) => Promise<{
       id: string;
       organizationId: string;
@@ -27,7 +27,7 @@ interface ApiKeyPrisma {
       rateLimitRps: number;
       revokedAt: Date | null;
       expiresAt: Date | null;
-      organization: { plan: string };
+      tenant: { organization: { plan: string } | null };
     } | null>;
     update: (args: { where: { id: string }; data: { lastUsedAt: Date } }) => Promise<unknown>;
   };

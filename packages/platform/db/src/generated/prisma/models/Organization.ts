@@ -207,14 +207,7 @@ export type OrganizationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   members?: Prisma.OrganizationMemberListRelationFilter
-  contents?: Prisma.ContentListRelationFilter
-  products?: Prisma.ProductListRelationFilter
-  orders?: Prisma.OrderListRelationFilter
-  integrations?: Prisma.IntegrationListRelationFilter
-  apiKeys?: Prisma.APIKeyListRelationFilter
-  oauthClients?: Prisma.OAuthClientListRelationFilter
-  chatSessions?: Prisma.ChatSessionListRelationFilter
-  threads?: Prisma.ThreadListRelationFilter
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -227,14 +220,7 @@ export type OrganizationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   members?: Prisma.OrganizationMemberOrderByRelationAggregateInput
-  contents?: Prisma.ContentOrderByRelationAggregateInput
-  products?: Prisma.ProductOrderByRelationAggregateInput
-  orders?: Prisma.OrderOrderByRelationAggregateInput
-  integrations?: Prisma.IntegrationOrderByRelationAggregateInput
-  apiKeys?: Prisma.APIKeyOrderByRelationAggregateInput
-  oauthClients?: Prisma.OAuthClientOrderByRelationAggregateInput
-  chatSessions?: Prisma.ChatSessionOrderByRelationAggregateInput
-  threads?: Prisma.ThreadOrderByRelationAggregateInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -250,14 +236,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Organization"> | Date | string
   members?: Prisma.OrganizationMemberListRelationFilter
-  contents?: Prisma.ContentListRelationFilter
-  products?: Prisma.ProductListRelationFilter
-  orders?: Prisma.OrderListRelationFilter
-  integrations?: Prisma.IntegrationListRelationFilter
-  apiKeys?: Prisma.APIKeyListRelationFilter
-  oauthClients?: Prisma.OAuthClientListRelationFilter
-  chatSessions?: Prisma.ChatSessionListRelationFilter
-  threads?: Prisma.ThreadListRelationFilter
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }, "id" | "clerkId" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -298,14 +277,7 @@ export type OrganizationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -318,14 +290,7 @@ export type OrganizationUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -338,14 +303,7 @@ export type OrganizationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -358,14 +316,7 @@ export type OrganizationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -434,6 +385,11 @@ export type OrganizationMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type OrganizationNullableScalarRelationFilter = {
+  is?: Prisma.OrganizationWhereInput | null
+  isNot?: Prisma.OrganizationWhereInput | null
+}
+
 export type OrganizationScalarRelationFilter = {
   is?: Prisma.OrganizationWhereInput
   isNot?: Prisma.OrganizationWhereInput
@@ -455,18 +411,20 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type OrganizationCreateNestedOneWithoutApiKeysInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutApiKeysInput, Prisma.OrganizationUncheckedCreateWithoutApiKeysInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutApiKeysInput
+export type OrganizationCreateNestedOneWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutTenantInput, Prisma.OrganizationUncheckedCreateWithoutTenantInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutTenantInput
   connect?: Prisma.OrganizationWhereUniqueInput
 }
 
-export type OrganizationUpdateOneRequiredWithoutApiKeysNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutApiKeysInput, Prisma.OrganizationUncheckedCreateWithoutApiKeysInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutApiKeysInput
-  upsert?: Prisma.OrganizationUpsertWithoutApiKeysInput
+export type OrganizationUpdateOneWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutTenantInput, Prisma.OrganizationUncheckedCreateWithoutTenantInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutTenantInput
+  upsert?: Prisma.OrganizationUpsertWithoutTenantInput
+  disconnect?: Prisma.OrganizationWhereInput | boolean
+  delete?: Prisma.OrganizationWhereInput | boolean
   connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutApiKeysInput, Prisma.OrganizationUpdateWithoutApiKeysInput>, Prisma.OrganizationUncheckedUpdateWithoutApiKeysInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutTenantInput, Prisma.OrganizationUpdateWithoutTenantInput>, Prisma.OrganizationUncheckedUpdateWithoutTenantInput>
 }
 
 export type OrganizationCreateNestedOneWithoutMembersInput = {
@@ -483,105 +441,7 @@ export type OrganizationUpdateOneRequiredWithoutMembersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutMembersInput, Prisma.OrganizationUpdateWithoutMembersInput>, Prisma.OrganizationUncheckedUpdateWithoutMembersInput>
 }
 
-export type OrganizationCreateNestedOneWithoutContentsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutContentsInput, Prisma.OrganizationUncheckedCreateWithoutContentsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutContentsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutContentsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutContentsInput, Prisma.OrganizationUncheckedCreateWithoutContentsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutContentsInput
-  upsert?: Prisma.OrganizationUpsertWithoutContentsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutContentsInput, Prisma.OrganizationUpdateWithoutContentsInput>, Prisma.OrganizationUncheckedUpdateWithoutContentsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutProductsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutProductsInput, Prisma.OrganizationUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutProductsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutProductsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutProductsInput, Prisma.OrganizationUncheckedCreateWithoutProductsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutProductsInput
-  upsert?: Prisma.OrganizationUpsertWithoutProductsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutProductsInput, Prisma.OrganizationUpdateWithoutProductsInput>, Prisma.OrganizationUncheckedUpdateWithoutProductsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutOrdersInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutOrdersInput, Prisma.OrganizationUncheckedCreateWithoutOrdersInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutOrdersInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutOrdersNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutOrdersInput, Prisma.OrganizationUncheckedCreateWithoutOrdersInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutOrdersInput
-  upsert?: Prisma.OrganizationUpsertWithoutOrdersInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutOrdersInput, Prisma.OrganizationUpdateWithoutOrdersInput>, Prisma.OrganizationUncheckedUpdateWithoutOrdersInput>
-}
-
-export type OrganizationCreateNestedOneWithoutIntegrationsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutIntegrationsInput, Prisma.OrganizationUncheckedCreateWithoutIntegrationsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutIntegrationsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutIntegrationsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutIntegrationsInput, Prisma.OrganizationUncheckedCreateWithoutIntegrationsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutIntegrationsInput
-  upsert?: Prisma.OrganizationUpsertWithoutIntegrationsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutIntegrationsInput, Prisma.OrganizationUpdateWithoutIntegrationsInput>, Prisma.OrganizationUncheckedUpdateWithoutIntegrationsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutOauthClientsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutOauthClientsInput, Prisma.OrganizationUncheckedCreateWithoutOauthClientsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutOauthClientsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutOauthClientsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutOauthClientsInput, Prisma.OrganizationUncheckedCreateWithoutOauthClientsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutOauthClientsInput
-  upsert?: Prisma.OrganizationUpsertWithoutOauthClientsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutOauthClientsInput, Prisma.OrganizationUpdateWithoutOauthClientsInput>, Prisma.OrganizationUncheckedUpdateWithoutOauthClientsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutChatSessionsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutChatSessionsInput, Prisma.OrganizationUncheckedCreateWithoutChatSessionsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutChatSessionsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutChatSessionsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutChatSessionsInput, Prisma.OrganizationUncheckedCreateWithoutChatSessionsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutChatSessionsInput
-  upsert?: Prisma.OrganizationUpsertWithoutChatSessionsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutChatSessionsInput, Prisma.OrganizationUpdateWithoutChatSessionsInput>, Prisma.OrganizationUncheckedUpdateWithoutChatSessionsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutThreadsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutThreadsInput, Prisma.OrganizationUncheckedCreateWithoutThreadsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutThreadsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutThreadsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutThreadsInput, Prisma.OrganizationUncheckedCreateWithoutThreadsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutThreadsInput
-  upsert?: Prisma.OrganizationUpsertWithoutThreadsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutThreadsInput, Prisma.OrganizationUpdateWithoutThreadsInput>, Prisma.OrganizationUncheckedUpdateWithoutThreadsInput>
-}
-
-export type OrganizationCreateWithoutApiKeysInput = {
+export type OrganizationCreateWithoutTenantInput = {
   id?: string
   clerkId: string
   name: string
@@ -591,16 +451,9 @@ export type OrganizationCreateWithoutApiKeysInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
 }
 
-export type OrganizationUncheckedCreateWithoutApiKeysInput = {
+export type OrganizationUncheckedCreateWithoutTenantInput = {
   id?: string
   clerkId: string
   name: string
@@ -610,32 +463,25 @@ export type OrganizationUncheckedCreateWithoutApiKeysInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
-export type OrganizationCreateOrConnectWithoutApiKeysInput = {
+export type OrganizationCreateOrConnectWithoutTenantInput = {
   where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutApiKeysInput, Prisma.OrganizationUncheckedCreateWithoutApiKeysInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutTenantInput, Prisma.OrganizationUncheckedCreateWithoutTenantInput>
 }
 
-export type OrganizationUpsertWithoutApiKeysInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutApiKeysInput, Prisma.OrganizationUncheckedUpdateWithoutApiKeysInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutApiKeysInput, Prisma.OrganizationUncheckedCreateWithoutApiKeysInput>
+export type OrganizationUpsertWithoutTenantInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutTenantInput, Prisma.OrganizationUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutTenantInput, Prisma.OrganizationUncheckedCreateWithoutTenantInput>
   where?: Prisma.OrganizationWhereInput
 }
 
-export type OrganizationUpdateToOneWithWhereWithoutApiKeysInput = {
+export type OrganizationUpdateToOneWithWhereWithoutTenantInput = {
   where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutApiKeysInput, Prisma.OrganizationUncheckedUpdateWithoutApiKeysInput>
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutTenantInput, Prisma.OrganizationUncheckedUpdateWithoutTenantInput>
 }
 
-export type OrganizationUpdateWithoutApiKeysInput = {
+export type OrganizationUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -645,16 +491,9 @@ export type OrganizationUpdateWithoutApiKeysInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
 }
 
-export type OrganizationUncheckedUpdateWithoutApiKeysInput = {
+export type OrganizationUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clerkId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -664,13 +503,6 @@ export type OrganizationUncheckedUpdateWithoutApiKeysInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutMembersInput = {
@@ -682,14 +514,7 @@ export type OrganizationCreateWithoutMembersInput = {
   logo?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
@@ -701,14 +526,7 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   logo?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -736,14 +554,7 @@ export type OrganizationUpdateWithoutMembersInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutMembersInput = {
@@ -755,658 +566,7 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutContentsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutContentsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutContentsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutContentsInput, Prisma.OrganizationUncheckedCreateWithoutContentsInput>
-}
-
-export type OrganizationUpsertWithoutContentsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutContentsInput, Prisma.OrganizationUncheckedUpdateWithoutContentsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutContentsInput, Prisma.OrganizationUncheckedCreateWithoutContentsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutContentsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutContentsInput, Prisma.OrganizationUncheckedUpdateWithoutContentsInput>
-}
-
-export type OrganizationUpdateWithoutContentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutContentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutProductsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutProductsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutProductsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutProductsInput, Prisma.OrganizationUncheckedCreateWithoutProductsInput>
-}
-
-export type OrganizationUpsertWithoutProductsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutProductsInput, Prisma.OrganizationUncheckedUpdateWithoutProductsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutProductsInput, Prisma.OrganizationUncheckedCreateWithoutProductsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutProductsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutProductsInput, Prisma.OrganizationUncheckedUpdateWithoutProductsInput>
-}
-
-export type OrganizationUpdateWithoutProductsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutProductsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutOrdersInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutOrdersInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutOrdersInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutOrdersInput, Prisma.OrganizationUncheckedCreateWithoutOrdersInput>
-}
-
-export type OrganizationUpsertWithoutOrdersInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutOrdersInput, Prisma.OrganizationUncheckedUpdateWithoutOrdersInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutOrdersInput, Prisma.OrganizationUncheckedCreateWithoutOrdersInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutOrdersInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutOrdersInput, Prisma.OrganizationUncheckedUpdateWithoutOrdersInput>
-}
-
-export type OrganizationUpdateWithoutOrdersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutOrdersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutIntegrationsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutIntegrationsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutIntegrationsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutIntegrationsInput, Prisma.OrganizationUncheckedCreateWithoutIntegrationsInput>
-}
-
-export type OrganizationUpsertWithoutIntegrationsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutIntegrationsInput, Prisma.OrganizationUncheckedUpdateWithoutIntegrationsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutIntegrationsInput, Prisma.OrganizationUncheckedCreateWithoutIntegrationsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutIntegrationsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutIntegrationsInput, Prisma.OrganizationUncheckedUpdateWithoutIntegrationsInput>
-}
-
-export type OrganizationUpdateWithoutIntegrationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutIntegrationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutOauthClientsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutOauthClientsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutOauthClientsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutOauthClientsInput, Prisma.OrganizationUncheckedCreateWithoutOauthClientsInput>
-}
-
-export type OrganizationUpsertWithoutOauthClientsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutOauthClientsInput, Prisma.OrganizationUncheckedUpdateWithoutOauthClientsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutOauthClientsInput, Prisma.OrganizationUncheckedCreateWithoutOauthClientsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutOauthClientsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutOauthClientsInput, Prisma.OrganizationUncheckedUpdateWithoutOauthClientsInput>
-}
-
-export type OrganizationUpdateWithoutOauthClientsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutOauthClientsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutChatSessionsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutChatSessionsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutChatSessionsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutChatSessionsInput, Prisma.OrganizationUncheckedCreateWithoutChatSessionsInput>
-}
-
-export type OrganizationUpsertWithoutChatSessionsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutChatSessionsInput, Prisma.OrganizationUncheckedUpdateWithoutChatSessionsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutChatSessionsInput, Prisma.OrganizationUncheckedCreateWithoutChatSessionsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutChatSessionsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutChatSessionsInput, Prisma.OrganizationUncheckedUpdateWithoutChatSessionsInput>
-}
-
-export type OrganizationUpdateWithoutChatSessionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutChatSessionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  threads?: Prisma.ThreadUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutThreadsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutThreadsInput = {
-  id?: string
-  clerkId: string
-  name: string
-  slug: string
-  plan?: $Enums.Plan
-  logo?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutOrganizationInput
-  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrganizationInput
-  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutOrganizationInput
-  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutOrganizationInput
-  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutOrganizationInput
-  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput
-  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutThreadsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutThreadsInput, Prisma.OrganizationUncheckedCreateWithoutThreadsInput>
-}
-
-export type OrganizationUpsertWithoutThreadsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutThreadsInput, Prisma.OrganizationUncheckedUpdateWithoutThreadsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutThreadsInput, Prisma.OrganizationUncheckedCreateWithoutThreadsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutThreadsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutThreadsInput, Prisma.OrganizationUncheckedUpdateWithoutThreadsInput>
-}
-
-export type OrganizationUpdateWithoutThreadsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutThreadsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  plan?: Prisma.EnumPlanFieldUpdateOperationsInput | $Enums.Plan
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  contents?: Prisma.ContentUncheckedUpdateManyWithoutOrganizationNestedInput
-  products?: Prisma.ProductUncheckedUpdateManyWithoutOrganizationNestedInput
-  orders?: Prisma.OrderUncheckedUpdateManyWithoutOrganizationNestedInput
-  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput
-  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutOrganizationNestedInput
-  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput
-  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutOrganizationNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutOrganizationNestedInput
 }
 
 
@@ -1416,26 +576,10 @@ export type OrganizationUncheckedUpdateWithoutThreadsInput = {
 
 export type OrganizationCountOutputType = {
   members: number
-  contents: number
-  products: number
-  orders: number
-  integrations: number
-  apiKeys: number
-  oauthClients: number
-  chatSessions: number
-  threads: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | OrganizationCountOutputTypeCountMembersArgs
-  contents?: boolean | OrganizationCountOutputTypeCountContentsArgs
-  products?: boolean | OrganizationCountOutputTypeCountProductsArgs
-  orders?: boolean | OrganizationCountOutputTypeCountOrdersArgs
-  integrations?: boolean | OrganizationCountOutputTypeCountIntegrationsArgs
-  apiKeys?: boolean | OrganizationCountOutputTypeCountApiKeysArgs
-  oauthClients?: boolean | OrganizationCountOutputTypeCountOauthClientsArgs
-  chatSessions?: boolean | OrganizationCountOutputTypeCountChatSessionsArgs
-  threads?: boolean | OrganizationCountOutputTypeCountThreadsArgs
 }
 
 /**
@@ -1455,62 +599,6 @@ export type OrganizationCountOutputTypeCountMembersArgs<ExtArgs extends runtime.
   where?: Prisma.OrganizationMemberWhereInput
 }
 
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountContentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ContentWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProductWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.OrderWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountIntegrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.IntegrationWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountApiKeysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.APIKeyWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountOauthClientsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.OAuthClientWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountChatSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChatSessionWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountThreadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ThreadWhereInput
-}
-
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1522,14 +610,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   createdAt?: boolean
   updatedAt?: boolean
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
-  contents?: boolean | Prisma.Organization$contentsArgs<ExtArgs>
-  products?: boolean | Prisma.Organization$productsArgs<ExtArgs>
-  orders?: boolean | Prisma.Organization$ordersArgs<ExtArgs>
-  integrations?: boolean | Prisma.Organization$integrationsArgs<ExtArgs>
-  apiKeys?: boolean | Prisma.Organization$apiKeysArgs<ExtArgs>
-  oauthClients?: boolean | Prisma.Organization$oauthClientsArgs<ExtArgs>
-  chatSessions?: boolean | Prisma.Organization$chatSessionsArgs<ExtArgs>
-  threads?: boolean | Prisma.Organization$threadsArgs<ExtArgs>
+  tenant?: boolean | Prisma.Organization$tenantArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -1569,14 +650,7 @@ export type OrganizationSelectScalar = {
 export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkId" | "name" | "slug" | "plan" | "logo" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
-  contents?: boolean | Prisma.Organization$contentsArgs<ExtArgs>
-  products?: boolean | Prisma.Organization$productsArgs<ExtArgs>
-  orders?: boolean | Prisma.Organization$ordersArgs<ExtArgs>
-  integrations?: boolean | Prisma.Organization$integrationsArgs<ExtArgs>
-  apiKeys?: boolean | Prisma.Organization$apiKeysArgs<ExtArgs>
-  oauthClients?: boolean | Prisma.Organization$oauthClientsArgs<ExtArgs>
-  chatSessions?: boolean | Prisma.Organization$chatSessionsArgs<ExtArgs>
-  threads?: boolean | Prisma.Organization$threadsArgs<ExtArgs>
+  tenant?: boolean | Prisma.Organization$tenantArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1586,14 +660,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "Organization"
   objects: {
     members: Prisma.$OrganizationMemberPayload<ExtArgs>[]
-    contents: Prisma.$ContentPayload<ExtArgs>[]
-    products: Prisma.$ProductPayload<ExtArgs>[]
-    orders: Prisma.$OrderPayload<ExtArgs>[]
-    integrations: Prisma.$IntegrationPayload<ExtArgs>[]
-    apiKeys: Prisma.$APIKeyPayload<ExtArgs>[]
-    oauthClients: Prisma.$OAuthClientPayload<ExtArgs>[]
-    chatSessions: Prisma.$ChatSessionPayload<ExtArgs>[]
-    threads: Prisma.$ThreadPayload<ExtArgs>[]
+    tenant: Prisma.$TenantPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1999,14 +1066,7 @@ readonly fields: OrganizationFieldRefs;
 export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   members<T extends Prisma.Organization$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  contents<T extends Prisma.Organization$contentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$contentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  products<T extends Prisma.Organization$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  orders<T extends Prisma.Organization$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  integrations<T extends Prisma.Organization$integrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  apiKeys<T extends Prisma.Organization$apiKeysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$apiKeysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$APIKeyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  oauthClients<T extends Prisma.Organization$oauthClientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$oauthClientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  chatSessions<T extends Prisma.Organization$chatSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$chatSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  threads<T extends Prisma.Organization$threadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$threadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tenant<T extends Prisma.Organization$tenantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$tenantArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2456,195 +1516,22 @@ export type Organization$membersArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Organization.contents
+ * Organization.tenant
  */
-export type Organization$contentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Organization$tenantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Content
+   * Select specific fields to fetch from the Tenant
    */
-  select?: Prisma.ContentSelect<ExtArgs> | null
+  select?: Prisma.TenantSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Content
+   * Omit specific fields from the Tenant
    */
-  omit?: Prisma.ContentOmit<ExtArgs> | null
+  omit?: Prisma.TenantOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ContentInclude<ExtArgs> | null
-  where?: Prisma.ContentWhereInput
-  orderBy?: Prisma.ContentOrderByWithRelationInput | Prisma.ContentOrderByWithRelationInput[]
-  cursor?: Prisma.ContentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ContentScalarFieldEnum | Prisma.ContentScalarFieldEnum[]
-}
-
-/**
- * Organization.products
- */
-export type Organization$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Product
-   */
-  select?: Prisma.ProductSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Product
-   */
-  omit?: Prisma.ProductOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProductInclude<ExtArgs> | null
-  where?: Prisma.ProductWhereInput
-  orderBy?: Prisma.ProductOrderByWithRelationInput | Prisma.ProductOrderByWithRelationInput[]
-  cursor?: Prisma.ProductWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProductScalarFieldEnum | Prisma.ProductScalarFieldEnum[]
-}
-
-/**
- * Organization.orders
- */
-export type Organization$ordersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Order
-   */
-  select?: Prisma.OrderSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Order
-   */
-  omit?: Prisma.OrderOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.OrderInclude<ExtArgs> | null
-  where?: Prisma.OrderWhereInput
-  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
-  cursor?: Prisma.OrderWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
-}
-
-/**
- * Organization.integrations
- */
-export type Organization$integrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Integration
-   */
-  select?: Prisma.IntegrationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Integration
-   */
-  omit?: Prisma.IntegrationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.IntegrationInclude<ExtArgs> | null
-  where?: Prisma.IntegrationWhereInput
-  orderBy?: Prisma.IntegrationOrderByWithRelationInput | Prisma.IntegrationOrderByWithRelationInput[]
-  cursor?: Prisma.IntegrationWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.IntegrationScalarFieldEnum | Prisma.IntegrationScalarFieldEnum[]
-}
-
-/**
- * Organization.apiKeys
- */
-export type Organization$apiKeysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the APIKey
-   */
-  select?: Prisma.APIKeySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the APIKey
-   */
-  omit?: Prisma.APIKeyOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.APIKeyInclude<ExtArgs> | null
-  where?: Prisma.APIKeyWhereInput
-  orderBy?: Prisma.APIKeyOrderByWithRelationInput | Prisma.APIKeyOrderByWithRelationInput[]
-  cursor?: Prisma.APIKeyWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.APIKeyScalarFieldEnum | Prisma.APIKeyScalarFieldEnum[]
-}
-
-/**
- * Organization.oauthClients
- */
-export type Organization$oauthClientsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the OAuthClient
-   */
-  select?: Prisma.OAuthClientSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the OAuthClient
-   */
-  omit?: Prisma.OAuthClientOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.OAuthClientInclude<ExtArgs> | null
-  where?: Prisma.OAuthClientWhereInput
-  orderBy?: Prisma.OAuthClientOrderByWithRelationInput | Prisma.OAuthClientOrderByWithRelationInput[]
-  cursor?: Prisma.OAuthClientWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.OAuthClientScalarFieldEnum | Prisma.OAuthClientScalarFieldEnum[]
-}
-
-/**
- * Organization.chatSessions
- */
-export type Organization$chatSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChatSession
-   */
-  select?: Prisma.ChatSessionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ChatSession
-   */
-  omit?: Prisma.ChatSessionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChatSessionInclude<ExtArgs> | null
-  where?: Prisma.ChatSessionWhereInput
-  orderBy?: Prisma.ChatSessionOrderByWithRelationInput | Prisma.ChatSessionOrderByWithRelationInput[]
-  cursor?: Prisma.ChatSessionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ChatSessionScalarFieldEnum | Prisma.ChatSessionScalarFieldEnum[]
-}
-
-/**
- * Organization.threads
- */
-export type Organization$threadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Thread
-   */
-  select?: Prisma.ThreadSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Thread
-   */
-  omit?: Prisma.ThreadOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ThreadInclude<ExtArgs> | null
-  where?: Prisma.ThreadWhereInput
-  orderBy?: Prisma.ThreadOrderByWithRelationInput | Prisma.ThreadOrderByWithRelationInput[]
-  cursor?: Prisma.ThreadWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ThreadScalarFieldEnum | Prisma.ThreadScalarFieldEnum[]
+  include?: Prisma.TenantInclude<ExtArgs> | null
+  where?: Prisma.TenantWhereInput
 }
 
 /**

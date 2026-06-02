@@ -23,6 +23,16 @@ export * from './enums';
  */
 export type Organization = Prisma.OrganizationModel
 /**
+ * Model Tenant
+ * Tenant supertype — the isolation boundary. An Organization or an individual
+ * User is each represented by exactly one Tenant. For organization tenants,
+ * `id` is set equal to the Organization id (id-reuse) at provisioning time, so
+ * existing owning-id values stay valid as tenant ids. RLS scopes data rows via
+ * `app.current_tenant_id` = Tenant.id. Owned-data back-relations are added as
+ * the data models retarget their FK from Organization to Tenant.
+ */
+export type Tenant = Prisma.TenantModel
+/**
  * Model APIKey
  * 
  */

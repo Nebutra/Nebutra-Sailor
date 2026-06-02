@@ -195,6 +195,7 @@ export type UserSkillWhereInput = {
   config?: Prisma.JsonFilter<"UserSkill">
   installedAt?: Prisma.DateTimeFilter<"UserSkill"> | Date | string
   skill?: Prisma.XOR<Prisma.SkillScalarRelationFilter, Prisma.SkillWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }
 
 export type UserSkillOrderByWithRelationInput = {
@@ -206,6 +207,7 @@ export type UserSkillOrderByWithRelationInput = {
   config?: Prisma.SortOrder
   installedAt?: Prisma.SortOrder
   skill?: Prisma.SkillOrderByWithRelationInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type UserSkillWhereUniqueInput = Prisma.AtLeast<{
@@ -221,6 +223,7 @@ export type UserSkillWhereUniqueInput = Prisma.AtLeast<{
   config?: Prisma.JsonFilter<"UserSkill">
   installedAt?: Prisma.DateTimeFilter<"UserSkill"> | Date | string
   skill?: Prisma.XOR<Prisma.SkillScalarRelationFilter, Prisma.SkillWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }, "id" | "userId_skillId">
 
 export type UserSkillOrderByWithAggregationInput = {
@@ -252,11 +255,11 @@ export type UserSkillScalarWhereWithAggregatesInput = {
 export type UserSkillCreateInput = {
   id?: string
   userId: string
-  organizationId?: string | null
   enabled?: boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Date | string
   skill: Prisma.SkillCreateNestedOneWithoutInstallationsInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserSkillsInput
 }
 
 export type UserSkillUncheckedCreateInput = {
@@ -272,11 +275,11 @@ export type UserSkillUncheckedCreateInput = {
 export type UserSkillUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   skill?: Prisma.SkillUpdateOneRequiredWithoutInstallationsNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutUserSkillsNestedInput
 }
 
 export type UserSkillUncheckedUpdateInput = {
@@ -302,7 +305,6 @@ export type UserSkillCreateManyInput = {
 export type UserSkillUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,6 +363,48 @@ export type UserSkillMinOrderByAggregateInput = {
   installedAt?: Prisma.SortOrder
 }
 
+export type UserSkillCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.UserSkillCreateWithoutTenantInput, Prisma.UserSkillUncheckedCreateWithoutTenantInput> | Prisma.UserSkillCreateWithoutTenantInput[] | Prisma.UserSkillUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UserSkillCreateOrConnectWithoutTenantInput | Prisma.UserSkillCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.UserSkillCreateManyTenantInputEnvelope
+  connect?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+}
+
+export type UserSkillUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.UserSkillCreateWithoutTenantInput, Prisma.UserSkillUncheckedCreateWithoutTenantInput> | Prisma.UserSkillCreateWithoutTenantInput[] | Prisma.UserSkillUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UserSkillCreateOrConnectWithoutTenantInput | Prisma.UserSkillCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.UserSkillCreateManyTenantInputEnvelope
+  connect?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+}
+
+export type UserSkillUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.UserSkillCreateWithoutTenantInput, Prisma.UserSkillUncheckedCreateWithoutTenantInput> | Prisma.UserSkillCreateWithoutTenantInput[] | Prisma.UserSkillUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UserSkillCreateOrConnectWithoutTenantInput | Prisma.UserSkillCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.UserSkillUpsertWithWhereUniqueWithoutTenantInput | Prisma.UserSkillUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.UserSkillCreateManyTenantInputEnvelope
+  set?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+  disconnect?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+  delete?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+  connect?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+  update?: Prisma.UserSkillUpdateWithWhereUniqueWithoutTenantInput | Prisma.UserSkillUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.UserSkillUpdateManyWithWhereWithoutTenantInput | Prisma.UserSkillUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.UserSkillScalarWhereInput | Prisma.UserSkillScalarWhereInput[]
+}
+
+export type UserSkillUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.UserSkillCreateWithoutTenantInput, Prisma.UserSkillUncheckedCreateWithoutTenantInput> | Prisma.UserSkillCreateWithoutTenantInput[] | Prisma.UserSkillUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UserSkillCreateOrConnectWithoutTenantInput | Prisma.UserSkillCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.UserSkillUpsertWithWhereUniqueWithoutTenantInput | Prisma.UserSkillUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.UserSkillCreateManyTenantInputEnvelope
+  set?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+  disconnect?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+  delete?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+  connect?: Prisma.UserSkillWhereUniqueInput | Prisma.UserSkillWhereUniqueInput[]
+  update?: Prisma.UserSkillUpdateWithWhereUniqueWithoutTenantInput | Prisma.UserSkillUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.UserSkillUpdateManyWithWhereWithoutTenantInput | Prisma.UserSkillUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.UserSkillScalarWhereInput | Prisma.UserSkillScalarWhereInput[]
+}
+
 export type UserSkillCreateNestedManyWithoutSkillInput = {
   create?: Prisma.XOR<Prisma.UserSkillCreateWithoutSkillInput, Prisma.UserSkillUncheckedCreateWithoutSkillInput> | Prisma.UserSkillCreateWithoutSkillInput[] | Prisma.UserSkillUncheckedCreateWithoutSkillInput[]
   connectOrCreate?: Prisma.UserSkillCreateOrConnectWithoutSkillInput | Prisma.UserSkillCreateOrConnectWithoutSkillInput[]
@@ -403,13 +447,70 @@ export type UserSkillUncheckedUpdateManyWithoutSkillNestedInput = {
   deleteMany?: Prisma.UserSkillScalarWhereInput | Prisma.UserSkillScalarWhereInput[]
 }
 
-export type UserSkillCreateWithoutSkillInput = {
+export type UserSkillCreateWithoutTenantInput = {
   id?: string
   userId: string
-  organizationId?: string | null
   enabled?: boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Date | string
+  skill: Prisma.SkillCreateNestedOneWithoutInstallationsInput
+}
+
+export type UserSkillUncheckedCreateWithoutTenantInput = {
+  id?: string
+  userId: string
+  skillId: string
+  enabled?: boolean
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  installedAt?: Date | string
+}
+
+export type UserSkillCreateOrConnectWithoutTenantInput = {
+  where: Prisma.UserSkillWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserSkillCreateWithoutTenantInput, Prisma.UserSkillUncheckedCreateWithoutTenantInput>
+}
+
+export type UserSkillCreateManyTenantInputEnvelope = {
+  data: Prisma.UserSkillCreateManyTenantInput | Prisma.UserSkillCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserSkillUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.UserSkillWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserSkillUpdateWithoutTenantInput, Prisma.UserSkillUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.UserSkillCreateWithoutTenantInput, Prisma.UserSkillUncheckedCreateWithoutTenantInput>
+}
+
+export type UserSkillUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.UserSkillWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserSkillUpdateWithoutTenantInput, Prisma.UserSkillUncheckedUpdateWithoutTenantInput>
+}
+
+export type UserSkillUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.UserSkillScalarWhereInput
+  data: Prisma.XOR<Prisma.UserSkillUpdateManyMutationInput, Prisma.UserSkillUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type UserSkillScalarWhereInput = {
+  AND?: Prisma.UserSkillScalarWhereInput | Prisma.UserSkillScalarWhereInput[]
+  OR?: Prisma.UserSkillScalarWhereInput[]
+  NOT?: Prisma.UserSkillScalarWhereInput | Prisma.UserSkillScalarWhereInput[]
+  id?: Prisma.StringFilter<"UserSkill"> | string
+  userId?: Prisma.StringFilter<"UserSkill"> | string
+  organizationId?: Prisma.StringNullableFilter<"UserSkill"> | string | null
+  skillId?: Prisma.StringFilter<"UserSkill"> | string
+  enabled?: Prisma.BoolFilter<"UserSkill"> | boolean
+  config?: Prisma.JsonFilter<"UserSkill">
+  installedAt?: Prisma.DateTimeFilter<"UserSkill"> | Date | string
+}
+
+export type UserSkillCreateWithoutSkillInput = {
+  id?: string
+  userId: string
+  enabled?: boolean
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  installedAt?: Date | string
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserSkillsInput
 }
 
 export type UserSkillUncheckedCreateWithoutSkillInput = {
@@ -447,17 +548,40 @@ export type UserSkillUpdateManyWithWhereWithoutSkillInput = {
   data: Prisma.XOR<Prisma.UserSkillUpdateManyMutationInput, Prisma.UserSkillUncheckedUpdateManyWithoutSkillInput>
 }
 
-export type UserSkillScalarWhereInput = {
-  AND?: Prisma.UserSkillScalarWhereInput | Prisma.UserSkillScalarWhereInput[]
-  OR?: Prisma.UserSkillScalarWhereInput[]
-  NOT?: Prisma.UserSkillScalarWhereInput | Prisma.UserSkillScalarWhereInput[]
-  id?: Prisma.StringFilter<"UserSkill"> | string
-  userId?: Prisma.StringFilter<"UserSkill"> | string
-  organizationId?: Prisma.StringNullableFilter<"UserSkill"> | string | null
-  skillId?: Prisma.StringFilter<"UserSkill"> | string
-  enabled?: Prisma.BoolFilter<"UserSkill"> | boolean
-  config?: Prisma.JsonFilter<"UserSkill">
-  installedAt?: Prisma.DateTimeFilter<"UserSkill"> | Date | string
+export type UserSkillCreateManyTenantInput = {
+  id?: string
+  userId: string
+  skillId: string
+  enabled?: boolean
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  installedAt?: Date | string
+}
+
+export type UserSkillUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  installedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  skill?: Prisma.SkillUpdateOneRequiredWithoutInstallationsNestedInput
+}
+
+export type UserSkillUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  skillId?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  installedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserSkillUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  skillId?: Prisma.StringFieldUpdateOperationsInput | string
+  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  installedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserSkillCreateManySkillInput = {
@@ -472,10 +596,10 @@ export type UserSkillCreateManySkillInput = {
 export type UserSkillUpdateWithoutSkillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneWithoutUserSkillsNestedInput
 }
 
 export type UserSkillUncheckedUpdateWithoutSkillInput = {
@@ -507,6 +631,7 @@ export type UserSkillSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   config?: boolean
   installedAt?: boolean
   skill?: boolean | Prisma.SkillDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.UserSkill$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["userSkill"]>
 
 export type UserSkillSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -518,6 +643,7 @@ export type UserSkillSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   config?: boolean
   installedAt?: boolean
   skill?: boolean | Prisma.SkillDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.UserSkill$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["userSkill"]>
 
 export type UserSkillSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -529,6 +655,7 @@ export type UserSkillSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   config?: boolean
   installedAt?: boolean
   skill?: boolean | Prisma.SkillDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.UserSkill$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["userSkill"]>
 
 export type UserSkillSelectScalar = {
@@ -544,18 +671,22 @@ export type UserSkillSelectScalar = {
 export type UserSkillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "organizationId" | "skillId" | "enabled" | "config" | "installedAt", ExtArgs["result"]["userSkill"]>
 export type UserSkillInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   skill?: boolean | Prisma.SkillDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.UserSkill$tenantArgs<ExtArgs>
 }
 export type UserSkillIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   skill?: boolean | Prisma.SkillDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.UserSkill$tenantArgs<ExtArgs>
 }
 export type UserSkillIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   skill?: boolean | Prisma.SkillDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.UserSkill$tenantArgs<ExtArgs>
 }
 
 export type $UserSkillPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserSkill"
   objects: {
     skill: Prisma.$SkillPayload<ExtArgs>
+    tenant: Prisma.$TenantPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -960,6 +1091,7 @@ readonly fields: UserSkillFieldRefs;
 export interface Prisma__UserSkillClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   skill<T extends Prisma.SkillDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SkillDefaultArgs<ExtArgs>>): Prisma.Prisma__SkillClient<runtime.Types.Result.GetResult<Prisma.$SkillPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenant<T extends Prisma.UserSkill$tenantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserSkill$tenantArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1389,6 +1521,25 @@ export type UserSkillDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many UserSkills to delete.
    */
   limit?: number
+}
+
+/**
+ * UserSkill.tenant
+ */
+export type UserSkill$tenantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tenant
+   */
+  select?: Prisma.TenantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tenant
+   */
+  omit?: Prisma.TenantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TenantInclude<ExtArgs> | null
+  where?: Prisma.TenantWhereInput
 }
 
 /**

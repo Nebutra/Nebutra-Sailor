@@ -58,7 +58,7 @@ describe("resolveApiKey", () => {
       rateLimitRps: 20,
       revokedAt: null,
       expiresAt: null,
-      organization: { plan: "ENTERPRISE" },
+      tenant: { organization: { plan: "ENTERPRISE" } },
     });
 
     const { resolveApiKey } = await import("../api-key-resolver");
@@ -70,13 +70,32 @@ describe("resolveApiKey", () => {
     expect(mockRedisSet.mock.calls[0]?.[2]).toEqual({ ex: 300 }); // 5 min TTL
   });
 
+  it("defaults plan to FREE for an individual tenant (no organization)", async () => {
+    mockRedisGet.mockResolvedValue(null);
+    mockPrismaFindUnique.mockResolvedValue({
+      id: "key_indiv",
+      organizationId: "tenant_indiv",
+      createdById: "user_indiv",
+      scopes: [],
+      rateLimitRps: 10,
+      revokedAt: null,
+      expiresAt: null,
+      tenant: { organization: null },
+    });
+
+    const { resolveApiKey } = await import("../api-key-resolver");
+    const result = await resolveApiKey("sk-sailor-indiv", mockDeps as any);
+
+    expect(result.plan).toBe("FREE");
+  });
+
   it("rejects revoked keys", async () => {
     mockRedisGet.mockResolvedValue(null);
     mockPrismaFindUnique.mockResolvedValue({
       id: "key_3",
       revokedAt: new Date("2025-01-01"),
       expiresAt: null,
-      organization: { plan: "FREE" },
+      tenant: { organization: { plan: "FREE" } },
     });
 
     const { resolveApiKey } = await import("../api-key-resolver");
@@ -91,7 +110,7 @@ describe("resolveApiKey", () => {
       id: "key_4",
       revokedAt: null,
       expiresAt: new Date("2020-01-01"),
-      organization: { plan: "FREE" },
+      tenant: { organization: { plan: "FREE" } },
     });
 
     const { resolveApiKey } = await import("../api-key-resolver");
@@ -120,7 +139,7 @@ describe("resolveApiKey", () => {
       rateLimitRps: 10,
       revokedAt: null,
       expiresAt: null,
-      organization: { plan: "PRO" },
+      tenant: { organization: { plan: "PRO" } },
     });
 
     const { resolveApiKey } = await import("../api-key-resolver");

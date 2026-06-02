@@ -15,7 +15,7 @@ interface ApiKeyDeps {
     aPIKey: {
       findUnique: (args: {
         where: { keyHash: string };
-        include?: { organization?: { select?: { plan?: boolean } } };
+        include?: { tenant?: { include?: { organization?: { select?: { plan?: boolean } } } } };
       }) => Promise<{
         id: string;
         organizationId: string;
@@ -24,7 +24,7 @@ interface ApiKeyDeps {
         rateLimitRps: number;
         revokedAt: Date | null;
         expiresAt: Date | null;
-        organization: { plan: string };
+        tenant: { organization: { plan: string } | null };
       } | null>;
       update: (args: { where: { id: string }; data: { lastUsedAt: Date } }) => Promise<unknown>;
     };
@@ -65,7 +65,7 @@ export async function resolveApiKey(token: string, deps: ApiKeyDeps): Promise<Re
   // 4. Prisma DB fallback
   const dbKey = await deps.prisma.aPIKey.findUnique({
     where: { keyHash },
-    include: { organization: { select: { plan: true } } },
+    include: { tenant: { include: { organization: { select: { plan: true } } } } },
   });
 
   // 7. Not found
@@ -90,7 +90,9 @@ export async function resolveApiKey(token: string, deps: ApiKeyDeps): Promise<Re
     userId: dbKey.createdById,
     scopes: dbKey.scopes,
     rateLimitRps: dbKey.rateLimitRps,
-    plan: dbKey.organization.plan,
+    // Plan lives on Organization; an individual tenant has no org → default to
+    // FREE until plan/billing-tier is modeled on Tenant (Model-2 follow-up).
+    plan: dbKey.tenant.organization?.plan ?? "FREE",
   };
 
   // 9. Cache in Redis with 5 min TTL

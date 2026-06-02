@@ -261,6 +261,7 @@ export type CustomerUsageLimitWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
   limitDef?: Prisma.XOR<Prisma.UsageLimitDefinitionScalarRelationFilter, Prisma.UsageLimitDefinitionWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
 export type CustomerUsageLimitOrderByWithRelationInput = {
@@ -275,6 +276,7 @@ export type CustomerUsageLimitOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   limitDef?: Prisma.UsageLimitDefinitionOrderByWithRelationInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type CustomerUsageLimitWhereUniqueInput = Prisma.AtLeast<{
@@ -293,6 +295,7 @@ export type CustomerUsageLimitWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
   limitDef?: Prisma.XOR<Prisma.UsageLimitDefinitionScalarRelationFilter, Prisma.UsageLimitDefinitionWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "organizationId_limitId">
 
 export type CustomerUsageLimitOrderByWithAggregationInput = {
@@ -331,7 +334,6 @@ export type CustomerUsageLimitScalarWhereWithAggregatesInput = {
 
 export type CustomerUsageLimitCreateInput = {
   id?: string
-  organizationId: string
   limitValue: bigint | number
   overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: string | null
@@ -340,6 +342,7 @@ export type CustomerUsageLimitCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   limitDef: Prisma.UsageLimitDefinitionCreateNestedOneWithoutCustomerLimitsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutCustomerUsageLimitsInput
 }
 
 export type CustomerUsageLimitUncheckedCreateInput = {
@@ -357,7 +360,6 @@ export type CustomerUsageLimitUncheckedCreateInput = {
 
 export type CustomerUsageLimitUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -366,6 +368,7 @@ export type CustomerUsageLimitUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   limitDef?: Prisma.UsageLimitDefinitionUpdateOneRequiredWithoutCustomerLimitsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCustomerUsageLimitsNestedInput
 }
 
 export type CustomerUsageLimitUncheckedUpdateInput = {
@@ -396,7 +399,6 @@ export type CustomerUsageLimitCreateManyInput = {
 
 export type CustomerUsageLimitUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -483,6 +485,48 @@ export type CustomerUsageLimitSumOrderByAggregateInput = {
   overageRate?: Prisma.SortOrder
 }
 
+export type CustomerUsageLimitCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.CustomerUsageLimitCreateWithoutTenantInput, Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput> | Prisma.CustomerUsageLimitCreateWithoutTenantInput[] | Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerUsageLimitCreateOrConnectWithoutTenantInput | Prisma.CustomerUsageLimitCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.CustomerUsageLimitCreateManyTenantInputEnvelope
+  connect?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+}
+
+export type CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.CustomerUsageLimitCreateWithoutTenantInput, Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput> | Prisma.CustomerUsageLimitCreateWithoutTenantInput[] | Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerUsageLimitCreateOrConnectWithoutTenantInput | Prisma.CustomerUsageLimitCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.CustomerUsageLimitCreateManyTenantInputEnvelope
+  connect?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+}
+
+export type CustomerUsageLimitUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerUsageLimitCreateWithoutTenantInput, Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput> | Prisma.CustomerUsageLimitCreateWithoutTenantInput[] | Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerUsageLimitCreateOrConnectWithoutTenantInput | Prisma.CustomerUsageLimitCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.CustomerUsageLimitUpsertWithWhereUniqueWithoutTenantInput | Prisma.CustomerUsageLimitUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.CustomerUsageLimitCreateManyTenantInputEnvelope
+  set?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+  disconnect?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+  delete?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+  connect?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+  update?: Prisma.CustomerUsageLimitUpdateWithWhereUniqueWithoutTenantInput | Prisma.CustomerUsageLimitUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.CustomerUsageLimitUpdateManyWithWhereWithoutTenantInput | Prisma.CustomerUsageLimitUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.CustomerUsageLimitScalarWhereInput | Prisma.CustomerUsageLimitScalarWhereInput[]
+}
+
+export type CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerUsageLimitCreateWithoutTenantInput, Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput> | Prisma.CustomerUsageLimitCreateWithoutTenantInput[] | Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerUsageLimitCreateOrConnectWithoutTenantInput | Prisma.CustomerUsageLimitCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.CustomerUsageLimitUpsertWithWhereUniqueWithoutTenantInput | Prisma.CustomerUsageLimitUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.CustomerUsageLimitCreateManyTenantInputEnvelope
+  set?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+  disconnect?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+  delete?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+  connect?: Prisma.CustomerUsageLimitWhereUniqueInput | Prisma.CustomerUsageLimitWhereUniqueInput[]
+  update?: Prisma.CustomerUsageLimitUpdateWithWhereUniqueWithoutTenantInput | Prisma.CustomerUsageLimitUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.CustomerUsageLimitUpdateManyWithWhereWithoutTenantInput | Prisma.CustomerUsageLimitUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.CustomerUsageLimitScalarWhereInput | Prisma.CustomerUsageLimitScalarWhereInput[]
+}
+
 export type CustomerUsageLimitCreateNestedManyWithoutLimitDefInput = {
   create?: Prisma.XOR<Prisma.CustomerUsageLimitCreateWithoutLimitDefInput, Prisma.CustomerUsageLimitUncheckedCreateWithoutLimitDefInput> | Prisma.CustomerUsageLimitCreateWithoutLimitDefInput[] | Prisma.CustomerUsageLimitUncheckedCreateWithoutLimitDefInput[]
   connectOrCreate?: Prisma.CustomerUsageLimitCreateOrConnectWithoutLimitDefInput | Prisma.CustomerUsageLimitCreateOrConnectWithoutLimitDefInput[]
@@ -525,9 +569,8 @@ export type CustomerUsageLimitUncheckedUpdateManyWithoutLimitDefNestedInput = {
   deleteMany?: Prisma.CustomerUsageLimitScalarWhereInput | Prisma.CustomerUsageLimitScalarWhereInput[]
 }
 
-export type CustomerUsageLimitCreateWithoutLimitDefInput = {
+export type CustomerUsageLimitCreateWithoutTenantInput = {
   id?: string
-  organizationId: string
   limitValue: bigint | number
   overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: string | null
@@ -535,6 +578,73 @@ export type CustomerUsageLimitCreateWithoutLimitDefInput = {
   expiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  limitDef: Prisma.UsageLimitDefinitionCreateNestedOneWithoutCustomerLimitsInput
+}
+
+export type CustomerUsageLimitUncheckedCreateWithoutTenantInput = {
+  id?: string
+  limitId: string
+  limitValue: bigint | number
+  overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CustomerUsageLimitCreateOrConnectWithoutTenantInput = {
+  where: Prisma.CustomerUsageLimitWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerUsageLimitCreateWithoutTenantInput, Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput>
+}
+
+export type CustomerUsageLimitCreateManyTenantInputEnvelope = {
+  data: Prisma.CustomerUsageLimitCreateManyTenantInput | Prisma.CustomerUsageLimitCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type CustomerUsageLimitUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.CustomerUsageLimitWhereUniqueInput
+  update: Prisma.XOR<Prisma.CustomerUsageLimitUpdateWithoutTenantInput, Prisma.CustomerUsageLimitUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.CustomerUsageLimitCreateWithoutTenantInput, Prisma.CustomerUsageLimitUncheckedCreateWithoutTenantInput>
+}
+
+export type CustomerUsageLimitUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.CustomerUsageLimitWhereUniqueInput
+  data: Prisma.XOR<Prisma.CustomerUsageLimitUpdateWithoutTenantInput, Prisma.CustomerUsageLimitUncheckedUpdateWithoutTenantInput>
+}
+
+export type CustomerUsageLimitUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.CustomerUsageLimitScalarWhereInput
+  data: Prisma.XOR<Prisma.CustomerUsageLimitUpdateManyMutationInput, Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type CustomerUsageLimitScalarWhereInput = {
+  AND?: Prisma.CustomerUsageLimitScalarWhereInput | Prisma.CustomerUsageLimitScalarWhereInput[]
+  OR?: Prisma.CustomerUsageLimitScalarWhereInput[]
+  NOT?: Prisma.CustomerUsageLimitScalarWhereInput | Prisma.CustomerUsageLimitScalarWhereInput[]
+  id?: Prisma.StringFilter<"CustomerUsageLimit"> | string
+  organizationId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
+  limitId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
+  limitValue?: Prisma.BigIntFilter<"CustomerUsageLimit"> | bigint | number
+  overageRate?: Prisma.DecimalNullableFilter<"CustomerUsageLimit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reason?: Prisma.StringNullableFilter<"CustomerUsageLimit"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"CustomerUsageLimit"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"CustomerUsageLimit"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
+}
+
+export type CustomerUsageLimitCreateWithoutLimitDefInput = {
+  id?: string
+  limitValue: bigint | number
+  overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutCustomerUsageLimitsInput
 }
 
 export type CustomerUsageLimitUncheckedCreateWithoutLimitDefInput = {
@@ -575,20 +685,52 @@ export type CustomerUsageLimitUpdateManyWithWhereWithoutLimitDefInput = {
   data: Prisma.XOR<Prisma.CustomerUsageLimitUpdateManyMutationInput, Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutLimitDefInput>
 }
 
-export type CustomerUsageLimitScalarWhereInput = {
-  AND?: Prisma.CustomerUsageLimitScalarWhereInput | Prisma.CustomerUsageLimitScalarWhereInput[]
-  OR?: Prisma.CustomerUsageLimitScalarWhereInput[]
-  NOT?: Prisma.CustomerUsageLimitScalarWhereInput | Prisma.CustomerUsageLimitScalarWhereInput[]
-  id?: Prisma.StringFilter<"CustomerUsageLimit"> | string
-  organizationId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
-  limitId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
-  limitValue?: Prisma.BigIntFilter<"CustomerUsageLimit"> | bigint | number
-  overageRate?: Prisma.DecimalNullableFilter<"CustomerUsageLimit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  reason?: Prisma.StringNullableFilter<"CustomerUsageLimit"> | string | null
-  approvedBy?: Prisma.StringNullableFilter<"CustomerUsageLimit"> | string | null
-  expiresAt?: Prisma.DateTimeNullableFilter<"CustomerUsageLimit"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
+export type CustomerUsageLimitCreateManyTenantInput = {
+  id?: string
+  limitId: string
+  limitValue: bigint | number
+  overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CustomerUsageLimitUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  limitDef?: Prisma.UsageLimitDefinitionUpdateOneRequiredWithoutCustomerLimitsNestedInput
+}
+
+export type CustomerUsageLimitUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  limitId?: Prisma.StringFieldUpdateOperationsInput | string
+  limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CustomerUsageLimitUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  limitId?: Prisma.StringFieldUpdateOperationsInput | string
+  limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CustomerUsageLimitCreateManyLimitDefInput = {
@@ -605,7 +747,6 @@ export type CustomerUsageLimitCreateManyLimitDefInput = {
 
 export type CustomerUsageLimitUpdateWithoutLimitDefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -613,6 +754,7 @@ export type CustomerUsageLimitUpdateWithoutLimitDefInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCustomerUsageLimitsNestedInput
 }
 
 export type CustomerUsageLimitUncheckedUpdateWithoutLimitDefInput = {
@@ -653,6 +795,7 @@ export type CustomerUsageLimitSelect<ExtArgs extends runtime.Types.Extensions.In
   createdAt?: boolean
   updatedAt?: boolean
   limitDef?: boolean | Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerUsageLimit"]>
 
 export type CustomerUsageLimitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -667,6 +810,7 @@ export type CustomerUsageLimitSelectCreateManyAndReturn<ExtArgs extends runtime.
   createdAt?: boolean
   updatedAt?: boolean
   limitDef?: boolean | Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerUsageLimit"]>
 
 export type CustomerUsageLimitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -681,6 +825,7 @@ export type CustomerUsageLimitSelectUpdateManyAndReturn<ExtArgs extends runtime.
   createdAt?: boolean
   updatedAt?: boolean
   limitDef?: boolean | Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerUsageLimit"]>
 
 export type CustomerUsageLimitSelectScalar = {
@@ -699,18 +844,22 @@ export type CustomerUsageLimitSelectScalar = {
 export type CustomerUsageLimitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "limitId" | "limitValue" | "overageRate" | "reason" | "approvedBy" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["customerUsageLimit"]>
 export type CustomerUsageLimitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   limitDef?: boolean | Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type CustomerUsageLimitIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   limitDef?: boolean | Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type CustomerUsageLimitIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   limitDef?: boolean | Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 
 export type $CustomerUsageLimitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CustomerUsageLimit"
   objects: {
     limitDef: Prisma.$UsageLimitDefinitionPayload<ExtArgs>
+    tenant: Prisma.$TenantPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1118,6 +1267,7 @@ readonly fields: CustomerUsageLimitFieldRefs;
 export interface Prisma__CustomerUsageLimitClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   limitDef<T extends Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs>>): Prisma.Prisma__UsageLimitDefinitionClient<runtime.Types.Result.GetResult<Prisma.$UsageLimitDefinitionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

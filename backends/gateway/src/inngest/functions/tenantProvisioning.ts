@@ -84,6 +84,16 @@ export const provisionTenant: InngestFunction.Any = inngest.createFunction(
     const ownerFirstName = owner?.name?.split(" ")[0] ?? "";
     const organizationClerkId = org.clerkId;
 
+    // ── Step 1.5: Ensure the org's Tenant exists (id-reuse: Tenant.id == org.id) ──
+    // Data rows (API keys, etc.) FK to Tenant now, so it must exist first.
+    await step.run("ensure-tenant", async () => {
+      await prisma.tenant.upsert({
+        where: { id: org.id },
+        update: {},
+        create: { id: org.id, kind: "ORGANIZATION", organizationId: org.id },
+      });
+    });
+
     // ── Step 2: Create default API key ────────────────────────────────────
     const { keyPrefix, keyPlaintext } = await step.run(
       "create-default-api-key",

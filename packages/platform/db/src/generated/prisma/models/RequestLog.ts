@@ -296,6 +296,7 @@ export type RequestLogWhereInput = {
   status?: Prisma.StringFilter<"RequestLog"> | string
   errorMessage?: Prisma.StringNullableFilter<"RequestLog"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RequestLog"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
 export type RequestLogOrderByWithRelationInput = {
@@ -312,6 +313,7 @@ export type RequestLogOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   errorMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type RequestLogWhereUniqueInput = Prisma.AtLeast<{
@@ -331,6 +333,7 @@ export type RequestLogWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.StringFilter<"RequestLog"> | string
   errorMessage?: Prisma.StringNullableFilter<"RequestLog"> | string | null
   createdAt?: Prisma.DateTimeFilter<"RequestLog"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "requestId">
 
 export type RequestLogOrderByWithAggregationInput = {
@@ -377,7 +380,6 @@ export type RequestLogCreateInput = {
   id?: string
   requestId: string
   apiKeyId?: string | null
-  organizationId: string
   model: string
   promptTokens?: number
   completionTokens?: number
@@ -387,6 +389,7 @@ export type RequestLogCreateInput = {
   status: string
   errorMessage?: string | null
   createdAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutRequestLogsInput
 }
 
 export type RequestLogUncheckedCreateInput = {
@@ -409,7 +412,6 @@ export type RequestLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   promptTokens?: Prisma.IntFieldUpdateOperationsInput | number
   completionTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -419,6 +421,7 @@ export type RequestLogUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutRequestLogsNestedInput
 }
 
 export type RequestLogUncheckedUpdateInput = {
@@ -457,7 +460,6 @@ export type RequestLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   promptTokens?: Prisma.IntFieldUpdateOperationsInput | number
   completionTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -483,6 +485,16 @@ export type RequestLogUncheckedUpdateManyInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RequestLogListRelationFilter = {
+  every?: Prisma.RequestLogWhereInput
+  some?: Prisma.RequestLogWhereInput
+  none?: Prisma.RequestLogWhereInput
+}
+
+export type RequestLogOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type RequestLogCountOrderByAggregateInput = {
@@ -549,6 +561,48 @@ export type RequestLogSumOrderByAggregateInput = {
   latencyMs?: Prisma.SortOrder
 }
 
+export type RequestLogCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.RequestLogCreateWithoutTenantInput, Prisma.RequestLogUncheckedCreateWithoutTenantInput> | Prisma.RequestLogCreateWithoutTenantInput[] | Prisma.RequestLogUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.RequestLogCreateOrConnectWithoutTenantInput | Prisma.RequestLogCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.RequestLogCreateManyTenantInputEnvelope
+  connect?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+}
+
+export type RequestLogUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.RequestLogCreateWithoutTenantInput, Prisma.RequestLogUncheckedCreateWithoutTenantInput> | Prisma.RequestLogCreateWithoutTenantInput[] | Prisma.RequestLogUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.RequestLogCreateOrConnectWithoutTenantInput | Prisma.RequestLogCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.RequestLogCreateManyTenantInputEnvelope
+  connect?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+}
+
+export type RequestLogUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.RequestLogCreateWithoutTenantInput, Prisma.RequestLogUncheckedCreateWithoutTenantInput> | Prisma.RequestLogCreateWithoutTenantInput[] | Prisma.RequestLogUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.RequestLogCreateOrConnectWithoutTenantInput | Prisma.RequestLogCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.RequestLogUpsertWithWhereUniqueWithoutTenantInput | Prisma.RequestLogUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.RequestLogCreateManyTenantInputEnvelope
+  set?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+  disconnect?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+  delete?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+  connect?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+  update?: Prisma.RequestLogUpdateWithWhereUniqueWithoutTenantInput | Prisma.RequestLogUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.RequestLogUpdateManyWithWhereWithoutTenantInput | Prisma.RequestLogUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.RequestLogScalarWhereInput | Prisma.RequestLogScalarWhereInput[]
+}
+
+export type RequestLogUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.RequestLogCreateWithoutTenantInput, Prisma.RequestLogUncheckedCreateWithoutTenantInput> | Prisma.RequestLogCreateWithoutTenantInput[] | Prisma.RequestLogUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.RequestLogCreateOrConnectWithoutTenantInput | Prisma.RequestLogCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.RequestLogUpsertWithWhereUniqueWithoutTenantInput | Prisma.RequestLogUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.RequestLogCreateManyTenantInputEnvelope
+  set?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+  disconnect?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+  delete?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+  connect?: Prisma.RequestLogWhereUniqueInput | Prisma.RequestLogWhereUniqueInput[]
+  update?: Prisma.RequestLogUpdateWithWhereUniqueWithoutTenantInput | Prisma.RequestLogUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.RequestLogUpdateManyWithWhereWithoutTenantInput | Prisma.RequestLogUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.RequestLogScalarWhereInput | Prisma.RequestLogScalarWhereInput[]
+}
+
 export type NullableDecimalFieldUpdateOperationsInput = {
   set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -563,6 +617,141 @@ export type NullableIntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type RequestLogCreateWithoutTenantInput = {
+  id?: string
+  requestId: string
+  apiKeyId?: string | null
+  model: string
+  promptTokens?: number
+  completionTokens?: number
+  totalTokens?: number
+  cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latencyMs?: number | null
+  status: string
+  errorMessage?: string | null
+  createdAt?: Date | string
+}
+
+export type RequestLogUncheckedCreateWithoutTenantInput = {
+  id?: string
+  requestId: string
+  apiKeyId?: string | null
+  model: string
+  promptTokens?: number
+  completionTokens?: number
+  totalTokens?: number
+  cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latencyMs?: number | null
+  status: string
+  errorMessage?: string | null
+  createdAt?: Date | string
+}
+
+export type RequestLogCreateOrConnectWithoutTenantInput = {
+  where: Prisma.RequestLogWhereUniqueInput
+  create: Prisma.XOR<Prisma.RequestLogCreateWithoutTenantInput, Prisma.RequestLogUncheckedCreateWithoutTenantInput>
+}
+
+export type RequestLogCreateManyTenantInputEnvelope = {
+  data: Prisma.RequestLogCreateManyTenantInput | Prisma.RequestLogCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type RequestLogUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.RequestLogWhereUniqueInput
+  update: Prisma.XOR<Prisma.RequestLogUpdateWithoutTenantInput, Prisma.RequestLogUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.RequestLogCreateWithoutTenantInput, Prisma.RequestLogUncheckedCreateWithoutTenantInput>
+}
+
+export type RequestLogUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.RequestLogWhereUniqueInput
+  data: Prisma.XOR<Prisma.RequestLogUpdateWithoutTenantInput, Prisma.RequestLogUncheckedUpdateWithoutTenantInput>
+}
+
+export type RequestLogUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.RequestLogScalarWhereInput
+  data: Prisma.XOR<Prisma.RequestLogUpdateManyMutationInput, Prisma.RequestLogUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type RequestLogScalarWhereInput = {
+  AND?: Prisma.RequestLogScalarWhereInput | Prisma.RequestLogScalarWhereInput[]
+  OR?: Prisma.RequestLogScalarWhereInput[]
+  NOT?: Prisma.RequestLogScalarWhereInput | Prisma.RequestLogScalarWhereInput[]
+  id?: Prisma.StringFilter<"RequestLog"> | string
+  requestId?: Prisma.StringFilter<"RequestLog"> | string
+  apiKeyId?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  organizationId?: Prisma.StringFilter<"RequestLog"> | string
+  model?: Prisma.StringFilter<"RequestLog"> | string
+  promptTokens?: Prisma.IntFilter<"RequestLog"> | number
+  completionTokens?: Prisma.IntFilter<"RequestLog"> | number
+  totalTokens?: Prisma.IntFilter<"RequestLog"> | number
+  cost?: Prisma.DecimalNullableFilter<"RequestLog"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latencyMs?: Prisma.IntNullableFilter<"RequestLog"> | number | null
+  status?: Prisma.StringFilter<"RequestLog"> | string
+  errorMessage?: Prisma.StringNullableFilter<"RequestLog"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"RequestLog"> | Date | string
+}
+
+export type RequestLogCreateManyTenantInput = {
+  id?: string
+  requestId: string
+  apiKeyId?: string | null
+  model: string
+  promptTokens?: number
+  completionTokens?: number
+  totalTokens?: number
+  cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latencyMs?: number | null
+  status: string
+  errorMessage?: string | null
+  createdAt?: Date | string
+}
+
+export type RequestLogUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  promptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  completionTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  totalTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latencyMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RequestLogUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  promptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  completionTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  totalTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latencyMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type RequestLogUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  requestId?: Prisma.StringFieldUpdateOperationsInput | string
+  apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  promptTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  completionTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  totalTokens?: Prisma.IntFieldUpdateOperationsInput | number
+  cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  latencyMs?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  errorMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -581,6 +770,7 @@ export type RequestLogSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   status?: boolean
   errorMessage?: boolean
   createdAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["requestLog"]>
 
 export type RequestLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -597,6 +787,7 @@ export type RequestLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   status?: boolean
   errorMessage?: boolean
   createdAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["requestLog"]>
 
 export type RequestLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -613,6 +804,7 @@ export type RequestLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   status?: boolean
   errorMessage?: boolean
   createdAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["requestLog"]>
 
 export type RequestLogSelectScalar = {
@@ -632,10 +824,21 @@ export type RequestLogSelectScalar = {
 }
 
 export type RequestLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "apiKeyId" | "organizationId" | "model" | "promptTokens" | "completionTokens" | "totalTokens" | "cost" | "latencyMs" | "status" | "errorMessage" | "createdAt", ExtArgs["result"]["requestLog"]>
+export type RequestLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
+export type RequestLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
+export type RequestLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
 
 export type $RequestLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RequestLog"
-  objects: {}
+  objects: {
+    tenant: Prisma.$TenantPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     requestId: string
@@ -1044,6 +1247,7 @@ readonly fields: RequestLogFieldRefs;
  */
 export interface Prisma__RequestLogClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1103,6 +1307,10 @@ export type RequestLogFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
+  /**
    * Filter, which RequestLog to fetch.
    */
   where: Prisma.RequestLogWhereUniqueInput
@@ -1121,6 +1329,10 @@ export type RequestLogFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
+  /**
    * Filter, which RequestLog to fetch.
    */
   where: Prisma.RequestLogWhereUniqueInput
@@ -1138,6 +1350,10 @@ export type RequestLogFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the RequestLog
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
   /**
    * Filter, which RequestLog to fetch.
    */
@@ -1187,6 +1403,10 @@ export type RequestLogFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
+  /**
    * Filter, which RequestLog to fetch.
    */
   where?: Prisma.RequestLogWhereInput
@@ -1235,6 +1455,10 @@ export type RequestLogFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
+  /**
    * Filter, which RequestLogs to fetch.
    */
   where?: Prisma.RequestLogWhereInput
@@ -1278,6 +1502,10 @@ export type RequestLogCreateArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
+  /**
    * The data needed to create a RequestLog.
    */
   data: Prisma.XOR<Prisma.RequestLogCreateInput, Prisma.RequestLogUncheckedCreateInput>
@@ -1311,6 +1539,10 @@ export type RequestLogCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    */
   data: Prisma.RequestLogCreateManyInput | Prisma.RequestLogCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1325,6 +1557,10 @@ export type RequestLogUpdateArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the RequestLog
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
   /**
    * The data needed to update a RequestLog.
    */
@@ -1377,6 +1613,10 @@ export type RequestLogUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many RequestLogs to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1391,6 +1631,10 @@ export type RequestLogUpsertArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the RequestLog
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
   /**
    * The filter to search for the RequestLog to update in case it exists.
    */
@@ -1417,6 +1661,10 @@ export type RequestLogDeleteArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the RequestLog
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
   /**
    * Filter which RequestLog to delete.
    */
@@ -1449,4 +1697,8 @@ export type RequestLogDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the RequestLog
    */
   omit?: Prisma.RequestLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RequestLogInclude<ExtArgs> | null
 }

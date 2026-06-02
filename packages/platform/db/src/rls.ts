@@ -21,6 +21,14 @@
 
 import type { PrismaClient } from "./generated/prisma/client";
 
+// Optional non-bypassrls role to assume for tenant-scoped transactions — e.g.
+// "app_user" on Supabase, whose `postgres` connection role bypasses RLS. Env-driven
+// so other backends opt in; validated as a bare SQL identifier (cannot be bound).
+const RLS_ROLE = (() => {
+  const r = process.env.APP_DB_ROLE;
+  return r && /^[a-z_][a-z0-9_]*$/.test(r) ? r : null;
+})();
+
 type InteractiveTransaction = Omit<
   PrismaClient,
   "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
@@ -38,6 +46,11 @@ export async function withOrgContext<T>(
   callback: (tx: InteractiveTransaction) => Promise<T>,
 ): Promise<T> {
   return prisma.$transaction(async (tx) => {
+    // Assume the non-bypassrls role (when configured) so RLS actually applies on
+    // backends whose connection role bypasses it (e.g. Supabase `postgres`).
+    if (RLS_ROLE) {
+      await tx.$executeRawUnsafe(`SET LOCAL ROLE "${RLS_ROLE}"`);
+    }
     // transaction-local: cleared automatically when tx commits or rolls back
     await tx.$executeRaw`SELECT set_config('app.current_tenant_id', ${orgId}, true)`;
     return callback(tx);

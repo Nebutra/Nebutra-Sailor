@@ -352,7 +352,7 @@ export type OAuthClientWhereInput = {
   createdById?: Prisma.StringNullableFilter<"OAuthClient"> | string | null
   createdAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   authorizations?: Prisma.OAuthAuthorizationListRelationFilter
   accessTokens?: Prisma.OAuthAccessTokenListRelationFilter
 }
@@ -381,7 +381,7 @@ export type OAuthClientOrderByWithRelationInput = {
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  organization?: Prisma.OrganizationOrderByWithRelationInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
   authorizations?: Prisma.OAuthAuthorizationOrderByRelationAggregateInput
   accessTokens?: Prisma.OAuthAccessTokenOrderByRelationAggregateInput
 }
@@ -413,7 +413,7 @@ export type OAuthClientWhereUniqueInput = Prisma.AtLeast<{
   createdById?: Prisma.StringNullableFilter<"OAuthClient"> | string | null
   createdAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   authorizations?: Prisma.OAuthAuthorizationListRelationFilter
   accessTokens?: Prisma.OAuthAccessTokenListRelationFilter
 }, "id" | "clientId">
@@ -501,7 +501,7 @@ export type OAuthClientCreateInput = {
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutOauthClientsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutOauthClientsInput
   authorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutClientInput
   accessTokens?: Prisma.OAuthAccessTokenCreateNestedManyWithoutClientInput
 }
@@ -557,7 +557,7 @@ export type OAuthClientUpdateInput = {
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutOauthClientsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutOauthClientsNestedInput
   authorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutClientNestedInput
   accessTokens?: Prisma.OAuthAccessTokenUpdateManyWithoutClientNestedInput
 }
@@ -764,45 +764,45 @@ export type OAuthClientScalarRelationFilter = {
   isNot?: Prisma.OAuthClientWhereInput
 }
 
-export type OAuthClientCreateNestedManyWithoutOrganizationInput = {
-  create?: Prisma.XOR<Prisma.OAuthClientCreateWithoutOrganizationInput, Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput> | Prisma.OAuthClientCreateWithoutOrganizationInput[] | Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.OAuthClientCreateOrConnectWithoutOrganizationInput | Prisma.OAuthClientCreateOrConnectWithoutOrganizationInput[]
-  createMany?: Prisma.OAuthClientCreateManyOrganizationInputEnvelope
+export type OAuthClientCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.OAuthClientCreateWithoutTenantInput, Prisma.OAuthClientUncheckedCreateWithoutTenantInput> | Prisma.OAuthClientCreateWithoutTenantInput[] | Prisma.OAuthClientUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.OAuthClientCreateOrConnectWithoutTenantInput | Prisma.OAuthClientCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.OAuthClientCreateManyTenantInputEnvelope
   connect?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
 }
 
-export type OAuthClientUncheckedCreateNestedManyWithoutOrganizationInput = {
-  create?: Prisma.XOR<Prisma.OAuthClientCreateWithoutOrganizationInput, Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput> | Prisma.OAuthClientCreateWithoutOrganizationInput[] | Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.OAuthClientCreateOrConnectWithoutOrganizationInput | Prisma.OAuthClientCreateOrConnectWithoutOrganizationInput[]
-  createMany?: Prisma.OAuthClientCreateManyOrganizationInputEnvelope
+export type OAuthClientUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.OAuthClientCreateWithoutTenantInput, Prisma.OAuthClientUncheckedCreateWithoutTenantInput> | Prisma.OAuthClientCreateWithoutTenantInput[] | Prisma.OAuthClientUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.OAuthClientCreateOrConnectWithoutTenantInput | Prisma.OAuthClientCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.OAuthClientCreateManyTenantInputEnvelope
   connect?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
 }
 
-export type OAuthClientUpdateManyWithoutOrganizationNestedInput = {
-  create?: Prisma.XOR<Prisma.OAuthClientCreateWithoutOrganizationInput, Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput> | Prisma.OAuthClientCreateWithoutOrganizationInput[] | Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.OAuthClientCreateOrConnectWithoutOrganizationInput | Prisma.OAuthClientCreateOrConnectWithoutOrganizationInput[]
-  upsert?: Prisma.OAuthClientUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.OAuthClientUpsertWithWhereUniqueWithoutOrganizationInput[]
-  createMany?: Prisma.OAuthClientCreateManyOrganizationInputEnvelope
+export type OAuthClientUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.OAuthClientCreateWithoutTenantInput, Prisma.OAuthClientUncheckedCreateWithoutTenantInput> | Prisma.OAuthClientCreateWithoutTenantInput[] | Prisma.OAuthClientUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.OAuthClientCreateOrConnectWithoutTenantInput | Prisma.OAuthClientCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.OAuthClientUpsertWithWhereUniqueWithoutTenantInput | Prisma.OAuthClientUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.OAuthClientCreateManyTenantInputEnvelope
   set?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
   disconnect?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
   delete?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
   connect?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
-  update?: Prisma.OAuthClientUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.OAuthClientUpdateWithWhereUniqueWithoutOrganizationInput[]
-  updateMany?: Prisma.OAuthClientUpdateManyWithWhereWithoutOrganizationInput | Prisma.OAuthClientUpdateManyWithWhereWithoutOrganizationInput[]
+  update?: Prisma.OAuthClientUpdateWithWhereUniqueWithoutTenantInput | Prisma.OAuthClientUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.OAuthClientUpdateManyWithWhereWithoutTenantInput | Prisma.OAuthClientUpdateManyWithWhereWithoutTenantInput[]
   deleteMany?: Prisma.OAuthClientScalarWhereInput | Prisma.OAuthClientScalarWhereInput[]
 }
 
-export type OAuthClientUncheckedUpdateManyWithoutOrganizationNestedInput = {
-  create?: Prisma.XOR<Prisma.OAuthClientCreateWithoutOrganizationInput, Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput> | Prisma.OAuthClientCreateWithoutOrganizationInput[] | Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.OAuthClientCreateOrConnectWithoutOrganizationInput | Prisma.OAuthClientCreateOrConnectWithoutOrganizationInput[]
-  upsert?: Prisma.OAuthClientUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.OAuthClientUpsertWithWhereUniqueWithoutOrganizationInput[]
-  createMany?: Prisma.OAuthClientCreateManyOrganizationInputEnvelope
+export type OAuthClientUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.OAuthClientCreateWithoutTenantInput, Prisma.OAuthClientUncheckedCreateWithoutTenantInput> | Prisma.OAuthClientCreateWithoutTenantInput[] | Prisma.OAuthClientUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.OAuthClientCreateOrConnectWithoutTenantInput | Prisma.OAuthClientCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.OAuthClientUpsertWithWhereUniqueWithoutTenantInput | Prisma.OAuthClientUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.OAuthClientCreateManyTenantInputEnvelope
   set?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
   disconnect?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
   delete?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
   connect?: Prisma.OAuthClientWhereUniqueInput | Prisma.OAuthClientWhereUniqueInput[]
-  update?: Prisma.OAuthClientUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.OAuthClientUpdateWithWhereUniqueWithoutOrganizationInput[]
-  updateMany?: Prisma.OAuthClientUpdateManyWithWhereWithoutOrganizationInput | Prisma.OAuthClientUpdateManyWithWhereWithoutOrganizationInput[]
+  update?: Prisma.OAuthClientUpdateWithWhereUniqueWithoutTenantInput | Prisma.OAuthClientUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.OAuthClientUpdateManyWithWhereWithoutTenantInput | Prisma.OAuthClientUpdateManyWithWhereWithoutTenantInput[]
   deleteMany?: Prisma.OAuthClientScalarWhereInput | Prisma.OAuthClientScalarWhereInput[]
 }
 
@@ -878,7 +878,7 @@ export type OAuthClientUpdateOneRequiredWithoutAccessTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OAuthClientUpdateToOneWithWhereWithoutAccessTokensInput, Prisma.OAuthClientUpdateWithoutAccessTokensInput>, Prisma.OAuthClientUncheckedUpdateWithoutAccessTokensInput>
 }
 
-export type OAuthClientCreateWithoutOrganizationInput = {
+export type OAuthClientCreateWithoutTenantInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
@@ -905,7 +905,7 @@ export type OAuthClientCreateWithoutOrganizationInput = {
   accessTokens?: Prisma.OAuthAccessTokenCreateNestedManyWithoutClientInput
 }
 
-export type OAuthClientUncheckedCreateWithoutOrganizationInput = {
+export type OAuthClientUncheckedCreateWithoutTenantInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
@@ -932,30 +932,30 @@ export type OAuthClientUncheckedCreateWithoutOrganizationInput = {
   accessTokens?: Prisma.OAuthAccessTokenUncheckedCreateNestedManyWithoutClientInput
 }
 
-export type OAuthClientCreateOrConnectWithoutOrganizationInput = {
+export type OAuthClientCreateOrConnectWithoutTenantInput = {
   where: Prisma.OAuthClientWhereUniqueInput
-  create: Prisma.XOR<Prisma.OAuthClientCreateWithoutOrganizationInput, Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput>
+  create: Prisma.XOR<Prisma.OAuthClientCreateWithoutTenantInput, Prisma.OAuthClientUncheckedCreateWithoutTenantInput>
 }
 
-export type OAuthClientCreateManyOrganizationInputEnvelope = {
-  data: Prisma.OAuthClientCreateManyOrganizationInput | Prisma.OAuthClientCreateManyOrganizationInput[]
+export type OAuthClientCreateManyTenantInputEnvelope = {
+  data: Prisma.OAuthClientCreateManyTenantInput | Prisma.OAuthClientCreateManyTenantInput[]
   skipDuplicates?: boolean
 }
 
-export type OAuthClientUpsertWithWhereUniqueWithoutOrganizationInput = {
+export type OAuthClientUpsertWithWhereUniqueWithoutTenantInput = {
   where: Prisma.OAuthClientWhereUniqueInput
-  update: Prisma.XOR<Prisma.OAuthClientUpdateWithoutOrganizationInput, Prisma.OAuthClientUncheckedUpdateWithoutOrganizationInput>
-  create: Prisma.XOR<Prisma.OAuthClientCreateWithoutOrganizationInput, Prisma.OAuthClientUncheckedCreateWithoutOrganizationInput>
+  update: Prisma.XOR<Prisma.OAuthClientUpdateWithoutTenantInput, Prisma.OAuthClientUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.OAuthClientCreateWithoutTenantInput, Prisma.OAuthClientUncheckedCreateWithoutTenantInput>
 }
 
-export type OAuthClientUpdateWithWhereUniqueWithoutOrganizationInput = {
+export type OAuthClientUpdateWithWhereUniqueWithoutTenantInput = {
   where: Prisma.OAuthClientWhereUniqueInput
-  data: Prisma.XOR<Prisma.OAuthClientUpdateWithoutOrganizationInput, Prisma.OAuthClientUncheckedUpdateWithoutOrganizationInput>
+  data: Prisma.XOR<Prisma.OAuthClientUpdateWithoutTenantInput, Prisma.OAuthClientUncheckedUpdateWithoutTenantInput>
 }
 
-export type OAuthClientUpdateManyWithWhereWithoutOrganizationInput = {
+export type OAuthClientUpdateManyWithWhereWithoutTenantInput = {
   where: Prisma.OAuthClientScalarWhereInput
-  data: Prisma.XOR<Prisma.OAuthClientUpdateManyMutationInput, Prisma.OAuthClientUncheckedUpdateManyWithoutOrganizationInput>
+  data: Prisma.XOR<Prisma.OAuthClientUpdateManyMutationInput, Prisma.OAuthClientUncheckedUpdateManyWithoutTenantInput>
 }
 
 export type OAuthClientScalarWhereInput = {
@@ -1010,7 +1010,7 @@ export type OAuthClientCreateWithoutAuthorizationsInput = {
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutOauthClientsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutOauthClientsInput
   accessTokens?: Prisma.OAuthAccessTokenCreateNestedManyWithoutClientInput
 }
 
@@ -1080,7 +1080,7 @@ export type OAuthClientUpdateWithoutAuthorizationsInput = {
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutOauthClientsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutOauthClientsNestedInput
   accessTokens?: Prisma.OAuthAccessTokenUpdateManyWithoutClientNestedInput
 }
 
@@ -1134,7 +1134,7 @@ export type OAuthClientCreateWithoutAccessTokensInput = {
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutOauthClientsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutOauthClientsInput
   authorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutClientInput
 }
 
@@ -1204,7 +1204,7 @@ export type OAuthClientUpdateWithoutAccessTokensInput = {
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutOauthClientsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutOauthClientsNestedInput
   authorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutClientNestedInput
 }
 
@@ -1235,7 +1235,7 @@ export type OAuthClientUncheckedUpdateWithoutAccessTokensInput = {
   authorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutClientNestedInput
 }
 
-export type OAuthClientCreateManyOrganizationInput = {
+export type OAuthClientCreateManyTenantInput = {
   id?: string
   clientId: string
   clientSecretHash?: string | null
@@ -1260,7 +1260,7 @@ export type OAuthClientCreateManyOrganizationInput = {
   updatedAt?: Date | string
 }
 
-export type OAuthClientUpdateWithoutOrganizationInput = {
+export type OAuthClientUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1287,7 +1287,7 @@ export type OAuthClientUpdateWithoutOrganizationInput = {
   accessTokens?: Prisma.OAuthAccessTokenUpdateManyWithoutClientNestedInput
 }
 
-export type OAuthClientUncheckedUpdateWithoutOrganizationInput = {
+export type OAuthClientUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1314,7 +1314,7 @@ export type OAuthClientUncheckedUpdateWithoutOrganizationInput = {
   accessTokens?: Prisma.OAuthAccessTokenUncheckedUpdateManyWithoutClientNestedInput
 }
 
-export type OAuthClientUncheckedUpdateManyWithoutOrganizationInput = {
+export type OAuthClientUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientSecretHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1403,7 +1403,7 @@ export type OAuthClientSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   authorizations?: boolean | Prisma.OAuthClient$authorizationsArgs<ExtArgs>
   accessTokens?: boolean | Prisma.OAuthClient$accessTokensArgs<ExtArgs>
   _count?: boolean | Prisma.OAuthClientCountOutputTypeDefaultArgs<ExtArgs>
@@ -1433,7 +1433,7 @@ export type OAuthClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["oAuthClient"]>
 
 export type OAuthClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1460,7 +1460,7 @@ export type OAuthClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["oAuthClient"]>
 
 export type OAuthClientSelectScalar = {
@@ -1491,22 +1491,22 @@ export type OAuthClientSelectScalar = {
 
 export type OAuthClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientId" | "clientSecretHash" | "type" | "status" | "name" | "description" | "logoUrl" | "websiteUrl" | "privacyPolicyUrl" | "tosUrl" | "redirectUris" | "allowedScopes" | "grantTypes" | "responseTypes" | "tokenEndpointAuthMethod" | "rateLimitRpm" | "accessTokenTtl" | "refreshTokenTtl" | "organizationId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["oAuthClient"]>
 export type OAuthClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   authorizations?: boolean | Prisma.OAuthClient$authorizationsArgs<ExtArgs>
   accessTokens?: boolean | Prisma.OAuthClient$accessTokensArgs<ExtArgs>
   _count?: boolean | Prisma.OAuthClientCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OAuthClientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type OAuthClientIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 
 export type $OAuthClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "OAuthClient"
   objects: {
-    organization: Prisma.$OrganizationPayload<ExtArgs>
+    tenant: Prisma.$TenantPayload<ExtArgs>
     authorizations: Prisma.$OAuthAuthorizationPayload<ExtArgs>[]
     accessTokens: Prisma.$OAuthAccessTokenPayload<ExtArgs>[]
   }
@@ -1928,7 +1928,7 @@ readonly fields: OAuthClientFieldRefs;
  */
 export interface Prisma__OAuthClientClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   authorizations<T extends Prisma.OAuthClient$authorizationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OAuthClient$authorizationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthAuthorizationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accessTokens<T extends Prisma.OAuthClient$accessTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OAuthClient$accessTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthAccessTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**

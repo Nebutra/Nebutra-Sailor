@@ -218,6 +218,7 @@ export type StripeCustomerWhereInput = {
   metadata?: Prisma.JsonFilter<"StripeCustomer">
   createdAt?: Prisma.DateTimeFilter<"StripeCustomer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StripeCustomer"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
 export type StripeCustomerOrderByWithRelationInput = {
@@ -231,6 +232,7 @@ export type StripeCustomerOrderByWithRelationInput = {
   metadata?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type StripeCustomerWhereUniqueInput = Prisma.AtLeast<{
@@ -247,6 +249,7 @@ export type StripeCustomerWhereUniqueInput = Prisma.AtLeast<{
   metadata?: Prisma.JsonFilter<"StripeCustomer">
   createdAt?: Prisma.DateTimeFilter<"StripeCustomer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StripeCustomer"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "organizationId" | "stripeId">
 
 export type StripeCustomerOrderByWithAggregationInput = {
@@ -283,7 +286,6 @@ export type StripeCustomerScalarWhereWithAggregatesInput = {
 
 export type StripeCustomerCreateInput = {
   id?: string
-  organizationId: string
   stripeId: string
   email?: string | null
   name?: string | null
@@ -292,6 +294,7 @@ export type StripeCustomerCreateInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutStripeCustomersInput
 }
 
 export type StripeCustomerUncheckedCreateInput = {
@@ -309,7 +312,6 @@ export type StripeCustomerUncheckedCreateInput = {
 
 export type StripeCustomerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -318,6 +320,7 @@ export type StripeCustomerUpdateInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutStripeCustomersNestedInput
 }
 
 export type StripeCustomerUncheckedUpdateInput = {
@@ -348,7 +351,6 @@ export type StripeCustomerCreateManyInput = {
 
 export type StripeCustomerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -370,6 +372,16 @@ export type StripeCustomerUncheckedUpdateManyInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StripeCustomerListRelationFilter = {
+  every?: Prisma.StripeCustomerWhereInput
+  some?: Prisma.StripeCustomerWhereInput
+  none?: Prisma.StripeCustomerWhereInput
+}
+
+export type StripeCustomerOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type StripeCustomerCountOrderByAggregateInput = {
@@ -409,6 +421,162 @@ export type StripeCustomerMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type StripeCustomerCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.StripeCustomerCreateWithoutTenantInput, Prisma.StripeCustomerUncheckedCreateWithoutTenantInput> | Prisma.StripeCustomerCreateWithoutTenantInput[] | Prisma.StripeCustomerUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.StripeCustomerCreateOrConnectWithoutTenantInput | Prisma.StripeCustomerCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.StripeCustomerCreateManyTenantInputEnvelope
+  connect?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+}
+
+export type StripeCustomerUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.StripeCustomerCreateWithoutTenantInput, Prisma.StripeCustomerUncheckedCreateWithoutTenantInput> | Prisma.StripeCustomerCreateWithoutTenantInput[] | Prisma.StripeCustomerUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.StripeCustomerCreateOrConnectWithoutTenantInput | Prisma.StripeCustomerCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.StripeCustomerCreateManyTenantInputEnvelope
+  connect?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+}
+
+export type StripeCustomerUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.StripeCustomerCreateWithoutTenantInput, Prisma.StripeCustomerUncheckedCreateWithoutTenantInput> | Prisma.StripeCustomerCreateWithoutTenantInput[] | Prisma.StripeCustomerUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.StripeCustomerCreateOrConnectWithoutTenantInput | Prisma.StripeCustomerCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.StripeCustomerUpsertWithWhereUniqueWithoutTenantInput | Prisma.StripeCustomerUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.StripeCustomerCreateManyTenantInputEnvelope
+  set?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+  disconnect?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+  delete?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+  connect?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+  update?: Prisma.StripeCustomerUpdateWithWhereUniqueWithoutTenantInput | Prisma.StripeCustomerUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.StripeCustomerUpdateManyWithWhereWithoutTenantInput | Prisma.StripeCustomerUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.StripeCustomerScalarWhereInput | Prisma.StripeCustomerScalarWhereInput[]
+}
+
+export type StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.StripeCustomerCreateWithoutTenantInput, Prisma.StripeCustomerUncheckedCreateWithoutTenantInput> | Prisma.StripeCustomerCreateWithoutTenantInput[] | Prisma.StripeCustomerUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.StripeCustomerCreateOrConnectWithoutTenantInput | Prisma.StripeCustomerCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.StripeCustomerUpsertWithWhereUniqueWithoutTenantInput | Prisma.StripeCustomerUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.StripeCustomerCreateManyTenantInputEnvelope
+  set?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+  disconnect?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+  delete?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+  connect?: Prisma.StripeCustomerWhereUniqueInput | Prisma.StripeCustomerWhereUniqueInput[]
+  update?: Prisma.StripeCustomerUpdateWithWhereUniqueWithoutTenantInput | Prisma.StripeCustomerUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.StripeCustomerUpdateManyWithWhereWithoutTenantInput | Prisma.StripeCustomerUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.StripeCustomerScalarWhereInput | Prisma.StripeCustomerScalarWhereInput[]
+}
+
+export type StripeCustomerCreateWithoutTenantInput = {
+  id?: string
+  stripeId: string
+  email?: string | null
+  name?: string | null
+  currency?: string
+  taxExempt?: string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type StripeCustomerUncheckedCreateWithoutTenantInput = {
+  id?: string
+  stripeId: string
+  email?: string | null
+  name?: string | null
+  currency?: string
+  taxExempt?: string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type StripeCustomerCreateOrConnectWithoutTenantInput = {
+  where: Prisma.StripeCustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.StripeCustomerCreateWithoutTenantInput, Prisma.StripeCustomerUncheckedCreateWithoutTenantInput>
+}
+
+export type StripeCustomerCreateManyTenantInputEnvelope = {
+  data: Prisma.StripeCustomerCreateManyTenantInput | Prisma.StripeCustomerCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type StripeCustomerUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.StripeCustomerWhereUniqueInput
+  update: Prisma.XOR<Prisma.StripeCustomerUpdateWithoutTenantInput, Prisma.StripeCustomerUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.StripeCustomerCreateWithoutTenantInput, Prisma.StripeCustomerUncheckedCreateWithoutTenantInput>
+}
+
+export type StripeCustomerUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.StripeCustomerWhereUniqueInput
+  data: Prisma.XOR<Prisma.StripeCustomerUpdateWithoutTenantInput, Prisma.StripeCustomerUncheckedUpdateWithoutTenantInput>
+}
+
+export type StripeCustomerUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.StripeCustomerScalarWhereInput
+  data: Prisma.XOR<Prisma.StripeCustomerUpdateManyMutationInput, Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type StripeCustomerScalarWhereInput = {
+  AND?: Prisma.StripeCustomerScalarWhereInput | Prisma.StripeCustomerScalarWhereInput[]
+  OR?: Prisma.StripeCustomerScalarWhereInput[]
+  NOT?: Prisma.StripeCustomerScalarWhereInput | Prisma.StripeCustomerScalarWhereInput[]
+  id?: Prisma.StringFilter<"StripeCustomer"> | string
+  organizationId?: Prisma.StringFilter<"StripeCustomer"> | string
+  stripeId?: Prisma.StringFilter<"StripeCustomer"> | string
+  email?: Prisma.StringNullableFilter<"StripeCustomer"> | string | null
+  name?: Prisma.StringNullableFilter<"StripeCustomer"> | string | null
+  currency?: Prisma.StringFilter<"StripeCustomer"> | string
+  taxExempt?: Prisma.StringFilter<"StripeCustomer"> | string
+  metadata?: Prisma.JsonFilter<"StripeCustomer">
+  createdAt?: Prisma.DateTimeFilter<"StripeCustomer"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"StripeCustomer"> | Date | string
+}
+
+export type StripeCustomerCreateManyTenantInput = {
+  id?: string
+  stripeId: string
+  email?: string | null
+  name?: string | null
+  currency?: string
+  taxExempt?: string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type StripeCustomerUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stripeId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxExempt?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StripeCustomerUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stripeId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxExempt?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StripeCustomerUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stripeId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  taxExempt?: Prisma.StringFieldUpdateOperationsInput | string
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type StripeCustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -422,6 +590,7 @@ export type StripeCustomerSelect<ExtArgs extends runtime.Types.Extensions.Intern
   metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stripeCustomer"]>
 
 export type StripeCustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -435,6 +604,7 @@ export type StripeCustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stripeCustomer"]>
 
 export type StripeCustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -448,6 +618,7 @@ export type StripeCustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stripeCustomer"]>
 
 export type StripeCustomerSelectScalar = {
@@ -464,10 +635,21 @@ export type StripeCustomerSelectScalar = {
 }
 
 export type StripeCustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "stripeId" | "email" | "name" | "currency" | "taxExempt" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["stripeCustomer"]>
+export type StripeCustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
+export type StripeCustomerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
+export type StripeCustomerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
 
 export type $StripeCustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StripeCustomer"
-  objects: {}
+  objects: {
+    tenant: Prisma.$TenantPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     organizationId: string
@@ -873,6 +1055,7 @@ readonly fields: StripeCustomerFieldRefs;
  */
 export interface Prisma__StripeCustomerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -929,6 +1112,10 @@ export type StripeCustomerFindUniqueArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
+  /**
    * Filter, which StripeCustomer to fetch.
    */
   where: Prisma.StripeCustomerWhereUniqueInput
@@ -947,6 +1134,10 @@ export type StripeCustomerFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
+  /**
    * Filter, which StripeCustomer to fetch.
    */
   where: Prisma.StripeCustomerWhereUniqueInput
@@ -964,6 +1155,10 @@ export type StripeCustomerFindFirstArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the StripeCustomer
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
   /**
    * Filter, which StripeCustomer to fetch.
    */
@@ -1013,6 +1208,10 @@ export type StripeCustomerFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
+  /**
    * Filter, which StripeCustomer to fetch.
    */
   where?: Prisma.StripeCustomerWhereInput
@@ -1061,6 +1260,10 @@ export type StripeCustomerFindManyArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
+  /**
    * Filter, which StripeCustomers to fetch.
    */
   where?: Prisma.StripeCustomerWhereInput
@@ -1104,6 +1307,10 @@ export type StripeCustomerCreateArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
+  /**
    * The data needed to create a StripeCustomer.
    */
   data: Prisma.XOR<Prisma.StripeCustomerCreateInput, Prisma.StripeCustomerUncheckedCreateInput>
@@ -1137,6 +1344,10 @@ export type StripeCustomerCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    */
   data: Prisma.StripeCustomerCreateManyInput | Prisma.StripeCustomerCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1151,6 +1362,10 @@ export type StripeCustomerUpdateArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the StripeCustomer
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
   /**
    * The data needed to update a StripeCustomer.
    */
@@ -1203,6 +1418,10 @@ export type StripeCustomerUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * Limit how many StripeCustomers to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1217,6 +1436,10 @@ export type StripeCustomerUpsertArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the StripeCustomer
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
   /**
    * The filter to search for the StripeCustomer to update in case it exists.
    */
@@ -1243,6 +1466,10 @@ export type StripeCustomerDeleteArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the StripeCustomer
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
   /**
    * Filter which StripeCustomer to delete.
    */
@@ -1275,4 +1502,8 @@ export type StripeCustomerDefaultArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the StripeCustomer
    */
   omit?: Prisma.StripeCustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StripeCustomerInclude<ExtArgs> | null
 }

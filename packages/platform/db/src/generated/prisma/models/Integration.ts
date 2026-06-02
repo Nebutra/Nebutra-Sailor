@@ -214,7 +214,7 @@ export type IntegrationWhereInput = {
   lastSyncAt?: Prisma.DateTimeNullableFilter<"Integration"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Integration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Integration"> | Date | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
 export type IntegrationOrderByWithRelationInput = {
@@ -228,7 +228,7 @@ export type IntegrationOrderByWithRelationInput = {
   lastSyncAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  organization?: Prisma.OrganizationOrderByWithRelationInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type IntegrationWhereUniqueInput = Prisma.AtLeast<{
@@ -246,7 +246,7 @@ export type IntegrationWhereUniqueInput = Prisma.AtLeast<{
   lastSyncAt?: Prisma.DateTimeNullableFilter<"Integration"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Integration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Integration"> | Date | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "organizationId_type_name">
 
 export type IntegrationOrderByWithAggregationInput = {
@@ -291,7 +291,7 @@ export type IntegrationCreateInput = {
   lastSyncAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutIntegrationsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutIntegrationsInput
 }
 
 export type IntegrationUncheckedCreateInput = {
@@ -317,7 +317,7 @@ export type IntegrationUpdateInput = {
   lastSyncAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutIntegrationsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutIntegrationsNestedInput
 }
 
 export type IntegrationUncheckedUpdateInput = {
@@ -422,45 +422,45 @@ export type IntegrationMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type IntegrationCreateNestedManyWithoutOrganizationInput = {
-  create?: Prisma.XOR<Prisma.IntegrationCreateWithoutOrganizationInput, Prisma.IntegrationUncheckedCreateWithoutOrganizationInput> | Prisma.IntegrationCreateWithoutOrganizationInput[] | Prisma.IntegrationUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.IntegrationCreateOrConnectWithoutOrganizationInput | Prisma.IntegrationCreateOrConnectWithoutOrganizationInput[]
-  createMany?: Prisma.IntegrationCreateManyOrganizationInputEnvelope
+export type IntegrationCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.IntegrationCreateWithoutTenantInput, Prisma.IntegrationUncheckedCreateWithoutTenantInput> | Prisma.IntegrationCreateWithoutTenantInput[] | Prisma.IntegrationUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.IntegrationCreateOrConnectWithoutTenantInput | Prisma.IntegrationCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.IntegrationCreateManyTenantInputEnvelope
   connect?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
 }
 
-export type IntegrationUncheckedCreateNestedManyWithoutOrganizationInput = {
-  create?: Prisma.XOR<Prisma.IntegrationCreateWithoutOrganizationInput, Prisma.IntegrationUncheckedCreateWithoutOrganizationInput> | Prisma.IntegrationCreateWithoutOrganizationInput[] | Prisma.IntegrationUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.IntegrationCreateOrConnectWithoutOrganizationInput | Prisma.IntegrationCreateOrConnectWithoutOrganizationInput[]
-  createMany?: Prisma.IntegrationCreateManyOrganizationInputEnvelope
+export type IntegrationUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.IntegrationCreateWithoutTenantInput, Prisma.IntegrationUncheckedCreateWithoutTenantInput> | Prisma.IntegrationCreateWithoutTenantInput[] | Prisma.IntegrationUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.IntegrationCreateOrConnectWithoutTenantInput | Prisma.IntegrationCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.IntegrationCreateManyTenantInputEnvelope
   connect?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
 }
 
-export type IntegrationUpdateManyWithoutOrganizationNestedInput = {
-  create?: Prisma.XOR<Prisma.IntegrationCreateWithoutOrganizationInput, Prisma.IntegrationUncheckedCreateWithoutOrganizationInput> | Prisma.IntegrationCreateWithoutOrganizationInput[] | Prisma.IntegrationUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.IntegrationCreateOrConnectWithoutOrganizationInput | Prisma.IntegrationCreateOrConnectWithoutOrganizationInput[]
-  upsert?: Prisma.IntegrationUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.IntegrationUpsertWithWhereUniqueWithoutOrganizationInput[]
-  createMany?: Prisma.IntegrationCreateManyOrganizationInputEnvelope
+export type IntegrationUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.IntegrationCreateWithoutTenantInput, Prisma.IntegrationUncheckedCreateWithoutTenantInput> | Prisma.IntegrationCreateWithoutTenantInput[] | Prisma.IntegrationUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.IntegrationCreateOrConnectWithoutTenantInput | Prisma.IntegrationCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.IntegrationUpsertWithWhereUniqueWithoutTenantInput | Prisma.IntegrationUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.IntegrationCreateManyTenantInputEnvelope
   set?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
   disconnect?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
   delete?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
   connect?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
-  update?: Prisma.IntegrationUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.IntegrationUpdateWithWhereUniqueWithoutOrganizationInput[]
-  updateMany?: Prisma.IntegrationUpdateManyWithWhereWithoutOrganizationInput | Prisma.IntegrationUpdateManyWithWhereWithoutOrganizationInput[]
+  update?: Prisma.IntegrationUpdateWithWhereUniqueWithoutTenantInput | Prisma.IntegrationUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.IntegrationUpdateManyWithWhereWithoutTenantInput | Prisma.IntegrationUpdateManyWithWhereWithoutTenantInput[]
   deleteMany?: Prisma.IntegrationScalarWhereInput | Prisma.IntegrationScalarWhereInput[]
 }
 
-export type IntegrationUncheckedUpdateManyWithoutOrganizationNestedInput = {
-  create?: Prisma.XOR<Prisma.IntegrationCreateWithoutOrganizationInput, Prisma.IntegrationUncheckedCreateWithoutOrganizationInput> | Prisma.IntegrationCreateWithoutOrganizationInput[] | Prisma.IntegrationUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.IntegrationCreateOrConnectWithoutOrganizationInput | Prisma.IntegrationCreateOrConnectWithoutOrganizationInput[]
-  upsert?: Prisma.IntegrationUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.IntegrationUpsertWithWhereUniqueWithoutOrganizationInput[]
-  createMany?: Prisma.IntegrationCreateManyOrganizationInputEnvelope
+export type IntegrationUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.IntegrationCreateWithoutTenantInput, Prisma.IntegrationUncheckedCreateWithoutTenantInput> | Prisma.IntegrationCreateWithoutTenantInput[] | Prisma.IntegrationUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.IntegrationCreateOrConnectWithoutTenantInput | Prisma.IntegrationCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.IntegrationUpsertWithWhereUniqueWithoutTenantInput | Prisma.IntegrationUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.IntegrationCreateManyTenantInputEnvelope
   set?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
   disconnect?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
   delete?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
   connect?: Prisma.IntegrationWhereUniqueInput | Prisma.IntegrationWhereUniqueInput[]
-  update?: Prisma.IntegrationUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.IntegrationUpdateWithWhereUniqueWithoutOrganizationInput[]
-  updateMany?: Prisma.IntegrationUpdateManyWithWhereWithoutOrganizationInput | Prisma.IntegrationUpdateManyWithWhereWithoutOrganizationInput[]
+  update?: Prisma.IntegrationUpdateWithWhereUniqueWithoutTenantInput | Prisma.IntegrationUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.IntegrationUpdateManyWithWhereWithoutTenantInput | Prisma.IntegrationUpdateManyWithWhereWithoutTenantInput[]
   deleteMany?: Prisma.IntegrationScalarWhereInput | Prisma.IntegrationScalarWhereInput[]
 }
 
@@ -468,7 +468,7 @@ export type EnumIntegrationTypeFieldUpdateOperationsInput = {
   set?: $Enums.IntegrationType
 }
 
-export type IntegrationCreateWithoutOrganizationInput = {
+export type IntegrationCreateWithoutTenantInput = {
   id?: string
   type: $Enums.IntegrationType
   name: string
@@ -480,7 +480,7 @@ export type IntegrationCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
 }
 
-export type IntegrationUncheckedCreateWithoutOrganizationInput = {
+export type IntegrationUncheckedCreateWithoutTenantInput = {
   id?: string
   type: $Enums.IntegrationType
   name: string
@@ -492,30 +492,30 @@ export type IntegrationUncheckedCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
 }
 
-export type IntegrationCreateOrConnectWithoutOrganizationInput = {
+export type IntegrationCreateOrConnectWithoutTenantInput = {
   where: Prisma.IntegrationWhereUniqueInput
-  create: Prisma.XOR<Prisma.IntegrationCreateWithoutOrganizationInput, Prisma.IntegrationUncheckedCreateWithoutOrganizationInput>
+  create: Prisma.XOR<Prisma.IntegrationCreateWithoutTenantInput, Prisma.IntegrationUncheckedCreateWithoutTenantInput>
 }
 
-export type IntegrationCreateManyOrganizationInputEnvelope = {
-  data: Prisma.IntegrationCreateManyOrganizationInput | Prisma.IntegrationCreateManyOrganizationInput[]
+export type IntegrationCreateManyTenantInputEnvelope = {
+  data: Prisma.IntegrationCreateManyTenantInput | Prisma.IntegrationCreateManyTenantInput[]
   skipDuplicates?: boolean
 }
 
-export type IntegrationUpsertWithWhereUniqueWithoutOrganizationInput = {
+export type IntegrationUpsertWithWhereUniqueWithoutTenantInput = {
   where: Prisma.IntegrationWhereUniqueInput
-  update: Prisma.XOR<Prisma.IntegrationUpdateWithoutOrganizationInput, Prisma.IntegrationUncheckedUpdateWithoutOrganizationInput>
-  create: Prisma.XOR<Prisma.IntegrationCreateWithoutOrganizationInput, Prisma.IntegrationUncheckedCreateWithoutOrganizationInput>
+  update: Prisma.XOR<Prisma.IntegrationUpdateWithoutTenantInput, Prisma.IntegrationUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.IntegrationCreateWithoutTenantInput, Prisma.IntegrationUncheckedCreateWithoutTenantInput>
 }
 
-export type IntegrationUpdateWithWhereUniqueWithoutOrganizationInput = {
+export type IntegrationUpdateWithWhereUniqueWithoutTenantInput = {
   where: Prisma.IntegrationWhereUniqueInput
-  data: Prisma.XOR<Prisma.IntegrationUpdateWithoutOrganizationInput, Prisma.IntegrationUncheckedUpdateWithoutOrganizationInput>
+  data: Prisma.XOR<Prisma.IntegrationUpdateWithoutTenantInput, Prisma.IntegrationUncheckedUpdateWithoutTenantInput>
 }
 
-export type IntegrationUpdateManyWithWhereWithoutOrganizationInput = {
+export type IntegrationUpdateManyWithWhereWithoutTenantInput = {
   where: Prisma.IntegrationScalarWhereInput
-  data: Prisma.XOR<Prisma.IntegrationUpdateManyMutationInput, Prisma.IntegrationUncheckedUpdateManyWithoutOrganizationInput>
+  data: Prisma.XOR<Prisma.IntegrationUpdateManyMutationInput, Prisma.IntegrationUncheckedUpdateManyWithoutTenantInput>
 }
 
 export type IntegrationScalarWhereInput = {
@@ -534,7 +534,7 @@ export type IntegrationScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Integration"> | Date | string
 }
 
-export type IntegrationCreateManyOrganizationInput = {
+export type IntegrationCreateManyTenantInput = {
   id?: string
   type: $Enums.IntegrationType
   name: string
@@ -546,7 +546,7 @@ export type IntegrationCreateManyOrganizationInput = {
   updatedAt?: Date | string
 }
 
-export type IntegrationUpdateWithoutOrganizationInput = {
+export type IntegrationUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumIntegrationTypeFieldUpdateOperationsInput | $Enums.IntegrationType
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -558,7 +558,7 @@ export type IntegrationUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type IntegrationUncheckedUpdateWithoutOrganizationInput = {
+export type IntegrationUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumIntegrationTypeFieldUpdateOperationsInput | $Enums.IntegrationType
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -570,7 +570,7 @@ export type IntegrationUncheckedUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type IntegrationUncheckedUpdateManyWithoutOrganizationInput = {
+export type IntegrationUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumIntegrationTypeFieldUpdateOperationsInput | $Enums.IntegrationType
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -595,7 +595,7 @@ export type IntegrationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   lastSyncAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["integration"]>
 
 export type IntegrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -609,7 +609,7 @@ export type IntegrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   lastSyncAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["integration"]>
 
 export type IntegrationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -623,7 +623,7 @@ export type IntegrationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   lastSyncAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["integration"]>
 
 export type IntegrationSelectScalar = {
@@ -641,19 +641,19 @@ export type IntegrationSelectScalar = {
 
 export type IntegrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "type" | "name" | "credentials" | "settings" | "isActive" | "lastSyncAt" | "createdAt" | "updatedAt", ExtArgs["result"]["integration"]>
 export type IntegrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type IntegrationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type IntegrationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 
 export type $IntegrationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Integration"
   objects: {
-    organization: Prisma.$OrganizationPayload<ExtArgs>
+    tenant: Prisma.$TenantPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1060,7 +1060,7 @@ readonly fields: IntegrationFieldRefs;
  */
 export interface Prisma__IntegrationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

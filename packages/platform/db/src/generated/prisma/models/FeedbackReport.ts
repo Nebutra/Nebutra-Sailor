@@ -246,6 +246,7 @@ export type FeedbackReportWhereInput = {
   resolved?: Prisma.BoolFilter<"FeedbackReport"> | boolean
   resolvedAt?: Prisma.DateTimeNullableFilter<"FeedbackReport"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"FeedbackReport"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }
 
 export type FeedbackReportOrderByWithRelationInput = {
@@ -262,6 +263,7 @@ export type FeedbackReportOrderByWithRelationInput = {
   resolved?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type FeedbackReportWhereUniqueInput = Prisma.AtLeast<{
@@ -281,6 +283,7 @@ export type FeedbackReportWhereUniqueInput = Prisma.AtLeast<{
   resolved?: Prisma.BoolFilter<"FeedbackReport"> | boolean
   resolvedAt?: Prisma.DateTimeNullableFilter<"FeedbackReport"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"FeedbackReport"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }, "id">
 
 export type FeedbackReportOrderByWithAggregationInput = {
@@ -323,7 +326,6 @@ export type FeedbackReportScalarWhereWithAggregatesInput = {
 
 export type FeedbackReportCreateInput = {
   id?: string
-  organizationId?: string | null
   userId?: string | null
   area: string
   mode?: string | null
@@ -335,6 +337,7 @@ export type FeedbackReportCreateInput = {
   resolved?: boolean
   resolvedAt?: Date | string | null
   createdAt?: Date | string
+  tenant?: Prisma.TenantCreateNestedOneWithoutFeedbackReportsInput
 }
 
 export type FeedbackReportUncheckedCreateInput = {
@@ -355,7 +358,6 @@ export type FeedbackReportUncheckedCreateInput = {
 
 export type FeedbackReportUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -367,6 +369,7 @@ export type FeedbackReportUpdateInput = {
   resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneWithoutFeedbackReportsNestedInput
 }
 
 export type FeedbackReportUncheckedUpdateInput = {
@@ -403,7 +406,6 @@ export type FeedbackReportCreateManyInput = {
 
 export type FeedbackReportUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -431,6 +433,16 @@ export type FeedbackReportUncheckedUpdateManyInput = {
   resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FeedbackReportListRelationFilter = {
+  every?: Prisma.FeedbackReportWhereInput
+  some?: Prisma.FeedbackReportWhereInput
+  none?: Prisma.FeedbackReportWhereInput
+}
+
+export type FeedbackReportOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type FeedbackReportCountOrderByAggregateInput = {
@@ -481,6 +493,183 @@ export type FeedbackReportMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
+export type FeedbackReportCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.FeedbackReportCreateWithoutTenantInput, Prisma.FeedbackReportUncheckedCreateWithoutTenantInput> | Prisma.FeedbackReportCreateWithoutTenantInput[] | Prisma.FeedbackReportUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.FeedbackReportCreateOrConnectWithoutTenantInput | Prisma.FeedbackReportCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.FeedbackReportCreateManyTenantInputEnvelope
+  connect?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+}
+
+export type FeedbackReportUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.FeedbackReportCreateWithoutTenantInput, Prisma.FeedbackReportUncheckedCreateWithoutTenantInput> | Prisma.FeedbackReportCreateWithoutTenantInput[] | Prisma.FeedbackReportUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.FeedbackReportCreateOrConnectWithoutTenantInput | Prisma.FeedbackReportCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.FeedbackReportCreateManyTenantInputEnvelope
+  connect?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+}
+
+export type FeedbackReportUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.FeedbackReportCreateWithoutTenantInput, Prisma.FeedbackReportUncheckedCreateWithoutTenantInput> | Prisma.FeedbackReportCreateWithoutTenantInput[] | Prisma.FeedbackReportUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.FeedbackReportCreateOrConnectWithoutTenantInput | Prisma.FeedbackReportCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.FeedbackReportUpsertWithWhereUniqueWithoutTenantInput | Prisma.FeedbackReportUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.FeedbackReportCreateManyTenantInputEnvelope
+  set?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+  disconnect?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+  delete?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+  connect?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+  update?: Prisma.FeedbackReportUpdateWithWhereUniqueWithoutTenantInput | Prisma.FeedbackReportUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.FeedbackReportUpdateManyWithWhereWithoutTenantInput | Prisma.FeedbackReportUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.FeedbackReportScalarWhereInput | Prisma.FeedbackReportScalarWhereInput[]
+}
+
+export type FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.FeedbackReportCreateWithoutTenantInput, Prisma.FeedbackReportUncheckedCreateWithoutTenantInput> | Prisma.FeedbackReportCreateWithoutTenantInput[] | Prisma.FeedbackReportUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.FeedbackReportCreateOrConnectWithoutTenantInput | Prisma.FeedbackReportCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.FeedbackReportUpsertWithWhereUniqueWithoutTenantInput | Prisma.FeedbackReportUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.FeedbackReportCreateManyTenantInputEnvelope
+  set?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+  disconnect?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+  delete?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+  connect?: Prisma.FeedbackReportWhereUniqueInput | Prisma.FeedbackReportWhereUniqueInput[]
+  update?: Prisma.FeedbackReportUpdateWithWhereUniqueWithoutTenantInput | Prisma.FeedbackReportUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.FeedbackReportUpdateManyWithWhereWithoutTenantInput | Prisma.FeedbackReportUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.FeedbackReportScalarWhereInput | Prisma.FeedbackReportScalarWhereInput[]
+}
+
+export type FeedbackReportCreateWithoutTenantInput = {
+  id?: string
+  userId?: string | null
+  area: string
+  mode?: string | null
+  description: string
+  contactEmail?: string | null
+  sessionId?: string | null
+  userAgent?: string | null
+  pageUrl?: string | null
+  resolved?: boolean
+  resolvedAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type FeedbackReportUncheckedCreateWithoutTenantInput = {
+  id?: string
+  userId?: string | null
+  area: string
+  mode?: string | null
+  description: string
+  contactEmail?: string | null
+  sessionId?: string | null
+  userAgent?: string | null
+  pageUrl?: string | null
+  resolved?: boolean
+  resolvedAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type FeedbackReportCreateOrConnectWithoutTenantInput = {
+  where: Prisma.FeedbackReportWhereUniqueInput
+  create: Prisma.XOR<Prisma.FeedbackReportCreateWithoutTenantInput, Prisma.FeedbackReportUncheckedCreateWithoutTenantInput>
+}
+
+export type FeedbackReportCreateManyTenantInputEnvelope = {
+  data: Prisma.FeedbackReportCreateManyTenantInput | Prisma.FeedbackReportCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type FeedbackReportUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.FeedbackReportWhereUniqueInput
+  update: Prisma.XOR<Prisma.FeedbackReportUpdateWithoutTenantInput, Prisma.FeedbackReportUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.FeedbackReportCreateWithoutTenantInput, Prisma.FeedbackReportUncheckedCreateWithoutTenantInput>
+}
+
+export type FeedbackReportUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.FeedbackReportWhereUniqueInput
+  data: Prisma.XOR<Prisma.FeedbackReportUpdateWithoutTenantInput, Prisma.FeedbackReportUncheckedUpdateWithoutTenantInput>
+}
+
+export type FeedbackReportUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.FeedbackReportScalarWhereInput
+  data: Prisma.XOR<Prisma.FeedbackReportUpdateManyMutationInput, Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type FeedbackReportScalarWhereInput = {
+  AND?: Prisma.FeedbackReportScalarWhereInput | Prisma.FeedbackReportScalarWhereInput[]
+  OR?: Prisma.FeedbackReportScalarWhereInput[]
+  NOT?: Prisma.FeedbackReportScalarWhereInput | Prisma.FeedbackReportScalarWhereInput[]
+  id?: Prisma.StringFilter<"FeedbackReport"> | string
+  organizationId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  userId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  area?: Prisma.StringFilter<"FeedbackReport"> | string
+  mode?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  description?: Prisma.StringFilter<"FeedbackReport"> | string
+  contactEmail?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  sessionId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  userAgent?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  pageUrl?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  resolved?: Prisma.BoolFilter<"FeedbackReport"> | boolean
+  resolvedAt?: Prisma.DateTimeNullableFilter<"FeedbackReport"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"FeedbackReport"> | Date | string
+}
+
+export type FeedbackReportCreateManyTenantInput = {
+  id?: string
+  userId?: string | null
+  area: string
+  mode?: string | null
+  description: string
+  contactEmail?: string | null
+  sessionId?: string | null
+  userAgent?: string | null
+  pageUrl?: string | null
+  resolved?: boolean
+  resolvedAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type FeedbackReportUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.StringFieldUpdateOperationsInput | string
+  mode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FeedbackReportUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.StringFieldUpdateOperationsInput | string
+  mode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FeedbackReportUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  area?: Prisma.StringFieldUpdateOperationsInput | string
+  mode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resolved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type FeedbackReportSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -497,6 +686,7 @@ export type FeedbackReportSelect<ExtArgs extends runtime.Types.Extensions.Intern
   resolved?: boolean
   resolvedAt?: boolean
   createdAt?: boolean
+  tenant?: boolean | Prisma.FeedbackReport$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["feedbackReport"]>
 
 export type FeedbackReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -513,6 +703,7 @@ export type FeedbackReportSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   resolved?: boolean
   resolvedAt?: boolean
   createdAt?: boolean
+  tenant?: boolean | Prisma.FeedbackReport$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["feedbackReport"]>
 
 export type FeedbackReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -529,6 +720,7 @@ export type FeedbackReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   resolved?: boolean
   resolvedAt?: boolean
   createdAt?: boolean
+  tenant?: boolean | Prisma.FeedbackReport$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["feedbackReport"]>
 
 export type FeedbackReportSelectScalar = {
@@ -548,10 +740,21 @@ export type FeedbackReportSelectScalar = {
 }
 
 export type FeedbackReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "userId" | "area" | "mode" | "description" | "contactEmail" | "sessionId" | "userAgent" | "pageUrl" | "resolved" | "resolvedAt" | "createdAt", ExtArgs["result"]["feedbackReport"]>
+export type FeedbackReportInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.FeedbackReport$tenantArgs<ExtArgs>
+}
+export type FeedbackReportIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.FeedbackReport$tenantArgs<ExtArgs>
+}
+export type FeedbackReportIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.FeedbackReport$tenantArgs<ExtArgs>
+}
 
 export type $FeedbackReportPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "FeedbackReport"
-  objects: {}
+  objects: {
+    tenant: Prisma.$TenantPayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     organizationId: string | null
@@ -960,6 +1163,7 @@ readonly fields: FeedbackReportFieldRefs;
  */
 export interface Prisma__FeedbackReportClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  tenant<T extends Prisma.FeedbackReport$tenantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FeedbackReport$tenantArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1019,6 +1223,10 @@ export type FeedbackReportFindUniqueArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
+  /**
    * Filter, which FeedbackReport to fetch.
    */
   where: Prisma.FeedbackReportWhereUniqueInput
@@ -1037,6 +1245,10 @@ export type FeedbackReportFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
+  /**
    * Filter, which FeedbackReport to fetch.
    */
   where: Prisma.FeedbackReportWhereUniqueInput
@@ -1054,6 +1266,10 @@ export type FeedbackReportFindFirstArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the FeedbackReport
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
   /**
    * Filter, which FeedbackReport to fetch.
    */
@@ -1103,6 +1319,10 @@ export type FeedbackReportFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Ext
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
+  /**
    * Filter, which FeedbackReport to fetch.
    */
   where?: Prisma.FeedbackReportWhereInput
@@ -1151,6 +1371,10 @@ export type FeedbackReportFindManyArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
+  /**
    * Filter, which FeedbackReports to fetch.
    */
   where?: Prisma.FeedbackReportWhereInput
@@ -1194,6 +1418,10 @@ export type FeedbackReportCreateArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
+  /**
    * The data needed to create a FeedbackReport.
    */
   data: Prisma.XOR<Prisma.FeedbackReportCreateInput, Prisma.FeedbackReportUncheckedCreateInput>
@@ -1227,6 +1455,10 @@ export type FeedbackReportCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    */
   data: Prisma.FeedbackReportCreateManyInput | Prisma.FeedbackReportCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1241,6 +1473,10 @@ export type FeedbackReportUpdateArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the FeedbackReport
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
   /**
    * The data needed to update a FeedbackReport.
    */
@@ -1293,6 +1529,10 @@ export type FeedbackReportUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * Limit how many FeedbackReports to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1307,6 +1547,10 @@ export type FeedbackReportUpsertArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the FeedbackReport
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
   /**
    * The filter to search for the FeedbackReport to update in case it exists.
    */
@@ -1334,6 +1578,10 @@ export type FeedbackReportDeleteArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
+  /**
    * Filter which FeedbackReport to delete.
    */
   where: Prisma.FeedbackReportWhereUniqueInput
@@ -1354,6 +1602,25 @@ export type FeedbackReportDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
+ * FeedbackReport.tenant
+ */
+export type FeedbackReport$tenantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tenant
+   */
+  select?: Prisma.TenantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tenant
+   */
+  omit?: Prisma.TenantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TenantInclude<ExtArgs> | null
+  where?: Prisma.TenantWhereInput
+}
+
+/**
  * FeedbackReport without action
  */
 export type FeedbackReportDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1365,4 +1632,8 @@ export type FeedbackReportDefaultArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the FeedbackReport
    */
   omit?: Prisma.FeedbackReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedbackReportInclude<ExtArgs> | null
 }

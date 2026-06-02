@@ -210,6 +210,7 @@ export type CustomerFeatureOverrideWhereInput = {
   expiresAt?: Prisma.DateTimeNullableFilter<"CustomerFeatureOverride"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CustomerFeatureOverride"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CustomerFeatureOverride"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
 export type CustomerFeatureOverrideOrderByWithRelationInput = {
@@ -222,6 +223,7 @@ export type CustomerFeatureOverrideOrderByWithRelationInput = {
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type CustomerFeatureOverrideWhereUniqueInput = Prisma.AtLeast<{
@@ -238,6 +240,7 @@ export type CustomerFeatureOverrideWhereUniqueInput = Prisma.AtLeast<{
   expiresAt?: Prisma.DateTimeNullableFilter<"CustomerFeatureOverride"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CustomerFeatureOverride"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CustomerFeatureOverride"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "organizationId_featureKey">
 
 export type CustomerFeatureOverrideOrderByWithAggregationInput = {
@@ -272,7 +275,6 @@ export type CustomerFeatureOverrideScalarWhereWithAggregatesInput = {
 
 export type CustomerFeatureOverrideCreateInput = {
   id?: string
-  organizationId: string
   featureKey: string
   value: Prisma.JsonNullValueInput | runtime.InputJsonValue
   reason?: string | null
@@ -280,6 +282,7 @@ export type CustomerFeatureOverrideCreateInput = {
   expiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutCustomerFeatureOverridesInput
 }
 
 export type CustomerFeatureOverrideUncheckedCreateInput = {
@@ -296,7 +299,6 @@ export type CustomerFeatureOverrideUncheckedCreateInput = {
 
 export type CustomerFeatureOverrideUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   featureKey?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -304,6 +306,7 @@ export type CustomerFeatureOverrideUpdateInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCustomerFeatureOverridesNestedInput
 }
 
 export type CustomerFeatureOverrideUncheckedUpdateInput = {
@@ -332,7 +335,6 @@ export type CustomerFeatureOverrideCreateManyInput = {
 
 export type CustomerFeatureOverrideUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   featureKey?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -352,6 +354,16 @@ export type CustomerFeatureOverrideUncheckedUpdateManyInput = {
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CustomerFeatureOverrideListRelationFilter = {
+  every?: Prisma.CustomerFeatureOverrideWhereInput
+  some?: Prisma.CustomerFeatureOverrideWhereInput
+  none?: Prisma.CustomerFeatureOverrideWhereInput
+}
+
+export type CustomerFeatureOverrideOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type CustomerFeatureOverrideOrganizationIdFeatureKeyCompoundUniqueInput = {
@@ -393,6 +405,155 @@ export type CustomerFeatureOverrideMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type CustomerFeatureOverrideCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.CustomerFeatureOverrideCreateWithoutTenantInput, Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput> | Prisma.CustomerFeatureOverrideCreateWithoutTenantInput[] | Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerFeatureOverrideCreateOrConnectWithoutTenantInput | Prisma.CustomerFeatureOverrideCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.CustomerFeatureOverrideCreateManyTenantInputEnvelope
+  connect?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+}
+
+export type CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.CustomerFeatureOverrideCreateWithoutTenantInput, Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput> | Prisma.CustomerFeatureOverrideCreateWithoutTenantInput[] | Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerFeatureOverrideCreateOrConnectWithoutTenantInput | Prisma.CustomerFeatureOverrideCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.CustomerFeatureOverrideCreateManyTenantInputEnvelope
+  connect?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+}
+
+export type CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerFeatureOverrideCreateWithoutTenantInput, Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput> | Prisma.CustomerFeatureOverrideCreateWithoutTenantInput[] | Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerFeatureOverrideCreateOrConnectWithoutTenantInput | Prisma.CustomerFeatureOverrideCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.CustomerFeatureOverrideUpsertWithWhereUniqueWithoutTenantInput | Prisma.CustomerFeatureOverrideUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.CustomerFeatureOverrideCreateManyTenantInputEnvelope
+  set?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+  disconnect?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+  delete?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+  connect?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+  update?: Prisma.CustomerFeatureOverrideUpdateWithWhereUniqueWithoutTenantInput | Prisma.CustomerFeatureOverrideUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.CustomerFeatureOverrideUpdateManyWithWhereWithoutTenantInput | Prisma.CustomerFeatureOverrideUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.CustomerFeatureOverrideScalarWhereInput | Prisma.CustomerFeatureOverrideScalarWhereInput[]
+}
+
+export type CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerFeatureOverrideCreateWithoutTenantInput, Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput> | Prisma.CustomerFeatureOverrideCreateWithoutTenantInput[] | Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerFeatureOverrideCreateOrConnectWithoutTenantInput | Prisma.CustomerFeatureOverrideCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.CustomerFeatureOverrideUpsertWithWhereUniqueWithoutTenantInput | Prisma.CustomerFeatureOverrideUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.CustomerFeatureOverrideCreateManyTenantInputEnvelope
+  set?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+  disconnect?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+  delete?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+  connect?: Prisma.CustomerFeatureOverrideWhereUniqueInput | Prisma.CustomerFeatureOverrideWhereUniqueInput[]
+  update?: Prisma.CustomerFeatureOverrideUpdateWithWhereUniqueWithoutTenantInput | Prisma.CustomerFeatureOverrideUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.CustomerFeatureOverrideUpdateManyWithWhereWithoutTenantInput | Prisma.CustomerFeatureOverrideUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.CustomerFeatureOverrideScalarWhereInput | Prisma.CustomerFeatureOverrideScalarWhereInput[]
+}
+
+export type CustomerFeatureOverrideCreateWithoutTenantInput = {
+  id?: string
+  featureKey: string
+  value: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CustomerFeatureOverrideUncheckedCreateWithoutTenantInput = {
+  id?: string
+  featureKey: string
+  value: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CustomerFeatureOverrideCreateOrConnectWithoutTenantInput = {
+  where: Prisma.CustomerFeatureOverrideWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerFeatureOverrideCreateWithoutTenantInput, Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput>
+}
+
+export type CustomerFeatureOverrideCreateManyTenantInputEnvelope = {
+  data: Prisma.CustomerFeatureOverrideCreateManyTenantInput | Prisma.CustomerFeatureOverrideCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type CustomerFeatureOverrideUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.CustomerFeatureOverrideWhereUniqueInput
+  update: Prisma.XOR<Prisma.CustomerFeatureOverrideUpdateWithoutTenantInput, Prisma.CustomerFeatureOverrideUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.CustomerFeatureOverrideCreateWithoutTenantInput, Prisma.CustomerFeatureOverrideUncheckedCreateWithoutTenantInput>
+}
+
+export type CustomerFeatureOverrideUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.CustomerFeatureOverrideWhereUniqueInput
+  data: Prisma.XOR<Prisma.CustomerFeatureOverrideUpdateWithoutTenantInput, Prisma.CustomerFeatureOverrideUncheckedUpdateWithoutTenantInput>
+}
+
+export type CustomerFeatureOverrideUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.CustomerFeatureOverrideScalarWhereInput
+  data: Prisma.XOR<Prisma.CustomerFeatureOverrideUpdateManyMutationInput, Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type CustomerFeatureOverrideScalarWhereInput = {
+  AND?: Prisma.CustomerFeatureOverrideScalarWhereInput | Prisma.CustomerFeatureOverrideScalarWhereInput[]
+  OR?: Prisma.CustomerFeatureOverrideScalarWhereInput[]
+  NOT?: Prisma.CustomerFeatureOverrideScalarWhereInput | Prisma.CustomerFeatureOverrideScalarWhereInput[]
+  id?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
+  organizationId?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
+  featureKey?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
+  value?: Prisma.JsonFilter<"CustomerFeatureOverride">
+  reason?: Prisma.StringNullableFilter<"CustomerFeatureOverride"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"CustomerFeatureOverride"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"CustomerFeatureOverride"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"CustomerFeatureOverride"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"CustomerFeatureOverride"> | Date | string
+}
+
+export type CustomerFeatureOverrideCreateManyTenantInput = {
+  id?: string
+  featureKey: string
+  value: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CustomerFeatureOverrideUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  featureKey?: Prisma.StringFieldUpdateOperationsInput | string
+  value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CustomerFeatureOverrideUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  featureKey?: Prisma.StringFieldUpdateOperationsInput | string
+  value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  featureKey?: Prisma.StringFieldUpdateOperationsInput | string
+  value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type CustomerFeatureOverrideSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -405,6 +566,7 @@ export type CustomerFeatureOverrideSelect<ExtArgs extends runtime.Types.Extensio
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerFeatureOverride"]>
 
 export type CustomerFeatureOverrideSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -417,6 +579,7 @@ export type CustomerFeatureOverrideSelectCreateManyAndReturn<ExtArgs extends run
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerFeatureOverride"]>
 
 export type CustomerFeatureOverrideSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -429,6 +592,7 @@ export type CustomerFeatureOverrideSelectUpdateManyAndReturn<ExtArgs extends run
   expiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerFeatureOverride"]>
 
 export type CustomerFeatureOverrideSelectScalar = {
@@ -444,10 +608,21 @@ export type CustomerFeatureOverrideSelectScalar = {
 }
 
 export type CustomerFeatureOverrideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "featureKey" | "value" | "reason" | "approvedBy" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["customerFeatureOverride"]>
+export type CustomerFeatureOverrideInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
+export type CustomerFeatureOverrideIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
+export type CustomerFeatureOverrideIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
 
 export type $CustomerFeatureOverridePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CustomerFeatureOverride"
-  objects: {}
+  objects: {
+    tenant: Prisma.$TenantPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     organizationId: string
@@ -852,6 +1027,7 @@ readonly fields: CustomerFeatureOverrideFieldRefs;
  */
 export interface Prisma__CustomerFeatureOverrideClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -907,6 +1083,10 @@ export type CustomerFeatureOverrideFindUniqueArgs<ExtArgs extends runtime.Types.
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
+  /**
    * Filter, which CustomerFeatureOverride to fetch.
    */
   where: Prisma.CustomerFeatureOverrideWhereUniqueInput
@@ -925,6 +1105,10 @@ export type CustomerFeatureOverrideFindUniqueOrThrowArgs<ExtArgs extends runtime
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
+  /**
    * Filter, which CustomerFeatureOverride to fetch.
    */
   where: Prisma.CustomerFeatureOverrideWhereUniqueInput
@@ -942,6 +1126,10 @@ export type CustomerFeatureOverrideFindFirstArgs<ExtArgs extends runtime.Types.E
    * Omit specific fields from the CustomerFeatureOverride
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
   /**
    * Filter, which CustomerFeatureOverride to fetch.
    */
@@ -991,6 +1179,10 @@ export type CustomerFeatureOverrideFindFirstOrThrowArgs<ExtArgs extends runtime.
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
+  /**
    * Filter, which CustomerFeatureOverride to fetch.
    */
   where?: Prisma.CustomerFeatureOverrideWhereInput
@@ -1039,6 +1231,10 @@ export type CustomerFeatureOverrideFindManyArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
+  /**
    * Filter, which CustomerFeatureOverrides to fetch.
    */
   where?: Prisma.CustomerFeatureOverrideWhereInput
@@ -1082,6 +1278,10 @@ export type CustomerFeatureOverrideCreateArgs<ExtArgs extends runtime.Types.Exte
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
+  /**
    * The data needed to create a CustomerFeatureOverride.
    */
   data: Prisma.XOR<Prisma.CustomerFeatureOverrideCreateInput, Prisma.CustomerFeatureOverrideUncheckedCreateInput>
@@ -1115,6 +1315,10 @@ export type CustomerFeatureOverrideCreateManyAndReturnArgs<ExtArgs extends runti
    */
   data: Prisma.CustomerFeatureOverrideCreateManyInput | Prisma.CustomerFeatureOverrideCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1129,6 +1333,10 @@ export type CustomerFeatureOverrideUpdateArgs<ExtArgs extends runtime.Types.Exte
    * Omit specific fields from the CustomerFeatureOverride
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
   /**
    * The data needed to update a CustomerFeatureOverride.
    */
@@ -1181,6 +1389,10 @@ export type CustomerFeatureOverrideUpdateManyAndReturnArgs<ExtArgs extends runti
    * Limit how many CustomerFeatureOverrides to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1195,6 +1407,10 @@ export type CustomerFeatureOverrideUpsertArgs<ExtArgs extends runtime.Types.Exte
    * Omit specific fields from the CustomerFeatureOverride
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
   /**
    * The filter to search for the CustomerFeatureOverride to update in case it exists.
    */
@@ -1221,6 +1437,10 @@ export type CustomerFeatureOverrideDeleteArgs<ExtArgs extends runtime.Types.Exte
    * Omit specific fields from the CustomerFeatureOverride
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
   /**
    * Filter which CustomerFeatureOverride to delete.
    */
@@ -1253,4 +1473,8 @@ export type CustomerFeatureOverrideDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Omit specific fields from the CustomerFeatureOverride
    */
   omit?: Prisma.CustomerFeatureOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerFeatureOverrideInclude<ExtArgs> | null
 }

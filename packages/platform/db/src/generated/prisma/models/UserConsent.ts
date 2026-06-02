@@ -258,6 +258,7 @@ export type UserConsentWhereInput = {
   metadata?: Prisma.JsonFilter<"UserConsent">
   consentedAt?: Prisma.DateTimeFilter<"UserConsent"> | Date | string
   withdrawnAt?: Prisma.DateTimeNullableFilter<"UserConsent"> | Date | string | null
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
   document?: Prisma.XOR<Prisma.LegalDocumentScalarRelationFilter, Prisma.LegalDocumentWhereInput>
 }
 
@@ -277,6 +278,7 @@ export type UserConsentOrderByWithRelationInput = {
   metadata?: Prisma.SortOrder
   consentedAt?: Prisma.SortOrder
   withdrawnAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenant?: Prisma.TenantOrderByWithRelationInput
   document?: Prisma.LegalDocumentOrderByWithRelationInput
 }
 
@@ -299,6 +301,7 @@ export type UserConsentWhereUniqueInput = Prisma.AtLeast<{
   metadata?: Prisma.JsonFilter<"UserConsent">
   consentedAt?: Prisma.DateTimeFilter<"UserConsent"> | Date | string
   withdrawnAt?: Prisma.DateTimeNullableFilter<"UserConsent"> | Date | string | null
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
   document?: Prisma.XOR<Prisma.LegalDocumentScalarRelationFilter, Prisma.LegalDocumentWhereInput>
 }, "id">
 
@@ -347,7 +350,6 @@ export type UserConsentScalarWhereWithAggregatesInput = {
 export type UserConsentCreateInput = {
   id?: string
   userId?: string | null
-  organizationId?: string | null
   visitorId?: string | null
   documentSlug: string
   documentVersion: string
@@ -359,6 +361,7 @@ export type UserConsentCreateInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   consentedAt?: Date | string
   withdrawnAt?: Date | string | null
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserConsentsInput
   document: Prisma.LegalDocumentCreateNestedOneWithoutConsentsInput
 }
 
@@ -383,7 +386,6 @@ export type UserConsentUncheckedCreateInput = {
 export type UserConsentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
   documentVersion?: Prisma.StringFieldUpdateOperationsInput | string
@@ -395,6 +397,7 @@ export type UserConsentUpdateInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   consentedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawnAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneWithoutUserConsentsNestedInput
   document?: Prisma.LegalDocumentUpdateOneRequiredWithoutConsentsNestedInput
 }
 
@@ -437,7 +440,6 @@ export type UserConsentCreateManyInput = {
 export type UserConsentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
   documentVersion?: Prisma.StringFieldUpdateOperationsInput | string
@@ -531,6 +533,48 @@ export type UserConsentMinOrderByAggregateInput = {
   withdrawnAt?: Prisma.SortOrder
 }
 
+export type UserConsentCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.UserConsentCreateWithoutTenantInput, Prisma.UserConsentUncheckedCreateWithoutTenantInput> | Prisma.UserConsentCreateWithoutTenantInput[] | Prisma.UserConsentUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UserConsentCreateOrConnectWithoutTenantInput | Prisma.UserConsentCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.UserConsentCreateManyTenantInputEnvelope
+  connect?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+}
+
+export type UserConsentUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.UserConsentCreateWithoutTenantInput, Prisma.UserConsentUncheckedCreateWithoutTenantInput> | Prisma.UserConsentCreateWithoutTenantInput[] | Prisma.UserConsentUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UserConsentCreateOrConnectWithoutTenantInput | Prisma.UserConsentCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.UserConsentCreateManyTenantInputEnvelope
+  connect?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+}
+
+export type UserConsentUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.UserConsentCreateWithoutTenantInput, Prisma.UserConsentUncheckedCreateWithoutTenantInput> | Prisma.UserConsentCreateWithoutTenantInput[] | Prisma.UserConsentUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UserConsentCreateOrConnectWithoutTenantInput | Prisma.UserConsentCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.UserConsentUpsertWithWhereUniqueWithoutTenantInput | Prisma.UserConsentUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.UserConsentCreateManyTenantInputEnvelope
+  set?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+  disconnect?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+  delete?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+  connect?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+  update?: Prisma.UserConsentUpdateWithWhereUniqueWithoutTenantInput | Prisma.UserConsentUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.UserConsentUpdateManyWithWhereWithoutTenantInput | Prisma.UserConsentUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.UserConsentScalarWhereInput | Prisma.UserConsentScalarWhereInput[]
+}
+
+export type UserConsentUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.UserConsentCreateWithoutTenantInput, Prisma.UserConsentUncheckedCreateWithoutTenantInput> | Prisma.UserConsentCreateWithoutTenantInput[] | Prisma.UserConsentUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.UserConsentCreateOrConnectWithoutTenantInput | Prisma.UserConsentCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.UserConsentUpsertWithWhereUniqueWithoutTenantInput | Prisma.UserConsentUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.UserConsentCreateManyTenantInputEnvelope
+  set?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+  disconnect?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+  delete?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+  connect?: Prisma.UserConsentWhereUniqueInput | Prisma.UserConsentWhereUniqueInput[]
+  update?: Prisma.UserConsentUpdateWithWhereUniqueWithoutTenantInput | Prisma.UserConsentUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.UserConsentUpdateManyWithWhereWithoutTenantInput | Prisma.UserConsentUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.UserConsentScalarWhereInput | Prisma.UserConsentScalarWhereInput[]
+}
+
 export type UserConsentCreateNestedManyWithoutDocumentInput = {
   create?: Prisma.XOR<Prisma.UserConsentCreateWithoutDocumentInput, Prisma.UserConsentUncheckedCreateWithoutDocumentInput> | Prisma.UserConsentCreateWithoutDocumentInput[] | Prisma.UserConsentUncheckedCreateWithoutDocumentInput[]
   connectOrCreate?: Prisma.UserConsentCreateOrConnectWithoutDocumentInput | Prisma.UserConsentCreateOrConnectWithoutDocumentInput[]
@@ -577,10 +621,9 @@ export type EnumConsentTypeFieldUpdateOperationsInput = {
   set?: $Enums.ConsentType
 }
 
-export type UserConsentCreateWithoutDocumentInput = {
+export type UserConsentCreateWithoutTenantInput = {
   id?: string
   userId?: string | null
-  organizationId?: string | null
   visitorId?: string | null
   documentSlug: string
   documentVersion: string
@@ -592,6 +635,88 @@ export type UserConsentCreateWithoutDocumentInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   consentedAt?: Date | string
   withdrawnAt?: Date | string | null
+  document: Prisma.LegalDocumentCreateNestedOneWithoutConsentsInput
+}
+
+export type UserConsentUncheckedCreateWithoutTenantInput = {
+  id?: string
+  userId?: string | null
+  visitorId?: string | null
+  documentId: string
+  documentSlug: string
+  documentVersion: string
+  consentType?: $Enums.ConsentType
+  consentGiven?: boolean
+  ipAddress?: string | null
+  userAgent?: string | null
+  consentContext?: string | null
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  consentedAt?: Date | string
+  withdrawnAt?: Date | string | null
+}
+
+export type UserConsentCreateOrConnectWithoutTenantInput = {
+  where: Prisma.UserConsentWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserConsentCreateWithoutTenantInput, Prisma.UserConsentUncheckedCreateWithoutTenantInput>
+}
+
+export type UserConsentCreateManyTenantInputEnvelope = {
+  data: Prisma.UserConsentCreateManyTenantInput | Prisma.UserConsentCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserConsentUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.UserConsentWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserConsentUpdateWithoutTenantInput, Prisma.UserConsentUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.UserConsentCreateWithoutTenantInput, Prisma.UserConsentUncheckedCreateWithoutTenantInput>
+}
+
+export type UserConsentUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.UserConsentWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserConsentUpdateWithoutTenantInput, Prisma.UserConsentUncheckedUpdateWithoutTenantInput>
+}
+
+export type UserConsentUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.UserConsentScalarWhereInput
+  data: Prisma.XOR<Prisma.UserConsentUpdateManyMutationInput, Prisma.UserConsentUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type UserConsentScalarWhereInput = {
+  AND?: Prisma.UserConsentScalarWhereInput | Prisma.UserConsentScalarWhereInput[]
+  OR?: Prisma.UserConsentScalarWhereInput[]
+  NOT?: Prisma.UserConsentScalarWhereInput | Prisma.UserConsentScalarWhereInput[]
+  id?: Prisma.StringFilter<"UserConsent"> | string
+  userId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  organizationId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  visitorId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  documentId?: Prisma.StringFilter<"UserConsent"> | string
+  documentSlug?: Prisma.StringFilter<"UserConsent"> | string
+  documentVersion?: Prisma.StringFilter<"UserConsent"> | string
+  consentType?: Prisma.EnumConsentTypeFilter<"UserConsent"> | $Enums.ConsentType
+  consentGiven?: Prisma.BoolFilter<"UserConsent"> | boolean
+  ipAddress?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  userAgent?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  consentContext?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  metadata?: Prisma.JsonFilter<"UserConsent">
+  consentedAt?: Prisma.DateTimeFilter<"UserConsent"> | Date | string
+  withdrawnAt?: Prisma.DateTimeNullableFilter<"UserConsent"> | Date | string | null
+}
+
+export type UserConsentCreateWithoutDocumentInput = {
+  id?: string
+  userId?: string | null
+  visitorId?: string | null
+  documentSlug: string
+  documentVersion: string
+  consentType?: $Enums.ConsentType
+  consentGiven?: boolean
+  ipAddress?: string | null
+  userAgent?: string | null
+  consentContext?: string | null
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  consentedAt?: Date | string
+  withdrawnAt?: Date | string | null
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserConsentsInput
 }
 
 export type UserConsentUncheckedCreateWithoutDocumentInput = {
@@ -637,25 +762,72 @@ export type UserConsentUpdateManyWithWhereWithoutDocumentInput = {
   data: Prisma.XOR<Prisma.UserConsentUpdateManyMutationInput, Prisma.UserConsentUncheckedUpdateManyWithoutDocumentInput>
 }
 
-export type UserConsentScalarWhereInput = {
-  AND?: Prisma.UserConsentScalarWhereInput | Prisma.UserConsentScalarWhereInput[]
-  OR?: Prisma.UserConsentScalarWhereInput[]
-  NOT?: Prisma.UserConsentScalarWhereInput | Prisma.UserConsentScalarWhereInput[]
-  id?: Prisma.StringFilter<"UserConsent"> | string
-  userId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  visitorId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  documentId?: Prisma.StringFilter<"UserConsent"> | string
-  documentSlug?: Prisma.StringFilter<"UserConsent"> | string
-  documentVersion?: Prisma.StringFilter<"UserConsent"> | string
-  consentType?: Prisma.EnumConsentTypeFilter<"UserConsent"> | $Enums.ConsentType
-  consentGiven?: Prisma.BoolFilter<"UserConsent"> | boolean
-  ipAddress?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  userAgent?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  consentContext?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  metadata?: Prisma.JsonFilter<"UserConsent">
-  consentedAt?: Prisma.DateTimeFilter<"UserConsent"> | Date | string
-  withdrawnAt?: Prisma.DateTimeNullableFilter<"UserConsent"> | Date | string | null
+export type UserConsentCreateManyTenantInput = {
+  id?: string
+  userId?: string | null
+  visitorId?: string | null
+  documentId: string
+  documentSlug: string
+  documentVersion: string
+  consentType?: $Enums.ConsentType
+  consentGiven?: boolean
+  ipAddress?: string | null
+  userAgent?: string | null
+  consentContext?: string | null
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  consentedAt?: Date | string
+  withdrawnAt?: Date | string | null
+}
+
+export type UserConsentUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
+  documentVersion?: Prisma.StringFieldUpdateOperationsInput | string
+  consentType?: Prisma.EnumConsentTypeFieldUpdateOperationsInput | $Enums.ConsentType
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consentContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  consentedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawnAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  document?: Prisma.LegalDocumentUpdateOneRequiredWithoutConsentsNestedInput
+}
+
+export type UserConsentUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
+  documentVersion?: Prisma.StringFieldUpdateOperationsInput | string
+  consentType?: Prisma.EnumConsentTypeFieldUpdateOperationsInput | $Enums.ConsentType
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consentContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  consentedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawnAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type UserConsentUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentId?: Prisma.StringFieldUpdateOperationsInput | string
+  documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
+  documentVersion?: Prisma.StringFieldUpdateOperationsInput | string
+  consentType?: Prisma.EnumConsentTypeFieldUpdateOperationsInput | $Enums.ConsentType
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userAgent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  consentContext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  consentedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  withdrawnAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserConsentCreateManyDocumentInput = {
@@ -678,7 +850,6 @@ export type UserConsentCreateManyDocumentInput = {
 export type UserConsentUpdateWithoutDocumentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
   documentVersion?: Prisma.StringFieldUpdateOperationsInput | string
@@ -690,6 +861,7 @@ export type UserConsentUpdateWithoutDocumentInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   consentedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   withdrawnAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  tenant?: Prisma.TenantUpdateOneWithoutUserConsentsNestedInput
 }
 
 export type UserConsentUncheckedUpdateWithoutDocumentInput = {
@@ -744,6 +916,7 @@ export type UserConsentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   metadata?: boolean
   consentedAt?: boolean
   withdrawnAt?: boolean
+  tenant?: boolean | Prisma.UserConsent$tenantArgs<ExtArgs>
   document?: boolean | Prisma.LegalDocumentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userConsent"]>
 
@@ -763,6 +936,7 @@ export type UserConsentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   metadata?: boolean
   consentedAt?: boolean
   withdrawnAt?: boolean
+  tenant?: boolean | Prisma.UserConsent$tenantArgs<ExtArgs>
   document?: boolean | Prisma.LegalDocumentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userConsent"]>
 
@@ -782,6 +956,7 @@ export type UserConsentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   metadata?: boolean
   consentedAt?: boolean
   withdrawnAt?: boolean
+  tenant?: boolean | Prisma.UserConsent$tenantArgs<ExtArgs>
   document?: boolean | Prisma.LegalDocumentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userConsent"]>
 
@@ -805,18 +980,22 @@ export type UserConsentSelectScalar = {
 
 export type UserConsentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "organizationId" | "visitorId" | "documentId" | "documentSlug" | "documentVersion" | "consentType" | "consentGiven" | "ipAddress" | "userAgent" | "consentContext" | "metadata" | "consentedAt" | "withdrawnAt", ExtArgs["result"]["userConsent"]>
 export type UserConsentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.UserConsent$tenantArgs<ExtArgs>
   document?: boolean | Prisma.LegalDocumentDefaultArgs<ExtArgs>
 }
 export type UserConsentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.UserConsent$tenantArgs<ExtArgs>
   document?: boolean | Prisma.LegalDocumentDefaultArgs<ExtArgs>
 }
 export type UserConsentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.UserConsent$tenantArgs<ExtArgs>
   document?: boolean | Prisma.LegalDocumentDefaultArgs<ExtArgs>
 }
 
 export type $UserConsentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserConsent"
   objects: {
+    tenant: Prisma.$TenantPayload<ExtArgs> | null
     document: Prisma.$LegalDocumentPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1229,6 +1408,7 @@ readonly fields: UserConsentFieldRefs;
  */
 export interface Prisma__UserConsentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  tenant<T extends Prisma.UserConsent$tenantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserConsent$tenantArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   document<T extends Prisma.LegalDocumentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LegalDocumentDefaultArgs<ExtArgs>>): Prisma.Prisma__LegalDocumentClient<runtime.Types.Result.GetResult<Prisma.$LegalDocumentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1667,6 +1847,25 @@ export type UserConsentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many UserConsents to delete.
    */
   limit?: number
+}
+
+/**
+ * UserConsent.tenant
+ */
+export type UserConsent$tenantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tenant
+   */
+  select?: Prisma.TenantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tenant
+   */
+  omit?: Prisma.TenantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TenantInclude<ExtArgs> | null
+  where?: Prisma.TenantWhereInput
 }
 
 /**

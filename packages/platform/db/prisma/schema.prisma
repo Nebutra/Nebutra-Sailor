@@ -7,7 +7,7 @@ generator client {
 datasource db {
   provider   = "postgresql"
   extensions = [vector, uuid_ossp(map: "uuid-ossp")]
-  schemas    = ["public", "auth"]
+  schemas    = ["public", "better_auth"]
 }
 
 // ============================================
@@ -110,16 +110,64 @@ model Organization {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   members      OrganizationMember[]
-  contents     Content[]
-  products     Product[]
-  orders       Order[]
-  integrations Integration[]
-  apiKeys      APIKey[]
-  oauthClients OAuthClient[]
-  chatSessions ChatSession[]
-  threads      Thread[]
+  tenant       Tenant?
 
   @@map("organizations")
+  @@schema("public")
+}
+
+enum TenantKind {
+  ORGANIZATION
+  INDIVIDUAL
+
+  @@schema("public")
+}
+
+/// Tenant supertype — the isolation boundary. An Organization or an individual
+/// User is each represented by exactly one Tenant. For organization tenants,
+/// `id` is set equal to the Organization id (id-reuse) at provisioning time, so
+/// existing owning-id values stay valid as tenant ids. RLS scopes data rows via
+/// `app.current_tenant_id` = Tenant.id. Owned-data back-relations are added as
+/// the data models retarget their FK from Organization to Tenant.
+model Tenant {
+  id             String     @id @default(cuid())
+  kind           TenantKind
+  organizationId String?    @unique @map("organization_id")
+  userId         String?    @unique @map("user_id")
+  createdAt      DateTime   @default(now()) @map("created_at")
+
+  organization Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Data back-relations (retargeted from Organization in Phase 2)
+  apiKeys                 APIKey[]
+  atelierCanvases         AtelierCanvas[]
+  auditLogs               AuditLog[]
+  chatSessions            ChatSession[]
+  codeRedemptions         CodeRedemption[]
+  connectors              Connector[]
+  contents                Content[]
+  creditBalances          CreditBalance[]
+  customerFeatureOverrides CustomerFeatureOverride[]
+  customerPlanVersions    CustomerPlanVersion[]
+  customerUsageLimits     CustomerUsageLimit[]
+  feedbackReports         FeedbackReport[]
+  integrations            Integration[]
+  invoices                Invoice[]
+  oauthClients            OAuthClient[]
+  orders                  Order[]
+  payments                Payment[]
+  paymentMethods          PaymentMethod[]
+  products                Product[]
+  requestLogs             RequestLog[]
+  stripeCustomers         StripeCustomer[]
+  subscriptions           Subscription[]
+  threads                 Thread[]
+  usageLedgerEntries      UsageLedgerEntry[]
+  userConsents            UserConsent[]
+  userSkills              UserSkill[]
+
+  @@map("tenants")
   @@schema("public")
 }
 
@@ -131,7 +179,7 @@ model APIKey {
   name           String    @db.VarChar(64)
   keyHash        String    @unique @map("key_hash")
   keyPrefix      String    @map("key_prefix") @db.VarChar(16)
-  organizationId String    @map("organization_id")
+  organizationId String    @map("tenant_id")
   createdById    String?   @map("created_by_id")
   lastUsedAt     DateTime? @map("last_used_at")
   revokedAt      DateTime? @map("revoked_at")
@@ -141,7 +189,7 @@ model APIKey {
   rateLimitRps   Int       @default(10) @map("rate_limit_rps")
   expiresAt      DateTime? @map("expires_at")
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tenant Tenant @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([keyHash])
@@ -164,6 +212,7 @@ model User {
   orders              Order[]
   oauthAuthorizations OAuthAuthorization[]
   threads             Thread[]
+  tenant              Tenant?
 
   @@map("users")
   @@schema("public")
@@ -253,7 +302,7 @@ model NotificationPreference {
 /// @conditional(template=blog|portfolio)
 model Content {
   id             String        @id @default(cuid())
-  organizationId String        @map("organization_id")
+  organizationId String        @map("tenant_id")
   authorId       String        @map("author_id")
   title          String
   slug           String?
@@ -263,7 +312,7 @@ model Content {
   createdAt      DateTime      @default(now()) @map("created_at")
   updatedAt      DateTime      @updatedAt @map("updated_at")
 
-  organization Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tenant       Tenant               @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   author       User                 @relation(fields: [authorId], references: [id])
   embeddings   ContentEmbedding[]
   translations ContentTranslation[]
@@ -321,7 +370,7 @@ model ContentEmbedding {
 /// @conditional(template=ecommerce)
 model Product {
   id             String   @id @default(cuid())
-  organizationId String   @map("organization_id")
+  organizationId String   @map("tenant_id")
   externalId     String?  @map("external_id")
   name           String
   description    String?  @db.Text
@@ -334,8 +383,8 @@ model Product {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  orderItems   OrderItem[]
+  tenant     Tenant    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
 
   @@unique([organizationId, externalId])
   @@index([organizationId])
@@ -346,7 +395,7 @@ model Product {
 /// @conditional(template=ecommerce)
 model Order {
   id             String      @id @default(cuid())
-  organizationId String      @map("organization_id")
+  organizationId String      @map("tenant_id")
   userId         String      @map("user_id")
   externalId     String?     @map("external_id")
   status         OrderStatus @default(PENDING)
@@ -357,9 +406,9 @@ model Order {
   createdAt      DateTime    @default(now()) @map("created_at")
   updatedAt      DateTime    @updatedAt @map("updated_at")
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user         User         @relation(fields: [userId], references: [id])
-  items        OrderItem[]
+  tenant Tenant    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user   User      @relation(fields: [userId], references: [id])
+  items  OrderItem[]
 
   @@index([organizationId])
   @@index([userId])
@@ -388,7 +437,7 @@ model OrderItem {
 /// @conditional(template=ecommerce)
 model Integration {
   id             String          @id @default(cuid())
-  organizationId String          @map("organization_id")
+  organizationId String          @map("tenant_id")
   type           IntegrationType
   name           String
   credentials    Json            @default("{}") // Encrypt in app layer
@@ -398,7 +447,7 @@ model Integration {
   createdAt      DateTime        @default(now()) @map("created_at")
   updatedAt      DateTime        @updatedAt @map("updated_at")
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tenant Tenant @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, type, name])
   @@map("integrations")
@@ -450,7 +499,7 @@ model RequestLog {
   id               String   @id @default(cuid())
   requestId        String   @unique @map("request_id")
   apiKeyId         String?  @map("api_key_id")
-  organizationId   String   @map("organization_id")
+  organizationId   String   @map("tenant_id")
   model            String   @db.VarChar(128)
   promptTokens     Int      @default(0) @map("prompt_tokens")
   completionTokens Int      @default(0) @map("completion_tokens")
@@ -460,6 +509,8 @@ model RequestLog {
   status           String   @db.VarChar(16)
   errorMessage     String?  @map("error_message")
   createdAt        DateTime @default(now()) @map("created_at")
+
+  tenant Tenant @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([organizationId, createdAt])
   @@index([apiKeyId])
@@ -692,14 +743,15 @@ model PlanUsageLimit {
 // Customer-specific plan version lock (grandfathering)
 model CustomerPlanVersion {
   id             String    @id @default(cuid())
-  organizationId String    @map("organization_id")
+  organizationId String    @map("tenant_id")
   planId         String    @map("plan_id")
   reason         String? // "Legacy customer", "Enterprise deal", "Beta tester"
   approvedBy     String?   @map("approved_by") // admin user id
   expiresAt      DateTime? @map("expires_at")
   createdAt      DateTime  @default(now()) @map("created_at")
 
-  plan PricingPlan @relation(fields: [planId], references: [id])
+  plan   PricingPlan @relation(fields: [planId], references: [id])
+  tenant Tenant      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId])
   @@map("customer_plan_versions")
@@ -709,7 +761,7 @@ model CustomerPlanVersion {
 // Customer-specific feature overrides
 model CustomerFeatureOverride {
   id             String    @id @default(cuid())
-  organizationId String    @map("organization_id")
+  organizationId String    @map("tenant_id")
   featureKey     String    @map("feature_key") @db.VarChar(100)
   value          Json // override value
   reason         String? // "Sales deal", "Support escalation"
@@ -717,6 +769,8 @@ model CustomerFeatureOverride {
   expiresAt      DateTime? @map("expires_at")
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  tenant Tenant @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, featureKey])
   @@index([featureKey])
@@ -727,7 +781,7 @@ model CustomerFeatureOverride {
 // Customer-specific usage limit overrides
 model CustomerUsageLimit {
   id             String    @id @default(cuid())
-  organizationId String    @map("organization_id")
+  organizationId String    @map("tenant_id")
   limitId        String    @map("limit_id")
   limitValue     BigInt    @map("limit_value") // -1 = unlimited
   overageRate    Decimal?  @map("overage_rate") @db.Decimal(10, 8)
@@ -738,6 +792,7 @@ model CustomerUsageLimit {
   updatedAt      DateTime  @updatedAt @map("updated_at")
 
   limitDef UsageLimitDefinition @relation(fields: [limitId], references: [id])
+  tenant   Tenant               @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, limitId])
   @@map("customer_usage_limits")
@@ -748,7 +803,7 @@ model CustomerUsageLimit {
 model Subscription {
   id                 String             @id @default(cuid())
   stripeId           String?            @unique @map("stripe_id")
-  organizationId     String             @map("organization_id")
+  organizationId     String             @map("tenant_id")
   pricingPlanId      String             @map("pricing_plan_id")
   status             SubscriptionStatus @default(ACTIVE)
   currentPeriodStart DateTime           @map("current_period_start")
@@ -762,6 +817,7 @@ model Subscription {
   updatedAt          DateTime           @updatedAt @map("updated_at")
 
   pricingPlan        PricingPlan        @relation(fields: [pricingPlanId], references: [id])
+  tenant             Tenant             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   invoices           Invoice[]
   usageLedgerEntries UsageLedgerEntry[]
 
@@ -777,7 +833,7 @@ model Subscription {
 model Invoice {
   id               String        @id @default(cuid())
   stripeId         String?       @unique @map("stripe_id")
-  organizationId   String        @map("organization_id")
+  organizationId   String        @map("tenant_id")
   subscriptionId   String?       @map("subscription_id")
   number           String        @unique
   status           InvoiceStatus @default(DRAFT)
@@ -796,6 +852,7 @@ model Invoice {
   createdAt        DateTime      @default(now()) @map("created_at")
   updatedAt        DateTime      @updatedAt @map("updated_at")
 
+  tenant       Tenant        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   subscription Subscription? @relation(fields: [subscriptionId], references: [id])
   items        InvoiceItem[]
   payments     Payment[]
@@ -836,7 +893,7 @@ model InvoiceItem {
 model Payment {
   id                String            @id @default(cuid())
   stripeId          String?           @unique @map("stripe_id")
-  organizationId    String            @map("organization_id")
+  organizationId    String            @map("tenant_id")
   invoiceId         String?           @map("invoice_id")
   amount            Decimal           @db.Decimal(10, 2)
   currency          String            @default("USD") @db.VarChar(3)
@@ -849,6 +906,7 @@ model Payment {
   metadata          Json              @default("{}")
   createdAt         DateTime          @default(now()) @map("created_at")
 
+  tenant        Tenant         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   invoice       Invoice?       @relation(fields: [invoiceId], references: [id])
   paymentMethod PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
 
@@ -865,7 +923,7 @@ model Payment {
 model PaymentMethod {
   id             String            @id @default(cuid())
   stripeId       String?           @unique @map("stripe_id")
-  organizationId String            @map("organization_id")
+  organizationId String            @map("tenant_id")
   type           PaymentMethodType
   isDefault      Boolean           @default(false) @map("is_default")
   lastFour       String?           @map("last_four") @db.VarChar(4)
@@ -877,6 +935,7 @@ model PaymentMethod {
   createdAt      DateTime          @default(now()) @map("created_at")
   updatedAt      DateTime          @updatedAt @map("updated_at")
 
+  tenant   Tenant    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   payments Payment[]
 
   @@index([organizationId])
@@ -889,7 +948,7 @@ model PaymentMethod {
 // Immutable usage ledger (idempotent append-only records)
 model UsageLedgerEntry {
   id             String            @id @default(cuid())
-  organizationId String            @map("organization_id")
+  organizationId String            @map("tenant_id")
   subscriptionId String?           @map("subscription_id")
   userId         String?           @map("user_id")
   idempotencyKey String            @map("idempotency_key") @db.VarChar(191)
@@ -907,6 +966,7 @@ model UsageLedgerEntry {
   ingestVersion  String            @default("v1") @map("ingest_version") @db.VarChar(16)
   metadata       Json              @default("{}")
 
+  tenant       Tenant        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   subscription Subscription? @relation(fields: [subscriptionId], references: [id])
 
   @@unique([organizationId, idempotencyKey])
@@ -923,11 +983,12 @@ model UsageLedgerEntry {
 /// @conditional(billing-mode=credits)
 model CreditBalance {
   id             String   @id @default(cuid())
-  organizationId String   @unique @map("organization_id")
+  organizationId String   @unique @map("tenant_id")
   balance        Decimal  @default(0) @db.Decimal(10, 4)
   currency       String   @default("USD") @db.VarChar(3)
   updatedAt      DateTime @updatedAt @map("updated_at")
 
+  tenant       Tenant              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   transactions CreditTransaction[]
 
   @@map("credit_balances")
@@ -961,7 +1022,7 @@ model CreditTransaction {
 // Stripe Customer Mapping
 model StripeCustomer {
   id             String   @id @default(cuid())
-  organizationId String   @unique @map("organization_id")
+  organizationId String   @unique @map("tenant_id")
   stripeId       String   @unique @map("stripe_id")
   email          String?
   name           String?
@@ -970,6 +1031,8 @@ model StripeCustomer {
   metadata       Json     @default("{}")
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
+
+  tenant Tenant @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@map("stripe_customers")
   @@schema("public")
@@ -1000,7 +1063,7 @@ model WebhookEvent {
 
 model AuditLog {
   id             String   @id @default(cuid())
-  organizationId String?  @map("organization_id")
+  organizationId String?  @map("tenant_id")
   userId         String?  @map("user_id")
   actorType      String?  @map("actor_type") @db.VarChar(20) // "user" | "system" | "api_key" | "admin"
   action         String   @db.VarChar(50)
@@ -1014,6 +1077,8 @@ model AuditLog {
   userAgent      String?  @map("user_agent")
   metadata       Json?    @default("{}")
   createdAt      DateTime @default(now()) @map("created_at")
+
+  tenant Tenant? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
 
   @@index([organizationId])
   @@index([userId])
@@ -1087,7 +1152,7 @@ model LegalDocument {
 model UserConsent {
   id              String      @id @default(cuid())
   userId          String?     @map("user_id") // Clerk user ID
-  organizationId  String?     @map("organization_id") // Clerk org ID
+  organizationId  String?     @map("tenant_id") // Clerk org ID / tenant ID
   visitorId       String?     @map("visitor_id") // Anonymous visitor fingerprint
   documentId      String      @map("document_id")
   documentSlug    String      @map("document_slug") @db.VarChar(100)
@@ -1101,6 +1166,7 @@ model UserConsent {
   consentedAt     DateTime    @default(now()) @map("consented_at")
   withdrawnAt     DateTime?   @map("withdrawn_at") // If consent was withdrawn
 
+  tenant   Tenant?       @relation(fields: [organizationId], references: [id], onDelete: SetNull)
   document LegalDocument @relation(fields: [documentId], references: [id])
 
   @@index([userId])
@@ -1209,13 +1275,13 @@ model OAuthClient {
   refreshTokenTtl Int @default(2592000) @map("refresh_token_ttl")
 
   // Ownership
-  organizationId String  @map("organization_id")
+  organizationId String  @map("tenant_id")
   createdById    String? @map("created_by_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  organization   Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tenant         Tenant               @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   authorizations OAuthAuthorization[]
   accessTokens   OAuthAccessToken[]
 
@@ -1306,7 +1372,7 @@ model AuthUser {
 // command mode the session was opened in (chat | data | workflow | search).
 model ChatSession {
   id             String   @id @default(cuid())
-  organizationId String   @map("organization_id")
+  organizationId String   @map("tenant_id")
   userId         String   @map("user_id")
   title          String   @default("New chat") @db.VarChar(200)
   mode           String   @default("chat") @db.VarChar(20)
@@ -1316,8 +1382,8 @@ model ChatSession {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user         AuthUser     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant Tenant   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user   AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([organizationId, lastMessageAt(sort: Desc)])
   @@index([userId, lastMessageAt(sort: Desc)])
@@ -1332,7 +1398,7 @@ model ChatSession {
 // command-mode chat session.
 model Thread {
   id             String   @id @default(cuid())
-  organizationId String   @map("organization_id")
+  organizationId String   @map("tenant_id")
   userId         String   @map("user_id")
   title          String   @default("Untitled") @db.VarChar(200)
   summary        String?  @db.Text
@@ -1340,8 +1406,8 @@ model Thread {
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenant Tenant @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([organizationId, lastActivityAt(sort: Desc)])
   @@index([userId, lastActivityAt(sort: Desc)])
@@ -1401,13 +1467,14 @@ model Skill {
 model UserSkill {
   id             String   @id @default(cuid())
   userId         String   @map("user_id")
-  organizationId String?  @map("organization_id")
+  organizationId String?  @map("tenant_id")
   skillId        String   @map("skill_id")
   enabled        Boolean  @default(true)
   config         Json     @default("{}")
   installedAt    DateTime @default(now()) @map("installed_at")
 
-  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  skill  Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  tenant Tenant? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
 
   @@unique([userId, skillId])
   @@index([userId, enabled])
@@ -1422,7 +1489,7 @@ model UserSkill {
 model Connector {
   id             String    @id @default(cuid())
   userId         String    @map("user_id")
-  organizationId String?   @map("organization_id")
+  organizationId String?   @map("tenant_id")
   type           String    @db.VarChar(40)
   name           String    @db.VarChar(120)
   iconUrl        String?   @map("icon_url")
@@ -1431,6 +1498,8 @@ model Connector {
   lastUsedAt     DateTime? @map("last_used_at")
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  tenant Tenant? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
 
   @@index([userId, isActive, lastUsedAt(sort: Desc)])
   @@map("connectors")
@@ -1545,11 +1614,12 @@ model CodeRedemption {
   id             String   @id @default(cuid())
   codeId         String   @map("code_id")
   userId         String   @map("user_id")
-  organizationId String?  @map("organization_id")
+  organizationId String?  @map("tenant_id")
   redeemedAt     DateTime @default(now()) @map("redeemed_at")
   ipAddress      String?  @map("ip_address") @db.VarChar(45)
 
-  code RedemptionCode @relation(fields: [codeId], references: [id], onDelete: Cascade)
+  code   RedemptionCode @relation(fields: [codeId], references: [id], onDelete: Cascade)
+  tenant Tenant?        @relation(fields: [organizationId], references: [id], onDelete: SetNull)
 
   @@unique([codeId, userId])
   @@index([userId, redeemedAt(sort: Desc)])
@@ -1564,7 +1634,7 @@ model CodeRedemption {
 // `ORDER BY resolved ASC, created_at DESC`.
 model FeedbackReport {
   id             String    @id @default(cuid())
-  organizationId String?   @map("organization_id")
+  organizationId String?   @map("tenant_id")
   userId         String?   @map("user_id")
   area           String    @db.VarChar(40)
   mode           String?   @db.VarChar(20)
@@ -1576,6 +1646,8 @@ model FeedbackReport {
   resolved       Boolean   @default(false)
   resolvedAt     DateTime? @map("resolved_at")
   createdAt      DateTime  @default(now()) @map("created_at")
+
+  tenant Tenant? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
 
   @@index([organizationId, createdAt(sort: Desc)])
   @@index([resolved, createdAt(sort: Desc)])
@@ -1842,7 +1914,7 @@ model BAOrganization {
   invitations BAInvitation[]
 
   @@map("organization")
-  @@schema("auth")
+  @@schema("better_auth")
 }
 
 /// @conditional(auth=betterauth)
@@ -1859,7 +1931,7 @@ model BAMember {
   @@unique([userId, organizationId])
   @@index([organizationId])
   @@map("member")
-  @@schema("auth")
+  @@schema("better_auth")
 }
 
 /// @conditional(auth=betterauth)
@@ -1882,7 +1954,7 @@ model BAInvitation {
 
   @@index([email])
   @@map("invitation")
-  @@schema("auth")
+  @@schema("better_auth")
 }
 
 /// @conditional(auth=betterauth)
@@ -1902,7 +1974,7 @@ model BAPasskey {
 
   @@index([userId])
   @@map("passkey")
-  @@schema("auth")
+  @@schema("better_auth")
 }
 
 // ============================================
@@ -1916,12 +1988,14 @@ model BAPasskey {
 model AtelierCanvas {
   pk             String   @id @default(cuid())
   id             String
-  organizationId String   @map("organization_id")
+  organizationId String   @map("tenant_id")
   name           String
   scene          Json     @default("{\"elements\":[],\"files\":[]}")
   thumbnail      String?
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
+
+  tenant Tenant @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, id])
   @@index([organizationId, updatedAt])

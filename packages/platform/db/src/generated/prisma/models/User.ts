@@ -203,6 +203,7 @@ export type UserWhereInput = {
   orders?: Prisma.OrderListRelationFilter
   oauthAuthorizations?: Prisma.OAuthAuthorizationListRelationFilter
   threads?: Prisma.ThreadListRelationFilter
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -218,6 +219,7 @@ export type UserOrderByWithRelationInput = {
   orders?: Prisma.OrderOrderByRelationAggregateInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationOrderByRelationAggregateInput
   threads?: Prisma.ThreadOrderByRelationAggregateInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -236,6 +238,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   orders?: Prisma.OrderListRelationFilter
   oauthAuthorizations?: Prisma.OAuthAuthorizationListRelationFilter
   threads?: Prisma.ThreadListRelationFilter
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }, "id" | "clerkId" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -277,6 +280,7 @@ export type UserCreateInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -292,6 +296,7 @@ export type UserUncheckedCreateInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -307,6 +312,7 @@ export type UserUpdateInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -322,6 +328,7 @@ export type UserUncheckedUpdateInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -352,6 +359,11 @@ export type UserUncheckedUpdateManyInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -387,6 +399,22 @@ export type UserMinOrderByAggregateInput = {
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserCreateNestedOneWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTenantInput, Prisma.UserUncheckedCreateWithoutTenantInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTenantInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTenantInput, Prisma.UserUncheckedCreateWithoutTenantInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTenantInput
+  upsert?: Prisma.UserUpsertWithoutTenantInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTenantInput, Prisma.UserUpdateWithoutTenantInput>, Prisma.UserUncheckedUpdateWithoutTenantInput>
 }
 
 export type UserCreateNestedOneWithoutOrganizationsInput = {
@@ -459,6 +487,82 @@ export type UserUpdateOneRequiredWithoutThreadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutThreadsInput, Prisma.UserUpdateWithoutThreadsInput>, Prisma.UserUncheckedUpdateWithoutThreadsInput>
 }
 
+export type UserCreateWithoutTenantInput = {
+  id?: string
+  clerkId: string
+  email: string
+  name?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  contents?: Prisma.ContentCreateNestedManyWithoutAuthorInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTenantInput = {
+  id?: string
+  clerkId: string
+  email: string
+  name?: string | null
+  avatarUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutAuthorInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTenantInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTenantInput, Prisma.UserUncheckedCreateWithoutTenantInput>
+}
+
+export type UserUpsertWithoutTenantInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTenantInput, Prisma.UserUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTenantInput, Prisma.UserUncheckedCreateWithoutTenantInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTenantInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTenantInput, Prisma.UserUncheckedUpdateWithoutTenantInput>
+}
+
+export type UserUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutAuthorNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clerkId?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutAuthorNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutOrganizationsInput = {
   id?: string
   clerkId: string
@@ -471,6 +575,7 @@ export type UserCreateWithoutOrganizationsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationsInput = {
@@ -485,6 +590,7 @@ export type UserUncheckedCreateWithoutOrganizationsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationsInput = {
@@ -515,6 +621,7 @@ export type UserUpdateWithoutOrganizationsInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationsInput = {
@@ -529,6 +636,7 @@ export type UserUncheckedUpdateWithoutOrganizationsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutContentsInput = {
@@ -543,6 +651,7 @@ export type UserCreateWithoutContentsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutContentsInput = {
@@ -557,6 +666,7 @@ export type UserUncheckedCreateWithoutContentsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutContentsInput = {
@@ -587,6 +697,7 @@ export type UserUpdateWithoutContentsInput = {
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutContentsInput = {
@@ -601,6 +712,7 @@ export type UserUncheckedUpdateWithoutContentsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -615,6 +727,7 @@ export type UserCreateWithoutOrdersInput = {
   contents?: Prisma.ContentCreateNestedManyWithoutAuthorInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -629,6 +742,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutAuthorInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -659,6 +773,7 @@ export type UserUpdateWithoutOrdersInput = {
   contents?: Prisma.ContentUpdateManyWithoutAuthorNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -673,6 +788,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   contents?: Prisma.ContentUncheckedUpdateManyWithoutAuthorNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOauthAuthorizationsInput = {
@@ -687,6 +803,7 @@ export type UserCreateWithoutOauthAuthorizationsInput = {
   contents?: Prisma.ContentCreateNestedManyWithoutAuthorInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOauthAuthorizationsInput = {
@@ -701,6 +818,7 @@ export type UserUncheckedCreateWithoutOauthAuthorizationsInput = {
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutAuthorInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOauthAuthorizationsInput = {
@@ -731,6 +849,7 @@ export type UserUpdateWithoutOauthAuthorizationsInput = {
   contents?: Prisma.ContentUpdateManyWithoutAuthorNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOauthAuthorizationsInput = {
@@ -745,6 +864,7 @@ export type UserUncheckedUpdateWithoutOauthAuthorizationsInput = {
   contents?: Prisma.ContentUncheckedUpdateManyWithoutAuthorNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutThreadsInput = {
@@ -759,6 +879,7 @@ export type UserCreateWithoutThreadsInput = {
   contents?: Prisma.ContentCreateNestedManyWithoutAuthorInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutThreadsInput = {
@@ -773,6 +894,7 @@ export type UserUncheckedCreateWithoutThreadsInput = {
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutAuthorInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedCreateNestedManyWithoutUserInput
+  tenant?: Prisma.TenantUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutThreadsInput = {
@@ -803,6 +925,7 @@ export type UserUpdateWithoutThreadsInput = {
   contents?: Prisma.ContentUpdateManyWithoutAuthorNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutThreadsInput = {
@@ -817,6 +940,7 @@ export type UserUncheckedUpdateWithoutThreadsInput = {
   contents?: Prisma.ContentUncheckedUpdateManyWithoutAuthorNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   oauthAuthorizations?: Prisma.OAuthAuthorizationUncheckedUpdateManyWithoutUserNestedInput
+  tenant?: Prisma.TenantUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -899,6 +1023,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   oauthAuthorizations?: boolean | Prisma.User$oauthAuthorizationsArgs<ExtArgs>
   threads?: boolean | Prisma.User$threadsArgs<ExtArgs>
+  tenant?: boolean | Prisma.User$tenantArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -939,6 +1064,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   oauthAuthorizations?: boolean | Prisma.User$oauthAuthorizationsArgs<ExtArgs>
   threads?: boolean | Prisma.User$threadsArgs<ExtArgs>
+  tenant?: boolean | Prisma.User$tenantArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -952,6 +1078,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     orders: Prisma.$OrderPayload<ExtArgs>[]
     oauthAuthorizations: Prisma.$OAuthAuthorizationPayload<ExtArgs>[]
     threads: Prisma.$ThreadPayload<ExtArgs>[]
+    tenant: Prisma.$TenantPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1360,6 +1487,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   oauthAuthorizations<T extends Prisma.User$oauthAuthorizationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$oauthAuthorizationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OAuthAuthorizationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   threads<T extends Prisma.User$threadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$threadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tenant<T extends Prisma.User$tenantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tenantArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1901,6 +2029,25 @@ export type User$threadsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.ThreadScalarFieldEnum | Prisma.ThreadScalarFieldEnum[]
+}
+
+/**
+ * User.tenant
+ */
+export type User$tenantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tenant
+   */
+  select?: Prisma.TenantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tenant
+   */
+  omit?: Prisma.TenantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TenantInclude<ExtArgs> | null
+  where?: Prisma.TenantWhereInput
 }
 
 /**

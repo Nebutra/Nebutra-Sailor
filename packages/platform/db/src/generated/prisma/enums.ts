@@ -97,6 +97,14 @@ export const AccessInviteStatus = {
 export type AccessInviteStatus = (typeof AccessInviteStatus)[keyof typeof AccessInviteStatus]
 
 
+export const TenantKind = {
+  ORGANIZATION: 'ORGANIZATION',
+  INDIVIDUAL: 'INDIVIDUAL'
+} as const
+
+export type TenantKind = (typeof TenantKind)[keyof typeof TenantKind]
+
+
 export const AIProvider = {
   OPENAI: 'OPENAI',
   ANTHROPIC: 'ANTHROPIC',

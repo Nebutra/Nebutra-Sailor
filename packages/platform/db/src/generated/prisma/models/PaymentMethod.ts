@@ -276,6 +276,7 @@ export type PaymentMethodWhereInput = {
   metadata?: Prisma.JsonFilter<"PaymentMethod">
   createdAt?: Prisma.DateTimeFilter<"PaymentMethod"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PaymentMethod"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   payments?: Prisma.PaymentListRelationFilter
 }
 
@@ -293,6 +294,7 @@ export type PaymentMethodOrderByWithRelationInput = {
   metadata?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  tenant?: Prisma.TenantOrderByWithRelationInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
@@ -313,6 +315,7 @@ export type PaymentMethodWhereUniqueInput = Prisma.AtLeast<{
   metadata?: Prisma.JsonFilter<"PaymentMethod">
   createdAt?: Prisma.DateTimeFilter<"PaymentMethod"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PaymentMethod"> | Date | string
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   payments?: Prisma.PaymentListRelationFilter
 }, "id" | "stripeId">
 
@@ -359,7 +362,6 @@ export type PaymentMethodScalarWhereWithAggregatesInput = {
 export type PaymentMethodCreateInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
   type: $Enums.PaymentMethodType
   isDefault?: boolean
   lastFour?: string | null
@@ -370,6 +372,7 @@ export type PaymentMethodCreateInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutPaymentMethodsInput
   payments?: Prisma.PaymentCreateNestedManyWithoutPaymentMethodInput
 }
 
@@ -393,7 +396,6 @@ export type PaymentMethodUncheckedCreateInput = {
 export type PaymentMethodUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -404,6 +406,7 @@ export type PaymentMethodUpdateInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutPaymentMethodsNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutPaymentMethodNestedInput
 }
 
@@ -443,7 +446,6 @@ export type PaymentMethodCreateManyInput = {
 export type PaymentMethodUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -470,6 +472,16 @@ export type PaymentMethodUncheckedUpdateManyInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PaymentMethodListRelationFilter = {
+  every?: Prisma.PaymentMethodWhereInput
+  some?: Prisma.PaymentMethodWhereInput
+  none?: Prisma.PaymentMethodWhereInput
+}
+
+export type PaymentMethodOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type PaymentMethodNullableScalarRelationFilter = {
@@ -531,6 +543,48 @@ export type PaymentMethodSumOrderByAggregateInput = {
   expiryYear?: Prisma.SortOrder
 }
 
+export type PaymentMethodCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.PaymentMethodCreateWithoutTenantInput, Prisma.PaymentMethodUncheckedCreateWithoutTenantInput> | Prisma.PaymentMethodCreateWithoutTenantInput[] | Prisma.PaymentMethodUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.PaymentMethodCreateOrConnectWithoutTenantInput | Prisma.PaymentMethodCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.PaymentMethodCreateManyTenantInputEnvelope
+  connect?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+}
+
+export type PaymentMethodUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.PaymentMethodCreateWithoutTenantInput, Prisma.PaymentMethodUncheckedCreateWithoutTenantInput> | Prisma.PaymentMethodCreateWithoutTenantInput[] | Prisma.PaymentMethodUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.PaymentMethodCreateOrConnectWithoutTenantInput | Prisma.PaymentMethodCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.PaymentMethodCreateManyTenantInputEnvelope
+  connect?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+}
+
+export type PaymentMethodUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentMethodCreateWithoutTenantInput, Prisma.PaymentMethodUncheckedCreateWithoutTenantInput> | Prisma.PaymentMethodCreateWithoutTenantInput[] | Prisma.PaymentMethodUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.PaymentMethodCreateOrConnectWithoutTenantInput | Prisma.PaymentMethodCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.PaymentMethodUpsertWithWhereUniqueWithoutTenantInput | Prisma.PaymentMethodUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.PaymentMethodCreateManyTenantInputEnvelope
+  set?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+  disconnect?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+  delete?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+  connect?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+  update?: Prisma.PaymentMethodUpdateWithWhereUniqueWithoutTenantInput | Prisma.PaymentMethodUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.PaymentMethodUpdateManyWithWhereWithoutTenantInput | Prisma.PaymentMethodUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.PaymentMethodScalarWhereInput | Prisma.PaymentMethodScalarWhereInput[]
+}
+
+export type PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.PaymentMethodCreateWithoutTenantInput, Prisma.PaymentMethodUncheckedCreateWithoutTenantInput> | Prisma.PaymentMethodCreateWithoutTenantInput[] | Prisma.PaymentMethodUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.PaymentMethodCreateOrConnectWithoutTenantInput | Prisma.PaymentMethodCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.PaymentMethodUpsertWithWhereUniqueWithoutTenantInput | Prisma.PaymentMethodUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.PaymentMethodCreateManyTenantInputEnvelope
+  set?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+  disconnect?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+  delete?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+  connect?: Prisma.PaymentMethodWhereUniqueInput | Prisma.PaymentMethodWhereUniqueInput[]
+  update?: Prisma.PaymentMethodUpdateWithWhereUniqueWithoutTenantInput | Prisma.PaymentMethodUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.PaymentMethodUpdateManyWithWhereWithoutTenantInput | Prisma.PaymentMethodUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.PaymentMethodScalarWhereInput | Prisma.PaymentMethodScalarWhereInput[]
+}
+
 export type PaymentMethodCreateNestedOneWithoutPaymentsInput = {
   create?: Prisma.XOR<Prisma.PaymentMethodCreateWithoutPaymentsInput, Prisma.PaymentMethodUncheckedCreateWithoutPaymentsInput>
   connectOrCreate?: Prisma.PaymentMethodCreateOrConnectWithoutPaymentsInput
@@ -547,10 +601,9 @@ export type PaymentMethodUpdateOneWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PaymentMethodUpdateToOneWithWhereWithoutPaymentsInput, Prisma.PaymentMethodUpdateWithoutPaymentsInput>, Prisma.PaymentMethodUncheckedUpdateWithoutPaymentsInput>
 }
 
-export type PaymentMethodCreateWithoutPaymentsInput = {
+export type PaymentMethodCreateWithoutTenantInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
   type: $Enums.PaymentMethodType
   isDefault?: boolean
   lastFour?: string | null
@@ -561,6 +614,84 @@ export type PaymentMethodCreateWithoutPaymentsInput = {
   metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  payments?: Prisma.PaymentCreateNestedManyWithoutPaymentMethodInput
+}
+
+export type PaymentMethodUncheckedCreateWithoutTenantInput = {
+  id?: string
+  stripeId?: string | null
+  type: $Enums.PaymentMethodType
+  isDefault?: boolean
+  lastFour?: string | null
+  brand?: string | null
+  expiryMonth?: number | null
+  expiryYear?: number | null
+  billingDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutPaymentMethodInput
+}
+
+export type PaymentMethodCreateOrConnectWithoutTenantInput = {
+  where: Prisma.PaymentMethodWhereUniqueInput
+  create: Prisma.XOR<Prisma.PaymentMethodCreateWithoutTenantInput, Prisma.PaymentMethodUncheckedCreateWithoutTenantInput>
+}
+
+export type PaymentMethodCreateManyTenantInputEnvelope = {
+  data: Prisma.PaymentMethodCreateManyTenantInput | Prisma.PaymentMethodCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type PaymentMethodUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.PaymentMethodWhereUniqueInput
+  update: Prisma.XOR<Prisma.PaymentMethodUpdateWithoutTenantInput, Prisma.PaymentMethodUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.PaymentMethodCreateWithoutTenantInput, Prisma.PaymentMethodUncheckedCreateWithoutTenantInput>
+}
+
+export type PaymentMethodUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.PaymentMethodWhereUniqueInput
+  data: Prisma.XOR<Prisma.PaymentMethodUpdateWithoutTenantInput, Prisma.PaymentMethodUncheckedUpdateWithoutTenantInput>
+}
+
+export type PaymentMethodUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.PaymentMethodScalarWhereInput
+  data: Prisma.XOR<Prisma.PaymentMethodUpdateManyMutationInput, Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type PaymentMethodScalarWhereInput = {
+  AND?: Prisma.PaymentMethodScalarWhereInput | Prisma.PaymentMethodScalarWhereInput[]
+  OR?: Prisma.PaymentMethodScalarWhereInput[]
+  NOT?: Prisma.PaymentMethodScalarWhereInput | Prisma.PaymentMethodScalarWhereInput[]
+  id?: Prisma.StringFilter<"PaymentMethod"> | string
+  stripeId?: Prisma.StringNullableFilter<"PaymentMethod"> | string | null
+  organizationId?: Prisma.StringFilter<"PaymentMethod"> | string
+  type?: Prisma.EnumPaymentMethodTypeFilter<"PaymentMethod"> | $Enums.PaymentMethodType
+  isDefault?: Prisma.BoolFilter<"PaymentMethod"> | boolean
+  lastFour?: Prisma.StringNullableFilter<"PaymentMethod"> | string | null
+  brand?: Prisma.StringNullableFilter<"PaymentMethod"> | string | null
+  expiryMonth?: Prisma.IntNullableFilter<"PaymentMethod"> | number | null
+  expiryYear?: Prisma.IntNullableFilter<"PaymentMethod"> | number | null
+  billingDetails?: Prisma.JsonNullableFilter<"PaymentMethod">
+  metadata?: Prisma.JsonFilter<"PaymentMethod">
+  createdAt?: Prisma.DateTimeFilter<"PaymentMethod"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"PaymentMethod"> | Date | string
+}
+
+export type PaymentMethodCreateWithoutPaymentsInput = {
+  id?: string
+  stripeId?: string | null
+  type: $Enums.PaymentMethodType
+  isDefault?: boolean
+  lastFour?: string | null
+  brand?: string | null
+  expiryMonth?: number | null
+  expiryYear?: number | null
+  billingDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutPaymentMethodsInput
 }
 
 export type PaymentMethodUncheckedCreateWithoutPaymentsInput = {
@@ -598,6 +729,22 @@ export type PaymentMethodUpdateToOneWithWhereWithoutPaymentsInput = {
 export type PaymentMethodUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiryMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiryYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutPaymentMethodsNestedInput
+}
+
+export type PaymentMethodUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -611,10 +758,56 @@ export type PaymentMethodUpdateWithoutPaymentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type PaymentMethodUncheckedUpdateWithoutPaymentsInput = {
+export type PaymentMethodCreateManyTenantInput = {
+  id?: string
+  stripeId?: string | null
+  type: $Enums.PaymentMethodType
+  isDefault?: boolean
+  lastFour?: string | null
+  brand?: string | null
+  expiryMonth?: number | null
+  expiryYear?: number | null
+  billingDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PaymentMethodUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiryMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiryYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUpdateManyWithoutPaymentMethodNestedInput
+}
+
+export type PaymentMethodUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
+  isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiryMonth?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  expiryYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billingDetails?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutPaymentMethodNestedInput
+}
+
+export type PaymentMethodUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -672,6 +865,7 @@ export type PaymentMethodSelect<ExtArgs extends runtime.Types.Extensions.Interna
   metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   payments?: boolean | Prisma.PaymentMethod$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.PaymentMethodCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["paymentMethod"]>
@@ -690,6 +884,7 @@ export type PaymentMethodSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["paymentMethod"]>
 
 export type PaymentMethodSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -706,6 +901,7 @@ export type PaymentMethodSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   metadata?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["paymentMethod"]>
 
 export type PaymentMethodSelectScalar = {
@@ -726,15 +922,21 @@ export type PaymentMethodSelectScalar = {
 
 export type PaymentMethodOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stripeId" | "organizationId" | "type" | "isDefault" | "lastFour" | "brand" | "expiryMonth" | "expiryYear" | "billingDetails" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentMethod"]>
 export type PaymentMethodInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   payments?: boolean | Prisma.PaymentMethod$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.PaymentMethodCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type PaymentMethodIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type PaymentMethodIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type PaymentMethodIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
+export type PaymentMethodIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
+}
 
 export type $PaymentMethodPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PaymentMethod"
   objects: {
+    tenant: Prisma.$TenantPayload<ExtArgs>
     payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1145,6 +1347,7 @@ readonly fields: PaymentMethodFieldRefs;
  */
 export interface Prisma__PaymentMethodClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.PaymentMethod$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentMethod$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1437,6 +1640,10 @@ export type PaymentMethodCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    */
   data: Prisma.PaymentMethodCreateManyInput | Prisma.PaymentMethodCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentMethodIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1507,6 +1714,10 @@ export type PaymentMethodUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * Limit how many PaymentMethods to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentMethodIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

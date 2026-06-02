@@ -199,6 +199,7 @@ export type CustomerPlanVersionWhereInput = {
   expiresAt?: Prisma.DateTimeNullableFilter<"CustomerPlanVersion"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CustomerPlanVersion"> | Date | string
   plan?: Prisma.XOR<Prisma.PricingPlanScalarRelationFilter, Prisma.PricingPlanWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }
 
 export type CustomerPlanVersionOrderByWithRelationInput = {
@@ -210,6 +211,7 @@ export type CustomerPlanVersionOrderByWithRelationInput = {
   expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   plan?: Prisma.PricingPlanOrderByWithRelationInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type CustomerPlanVersionWhereUniqueInput = Prisma.AtLeast<{
@@ -224,6 +226,7 @@ export type CustomerPlanVersionWhereUniqueInput = Prisma.AtLeast<{
   expiresAt?: Prisma.DateTimeNullableFilter<"CustomerPlanVersion"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CustomerPlanVersion"> | Date | string
   plan?: Prisma.XOR<Prisma.PricingPlanScalarRelationFilter, Prisma.PricingPlanWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
 }, "id" | "organizationId">
 
 export type CustomerPlanVersionOrderByWithAggregationInput = {
@@ -254,12 +257,12 @@ export type CustomerPlanVersionScalarWhereWithAggregatesInput = {
 
 export type CustomerPlanVersionCreateInput = {
   id?: string
-  organizationId: string
   reason?: string | null
   approvedBy?: string | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
   plan: Prisma.PricingPlanCreateNestedOneWithoutGrandfatheredOrgsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutCustomerPlanVersionsInput
 }
 
 export type CustomerPlanVersionUncheckedCreateInput = {
@@ -274,12 +277,12 @@ export type CustomerPlanVersionUncheckedCreateInput = {
 
 export type CustomerPlanVersionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.PricingPlanUpdateOneRequiredWithoutGrandfatheredOrgsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCustomerPlanVersionsNestedInput
 }
 
 export type CustomerPlanVersionUncheckedUpdateInput = {
@@ -304,7 +307,6 @@ export type CustomerPlanVersionCreateManyInput = {
 
 export type CustomerPlanVersionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -361,6 +363,48 @@ export type CustomerPlanVersionMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
+export type CustomerPlanVersionCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.CustomerPlanVersionCreateWithoutTenantInput, Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput> | Prisma.CustomerPlanVersionCreateWithoutTenantInput[] | Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerPlanVersionCreateOrConnectWithoutTenantInput | Prisma.CustomerPlanVersionCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.CustomerPlanVersionCreateManyTenantInputEnvelope
+  connect?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+}
+
+export type CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.CustomerPlanVersionCreateWithoutTenantInput, Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput> | Prisma.CustomerPlanVersionCreateWithoutTenantInput[] | Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerPlanVersionCreateOrConnectWithoutTenantInput | Prisma.CustomerPlanVersionCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.CustomerPlanVersionCreateManyTenantInputEnvelope
+  connect?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+}
+
+export type CustomerPlanVersionUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerPlanVersionCreateWithoutTenantInput, Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput> | Prisma.CustomerPlanVersionCreateWithoutTenantInput[] | Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerPlanVersionCreateOrConnectWithoutTenantInput | Prisma.CustomerPlanVersionCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.CustomerPlanVersionUpsertWithWhereUniqueWithoutTenantInput | Prisma.CustomerPlanVersionUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.CustomerPlanVersionCreateManyTenantInputEnvelope
+  set?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+  disconnect?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+  delete?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+  connect?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+  update?: Prisma.CustomerPlanVersionUpdateWithWhereUniqueWithoutTenantInput | Prisma.CustomerPlanVersionUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.CustomerPlanVersionUpdateManyWithWhereWithoutTenantInput | Prisma.CustomerPlanVersionUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.CustomerPlanVersionScalarWhereInput | Prisma.CustomerPlanVersionScalarWhereInput[]
+}
+
+export type CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerPlanVersionCreateWithoutTenantInput, Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput> | Prisma.CustomerPlanVersionCreateWithoutTenantInput[] | Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CustomerPlanVersionCreateOrConnectWithoutTenantInput | Prisma.CustomerPlanVersionCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.CustomerPlanVersionUpsertWithWhereUniqueWithoutTenantInput | Prisma.CustomerPlanVersionUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.CustomerPlanVersionCreateManyTenantInputEnvelope
+  set?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+  disconnect?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+  delete?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+  connect?: Prisma.CustomerPlanVersionWhereUniqueInput | Prisma.CustomerPlanVersionWhereUniqueInput[]
+  update?: Prisma.CustomerPlanVersionUpdateWithWhereUniqueWithoutTenantInput | Prisma.CustomerPlanVersionUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.CustomerPlanVersionUpdateManyWithWhereWithoutTenantInput | Prisma.CustomerPlanVersionUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.CustomerPlanVersionScalarWhereInput | Prisma.CustomerPlanVersionScalarWhereInput[]
+}
+
 export type CustomerPlanVersionCreateNestedManyWithoutPlanInput = {
   create?: Prisma.XOR<Prisma.CustomerPlanVersionCreateWithoutPlanInput, Prisma.CustomerPlanVersionUncheckedCreateWithoutPlanInput> | Prisma.CustomerPlanVersionCreateWithoutPlanInput[] | Prisma.CustomerPlanVersionUncheckedCreateWithoutPlanInput[]
   connectOrCreate?: Prisma.CustomerPlanVersionCreateOrConnectWithoutPlanInput | Prisma.CustomerPlanVersionCreateOrConnectWithoutPlanInput[]
@@ -403,13 +447,70 @@ export type CustomerPlanVersionUncheckedUpdateManyWithoutPlanNestedInput = {
   deleteMany?: Prisma.CustomerPlanVersionScalarWhereInput | Prisma.CustomerPlanVersionScalarWhereInput[]
 }
 
-export type CustomerPlanVersionCreateWithoutPlanInput = {
+export type CustomerPlanVersionCreateWithoutTenantInput = {
   id?: string
-  organizationId: string
   reason?: string | null
   approvedBy?: string | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
+  plan: Prisma.PricingPlanCreateNestedOneWithoutGrandfatheredOrgsInput
+}
+
+export type CustomerPlanVersionUncheckedCreateWithoutTenantInput = {
+  id?: string
+  planId: string
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type CustomerPlanVersionCreateOrConnectWithoutTenantInput = {
+  where: Prisma.CustomerPlanVersionWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerPlanVersionCreateWithoutTenantInput, Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput>
+}
+
+export type CustomerPlanVersionCreateManyTenantInputEnvelope = {
+  data: Prisma.CustomerPlanVersionCreateManyTenantInput | Prisma.CustomerPlanVersionCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type CustomerPlanVersionUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.CustomerPlanVersionWhereUniqueInput
+  update: Prisma.XOR<Prisma.CustomerPlanVersionUpdateWithoutTenantInput, Prisma.CustomerPlanVersionUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.CustomerPlanVersionCreateWithoutTenantInput, Prisma.CustomerPlanVersionUncheckedCreateWithoutTenantInput>
+}
+
+export type CustomerPlanVersionUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.CustomerPlanVersionWhereUniqueInput
+  data: Prisma.XOR<Prisma.CustomerPlanVersionUpdateWithoutTenantInput, Prisma.CustomerPlanVersionUncheckedUpdateWithoutTenantInput>
+}
+
+export type CustomerPlanVersionUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.CustomerPlanVersionScalarWhereInput
+  data: Prisma.XOR<Prisma.CustomerPlanVersionUpdateManyMutationInput, Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type CustomerPlanVersionScalarWhereInput = {
+  AND?: Prisma.CustomerPlanVersionScalarWhereInput | Prisma.CustomerPlanVersionScalarWhereInput[]
+  OR?: Prisma.CustomerPlanVersionScalarWhereInput[]
+  NOT?: Prisma.CustomerPlanVersionScalarWhereInput | Prisma.CustomerPlanVersionScalarWhereInput[]
+  id?: Prisma.StringFilter<"CustomerPlanVersion"> | string
+  organizationId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
+  planId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
+  reason?: Prisma.StringNullableFilter<"CustomerPlanVersion"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"CustomerPlanVersion"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"CustomerPlanVersion"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"CustomerPlanVersion"> | Date | string
+}
+
+export type CustomerPlanVersionCreateWithoutPlanInput = {
+  id?: string
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+  tenant: Prisma.TenantCreateNestedOneWithoutCustomerPlanVersionsInput
 }
 
 export type CustomerPlanVersionUncheckedCreateWithoutPlanInput = {
@@ -447,17 +548,40 @@ export type CustomerPlanVersionUpdateManyWithWhereWithoutPlanInput = {
   data: Prisma.XOR<Prisma.CustomerPlanVersionUpdateManyMutationInput, Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutPlanInput>
 }
 
-export type CustomerPlanVersionScalarWhereInput = {
-  AND?: Prisma.CustomerPlanVersionScalarWhereInput | Prisma.CustomerPlanVersionScalarWhereInput[]
-  OR?: Prisma.CustomerPlanVersionScalarWhereInput[]
-  NOT?: Prisma.CustomerPlanVersionScalarWhereInput | Prisma.CustomerPlanVersionScalarWhereInput[]
-  id?: Prisma.StringFilter<"CustomerPlanVersion"> | string
-  organizationId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
-  planId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
-  reason?: Prisma.StringNullableFilter<"CustomerPlanVersion"> | string | null
-  approvedBy?: Prisma.StringNullableFilter<"CustomerPlanVersion"> | string | null
-  expiresAt?: Prisma.DateTimeNullableFilter<"CustomerPlanVersion"> | Date | string | null
-  createdAt?: Prisma.DateTimeFilter<"CustomerPlanVersion"> | Date | string
+export type CustomerPlanVersionCreateManyTenantInput = {
+  id?: string
+  planId: string
+  reason?: string | null
+  approvedBy?: string | null
+  expiresAt?: Date | string | null
+  createdAt?: Date | string
+}
+
+export type CustomerPlanVersionUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.PricingPlanUpdateOneRequiredWithoutGrandfatheredOrgsNestedInput
+}
+
+export type CustomerPlanVersionUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CustomerPlanVersionUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  planId?: Prisma.StringFieldUpdateOperationsInput | string
+  reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CustomerPlanVersionCreateManyPlanInput = {
@@ -471,11 +595,11 @@ export type CustomerPlanVersionCreateManyPlanInput = {
 
 export type CustomerPlanVersionUpdateWithoutPlanInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutCustomerPlanVersionsNestedInput
 }
 
 export type CustomerPlanVersionUncheckedUpdateWithoutPlanInput = {
@@ -507,6 +631,7 @@ export type CustomerPlanVersionSelect<ExtArgs extends runtime.Types.Extensions.I
   expiresAt?: boolean
   createdAt?: boolean
   plan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerPlanVersion"]>
 
 export type CustomerPlanVersionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -518,6 +643,7 @@ export type CustomerPlanVersionSelectCreateManyAndReturn<ExtArgs extends runtime
   expiresAt?: boolean
   createdAt?: boolean
   plan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerPlanVersion"]>
 
 export type CustomerPlanVersionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -529,6 +655,7 @@ export type CustomerPlanVersionSelectUpdateManyAndReturn<ExtArgs extends runtime
   expiresAt?: boolean
   createdAt?: boolean
   plan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customerPlanVersion"]>
 
 export type CustomerPlanVersionSelectScalar = {
@@ -544,18 +671,22 @@ export type CustomerPlanVersionSelectScalar = {
 export type CustomerPlanVersionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "planId" | "reason" | "approvedBy" | "expiresAt" | "createdAt", ExtArgs["result"]["customerPlanVersion"]>
 export type CustomerPlanVersionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type CustomerPlanVersionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 export type CustomerPlanVersionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
 
 export type $CustomerPlanVersionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CustomerPlanVersion"
   objects: {
     plan: Prisma.$PricingPlanPayload<ExtArgs>
+    tenant: Prisma.$TenantPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -960,6 +1091,7 @@ readonly fields: CustomerPlanVersionFieldRefs;
 export interface Prisma__CustomerPlanVersionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   plan<T extends Prisma.PricingPlanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PricingPlanDefaultArgs<ExtArgs>>): Prisma.Prisma__PricingPlanClient<runtime.Types.Result.GetResult<Prisma.$PricingPlanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

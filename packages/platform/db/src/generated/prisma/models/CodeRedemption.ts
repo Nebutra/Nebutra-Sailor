@@ -191,6 +191,7 @@ export type CodeRedemptionWhereInput = {
   redeemedAt?: Prisma.DateTimeFilter<"CodeRedemption"> | Date | string
   ipAddress?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
   code?: Prisma.XOR<Prisma.RedemptionCodeScalarRelationFilter, Prisma.RedemptionCodeWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }
 
 export type CodeRedemptionOrderByWithRelationInput = {
@@ -201,6 +202,7 @@ export type CodeRedemptionOrderByWithRelationInput = {
   redeemedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   code?: Prisma.RedemptionCodeOrderByWithRelationInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
 }
 
 export type CodeRedemptionWhereUniqueInput = Prisma.AtLeast<{
@@ -215,6 +217,7 @@ export type CodeRedemptionWhereUniqueInput = Prisma.AtLeast<{
   redeemedAt?: Prisma.DateTimeFilter<"CodeRedemption"> | Date | string
   ipAddress?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
   code?: Prisma.XOR<Prisma.RedemptionCodeScalarRelationFilter, Prisma.RedemptionCodeWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantNullableScalarRelationFilter, Prisma.TenantWhereInput> | null
 }, "id" | "codeId_userId">
 
 export type CodeRedemptionOrderByWithAggregationInput = {
@@ -244,10 +247,10 @@ export type CodeRedemptionScalarWhereWithAggregatesInput = {
 export type CodeRedemptionCreateInput = {
   id?: string
   userId: string
-  organizationId?: string | null
   redeemedAt?: Date | string
   ipAddress?: string | null
   code: Prisma.RedemptionCodeCreateNestedOneWithoutRedemptionsInput
+  tenant?: Prisma.TenantCreateNestedOneWithoutCodeRedemptionsInput
 }
 
 export type CodeRedemptionUncheckedCreateInput = {
@@ -262,10 +265,10 @@ export type CodeRedemptionUncheckedCreateInput = {
 export type CodeRedemptionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   code?: Prisma.RedemptionCodeUpdateOneRequiredWithoutRedemptionsNestedInput
+  tenant?: Prisma.TenantUpdateOneWithoutCodeRedemptionsNestedInput
 }
 
 export type CodeRedemptionUncheckedUpdateInput = {
@@ -289,7 +292,6 @@ export type CodeRedemptionCreateManyInput = {
 export type CodeRedemptionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -345,6 +347,48 @@ export type CodeRedemptionMinOrderByAggregateInput = {
   ipAddress?: Prisma.SortOrder
 }
 
+export type CodeRedemptionCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.CodeRedemptionCreateWithoutTenantInput, Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput> | Prisma.CodeRedemptionCreateWithoutTenantInput[] | Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CodeRedemptionCreateOrConnectWithoutTenantInput | Prisma.CodeRedemptionCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.CodeRedemptionCreateManyTenantInputEnvelope
+  connect?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+}
+
+export type CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.CodeRedemptionCreateWithoutTenantInput, Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput> | Prisma.CodeRedemptionCreateWithoutTenantInput[] | Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CodeRedemptionCreateOrConnectWithoutTenantInput | Prisma.CodeRedemptionCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.CodeRedemptionCreateManyTenantInputEnvelope
+  connect?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+}
+
+export type CodeRedemptionUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.CodeRedemptionCreateWithoutTenantInput, Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput> | Prisma.CodeRedemptionCreateWithoutTenantInput[] | Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CodeRedemptionCreateOrConnectWithoutTenantInput | Prisma.CodeRedemptionCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.CodeRedemptionUpsertWithWhereUniqueWithoutTenantInput | Prisma.CodeRedemptionUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.CodeRedemptionCreateManyTenantInputEnvelope
+  set?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+  disconnect?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+  delete?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+  connect?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+  update?: Prisma.CodeRedemptionUpdateWithWhereUniqueWithoutTenantInput | Prisma.CodeRedemptionUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.CodeRedemptionUpdateManyWithWhereWithoutTenantInput | Prisma.CodeRedemptionUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.CodeRedemptionScalarWhereInput | Prisma.CodeRedemptionScalarWhereInput[]
+}
+
+export type CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.CodeRedemptionCreateWithoutTenantInput, Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput> | Prisma.CodeRedemptionCreateWithoutTenantInput[] | Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.CodeRedemptionCreateOrConnectWithoutTenantInput | Prisma.CodeRedemptionCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.CodeRedemptionUpsertWithWhereUniqueWithoutTenantInput | Prisma.CodeRedemptionUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.CodeRedemptionCreateManyTenantInputEnvelope
+  set?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+  disconnect?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+  delete?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+  connect?: Prisma.CodeRedemptionWhereUniqueInput | Prisma.CodeRedemptionWhereUniqueInput[]
+  update?: Prisma.CodeRedemptionUpdateWithWhereUniqueWithoutTenantInput | Prisma.CodeRedemptionUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.CodeRedemptionUpdateManyWithWhereWithoutTenantInput | Prisma.CodeRedemptionUpdateManyWithWhereWithoutTenantInput[]
+  deleteMany?: Prisma.CodeRedemptionScalarWhereInput | Prisma.CodeRedemptionScalarWhereInput[]
+}
+
 export type CodeRedemptionCreateNestedManyWithoutCodeInput = {
   create?: Prisma.XOR<Prisma.CodeRedemptionCreateWithoutCodeInput, Prisma.CodeRedemptionUncheckedCreateWithoutCodeInput> | Prisma.CodeRedemptionCreateWithoutCodeInput[] | Prisma.CodeRedemptionUncheckedCreateWithoutCodeInput[]
   connectOrCreate?: Prisma.CodeRedemptionCreateOrConnectWithoutCodeInput | Prisma.CodeRedemptionCreateOrConnectWithoutCodeInput[]
@@ -387,12 +431,66 @@ export type CodeRedemptionUncheckedUpdateManyWithoutCodeNestedInput = {
   deleteMany?: Prisma.CodeRedemptionScalarWhereInput | Prisma.CodeRedemptionScalarWhereInput[]
 }
 
+export type CodeRedemptionCreateWithoutTenantInput = {
+  id?: string
+  userId: string
+  redeemedAt?: Date | string
+  ipAddress?: string | null
+  code: Prisma.RedemptionCodeCreateNestedOneWithoutRedemptionsInput
+}
+
+export type CodeRedemptionUncheckedCreateWithoutTenantInput = {
+  id?: string
+  codeId: string
+  userId: string
+  redeemedAt?: Date | string
+  ipAddress?: string | null
+}
+
+export type CodeRedemptionCreateOrConnectWithoutTenantInput = {
+  where: Prisma.CodeRedemptionWhereUniqueInput
+  create: Prisma.XOR<Prisma.CodeRedemptionCreateWithoutTenantInput, Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput>
+}
+
+export type CodeRedemptionCreateManyTenantInputEnvelope = {
+  data: Prisma.CodeRedemptionCreateManyTenantInput | Prisma.CodeRedemptionCreateManyTenantInput[]
+  skipDuplicates?: boolean
+}
+
+export type CodeRedemptionUpsertWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.CodeRedemptionWhereUniqueInput
+  update: Prisma.XOR<Prisma.CodeRedemptionUpdateWithoutTenantInput, Prisma.CodeRedemptionUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.CodeRedemptionCreateWithoutTenantInput, Prisma.CodeRedemptionUncheckedCreateWithoutTenantInput>
+}
+
+export type CodeRedemptionUpdateWithWhereUniqueWithoutTenantInput = {
+  where: Prisma.CodeRedemptionWhereUniqueInput
+  data: Prisma.XOR<Prisma.CodeRedemptionUpdateWithoutTenantInput, Prisma.CodeRedemptionUncheckedUpdateWithoutTenantInput>
+}
+
+export type CodeRedemptionUpdateManyWithWhereWithoutTenantInput = {
+  where: Prisma.CodeRedemptionScalarWhereInput
+  data: Prisma.XOR<Prisma.CodeRedemptionUpdateManyMutationInput, Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantInput>
+}
+
+export type CodeRedemptionScalarWhereInput = {
+  AND?: Prisma.CodeRedemptionScalarWhereInput | Prisma.CodeRedemptionScalarWhereInput[]
+  OR?: Prisma.CodeRedemptionScalarWhereInput[]
+  NOT?: Prisma.CodeRedemptionScalarWhereInput | Prisma.CodeRedemptionScalarWhereInput[]
+  id?: Prisma.StringFilter<"CodeRedemption"> | string
+  codeId?: Prisma.StringFilter<"CodeRedemption"> | string
+  userId?: Prisma.StringFilter<"CodeRedemption"> | string
+  organizationId?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
+  redeemedAt?: Prisma.DateTimeFilter<"CodeRedemption"> | Date | string
+  ipAddress?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
+}
+
 export type CodeRedemptionCreateWithoutCodeInput = {
   id?: string
   userId: string
-  organizationId?: string | null
   redeemedAt?: Date | string
   ipAddress?: string | null
+  tenant?: Prisma.TenantCreateNestedOneWithoutCodeRedemptionsInput
 }
 
 export type CodeRedemptionUncheckedCreateWithoutCodeInput = {
@@ -429,16 +527,36 @@ export type CodeRedemptionUpdateManyWithWhereWithoutCodeInput = {
   data: Prisma.XOR<Prisma.CodeRedemptionUpdateManyMutationInput, Prisma.CodeRedemptionUncheckedUpdateManyWithoutCodeInput>
 }
 
-export type CodeRedemptionScalarWhereInput = {
-  AND?: Prisma.CodeRedemptionScalarWhereInput | Prisma.CodeRedemptionScalarWhereInput[]
-  OR?: Prisma.CodeRedemptionScalarWhereInput[]
-  NOT?: Prisma.CodeRedemptionScalarWhereInput | Prisma.CodeRedemptionScalarWhereInput[]
-  id?: Prisma.StringFilter<"CodeRedemption"> | string
-  codeId?: Prisma.StringFilter<"CodeRedemption"> | string
-  userId?: Prisma.StringFilter<"CodeRedemption"> | string
-  organizationId?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
-  redeemedAt?: Prisma.DateTimeFilter<"CodeRedemption"> | Date | string
-  ipAddress?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
+export type CodeRedemptionCreateManyTenantInput = {
+  id?: string
+  codeId: string
+  userId: string
+  redeemedAt?: Date | string
+  ipAddress?: string | null
+}
+
+export type CodeRedemptionUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code?: Prisma.RedemptionCodeUpdateOneRequiredWithoutRedemptionsNestedInput
+}
+
+export type CodeRedemptionUncheckedUpdateWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  codeId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type CodeRedemptionUncheckedUpdateManyWithoutTenantInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  codeId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CodeRedemptionCreateManyCodeInput = {
@@ -452,9 +570,9 @@ export type CodeRedemptionCreateManyCodeInput = {
 export type CodeRedemptionUpdateWithoutCodeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenant?: Prisma.TenantUpdateOneWithoutCodeRedemptionsNestedInput
 }
 
 export type CodeRedemptionUncheckedUpdateWithoutCodeInput = {
@@ -483,6 +601,7 @@ export type CodeRedemptionSelect<ExtArgs extends runtime.Types.Extensions.Intern
   redeemedAt?: boolean
   ipAddress?: boolean
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.CodeRedemption$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["codeRedemption"]>
 
 export type CodeRedemptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -493,6 +612,7 @@ export type CodeRedemptionSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   redeemedAt?: boolean
   ipAddress?: boolean
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.CodeRedemption$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["codeRedemption"]>
 
 export type CodeRedemptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -503,6 +623,7 @@ export type CodeRedemptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   redeemedAt?: boolean
   ipAddress?: boolean
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.CodeRedemption$tenantArgs<ExtArgs>
 }, ExtArgs["result"]["codeRedemption"]>
 
 export type CodeRedemptionSelectScalar = {
@@ -517,18 +638,22 @@ export type CodeRedemptionSelectScalar = {
 export type CodeRedemptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "codeId" | "userId" | "organizationId" | "redeemedAt" | "ipAddress", ExtArgs["result"]["codeRedemption"]>
 export type CodeRedemptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.CodeRedemption$tenantArgs<ExtArgs>
 }
 export type CodeRedemptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.CodeRedemption$tenantArgs<ExtArgs>
 }
 export type CodeRedemptionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.CodeRedemption$tenantArgs<ExtArgs>
 }
 
 export type $CodeRedemptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CodeRedemption"
   objects: {
     code: Prisma.$RedemptionCodePayload<ExtArgs>
+    tenant: Prisma.$TenantPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -932,6 +1057,7 @@ readonly fields: CodeRedemptionFieldRefs;
 export interface Prisma__CodeRedemptionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   code<T extends Prisma.RedemptionCodeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RedemptionCodeDefaultArgs<ExtArgs>>): Prisma.Prisma__RedemptionCodeClient<runtime.Types.Result.GetResult<Prisma.$RedemptionCodePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenant<T extends Prisma.CodeRedemption$tenantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CodeRedemption$tenantArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1360,6 +1486,25 @@ export type CodeRedemptionDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many CodeRedemptions to delete.
    */
   limit?: number
+}
+
+/**
+ * CodeRedemption.tenant
+ */
+export type CodeRedemption$tenantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tenant
+   */
+  select?: Prisma.TenantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tenant
+   */
+  omit?: Prisma.TenantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TenantInclude<ExtArgs> | null
+  where?: Prisma.TenantWhereInput
 }
 
 /**

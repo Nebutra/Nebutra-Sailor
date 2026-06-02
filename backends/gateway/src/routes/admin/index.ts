@@ -122,11 +122,16 @@ adminRoutes.openapi(
       where: { id },
       include: {
         members: { include: { user: { select: { email: true, name: true } } } },
-        apiKeys: {
-          where: { revokedAt: null },
-          select: { id: true, name: true, keyPrefix: true, createdAt: true, lastUsedAt: true },
+        tenant: {
+          include: {
+            apiKeys: {
+              where: { revokedAt: null },
+              select: { id: true, name: true, keyPrefix: true, createdAt: true, lastUsedAt: true },
+            },
+            _count: { select: { apiKeys: true } },
+          },
         },
-        _count: { select: { members: true, apiKeys: true } },
+        _count: { select: { members: true } },
       },
     });
 

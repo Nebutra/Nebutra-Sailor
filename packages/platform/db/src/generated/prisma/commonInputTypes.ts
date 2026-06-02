@@ -127,6 +127,23 @@ export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
+export type EnumTenantKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantKind | Prisma.EnumTenantKindFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantKindFilter<$PrismaModel> | $Enums.TenantKind
+}
+
+export type EnumTenantKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantKind | Prisma.EnumTenantKindFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantKindWithAggregatesFilter<$PrismaModel> | $Enums.TenantKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTenantKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTenantKindFilter<$PrismaModel>
+}
+
 export type DateTimeNullableFilter<$PrismaModel = never> = {
   equals?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel> | null
   in?: Date[] | string[] | Prisma.ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -900,6 +917,23 @@ export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
+}
+
+export type NestedEnumTenantKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantKind | Prisma.EnumTenantKindFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantKindFilter<$PrismaModel> | $Enums.TenantKind
+}
+
+export type NestedEnumTenantKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantKind | Prisma.EnumTenantKindFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantKindWithAggregatesFilter<$PrismaModel> | $Enums.TenantKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTenantKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTenantKindFilter<$PrismaModel>
 }
 
 export type NestedDateTimeNullableFilter<$PrismaModel = never> = {

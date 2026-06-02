@@ -206,7 +206,7 @@ export type ThreadWhereInput = {
   lastActivityAt?: Prisma.DateTimeFilter<"Thread"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Thread"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Thread"> | Date | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -219,7 +219,7 @@ export type ThreadOrderByWithRelationInput = {
   lastActivityAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  organization?: Prisma.OrganizationOrderByWithRelationInput
+  tenant?: Prisma.TenantOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -235,7 +235,7 @@ export type ThreadWhereUniqueInput = Prisma.AtLeast<{
   lastActivityAt?: Prisma.DateTimeFilter<"Thread"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Thread"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Thread"> | Date | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
@@ -274,7 +274,7 @@ export type ThreadCreateInput = {
   lastActivityAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutThreadsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutThreadsInput
   user: Prisma.UserCreateNestedOneWithoutThreadsInput
 }
 
@@ -296,7 +296,7 @@ export type ThreadUpdateInput = {
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutThreadsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutThreadsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutThreadsNestedInput
 }
 
@@ -385,45 +385,45 @@ export type ThreadMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type ThreadCreateNestedManyWithoutOrganizationInput = {
-  create?: Prisma.XOR<Prisma.ThreadCreateWithoutOrganizationInput, Prisma.ThreadUncheckedCreateWithoutOrganizationInput> | Prisma.ThreadCreateWithoutOrganizationInput[] | Prisma.ThreadUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.ThreadCreateOrConnectWithoutOrganizationInput | Prisma.ThreadCreateOrConnectWithoutOrganizationInput[]
-  createMany?: Prisma.ThreadCreateManyOrganizationInputEnvelope
+export type ThreadCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.ThreadCreateWithoutTenantInput, Prisma.ThreadUncheckedCreateWithoutTenantInput> | Prisma.ThreadCreateWithoutTenantInput[] | Prisma.ThreadUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.ThreadCreateOrConnectWithoutTenantInput | Prisma.ThreadCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.ThreadCreateManyTenantInputEnvelope
   connect?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
 }
 
-export type ThreadUncheckedCreateNestedManyWithoutOrganizationInput = {
-  create?: Prisma.XOR<Prisma.ThreadCreateWithoutOrganizationInput, Prisma.ThreadUncheckedCreateWithoutOrganizationInput> | Prisma.ThreadCreateWithoutOrganizationInput[] | Prisma.ThreadUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.ThreadCreateOrConnectWithoutOrganizationInput | Prisma.ThreadCreateOrConnectWithoutOrganizationInput[]
-  createMany?: Prisma.ThreadCreateManyOrganizationInputEnvelope
+export type ThreadUncheckedCreateNestedManyWithoutTenantInput = {
+  create?: Prisma.XOR<Prisma.ThreadCreateWithoutTenantInput, Prisma.ThreadUncheckedCreateWithoutTenantInput> | Prisma.ThreadCreateWithoutTenantInput[] | Prisma.ThreadUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.ThreadCreateOrConnectWithoutTenantInput | Prisma.ThreadCreateOrConnectWithoutTenantInput[]
+  createMany?: Prisma.ThreadCreateManyTenantInputEnvelope
   connect?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
 }
 
-export type ThreadUpdateManyWithoutOrganizationNestedInput = {
-  create?: Prisma.XOR<Prisma.ThreadCreateWithoutOrganizationInput, Prisma.ThreadUncheckedCreateWithoutOrganizationInput> | Prisma.ThreadCreateWithoutOrganizationInput[] | Prisma.ThreadUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.ThreadCreateOrConnectWithoutOrganizationInput | Prisma.ThreadCreateOrConnectWithoutOrganizationInput[]
-  upsert?: Prisma.ThreadUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.ThreadUpsertWithWhereUniqueWithoutOrganizationInput[]
-  createMany?: Prisma.ThreadCreateManyOrganizationInputEnvelope
+export type ThreadUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.ThreadCreateWithoutTenantInput, Prisma.ThreadUncheckedCreateWithoutTenantInput> | Prisma.ThreadCreateWithoutTenantInput[] | Prisma.ThreadUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.ThreadCreateOrConnectWithoutTenantInput | Prisma.ThreadCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.ThreadUpsertWithWhereUniqueWithoutTenantInput | Prisma.ThreadUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.ThreadCreateManyTenantInputEnvelope
   set?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
   disconnect?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
   delete?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
   connect?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
-  update?: Prisma.ThreadUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.ThreadUpdateWithWhereUniqueWithoutOrganizationInput[]
-  updateMany?: Prisma.ThreadUpdateManyWithWhereWithoutOrganizationInput | Prisma.ThreadUpdateManyWithWhereWithoutOrganizationInput[]
+  update?: Prisma.ThreadUpdateWithWhereUniqueWithoutTenantInput | Prisma.ThreadUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.ThreadUpdateManyWithWhereWithoutTenantInput | Prisma.ThreadUpdateManyWithWhereWithoutTenantInput[]
   deleteMany?: Prisma.ThreadScalarWhereInput | Prisma.ThreadScalarWhereInput[]
 }
 
-export type ThreadUncheckedUpdateManyWithoutOrganizationNestedInput = {
-  create?: Prisma.XOR<Prisma.ThreadCreateWithoutOrganizationInput, Prisma.ThreadUncheckedCreateWithoutOrganizationInput> | Prisma.ThreadCreateWithoutOrganizationInput[] | Prisma.ThreadUncheckedCreateWithoutOrganizationInput[]
-  connectOrCreate?: Prisma.ThreadCreateOrConnectWithoutOrganizationInput | Prisma.ThreadCreateOrConnectWithoutOrganizationInput[]
-  upsert?: Prisma.ThreadUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.ThreadUpsertWithWhereUniqueWithoutOrganizationInput[]
-  createMany?: Prisma.ThreadCreateManyOrganizationInputEnvelope
+export type ThreadUncheckedUpdateManyWithoutTenantNestedInput = {
+  create?: Prisma.XOR<Prisma.ThreadCreateWithoutTenantInput, Prisma.ThreadUncheckedCreateWithoutTenantInput> | Prisma.ThreadCreateWithoutTenantInput[] | Prisma.ThreadUncheckedCreateWithoutTenantInput[]
+  connectOrCreate?: Prisma.ThreadCreateOrConnectWithoutTenantInput | Prisma.ThreadCreateOrConnectWithoutTenantInput[]
+  upsert?: Prisma.ThreadUpsertWithWhereUniqueWithoutTenantInput | Prisma.ThreadUpsertWithWhereUniqueWithoutTenantInput[]
+  createMany?: Prisma.ThreadCreateManyTenantInputEnvelope
   set?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
   disconnect?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
   delete?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
   connect?: Prisma.ThreadWhereUniqueInput | Prisma.ThreadWhereUniqueInput[]
-  update?: Prisma.ThreadUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.ThreadUpdateWithWhereUniqueWithoutOrganizationInput[]
-  updateMany?: Prisma.ThreadUpdateManyWithWhereWithoutOrganizationInput | Prisma.ThreadUpdateManyWithWhereWithoutOrganizationInput[]
+  update?: Prisma.ThreadUpdateWithWhereUniqueWithoutTenantInput | Prisma.ThreadUpdateWithWhereUniqueWithoutTenantInput[]
+  updateMany?: Prisma.ThreadUpdateManyWithWhereWithoutTenantInput | Prisma.ThreadUpdateManyWithWhereWithoutTenantInput[]
   deleteMany?: Prisma.ThreadScalarWhereInput | Prisma.ThreadScalarWhereInput[]
 }
 
@@ -469,7 +469,7 @@ export type ThreadUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ThreadScalarWhereInput | Prisma.ThreadScalarWhereInput[]
 }
 
-export type ThreadCreateWithoutOrganizationInput = {
+export type ThreadCreateWithoutTenantInput = {
   id?: string
   title?: string
   summary?: string | null
@@ -479,7 +479,7 @@ export type ThreadCreateWithoutOrganizationInput = {
   user: Prisma.UserCreateNestedOneWithoutThreadsInput
 }
 
-export type ThreadUncheckedCreateWithoutOrganizationInput = {
+export type ThreadUncheckedCreateWithoutTenantInput = {
   id?: string
   userId: string
   title?: string
@@ -489,30 +489,30 @@ export type ThreadUncheckedCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
 }
 
-export type ThreadCreateOrConnectWithoutOrganizationInput = {
+export type ThreadCreateOrConnectWithoutTenantInput = {
   where: Prisma.ThreadWhereUniqueInput
-  create: Prisma.XOR<Prisma.ThreadCreateWithoutOrganizationInput, Prisma.ThreadUncheckedCreateWithoutOrganizationInput>
+  create: Prisma.XOR<Prisma.ThreadCreateWithoutTenantInput, Prisma.ThreadUncheckedCreateWithoutTenantInput>
 }
 
-export type ThreadCreateManyOrganizationInputEnvelope = {
-  data: Prisma.ThreadCreateManyOrganizationInput | Prisma.ThreadCreateManyOrganizationInput[]
+export type ThreadCreateManyTenantInputEnvelope = {
+  data: Prisma.ThreadCreateManyTenantInput | Prisma.ThreadCreateManyTenantInput[]
   skipDuplicates?: boolean
 }
 
-export type ThreadUpsertWithWhereUniqueWithoutOrganizationInput = {
+export type ThreadUpsertWithWhereUniqueWithoutTenantInput = {
   where: Prisma.ThreadWhereUniqueInput
-  update: Prisma.XOR<Prisma.ThreadUpdateWithoutOrganizationInput, Prisma.ThreadUncheckedUpdateWithoutOrganizationInput>
-  create: Prisma.XOR<Prisma.ThreadCreateWithoutOrganizationInput, Prisma.ThreadUncheckedCreateWithoutOrganizationInput>
+  update: Prisma.XOR<Prisma.ThreadUpdateWithoutTenantInput, Prisma.ThreadUncheckedUpdateWithoutTenantInput>
+  create: Prisma.XOR<Prisma.ThreadCreateWithoutTenantInput, Prisma.ThreadUncheckedCreateWithoutTenantInput>
 }
 
-export type ThreadUpdateWithWhereUniqueWithoutOrganizationInput = {
+export type ThreadUpdateWithWhereUniqueWithoutTenantInput = {
   where: Prisma.ThreadWhereUniqueInput
-  data: Prisma.XOR<Prisma.ThreadUpdateWithoutOrganizationInput, Prisma.ThreadUncheckedUpdateWithoutOrganizationInput>
+  data: Prisma.XOR<Prisma.ThreadUpdateWithoutTenantInput, Prisma.ThreadUncheckedUpdateWithoutTenantInput>
 }
 
-export type ThreadUpdateManyWithWhereWithoutOrganizationInput = {
+export type ThreadUpdateManyWithWhereWithoutTenantInput = {
   where: Prisma.ThreadScalarWhereInput
-  data: Prisma.XOR<Prisma.ThreadUpdateManyMutationInput, Prisma.ThreadUncheckedUpdateManyWithoutOrganizationInput>
+  data: Prisma.XOR<Prisma.ThreadUpdateManyMutationInput, Prisma.ThreadUncheckedUpdateManyWithoutTenantInput>
 }
 
 export type ThreadScalarWhereInput = {
@@ -536,7 +536,7 @@ export type ThreadCreateWithoutUserInput = {
   lastActivityAt?: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutThreadsInput
+  tenant: Prisma.TenantCreateNestedOneWithoutThreadsInput
 }
 
 export type ThreadUncheckedCreateWithoutUserInput = {
@@ -575,7 +575,7 @@ export type ThreadUpdateManyWithWhereWithoutUserInput = {
   data: Prisma.XOR<Prisma.ThreadUpdateManyMutationInput, Prisma.ThreadUncheckedUpdateManyWithoutUserInput>
 }
 
-export type ThreadCreateManyOrganizationInput = {
+export type ThreadCreateManyTenantInput = {
   id?: string
   userId: string
   title?: string
@@ -585,7 +585,7 @@ export type ThreadCreateManyOrganizationInput = {
   updatedAt?: Date | string
 }
 
-export type ThreadUpdateWithoutOrganizationInput = {
+export type ThreadUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -595,7 +595,7 @@ export type ThreadUpdateWithoutOrganizationInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutThreadsNestedInput
 }
 
-export type ThreadUncheckedUpdateWithoutOrganizationInput = {
+export type ThreadUncheckedUpdateWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -605,7 +605,7 @@ export type ThreadUncheckedUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type ThreadUncheckedUpdateManyWithoutOrganizationInput = {
+export type ThreadUncheckedUpdateManyWithoutTenantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -632,7 +632,7 @@ export type ThreadUpdateWithoutUserInput = {
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutThreadsNestedInput
+  tenant?: Prisma.TenantUpdateOneRequiredWithoutThreadsNestedInput
 }
 
 export type ThreadUncheckedUpdateWithoutUserInput = {
@@ -666,7 +666,7 @@ export type ThreadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   lastActivityAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["thread"]>
 
@@ -679,7 +679,7 @@ export type ThreadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   lastActivityAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["thread"]>
 
@@ -692,7 +692,7 @@ export type ThreadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   lastActivityAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["thread"]>
 
@@ -709,22 +709,22 @@ export type ThreadSelectScalar = {
 
 export type ThreadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "userId" | "title" | "summary" | "lastActivityAt" | "createdAt" | "updatedAt", ExtArgs["result"]["thread"]>
 export type ThreadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ThreadIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ThreadIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ThreadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Thread"
   objects: {
-    organization: Prisma.$OrganizationPayload<ExtArgs>
+    tenant: Prisma.$TenantPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1130,7 +1130,7 @@ readonly fields: ThreadFieldRefs;
  */
 export interface Prisma__ThreadClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tenant<T extends Prisma.TenantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TenantDefaultArgs<ExtArgs>>): Prisma.Prisma__TenantClient<runtime.Types.Result.GetResult<Prisma.$TenantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
