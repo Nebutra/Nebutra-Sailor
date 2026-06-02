@@ -11,8 +11,19 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ lang: string; id: string }> };
 
+// ECS artifact headroom (#141): the China VC directory prerendered every org ×
+// every locale (~516 × 7 ≈ 3.6k pages, the dominant slice of the standalone
+// bundle). Prerender only the highest-activity firms (the pages crawlers and
+// users actually reach); the long tail renders on demand on first request.
+// `dynamicParams` stays at its default (true) so any non-prerendered id is
+// still served live.
+const PRERENDER_TOP_N = 100;
+
 export function generateStaticParams() {
-  return routing.locales.flatMap((lang) => CHINA_VC_ORGS.map((o) => ({ lang, id: String(o.id) })));
+  const topByActivity = [...CHINA_VC_ORGS]
+    .sort((a, b) => (b.total ?? 0) - (a.total ?? 0))
+    .slice(0, PRERENDER_TOP_N);
+  return routing.locales.flatMap((lang) => topByActivity.map((o) => ({ lang, id: String(o.id) })));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
