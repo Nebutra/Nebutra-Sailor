@@ -476,7 +476,7 @@ function markdownToPortableText(markdown, title) {
       const headingText = heading[2].trim();
       if (!skippedTitle) {
         skippedTitle = true;
-        if (title && heading[1] === "#" && headingText === title) {
+        if (heading[1] === "#" && headingText === title) {
           continue;
         }
       }
