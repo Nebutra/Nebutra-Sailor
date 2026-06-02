@@ -156,6 +156,9 @@ vi.mock("@nebutra/ui/primitives", () => ({
 vi.mock("@/components/notifications/notifications-dialog", () => ({
   NotificationsDialog: () => null,
 }));
+vi.mock("@/components/feedback/feedback-dialog-provider", () => ({
+  useFeedbackDialog: () => ({ openDialog: vi.fn() }),
+}));
 vi.mock("@/components/navigation/user-menu", () => ({
   UserMenu: () => null,
 }));
@@ -164,6 +167,7 @@ vi.mock("@/components/navigation/view-transition-link", () => ({
 }));
 vi.mock("@/components/brand/brand-assets", () => ({
   BrandLogo: () => null,
+  webBrandLabels: { homeLink: "Nebutra home" },
 }));
 
 import { DesignSystemShell } from "../design-system-shell";
@@ -233,7 +237,7 @@ describe("DesignSystemShell (react-query integration)", () => {
 
     // Before the organizations query resolves the seed WORKSPACES render
     // (loading fallback for the org list — equivalent to the old initial state).
-    expect(screen.getByText("Startup OS")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Home" })).toBeInTheDocument();
     expect(screen.getByText("Starter Workspace")).toBeInTheDocument();
 
     // After the org list resolves, the real org labels replace the seeds and
@@ -302,7 +306,7 @@ describe("DesignSystemShell (react-query integration)", () => {
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith("/api/organizations", expect.any(Object));
     });
-    expect(screen.getByText("Startup OS")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Startup OS" })).toBeInTheDocument();
     expect(screen.queryByText("Starter Workspace")).not.toBeInTheDocument();
     expect(screen.queryByText("Growth Workspace")).not.toBeInTheDocument();
     expect(screen.queryByText("Enterprise Workspace")).not.toBeInTheDocument();

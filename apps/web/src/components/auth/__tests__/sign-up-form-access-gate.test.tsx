@@ -4,6 +4,7 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type {
   ButtonHTMLAttributes,
+  HTMLAttributes,
   InputHTMLAttributes,
   LabelHTMLAttributes,
   ReactNode,
@@ -40,15 +41,36 @@ vi.mock("@nebutra/ui/components", () => ({
       {children}
     </button>
   ),
-  Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
+  Input: ({ id, name, ...props }: InputHTMLAttributes<HTMLInputElement>) => (
+    <input id={id ?? name} name={name} {...props} />
+  ),
 }));
 
-vi.mock("@nebutra/ui/primitives", async (importActual) => ({
-  ...(await importActual<typeof import("@nebutra/ui/primitives")>()),
-  // biome-ignore lint/a11y/noLabelWithoutControl: this test double forwards htmlFor from the component under test.
-  Label: (props: LabelHTMLAttributes<HTMLLabelElement>) => <label {...props} />,
-  Separator: () => <hr />,
-}));
+vi.mock("@nebutra/ui/primitives", async () => {
+  const React = await vi.importActual<typeof import("react")>("react");
+  const { Controller } = await vi.importActual<typeof import("react-hook-form")>("react-hook-form");
+  const FieldNameContext = React.createContext<string | undefined>(undefined);
+
+  return {
+    Form: ({ children }: { children: ReactNode }) => <>{children}</>,
+    FormControl: ({ children }: { children: ReactNode }) => <>{children}</>,
+    FormField: ({ name, ...props }: React.ComponentProps<typeof Controller>) => (
+      <FieldNameContext.Provider value={name}>
+        <Controller name={name} {...props} />
+      </FieldNameContext.Provider>
+    ),
+    FormItem: ({ children, ...props }: HTMLAttributes<HTMLDivElement>) => (
+      <div {...props}>{children}</div>
+    ),
+    FormLabel: ({ htmlFor, ...props }: LabelHTMLAttributes<HTMLLabelElement>) => {
+      const fieldName = React.useContext(FieldNameContext);
+      return React.createElement("label", { htmlFor: htmlFor ?? fieldName, ...props });
+    },
+    // biome-ignore lint/a11y/noLabelWithoutControl: this test double forwards htmlFor from the component under test.
+    Label: (props: LabelHTMLAttributes<HTMLLabelElement>) => <label {...props} />,
+    Separator: () => <hr />,
+  };
+});
 
 vi.mock("../oauth-buttons", () => ({
   OAuthButtons: () => <div data-testid="oauth-buttons" />,

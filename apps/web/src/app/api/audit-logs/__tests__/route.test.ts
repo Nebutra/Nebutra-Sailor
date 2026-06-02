@@ -27,7 +27,7 @@ function buildRequest(url: string) {
 function makeLog(overrides: Partial<Record<string, unknown>> = {}) {
   return {
     id: "log_1",
-    organizationId: "org_123",
+    tenantId: "org_123",
     userId: "user_1",
     actorType: "user",
     action: "user.login",
@@ -107,7 +107,7 @@ describe("GET /api/audit-logs", () => {
     expect(dbMock.auditLog.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         take: 3,
-        where: expect.objectContaining({ organizationId: "org_123" }),
+        where: expect.objectContaining({ tenantId: "org_123" }),
       }),
     );
   });
@@ -130,7 +130,7 @@ describe("GET /api/audit-logs", () => {
 
     const call = dbMock.auditLog.findMany.mock.calls[0]?.[0];
     expect(call.where).toMatchObject({
-      organizationId: "org_123",
+      tenantId: "org_123",
       action: { startsWith: "user." },
       entityType: "session",
       outcome: "success",
@@ -150,12 +150,12 @@ describe("GET /api/audit-logs", () => {
     dbMock.auditLog.findMany.mockResolvedValue([]);
 
     const { GET } = await loadRoute();
-    // Even if a malicious caller passes ?organizationId=org_other, the route
-    // must use the auth-resolved orgId and ignore that param.
-    await GET(buildRequest("http://localhost/api/audit-logs?organizationId=org_other"));
+    // Even if a malicious caller passes ?tenantId=org_other, the route
+    // must use the auth-resolved tenant and ignore that param.
+    await GET(buildRequest("http://localhost/api/audit-logs?tenantId=org_other"));
 
     const call = dbMock.auditLog.findMany.mock.calls[0]?.[0];
-    expect(call.where.organizationId).toBe("org_mine");
+    expect(call.where.tenantId).toBe("org_mine");
   });
 
   it("clamps limit to max 100 and rejects invalid values", async () => {

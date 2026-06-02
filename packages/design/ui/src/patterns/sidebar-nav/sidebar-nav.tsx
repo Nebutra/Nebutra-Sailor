@@ -88,13 +88,13 @@ export interface SidebarNavProps {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const ITEM_BASE_CLASSES =
-  "group flex min-h-9 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 py-2 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform]";
+  "group flex min-h-9 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 py-1.5 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform]";
 const ITEM_DEFAULT_CLASSES =
   "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
 const ITEM_ACTIVE_CLASSES =
   "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm shadow-sidebar-primary/10 hover:bg-sidebar-primary hover:text-sidebar-primary-foreground";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
-const ITEM_COLLAPSED_CLASSES = "mx-auto size-9 justify-center px-0 py-0";
+const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto";
 const ICON_CLASSES = "size-4 shrink-0";
 
 function defaultRenderLink({

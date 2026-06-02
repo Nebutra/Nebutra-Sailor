@@ -40,6 +40,12 @@ function useAnimationFrame(
   callback: (deltaMs: number) => void,
   dependencies: DependencyList,
 ) {
+  const callbackRef = useRef(callback);
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
   useEffect(() => {
     if (!enabled) return;
 
@@ -49,14 +55,12 @@ function useAnimationFrame(
     const tick = (time: number) => {
       const delta = time - previousTime;
       previousTime = time;
-      callback(delta);
+      callbackRef.current(delta);
       frameId = window.requestAnimationFrame(tick);
     };
 
     frameId = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frameId);
-    // The caller owns the dependency list so animation state can stay explicit.
-    // biome-ignore lint/correctness/useExhaustiveDependencies: custom animation hook API
   }, [enabled, ...dependencies]);
 }
 
