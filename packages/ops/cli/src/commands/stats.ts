@@ -1,5 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { basename, resolve } from "node:path";
 import type { Command } from "commander";
 import pc from "picocolors";
 import { delegate, findMonorepoRoot } from "../utils/delegate";
@@ -59,6 +59,35 @@ function getDirectorySize(path: string): number {
 }
 
 /**
+ * Collect every package directory under `packages/`, handling BOTH the legacy
+ * flat layout (`packages/<name>/package.json`) and the current categorized
+ * layout (`packages/<category>/<name>/package.json`, categories: design, iam,
+ * commerce, integrations, platform, ops, ai). The previous flat-only scan
+ * returned zero packages on the categorized monorepo because category dirs have
+ * no package.json of their own.
+ */
+function collectPackageDirs(packagesPath: string): string[] {
+  if (!existsSync(packagesPath)) return [];
+  const dirs: string[] = [];
+  for (const entry of readdirSync(packagesPath, { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
+    const entryPath = resolve(packagesPath, entry.name);
+    if (existsSync(resolve(entryPath, "package.json"))) {
+      dirs.push(entryPath); // flat package (legacy)
+      continue;
+    }
+    // Categorized: descend one level into the category directory.
+    for (const sub of readdirSync(entryPath, { withFileTypes: true })) {
+      if (!sub.isDirectory() || sub.name.startsWith(".")) continue;
+      if (existsSync(resolve(entryPath, sub.name, "package.json"))) {
+        dirs.push(resolve(entryPath, sub.name));
+      }
+    }
+  }
+  return dirs;
+}
+
+/**
  * Handle 'nebutra stats' command
  * Overview of the monorepo
  */
@@ -71,15 +100,10 @@ async function handleStatsOverview(options: StatsCommandOptions) {
 
   let packages: string[] = [];
   let apps: string[] = [];
-  const _totalFiles = 0;
   let preset = "unknown";
 
   try {
-    if (existsSync(packagesPath)) {
-      packages = readdirSync(packagesPath).filter(
-        (f) => !f.startsWith(".") && existsSync(resolve(packagesPath, f, "package.json")),
-      );
-    }
+    packages = collectPackageDirs(packagesPath);
 
     if (existsSync(appsPath)) {
       apps = readdirSync(appsPath).filter(
@@ -205,22 +229,15 @@ async function handleStatsPackages(options: StatsCommandOptions) {
   }> = [];
 
   try {
-    if (existsSync(packagesPath)) {
-      const entries = readdirSync(packagesPath).filter(
-        (f) => !f.startsWith(".") && existsSync(resolve(packagesPath, f, "package.json")),
-      );
-
-      packages = entries.map((entry) => {
-        const pkgPath = resolve(packagesPath, entry);
-        const pkg = readPackageJson(pkgPath);
-        return {
-          name: pkg.name || entry,
-          version: pkg.version,
-          description: pkg.description,
-          files: getDirectorySize(pkgPath),
-        };
-      });
-    }
+    packages = collectPackageDirs(packagesPath).map((pkgPath) => {
+      const pkg = readPackageJson(pkgPath);
+      return {
+        name: pkg.name || basename(pkgPath),
+        version: pkg.version,
+        description: pkg.description,
+        files: getDirectorySize(pkgPath),
+      };
+    });
   } catch (error) {
     logger.error(
       `Failed to list packages: ${error instanceof Error ? error.message : String(error)}`,

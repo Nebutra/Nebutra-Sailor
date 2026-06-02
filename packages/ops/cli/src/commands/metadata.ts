@@ -40,7 +40,7 @@ export const createSailorValueDomains = {
   region: ["global", "cn", "hybrid"],
   orm: ["prisma", "drizzle", "none"],
   db: ["postgres", "mysql", "sqlite", "none"],
-  auth: ["clerk", "betterauth", "none"],
+  auth: ["clerk", "betterauth", "nextauth", "supabase", "none"],
   socialLogin: ["wechat", "qq", "dingtalk", "workweixin", "feishu", "weibo"],
   payment: ["stripe", "lemon", "wechat", "alipay", "none"],
   ai: [
@@ -498,19 +498,49 @@ export const nebultraCommand: CommandMeta = {
       usage: "nebutra generate [type] [name]",
     },
     {
-      name: "preset",
-      description: "List and apply topology presets for governed SaaS projects",
-      usage: "nebutra preset [subcommand]",
-    },
-    {
       name: "dev",
       description: "Start development workflows for selected Nebutra apps or presets",
       usage: "nebutra dev [options]",
     },
     {
+      name: "build",
+      description: "Build all apps (pnpm build or turbo build)",
+      usage: "nebutra build [options]",
+    },
+    {
+      name: "lint",
+      description: "Lint with Biome (pnpm lint or pnpm lint:fix)",
+      usage: "nebutra lint [options]",
+    },
+    {
+      name: "typecheck",
+      description: "Type-check with TypeScript (turbo typecheck)",
+      usage: "nebutra typecheck [options]",
+    },
+    {
       name: "test",
       description: "Run unit, architecture, and E2E verification workflows",
       usage: "nebutra test [scope]",
+    },
+    {
+      name: "e2e",
+      description: "Run end-to-end tests (Playwright)",
+      usage: "nebutra e2e [suite]",
+    },
+    {
+      name: "workflow",
+      description: "Manage workflow provider scaffolding (inngest | n8n | pusher)",
+      usage: "nebutra workflow [subcommand]",
+    },
+    {
+      name: "backend",
+      description: "Scaffold backend services (ts | py)",
+      usage: "nebutra backend [subcommand]",
+    },
+    {
+      name: "theme",
+      description: "Inspect registry-backed Nebutra themes and governance metadata",
+      usage: "nebutra theme [subcommand]",
     },
     {
       name: "admin",
@@ -546,6 +576,26 @@ export const nebultraCommand: CommandMeta = {
       name: "secrets",
       description: "Manage encrypted tenant and platform secrets",
       usage: "nebutra secrets [subcommand]",
+    },
+    {
+      name: "logout",
+      description: "Clear stored authentication credentials",
+      usage: "nebutra logout",
+    },
+    {
+      name: "upgrade",
+      description: "Upgrade the nebutra CLI to the latest version",
+      usage: "nebutra upgrade",
+    },
+    {
+      name: "link",
+      description: "Link the current project to a Nebutra project id",
+      usage: "nebutra link [project-id]",
+    },
+    {
+      name: "unlink",
+      description: "Remove the project link from nebutra.config.json",
+      usage: "nebutra unlink",
     },
     {
       name: "completions",

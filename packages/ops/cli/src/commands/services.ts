@@ -423,9 +423,8 @@ Examples:
   nebutra services scale ai-service 3     Scale ai-service to 3 replicas
 
 Services Available:
-  postgres, redis, clickhouse, meilisearch, novu, openfga, ai-service, content-service,
-  recsys-service, ecommerce-service, web3-service, billing-service, event-ingest, idp,
-  jaeger, nginx
+  postgres, redis, clickhouse, meilisearch, novu, openfga, ai-service,
+  billing-service, idp, jaeger
 
 Flags:
   --dry-run                       Show what would be run without executing
