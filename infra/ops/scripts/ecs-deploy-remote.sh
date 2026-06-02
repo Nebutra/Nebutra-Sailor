@@ -787,6 +787,12 @@ deploy_one() {
   stamp="$(date -u +%Y%m%d-%H%M%S)-${SHA:0:7}"
   local release="$releases/$stamp"
 
+  if [ -f "$app_root/current/.env" ] && [ ! -f "$app_root/.env" ]; then
+    cp -p "$app_root/current/.env" "$app_root/.env" || true
+    chmod 600 "$app_root/.env" 2>/dev/null || true
+    log "preserved runtime env before release prune: $app_root/.env"
+  fi
+
   # PRE-EXTRACTION CLEANUP: drop old releases BEFORE we try to write the new
   # one. The post-extraction prune at the bottom of this function only fires
   # AFTER tar succeeds, so when the box is already at disk-pressure (this app
@@ -795,7 +801,7 @@ deploy_one() {
   # the latest (KEEP_RELEASES - 1) so the incoming release becomes Nth.
   if [ "$KEEP_RELEASES" -gt 0 ] && [ -d "$releases" ]; then
     local pre_keep=$((KEEP_RELEASES - 1))
-    [ "$pre_keep" -lt 1 ] && pre_keep=1
+    [ "$pre_keep" -lt 0 ] && pre_keep=0
     local pre_extra
     pre_extra=$(find "$releases" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
                   | sort -nr | tail -n +"$((pre_keep + 1))" | cut -d' ' -f2- || true)

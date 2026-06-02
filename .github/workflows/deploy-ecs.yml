@@ -424,21 +424,27 @@ jobs:
         # holds ~1 GB of node_modules, so KEEP_RELEASES=5 × 3 apps fills the
         # disk and even scp-to-/tmp fails before the remote helper can run.
         # This step SSHes in BEFORE upload and prunes:
-        #   1. Stale /tmp/nebutra-*.tar.gz from prior failed runs
-        #   2. All but the latest 2 releases per app
+        #   1. Stale /tmp/nebutra-*.tar.gz and .incoming bundles from prior failed runs
+        #   2. Existing releases down to the upload headroom required by ECS_KEEP_RELEASES
         #   3. Old pnpm store / apt caches as a last resort
-        # so the box has enough headroom for the new bundle (~250 MB) + the
-        # extracted node_modules tree.
+        # so the box has enough headroom for the new bundle + extracted tree.
         run: |
           set -euo pipefail
           remote_root=$(printf '%q' "${ECS_DEPLOY_ROOT:-/var/www/nebutra}")
+          keep_releases=$(printf '%q' "${ECS_KEEP_RELEASES:-1}")
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
               "${ECS_USER}@${ECS_HOST}" \
-              "ECS_DEPLOY_ROOT=${remote_root} bash -s" <<'PREFLIGHT'
+              "ECS_DEPLOY_ROOT=${remote_root} ECS_KEEP_RELEASES=${keep_releases} bash -s" <<'PREFLIGHT'
           set -euo pipefail
           incoming="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/.incoming"
+          keep="${ECS_KEEP_RELEASES:-1}"
+          case "$keep" in
+            ''|*[!0-9]*) keep=1 ;;
+          esac
+          upload_keep=$((keep - 1))
+          [ "$upload_keep" -lt 0 ] && upload_keep=0
           echo "--- disk before cleanup ---"
           df -h / 2>/dev/null || df -h
           echo "--- /tmp tarballs ---"
@@ -446,13 +452,18 @@ jobs:
           find /tmp -maxdepth 1 -name 'nebutra-*.tar.gz' -delete 2>/dev/null || true
           echo "--- incoming bundle staging ---"
           mkdir -p "$incoming"
-          find "$incoming" -mindepth 1 -maxdepth 1 -type d -mtime +1 -print -exec rm -rf {} + 2>/dev/null || true
-          echo "--- pruning old releases (keep latest 2 per app) ---"
+          find "$incoming" -mindepth 1 -maxdepth 1 -print -exec rm -rf {} + 2>/dev/null || true
+          echo "--- pruning releases for upload headroom (keep latest $upload_keep per app) ---"
           for app in landing web api design-docs sailor-docs; do
-            dir="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app/releases"
+            app_root="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app"
+            dir="$app_root/releases"
             [ -d "$dir" ] || continue
+            if [ -f "$app_root/current/.env" ] && [ ! -f "$app_root/.env" ]; then
+              cp -p "$app_root/current/.env" "$app_root/.env" || true
+              chmod 600 "$app_root/.env" 2>/dev/null || true
+            fi
             extra=$(find "$dir" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
-                      | sort -nr | tail -n +3 | cut -d' ' -f2- || true)
+                      | sort -nr | tail -n +"$((upload_keep + 1))" | cut -d' ' -f2- || true)
             if [ -n "$extra" ]; then
               echo "$app:"; echo "$extra"
               echo "$extra" | xargs -r rm -rf
@@ -494,7 +505,7 @@ jobs:
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
               "${ECS_USER}@${ECS_HOST}" \
-              "mkdir -p $(printf '%q' "$REMOTE_BUNDLE_DIR")"
+              "rm -rf $(printf '%q' "$REMOTE_BUNDLE_DIR") && mkdir -p $(printf '%q' "$REMOTE_BUNDLE_DIR") && df -h $(printf '%q' "$ECS_DEPLOY_ROOT")"
 
           # Upload bundles one at a time so a stalled transfer surfaces
           # quickly and the failure points at a specific tarball.
