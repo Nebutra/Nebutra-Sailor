@@ -1,3 +1,4 @@
+import pRetry from "p-retry";
 import { getCacheClient } from "../client.js";
 import type { CacheClient } from "../types.js";
 import { createLock } from "./lockCache.js";
@@ -11,8 +12,19 @@ export interface StampedeOptions {
   ttl: number;
   /** Lock TTL in seconds */
   lockTTL?: number;
+  /** Retry attempts while waiting for a contended lock holder to fill cache */
+  waitRetries?: number;
+  /** Initial retry delay in ms while waiting for a contended cache fill */
+  waitDelay?: number;
   /** Key prefix */
   prefix?: string;
+}
+
+class CacheFillPendingError extends Error {
+  constructor() {
+    super("cache fill pending");
+    this.name = "CacheFillPendingError";
+  }
 }
 
 /**
@@ -24,12 +36,16 @@ export class StampedeCache {
   private prefix: string;
   private ttl: number;
   private lockTTL: number;
+  private waitRetries: number;
+  private waitDelay: number;
   private lock = createLock();
 
   constructor(options: StampedeOptions) {
     this.prefix = options.prefix || "stampede";
     this.ttl = options.ttl;
     this.lockTTL = options.lockTTL || 30;
+    this.waitRetries = options.waitRetries ?? 3;
+    this.waitDelay = options.waitDelay ?? 100;
   }
 
   private key(k: string): string {
@@ -64,13 +80,31 @@ export class StampedeCache {
       return value;
     });
 
-    // If we couldn't get the lock, wait and retry
+    // If we couldn't get the lock, another process is regenerating. Poll with
+    // exponential backoff + jitter before falling back to an uncached fetch.
     if (result === null) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-      const eventual = await redis.get<T>(cacheKey);
-      if (eventual !== null) {
-        return eventual;
+      try {
+        return await pRetry(
+          async () => {
+            const eventual = await redis.get<T>(cacheKey);
+            if (eventual !== null) return eventual;
+            throw new CacheFillPendingError();
+          },
+          {
+            retries: this.waitRetries,
+            minTimeout: this.waitDelay,
+            factor: 2,
+            maxTimeout: Math.max(this.waitDelay, this.waitDelay * 2 ** 4),
+            randomize: true,
+            shouldRetry: ({ error }) => error instanceof CacheFillPendingError,
+          },
+        );
+      } catch (error) {
+        if (!(error instanceof CacheFillPendingError)) {
+          throw error;
+        }
       }
+
       // Last resort - just fetch without caching
       return fetcher();
     }
