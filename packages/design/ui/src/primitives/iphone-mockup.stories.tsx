@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IphoneMockup, Phone } from "./iphone-mockup";
 
 const demoImage = `data:image/svg+xml;utf8,${encodeURIComponent(`

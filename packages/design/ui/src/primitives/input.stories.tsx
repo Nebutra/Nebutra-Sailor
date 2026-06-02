@@ -1,7 +1,7 @@
 import { Dollar as DollarSign, Envelope as Mail, MagnifyingGlass as Search } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
+import { expect, userEvent, within } from "storybook/test";
 import { Input } from "./input";
 
 const meta = {

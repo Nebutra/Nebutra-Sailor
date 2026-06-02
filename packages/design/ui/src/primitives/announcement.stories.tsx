@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Announcement, AnnouncementTag, AnnouncementTitle } from "./announcement";
 
 const meta = {

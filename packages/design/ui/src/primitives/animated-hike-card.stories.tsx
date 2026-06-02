@@ -6,7 +6,7 @@ import {
   Globe as Map,
   ChartTrendingUp as TrendingUp,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AnimatedHikeCard } from "./animated-hike-card";
 
 const meta = {

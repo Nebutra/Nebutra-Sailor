@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { format, subDays } from "date-fns";
 import { GitHubCalendar } from "./github-calendar";
 

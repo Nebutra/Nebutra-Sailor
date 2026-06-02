@@ -1,5 +1,5 @@
 import type { Graph, GraphEdge, GraphNode } from "@nebutra/graph-model";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { NodeGraphCanvas } from "./node-graph-canvas";
 

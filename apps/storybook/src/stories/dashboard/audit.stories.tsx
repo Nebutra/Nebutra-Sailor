@@ -5,7 +5,7 @@
  * in a `NextIntlClientProvider` decorator with curated message fixtures (see
  * `_shared.tsx`) so they render without a Next.js runtime.
  */
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AuditLogFilters } from "../../../../web/src/components/audit/audit-log-filters";
 import {
   type AuditLogEntry,

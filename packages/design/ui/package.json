@@ -137,7 +137,6 @@
   },
   "devDependencies": {
     "@nebutra/design-tokens": "workspace:*",
-    "@storybook/test": "^8.6.17",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/canvas-confetti": "^1.9.0",
@@ -146,7 +145,7 @@
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/three": "^0.183.1",
     "next": "^16.2.6",
-    "storybook": "^8.6.17",
+    "storybook": "^10.4.2",
     "@vitejs/plugin-react": "^4.3.4",
     "tsup": "catalog:",
     "tsx": "catalog:",

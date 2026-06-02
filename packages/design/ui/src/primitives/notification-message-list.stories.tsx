@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { NotificationMessage } from "./notification-message-list";
 import { NotificationMessageList } from "./notification-message-list";
 

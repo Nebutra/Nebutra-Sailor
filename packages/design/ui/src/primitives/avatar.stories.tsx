@@ -1,5 +1,5 @@
 import { ArrowCircleDown, CheckCircleFill, ClockDashed } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "./avatar";
 import { AvatarWithIcon, BitbucketAvatar, GitHubAvatar, GitLabAvatar } from "./avatar-extended";
 

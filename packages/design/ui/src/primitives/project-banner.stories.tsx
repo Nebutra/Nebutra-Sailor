@@ -1,5 +1,5 @@
 import { RotateCounterClockwise, ShieldCheck, Warning as WarningIcon } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ProjectBanner } from "./project-banner";
 
 const meta: Meta<typeof ProjectBanner> = {

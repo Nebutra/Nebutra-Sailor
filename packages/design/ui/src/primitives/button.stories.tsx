@@ -7,7 +7,7 @@ import {
   MagnifyingGlass as Search,
   SettingsGear as Settings,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button, ButtonLink } from "./button";
 
 const meta = {

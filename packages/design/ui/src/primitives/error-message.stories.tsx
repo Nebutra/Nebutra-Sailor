@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ErrorMessage, Error as ErrorSurface } from "./error-message";
 import { Input } from "./input";
 

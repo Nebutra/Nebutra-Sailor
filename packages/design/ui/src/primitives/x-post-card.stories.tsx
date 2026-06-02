@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { XPostCard, XPostSkeleton } from "./x-post-card";
 
 const meta = {

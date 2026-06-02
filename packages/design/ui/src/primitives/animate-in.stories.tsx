@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AnimateIn, AnimateInGroup } from "./animate-in";
 
 const meta: Meta<typeof AnimateIn> = {

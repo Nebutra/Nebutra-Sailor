@@ -5,7 +5,7 @@
  * `fetcher` shim so stories never hit the network. `InboxList` is a pure
  * presentational component and only needs an array of items.
  */
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { InboxBell } from "../../../../web/src/components/notifications/inbox-bell";
 import {
   InboxEmptyState,

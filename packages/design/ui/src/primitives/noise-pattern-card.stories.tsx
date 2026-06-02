@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { NoisePatternCard, NoisePatternCardBody } from "./noise-pattern-card";
 
 const meta = {

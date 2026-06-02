@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./button";
 import { Note, type NoteTone } from "./note";
 
@@ -106,9 +106,6 @@ export const EdgeCases: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: {
-    backgrounds: { default: "dark" },
-  },
   render: () => (
     <div className="dark grid max-w-3xl gap-3 rounded-lg bg-[var(--neutral-1)] p-6">
       {tones.map((tone) => (
@@ -118,4 +115,9 @@ export const DarkMode: Story = {
       ))}
     </div>
   ),
+  globals: {
+    backgrounds: {
+      value: "dark",
+    },
+  },
 };

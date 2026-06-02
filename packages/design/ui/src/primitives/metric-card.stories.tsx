@@ -1,5 +1,5 @@
 import { Gauge, Servers, Warning } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { MetricCard, MetricCardBordered, MetricGrid } from "./metric-card";
 
 const meta = {

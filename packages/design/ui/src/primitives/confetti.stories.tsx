@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useRef } from "react";
 import type { ConfettiRef } from "./confetti";
 import { Confetti, ConfettiButton } from "./confetti";

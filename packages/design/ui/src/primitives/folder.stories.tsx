@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Folder, type FolderColor } from "./folder";
 
 const meta: Meta<typeof Folder> = {

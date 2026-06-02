@@ -6,7 +6,7 @@ import {
   Sparkles,
   Lightning as Zap,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { GridFeatureCard } from "./grid-feature-card";
 
 const meta = {

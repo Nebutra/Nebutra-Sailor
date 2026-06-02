@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./button";
 import {
   Sheet,
@@ -205,12 +205,14 @@ export const AsyncStates: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: {
-    backgrounds: { default: "dark" },
-  },
   render: () => (
     <div className="dark">
       <DefaultSheetExample />
     </div>
   ),
+  globals: {
+    backgrounds: {
+      value: "dark",
+    },
+  },
 };

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { SubagentTool } from "./subagent-tool";
 
 const meta: Meta<typeof SubagentTool> = {

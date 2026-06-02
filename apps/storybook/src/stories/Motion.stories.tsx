@@ -1,5 +1,5 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type * as React from "react";
 import { useState } from "react";
 

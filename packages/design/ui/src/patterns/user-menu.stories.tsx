@@ -9,7 +9,7 @@ import {
   User,
   Users,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { UserMenu } from "./user-menu";
 
 const meta: Meta<typeof UserMenu> = {

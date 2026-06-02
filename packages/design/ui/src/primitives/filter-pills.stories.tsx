@@ -11,7 +11,7 @@ import {
   Lightning as Zap,
 } from "@nebutra/icons";
 import { GraduationCap, Wallet } from "@phosphor-icons/react/dist/ssr";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 import { type FilterPillOption, FilterPills, type FilterPillsProps } from "./filter-pills";
 

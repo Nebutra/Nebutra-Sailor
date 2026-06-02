@@ -1,5 +1,5 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof AnimateIn> = {
   title: "Components/AnimateIn",

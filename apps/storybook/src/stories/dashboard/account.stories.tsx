@@ -5,7 +5,7 @@
  * overrides for their network operations. We pass in-memory mocks so stories
  * never hit the real `/api/account/*` endpoints.
  */
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DataExportCard } from "../../../../web/src/components/account/data-export-card";
 import { EmailChangeForm } from "../../../../web/src/components/account/email-change-form";
 import { withIntl } from "./_shared";

@@ -1,5 +1,5 @@
 import { Database, LogoGithub, LogoSlack, Servers, Workflow } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type * as React from "react";
 import { useRef } from "react";
 import { AnimatedBeam } from "./animated-beam";
@@ -181,12 +181,14 @@ export const DenseTopology: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: {
-    backgrounds: { default: "dark" },
-  },
   render: () => (
     <div className="dark">
       <ProductFlowDemo />
     </div>
   ),
+  globals: {
+    backgrounds: {
+      value: "dark",
+    },
+  },
 };

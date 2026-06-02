@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { Input } from "./input";
 import { Slider } from "./slider";
@@ -109,12 +109,14 @@ export const LongLabel: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: {
-    backgrounds: { default: "dark" },
-  },
   render: () => (
     <div className="dark w-80">
       <Slider defaultValue={50} label="Sample Rate" max={96} min={8} step={4} unit=" kHz" />
     </div>
   ),
+  globals: {
+    backgrounds: {
+      value: "dark",
+    },
+  },
 };

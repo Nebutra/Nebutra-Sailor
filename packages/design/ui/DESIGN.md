@@ -234,7 +234,7 @@ import { ChevronRight } from "lucide-react"; // only when no Geist equivalent
    ```
 3. **Storybook story** is mandatory:
    ```tsx
-   import type { Meta, StoryObj } from "@storybook/react";
+   import type { Meta, StoryObj } from "@storybook/react-vite";
    import { MyComponent } from "./my-component";
 
    const meta: Meta<typeof MyComponent> = {

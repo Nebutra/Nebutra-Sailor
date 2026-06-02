@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 import { type Workspace, WorkspaceSwitcher } from "./workspace-switcher";
 

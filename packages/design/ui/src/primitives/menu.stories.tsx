@@ -1,7 +1,7 @@
 "use client";
 
 import { External, Trash } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Menu, MenuButton, MenuContainer, MenuItem, MenuItemLocked, MenuSection } from "./menu";
 
 const meta = {

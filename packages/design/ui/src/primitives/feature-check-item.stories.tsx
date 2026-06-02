@@ -1,5 +1,5 @@
 import { Sparkles, Star } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FeatureCheckItem } from "./feature-check-item";
 
 const meta = {

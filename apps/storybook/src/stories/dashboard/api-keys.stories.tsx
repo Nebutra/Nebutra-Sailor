@@ -5,7 +5,7 @@
  * does not register a path alias to that workspace. Heavy runtime mocks (auth,
  * permissions) are not required here — both components are pure React.
  */
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { type ApiKey, ApiKeysList } from "../../../../web/src/components/api-keys/api-keys-list";
 import {

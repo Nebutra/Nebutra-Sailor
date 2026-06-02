@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta = {
   title: "Design Tokens/Colors",
@@ -124,7 +124,6 @@ export const Gradients: StoryObj = {
 
 export const DarkMode: StoryObj = {
   name: "Dark Mode Preview",
-  parameters: { backgrounds: { default: "dark" } },
   render: () => (
     <div className="dark p-6 bg-[var(--neutral-1)] min-h-64">
       <p className="mb-4 text-sm" style={{ color: "var(--neutral-11)" }}>
@@ -156,4 +155,9 @@ export const DarkMode: StoryObj = {
       </div>
     </div>
   ),
+  globals: {
+    backgrounds: {
+      value: "dark",
+    },
+  },
 };

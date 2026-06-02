@@ -8,7 +8,7 @@ import {
   SettingsGear as Settings,
   User,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { ExpandableTabs } from "./expandable-tabs";
 

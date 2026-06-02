@@ -1,5 +1,5 @@
 import { ShowMore } from "@nebutra/ui/primitives";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
 const meta: Meta<typeof ShowMore> = {

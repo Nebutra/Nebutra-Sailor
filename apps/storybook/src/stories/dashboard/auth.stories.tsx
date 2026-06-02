@@ -7,7 +7,7 @@
  * link click. The forms accept `onSubmit` overrides so we never hit the
  * real `/api/auth/*` endpoints.
  */
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ForgotPasswordForm } from "../../../../web/src/components/auth/forgot-password-form";
 import { ResetPasswordForm } from "../../../../web/src/components/auth/reset-password-form";
 import { VerifyEmailResult } from "../../../../web/src/components/auth/verify-email-result";

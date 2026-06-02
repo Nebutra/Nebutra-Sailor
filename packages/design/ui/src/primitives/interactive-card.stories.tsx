@@ -1,5 +1,5 @@
 import { Lightning as Rocket, Shield, Star, Lightning as Zap } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { AnimatedExportIcon, InteractiveCard } from "./interactive-card";
 
 const meta = {

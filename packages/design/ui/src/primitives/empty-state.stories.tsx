@@ -6,8 +6,8 @@ import {
   MagnifyingGlass,
   Warning,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, within } from "storybook/test";
 import { Button } from "./button";
 import { EmptyState } from "./empty-state";
 

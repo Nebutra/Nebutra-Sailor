@@ -1,4 +1,4 @@
-import type { Preview, StoryContext, StoryFn } from "@storybook/react";
+import type { Preview, StoryContext, StoryFn } from "@storybook/react-vite";
 // Single stylesheet — Tailwind v4 + tokens + fonts + @source scan directives.
 import "./preview.css";
 import { a11yConfig } from "./a11y-config";
@@ -12,12 +12,11 @@ const preview: Preview = {
       },
     },
     backgrounds: {
-      default: "light",
-      values: [
-        { name: "light", value: "var(--neutral-1)" },
-        { name: "dark", value: "var(--neutral-12)" },
-        { name: "neutral", value: "var(--neutral-2)" },
-      ],
+      options: {
+        light: { name: "light", value: "var(--neutral-1)" },
+        dark: { name: "dark", value: "var(--neutral-12)" },
+        neutral: { name: "neutral", value: "var(--neutral-2)" },
+      },
     },
     docs: {
       theme: undefined,
@@ -47,6 +46,12 @@ const preview: Preview = {
       return Story(context.args, context);
     },
   ],
+
+  initialGlobals: {
+    backgrounds: {
+      value: "light",
+    },
+  },
 };
 
 export default preview;

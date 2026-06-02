@@ -9,7 +9,7 @@ import {
   Sparkles,
   Video,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { GalleryCard, type GalleryCardIconTone } from "./gallery-card";
 
 const meta: Meta<typeof GalleryCard> = {

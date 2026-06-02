@@ -1,5 +1,5 @@
 import { ArrowRight } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "./button";
 import { ExpandableGallery, type GalleryPhoto } from "./expandable-gallery";
 

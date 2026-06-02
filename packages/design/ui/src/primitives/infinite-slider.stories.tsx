@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { InfiniteSlider } from "./infinite-slider";
 
 const logos = ["Vercel", "Next.js", "React", "TypeScript", "Tailwind", "Prisma", "Supabase"];

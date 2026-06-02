@@ -1,5 +1,5 @@
 import { ChartTrendingUp, Servers } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { KpiCard } from "./kpi-card";
 
 const meta = {

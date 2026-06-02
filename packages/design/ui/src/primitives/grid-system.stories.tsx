@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type * as React from "react";
+import { expect, userEvent, within } from "storybook/test";
 import { Button } from "./button";
 import { Grid } from "./grid-system";
 import { Spinner } from "./spinner";
@@ -244,9 +244,6 @@ export const KeyboardA11y: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: {
-    backgrounds: { default: "dark" },
-  },
   render: () => (
     <div className="dark bg-background p-[var(--grid-cell-padding)] text-foreground">
       <Grid.System debug guideWidth={1} unstable_useContainer>
@@ -264,4 +261,9 @@ export const DarkMode: Story = {
       </Grid.System>
     </div>
   ),
+  globals: {
+    backgrounds: {
+      value: "dark",
+    },
+  },
 };

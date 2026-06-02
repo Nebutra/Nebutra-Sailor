@@ -13,7 +13,7 @@ import {
   Users,
   Lightning as Zap,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { SidebarNav, type SidebarNavSection } from "./sidebar-nav";
 
 const meta: Meta<typeof SidebarNav> = {

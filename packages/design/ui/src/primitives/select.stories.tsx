@@ -1,7 +1,7 @@
 import { ArrowCircleUp } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ReactNode } from "react";
+import { expect, userEvent, within } from "storybook/test";
 import {
   Select,
   SelectContent,

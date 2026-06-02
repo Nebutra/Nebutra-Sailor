@@ -5,7 +5,7 @@ import {
   Star,
   Lightning as Zap,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { PricingCard } from "./pricing-card";
 
 const meta = {

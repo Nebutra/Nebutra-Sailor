@@ -1,7 +1,7 @@
 import { Copy, Download, Pencil as Edit2, External, Link } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import type * as React from "react";
+import { expect, userEvent, within } from "storybook/test";
 import { ContextMenu } from "./context-menu";
 
 const meta = {

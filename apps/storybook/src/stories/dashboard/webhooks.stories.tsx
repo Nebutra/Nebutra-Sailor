@@ -5,7 +5,7 @@
  * fetch when `initialEndpoints` is omitted — we always pass a fixture so
  * stories never make real network calls.
  */
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   CreateWebhookDialog,
   type CreateWebhookResult,

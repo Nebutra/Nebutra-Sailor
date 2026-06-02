@@ -1,5 +1,5 @@
 import { GridSquare, ListUnordered, LogoGithub, LogoGitlab } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
@@ -176,9 +176,6 @@ export const LongTextOverflow: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: {
-    backgrounds: { default: "dark" },
-  },
   render: () => (
     <div className="dark rounded-lg bg-background p-4">
       <Tabs defaultValue="source" className="w-[min(24rem,calc(100vw-2rem))]">
@@ -189,6 +186,11 @@ export const DarkMode: Story = {
       </Tabs>
     </div>
   ),
+  globals: {
+    backgrounds: {
+      value: "dark",
+    },
+  },
 };
 
 export const TooltipComposition: Story = {

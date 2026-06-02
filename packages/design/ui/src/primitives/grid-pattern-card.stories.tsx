@@ -1,5 +1,5 @@
 import { Shield, Sparkles, Lightning as Zap } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { GridPatternCard, GridPatternCardBody } from "./grid-pattern-card";
 
 const meta = {

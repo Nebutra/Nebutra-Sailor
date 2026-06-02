@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@nebutra/tokens";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
 import { ThemeSwitcher, type ThemeSwitcherValue } from "./theme-switcher";
@@ -90,9 +90,6 @@ export const ControlledCompatibility: Story = {
 };
 
 export const DarkMode: Story = {
-  parameters: {
-    backgrounds: { default: "dark" },
-  },
   render: () => (
     <div className="dark rounded-lg bg-background p-4">
       <StoryThemeProvider forcedTheme="dark">
@@ -100,4 +97,9 @@ export const DarkMode: Story = {
       </StoryThemeProvider>
     </div>
   ),
+  globals: {
+    backgrounds: {
+      value: "dark",
+    },
+  },
 };

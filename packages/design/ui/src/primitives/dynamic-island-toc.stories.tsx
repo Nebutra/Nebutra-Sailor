@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DynamicIslandTOC } from "./dynamic-island-toc";
 
 /* eslint-disable react/no-array-index-key */

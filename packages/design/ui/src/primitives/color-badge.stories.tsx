@@ -1,5 +1,5 @@
 import { Warning as AlertTriangle, Shield, Star, Lightning as Zap } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ColorBadge } from "./color-badge";
 
 const meta = {

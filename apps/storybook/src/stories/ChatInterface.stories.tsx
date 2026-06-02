@@ -5,7 +5,7 @@ import {
   Trash as Trash2,
   User,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 /* ---------------------------------------------------------------------------
  * Visual-only story components

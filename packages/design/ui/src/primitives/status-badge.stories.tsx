@@ -7,7 +7,7 @@ import {
   ShieldCheck,
   CrossCircle as XCircle,
 } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { StatusBadge } from "./status-badge";
 
 const meta = {

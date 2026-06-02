@@ -1,5 +1,5 @@
 import { Check } from "@nebutra/icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { MagicCard } from "./magic-card";
 
 const meta = {

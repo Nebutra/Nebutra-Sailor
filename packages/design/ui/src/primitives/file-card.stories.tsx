@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FileCard, type FileFormat } from "./file-card";
 
 const meta: Meta<typeof FileCard> = {

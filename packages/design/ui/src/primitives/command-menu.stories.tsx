@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { type ReactNode, useMemo, useState } from "react";
+import { expect, userEvent, within } from "storybook/test";
 import { Button } from "./button";
 import { CommandMenu } from "./command-menu";
 
