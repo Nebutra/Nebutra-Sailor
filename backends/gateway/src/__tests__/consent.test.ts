@@ -130,7 +130,7 @@ const mockDocument = {
 const mockConsent = {
   id: "consent-1",
   userId: null,
-  organizationId: null,
+  tenantId: null,
   visitorId: "visitor-abc",
   documentId: "doc-1",
   documentSlug: "terms-of-service",
@@ -196,7 +196,7 @@ describe("POST /consent", () => {
     expect(body.documentVersion).toBe("2024-01");
     const createCall = (prisma.userConsent.create as ReturnType<typeof vi.fn>).mock.calls[0]?.[0];
     expect(createCall.data.userId).toBe("user-123");
-    expect(createCall.data.organizationId).toBe("org-456");
+    expect(createCall.data.tenantId).toBe("org-456");
   });
 
   it("returns 404 when the document is not found", async () => {
