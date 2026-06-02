@@ -36,13 +36,15 @@ describe("Tenant cutover contract", () => {
   });
 
   it("keeps gateway request isolation keyed by canonical tenantId", async () => {
-    const [tenantContext, gatewayIndex, rateLimit, idempotency, auditMutation] = await Promise.all([
-      readFile(join(process.cwd(), "backends/gateway/src/middlewares/tenantContext.ts"), "utf8"),
-      readFile(join(process.cwd(), "backends/gateway/src/index.ts"), "utf8"),
-      readFile(join(process.cwd(), "backends/gateway/src/middlewares/rateLimit.ts"), "utf8"),
-      readFile(join(process.cwd(), "backends/gateway/src/middlewares/idempotency.ts"), "utf8"),
-      readFile(join(process.cwd(), "backends/gateway/src/middlewares/auditMutation.ts"), "utf8"),
-    ]);
+    const [tenantContext, gatewayIndex, rateLimit, idempotency, auditMutation, usageMetering] =
+      await Promise.all([
+        readFile(join(process.cwd(), "backends/gateway/src/middlewares/tenantContext.ts"), "utf8"),
+        readFile(join(process.cwd(), "backends/gateway/src/index.ts"), "utf8"),
+        readFile(join(process.cwd(), "backends/gateway/src/middlewares/rateLimit.ts"), "utf8"),
+        readFile(join(process.cwd(), "backends/gateway/src/middlewares/idempotency.ts"), "utf8"),
+        readFile(join(process.cwd(), "backends/gateway/src/middlewares/auditMutation.ts"), "utf8"),
+        readFile(join(process.cwd(), "backends/gateway/src/middlewares/usageMetering.ts"), "utf8"),
+      ]);
 
     expect(tenantContext).toContain("tenantId?: string;");
     expect(tenantContext).toContain("if (!tenant.userId || !tenant.tenantId)");
@@ -53,5 +55,8 @@ describe("Tenant cutover contract", () => {
     expect(rateLimit).toContain('tenant?.tenantId || "anonymous"');
     expect(idempotency).toContain('tenant?.tenantId ?? tenant?.userId ?? "anonymous"');
     expect(auditMutation).toContain("tenant?.tenantId ? { tenantId: tenant.tenantId } : {}");
+    expect(usageMetering).toContain("const tenantId = tenant?.tenantId;");
+    expect(usageMetering).toContain("usage:${tenantId}:${period}:api_calls");
+    expect(usageMetering).not.toContain("const orgId = tenant?.organizationId;");
   });
 });

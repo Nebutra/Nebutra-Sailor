@@ -61,7 +61,7 @@ export async function auditMutationMiddleware(c: Context, next: Next) {
     action: inferAction(c.req.method, path),
     actorId: tenant?.userId ?? "anonymous",
     actorType: tenant?.userId ? "user" : "system",
-    ...(tenant?.organizationId ? { tenantId: tenant.organizationId } : {}),
+    ...(tenant?.tenantId ? { tenantId: tenant.tenantId } : {}),
     outcome: status >= 200 && status < 400 ? "success" : "failure",
     ...(ip ? { ipAddress: ip } : {}),
     ...(ua ? { userAgent: ua } : {}),

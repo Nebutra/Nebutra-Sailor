@@ -166,7 +166,7 @@ app.use("*", async (c, next) => {
   const tenant = c.get("tenant");
   const ctx = requestContext.getStore();
   if (ctx && tenant) {
-    if (tenant.organizationId !== undefined) ctx.tenantId = tenant.organizationId;
+    if (tenant.tenantId !== undefined) ctx.tenantId = tenant.tenantId;
     if (tenant.userId !== undefined) ctx.userId = tenant.userId;
   }
   await next();
@@ -337,7 +337,7 @@ app.onError((err, c) => {
   const requestId = c.req.header("x-request-id");
   const tenant = c.get("tenant");
   logger.error("Unhandled error", err, { path: c.req.path, requestId });
-  captureRequestError(err, requestId, tenant?.organizationId);
+  captureRequestError(err, requestId, tenant?.tenantId);
   return c.json(
     toApiError(err, requestId),
     getStatusCode(err) as 400 | 401 | 403 | 404 | 409 | 429 | 500 | 502 | 503 | 504,
