@@ -315,13 +315,23 @@ integrationRoutes.openapi(deleteRoute, async (c) => {
 // `manage` ability on `Integration`; member/viewer are denied). The legacy coarse
 // `requireRole` guard was removed here — CASL `requirePermission` is the canonical
 // route-layer authorization across the gateway.
+/** Aggregated integration counts returned by the admin overview endpoint. */
+const IntegrationOverviewSchema = z.object({
+  total: z.number().int(),
+  activeCount: z.number().int(),
+  byType: z.record(z.string(), z.number().int()),
+});
+
 const adminOverviewRoute = createRoute({
   method: "get",
   path: "/admin/overview",
   tags: ["Integrations"],
   summary: "Admin-only integration overview (active count + types)",
   responses: {
-    200: { description: "Integration overview" },
+    200: {
+      description: "Integration overview",
+      content: { "application/json": { schema: IntegrationOverviewSchema } },
+    },
     401: { description: "Unauthorized" },
     403: { description: "Forbidden" },
   },

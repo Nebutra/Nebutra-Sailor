@@ -5078,7 +5078,29 @@
         "summary": "Admin-only integration overview (active count + types)",
         "responses": {
           "200": {
-            "description": "Integration overview"
+            "description": "Integration overview",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "activeCount": {
+                      "type": "integer"
+                    },
+                    "byType": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "required": ["total", "activeCount", "byType"]
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized"

@@ -16,6 +16,7 @@ const ROOT = resolve(__dirname, "../..");
 const API_GATEWAY_SRC = resolve(ROOT, "backends/gateway/src");
 const OPENAPI_SPEC_PATH = resolve(ROOT, "backends/gateway/openapi.json");
 const CI_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/ci.yml");
+const GENERATED_TYPES_PATH = resolve(ROOT, "apps/web/src/lib/api/types.generated.ts");
 
 /**
  * Routes that are intentionally unversioned.
@@ -224,5 +225,46 @@ describe("Property 5d: OpenAPI Client Drift Gate", () => {
   it("does not pretend the ignored OpenAPI spec is a committed freshness gate", () => {
     expect(workflow).not.toContain("Check spec is up to date");
     expect(workflow).not.toContain("OpenAPI spec is out of date");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Property 5e: JSON-returning routes declare a typed response body (#148)
+//
+// Regression guard for the integrations admin overview drift: a `createRoute`
+// 200 response declared with only a `description` (no `content` schema) makes
+// openapi-typescript emit `content?: never`, contradicting the handler's
+// `c.json(...)` body and silently breaking the frontend client contract.
+// ---------------------------------------------------------------------------
+
+describe("Property 5e: Typed JSON response contract (#148)", () => {
+  const types = readFileSync(GENERATED_TYPES_PATH, "utf-8");
+
+  /** Slice the generated type block for a given path, bounded by the next path key. */
+  function pathBlock(path: string): string {
+    const start = types.indexOf(`"${path}":`);
+    expect(start, `path ${path} missing from generated types`).toBeGreaterThan(-1);
+    // Bound the slice at the next route-path key so assertions never bleed into
+    // an adjacent endpoint's response shape.
+    const nextPath = types.indexOf('"/api/', start + 1);
+    return types.slice(start, nextPath > start ? nextPath : start + 2000);
+  }
+
+  it("integrations admin overview 200 exposes a typed JSON body, not content?: never", () => {
+    const block = pathBlock("/api/v1/integrations/admin/overview");
+    // Scope to the 200 response only — error responses (401/403) legitimately
+    // carry no body and are allowed to be `content?: never`.
+    const from200 = block.indexOf("200: {");
+    const to401 = block.indexOf("401:", from200);
+    const ok200 = block.slice(from200, to401 > from200 ? to401 : undefined);
+
+    expect(
+      ok200.includes("content?: never"),
+      "admin/overview regressed to a content-less 200 — add a zod-openapi response schema in " +
+        "backends/gateway/src/routes/integrations/index.ts and run pnpm generate:api-types",
+    ).toBe(false);
+
+    expect(ok200).toContain("activeCount: number;");
+    expect(ok200).toContain("byType:");
   });
 });
