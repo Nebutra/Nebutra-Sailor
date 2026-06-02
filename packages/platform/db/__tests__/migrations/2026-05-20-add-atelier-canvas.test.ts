@@ -53,13 +53,16 @@ describe("migration: 2026-05-20 — add Atelier canvas without template drift", 
     const model = getModelBlock(readSchema(), "AtelierCanvas");
 
     expect(model).toContain("id             String");
-    expect(model).toContain('organizationId String   @map("organization_id")');
+    expect(model).toContain('tenantId String   @map("tenant_id")');
     expect(model).toContain(
       'scene          Json     @default("{\\"elements\\":[],\\"files\\":[]}")',
     );
     expect(model).toContain("thumbnail      String?");
-    expect(model).toContain("@@unique([organizationId, id])");
-    expect(model).toContain("@@index([organizationId, updatedAt])");
+    expect(model).toContain(
+      "tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)",
+    );
+    expect(model).toContain("@@unique([tenantId, id])");
+    expect(model).toContain("@@index([tenantId, updatedAt])");
     expect(model).toContain('@@map("atelier_canvas")');
     expect(model).toContain('@@schema("public")');
   });
@@ -69,8 +72,9 @@ describe("migration: 2026-05-20 — add Atelier canvas without template drift", 
     const executableSql = withoutSqlComments(migration);
 
     expect(migration).toContain('CREATE TABLE "public"."atelier_canvas"');
-    expect(migration).toContain('CREATE UNIQUE INDEX "atelier_canvas_organization_id_id_key"');
-    expect(migration).toContain('CREATE INDEX "atelier_canvas_organization_id_updated_at_idx"');
+    expect(migration).toContain('"tenant_id" TEXT NOT NULL');
+    expect(migration).toContain('CREATE UNIQUE INDEX "atelier_canvas_tenant_id_id_key"');
+    expect(migration).toContain('CREATE INDEX "atelier_canvas_tenant_id_updated_at_idx"');
     expect(executableSql).not.toMatch(/\bIF\s+NOT\s+EXISTS\b/i);
     expect(executableSql).not.toMatch(/\bDO\s+\$\$/i);
   });
@@ -81,7 +85,7 @@ describe("migration: 2026-05-20 — add Atelier canvas without template drift", 
     expect(migration).toContain('ALTER TABLE "public"."atelier_canvas" ENABLE ROW LEVEL SECURITY');
     expect(migration).toContain('CREATE POLICY "atelier_canvas_bypass"');
     expect(migration).toContain('CREATE POLICY "atelier_canvas_tenant"');
-    expect(migration).toContain('USING ("organization_id" = current_org_id())');
-    expect(migration).toContain('WITH CHECK ("organization_id" = current_org_id())');
+    expect(migration).toContain('USING ("tenant_id" = current_org_id())');
+    expect(migration).toContain('WITH CHECK ("tenant_id" = current_org_id())');
   });
 });
