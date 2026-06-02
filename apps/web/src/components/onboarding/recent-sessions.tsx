@@ -47,7 +47,7 @@ export async function RecentSessions() {
 
   const sessions = await db.chatSession
     .findMany({
-      where: { organizationId: orgId, userId },
+      where: { tenantId: orgId, userId },
       orderBy: { lastMessageAt: "desc" },
       take: 4,
       select: {

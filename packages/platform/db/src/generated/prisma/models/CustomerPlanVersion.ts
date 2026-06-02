@@ -26,7 +26,7 @@ export type AggregateCustomerPlanVersion = {
 
 export type CustomerPlanVersionMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   planId: string | null
   reason: string | null
   approvedBy: string | null
@@ -36,7 +36,7 @@ export type CustomerPlanVersionMinAggregateOutputType = {
 
 export type CustomerPlanVersionMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   planId: string | null
   reason: string | null
   approvedBy: string | null
@@ -46,7 +46,7 @@ export type CustomerPlanVersionMaxAggregateOutputType = {
 
 export type CustomerPlanVersionCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   planId: number
   reason: number
   approvedBy: number
@@ -58,7 +58,7 @@ export type CustomerPlanVersionCountAggregateOutputType = {
 
 export type CustomerPlanVersionMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   planId?: true
   reason?: true
   approvedBy?: true
@@ -68,7 +68,7 @@ export type CustomerPlanVersionMinAggregateInputType = {
 
 export type CustomerPlanVersionMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   planId?: true
   reason?: true
   approvedBy?: true
@@ -78,7 +78,7 @@ export type CustomerPlanVersionMaxAggregateInputType = {
 
 export type CustomerPlanVersionCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   planId?: true
   reason?: true
   approvedBy?: true
@@ -161,7 +161,7 @@ export type CustomerPlanVersionGroupByArgs<ExtArgs extends runtime.Types.Extensi
 
 export type CustomerPlanVersionGroupByOutputType = {
   id: string
-  organizationId: string
+  tenantId: string
   planId: string
   reason: string | null
   approvedBy: string | null
@@ -192,7 +192,7 @@ export type CustomerPlanVersionWhereInput = {
   OR?: Prisma.CustomerPlanVersionWhereInput[]
   NOT?: Prisma.CustomerPlanVersionWhereInput | Prisma.CustomerPlanVersionWhereInput[]
   id?: Prisma.StringFilter<"CustomerPlanVersion"> | string
-  organizationId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
+  tenantId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
   planId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
   reason?: Prisma.StringNullableFilter<"CustomerPlanVersion"> | string | null
   approvedBy?: Prisma.StringNullableFilter<"CustomerPlanVersion"> | string | null
@@ -204,7 +204,7 @@ export type CustomerPlanVersionWhereInput = {
 
 export type CustomerPlanVersionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   planId?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -216,7 +216,7 @@ export type CustomerPlanVersionOrderByWithRelationInput = {
 
 export type CustomerPlanVersionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId?: string
+  tenantId?: string
   AND?: Prisma.CustomerPlanVersionWhereInput | Prisma.CustomerPlanVersionWhereInput[]
   OR?: Prisma.CustomerPlanVersionWhereInput[]
   NOT?: Prisma.CustomerPlanVersionWhereInput | Prisma.CustomerPlanVersionWhereInput[]
@@ -227,11 +227,11 @@ export type CustomerPlanVersionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"CustomerPlanVersion"> | Date | string
   plan?: Prisma.XOR<Prisma.PricingPlanScalarRelationFilter, Prisma.PricingPlanWhereInput>
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
-}, "id" | "organizationId">
+}, "id" | "tenantId">
 
 export type CustomerPlanVersionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   planId?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -247,7 +247,7 @@ export type CustomerPlanVersionScalarWhereWithAggregatesInput = {
   OR?: Prisma.CustomerPlanVersionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CustomerPlanVersionScalarWhereWithAggregatesInput | Prisma.CustomerPlanVersionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CustomerPlanVersion"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"CustomerPlanVersion"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"CustomerPlanVersion"> | string
   planId?: Prisma.StringWithAggregatesFilter<"CustomerPlanVersion"> | string
   reason?: Prisma.StringNullableWithAggregatesFilter<"CustomerPlanVersion"> | string | null
   approvedBy?: Prisma.StringNullableWithAggregatesFilter<"CustomerPlanVersion"> | string | null
@@ -267,7 +267,7 @@ export type CustomerPlanVersionCreateInput = {
 
 export type CustomerPlanVersionUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   planId: string
   reason?: string | null
   approvedBy?: string | null
@@ -287,7 +287,7 @@ export type CustomerPlanVersionUpdateInput = {
 
 export type CustomerPlanVersionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -297,7 +297,7 @@ export type CustomerPlanVersionUncheckedUpdateInput = {
 
 export type CustomerPlanVersionCreateManyInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   planId: string
   reason?: string | null
   approvedBy?: string | null
@@ -315,7 +315,7 @@ export type CustomerPlanVersionUpdateManyMutationInput = {
 
 export type CustomerPlanVersionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   planId?: Prisma.StringFieldUpdateOperationsInput | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -335,7 +335,7 @@ export type CustomerPlanVersionOrderByRelationAggregateInput = {
 
 export type CustomerPlanVersionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   planId?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
@@ -345,7 +345,7 @@ export type CustomerPlanVersionCountOrderByAggregateInput = {
 
 export type CustomerPlanVersionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   planId?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
@@ -355,7 +355,7 @@ export type CustomerPlanVersionMaxOrderByAggregateInput = {
 
 export type CustomerPlanVersionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   planId?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
@@ -496,7 +496,7 @@ export type CustomerPlanVersionScalarWhereInput = {
   OR?: Prisma.CustomerPlanVersionScalarWhereInput[]
   NOT?: Prisma.CustomerPlanVersionScalarWhereInput | Prisma.CustomerPlanVersionScalarWhereInput[]
   id?: Prisma.StringFilter<"CustomerPlanVersion"> | string
-  organizationId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
+  tenantId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
   planId?: Prisma.StringFilter<"CustomerPlanVersion"> | string
   reason?: Prisma.StringNullableFilter<"CustomerPlanVersion"> | string | null
   approvedBy?: Prisma.StringNullableFilter<"CustomerPlanVersion"> | string | null
@@ -515,7 +515,7 @@ export type CustomerPlanVersionCreateWithoutPlanInput = {
 
 export type CustomerPlanVersionUncheckedCreateWithoutPlanInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   reason?: string | null
   approvedBy?: string | null
   expiresAt?: Date | string | null
@@ -586,7 +586,7 @@ export type CustomerPlanVersionUncheckedUpdateManyWithoutTenantInput = {
 
 export type CustomerPlanVersionCreateManyPlanInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   reason?: string | null
   approvedBy?: string | null
   expiresAt?: Date | string | null
@@ -604,7 +604,7 @@ export type CustomerPlanVersionUpdateWithoutPlanInput = {
 
 export type CustomerPlanVersionUncheckedUpdateWithoutPlanInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -613,7 +613,7 @@ export type CustomerPlanVersionUncheckedUpdateWithoutPlanInput = {
 
 export type CustomerPlanVersionUncheckedUpdateManyWithoutPlanInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -624,7 +624,7 @@ export type CustomerPlanVersionUncheckedUpdateManyWithoutPlanInput = {
 
 export type CustomerPlanVersionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   planId?: boolean
   reason?: boolean
   approvedBy?: boolean
@@ -636,7 +636,7 @@ export type CustomerPlanVersionSelect<ExtArgs extends runtime.Types.Extensions.I
 
 export type CustomerPlanVersionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   planId?: boolean
   reason?: boolean
   approvedBy?: boolean
@@ -648,7 +648,7 @@ export type CustomerPlanVersionSelectCreateManyAndReturn<ExtArgs extends runtime
 
 export type CustomerPlanVersionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   planId?: boolean
   reason?: boolean
   approvedBy?: boolean
@@ -660,7 +660,7 @@ export type CustomerPlanVersionSelectUpdateManyAndReturn<ExtArgs extends runtime
 
 export type CustomerPlanVersionSelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   planId?: boolean
   reason?: boolean
   approvedBy?: boolean
@@ -668,7 +668,7 @@ export type CustomerPlanVersionSelectScalar = {
   createdAt?: boolean
 }
 
-export type CustomerPlanVersionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "planId" | "reason" | "approvedBy" | "expiresAt" | "createdAt", ExtArgs["result"]["customerPlanVersion"]>
+export type CustomerPlanVersionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "planId" | "reason" | "approvedBy" | "expiresAt" | "createdAt", ExtArgs["result"]["customerPlanVersion"]>
 export type CustomerPlanVersionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   plan?: boolean | Prisma.PricingPlanDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
@@ -690,7 +690,7 @@ export type $CustomerPlanVersionPayload<ExtArgs extends runtime.Types.Extensions
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    tenantId: string
     planId: string
     reason: string | null
     approvedBy: string | null
@@ -1122,7 +1122,7 @@ export interface Prisma__CustomerPlanVersionClient<T, Null = never, ExtArgs exte
  */
 export interface CustomerPlanVersionFieldRefs {
   readonly id: Prisma.FieldRef<"CustomerPlanVersion", 'String'>
-  readonly organizationId: Prisma.FieldRef<"CustomerPlanVersion", 'String'>
+  readonly tenantId: Prisma.FieldRef<"CustomerPlanVersion", 'String'>
   readonly planId: Prisma.FieldRef<"CustomerPlanVersion", 'String'>
   readonly reason: Prisma.FieldRef<"CustomerPlanVersion", 'String'>
   readonly approvedBy: Prisma.FieldRef<"CustomerPlanVersion", 'String'>

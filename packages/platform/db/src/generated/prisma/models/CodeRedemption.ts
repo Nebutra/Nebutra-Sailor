@@ -28,7 +28,7 @@ export type CodeRedemptionMinAggregateOutputType = {
   id: string | null
   codeId: string | null
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   redeemedAt: Date | null
   ipAddress: string | null
 }
@@ -37,7 +37,7 @@ export type CodeRedemptionMaxAggregateOutputType = {
   id: string | null
   codeId: string | null
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   redeemedAt: Date | null
   ipAddress: string | null
 }
@@ -46,7 +46,7 @@ export type CodeRedemptionCountAggregateOutputType = {
   id: number
   codeId: number
   userId: number
-  organizationId: number
+  tenantId: number
   redeemedAt: number
   ipAddress: number
   _all: number
@@ -57,7 +57,7 @@ export type CodeRedemptionMinAggregateInputType = {
   id?: true
   codeId?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   redeemedAt?: true
   ipAddress?: true
 }
@@ -66,7 +66,7 @@ export type CodeRedemptionMaxAggregateInputType = {
   id?: true
   codeId?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   redeemedAt?: true
   ipAddress?: true
 }
@@ -75,7 +75,7 @@ export type CodeRedemptionCountAggregateInputType = {
   id?: true
   codeId?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   redeemedAt?: true
   ipAddress?: true
   _all?: true
@@ -157,7 +157,7 @@ export type CodeRedemptionGroupByOutputType = {
   id: string
   codeId: string
   userId: string
-  organizationId: string | null
+  tenantId: string | null
   redeemedAt: Date
   ipAddress: string | null
   _count: CodeRedemptionCountAggregateOutputType | null
@@ -187,7 +187,7 @@ export type CodeRedemptionWhereInput = {
   id?: Prisma.StringFilter<"CodeRedemption"> | string
   codeId?: Prisma.StringFilter<"CodeRedemption"> | string
   userId?: Prisma.StringFilter<"CodeRedemption"> | string
-  organizationId?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
   redeemedAt?: Prisma.DateTimeFilter<"CodeRedemption"> | Date | string
   ipAddress?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
   code?: Prisma.XOR<Prisma.RedemptionCodeScalarRelationFilter, Prisma.RedemptionCodeWhereInput>
@@ -198,7 +198,7 @@ export type CodeRedemptionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   codeId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   redeemedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   code?: Prisma.RedemptionCodeOrderByWithRelationInput
@@ -213,7 +213,7 @@ export type CodeRedemptionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CodeRedemptionWhereInput | Prisma.CodeRedemptionWhereInput[]
   codeId?: Prisma.StringFilter<"CodeRedemption"> | string
   userId?: Prisma.StringFilter<"CodeRedemption"> | string
-  organizationId?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
   redeemedAt?: Prisma.DateTimeFilter<"CodeRedemption"> | Date | string
   ipAddress?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
   code?: Prisma.XOR<Prisma.RedemptionCodeScalarRelationFilter, Prisma.RedemptionCodeWhereInput>
@@ -224,7 +224,7 @@ export type CodeRedemptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   codeId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   redeemedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.CodeRedemptionCountOrderByAggregateInput
@@ -239,7 +239,7 @@ export type CodeRedemptionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"CodeRedemption"> | string
   codeId?: Prisma.StringWithAggregatesFilter<"CodeRedemption"> | string
   userId?: Prisma.StringWithAggregatesFilter<"CodeRedemption"> | string
-  organizationId?: Prisma.StringNullableWithAggregatesFilter<"CodeRedemption"> | string | null
+  tenantId?: Prisma.StringNullableWithAggregatesFilter<"CodeRedemption"> | string | null
   redeemedAt?: Prisma.DateTimeWithAggregatesFilter<"CodeRedemption"> | Date | string
   ipAddress?: Prisma.StringNullableWithAggregatesFilter<"CodeRedemption"> | string | null
 }
@@ -257,7 +257,7 @@ export type CodeRedemptionUncheckedCreateInput = {
   id?: string
   codeId: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   redeemedAt?: Date | string
   ipAddress?: string | null
 }
@@ -275,7 +275,7 @@ export type CodeRedemptionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   codeId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -284,7 +284,7 @@ export type CodeRedemptionCreateManyInput = {
   id?: string
   codeId: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   redeemedAt?: Date | string
   ipAddress?: string | null
 }
@@ -300,7 +300,7 @@ export type CodeRedemptionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   codeId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -324,7 +324,7 @@ export type CodeRedemptionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   codeId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   redeemedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrder
 }
@@ -333,7 +333,7 @@ export type CodeRedemptionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   codeId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   redeemedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrder
 }
@@ -342,7 +342,7 @@ export type CodeRedemptionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   codeId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   redeemedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrder
 }
@@ -480,7 +480,7 @@ export type CodeRedemptionScalarWhereInput = {
   id?: Prisma.StringFilter<"CodeRedemption"> | string
   codeId?: Prisma.StringFilter<"CodeRedemption"> | string
   userId?: Prisma.StringFilter<"CodeRedemption"> | string
-  organizationId?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
   redeemedAt?: Prisma.DateTimeFilter<"CodeRedemption"> | Date | string
   ipAddress?: Prisma.StringNullableFilter<"CodeRedemption"> | string | null
 }
@@ -496,7 +496,7 @@ export type CodeRedemptionCreateWithoutCodeInput = {
 export type CodeRedemptionUncheckedCreateWithoutCodeInput = {
   id?: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   redeemedAt?: Date | string
   ipAddress?: string | null
 }
@@ -562,7 +562,7 @@ export type CodeRedemptionUncheckedUpdateManyWithoutTenantInput = {
 export type CodeRedemptionCreateManyCodeInput = {
   id?: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   redeemedAt?: Date | string
   ipAddress?: string | null
 }
@@ -578,7 +578,7 @@ export type CodeRedemptionUpdateWithoutCodeInput = {
 export type CodeRedemptionUncheckedUpdateWithoutCodeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -586,7 +586,7 @@ export type CodeRedemptionUncheckedUpdateWithoutCodeInput = {
 export type CodeRedemptionUncheckedUpdateManyWithoutCodeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   redeemedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -597,7 +597,7 @@ export type CodeRedemptionSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   codeId?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   redeemedAt?: boolean
   ipAddress?: boolean
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
@@ -608,7 +608,7 @@ export type CodeRedemptionSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   codeId?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   redeemedAt?: boolean
   ipAddress?: boolean
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
@@ -619,7 +619,7 @@ export type CodeRedemptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   codeId?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   redeemedAt?: boolean
   ipAddress?: boolean
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
@@ -630,12 +630,12 @@ export type CodeRedemptionSelectScalar = {
   id?: boolean
   codeId?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   redeemedAt?: boolean
   ipAddress?: boolean
 }
 
-export type CodeRedemptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "codeId" | "userId" | "organizationId" | "redeemedAt" | "ipAddress", ExtArgs["result"]["codeRedemption"]>
+export type CodeRedemptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "codeId" | "userId" | "tenantId" | "redeemedAt" | "ipAddress", ExtArgs["result"]["codeRedemption"]>
 export type CodeRedemptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   code?: boolean | Prisma.RedemptionCodeDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.CodeRedemption$tenantArgs<ExtArgs>
@@ -659,7 +659,7 @@ export type $CodeRedemptionPayload<ExtArgs extends runtime.Types.Extensions.Inte
     id: string
     codeId: string
     userId: string
-    organizationId: string | null
+    tenantId: string | null
     redeemedAt: Date
     ipAddress: string | null
   }, ExtArgs["result"]["codeRedemption"]>
@@ -1090,7 +1090,7 @@ export interface CodeRedemptionFieldRefs {
   readonly id: Prisma.FieldRef<"CodeRedemption", 'String'>
   readonly codeId: Prisma.FieldRef<"CodeRedemption", 'String'>
   readonly userId: Prisma.FieldRef<"CodeRedemption", 'String'>
-  readonly organizationId: Prisma.FieldRef<"CodeRedemption", 'String'>
+  readonly tenantId: Prisma.FieldRef<"CodeRedemption", 'String'>
   readonly redeemedAt: Prisma.FieldRef<"CodeRedemption", 'DateTime'>
   readonly ipAddress: Prisma.FieldRef<"CodeRedemption", 'String'>
 }

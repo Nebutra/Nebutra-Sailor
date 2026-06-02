@@ -405,7 +405,7 @@ async function handleSubscriptionCreated(
 
   log.info("Subscription created", {
     subscriptionId: sub.id,
-    organizationId: stripeCustomer.organizationId,
+    organizationId: stripeCustomer.tenantId,
     status: sub.status,
   });
 }
@@ -450,7 +450,7 @@ async function handleSubscriptionUpdated(
   await inngest.send({
     name: "stripe/subscription.updated",
     data: {
-      organizationId: stripeCustomer.organizationId,
+      organizationId: stripeCustomer.tenantId,
       subscriptionId: sub.id,
       customerId: sub.customer as string,
       status: sub.status,

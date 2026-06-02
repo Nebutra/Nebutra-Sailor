@@ -56,8 +56,8 @@ export async function appendUsageLedgerEntry(
 
   const existing = await db.usageLedgerEntry.findUnique({
     where: {
-      organizationId_idempotencyKey: {
-        organizationId: payload.organizationId,
+      tenantId_idempotencyKey: {
+        tenantId: payload.organizationId,
         idempotencyKey: payload.idempotencyKey,
       },
     },
@@ -71,7 +71,7 @@ export async function appendUsageLedgerEntry(
   try {
     const created = await db.usageLedgerEntry.create({
       data: {
-        organizationId: payload.organizationId,
+        tenantId: payload.organizationId,
         idempotencyKey: payload.idempotencyKey,
         source: payload.source,
         type: payload.type,
@@ -96,8 +96,8 @@ export async function appendUsageLedgerEntry(
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       const duplicate = await db.usageLedgerEntry.findUnique({
         where: {
-          organizationId_idempotencyKey: {
-            organizationId: payload.organizationId,
+          tenantId_idempotencyKey: {
+            tenantId: payload.organizationId,
             idempotencyKey: payload.idempotencyKey,
           },
         },
@@ -122,7 +122,7 @@ export async function listUsageLedgerEntries(
 
   return db.usageLedgerEntry.findMany({
     where: {
-      organizationId: input.organizationId,
+      tenantId: input.organizationId,
       ...(input.source ? { source: input.source } : {}),
       ...(input.type ? { type: input.type } : {}),
       ...(input.from || input.to

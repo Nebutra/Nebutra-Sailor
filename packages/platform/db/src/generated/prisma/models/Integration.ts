@@ -26,7 +26,7 @@ export type AggregateIntegration = {
 
 export type IntegrationMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   type: $Enums.IntegrationType | null
   name: string | null
   isActive: boolean | null
@@ -37,7 +37,7 @@ export type IntegrationMinAggregateOutputType = {
 
 export type IntegrationMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   type: $Enums.IntegrationType | null
   name: string | null
   isActive: boolean | null
@@ -48,7 +48,7 @@ export type IntegrationMaxAggregateOutputType = {
 
 export type IntegrationCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   type: number
   name: number
   credentials: number
@@ -63,7 +63,7 @@ export type IntegrationCountAggregateOutputType = {
 
 export type IntegrationMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   name?: true
   isActive?: true
@@ -74,7 +74,7 @@ export type IntegrationMinAggregateInputType = {
 
 export type IntegrationMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   name?: true
   isActive?: true
@@ -85,7 +85,7 @@ export type IntegrationMaxAggregateInputType = {
 
 export type IntegrationCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   name?: true
   credentials?: true
@@ -171,7 +171,7 @@ export type IntegrationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type IntegrationGroupByOutputType = {
   id: string
-  organizationId: string
+  tenantId: string
   type: $Enums.IntegrationType
   name: string
   credentials: runtime.JsonValue
@@ -205,7 +205,7 @@ export type IntegrationWhereInput = {
   OR?: Prisma.IntegrationWhereInput[]
   NOT?: Prisma.IntegrationWhereInput | Prisma.IntegrationWhereInput[]
   id?: Prisma.StringFilter<"Integration"> | string
-  organizationId?: Prisma.StringFilter<"Integration"> | string
+  tenantId?: Prisma.StringFilter<"Integration"> | string
   type?: Prisma.EnumIntegrationTypeFilter<"Integration"> | $Enums.IntegrationType
   name?: Prisma.StringFilter<"Integration"> | string
   credentials?: Prisma.JsonFilter<"Integration">
@@ -219,7 +219,7 @@ export type IntegrationWhereInput = {
 
 export type IntegrationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   credentials?: Prisma.SortOrder
@@ -233,11 +233,11 @@ export type IntegrationOrderByWithRelationInput = {
 
 export type IntegrationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId_type_name?: Prisma.IntegrationOrganizationIdTypeNameCompoundUniqueInput
+  tenantId_type_name?: Prisma.IntegrationTenantIdTypeNameCompoundUniqueInput
   AND?: Prisma.IntegrationWhereInput | Prisma.IntegrationWhereInput[]
   OR?: Prisma.IntegrationWhereInput[]
   NOT?: Prisma.IntegrationWhereInput | Prisma.IntegrationWhereInput[]
-  organizationId?: Prisma.StringFilter<"Integration"> | string
+  tenantId?: Prisma.StringFilter<"Integration"> | string
   type?: Prisma.EnumIntegrationTypeFilter<"Integration"> | $Enums.IntegrationType
   name?: Prisma.StringFilter<"Integration"> | string
   credentials?: Prisma.JsonFilter<"Integration">
@@ -247,11 +247,11 @@ export type IntegrationWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Integration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Integration"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
-}, "id" | "organizationId_type_name">
+}, "id" | "tenantId_type_name">
 
 export type IntegrationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   credentials?: Prisma.SortOrder
@@ -270,7 +270,7 @@ export type IntegrationScalarWhereWithAggregatesInput = {
   OR?: Prisma.IntegrationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.IntegrationScalarWhereWithAggregatesInput | Prisma.IntegrationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Integration"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"Integration"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"Integration"> | string
   type?: Prisma.EnumIntegrationTypeWithAggregatesFilter<"Integration"> | $Enums.IntegrationType
   name?: Prisma.StringWithAggregatesFilter<"Integration"> | string
   credentials?: Prisma.JsonWithAggregatesFilter<"Integration">
@@ -296,7 +296,7 @@ export type IntegrationCreateInput = {
 
 export type IntegrationUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   type: $Enums.IntegrationType
   name: string
   credentials?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -322,7 +322,7 @@ export type IntegrationUpdateInput = {
 
 export type IntegrationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumIntegrationTypeFieldUpdateOperationsInput | $Enums.IntegrationType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   credentials?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -335,7 +335,7 @@ export type IntegrationUncheckedUpdateInput = {
 
 export type IntegrationCreateManyInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   type: $Enums.IntegrationType
   name: string
   credentials?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -360,7 +360,7 @@ export type IntegrationUpdateManyMutationInput = {
 
 export type IntegrationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumIntegrationTypeFieldUpdateOperationsInput | $Enums.IntegrationType
   name?: Prisma.StringFieldUpdateOperationsInput | string
   credentials?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -381,15 +381,15 @@ export type IntegrationOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type IntegrationOrganizationIdTypeNameCompoundUniqueInput = {
-  organizationId: string
+export type IntegrationTenantIdTypeNameCompoundUniqueInput = {
+  tenantId: string
   type: $Enums.IntegrationType
   name: string
 }
 
 export type IntegrationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   credentials?: Prisma.SortOrder
@@ -402,7 +402,7 @@ export type IntegrationCountOrderByAggregateInput = {
 
 export type IntegrationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -413,7 +413,7 @@ export type IntegrationMaxOrderByAggregateInput = {
 
 export type IntegrationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
@@ -523,7 +523,7 @@ export type IntegrationScalarWhereInput = {
   OR?: Prisma.IntegrationScalarWhereInput[]
   NOT?: Prisma.IntegrationScalarWhereInput | Prisma.IntegrationScalarWhereInput[]
   id?: Prisma.StringFilter<"Integration"> | string
-  organizationId?: Prisma.StringFilter<"Integration"> | string
+  tenantId?: Prisma.StringFilter<"Integration"> | string
   type?: Prisma.EnumIntegrationTypeFilter<"Integration"> | $Enums.IntegrationType
   name?: Prisma.StringFilter<"Integration"> | string
   credentials?: Prisma.JsonFilter<"Integration">
@@ -586,7 +586,7 @@ export type IntegrationUncheckedUpdateManyWithoutTenantInput = {
 
 export type IntegrationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   name?: boolean
   credentials?: boolean
@@ -600,7 +600,7 @@ export type IntegrationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type IntegrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   name?: boolean
   credentials?: boolean
@@ -614,7 +614,7 @@ export type IntegrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type IntegrationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   name?: boolean
   credentials?: boolean
@@ -628,7 +628,7 @@ export type IntegrationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type IntegrationSelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   name?: boolean
   credentials?: boolean
@@ -639,7 +639,7 @@ export type IntegrationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type IntegrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "type" | "name" | "credentials" | "settings" | "isActive" | "lastSyncAt" | "createdAt" | "updatedAt", ExtArgs["result"]["integration"]>
+export type IntegrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "type" | "name" | "credentials" | "settings" | "isActive" | "lastSyncAt" | "createdAt" | "updatedAt", ExtArgs["result"]["integration"]>
 export type IntegrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
@@ -657,7 +657,7 @@ export type $IntegrationPayload<ExtArgs extends runtime.Types.Extensions.Interna
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    tenantId: string
     type: $Enums.IntegrationType
     name: string
     credentials: runtime.JsonValue
@@ -1091,7 +1091,7 @@ export interface Prisma__IntegrationClient<T, Null = never, ExtArgs extends runt
  */
 export interface IntegrationFieldRefs {
   readonly id: Prisma.FieldRef<"Integration", 'String'>
-  readonly organizationId: Prisma.FieldRef<"Integration", 'String'>
+  readonly tenantId: Prisma.FieldRef<"Integration", 'String'>
   readonly type: Prisma.FieldRef<"Integration", 'IntegrationType'>
   readonly name: Prisma.FieldRef<"Integration", 'String'>
   readonly credentials: Prisma.FieldRef<"Integration", 'Json'>

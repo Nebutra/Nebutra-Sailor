@@ -21,7 +21,7 @@ const QuerySchema = z.object({
 
 interface AuditLogRow {
   id: string;
-  organizationId: string | null;
+  tenantId: string | null;
   userId: string | null;
   actorType: string | null;
   action: string;
@@ -87,9 +87,9 @@ export async function GET(request: Request) {
   const startAt = parseDate(startDate);
   const endAt = parseDate(endDate);
 
-  // organizationId is ALWAYS sourced from auth.orgId — never trust the caller.
+  // tenantId is ALWAYS sourced from auth.orgId — never trust the caller.
   const where: Record<string, unknown> = {
-    organizationId: auth.orgId,
+    tenantId: auth.orgId,
   };
 
   if (action) where.action = { startsWith: action };
@@ -118,7 +118,7 @@ export async function GET(request: Request) {
 
     const logs = page.map((row) => ({
       id: row.id,
-      organizationId: row.organizationId,
+      organizationId: row.tenantId,
       userId: row.userId,
       actorType: row.actorType,
       action: row.action,

@@ -26,7 +26,7 @@ export type AggregateStripeCustomer = {
 
 export type StripeCustomerMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   stripeId: string | null
   email: string | null
   name: string | null
@@ -38,7 +38,7 @@ export type StripeCustomerMinAggregateOutputType = {
 
 export type StripeCustomerMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   stripeId: string | null
   email: string | null
   name: string | null
@@ -50,7 +50,7 @@ export type StripeCustomerMaxAggregateOutputType = {
 
 export type StripeCustomerCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   stripeId: number
   email: number
   name: number
@@ -65,7 +65,7 @@ export type StripeCustomerCountAggregateOutputType = {
 
 export type StripeCustomerMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   stripeId?: true
   email?: true
   name?: true
@@ -77,7 +77,7 @@ export type StripeCustomerMinAggregateInputType = {
 
 export type StripeCustomerMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   stripeId?: true
   email?: true
   name?: true
@@ -89,7 +89,7 @@ export type StripeCustomerMaxAggregateInputType = {
 
 export type StripeCustomerCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   stripeId?: true
   email?: true
   name?: true
@@ -175,7 +175,7 @@ export type StripeCustomerGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type StripeCustomerGroupByOutputType = {
   id: string
-  organizationId: string
+  tenantId: string
   stripeId: string
   email: string | null
   name: string | null
@@ -209,7 +209,7 @@ export type StripeCustomerWhereInput = {
   OR?: Prisma.StripeCustomerWhereInput[]
   NOT?: Prisma.StripeCustomerWhereInput | Prisma.StripeCustomerWhereInput[]
   id?: Prisma.StringFilter<"StripeCustomer"> | string
-  organizationId?: Prisma.StringFilter<"StripeCustomer"> | string
+  tenantId?: Prisma.StringFilter<"StripeCustomer"> | string
   stripeId?: Prisma.StringFilter<"StripeCustomer"> | string
   email?: Prisma.StringNullableFilter<"StripeCustomer"> | string | null
   name?: Prisma.StringNullableFilter<"StripeCustomer"> | string | null
@@ -223,7 +223,7 @@ export type StripeCustomerWhereInput = {
 
 export type StripeCustomerOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -237,7 +237,7 @@ export type StripeCustomerOrderByWithRelationInput = {
 
 export type StripeCustomerWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId?: string
+  tenantId?: string
   stripeId?: string
   AND?: Prisma.StripeCustomerWhereInput | Prisma.StripeCustomerWhereInput[]
   OR?: Prisma.StripeCustomerWhereInput[]
@@ -250,11 +250,11 @@ export type StripeCustomerWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"StripeCustomer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StripeCustomer"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
-}, "id" | "organizationId" | "stripeId">
+}, "id" | "tenantId" | "stripeId">
 
 export type StripeCustomerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -273,7 +273,7 @@ export type StripeCustomerScalarWhereWithAggregatesInput = {
   OR?: Prisma.StripeCustomerScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StripeCustomerScalarWhereWithAggregatesInput | Prisma.StripeCustomerScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"StripeCustomer"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"StripeCustomer"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"StripeCustomer"> | string
   stripeId?: Prisma.StringWithAggregatesFilter<"StripeCustomer"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"StripeCustomer"> | string | null
   name?: Prisma.StringNullableWithAggregatesFilter<"StripeCustomer"> | string | null
@@ -299,7 +299,7 @@ export type StripeCustomerCreateInput = {
 
 export type StripeCustomerUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   stripeId: string
   email?: string | null
   name?: string | null
@@ -325,7 +325,7 @@ export type StripeCustomerUpdateInput = {
 
 export type StripeCustomerUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -338,7 +338,7 @@ export type StripeCustomerUncheckedUpdateInput = {
 
 export type StripeCustomerCreateManyInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   stripeId: string
   email?: string | null
   name?: string | null
@@ -363,7 +363,7 @@ export type StripeCustomerUpdateManyMutationInput = {
 
 export type StripeCustomerUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -386,7 +386,7 @@ export type StripeCustomerOrderByRelationAggregateInput = {
 
 export type StripeCustomerCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -399,7 +399,7 @@ export type StripeCustomerCountOrderByAggregateInput = {
 
 export type StripeCustomerMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -411,7 +411,7 @@ export type StripeCustomerMaxOrderByAggregateInput = {
 
 export type StripeCustomerMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -518,7 +518,7 @@ export type StripeCustomerScalarWhereInput = {
   OR?: Prisma.StripeCustomerScalarWhereInput[]
   NOT?: Prisma.StripeCustomerScalarWhereInput | Prisma.StripeCustomerScalarWhereInput[]
   id?: Prisma.StringFilter<"StripeCustomer"> | string
-  organizationId?: Prisma.StringFilter<"StripeCustomer"> | string
+  tenantId?: Prisma.StringFilter<"StripeCustomer"> | string
   stripeId?: Prisma.StringFilter<"StripeCustomer"> | string
   email?: Prisma.StringNullableFilter<"StripeCustomer"> | string | null
   name?: Prisma.StringNullableFilter<"StripeCustomer"> | string | null
@@ -581,7 +581,7 @@ export type StripeCustomerUncheckedUpdateManyWithoutTenantInput = {
 
 export type StripeCustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   stripeId?: boolean
   email?: boolean
   name?: boolean
@@ -595,7 +595,7 @@ export type StripeCustomerSelect<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type StripeCustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   stripeId?: boolean
   email?: boolean
   name?: boolean
@@ -609,7 +609,7 @@ export type StripeCustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Type
 
 export type StripeCustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   stripeId?: boolean
   email?: boolean
   name?: boolean
@@ -623,7 +623,7 @@ export type StripeCustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
 
 export type StripeCustomerSelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   stripeId?: boolean
   email?: boolean
   name?: boolean
@@ -634,7 +634,7 @@ export type StripeCustomerSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StripeCustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "stripeId" | "email" | "name" | "currency" | "taxExempt" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["stripeCustomer"]>
+export type StripeCustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "stripeId" | "email" | "name" | "currency" | "taxExempt" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["stripeCustomer"]>
 export type StripeCustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
@@ -652,7 +652,7 @@ export type $StripeCustomerPayload<ExtArgs extends runtime.Types.Extensions.Inte
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    tenantId: string
     stripeId: string
     email: string | null
     name: string | null
@@ -1086,7 +1086,7 @@ export interface Prisma__StripeCustomerClient<T, Null = never, ExtArgs extends r
  */
 export interface StripeCustomerFieldRefs {
   readonly id: Prisma.FieldRef<"StripeCustomer", 'String'>
-  readonly organizationId: Prisma.FieldRef<"StripeCustomer", 'String'>
+  readonly tenantId: Prisma.FieldRef<"StripeCustomer", 'String'>
   readonly stripeId: Prisma.FieldRef<"StripeCustomer", 'String'>
   readonly email: Prisma.FieldRef<"StripeCustomer", 'String'>
   readonly name: Prisma.FieldRef<"StripeCustomer", 'String'>

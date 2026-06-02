@@ -173,7 +173,7 @@ consentRoutes.openapi(recordConsentRoute, async (c) => {
     };
 
     if (userId) consentData.userId = userId;
-    if (organizationId) consentData.organizationId = organizationId;
+    if (organizationId) consentData.tenantId = organizationId;
 
     const ipAddress = c.req.header("x-forwarded-for") || c.req.header("x-real-ip");
     if (ipAddress) consentData.ipAddress = ipAddress;

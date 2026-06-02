@@ -100,7 +100,7 @@ export const provisionTenant: InngestFunction.Any = inngest.createFunction(
       async (): Promise<{ keyPrefix: string; keyPlaintext: string | null }> => {
         // Idempotency: skip if org already has an API key
         const existingKey = await prisma.aPIKey.findFirst({
-          where: { organizationId: org.id, revokedAt: null },
+          where: { tenantId: org.id, revokedAt: null },
         });
 
         if (existingKey) {
@@ -117,7 +117,7 @@ export const provisionTenant: InngestFunction.Any = inngest.createFunction(
             name: "Default Key",
             keyHash: hash,
             keyPrefix: prefix,
-            organizationId: org.id,
+            tenantId: org.id,
           },
         });
 
@@ -142,7 +142,7 @@ export const provisionTenant: InngestFunction.Any = inngest.createFunction(
 
       // Idempotency: skip if StripeCustomer record already exists
       const existing = await prisma.stripeCustomer.findUnique({
-        where: { organizationId: org.id },
+        where: { tenantId: org.id },
       });
 
       if (existing) {
@@ -165,7 +165,7 @@ export const provisionTenant: InngestFunction.Any = inngest.createFunction(
 
       await prisma.stripeCustomer.create({
         data: {
-          organizationId: org.id,
+          tenantId: org.id,
           stripeId: customer.id,
           email: ownerEmail,
           name: organizationName,

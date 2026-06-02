@@ -64,7 +64,7 @@ export async function createApiKey(
         name,
         keyHash: hash,
         keyPrefix: prefix,
-        organizationId: orgId,
+        tenantId: orgId,
       },
       select: { id: true },
     });
@@ -99,7 +99,7 @@ export async function revokeApiKey(
 
   try {
     await db.aPIKey.updateMany({
-      where: { id: keyId, organizationId: orgId },
+      where: { id: keyId, tenantId: orgId },
       data: { revokedAt: new Date() },
     });
     return { status: "success" };

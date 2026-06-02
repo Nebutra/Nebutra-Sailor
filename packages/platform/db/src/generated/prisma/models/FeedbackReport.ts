@@ -26,7 +26,7 @@ export type AggregateFeedbackReport = {
 
 export type FeedbackReportMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   userId: string | null
   area: string | null
   mode: string | null
@@ -42,7 +42,7 @@ export type FeedbackReportMinAggregateOutputType = {
 
 export type FeedbackReportMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   userId: string | null
   area: string | null
   mode: string | null
@@ -58,7 +58,7 @@ export type FeedbackReportMaxAggregateOutputType = {
 
 export type FeedbackReportCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   userId: number
   area: number
   mode: number
@@ -76,7 +76,7 @@ export type FeedbackReportCountAggregateOutputType = {
 
 export type FeedbackReportMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   userId?: true
   area?: true
   mode?: true
@@ -92,7 +92,7 @@ export type FeedbackReportMinAggregateInputType = {
 
 export type FeedbackReportMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   userId?: true
   area?: true
   mode?: true
@@ -108,7 +108,7 @@ export type FeedbackReportMaxAggregateInputType = {
 
 export type FeedbackReportCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   userId?: true
   area?: true
   mode?: true
@@ -197,7 +197,7 @@ export type FeedbackReportGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 
 export type FeedbackReportGroupByOutputType = {
   id: string
-  organizationId: string | null
+  tenantId: string | null
   userId: string | null
   area: string
   mode: string | null
@@ -234,7 +234,7 @@ export type FeedbackReportWhereInput = {
   OR?: Prisma.FeedbackReportWhereInput[]
   NOT?: Prisma.FeedbackReportWhereInput | Prisma.FeedbackReportWhereInput[]
   id?: Prisma.StringFilter<"FeedbackReport"> | string
-  organizationId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
   userId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
   area?: Prisma.StringFilter<"FeedbackReport"> | string
   mode?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
@@ -251,7 +251,7 @@ export type FeedbackReportWhereInput = {
 
 export type FeedbackReportOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   area?: Prisma.SortOrder
   mode?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -271,7 +271,7 @@ export type FeedbackReportWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.FeedbackReportWhereInput | Prisma.FeedbackReportWhereInput[]
   OR?: Prisma.FeedbackReportWhereInput[]
   NOT?: Prisma.FeedbackReportWhereInput | Prisma.FeedbackReportWhereInput[]
-  organizationId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
   userId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
   area?: Prisma.StringFilter<"FeedbackReport"> | string
   mode?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
@@ -288,7 +288,7 @@ export type FeedbackReportWhereUniqueInput = Prisma.AtLeast<{
 
 export type FeedbackReportOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   area?: Prisma.SortOrder
   mode?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -310,7 +310,7 @@ export type FeedbackReportScalarWhereWithAggregatesInput = {
   OR?: Prisma.FeedbackReportScalarWhereWithAggregatesInput[]
   NOT?: Prisma.FeedbackReportScalarWhereWithAggregatesInput | Prisma.FeedbackReportScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"FeedbackReport"> | string
-  organizationId?: Prisma.StringNullableWithAggregatesFilter<"FeedbackReport"> | string | null
+  tenantId?: Prisma.StringNullableWithAggregatesFilter<"FeedbackReport"> | string | null
   userId?: Prisma.StringNullableWithAggregatesFilter<"FeedbackReport"> | string | null
   area?: Prisma.StringWithAggregatesFilter<"FeedbackReport"> | string
   mode?: Prisma.StringNullableWithAggregatesFilter<"FeedbackReport"> | string | null
@@ -342,7 +342,7 @@ export type FeedbackReportCreateInput = {
 
 export type FeedbackReportUncheckedCreateInput = {
   id?: string
-  organizationId?: string | null
+  tenantId?: string | null
   userId?: string | null
   area: string
   mode?: string | null
@@ -374,7 +374,7 @@ export type FeedbackReportUpdateInput = {
 
 export type FeedbackReportUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -390,7 +390,7 @@ export type FeedbackReportUncheckedUpdateInput = {
 
 export type FeedbackReportCreateManyInput = {
   id?: string
-  organizationId?: string | null
+  tenantId?: string | null
   userId?: string | null
   area: string
   mode?: string | null
@@ -421,7 +421,7 @@ export type FeedbackReportUpdateManyMutationInput = {
 
 export type FeedbackReportUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   area?: Prisma.StringFieldUpdateOperationsInput | string
   mode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -447,7 +447,7 @@ export type FeedbackReportOrderByRelationAggregateInput = {
 
 export type FeedbackReportCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   area?: Prisma.SortOrder
   mode?: Prisma.SortOrder
@@ -463,7 +463,7 @@ export type FeedbackReportCountOrderByAggregateInput = {
 
 export type FeedbackReportMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   area?: Prisma.SortOrder
   mode?: Prisma.SortOrder
@@ -479,7 +479,7 @@ export type FeedbackReportMaxOrderByAggregateInput = {
 
 export type FeedbackReportMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   area?: Prisma.SortOrder
   mode?: Prisma.SortOrder
@@ -596,7 +596,7 @@ export type FeedbackReportScalarWhereInput = {
   OR?: Prisma.FeedbackReportScalarWhereInput[]
   NOT?: Prisma.FeedbackReportScalarWhereInput | Prisma.FeedbackReportScalarWhereInput[]
   id?: Prisma.StringFilter<"FeedbackReport"> | string
-  organizationId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
   userId?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
   area?: Prisma.StringFilter<"FeedbackReport"> | string
   mode?: Prisma.StringNullableFilter<"FeedbackReport"> | string | null
@@ -674,7 +674,7 @@ export type FeedbackReportUncheckedUpdateManyWithoutTenantInput = {
 
 export type FeedbackReportSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   userId?: boolean
   area?: boolean
   mode?: boolean
@@ -691,7 +691,7 @@ export type FeedbackReportSelect<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type FeedbackReportSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   userId?: boolean
   area?: boolean
   mode?: boolean
@@ -708,7 +708,7 @@ export type FeedbackReportSelectCreateManyAndReturn<ExtArgs extends runtime.Type
 
 export type FeedbackReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   userId?: boolean
   area?: boolean
   mode?: boolean
@@ -725,7 +725,7 @@ export type FeedbackReportSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
 
 export type FeedbackReportSelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   userId?: boolean
   area?: boolean
   mode?: boolean
@@ -739,7 +739,7 @@ export type FeedbackReportSelectScalar = {
   createdAt?: boolean
 }
 
-export type FeedbackReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "userId" | "area" | "mode" | "description" | "contactEmail" | "sessionId" | "userAgent" | "pageUrl" | "resolved" | "resolvedAt" | "createdAt", ExtArgs["result"]["feedbackReport"]>
+export type FeedbackReportOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "userId" | "area" | "mode" | "description" | "contactEmail" | "sessionId" | "userAgent" | "pageUrl" | "resolved" | "resolvedAt" | "createdAt", ExtArgs["result"]["feedbackReport"]>
 export type FeedbackReportInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.FeedbackReport$tenantArgs<ExtArgs>
 }
@@ -757,7 +757,7 @@ export type $FeedbackReportPayload<ExtArgs extends runtime.Types.Extensions.Inte
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string | null
+    tenantId: string | null
     userId: string | null
     area: string
     mode: string | null
@@ -1194,7 +1194,7 @@ export interface Prisma__FeedbackReportClient<T, Null = never, ExtArgs extends r
  */
 export interface FeedbackReportFieldRefs {
   readonly id: Prisma.FieldRef<"FeedbackReport", 'String'>
-  readonly organizationId: Prisma.FieldRef<"FeedbackReport", 'String'>
+  readonly tenantId: Prisma.FieldRef<"FeedbackReport", 'String'>
   readonly userId: Prisma.FieldRef<"FeedbackReport", 'String'>
   readonly area: Prisma.FieldRef<"FeedbackReport", 'String'>
   readonly mode: Prisma.FieldRef<"FeedbackReport", 'String'>

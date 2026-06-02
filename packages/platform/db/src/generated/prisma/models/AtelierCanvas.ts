@@ -27,7 +27,7 @@ export type AggregateAtelierCanvas = {
 export type AtelierCanvasMinAggregateOutputType = {
   pk: string | null
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   name: string | null
   thumbnail: string | null
   createdAt: Date | null
@@ -37,7 +37,7 @@ export type AtelierCanvasMinAggregateOutputType = {
 export type AtelierCanvasMaxAggregateOutputType = {
   pk: string | null
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   name: string | null
   thumbnail: string | null
   createdAt: Date | null
@@ -47,7 +47,7 @@ export type AtelierCanvasMaxAggregateOutputType = {
 export type AtelierCanvasCountAggregateOutputType = {
   pk: number
   id: number
-  organizationId: number
+  tenantId: number
   name: number
   scene: number
   thumbnail: number
@@ -60,7 +60,7 @@ export type AtelierCanvasCountAggregateOutputType = {
 export type AtelierCanvasMinAggregateInputType = {
   pk?: true
   id?: true
-  organizationId?: true
+  tenantId?: true
   name?: true
   thumbnail?: true
   createdAt?: true
@@ -70,7 +70,7 @@ export type AtelierCanvasMinAggregateInputType = {
 export type AtelierCanvasMaxAggregateInputType = {
   pk?: true
   id?: true
-  organizationId?: true
+  tenantId?: true
   name?: true
   thumbnail?: true
   createdAt?: true
@@ -80,7 +80,7 @@ export type AtelierCanvasMaxAggregateInputType = {
 export type AtelierCanvasCountAggregateInputType = {
   pk?: true
   id?: true
-  organizationId?: true
+  tenantId?: true
   name?: true
   scene?: true
   thumbnail?: true
@@ -164,7 +164,7 @@ export type AtelierCanvasGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type AtelierCanvasGroupByOutputType = {
   pk: string
   id: string
-  organizationId: string
+  tenantId: string
   name: string
   scene: runtime.JsonValue
   thumbnail: string | null
@@ -196,7 +196,7 @@ export type AtelierCanvasWhereInput = {
   NOT?: Prisma.AtelierCanvasWhereInput | Prisma.AtelierCanvasWhereInput[]
   pk?: Prisma.StringFilter<"AtelierCanvas"> | string
   id?: Prisma.StringFilter<"AtelierCanvas"> | string
-  organizationId?: Prisma.StringFilter<"AtelierCanvas"> | string
+  tenantId?: Prisma.StringFilter<"AtelierCanvas"> | string
   name?: Prisma.StringFilter<"AtelierCanvas"> | string
   scene?: Prisma.JsonFilter<"AtelierCanvas">
   thumbnail?: Prisma.StringNullableFilter<"AtelierCanvas"> | string | null
@@ -208,7 +208,7 @@ export type AtelierCanvasWhereInput = {
 export type AtelierCanvasOrderByWithRelationInput = {
   pk?: Prisma.SortOrder
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   scene?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -219,24 +219,24 @@ export type AtelierCanvasOrderByWithRelationInput = {
 
 export type AtelierCanvasWhereUniqueInput = Prisma.AtLeast<{
   pk?: string
-  organizationId_id?: Prisma.AtelierCanvasOrganizationIdIdCompoundUniqueInput
+  tenantId_id?: Prisma.AtelierCanvasTenantIdIdCompoundUniqueInput
   AND?: Prisma.AtelierCanvasWhereInput | Prisma.AtelierCanvasWhereInput[]
   OR?: Prisma.AtelierCanvasWhereInput[]
   NOT?: Prisma.AtelierCanvasWhereInput | Prisma.AtelierCanvasWhereInput[]
   id?: Prisma.StringFilter<"AtelierCanvas"> | string
-  organizationId?: Prisma.StringFilter<"AtelierCanvas"> | string
+  tenantId?: Prisma.StringFilter<"AtelierCanvas"> | string
   name?: Prisma.StringFilter<"AtelierCanvas"> | string
   scene?: Prisma.JsonFilter<"AtelierCanvas">
   thumbnail?: Prisma.StringNullableFilter<"AtelierCanvas"> | string | null
   createdAt?: Prisma.DateTimeFilter<"AtelierCanvas"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AtelierCanvas"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
-}, "pk" | "organizationId_id">
+}, "pk" | "tenantId_id">
 
 export type AtelierCanvasOrderByWithAggregationInput = {
   pk?: Prisma.SortOrder
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   scene?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -253,7 +253,7 @@ export type AtelierCanvasScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AtelierCanvasScalarWhereWithAggregatesInput | Prisma.AtelierCanvasScalarWhereWithAggregatesInput[]
   pk?: Prisma.StringWithAggregatesFilter<"AtelierCanvas"> | string
   id?: Prisma.StringWithAggregatesFilter<"AtelierCanvas"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"AtelierCanvas"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"AtelierCanvas"> | string
   name?: Prisma.StringWithAggregatesFilter<"AtelierCanvas"> | string
   scene?: Prisma.JsonWithAggregatesFilter<"AtelierCanvas">
   thumbnail?: Prisma.StringNullableWithAggregatesFilter<"AtelierCanvas"> | string | null
@@ -275,7 +275,7 @@ export type AtelierCanvasCreateInput = {
 export type AtelierCanvasUncheckedCreateInput = {
   pk?: string
   id: string
-  organizationId: string
+  tenantId: string
   name: string
   scene?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   thumbnail?: string | null
@@ -297,7 +297,7 @@ export type AtelierCanvasUpdateInput = {
 export type AtelierCanvasUncheckedUpdateInput = {
   pk?: Prisma.StringFieldUpdateOperationsInput | string
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   scene?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -308,7 +308,7 @@ export type AtelierCanvasUncheckedUpdateInput = {
 export type AtelierCanvasCreateManyInput = {
   pk?: string
   id: string
-  organizationId: string
+  tenantId: string
   name: string
   scene?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   thumbnail?: string | null
@@ -329,7 +329,7 @@ export type AtelierCanvasUpdateManyMutationInput = {
 export type AtelierCanvasUncheckedUpdateManyInput = {
   pk?: Prisma.StringFieldUpdateOperationsInput | string
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   scene?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -347,15 +347,15 @@ export type AtelierCanvasOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type AtelierCanvasOrganizationIdIdCompoundUniqueInput = {
-  organizationId: string
+export type AtelierCanvasTenantIdIdCompoundUniqueInput = {
+  tenantId: string
   id: string
 }
 
 export type AtelierCanvasCountOrderByAggregateInput = {
   pk?: Prisma.SortOrder
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   scene?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
@@ -366,7 +366,7 @@ export type AtelierCanvasCountOrderByAggregateInput = {
 export type AtelierCanvasMaxOrderByAggregateInput = {
   pk?: Prisma.SortOrder
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -376,7 +376,7 @@ export type AtelierCanvasMaxOrderByAggregateInput = {
 export type AtelierCanvasMinOrderByAggregateInput = {
   pk?: Prisma.SortOrder
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   thumbnail?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -477,7 +477,7 @@ export type AtelierCanvasScalarWhereInput = {
   NOT?: Prisma.AtelierCanvasScalarWhereInput | Prisma.AtelierCanvasScalarWhereInput[]
   pk?: Prisma.StringFilter<"AtelierCanvas"> | string
   id?: Prisma.StringFilter<"AtelierCanvas"> | string
-  organizationId?: Prisma.StringFilter<"AtelierCanvas"> | string
+  tenantId?: Prisma.StringFilter<"AtelierCanvas"> | string
   name?: Prisma.StringFilter<"AtelierCanvas"> | string
   scene?: Prisma.JsonFilter<"AtelierCanvas">
   thumbnail?: Prisma.StringNullableFilter<"AtelierCanvas"> | string | null
@@ -530,7 +530,7 @@ export type AtelierCanvasUncheckedUpdateManyWithoutTenantInput = {
 export type AtelierCanvasSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   pk?: boolean
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   name?: boolean
   scene?: boolean
   thumbnail?: boolean
@@ -542,7 +542,7 @@ export type AtelierCanvasSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type AtelierCanvasSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   pk?: boolean
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   name?: boolean
   scene?: boolean
   thumbnail?: boolean
@@ -554,7 +554,7 @@ export type AtelierCanvasSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type AtelierCanvasSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   pk?: boolean
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   name?: boolean
   scene?: boolean
   thumbnail?: boolean
@@ -566,7 +566,7 @@ export type AtelierCanvasSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type AtelierCanvasSelectScalar = {
   pk?: boolean
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   name?: boolean
   scene?: boolean
   thumbnail?: boolean
@@ -574,7 +574,7 @@ export type AtelierCanvasSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AtelierCanvasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"pk" | "id" | "organizationId" | "name" | "scene" | "thumbnail" | "createdAt" | "updatedAt", ExtArgs["result"]["atelierCanvas"]>
+export type AtelierCanvasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"pk" | "id" | "tenantId" | "name" | "scene" | "thumbnail" | "createdAt" | "updatedAt", ExtArgs["result"]["atelierCanvas"]>
 export type AtelierCanvasInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
@@ -593,7 +593,7 @@ export type $AtelierCanvasPayload<ExtArgs extends runtime.Types.Extensions.Inter
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     pk: string
     id: string
-    organizationId: string
+    tenantId: string
     name: string
     scene: runtime.JsonValue
     thumbnail: string | null
@@ -1025,7 +1025,7 @@ export interface Prisma__AtelierCanvasClient<T, Null = never, ExtArgs extends ru
 export interface AtelierCanvasFieldRefs {
   readonly pk: Prisma.FieldRef<"AtelierCanvas", 'String'>
   readonly id: Prisma.FieldRef<"AtelierCanvas", 'String'>
-  readonly organizationId: Prisma.FieldRef<"AtelierCanvas", 'String'>
+  readonly tenantId: Prisma.FieldRef<"AtelierCanvas", 'String'>
   readonly name: Prisma.FieldRef<"AtelierCanvas", 'String'>
   readonly scene: Prisma.FieldRef<"AtelierCanvas", 'Json'>
   readonly thumbnail: Prisma.FieldRef<"AtelierCanvas", 'String'>

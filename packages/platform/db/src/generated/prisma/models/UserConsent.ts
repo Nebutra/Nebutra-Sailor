@@ -27,7 +27,7 @@ export type AggregateUserConsent = {
 export type UserConsentMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   visitorId: string | null
   documentId: string | null
   documentSlug: string | null
@@ -44,7 +44,7 @@ export type UserConsentMinAggregateOutputType = {
 export type UserConsentMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   visitorId: string | null
   documentId: string | null
   documentSlug: string | null
@@ -61,7 +61,7 @@ export type UserConsentMaxAggregateOutputType = {
 export type UserConsentCountAggregateOutputType = {
   id: number
   userId: number
-  organizationId: number
+  tenantId: number
   visitorId: number
   documentId: number
   documentSlug: number
@@ -81,7 +81,7 @@ export type UserConsentCountAggregateOutputType = {
 export type UserConsentMinAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   visitorId?: true
   documentId?: true
   documentSlug?: true
@@ -98,7 +98,7 @@ export type UserConsentMinAggregateInputType = {
 export type UserConsentMaxAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   visitorId?: true
   documentId?: true
   documentSlug?: true
@@ -115,7 +115,7 @@ export type UserConsentMaxAggregateInputType = {
 export type UserConsentCountAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   visitorId?: true
   documentId?: true
   documentSlug?: true
@@ -206,7 +206,7 @@ export type UserConsentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type UserConsentGroupByOutputType = {
   id: string
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   visitorId: string | null
   documentId: string
   documentSlug: string
@@ -245,7 +245,7 @@ export type UserConsentWhereInput = {
   NOT?: Prisma.UserConsentWhereInput | Prisma.UserConsentWhereInput[]
   id?: Prisma.StringFilter<"UserConsent"> | string
   userId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
   visitorId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
   documentId?: Prisma.StringFilter<"UserConsent"> | string
   documentSlug?: Prisma.StringFilter<"UserConsent"> | string
@@ -265,7 +265,7 @@ export type UserConsentWhereInput = {
 export type UserConsentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   visitorId?: Prisma.SortOrderInput | Prisma.SortOrder
   documentId?: Prisma.SortOrder
   documentSlug?: Prisma.SortOrder
@@ -288,7 +288,7 @@ export type UserConsentWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserConsentWhereInput[]
   NOT?: Prisma.UserConsentWhereInput | Prisma.UserConsentWhereInput[]
   userId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
   visitorId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
   documentId?: Prisma.StringFilter<"UserConsent"> | string
   documentSlug?: Prisma.StringFilter<"UserConsent"> | string
@@ -308,7 +308,7 @@ export type UserConsentWhereUniqueInput = Prisma.AtLeast<{
 export type UserConsentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   visitorId?: Prisma.SortOrderInput | Prisma.SortOrder
   documentId?: Prisma.SortOrder
   documentSlug?: Prisma.SortOrder
@@ -332,7 +332,7 @@ export type UserConsentScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserConsentScalarWhereWithAggregatesInput | Prisma.UserConsentScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"UserConsent"> | string
   userId?: Prisma.StringNullableWithAggregatesFilter<"UserConsent"> | string | null
-  organizationId?: Prisma.StringNullableWithAggregatesFilter<"UserConsent"> | string | null
+  tenantId?: Prisma.StringNullableWithAggregatesFilter<"UserConsent"> | string | null
   visitorId?: Prisma.StringNullableWithAggregatesFilter<"UserConsent"> | string | null
   documentId?: Prisma.StringWithAggregatesFilter<"UserConsent"> | string
   documentSlug?: Prisma.StringWithAggregatesFilter<"UserConsent"> | string
@@ -368,7 +368,7 @@ export type UserConsentCreateInput = {
 export type UserConsentUncheckedCreateInput = {
   id?: string
   userId?: string | null
-  organizationId?: string | null
+  tenantId?: string | null
   visitorId?: string | null
   documentId: string
   documentSlug: string
@@ -404,7 +404,7 @@ export type UserConsentUpdateInput = {
 export type UserConsentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.StringFieldUpdateOperationsInput | string
   documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
@@ -422,7 +422,7 @@ export type UserConsentUncheckedUpdateInput = {
 export type UserConsentCreateManyInput = {
   id?: string
   userId?: string | null
-  organizationId?: string | null
+  tenantId?: string | null
   visitorId?: string | null
   documentId: string
   documentSlug: string
@@ -456,7 +456,7 @@ export type UserConsentUpdateManyMutationInput = {
 export type UserConsentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentId?: Prisma.StringFieldUpdateOperationsInput | string
   documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
@@ -484,7 +484,7 @@ export type UserConsentOrderByRelationAggregateInput = {
 export type UserConsentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   visitorId?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   documentSlug?: Prisma.SortOrder
@@ -502,7 +502,7 @@ export type UserConsentCountOrderByAggregateInput = {
 export type UserConsentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   visitorId?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   documentSlug?: Prisma.SortOrder
@@ -519,7 +519,7 @@ export type UserConsentMaxOrderByAggregateInput = {
 export type UserConsentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   visitorId?: Prisma.SortOrder
   documentId?: Prisma.SortOrder
   documentSlug?: Prisma.SortOrder
@@ -687,7 +687,7 @@ export type UserConsentScalarWhereInput = {
   NOT?: Prisma.UserConsentScalarWhereInput | Prisma.UserConsentScalarWhereInput[]
   id?: Prisma.StringFilter<"UserConsent"> | string
   userId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
-  organizationId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
   visitorId?: Prisma.StringNullableFilter<"UserConsent"> | string | null
   documentId?: Prisma.StringFilter<"UserConsent"> | string
   documentSlug?: Prisma.StringFilter<"UserConsent"> | string
@@ -722,7 +722,7 @@ export type UserConsentCreateWithoutDocumentInput = {
 export type UserConsentUncheckedCreateWithoutDocumentInput = {
   id?: string
   userId?: string | null
-  organizationId?: string | null
+  tenantId?: string | null
   visitorId?: string | null
   documentSlug: string
   documentVersion: string
@@ -833,7 +833,7 @@ export type UserConsentUncheckedUpdateManyWithoutTenantInput = {
 export type UserConsentCreateManyDocumentInput = {
   id?: string
   userId?: string | null
-  organizationId?: string | null
+  tenantId?: string | null
   visitorId?: string | null
   documentSlug: string
   documentVersion: string
@@ -867,7 +867,7 @@ export type UserConsentUpdateWithoutDocumentInput = {
 export type UserConsentUncheckedUpdateWithoutDocumentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
   documentVersion?: Prisma.StringFieldUpdateOperationsInput | string
@@ -884,7 +884,7 @@ export type UserConsentUncheckedUpdateWithoutDocumentInput = {
 export type UserConsentUncheckedUpdateManyWithoutDocumentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visitorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   documentSlug?: Prisma.StringFieldUpdateOperationsInput | string
   documentVersion?: Prisma.StringFieldUpdateOperationsInput | string
@@ -903,7 +903,7 @@ export type UserConsentUncheckedUpdateManyWithoutDocumentInput = {
 export type UserConsentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   visitorId?: boolean
   documentId?: boolean
   documentSlug?: boolean
@@ -923,7 +923,7 @@ export type UserConsentSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 export type UserConsentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   visitorId?: boolean
   documentId?: boolean
   documentSlug?: boolean
@@ -943,7 +943,7 @@ export type UserConsentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 export type UserConsentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   visitorId?: boolean
   documentId?: boolean
   documentSlug?: boolean
@@ -963,7 +963,7 @@ export type UserConsentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type UserConsentSelectScalar = {
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   visitorId?: boolean
   documentId?: boolean
   documentSlug?: boolean
@@ -978,7 +978,7 @@ export type UserConsentSelectScalar = {
   withdrawnAt?: boolean
 }
 
-export type UserConsentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "organizationId" | "visitorId" | "documentId" | "documentSlug" | "documentVersion" | "consentType" | "consentGiven" | "ipAddress" | "userAgent" | "consentContext" | "metadata" | "consentedAt" | "withdrawnAt", ExtArgs["result"]["userConsent"]>
+export type UserConsentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "tenantId" | "visitorId" | "documentId" | "documentSlug" | "documentVersion" | "consentType" | "consentGiven" | "ipAddress" | "userAgent" | "consentContext" | "metadata" | "consentedAt" | "withdrawnAt", ExtArgs["result"]["userConsent"]>
 export type UserConsentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.UserConsent$tenantArgs<ExtArgs>
   document?: boolean | Prisma.LegalDocumentDefaultArgs<ExtArgs>
@@ -1001,7 +1001,7 @@ export type $UserConsentPayload<ExtArgs extends runtime.Types.Extensions.Interna
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string | null
-    organizationId: string | null
+    tenantId: string | null
     visitorId: string | null
     documentId: string
     documentSlug: string
@@ -1441,7 +1441,7 @@ export interface Prisma__UserConsentClient<T, Null = never, ExtArgs extends runt
 export interface UserConsentFieldRefs {
   readonly id: Prisma.FieldRef<"UserConsent", 'String'>
   readonly userId: Prisma.FieldRef<"UserConsent", 'String'>
-  readonly organizationId: Prisma.FieldRef<"UserConsent", 'String'>
+  readonly tenantId: Prisma.FieldRef<"UserConsent", 'String'>
   readonly visitorId: Prisma.FieldRef<"UserConsent", 'String'>
   readonly documentId: Prisma.FieldRef<"UserConsent", 'String'>
   readonly documentSlug: Prisma.FieldRef<"UserConsent", 'String'>

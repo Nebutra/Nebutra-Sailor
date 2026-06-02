@@ -45,7 +45,7 @@ export type InvoiceSumAggregateOutputType = {
 export type InvoiceMinAggregateOutputType = {
   id: string | null
   stripeId: string | null
-  organizationId: string | null
+  tenantId: string | null
   subscriptionId: string | null
   number: string | null
   status: $Enums.InvoiceStatus | null
@@ -67,7 +67,7 @@ export type InvoiceMinAggregateOutputType = {
 export type InvoiceMaxAggregateOutputType = {
   id: string | null
   stripeId: string | null
-  organizationId: string | null
+  tenantId: string | null
   subscriptionId: string | null
   number: string | null
   status: $Enums.InvoiceStatus | null
@@ -89,7 +89,7 @@ export type InvoiceMaxAggregateOutputType = {
 export type InvoiceCountAggregateOutputType = {
   id: number
   stripeId: number
-  organizationId: number
+  tenantId: number
   subscriptionId: number
   number: number
   status: number
@@ -130,7 +130,7 @@ export type InvoiceSumAggregateInputType = {
 export type InvoiceMinAggregateInputType = {
   id?: true
   stripeId?: true
-  organizationId?: true
+  tenantId?: true
   subscriptionId?: true
   number?: true
   status?: true
@@ -152,7 +152,7 @@ export type InvoiceMinAggregateInputType = {
 export type InvoiceMaxAggregateInputType = {
   id?: true
   stripeId?: true
-  organizationId?: true
+  tenantId?: true
   subscriptionId?: true
   number?: true
   status?: true
@@ -174,7 +174,7 @@ export type InvoiceMaxAggregateInputType = {
 export type InvoiceCountAggregateInputType = {
   id?: true
   stripeId?: true
-  organizationId?: true
+  tenantId?: true
   subscriptionId?: true
   number?: true
   status?: true
@@ -284,7 +284,7 @@ export type InvoiceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type InvoiceGroupByOutputType = {
   id: string
   stripeId: string | null
-  organizationId: string
+  tenantId: string
   subscriptionId: string | null
   number: string
   status: $Enums.InvoiceStatus
@@ -330,7 +330,7 @@ export type InvoiceWhereInput = {
   NOT?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
   id?: Prisma.StringFilter<"Invoice"> | string
   stripeId?: Prisma.StringNullableFilter<"Invoice"> | string | null
-  organizationId?: Prisma.StringFilter<"Invoice"> | string
+  tenantId?: Prisma.StringFilter<"Invoice"> | string
   subscriptionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   number?: Prisma.StringFilter<"Invoice"> | string
   status?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
@@ -357,7 +357,7 @@ export type InvoiceWhereInput = {
 export type InvoiceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   number?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -388,7 +388,7 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
   OR?: Prisma.InvoiceWhereInput[]
   NOT?: Prisma.InvoiceWhereInput | Prisma.InvoiceWhereInput[]
-  organizationId?: Prisma.StringFilter<"Invoice"> | string
+  tenantId?: Prisma.StringFilter<"Invoice"> | string
   subscriptionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   status?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
   subtotal?: Prisma.DecimalFilter<"Invoice"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -414,7 +414,7 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
 export type InvoiceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   number?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -445,7 +445,7 @@ export type InvoiceScalarWhereWithAggregatesInput = {
   NOT?: Prisma.InvoiceScalarWhereWithAggregatesInput | Prisma.InvoiceScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   stripeId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
-  organizationId?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   subscriptionId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   number?: Prisma.StringWithAggregatesFilter<"Invoice"> | string
   status?: Prisma.EnumInvoiceStatusWithAggregatesFilter<"Invoice"> | $Enums.InvoiceStatus
@@ -493,7 +493,7 @@ export type InvoiceCreateInput = {
 export type InvoiceUncheckedCreateInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   subscriptionId?: string | null
   number: string
   status?: $Enums.InvoiceStatus
@@ -543,7 +543,7 @@ export type InvoiceUpdateInput = {
 export type InvoiceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
@@ -568,7 +568,7 @@ export type InvoiceUncheckedUpdateInput = {
 export type InvoiceCreateManyInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   subscriptionId?: string | null
   number: string
   status?: $Enums.InvoiceStatus
@@ -612,7 +612,7 @@ export type InvoiceUpdateManyMutationInput = {
 export type InvoiceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
@@ -645,7 +645,7 @@ export type InvoiceOrderByRelationAggregateInput = {
 export type InvoiceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   number?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -676,7 +676,7 @@ export type InvoiceAvgOrderByAggregateInput = {
 export type InvoiceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   number?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -698,7 +698,7 @@ export type InvoiceMaxOrderByAggregateInput = {
 export type InvoiceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   number?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -933,7 +933,7 @@ export type InvoiceScalarWhereInput = {
   NOT?: Prisma.InvoiceScalarWhereInput | Prisma.InvoiceScalarWhereInput[]
   id?: Prisma.StringFilter<"Invoice"> | string
   stripeId?: Prisma.StringNullableFilter<"Invoice"> | string | null
-  organizationId?: Prisma.StringFilter<"Invoice"> | string
+  tenantId?: Prisma.StringFilter<"Invoice"> | string
   subscriptionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   number?: Prisma.StringFilter<"Invoice"> | string
   status?: Prisma.EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
@@ -980,7 +980,7 @@ export type InvoiceCreateWithoutSubscriptionInput = {
 export type InvoiceUncheckedCreateWithoutSubscriptionInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   number: string
   status?: $Enums.InvoiceStatus
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1054,7 +1054,7 @@ export type InvoiceCreateWithoutItemsInput = {
 export type InvoiceUncheckedCreateWithoutItemsInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   subscriptionId?: string | null
   number: string
   status?: $Enums.InvoiceStatus
@@ -1118,7 +1118,7 @@ export type InvoiceUpdateWithoutItemsInput = {
 export type InvoiceUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
@@ -1166,7 +1166,7 @@ export type InvoiceCreateWithoutPaymentsInput = {
 export type InvoiceUncheckedCreateWithoutPaymentsInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   subscriptionId?: string | null
   number: string
   status?: $Enums.InvoiceStatus
@@ -1230,7 +1230,7 @@ export type InvoiceUpdateWithoutPaymentsInput = {
 export type InvoiceUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   number?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
@@ -1346,7 +1346,7 @@ export type InvoiceUncheckedUpdateManyWithoutTenantInput = {
 export type InvoiceCreateManySubscriptionInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   number: string
   status?: $Enums.InvoiceStatus
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1392,7 +1392,7 @@ export type InvoiceUpdateWithoutSubscriptionInput = {
 export type InvoiceUncheckedUpdateWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1416,7 +1416,7 @@ export type InvoiceUncheckedUpdateWithoutSubscriptionInput = {
 export type InvoiceUncheckedUpdateManyWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1478,7 +1478,7 @@ export type InvoiceCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Type
 export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   stripeId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   subscriptionId?: boolean
   number?: boolean
   status?: boolean
@@ -1506,7 +1506,7 @@ export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type InvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   stripeId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   subscriptionId?: boolean
   number?: boolean
   status?: boolean
@@ -1531,7 +1531,7 @@ export type InvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type InvoiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   stripeId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   subscriptionId?: boolean
   number?: boolean
   status?: boolean
@@ -1556,7 +1556,7 @@ export type InvoiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type InvoiceSelectScalar = {
   id?: boolean
   stripeId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   subscriptionId?: boolean
   number?: boolean
   status?: boolean
@@ -1576,7 +1576,7 @@ export type InvoiceSelectScalar = {
   updatedAt?: boolean
 }
 
-export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stripeId" | "organizationId" | "subscriptionId" | "number" | "status" | "subtotal" | "tax" | "total" | "amountPaid" | "amountDue" | "currency" | "dueDate" | "paidAt" | "invoicePdf" | "hostedInvoiceUrl" | "billingReason" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
+export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stripeId" | "tenantId" | "subscriptionId" | "number" | "status" | "subtotal" | "tax" | "total" | "amountPaid" | "amountDue" | "currency" | "dueDate" | "paidAt" | "invoicePdf" | "hostedInvoiceUrl" | "billingReason" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
 export type InvoiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.Invoice$subscriptionArgs<ExtArgs>
@@ -1604,7 +1604,7 @@ export type $InvoicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     stripeId: string | null
-    organizationId: string
+    tenantId: string
     subscriptionId: string | null
     number: string
     status: $Enums.InvoiceStatus
@@ -2051,7 +2051,7 @@ export interface Prisma__InvoiceClient<T, Null = never, ExtArgs extends runtime.
 export interface InvoiceFieldRefs {
   readonly id: Prisma.FieldRef<"Invoice", 'String'>
   readonly stripeId: Prisma.FieldRef<"Invoice", 'String'>
-  readonly organizationId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly tenantId: Prisma.FieldRef<"Invoice", 'String'>
   readonly subscriptionId: Prisma.FieldRef<"Invoice", 'String'>
   readonly number: Prisma.FieldRef<"Invoice", 'String'>
   readonly status: Prisma.FieldRef<"Invoice", 'InvoiceStatus'>

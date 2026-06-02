@@ -170,7 +170,7 @@ export const APIKeyScalarFieldEnum = {
   name: 'name',
   keyHash: 'keyHash',
   keyPrefix: 'keyPrefix',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   createdById: 'createdById',
   lastUsedAt: 'lastUsedAt',
   revokedAt: 'revokedAt',
@@ -258,7 +258,7 @@ export type NotificationPreferenceScalarFieldEnum = (typeof NotificationPreferen
 
 export const ContentScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   authorId: 'authorId',
   title: 'title',
   slug: 'slug',
@@ -297,7 +297,7 @@ export type ContentEmbeddingScalarFieldEnum = (typeof ContentEmbeddingScalarFiel
 
 export const ProductScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   externalId: 'externalId',
   name: 'name',
   description: 'description',
@@ -316,7 +316,7 @@ export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeo
 
 export const OrderScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   userId: 'userId',
   externalId: 'externalId',
   status: 'status',
@@ -344,7 +344,7 @@ export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof t
 
 export const IntegrationScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   type: 'type',
   name: 'name',
   credentials: 'credentials',
@@ -377,7 +377,7 @@ export const RequestLogScalarFieldEnum = {
   id: 'id',
   requestId: 'requestId',
   apiKeyId: 'apiKeyId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   model: 'model',
   promptTokens: 'promptTokens',
   completionTokens: 'completionTokens',
@@ -483,7 +483,7 @@ export type PlanUsageLimitScalarFieldEnum = (typeof PlanUsageLimitScalarFieldEnu
 
 export const CustomerPlanVersionScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   planId: 'planId',
   reason: 'reason',
   approvedBy: 'approvedBy',
@@ -496,7 +496,7 @@ export type CustomerPlanVersionScalarFieldEnum = (typeof CustomerPlanVersionScal
 
 export const CustomerFeatureOverrideScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   featureKey: 'featureKey',
   value: 'value',
   reason: 'reason',
@@ -511,7 +511,7 @@ export type CustomerFeatureOverrideScalarFieldEnum = (typeof CustomerFeatureOver
 
 export const CustomerUsageLimitScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   limitId: 'limitId',
   limitValue: 'limitValue',
   overageRate: 'overageRate',
@@ -528,7 +528,7 @@ export type CustomerUsageLimitScalarFieldEnum = (typeof CustomerUsageLimitScalar
 export const SubscriptionScalarFieldEnum = {
   id: 'id',
   stripeId: 'stripeId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   pricingPlanId: 'pricingPlanId',
   status: 'status',
   currentPeriodStart: 'currentPeriodStart',
@@ -548,7 +548,7 @@ export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[k
 export const InvoiceScalarFieldEnum = {
   id: 'id',
   stripeId: 'stripeId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   subscriptionId: 'subscriptionId',
   number: 'number',
   status: 'status',
@@ -592,7 +592,7 @@ export type InvoiceItemScalarFieldEnum = (typeof InvoiceItemScalarFieldEnum)[key
 export const PaymentScalarFieldEnum = {
   id: 'id',
   stripeId: 'stripeId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   invoiceId: 'invoiceId',
   amount: 'amount',
   currency: 'currency',
@@ -612,7 +612,7 @@ export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeo
 export const PaymentMethodScalarFieldEnum = {
   id: 'id',
   stripeId: 'stripeId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   type: 'type',
   isDefault: 'isDefault',
   lastFour: 'lastFour',
@@ -630,7 +630,7 @@ export type PaymentMethodScalarFieldEnum = (typeof PaymentMethodScalarFieldEnum)
 
 export const UsageLedgerEntryScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   subscriptionId: 'subscriptionId',
   userId: 'userId',
   idempotencyKey: 'idempotencyKey',
@@ -654,7 +654,7 @@ export type UsageLedgerEntryScalarFieldEnum = (typeof UsageLedgerEntryScalarFiel
 
 export const CreditBalanceScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   balance: 'balance',
   currency: 'currency',
   updatedAt: 'updatedAt'
@@ -681,7 +681,7 @@ export type CreditTransactionScalarFieldEnum = (typeof CreditTransactionScalarFi
 
 export const StripeCustomerScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   stripeId: 'stripeId',
   email: 'email',
   name: 'name',
@@ -712,7 +712,7 @@ export type WebhookEventScalarFieldEnum = (typeof WebhookEventScalarFieldEnum)[k
 
 export const AuditLogScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   userId: 'userId',
   actorType: 'actorType',
   action: 'action',
@@ -756,7 +756,7 @@ export type LegalDocumentScalarFieldEnum = (typeof LegalDocumentScalarFieldEnum)
 export const UserConsentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   visitorId: 'visitorId',
   documentId: 'documentId',
   documentSlug: 'documentSlug',
@@ -834,7 +834,7 @@ export const OAuthClientScalarFieldEnum = {
   rateLimitRpm: 'rateLimitRpm',
   accessTokenTtl: 'accessTokenTtl',
   refreshTokenTtl: 'refreshTokenTtl',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -890,7 +890,7 @@ export type AuthUserScalarFieldEnum = (typeof AuthUserScalarFieldEnum)[keyof typ
 
 export const ChatSessionScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   userId: 'userId',
   title: 'title',
   mode: 'mode',
@@ -906,7 +906,7 @@ export type ChatSessionScalarFieldEnum = (typeof ChatSessionScalarFieldEnum)[key
 
 export const ThreadScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   userId: 'userId',
   title: 'title',
   summary: 'summary',
@@ -954,7 +954,7 @@ export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof Sk
 export const UserSkillScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   skillId: 'skillId',
   enabled: 'enabled',
   config: 'config',
@@ -967,7 +967,7 @@ export type UserSkillScalarFieldEnum = (typeof UserSkillScalarFieldEnum)[keyof t
 export const ConnectorScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   type: 'type',
   name: 'name',
   iconUrl: 'iconUrl',
@@ -1053,7 +1053,7 @@ export const CodeRedemptionScalarFieldEnum = {
   id: 'id',
   codeId: 'codeId',
   userId: 'userId',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   redeemedAt: 'redeemedAt',
   ipAddress: 'ipAddress'
 } as const
@@ -1063,7 +1063,7 @@ export type CodeRedemptionScalarFieldEnum = (typeof CodeRedemptionScalarFieldEnu
 
 export const FeedbackReportScalarFieldEnum = {
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   userId: 'userId',
   area: 'area',
   mode: 'mode',
@@ -1292,7 +1292,7 @@ export type BAPasskeyScalarFieldEnum = (typeof BAPasskeyScalarFieldEnum)[keyof t
 export const AtelierCanvasScalarFieldEnum = {
   pk: 'pk',
   id: 'id',
-  organizationId: 'organizationId',
+  tenantId: 'tenantId',
   name: 'name',
   scene: 'scene',
   thumbnail: 'thumbnail',

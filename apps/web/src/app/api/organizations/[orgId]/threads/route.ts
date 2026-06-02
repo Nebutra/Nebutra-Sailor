@@ -48,7 +48,7 @@ export async function GET(request: Request, context: RouteContext) {
     }
 
     const threads = await db.thread.findMany({
-      where: { organizationId: orgId, userId: authState.userId },
+      where: { tenantId: orgId, userId: authState.userId },
       orderBy: { lastActivityAt: "desc" },
       take: 5,
       select: { id: true, title: true, lastActivityAt: true },
@@ -112,7 +112,7 @@ export async function POST(request: Request, context: RouteContext) {
         : "Untitled";
 
     const thread = await db.thread.create({
-      data: { organizationId: orgId, userId: authState.userId, title },
+      data: { tenantId: orgId, userId: authState.userId, title },
       select: { id: true, title: true, lastActivityAt: true },
     });
 

@@ -39,7 +39,7 @@ export type PaymentMethodSumAggregateOutputType = {
 export type PaymentMethodMinAggregateOutputType = {
   id: string | null
   stripeId: string | null
-  organizationId: string | null
+  tenantId: string | null
   type: $Enums.PaymentMethodType | null
   isDefault: boolean | null
   lastFour: string | null
@@ -53,7 +53,7 @@ export type PaymentMethodMinAggregateOutputType = {
 export type PaymentMethodMaxAggregateOutputType = {
   id: string | null
   stripeId: string | null
-  organizationId: string | null
+  tenantId: string | null
   type: $Enums.PaymentMethodType | null
   isDefault: boolean | null
   lastFour: string | null
@@ -67,7 +67,7 @@ export type PaymentMethodMaxAggregateOutputType = {
 export type PaymentMethodCountAggregateOutputType = {
   id: number
   stripeId: number
-  organizationId: number
+  tenantId: number
   type: number
   isDefault: number
   lastFour: number
@@ -95,7 +95,7 @@ export type PaymentMethodSumAggregateInputType = {
 export type PaymentMethodMinAggregateInputType = {
   id?: true
   stripeId?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   isDefault?: true
   lastFour?: true
@@ -109,7 +109,7 @@ export type PaymentMethodMinAggregateInputType = {
 export type PaymentMethodMaxAggregateInputType = {
   id?: true
   stripeId?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   isDefault?: true
   lastFour?: true
@@ -123,7 +123,7 @@ export type PaymentMethodMaxAggregateInputType = {
 export type PaymentMethodCountAggregateInputType = {
   id?: true
   stripeId?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   isDefault?: true
   lastFour?: true
@@ -226,7 +226,7 @@ export type PaymentMethodGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type PaymentMethodGroupByOutputType = {
   id: string
   stripeId: string | null
-  organizationId: string
+  tenantId: string
   type: $Enums.PaymentMethodType
   isDefault: boolean
   lastFour: string | null
@@ -265,7 +265,7 @@ export type PaymentMethodWhereInput = {
   NOT?: Prisma.PaymentMethodWhereInput | Prisma.PaymentMethodWhereInput[]
   id?: Prisma.StringFilter<"PaymentMethod"> | string
   stripeId?: Prisma.StringNullableFilter<"PaymentMethod"> | string | null
-  organizationId?: Prisma.StringFilter<"PaymentMethod"> | string
+  tenantId?: Prisma.StringFilter<"PaymentMethod"> | string
   type?: Prisma.EnumPaymentMethodTypeFilter<"PaymentMethod"> | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFilter<"PaymentMethod"> | boolean
   lastFour?: Prisma.StringNullableFilter<"PaymentMethod"> | string | null
@@ -283,7 +283,7 @@ export type PaymentMethodWhereInput = {
 export type PaymentMethodOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   lastFour?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -304,7 +304,7 @@ export type PaymentMethodWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PaymentMethodWhereInput | Prisma.PaymentMethodWhereInput[]
   OR?: Prisma.PaymentMethodWhereInput[]
   NOT?: Prisma.PaymentMethodWhereInput | Prisma.PaymentMethodWhereInput[]
-  organizationId?: Prisma.StringFilter<"PaymentMethod"> | string
+  tenantId?: Prisma.StringFilter<"PaymentMethod"> | string
   type?: Prisma.EnumPaymentMethodTypeFilter<"PaymentMethod"> | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFilter<"PaymentMethod"> | boolean
   lastFour?: Prisma.StringNullableFilter<"PaymentMethod"> | string | null
@@ -322,7 +322,7 @@ export type PaymentMethodWhereUniqueInput = Prisma.AtLeast<{
 export type PaymentMethodOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   lastFour?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -346,7 +346,7 @@ export type PaymentMethodScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PaymentMethodScalarWhereWithAggregatesInput | Prisma.PaymentMethodScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PaymentMethod"> | string
   stripeId?: Prisma.StringNullableWithAggregatesFilter<"PaymentMethod"> | string | null
-  organizationId?: Prisma.StringWithAggregatesFilter<"PaymentMethod"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"PaymentMethod"> | string
   type?: Prisma.EnumPaymentMethodTypeWithAggregatesFilter<"PaymentMethod"> | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolWithAggregatesFilter<"PaymentMethod"> | boolean
   lastFour?: Prisma.StringNullableWithAggregatesFilter<"PaymentMethod"> | string | null
@@ -379,7 +379,7 @@ export type PaymentMethodCreateInput = {
 export type PaymentMethodUncheckedCreateInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   type: $Enums.PaymentMethodType
   isDefault?: boolean
   lastFour?: string | null
@@ -413,7 +413,7 @@ export type PaymentMethodUpdateInput = {
 export type PaymentMethodUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -430,7 +430,7 @@ export type PaymentMethodUncheckedUpdateInput = {
 export type PaymentMethodCreateManyInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   type: $Enums.PaymentMethodType
   isDefault?: boolean
   lastFour?: string | null
@@ -461,7 +461,7 @@ export type PaymentMethodUpdateManyMutationInput = {
 export type PaymentMethodUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -492,7 +492,7 @@ export type PaymentMethodNullableScalarRelationFilter = {
 export type PaymentMethodCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   lastFour?: Prisma.SortOrder
@@ -513,7 +513,7 @@ export type PaymentMethodAvgOrderByAggregateInput = {
 export type PaymentMethodMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   lastFour?: Prisma.SortOrder
@@ -527,7 +527,7 @@ export type PaymentMethodMaxOrderByAggregateInput = {
 export type PaymentMethodMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   stripeId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
   lastFour?: Prisma.SortOrder
@@ -665,7 +665,7 @@ export type PaymentMethodScalarWhereInput = {
   NOT?: Prisma.PaymentMethodScalarWhereInput | Prisma.PaymentMethodScalarWhereInput[]
   id?: Prisma.StringFilter<"PaymentMethod"> | string
   stripeId?: Prisma.StringNullableFilter<"PaymentMethod"> | string | null
-  organizationId?: Prisma.StringFilter<"PaymentMethod"> | string
+  tenantId?: Prisma.StringFilter<"PaymentMethod"> | string
   type?: Prisma.EnumPaymentMethodTypeFilter<"PaymentMethod"> | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFilter<"PaymentMethod"> | boolean
   lastFour?: Prisma.StringNullableFilter<"PaymentMethod"> | string | null
@@ -697,7 +697,7 @@ export type PaymentMethodCreateWithoutPaymentsInput = {
 export type PaymentMethodUncheckedCreateWithoutPaymentsInput = {
   id?: string
   stripeId?: string | null
-  organizationId: string
+  tenantId: string
   type: $Enums.PaymentMethodType
   isDefault?: boolean
   lastFour?: string | null
@@ -745,7 +745,7 @@ export type PaymentMethodUpdateWithoutPaymentsInput = {
 export type PaymentMethodUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   stripeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumPaymentMethodTypeFieldUpdateOperationsInput | $Enums.PaymentMethodType
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastFour?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -854,7 +854,7 @@ export type PaymentMethodCountOutputTypeCountPaymentsArgs<ExtArgs extends runtim
 export type PaymentMethodSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   stripeId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   isDefault?: boolean
   lastFour?: boolean
@@ -873,7 +873,7 @@ export type PaymentMethodSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type PaymentMethodSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   stripeId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   isDefault?: boolean
   lastFour?: boolean
@@ -890,7 +890,7 @@ export type PaymentMethodSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type PaymentMethodSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   stripeId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   isDefault?: boolean
   lastFour?: boolean
@@ -907,7 +907,7 @@ export type PaymentMethodSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type PaymentMethodSelectScalar = {
   id?: boolean
   stripeId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   isDefault?: boolean
   lastFour?: boolean
@@ -920,7 +920,7 @@ export type PaymentMethodSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PaymentMethodOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stripeId" | "organizationId" | "type" | "isDefault" | "lastFour" | "brand" | "expiryMonth" | "expiryYear" | "billingDetails" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentMethod"]>
+export type PaymentMethodOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "stripeId" | "tenantId" | "type" | "isDefault" | "lastFour" | "brand" | "expiryMonth" | "expiryYear" | "billingDetails" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentMethod"]>
 export type PaymentMethodInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   payments?: boolean | Prisma.PaymentMethod$paymentsArgs<ExtArgs>
@@ -942,7 +942,7 @@ export type $PaymentMethodPayload<ExtArgs extends runtime.Types.Extensions.Inter
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     stripeId: string | null
-    organizationId: string
+    tenantId: string
     type: $Enums.PaymentMethodType
     isDefault: boolean
     lastFour: string | null
@@ -1380,7 +1380,7 @@ export interface Prisma__PaymentMethodClient<T, Null = never, ExtArgs extends ru
 export interface PaymentMethodFieldRefs {
   readonly id: Prisma.FieldRef<"PaymentMethod", 'String'>
   readonly stripeId: Prisma.FieldRef<"PaymentMethod", 'String'>
-  readonly organizationId: Prisma.FieldRef<"PaymentMethod", 'String'>
+  readonly tenantId: Prisma.FieldRef<"PaymentMethod", 'String'>
   readonly type: Prisma.FieldRef<"PaymentMethod", 'PaymentMethodType'>
   readonly isDefault: Prisma.FieldRef<"PaymentMethod", 'Boolean'>
   readonly lastFour: Prisma.FieldRef<"PaymentMethod", 'String'>

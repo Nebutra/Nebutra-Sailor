@@ -54,7 +54,7 @@ export type OAuthClientMinAggregateOutputType = {
   rateLimitRpm: number | null
   accessTokenTtl: number | null
   refreshTokenTtl: number | null
-  organizationId: string | null
+  tenantId: string | null
   createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -76,7 +76,7 @@ export type OAuthClientMaxAggregateOutputType = {
   rateLimitRpm: number | null
   accessTokenTtl: number | null
   refreshTokenTtl: number | null
-  organizationId: string | null
+  tenantId: string | null
   createdById: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -102,7 +102,7 @@ export type OAuthClientCountAggregateOutputType = {
   rateLimitRpm: number
   accessTokenTtl: number
   refreshTokenTtl: number
-  organizationId: number
+  tenantId: number
   createdById: number
   createdAt: number
   updatedAt: number
@@ -138,7 +138,7 @@ export type OAuthClientMinAggregateInputType = {
   rateLimitRpm?: true
   accessTokenTtl?: true
   refreshTokenTtl?: true
-  organizationId?: true
+  tenantId?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -160,7 +160,7 @@ export type OAuthClientMaxAggregateInputType = {
   rateLimitRpm?: true
   accessTokenTtl?: true
   refreshTokenTtl?: true
-  organizationId?: true
+  tenantId?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -186,7 +186,7 @@ export type OAuthClientCountAggregateInputType = {
   rateLimitRpm?: true
   accessTokenTtl?: true
   refreshTokenTtl?: true
-  organizationId?: true
+  tenantId?: true
   createdById?: true
   createdAt?: true
   updatedAt?: true
@@ -299,7 +299,7 @@ export type OAuthClientGroupByOutputType = {
   rateLimitRpm: number
   accessTokenTtl: number
   refreshTokenTtl: number
-  organizationId: string
+  tenantId: string
   createdById: string | null
   createdAt: Date
   updatedAt: Date
@@ -348,7 +348,7 @@ export type OAuthClientWhereInput = {
   rateLimitRpm?: Prisma.IntFilter<"OAuthClient"> | number
   accessTokenTtl?: Prisma.IntFilter<"OAuthClient"> | number
   refreshTokenTtl?: Prisma.IntFilter<"OAuthClient"> | number
-  organizationId?: Prisma.StringFilter<"OAuthClient"> | string
+  tenantId?: Prisma.StringFilter<"OAuthClient"> | string
   createdById?: Prisma.StringNullableFilter<"OAuthClient"> | string | null
   createdAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
@@ -377,7 +377,7 @@ export type OAuthClientOrderByWithRelationInput = {
   rateLimitRpm?: Prisma.SortOrder
   accessTokenTtl?: Prisma.SortOrder
   refreshTokenTtl?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -409,7 +409,7 @@ export type OAuthClientWhereUniqueInput = Prisma.AtLeast<{
   rateLimitRpm?: Prisma.IntFilter<"OAuthClient"> | number
   accessTokenTtl?: Prisma.IntFilter<"OAuthClient"> | number
   refreshTokenTtl?: Prisma.IntFilter<"OAuthClient"> | number
-  organizationId?: Prisma.StringFilter<"OAuthClient"> | string
+  tenantId?: Prisma.StringFilter<"OAuthClient"> | string
   createdById?: Prisma.StringNullableFilter<"OAuthClient"> | string | null
   createdAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
@@ -438,7 +438,7 @@ export type OAuthClientOrderByWithAggregationInput = {
   rateLimitRpm?: Prisma.SortOrder
   accessTokenTtl?: Prisma.SortOrder
   refreshTokenTtl?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -472,7 +472,7 @@ export type OAuthClientScalarWhereWithAggregatesInput = {
   rateLimitRpm?: Prisma.IntWithAggregatesFilter<"OAuthClient"> | number
   accessTokenTtl?: Prisma.IntWithAggregatesFilter<"OAuthClient"> | number
   refreshTokenTtl?: Prisma.IntWithAggregatesFilter<"OAuthClient"> | number
-  organizationId?: Prisma.StringWithAggregatesFilter<"OAuthClient"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"OAuthClient"> | string
   createdById?: Prisma.StringNullableWithAggregatesFilter<"OAuthClient"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"OAuthClient"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"OAuthClient"> | Date | string
@@ -526,7 +526,7 @@ export type OAuthClientUncheckedCreateInput = {
   rateLimitRpm?: number
   accessTokenTtl?: number
   refreshTokenTtl?: number
-  organizationId: string
+  tenantId: string
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -582,7 +582,7 @@ export type OAuthClientUncheckedUpdateInput = {
   rateLimitRpm?: Prisma.IntFieldUpdateOperationsInput | number
   accessTokenTtl?: Prisma.IntFieldUpdateOperationsInput | number
   refreshTokenTtl?: Prisma.IntFieldUpdateOperationsInput | number
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -610,7 +610,7 @@ export type OAuthClientCreateManyInput = {
   rateLimitRpm?: number
   accessTokenTtl?: number
   refreshTokenTtl?: number
-  organizationId: string
+  tenantId: string
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -661,7 +661,7 @@ export type OAuthClientUncheckedUpdateManyInput = {
   rateLimitRpm?: Prisma.IntFieldUpdateOperationsInput | number
   accessTokenTtl?: Prisma.IntFieldUpdateOperationsInput | number
   refreshTokenTtl?: Prisma.IntFieldUpdateOperationsInput | number
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -697,7 +697,7 @@ export type OAuthClientCountOrderByAggregateInput = {
   rateLimitRpm?: Prisma.SortOrder
   accessTokenTtl?: Prisma.SortOrder
   refreshTokenTtl?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -725,7 +725,7 @@ export type OAuthClientMaxOrderByAggregateInput = {
   rateLimitRpm?: Prisma.SortOrder
   accessTokenTtl?: Prisma.SortOrder
   refreshTokenTtl?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -747,7 +747,7 @@ export type OAuthClientMinOrderByAggregateInput = {
   rateLimitRpm?: Prisma.SortOrder
   accessTokenTtl?: Prisma.SortOrder
   refreshTokenTtl?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -981,7 +981,7 @@ export type OAuthClientScalarWhereInput = {
   rateLimitRpm?: Prisma.IntFilter<"OAuthClient"> | number
   accessTokenTtl?: Prisma.IntFilter<"OAuthClient"> | number
   refreshTokenTtl?: Prisma.IntFilter<"OAuthClient"> | number
-  organizationId?: Prisma.StringFilter<"OAuthClient"> | string
+  tenantId?: Prisma.StringFilter<"OAuthClient"> | string
   createdById?: Prisma.StringNullableFilter<"OAuthClient"> | string | null
   createdAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"OAuthClient"> | Date | string
@@ -1034,7 +1034,7 @@ export type OAuthClientUncheckedCreateWithoutAuthorizationsInput = {
   rateLimitRpm?: number
   accessTokenTtl?: number
   refreshTokenTtl?: number
-  organizationId: string
+  tenantId: string
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1104,7 +1104,7 @@ export type OAuthClientUncheckedUpdateWithoutAuthorizationsInput = {
   rateLimitRpm?: Prisma.IntFieldUpdateOperationsInput | number
   accessTokenTtl?: Prisma.IntFieldUpdateOperationsInput | number
   refreshTokenTtl?: Prisma.IntFieldUpdateOperationsInput | number
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1158,7 +1158,7 @@ export type OAuthClientUncheckedCreateWithoutAccessTokensInput = {
   rateLimitRpm?: number
   accessTokenTtl?: number
   refreshTokenTtl?: number
-  organizationId: string
+  tenantId: string
   createdById?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1228,7 +1228,7 @@ export type OAuthClientUncheckedUpdateWithoutAccessTokensInput = {
   rateLimitRpm?: Prisma.IntFieldUpdateOperationsInput | number
   accessTokenTtl?: Prisma.IntFieldUpdateOperationsInput | number
   refreshTokenTtl?: Prisma.IntFieldUpdateOperationsInput | number
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1399,7 +1399,7 @@ export type OAuthClientSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   rateLimitRpm?: boolean
   accessTokenTtl?: boolean
   refreshTokenTtl?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1429,7 +1429,7 @@ export type OAuthClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   rateLimitRpm?: boolean
   accessTokenTtl?: boolean
   refreshTokenTtl?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1456,7 +1456,7 @@ export type OAuthClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   rateLimitRpm?: boolean
   accessTokenTtl?: boolean
   refreshTokenTtl?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1483,13 +1483,13 @@ export type OAuthClientSelectScalar = {
   rateLimitRpm?: boolean
   accessTokenTtl?: boolean
   refreshTokenTtl?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   createdById?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OAuthClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientId" | "clientSecretHash" | "type" | "status" | "name" | "description" | "logoUrl" | "websiteUrl" | "privacyPolicyUrl" | "tosUrl" | "redirectUris" | "allowedScopes" | "grantTypes" | "responseTypes" | "tokenEndpointAuthMethod" | "rateLimitRpm" | "accessTokenTtl" | "refreshTokenTtl" | "organizationId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["oAuthClient"]>
+export type OAuthClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientId" | "clientSecretHash" | "type" | "status" | "name" | "description" | "logoUrl" | "websiteUrl" | "privacyPolicyUrl" | "tosUrl" | "redirectUris" | "allowedScopes" | "grantTypes" | "responseTypes" | "tokenEndpointAuthMethod" | "rateLimitRpm" | "accessTokenTtl" | "refreshTokenTtl" | "tenantId" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["oAuthClient"]>
 export type OAuthClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   authorizations?: boolean | Prisma.OAuthClient$authorizationsArgs<ExtArgs>
@@ -1530,7 +1530,7 @@ export type $OAuthClientPayload<ExtArgs extends runtime.Types.Extensions.Interna
     rateLimitRpm: number
     accessTokenTtl: number
     refreshTokenTtl: number
-    organizationId: string
+    tenantId: string
     createdById: string | null
     createdAt: Date
     updatedAt: Date
@@ -1979,7 +1979,7 @@ export interface OAuthClientFieldRefs {
   readonly rateLimitRpm: Prisma.FieldRef<"OAuthClient", 'Int'>
   readonly accessTokenTtl: Prisma.FieldRef<"OAuthClient", 'Int'>
   readonly refreshTokenTtl: Prisma.FieldRef<"OAuthClient", 'Int'>
-  readonly organizationId: Prisma.FieldRef<"OAuthClient", 'String'>
+  readonly tenantId: Prisma.FieldRef<"OAuthClient", 'String'>
   readonly createdById: Prisma.FieldRef<"OAuthClient", 'String'>
   readonly createdAt: Prisma.FieldRef<"OAuthClient", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"OAuthClient", 'DateTime'>

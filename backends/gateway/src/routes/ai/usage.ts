@@ -216,7 +216,7 @@ usageRoutes.openapi(byModelRouteDef, async (c) => {
   const grouped = await db.requestLog.groupBy({
     by: ["model"],
     where: {
-      organizationId,
+      tenantId: organizationId,
       createdAt: { gte: period.from, lte: period.to },
     },
     _sum: { totalTokens: true, cost: true },
@@ -272,7 +272,7 @@ usageRoutes.openapi(byKeyRouteDef, async (c) => {
   const grouped = await db.requestLog.groupBy({
     by: ["apiKeyId"],
     where: {
-      organizationId,
+      tenantId: organizationId,
       createdAt: { gte: period.from, lte: period.to },
       apiKeyId: { not: null },
     },
@@ -284,7 +284,7 @@ usageRoutes.openapi(byKeyRouteDef, async (c) => {
 
   const keyMeta = keyIds.length
     ? await db.aPIKey.findMany({
-        where: { id: { in: keyIds }, organizationId },
+        where: { id: { in: keyIds }, tenantId: organizationId },
         select: { id: true, name: true, keyPrefix: true },
       })
     : [];
@@ -351,7 +351,7 @@ usageRoutes.openapi(historyRouteDef, async (c) => {
   const db = getTenantDb(organizationId);
   const rows = await db.requestLog.findMany({
     where: {
-      organizationId,
+      tenantId: organizationId,
       createdAt: { gte: period.from, lte: period.to },
     },
     select: { createdAt: true, totalTokens: true, cost: true },

@@ -164,7 +164,7 @@ export class PlanConfigService {
     // Get organization's subscription to find their plan
     const subscription = await this.prisma.subscription.findFirst({
       where: {
-        organizationId,
+        tenantId: organizationId,
         status: { in: ["ACTIVE", "TRIALING"] },
       },
       include: {
@@ -184,7 +184,7 @@ export class PlanConfigService {
 
     // Check for grandfathered plan version
     const planVersion = await this.prisma.customerPlanVersion.findUnique({
-      where: { organizationId },
+      where: { tenantId: organizationId },
       include: {
         plan: {
           include: {
@@ -212,13 +212,13 @@ export class PlanConfigService {
     const [featureOverrides, limitOverrides] = await Promise.all([
       this.prisma.customerFeatureOverride.findMany({
         where: {
-          organizationId,
+          tenantId: organizationId,
           OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
         },
       }),
       this.prisma.customerUsageLimit.findMany({
         where: {
-          organizationId,
+          tenantId: organizationId,
           OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
         },
         include: { limitDef: true },

@@ -88,7 +88,7 @@ export async function GET(_request: Request) {
 
   try {
     const rows = (await db.aPIKey.findMany({
-      where: { organizationId: auth.orgId, revokedAt: null },
+      where: { tenantId: auth.orgId, revokedAt: null },
       orderBy: { createdAt: "desc" },
       select: {
         id: true,
@@ -150,7 +150,7 @@ export async function POST(request: Request) {
         name,
         keyHash,
         keyPrefix,
-        organizationId: auth.orgId,
+        tenantId: auth.orgId,
         createdById: auth.userId,
         scopes,
         ...(typeof rateLimitRps === "number" ? { rateLimitRps } : {}),

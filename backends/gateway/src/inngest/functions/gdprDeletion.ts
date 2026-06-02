@@ -67,7 +67,7 @@ export const processGdprDeletion: InngestFunction.Any = inngest.createFunction(
 
       const revoked = await prisma.aPIKey.updateMany({
         where: {
-          organizationId: { in: orgIds },
+          tenantId: { in: orgIds },
           revokedAt: null,
         },
         data: { revokedAt: new Date() },

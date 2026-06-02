@@ -26,7 +26,7 @@ export type AggregateCustomerFeatureOverride = {
 
 export type CustomerFeatureOverrideMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   featureKey: string | null
   reason: string | null
   approvedBy: string | null
@@ -37,7 +37,7 @@ export type CustomerFeatureOverrideMinAggregateOutputType = {
 
 export type CustomerFeatureOverrideMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   featureKey: string | null
   reason: string | null
   approvedBy: string | null
@@ -48,7 +48,7 @@ export type CustomerFeatureOverrideMaxAggregateOutputType = {
 
 export type CustomerFeatureOverrideCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   featureKey: number
   value: number
   reason: number
@@ -62,7 +62,7 @@ export type CustomerFeatureOverrideCountAggregateOutputType = {
 
 export type CustomerFeatureOverrideMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   featureKey?: true
   reason?: true
   approvedBy?: true
@@ -73,7 +73,7 @@ export type CustomerFeatureOverrideMinAggregateInputType = {
 
 export type CustomerFeatureOverrideMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   featureKey?: true
   reason?: true
   approvedBy?: true
@@ -84,7 +84,7 @@ export type CustomerFeatureOverrideMaxAggregateInputType = {
 
 export type CustomerFeatureOverrideCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   featureKey?: true
   value?: true
   reason?: true
@@ -169,7 +169,7 @@ export type CustomerFeatureOverrideGroupByArgs<ExtArgs extends runtime.Types.Ext
 
 export type CustomerFeatureOverrideGroupByOutputType = {
   id: string
-  organizationId: string
+  tenantId: string
   featureKey: string
   value: runtime.JsonValue
   reason: string | null
@@ -202,7 +202,7 @@ export type CustomerFeatureOverrideWhereInput = {
   OR?: Prisma.CustomerFeatureOverrideWhereInput[]
   NOT?: Prisma.CustomerFeatureOverrideWhereInput | Prisma.CustomerFeatureOverrideWhereInput[]
   id?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
-  organizationId?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
+  tenantId?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
   featureKey?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
   value?: Prisma.JsonFilter<"CustomerFeatureOverride">
   reason?: Prisma.StringNullableFilter<"CustomerFeatureOverride"> | string | null
@@ -215,7 +215,7 @@ export type CustomerFeatureOverrideWhereInput = {
 
 export type CustomerFeatureOverrideOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   featureKey?: Prisma.SortOrder
   value?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -228,11 +228,11 @@ export type CustomerFeatureOverrideOrderByWithRelationInput = {
 
 export type CustomerFeatureOverrideWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId_featureKey?: Prisma.CustomerFeatureOverrideOrganizationIdFeatureKeyCompoundUniqueInput
+  tenantId_featureKey?: Prisma.CustomerFeatureOverrideTenantIdFeatureKeyCompoundUniqueInput
   AND?: Prisma.CustomerFeatureOverrideWhereInput | Prisma.CustomerFeatureOverrideWhereInput[]
   OR?: Prisma.CustomerFeatureOverrideWhereInput[]
   NOT?: Prisma.CustomerFeatureOverrideWhereInput | Prisma.CustomerFeatureOverrideWhereInput[]
-  organizationId?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
+  tenantId?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
   featureKey?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
   value?: Prisma.JsonFilter<"CustomerFeatureOverride">
   reason?: Prisma.StringNullableFilter<"CustomerFeatureOverride"> | string | null
@@ -241,11 +241,11 @@ export type CustomerFeatureOverrideWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"CustomerFeatureOverride"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CustomerFeatureOverride"> | Date | string
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
-}, "id" | "organizationId_featureKey">
+}, "id" | "tenantId_featureKey">
 
 export type CustomerFeatureOverrideOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   featureKey?: Prisma.SortOrder
   value?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -263,7 +263,7 @@ export type CustomerFeatureOverrideScalarWhereWithAggregatesInput = {
   OR?: Prisma.CustomerFeatureOverrideScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CustomerFeatureOverrideScalarWhereWithAggregatesInput | Prisma.CustomerFeatureOverrideScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CustomerFeatureOverride"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"CustomerFeatureOverride"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"CustomerFeatureOverride"> | string
   featureKey?: Prisma.StringWithAggregatesFilter<"CustomerFeatureOverride"> | string
   value?: Prisma.JsonWithAggregatesFilter<"CustomerFeatureOverride">
   reason?: Prisma.StringNullableWithAggregatesFilter<"CustomerFeatureOverride"> | string | null
@@ -287,7 +287,7 @@ export type CustomerFeatureOverrideCreateInput = {
 
 export type CustomerFeatureOverrideUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   featureKey: string
   value: Prisma.JsonNullValueInput | runtime.InputJsonValue
   reason?: string | null
@@ -311,7 +311,7 @@ export type CustomerFeatureOverrideUpdateInput = {
 
 export type CustomerFeatureOverrideUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   featureKey?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -323,7 +323,7 @@ export type CustomerFeatureOverrideUncheckedUpdateInput = {
 
 export type CustomerFeatureOverrideCreateManyInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   featureKey: string
   value: Prisma.JsonNullValueInput | runtime.InputJsonValue
   reason?: string | null
@@ -346,7 +346,7 @@ export type CustomerFeatureOverrideUpdateManyMutationInput = {
 
 export type CustomerFeatureOverrideUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   featureKey?: Prisma.StringFieldUpdateOperationsInput | string
   value?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -366,14 +366,14 @@ export type CustomerFeatureOverrideOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type CustomerFeatureOverrideOrganizationIdFeatureKeyCompoundUniqueInput = {
-  organizationId: string
+export type CustomerFeatureOverrideTenantIdFeatureKeyCompoundUniqueInput = {
+  tenantId: string
   featureKey: string
 }
 
 export type CustomerFeatureOverrideCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   featureKey?: Prisma.SortOrder
   value?: Prisma.SortOrder
   reason?: Prisma.SortOrder
@@ -385,7 +385,7 @@ export type CustomerFeatureOverrideCountOrderByAggregateInput = {
 
 export type CustomerFeatureOverrideMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   featureKey?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
@@ -396,7 +396,7 @@ export type CustomerFeatureOverrideMaxOrderByAggregateInput = {
 
 export type CustomerFeatureOverrideMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   featureKey?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   approvedBy?: Prisma.SortOrder
@@ -500,7 +500,7 @@ export type CustomerFeatureOverrideScalarWhereInput = {
   OR?: Prisma.CustomerFeatureOverrideScalarWhereInput[]
   NOT?: Prisma.CustomerFeatureOverrideScalarWhereInput | Prisma.CustomerFeatureOverrideScalarWhereInput[]
   id?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
-  organizationId?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
+  tenantId?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
   featureKey?: Prisma.StringFilter<"CustomerFeatureOverride"> | string
   value?: Prisma.JsonFilter<"CustomerFeatureOverride">
   reason?: Prisma.StringNullableFilter<"CustomerFeatureOverride"> | string | null
@@ -558,7 +558,7 @@ export type CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantInput = {
 
 export type CustomerFeatureOverrideSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   featureKey?: boolean
   value?: boolean
   reason?: boolean
@@ -571,7 +571,7 @@ export type CustomerFeatureOverrideSelect<ExtArgs extends runtime.Types.Extensio
 
 export type CustomerFeatureOverrideSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   featureKey?: boolean
   value?: boolean
   reason?: boolean
@@ -584,7 +584,7 @@ export type CustomerFeatureOverrideSelectCreateManyAndReturn<ExtArgs extends run
 
 export type CustomerFeatureOverrideSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   featureKey?: boolean
   value?: boolean
   reason?: boolean
@@ -597,7 +597,7 @@ export type CustomerFeatureOverrideSelectUpdateManyAndReturn<ExtArgs extends run
 
 export type CustomerFeatureOverrideSelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   featureKey?: boolean
   value?: boolean
   reason?: boolean
@@ -607,7 +607,7 @@ export type CustomerFeatureOverrideSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CustomerFeatureOverrideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "featureKey" | "value" | "reason" | "approvedBy" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["customerFeatureOverride"]>
+export type CustomerFeatureOverrideOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "featureKey" | "value" | "reason" | "approvedBy" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["customerFeatureOverride"]>
 export type CustomerFeatureOverrideInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
@@ -625,7 +625,7 @@ export type $CustomerFeatureOverridePayload<ExtArgs extends runtime.Types.Extens
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    tenantId: string
     featureKey: string
     value: runtime.JsonValue
     reason: string | null
@@ -1058,7 +1058,7 @@ export interface Prisma__CustomerFeatureOverrideClient<T, Null = never, ExtArgs 
  */
 export interface CustomerFeatureOverrideFieldRefs {
   readonly id: Prisma.FieldRef<"CustomerFeatureOverride", 'String'>
-  readonly organizationId: Prisma.FieldRef<"CustomerFeatureOverride", 'String'>
+  readonly tenantId: Prisma.FieldRef<"CustomerFeatureOverride", 'String'>
   readonly featureKey: Prisma.FieldRef<"CustomerFeatureOverride", 'String'>
   readonly value: Prisma.FieldRef<"CustomerFeatureOverride", 'Json'>
   readonly reason: Prisma.FieldRef<"CustomerFeatureOverride", 'String'>

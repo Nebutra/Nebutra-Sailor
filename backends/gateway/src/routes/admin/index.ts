@@ -161,7 +161,7 @@ adminRoutes.openapi(
 
     // Revoke all API keys (effectively blocks all API access)
     const revoked = await adminDb.aPIKey.updateMany({
-      where: { organizationId: id, revokedAt: null },
+      where: { tenantId: id, revokedAt: null },
       data: { revokedAt: new Date() },
     });
 
@@ -197,7 +197,7 @@ adminRoutes.openapi(
         name: "Restored Key",
         keyHash: hash,
         keyPrefix: prefix,
-        organizationId: id,
+        tenantId: id,
       },
     });
 

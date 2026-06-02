@@ -123,7 +123,7 @@ apiKeysRoutes.openapi(createRouteDef, async (c) => {
       name: body.name,
       keyHash,
       keyPrefix,
-      organizationId,
+      tenantId: organizationId,
       createdById: tenant.userId ?? null,
       scopes: body.scopes ?? [],
       ...(body.rateLimitRps !== undefined ? { rateLimitRps: body.rateLimitRps } : {}),
@@ -176,7 +176,7 @@ apiKeysRoutes.openapi(listRouteDef, async (c) => {
   const db = getTenantDb(organizationId);
 
   const keys = await db.aPIKey.findMany({
-    where: { organizationId },
+    where: { tenantId: organizationId },
     orderBy: { createdAt: "desc" },
   });
 
@@ -222,7 +222,7 @@ apiKeysRoutes.openapi(revokeRouteDef, async (c) => {
   const db = getTenantDb(organizationId);
 
   const existing = await db.aPIKey.findFirst({
-    where: { id, organizationId },
+    where: { id, tenantId: organizationId },
   });
 
   if (!existing) {
@@ -274,7 +274,7 @@ apiKeysRoutes.openapi(patchRouteDef, async (c) => {
   const db = getTenantDb(organizationId);
 
   const existing = await db.aPIKey.findFirst({
-    where: { id, organizationId },
+    where: { id, tenantId: organizationId },
   });
 
   if (!existing) {

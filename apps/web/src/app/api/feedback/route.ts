@@ -77,7 +77,7 @@ export async function POST(request: Request) {
   try {
     const report = await db.feedbackReport.create({
       data: {
-        organizationId: auth.orgId ?? null,
+        tenantId: auth.orgId ?? null,
         userId: auth.userId,
         area: payload.area,
         mode,

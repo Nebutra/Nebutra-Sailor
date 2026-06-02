@@ -27,7 +27,7 @@ export type AggregateConnector = {
 export type ConnectorMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   type: string | null
   name: string | null
   iconUrl: string | null
@@ -40,7 +40,7 @@ export type ConnectorMinAggregateOutputType = {
 export type ConnectorMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   type: string | null
   name: string | null
   iconUrl: string | null
@@ -53,7 +53,7 @@ export type ConnectorMaxAggregateOutputType = {
 export type ConnectorCountAggregateOutputType = {
   id: number
   userId: number
-  organizationId: number
+  tenantId: number
   type: number
   name: number
   iconUrl: number
@@ -69,7 +69,7 @@ export type ConnectorCountAggregateOutputType = {
 export type ConnectorMinAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   name?: true
   iconUrl?: true
@@ -82,7 +82,7 @@ export type ConnectorMinAggregateInputType = {
 export type ConnectorMaxAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   name?: true
   iconUrl?: true
@@ -95,7 +95,7 @@ export type ConnectorMaxAggregateInputType = {
 export type ConnectorCountAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   type?: true
   name?: true
   iconUrl?: true
@@ -182,7 +182,7 @@ export type ConnectorGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type ConnectorGroupByOutputType = {
   id: string
   userId: string
-  organizationId: string | null
+  tenantId: string | null
   type: string
   name: string
   iconUrl: string | null
@@ -217,7 +217,7 @@ export type ConnectorWhereInput = {
   NOT?: Prisma.ConnectorWhereInput | Prisma.ConnectorWhereInput[]
   id?: Prisma.StringFilter<"Connector"> | string
   userId?: Prisma.StringFilter<"Connector"> | string
-  organizationId?: Prisma.StringNullableFilter<"Connector"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"Connector"> | string | null
   type?: Prisma.StringFilter<"Connector"> | string
   name?: Prisma.StringFilter<"Connector"> | string
   iconUrl?: Prisma.StringNullableFilter<"Connector"> | string | null
@@ -232,7 +232,7 @@ export type ConnectorWhereInput = {
 export type ConnectorOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   iconUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -250,7 +250,7 @@ export type ConnectorWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ConnectorWhereInput[]
   NOT?: Prisma.ConnectorWhereInput | Prisma.ConnectorWhereInput[]
   userId?: Prisma.StringFilter<"Connector"> | string
-  organizationId?: Prisma.StringNullableFilter<"Connector"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"Connector"> | string | null
   type?: Prisma.StringFilter<"Connector"> | string
   name?: Prisma.StringFilter<"Connector"> | string
   iconUrl?: Prisma.StringNullableFilter<"Connector"> | string | null
@@ -265,7 +265,7 @@ export type ConnectorWhereUniqueInput = Prisma.AtLeast<{
 export type ConnectorOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   iconUrl?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -285,7 +285,7 @@ export type ConnectorScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ConnectorScalarWhereWithAggregatesInput | Prisma.ConnectorScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Connector"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Connector"> | string
-  organizationId?: Prisma.StringNullableWithAggregatesFilter<"Connector"> | string | null
+  tenantId?: Prisma.StringNullableWithAggregatesFilter<"Connector"> | string | null
   type?: Prisma.StringWithAggregatesFilter<"Connector"> | string
   name?: Prisma.StringWithAggregatesFilter<"Connector"> | string
   iconUrl?: Prisma.StringNullableWithAggregatesFilter<"Connector"> | string | null
@@ -313,7 +313,7 @@ export type ConnectorCreateInput = {
 export type ConnectorUncheckedCreateInput = {
   id?: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   type: string
   name: string
   iconUrl?: string | null
@@ -341,7 +341,7 @@ export type ConnectorUpdateInput = {
 export type ConnectorUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -355,7 +355,7 @@ export type ConnectorUncheckedUpdateInput = {
 export type ConnectorCreateManyInput = {
   id?: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   type: string
   name: string
   iconUrl?: string | null
@@ -382,7 +382,7 @@ export type ConnectorUpdateManyMutationInput = {
 export type ConnectorUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   iconUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -406,7 +406,7 @@ export type ConnectorOrderByRelationAggregateInput = {
 export type ConnectorCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   iconUrl?: Prisma.SortOrder
@@ -420,7 +420,7 @@ export type ConnectorCountOrderByAggregateInput = {
 export type ConnectorMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   iconUrl?: Prisma.SortOrder
@@ -433,7 +433,7 @@ export type ConnectorMaxOrderByAggregateInput = {
 export type ConnectorMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   type?: Prisma.SortOrder
   name?: Prisma.SortOrder
   iconUrl?: Prisma.SortOrder
@@ -543,7 +543,7 @@ export type ConnectorScalarWhereInput = {
   NOT?: Prisma.ConnectorScalarWhereInput | Prisma.ConnectorScalarWhereInput[]
   id?: Prisma.StringFilter<"Connector"> | string
   userId?: Prisma.StringFilter<"Connector"> | string
-  organizationId?: Prisma.StringNullableFilter<"Connector"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"Connector"> | string | null
   type?: Prisma.StringFilter<"Connector"> | string
   name?: Prisma.StringFilter<"Connector"> | string
   iconUrl?: Prisma.StringNullableFilter<"Connector"> | string | null
@@ -611,7 +611,7 @@ export type ConnectorUncheckedUpdateManyWithoutTenantInput = {
 export type ConnectorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   name?: boolean
   iconUrl?: boolean
@@ -626,7 +626,7 @@ export type ConnectorSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ConnectorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   name?: boolean
   iconUrl?: boolean
@@ -641,7 +641,7 @@ export type ConnectorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type ConnectorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   name?: boolean
   iconUrl?: boolean
@@ -656,7 +656,7 @@ export type ConnectorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type ConnectorSelectScalar = {
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   type?: boolean
   name?: boolean
   iconUrl?: boolean
@@ -667,7 +667,7 @@ export type ConnectorSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ConnectorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "organizationId" | "type" | "name" | "iconUrl" | "config" | "isActive" | "lastUsedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["connector"]>
+export type ConnectorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "tenantId" | "type" | "name" | "iconUrl" | "config" | "isActive" | "lastUsedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["connector"]>
 export type ConnectorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.Connector$tenantArgs<ExtArgs>
 }
@@ -686,7 +686,7 @@ export type $ConnectorPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    organizationId: string | null
+    tenantId: string | null
     type: string
     name: string
     iconUrl: string | null
@@ -1121,7 +1121,7 @@ export interface Prisma__ConnectorClient<T, Null = never, ExtArgs extends runtim
 export interface ConnectorFieldRefs {
   readonly id: Prisma.FieldRef<"Connector", 'String'>
   readonly userId: Prisma.FieldRef<"Connector", 'String'>
-  readonly organizationId: Prisma.FieldRef<"Connector", 'String'>
+  readonly tenantId: Prisma.FieldRef<"Connector", 'String'>
   readonly type: Prisma.FieldRef<"Connector", 'String'>
   readonly name: Prisma.FieldRef<"Connector", 'String'>
   readonly iconUrl: Prisma.FieldRef<"Connector", 'String'>

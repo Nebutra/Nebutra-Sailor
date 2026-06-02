@@ -71,13 +71,13 @@ export async function getCreditBalance(organizationId: string): Promise<CreditBa
 
   const db = getTenantDb(organizationId);
   let dbBalance = await db.creditBalance.findUnique({
-    where: { organizationId },
+    where: { tenantId: organizationId },
   });
 
   if (!dbBalance) {
     dbBalance = await db.creditBalance.create({
       data: {
-        organizationId,
+        tenantId: organizationId,
         balance: 0,
         currency: "USD",
       },
@@ -85,7 +85,7 @@ export async function getCreditBalance(organizationId: string): Promise<CreditBa
   }
 
   const mapped: CreditBalance = {
-    organizationId: dbBalance.organizationId,
+    organizationId: dbBalance.tenantId,
     balance: Number(dbBalance.balance),
     currency: dbBalance.currency,
   };
@@ -220,7 +220,7 @@ export async function getCreditTransactions(
 ): Promise<CreditTransaction[]> {
   const db = getTenantDb(organizationId);
   const balance = await db.creditBalance.findUnique({
-    where: { organizationId },
+    where: { tenantId: organizationId },
     select: { id: true },
   });
 

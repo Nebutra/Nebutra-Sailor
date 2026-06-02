@@ -26,7 +26,7 @@ export type AggregateThread = {
 
 export type ThreadMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   userId: string | null
   title: string | null
   summary: string | null
@@ -37,7 +37,7 @@ export type ThreadMinAggregateOutputType = {
 
 export type ThreadMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   userId: string | null
   title: string | null
   summary: string | null
@@ -48,7 +48,7 @@ export type ThreadMaxAggregateOutputType = {
 
 export type ThreadCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   userId: number
   title: number
   summary: number
@@ -61,7 +61,7 @@ export type ThreadCountAggregateOutputType = {
 
 export type ThreadMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   userId?: true
   title?: true
   summary?: true
@@ -72,7 +72,7 @@ export type ThreadMinAggregateInputType = {
 
 export type ThreadMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   userId?: true
   title?: true
   summary?: true
@@ -83,7 +83,7 @@ export type ThreadMaxAggregateInputType = {
 
 export type ThreadCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   userId?: true
   title?: true
   summary?: true
@@ -167,7 +167,7 @@ export type ThreadGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type ThreadGroupByOutputType = {
   id: string
-  organizationId: string
+  tenantId: string
   userId: string
   title: string
   summary: string | null
@@ -199,7 +199,7 @@ export type ThreadWhereInput = {
   OR?: Prisma.ThreadWhereInput[]
   NOT?: Prisma.ThreadWhereInput | Prisma.ThreadWhereInput[]
   id?: Prisma.StringFilter<"Thread"> | string
-  organizationId?: Prisma.StringFilter<"Thread"> | string
+  tenantId?: Prisma.StringFilter<"Thread"> | string
   userId?: Prisma.StringFilter<"Thread"> | string
   title?: Prisma.StringFilter<"Thread"> | string
   summary?: Prisma.StringNullableFilter<"Thread"> | string | null
@@ -212,7 +212,7 @@ export type ThreadWhereInput = {
 
 export type ThreadOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   summary?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -228,7 +228,7 @@ export type ThreadWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ThreadWhereInput | Prisma.ThreadWhereInput[]
   OR?: Prisma.ThreadWhereInput[]
   NOT?: Prisma.ThreadWhereInput | Prisma.ThreadWhereInput[]
-  organizationId?: Prisma.StringFilter<"Thread"> | string
+  tenantId?: Prisma.StringFilter<"Thread"> | string
   userId?: Prisma.StringFilter<"Thread"> | string
   title?: Prisma.StringFilter<"Thread"> | string
   summary?: Prisma.StringNullableFilter<"Thread"> | string | null
@@ -241,7 +241,7 @@ export type ThreadWhereUniqueInput = Prisma.AtLeast<{
 
 export type ThreadOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   summary?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -258,7 +258,7 @@ export type ThreadScalarWhereWithAggregatesInput = {
   OR?: Prisma.ThreadScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ThreadScalarWhereWithAggregatesInput | Prisma.ThreadScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Thread"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"Thread"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"Thread"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Thread"> | string
   title?: Prisma.StringWithAggregatesFilter<"Thread"> | string
   summary?: Prisma.StringNullableWithAggregatesFilter<"Thread"> | string | null
@@ -280,7 +280,7 @@ export type ThreadCreateInput = {
 
 export type ThreadUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   userId: string
   title?: string
   summary?: string | null
@@ -302,7 +302,7 @@ export type ThreadUpdateInput = {
 
 export type ThreadUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -313,7 +313,7 @@ export type ThreadUncheckedUpdateInput = {
 
 export type ThreadCreateManyInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   userId: string
   title?: string
   summary?: string | null
@@ -333,7 +333,7 @@ export type ThreadUpdateManyMutationInput = {
 
 export type ThreadUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -354,7 +354,7 @@ export type ThreadOrderByRelationAggregateInput = {
 
 export type ThreadCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   summary?: Prisma.SortOrder
@@ -365,7 +365,7 @@ export type ThreadCountOrderByAggregateInput = {
 
 export type ThreadMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   summary?: Prisma.SortOrder
@@ -376,7 +376,7 @@ export type ThreadMaxOrderByAggregateInput = {
 
 export type ThreadMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   summary?: Prisma.SortOrder
@@ -520,7 +520,7 @@ export type ThreadScalarWhereInput = {
   OR?: Prisma.ThreadScalarWhereInput[]
   NOT?: Prisma.ThreadScalarWhereInput | Prisma.ThreadScalarWhereInput[]
   id?: Prisma.StringFilter<"Thread"> | string
-  organizationId?: Prisma.StringFilter<"Thread"> | string
+  tenantId?: Prisma.StringFilter<"Thread"> | string
   userId?: Prisma.StringFilter<"Thread"> | string
   title?: Prisma.StringFilter<"Thread"> | string
   summary?: Prisma.StringNullableFilter<"Thread"> | string | null
@@ -541,7 +541,7 @@ export type ThreadCreateWithoutUserInput = {
 
 export type ThreadUncheckedCreateWithoutUserInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   title?: string
   summary?: string | null
   lastActivityAt?: Date | string
@@ -617,7 +617,7 @@ export type ThreadUncheckedUpdateManyWithoutTenantInput = {
 
 export type ThreadCreateManyUserInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   title?: string
   summary?: string | null
   lastActivityAt?: Date | string
@@ -637,7 +637,7 @@ export type ThreadUpdateWithoutUserInput = {
 
 export type ThreadUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -647,7 +647,7 @@ export type ThreadUncheckedUpdateWithoutUserInput = {
 
 export type ThreadUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -659,7 +659,7 @@ export type ThreadUncheckedUpdateManyWithoutUserInput = {
 
 export type ThreadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   userId?: boolean
   title?: boolean
   summary?: boolean
@@ -672,7 +672,7 @@ export type ThreadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type ThreadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   userId?: boolean
   title?: boolean
   summary?: boolean
@@ -685,7 +685,7 @@ export type ThreadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type ThreadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   userId?: boolean
   title?: boolean
   summary?: boolean
@@ -698,7 +698,7 @@ export type ThreadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 
 export type ThreadSelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   userId?: boolean
   title?: boolean
   summary?: boolean
@@ -707,7 +707,7 @@ export type ThreadSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ThreadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "userId" | "title" | "summary" | "lastActivityAt" | "createdAt" | "updatedAt", ExtArgs["result"]["thread"]>
+export type ThreadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "userId" | "title" | "summary" | "lastActivityAt" | "createdAt" | "updatedAt", ExtArgs["result"]["thread"]>
 export type ThreadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -729,7 +729,7 @@ export type $ThreadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    tenantId: string
     userId: string
     title: string
     summary: string | null
@@ -1162,7 +1162,7 @@ export interface Prisma__ThreadClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface ThreadFieldRefs {
   readonly id: Prisma.FieldRef<"Thread", 'String'>
-  readonly organizationId: Prisma.FieldRef<"Thread", 'String'>
+  readonly tenantId: Prisma.FieldRef<"Thread", 'String'>
   readonly userId: Prisma.FieldRef<"Thread", 'String'>
   readonly title: Prisma.FieldRef<"Thread", 'String'>
   readonly summary: Prisma.FieldRef<"Thread", 'String'>

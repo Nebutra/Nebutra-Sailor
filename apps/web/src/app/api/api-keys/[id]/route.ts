@@ -29,18 +29,18 @@ export async function DELETE(request: Request, context: RouteContext) {
       where: { id },
       select: {
         id: true,
-        organizationId: true,
+        tenantId: true,
         createdById: true,
         revokedAt: true,
       },
     })) as {
       id: string;
-      organizationId: string;
+      tenantId: string;
       createdById: string | null;
       revokedAt: Date | null;
     } | null;
 
-    if (!existing || existing.organizationId !== auth.orgId) {
+    if (!existing || existing.tenantId !== auth.orgId) {
       return NextResponse.json({ error: "Not found." }, { status: 404 });
     }
 

@@ -40,7 +40,7 @@ export type UsageLedgerEntrySumAggregateOutputType = {
 
 export type UsageLedgerEntryMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   subscriptionId: string | null
   userId: string | null
   idempotencyKey: string | null
@@ -60,7 +60,7 @@ export type UsageLedgerEntryMinAggregateOutputType = {
 
 export type UsageLedgerEntryMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   subscriptionId: string | null
   userId: string | null
   idempotencyKey: string | null
@@ -80,7 +80,7 @@ export type UsageLedgerEntryMaxAggregateOutputType = {
 
 export type UsageLedgerEntryCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   subscriptionId: number
   userId: number
   idempotencyKey: number
@@ -115,7 +115,7 @@ export type UsageLedgerEntrySumAggregateInputType = {
 
 export type UsageLedgerEntryMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   subscriptionId?: true
   userId?: true
   idempotencyKey?: true
@@ -135,7 +135,7 @@ export type UsageLedgerEntryMinAggregateInputType = {
 
 export type UsageLedgerEntryMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   subscriptionId?: true
   userId?: true
   idempotencyKey?: true
@@ -155,7 +155,7 @@ export type UsageLedgerEntryMaxAggregateInputType = {
 
 export type UsageLedgerEntryCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   subscriptionId?: true
   userId?: true
   idempotencyKey?: true
@@ -263,7 +263,7 @@ export type UsageLedgerEntryGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type UsageLedgerEntryGroupByOutputType = {
   id: string
-  organizationId: string
+  tenantId: string
   subscriptionId: string | null
   userId: string | null
   idempotencyKey: string
@@ -307,7 +307,7 @@ export type UsageLedgerEntryWhereInput = {
   OR?: Prisma.UsageLedgerEntryWhereInput[]
   NOT?: Prisma.UsageLedgerEntryWhereInput | Prisma.UsageLedgerEntryWhereInput[]
   id?: Prisma.StringFilter<"UsageLedgerEntry"> | string
-  organizationId?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  tenantId?: Prisma.StringFilter<"UsageLedgerEntry"> | string
   subscriptionId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
   userId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
   idempotencyKey?: Prisma.StringFilter<"UsageLedgerEntry"> | string
@@ -330,7 +330,7 @@ export type UsageLedgerEntryWhereInput = {
 
 export type UsageLedgerEntryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrder
@@ -353,11 +353,11 @@ export type UsageLedgerEntryOrderByWithRelationInput = {
 
 export type UsageLedgerEntryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId_idempotencyKey?: Prisma.UsageLedgerEntryOrganizationIdIdempotencyKeyCompoundUniqueInput
+  tenantId_idempotencyKey?: Prisma.UsageLedgerEntryTenantIdIdempotencyKeyCompoundUniqueInput
   AND?: Prisma.UsageLedgerEntryWhereInput | Prisma.UsageLedgerEntryWhereInput[]
   OR?: Prisma.UsageLedgerEntryWhereInput[]
   NOT?: Prisma.UsageLedgerEntryWhereInput | Prisma.UsageLedgerEntryWhereInput[]
-  organizationId?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  tenantId?: Prisma.StringFilter<"UsageLedgerEntry"> | string
   subscriptionId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
   userId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
   idempotencyKey?: Prisma.StringFilter<"UsageLedgerEntry"> | string
@@ -376,11 +376,11 @@ export type UsageLedgerEntryWhereUniqueInput = Prisma.AtLeast<{
   metadata?: Prisma.JsonFilter<"UsageLedgerEntry">
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
-}, "id" | "organizationId_idempotencyKey">
+}, "id" | "tenantId_idempotencyKey">
 
 export type UsageLedgerEntryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrder
@@ -409,7 +409,7 @@ export type UsageLedgerEntryScalarWhereWithAggregatesInput = {
   OR?: Prisma.UsageLedgerEntryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UsageLedgerEntryScalarWhereWithAggregatesInput | Prisma.UsageLedgerEntryScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"UsageLedgerEntry"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"UsageLedgerEntry"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"UsageLedgerEntry"> | string
   subscriptionId?: Prisma.StringNullableWithAggregatesFilter<"UsageLedgerEntry"> | string | null
   userId?: Prisma.StringNullableWithAggregatesFilter<"UsageLedgerEntry"> | string | null
   idempotencyKey?: Prisma.StringWithAggregatesFilter<"UsageLedgerEntry"> | string
@@ -451,7 +451,7 @@ export type UsageLedgerEntryCreateInput = {
 
 export type UsageLedgerEntryUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   subscriptionId?: string | null
   userId?: string | null
   idempotencyKey: string
@@ -493,7 +493,7 @@ export type UsageLedgerEntryUpdateInput = {
 
 export type UsageLedgerEntryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
@@ -514,7 +514,7 @@ export type UsageLedgerEntryUncheckedUpdateInput = {
 
 export type UsageLedgerEntryCreateManyInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   subscriptionId?: string | null
   userId?: string | null
   idempotencyKey: string
@@ -554,7 +554,7 @@ export type UsageLedgerEntryUpdateManyMutationInput = {
 
 export type UsageLedgerEntryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
@@ -583,14 +583,14 @@ export type UsageLedgerEntryOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type UsageLedgerEntryOrganizationIdIdempotencyKeyCompoundUniqueInput = {
-  organizationId: string
+export type UsageLedgerEntryTenantIdIdempotencyKeyCompoundUniqueInput = {
+  tenantId: string
   idempotencyKey: string
 }
 
 export type UsageLedgerEntryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrder
@@ -617,7 +617,7 @@ export type UsageLedgerEntryAvgOrderByAggregateInput = {
 
 export type UsageLedgerEntryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrder
@@ -637,7 +637,7 @@ export type UsageLedgerEntryMaxOrderByAggregateInput = {
 
 export type UsageLedgerEntryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrder
@@ -824,7 +824,7 @@ export type UsageLedgerEntryScalarWhereInput = {
   OR?: Prisma.UsageLedgerEntryScalarWhereInput[]
   NOT?: Prisma.UsageLedgerEntryScalarWhereInput | Prisma.UsageLedgerEntryScalarWhereInput[]
   id?: Prisma.StringFilter<"UsageLedgerEntry"> | string
-  organizationId?: Prisma.StringFilter<"UsageLedgerEntry"> | string
+  tenantId?: Prisma.StringFilter<"UsageLedgerEntry"> | string
   subscriptionId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
   userId?: Prisma.StringNullableFilter<"UsageLedgerEntry"> | string | null
   idempotencyKey?: Prisma.StringFilter<"UsageLedgerEntry"> | string
@@ -865,7 +865,7 @@ export type UsageLedgerEntryCreateWithoutSubscriptionInput = {
 
 export type UsageLedgerEntryUncheckedCreateWithoutSubscriptionInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   userId?: string | null
   idempotencyKey: string
   eventId?: string | null
@@ -991,7 +991,7 @@ export type UsageLedgerEntryUncheckedUpdateManyWithoutTenantInput = {
 
 export type UsageLedgerEntryCreateManySubscriptionInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   userId?: string | null
   idempotencyKey: string
   eventId?: string | null
@@ -1031,7 +1031,7 @@ export type UsageLedgerEntryUpdateWithoutSubscriptionInput = {
 
 export type UsageLedgerEntryUncheckedUpdateWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1051,7 +1051,7 @@ export type UsageLedgerEntryUncheckedUpdateWithoutSubscriptionInput = {
 
 export type UsageLedgerEntryUncheckedUpdateManyWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1073,7 +1073,7 @@ export type UsageLedgerEntryUncheckedUpdateManyWithoutSubscriptionInput = {
 
 export type UsageLedgerEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   subscriptionId?: boolean
   userId?: boolean
   idempotencyKey?: boolean
@@ -1096,7 +1096,7 @@ export type UsageLedgerEntrySelect<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type UsageLedgerEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   subscriptionId?: boolean
   userId?: boolean
   idempotencyKey?: boolean
@@ -1119,7 +1119,7 @@ export type UsageLedgerEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Ty
 
 export type UsageLedgerEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   subscriptionId?: boolean
   userId?: boolean
   idempotencyKey?: boolean
@@ -1142,7 +1142,7 @@ export type UsageLedgerEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
 
 export type UsageLedgerEntrySelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   subscriptionId?: boolean
   userId?: boolean
   idempotencyKey?: boolean
@@ -1161,7 +1161,7 @@ export type UsageLedgerEntrySelectScalar = {
   metadata?: boolean
 }
 
-export type UsageLedgerEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "subscriptionId" | "userId" | "idempotencyKey" | "eventId" | "source" | "type" | "resource" | "quantity" | "unit" | "unitCost" | "totalCost" | "currency" | "occurredAt" | "recordedAt" | "ingestVersion" | "metadata", ExtArgs["result"]["usageLedgerEntry"]>
+export type UsageLedgerEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "subscriptionId" | "userId" | "idempotencyKey" | "eventId" | "source" | "type" | "resource" | "quantity" | "unit" | "unitCost" | "totalCost" | "currency" | "occurredAt" | "recordedAt" | "ingestVersion" | "metadata", ExtArgs["result"]["usageLedgerEntry"]>
 export type UsageLedgerEntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.UsageLedgerEntry$subscriptionArgs<ExtArgs>
@@ -1183,7 +1183,7 @@ export type $UsageLedgerEntryPayload<ExtArgs extends runtime.Types.Extensions.In
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    tenantId: string
     subscriptionId: string | null
     userId: string | null
     idempotencyKey: string
@@ -1626,7 +1626,7 @@ export interface Prisma__UsageLedgerEntryClient<T, Null = never, ExtArgs extends
  */
 export interface UsageLedgerEntryFieldRefs {
   readonly id: Prisma.FieldRef<"UsageLedgerEntry", 'String'>
-  readonly organizationId: Prisma.FieldRef<"UsageLedgerEntry", 'String'>
+  readonly tenantId: Prisma.FieldRef<"UsageLedgerEntry", 'String'>
   readonly subscriptionId: Prisma.FieldRef<"UsageLedgerEntry", 'String'>
   readonly userId: Prisma.FieldRef<"UsageLedgerEntry", 'String'>
   readonly idempotencyKey: Prisma.FieldRef<"UsageLedgerEntry", 'String'>

@@ -51,7 +51,7 @@ export class UsageLedgerRepository {
   ): Promise<UsageLedgerEntry | null> {
     return this.prisma.usageLedgerEntry.findUnique({
       where: {
-        organizationId_idempotencyKey: { organizationId, idempotencyKey },
+        tenantId_idempotencyKey: { tenantId: organizationId, idempotencyKey },
       },
     });
   }
@@ -91,7 +91,7 @@ export class UsageLedgerRepository {
     try {
       const entry = await this.prisma.usageLedgerEntry.create({
         data: {
-          organizationId,
+          tenantId: organizationId,
           idempotencyKey,
           source,
           type,
@@ -114,7 +114,7 @@ export class UsageLedgerRepository {
       if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
         const existing = await this.prisma.usageLedgerEntry.findUnique({
           where: {
-            organizationId_idempotencyKey: { organizationId, idempotencyKey },
+            tenantId_idempotencyKey: { tenantId: organizationId, idempotencyKey },
           },
         });
         if (existing) {

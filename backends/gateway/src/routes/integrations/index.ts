@@ -18,9 +18,8 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { getTenantDb, type Prisma } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
-import { ADMIN_ROLES } from "../../config/roles.js";
 import { requirePermission } from "../../middlewares/permissions.js";
-import { requireAuth, requireOrganization, requireRole } from "../../middlewares/tenantContext.js";
+import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 
 export const integrationRoutes = new OpenAPIHono();
 // Every route below issues tenant-scoped queries via getTenantDb() — we must
@@ -85,7 +84,7 @@ integrationRoutes.openapi(listRoute, async (c) => {
     // to receive the decrypted credentials. `settings` is included (non-secret
     // configuration) and decrypted transparently by the DB extension.
     const integrations = await db.integration.findMany({
-      where: { organizationId: orgId },
+      where: { tenantId: orgId },
       orderBy: { createdAt: "desc" },
       select: {
         id: true,
@@ -127,7 +126,7 @@ integrationRoutes.openapi(getRoute, async (c) => {
 
   try {
     const integration = await db.integration.findFirst({
-      where: { id, organizationId: orgId },
+      where: { id, tenantId: orgId },
       select: {
         id: true,
         type: true,
@@ -180,7 +179,7 @@ integrationRoutes.openapi(createRoute_, async (c) => {
     // the row is persisted — we pass validated plaintext here.
     const integration = await db.integration.create({
       data: {
-        organizationId: orgId,
+        tenantId: orgId,
         type: body.type,
         name: body.name,
         credentials: toJsonInput(body.credentials ?? {}),
@@ -240,7 +239,7 @@ integrationRoutes.openapi(updateRoute, async (c) => {
   try {
     // Verify ownership (RLS also protects this, but explicit is clearer).
     const existing = await db.integration.findFirst({
-      where: { id, organizationId: orgId },
+      where: { id, tenantId: orgId },
       select: { id: true },
     });
     if (!existing) return c.json({ error: "Integration not found" }, 404);
@@ -295,7 +294,7 @@ integrationRoutes.openapi(deleteRoute, async (c) => {
 
   try {
     const existing = await db.integration.findFirst({
-      where: { id, organizationId: orgId },
+      where: { id, tenantId: orgId },
       select: { id: true },
     });
     if (!existing) return c.json({ error: "Integration not found" }, 404);
@@ -309,21 +308,13 @@ integrationRoutes.openapi(deleteRoute, async (c) => {
   }
 });
 
-// ── Admin overview (reference: requireRole + requirePermission in parallel) ─────
+// ── Admin overview — fine-grained CASL authorization ────────────────────────────
 //
-// This endpoint is the canonical example of the two guards composed on a single
-// route. It is intentionally an additive, admin-only surface and does NOT alter
-// the authorization of the CRUD endpoints above.
-//
-//   - `requireRole(ADMIN_ROLES)` — coarse-grained Clerk org-role check
-//     (org:owner | org:admin), reading `tenant.role` directly.
-//   - `requirePermission("manage", "Integration")` — fine-grained CASL check
-//     against the PermissionContext mapped onto `c.get("user")`. owner/admin
-//     resolve to the `manage` ability on `Integration`; member/viewer do not.
-//
-// Both guards agree (owner/admin pass, member/viewer are denied), demonstrating
-// that the new permission layer can run alongside the existing role guard with
-// no behavioural drift. New routes should prefer `requirePermission`.
+// Admin-only surface guarded solely by `requirePermission("manage", "Integration")`
+// (CASL, against the PermissionContext on `c.get("user")`: owner/admin resolve to the
+// `manage` ability on `Integration`; member/viewer are denied). The legacy coarse
+// `requireRole` guard was removed here — CASL `requirePermission` is the canonical
+// route-layer authorization across the gateway.
 const adminOverviewRoute = createRoute({
   method: "get",
   path: "/admin/overview",
@@ -336,14 +327,9 @@ const adminOverviewRoute = createRoute({
   },
 });
 
-// Compose both guards on this single path. Following the gateway convention of
-// `.use(path, ...)` rather than route-level `middleware`, the guards run before
-// the handler below.
-integrationRoutes.use(
-  "/admin/overview",
-  requireRole(...ADMIN_ROLES),
-  requirePermission("manage", "Integration"),
-);
+// Following the gateway convention of `.use(path, ...)` rather than route-level
+// `middleware`, the guard runs before the handler below.
+integrationRoutes.use("/admin/overview", requirePermission("manage", "Integration"));
 
 integrationRoutes.openapi(adminOverviewRoute, async (c) => {
   const tenant = c.get("tenant");
@@ -352,7 +338,7 @@ integrationRoutes.openapi(adminOverviewRoute, async (c) => {
 
   try {
     const integrations = await db.integration.findMany({
-      where: { organizationId: orgId },
+      where: { tenantId: orgId },
       select: { type: true, isActive: true },
     });
 

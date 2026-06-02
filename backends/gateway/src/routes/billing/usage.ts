@@ -106,7 +106,7 @@ usageLedgerRoutes.openapi(usageRoute, async (c) => {
 
     const payload = {
       id: result.entry.id,
-      organizationId: result.entry.organizationId,
+      organizationId: result.entry.tenantId,
       idempotencyKey: result.entry.idempotencyKey,
       amount: Number(result.entry.quantity),
       duplicate: !result.claimed,

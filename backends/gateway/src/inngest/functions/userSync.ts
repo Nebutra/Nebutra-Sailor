@@ -38,6 +38,21 @@ export const syncUserToDB: InngestFunction.Any = inngest.createFunction(
         avatarUrl: imageUrl ?? null,
       });
     });
+
+    // Ensure an individual Tenant for this user (id-reuse: Tenant.id == User.id), so a
+    // user can own data (idea-plaza, cofounder-match, …) before/independent of any org.
+    // Idempotent — also safe on user.updated re-runs.
+    await step.run("ensure-individual-tenant", async () => {
+      const db = getSystemDb();
+      const user = await db.user.findUnique({ where: { clerkId: userId }, select: { id: true } });
+      if (user) {
+        await db.tenant.upsert({
+          where: { id: user.id },
+          update: {},
+          create: { id: user.id, kind: "INDIVIDUAL", userId: user.id },
+        });
+      }
+    });
   },
 );
 

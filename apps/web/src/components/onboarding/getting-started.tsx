@@ -36,8 +36,8 @@ interface OrgState {
 async function readOrgState(orgId: string): Promise<OrgState> {
   const [members, apiKeys, integrations] = await Promise.all([
     db.organizationMember.count({ where: { organizationId: orgId } }).catch(() => 0),
-    db.aPIKey.count({ where: { organizationId: orgId } }).catch(() => 0),
-    db.integration.count({ where: { organizationId: orgId, isActive: true } }).catch(() => 0),
+    db.aPIKey.count({ where: { tenantId: orgId } }).catch(() => 0),
+    db.integration.count({ where: { tenantId: orgId, isActive: true } }).catch(() => 0),
   ]);
   return { members, apiKeys, integrations };
 }

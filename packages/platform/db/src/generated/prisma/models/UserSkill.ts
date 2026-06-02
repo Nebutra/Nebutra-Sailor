@@ -27,7 +27,7 @@ export type AggregateUserSkill = {
 export type UserSkillMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   skillId: string | null
   enabled: boolean | null
   installedAt: Date | null
@@ -36,7 +36,7 @@ export type UserSkillMinAggregateOutputType = {
 export type UserSkillMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  organizationId: string | null
+  tenantId: string | null
   skillId: string | null
   enabled: boolean | null
   installedAt: Date | null
@@ -45,7 +45,7 @@ export type UserSkillMaxAggregateOutputType = {
 export type UserSkillCountAggregateOutputType = {
   id: number
   userId: number
-  organizationId: number
+  tenantId: number
   skillId: number
   enabled: number
   config: number
@@ -57,7 +57,7 @@ export type UserSkillCountAggregateOutputType = {
 export type UserSkillMinAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   skillId?: true
   enabled?: true
   installedAt?: true
@@ -66,7 +66,7 @@ export type UserSkillMinAggregateInputType = {
 export type UserSkillMaxAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   skillId?: true
   enabled?: true
   installedAt?: true
@@ -75,7 +75,7 @@ export type UserSkillMaxAggregateInputType = {
 export type UserSkillCountAggregateInputType = {
   id?: true
   userId?: true
-  organizationId?: true
+  tenantId?: true
   skillId?: true
   enabled?: true
   config?: true
@@ -158,7 +158,7 @@ export type UserSkillGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type UserSkillGroupByOutputType = {
   id: string
   userId: string
-  organizationId: string | null
+  tenantId: string | null
   skillId: string
   enabled: boolean
   config: runtime.JsonValue
@@ -189,7 +189,7 @@ export type UserSkillWhereInput = {
   NOT?: Prisma.UserSkillWhereInput | Prisma.UserSkillWhereInput[]
   id?: Prisma.StringFilter<"UserSkill"> | string
   userId?: Prisma.StringFilter<"UserSkill"> | string
-  organizationId?: Prisma.StringNullableFilter<"UserSkill"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"UserSkill"> | string | null
   skillId?: Prisma.StringFilter<"UserSkill"> | string
   enabled?: Prisma.BoolFilter<"UserSkill"> | boolean
   config?: Prisma.JsonFilter<"UserSkill">
@@ -201,7 +201,7 @@ export type UserSkillWhereInput = {
 export type UserSkillOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   skillId?: Prisma.SortOrder
   enabled?: Prisma.SortOrder
   config?: Prisma.SortOrder
@@ -217,7 +217,7 @@ export type UserSkillWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserSkillWhereInput[]
   NOT?: Prisma.UserSkillWhereInput | Prisma.UserSkillWhereInput[]
   userId?: Prisma.StringFilter<"UserSkill"> | string
-  organizationId?: Prisma.StringNullableFilter<"UserSkill"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"UserSkill"> | string | null
   skillId?: Prisma.StringFilter<"UserSkill"> | string
   enabled?: Prisma.BoolFilter<"UserSkill"> | boolean
   config?: Prisma.JsonFilter<"UserSkill">
@@ -229,7 +229,7 @@ export type UserSkillWhereUniqueInput = Prisma.AtLeast<{
 export type UserSkillOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tenantId?: Prisma.SortOrderInput | Prisma.SortOrder
   skillId?: Prisma.SortOrder
   enabled?: Prisma.SortOrder
   config?: Prisma.SortOrder
@@ -245,7 +245,7 @@ export type UserSkillScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserSkillScalarWhereWithAggregatesInput | Prisma.UserSkillScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"UserSkill"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserSkill"> | string
-  organizationId?: Prisma.StringNullableWithAggregatesFilter<"UserSkill"> | string | null
+  tenantId?: Prisma.StringNullableWithAggregatesFilter<"UserSkill"> | string | null
   skillId?: Prisma.StringWithAggregatesFilter<"UserSkill"> | string
   enabled?: Prisma.BoolWithAggregatesFilter<"UserSkill"> | boolean
   config?: Prisma.JsonWithAggregatesFilter<"UserSkill">
@@ -265,7 +265,7 @@ export type UserSkillCreateInput = {
 export type UserSkillUncheckedCreateInput = {
   id?: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   skillId: string
   enabled?: boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -285,7 +285,7 @@ export type UserSkillUpdateInput = {
 export type UserSkillUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skillId?: Prisma.StringFieldUpdateOperationsInput | string
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -295,7 +295,7 @@ export type UserSkillUncheckedUpdateInput = {
 export type UserSkillCreateManyInput = {
   id?: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   skillId: string
   enabled?: boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -313,7 +313,7 @@ export type UserSkillUpdateManyMutationInput = {
 export type UserSkillUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skillId?: Prisma.StringFieldUpdateOperationsInput | string
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
@@ -338,7 +338,7 @@ export type UserSkillUserIdSkillIdCompoundUniqueInput = {
 export type UserSkillCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   skillId?: Prisma.SortOrder
   enabled?: Prisma.SortOrder
   config?: Prisma.SortOrder
@@ -348,7 +348,7 @@ export type UserSkillCountOrderByAggregateInput = {
 export type UserSkillMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   skillId?: Prisma.SortOrder
   enabled?: Prisma.SortOrder
   installedAt?: Prisma.SortOrder
@@ -357,7 +357,7 @@ export type UserSkillMaxOrderByAggregateInput = {
 export type UserSkillMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   skillId?: Prisma.SortOrder
   enabled?: Prisma.SortOrder
   installedAt?: Prisma.SortOrder
@@ -497,7 +497,7 @@ export type UserSkillScalarWhereInput = {
   NOT?: Prisma.UserSkillScalarWhereInput | Prisma.UserSkillScalarWhereInput[]
   id?: Prisma.StringFilter<"UserSkill"> | string
   userId?: Prisma.StringFilter<"UserSkill"> | string
-  organizationId?: Prisma.StringNullableFilter<"UserSkill"> | string | null
+  tenantId?: Prisma.StringNullableFilter<"UserSkill"> | string | null
   skillId?: Prisma.StringFilter<"UserSkill"> | string
   enabled?: Prisma.BoolFilter<"UserSkill"> | boolean
   config?: Prisma.JsonFilter<"UserSkill">
@@ -516,7 +516,7 @@ export type UserSkillCreateWithoutSkillInput = {
 export type UserSkillUncheckedCreateWithoutSkillInput = {
   id?: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   enabled?: boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Date | string
@@ -587,7 +587,7 @@ export type UserSkillUncheckedUpdateManyWithoutTenantInput = {
 export type UserSkillCreateManySkillInput = {
   id?: string
   userId: string
-  organizationId?: string | null
+  tenantId?: string | null
   enabled?: boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Date | string
@@ -605,7 +605,7 @@ export type UserSkillUpdateWithoutSkillInput = {
 export type UserSkillUncheckedUpdateWithoutSkillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -614,7 +614,7 @@ export type UserSkillUncheckedUpdateWithoutSkillInput = {
 export type UserSkillUncheckedUpdateManyWithoutSkillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tenantId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   config?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   installedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -625,7 +625,7 @@ export type UserSkillUncheckedUpdateManyWithoutSkillInput = {
 export type UserSkillSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   skillId?: boolean
   enabled?: boolean
   config?: boolean
@@ -637,7 +637,7 @@ export type UserSkillSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserSkillSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   skillId?: boolean
   enabled?: boolean
   config?: boolean
@@ -649,7 +649,7 @@ export type UserSkillSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type UserSkillSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   skillId?: boolean
   enabled?: boolean
   config?: boolean
@@ -661,14 +661,14 @@ export type UserSkillSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type UserSkillSelectScalar = {
   id?: boolean
   userId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   skillId?: boolean
   enabled?: boolean
   config?: boolean
   installedAt?: boolean
 }
 
-export type UserSkillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "organizationId" | "skillId" | "enabled" | "config" | "installedAt", ExtArgs["result"]["userSkill"]>
+export type UserSkillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "tenantId" | "skillId" | "enabled" | "config" | "installedAt", ExtArgs["result"]["userSkill"]>
 export type UserSkillInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   skill?: boolean | Prisma.SkillDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.UserSkill$tenantArgs<ExtArgs>
@@ -691,7 +691,7 @@ export type $UserSkillPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    organizationId: string | null
+    tenantId: string | null
     skillId: string
     enabled: boolean
     config: runtime.JsonValue
@@ -1123,7 +1123,7 @@ export interface Prisma__UserSkillClient<T, Null = never, ExtArgs extends runtim
 export interface UserSkillFieldRefs {
   readonly id: Prisma.FieldRef<"UserSkill", 'String'>
   readonly userId: Prisma.FieldRef<"UserSkill", 'String'>
-  readonly organizationId: Prisma.FieldRef<"UserSkill", 'String'>
+  readonly tenantId: Prisma.FieldRef<"UserSkill", 'String'>
   readonly skillId: Prisma.FieldRef<"UserSkill", 'String'>
   readonly enabled: Prisma.FieldRef<"UserSkill", 'Boolean'>
   readonly config: Prisma.FieldRef<"UserSkill", 'Json'>

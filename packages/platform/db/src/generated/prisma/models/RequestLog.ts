@@ -46,7 +46,7 @@ export type RequestLogMinAggregateOutputType = {
   id: string | null
   requestId: string | null
   apiKeyId: string | null
-  organizationId: string | null
+  tenantId: string | null
   model: string | null
   promptTokens: number | null
   completionTokens: number | null
@@ -62,7 +62,7 @@ export type RequestLogMaxAggregateOutputType = {
   id: string | null
   requestId: string | null
   apiKeyId: string | null
-  organizationId: string | null
+  tenantId: string | null
   model: string | null
   promptTokens: number | null
   completionTokens: number | null
@@ -78,7 +78,7 @@ export type RequestLogCountAggregateOutputType = {
   id: number
   requestId: number
   apiKeyId: number
-  organizationId: number
+  tenantId: number
   model: number
   promptTokens: number
   completionTokens: number
@@ -112,7 +112,7 @@ export type RequestLogMinAggregateInputType = {
   id?: true
   requestId?: true
   apiKeyId?: true
-  organizationId?: true
+  tenantId?: true
   model?: true
   promptTokens?: true
   completionTokens?: true
@@ -128,7 +128,7 @@ export type RequestLogMaxAggregateInputType = {
   id?: true
   requestId?: true
   apiKeyId?: true
-  organizationId?: true
+  tenantId?: true
   model?: true
   promptTokens?: true
   completionTokens?: true
@@ -144,7 +144,7 @@ export type RequestLogCountAggregateInputType = {
   id?: true
   requestId?: true
   apiKeyId?: true
-  organizationId?: true
+  tenantId?: true
   model?: true
   promptTokens?: true
   completionTokens?: true
@@ -247,7 +247,7 @@ export type RequestLogGroupByOutputType = {
   id: string
   requestId: string
   apiKeyId: string | null
-  organizationId: string
+  tenantId: string
   model: string
   promptTokens: number
   completionTokens: number
@@ -286,7 +286,7 @@ export type RequestLogWhereInput = {
   id?: Prisma.StringFilter<"RequestLog"> | string
   requestId?: Prisma.StringFilter<"RequestLog"> | string
   apiKeyId?: Prisma.StringNullableFilter<"RequestLog"> | string | null
-  organizationId?: Prisma.StringFilter<"RequestLog"> | string
+  tenantId?: Prisma.StringFilter<"RequestLog"> | string
   model?: Prisma.StringFilter<"RequestLog"> | string
   promptTokens?: Prisma.IntFilter<"RequestLog"> | number
   completionTokens?: Prisma.IntFilter<"RequestLog"> | number
@@ -303,7 +303,7 @@ export type RequestLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   model?: Prisma.SortOrder
   promptTokens?: Prisma.SortOrder
   completionTokens?: Prisma.SortOrder
@@ -323,7 +323,7 @@ export type RequestLogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.RequestLogWhereInput[]
   NOT?: Prisma.RequestLogWhereInput | Prisma.RequestLogWhereInput[]
   apiKeyId?: Prisma.StringNullableFilter<"RequestLog"> | string | null
-  organizationId?: Prisma.StringFilter<"RequestLog"> | string
+  tenantId?: Prisma.StringFilter<"RequestLog"> | string
   model?: Prisma.StringFilter<"RequestLog"> | string
   promptTokens?: Prisma.IntFilter<"RequestLog"> | number
   completionTokens?: Prisma.IntFilter<"RequestLog"> | number
@@ -340,7 +340,7 @@ export type RequestLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrderInput | Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   model?: Prisma.SortOrder
   promptTokens?: Prisma.SortOrder
   completionTokens?: Prisma.SortOrder
@@ -364,7 +364,7 @@ export type RequestLogScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"RequestLog"> | string
   requestId?: Prisma.StringWithAggregatesFilter<"RequestLog"> | string
   apiKeyId?: Prisma.StringNullableWithAggregatesFilter<"RequestLog"> | string | null
-  organizationId?: Prisma.StringWithAggregatesFilter<"RequestLog"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"RequestLog"> | string
   model?: Prisma.StringWithAggregatesFilter<"RequestLog"> | string
   promptTokens?: Prisma.IntWithAggregatesFilter<"RequestLog"> | number
   completionTokens?: Prisma.IntWithAggregatesFilter<"RequestLog"> | number
@@ -396,7 +396,7 @@ export type RequestLogUncheckedCreateInput = {
   id?: string
   requestId: string
   apiKeyId?: string | null
-  organizationId: string
+  tenantId: string
   model: string
   promptTokens?: number
   completionTokens?: number
@@ -428,7 +428,7 @@ export type RequestLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   promptTokens?: Prisma.IntFieldUpdateOperationsInput | number
   completionTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -444,7 +444,7 @@ export type RequestLogCreateManyInput = {
   id?: string
   requestId: string
   apiKeyId?: string | null
-  organizationId: string
+  tenantId: string
   model: string
   promptTokens?: number
   completionTokens?: number
@@ -475,7 +475,7 @@ export type RequestLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   requestId?: Prisma.StringFieldUpdateOperationsInput | string
   apiKeyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   model?: Prisma.StringFieldUpdateOperationsInput | string
   promptTokens?: Prisma.IntFieldUpdateOperationsInput | number
   completionTokens?: Prisma.IntFieldUpdateOperationsInput | number
@@ -501,7 +501,7 @@ export type RequestLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   model?: Prisma.SortOrder
   promptTokens?: Prisma.SortOrder
   completionTokens?: Prisma.SortOrder
@@ -525,7 +525,7 @@ export type RequestLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   model?: Prisma.SortOrder
   promptTokens?: Prisma.SortOrder
   completionTokens?: Prisma.SortOrder
@@ -541,7 +541,7 @@ export type RequestLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   requestId?: Prisma.SortOrder
   apiKeyId?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   model?: Prisma.SortOrder
   promptTokens?: Prisma.SortOrder
   completionTokens?: Prisma.SortOrder
@@ -682,7 +682,7 @@ export type RequestLogScalarWhereInput = {
   id?: Prisma.StringFilter<"RequestLog"> | string
   requestId?: Prisma.StringFilter<"RequestLog"> | string
   apiKeyId?: Prisma.StringNullableFilter<"RequestLog"> | string | null
-  organizationId?: Prisma.StringFilter<"RequestLog"> | string
+  tenantId?: Prisma.StringFilter<"RequestLog"> | string
   model?: Prisma.StringFilter<"RequestLog"> | string
   promptTokens?: Prisma.IntFilter<"RequestLog"> | number
   completionTokens?: Prisma.IntFilter<"RequestLog"> | number
@@ -760,7 +760,7 @@ export type RequestLogSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   requestId?: boolean
   apiKeyId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   model?: boolean
   promptTokens?: boolean
   completionTokens?: boolean
@@ -777,7 +777,7 @@ export type RequestLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   requestId?: boolean
   apiKeyId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   model?: boolean
   promptTokens?: boolean
   completionTokens?: boolean
@@ -794,7 +794,7 @@ export type RequestLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   requestId?: boolean
   apiKeyId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   model?: boolean
   promptTokens?: boolean
   completionTokens?: boolean
@@ -811,7 +811,7 @@ export type RequestLogSelectScalar = {
   id?: boolean
   requestId?: boolean
   apiKeyId?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   model?: boolean
   promptTokens?: boolean
   completionTokens?: boolean
@@ -823,7 +823,7 @@ export type RequestLogSelectScalar = {
   createdAt?: boolean
 }
 
-export type RequestLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "apiKeyId" | "organizationId" | "model" | "promptTokens" | "completionTokens" | "totalTokens" | "cost" | "latencyMs" | "status" | "errorMessage" | "createdAt", ExtArgs["result"]["requestLog"]>
+export type RequestLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "requestId" | "apiKeyId" | "tenantId" | "model" | "promptTokens" | "completionTokens" | "totalTokens" | "cost" | "latencyMs" | "status" | "errorMessage" | "createdAt", ExtArgs["result"]["requestLog"]>
 export type RequestLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
 }
@@ -843,7 +843,7 @@ export type $RequestLogPayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     requestId: string
     apiKeyId: string | null
-    organizationId: string
+    tenantId: string
     model: string
     promptTokens: number
     completionTokens: number
@@ -1280,7 +1280,7 @@ export interface RequestLogFieldRefs {
   readonly id: Prisma.FieldRef<"RequestLog", 'String'>
   readonly requestId: Prisma.FieldRef<"RequestLog", 'String'>
   readonly apiKeyId: Prisma.FieldRef<"RequestLog", 'String'>
-  readonly organizationId: Prisma.FieldRef<"RequestLog", 'String'>
+  readonly tenantId: Prisma.FieldRef<"RequestLog", 'String'>
   readonly model: Prisma.FieldRef<"RequestLog", 'String'>
   readonly promptTokens: Prisma.FieldRef<"RequestLog", 'Int'>
   readonly completionTokens: Prisma.FieldRef<"RequestLog", 'Int'>

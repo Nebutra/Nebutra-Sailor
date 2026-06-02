@@ -26,7 +26,7 @@ export type AggregateContent = {
 
 export type ContentMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   authorId: string | null
   title: string | null
   slug: string | null
@@ -39,7 +39,7 @@ export type ContentMinAggregateOutputType = {
 
 export type ContentMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   authorId: string | null
   title: string | null
   slug: string | null
@@ -52,7 +52,7 @@ export type ContentMaxAggregateOutputType = {
 
 export type ContentCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   authorId: number
   title: number
   slug: number
@@ -67,7 +67,7 @@ export type ContentCountAggregateOutputType = {
 
 export type ContentMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   authorId?: true
   title?: true
   slug?: true
@@ -80,7 +80,7 @@ export type ContentMinAggregateInputType = {
 
 export type ContentMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   authorId?: true
   title?: true
   slug?: true
@@ -93,7 +93,7 @@ export type ContentMaxAggregateInputType = {
 
 export type ContentCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   authorId?: true
   title?: true
   slug?: true
@@ -179,7 +179,7 @@ export type ContentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type ContentGroupByOutputType = {
   id: string
-  organizationId: string
+  tenantId: string
   authorId: string
   title: string
   slug: string | null
@@ -213,7 +213,7 @@ export type ContentWhereInput = {
   OR?: Prisma.ContentWhereInput[]
   NOT?: Prisma.ContentWhereInput | Prisma.ContentWhereInput[]
   id?: Prisma.StringFilter<"Content"> | string
-  organizationId?: Prisma.StringFilter<"Content"> | string
+  tenantId?: Prisma.StringFilter<"Content"> | string
   authorId?: Prisma.StringFilter<"Content"> | string
   title?: Prisma.StringFilter<"Content"> | string
   slug?: Prisma.StringNullableFilter<"Content"> | string | null
@@ -230,7 +230,7 @@ export type ContentWhereInput = {
 
 export type ContentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -247,11 +247,11 @@ export type ContentOrderByWithRelationInput = {
 
 export type ContentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId_slug?: Prisma.ContentOrganizationIdSlugCompoundUniqueInput
+  tenantId_slug?: Prisma.ContentTenantIdSlugCompoundUniqueInput
   AND?: Prisma.ContentWhereInput | Prisma.ContentWhereInput[]
   OR?: Prisma.ContentWhereInput[]
   NOT?: Prisma.ContentWhereInput | Prisma.ContentWhereInput[]
-  organizationId?: Prisma.StringFilter<"Content"> | string
+  tenantId?: Prisma.StringFilter<"Content"> | string
   authorId?: Prisma.StringFilter<"Content"> | string
   title?: Prisma.StringFilter<"Content"> | string
   slug?: Prisma.StringNullableFilter<"Content"> | string | null
@@ -264,11 +264,11 @@ export type ContentWhereUniqueInput = Prisma.AtLeast<{
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   embeddings?: Prisma.ContentEmbeddingListRelationFilter
   translations?: Prisma.ContentTranslationListRelationFilter
-}, "id" | "organizationId_slug">
+}, "id" | "tenantId_slug">
 
 export type ContentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -287,7 +287,7 @@ export type ContentScalarWhereWithAggregatesInput = {
   OR?: Prisma.ContentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ContentScalarWhereWithAggregatesInput | Prisma.ContentScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Content"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"Content"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"Content"> | string
   authorId?: Prisma.StringWithAggregatesFilter<"Content"> | string
   title?: Prisma.StringWithAggregatesFilter<"Content"> | string
   slug?: Prisma.StringNullableWithAggregatesFilter<"Content"> | string | null
@@ -315,7 +315,7 @@ export type ContentCreateInput = {
 
 export type ContentUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   authorId: string
   title: string
   slug?: string | null
@@ -345,7 +345,7 @@ export type ContentUpdateInput = {
 
 export type ContentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -360,7 +360,7 @@ export type ContentUncheckedUpdateInput = {
 
 export type ContentCreateManyInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   authorId: string
   title: string
   slug?: string | null
@@ -384,7 +384,7 @@ export type ContentUpdateManyMutationInput = {
 
 export type ContentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -405,14 +405,14 @@ export type ContentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ContentOrganizationIdSlugCompoundUniqueInput = {
-  organizationId: string
+export type ContentTenantIdSlugCompoundUniqueInput = {
+  tenantId: string
   slug: string
 }
 
 export type ContentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
@@ -425,7 +425,7 @@ export type ContentCountOrderByAggregateInput = {
 
 export type ContentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
@@ -438,7 +438,7 @@ export type ContentMaxOrderByAggregateInput = {
 
 export type ContentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   authorId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
@@ -623,7 +623,7 @@ export type ContentScalarWhereInput = {
   OR?: Prisma.ContentScalarWhereInput[]
   NOT?: Prisma.ContentScalarWhereInput | Prisma.ContentScalarWhereInput[]
   id?: Prisma.StringFilter<"Content"> | string
-  organizationId?: Prisma.StringFilter<"Content"> | string
+  tenantId?: Prisma.StringFilter<"Content"> | string
   authorId?: Prisma.StringFilter<"Content"> | string
   title?: Prisma.StringFilter<"Content"> | string
   slug?: Prisma.StringNullableFilter<"Content"> | string | null
@@ -650,7 +650,7 @@ export type ContentCreateWithoutAuthorInput = {
 
 export type ContentUncheckedCreateWithoutAuthorInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   title: string
   slug?: string | null
   body: string
@@ -704,7 +704,7 @@ export type ContentCreateWithoutTranslationsInput = {
 
 export type ContentUncheckedCreateWithoutTranslationsInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   authorId: string
   title: string
   slug?: string | null
@@ -748,7 +748,7 @@ export type ContentUpdateWithoutTranslationsInput = {
 
 export type ContentUncheckedUpdateWithoutTranslationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -776,7 +776,7 @@ export type ContentCreateWithoutEmbeddingsInput = {
 
 export type ContentUncheckedCreateWithoutEmbeddingsInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   authorId: string
   title: string
   slug?: string | null
@@ -820,7 +820,7 @@ export type ContentUpdateWithoutEmbeddingsInput = {
 
 export type ContentUncheckedUpdateWithoutEmbeddingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -886,7 +886,7 @@ export type ContentUncheckedUpdateManyWithoutTenantInput = {
 
 export type ContentCreateManyAuthorInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   title: string
   slug?: string | null
   body: string
@@ -912,7 +912,7 @@ export type ContentUpdateWithoutAuthorInput = {
 
 export type ContentUncheckedUpdateWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.StringFieldUpdateOperationsInput | string
@@ -926,7 +926,7 @@ export type ContentUncheckedUpdateWithoutAuthorInput = {
 
 export type ContentUncheckedUpdateManyWithoutAuthorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   body?: Prisma.StringFieldUpdateOperationsInput | string
@@ -978,7 +978,7 @@ export type ContentCountOutputTypeCountTranslationsArgs<ExtArgs extends runtime.
 
 export type ContentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   authorId?: boolean
   title?: boolean
   slug?: boolean
@@ -996,7 +996,7 @@ export type ContentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 
 export type ContentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   authorId?: boolean
   title?: boolean
   slug?: boolean
@@ -1011,7 +1011,7 @@ export type ContentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 
 export type ContentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   authorId?: boolean
   title?: boolean
   slug?: boolean
@@ -1026,7 +1026,7 @@ export type ContentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 
 export type ContentSelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   authorId?: boolean
   title?: boolean
   slug?: boolean
@@ -1037,7 +1037,7 @@ export type ContentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ContentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "authorId" | "title" | "slug" | "body" | "status" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["content"]>
+export type ContentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "authorId" | "title" | "slug" | "body" | "status" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["content"]>
 export type ContentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1064,7 +1064,7 @@ export type $ContentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    tenantId: string
     authorId: string
     title: string
     slug: string | null
@@ -1501,7 +1501,7 @@ export interface Prisma__ContentClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface ContentFieldRefs {
   readonly id: Prisma.FieldRef<"Content", 'String'>
-  readonly organizationId: Prisma.FieldRef<"Content", 'String'>
+  readonly tenantId: Prisma.FieldRef<"Content", 'String'>
   readonly authorId: Prisma.FieldRef<"Content", 'String'>
   readonly title: Prisma.FieldRef<"Content", 'String'>
   readonly slug: Prisma.FieldRef<"Content", 'String'>

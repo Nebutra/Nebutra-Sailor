@@ -38,7 +38,7 @@ export type CustomerUsageLimitSumAggregateOutputType = {
 
 export type CustomerUsageLimitMinAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   limitId: string | null
   limitValue: bigint | null
   overageRate: runtime.Decimal | null
@@ -51,7 +51,7 @@ export type CustomerUsageLimitMinAggregateOutputType = {
 
 export type CustomerUsageLimitMaxAggregateOutputType = {
   id: string | null
-  organizationId: string | null
+  tenantId: string | null
   limitId: string | null
   limitValue: bigint | null
   overageRate: runtime.Decimal | null
@@ -64,7 +64,7 @@ export type CustomerUsageLimitMaxAggregateOutputType = {
 
 export type CustomerUsageLimitCountAggregateOutputType = {
   id: number
-  organizationId: number
+  tenantId: number
   limitId: number
   limitValue: number
   overageRate: number
@@ -89,7 +89,7 @@ export type CustomerUsageLimitSumAggregateInputType = {
 
 export type CustomerUsageLimitMinAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   limitId?: true
   limitValue?: true
   overageRate?: true
@@ -102,7 +102,7 @@ export type CustomerUsageLimitMinAggregateInputType = {
 
 export type CustomerUsageLimitMaxAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   limitId?: true
   limitValue?: true
   overageRate?: true
@@ -115,7 +115,7 @@ export type CustomerUsageLimitMaxAggregateInputType = {
 
 export type CustomerUsageLimitCountAggregateInputType = {
   id?: true
-  organizationId?: true
+  tenantId?: true
   limitId?: true
   limitValue?: true
   overageRate?: true
@@ -215,7 +215,7 @@ export type CustomerUsageLimitGroupByArgs<ExtArgs extends runtime.Types.Extensio
 
 export type CustomerUsageLimitGroupByOutputType = {
   id: string
-  organizationId: string
+  tenantId: string
   limitId: string
   limitValue: bigint
   overageRate: runtime.Decimal | null
@@ -251,7 +251,7 @@ export type CustomerUsageLimitWhereInput = {
   OR?: Prisma.CustomerUsageLimitWhereInput[]
   NOT?: Prisma.CustomerUsageLimitWhereInput | Prisma.CustomerUsageLimitWhereInput[]
   id?: Prisma.StringFilter<"CustomerUsageLimit"> | string
-  organizationId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
+  tenantId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
   limitId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
   limitValue?: Prisma.BigIntFilter<"CustomerUsageLimit"> | bigint | number
   overageRate?: Prisma.DecimalNullableFilter<"CustomerUsageLimit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -266,7 +266,7 @@ export type CustomerUsageLimitWhereInput = {
 
 export type CustomerUsageLimitOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   limitId?: Prisma.SortOrder
   limitValue?: Prisma.SortOrder
   overageRate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -281,11 +281,11 @@ export type CustomerUsageLimitOrderByWithRelationInput = {
 
 export type CustomerUsageLimitWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  organizationId_limitId?: Prisma.CustomerUsageLimitOrganizationIdLimitIdCompoundUniqueInput
+  tenantId_limitId?: Prisma.CustomerUsageLimitTenantIdLimitIdCompoundUniqueInput
   AND?: Prisma.CustomerUsageLimitWhereInput | Prisma.CustomerUsageLimitWhereInput[]
   OR?: Prisma.CustomerUsageLimitWhereInput[]
   NOT?: Prisma.CustomerUsageLimitWhereInput | Prisma.CustomerUsageLimitWhereInput[]
-  organizationId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
+  tenantId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
   limitId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
   limitValue?: Prisma.BigIntFilter<"CustomerUsageLimit"> | bigint | number
   overageRate?: Prisma.DecimalNullableFilter<"CustomerUsageLimit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -296,11 +296,11 @@ export type CustomerUsageLimitWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"CustomerUsageLimit"> | Date | string
   limitDef?: Prisma.XOR<Prisma.UsageLimitDefinitionScalarRelationFilter, Prisma.UsageLimitDefinitionWhereInput>
   tenant?: Prisma.XOR<Prisma.TenantScalarRelationFilter, Prisma.TenantWhereInput>
-}, "id" | "organizationId_limitId">
+}, "id" | "tenantId_limitId">
 
 export type CustomerUsageLimitOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   limitId?: Prisma.SortOrder
   limitValue?: Prisma.SortOrder
   overageRate?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -321,7 +321,7 @@ export type CustomerUsageLimitScalarWhereWithAggregatesInput = {
   OR?: Prisma.CustomerUsageLimitScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CustomerUsageLimitScalarWhereWithAggregatesInput | Prisma.CustomerUsageLimitScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CustomerUsageLimit"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"CustomerUsageLimit"> | string
+  tenantId?: Prisma.StringWithAggregatesFilter<"CustomerUsageLimit"> | string
   limitId?: Prisma.StringWithAggregatesFilter<"CustomerUsageLimit"> | string
   limitValue?: Prisma.BigIntWithAggregatesFilter<"CustomerUsageLimit"> | bigint | number
   overageRate?: Prisma.DecimalNullableWithAggregatesFilter<"CustomerUsageLimit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -347,7 +347,7 @@ export type CustomerUsageLimitCreateInput = {
 
 export type CustomerUsageLimitUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   limitId: string
   limitValue: bigint | number
   overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -373,7 +373,7 @@ export type CustomerUsageLimitUpdateInput = {
 
 export type CustomerUsageLimitUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   limitId?: Prisma.StringFieldUpdateOperationsInput | string
   limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -386,7 +386,7 @@ export type CustomerUsageLimitUncheckedUpdateInput = {
 
 export type CustomerUsageLimitCreateManyInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   limitId: string
   limitValue: bigint | number
   overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -410,7 +410,7 @@ export type CustomerUsageLimitUpdateManyMutationInput = {
 
 export type CustomerUsageLimitUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   limitId?: Prisma.StringFieldUpdateOperationsInput | string
   limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -431,14 +431,14 @@ export type CustomerUsageLimitOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type CustomerUsageLimitOrganizationIdLimitIdCompoundUniqueInput = {
-  organizationId: string
+export type CustomerUsageLimitTenantIdLimitIdCompoundUniqueInput = {
+  tenantId: string
   limitId: string
 }
 
 export type CustomerUsageLimitCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   limitId?: Prisma.SortOrder
   limitValue?: Prisma.SortOrder
   overageRate?: Prisma.SortOrder
@@ -456,7 +456,7 @@ export type CustomerUsageLimitAvgOrderByAggregateInput = {
 
 export type CustomerUsageLimitMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   limitId?: Prisma.SortOrder
   limitValue?: Prisma.SortOrder
   overageRate?: Prisma.SortOrder
@@ -469,7 +469,7 @@ export type CustomerUsageLimitMaxOrderByAggregateInput = {
 
 export type CustomerUsageLimitMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  tenantId?: Prisma.SortOrder
   limitId?: Prisma.SortOrder
   limitValue?: Prisma.SortOrder
   overageRate?: Prisma.SortOrder
@@ -624,7 +624,7 @@ export type CustomerUsageLimitScalarWhereInput = {
   OR?: Prisma.CustomerUsageLimitScalarWhereInput[]
   NOT?: Prisma.CustomerUsageLimitScalarWhereInput | Prisma.CustomerUsageLimitScalarWhereInput[]
   id?: Prisma.StringFilter<"CustomerUsageLimit"> | string
-  organizationId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
+  tenantId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
   limitId?: Prisma.StringFilter<"CustomerUsageLimit"> | string
   limitValue?: Prisma.BigIntFilter<"CustomerUsageLimit"> | bigint | number
   overageRate?: Prisma.DecimalNullableFilter<"CustomerUsageLimit"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -649,7 +649,7 @@ export type CustomerUsageLimitCreateWithoutLimitDefInput = {
 
 export type CustomerUsageLimitUncheckedCreateWithoutLimitDefInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   limitValue: bigint | number
   overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: string | null
@@ -735,7 +735,7 @@ export type CustomerUsageLimitUncheckedUpdateManyWithoutTenantInput = {
 
 export type CustomerUsageLimitCreateManyLimitDefInput = {
   id?: string
-  organizationId: string
+  tenantId: string
   limitValue: bigint | number
   overageRate?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: string | null
@@ -759,7 +759,7 @@ export type CustomerUsageLimitUpdateWithoutLimitDefInput = {
 
 export type CustomerUsageLimitUncheckedUpdateWithoutLimitDefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -771,7 +771,7 @@ export type CustomerUsageLimitUncheckedUpdateWithoutLimitDefInput = {
 
 export type CustomerUsageLimitUncheckedUpdateManyWithoutLimitDefInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  tenantId?: Prisma.StringFieldUpdateOperationsInput | string
   limitValue?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   overageRate?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -785,7 +785,7 @@ export type CustomerUsageLimitUncheckedUpdateManyWithoutLimitDefInput = {
 
 export type CustomerUsageLimitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   limitId?: boolean
   limitValue?: boolean
   overageRate?: boolean
@@ -800,7 +800,7 @@ export type CustomerUsageLimitSelect<ExtArgs extends runtime.Types.Extensions.In
 
 export type CustomerUsageLimitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   limitId?: boolean
   limitValue?: boolean
   overageRate?: boolean
@@ -815,7 +815,7 @@ export type CustomerUsageLimitSelectCreateManyAndReturn<ExtArgs extends runtime.
 
 export type CustomerUsageLimitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   limitId?: boolean
   limitValue?: boolean
   overageRate?: boolean
@@ -830,7 +830,7 @@ export type CustomerUsageLimitSelectUpdateManyAndReturn<ExtArgs extends runtime.
 
 export type CustomerUsageLimitSelectScalar = {
   id?: boolean
-  organizationId?: boolean
+  tenantId?: boolean
   limitId?: boolean
   limitValue?: boolean
   overageRate?: boolean
@@ -841,7 +841,7 @@ export type CustomerUsageLimitSelectScalar = {
   updatedAt?: boolean
 }
 
-export type CustomerUsageLimitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "limitId" | "limitValue" | "overageRate" | "reason" | "approvedBy" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["customerUsageLimit"]>
+export type CustomerUsageLimitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tenantId" | "limitId" | "limitValue" | "overageRate" | "reason" | "approvedBy" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["customerUsageLimit"]>
 export type CustomerUsageLimitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   limitDef?: boolean | Prisma.UsageLimitDefinitionDefaultArgs<ExtArgs>
   tenant?: boolean | Prisma.TenantDefaultArgs<ExtArgs>
@@ -863,7 +863,7 @@ export type $CustomerUsageLimitPayload<ExtArgs extends runtime.Types.Extensions.
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    tenantId: string
     limitId: string
     limitValue: bigint
     overageRate: runtime.Decimal | null
@@ -1298,7 +1298,7 @@ export interface Prisma__CustomerUsageLimitClient<T, Null = never, ExtArgs exten
  */
 export interface CustomerUsageLimitFieldRefs {
   readonly id: Prisma.FieldRef<"CustomerUsageLimit", 'String'>
-  readonly organizationId: Prisma.FieldRef<"CustomerUsageLimit", 'String'>
+  readonly tenantId: Prisma.FieldRef<"CustomerUsageLimit", 'String'>
   readonly limitId: Prisma.FieldRef<"CustomerUsageLimit", 'String'>
   readonly limitValue: Prisma.FieldRef<"CustomerUsageLimit", 'BigInt'>
   readonly overageRate: Prisma.FieldRef<"CustomerUsageLimit", 'Decimal'>

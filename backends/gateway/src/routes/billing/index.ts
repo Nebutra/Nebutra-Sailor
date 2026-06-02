@@ -85,7 +85,7 @@ function resolveGatewayBillingProviderReadiness() {
 
 async function resolveStripeCustomerId(organizationId: string): Promise<string | null> {
   const customer = await getSystemDb().stripeCustomer.findUnique({
-    where: { organizationId },
+    where: { tenantId: organizationId },
     select: { stripeId: true },
   });
 
