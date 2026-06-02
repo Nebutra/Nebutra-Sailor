@@ -90,9 +90,9 @@ export interface SidebarNavProps {
 const ITEM_BASE_CLASSES =
   "group flex min-h-9 items-center gap-2 rounded-[var(--radius-lg)] px-2.5 py-2 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform]";
 const ITEM_DEFAULT_CLASSES =
-  "text-neutral-11 hover:bg-neutral-1 hover:text-neutral-12 dark:text-white/62 dark:hover:bg-white/[0.06] dark:hover:text-white";
+  "text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground";
 const ITEM_ACTIVE_CLASSES =
-  "bg-neutral-12 text-neutral-1 font-medium shadow-sm shadow-neutral-12/10 hover:bg-neutral-12 hover:text-neutral-1 dark:bg-white dark:text-neutral-12 dark:hover:bg-white";
+  "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-sm shadow-sidebar-primary/10 hover:bg-sidebar-primary hover:text-sidebar-primary-foreground";
 const ITEM_DISABLED_CLASSES = "opacity-50 pointer-events-none";
 const ITEM_COLLAPSED_CLASSES = "mx-auto size-9 justify-center px-0 py-0";
 const ICON_CLASSES = "size-4 shrink-0";
@@ -371,7 +371,7 @@ export function SidebarNav({
               <section key={section.id} className="group/section">
                 {section.label && !collapsed ? (
                   <div className="mb-1.5 flex items-center justify-between px-2.5">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-9 dark:text-white/32">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/45">
                       {section.label}
                     </span>
                     {visibleActions ? (
@@ -384,7 +384,7 @@ export function SidebarNav({
                               aria-label={action.label}
                               title={action.label}
                               onClick={action.onClick}
-                              className="inline-flex size-4 items-center justify-center rounded text-neutral-9 transition-colors hover:bg-neutral-3 hover:text-neutral-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-white/45 dark:hover:bg-white/10 dark:hover:text-white"
+                              className="inline-flex size-4 items-center justify-center rounded text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                             >
                               <ActionIcon className="size-3" />
                             </button>
@@ -429,9 +429,7 @@ export function SidebarNav({
         </div>
 
         {footer ? (
-          <div className="shrink-0 border-t border-neutral-5 pt-3 dark:border-white/10">
-            {footer}
-          </div>
+          <div className="shrink-0 border-t border-sidebar-border pt-3">{footer}</div>
         ) : null}
       </nav>
     </TooltipProvider>

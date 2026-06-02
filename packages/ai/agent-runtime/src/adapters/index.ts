@@ -13,6 +13,6 @@
  * log() swallows transient failures and is not suitable as source-of-truth).
  */
 
-export * from "./dispatcher-sse.js";
-export * from "./mcp-catalog.js";
-export * from "./prisma-rollout.js";
+export * from "./dispatcher-sse";
+export * from "./mcp-catalog";
+export * from "./prisma-rollout";
