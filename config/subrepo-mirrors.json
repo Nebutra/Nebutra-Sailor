@@ -1,0 +1,147 @@
+{
+  "owner": "Nebutra",
+  "sourceRepository": "Nebutra/Nebutra-Sailor",
+  "defaultBranch": "main",
+  "distribution": {
+    "canonicalSource": "monorepo",
+    "packageRegistries": ["npmjs", "github-packages"],
+    "mirrorRole": "public discovery, cloneable examples, and contribution intake"
+  },
+  "mirrors": [
+    {
+      "packageName": "@nebutra/agents",
+      "repoName": "agents",
+      "sourceDir": "packages/ai/agents",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Nebutra AI runtime for multi-agent orchestration and Vercel AI SDK helpers.",
+      "topics": ["nebutra", "ai", "agents", "typescript", "ai-sdk", "multi-agent"]
+    },
+    {
+      "packageName": "@nebutra/mcp",
+      "repoName": "mcp",
+      "sourceDir": "packages/ai/mcp",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Model Context Protocol primitives for Nebutra agent and tool surfaces.",
+      "topics": ["nebutra", "mcp", "model-context-protocol", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tool-registry",
+      "repoName": "tool-registry",
+      "sourceDir": "packages/ai/tool-registry",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Registry and loader primitives for agent skills, tools, and local capability packs.",
+      "topics": ["nebutra", "tool-registry", "agent-tools", "typescript", "skills"]
+    },
+    {
+      "packageName": "@nebutra/code-execution",
+      "repoName": "code-execution",
+      "sourceDir": "packages/ai/code-execution",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Policy-aware code execution orchestration for AI-native applications.",
+      "topics": ["nebutra", "code-execution", "sandbox", "agents", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/sandbox-runtime",
+      "repoName": "sandbox-runtime",
+      "sourceDir": "packages/ai/sandbox-runtime",
+      "cohort": "first-wave",
+      "category": "ai-runtime",
+      "description": "Sandbox runtime contracts for governed AI tool execution.",
+      "topics": ["nebutra", "sandbox", "runtime", "security", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/ui",
+      "repoName": "ui",
+      "sourceDir": "packages/design/ui",
+      "cohort": "first-wave",
+      "category": "design-system",
+      "description": "Nebutra design-system UI primitives, layouts, and token-integrated components.",
+      "topics": ["nebutra", "ui", "design-system", "react", "tailwindcss", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/tokens",
+      "repoName": "tokens",
+      "sourceDir": "packages/design/tokens",
+      "cohort": "first-wave",
+      "category": "design-system",
+      "description": "Runtime CSS variables and theme provider primitives for Nebutra products.",
+      "topics": ["nebutra", "design-tokens", "theme", "css-variables", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/icons",
+      "repoName": "icons",
+      "sourceDir": "packages/design/icons",
+      "cohort": "first-wave",
+      "category": "design-system",
+      "description": "Nebutra icon exports and generated Geist-compatible icon components.",
+      "topics": ["nebutra", "icons", "design-system", "react", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/fonts",
+      "repoName": "fonts",
+      "sourceDir": "packages/design/fonts",
+      "cohort": "first-wave",
+      "category": "design-system",
+      "description": "Self-hosted OSS font registry for Nebutra themes and DESIGN.md imports.",
+      "topics": ["nebutra", "fonts", "nextjs", "design-system", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/logger",
+      "repoName": "logger",
+      "sourceDir": "packages/platform/logger",
+      "cohort": "first-wave",
+      "category": "platform",
+      "description": "Structured logging and OpenTelemetry instrumentation for Nebutra services.",
+      "topics": ["nebutra", "logger", "opentelemetry", "observability", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/errors",
+      "repoName": "errors",
+      "sourceDir": "packages/platform/errors",
+      "cohort": "first-wave",
+      "category": "platform",
+      "description": "Typed error definitions and platform error contracts for Nebutra packages.",
+      "topics": ["nebutra", "errors", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/provider-factory",
+      "repoName": "provider-factory",
+      "sourceDir": "packages/platform/provider-factory",
+      "cohort": "first-wave",
+      "category": "platform",
+      "description": "Provider resolution primitive for explicit, environment, detection-chain, and fallback selection.",
+      "topics": ["nebutra", "provider-factory", "platform", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/cache",
+      "repoName": "cache",
+      "sourceDir": "packages/integrations/cache",
+      "cohort": "first-wave",
+      "category": "integrations",
+      "description": "Cache provider contracts and runtime helpers for Nebutra applications.",
+      "topics": ["nebutra", "cache", "redis", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/email",
+      "repoName": "email",
+      "sourceDir": "packages/integrations/email",
+      "cohort": "first-wave",
+      "category": "integrations",
+      "description": "Transactional email contracts and provider integration helpers.",
+      "topics": ["nebutra", "email", "resend", "integrations", "typescript"]
+    },
+    {
+      "packageName": "@nebutra/webhooks",
+      "repoName": "webhooks",
+      "sourceDir": "packages/integrations/webhooks",
+      "cohort": "first-wave",
+      "category": "integrations",
+      "description": "Outbound webhook contracts and delivery primitives for Nebutra services.",
+      "topics": ["nebutra", "webhooks", "svix", "integrations", "typescript"]
+    }
+  ]
+}

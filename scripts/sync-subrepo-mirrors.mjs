@@ -1,0 +1,397 @@
+#!/usr/bin/env node
+import { execFileSync } from "node:child_process";
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  rmSync,
+  statSync,
+  writeFileSync,
+  readdirSync,
+} from "node:fs";
+import { dirname, join, relative, resolve, sep } from "node:path";
+import {
+  getCurrentGitSha,
+  getGithubToken,
+  readCatalogVersions,
+  resolveSubrepoMirrors,
+} from "./lib/subrepo-mirrors.mjs";
+
+const HARD_SKIP = new Set([
+  ".git",
+  ".next",
+  ".turbo",
+  "coverage",
+  "dist",
+  "node_modules",
+  "playwright-report",
+  "test-results",
+]);
+
+const MIT_LICENSE = `MIT License
+
+Copyright (c) 2026 Nebutra
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+`;
+
+function parseArgs(argv) {
+  const args = {
+    all: false,
+    cohort: undefined,
+    packageName: undefined,
+    repoName: undefined,
+    out: "",
+    push: false,
+  };
+
+  for (const arg of argv) {
+    if (arg === "--all") args.all = true;
+    else if (arg === "--push") args.push = true;
+    else if (arg.startsWith("--cohort=")) args.cohort = arg.slice("--cohort=".length);
+    else if (arg.startsWith("--package=")) args.packageName = arg.slice("--package=".length);
+    else if (arg.startsWith("--repo=")) args.repoName = arg.slice("--repo=".length);
+    else if (arg.startsWith("--out=")) args.out = arg.slice("--out=".length);
+    else if (arg === "--help" || arg === "-h") {
+      console.log([
+        "Usage: node scripts/sync-subrepo-mirrors.mjs [options]",
+        "",
+        "Options:",
+        "  --all                 Build all matching mirrors",
+        "  --cohort=<name>       Filter by mirror cohort, e.g. first-wave",
+        "  --package=<name>      Build one package mirror",
+        "  --repo=<name>         Build one repo mirror",
+        "  --out=<dir>           Output directory",
+        "  --push                Force-push generated mirror(s) to GitHub",
+      ].join("\n"));
+      process.exit(0);
+    }
+  }
+
+  if (!args.out) args.out = join("/tmp", "nebutra-subrepo-mirrors");
+  return args;
+}
+
+function copyTree(src, dst) {
+  mkdirSync(dst, { recursive: true });
+
+  for (const entry of readdirSync(src, { withFileTypes: true })) {
+    if (HARD_SKIP.has(entry.name)) continue;
+
+    const from = join(src, entry.name);
+    const to = join(dst, entry.name);
+
+    if (entry.isDirectory()) {
+      copyTree(from, to);
+    } else if (entry.isFile()) {
+      mkdirSync(dirname(to), { recursive: true });
+      copyFileSync(from, to);
+    }
+  }
+}
+
+function toPosix(path) {
+  return path.split(sep).join("/");
+}
+
+function readJson(path) {
+  return JSON.parse(readFileSync(path, "utf8"));
+}
+
+function writeJson(path, value) {
+  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
+}
+
+function resolveDependencyVersion(name, range, workspaceVersions, catalogVersions) {
+  if (range.startsWith("workspace:")) {
+    const version = workspaceVersions.get(name);
+    if (!version) {
+      throw new Error(`Cannot resolve workspace dependency ${name}`);
+    }
+    return `^${version}`;
+  }
+
+  if (range.startsWith("catalog:")) {
+    const version = catalogVersions.get(name);
+    if (!version) {
+      throw new Error(`Cannot resolve catalog dependency ${name}`);
+    }
+    return version;
+  }
+
+  return range;
+}
+
+function normalizeDependencyBlock(block, workspaceVersions, catalogVersions) {
+  if (!block) return block;
+
+  return Object.fromEntries(
+    Object.entries(block).map(([name, range]) => [
+      name,
+      typeof range === "string"
+        ? resolveDependencyVersion(name, range, workspaceVersions, catalogVersions)
+        : range,
+    ]),
+  );
+}
+
+function normalizePackageJson(root, mirror, targetDir, catalogVersions, workspaceVersions) {
+  const manifestPath = join(targetDir, "package.json");
+  const manifest = readJson(manifestPath);
+  const repoUrl = `git+https://github.com/${mirror.owner}/${mirror.repoName}.git`;
+  const sourceSha = getCurrentGitSha(root);
+
+  for (const field of [
+    "dependencies",
+    "devDependencies",
+    "peerDependencies",
+    "optionalDependencies",
+  ]) {
+    manifest[field] = normalizeDependencyBlock(manifest[field], workspaceVersions, catalogVersions);
+  }
+
+  manifest.repository = {
+    type: "git",
+    url: repoUrl,
+  };
+  manifest.homepage = `https://github.com/${mirror.owner}/${mirror.repoName}#readme`;
+  manifest.bugs = {
+    url: `https://github.com/${mirror.owner}/${mirror.repoName}/issues`,
+  };
+  manifest.nebutraMirror = {
+    sourceRepository: mirror.sourceRepository,
+    sourceDirectory: mirror.sourceDir,
+    sourcePackage: mirror.packageName,
+    sourceSha,
+    canonicalSource: "monorepo",
+  };
+
+  writeJson(manifestPath, manifest);
+}
+
+function normalizeTsconfig(root, targetDir) {
+  const tsconfigPath = join(targetDir, "tsconfig.json");
+  if (!existsSync(tsconfigPath)) return;
+
+  const tsconfig = readJson(tsconfigPath);
+  if (typeof tsconfig.extends === "string" && tsconfig.extends.includes("tsconfig.base.json")) {
+    tsconfig.extends = "./tsconfig.base.json";
+    copyFileSync(join(root, "tsconfig.base.json"), join(targetDir, "tsconfig.base.json"));
+    writeJson(tsconfigPath, tsconfig);
+  }
+}
+
+function prependReadmeBanner(targetDir, mirror) {
+  const readmePath = join(targetDir, "README.md");
+  const existing = existsSync(readmePath)
+    ? readFileSync(readmePath, "utf8").replace(/^\uFEFF/, "")
+    : `# ${mirror.packageName}\n`;
+  const banner = [
+    `# ${mirror.packageName}`,
+    "",
+    `Public mirror for [${mirror.packageName}](https://www.npmjs.com/package/${encodeURIComponent(mirror.packageName)}) from [${mirror.sourceRepository}](https://github.com/${mirror.sourceRepository}/tree/main/${mirror.sourceDir}).`,
+    "",
+    "This repository is generated from the Nebutra Sailor monorepo. Package releases are cut from the monorepo and mirrored here for discovery, standalone cloning, and contribution intake.",
+    "",
+    "- Canonical source: `" + mirror.sourceDir + "` in `" + mirror.sourceRepository + "`",
+    "- Package registry: npm and GitHub Packages",
+    "- Contributions: open issues or PRs here; maintainers port accepted changes back into the monorepo source package",
+    "",
+    "---",
+    "",
+  ].join("\n");
+
+  const body = existing.replace(/^# .*\n+/, "");
+  writeFileSync(readmePath, `${banner}${body}`);
+}
+
+function writeMirrorMetadata(targetDir, mirror) {
+  writeFileSync(join(targetDir, "LICENSE"), MIT_LICENSE);
+  writeFileSync(
+    join(targetDir, "NEBUTRA_SUBREPO.md"),
+    [
+      "# Nebutra Subrepo Mirror",
+      "",
+      `This repository is generated from \`${mirror.sourceRepository}\`.`,
+      "",
+      "| Field | Value |",
+      "|---|---|",
+      `| Package | \`${mirror.packageName}\` |`,
+      `| Source directory | \`${mirror.sourceDir}\` |`,
+      `| Mirror repo | \`${mirror.owner}/${mirror.repoName}\` |`,
+      `| Cohort | \`${mirror.cohort}\` |`,
+      "",
+      "Do not treat this mirror as an independent source of truth. Release versions, package metadata, and dependency governance are maintained in the monorepo.",
+      "",
+    ].join("\n"),
+  );
+  writeFileSync(
+    join(targetDir, ".gitignore"),
+    ["node_modules", "dist", "coverage", ".turbo", ".DS_Store", ""].join("\n"),
+  );
+}
+
+function writeMirrorWorkflow(targetDir) {
+  const workflowDir = join(targetDir, ".github", "workflows");
+  mkdirSync(workflowDir, { recursive: true });
+  writeFileSync(
+    join(workflowDir, "ci.yml"),
+    [
+      "name: CI",
+      "",
+      "on:",
+      "  pull_request:",
+      "  push:",
+      "    branches: [main]",
+      "",
+      "permissions:",
+      "  contents: read",
+      "",
+      "jobs:",
+      "  package:",
+      "    runs-on: ubuntu-latest",
+      "    steps:",
+      "      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd",
+      "      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1",
+      "      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e",
+      "        with:",
+      "          node-version: 22",
+      "          cache: pnpm",
+      "      - run: pnpm install --no-frozen-lockfile --ignore-scripts",
+      "      - name: Build",
+      "        run: node -e \"process.exit(require('./package.json').scripts?.build ? 0 : 1)\" && pnpm build || echo 'no build script'",
+      "      - name: Typecheck",
+      "        run: node -e \"process.exit(require('./package.json').scripts?.typecheck ? 0 : 1)\" && pnpm typecheck || echo 'no typecheck script'",
+      "      - name: Test",
+      "        run: node -e \"process.exit(require('./package.json').scripts?.test ? 0 : 1)\" && pnpm test || echo 'no test script'",
+      "",
+    ].join("\n"),
+  );
+}
+
+function buildMirror(root, mirror, targetDir, catalogVersions, workspaceVersions) {
+  const sourceDir = join(root, mirror.sourceDir);
+  rmSync(targetDir, { recursive: true, force: true });
+  copyTree(sourceDir, targetDir);
+  normalizePackageJson(root, mirror, targetDir, catalogVersions, workspaceVersions);
+  normalizeTsconfig(root, targetDir);
+  prependReadmeBanner(targetDir, mirror);
+  writeMirrorMetadata(targetDir, mirror);
+  writeMirrorWorkflow(targetDir);
+
+  const fileCount = countFiles(targetDir);
+  if (fileCount < 5) {
+    throw new Error(`${mirror.repoName} generated mirror is suspiciously small`);
+  }
+
+  console.log(`[subrepo-sync] built ${mirror.packageName} -> ${toPosix(targetDir)} (${fileCount} files)`);
+}
+
+function countFiles(dir) {
+  let count = 0;
+  for (const entry of readdirSync(dir)) {
+    const full = join(dir, entry);
+    const stat = statSync(full);
+    if (stat.isDirectory()) count += countFiles(full);
+    else count += 1;
+  }
+  return count;
+}
+
+function git(args, cwd, env = {}) {
+  execFileSync("git", args, {
+    cwd,
+    env: { ...process.env, ...env },
+    stdio: "inherit",
+  });
+}
+
+function gitSilent(args, cwd, env = {}) {
+  execFileSync("git", args, {
+    cwd,
+    env: { ...process.env, ...env },
+    stdio: "ignore",
+  });
+}
+
+function pushMirror(mirror, targetDir, sourceSha) {
+  const token = getGithubToken();
+  if (!token) {
+    throw new Error("No GitHub token available for subrepo mirror push");
+  }
+
+  const remote = `https://x-access-token:${encodeURIComponent(token)}@github.com/${mirror.owner}/${mirror.repoName}.git`;
+
+  git(["init", "-q"], targetDir);
+  git(["config", "user.email", "bot@nebutra.com"], targetDir);
+  git(["config", "user.name", "Nebutra Mirror Bot"], targetDir);
+  git(["checkout", "-q", "-B", "main"], targetDir);
+  git(["add", "-A"], targetDir);
+  git(["commit", "--allow-empty", "-q", "-m", `chore: sync from Nebutra-Sailor@${sourceSha}`], targetDir);
+  try {
+    gitSilent(["remote", "remove", "origin"], targetDir, { GIT_TERMINAL_PROMPT: "0" });
+  } catch {
+    // Fresh mirrors do not have a remote yet.
+  }
+  git(["remote", "add", "origin", remote], targetDir);
+  git(["push", "-qf", "origin", "main"], targetDir, { GIT_TERMINAL_PROMPT: "0" });
+  console.log(`[subrepo-sync] pushed ${mirror.owner}/${mirror.repoName}`);
+}
+
+function main() {
+  const root = process.cwd();
+  const args = parseArgs(process.argv.slice(2));
+  const { releaseSurface, mirrors } = resolveSubrepoMirrors({
+    cohort: args.cohort,
+    packageName: args.packageName,
+    repoName: args.repoName,
+  });
+
+  if (!args.all && !args.packageName && !args.repoName && mirrors.length !== 1) {
+    throw new Error("Select one mirror with --package/--repo or pass --all");
+  }
+
+  const selectedMirrors = args.all || args.packageName || args.repoName ? mirrors : mirrors.slice(0, 1);
+  const outputRoot = resolve(args.out);
+  const catalogVersions = readCatalogVersions(root);
+  const workspaceVersions = new Map(
+    releaseSurface.publishable.map((entry) => [entry.manifest.name, entry.manifest.version]),
+  );
+  const sourceSha = getCurrentGitSha(root);
+
+  rmSync(outputRoot, { recursive: true, force: true });
+  mkdirSync(outputRoot, { recursive: true });
+
+  for (const mirror of selectedMirrors) {
+    const targetDir =
+      selectedMirrors.length === 1 && !args.all ? outputRoot : join(outputRoot, mirror.repoName);
+    buildMirror(root, mirror, targetDir, catalogVersions, workspaceVersions);
+    if (args.push) pushMirror(mirror, targetDir, sourceSha);
+  }
+
+  console.log(`[subrepo-sync] completed ${selectedMirrors.length} mirror(s)`);
+}
+
+try {
+  main();
+} catch (error) {
+  console.error(`[subrepo-sync] ${error.message}`);
+  process.exit(1);
+}
