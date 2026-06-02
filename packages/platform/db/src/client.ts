@@ -7,6 +7,11 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+const RLS_ROLE = (() => {
+  const role = process.env.APP_DB_ROLE;
+  return role && /^[a-z_][a-z0-9_]*$/.test(role) ? role : null;
+})();
+
 function createPrismaClient(): PrismaClient {
   if (!process.env.DATABASE_URL) {
     throw new Error("[db] DATABASE_URL is not set. Cannot initialize database connection pool.");
@@ -238,6 +243,15 @@ export function getTenantDb(tenantId: string): PrismaClient {
     query: {
       $allModels: {
         async $allOperations({ args, query }) {
+          if (RLS_ROLE) {
+            const [, , result] = await client.$transaction([
+              client.$executeRawUnsafe(`SET LOCAL ROLE "${RLS_ROLE}"`),
+              client.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
+              query(args),
+            ]);
+            return result as unknown;
+          }
+
           const [, result] = await client.$transaction([
             client.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
             query(args),
