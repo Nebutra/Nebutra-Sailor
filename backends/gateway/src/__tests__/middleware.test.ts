@@ -140,6 +140,7 @@ beforeEach(() => {
 
   // Ensure SERVICE_SECRET is set for most tests
   process.env.SERVICE_SECRET = "test-secret-key-for-hmac-verification";
+  process.env.S2S_ALLOW_LEGACY = "1";
   delete process.env.UPSTASH_REDIS_REST_URL;
   delete process.env.UPSTASH_REDIS_REST_TOKEN;
   delete process.env.UPSTASH_REDIS_URL;

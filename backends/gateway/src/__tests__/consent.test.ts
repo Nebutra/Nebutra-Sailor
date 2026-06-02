@@ -168,6 +168,7 @@ const mockCookieConsent = {
 beforeEach(() => {
   vi.clearAllMocks();
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
+  process.env.S2S_ALLOW_LEGACY = "1";
 });
 
 // ===========================================================================

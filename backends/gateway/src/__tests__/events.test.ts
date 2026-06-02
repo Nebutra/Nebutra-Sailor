@@ -94,6 +94,7 @@ beforeEach(() => {
   mockIngest.mockReset();
   mockIngest.mockResolvedValue({ accepted: 0, duplicated: 0 });
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
+  process.env.S2S_ALLOW_LEGACY = "1";
 });
 
 // ===========================================================================
