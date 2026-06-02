@@ -1,3 +1,4 @@
+import { dollarsToCents } from "../money";
 import type { CheckoutProvider, CreditPurchaseInput, CreditPurchaseSession } from "./types";
 
 /**
@@ -42,7 +43,7 @@ export class StripeCheckoutProvider implements CheckoutProvider {
           price_data: {
             currency: input.currency.toLowerCase(),
             product_data: { name: `${input.creditAmount} Credits` },
-            unit_amount: Math.round(input.amount * 100),
+            unit_amount: dollarsToCents(input.amount),
           },
           quantity: 1,
         },

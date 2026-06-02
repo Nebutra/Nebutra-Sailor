@@ -1,4 +1,5 @@
 import { getTenantDb } from "@nebutra/db";
+import { dollarsToCents } from "../money";
 import type { CreditTransactionType } from "../types";
 import { BillingError } from "../types";
 
@@ -255,7 +256,7 @@ export async function getCreditTransactions(
  * 1 credit = $0.01 (100 credits = $1)
  */
 export function dollarsToCredits(dollars: number): number {
-  return Math.round(dollars * 100);
+  return dollarsToCents(dollars);
 }
 
 /**
