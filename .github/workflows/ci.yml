@@ -304,12 +304,14 @@ jobs:
 
       - name: Build (affected)
         run: |
-          pnpm turbo build --filter="...[${TURBO_BASE_REF}]..." \
-            --filter='!./apps/design-docs' \
-            --filter='!./apps/sailor-docs' \
-            --filter='!./apps/storybook' \
-            --filter='!./apps/studio' \
-            --filter='!./apps/tsekaluk-dev'
+          filters=(--filter="...[${TURBO_BASE_REF}]...")
+          for app in apps/design-docs apps/sailor-docs apps/storybook apps/studio apps/tsekaluk-dev; do
+            if [ -d "$app" ]; then
+              filters+=(--filter="!./$app")
+            fi
+          done
+
+          pnpm turbo build "${filters[@]}"
         env:
           SKIP_ENV_VALIDATION: "true"
           AUTH_PROVIDER: "clerk"
