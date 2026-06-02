@@ -17,22 +17,30 @@ interface SecretsCommandOptions {
   limit?: number;
 }
 
-interface SecretMetadata {
-  key: string;
-  tenant: string;
-  createdAt: string;
-  updatedAt: string;
-  description?: string;
-  masked: boolean;
-}
+/**
+ * Emit an honest "not wired to a backend" response for a secrets subcommand.
+ *
+ * The `nebutra` CLI has no secrets API to call: the gateway exposes no
+ * `/secrets` or `/vault` route, and `@nebutra/vault` only does encrypt/decrypt
+ * (no list/get/rotate/audit/verify surface). These subcommands are therefore
+ * previews — we report that honestly instead of fabricating secret data.
+ */
+function notWired(feature: string, options: SecretsCommandOptions, hint: string): never {
+  if (options.format === "json") {
+    output(
+      {
+        status: "not_implemented",
+        feature,
+        reason: "no vault backend configured",
+      },
+      { format: "json" },
+    );
+  } else {
+    status(`\`secrets ${feature}\` is a preview — not wired to a backend in this build.`, "warn");
+    status(hint, "info");
+  }
 
-interface AuditEntry {
-  timestamp: string;
-  action: "read" | "write" | "rotate" | "delete";
-  key: string;
-  actor: string;
-  success: boolean;
-  message?: string;
+  process.exit(ExitCode.INCOMPATIBLE);
 }
 
 /**
@@ -59,46 +67,11 @@ async function readStdinSecure(): Promise<string> {
  * `nebutra secrets list` — List encrypted secrets (metadata only)
  */
 async function handleList(options: SecretsCommandOptions): Promise<void> {
-  status("Fetching secret metadata...", "info");
-
-  // Mock secret list (in real implementation, would query vault service)
-  const mockSecrets: SecretMetadata[] = [
-    {
-      key: "openai_key",
-      tenant: options.tenant || "org_123",
-      createdAt: "2024-03-15T10:30:00Z",
-      updatedAt: "2024-03-30T14:22:00Z",
-      description: "OpenAI API key for embeddings",
-      masked: true,
-    },
-    {
-      key: "stripe_sk",
-      tenant: options.tenant || "org_123",
-      createdAt: "2024-03-10T08:15:00Z",
-      updatedAt: "2024-03-25T09:45:00Z",
-      description: "Stripe secret key",
-      masked: true,
-    },
-    {
-      key: "github_token",
-      tenant: options.tenant || "org_123",
-      createdAt: "2024-03-20T16:30:00Z",
-      updatedAt: "2024-03-29T11:20:00Z",
-      description: "GitHub API token",
-      masked: true,
-    },
-  ];
-
-  if (options.format === "json") {
-    output(mockSecrets, { format: "json" });
-  } else {
-    status("Secrets for tenant: " + (options.tenant || "org_123"), "info");
-    for (const secret of mockSecrets) {
-      const desc = secret.description ? ` — ${secret.description}` : "";
-      status(`${pc.cyan(secret.key)}${pc.gray(desc)}`, "info");
-      status(`  Updated: ${secret.updatedAt}`, "info");
-    }
-  }
+  notWired(
+    "list",
+    options,
+    "Listing secrets requires a configured vault/secrets API (e.g. a NEBUTRA_SECRETS_API_URL backend) that is not available in this build.",
+  );
 }
 
 /**
@@ -130,21 +103,13 @@ async function handleSet(key: string, options: SecretsCommandOptions): Promise<v
     process.exit(ExitCode.INVALID_ARGS);
   }
 
-  status(`Setting secret ${pc.cyan(key)}...`, "info");
-
-  if (options.dryRun) {
-    status(
-      `Would encrypt and store secret ${key} for tenant ${options.tenant || "org_123"}`,
-      "info",
-    );
-    return;
-  }
-
-  // Mock set operation
-  status(`Secret ${pc.cyan(key)} encrypted and stored successfully`, "success");
-  if (options.description) {
-    status(`Description: ${options.description}`, "info");
-  }
+  // Input has been read/validated above, but there is no backend to persist to.
+  // Do NOT claim the secret was stored — report the honest not-wired status.
+  notWired(
+    "set",
+    options,
+    "Storing secrets requires a configured vault/secrets API (e.g. a NEBUTRA_SECRETS_API_URL backend) that is not available in this build. Nothing was persisted.",
+  );
 }
 
 /**
@@ -156,28 +121,11 @@ async function handleGet(key: string, options: SecretsCommandOptions): Promise<v
     process.exit(ExitCode.INVALID_ARGS);
   }
 
-  status(`Retrieving secret ${pc.cyan(key)}...`, "info");
-
-  // Mock get operation
-  const secretValue = "sk_live_abc123xyz789...";
-  const displayValue = options.unmask ? secretValue : "***masked***";
-
-  if (!options.unmask) {
-    status(`Secret value is ${pc.yellow("masked")}. Use --unmask to display.`, "warn");
-  }
-
-  const output_data = {
-    key,
-    tenant: options.tenant || "org_123",
-    value: displayValue,
-    encrypted: true,
-  };
-
-  if (options.format === "json") {
-    output(output_data, { format: "json" });
-  } else {
-    status(`${pc.cyan(key)}: ${displayValue}`, "info");
-  }
+  notWired(
+    "get",
+    options,
+    "Retrieving secrets requires a configured vault/secrets API (e.g. a NEBUTRA_SECRETS_API_URL backend) that is not available in this build.",
+  );
 }
 
 /**
@@ -208,136 +156,35 @@ async function handleRotate(key: string, options: SecretsCommandOptions): Promis
     process.exit(ExitCode.INVALID_ARGS);
   }
 
-  status(`Rotating encryption key for ${pc.cyan(key)}...`, "info");
-
-  if (options.dryRun) {
-    status(`Would rotate encryption key for ${key}`, "info");
-    return;
-  }
-
-  // Mock rotation
-  status(`Encryption key for ${pc.cyan(key)} rotated successfully`, "success");
-  status(`New key version: ${pc.dim("v2")}`, "info");
+  // Confirmation handled above, but there is no backend to rotate against.
+  // Do NOT claim rotation succeeded — report the honest not-wired status.
+  notWired(
+    "rotate",
+    options,
+    "Rotating key material requires a configured vault/secrets API (e.g. a NEBUTRA_SECRETS_API_URL backend) that is not available in this build. Nothing was rotated.",
+  );
 }
 
 /**
  * `nebutra secrets audit` — Secret access audit log
  */
 async function handleAudit(options: SecretsCommandOptions): Promise<void> {
-  status("Fetching audit log...", "info");
-
-  // Mock audit log
-  const mockAudit: AuditEntry[] = [
-    {
-      timestamp: "2024-03-30T14:52:00Z",
-      action: "read",
-      key: "openai_key",
-      actor: "api_service",
-      success: true,
-    },
-    {
-      timestamp: "2024-03-30T14:22:00Z",
-      action: "write",
-      key: "openai_key",
-      actor: "claude_user",
-      success: true,
-    },
-    {
-      timestamp: "2024-03-30T13:45:00Z",
-      action: "read",
-      key: "stripe_sk",
-      actor: "billing_worker",
-      success: true,
-    },
-    {
-      timestamp: "2024-03-30T11:30:00Z",
-      action: "rotate",
-      key: "github_token",
-      actor: "admin_user",
-      success: true,
-    },
-    {
-      timestamp: "2024-03-30T10:15:00Z",
-      action: "read",
-      key: "unknown_key",
-      actor: "unauthorized_service",
-      success: false,
-      message: "Key not found",
-    },
-  ];
-
-  let filtered = mockAudit;
-
-  if (options.limit) {
-    filtered = filtered.slice(0, options.limit);
-  }
-
-  if (options.format === "json") {
-    output(filtered, { format: "json" });
-  } else {
-    status("Secret Access Audit Log", "info");
-    for (const entry of filtered) {
-      const icon = entry.success ? pc.green("✓") : pc.red("✖");
-      status(
-        `${icon} ${entry.timestamp} ${pc.cyan(entry.action)} ${entry.key}`,
-        entry.success ? "success" : "error",
-      );
-      status(`  Actor: ${entry.actor}${entry.message ? ` — ${entry.message}` : ""}`, "info");
-    }
-  }
+  notWired(
+    "audit",
+    options,
+    "The secret-access audit log requires a configured vault/secrets API (e.g. a NEBUTRA_SECRETS_API_URL backend) that is not available in this build.",
+  );
 }
 
 /**
  * `nebutra secrets verify` — Verify vault configuration
  */
 async function handleVerify(options: SecretsCommandOptions): Promise<void> {
-  status("Verifying vault configuration...", "info");
-
-  const checks: Array<{ name: string; healthy: boolean; message: string }> = [];
-
-  // Check KMS connectivity
-  checks.push({
-    name: "KMS Connectivity",
-    healthy: true,
-    message: "Connected to AWS KMS",
-  });
-
-  // Check key availability
-  checks.push({
-    name: "Master Key",
-    healthy: true,
-    message: "Master encryption key available",
-  });
-
-  // Check envelope encryption support
-  checks.push({
-    name: "Envelope Encryption",
-    healthy: true,
-    message: "HKDF envelope encryption configured",
-  });
-
-  // Check secret storage backend
-  checks.push({
-    name: "Storage Backend",
-    healthy: true,
-    message: "PostgreSQL backend healthy",
-  });
-
-  if (options.format === "json") {
-    output(checks, { format: "json" });
-  } else {
-    status("Vault Configuration Check", "info");
-    for (const check of checks) {
-      const icon = check.healthy ? pc.green("✓") : pc.red("✖");
-      status(`${icon} ${check.name}: ${check.message}`, check.healthy ? "success" : "error");
-    }
-
-    const allHealthy = checks.every((c) => c.healthy);
-    status(
-      `Overall: ${allHealthy ? pc.green("HEALTHY") : pc.red("UNHEALTHY")}`,
-      allHealthy ? "success" : "error",
-    );
-  }
+  notWired(
+    "verify",
+    options,
+    "Verifying vault configuration (KMS, envelope encryption, storage backend) requires a configured vault/secrets API (e.g. a NEBUTRA_SECRETS_API_URL backend) that is not available in this build.",
+  );
 }
 
 /**

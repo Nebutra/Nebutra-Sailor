@@ -21,11 +21,60 @@ interface SearchProvider {
   message: string;
 }
 
-interface SearchIndex {
-  name: string;
-  documentCount: number;
-  size?: string;
-  lastUpdated?: string;
+/**
+ * Fetch helper for the gateway search API.
+ * Mirrors the auth-fetch pattern in admin.ts: builds a request to
+ * `${NEBUTRA_API_URL}/api/v1/...` with a Bearer token from the environment.
+ */
+async function searchApiFetch(
+  path: string,
+  init: { method?: string; body?: Record<string, unknown> } = {},
+): Promise<{ ok: boolean; status: number; data?: unknown; error?: string }> {
+  const apiUrl = process.env.NEBUTRA_API_URL || "http://localhost:3100";
+  const token = process.env.NEBUTRA_API_TOKEN;
+
+  if (!token) {
+    return {
+      ok: false,
+      status: 401,
+      error: "NEBUTRA_API_TOKEN environment variable not set. Set it to a valid bearer token.",
+    };
+  }
+
+  const url = new URL(path, apiUrl).toString();
+  const method = init.method || "GET";
+  const body = init.body ? JSON.stringify(init.body) : undefined;
+
+  try {
+    const response = await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      ...(body && { body }),
+    });
+
+    const data = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      const message =
+        (data &&
+          typeof data === "object" &&
+          "error" in data &&
+          (data as { error?: string }).error) ||
+        `HTTP ${response.status}`;
+      return { ok: false, status: response.status, error: String(message) };
+    }
+
+    return { ok: true, status: response.status, data };
+  } catch (error) {
+    return {
+      ok: false,
+      status: 0,
+      error: `Network error: ${error instanceof Error ? error.message : String(error)}`,
+    };
+  }
 }
 
 /**
@@ -96,30 +145,27 @@ async function handleStatus(options: SearchCommandOptions): Promise<void> {
  * `nebutra search indexes` — List all search indexes
  */
 async function handleIndexes(options: SearchCommandOptions): Promise<void> {
-  status("Fetching search indexes...", "info");
-
-  const provider = detectSearchProvider();
-
-  if (provider.type === "none") {
-    status("No search provider configured", "error");
-    process.exit(ExitCode.CONFIG_ERROR);
-  }
-
-  // Mock implementation — would integrate with actual provider SDKs
-  const mockIndexes: SearchIndex[] = [
-    { name: "products", documentCount: 15420, size: "2.4 MB", lastUpdated: "2 hours ago" },
-    { name: "articles", documentCount: 3240, size: "1.1 MB", lastUpdated: "1 day ago" },
-    { name: "users", documentCount: 8900, size: "0.8 MB", lastUpdated: "30 minutes ago" },
-  ];
-
+  // There is no provider-admin endpoint to enumerate indexes through the
+  // gateway, so this is an honest not-wired preview rather than fabricated data.
   if (options.format === "json") {
-    output(mockIndexes, { format: "json" });
+    output(
+      {
+        status: "not_implemented",
+        feature: "search indexes",
+        reason: "no provider-admin endpoint exposed by the gateway",
+      },
+      { format: "json" },
+    );
   } else {
-    status("Search Indexes", "info");
-    for (const index of mockIndexes) {
-      status(`${pc.cyan(index.name)}: ${index.documentCount} documents (${index.size})`, "info");
-    }
+    status("`search indexes` is a preview — not wired to a backend in this build.", "warn");
+    status(
+      "Listing indexes requires a provider-admin API the gateway does not expose. " +
+        "Use `nebutra search query <index> <term>` to exercise a known index instead.",
+      "info",
+    );
   }
+
+  process.exit(ExitCode.INCOMPATIBLE);
 }
 
 /**
@@ -159,13 +205,33 @@ async function handleReindex(index?: string, options?: SearchCommandOptions): Pr
   status(`Reindexing ${pc.cyan(targetIndex)}...`, "info");
 
   if (opts.dryRun) {
-    status(`Would reindex ${targetIndex} with provider ${provider.type}`, "info");
+    status(`Would POST /api/v1/search/sync to reindex ${targetIndex}`, "info");
     return;
   }
 
-  // Mock reindex operation
-  status(`Reindexing ${targetIndex} on ${provider.type}...`, "info");
-  status(`Index ${pc.cyan(targetIndex)} reindexed successfully`, "success");
+  const result = await searchApiFetch("/api/v1/search/sync", {
+    method: "POST",
+    body: index ? { index } : {},
+  });
+
+  if (!result.ok) {
+    status(`Reindex failed: ${result.error}`, "error");
+    process.exit(ExitCode.NETWORK_ERROR);
+  }
+
+  if (opts.format === "json") {
+    output(result.data ?? { status: result.status }, { format: "json" });
+  } else {
+    status(`Reindex dispatched for ${pc.cyan(targetIndex)}`, "success");
+    const message =
+      result.data &&
+      typeof result.data === "object" &&
+      "message" in result.data &&
+      (result.data as { message?: string }).message;
+    if (message) {
+      status(String(message), "info");
+    }
+  }
 }
 
 /**
@@ -178,50 +244,49 @@ async function handleQuery(
 ): Promise<void> {
   status(`Querying ${pc.cyan(index)} for "${pc.yellow(query)}"...`, "info");
 
-  const provider = detectSearchProvider();
-
-  if (provider.type === "none") {
-    status("No search provider configured", "error");
-    process.exit(ExitCode.CONFIG_ERROR);
+  let filters: Record<string, string | number | boolean> | undefined;
+  if (options.filters) {
+    try {
+      filters = JSON.parse(options.filters) as Record<string, string | number | boolean>;
+    } catch (_error) {
+      status("--filters must be valid JSON", "error");
+      process.exit(ExitCode.INVALID_ARGS);
+    }
   }
 
-  // Mock search results
-  const mockResults = [
-    {
-      id: "1",
-      title: "Sample Result 1",
-      score: 0.95,
-      _formatted: {
-        title: `Sample <mark>Result</mark> 1`,
-        content: "Contains search term...",
-      },
+  const result = await searchApiFetch("/api/v1/search", {
+    method: "POST",
+    body: {
+      index,
+      query,
+      hitsPerPage: options.limit ?? 10,
+      ...(filters && { filters }),
     },
-    {
-      id: "2",
-      title: "Another Result",
-      score: 0.87,
-      _formatted: {
-        title: "Another <mark>Result</mark>",
-        content: "Also matches search...",
-      },
-    },
-  ];
+  });
 
-  const searchResponse = {
-    index,
-    query,
-    provider: provider.type,
-    hits: mockResults.length,
-    limit: options.limit || 10,
-    results: mockResults,
-  };
+  if (!result.ok) {
+    status(`Search failed: ${result.error}`, "error");
+    process.exit(ExitCode.NETWORK_ERROR);
+  }
+
+  const data = result.data;
+  const hits =
+    data &&
+    typeof data === "object" &&
+    "hits" in data &&
+    Array.isArray((data as { hits?: unknown }).hits)
+      ? (data as { hits: Array<Record<string, unknown>> }).hits
+      : [];
 
   if (options.format === "json") {
-    output(searchResponse, { format: "json" });
+    output(data ?? { index, query, hits: [] }, { format: "json" });
   } else {
-    status(`Found ${pc.cyan(String(mockResults.length))} results for "${query}"`, "success");
-    for (const result of mockResults) {
-      status(`${pc.dim(String(result.score))}: ${result.title}`, "info");
+    status(`Found ${pc.cyan(String(hits.length))} result(s) for "${query}"`, "success");
+    for (const hit of hits) {
+      const title = hit.title ?? hit.name ?? hit.id ?? "(no title)";
+      const score = hit._score ?? hit.score;
+      const prefix = score !== undefined ? `${pc.dim(String(score))}: ` : "";
+      status(`${prefix}${String(title)}`, "info");
     }
   }
 }
@@ -230,44 +295,27 @@ async function handleQuery(
  * `nebutra search stats` — Index statistics
  */
 async function handleStats(options: SearchCommandOptions): Promise<void> {
-  status("Fetching search statistics...", "info");
-
-  const provider = detectSearchProvider();
-
-  if (provider.type === "none") {
-    status("No search provider configured", "error");
-    process.exit(ExitCode.CONFIG_ERROR);
-  }
-
-  // Mock statistics
-  const stats = {
-    provider: provider.type,
-    indexes: [
-      { name: "products", documents: 15420, size: 2400000, lastUpdated: "2024-03-30T14:22:00Z" },
-      { name: "articles", documents: 3240, size: 1100000, lastUpdated: "2024-03-29T08:15:00Z" },
-      { name: "users", documents: 8900, size: 800000, lastUpdated: "2024-03-30T14:52:00Z" },
-    ],
-    totalDocuments: 27560,
-    totalSize: 4300000,
-  };
-
+  // No provider-admin endpoint exposes index statistics through the gateway,
+  // so this is an honest not-wired preview rather than fabricated counts.
   if (options.format === "json") {
-    output(stats, { format: "json" });
+    output(
+      {
+        status: "not_implemented",
+        feature: "search stats",
+        reason: "no provider-admin endpoint exposed by the gateway",
+      },
+      { format: "json" },
+    );
   } else {
-    status("Search Statistics", "info");
-    status(`Provider: ${pc.cyan(stats.provider)}`, "info");
-    status(`Total Indexes: ${stats.indexes.length}`, "info");
-    status(`Total Documents: ${stats.totalDocuments.toLocaleString()}`, "info");
-    status(`Total Size: ${(stats.totalSize / 1024 / 1024).toFixed(2)} MB`, "info");
-
-    status("Index Breakdown:", "info");
-    for (const idx of stats.indexes) {
-      status(
-        `  ${pc.cyan(idx.name)}: ${idx.documents.toLocaleString()} docs (${(idx.size / 1024 / 1024).toFixed(2)} MB)`,
-        "info",
-      );
-    }
+    status("`search stats` is a preview — not wired to a backend in this build.", "warn");
+    status(
+      "Index statistics require a provider-admin API the gateway does not expose. " +
+        "Use `nebutra search status` to confirm provider configuration.",
+      "info",
+    );
   }
+
+  process.exit(ExitCode.INCOMPATIBLE);
 }
 
 /**
