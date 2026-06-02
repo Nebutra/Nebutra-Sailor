@@ -76,6 +76,7 @@ describe("tenantToPermissionContext", () => {
   const base: TenantContext = {
     userId: "user-1",
     organizationId: "org-1",
+    tenantId: "tenant-1",
     role: "org:admin",
     plan: "PRO",
     ip: "127.0.0.1",
@@ -85,7 +86,7 @@ describe("tenantToPermissionContext", () => {
     const ctx = tenantToPermissionContext(base);
     expect(ctx).toEqual({
       userId: "user-1",
-      tenantId: "org-1",
+      tenantId: "tenant-1",
       roles: ["admin"],
       attributes: { plan: "PRO" },
     });
@@ -96,9 +97,9 @@ describe("tenantToPermissionContext", () => {
     expect(tenantToPermissionContext(noUser)).toBeUndefined();
   });
 
-  it("returns undefined when organizationId is missing", () => {
-    const { organizationId: _orgId, ...noOrg } = base;
-    expect(tenantToPermissionContext(noOrg)).toBeUndefined();
+  it("returns undefined when tenantId is missing", () => {
+    const { tenantId: _tenantId, ...noTenant } = base;
+    expect(tenantToPermissionContext(noTenant)).toBeUndefined();
   });
 
   it("yields empty roles when the tenant has no role", () => {

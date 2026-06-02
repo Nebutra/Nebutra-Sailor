@@ -4,8 +4,8 @@
  * Records API call counts per tenant in Redis (Upstash-compatible).
  * Keys are scoped to the current billing period (month):
  *
- *   usage:{orgId}:{YYYY-MM}:api_calls  → INCR each request
- *   usage:{orgId}:{YYYY-MM}:ai_tokens  → INCRBY from response header (added by AI service)
+ *   usage:{tenantId}:{YYYY-MM}:api_calls  → INCR each request
+ *   usage:{tenantId}:{YYYY-MM}:ai_tokens  → INCRBY from response header (added by AI service)
  *
  * The metering runs fire-and-forget (non-blocking) so it never adds latency
  * to the critical path. Failures are logged but do not fail the request.
@@ -82,12 +82,12 @@ export async function usageMeteringMiddleware(c: Context, next: Next) {
 
   // Non-blocking background metering — never block the response
   const tenant = c.get("tenant");
-  const orgId = tenant?.organizationId;
+  const tenantId = tenant?.tenantId;
 
-  if (!orgId) return; // anonymous calls are not metered
+  if (!tenantId) return; // anonymous calls are not metered
 
   const period = billingPeriod();
-  const apiCallKey = `usage:${orgId}:${period}:api_calls`;
+  const apiCallKey = `usage:${tenantId}:${period}:api_calls`;
 
   // Best-effort: fire and forget
   void (async () => {
@@ -102,7 +102,7 @@ export async function usageMeteringMiddleware(c: Context, next: Next) {
       // If the AI service returned a token count header, meter it too
       const tokensUsed = c.res.headers.get("X-Tokens-Used");
       if (tokensUsed) {
-        const tokenKey = `usage:${orgId}:${period}:ai_tokens`;
+        const tokenKey = `usage:${tenantId}:${period}:ai_tokens`;
         const count = parseInt(tokensUsed, 10);
         if (!Number.isNaN(count) && count > 0) {
           await r.incrby(tokenKey, count);
@@ -111,7 +111,7 @@ export async function usageMeteringMiddleware(c: Context, next: Next) {
       }
     } catch (err) {
       // Never let metering failures propagate to the client
-      logger.warn("Usage metering write failed", { orgId, period, err });
+      logger.warn("Usage metering write failed", { tenantId, period, err });
     }
   })();
 }

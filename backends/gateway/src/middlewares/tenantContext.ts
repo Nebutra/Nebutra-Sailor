@@ -7,6 +7,8 @@ import { getAuthProvider } from "../config/env.js";
 
 export interface TenantContext {
   userId?: string;
+  tenantId?: string;
+  tenantKind?: "organization" | "individual";
   organizationId?: string;
   role?: string;
   plan: string;
@@ -18,8 +20,8 @@ declare module "hono" {
     tenant: TenantContext;
     // PermissionContext for the route-layer `requirePermission` guard from
     // @nebutra/permissions. Populated by `tenantContextMiddleware` whenever a
-    // tenant has both a userId and an organizationId. Optional because
-    // unauthenticated / org-less requests never get one.
+    // tenant has both a userId and a canonical tenantId. Optional because
+    // unauthenticated / tenant-less requests never get one.
     user?: PermissionContext;
   }
 }
@@ -48,19 +50,25 @@ export function mapTenantRoleToPermissionRoles(role: string | undefined): Role[]
 /**
  * Build the @nebutra/permissions PermissionContext from a resolved
  * TenantContext. Returns `undefined` when the tenant is not fully resolved
- * (missing userId or organizationId), so `requirePermission` can short-circuit
+ * (missing userId or tenantId), so `requirePermission` can short-circuit
  * to 401 exactly like before.
  */
 export function tenantToPermissionContext(tenant: TenantContext): PermissionContext | undefined {
-  if (!tenant.userId || !tenant.organizationId) {
+  if (!tenant.userId || !tenant.tenantId) {
     return undefined;
   }
   return {
     userId: tenant.userId,
-    tenantId: tenant.organizationId,
+    tenantId: tenant.tenantId,
     roles: mapTenantRoleToPermissionRoles(tenant.role),
     attributes: { plan: tenant.plan },
   };
+}
+
+function attachOrganizationTenant(tenant: TenantContext, organizationId: string) {
+  tenant.organizationId = organizationId;
+  tenant.tenantId = organizationId;
+  tenant.tenantKind = "organization";
 }
 
 // ── Singleton auth provider ────────────────────────────────────────────────
@@ -153,7 +161,7 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
       )
     ) {
       if (headerUserId) tenant.userId = headerUserId;
-      if (headerOrganizationId) tenant.organizationId = headerOrganizationId;
+      if (headerOrganizationId) attachOrganizationTenant(tenant, headerOrganizationId);
       if (headerRole) tenant.role = headerRole;
       if (headerPlan) tenant.plan = headerPlan;
     } else {
@@ -181,7 +189,7 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
 
       if (session) {
         if (session.userId) tenant.userId = session.userId;
-        if (session.organizationId) tenant.organizationId = session.organizationId;
+        if (session.organizationId) attachOrganizationTenant(tenant, session.organizationId);
         if (session.role) tenant.role = session.role;
       }
     } catch (error) {
@@ -206,7 +214,7 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   }
 
   // NOTE: The middleware no longer attaches a `prisma` client to the Hono
-  // context. Route handlers must explicitly call `getTenantDb(orgId)` from
+  // context. Route handlers must explicitly call `getTenantDb(tenantId)` from
   // `@nebutra/db` (or `getSystemDb()` for admin / webhook flows that lack a
   // tenant context). This forces every Prisma call site to state its tenant
   // scope up front, which prevents accidental cross-tenant leaks.
@@ -222,6 +230,23 @@ export async function requireAuth(c: Context, next: Next) {
 
   if (!tenant?.userId) {
     return c.json({ error: "Unauthorized", message: "Authentication required" }, 401);
+  }
+
+  await next();
+}
+
+/**
+ * Require a resolved tenant isolation boundary.
+ *
+ * This is broader than `requireOrganization`: organization routes should still
+ * require organization membership, while tenant-scoped infrastructure can use
+ * this guard for organization and future individual tenants.
+ */
+export async function requireTenant(c: Context, next: Next) {
+  const tenant = c.get("tenant");
+
+  if (!tenant?.tenantId) {
+    return c.json({ error: "Forbidden", message: "Tenant context required" }, 403);
   }
 
   await next();

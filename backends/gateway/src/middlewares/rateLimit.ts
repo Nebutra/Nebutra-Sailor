@@ -23,7 +23,7 @@ function resolvePlanKey(plan: unknown): PlanKey {
 
 /**
  * Rate limiting middleware using token bucket algorithm
- * Keys are composed of: tenant:organization:user:ip
+ * Keys are composed of: tenant:user:ip
  */
 export async function rateLimitMiddleware(c: Context, next: Next) {
   const tenant = c.get("tenant");
@@ -32,7 +32,7 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
 
   // Build rate limit key
   const keyParts = [
-    tenant?.organizationId || "anonymous",
+    tenant?.tenantId || "anonymous",
     tenant?.userId || "anonymous",
     tenant?.ip || "unknown",
   ];

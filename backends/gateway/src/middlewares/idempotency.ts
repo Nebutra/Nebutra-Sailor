@@ -84,7 +84,7 @@ export async function idempotencyMiddleware(c: Context, next: Next): Promise<Res
   }
 
   const tenant = c.get("tenant");
-  const tenantId = tenant?.organizationId ?? tenant?.userId ?? "anonymous";
+  const tenantId = tenant?.tenantId ?? tenant?.userId ?? "anonymous";
   const redis = await getRedis();
 
   const cacheKey = getCacheKey(tenantId, idempotencyKey);
