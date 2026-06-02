@@ -14,10 +14,9 @@ const prisma = getSystemDb();
 const log = logger.child({ service: "stripe-webhook" });
 
 // ============================================
-// Phase 0 analytics helper — fire-and-forget, silent-fail.
-// Respects NEBUTRA_TELEMETRY=0. The `@nebutra/analytics` PostHog contract is
-// being finalised by a parallel subagent; import is dynamic to keep this
-// module decoupled from the final wrapper schema.
+// Product analytics helper — fire-and-forget, silent-fail.
+// Respects NEBUTRA_TELEMETRY=0. Product events go through the PostHog client;
+// Dub attribution remains on `createAnalyticsClient` and is not used here.
 // ============================================
 function isTelemetryDisabled(): boolean {
   const envValue = process.env.NEBUTRA_TELEMETRY;
@@ -29,22 +28,26 @@ function emitCheckoutCompleted(props: Record<string, unknown>): void {
 
   void (async () => {
     try {
-      // Phase 0: the PostHog-backed client is being shipped by a parallel
-      // subagent; cast through `unknown` so the final contract (which will
-      // expose a `track` method) compiles against both the in-flight and
-      // final schema without this module needing to be updated.
       const mod = (await import("@nebutra/analytics")) as unknown as {
-        createAnalyticsClient?: (config: unknown) => {
+        createProductAnalyticsClient?: (config: unknown) => {
           track: (event: string, props: Record<string, unknown>) => Promise<unknown> | unknown;
         };
       };
 
-      if (typeof mod.createAnalyticsClient !== "function") return;
+      if (typeof mod.createProductAnalyticsClient !== "function") return;
 
-      const client = mod.createAnalyticsClient({
+      const client = mod.createProductAnalyticsClient({
         posthog: {
-          apiKey: process.env.NEBUTRA_POSTHOG_KEY ?? "",
-          host: process.env.NEBUTRA_POSTHOG_HOST ?? "https://analytics.nebutra.com",
+          apiKey:
+            process.env.POSTHOG_KEY ??
+            process.env.NEXT_PUBLIC_POSTHOG_KEY ??
+            process.env.NEBUTRA_POSTHOG_KEY ??
+            "",
+          host:
+            process.env.POSTHOG_HOST ??
+            process.env.NEXT_PUBLIC_POSTHOG_HOST ??
+            process.env.NEBUTRA_POSTHOG_HOST ??
+            "https://analytics.nebutra.com",
         },
         onError: () => {
           log.warn("Stripe checkout telemetry sink reported an internal error");

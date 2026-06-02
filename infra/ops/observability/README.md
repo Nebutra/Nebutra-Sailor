@@ -6,9 +6,26 @@ Logging, tracing, and metrics configuration.
 
 | Tool              | Purpose                                 |
 | ----------------- | --------------------------------------- |
-| **Sentry**        | Error tracking & performance monitoring |
-| **OpenTelemetry** | Distributed tracing                     |
+| **Sentry**        | Error tracking, stack traces, release regression, performance symptoms |
+| **OpenTelemetry** | Vendor-neutral traces and metrics export |
+| **PostHog**       | Product events, funnels, retention, session replay, feature usage |
+| **@nebutra/logger** | Structured application logs and optional Sentry breadcrumbs |
 | **OpenStatus**    | Uptime monitoring                       |
+
+## Responsibility Boundary
+
+| Question | Source of truth | Do not use |
+| -------- | --------------- | ---------- |
+| What code path failed, with stack trace and release? | Sentry | PostHog product events |
+| What did the user do before/after the failure? | PostHog session replay and product events | Sentry issue metadata alone |
+| What happened inside this request or worker? | `@nebutra/logger` plus OTel trace IDs | ad hoc `console.log` |
+| What marketing link or invite caused the conversion? | Dub via `createAnalyticsClient` | PostHog capture |
+| What product funnel or retention cohort moved? | PostHog via `createProductAnalyticsClient` | Dub link analytics |
+
+Sentry and PostHog may both receive context for the same incident, but they do
+not own the same job. Sentry owns application health. PostHog owns user/product
+behavior. Correlate them by carrying `userId`, `organizationId`, release, and
+request IDs where available.
 
 ## Sentry Setup
 
@@ -32,6 +49,31 @@ SENTRY_ORG=your-org
 SENTRY_PROJECT=your-project
 SENTRY_AUTH_TOKEN=...
 ```
+
+## PostHog Setup
+
+Use PostHog for product analytics and session context. Browser events use the
+public key. Server-originated events use the server key first and fall back to
+the public key only when a separate server key is not configured.
+
+```bash
+POSTHOG_KEY=phc_server_project_key
+POSTHOG_HOST=https://us.i.posthog.com
+NEXT_PUBLIC_POSTHOG_KEY=phc_browser_project_key
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+```
+
+Code ownership:
+
+```typescript
+import { createProductAnalyticsClientFromEnv } from "@nebutra/analytics";
+
+const productAnalytics = createProductAnalyticsClientFromEnv();
+await productAnalytics.track("checkout", { action: "completed", tier: "STARTUP" });
+```
+
+Do not send product events through `createAnalyticsClient`; that entry point is
+for Dub attribution and short links.
 
 ### 4. Usage
 

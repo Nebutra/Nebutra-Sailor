@@ -43,6 +43,7 @@ export const LicenseWizardEvent = BaseEventProps.extend({
 export const LicenseCliEvent = BaseEventProps.extend({
   action: z.enum(["activate_attempted", "activated", "failed"]),
   license_tier: z.string().optional(),
+  license_type: z.string().optional(),
   cli_version: z.string(),
   error_code: z.string().optional(),
 });

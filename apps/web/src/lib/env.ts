@@ -27,6 +27,10 @@ export const env = createEnv({
     // Logger Sentry transport — opt-in to avoid double-capturing errors
     LOGGER_SENTRY_ENABLED: z.enum(["true", "false"]).optional().default("false"),
 
+    // PostHog — server-side product event capture (optional)
+    POSTHOG_KEY: z.string().optional(),
+    POSTHOG_HOST: z.string().url().optional(),
+
     // Cross-subdomain session-hint cookie + landing-origin CORS allowlist.
     // Both are unset in dev/preview so cookies stay host-scoped (no traversal
     // between localhost:3000 ↔ localhost:3001) and CORS rejects cross-origin

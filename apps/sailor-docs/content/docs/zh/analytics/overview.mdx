@@ -58,10 +58,12 @@ Nebutra 内置两个互补的分析工具：
 
 ## 配置概览
 
-无需复杂的 SDK 配置。Nebutra 读取两个 PostHog 环境变量和一个 Dub.co 环境变量：
+无需复杂的 SDK 配置。Nebutra 读取 PostHog 服务端/浏览器环境变量，以及一个 Dub.co 环境变量：
 
 ```bash
 # PostHog
+POSTHOG_KEY=phc_xxxxxxxxxxxx
+POSTHOG_HOST=https://app.posthog.com
 NEXT_PUBLIC_POSTHOG_KEY=phc_xxxxxxxxxxxx
 NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com   # 或你的自托管 URL
 
@@ -88,8 +90,8 @@ DUB_API_KEY=dub_xxxxxxxxxxxx
 
 PostHog 会收集行为数据。根据你的部署地区和合规要求：
 
-- **云端（欧盟）**：将 `NEXT_PUBLIC_POSTHOG_HOST` 设置为 `https://eu.posthog.com`，将数据保留在欧盟。
-- **自托管**：在你自己的基础设施上部署 PostHog，并将 `NEXT_PUBLIC_POSTHOG_HOST` 指向你的实例 URL。
+- **云端（欧盟）**：将 `POSTHOG_HOST` 和 `NEXT_PUBLIC_POSTHOG_HOST` 设置为 `https://eu.posthog.com`，将数据保留在欧盟。
+- **自托管**：在你自己的基础设施上部署 PostHog，并将两个 PostHog host 变量指向你的实例 URL。
 - **会话录制**：可按租户或全局禁用——详见 [PostHog 文档](/zh/analytics/posthog#session-recording)。
 - **GDPR**：PostHog 通过其 API 支持数据删除请求。
 

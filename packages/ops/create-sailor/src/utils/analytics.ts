@@ -84,7 +84,7 @@ export function getPostHogServerClient(): PostHog | null {
   if (!key) return null;
 
   client = new PostHog(key, {
-    host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
+    host: process.env.POSTHOG_HOST ?? process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
     flushAt: 1,
     flushInterval: 0,
   });
@@ -140,6 +140,7 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
 function postHogEnv(): string {
   return `# PostHog — product analytics
 POSTHOG_KEY=
+POSTHOG_HOST=https://us.i.posthog.com
 NEXT_PUBLIC_POSTHOG_KEY=
 NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 `;

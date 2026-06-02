@@ -4,10 +4,10 @@
  * Fire-and-forget: never blocks the user flow, never throws, silently drops
  * errors. Respects `NEBUTRA_TELEMETRY=0` opt-out env var.
  *
- * The `@nebutra/analytics` PostHog contract is being finalised by a parallel
- * subagent; this module keeps the import dynamic so tests can mock-import
- * without requiring the final schema, and runtime can no-op when the
- * package isn't available on the user's machine.
+ * Product events go through `createProductAnalyticsClient`; Dub attribution
+ * remains on `createAnalyticsClient` and must not be used for PostHog capture.
+ * The import stays dynamic so runtime can no-op when the analytics package is
+ * not available on the user's machine.
  */
 
 const POSTHOG_DEFAULT_HOST = "https://analytics.nebutra.com";
@@ -51,19 +51,27 @@ export function emitScaffoldCompleted(
   void (async () => {
     try {
       // Optional peer — resolved at runtime; absence is handled by the
-      // surrounding try/catch and the `typeof createAnalyticsClient` guard below.
+      // surrounding try/catch and the `typeof createProductAnalyticsClient` guard below.
       const mod = (await import("@nebutra/analytics")) as unknown as {
-        createAnalyticsClient?: (config: unknown) => {
+        createProductAnalyticsClient?: (config: unknown) => {
           track: (event: string, props: Record<string, unknown>) => Promise<unknown> | unknown;
         };
       };
 
-      if (typeof mod.createAnalyticsClient !== "function") return;
+      if (typeof mod.createProductAnalyticsClient !== "function") return;
 
-      const client = mod.createAnalyticsClient({
+      const client = mod.createProductAnalyticsClient({
         posthog: {
-          apiKey: process.env.NEBUTRA_POSTHOG_KEY ?? "",
-          host: process.env.NEBUTRA_POSTHOG_HOST ?? POSTHOG_DEFAULT_HOST,
+          apiKey:
+            process.env.POSTHOG_KEY ??
+            process.env.NEXT_PUBLIC_POSTHOG_KEY ??
+            process.env.NEBUTRA_POSTHOG_KEY ??
+            "",
+          host:
+            process.env.POSTHOG_HOST ??
+            process.env.NEXT_PUBLIC_POSTHOG_HOST ??
+            process.env.NEBUTRA_POSTHOG_HOST ??
+            POSTHOG_DEFAULT_HOST,
         },
         onError: () => {
           // Silent — telemetry failures cannot spam users during scaffold.

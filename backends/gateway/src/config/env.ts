@@ -77,6 +77,12 @@ const baseSchema = z.object({
   SENTRY_DSN: z.string().url().optional(),
   SENTRY_RELEASE: z.string().optional(),
 
+  // PostHog product analytics (optional — disabled when absent)
+  POSTHOG_KEY: z.string().optional(),
+  POSTHOG_HOST: z.string().url().optional(),
+  NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
+  NEXT_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
+
   // Email / Resend
   RESEND_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().optional(),

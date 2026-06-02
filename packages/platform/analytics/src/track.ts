@@ -23,6 +23,12 @@ export interface AnalyticsClientOptions {
   onError?: (err: unknown, event: string) => void;
 }
 
+export interface AnalyticsEnvClientOptions {
+  env?: Record<string, string | undefined>;
+  defaultHost?: string;
+  onError?: (err: unknown, event: string) => void;
+}
+
 export interface TrackResult {
   success: boolean;
   error?: string;
@@ -38,6 +44,14 @@ export interface ProductAnalyticsClient {
 }
 
 const DEFAULT_POSTHOG_HOST = "https://app.posthog.com";
+
+function runtimeEnv(): Record<string, string | undefined> {
+  return typeof process !== "undefined" ? process.env : {};
+}
+
+function firstNonEmpty(...values: Array<string | undefined>): string | undefined {
+  return values.find((value) => typeof value === "string" && value.length > 0);
+}
 
 function errorMessage(err: unknown): string {
   if (err instanceof Error) return err.message;
@@ -128,4 +142,25 @@ export function createProductAnalyticsClient(opts: AnalyticsClientOptions): Prod
       // No buffering in v1 — every track is a direct HTTP call.
     },
   };
+}
+
+export function createProductAnalyticsClientFromEnv(
+  opts: AnalyticsEnvClientOptions = {},
+): ProductAnalyticsClient {
+  const env = opts.env ?? runtimeEnv();
+  const apiKey = firstNonEmpty(
+    env.POSTHOG_KEY,
+    env.NEXT_PUBLIC_POSTHOG_KEY,
+    // Backward-compatible fallback for older Nebutra CLI builds.
+    env.NEBUTRA_POSTHOG_KEY,
+  );
+  const host =
+    firstNonEmpty(env.POSTHOG_HOST, env.NEXT_PUBLIC_POSTHOG_HOST, env.NEBUTRA_POSTHOG_HOST) ??
+    opts.defaultHost ??
+    DEFAULT_POSTHOG_HOST;
+
+  return createProductAnalyticsClient({
+    ...(apiKey ? { posthog: { apiKey, host } } : {}),
+    ...(opts.onError ? { onError: opts.onError } : {}),
+  });
 }

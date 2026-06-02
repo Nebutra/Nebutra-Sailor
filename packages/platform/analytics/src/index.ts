@@ -10,7 +10,9 @@ export {
 export * from "./events";
 export {
   type AnalyticsClientOptions,
+  type AnalyticsEnvClientOptions,
   createProductAnalyticsClient,
+  createProductAnalyticsClientFromEnv,
   type ProductAnalyticsClient,
   type TrackResult,
 } from "./track";

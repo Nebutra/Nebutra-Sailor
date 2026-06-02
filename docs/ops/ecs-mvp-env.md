@@ -18,7 +18,7 @@ deployment path. The deploy workflow forwards these values from the GitHub
 | Billing | `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_ID_PRO_MONTHLY`, `STRIPE_PRICE_ID_PRO_YEARLY` | Checkout returns 503 without `STRIPE_SECRET_KEY`. |
 | AI assistant | one of `OPENAI_API_KEY`, `OPENROUTER_API_KEY`, `SILICONFLOW_API_KEY` | Chat returns 503 without a provider key. |
 | Uploads | `UPLOAD_PROVIDER` plus provider keys | Prefer R2/OSS/S3 for production; local disk is only acceptable for a very early MVP. |
-| Observability | `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_RELEASE` | `SENTRY_RELEASE` defaults to the deployed commit SHA. |
+| Observability | `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_RELEASE`, `POSTHOG_KEY`, `POSTHOG_HOST`, `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST` | `SENTRY_RELEASE` defaults to the deployed commit SHA. PostHog server keys are for product events from API/server code; public keys are for the browser SDK. |
 | Scheduled jobs | `CRON_SECRET` | Required for protected cron routes. |
 | Abuse protection | `TURNSTILE_SECRET_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Recommended before opening public signup. |
 | Service auth | `SERVICE_SECRET`, `ADMIN_API_KEY` | Required for mature service-to-service/admin surfaces. |

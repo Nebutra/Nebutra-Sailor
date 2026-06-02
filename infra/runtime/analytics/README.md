@@ -31,7 +31,8 @@ pnpm analytics:smoke                                    # run smoke tests
 - **PostHog** (http://localhost:8000)
   - Visit the URL and complete the signup flow to create the initial admin user.
   - Create a project, copy the **Project API Key** (`phc_...`) — use this as
-    `POSTHOG_PROJECT_API_KEY` in apps that ingest events.
+    `POSTHOG_KEY` for server-side events and `NEXT_PUBLIC_POSTHOG_KEY` for
+    browser-side events.
 - **Umami** (http://localhost:3010)
   - Default login: `admin` / `umami`. Change the password immediately.
   - Add a website → copy the tracking script tag or the Website ID for JS SDK use.
@@ -88,7 +89,11 @@ All secrets have dev-friendly defaults but MUST be overridden in production.
 | `POSTHOG_SECRET_KEY`            | Django `SECRET_KEY` for PostHog                | `dev_posthog_secret_change_me`    |
 | `POSTHOG_SITE_URL`              | Public URL PostHog uses for links in emails   | `http://localhost:8000`           |
 | `UMAMI_APP_SECRET`              | Umami session / cookie secret                  | `dev_umami_secret_change_me`      |
-| `POSTHOG_PROJECT_API_KEY`       | Only used by smoke test — optional             | `phc_test`                        |
+| `POSTHOG_KEY`                   | Project API key for server-side product events | unset                             |
+| `POSTHOG_HOST`                  | Server-side product event ingestion host       | `http://localhost:8000` locally   |
+| `NEXT_PUBLIC_POSTHOG_KEY`       | Project API key for browser-side events        | unset                             |
+| `NEXT_PUBLIC_POSTHOG_HOST`      | Browser-side product event ingestion host      | `http://localhost:8000` locally   |
+| `POSTHOG_PROJECT_API_KEY`       | Only used by smoke test — optional legacy name | `phc_test`                        |
 
 ## Security notes
 

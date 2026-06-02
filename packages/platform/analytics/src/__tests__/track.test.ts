@@ -1,13 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { ProductAnalyticsClient } from "../track";
-import { createProductAnalyticsClient } from "../track";
+import { createProductAnalyticsClient, createProductAnalyticsClientFromEnv } from "../track";
 
 describe("ProductAnalyticsClient", () => {
   let mockFetch: ReturnType<typeof vi.fn>;
   let client: ProductAnalyticsClient;
 
   beforeEach(() => {
+    vi.unstubAllEnvs();
     mockFetch = vi.fn().mockResolvedValue({ ok: true, status: 200 });
     globalThis.fetch = mockFetch as unknown as typeof fetch;
     client = createProductAnalyticsClient({
@@ -167,5 +168,38 @@ describe("ProductAnalyticsClient", () => {
     await c.track("docs.search_query", { query: "q", result_count: 1 });
     const [url] = mockFetch.mock.calls[0];
     expect(url).toContain("https://app.posthog.com/capture/");
+  });
+
+  it("creates a no-op client when no PostHog key is configured in the environment", async () => {
+    const c = createProductAnalyticsClientFromEnv();
+    const result = await c.track("docs.search_query", { query: "tokens", result_count: 1 });
+    expect(result.success).toBe(true);
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it("uses server PostHog env vars before public fallbacks", async () => {
+    vi.stubEnv("POSTHOG_KEY", "phc_server");
+    vi.stubEnv("POSTHOG_HOST", "https://posthog.internal");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_public");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_HOST", "https://posthog-public.example");
+
+    const c = createProductAnalyticsClientFromEnv();
+    await c.track("docs.search_query", { query: "rbac", result_count: 2 });
+
+    const [url, options] = mockFetch.mock.calls[0];
+    expect(url).toBe("https://posthog.internal/capture/");
+    expect(JSON.parse(options.body)).toMatchObject({ api_key: "phc_server" });
+  });
+
+  it("falls back to public PostHog env vars for browser-compatible runtimes", async () => {
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_public");
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_HOST", "https://posthog-public.example");
+
+    const c = createProductAnalyticsClientFromEnv();
+    await c.track("docs.search_query", { query: "funnels", result_count: 3 });
+
+    const [url, options] = mockFetch.mock.calls[0];
+    expect(url).toBe("https://posthog-public.example/capture/");
+    expect(JSON.parse(options.body)).toMatchObject({ api_key: "phc_public" });
   });
 });

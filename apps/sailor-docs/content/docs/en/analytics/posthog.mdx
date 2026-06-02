@@ -23,10 +23,13 @@ PostHog is the primary product analytics tool in Nebutra. It tracks in-product b
     Add the following to your `.env.local` (development) and your deployment environment (production):
 
     ```bash
+    POSTHOG_KEY=phc_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    POSTHOG_HOST=https://app.posthog.com
     NEXT_PUBLIC_POSTHOG_KEY=phc_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
     NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
     ```
 
+    `POSTHOG_KEY` is used for server-originated product events. `NEXT_PUBLIC_POSTHOG_KEY` is used by the browser SDK.
     For EU data residency, use `https://eu.posthog.com`.
     For a self-hosted instance, use your own URL (e.g. `https://posthog.yourcompany.com`).
   </Step>
@@ -75,29 +78,25 @@ export function CreateProjectButton() {
 
 ### Server-Side (API Gateway)
 
-Use `serverAnalytics` for events that originate in the Hono API layer, where no browser context is available:
+Use `createProductAnalyticsClientFromEnv` for events that originate in the Hono API layer, where no browser context is available:
 
 ```typescript
-import { serverAnalytics } from "@nebutra/analytics";
+import { createProductAnalyticsClientFromEnv } from "@nebutra/analytics";
 
-app.post("/api/v1/projects", async (c) => {
-  const { tenantId, userId, plan } = c.get("tenantContext");
+app.post("/api/v1/checkout/complete", async (c) => {
+  const { organizationId, userId, plan } = c.get("tenantContext");
+  const analytics = createProductAnalyticsClientFromEnv();
 
-  const project = await db.project.create({ ... });
+  const checkout = await completeCheckout(c.req);
 
-  await serverAnalytics.capture({
-    distinctId: userId,
-    event: "project_created",
-    properties: {
-      projectId: project.id,
-      tenantId,
-      plan,
-      endpoint: "/api/v1/projects",
-      method: "POST",
-    },
+  await analytics.track("checkout", {
+    action: "completed",
+    userId,
+    organizationId,
+    tier: plan,
   });
 
-  return c.json({ success: true, data: project });
+  return c.json({ success: true, data: checkout });
 });
 ```
 
@@ -131,10 +130,10 @@ export function useAuthEffect(user: User, subscription: Subscription, org: Org) 
 
 ## Feature Flags
 
-PostHog feature flags in Nebutra are used to gate features by billing plan. The `@nebutra/analytics` package wraps the PostHog flag API:
+Feature-flag decisions are owned by `@nebutra/feature-flags`, not by `@nebutra/analytics`. PostHog can be used as a future flag provider, but product-event capture and flag evaluation stay separate.
 
 ```typescript
-import { useFeatureFlag } from "@nebutra/analytics";
+import { useFeatureFlag } from "@nebutra/feature-flags";
 
 export function AiChatButton() {
   const { enabled, loading } = useFeatureFlag("ai_chat");
@@ -146,13 +145,14 @@ export function AiChatButton() {
 }
 ```
 
-Feature flags are evaluated server-side for API routes:
+Feature flags are evaluated server-side for API routes through the feature-flags package:
 
 ```typescript
-import { serverAnalytics } from "@nebutra/analytics";
+import { isFeatureEnabled } from "@nebutra/feature-flags";
 
-const enabled = await serverAnalytics.isFeatureEnabled("ai_chat", userId, {
-  groups: { organization: tenantId },
+const enabled = await isFeatureEnabled("ai_chat", {
+  userId,
+  tenantId,
 });
 ```
 

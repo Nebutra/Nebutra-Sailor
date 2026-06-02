@@ -38,7 +38,7 @@ export const ANALYTICS_PROVIDERS: AnalyticsProviderMeta[] = [
     id: "posthog",
     name: "PostHog",
     region: "both",
-    envVars: ["POSTHOG_KEY", "NEXT_PUBLIC_POSTHOG_KEY", "NEXT_PUBLIC_POSTHOG_HOST"],
+    envVars: ["POSTHOG_KEY", "POSTHOG_HOST", "NEXT_PUBLIC_POSTHOG_KEY", "NEXT_PUBLIC_POSTHOG_HOST"],
     docs: "https://posthog.com/docs",
     pkgs: ["posthog-js", "posthog-node"],
     providerFile: "apps/web/src/lib/analytics/posthog.client.ts",

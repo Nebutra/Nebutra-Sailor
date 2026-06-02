@@ -58,10 +58,12 @@ Every Nebutra deployment automatically captures the following events without any
 
 ## Setup Overview
 
-No complex SDK configuration is required. Nebutra reads two environment variables for PostHog and one for Dub.co:
+No complex SDK configuration is required. Nebutra reads server and browser environment variables for PostHog, plus one for Dub.co:
 
 ```bash
 # PostHog
+POSTHOG_KEY=phc_xxxxxxxxxxxx
+POSTHOG_HOST=https://app.posthog.com
 NEXT_PUBLIC_POSTHOG_KEY=phc_xxxxxxxxxxxx
 NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com   # or your self-hosted URL
 
@@ -88,8 +90,8 @@ The admin analytics dashboard requires the `admin` role. Standard users cannot a
 
 PostHog collects behavioural data. Depending on your deployment region and compliance requirements:
 
-- **Cloud (EU)**: Use `https://eu.posthog.com` as `NEXT_PUBLIC_POSTHOG_HOST` to keep data in the EU.
-- **Self-hosted**: Deploy PostHog on your own infrastructure. Set `NEXT_PUBLIC_POSTHOG_HOST` to your instance URL.
+- **Cloud (EU)**: Use `https://eu.posthog.com` as `POSTHOG_HOST` and `NEXT_PUBLIC_POSTHOG_HOST` to keep data in the EU.
+- **Self-hosted**: Deploy PostHog on your own infrastructure. Set both PostHog host variables to your instance URL.
 - **Session recording**: Can be disabled per tenant or globally — see [PostHog docs](/analytics/posthog#session-recording).
 - **GDPR**: PostHog supports data deletion requests via their API.
 

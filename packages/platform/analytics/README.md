@@ -1,14 +1,26 @@
 # @nebutra/analytics
 
-Link attribution, conversion tracking, and growth analytics powered by Dub.
+Link attribution, conversion tracking, and product analytics for Nebutra.
 
 ## Overview
 
 This package provides:
-- **Link Attribution** — Track clicks, referrals, and conversions
-- **Short Links** — Generate branded short URLs
-- **Referral System** — Affiliate and invite tracking
-- **Multi-tenant Analytics** — Tenant-scoped metrics and reports
+- **Dub Attribution** — short links, referrals, campaign links, and conversion attribution
+- **PostHog Product Events** — typed product events for funnels, retention, and session context
+- **Umami Proxy Helpers** — privacy-first pageview forwarding when needed
+
+## Responsibility Boundary
+
+| Concern | Owner | Entry point |
+|---------|-------|-------------|
+| Marketing attribution, invite links, short links | Dub | `createAnalyticsClient` / `analytics` |
+| Product events, funnels, retention, feature usage | PostHog | `createProductAnalyticsClient` |
+| Runtime errors, stack traces, release regression | Sentry | `@nebutra/logger` and app Sentry config |
+
+Do not use `createAnalyticsClient` for PostHog event capture. It is the legacy
+Dub client. Product analytics must use `createProductAnalyticsClient` or
+`createProductAnalyticsClientFromEnv` so event schemas are validated before
+network transport.
 
 ## Installation
 
@@ -32,8 +44,8 @@ pnpm add @nebutra/analytics
                               │
                               ▼
                     ┌─────────────────┐
-                    │   Dub API/SDK   │
-                    └─────────────────┘
+	                    │ Dub / PostHog   │
+	                    └─────────────────┘
 ```
 
 ## Quick Start
@@ -87,6 +99,33 @@ const stats = await analytics.links.getAnalytics({
   interval: "7d",
 });
 ```
+
+### Product event capture (PostHog)
+
+```typescript
+import { createProductAnalyticsClientFromEnv } from "@nebutra/analytics";
+
+const analytics = createProductAnalyticsClientFromEnv();
+
+await analytics.track("checkout", {
+  action: "completed",
+  tier: "STARTUP",
+  userId: "user_123",
+  organizationId: "org_123",
+});
+```
+
+Environment precedence for product events:
+
+```bash
+POSTHOG_KEY=phc_server_side_project_key
+POSTHOG_HOST=https://us.i.posthog.com
+NEXT_PUBLIC_POSTHOG_KEY=phc_browser_project_key
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+```
+
+`POSTHOG_KEY` is preferred for server-originated events. Browser providers use
+`NEXT_PUBLIC_POSTHOG_KEY`.
 
 ## Features
 

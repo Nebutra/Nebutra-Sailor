@@ -14,6 +14,18 @@ Nebutra 的监控栈让你对 Next.js 前端和 Hono API Gateway 的应用健康
 | 性能监控 | Sentry Tracing | HTTP 请求追踪、DB 查询耗时、p99 延迟 |
 | 结构化日志 | `@nebutra/logger` | 所有 `info` / `warn` / `error` 事件（含租户上下文） |
 | 发布追踪 | Sentry Releases | 每次部署自动上传源码映射，关联提交记录 |
+| 产品分析 | PostHog | 漏斗、留存、会话回放、功能使用情况 |
+
+## 职责边界
+
+| 关注点 | 负责人 |
+|--------|--------|
+| 代码失败、堆栈、发布回归 | Sentry |
+| 用户旅程、漏斗流失、会话回放 | PostHog |
+| 请求内结构化事件和 trace ID | `@nebutra/logger` + OpenTelemetry |
+| 活动链接和邀请归因 | Dub via `createAnalyticsClient` |
+
+PostHog 和 Sentry 可以通过共享的 `userId`、`organizationId`、request ID 和 release 值做关联，但不要互相替代。
 
 ## 架构
 
@@ -81,6 +93,14 @@ SENTRY_PROJECT=nebutra
 
 # Sentry — 客户端（浏览器，必须以 NEXT_PUBLIC_ 开头）
 NEXT_PUBLIC_SENTRY_DSN=https://xxxx@oXXX.ingest.sentry.io/XXXX
+
+# PostHog — 服务端产品事件
+POSTHOG_KEY=phc_xxxxxxxxxxxx
+POSTHOG_HOST=https://us.i.posthog.com
+
+# PostHog — 浏览器 SDK
+NEXT_PUBLIC_POSTHOG_KEY=phc_xxxxxxxxxxxx
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 ```
 
 <Warning>

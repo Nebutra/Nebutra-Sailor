@@ -14,6 +14,19 @@ Nebutra's monitoring stack gives you full visibility into application health acr
 | Performance | Sentry Tracing | HTTP request spans, DB query durations, p99 latency |
 | Structured logs | `@nebutra/logger` | All `info` / `warn` / `error` events with tenant context |
 | Release tracking | Sentry Releases | Source maps uploaded per deployment, commit context |
+| Product analytics | PostHog | Funnels, retention, session replay, feature usage |
+
+## Responsibility Boundary
+
+| Concern | Owner |
+|---------|-------|
+| Code failure, stack trace, release regression | Sentry |
+| User journey, funnel drop-off, session replay | PostHog |
+| Request-local structured events and trace IDs | `@nebutra/logger` + OpenTelemetry |
+| Campaign links and invite attribution | Dub via `createAnalyticsClient` |
+
+PostHog and Sentry can be correlated with shared `userId`, `organizationId`,
+request ID, and release values, but they should not replace each other.
 
 ## Architecture
 
@@ -81,6 +94,14 @@ SENTRY_PROJECT=nebutra
 
 # Sentry — client-side (browser, must be NEXT_PUBLIC_)
 NEXT_PUBLIC_SENTRY_DSN=https://xxxx@oXXX.ingest.sentry.io/XXXX
+
+# PostHog — server-side product events
+POSTHOG_KEY=phc_xxxxxxxxxxxx
+POSTHOG_HOST=https://us.i.posthog.com
+
+# PostHog — browser SDK
+NEXT_PUBLIC_POSTHOG_KEY=phc_xxxxxxxxxxxx
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 ```
 
 <Warning>

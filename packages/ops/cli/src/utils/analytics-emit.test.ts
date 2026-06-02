@@ -1,14 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const trackMock = vi.fn().mockResolvedValue({ success: true });
-const createAnalyticsClientMock = vi.fn(() => ({
+const createProductAnalyticsClientMock = vi.fn(() => ({
   track: trackMock,
   identify: vi.fn(),
   flush: vi.fn(),
 }));
 
 vi.mock("@nebutra/analytics", () => ({
-  createAnalyticsClient: createAnalyticsClientMock,
+  createProductAnalyticsClient: createProductAnalyticsClientMock,
 }));
 
 import { emitLicenseCliEvent, isTelemetryDisabled } from "./analytics-emit";
@@ -22,12 +22,14 @@ async function flushAsync() {
 describe("emitLicenseCliEvent", () => {
   beforeEach(() => {
     trackMock.mockClear();
-    createAnalyticsClientMock.mockClear();
+    createProductAnalyticsClientMock.mockClear();
     delete process.env.NEBUTRA_TELEMETRY;
+    process.env.npm_package_version = "0.3.2";
   });
 
   afterEach(() => {
     delete process.env.NEBUTRA_TELEMETRY;
+    delete process.env.npm_package_version;
   });
 
   it("emits license.cli with action=activate_attempted", async () => {
@@ -36,17 +38,19 @@ describe("emitLicenseCliEvent", () => {
 
     expect(trackMock).toHaveBeenCalledWith("license.cli", {
       action: "activate_attempted",
+      cli_version: "0.3.2",
     });
   });
 
-  it("emits license.cli with action=activated and tier/type", async () => {
+  it("emits license.cli with action=activated and license_tier", async () => {
     emitLicenseCliEvent({ action: "activated", tier: "INDIVIDUAL", type: "FREE" });
     await flushAsync();
 
     expect(trackMock).toHaveBeenCalledWith("license.cli", {
       action: "activated",
-      tier: "INDIVIDUAL",
-      type: "FREE",
+      cli_version: "0.3.2",
+      license_tier: "INDIVIDUAL",
+      license_type: "FREE",
     });
   });
 
@@ -56,6 +60,7 @@ describe("emitLicenseCliEvent", () => {
 
     expect(trackMock).toHaveBeenCalledWith("license.cli", {
       action: "failed",
+      cli_version: "0.3.2",
       error_code: "invalid_format",
     });
   });

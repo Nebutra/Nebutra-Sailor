@@ -22,6 +22,8 @@ const envSchema = z.object({
   NEXT_PUBLIC_SANITY_API_VERSION: z.string().default("2024-01-01"),
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().optional(),
   NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
+  NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
+  NEXT_PUBLIC_POSTHOG_HOST: z.string().url().default("https://us.i.posthog.com"),
 });
 
 describe("web env schema", () => {
@@ -75,7 +77,7 @@ describe("web env schema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("allows missing optional keys (clerk, stripe, sentry)", () => {
+  it("allows missing optional keys (clerk, stripe, sentry, posthog)", () => {
     const result = envSchema.safeParse({});
     expect(result.success).toBe(true);
     expect(result.data?.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY).toBeUndefined();
@@ -83,6 +85,8 @@ describe("web env schema", () => {
     expect(result.data?.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY).toBeUndefined();
     expect(result.data?.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY).toBeUndefined();
     expect(result.data?.NEXT_PUBLIC_SENTRY_DSN).toBeUndefined();
+    expect(result.data?.NEXT_PUBLIC_POSTHOG_KEY).toBeUndefined();
+    expect(result.data?.NEXT_PUBLIC_POSTHOG_HOST).toBe("https://us.i.posthog.com");
   });
 
   it("uses correct default Sanity config", () => {

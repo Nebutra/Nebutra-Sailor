@@ -2,9 +2,10 @@
  * Phase 0 analytics emission helper for the `nebutra` CLI.
  *
  * Fire-and-forget, silent-fail, honours `NEBUTRA_TELEMETRY=0`.
- * The `@nebutra/analytics` PostHog contract is being finalised by a parallel
- * subagent; imports are dynamic so the CLI still works even when the
- * analytics package is unavailable at runtime.
+ * Product events go through `createProductAnalyticsClient`; Dub attribution
+ * remains on `createAnalyticsClient` and must not be used for PostHog capture.
+ * Imports are dynamic so the CLI still works even when the analytics package is
+ * unavailable at runtime.
  */
 
 const POSTHOG_DEFAULT_HOST = "https://analytics.nebutra.com";
@@ -31,6 +32,10 @@ export function isTelemetryDisabled(opts: EmitOptions = {}): boolean {
   return envValue === "0" || envValue === "false";
 }
 
+function resolveCliVersion(): string {
+  return process.env.npm_package_version ?? "0.0.0-dev";
+}
+
 /**
  * Emit a `license.cli` event. Fire-and-forget. Never throws.
  */
@@ -39,19 +44,26 @@ export function emitLicenseCliEvent(props: LicenseCliEventProps, opts: EmitOptio
 
   void (async () => {
     try {
-      // @ts-expect-error — optional peer; resolved at runtime, may be absent
       const mod = (await import("@nebutra/analytics")) as unknown as {
-        createAnalyticsClient?: (config: unknown) => {
+        createProductAnalyticsClient?: (config: unknown) => {
           track: (event: string, props: Record<string, unknown>) => Promise<unknown> | unknown;
         };
       };
 
-      if (typeof mod.createAnalyticsClient !== "function") return;
+      if (typeof mod.createProductAnalyticsClient !== "function") return;
 
-      const client = mod.createAnalyticsClient({
+      const client = mod.createProductAnalyticsClient({
         posthog: {
-          apiKey: process.env.NEBUTRA_POSTHOG_KEY ?? "",
-          host: process.env.NEBUTRA_POSTHOG_HOST ?? POSTHOG_DEFAULT_HOST,
+          apiKey:
+            process.env.POSTHOG_KEY ??
+            process.env.NEXT_PUBLIC_POSTHOG_KEY ??
+            process.env.NEBUTRA_POSTHOG_KEY ??
+            "",
+          host:
+            process.env.POSTHOG_HOST ??
+            process.env.NEXT_PUBLIC_POSTHOG_HOST ??
+            process.env.NEBUTRA_POSTHOG_HOST ??
+            POSTHOG_DEFAULT_HOST,
         },
         onError: () => {
           // Silent — CLI must not spew telemetry errors.
@@ -60,7 +72,13 @@ export function emitLicenseCliEvent(props: LicenseCliEventProps, opts: EmitOptio
 
       if (typeof client?.track !== "function") return;
 
-      const result = client.track("license.cli", props as unknown as Record<string, unknown>);
+      const result = client.track("license.cli", {
+        action: props.action,
+        cli_version: resolveCliVersion(),
+        ...(props.tier ? { license_tier: props.tier } : {}),
+        ...(props.type ? { license_type: props.type } : {}),
+        ...(props.error_code ? { error_code: props.error_code } : {}),
+      });
       if (result && typeof (result as Promise<unknown>).then === "function") {
         await (result as Promise<unknown>).catch(() => {
           // Silent

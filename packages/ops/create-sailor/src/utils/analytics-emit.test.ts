@@ -1,14 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const trackMock = vi.fn().mockResolvedValue({ success: true });
-const createAnalyticsClientMock = vi.fn(() => ({
+const createProductAnalyticsClientMock = vi.fn(() => ({
   track: trackMock,
   identify: vi.fn(),
   flush: vi.fn(),
 }));
 
 vi.mock("@nebutra/analytics", () => ({
-  createAnalyticsClient: createAnalyticsClientMock,
+  createProductAnalyticsClient: createProductAnalyticsClientMock,
 }));
 
 // Import under test AFTER the mock is declared (vi.mock is hoisted).
@@ -40,10 +40,12 @@ async function flushAsync() {
 describe("emitScaffoldCompleted", () => {
   beforeEach(() => {
     trackMock.mockClear();
-    createAnalyticsClientMock.mockClear();
+    createProductAnalyticsClientMock.mockClear();
     delete process.env.NEBUTRA_TELEMETRY;
-    delete process.env.NEBUTRA_POSTHOG_KEY;
-    delete process.env.NEBUTRA_POSTHOG_HOST;
+    delete process.env.POSTHOG_KEY;
+    delete process.env.POSTHOG_HOST;
+    delete process.env.NEXT_PUBLIC_POSTHOG_KEY;
+    delete process.env.NEXT_PUBLIC_POSTHOG_HOST;
   });
 
   afterEach(() => {
@@ -54,27 +56,31 @@ describe("emitScaffoldCompleted", () => {
     emitScaffoldCompleted(baseProps);
     await flushAsync();
 
-    expect(createAnalyticsClientMock).toHaveBeenCalledTimes(1);
+    expect(createProductAnalyticsClientMock).toHaveBeenCalledTimes(1);
     expect(trackMock).toHaveBeenCalledTimes(1);
     expect(trackMock).toHaveBeenCalledWith("scaffold.completed", baseProps);
   });
 
-  it("uses default PostHog host when NEBUTRA_POSTHOG_HOST is unset", async () => {
+  it("uses default PostHog host when POSTHOG_HOST is unset", async () => {
     emitScaffoldCompleted(baseProps);
     await flushAsync();
 
-    const callArg = (createAnalyticsClientMock.mock.calls as unknown as unknown[][])[0]?.[0] as {
+    const callArg = (
+      createProductAnalyticsClientMock.mock.calls as unknown as unknown[][]
+    )[0]?.[0] as {
       posthog: { host: string };
     };
     expect(callArg.posthog.host).toBe("https://analytics.nebutra.com");
   });
 
-  it("honours NEBUTRA_POSTHOG_HOST override", async () => {
-    process.env.NEBUTRA_POSTHOG_HOST = "https://ph.example.test";
+  it("honours POSTHOG_HOST override", async () => {
+    process.env.POSTHOG_HOST = "https://ph.example.test";
     emitScaffoldCompleted(baseProps);
     await flushAsync();
 
-    const callArg = (createAnalyticsClientMock.mock.calls as unknown as unknown[][])[0]?.[0] as {
+    const callArg = (
+      createProductAnalyticsClientMock.mock.calls as unknown as unknown[][]
+    )[0]?.[0] as {
       posthog: { host: string };
     };
     expect(callArg.posthog.host).toBe("https://ph.example.test");
@@ -86,7 +92,7 @@ describe("emitScaffoldCompleted", () => {
     await flushAsync();
 
     expect(trackMock).not.toHaveBeenCalled();
-    expect(createAnalyticsClientMock).not.toHaveBeenCalled();
+    expect(createProductAnalyticsClientMock).not.toHaveBeenCalled();
   });
 
   it("respects opts.noTelemetry flag", async () => {

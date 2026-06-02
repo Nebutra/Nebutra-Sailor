@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@nebutra/auth/client";
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider } from "posthog-js/react";
 /**
@@ -9,11 +10,10 @@ import { PostHogProvider as PHProvider } from "posthog-js/react";
  * with zero runtime cost. Configures pageview capture for Next.js App Router
  * (history_change captures client-side navigations).
  *
- * TODO(#126 auth): once Clerk's useUser hook is reachable from this layer, identify
- * the user via posthog.identify(user.id, { email }). Skipped here to keep the
- * provider auth-agnostic.
+ * Identity is synchronized via the provider-agnostic `@nebutra/auth/client`
+ * context. Do not import Clerk/Better Auth SDKs here.
  */
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 const POSTHOG_HOST = process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com";
@@ -40,5 +40,40 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
-  return <PHProvider client={posthog}>{children}</PHProvider>;
+  return (
+    <PHProvider client={posthog}>
+      <PostHogIdentityBridge />
+      {children}
+    </PHProvider>
+  );
+}
+
+function PostHogIdentityBridge() {
+  const { isLoaded, isSignedIn, user, organization, membership, provider } = useAuth();
+  const identifiedUserIdRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!POSTHOG_KEY) return;
+    if (!isLoaded) return;
+
+    if (!isSignedIn || !user?.id) {
+      if (identifiedUserIdRef.current) {
+        posthog.reset();
+        identifiedUserIdRef.current = null;
+      }
+      return;
+    }
+
+    posthog.identify(user.id, {
+      ...(user.email ? { email: user.email } : {}),
+      ...(user.name ? { name: user.name } : {}),
+      ...(organization?.id ? { organizationId: organization.id } : {}),
+      ...(organization?.slug ? { organizationSlug: organization.slug } : {}),
+      ...(membership?.role ? { role: membership.role } : {}),
+      authProvider: provider,
+    });
+    identifiedUserIdRef.current = user.id;
+  }, [isLoaded, isSignedIn, user, organization, membership, provider]);
+
+  return null;
 }

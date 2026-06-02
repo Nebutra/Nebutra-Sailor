@@ -23,10 +23,13 @@ PostHog 是 Nebutra 的核心产品分析工具。它追踪产品内的用户行
     将以下内容添加到你的 `.env.local`（开发环境）和部署环境（生产环境）：
 
     ```bash
+    POSTHOG_KEY=phc_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    POSTHOG_HOST=https://app.posthog.com
     NEXT_PUBLIC_POSTHOG_KEY=phc_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
     NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
     ```
 
+    `POSTHOG_KEY` 用于服务端产品事件，`NEXT_PUBLIC_POSTHOG_KEY` 用于浏览器 SDK。
     如需欧盟数据驻留，请使用 `https://eu.posthog.com`。
     如使用自托管实例，请填写你自己的 URL（例如 `https://posthog.yourcompany.com`）。
   </Step>
@@ -75,29 +78,25 @@ export function CreateProjectButton() {
 
 ### 服务端（API Gateway）
 
-对于源自 Hono API 层且没有浏览器上下文的事件，使用 `serverAnalytics`：
+对于源自 Hono API 层且没有浏览器上下文的事件，使用 `createProductAnalyticsClientFromEnv`：
 
 ```typescript
-import { serverAnalytics } from "@nebutra/analytics";
+import { createProductAnalyticsClientFromEnv } from "@nebutra/analytics";
 
-app.post("/api/v1/projects", async (c) => {
-  const { tenantId, userId, plan } = c.get("tenantContext");
+app.post("/api/v1/checkout/complete", async (c) => {
+  const { organizationId, userId, plan } = c.get("tenantContext");
+  const analytics = createProductAnalyticsClientFromEnv();
 
-  const project = await db.project.create({ ... });
+  const checkout = await completeCheckout(c.req);
 
-  await serverAnalytics.capture({
-    distinctId: userId,
-    event: "project_created",
-    properties: {
-      projectId: project.id,
-      tenantId,
-      plan,
-      endpoint: "/api/v1/projects",
-      method: "POST",
-    },
+  await analytics.track("checkout", {
+    action: "completed",
+    userId,
+    organizationId,
+    tier: plan,
   });
 
-  return c.json({ success: true, data: project });
+  return c.json({ success: true, data: checkout });
 });
 ```
 
@@ -131,10 +130,10 @@ export function useAuthEffect(user: User, subscription: Subscription, org: Org) 
 
 ## 功能开关
 
-PostHog 功能开关在 Nebutra 中用于按计费方案控制功能访问。`@nebutra/analytics` 包封装了 PostHog 的功能开关 API：
+功能开关决策归 `@nebutra/feature-flags` 管，不归 `@nebutra/analytics` 管。PostHog 将来可以作为功能开关 provider，但产品事件采集和功能开关评估保持分离。
 
 ```typescript
-import { useFeatureFlag } from "@nebutra/analytics";
+import { useFeatureFlag } from "@nebutra/feature-flags";
 
 export function AiChatButton() {
   const { enabled, loading } = useFeatureFlag("ai_chat");
@@ -146,13 +145,14 @@ export function AiChatButton() {
 }
 ```
 
-在 API 路由中进行服务端功能开关评估：
+在 API 路由中通过 feature-flags 包进行服务端功能开关评估：
 
 ```typescript
-import { serverAnalytics } from "@nebutra/analytics";
+import { isFeatureEnabled } from "@nebutra/feature-flags";
 
-const enabled = await serverAnalytics.isFeatureEnabled("ai_chat", userId, {
-  groups: { organization: tenantId },
+const enabled = await isFeatureEnabled("ai_chat", {
+  userId,
+  tenantId,
 });
 ```
 
