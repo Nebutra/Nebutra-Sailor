@@ -1,6 +1,7 @@
 "use client";
 
 import type { NotificationChannel } from "@nebutra/notifications";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   buildPreferenceMatrix,
@@ -12,6 +13,7 @@ import {
   resetAllPreferences,
   togglePreferenceCell,
 } from "@/lib/notification-preferences";
+import { queryKeys } from "@/lib/query-keys";
 import { NotificationPreferencesRow } from "./notification-preferences-row";
 
 type Translator = (key: string) => string;
@@ -34,10 +36,20 @@ type SaveStatus = "idle" | "saving" | "saved" | "error";
 
 const DEFAULT_ENDPOINT = "/api/notifications/preferences";
 
-async function fetchPreferences(endpoint: string): Promise<NotificationPreferenceMap> {
+type PreferencePatchInput = {
+  eventType: NotificationEventTypeId;
+  channel: NotificationChannel;
+  enabled: boolean;
+};
+
+async function fetchPreferences(
+  endpoint: string,
+  signal: AbortSignal,
+): Promise<NotificationPreferenceMap> {
   const response = await fetch(endpoint, {
     method: "GET",
     headers: { Accept: "application/json" },
+    signal,
   });
   if (!response.ok) {
     throw new Error(`Failed to load notification preferences: ${response.status}`);
@@ -49,10 +61,7 @@ async function fetchPreferences(endpoint: string): Promise<NotificationPreferenc
   return payload.data?.preferences ?? {};
 }
 
-async function patchPreference(
-  endpoint: string,
-  body: { eventType: NotificationEventTypeId; channel: NotificationChannel; enabled: boolean },
-): Promise<void> {
+async function patchPreference(endpoint: string, body: PreferencePatchInput): Promise<void> {
   const response = await fetch(endpoint, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
@@ -76,34 +85,32 @@ export function NotificationPreferencesMatrix({
   capabilities,
   endpoint = DEFAULT_ENDPOINT,
 }: NotificationPreferencesMatrixProps) {
-  const [preferences, setPreferences] = useState<NotificationPreferenceMap>({});
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const preferencesKey = useMemo(
+    () => queryKeys.notifications.preferencesEndpoint(endpoint),
+    [endpoint],
+  );
+  const preferencesQuery = useQuery({
+    queryKey: preferencesKey,
+    queryFn: ({ signal }) => fetchPreferences(endpoint, signal),
+  });
+  const { mutateAsync: savePreference } = useMutation({
+    mutationFn: (body: PreferencePatchInput) => patchPreference(endpoint, body),
+  });
+
+  const [draftPreferences, setDraftPreferences] = useState<NotificationPreferenceMap | null>(null);
   const [busyCells, setBusyCells] = useState<Set<string>>(() => new Set());
   const [status, setStatus] = useState<SaveStatus>("idle");
 
   useEffect(() => {
-    let cancelled = false;
+    if (preferencesQuery.data) {
+      setDraftPreferences(preferencesQuery.data);
+    }
+  }, [preferencesQuery.data]);
 
-    fetchPreferences(endpoint)
-      .then((next) => {
-        if (cancelled) return;
-        setPreferences(next);
-        setLoadError(null);
-      })
-      .catch(() => {
-        if (cancelled) return;
-        setLoadError(t("settings.notifications.status.error"));
-      })
-      .finally(() => {
-        if (cancelled) return;
-        setLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [endpoint, t]);
+  const preferences = draftPreferences ?? preferencesQuery.data ?? {};
+  const loading = preferencesQuery.isPending;
+  const loadError = preferencesQuery.isError ? t("settings.notifications.status.error") : null;
 
   const matrix = useMemo(
     () => buildPreferenceMatrix({ preferences, capabilities }),
@@ -129,7 +136,7 @@ export function NotificationPreferencesMatrix({
       const previous = preferences;
       const optimistic = togglePreferenceCell(previous, eventType, channel, enabled);
 
-      setPreferences(optimistic);
+      setDraftPreferences(optimistic);
       setBusyCells((current) => {
         const next = new Set(current);
         next.add(key);
@@ -138,11 +145,12 @@ export function NotificationPreferencesMatrix({
       setStatus("saving");
 
       try {
-        await patchPreference(endpoint, { eventType, channel, enabled });
+        await savePreference({ eventType, channel, enabled });
+        queryClient.setQueryData(preferencesKey, optimistic);
         setStatus("saved");
       } catch {
         // Revert
-        setPreferences(previous);
+        setDraftPreferences(previous);
         setStatus("error");
       } finally {
         setBusyCells((current) => {
@@ -152,11 +160,11 @@ export function NotificationPreferencesMatrix({
         });
       }
     },
-    [endpoint, preferences],
+    [preferences, preferencesKey, queryClient, savePreference],
   );
 
   const handleResetAll = useCallback(() => {
-    setPreferences(resetAllPreferences());
+    setDraftPreferences(resetAllPreferences());
     setStatus("idle");
   }, []);
 
@@ -208,7 +216,10 @@ export function NotificationPreferencesMatrix({
       </header>
 
       {loadError ? (
-        <div className="rounded-[var(--radius-md)] border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11">
+        <div
+          className="rounded-[var(--radius-md)] border border-red-6 bg-red-2 px-3 py-2 text-xs text-red-11"
+          role="alert"
+        >
           {loadError}
         </div>
       ) : null}

@@ -85,6 +85,8 @@ export const queryKeys = {
       userId
         ? (["notifications", "preferences", userId] as const)
         : (["notifications", "preferences"] as const),
+    preferencesEndpoint: (endpoint: string) =>
+      ["notifications", "preferences", "endpoint", endpoint] as const,
   },
 
   notificationsInbox: {
