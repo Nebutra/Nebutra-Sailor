@@ -1,4 +1,5 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import pTimeout from "p-timeout";
 import { aiServiceBreaker, billingServiceBreaker } from "../../services/circuitBreaker.js";
 
 const serviceStatusEnum = z.enum(["available", "unavailable", "unknown"]);
@@ -29,6 +30,7 @@ type StatusResponse = z.infer<typeof statusResponseSchema>;
 export const statusRoutes = new OpenAPIHono();
 
 const startTime = Date.now();
+const SERVICE_HEALTH_TIMEOUT_MS = 5000;
 
 // ============================================
 // Status route
@@ -312,13 +314,18 @@ async function checkService(name: string, url?: string): Promise<StatusResponse[
 
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-
-    const response = await fetch(`${url}/health`, {
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeout);
+    const response = await pTimeout(
+      fetch(`${url}/health`, {
+        signal: controller.signal,
+      }),
+      {
+        milliseconds: SERVICE_HEALTH_TIMEOUT_MS,
+        fallback: () => {
+          controller.abort();
+          throw new Error(`Service health check timed out after ${SERVICE_HEALTH_TIMEOUT_MS}ms`);
+        },
+      },
+    );
 
     return {
       name,
