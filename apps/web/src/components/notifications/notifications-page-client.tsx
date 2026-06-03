@@ -8,6 +8,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import pLimit from "p-limit";
 import { useCallback, useMemo, useState } from "react";
 import { queryKeys } from "@/lib/query-keys";
 import { InboxList, type InboxNotification } from "./inbox-list";
@@ -36,6 +37,7 @@ import { InboxList, type InboxNotification } from "./inbox-list";
 // =============================================================================
 
 const PAGE_LIMIT = 50;
+const BULK_MUTATION_CONCURRENCY = 5;
 
 type FilterTab = "all" | "unread";
 
@@ -255,11 +257,12 @@ export function NotificationsPageClient({
     onSettled: settle,
   });
 
-  // Bulk mark-read: optimistically mark every id read, fire PATCH for each, roll
-  // back the whole batch if ANY request fails (matches old results.some(!ok)).
+  // Bulk mark-read: optimistically mark every id read, fire PATCH for each with
+  // capped concurrency, roll back the whole batch if ANY request fails.
   const bulkMarkReadMutation = useMutation({
     mutationFn: async (ids: readonly string[]) => {
-      await Promise.all(ids.map((id) => patchRead(id)));
+      const limit = pLimit(BULK_MUTATION_CONCURRENCY);
+      await Promise.all(ids.map((id) => limit(() => patchRead(id))));
     },
     onMutate: (ids: readonly string[]) => {
       setMutationError(null);
@@ -278,7 +281,8 @@ export function NotificationsPageClient({
 
   const bulkArchiveMutation = useMutation({
     mutationFn: async (ids: readonly string[]) => {
-      await Promise.all(ids.map((id) => archiveOne(id)));
+      const limit = pLimit(BULK_MUTATION_CONCURRENCY);
+      await Promise.all(ids.map((id) => limit(() => archiveOne(id))));
     },
     onMutate: (ids: readonly string[]) => {
       setMutationError(null);
