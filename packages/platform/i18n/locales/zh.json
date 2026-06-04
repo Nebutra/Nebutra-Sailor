@@ -1066,6 +1066,17 @@
         "billing": "计费"
       }
     },
+    "documentPipeline": {
+      "title": "文档流水线",
+      "description": "将源文件送入 Origin 任务队列。",
+      "intakeTitle": "文档接入",
+      "intakeDescription": "PDF、Markdown、文本或 Word 文档",
+      "chooseDocument": "选择文档",
+      "startParseTask": "启动解析任务",
+      "queued": "已入队",
+      "fileInputLabel": "文档文件",
+      "fallbackError": "文档任务失败。"
+    },
     "recentSessions": {
       "title": "继续之前的工作",
       "subtitle": "{count, plural, =0 {无会话} other {# 个最近会话}}",

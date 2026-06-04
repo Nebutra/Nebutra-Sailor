@@ -13,7 +13,7 @@
  *   const { data } = await api.GET("/api/v1/ai/models");
  *
  * Usage in Client Components:
- *   import { browserApiClient } from "@/lib/api/client";
+ *   import { browserApiClient } from "@/lib/api/browser-client";
  *   const { data } = await browserApiClient.GET("/api/v1/ai/models");
  */
 
@@ -22,9 +22,10 @@ import createClient, { type Middleware } from "openapi-fetch";
 
 // `types.generated.ts` is produced by `pnpm generate:api-types`.
 // A stub is committed so the project typechecks before generation.
+import { API_BASE_URL } from "./browser-client";
 import type { paths } from "./types.generated";
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_GATEWAY_URL ?? "http://localhost:3002";
+export { API_BASE_URL } from "./browser-client";
 
 // ── Auth middleware ───────────────────────────────────────────────────────────
 
@@ -40,14 +41,6 @@ function createAuthMiddleware(token: string): Middleware {
     },
   };
 }
-
-// ── Browser (client-side) client — no auth token ─────────────────────────────
-// For authenticated browser requests, use the React Query hooks which inject
-// the Clerk session token via SWR/TanStack Query auth adapters.
-
-export const browserApiClient = createClient<paths>({
-  baseUrl: API_BASE_URL,
-});
 
 // ── Server-side factory — auto-injects provider-agnostic JWT ─────────────────────────────
 

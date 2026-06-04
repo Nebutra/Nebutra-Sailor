@@ -1,6 +1,6 @@
 import type { Client } from "openapi-fetch";
 
-import { browserApiClient } from "./client";
+import { browserApiClient } from "./browser-client";
 import type { paths } from "./types.generated";
 
 type ApiClient = Pick<Client<paths>, "POST">;

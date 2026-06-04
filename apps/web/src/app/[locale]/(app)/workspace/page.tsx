@@ -5,6 +5,7 @@ import { DashboardCommandSurface, DashboardMetricTile, DashboardPanel } from "@n
 import { connection } from "next/server";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
+import { DocumentTaskUploader } from "@/components/documents/document-task-uploader";
 import { RecentSessions } from "@/components/onboarding/recent-sessions";
 import { getAuth, getUser } from "@/lib/auth";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
@@ -179,6 +180,26 @@ async function WorkspaceMetrics() {
   );
 }
 
+async function DocumentPipeline() {
+  const t = await getTranslations("dashboard.documentPipeline");
+
+  return (
+    <DashboardPanel title={t("title")} description={t("description")}>
+      <DocumentTaskUploader
+        labels={{
+          intakeTitle: t("intakeTitle"),
+          intakeDescription: t("intakeDescription"),
+          chooseDocument: t("chooseDocument"),
+          startParseTask: t("startParseTask"),
+          queued: t("queued"),
+          fileInputLabel: t("fileInputLabel"),
+          fallbackError: t("fallbackError"),
+        }}
+      />
+    </DashboardPanel>
+  );
+}
+
 export default function DashboardPage() {
   return (
     <section
@@ -193,6 +214,8 @@ export default function DashboardPage() {
         <Suspense fallback={<MetricsSkeleton />}>
           <WorkspaceMetrics />
         </Suspense>
+
+        <DocumentPipeline />
 
         <Suspense fallback={<RecentSessionsSkeleton />}>
           <RecentSessions />

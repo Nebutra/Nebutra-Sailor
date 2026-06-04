@@ -75,7 +75,7 @@ pnpm db:generate
 pnpm generate:api-types
 ```
 
-生成的类型位于 `apps/web/src/lib/api/types.generated.ts`，通过 `apps/web/src/lib/api/client.ts` 中的 `openapi-fetch` 消费（`getTypedApi` / `browserApiClient`）。仓库中提交了 stub 以便生成前也能通过 typecheck，CI 会覆盖它。
+生成的类型位于 `apps/web/src/lib/api/types.generated.ts`，通过 `apps/web/src/lib/api/client.ts`（`getTypedApi`）和 `apps/web/src/lib/api/browser-client.ts`（`browserApiClient`）中的 `openapi-fetch` 消费。仓库中提交了 stub 以便生成前也能通过 typecheck，CI 会覆盖它。
 
 需要重新生成的信号：
 - 关于缺少 API 请求/响应类型的 TypeScript 错误
