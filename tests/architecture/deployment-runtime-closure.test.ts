@@ -172,6 +172,7 @@ describe("production runtime closure", () => {
 
     expect(envExample).toContain("CELERY_BROKER_URL=");
     expect(envExample).toContain("CELERY_RESULT_BACKEND=");
+    expect(envExample).toContain("CELERY_TASK_DEFAULT_QUEUE=default");
     expect(envExample).toContain("CELERY_WORKER_CONCURRENCY=1");
     expect(envExample).toContain("CELERY_PREFETCH_MULTIPLIER=1");
   });
