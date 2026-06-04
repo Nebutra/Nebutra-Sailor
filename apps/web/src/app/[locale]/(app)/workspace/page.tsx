@@ -194,6 +194,20 @@ async function DocumentPipeline() {
           queued: t("queued"),
           fileInputLabel: t("fileInputLabel"),
           fallbackError: t("fallbackError"),
+          taskStatus: t("taskStatus"),
+          progressLabel: t("progressLabel"),
+          refreshStatus: t("refreshStatus"),
+          cancelTask: t("cancelTask"),
+          statusError: t("statusError"),
+          cancelError: t("cancelError"),
+          statusQueued: t("statusQueued"),
+          statusRunning: t("statusRunning"),
+          statusSucceeded: t("statusSucceeded"),
+          statusFailed: t("statusFailed"),
+          statusCancelled: t("statusCancelled"),
+          resultReady: t("resultReady"),
+          taskError: t("taskError"),
+          updatedAt: t("updatedAt"),
         }}
       />
     </DashboardPanel>

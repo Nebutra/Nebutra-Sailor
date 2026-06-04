@@ -111,6 +111,11 @@ export const queryKeys = {
     all: ["checkout-status"] as const,
     detail: (sessionId: string) => ["checkout-status", "detail", sessionId] as const,
   },
+
+  tasks: {
+    all: ["tasks"] as const,
+    detail: (taskId: string) => ["tasks", "detail", taskId] as const,
+  },
 } as const;
 
 export type QueryKeys = typeof queryKeys;

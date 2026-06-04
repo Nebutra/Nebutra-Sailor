@@ -1,11 +1,38 @@
 import type { Client } from "openapi-fetch";
 import { describe, expect, it, vi } from "vitest";
-import { type DocumentUploadTaskError, uploadDocumentAndCreateTask } from "../document-upload-task";
+import {
+  cancelDocumentTask,
+  type DocumentUploadTaskError,
+  getDocumentTask,
+  isTerminalTaskStatus,
+  uploadDocumentAndCreateTask,
+} from "../document-upload-task";
 import type { paths } from "../types.generated";
 
 function makeFile() {
   const blob = new Blob([new Uint8Array(1024)], { type: "application/pdf" });
   return new File([blob], "Quarterly Plan.pdf", { type: "application/pdf" });
+}
+
+function makeTask(overrides: Record<string, unknown> = {}) {
+  return {
+    id: "task_1",
+    type: "document.parse",
+    status: "queued",
+    progress: 0,
+    queue: "document",
+    priority: "normal",
+    metadata: {},
+    result: null,
+    error: null,
+    dispatcher_provider: "celery",
+    provider_job_id: "celery-1",
+    created_at: "2026-06-04T09:01:00.000Z",
+    updated_at: "2026-06-04T09:01:00.000Z",
+    started_at: null,
+    completed_at: null,
+    ...overrides,
+  };
 }
 
 describe("uploadDocumentAndCreateTask", () => {
@@ -136,6 +163,35 @@ describe("uploadDocumentAndCreateTask", () => {
       body: file,
     });
     expect(calls).toEqual(["/api/v1/uploads/presign", "/api/v1/uploads/complete", "/api/v1/tasks"]);
+  });
+
+  it("loads and cancels task envelopes through typed task routes", async () => {
+    const runningTask = makeTask({
+      status: "running",
+      progress: 35,
+      started_at: "2026-06-04T09:02:00.000Z",
+    });
+    const cancelledTask = makeTask({
+      status: "cancelled",
+      progress: 35,
+      completed_at: "2026-06-04T09:03:00.000Z",
+    });
+    const get = vi.fn(async (path: string, init?: { params?: unknown }) => {
+      expect(path).toBe("/api/v1/tasks/{taskId}");
+      expect(init?.params).toEqual({ path: { taskId: "task_1" } });
+      return { data: runningTask };
+    });
+    const post = vi.fn(async (path: string, init?: { params?: unknown }) => {
+      expect(path).toBe("/api/v1/tasks/{taskId}/cancel");
+      expect(init?.params).toEqual({ path: { taskId: "task_1" } });
+      return { data: cancelledTask };
+    });
+    const apiClient = { GET: get, POST: post } as unknown as Client<paths>;
+
+    await expect(getDocumentTask("task_1", apiClient)).resolves.toEqual(runningTask);
+    await expect(cancelDocumentTask("task_1", apiClient)).resolves.toEqual(cancelledTask);
+    expect(isTerminalTaskStatus("running")).toBe(false);
+    expect(isTerminalTaskStatus("cancelled")).toBe(true);
   });
 
   it("wraps object storage upload failures for UI callers", async () => {

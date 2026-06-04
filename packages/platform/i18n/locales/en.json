@@ -1075,7 +1075,21 @@
       "startParseTask": "Start parse task",
       "queued": "Queued",
       "fileInputLabel": "Document file",
-      "fallbackError": "Document task failed."
+      "fallbackError": "Document task failed.",
+      "taskStatus": "Task status",
+      "progressLabel": "Task progress",
+      "refreshStatus": "Refresh",
+      "cancelTask": "Cancel",
+      "statusError": "Could not refresh task status.",
+      "cancelError": "Could not cancel the task.",
+      "statusQueued": "Queued",
+      "statusRunning": "Running",
+      "statusSucceeded": "Succeeded",
+      "statusFailed": "Failed",
+      "statusCancelled": "Cancelled",
+      "resultReady": "Result ready",
+      "taskError": "Task error",
+      "updatedAt": "Updated"
     },
     "recentSessions": {
       "title": "Continue where you left off",

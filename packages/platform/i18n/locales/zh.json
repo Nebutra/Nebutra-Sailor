@@ -1075,7 +1075,21 @@
       "startParseTask": "启动解析任务",
       "queued": "已入队",
       "fileInputLabel": "文档文件",
-      "fallbackError": "文档任务失败。"
+      "fallbackError": "文档任务失败。",
+      "taskStatus": "任务状态",
+      "progressLabel": "任务进度",
+      "refreshStatus": "刷新",
+      "cancelTask": "取消",
+      "statusError": "无法刷新任务状态。",
+      "cancelError": "无法取消任务。",
+      "statusQueued": "已入队",
+      "statusRunning": "运行中",
+      "statusSucceeded": "已完成",
+      "statusFailed": "失败",
+      "statusCancelled": "已取消",
+      "resultReady": "结果就绪",
+      "taskError": "任务错误",
+      "updatedAt": "更新于"
     },
     "recentSessions": {
       "title": "继续之前的工作",

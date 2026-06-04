@@ -3,7 +3,7 @@ import type { Client } from "openapi-fetch";
 import { browserApiClient } from "./browser-client";
 import type { paths } from "./types.generated";
 
-type ApiClient = Pick<Client<paths>, "POST">;
+type ApiClient = Pick<Client<paths>, "GET" | "POST">;
 type JsonContent<T> = T extends { content: { "application/json": infer Body } } ? Body : never;
 type OperationRequestBody<T> = T extends {
   requestBody?: { content: { "application/json": infer Body } };
@@ -15,7 +15,7 @@ export type UploadPresignRequest = OperationRequestBody<paths["/api/v1/uploads/p
 export type UploadCompleteRequest = OperationRequestBody<paths["/api/v1/uploads/complete"]["post"]>;
 export type CreateTaskRequest = OperationRequestBody<paths["/api/v1/tasks"]["post"]>;
 export type UploadRecord = JsonContent<paths["/api/v1/uploads/complete"]["post"]["responses"][200]>;
-export type TaskRecord = JsonContent<paths["/api/v1/tasks"]["post"]["responses"][202]>;
+export type TaskRecord = JsonContent<paths["/api/v1/tasks/{taskId}"]["get"]["responses"][200]>;
 export type DocumentUploadTaskPayload = {
   uploadId: string;
   provider: string;
@@ -144,6 +144,42 @@ export async function uploadDocumentAndCreateTask({
     upload: completedUpload,
     task,
   };
+}
+
+export async function getDocumentTask(
+  taskId: string,
+  apiClient: ApiClient = browserApiClient,
+): Promise<TaskRecord> {
+  return requireApiData(
+    await callApi(
+      () =>
+        apiClient.GET("/api/v1/tasks/{taskId}", {
+          params: { path: { taskId } },
+        }),
+      "Could not load the document task.",
+    ),
+    "Could not load the document task.",
+  );
+}
+
+export async function cancelDocumentTask(
+  taskId: string,
+  apiClient: ApiClient = browserApiClient,
+): Promise<TaskRecord> {
+  return requireApiData(
+    await callApi(
+      () =>
+        apiClient.POST("/api/v1/tasks/{taskId}/cancel", {
+          params: { path: { taskId } },
+        }),
+      "Could not cancel the document task.",
+    ),
+    "Could not cancel the document task.",
+  );
+}
+
+export function isTerminalTaskStatus(status: TaskRecord["status"]) {
+  return status === "succeeded" || status === "failed" || status === "cancelled";
 }
 
 function toDocumentTaskPayload(upload: UploadRecord): DocumentUploadTaskPayload {
