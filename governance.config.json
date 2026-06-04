@@ -1,0 +1,46 @@
+{
+  "repositorySeam": {
+    "coreDomains": [
+      "^packages/commerce/(billing|license|metering)/",
+      "^packages/iam/(auth|audit|permissions|identity|tenant)/",
+      "^packages/ai/agent-runtime/",
+      "^packages/integrations/(uploads|storage)/",
+      "^packages/integrations/queue/src/scheduled/",
+      "^backends/gateway/src/inngest/",
+      "^backends/gateway/src/routes/(billing|ai|admin|legal|integrations|webhooks)/",
+      "^apps/web/src/app/api/(invitations|onboarding|startup-os)/",
+      "^apps/web/src/app/\\[locale\\]/\\(app\\)/organization-invitation/",
+      "^apps/web/src/lib/invitations\\.ts$"
+    ],
+    "seamPaths": ["^packages/platform/repositories/", "^packages/platform/db/"],
+    "dbAccessors": ["getTenantDb", "getSystemDb"],
+    "allowlist": [
+      "apps/web/src/app/[locale]/(app)/organization-invitation/[invitationId]/page.tsx",
+      "apps/web/src/app/api/invitations/[invitationId]/accept/route.ts",
+      "apps/web/src/app/api/onboarding/invite-members/route.ts",
+      "apps/web/src/app/api/startup-os/projects/[projectId]/runs/[runId]/execute/route.ts",
+      "apps/web/src/lib/invitations.ts",
+      "backends/gateway/src/inngest/functions/gdprDeletion.ts",
+      "backends/gateway/src/inngest/functions/tenantProvisioning.ts",
+      "backends/gateway/src/inngest/functions/userSync.ts",
+      "backends/gateway/src/routes/admin/index.ts",
+      "backends/gateway/src/routes/ai/api-keys.ts",
+      "backends/gateway/src/routes/ai/usage.ts",
+      "backends/gateway/src/routes/billing/index.ts",
+      "backends/gateway/src/routes/integrations/index.ts",
+      "backends/gateway/src/routes/legal/consent.ts",
+      "backends/gateway/src/routes/webhooks/clerk.ts",
+      "backends/gateway/src/routes/webhooks/stripe.ts",
+      "packages/ai/agent-runtime/src/adapters/prisma-rollout.ts",
+      "packages/commerce/billing/src/credits/service.ts",
+      "packages/commerce/billing/src/usage/ledger.ts",
+      "packages/commerce/license/src/handlers/on-license-issued.ts",
+      "packages/commerce/license/src/issue-license.ts",
+      "packages/commerce/license/src/validate-license.ts",
+      "packages/iam/audit/src/index.ts",
+      "packages/iam/auth/src/plugins/passkey-plugin.ts",
+      "packages/integrations/queue/src/scheduled/jobs/invitation-cleanup.ts",
+      "packages/integrations/queue/src/scheduled/jobs/session-cleanup.ts"
+    ]
+  }
+}
