@@ -148,8 +148,15 @@ export async function applyGovernanceLints(
 
   // -- 3. patch the cloned root package.json "lint" script --
   const pkgPath = path.join(targetDir, "package.json");
-  if (fs.existsSync(pkgPath)) {
-    const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+  // Read-then-act (no existsSync check) avoids a check-then-use file race.
+  let pkgRaw: string | undefined;
+  try {
+    pkgRaw = fs.readFileSync(pkgPath, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+  }
+  if (pkgRaw !== undefined) {
+    const pkg = JSON.parse(pkgRaw);
     pkg.scripts = pkg.scripts ?? {};
 
     // Drop dangling per-lint helper scripts inherited from the monorepo

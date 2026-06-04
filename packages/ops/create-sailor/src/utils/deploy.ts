@@ -99,9 +99,16 @@ export async function appendDeployTargetEnv(
   deployTargets: ScaffoldDeployTargetMap,
 ): Promise<void> {
   const envPath = path.join(targetDir, ".env.example");
-  if (!fs.existsSync(envPath)) return;
 
-  const existing = await fs.promises.readFile(envPath, "utf8");
+  // Read-then-act (no existsSync check) avoids a check-then-use file race:
+  // a missing .env.example simply means there is nothing to augment.
+  let existing: string;
+  try {
+    existing = await fs.promises.readFile(envPath, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return;
+    throw error;
+  }
   if (existing.includes("# Deployment Targets")) return;
 
   const lines = Object.entries(deployTargets).map(
