@@ -26,6 +26,37 @@ taskRoutes.use("*", requireAuth, requireOrganization);
 
 const JsonRecordSchema = z.record(z.string(), z.unknown());
 
+const TaskStatusSchema = z.enum(["queued", "running", "succeeded", "failed", "cancelled"]);
+const TaskPrioritySchema = z.enum(["low", "normal", "high"]);
+
+const TaskEnvelopeSchema = z.object({
+  id: z.string(),
+  type: z.string(),
+  status: TaskStatusSchema,
+  progress: z.number().int().min(0).max(100),
+  queue: z.string(),
+  priority: TaskPrioritySchema,
+  metadata: JsonRecordSchema,
+  result: JsonRecordSchema.nullable(),
+  error: JsonRecordSchema.nullable(),
+  dispatcher_provider: z.string().nullable(),
+  provider_job_id: z.string().nullable(),
+  created_at: z.string().datetime(),
+  updated_at: z.string().datetime(),
+  started_at: z.string().datetime().nullable(),
+  completed_at: z.string().datetime().nullable(),
+});
+
+const ErrorResponseSchema = z.object({
+  error: z.string(),
+});
+
+const SseStreamSchema = z.string().openapi({
+  description: "Server-sent events stream; each task event carries a TaskEnvelope JSON payload.",
+  example:
+    'event: task\ndata: {"id":"task_1","type":"document.parse","status":"running","progress":50}\n\n',
+});
+
 const TaskCreateRequestSchema = z.object({
   type: z
     .string()
@@ -135,10 +166,16 @@ const createTaskRoute = createRoute({
   summary: "Create a long-running origin task",
   request: { body: { content: { "application/json": { schema: TaskCreateRequestSchema } } } },
   responses: {
-    202: { description: "Task envelope" },
+    202: {
+      description: "Task envelope",
+      content: { "application/json": { schema: TaskEnvelopeSchema } },
+    },
     401: { description: "Authentication required" },
     403: { description: "Organization membership required" },
-    503: { description: "Task origin unavailable" },
+    503: {
+      description: "Task origin unavailable",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
   },
 });
 
@@ -157,10 +194,16 @@ const streamTaskEventsRoute = createRoute({
   summary: "Stream task state changes",
   request: { params: TaskIdParamsSchema },
   responses: {
-    200: { description: "Server-sent task events" },
+    200: {
+      description: "Server-sent task events",
+      content: { "text/event-stream": { schema: SseStreamSchema } },
+    },
     401: { description: "Authentication required" },
     403: { description: "Organization membership required" },
-    503: { description: "Task origin unavailable" },
+    503: {
+      description: "Task origin unavailable",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
   },
 });
 
@@ -183,11 +226,17 @@ const cancelTaskRoute = createRoute({
   summary: "Cancel a long-running origin task",
   request: { params: TaskIdParamsSchema },
   responses: {
-    200: { description: "Task envelope" },
+    200: {
+      description: "Task envelope",
+      content: { "application/json": { schema: TaskEnvelopeSchema } },
+    },
     401: { description: "Authentication required" },
     403: { description: "Organization membership required" },
     404: { description: "Task not found" },
-    503: { description: "Task origin unavailable" },
+    503: {
+      description: "Task origin unavailable",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
   },
 });
 
@@ -210,11 +259,17 @@ const getTaskRoute = createRoute({
   summary: "Get a task envelope",
   request: { params: TaskIdParamsSchema },
   responses: {
-    200: { description: "Task envelope" },
+    200: {
+      description: "Task envelope",
+      content: { "application/json": { schema: TaskEnvelopeSchema } },
+    },
     401: { description: "Authentication required" },
     403: { description: "Organization membership required" },
     404: { description: "Task not found" },
-    503: { description: "Task origin unavailable" },
+    503: {
+      description: "Task origin unavailable",
+      content: { "application/json": { schema: ErrorResponseSchema } },
+    },
   },
 });
 
