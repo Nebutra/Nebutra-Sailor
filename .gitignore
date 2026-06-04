@@ -16,6 +16,7 @@ out
 .env.*
 !.env.example
 !*.template
+.wrangler-secrets.json
 
 # IDE
 .idea

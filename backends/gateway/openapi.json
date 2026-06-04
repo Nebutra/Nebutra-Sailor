@@ -2341,6 +2341,178 @@
         }
       }
     },
+    "/api/v1/tasks": {
+      "post": {
+        "tags": ["Tasks"],
+        "operationId": "createTask",
+        "summary": "Create a long-running origin task",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 80,
+                    "pattern": "^[a-z][a-z0-9_.-]+$"
+                  },
+                  "payload": {
+                    "type": "object",
+                    "additionalProperties": {},
+                    "default": {}
+                  },
+                  "idempotency_key": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120,
+                    "pattern": "^[A-Za-z0-9_.:-]+$"
+                  },
+                  "queue": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "pattern": "^[a-z0-9_-]+$",
+                    "default": "ai"
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": ["low", "normal", "high"],
+                    "default": "normal"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": {},
+                    "default": {}
+                  }
+                },
+                "required": ["type"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Task envelope"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Organization membership required"
+          },
+          "503": {
+            "description": "Task origin unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/tasks/{taskId}/events": {
+      "get": {
+        "tags": ["Tasks"],
+        "operationId": "streamTaskEvents",
+        "summary": "Stream task state changes",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "taskId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Server-sent task events"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Organization membership required"
+          },
+          "503": {
+            "description": "Task origin unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/tasks/{taskId}/cancel": {
+      "post": {
+        "tags": ["Tasks"],
+        "operationId": "cancelTask",
+        "summary": "Cancel a long-running origin task",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "taskId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task envelope"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Organization membership required"
+          },
+          "404": {
+            "description": "Task not found"
+          },
+          "503": {
+            "description": "Task origin unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/tasks/{taskId}": {
+      "get": {
+        "tags": ["Tasks"],
+        "operationId": "getTask",
+        "summary": "Get a task envelope",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "required": true,
+            "name": "taskId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task envelope"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Organization membership required"
+          },
+          "404": {
+            "description": "Task not found"
+          },
+          "503": {
+            "description": "Task origin unavailable"
+          }
+        }
+      }
+    },
     "/api/v1/ai/gateway/chat/completions": {
       "post": {
         "tags": ["AI Gateway"],

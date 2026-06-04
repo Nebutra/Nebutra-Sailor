@@ -2,24 +2,46 @@
 
 from __future__ import annotations
 
+import base64
 import hashlib
 import hmac
+import json
+import time
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
 TASKS_URL = "/api/v1/tasks/"
-TEST_HMAC = "test-auth-value"
+TEST_SIGNING_VALUE = "test-signing-value-at-least-32-bytes"
+
+
+def _b64url(data: bytes) -> str:
+    return base64.urlsafe_b64encode(data).decode().rstrip("=")
 
 
 def _service_headers(*, signing_key: str, tenant_id: str = "tenant_123"):
-    canonical = f"user_123:{tenant_id}:ADMIN:PRO"
-    token = hmac.new(
+    now = int(time.time())
+    header = _b64url(json.dumps({"alg": "HS256", "typ": "JWT"}).encode())
+    payload = _b64url(
+        json.dumps(
+            {
+                "userId": "user_123",
+                "organizationId": tenant_id,
+                "role": "ADMIN",
+                "plan": "PRO",
+                "iat": now,
+                "exp": now + 300,
+                "jti": "task-test-token",
+            }
+        ).encode()
+    )
+    signature = hmac.new(
         signing_key.encode(),
-        canonical.encode(),
+        f"{header}.{payload}".encode(),
         hashlib.sha256,
-    ).hexdigest()
+    ).digest()
+    token = f"{header}.{payload}.{_b64url(signature)}"
     return {
         "x-service-token": token,
         "x-organization-id": tenant_id,
@@ -31,13 +53,13 @@ def _service_headers(*, signing_key: str, tenant_id: str = "tenant_123"):
 
 @pytest.mark.asyncio
 async def test_create_task_returns_standard_envelope(client, monkeypatch):
-    monkeypatch.setenv("SERVICE_SECRET", TEST_HMAC)
+    monkeypatch.setenv("SERVICE_SECRET", TEST_SIGNING_VALUE)
     monkeypatch.setenv("TASK_STORE_PROVIDER", "memory")
     monkeypatch.setenv("TASK_DISPATCHER_PROVIDER", "memory")
 
     response = await client.post(
         TASKS_URL,
-        headers=_service_headers(signing_key=TEST_HMAC),
+        headers=_service_headers(signing_key=TEST_SIGNING_VALUE),
         json={
             "type": "llm.generate",
             "payload": {"prompt": "Summarize this"},
@@ -58,7 +80,7 @@ async def test_create_task_returns_standard_envelope(client, monkeypatch):
 
     get_response = await client.get(
         f"{TASKS_URL}{data['id']}",
-        headers=_service_headers(signing_key=TEST_HMAC),
+        headers=_service_headers(signing_key=TEST_SIGNING_VALUE),
     )
     assert get_response.status_code == 200
     assert get_response.json()["id"] == data["id"]
@@ -66,7 +88,7 @@ async def test_create_task_returns_standard_envelope(client, monkeypatch):
 
 @pytest.mark.asyncio
 async def test_task_idempotency_key_reuses_existing_envelope(client, monkeypatch):
-    monkeypatch.setenv("SERVICE_SECRET", TEST_HMAC)
+    monkeypatch.setenv("SERVICE_SECRET", TEST_SIGNING_VALUE)
     monkeypatch.setenv("TASK_STORE_PROVIDER", "memory")
     monkeypatch.setenv("TASK_DISPATCHER_PROVIDER", "memory")
 
@@ -77,12 +99,12 @@ async def test_task_idempotency_key_reuses_existing_envelope(client, monkeypatch
     }
     first = await client.post(
         TASKS_URL,
-        headers=_service_headers(signing_key=TEST_HMAC),
+        headers=_service_headers(signing_key=TEST_SIGNING_VALUE),
         json=payload,
     )
     second = await client.post(
         TASKS_URL,
-        headers=_service_headers(signing_key=TEST_HMAC),
+        headers=_service_headers(signing_key=TEST_SIGNING_VALUE),
         json=payload,
     )
 
@@ -95,7 +117,7 @@ async def test_task_idempotency_key_reuses_existing_envelope(client, monkeypatch
 async def test_task_idempotency_does_not_redispatch_existing_envelope(
     client, monkeypatch
 ):
-    monkeypatch.setenv("SERVICE_SECRET", TEST_HMAC)
+    monkeypatch.setenv("SERVICE_SECRET", TEST_SIGNING_VALUE)
     monkeypatch.setenv("TASK_STORE_PROVIDER", "memory")
     monkeypatch.setenv("TASK_DISPATCHER_PROVIDER", "memory")
 
@@ -106,13 +128,13 @@ async def test_task_idempotency_does_not_redispatch_existing_envelope(
     }
     first = await client.post(
         TASKS_URL,
-        headers=_service_headers(signing_key=TEST_HMAC),
+        headers=_service_headers(signing_key=TEST_SIGNING_VALUE),
         json=payload,
     )
     monkeypatch.setenv("TASK_DISPATCHER_PROVIDER", "unsupported")
     second = await client.post(
         TASKS_URL,
-        headers=_service_headers(signing_key=TEST_HMAC),
+        headers=_service_headers(signing_key=TEST_SIGNING_VALUE),
         json=payload,
     )
 
@@ -126,19 +148,47 @@ async def test_task_idempotency_does_not_redispatch_existing_envelope(
 async def test_production_rejects_memory_task_store_without_database_url(
     client, monkeypatch
 ):
-    monkeypatch.setenv("SERVICE_SECRET", TEST_HMAC)
+    monkeypatch.setenv("SERVICE_SECRET", TEST_SIGNING_VALUE)
     monkeypatch.setenv("APP_ENV", "production")
     monkeypatch.delenv("DATABASE_URL", raising=False)
     monkeypatch.delenv("TASK_STORE_PROVIDER", raising=False)
 
     response = await client.post(
         TASKS_URL,
-        headers=_service_headers(signing_key=TEST_HMAC),
+        headers=_service_headers(signing_key=TEST_SIGNING_VALUE),
         json={"type": "llm.generate", "payload": {"prompt": "no db"}},
     )
 
     assert response.status_code == 503
     assert response.json()["detail"] == "task_store_not_configured"
+
+
+@pytest.mark.asyncio
+async def test_cancel_task_marks_existing_task_cancelled(client, monkeypatch):
+    monkeypatch.setenv("SERVICE_SECRET", TEST_SIGNING_VALUE)
+    monkeypatch.setenv("TASK_STORE_PROVIDER", "memory")
+    monkeypatch.setenv("TASK_DISPATCHER_PROVIDER", "memory")
+
+    create = await client.post(
+        TASKS_URL,
+        headers=_service_headers(
+            signing_key=TEST_SIGNING_VALUE,
+            tenant_id="tenant_cancel",
+        ),
+        json={"type": "llm.generate", "payload": {"prompt": "cancel me"}},
+    )
+    assert create.status_code == 202
+
+    response = await client.post(
+        f"{TASKS_URL}{create.json()['id']}/cancel",
+        headers=_service_headers(
+            signing_key=TEST_SIGNING_VALUE,
+            tenant_id="tenant_cancel",
+        ),
+    )
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "cancelled"
 
 
 def test_task_dispatcher_selection_is_provider_switchable(monkeypatch):

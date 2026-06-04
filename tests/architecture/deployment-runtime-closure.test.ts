@@ -20,6 +20,7 @@ const GATEWAY_AI_ORIGIN_HEADERS_PATH = resolve(
   ROOT,
   "backends/gateway/src/routes/ai/origin-headers.ts",
 );
+const GATEWAY_TASK_ROUTES_PATH = resolve(ROOT, "backends/gateway/src/routes/tasks/index.ts");
 const PYTHON_AI_MAIN_PATH = resolve(ROOT, "backends/python/ai/app/main.py");
 const PYTHON_AI_TASK_ROUTES_PATH = resolve(ROOT, "backends/python/ai/app/api/v1/routes_tasks.py");
 const PYTHON_AI_TASK_DISPATCHER_PATH = resolve(ROOT, "backends/python/ai/app/tasks/dispatcher.py");
@@ -119,6 +120,12 @@ describe("production runtime closure", () => {
     expect(workflow).toContain("cloudflare/wrangler-action");
     expect(workflow).toContain("CLOUDFLARE_API_TOKEN secret is not set");
     expect(workflow).toContain("CLOUDFLARE_ACCOUNT_ID secret is not set");
+    expect(workflow).toContain("AI_SERVICE_URL repository variable is not set");
+    expect(workflow).toContain("SERVICE_SECRET secret is not set");
+    expect(workflow).toContain("GATEWAY_SHARED_SECRET secret is not set");
+    expect(workflow).toContain("Prepare Worker runtime bindings");
+    expect(workflow).toContain("Sync Worker runtime bindings");
+    expect(workflow).toContain("secret bulk .wrangler-secrets.json --config wrangler.toml");
     expect(workflow).toContain("backends/gateway");
     expect(workflow).not.toContain("DEPLOY_TARGET == '");
   });
@@ -130,8 +137,28 @@ describe("production runtime closure", () => {
     expect(headers).toContain("x-nebutra-request-id");
     expect(headers).toContain("x-request-id");
     expect(headers).toContain("x-nebutra-client-ip");
+    expect(headers).toContain("signServiceToken");
+    expect(headers).toContain("x-service-token");
+    expect(headers).toContain("x-organization-id");
     expect(routes).toContain('requestId: c.get("requestId")');
     expect(routes).toContain("resolveAiOriginClientIp(c.req.raw.headers)");
+  });
+
+  it("exposes the standard task envelope through the Worker gateway only as an origin proxy", () => {
+    expect(existsSync(GATEWAY_TASK_ROUTES_PATH), `${GATEWAY_TASK_ROUTES_PATH} must exist`).toBe(
+      true,
+    );
+    const index = readFileSync(GATEWAY_INDEX_PATH, "utf8");
+    const routes = readFileSync(GATEWAY_TASK_ROUTES_PATH, "utf8");
+
+    expect(index).toContain('app.route("/api/v1/tasks", taskRoutes)');
+    expect(routes).toContain("/api/v1/tasks/");
+    expect(routes).toContain("/{taskId}/events");
+    expect(routes).toContain("/{taskId}/cancel");
+    expect(routes).toContain("buildAuthenticatedAiOriginHeaders");
+    expect(routes).not.toContain("CELERY_BROKER_URL");
+    expect(routes).not.toContain("QSTASH_TOKEN");
+    expect(routes).not.toContain("REDIS_URL");
   });
 
   it("gates the ECS origin deploy behind the python-ai per-service selector", () => {

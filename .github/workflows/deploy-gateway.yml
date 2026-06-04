@@ -61,6 +61,36 @@ jobs:
         run: |
           [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
           [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
+          [ -n "${{ vars.AI_SERVICE_URL }}" ] || { echo "::error::AI_SERVICE_URL repository variable is not set"; exit 1; }
+          [ -n "${{ secrets.SERVICE_SECRET }}" ] || { echo "::error::SERVICE_SECRET secret is not set"; exit 1; }
+          [ -n "${{ secrets.GATEWAY_SHARED_SECRET }}" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
+
+      - name: Prepare Worker runtime bindings
+        env:
+          AI_SERVICE_URL: ${{ vars.AI_SERVICE_URL }}
+          SERVICE_SECRET: ${{ secrets.SERVICE_SECRET }}
+          GATEWAY_SHARED_SECRET: ${{ secrets.GATEWAY_SHARED_SECRET }}
+        run: |
+          node <<'EOF'
+          const fs = require("node:fs");
+
+          fs.writeFileSync(
+            "backends/gateway/.wrangler-secrets.json",
+            JSON.stringify({
+              AI_SERVICE_URL: process.env.AI_SERVICE_URL,
+              SERVICE_SECRET: process.env.SERVICE_SECRET,
+              GATEWAY_SHARED_SECRET: process.env.GATEWAY_SHARED_SECRET,
+            }),
+          );
+          EOF
+
+      - name: Sync Worker runtime bindings
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: backends/gateway
+          command: secret bulk .wrangler-secrets.json --config wrangler.toml
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3

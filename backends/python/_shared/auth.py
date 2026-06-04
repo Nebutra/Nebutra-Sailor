@@ -1,8 +1,8 @@
 """Service-to-service authentication for Nebutra Python microservices.
 
-Mirrors the TypeScript implementation in packages/iam/auth/src/s2s.ts exactly:
-  canonical = f"{user_id}:{org_id}:{role}:{plan}"  (empty string for missing fields)
-  token     = HMAC-SHA256(canonical, SERVICE_SECRET).hexdigest()
+Mirrors the TypeScript implementation in packages/iam/auth/src/s2s.ts:
+  primary token = short-lived HS256 JWT carrying tenant claims + iat/exp/jti
+  legacy token  = HMAC-SHA256 canonical digest, accepted only when opted in
 
 All Python services that receive internal traffic from the gateway must
 declare `tenant: TenantContext = Depends(get_tenant)` on their route handlers.
@@ -18,6 +18,7 @@ import os
 from dataclasses import dataclass
 from typing import Annotated
 
+import jwt
 from fastapi import Depends, Header, HTTPException
 
 
@@ -29,7 +30,7 @@ class TenantContext:
     user_id: str | None
     role: str | None
     plan: str
-    # True when the request carried a valid HMAC service token.
+    # True when the request carried a valid service token.
     # False = anonymous / public (health probes, unauthenticated dev calls).
     authenticated: bool = False
 
@@ -44,12 +45,50 @@ def _canonical(
     return ":".join([user_id or "", org_id or "", role or "", plan or ""])
 
 
-def _verify_hmac(token: str, canonical: str, secret: str) -> bool:
+def _verify_legacy_hmac(token: str, canonical: str, secret: str) -> bool:
+    if not token or any(char not in "0123456789abcdef" for char in token):
+        return False
     expected = hmac.new(secret.encode(), canonical.encode(), hashlib.sha256).hexdigest()
     try:
         return hmac.compare_digest(token, expected)
     except Exception:
         return False
+
+
+def _legacy_fallback_allowed() -> bool:
+    return os.environ.get("S2S_ALLOW_LEGACY") == "1"
+
+
+def _claim(payload: dict[str, object], name: str) -> object | None:
+    value = payload.get(name)
+    return value if value is not None else None
+
+
+def _verify_jwt(
+    token: str,
+    secret: str,
+    *,
+    user_id: str | None,
+    organization_id: str | None,
+    role: str | None,
+    plan: str | None,
+) -> bool:
+    try:
+        payload = jwt.decode(
+            token,
+            secret,
+            algorithms=["HS256"],
+            options={"require": ["exp", "iat", "jti"]},
+        )
+    except jwt.PyJWTError:
+        return False
+
+    return (
+        _claim(payload, "userId") == (user_id or None)
+        and _claim(payload, "organizationId") == (organization_id or None)
+        and _claim(payload, "role") == (role or None)
+        and _claim(payload, "plan") == (plan or None)
+    )
 
 
 async def get_tenant(
@@ -63,7 +102,7 @@ async def get_tenant(
     FastAPI dependency — inject as: tenant: TenantContext = Depends(get_tenant)
 
     When x-service-token is present:
-      - Verifies HMAC against SERVICE_SECRET (same algorithm as s2s.ts)
+      - Verifies short-lived HS256 JWT against SERVICE_SECRET (same as s2s.ts)
       - Raises 401 on invalid token so gateway misconfigurations surface fast
       - Returns a fully populated, authenticated TenantContext
 
@@ -87,8 +126,20 @@ async def get_tenant(
             detail="SERVICE_SECRET not configured — service cannot verify internal tokens",
         )
 
-    canonical = _canonical(x_user_id, x_organization_id, x_role, x_plan)
-    if not _verify_hmac(x_service_token, canonical, secret):
+    jwt_valid = _verify_jwt(
+        x_service_token,
+        secret,
+        user_id=x_user_id,
+        organization_id=x_organization_id,
+        role=x_role,
+        plan=x_plan,
+    )
+    legacy_valid = _legacy_fallback_allowed() and _verify_legacy_hmac(
+        x_service_token,
+        _canonical(x_user_id, x_organization_id, x_role, x_plan),
+        secret,
+    )
+    if not (jwt_valid or legacy_valid):
         raise HTTPException(status_code=401, detail="invalid_service_token")
 
     return TenantContext(

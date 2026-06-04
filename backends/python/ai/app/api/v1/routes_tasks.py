@@ -76,6 +76,29 @@ async def get_task(
     return task.envelope()
 
 
+@router.post("/{task_id}/cancel", response_model=TaskEnvelope)
+async def cancel_task(
+    task_id: str,
+    tenant: TaskTenant,
+) -> TaskEnvelope:
+    try:
+        store = resolve_task_store()
+        task = await store.mark_status(
+            task_id,
+            tenant.organization_id or "",
+            TaskStatus.CANCELLED,
+            progress=100,
+        )
+    except TaskStoreUnavailable as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="task_store_not_configured",
+        ) from exc
+    except TaskNotFound as exc:
+        raise HTTPException(status_code=404, detail="task_not_found") from exc
+    return task.envelope()
+
+
 @router.get("/{task_id}/events")
 async def stream_task_events(
     task_id: str,
