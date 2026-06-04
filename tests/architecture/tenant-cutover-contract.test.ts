@@ -21,6 +21,9 @@ describe("Tenant cutover contract", () => {
 
     expect(client).toContain("export function getTenantDb(tenantId: string): PrismaClient");
     expect(client).toContain("requires a non-empty tenantId");
+    expect(client).toContain("const RLS_ROLE =");
+    expect(client).toContain("process.env.APP_DB_ROLE");
+    expect(client).toContain('client.$executeRawUnsafe(`SET LOCAL ROLE "$' + '{RLS_ROLE}"`)');
     expect(client).toContain("set_config('app.current_tenant_id', $" + "{tenantId}, true)");
     expect(client).not.toContain("export function getTenantDb(organizationId: string)");
     expect(client).not.toContain("requires a non-empty organizationId");
@@ -56,7 +59,7 @@ describe("Tenant cutover contract", () => {
     expect(idempotency).toContain('tenant?.tenantId ?? tenant?.userId ?? "anonymous"');
     expect(auditMutation).toContain("tenant?.tenantId ? { tenantId: tenant.tenantId } : {}");
     expect(usageMetering).toContain("const tenantId = tenant?.tenantId;");
-    expect(usageMetering).toContain("usage:${tenantId}:${period}:api_calls");
+    expect(usageMetering).toContain("usage:$" + "{tenantId}:$" + "{period}:api_calls");
     expect(usageMetering).not.toContain("const orgId = tenant?.organizationId;");
   });
 });
