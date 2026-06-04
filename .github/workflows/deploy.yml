@@ -62,11 +62,17 @@ jobs:
     name: Deploy to Kubernetes (${{ github.event.inputs.environment || 'staging' }})
     runs-on: ubuntu-latest
 
-    # For automatic triggers: only proceed if the upstream workflow succeeded.
-    # For manual triggers: always proceed.
+    # SUBSTRATE GATE (single-active-substrate governance):
+    # deploy-ecs.yml (Aliyun ECS / PM2) is the DEFAULT-ACTIVE backend substrate.
+    # This Kubernetes path stays DORMANT on the automatic (workflow_run) trigger
+    # unless the repo variable DEPLOY_TARGET is explicitly set to 'k8s', so no
+    # service is auto-deployed to two substrates at once — the drift behind
+    # #141-class incidents (gateway/landing were deploying to ECS + k8s + Vercel
+    # simultaneously). Manual workflow_dispatch always works as an explicit,
+    # intentional override.
     if: |
       github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && vars.DEPLOY_TARGET == 'k8s')
 
     # Pin the GitHub environment so that environment-level protection rules
     # (required reviewers, wait timers) are enforced in the GitHub UI.
