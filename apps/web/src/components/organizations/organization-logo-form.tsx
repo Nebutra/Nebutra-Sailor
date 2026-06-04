@@ -1,9 +1,11 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
+import { queryKeys } from "@/lib/query-keys";
 
 const MAX_LOGO_SIZE_BYTES = 2 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
@@ -148,12 +150,38 @@ export function OrganizationLogoForm({
 }: OrganizationLogoFormProps) {
   const t = useTranslations();
   const [logoUrl, setLogoUrl] = useState<string | null>(initialLogoUrl ?? null);
-  const [pending, setPending] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  async function handleFileSelected(file: File) {
+  function resolveLogoErrorMessage(err: unknown) {
+    const key = resolveAuthErrorKey(err);
+    return err && typeof err === "object" && "message" in err && typeof err.message === "string"
+      ? err.message
+      : t(`auth.errors.${key}`);
+  }
+
+  const uploadMutation = useMutation({
+    mutationKey: queryKeys.organizationLogo.upload(orgId),
+    mutationFn: async (file: File) => {
+      const pipeline = uploadPipeline ?? ((next: File) => defaultUploadPipeline(orgId, next));
+      const uploadFile = uploadPipeline ? file : await centerCropSquareImage(file);
+      return pipeline(uploadFile);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationKey: queryKeys.organizationLogo.remove(orgId),
+    mutationFn: async () => {
+      const pipeline = deletePipeline ?? (() => defaultDeletePipeline(orgId));
+      return pipeline();
+    },
+  });
+
+  const pending = uploadMutation.isPending || deleteMutation.isPending;
+
+  function handleFileSelected(file: File) {
+    if (pending) return;
     setErrorMessage("");
     setShowSuccess(false);
 
@@ -166,48 +194,32 @@ export function OrganizationLogoForm({
       return;
     }
 
-    setPending(true);
-    try {
-      const pipeline = uploadPipeline ?? ((next: File) => defaultUploadPipeline(orgId, next));
-      const uploadFile = uploadPipeline ? file : await centerCropSquareImage(file);
-      const result = await pipeline(uploadFile);
-      setLogoUrl(result.logoUrl);
-      setShowSuccess(true);
-      onUpdated?.(result);
-    } catch (err) {
-      const key = resolveAuthErrorKey(err);
-      const fallback =
-        err && typeof err === "object" && "message" in err && typeof err.message === "string"
-          ? err.message
-          : t(`auth.errors.${key}`);
-      setErrorMessage(fallback);
-    } finally {
-      setPending(false);
-      // Reset the input so re-selecting the same file fires onChange.
-      if (inputRef.current) inputRef.current.value = "";
-    }
+    uploadMutation.mutate(file, {
+      onSuccess: (result) => {
+        setLogoUrl(result.logoUrl);
+        setShowSuccess(true);
+        onUpdated?.(result);
+      },
+      onError: (err) => setErrorMessage(resolveLogoErrorMessage(err)),
+      onSettled: () => {
+        // Reset the input so re-selecting the same file fires onChange.
+        if (inputRef.current) inputRef.current.value = "";
+      },
+    });
   }
 
-  async function handleDelete() {
+  function handleDelete() {
+    if (pending) return;
     setErrorMessage("");
     setShowSuccess(false);
-    setPending(true);
-    try {
-      const pipeline = deletePipeline ?? (() => defaultDeletePipeline(orgId));
-      const result = await pipeline();
-      setLogoUrl(null);
-      setShowSuccess(true);
-      onUpdated?.(result);
-    } catch (err) {
-      const key = resolveAuthErrorKey(err);
-      const fallback =
-        err && typeof err === "object" && "message" in err && typeof err.message === "string"
-          ? err.message
-          : t(`auth.errors.${key}`);
-      setErrorMessage(fallback);
-    } finally {
-      setPending(false);
-    }
+    deleteMutation.mutate(undefined, {
+      onSuccess: (result) => {
+        setLogoUrl(result.logoUrl);
+        setShowSuccess(true);
+        onUpdated?.(result);
+      },
+      onError: (err) => setErrorMessage(resolveLogoErrorMessage(err)),
+    });
   }
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {

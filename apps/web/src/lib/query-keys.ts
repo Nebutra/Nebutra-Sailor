@@ -118,6 +118,12 @@ export const queryKeys = {
     remove: () => ["account-avatar", "remove"] as const,
   },
 
+  organizationLogo: {
+    all: ["organization-logo"] as const,
+    upload: (orgId: string) => ["organization-logo", "upload", orgId] as const,
+    remove: (orgId: string) => ["organization-logo", "remove", orgId] as const,
+  },
+
   tasks: {
     all: ["tasks"] as const,
     detail: (taskId: string) => ["tasks", "detail", taskId] as const,

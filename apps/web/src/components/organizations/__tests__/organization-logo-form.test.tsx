@@ -1,7 +1,9 @@
 // @vitest-environment jsdom
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type React from "react";
+import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next-intl", () => ({
@@ -22,9 +24,29 @@ vi.mock("@/lib/auth/error-catalog", () => ({
 
 import { OrganizationLogoForm } from "../organization-logo-form";
 
+function renderWithQueryClient(ui: ReactNode) {
+  const client = new QueryClient({
+    defaultOptions: {
+      mutations: { retry: false },
+      queries: { retry: false },
+    },
+  });
+  return render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+}
+
 function makeFile(opts: { type: string; size: number; name?: string }) {
   const blob = new Blob([new Uint8Array(opts.size)], { type: opts.type });
   return new File([blob], opts.name ?? "logo.png", { type: opts.type });
+}
+
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, reject, resolve };
 }
 
 describe("OrganizationLogoForm", () => {
@@ -33,12 +55,14 @@ describe("OrganizationLogoForm", () => {
   });
 
   it("renders initials when no logo is set", () => {
-    render(<OrganizationLogoForm orgId="org_1" orgName="Acme Labs" initialLogoUrl={null} />);
+    renderWithQueryClient(
+      <OrganizationLogoForm orgId="org_1" orgName="Acme Labs" initialLogoUrl={null} />,
+    );
     expect(screen.getByLabelText(/organization logo preview/i).textContent).toBe("AC");
   });
 
   it("renders external logo URLs directly", () => {
-    render(
+    renderWithQueryClient(
       <OrganizationLogoForm
         orgId="org_1"
         orgName="Acme Labs"
@@ -53,7 +77,7 @@ describe("OrganizationLogoForm", () => {
   it("uploads a valid logo and reports success", async () => {
     const uploadPipeline = vi.fn().mockResolvedValue({ logoUrl: "https://cdn/logo.png" });
     const onUpdated = vi.fn();
-    render(
+    renderWithQueryClient(
       <OrganizationLogoForm
         orgId="org_1"
         orgName="Acme Labs"
@@ -72,10 +96,34 @@ describe("OrganizationLogoForm", () => {
     expect(onUpdated).toHaveBeenCalledWith({ logoUrl: "https://cdn/logo.png" });
   });
 
+  it("ignores selected files while a logo upload is already pending", async () => {
+    const pendingUpload = deferred<{ logoUrl: string }>();
+    const uploadPipeline = vi.fn().mockReturnValue(pendingUpload.promise);
+    renderWithQueryClient(
+      <OrganizationLogoForm orgId="org_1" orgName="Acme Labs" uploadPipeline={uploadPipeline} />,
+    );
+    const input = screen.getByTestId("organization-logo-input");
+
+    fireEvent.change(input, {
+      target: { files: [makeFile({ type: "image/png", size: 1024, name: "first.png" })] },
+    });
+
+    await waitFor(() => expect(uploadPipeline).toHaveBeenCalledTimes(1));
+    fireEvent.change(input, {
+      target: { files: [makeFile({ type: "image/png", size: 1024, name: "second.png" })] },
+    });
+
+    expect(uploadPipeline).toHaveBeenCalledTimes(1);
+    pendingUpload.resolve({ logoUrl: "https://cdn/first.png" });
+    await waitFor(() =>
+      expect(screen.getByText("organizations.settings.logo.success")).toBeTruthy(),
+    );
+  });
+
   it("deletes a logo and returns to initials", async () => {
     const deletePipeline = vi.fn().mockResolvedValue({ logoUrl: null });
     const onUpdated = vi.fn();
-    render(
+    renderWithQueryClient(
       <OrganizationLogoForm
         orgId="org_1"
         orgName="Acme Labs"
@@ -97,7 +145,7 @@ describe("OrganizationLogoForm", () => {
 
   it("shows delete errors without clearing the current logo", async () => {
     const deletePipeline = vi.fn().mockRejectedValue(new Error("Could not delete logo."));
-    render(
+    renderWithQueryClient(
       <OrganizationLogoForm
         orgId="org_1"
         orgName="Acme Labs"
