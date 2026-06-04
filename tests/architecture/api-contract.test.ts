@@ -143,6 +143,88 @@ describe("Property 5b: OpenAPI Spec File", () => {
     ).toBe(true);
   });
 
+  // Ratchet guard for issue #148: a 2xx response whose handler returns JSON must
+  // declare `content["application/json"].schema` in the spec. Without it, the
+  // generated web client types the response body as `content?: never`, silently
+  // dropping the payload type (A9 type-contract drift).
+  //
+  // KNOWN_JSON_CONTENT_DEBT lists routes that currently lack a declared response
+  // schema. It is a SHRINK-ONLY allowlist: when you add a response schema to one
+  // of these routes (see the integrations/admin/overview fix as the template),
+  // delete its entry here. The test FAILS if any route NOT on this list regresses
+  // to a content-less 2xx — so new drift can never be introduced.
+  const KNOWN_JSON_CONTENT_DEBT = new Set<string>([
+    "GET /api/system/ping 200",
+    "GET /system/ping 200",
+    "POST /api/v1/agent-runtime/turns 200",
+    "POST /api/v1/ai/chat 200",
+    "POST /api/v1/ai/embeddings 200",
+    "GET /api/v1/ai/models 200",
+    "POST /api/v1/ai/gateway/chat/completions 200",
+    "GET /api/v1/billing/subscription 200",
+    "POST /api/v1/search 200",
+    "POST /api/v1/search/sync 200",
+    "GET /api/v1/integrations 200",
+    "POST /api/v1/integrations 201",
+    "GET /api/v1/integrations/:id 200",
+    "PATCH /api/v1/integrations/:id 200",
+    "DELETE /api/v1/integrations/:id 200",
+    "GET /api/v1/admin/tenants 200",
+    "GET /api/v1/admin/tenants/{id} 200",
+    "POST /api/v1/admin/tenants/{id}/suspend 200",
+    "POST /api/v1/admin/tenants/{id}/unsuspend 200",
+    "GET /api/v1/admin/usage/report 200",
+    "GET /api/v1/admin/dlq 200",
+    "POST /api/v1/admin/dlq/{id}/ack 200",
+    "GET /api/v1/admin/feature-flags 200",
+    "POST /api/v1/admin/feature-flags 200",
+  ]);
+
+  it("2xx JSON responses declare application/json content (no content?: never drift)", () => {
+    if (!existsSync(OPENAPI_SPEC_PATH)) return;
+
+    const spec = JSON.parse(readFileSync(OPENAPI_SPEC_PATH, "utf-8")) as {
+      paths?: Record<string, Record<string, { responses?: Record<string, { content?: unknown }> }>>;
+    };
+    if (!spec.paths) return;
+
+    const newDrift: string[] = [];
+    const fixedButStillListed: string[] = [];
+
+    for (const [path, methods] of Object.entries(spec.paths)) {
+      for (const [method, op] of Object.entries(methods)) {
+        if (!op || typeof op !== "object" || !op.responses) continue;
+        for (const [code, resp] of Object.entries(op.responses)) {
+          if (code !== "200" && code !== "201") continue;
+          const key = `${method.toUpperCase()} ${path} ${code}`;
+          const hasJson =
+            !!resp.content && Object.hasOwn(resp.content as object, "application/json");
+          if (!hasJson && !KNOWN_JSON_CONTENT_DEBT.has(key)) {
+            newDrift.push(key);
+          }
+          if (hasJson && KNOWN_JSON_CONTENT_DEBT.has(key)) {
+            fixedButStillListed.push(key);
+          }
+        }
+      }
+    }
+
+    expect(
+      newDrift,
+      "These 2xx responses return JSON but declare no application/json schema, so the\n" +
+        "generated client will type them as `content?: never`. Add a zod-openapi response\n" +
+        "schema (see backends/gateway/src/routes/integrations/index.ts adminOverviewRoute):\n" +
+        newDrift.map((k) => `  - ${k}`).join("\n"),
+    ).toHaveLength(0);
+
+    // Keep the debt allowlist honest: once a route is fixed, its entry must be removed.
+    expect(
+      fixedButStillListed,
+      "These routes now declare a response schema — remove them from KNOWN_JSON_CONTENT_DEBT:\n" +
+        fixedButStillListed.map((k) => `  - ${k}`).join("\n"),
+    ).toHaveLength(0);
+  });
+
   it("all spec paths use versioned prefixes", () => {
     if (!existsSync(OPENAPI_SPEC_PATH)) return;
 

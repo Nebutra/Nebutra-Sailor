@@ -164,8 +164,10 @@ vi.mock("@/components/navigation/view-transition-link", () => ({
 }));
 vi.mock("@/components/brand/brand-assets", () => ({
   BrandLogo: () => null,
+  webBrandLabels: { homeLink: "Open product home", primaryNavigation: "Primary navigation" },
 }));
 
+import { FeedbackDialogProvider } from "@/components/feedback/feedback-dialog-provider";
 import { DesignSystemShell } from "../design-system-shell";
 
 const ORG_ALPHA = { id: "org_alpha", name: "Alpha Org" };
@@ -191,7 +193,11 @@ function makeTestClient() {
 
 function renderWithClient(ui: ReactElement) {
   const client = makeTestClient();
-  const utils = render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+  const utils = render(
+    <QueryClientProvider client={client}>
+      <FeedbackDialogProvider>{ui}</FeedbackDialogProvider>
+    </QueryClientProvider>,
+  );
   return { client, ...utils };
 }
 
@@ -233,7 +239,7 @@ describe("DesignSystemShell (react-query integration)", () => {
 
     // Before the organizations query resolves the seed WORKSPACES render
     // (loading fallback for the org list — equivalent to the old initial state).
-    expect(screen.getByText("Startup OS")).toBeInTheDocument();
+    expect(screen.getAllByText("Startup OS").length).toBeGreaterThan(0);
     expect(screen.getByText("Starter Workspace")).toBeInTheDocument();
 
     // After the org list resolves, the real org labels replace the seeds and
@@ -302,8 +308,13 @@ describe("DesignSystemShell (react-query integration)", () => {
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith("/api/organizations", expect.any(Object));
     });
-    expect(screen.getByText("Startup OS")).toBeInTheDocument();
-    expect(screen.queryByText("Starter Workspace")).not.toBeInTheDocument();
+    // Wait for the empty-organizations result to reconcile before asserting the
+    // negative cases — `waitFor` above only confirms the fetch fired, not that
+    // the render settled, which races under heavy parallel-suite load.
+    await waitFor(() => {
+      expect(screen.getAllByText("Startup OS").length).toBeGreaterThan(0);
+      expect(screen.queryByText("Starter Workspace")).not.toBeInTheDocument();
+    });
     expect(screen.queryByText("Growth Workspace")).not.toBeInTheDocument();
     expect(screen.queryByText("Enterprise Workspace")).not.toBeInTheDocument();
   });

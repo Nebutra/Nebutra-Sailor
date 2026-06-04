@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     "@nebutra/db",
     "@nebutra/tokens",
     "@nebutra/ui",
+    "@nebutra/vault",
   ],
 };
 

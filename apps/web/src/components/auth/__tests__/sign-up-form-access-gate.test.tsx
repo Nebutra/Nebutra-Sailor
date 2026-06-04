@@ -2,12 +2,19 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type {
-  ButtonHTMLAttributes,
-  InputHTMLAttributes,
-  LabelHTMLAttributes,
-  ReactNode,
+import {
+  type ButtonHTMLAttributes,
+  cloneElement,
+  createContext,
+  type InputHTMLAttributes,
+  isValidElement,
+  type LabelHTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  useContext,
+  useId,
 } from "react";
+import { Controller, FormProvider, useFormContext } from "react-hook-form";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const pushMock = vi.fn();
@@ -43,8 +50,44 @@ vi.mock("@nebutra/ui/components", () => ({
   Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
 }));
 
-vi.mock("@nebutra/ui/primitives", async (importActual) => ({
-  ...(await importActual<typeof import("@nebutra/ui/primitives")>()),
+// Lightweight passthrough doubles for the react-hook-form primitives. We must
+// NOT spread importActual("@nebutra/ui/primitives") — that eagerly loads the
+// heavy real barrel (THREE.js / Lobe UI) and hangs the jsdom run. These doubles
+// faithfully reproduce the two behaviours the component relies on:
+//   1. FormField binds to RHF via Controller so typed values flow into submit.
+//   2. FormLabel/FormControl share an id so getByLabelText() resolves the input.
+const FormItemIdContext = createContext<string>("");
+
+vi.mock("@nebutra/ui/primitives", () => ({
+  Form: FormProvider,
+  FormField: ({
+    name,
+    render,
+  }: {
+    control?: unknown;
+    name: string;
+    render: (args: {
+      field: { name: string; value: unknown; onChange: (...a: unknown[]) => void; ref: unknown };
+    }) => ReactElement;
+  }) => {
+    const { control } = useFormContext();
+    return <Controller control={control} name={name} render={({ field }) => render({ field })} />;
+  },
+  FormItem: ({ children }: { children: ReactNode }) => {
+    const id = useId();
+    return <FormItemIdContext.Provider value={id}>{children}</FormItemIdContext.Provider>;
+  },
+  FormControl: ({ children }: { children: ReactNode }) => {
+    const id = useContext(FormItemIdContext);
+    if (isValidElement(children)) {
+      return cloneElement(children as ReactElement<{ id?: string }>, { id });
+    }
+    return <>{children}</>;
+  },
+  FormLabel: ({ children }: { children: ReactNode }) => {
+    const id = useContext(FormItemIdContext);
+    return <label htmlFor={id}>{children}</label>;
+  },
   // biome-ignore lint/a11y/noLabelWithoutControl: this test double forwards htmlFor from the component under test.
   Label: (props: LabelHTMLAttributes<HTMLLabelElement>) => <label {...props} />,
   Separator: () => <hr />,

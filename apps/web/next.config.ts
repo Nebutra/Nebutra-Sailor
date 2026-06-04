@@ -77,6 +77,7 @@ const nextConfig: NextConfig = {
     "@nebutra/tokens",
     "@nebutra/ui",
     "@nebutra/uploads",
+    "@nebutra/vault",
     "@nebutra/webhooks",
   ],
 

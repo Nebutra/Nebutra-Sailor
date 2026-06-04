@@ -1,14 +1,27 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  InputHTMLAttributes,
-  LabelHTMLAttributes,
-  ReactNode,
+import {
+  type AnchorHTMLAttributes,
+  type ButtonHTMLAttributes,
+  cloneElement,
+  createContext,
+  type InputHTMLAttributes,
+  isValidElement,
+  type LabelHTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  useContext,
 } from "react";
+import {
+  type Control,
+  Controller,
+  type ControllerRenderProps,
+  type FieldValues,
+  FormProvider,
+  type UseFormReturn,
+} from "react-hook-form";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const pushMock = vi.fn();
@@ -68,26 +81,58 @@ vi.mock("@nebutra/icons", () => ({
   Envelope: () => <span aria-hidden />,
 }));
 
-vi.mock("@nebutra/ui/primitives", () => ({
-  Button: ({
-    children,
-    type,
-    variant: _variant,
-    ...props
-  }: {
-    children?: ReactNode;
-    type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-    variant?: string;
-  } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
-    <button type={type ?? "button"} {...props}>
-      {children}
-    </button>
-  ),
-  Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
-  // biome-ignore lint/a11y/noLabelWithoutControl: test double forwards htmlFor from the component.
-  Label: (props: LabelHTMLAttributes<HTMLLabelElement>) => <label {...props} />,
-  Separator: () => <hr />,
-}));
+vi.mock("@nebutra/ui/primitives", () => {
+  const FieldNameContext = createContext<string>("field");
+  return {
+    Button: ({
+      children,
+      type,
+      variant: _variant,
+      ...props
+    }: {
+      children?: ReactNode;
+      type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
+      variant?: string;
+    } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">) => (
+      <button type={type ?? "button"} {...props}>
+        {children}
+      </button>
+    ),
+    Input: (props: InputHTMLAttributes<HTMLInputElement>) => <input {...props} />,
+    // biome-ignore lint/a11y/noLabelWithoutControl: test double forwards htmlFor from the component.
+    Label: (props: LabelHTMLAttributes<HTMLLabelElement>) => <label {...props} />,
+    Separator: () => <hr />,
+    Form: ({ children, ...form }: UseFormReturn<FieldValues> & { children?: ReactNode }) => (
+      <FormProvider {...form}>{children}</FormProvider>
+    ),
+    FormField: ({
+      control,
+      name,
+      render,
+    }: {
+      control: Control<FieldValues>;
+      name: string;
+      render: (renderProps: { field: ControllerRenderProps<FieldValues, string> }) => ReactElement;
+    }) => (
+      <FieldNameContext.Provider value={name}>
+        <Controller control={control} name={name} render={render} />
+      </FieldNameContext.Provider>
+    ),
+    FormItem: ({ children }: { children?: ReactNode }) => <div>{children}</div>,
+    FormControl: ({ children }: { children?: ReactNode }) => {
+      const name = useContext(FieldNameContext);
+      if (isValidElement(children)) {
+        return cloneElement(children as ReactElement<{ id?: string }>, { id: name });
+      }
+      return <>{children}</>;
+    },
+    FormLabel: ({ children }: { children?: ReactNode }) => {
+      const name = useContext(FieldNameContext);
+      return <label htmlFor={name}>{children}</label>;
+    },
+    FormMessage: ({ children }: { children?: ReactNode }) => <p>{children}</p>,
+  };
+});
 
 vi.mock("@/lib/auth/passkey-client", () => ({
   enablePasskeyConditionalUI: vi.fn(),
@@ -141,8 +186,9 @@ describe("SignInForm SSO discovery", () => {
 
     render(<SignInForm returnUrl="/dashboard" />);
 
-    await user.type(screen.getByLabelText("Email"), "owner@acme.com");
-    await user.tab();
+    const emailInput = screen.getByLabelText("Email");
+    await user.type(emailInput, "owner@acme.com");
+    fireEvent.blur(emailInput);
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith(
@@ -164,8 +210,9 @@ describe("SignInForm SSO discovery", () => {
 
     render(<SignInForm />);
 
-    await user.type(screen.getByLabelText("Email"), "user@example.com");
-    await user.tab();
+    const emailInput = screen.getByLabelText("Email");
+    await user.type(emailInput, "user@example.com");
+    fireEvent.blur(emailInput);
 
     await waitFor(() => {
       expect(screen.queryByRole("button", { name: /Continue with/ })).not.toBeInTheDocument();
