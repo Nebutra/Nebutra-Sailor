@@ -2,25 +2,33 @@
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, patch
+from types import SimpleNamespace
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
 GENERATE_URL = "/api/v1/generate/"
 
-MOCK_RESULT = {
-    "text": "Hello, world!",
-    "model": "gpt-5.2",
-    "tokens_used": 12,
-}
+MOCK_RESULT = SimpleNamespace(
+    content="Hello, world!",
+    model="gpt-5.2",
+    usage={
+        "prompt_tokens": 5,
+        "completion_tokens": 7,
+        "total_tokens": 12,
+    },
+    finish_reason="stop",
+    tool_calls=None,
+)
 
 
 @pytest.mark.asyncio
 async def test_generate_success(client):
+    provider = SimpleNamespace(name="mock", chat=AsyncMock(return_value=MOCK_RESULT))
+
     with patch(
-        "app.api.v1.routes_generate.generate_text",
-        new_callable=AsyncMock,
-        return_value=MOCK_RESULT,
+        "app.api.v1.routes_generate.get_default_provider",
+        Mock(return_value=provider),
     ):
         response = await client.post(
             GENERATE_URL,
@@ -31,36 +39,40 @@ async def test_generate_success(client):
     data = response.json()
     assert data["text"] == "Hello, world!"
     assert data["model"] == "gpt-5.2"
-    assert data["tokens_used"] == 12
+    assert data["total_tokens"] == 12
 
 
 @pytest.mark.asyncio
 async def test_generate_default_model(client):
-    """Defaults to gpt-5.2 when model is omitted."""
+    """Defaults to the route provider model when model is omitted."""
+    provider = SimpleNamespace(name="mock", chat=AsyncMock(return_value=MOCK_RESULT))
+
     with patch(
-        "app.api.v1.routes_generate.generate_text",
-        new_callable=AsyncMock,
-        return_value=MOCK_RESULT,
-    ) as mock_fn:
+        "app.api.v1.routes_generate.get_default_provider",
+        Mock(return_value=provider),
+    ):
         await client.post(GENERATE_URL, json={"prompt": "hi"})
-        call_kwargs = mock_fn.call_args.kwargs
-        assert call_kwargs.get("model", "gpt-5.2") == "gpt-5.2"
+        chat_request = provider.chat.call_args.args[0]
+        assert chat_request.model == "Qwen/Qwen2.5-72B-Instruct"
 
 
 @pytest.mark.asyncio
 async def test_generate_service_error_returns_500(client):
+    provider = SimpleNamespace(
+        name="mock", chat=AsyncMock(side_effect=RuntimeError("upstream failure"))
+    )
+
     with patch(
-        "app.api.v1.routes_generate.generate_text",
-        new_callable=AsyncMock,
-        side_effect=RuntimeError("upstream failure"),
+        "app.api.v1.routes_generate.get_default_provider",
+        Mock(return_value=provider),
     ):
         response = await client.post(
             GENERATE_URL,
             json={"prompt": "fail"},
         )
 
-    assert response.status_code == 500
-    assert "internal server error" in response.json()["detail"].lower()
+    assert response.status_code == 502
+    assert "provider error" in response.json()["detail"].lower()
 
 
 @pytest.mark.asyncio

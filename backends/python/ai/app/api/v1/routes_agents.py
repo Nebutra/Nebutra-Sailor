@@ -67,7 +67,9 @@ async def run_agent(
     if request.system_prompt:
         messages.append(ChatMessage(role="system", content=request.system_prompt))
     for m in request.messages:
-        messages.append(ChatMessage(role=m.get("role", "user"), content=m.get("content", "")))
+        messages.append(
+            ChatMessage(role=m.get("role", "user"), content=m.get("content", ""))
+        )
 
     chat_req = ChatCompletionRequest(
         model=request.model or default_model,

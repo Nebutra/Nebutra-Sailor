@@ -56,7 +56,7 @@ async def run_code(
     The sandbox is destroyed immediately after execution regardless of outcome.
     """
     try:
-        from e2b_code_interpreter import AsyncSandbox  # noqa: PLC0415
+        from e2b_code_interpreter import AsyncSandbox
     except ImportError:
         raise HTTPException(
             status_code=503,
@@ -73,7 +73,7 @@ async def run_code(
                 sandbox.run_code(request.code, language=request.language),
                 timeout=request.timeout_s,
             )
-    except asyncio.TimeoutError:
+    except TimeoutError:
         raise HTTPException(status_code=408, detail="sandbox_timeout") from None
     except Exception as exc:
         raise HTTPException(
