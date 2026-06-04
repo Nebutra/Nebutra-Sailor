@@ -106,7 +106,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO 架构",
-    "title": "10 个应用 · 104 个包 · 4 条后端线",
+    "title": "10 个应用 · 102 个包 · 4 条后端线",
     "description": "共享代码、并行构建、零冗余。从数据库到前端的完整端到端类型安全。",
     "metricApps": "应用",
     "metricBackends": "后端线",
@@ -1123,21 +1123,21 @@
       }
     },
     "faq": {
-      "title": "定价与商务常见问题",
-      "description": "关于订阅、退款与商用授权的常见问题。",
+      "title": "定价与授权常见问题",
+      "description": "关于授权层级、退款与商用使用权的常见问题。",
       "q1": {
-        "q": "专业版是按月订阅制吗？",
-        "a": "是的，我们的专业版按月结算。您可以随时在控制台仪表盘取消订阅，没有任何隐藏的违约费用。"
+        "q": "Sailor 是按月订阅制吗？",
+        "a": "不是。本页定价面向 Sailor 源代码授权：Independent 免费，Startup 按年授权，Enterprise 走定制合同。"
       },
       "q2": {
-        "q": "对体系架构不满意可以退款吗？",
-        "a": "我们提供 14 天无理由全额退款保障，确保中大型公司的选型试错风险为绝对零度。"
+        "q": "可以退款吗？",
+        "a": "Startup 商业授权的首次购买提供 14 天退款窗口；Enterprise 退款与验收条款以签署合同为准。"
       },
       "q3": {
-        "q": "获取后可以直接用于外向外包项目交付吗？",
-        "a": "完全可以。高级商业授权允许您在无限数量的终端商用项目中自由使用并兜售该架构底座。"
+        "q": "可以用于客户项目交付吗？",
+        "a": "可以。商业授权允许团队在授权范围内交付闭源客户项目或内部产品；白标权益需通过 Enterprise 书面确认。"
       },
-      "contactNudge": "还有疑问？与工程团队直接沟通 →"
+      "contactNudge": "还有疑问？与 Nebutra 团队沟通 →"
     },
     "cta": {
       "eyebrow": "立即开始",
@@ -1622,7 +1622,7 @@
         },
         "why-turborepo": {
           "question": "为什么用 Turborepo 而不是单一 Next.js 项目？",
-          "answer": "Sailor 由 10 个应用 + packages/*/* 下的 104 个共享包 + 4 条后端线（Hono gateway、FastAPI/Python、Go、Rust）组成，单一 Next.js 巨型应用早就维护不过来。Turborepo 提供 affected-only 增量构建、透明的远程缓存，以及共享设计 token / 认证 / 计费 / 可观测性的单一来源——而不需要把所有团队塞进同一个 Next.js 进程。"
+          "answer": "Sailor 由 10 个应用 + packages/*/* 下的 102 个共享包 + 4 条后端线（Hono gateway、FastAPI/Python、Go、Rust）组成，单一 Next.js 巨型应用早就维护不过来。Turborepo 提供 affected-only 增量构建、透明的远程缓存，以及共享设计 token / 认证 / 计费 / 可观测性的单一来源——而不需要把所有团队塞进同一个 Next.js 进程。"
         },
         "multi-tenancy": {
           "question": "多租户怎么实现？",
@@ -1676,7 +1676,7 @@
           "label": "AI 提供商支持"
         },
         "projects": {
-          "value": "104",
+          "value": "102",
           "label": "monorepo 包"
         },
         "uptime": {

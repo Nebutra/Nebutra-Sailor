@@ -1,5 +1,5 @@
 /**
- * Sub-package glyph registry — 104 bespoke ~160px thumbnails.
+ * Sub-package glyph registry — 102 bespoke ~160px thumbnails.
  *
  * Coverage: 100% of the slugs that appear as children of any group on
  * `/[lang]/features/[group]`. Each glyph is a custom mini-visual hinting

@@ -3,7 +3,6 @@
 import { motionDurationSec } from "@nebutra/brand";
 import { ArrowRight, BookOpen, ChevronDown, Copy, Message } from "@nebutra/icons";
 import { useCopyToClipboard } from "@nebutra/ui/primitives";
-import { motion, useAnimationFrame, useMotionValue } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -244,7 +243,8 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   const [halfWidth, setHalfWidth] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const trackX = useMotionValue(0);
+  const [trackX, setTrackX] = useState(0);
+  const trackXRef = useRef(0);
   const railPosts = posts.slice(0, RAIL_POST_COUNT);
 
   useEffect(() => {
@@ -270,11 +270,23 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
 
   const running = !reduceMotion && !paused && halfWidth > 0;
 
-  useAnimationFrame((_time, delta) => {
+  useEffect(() => {
     if (!running) return;
-    const next = trackX.get() - delta * RAIL_SPEED_PX_PER_MS;
-    trackX.set(Math.abs(next) >= halfWidth ? next + halfWidth : next);
-  });
+
+    let frame = 0;
+    let lastTime = performance.now();
+    const tick = (time: number) => {
+      const delta = time - lastTime;
+      lastTime = time;
+      const next = trackXRef.current - delta * RAIL_SPEED_PX_PER_MS;
+      trackXRef.current = Math.abs(next) >= halfWidth ? next + halfWidth : next;
+      setTrackX(trackXRef.current);
+      frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [halfWidth, running]);
 
   if (railPosts.length === 0) return null;
 
@@ -300,9 +312,9 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
     >
       <div className="border-t border-[var(--neutral-6)]" />
       <div className="relative overflow-hidden">
-        <motion.div
+        <div
           ref={trackRef}
-          style={{ x: trackX }}
+          style={{ transform: `translate3d(${trackX}px, 0, 0)` }}
           className="flex w-max will-change-transform motion-reduce:transform-none"
         >
           {renderedPosts.map((post, index) => (
@@ -314,7 +326,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
               setActivePostId={setActivePostId}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[var(--neutral-1)] to-transparent sm:w-24"

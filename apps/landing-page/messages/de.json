@@ -106,7 +106,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUKTUR",
-    "title": "10 Apps. 104 Pakete. 4 Backend-Lanes.",
+    "title": "10 Apps. 102 Pakete. 4 Backend-Lanes.",
     "description": "Gemeinsamer Code, parallele Builds, keine Duplizierung. Vollständige End-to-End-Typisierung von der Datenbank bis zum Frontend.",
     "metricApps": "Apps",
     "metricBackends": "Backend-Lanes",
@@ -1124,20 +1124,20 @@
     },
     "faq": {
       "title": "FAQ zu Preisen & Lizenzen",
-      "description": "Häufige Fragen zu Abonnement, Rückerstattung und kommerzieller Lizenz.",
+      "description": "Fragen zu Lizenzstufen, Rückerstattungen und kommerziellen Nutzungsrechten.",
       "q1": {
-        "q": "Ist das ein Abonnement?",
-        "a": "Ja, unser Pro-Plan wird monatlich abgerechnet. Sie können jederzeit kündigen, ohne versteckte Gebühren."
+        "q": "Ist Sailor ein monatliches SaaS-Abonnement?",
+        "a": "Nein. Diese Preise gelten für Sailor-Quellcodelizenzen: Independent ist kostenlos, Startup wird jährlich abgerechnet und Enterprise ist individuell."
       },
       "q2": {
         "q": "Bieten Sie Erstattungen an?",
-        "a": "Wir bieten eine 14-tägige Geld-zurück-Garantie ohne Rückfragen."
+        "a": "Startup-Kommerzlizenzen enthalten für Erstkäufe ein 14-tägiges Rückerstattungsfenster. Enterprise-Bedingungen werden im unterzeichneten Vertrag geregelt."
       },
       "q3": {
-        "q": "Kann ich das für Kundenprojekte nutzen?",
-        "a": "Absolut. Die kommerzielle Lizenz gilt für unbegrenzte Kundenprojekte."
+        "q": "Kann ich Sailor für Kundenprojekte nutzen?",
+        "a": "Ja. Eine kommerzielle Lizenz erlaubt Ihrem Team, geschlossene Kunden- oder interne Produkte im lizenzierten Umfang auszuliefern; White-Label-Rechte erfordern Enterprise-Freigabe."
       },
-      "contactNudge": "Noch Fragen? Sprechen Sie mit unserem Engineering-Team →"
+      "contactNudge": "Noch Fragen? Sprechen Sie mit dem Nebutra-Team →"
     },
     "cta": {
       "eyebrow": "Loslegen",
@@ -1622,7 +1622,7 @@
         },
         "why-turborepo": {
           "question": "Warum Turborepo statt einer Standard-Next.js-App?",
-          "answer": "Sailor umfasst 10 Apps + 104 gemeinsame Pakete unter packages/*/* + 4 Backend-Lanes (Hono gateway, FastAPI/Python, Go, Rust) — weit über den Punkt hinaus, an dem eine einzelne Next.js-Mega-App wartbar bleibt. Turborepo bietet affected-only Builds, transparentes Remote-Caching und eine einzige Quelle der Wahrheit für gemeinsame Design-Tokens, Auth, Billing und Observability."
+          "answer": "Sailor umfasst 10 Apps + 102 gemeinsame Pakete unter packages/*/* + 4 Backend-Lanes (Hono gateway, FastAPI/Python, Go, Rust) — weit über den Punkt hinaus, an dem eine einzelne Next.js-Mega-App wartbar bleibt. Turborepo bietet affected-only Builds, transparentes Remote-Caching und eine einzige Quelle der Wahrheit für gemeinsame Design-Tokens, Auth, Billing und Observability."
         },
         "multi-tenancy": {
           "question": "Wie wird Multi-Tenancy gehandhabt?",
@@ -1676,7 +1676,7 @@
           "label": "unterstützte KI-Anbieter"
         },
         "projects": {
-          "value": "104",
+          "value": "102",
           "label": "Monorepo-Pakete"
         },
         "uptime": {
