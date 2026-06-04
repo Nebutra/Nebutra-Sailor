@@ -9,6 +9,7 @@ Supports: Chat, Embeddings, Reranking, Image Generation
 
 import os
 from collections.abc import AsyncGenerator
+from dataclasses import dataclass
 
 import httpx
 
@@ -108,6 +109,7 @@ SILICONFLOW_MODELS: list[ModelInfo] = [
 ]
 
 
+@dataclass
 class SiliconFlowConfig(ProviderConfig):
     """SiliconFlow specific configuration"""
 

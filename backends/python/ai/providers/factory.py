@@ -59,6 +59,7 @@ def create_provider(
         )
 
     # Create provider-specific config
+    config: ProviderConfig
     if name == "siliconflow":
         config = SiliconFlowConfig(
             api_key=key,

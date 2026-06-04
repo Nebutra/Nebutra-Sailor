@@ -22,8 +22,8 @@ from pydantic import BaseModel, Field
 from _shared.auth import TenantContext, get_tenant
 from _shared.contracts import UsageEvent
 from _shared.usage import dispatch_usage
-from providers.factory import get_default_provider
 from providers.base import ChatCompletionRequest, ChatMessage
+from providers.factory import get_default_provider
 
 router = APIRouter()
 
@@ -65,12 +65,13 @@ class GenerateResponse(BaseModel):
 # ── Shared helper ─────────────────────────────────────────────────────────────
 
 
-def _build_chat_request(req: GenerateRequest, provider_default_model: str) -> ChatCompletionRequest:
+def _build_chat_request(
+    req: GenerateRequest, provider_default_model: str
+) -> ChatCompletionRequest:
     return ChatCompletionRequest(
         model=req.model or provider_default_model,
         messages=[
-            ChatMessage(role=m.role, content=m.content)
-            for m in req.to_messages()
+            ChatMessage(role=m.role, content=m.content) for m in req.to_messages()
         ],
         temperature=req.temperature,
         max_tokens=req.max_tokens,
@@ -184,7 +185,11 @@ async def generate_stream(
             return
 
         duration_ms = (time.perf_counter() - start) * 1000
-        yield f"data: {json.dumps({'delta': '', 'done': True, 'total_tokens': token_estimate})}\n\n"
+        yield (
+            "data: "
+            f"{json.dumps({'delta': '', 'done': True, 'total_tokens': token_estimate})}"
+            "\n\n"
+        )
 
         _dispatch(
             tenant=tenant,

@@ -10,7 +10,7 @@ async def create_embedding(
     text: str,
     model: str | None = None,
 ) -> dict:
-    """Create a text embedding using the configured AI provider (via provider abstraction layer).
+    """Create a text embedding using the configured AI provider.
 
     The default model is resolved from the ``DEFAULT_EMBEDDING_MODEL`` environment
     variable so that callers do not need to hard-code a vendor-specific model name.
