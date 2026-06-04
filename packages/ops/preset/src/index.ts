@@ -18,11 +18,31 @@ export {
   defineConfig,
   FeatureId,
   type NebutraConfig,
+  type NebutraConfigInput,
   NebutraConfigSchema,
   type ResolvedConfig,
   resolveConfig,
   ThemeId,
 } from "./config";
+// Deployment target selector
+export {
+  DEPLOYABLE_SERVICES,
+  type DeployableService,
+  type DeploySurface,
+  type DeployTarget,
+  type DeployTargetEnv,
+  type DeployTargetMap,
+  type DeployTargetOverrides,
+  deployTargetEnvKey,
+  getDefaultDeployTarget,
+  getDefaultDeployTargets,
+  getDeploySurface,
+  isDeployableService,
+  resolveDeployTarget,
+  resolveDeployTargetConfig,
+  resolveDeployTargets,
+  TARGETS_BY_SURFACE,
+} from "./deploy-target";
 // Feature map
 export {
   getActiveApps,

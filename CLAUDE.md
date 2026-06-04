@@ -906,3 +906,34 @@ rg "<SERVICE_NAME>_SERVICE_URL" --type ts -g '!**/node_modules/**' -g '!**/dist/
 ```
 
 Status: as of 2026-05-12, after a follow-up audit, `backends/python/` contains only `_shared` + `ai`. recsys/ecommerce (mock data / broken callers), event-ingest (migrated in-process to gateway), content/web3/third-party (empty stubs) — all removed. The Three-Tier Lifecycle is now structurally enforced, not just documented.
+
+---
+
+## Deployment Target Policy
+
+> See [ADR 2026-06-04 — Production Runtime Closure and Deploy Target Switchability](docs/architecture/2026-06-04-production-runtime-closure.md).
+
+Default production topology:
+
+```text
+Vercel frontends -> Cloudflare Workers gateway -> ECS Origin -> Supabase / Upstash / R2 or OSS
+```
+
+This default is provider-switchable, not provider-locked. Use the per-service
+selectors from `@nebutra/preset/deploy-target`:
+
+| Service | Default | Selector |
+|---|---|---|
+| `web` | `vercel` | `DEPLOY_TARGET_WEB` |
+| `landing-page` | `vercel` | `DEPLOY_TARGET_LANDING_PAGE` |
+| `gateway` | `cloudflare-workers` | `DEPLOY_TARGET_GATEWAY` |
+| `python-ai` | `ecs-docker` | `DEPLOY_TARGET_PYTHON_AI` |
+
+Frontends may switch to `standalone`, `cloudflare-pages`, or `railway` when an
+adapter is intentionally selected. Gateway may switch to `vercel-functions`,
+`ecs-docker`, `k8s`, `aws`, or `railway`. `python-ai` may switch to `k8s`,
+`aws`, or `railway`. The rule is one service, one environment, one active
+target.
+
+`packages/*` do not deploy. They provide domain capabilities consumed by apps,
+the gateway, or the origin backend.

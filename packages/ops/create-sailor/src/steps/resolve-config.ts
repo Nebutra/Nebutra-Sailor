@@ -14,6 +14,7 @@ import type { AuthChoice } from "../utils/auth";
 import { parseSocialLoginFlag, type SocialLoginId } from "../utils/auth-social";
 import type { DocsFramework, NebutraConfig, Region } from "../utils/config";
 import type { DatabaseHostId } from "../utils/database-host-meta";
+import { resolveScaffoldDeployTargets } from "../utils/deploy";
 import { collectPreviewSelections, type PreviewSelection } from "../utils/package-status";
 import type { PaymentChoice } from "../utils/payment";
 import type { WaveFeatureToggles } from "../utils/wave-features";
@@ -54,6 +55,7 @@ export interface ResolvedConfig {
   aiProviders: NebutraConfig["aiProviders"];
   customAiEndpoint: NebutraConfig["customAiEndpoint"];
   deployTarget: NebutraConfig["deployTarget"];
+  deployTargets: NebutraConfig["deployTargets"];
   docs: DocsFramework;
   i18n: boolean;
   email: string;
@@ -356,6 +358,7 @@ export async function resolveConfig(opts: CliOptions, useJson: boolean): Promise
   const accessGate = (opts.accessGate === "invite" ? "invite" : rDefaults.accessGate) as
     | "none"
     | "invite";
+  const deployTargets = resolveScaffoldDeployTargets(deployTarget);
 
   // Wave 3-5 feature toggles — region-aware defaults, flag overrides.
   const waveToggles = resolveWaveFeatureToggles(
@@ -393,6 +396,7 @@ export async function resolveConfig(opts: CliOptions, useJson: boolean): Promise
     aiProviders,
     customAiEndpoint,
     deployTarget,
+    deployTargets,
     docs,
     i18n,
     email,
@@ -436,6 +440,7 @@ export async function resolveConfig(opts: CliOptions, useJson: boolean): Promise
     aiProviders,
     customAiEndpoint,
     deployTarget,
+    deployTargets,
     docs,
     i18n,
     email,

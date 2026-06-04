@@ -1,5 +1,6 @@
 import { resolveProductCapabilities } from "./capabilities";
 import type { ResolvedConfig } from "./config";
+import { DEPLOYABLE_SERVICES, deployTargetEnvKey } from "./deploy-target";
 
 const APP_PACKAGE_MAP: Record<string, string> = {
   web: "@nebutra/web",
@@ -42,6 +43,10 @@ export function getFeatureEnvVars(config: ResolvedConfig): Record<string, string
   vars.NEBUTRA_NOTIFICATIONS_INBOX = String(capabilities.notifications.inbox);
   vars.NEBUTRA_NOTIFICATIONS_PREFERENCES = String(capabilities.notifications.preferences);
   vars.NEBUTRA_NOTIFICATION_CHANNELS = capabilities.notifications.defaultChannels.join(",");
+
+  for (const service of DEPLOYABLE_SERVICES) {
+    vars[deployTargetEnvKey(service)] = config.deployTargets[service];
+  }
 
   return vars;
 }

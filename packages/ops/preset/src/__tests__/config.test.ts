@@ -14,6 +14,9 @@ describe("NebutraConfigSchema", () => {
     expect(result.theme).toBe("nebutra");
     expect(result.locales).toEqual(["en"]);
     expect(result.defaultLocale).toBe("en");
+    expect(result.deployTargets.web).toBe("vercel");
+    expect(result.deployTargets.gateway).toBe("cloudflare-workers");
+    expect(result.deployTargets["python-ai"]).toBe("ecs-docker");
     // defaults = everything enabled
     expect(Object.values(result.apps).every(Boolean)).toBe(true);
     expect(Object.values(result.features).every(Boolean)).toBe(true);
@@ -23,6 +26,7 @@ describe("NebutraConfigSchema", () => {
     const result = NebutraConfigSchema.parse({
       apps: { web: true, blog: false },
       features: { billing: true, web3: false },
+      deployTargets: { gateway: "k8s", "python-ai": "aws" },
       theme: "vibrant",
       locales: ["en", "zh"],
       defaultLocale: "zh",
@@ -32,10 +36,20 @@ describe("NebutraConfigSchema", () => {
     expect(result.defaultLocale).toBe("zh");
     expect(result.apps).toEqual({ web: true, blog: false });
     expect(result.features).toEqual({ billing: true, web3: false });
+    expect(result.deployTargets).toMatchObject({ gateway: "k8s", "python-ai": "aws" });
+    expect(result.deployTargets.web).toBe("vercel");
   });
 
   it("rejects invalid theme", () => {
     expect(() => NebutraConfigSchema.parse({ theme: "nope" })).toThrow();
+  });
+
+  it("rejects deploy targets that are not allowed for a service surface", () => {
+    expect(() =>
+      NebutraConfigSchema.parse({
+        deployTargets: { web: "k8s" },
+      }),
+    ).toThrow(/not allowed/);
   });
 });
 
@@ -103,8 +117,10 @@ describe("defineConfig", () => {
   });
 
   it("accepts partial overrides", () => {
-    const config = defineConfig({ theme: "vibrant" });
+    const config = defineConfig({ theme: "vibrant", deployTargets: { gateway: "aws" } });
     expect(config.theme).toBe("vibrant");
+    expect(config.deployTargets.gateway).toBe("aws");
+    expect(config.deployTargets.web).toBe("vercel");
   });
 
   it("throws on invalid input", () => {

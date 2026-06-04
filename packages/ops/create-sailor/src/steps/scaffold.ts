@@ -23,7 +23,7 @@ import { applyComplianceTemplates } from "../utils/compliance";
 import { writeNebutraConfig } from "../utils/config";
 import { applyDatabaseHostSelection, applyDatabaseSelection } from "../utils/database";
 import { getDatabaseHost } from "../utils/database-host-meta";
-import { applyDeployTarget } from "../utils/deploy";
+import { appendDeployTargetEnv, applyDeployTarget } from "../utils/deploy";
 import { applyDocsTemplate } from "../utils/docs";
 import { applyEmailSelection } from "../utils/email";
 import { injectEnv } from "../utils/env";
@@ -452,7 +452,13 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   if (deployTarget !== "none") {
     await applyDeployTarget(resolvedTarget, deployTarget);
   }
-  emitJson(useJson, { event: "step", step: "deploy-target", status: "ok" });
+  await appendDeployTargetEnv(resolvedTarget, config.deployTargets);
+  emitJson(useJson, {
+    event: "step",
+    step: "deploy-target",
+    status: "ok",
+    targets: config.deployTargets,
+  });
 
   // -- env --
   const envDefaults = {

@@ -1,8 +1,16 @@
 # Deployment Responsibility Split — Design
 
 **Date:** 2026-06-04
-**Status:** Approved (design) — implementation plan to follow
+**Status:** Approved (design) — refined by
+`docs/architecture/2026-06-04-production-runtime-closure.md`
 **Goal:** Unicorn-grade AI-SaaS deployment topology with excellent boilerplate DX, governed the hard-but-right way.
+
+> 2026-06-04 refinement: the production default is now recorded as Vercel
+> frontends → Cloudflare Workers gateway → ECS Origin FastAPI/Celery. Gateway
+> remains provider-switchable (`cloudflare-workers`, `vercel-functions`,
+> `ecs-docker`, `k8s`, `aws`, `railway`), but Cloudflare Workers is the recommended
+> default edge target. Treat older gateway-on-ECS wording in this design as a
+> dormant adapter path, not the long-term default.
 
 ---
 
@@ -65,9 +73,11 @@
 A new **switchable deployment dimension**, modeled exactly like the existing provider abstractions.
 
 ### 4.1 Selector
-- One env/preset key per service: `DEPLOY_TARGET_<SERVICE>` ∈ `{ vercel, standalone, ecs-pm2, k8s, aws }`.
-  - Frontends accept `{ vercel, standalone }`; backends accept `{ ecs-pm2, k8s, aws }`.
-- Defaults (when unset): frontends → `vercel`; backends → `ecs-pm2`.
+- One env/preset key per service: `DEPLOY_TARGET_<SERVICE>`.
+  - Frontends accept `{ vercel, standalone, cloudflare-pages, railway }`.
+  - `gateway` accepts `{ cloudflare-workers, vercel-functions, ecs-docker, k8s, aws, railway }`.
+  - `python-ai` accepts `{ ecs-docker, k8s, aws, railway }`.
+  - Defaults (when unset): frontends → `vercel`; `gateway` → `cloudflare-workers`; `python-ai` → `ecs-docker`.
 - Surfaced through the existing **preset system** (`packages/ops/preset`) so a scaffold picks a coherent set; documented in one place.
 
 ### 4.2 Adapters (all retained, only one active)

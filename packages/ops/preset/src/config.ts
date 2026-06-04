@@ -1,5 +1,10 @@
 import { THEME_IDS as BUILT_IN_THEME_IDS, isThemeId } from "@nebutra/theme/registry";
 import { z } from "zod";
+import {
+  type DeployTargetMap,
+  getDefaultDeployTargets,
+  resolveDeployTargetConfig,
+} from "./deploy-target";
 
 // ─── Enum Schemas ───
 
@@ -45,6 +50,21 @@ export const ApiProtocolId = z.enum(["rest", "orpc", "trpc"]);
 
 export const AuthProviderId = z.enum(["clerk", "better-auth", "nextauth", "supabase"]);
 
+const DeployTargetsSchema = z
+  .record(z.string(), z.string())
+  .default(getDefaultDeployTargets())
+  .transform((value, ctx): DeployTargetMap => {
+    try {
+      return resolveDeployTargetConfig(value);
+    } catch (error) {
+      ctx.addIssue({
+        code: "custom",
+        message: error instanceof Error ? error.message : String(error),
+      });
+      return z.NEVER;
+    }
+  });
+
 // ─── Defaults (everything on — the former "full" baseline) ───
 
 const DEFAULT_APPS: Record<z.infer<typeof AppId>, boolean> = {
@@ -85,9 +105,11 @@ export const NebutraConfigSchema = z.object({
   defaultLocale: z.string().default("en"),
   apiProtocols: z.array(ApiProtocolId).default(["rest"]),
   authProvider: AuthProviderId.default("clerk"),
+  deployTargets: DeployTargetsSchema,
 });
 
 export type NebutraConfig = z.infer<typeof NebutraConfigSchema>;
+export type NebutraConfigInput = z.input<typeof NebutraConfigSchema>;
 
 // ─── Resolved Config ───
 
@@ -99,11 +121,12 @@ export interface ResolvedConfig {
   defaultLocale: string;
   apiProtocols: z.infer<typeof ApiProtocolId>[];
   authProvider: z.infer<typeof AuthProviderId>;
+  deployTargets: DeployTargetMap;
 }
 
 // ─── Public API ───
 
-export function defineConfig(config: Partial<NebutraConfig>): NebutraConfig {
+export function defineConfig(config: NebutraConfigInput): NebutraConfig {
   return NebutraConfigSchema.parse(config);
 }
 
@@ -116,5 +139,6 @@ export function resolveConfig(config: NebutraConfig): ResolvedConfig {
     defaultLocale: config.defaultLocale,
     apiProtocols: config.apiProtocols,
     authProvider: config.authProvider,
+    deployTargets: config.deployTargets,
   };
 }

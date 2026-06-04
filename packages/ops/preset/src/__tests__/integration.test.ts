@@ -1,10 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  defineConfig,
-  getActiveApps,
-  getFeatureEnvVars,
-  resolveConfig,
-} from "../index";
+import { defineConfig, getActiveApps, getFeatureEnvVars, resolveConfig } from "../index";
 
 describe("config → theme integration", () => {
   it("default config resolves to a valid theme", () => {
@@ -39,6 +34,11 @@ describe("config → theme integration", () => {
 
     // Locales
     expect(envVars.NEBUTRA_LOCALES).toBe("en,zh");
+
+    // Deploy targets
+    expect(envVars.DEPLOY_TARGET_WEB).toBe("vercel");
+    expect(envVars.DEPLOY_TARGET_GATEWAY).toBe("cloudflare-workers");
+    expect(envVars.DEPLOY_TARGET_PYTHON_AI).toBe("ecs-docker");
   });
 
   it("user overrides merge correctly on top of defaults", () => {
@@ -57,5 +57,22 @@ describe("config → theme integration", () => {
     expect(resolved.features.ai).toBe(false);
     // Override: theme=vibrant
     expect(resolved.theme).toBe("vibrant");
+  });
+
+  it("preserves provider-switchable deploy target overrides through config to env vars", () => {
+    const config = defineConfig({
+      deployTargets: {
+        gateway: "k8s",
+        "python-ai": "aws",
+      },
+    });
+    const resolved = resolveConfig(config);
+    const envVars = getFeatureEnvVars(resolved);
+
+    expect(resolved.deployTargets.gateway).toBe("k8s");
+    expect(resolved.deployTargets["python-ai"]).toBe("aws");
+    expect(resolved.deployTargets.web).toBe("vercel");
+    expect(envVars.DEPLOY_TARGET_GATEWAY).toBe("k8s");
+    expect(envVars.DEPLOY_TARGET_PYTHON_AI).toBe("aws");
   });
 });

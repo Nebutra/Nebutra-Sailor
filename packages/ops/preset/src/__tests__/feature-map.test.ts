@@ -34,6 +34,14 @@ const mockConfig: ResolvedConfig = {
   defaultLocale: "en",
   apiProtocols: ["rest"],
   authProvider: "clerk",
+  deployTargets: {
+    web: "vercel",
+    "landing-page": "vercel",
+    "design-docs": "vercel",
+    "sailor-docs": "vercel",
+    gateway: "cloudflare-workers",
+    "python-ai": "ecs-docker",
+  },
 };
 
 describe("getFeatureEnvVars", () => {
@@ -51,6 +59,14 @@ describe("getFeatureEnvVars", () => {
     expect(vars.NEBUTRA_THEME).toBe("nebutra");
     expect(vars.NEBUTRA_LOCALES).toBe("en");
     expect(vars.NEBUTRA_DEFAULT_LOCALE).toBe("en");
+  });
+
+  it("includes deployment target vars for provider-switchable DX", () => {
+    const vars = getFeatureEnvVars(mockConfig);
+    expect(vars.DEPLOY_TARGET_WEB).toBe("vercel");
+    expect(vars.DEPLOY_TARGET_LANDING_PAGE).toBe("vercel");
+    expect(vars.DEPLOY_TARGET_GATEWAY).toBe("cloudflare-workers");
+    expect(vars.DEPLOY_TARGET_PYTHON_AI).toBe("ecs-docker");
   });
 });
 

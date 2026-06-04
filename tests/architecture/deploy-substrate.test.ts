@@ -3,14 +3,13 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
- * Single-active-substrate governance.
+ * Legacy deploy-workflow governance.
  *
- * deploy-ecs.yml (Aliyun ECS / PM2) is the DEFAULT-ACTIVE backend substrate.
- * The Kubernetes path (deploy.yml) must stay DORMANT on the automatic
- * `workflow_run` trigger unless the repo variable DEPLOY_TARGET == 'k8s', so no
- * service is auto-deployed to two substrates at once (the drift behind
- * #141-class incidents, where gateway/landing deployed to ECS + k8s + Vercel
- * simultaneously). Manual `workflow_dispatch` may still override intentionally.
+ * The target contract now lives in `@nebutra/preset/deploy-target` and
+ * `docs/architecture/2026-06-04-production-runtime-closure.md`: gateway defaults
+ * to Cloudflare Workers but remains provider-switchable. This file only guards
+ * the legacy Kubernetes auto-trigger while workflow migration is still in
+ * progress. Manual `workflow_dispatch` may still override intentionally.
  *
  * This test fails if someone removes the substrate gate and reintroduces the
  * double-deploy.
@@ -40,10 +39,10 @@ describe("Deploy substrate governance", () => {
     ).toBe(true);
   });
 
-  it("ECS (deploy-ecs.yml) remains the default-active substrate (not DEPLOY_TARGET-gated off)", () => {
+  it("legacy ECS workflow is still visible as the current migration bridge", () => {
     const yml = read("deploy-ecs.yml");
-    // ECS is the default backend path: it must NOT require DEPLOY_TARGET to run,
-    // otherwise no substrate would be active by default.
+    // This assertion documents current workflow reality only. The desired
+    // long-term contract is per-service `DEPLOY_TARGET_*` gating.
     expect(yml).not.toContain("vars.DEPLOY_TARGET == 'ecs");
   });
 });

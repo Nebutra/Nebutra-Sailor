@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { ScaffoldDeployTargetMap } from "./deploy";
 
 export interface CustomEndpoint {
   name: string;
@@ -35,6 +36,7 @@ export interface NebutraConfig {
   aiProviders: string[];
   customAiEndpoint?: CustomEndpoint;
   deployTarget: "vercel" | "railway" | "cloudflare" | "selfhost" | "none";
+  deployTargets: ScaffoldDeployTargetMap;
   i18n: boolean;
   docs?: DocsFramework;
   email?: string;

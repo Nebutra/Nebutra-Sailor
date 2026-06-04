@@ -10,6 +10,15 @@
 
 **Reference design:** `docs/plans/2026-06-04-deployment-responsibility-split-design.md`
 
+**2026-06-04 refinement:** `docs/architecture/2026-06-04-production-runtime-closure.md`
+is now the authoritative runtime closure. Gateway defaults to
+`cloudflare-workers` but remains provider-switchable (`vercel-functions`,
+`ecs-docker`, `k8s`, `aws`, `railway`). Frontends may also switch to
+`cloudflare-pages` or `railway`. `python-ai` defaults to `ecs-docker`. The old
+`gateway`-as-default-ECS-backend framing is now a dormant adapter path, not the
+target default. Phase 5.1 (`idp` to `@nebutra/cache`) is dropped because OIDC
+state storage needs full Redis semantics.
+
 ---
 
 ## Pre-flight (read before starting)
