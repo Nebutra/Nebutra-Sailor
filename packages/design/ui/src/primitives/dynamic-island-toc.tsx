@@ -44,8 +44,10 @@ const islandTween: Transition = {
   duration: motionDurationSec.cinematic, // 500ms — shape morph reads as cinematic
 };
 
-const PILL_W_CLOSED = 280;
+const PILL_W_CLOSED = 280; // minimum closed width; grows to fit the active title
 const PILL_W_OPEN = 340;
+const PILL_W_MAX = 560; // hard cap — a longer title ellipsizes instead of spanning the screen
+const PILL_CHROME_W = 104; // status dot + flex gaps + horizontal padding + progress ring
 const PILL_H_CLOSED = 52;
 const PILL_H_OPEN = 400;
 const PILL_R_CLOSED = 26;
@@ -434,9 +436,11 @@ export function DynamicIslandTOC({
   });
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [pillWidths, setPillWidths] = useState({ closed: PILL_W_CLOSED, open: PILL_W_OPEN });
 
   const pillButtonRef = useRef<HTMLButtonElement | null>(null);
   const firstMenuItemRef = useRef<HTMLButtonElement | null>(null);
+  const titleSizerRef = useRef<HTMLSpanElement | null>(null);
 
   // 1. DOM scan — immediate, with MutationObserver fallback for hydration races.
   useEffect(() => {
@@ -529,6 +533,35 @@ export function DynamicIslandTOC({
   // Normalize indentation so the highest-level heading touches the left edge.
   const minLevel = headings.length === 0 ? 1 : Math.min(...headings.map((h) => h.level));
 
+  // 5. Closed pill grows to fit the active title's natural width, clamped to a
+  //    responsive max. A ResizeObserver on the off-screen sizer re-measures
+  //    whenever the active title (and thus the sizer's width) changes — a
+  //    discrete, smooth morph rather than continuous scroll jitter.
+  useEffect(() => {
+    const sizer = titleSizerRef.current;
+    if (!sizer) return;
+    const measure = () => {
+      const textWidth = sizer.getBoundingClientRect().width;
+      const maxClosed = Math.min(window.innerWidth - 32, PILL_W_MAX);
+      const closed = Math.max(
+        PILL_W_CLOSED,
+        Math.min(maxClosed, Math.ceil(textWidth) + PILL_CHROME_W),
+      );
+      const open = Math.max(PILL_W_OPEN, closed);
+      setPillWidths((prev) =>
+        prev.closed === closed && prev.open === open ? prev : { closed, open },
+      );
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(sizer);
+    window.addEventListener("resize", measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
   function handleJump(h: HeadingData) {
     const y = h.element.getBoundingClientRect().top + window.scrollY - SCROLL_TOP_OFFSET;
     window.scrollTo({ top: y, behavior: reduceMotion ? "auto" : "smooth" });
@@ -540,7 +573,7 @@ export function DynamicIslandTOC({
   const pillAnimate = reduceMotion
     ? { opacity: 1 }
     : {
-        width: isExpanded ? PILL_W_OPEN : PILL_W_CLOSED,
+        width: isExpanded ? pillWidths.open : pillWidths.closed,
         height: isExpanded ? PILL_H_OPEN : PILL_H_CLOSED,
         borderRadius: isExpanded ? PILL_R_OPEN : PILL_R_CLOSED,
       };
@@ -562,6 +595,16 @@ export function DynamicIslandTOC({
         )}
       >
         <TocBackdrop isExpanded={isExpanded} onClose={() => setIsExpanded(false)} />
+
+        {/* Off-screen sizer — measures the active title's natural width so the closed
+            pill can grow to fit it. Mirrors the visible label's typography exactly. */}
+        <span
+          ref={titleSizerRef}
+          aria-hidden="true"
+          className="pointer-events-none invisible fixed left-0 top-0 -z-[1] whitespace-nowrap text-sm font-medium"
+        >
+          {activeHeading?.text || emptyLabel}
+        </span>
 
         {/* Pill entrance + morph wrapper */}
         <m.div
