@@ -639,6 +639,37 @@ const db = withRls(prisma, tenant.tenantId);
 
 ---
 
+## Data Access — Repository Seam (lint-enforced, incremental)
+
+Direct Prisma query access (`db.<model>.findMany()`, `$transaction`, `$queryRaw`, …)
+belongs ONLY inside the **data-access seam**. Everything else (routes, services,
+jobs, UI) goes through a repository from `@nebutra/repositories`. This keeps the
+ORM swappable (Prisma → Drizzle, or anything) without a big-bang rewrite — a
+future swap re-implements repositories, not the whole app.
+
+**The seam** (may touch the Prisma client directly): `packages/platform/repositories/**`
+and `packages/platform/db/**`.
+
+```ts
+// ✅ Correct — route/service depends on the repository seam
+import { UserRepository } from "@nebutra/repositories";
+import { getTenantDb } from "@nebutra/db";
+const users = new UserRepository(getTenantDb(tenantId));
+await users.findPaginated({ take: 20 });
+
+// ❌ Wrong — direct Prisma query outside the seam
+await getTenantDb(tenantId).user.findMany();
+```
+
+**Shrink-only ratchet** (`scripts/lint-repository-seam.mjs`, wired into `pnpm lint`):
+new files that bypass the seam **fail CI**; the ~29 existing bypasses are tracked
+in `KNOWN_SEAM_BYPASS` and migrated **on-touch** — when you next edit one, route
+its data access through a repository (create one in `@nebutra/repositories` if the
+entity has none) and delete its entry. The list may only shrink. Legitimate
+raw-SQL/migration/store cases use a top-level `// @seam-exempt: <reason>` comment.
+
+---
+
 ## What NOT to do
 
 ```tsx
