@@ -4120,6 +4120,9 @@ importers:
       '@upstash/redis':
         specifier: ^1.36.3
         version: 1.36.3
+      p-limit:
+        specifier: ^7.3.0
+        version: 7.3.0
     devDependencies:
       '@types/node':
         specifier: ^22.19.15

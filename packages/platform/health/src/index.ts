@@ -7,6 +7,8 @@
  * - External service availability
  */
 
+import pLimit from "p-limit";
+
 export interface HealthCheckResult {
   status: "healthy" | "degraded" | "unhealthy";
   timestamp: string;
@@ -186,23 +188,28 @@ export function createMemoryCheck(thresholdMB: number = 512): HealthChecker {
 // Main Health Check Runner
 // ============================================
 
+const HEALTH_CHECK_CONCURRENCY = 8;
+
 export async function runHealthChecks(
   additionalCheckers: HealthChecker[] = [],
 ): Promise<HealthCheckResult> {
   const allCheckers = [...checkers, ...additionalCheckers];
   const results: HealthCheckResult["checks"] = {};
+  const limit = pLimit(HEALTH_CHECK_CONCURRENCY);
 
   await Promise.all(
-    allCheckers.map(async (checker) => {
-      try {
-        results[checker.name] = await checker.check();
-      } catch (error) {
-        results[checker.name] = {
-          status: "fail",
-          message: error instanceof Error ? error.message : "Check threw exception",
-        };
-      }
-    }),
+    allCheckers.map((checker) =>
+      limit(async () => {
+        try {
+          results[checker.name] = await checker.check();
+        } catch (error) {
+          results[checker.name] = {
+            status: "fail",
+            message: error instanceof Error ? error.message : "Check threw exception",
+          };
+        }
+      }),
+    ),
   );
 
   // Determine overall status
