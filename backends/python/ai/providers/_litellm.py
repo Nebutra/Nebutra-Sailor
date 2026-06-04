@@ -55,8 +55,7 @@ def _openai_route(model: str) -> str:
 
 def _messages_to_dicts(request: ChatCompletionRequest) -> list[dict[str, Any]]:
     return [
-        {"role": m.role, "content": m.content, "name": m.name}
-        for m in request.messages
+        {"role": m.role, "content": m.content, "name": m.name} for m in request.messages
     ]
 
 
@@ -179,9 +178,7 @@ def _adapt_chat_response(response: Any) -> ChatCompletionResponse:
         finish_reason=choice.finish_reason,
         usage={
             "prompt_tokens": getattr(usage, "prompt_tokens", 0) if usage else 0,
-            "completion_tokens": getattr(usage, "completion_tokens", 0)
-            if usage
-            else 0,
+            "completion_tokens": getattr(usage, "completion_tokens", 0) if usage else 0,
             "total_tokens": getattr(usage, "total_tokens", 0) if usage else 0,
         },
         tool_calls=tool_calls,
@@ -219,6 +216,7 @@ async def embedding(
             "total_tokens": getattr(usage, "total_tokens", 0) if usage else 0,
         },
     )
+
 
 # NOTE: reranking is intentionally NOT delegated to litellm. SiliconFlow's
 # /rerank returns ``document`` as an object ({"text": ...} / {"image": ...})

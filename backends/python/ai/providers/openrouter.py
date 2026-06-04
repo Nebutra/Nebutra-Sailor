@@ -254,9 +254,10 @@ OPENROUTER_VARIANTS = {
 class OpenRouterProvider(BaseProvider):
     """OpenRouter unified API provider"""
 
+    config: OpenRouterConfig
+
     def __init__(self, config: OpenRouterConfig):
-        self._config = config
-        self._validate_api_key()
+        super().__init__(config)
 
         self.base_url = config.base_url or OPENROUTER_BASE_URL
 
@@ -288,10 +289,6 @@ class OpenRouterProvider(BaseProvider):
             "vision",
             "reasoning",
         }
-
-    @property
-    def config(self) -> OpenRouterConfig:
-        return self._config
 
     @property
     def name(self) -> str:
@@ -389,7 +386,7 @@ class OpenRouterProvider(BaseProvider):
     # ============================================
 
     async def embed(self, request: EmbeddingRequest) -> EmbeddingResponse:
-        """Create embeddings via OpenRouter (delegated to litellm openai-compatible route).
+        """Create embeddings via OpenRouter.
 
         OpenRouter's ``/embeddings`` endpoint is OpenAI wire-protocol compatible.
         Routing through litellm keeps the same error-handling, retry, and usage
