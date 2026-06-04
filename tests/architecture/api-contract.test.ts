@@ -197,9 +197,12 @@ describe("Property 5b: OpenAPI Spec File", () => {
         for (const [code, resp] of Object.entries(op.responses)) {
           if (code !== "200" && code !== "201") continue;
           const key = `${method.toUpperCase()} ${path} ${code}`;
-          const hasJson =
-            !!resp.content && Object.hasOwn(resp.content as object, "application/json");
-          if (!hasJson && !KNOWN_JSON_CONTENT_DEBT.has(key)) {
+          const declaredContent =
+            resp.content && typeof resp.content === "object" ? (resp.content as object) : null;
+          const hasJson = !!declaredContent && Object.hasOwn(declaredContent, "application/json");
+          const declaresNonJsonContent =
+            !!declaredContent && Object.keys(declaredContent).length > 0;
+          if (!hasJson && !declaresNonJsonContent && !KNOWN_JSON_CONTENT_DEBT.has(key)) {
             newDrift.push(key);
           }
           if (hasJson && KNOWN_JSON_CONTENT_DEBT.has(key)) {

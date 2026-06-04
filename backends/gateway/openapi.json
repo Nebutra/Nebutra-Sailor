@@ -2394,7 +2394,95 @@
         },
         "responses": {
           "202": {
-            "description": "Task envelope"
+            "description": "Task envelope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
+                    },
+                    "progress": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "queue": {
+                      "type": "string"
+                    },
+                    "priority": {
+                      "type": "string",
+                      "enum": ["low", "normal", "high"]
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    },
+                    "result": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    },
+                    "dispatcher_provider": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "provider_job_id": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "started_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "date-time"
+                    },
+                    "completed_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type",
+                    "status",
+                    "progress",
+                    "queue",
+                    "priority",
+                    "metadata",
+                    "result",
+                    "error",
+                    "dispatcher_provider",
+                    "provider_job_id",
+                    "created_at",
+                    "updated_at",
+                    "started_at",
+                    "completed_at"
+                  ]
+                }
+              }
+            }
           },
           "401": {
             "description": "Authentication required"
@@ -2403,7 +2491,20 @@
             "description": "Organization membership required"
           },
           "503": {
-            "description": "Task origin unavailable"
+            "description": "Task origin unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
@@ -2427,7 +2528,16 @@
         ],
         "responses": {
           "200": {
-            "description": "Server-sent task events"
+            "description": "Server-sent task events",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "Server-sent events stream; each task event carries a TaskEnvelope JSON payload.",
+                  "example": "event: task\ndata: {\"id\":\"task_1\",\"type\":\"document.parse\",\"status\":\"running\",\"progress\":50}\n\n"
+                }
+              }
+            }
           },
           "401": {
             "description": "Authentication required"
@@ -2436,7 +2546,20 @@
             "description": "Organization membership required"
           },
           "503": {
-            "description": "Task origin unavailable"
+            "description": "Task origin unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
@@ -2460,7 +2583,95 @@
         ],
         "responses": {
           "200": {
-            "description": "Task envelope"
+            "description": "Task envelope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
+                    },
+                    "progress": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "queue": {
+                      "type": "string"
+                    },
+                    "priority": {
+                      "type": "string",
+                      "enum": ["low", "normal", "high"]
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    },
+                    "result": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    },
+                    "dispatcher_provider": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "provider_job_id": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "started_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "date-time"
+                    },
+                    "completed_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type",
+                    "status",
+                    "progress",
+                    "queue",
+                    "priority",
+                    "metadata",
+                    "result",
+                    "error",
+                    "dispatcher_provider",
+                    "provider_job_id",
+                    "created_at",
+                    "updated_at",
+                    "started_at",
+                    "completed_at"
+                  ]
+                }
+              }
+            }
           },
           "401": {
             "description": "Authentication required"
@@ -2472,7 +2683,20 @@
             "description": "Task not found"
           },
           "503": {
-            "description": "Task origin unavailable"
+            "description": "Task origin unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
@@ -2496,7 +2720,95 @@
         ],
         "responses": {
           "200": {
-            "description": "Task envelope"
+            "description": "Task envelope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["queued", "running", "succeeded", "failed", "cancelled"]
+                    },
+                    "progress": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "queue": {
+                      "type": "string"
+                    },
+                    "priority": {
+                      "type": "string",
+                      "enum": ["low", "normal", "high"]
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    },
+                    "result": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    },
+                    "error": {
+                      "type": "object",
+                      "nullable": true,
+                      "additionalProperties": {}
+                    },
+                    "dispatcher_provider": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "provider_job_id": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "started_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "date-time"
+                    },
+                    "completed_at": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type",
+                    "status",
+                    "progress",
+                    "queue",
+                    "priority",
+                    "metadata",
+                    "result",
+                    "error",
+                    "dispatcher_provider",
+                    "provider_job_id",
+                    "created_at",
+                    "updated_at",
+                    "started_at",
+                    "completed_at"
+                  ]
+                }
+              }
+            }
           },
           "401": {
             "description": "Authentication required"
@@ -2508,7 +2820,20 @@
             "description": "Task not found"
           },
           "503": {
-            "description": "Task origin unavailable"
+            "description": "Task origin unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
