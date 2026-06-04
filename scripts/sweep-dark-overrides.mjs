@@ -22,8 +22,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 const ROOTS = ["apps/web/src", "apps/landing-page/src", "packages/design"];
 
 const NEEDLES = [
-  // dark:<chain>:<prop>-white(/N)?
-  /\bdark:(?:[a-z][a-z0-9-]*(?:\/[a-z0-9-]+)?:)*(?:bg|text|border|fill|stroke|divide|ring)-white(?:\/(?:\d+|\[[^\]\s"']+\]))?\b/g,
+  // dark:<chain>:<prop>-white(/N)?  — `\b` sits right after `white` (NOT after the
+  // optional opacity) so a bracket opacity like `/[0.03]` is fully consumed. A
+  // trailing `\b` would fail when `]` is followed by a space (both non-word),
+  // backtracking to drop only `dark:bg-white` and orphaning `/[0.03]`.
+  /\bdark:(?:[a-z][a-z0-9-]*(?:\/[a-z0-9-]+)?:)*(?:bg|text|border|fill|stroke|divide|ring)-white\b(?:\/(?:\d+|\[[^\]\s"']+\]))?/g,
   // dark:bg-neutral-12 (the invisible-popover bug)
   /\bdark:bg-neutral-12\b(?!\/)/g,
 ];
@@ -35,13 +38,17 @@ const files = execSync(
   .split("\n")
   .filter(Boolean);
 
-// Repair pass: orphan opacity fragments like `bg-neutral-1/[0.02]` produced
-// when an earlier sweep didn't consume the bracket part of `dark:bg-white/[0.02]`.
-// HEAD has zero legitimate occurrences of `<color-scale-N>/[fraction]` shape
-// (audited 2026-05-30), so we strip every chained `/[fraction]` that trails a
-// scale-N color utility.
+// Repair pass: orphan opacity fragments like `bg-neutral-1/[0.02]` or the
+// spacing-glued `py-3/[0.03]` produced when an earlier (buggy) sweep didn't
+// consume the bracket part of `dark:bg-white/[0.02]`. The needle above now
+// consumes it fully, so new runs never create orphans — this pass only heals
+// leftovers from older runs.
+//   • color-scale tokens: HEAD has zero legitimate `<scale-N>/[fraction]`
+//     (audited 2026-05-30).
+//   • spacing/layout utilities (p-*, m-*, gap-*): never legitimately take an
+//     opacity fraction, so any trailing `/[fraction]` is always an orphan.
 const ORPHAN_BRACKET =
-  /(\b(?:neutral|primary|secondary|background|foreground|muted|accent|destructive|sidebar|popover|card|ring|border|input)-\d+(?:\/\d+)?)(?:\/\[[0-9.]+\])+/g;
+  /(\b(?:neutral|primary|secondary|background|foreground|muted|accent|destructive|sidebar|popover|card|ring|border|input)-\d+(?:\/\d+)?|\b(?:p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap|gap-x|gap-y|space-x|space-y)-[0-9.]+)(?:\/\[[0-9.]+\])+/g;
 
 let touched = 0;
 let removed = 0;
