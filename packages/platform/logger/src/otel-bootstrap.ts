@@ -28,7 +28,7 @@ import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { BatchSpanProcessor, type SpanExporter } from "@opentelemetry/sdk-trace-base";
 import { LangfuseExporter } from "langfuse-vercel";
-import { logger } from "./logger";
+import { logger } from "./logger.js";
 
 // `BatchSpanProcessor` / `OTLPTraceExporter` may resolve to different
 // `@opentelemetry/sdk-trace-base` major versions (v1 vs v2) depending on the

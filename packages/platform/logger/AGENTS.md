@@ -46,8 +46,9 @@ files above instead of preserving outdated docs.
 ## Generated And Derived Files
 
 - `tsconfig.tsbuildinfo` is derived compiler output. Do not edit it by hand.
-- This package currently exports source directly and has no checked-in
-  generated source of truth.
+- This package builds `dist/` for runtime package exports. Do not point
+  `main`, `types`, or `exports` back to `src/*.ts` unless the package files
+  policy changes with it.
 - If build or telemetry-generated artifacts are introduced later, update the
   source files above rather than patching derived output.
 

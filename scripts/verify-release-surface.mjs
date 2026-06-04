@@ -15,6 +15,10 @@ const failures = [
   ...diagnostics.requiredMetadataMissing.map(
     (entry) => `${entry.packageName} is missing ${entry.field}; expected ${entry.expected}`,
   ),
+  ...diagnostics.manifestRuntimeFilesExcludedByFiles.map(
+    (entry) =>
+      `${entry.packageName} manifest references ${entry.reference}, but package files only include ${entry.files.join(", ")} (${entry.packageDir})`,
+  ),
 ];
 
 console.log(

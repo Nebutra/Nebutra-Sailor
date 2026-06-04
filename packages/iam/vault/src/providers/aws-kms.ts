@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { DecryptCommand, GenerateDataKeyCommand, KMSClient } from "@aws-sdk/client-kms";
 import { logger } from "@nebutra/logger";
-import { aesDecrypt, aesEncrypt, fromBase64, toBase64 } from "../crypto";
-import type { AWSKMSProviderConfig, EncryptedSecret, VaultProvider } from "../types";
+import { aesDecrypt, aesEncrypt, fromBase64, toBase64 } from "../crypto.js";
+import type { AWSKMSProviderConfig, EncryptedSecret, VaultProvider } from "../types.js";
 
 // =============================================================================
 // AWS KMS Vault Provider

@@ -45,6 +45,10 @@ describe("release surface governance", () => {
     expect(diagnostics.requiredMetadataMissing).toEqual([]);
   });
 
+  it("does not declare runtime entrypoints that package files exclude", () => {
+    expect(diagnostics.manifestRuntimeFilesExcludedByFiles).toEqual([]);
+  });
+
   it("publishes registry packages under MIT", () => {
     const nonMitPackages = diagnostics.publishable
       .filter((entry) => entry.manifest.license !== "MIT")

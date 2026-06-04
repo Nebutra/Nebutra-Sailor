@@ -1,5 +1,5 @@
-import { getVault } from "./factory";
-import type { EncryptedSecret } from "./types";
+import { getVault } from "./factory.js";
+import type { EncryptedSecret } from "./types.js";
 
 // =============================================================================
 // JSON envelope helpers — convenience wrappers around getVault().encrypt/decrypt

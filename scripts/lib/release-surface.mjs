@@ -68,6 +68,61 @@ export function readChangesetPackageNames(root = process.cwd()) {
   return names.sort((a, b) => a.packageName.localeCompare(b.packageName));
 }
 
+function collectManifestFileReferences(value, out = []) {
+  if (typeof value === "string") {
+    if (value.startsWith("./")) {
+      out.push(value);
+    }
+    return out;
+  }
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      collectManifestFileReferences(item, out);
+    }
+    return out;
+  }
+
+  if (value && typeof value === "object") {
+    for (const item of Object.values(value)) {
+      collectManifestFileReferences(item, out);
+    }
+  }
+
+  return out;
+}
+
+function normalizePackageFileReference(reference) {
+  return reference.replace(/^\.\//, "").replace(/[?#].*$/, "");
+}
+
+function fileReferenceIncludedByFiles(reference, files) {
+  const normalized = normalizePackageFileReference(reference);
+
+  if (normalized === "package.json") {
+    return true;
+  }
+
+  for (const entry of files) {
+    const normalizedEntry = String(entry).replace(/^\.\//, "").replace(/\/$/, "");
+    if (!normalizedEntry) continue;
+
+    if (normalizedEntry.includes("*")) {
+      const prefix = normalizedEntry.split("*")[0] ?? "";
+      if (prefix && normalized.startsWith(prefix)) {
+        return true;
+      }
+      continue;
+    }
+
+    if (normalized === normalizedEntry || normalized.startsWith(`${normalizedEntry}/`)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export function getReleaseSurfaceDiagnostics(root = process.cwd()) {
   const packages = readWorkspacePackages(root);
   const byName = new Map(packages.map((entry) => [entry.manifest.name, entry]));
@@ -123,6 +178,32 @@ export function getReleaseSurfaceDiagnostics(root = process.cwd()) {
     }
   }
 
+  const manifestRuntimeFilesExcludedByFiles = [];
+  for (const entry of publishable) {
+    const files = entry.manifest.files;
+    if (!Array.isArray(files) || files.length === 0) {
+      continue;
+    }
+
+    const references = [
+      ...collectManifestFileReferences(entry.manifest.main),
+      ...collectManifestFileReferences(entry.manifest.module),
+      ...collectManifestFileReferences(entry.manifest.types),
+      ...collectManifestFileReferences(entry.manifest.exports),
+    ];
+
+    for (const reference of new Set(references)) {
+      if (!fileReferenceIncludedByFiles(reference, files)) {
+        manifestRuntimeFilesExcludedByFiles.push({
+          packageName: entry.manifest.name,
+          reference,
+          files,
+          packageDir: entry.relativeDir,
+        });
+      }
+    }
+  }
+
   return {
     packageCount: packages.length,
     publishableCount: publishable.length,
@@ -131,5 +212,6 @@ export function getReleaseSurfaceDiagnostics(root = process.cwd()) {
     missingChangesetPackages,
     privateRuntimeDependencies,
     requiredMetadataMissing,
+    manifestRuntimeFilesExcludedByFiles,
   };
 }

@@ -1,5 +1,5 @@
 import { logger } from "@nebutra/logger";
-import type { VaultConfig, VaultProvider, VaultProviderType } from "./types";
+import type { VaultConfig, VaultProvider, VaultProviderType } from "./types.js";
 
 // =============================================================================
 // Vault Factory — Provider-agnostic secrets vault creation
@@ -68,7 +68,7 @@ export async function createVault(config?: VaultConfig): Promise<VaultProvider> 
 
   switch (providerType) {
     case "aws-kms": {
-      const { AWSKMSProvider } = await import("./providers/aws-kms");
+      const { AWSKMSProvider } = await import("./providers/aws-kms.js");
       const kmsConfig = config as Exclude<VaultConfig, { provider: "local" }> | undefined;
       return new AWSKMSProvider({
         provider: "aws-kms",
@@ -80,7 +80,7 @@ export async function createVault(config?: VaultConfig): Promise<VaultProvider> 
     }
 
     case "local": {
-      const { LocalProvider } = await import("./providers/local");
+      const { LocalProvider } = await import("./providers/local.js");
       const localConfig = config as Exclude<VaultConfig, { provider: "aws-kms" }> | undefined;
       return new LocalProvider({
         provider: "local",

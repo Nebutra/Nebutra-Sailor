@@ -9,7 +9,7 @@
  * Loaded lazily — if `@sentry/node` is not installed in the host app, the
  * transport silently no-ops rather than throwing.
  */
-import type { Meta } from "./types";
+import type { Meta } from "./types.js";
 
 type SentryLike = {
   captureException: (err: unknown, ctx?: { extra?: Record<string, unknown> }) => void;

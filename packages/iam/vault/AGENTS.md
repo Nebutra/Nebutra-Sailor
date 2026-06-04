@@ -45,8 +45,9 @@ storage workflows or remote secret discovery.
 
 ## Generated And Derived Files
 
-- This package currently exports source files directly and has no checked-in
-  generated source of truth.
+- This package builds `dist/` for runtime package exports. Do not point
+  `main`, `types`, or `exports` back to `src/*.ts` unless the package files
+  policy changes with it.
 - Do not hand-edit transient encrypted payload dumps or ad hoc build artifacts.
 - If the public surface changes, update `package.json` and the source files
   above instead of patching derived output.
@@ -55,4 +56,3 @@ storage workflows or remote secret discovery.
 
 - Package contract changes:
   `pnpm --filter @nebutra/vault typecheck`
-
