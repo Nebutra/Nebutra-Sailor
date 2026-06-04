@@ -48,6 +48,7 @@
     "@nebutra/logger": "workspace:*",
     "@nebutra/search": "workspace:*",
     "@nebutra/tenant-store": "workspace:*",
+    "p-timeout": "^7.0.1",
     "zod": "catalog:"
   },
   "devDependencies": {
