@@ -10,6 +10,10 @@
     "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
     "directory": "packages/design/fonts"
   },
+  "files": [
+    "src/index.ts",
+    "src/next.ts"
+  ],
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

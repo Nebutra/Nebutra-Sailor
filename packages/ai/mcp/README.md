@@ -1,10 +1,22 @@
 # @nebutra/mcp
 
-Status: **WIP**
+Model Context Protocol primitives for Nebutra agent and tool surfaces.
 
-> **Status: WIP** — Not yet integrated into any production app. Do not import until this notice is removed.
+This package provides a registry, client, middleware, consent store, debug
+helpers, and internal-server registration seams around the official
+`@modelcontextprotocol/sdk` runtime.
 
-Model Context Protocol (MCP) for AI agent tool calling.
+## Status: WIP
+
+Experimental public package. The package is published for reuse and contribution
+intake, but its package metadata still marks these production gaps explicitly:
+
+- no production app integrations yet
+- no production MCP transports beyond HTTP/local seams
+- no durable remote tool discovery or app-level integration layer
+
+Use it for local tools, integration prototypes, and package development. Keep
+production deployments behind the application-level gateway and approval model.
 
 ## Installation
 
@@ -12,114 +24,92 @@ Model Context Protocol (MCP) for AI agent tool calling.
 pnpm add @nebutra/mcp
 ```
 
-## Features
+## Exports
 
-- **MCP Client** — Execute tools across registered servers
-- **Server Registry** — Manage internal and external MCP servers
-- **Middleware** — Rate limiting, audit logging, access control
-- **Plan-based Access** — Tool access based on subscription tier
-
-## Architecture
-
-```
-Agent → MCPClient → ServerRegistry → MCP Servers
-                  ↓
-            Middleware (rate-limit, audit, access-control)
-```
+| Path | Description |
+| --- | --- |
+| `@nebutra/mcp` | Main registry, client, host, consent, debug, middleware, server, and type exports |
+| `@nebutra/mcp/client` | `MCPClient` and the shared `mcpClient` instance |
+| `@nebutra/mcp/server` | Internal server registration helpers |
+| `@nebutra/mcp/middleware` | Rate-limit, audit, access-control, and middleware composition helpers |
 
 ## Usage
 
-### Initialize
+### Register a local server
 
-```typescript
-import { mcpClient, registerInternalServers } from "@nebutra/mcp";
+```ts
+import { MCPClient, serverRegistry } from "@nebutra/mcp";
 
-// Register built-in servers
-registerInternalServers();
-```
+serverRegistry.register({
+  id: "workspace",
+  name: "Workspace tools",
+  description: "Local workspace utility tools",
+  endpoint: "local",
+  transport: "local",
+  tools: [
+    {
+      name: "echo",
+      description: "Return the provided message",
+      parameters: {
+        message: { type: "string", required: true },
+      },
+      allowedPlans: ["PRO", "ENTERPRISE"],
+    },
+  ],
+  handlers: {
+    echo: (args) => ({ message: args.message }),
+  },
+  allowedPlans: ["PRO", "ENTERPRISE"],
+});
 
-### Execute Tools
-
-```typescript
-const result = await mcpClient.executeTool(
-  "generate_text",
-  { prompt: "Write a product description" },
+const client = new MCPClient(serverRegistry);
+const result = await client.executeTool(
+  "workspace:echo",
+  { message: "hello" },
   {
-    requestId: "req-123",
-    tenantId: "org_456",
+    requestId: "req_123",
+    tenantId: "org_123",
+    userId: "user_123",
     plan: "PRO",
   },
 );
 ```
 
-### Available Tools
+### Register built-in servers
 
-| Tool              | Plan       | Description         |
-| ----------------- | ---------- | ------------------- |
-| `generate_text`   | FREE       | AI text generation  |
-| `translate`       | FREE       | AI translation      |
-| `embed_text`      | FREE       | Generate embeddings |
-| `recommend_items` | PRO        | Get recommendations |
-| `sync_products`   | PRO        | E-commerce sync     |
-| `mint_nft`        | ENTERPRISE | Web3 minting        |
+```ts
+import { getInternalServerIds, registerInternalServers } from "@nebutra/mcp";
 
-## Plan-based Access Control
-
-```typescript
-const plans = {
-  FREE: ["generate_text", "translate", "embed_text", "content_*"],
-  PRO: ["*_recommend_*", "*_ecommerce_*", ...FREE],
-  ENTERPRISE: ["*_web3_*", ...PRO],
-};
+registerInternalServers();
+const internalServerIds = getInternalServerIds();
 ```
 
-## Register Custom Server
+### Compose middleware
 
-```typescript
-import { serverRegistry } from "@nebutra/mcp";
+```ts
+import {
+  composeMCPMiddleware,
+  createAccessControlMiddleware,
+  createAuditMiddleware,
+  createRateLimitMiddleware,
+} from "@nebutra/mcp/middleware";
 
-serverRegistry.register({
-  name: "custom-tools",
-  url: "http://localhost:3001/mcp",
-  tools: [
-    {
-      name: "custom_tool",
-      description: "My custom tool",
-      parameters: { type: "object", properties: {} },
-    },
-  ],
-  allowedPlans: ["PRO", "ENTERPRISE"],
-});
+const middleware = composeMCPMiddleware([
+  createRateLimitMiddleware({ maxRequests: 100, windowMs: 60_000 }),
+  createAccessControlMiddleware({ blockedTools: [] }),
+  createAuditMiddleware({ onLog: (entry) => auditSink.write(entry) }),
+]);
 ```
 
-## Middleware
+## Runtime Notes
 
-### Rate Limiting
+- HTTP execution uses `StreamableHTTPClientTransport` from the official MCP SDK.
+- Local execution resolves registered handlers directly.
+- WebSocket execution is not implemented in this package.
+- `stdio` execution is rejected for browser/serverless contexts.
+- Tool access is checked at both server and tool level for plan, tenant, and
+  permission gates.
 
-```typescript
-// Configured per tool
-const limits = {
-  generate_text: { requests: 100, window: "1m" },
-  embed_text: { requests: 1000, window: "1h" },
-};
-```
+## License
 
-### Audit Logging
-
-All tool executions are logged:
-
-```json
-{
-  "timestamp": "2024-01-15T10:30:00Z",
-  "tool": "generate_text",
-  "tenantId": "org_456",
-  "userId": "user_123",
-  "duration": 245,
-  "success": true
-}
-```
-
-## Related
-
-- [AI service](../../../backends/python/ai/)
-- [API Gateway](../../../backends/gateway/)
+MIT

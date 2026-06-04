@@ -25,3 +25,7 @@ logger.error("Payment failed", error, { orderId: "ord_456" });
 const log = logger.child({ service: "billing" });
 log.warn("Quota approaching", { used: 950, limit: 1000 });
 ```
+
+## License
+
+MIT

@@ -95,3 +95,7 @@ await ttlCache.get("user:456", { tenantId: "org_123" });
 
 - [Rate limiting](../../platform/rate-limit/)
 - [Upstash console](https://console.upstash.com)
+
+## License
+
+MIT

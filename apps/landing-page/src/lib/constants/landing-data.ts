@@ -108,6 +108,7 @@ const packageGroups = [
     children: [
       "access-gate",
       "billing",
+      "blog",
       "contracts",
       "legal",
       "license",
@@ -121,7 +122,7 @@ const packageGroups = [
     featureAnchor: "capability-design",
     description: "- Brand, tokens, icons, theme, and UI system packages",
     icon: React.createElement(Palette, { className: "h-4 w-4 text-orange-400" }),
-    children: ["brand", "design-sync", "design-tokens", "icons", "theme", "tokens", "ui"],
+    children: ["brand", "design-sync", "design-tokens", "fonts", "icons", "theme", "tokens", "ui"],
   },
   {
     id: "iam",
@@ -326,7 +327,7 @@ export const TREE_DATA: FileNode[] = [
     id: "packages",
     label: "packages",
     path: "packages",
-    tag: "102",
+    tag: "104",
     icon: React.createElement(Box, {
       className: "h-[15px] w-[15px] text-emerald-500 fill-emerald-500/20",
     }),
