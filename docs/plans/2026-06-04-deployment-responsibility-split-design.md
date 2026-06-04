@@ -163,3 +163,51 @@ Target end-state of CI:
 - BFF lint guard: route-classification rule in `pnpm lint`.
 - Cache: existing provider auto-detect tests extended to cover `idp` + `python/ai` convergence.
 - No suppression / `continue-on-error` introduced (carry-over governance rule).
+
+---
+
+## 12. DB / ORM layer — switchability decisions (recorded 2026-06-04)
+
+These were investigated and decided during implementation. Recorded here so they
+are not re-litigated.
+
+### 12.1 DB provider switchable (Supabase / Neon / self-host Postgres) — ✅ already abstracted, no work
+- `@nebutra/db` exposes only `getTenantDb` / `getSystemDb`; the connection layer is
+  `createPgPool` (`@nebutra/db/pool`) + `@prisma/adapter-pg`, driven by `DATABASE_URL`
+  (+ `DIRECT_URL` for DDL). 97 consumers go through this — none pin a provider.
+- Switching Supabase ↔ Neon ↔ self-host Postgres is **just `DATABASE_URL`**, already
+  proven (main = Supabase, `tsekaluk-dev` = Neon). Non-Postgres (MySQL/SQLite) = swap the
+  Prisma adapter. **Action: document only.** No abstraction work needed.
+- `apps/tsekaluk-dev` is **not** a bypass: its `prisma.ts` uses the shared `createPgPool`
+  + adapter-pg + `DATABASE_URL` (provider abstracted). Its own schema/generated client is
+  *correct* — a personal-portal data model (Guestbook/NowEntry/Feedback + Better Auth),
+  unrelated to the SaaS multi-tenant schema. Forcing `@nebutra/db`'s schema on it would be wrong.
+
+### 12.2 ORM switchable (Prisma ↔ Drizzle) — ⚠️ do NOT build runtime switching
+- A *runtime* swappable ORM (both present, flag-selected) is over-engineering: permanent
+  abstraction tax for an option almost never exercised; Prisma is deeply woven in
+  (`db.<model>.<op>()` across many files).
+- **Decision: keep the door open via the repository seam, not a dual-ORM runtime.** A future
+  Drizzle swap re-implements repositories, not the whole app. For a boilerplate, the only
+  defensible stronger form is *scaffold-time* ORM choice (preset generates Prisma OR Drizzle
+  data layer) — a real product investment, deferred until "Drizzle option" is a committed selling point.
+
+### 12.3 Repository seam — selective, not dogmatic
+- Seam required for **core, long-evolving domains** (users/teams/permissions/tenancy/identity,
+  subscriptions/quota/payments/license/metering, agent runs/exec/logs, file/PDF/object-store tasks).
+- **Not** for simple CMS CRUD, config tables, one-off scripts, marketing surfaces, side apps —
+  wrapping those in pass-through repositories is over-abstraction.
+- Decision test: *"could this data access ever change implementation, or add
+  caching / permissions / multi-tenancy / RLS / audit / async workers / external stores?"*
+  yes → seam; no → direct Prisma.
+- Enforced by `scripts/lint-repository-seam.mjs` (in `pnpm lint`): a **core-domain-scoped,
+  shrink-only ratchet**. New core bypasses fail CI; 26 existing core bypasses migrate on-touch;
+  everything outside `CORE_SEAM_DOMAINS` is ungoverned. Escape hatch: `// @seam-exempt: <reason>`.
+  Full rule in CLAUDE.md → "Data Access — Repository Seam".
+
+### 12.4 Cache — `idp` is not a seam bypass (correction)
+- The design's earlier "idp bypasses `@nebutra/cache`" was imprecise. `apps/idp/src/lib/oidc.ts`
+  hands a **raw ioredis client to the OIDC provider's state adapter** (`createNebutraOIDCProvider({ redis })`) —
+  that needs full Redis semantics, not the cache facade (whose Upstash backend is REST). It already
+  uses the standard `REDIS_URL` (which can point at Upstash's TCP endpoint or self-host). **No convergence —
+  forcing `@nebutra/cache` here would be wrong.** Phase 5's idp item is dropped.
