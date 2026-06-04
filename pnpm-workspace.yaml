@@ -28,7 +28,7 @@ catalog:
   tsx: ^4.21.0
 
   # ── Node types ─────────────────────────────────────────────────────────────
-  "@types/node": ^22.19.15
+  "@types/node": ^25.9.1
 
   # ── React ──────────────────────────────────────────────────────────────────
   # Most apps use ^19.2.4 (caret); a few pin to 19.2.4 — standardizing to caret.
@@ -67,10 +67,10 @@ catalog:
   vite: ^7.3.3
   vitest: ^4.1.4
   "@vitest/coverage-v8": ^4.1.4
-  "@vitejs/plugin-react": ^5.1.4
+  "@vitejs/plugin-react-swc": ^4.3.1
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/react": ^16.3.2
-  jsdom: ^28.1.0
+  jsdom: ^29.1.1
 
   # ── Linting ────────────────────────────────────────────────────────────────
   "@biomejs/biome": ^2.4.8

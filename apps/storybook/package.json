@@ -29,7 +29,7 @@
     "@types/node": "^22.19.15",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "catalog:",
+    "@vitejs/plugin-react-swc": "catalog:",
     "storybook": "8.6.17",
     "tailwindcss": "catalog:",
     "typescript": "catalog:",

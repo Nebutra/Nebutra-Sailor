@@ -68,7 +68,7 @@
     "@types/node": "^22.19.15",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "catalog:",
+    "@vitejs/plugin-react-swc": "catalog:",
     "pagefind": "^1.5.2",
     "tailwindcss": "^4.2.1",
     "typescript": "catalog:",
