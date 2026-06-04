@@ -1,9 +1,11 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
 import { useReducer, useRef } from "react";
 import { dicebearAvatarUrl } from "@/lib/avatar";
+import { queryKeys } from "@/lib/query-keys";
 
 const MAX_AVATAR_SIZE_BYTES = 2 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
@@ -135,7 +137,6 @@ async function centerCropSquareImage(file: File): Promise<File> {
 
 interface AvatarUploadState {
   avatarUrl: string | null;
-  pending: boolean;
   errorMessage: string;
   statusMessage: string;
   dragActive: boolean;
@@ -161,29 +162,27 @@ function avatarUploadReducer(
     case "file.reject":
       return { ...state, errorMessage: action.message, statusMessage: "" };
     case "upload.start":
-      return { ...state, pending: true, errorMessage: "", statusMessage: "" };
+      return { ...state, errorMessage: "", statusMessage: "" };
     case "upload.success":
       return {
         ...state,
         avatarUrl: action.avatarUrl,
-        pending: false,
         errorMessage: "",
         statusMessage: action.message,
       };
     case "upload.failure":
-      return { ...state, pending: false, errorMessage: action.message, statusMessage: "" };
+      return { ...state, errorMessage: action.message, statusMessage: "" };
     case "delete.start":
-      return { ...state, pending: true, errorMessage: "", statusMessage: "" };
+      return { ...state, errorMessage: "", statusMessage: "" };
     case "delete.success":
       return {
         ...state,
         avatarUrl: null,
-        pending: false,
         errorMessage: "",
         statusMessage: action.message,
       };
     case "delete.failure":
-      return { ...state, pending: false, errorMessage: action.message, statusMessage: "" };
+      return { ...state, errorMessage: action.message, statusMessage: "" };
   }
 }
 
@@ -198,14 +197,33 @@ export function AvatarUploadForm({
   const t = useTranslations("account.avatar");
   const [state, dispatch] = useReducer(avatarUploadReducer, {
     avatarUrl: initialAvatarUrl ?? null,
-    pending: false,
     errorMessage: "",
     statusMessage: "",
     dragActive: false,
   });
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  async function handleFileSelected(file: File) {
+  const uploadMutation = useMutation({
+    mutationKey: queryKeys.accountAvatar.upload(),
+    mutationFn: async (file: File) => {
+      const pipeline = uploadPipeline ?? defaultUploadPipeline;
+      const uploadFile = uploadPipeline ? file : await centerCropSquareImage(file);
+      return pipeline(uploadFile);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationKey: queryKeys.accountAvatar.remove(),
+    mutationFn: async () => {
+      const pipeline = deletePipeline ?? defaultDeletePipeline;
+      return pipeline();
+    },
+  });
+
+  const pending = uploadMutation.isPending || deleteMutation.isPending;
+
+  function handleFileSelected(file: File) {
+    if (pending) return;
     if (!ALLOWED_TYPES.has(file.type)) {
       dispatch({ type: "file.reject", message: t("invalidType") });
       return;
@@ -216,41 +234,44 @@ export function AvatarUploadForm({
     }
 
     dispatch({ type: "upload.start" });
-    try {
-      const pipeline = uploadPipeline ?? defaultUploadPipeline;
-      const uploadFile = uploadPipeline ? file : await centerCropSquareImage(file);
-      const result = await pipeline(uploadFile);
-      dispatch({ type: "upload.success", avatarUrl: result.avatarUrl, message: t("success") });
-      onUpdated?.(result);
-    } catch (err) {
-      dispatch({
-        type: "upload.failure",
-        message: err instanceof Error ? err.message : t("invalidType"),
-      });
-    } finally {
-      if (inputRef.current) inputRef.current.value = "";
-    }
+    uploadMutation.mutate(file, {
+      onSuccess: (result) => {
+        dispatch({ type: "upload.success", avatarUrl: result.avatarUrl, message: t("success") });
+        onUpdated?.(result);
+      },
+      onError: (err) => {
+        dispatch({
+          type: "upload.failure",
+          message: err instanceof Error ? err.message : t("invalidType"),
+        });
+      },
+      onSettled: () => {
+        if (inputRef.current) inputRef.current.value = "";
+      },
+    });
   }
 
-  async function handleDelete() {
+  function handleDelete() {
+    if (pending) return;
     dispatch({ type: "delete.start" });
-    try {
-      const pipeline = deletePipeline ?? defaultDeletePipeline;
-      const result = await pipeline();
-      dispatch({ type: "delete.success", message: t("removed") });
-      onUpdated?.(result);
-    } catch (err) {
-      dispatch({
-        type: "delete.failure",
-        message: err instanceof Error ? err.message : t("deleteError"),
-      });
-    }
+    deleteMutation.mutate(undefined, {
+      onSuccess: (result) => {
+        dispatch({ type: "delete.success", message: t("removed") });
+        onUpdated?.(result);
+      },
+      onError: (err) => {
+        dispatch({
+          type: "delete.failure",
+          message: err instanceof Error ? err.message : t("deleteError"),
+        });
+      },
+    });
   }
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file) {
-      void handleFileSelected(file);
+      handleFileSelected(file);
     }
   }
 
@@ -259,7 +280,7 @@ export function AvatarUploadForm({
     dispatch({ type: "drag.active", active: false });
     const file = event.dataTransfer.files?.[0];
     if (file) {
-      void handleFileSelected(file);
+      handleFileSelected(file);
     }
   }
 
@@ -312,22 +333,22 @@ export function AvatarUploadForm({
             accept="image/png,image/jpeg,image/webp"
             className="sr-only"
             onChange={handleInputChange}
-            disabled={state.pending}
+            disabled={pending}
           />
           <label
             htmlFor="account-avatar-input"
             className={`inline-flex cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-[var(--neutral-7)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-3)] ${
-              state.pending ? "cursor-not-allowed opacity-50" : ""
+              pending ? "cursor-not-allowed opacity-50" : ""
             }`}
           >
-            {state.pending ? t("uploading") : t("uploadButton")}
+            {pending ? t("uploading") : t("uploadButton")}
           </label>
           <p className="text-xs text-[var(--neutral-11)]">{t("description")}</p>
           {state.avatarUrl && (
             <button
               type="button"
-              onClick={() => void handleDelete()}
-              disabled={state.pending}
+              onClick={handleDelete}
+              disabled={pending}
               className="text-xs font-medium text-[var(--status-danger)] underline-offset-4 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
             >
               {t("removeButton")}

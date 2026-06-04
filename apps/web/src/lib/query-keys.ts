@@ -112,6 +112,12 @@ export const queryKeys = {
     detail: (sessionId: string) => ["checkout-status", "detail", sessionId] as const,
   },
 
+  accountAvatar: {
+    all: ["account-avatar"] as const,
+    upload: () => ["account-avatar", "upload"] as const,
+    remove: () => ["account-avatar", "remove"] as const,
+  },
+
   tasks: {
     all: ["tasks"] as const,
     detail: (taskId: string) => ["tasks", "detail", taskId] as const,
