@@ -2840,9 +2840,7 @@
     },
     "/api/v1/uploads/presign": {
       "post": {
-        "tags": [
-          "Uploads"
-        ],
+        "tags": ["Uploads"],
         "operationId": "presignUpload",
         "summary": "Create a direct object-storage upload URL",
         "requestBody": {
@@ -2881,11 +2879,7 @@
                     "pattern": "^[A-Za-z0-9_.:-]+$"
                   }
                 },
-                "required": [
-                  "filename",
-                  "content_type",
-                  "size"
-                ]
+                "required": ["filename", "content_type", "size"]
               }
             }
           }
@@ -2903,11 +2897,7 @@
                     },
                     "status": {
                       "type": "string",
-                      "enum": [
-                        "pending",
-                        "completed",
-                        "failed"
-                      ]
+                      "enum": ["pending", "completed", "failed"]
                     },
                     "provider": {
                       "type": "string"
@@ -2943,10 +2933,7 @@
                         },
                         "method": {
                           "type": "string",
-                          "enum": [
-                            "PUT",
-                            "POST"
-                          ]
+                          "enum": ["PUT", "POST"]
                         },
                         "headers": {
                           "type": "object",
@@ -2959,12 +2946,7 @@
                           "format": "date-time"
                         }
                       },
-                      "required": [
-                        "url",
-                        "method",
-                        "headers",
-                        "expires_at"
-                      ]
+                      "required": ["url", "method", "headers", "expires_at"]
                     },
                     "etag": {
                       "type": "string",
@@ -3026,9 +3008,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "error"
-                  ]
+                  "required": ["error"]
                 }
               }
             }
@@ -3038,9 +3018,7 @@
     },
     "/api/v1/uploads/complete": {
       "post": {
-        "tags": [
-          "Uploads"
-        ],
+        "tags": ["Uploads"],
         "operationId": "completeUpload",
         "summary": "Mark an object-storage upload complete",
         "requestBody": {
@@ -3071,10 +3049,7 @@
                     "pattern": "^[0-9a-f]+$"
                   }
                 },
-                "required": [
-                  "upload_id",
-                  "size"
-                ]
+                "required": ["upload_id", "size"]
               }
             }
           }
@@ -3092,11 +3067,7 @@
                     },
                     "status": {
                       "type": "string",
-                      "enum": [
-                        "pending",
-                        "completed",
-                        "failed"
-                      ]
+                      "enum": ["pending", "completed", "failed"]
                     },
                     "provider": {
                       "type": "string"
@@ -3132,10 +3103,7 @@
                         },
                         "method": {
                           "type": "string",
-                          "enum": [
-                            "PUT",
-                            "POST"
-                          ]
+                          "enum": ["PUT", "POST"]
                         },
                         "headers": {
                           "type": "object",
@@ -3148,12 +3116,7 @@
                           "format": "date-time"
                         }
                       },
-                      "required": [
-                        "url",
-                        "method",
-                        "headers",
-                        "expires_at"
-                      ]
+                      "required": ["url", "method", "headers", "expires_at"]
                     },
                     "etag": {
                       "type": "string",
@@ -3218,9 +3181,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "error"
-                  ]
+                  "required": ["error"]
                 }
               }
             }
@@ -3230,9 +3191,7 @@
     },
     "/api/v1/uploads/{uploadId}": {
       "get": {
-        "tags": [
-          "Uploads"
-        ],
+        "tags": ["Uploads"],
         "operationId": "getUpload",
         "summary": "Get upload metadata",
         "parameters": [
@@ -3260,11 +3219,7 @@
                     },
                     "status": {
                       "type": "string",
-                      "enum": [
-                        "pending",
-                        "completed",
-                        "failed"
-                      ]
+                      "enum": ["pending", "completed", "failed"]
                     },
                     "provider": {
                       "type": "string"
@@ -3300,10 +3255,7 @@
                         },
                         "method": {
                           "type": "string",
-                          "enum": [
-                            "PUT",
-                            "POST"
-                          ]
+                          "enum": ["PUT", "POST"]
                         },
                         "headers": {
                           "type": "object",
@@ -3316,12 +3268,7 @@
                           "format": "date-time"
                         }
                       },
-                      "required": [
-                        "url",
-                        "method",
-                        "headers",
-                        "expires_at"
-                      ]
+                      "required": ["url", "method", "headers", "expires_at"]
                     },
                     "etag": {
                       "type": "string",
@@ -3386,9 +3333,7 @@
                       "type": "string"
                     }
                   },
-                  "required": [
-                    "error"
-                  ]
+                  "required": ["error"]
                 }
               }
             }
