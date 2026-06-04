@@ -33,6 +33,13 @@ const REPOSITORY_SEAM_CMD = "node scripts/governance/lint-repository-seam.mjs";
 // so the output's lint chain contains exactly the enabled, generalized lints.
 const MONOREPO_LINT_CMD_RE = /\bnode\s+scripts\/(governance\/)?lint-[\w-]+\.mjs/g;
 
+// The monorepo's per-lint helper scripts reference scripts/lint-*.mjs at the
+// repo root (NOT under governance/). Those .mjs files are removed from the
+// scaffold by .templateignore, so any cloned package.json script that points at
+// them is dangling and must be pruned — otherwise the scaffold ships broken
+// `lint:no-dark-drift`, `lint:phosphor-zone`, … scripts.
+const MONOREPO_ROOT_LINT_CMD_RE = /\bnode\s+scripts\/lint-[\w-]+\.mjs/;
+
 // Scaffold-layout defaults for governance.config.json. These mirror the
 // built-in DEFAULTS in scripts/governance/_config.mjs so the emitted file is an
 // explicit, editable starting point — but contain NO monorepo-absolute paths.
@@ -109,6 +116,18 @@ export async function applyGovernanceLints(
   if (fs.existsSync(pkgPath)) {
     const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
     pkg.scripts = pkg.scripts ?? {};
+
+    // Drop dangling per-lint helper scripts inherited from the monorepo
+    // (lint:no-dark-drift, lint:phosphor-zone, …). They invoke the repo-root
+    // scripts/lint-*.mjs files, which .templateignore removes from the scaffold,
+    // so they would error on run. The main `lint` key is rebuilt below.
+    for (const [key, value] of Object.entries(pkg.scripts)) {
+      if (key === "lint") continue;
+      if (typeof value === "string" && MONOREPO_ROOT_LINT_CMD_RE.test(value)) {
+        delete pkg.scripts[key];
+      }
+    }
+
     pkg.scripts.lint = rebuildLintScript(pkg.scripts.lint, lints);
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + "\n");
   }
