@@ -2,7 +2,10 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Reorganize deployment so all frontends run on Vercel and all backends run on a *switchable* compute substrate (ecs-pm2 default; k8s + aws as first-class, dormant, selectable adapters), with DB on Supabase and cache/queue on Upstash — while killing the current 3-way deploy drift.
+**Goal:** Reorganize deployment so frontends default to Vercel, the gateway
+defaults to Cloudflare Workers, the origin backend defaults to ECS Docker, and
+all deploy targets remain provider-switchable through per-service selectors —
+while killing the current 3-way deploy drift.
 
 **Architecture:** Introduce a `DEPLOY_TARGET_<SERVICE>` selector (surfaced via the preset system) that gates each deploy adapter behind a CI `if`. Exactly one substrate is active per service per environment, enforced by an architecture test. Frontends move to Vercel git-integration; `web`'s 64 API routes are split into thin BFF (Vercel) vs heavy (gateway) by a lint-guarded rule. Cache/queue converge on Upstash via the existing auto-detect, with `idp`/`python-ai` brought into the abstraction. Dual-market is designed-for (region overlay) but default-single.
 
@@ -18,6 +21,9 @@ is now the authoritative runtime closure. Gateway defaults to
 `gateway`-as-default-ECS-backend framing is now a dormant adapter path, not the
 target default. Phase 5.1 (`idp` to `@nebutra/cache`) is dropped because OIDC
 state storage needs full Redis semantics.
+
+The task body below is historical. If a step conflicts with the ADR or with
+`@nebutra/preset/deploy-target`, follow the ADR and selector module.
 
 ---
 

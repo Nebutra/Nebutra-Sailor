@@ -223,6 +223,11 @@ export type CookieConsent = Prisma.CookieConsentModel
  */
 export type ContactSubmission = Prisma.ContactSubmissionModel
 /**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel
+/**
  * Model OAuthClient
  * 
  */

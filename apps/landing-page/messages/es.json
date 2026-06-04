@@ -1124,20 +1124,20 @@
     },
     "faq": {
       "title": "FAQ de precios y licencias",
-      "description": "Preguntas frecuentes sobre suscripción, reembolsos y licencia comercial.",
+      "description": "Preguntas sobre niveles de licencia, reembolsos y derechos de uso comercial.",
       "q1": {
-        "q": "¿Es una suscripción?",
-        "a": "Sí, nuestro plan Pro se factura mensualmente. Puede cancelar en cualquier momento sin tarifas ocultas."
+        "q": "¿Sailor es una suscripción SaaS mensual?",
+        "a": "No. Estos precios son para licencias de código fuente de Sailor: Independent es gratis, Startup se factura anualmente y Enterprise es personalizado."
       },
       "q2": {
         "q": "¿Ofrecen reembolsos?",
-        "a": "Ofrecemos una garantía de devolución de dinero de 14 días sin preguntas."
+        "a": "Las licencias comerciales Startup incluyen una ventana de reembolso de 14 días para compras iniciales. Los términos Enterprise se gestionan en el contrato firmado."
       },
       "q3": {
-        "q": "¿Puedo usarlo para trabajo de clientes?",
-        "a": "Por supuesto. La licencia comercial cubre proyectos de clientes ilimitados."
+        "q": "¿Puedo usar Sailor para proyectos de clientes?",
+        "a": "Sí. Una licencia comercial permite a tu equipo entregar productos cerrados para clientes o uso interno dentro del alcance licenciado; los derechos white-label requieren aprobación Enterprise."
       },
-      "contactNudge": "¿Tienes más preguntas? Habla con nuestro equipo de ingeniería →"
+      "contactNudge": "¿Tienes más preguntas? Habla con el equipo de Nebutra →"
     },
     "cta": {
       "eyebrow": "Empezar",

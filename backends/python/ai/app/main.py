@@ -8,7 +8,7 @@ from fastapi import FastAPI
 
 from _shared.errors import generic_exception_handler
 from _shared.health import router as health_router
-from _shared.middleware import RequestLoggingMiddleware
+from _shared.middleware import GatewaySecretMiddleware, RequestLoggingMiddleware
 from _shared.otel import instrument_app
 from _shared.usage import start_usage_worker, stop_usage_worker
 from app.api.v1 import (
@@ -16,6 +16,7 @@ from app.api.v1 import (
     routes_embed,
     routes_generate,
     routes_sandbox,
+    routes_tasks,
     routes_translate,
 )
 
@@ -39,6 +40,7 @@ app = FastAPI(
 
 instrument_app(app, service_name="ai-service")
 app.add_middleware(RequestLoggingMiddleware)
+app.add_middleware(GatewaySecretMiddleware)
 app.add_exception_handler(Exception, generic_exception_handler)
 
 # CORS is handled at the Hono API Gateway layer.
@@ -51,6 +53,7 @@ app.include_router(
 )
 app.include_router(routes_sandbox.router, prefix="/api/v1/sandbox", tags=["sandbox"])
 app.include_router(routes_agents.router, prefix="/api/v1/agents", tags=["agents"])
+app.include_router(routes_tasks.router, prefix="/api/v1/tasks", tags=["tasks"])
 
 
 @app.get("/")

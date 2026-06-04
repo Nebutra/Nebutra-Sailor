@@ -201,7 +201,8 @@ describe("landing UI governance", () => {
   it("keeps the blog index on branded motion selectors instead of static hover only", () => {
     expect(blogPageSource).toContain("<BlogMotionHero");
     expect(blogPageSource).toContain("<LatestPostMotionRail");
-    expect(blogMotionShowcaseSource).toContain("useAnimationFrame");
+    expect(blogMotionShowcaseSource).toContain("requestAnimationFrame");
+    expect(blogMotionShowcaseSource).not.toContain(`from "${["framer", "motion"].join("-")}"`);
     expect(blogMotionShowcaseSource).toContain("aria-expanded={open}");
     expect(blogMotionShowcaseSource).toContain("copyPageAsMarkdown");
     expect(blogMotionShowcaseSource).toContain("setActivePostId(post.id)");

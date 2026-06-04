@@ -15,6 +15,7 @@ import {
 import { ArrowLeft, ArrowRight, BookOpen, Calendar, Clock, Globe, Message } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { AnimateIn } from "@nebutra/ui/components";
+import { DynamicIslandTOC } from "@nebutra/ui/primitives";
 import { format as dateFnsFormat } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import type { Metadata } from "next";
@@ -31,7 +32,6 @@ import { BlogCopyButton } from "@/components/landing/blog-copy-button";
 import { BlogImage } from "@/components/landing/blog-image";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { BlogShareActions } from "@/components/landing/blog-share-actions";
-import { BlogTableOfContents } from "@/components/landing/blog-table-of-contents";
 import { type Locale, routing } from "@/i18n/routing";
 import {
   getAllPosts,
@@ -434,41 +434,31 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
         </AnimateIn>
 
         <AnimateIn preset="fadeUp" inView>
-          <div className="mx-auto mt-12 grid max-w-7xl gap-10 xl:grid-cols-[240px_minmax(0,720px)_240px] xl:items-start xl:gap-12">
-            <BlogTableOfContents
-              items={tableOfContents.items}
-              variant="desktop"
-              labels={{
-                title: isZh ? "目录" : "Contents",
-                current: isZh ? "正在阅读" : "Reading",
-                progress: isZh ? "阅读进度" : "Reading progress",
-                open: isZh ? "展开目录" : "Open contents",
-              }}
+          {/* `data-blog-content` scopes the floating TOC scan to the article body —
+              keeps the post <h1>, "Related notes", and comments headings out of the menu. */}
+          <div data-blog-content className="mx-auto mt-12 min-w-0 max-w-3xl">
+            <BlogPortableText
+              body={post.body}
+              copyLabel={isZh ? "复制此段" : "Copy block"}
+              copiedLabel={isZh ? "已复制" : "Copied"}
+              headingIds={tableOfContents.headingIds}
+              resolveCtaHref={(href) =>
+                href === "#contact" ? localizedPageHref(lang, "/contact") : href
+              }
             />
-            <div className="min-w-0">
-              <BlogTableOfContents
-                items={tableOfContents.items}
-                variant="mobile"
-                labels={{
-                  title: isZh ? "目录" : "Contents",
-                  current: isZh ? "正在阅读" : "Reading",
-                  progress: isZh ? "阅读进度" : "Reading progress",
-                  open: isZh ? "展开目录" : "Open contents",
-                }}
-              />
-              <BlogPortableText
-                body={post.body}
-                copyLabel={isZh ? "复制此段" : "Copy block"}
-                copiedLabel={isZh ? "已复制" : "Copied"}
-                headingIds={tableOfContents.headingIds}
-                resolveCtaHref={(href) =>
-                  href === "#contact" ? localizedPageHref(lang, "/contact") : href
-                }
-              />
-            </div>
-            <div aria-hidden className="hidden xl:block" />
           </div>
         </AnimateIn>
+
+        {/* Floating Dynamic Island TOC — only when there's enough structure to navigate,
+            mirroring the old sidebar's "hide when < 2 headings" rule. */}
+        {tableOfContents.items.length >= 2 && (
+          <DynamicIslandTOC
+            selector="[data-blog-content] h2, [data-blog-content] h3, [data-blog-content] h4"
+            ariaLabel={isZh ? "目录" : "Table of contents"}
+            menuHeading={isZh ? "目录" : "Contents"}
+            emptyLabel={isZh ? "目录" : "Contents"}
+          />
+        )}
 
         {footerPosts.length > 0 && (
           <AnimateIn preset="fadeUp" inView>

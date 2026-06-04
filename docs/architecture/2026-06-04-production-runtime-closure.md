@@ -115,6 +115,15 @@ cache, rate-limit, lock, queue, and task-event substrate. R2/OSS stores files.
 Files go to object storage. ECS handles metadata and async processing, not raw
 frontend file ingress.
 
+### Task Envelope
+
+Long-running origin work is exposed as `/api/v1/tasks`, not as a provider
+specific Celery, QStash, or arq API. The standard envelope persists task state
+in Postgres and returns `queued`, `running`, `succeeded`, `failed`, or
+`cancelled` progress. Dispatch is provider-switchable through
+`TASK_DISPATCHER_PROVIDER=celery|queue|memory`; production defaults to Celery
+on ECS origin and requires `TASK_STORE_PROVIDER=postgres`.
+
 ---
 
 ## Packages Do Not Deploy

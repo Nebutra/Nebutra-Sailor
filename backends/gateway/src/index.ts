@@ -2,12 +2,10 @@
 // module that emits spans is loaded.
 import "./instrumentation.js";
 
-import { serve } from "@hono/node-server";
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { initializeFromEnv, setAlertErrorHandler } from "@nebutra/alerting";
 import { deductCredits, dollarsToCredits } from "@nebutra/billing";
-import { getSystemDb } from "@nebutra/db";
 import { getStatusCode, toApiError } from "@nebutra/errors";
 import {
   calculateCost,
@@ -17,7 +15,6 @@ import {
 } from "@nebutra/gateway-core";
 import { logger } from "@nebutra/logger";
 import { initOtel } from "@nebutra/logger/otel";
-import { closeQueue } from "@nebutra/queue";
 import { trace } from "@opentelemetry/api";
 import { bodyLimit } from "hono/body-limit";
 import { compress } from "hono/compress";
@@ -26,7 +23,7 @@ import { logger as honoLogger } from "hono/logger";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
 import { DOMAINS, env } from "./config/env.js";
-import { enabledOptionalProtocols, isOrpcEnabled, isTrpcEnabled } from "./config/protocols.js";
+import { isOrpcEnabled, isTrpcEnabled } from "./config/protocols.js";
 import { captureRequestError, initSentry } from "./config/sentry.js";
 import { inngestHandler } from "./inngest/index.js";
 import { buildGatewayDeps } from "./lib/gateway-deps.js";
@@ -55,6 +52,7 @@ import { notificationRoutes } from "./routes/notifications/index.js";
 import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
 import { statusRoutes } from "./routes/system/status.js";
+import { taskRoutes } from "./routes/tasks/index.js";
 import { getAuthWebhookRoutes, stripeWebhookRoutes } from "./routes/webhooks/index.js";
 
 initOtel({ serviceName: "api-gateway" });
@@ -222,10 +220,16 @@ app.route("/api/v1/events", eventRoutes);
 app.route("/api/v1/agents", agentRoutes);
 app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
 app.route("/api/v1/ai", aiRoutes);
+app.route("/api/v1/tasks", taskRoutes);
 
 // AI Gateway — build shared deps once, mount route + register completion worker.
 // Graceful degradation: a missing Redis/queue must not prevent app startup.
 let gatewayDepsInitialized = false;
+
+export function areGatewayDepsInitialized(): boolean {
+  return gatewayDepsInitialized;
+}
+
 try {
   const gatewayDeps = await buildGatewayDeps();
   app.route("/api/v1/ai/gateway", createAiGatewayRoutes(gatewayDeps));
@@ -343,45 +347,5 @@ app.onError((err, c) => {
     getStatusCode(err) as 400 | 401 | 403 | 404 | 409 | 429 | 500 | 502 | 503 | 504,
   );
 });
-
-const port = parseInt(process.env.PORT || "3002", 10);
-
-logger.info("API Gateway started", { port, optionalProtocols: enabledOptionalProtocols });
-
-const server = serve({ fetch: app.fetch, port }, (info) => {
-  logger.info(`API Gateway listening on port ${info.port}`);
-});
-
-// Graceful shutdown
-const shutdown = async (signal: string) => {
-  logger.info(`Received ${signal}, starting graceful shutdown...`);
-  server.close(async () => {
-    logger.info("HTTP server closed");
-    if (gatewayDepsInitialized) {
-      try {
-        await closeQueue();
-        logger.info("Queue connection closed");
-      } catch (err) {
-        logger.error("Error closing queue during shutdown", err);
-      }
-    }
-    try {
-      // AUDIT(no-tenant): graceful shutdown closes the shared connection pool.
-      await getSystemDb().$disconnect();
-      logger.info("Database connection closed");
-    } catch (err) {
-      logger.error("Error during shutdown", err);
-    }
-    process.exit(0);
-  });
-  // Force exit after 10s if graceful shutdown hangs
-  setTimeout(() => {
-    logger.error("Forced shutdown after timeout");
-    process.exit(1);
-  }, 10_000);
-};
-
-process.on("SIGTERM", () => shutdown("SIGTERM"));
-process.on("SIGINT", () => shutdown("SIGINT"));
 
 export default app;

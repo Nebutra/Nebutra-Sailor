@@ -43,6 +43,42 @@ async def test_generate_success(client):
 
 
 @pytest.mark.asyncio
+async def test_generate_rejects_direct_call_when_gateway_secret_is_configured(
+    client, monkeypatch
+):
+    monkeypatch.setenv("GATEWAY_SHARED_SECRET", "shared-secret")
+
+    response = await client.post(
+        GENERATE_URL,
+        json={"prompt": "Say hello", "max_tokens": 50},
+    )
+
+    assert response.status_code == 403
+    assert response.json()["detail"] == "invalid_gateway_secret"
+
+
+@pytest.mark.asyncio
+async def test_generate_accepts_gateway_call_when_gateway_secret_matches(
+    client, monkeypatch
+):
+    monkeypatch.setenv("GATEWAY_SHARED_SECRET", "shared-secret")
+    provider = SimpleNamespace(name="mock", chat=AsyncMock(return_value=MOCK_RESULT))
+
+    with patch(
+        "app.api.v1.routes_generate.get_default_provider",
+        Mock(return_value=provider),
+    ):
+        response = await client.post(
+            GENERATE_URL,
+            headers={"x-nebutra-gateway-secret": "shared-secret"},
+            json={"prompt": "Say hello", "max_tokens": 50},
+        )
+
+    assert response.status_code == 200
+    assert response.json()["text"] == "Hello, world!"
+
+
+@pytest.mark.asyncio
 async def test_generate_default_model(client):
     """Defaults to the route provider model when model is omitted."""
     provider = SimpleNamespace(name="mock", chat=AsyncMock(return_value=MOCK_RESULT))

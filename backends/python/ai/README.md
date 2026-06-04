@@ -44,6 +44,14 @@ cp .env.example .env
 
 # Run development server
 uvicorn app.main:app --reload --port 8001
+
+# Run the ECS-origin style worker locally
+CELERY_BROKER_URL="${REDIS_URL:-redis://localhost:6379}" \
+  celery -A app.workers.celery_app worker \
+  --loglevel=info \
+  --queues=default,ai,document,maintenance,webhook \
+  --concurrency=1 \
+  --prefetch-multiplier=1
 ```
 
 ## API Endpoints
@@ -70,6 +78,18 @@ DEFAULT_EMBED_PROVIDER=openai
 
 # Service config
 AI_SERVICE_PORT=8001
+
+# ECS origin worker config
+APP_ENV=production
+DATABASE_URL=postgresql://...
+TASK_STORE_PROVIDER=postgres
+TASK_DISPATCHER_PROVIDER=celery
+REDIS_URL=redis://localhost:6379
+CELERY_BROKER_URL=redis://localhost:6379
+CELERY_RESULT_BACKEND=redis://localhost:6379
+CELERY_TASK_DEFAULT_QUEUE=default
+CELERY_WORKER_CONCURRENCY=1
+CELERY_PREFETCH_MULTIPLIER=1
 ```
 
 ## Docker
@@ -80,6 +100,9 @@ docker build -t nebutra-ai .
 
 # Run container
 docker run -p 8001:8001 --env-file .env nebutra-ai
+
+# Production ECS compose runs both FastAPI and Celery from the same image
+docker compose -f ../../../infra/runtime/docker/docker-compose.origin.yml up -d ai-origin ai-worker
 ```
 
 ## Project Structure
@@ -88,9 +111,12 @@ docker run -p 8001:8001 --env-file .env nebutra-ai
 backends/python/ai/
 ├── app/
 │   ├── main.py              # FastAPI entry point
+│   ├── tasks/               # Standard task envelope and dispatch selector
+│   ├── workers/             # Celery worker/beat runtime for ECS origin
 │   └── api/v1/
 │       ├── routes_generate.py
 │       ├── routes_embed.py
+│       ├── routes_tasks.py
 │       └── routes_translate.py
 ├── providers/               # AI provider implementations
 ├── services/                # Business logic

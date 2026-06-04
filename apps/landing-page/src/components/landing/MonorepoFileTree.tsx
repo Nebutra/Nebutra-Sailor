@@ -21,7 +21,7 @@ import { AnimateIn } from "./AnimateIn";
 const TREE_METRICS = [
   { labelKey: "metricApps", value: "10" },
   { labelKey: "metricBackends", value: "4" },
-  { labelKey: "metricPackages", value: "104" },
+  { labelKey: "metricPackages", value: "102" },
 ] as const;
 
 const EMPTY_PARENT_PATH: boolean[] = [];

@@ -1,9 +1,9 @@
-name: Deploy to ECS (PM2)
+name: Deploy to ECS (PM2 Manual Fallback)
 
-# Build Node apps on the GH-hosted runner (16 GB) and ship standalone bundles
-# to a single Aliyun ECS box that runs PM2 + Nginx. ECS itself is 2C4G and
-# cannot build Next.js — this workflow exists to remove that constraint and
-# replace the manual rsync flow.
+# Legacy manual fallback for shipping standalone Node bundles to a single
+# Aliyun ECS box that runs PM2 + Nginx. The production default is now Vercel
+# frontends + Cloudflare Workers gateway + ECS/FastAPI origin; this workflow
+# must not auto-deploy on main push.
 #
 # REQUIRED REPOSITORY SECRETS (Settings → Secrets and variables → Actions):
 #   ECS_SSH_PRIVATE_KEY  — OpenSSH private key (Ed25519 recommended) whose
@@ -37,20 +37,6 @@ name: Deploy to ECS (PM2)
 # the same.
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "apps/landing-page/**"
-      - "apps/web/**"
-      - "apps/design-docs/**"
-      - "apps/sailor-docs/**"
-      - "backends/gateway/**"
-      - "packages/**"
-      - "pnpm-lock.yaml"
-      - ".github/workflows/deploy-ecs.yml"
-      - "infra/iac/ecs/**"
-      - "infra/ops/scripts/ecs-deploy-remote.sh"
-
   workflow_dispatch:
     inputs:
       apps:
@@ -118,7 +104,6 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - '.github/workflows/deploy-ecs.yml'
             api:
-              - 'backends/gateway/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'
@@ -143,7 +128,6 @@ jobs:
         id: resolve
         env:
           INPUT_APPS:     ${{ github.event.inputs.apps }}
-          EVENT_NAME:     ${{ github.event_name }}
           F_LANDING:      ${{ steps.filter.outputs.landing }}
           F_WEB:          ${{ steps.filter.outputs.web }}
           F_API:          ${{ steps.filter.outputs.api }}
@@ -153,7 +137,6 @@ jobs:
           # `design-docs` / `sailor-docs` tokens contain a hyphen — match them
           # explicitly to avoid bash glob pitfalls where *docs* could also match
           # other strings we add in the future.
-          CHANGED_ANY=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" ]] && echo true || echo false)
           {
             if [ -n "${INPUT_APPS:-}" ]; then
               echo "landing=$([[ "$INPUT_APPS" == *landing* ]] && echo true || echo false)"
@@ -161,22 +144,14 @@ jobs:
               echo "api=$([[ "$INPUT_APPS" == *api* ]] && echo true || echo false)"
               echo "design-docs=$([[ "$INPUT_APPS" == *design-docs* ]] && echo true || echo false)"
               echo "sailor-docs=$([[ "$INPUT_APPS" == *sailor-docs* ]] && echo true || echo false)"
-              echo "any=true"
             else
-              TARGET_ALL="$CHANGED_ANY"
-              if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
-                TARGET_ALL=true
-              fi
-              # Push deploys build the complete ECS service set from the latest
-              # main head. Otherwise a later app-only push can cancel an earlier
-              # queued package/api deploy and leave ECS running stale artifacts.
-              echo "landing=$TARGET_ALL"
-              echo "web=$TARGET_ALL"
-              echo "api=$TARGET_ALL"
-              echo "design-docs=$TARGET_ALL"
-              echo "sailor-docs=$TARGET_ALL"
-              echo "any=$TARGET_ALL"
+              echo "landing=$F_LANDING"
+              echo "web=$F_WEB"
+              echo "api=$F_API"
+              echo "design-docs=$F_DESIGN_DOCS"
+              echo "sailor-docs=$F_SAILOR_DOCS"
             fi
+            echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" || -n "${INPUT_APPS:-}" ]] && echo true || echo false)"
           } >> "$GITHUB_OUTPUT"
 
   # ──────────────────────────────────────────────────────────────────────

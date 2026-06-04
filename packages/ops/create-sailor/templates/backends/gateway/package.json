@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "src/index.ts",
+  "main": "dist/node.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsup src/index.ts --format esm --target node20",
+    "dev": "tsx watch src/node.ts",
+    "build": "tsup src/index.ts src/node.ts src/worker.ts --format esm --target node20",
+    "start": "node dist/node.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

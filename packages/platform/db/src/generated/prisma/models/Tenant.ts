@@ -211,6 +211,7 @@ export type TenantWhereInput = {
   requestLogs?: Prisma.RequestLogListRelationFilter
   stripeCustomers?: Prisma.StripeCustomerListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
   threads?: Prisma.ThreadListRelationFilter
   usageLedgerEntries?: Prisma.UsageLedgerEntryListRelationFilter
   userConsents?: Prisma.UserConsentListRelationFilter
@@ -247,6 +248,7 @@ export type TenantOrderByWithRelationInput = {
   requestLogs?: Prisma.RequestLogOrderByRelationAggregateInput
   stripeCustomers?: Prisma.StripeCustomerOrderByRelationAggregateInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
+  tasks?: Prisma.TaskOrderByRelationAggregateInput
   threads?: Prisma.ThreadOrderByRelationAggregateInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryOrderByRelationAggregateInput
   userConsents?: Prisma.UserConsentOrderByRelationAggregateInput
@@ -286,6 +288,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   requestLogs?: Prisma.RequestLogListRelationFilter
   stripeCustomers?: Prisma.StripeCustomerListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
   threads?: Prisma.ThreadListRelationFilter
   usageLedgerEntries?: Prisma.UsageLedgerEntryListRelationFilter
   userConsents?: Prisma.UserConsentListRelationFilter
@@ -342,6 +345,7 @@ export type TenantCreateInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -376,6 +380,7 @@ export type TenantUncheckedCreateInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -410,6 +415,7 @@ export type TenantUpdateInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -444,6 +450,7 @@ export type TenantUncheckedUpdateInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -830,6 +837,20 @@ export type TenantUpdateOneWithoutUserConsentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutUserConsentsInput, Prisma.TenantUpdateWithoutUserConsentsInput>, Prisma.TenantUncheckedUpdateWithoutUserConsentsInput>
 }
 
+export type TenantCreateNestedOneWithoutTasksInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutTasksInput, Prisma.TenantUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutTasksInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutTasksInput, Prisma.TenantUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutTasksInput
+  upsert?: Prisma.TenantUpsertWithoutTasksInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutTasksInput, Prisma.TenantUpdateWithoutTasksInput>, Prisma.TenantUncheckedUpdateWithoutTasksInput>
+}
+
 export type TenantCreateNestedOneWithoutOauthClientsInput = {
   create?: Prisma.XOR<Prisma.TenantCreateWithoutOauthClientsInput, Prisma.TenantUncheckedCreateWithoutOauthClientsInput>
   connectOrCreate?: Prisma.TenantCreateOrConnectWithoutOauthClientsInput
@@ -977,6 +998,7 @@ export type TenantCreateWithoutOrganizationInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -1010,6 +1032,7 @@ export type TenantUncheckedCreateWithoutOrganizationInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -1059,6 +1082,7 @@ export type TenantUpdateWithoutOrganizationInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -1092,6 +1116,7 @@ export type TenantUncheckedUpdateWithoutOrganizationInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -1125,6 +1150,7 @@ export type TenantCreateWithoutApiKeysInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -1158,6 +1184,7 @@ export type TenantUncheckedCreateWithoutApiKeysInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -1207,6 +1234,7 @@ export type TenantUpdateWithoutApiKeysInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -1240,6 +1268,7 @@ export type TenantUncheckedUpdateWithoutApiKeysInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -1273,6 +1302,7 @@ export type TenantCreateWithoutUserInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -1306,6 +1336,7 @@ export type TenantUncheckedCreateWithoutUserInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -1355,6 +1386,7 @@ export type TenantUpdateWithoutUserInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -1388,6 +1420,7 @@ export type TenantUncheckedUpdateWithoutUserInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -1421,6 +1454,7 @@ export type TenantCreateWithoutContentsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -1454,6 +1488,7 @@ export type TenantUncheckedCreateWithoutContentsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -1503,6 +1538,7 @@ export type TenantUpdateWithoutContentsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -1536,6 +1572,7 @@ export type TenantUncheckedUpdateWithoutContentsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -1569,6 +1606,7 @@ export type TenantCreateWithoutProductsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -1602,6 +1640,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -1651,6 +1690,7 @@ export type TenantUpdateWithoutProductsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -1684,6 +1724,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -1717,6 +1758,7 @@ export type TenantCreateWithoutOrdersInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -1750,6 +1792,7 @@ export type TenantUncheckedCreateWithoutOrdersInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -1799,6 +1842,7 @@ export type TenantUpdateWithoutOrdersInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -1832,6 +1876,7 @@ export type TenantUncheckedUpdateWithoutOrdersInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -1865,6 +1910,7 @@ export type TenantCreateWithoutIntegrationsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -1898,6 +1944,7 @@ export type TenantUncheckedCreateWithoutIntegrationsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -1947,6 +1994,7 @@ export type TenantUpdateWithoutIntegrationsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -1980,6 +2028,7 @@ export type TenantUncheckedUpdateWithoutIntegrationsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -2013,6 +2062,7 @@ export type TenantCreateWithoutRequestLogsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -2046,6 +2096,7 @@ export type TenantUncheckedCreateWithoutRequestLogsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -2095,6 +2146,7 @@ export type TenantUpdateWithoutRequestLogsInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -2128,6 +2180,7 @@ export type TenantUncheckedUpdateWithoutRequestLogsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -2161,6 +2214,7 @@ export type TenantCreateWithoutCustomerPlanVersionsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -2194,6 +2248,7 @@ export type TenantUncheckedCreateWithoutCustomerPlanVersionsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -2243,6 +2298,7 @@ export type TenantUpdateWithoutCustomerPlanVersionsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -2276,6 +2332,7 @@ export type TenantUncheckedUpdateWithoutCustomerPlanVersionsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -2309,6 +2366,7 @@ export type TenantCreateWithoutCustomerFeatureOverridesInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -2342,6 +2400,7 @@ export type TenantUncheckedCreateWithoutCustomerFeatureOverridesInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -2391,6 +2450,7 @@ export type TenantUpdateWithoutCustomerFeatureOverridesInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -2424,6 +2484,7 @@ export type TenantUncheckedUpdateWithoutCustomerFeatureOverridesInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -2457,6 +2518,7 @@ export type TenantCreateWithoutCustomerUsageLimitsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -2490,6 +2552,7 @@ export type TenantUncheckedCreateWithoutCustomerUsageLimitsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -2539,6 +2602,7 @@ export type TenantUpdateWithoutCustomerUsageLimitsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -2572,6 +2636,7 @@ export type TenantUncheckedUpdateWithoutCustomerUsageLimitsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -2605,6 +2670,7 @@ export type TenantCreateWithoutSubscriptionsInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -2638,6 +2704,7 @@ export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -2687,6 +2754,7 @@ export type TenantUpdateWithoutSubscriptionsInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -2720,6 +2788,7 @@ export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -2753,6 +2822,7 @@ export type TenantCreateWithoutInvoicesInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -2786,6 +2856,7 @@ export type TenantUncheckedCreateWithoutInvoicesInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -2835,6 +2906,7 @@ export type TenantUpdateWithoutInvoicesInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -2868,6 +2940,7 @@ export type TenantUncheckedUpdateWithoutInvoicesInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -2901,6 +2974,7 @@ export type TenantCreateWithoutPaymentsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -2934,6 +3008,7 @@ export type TenantUncheckedCreateWithoutPaymentsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -2983,6 +3058,7 @@ export type TenantUpdateWithoutPaymentsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -3016,6 +3092,7 @@ export type TenantUncheckedUpdateWithoutPaymentsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -3049,6 +3126,7 @@ export type TenantCreateWithoutPaymentMethodsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -3082,6 +3160,7 @@ export type TenantUncheckedCreateWithoutPaymentMethodsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -3131,6 +3210,7 @@ export type TenantUpdateWithoutPaymentMethodsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -3164,6 +3244,7 @@ export type TenantUncheckedUpdateWithoutPaymentMethodsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -3198,6 +3279,7 @@ export type TenantCreateWithoutUsageLedgerEntriesInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
@@ -3231,6 +3313,7 @@ export type TenantUncheckedCreateWithoutUsageLedgerEntriesInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
@@ -3280,6 +3363,7 @@ export type TenantUpdateWithoutUsageLedgerEntriesInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
@@ -3313,6 +3397,7 @@ export type TenantUncheckedUpdateWithoutUsageLedgerEntriesInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
@@ -3345,6 +3430,7 @@ export type TenantCreateWithoutCreditBalancesInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -3378,6 +3464,7 @@ export type TenantUncheckedCreateWithoutCreditBalancesInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -3427,6 +3514,7 @@ export type TenantUpdateWithoutCreditBalancesInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -3460,6 +3548,7 @@ export type TenantUncheckedUpdateWithoutCreditBalancesInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -3493,6 +3582,7 @@ export type TenantCreateWithoutStripeCustomersInput = {
   products?: Prisma.ProductCreateNestedManyWithoutTenantInput
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -3526,6 +3616,7 @@ export type TenantUncheckedCreateWithoutStripeCustomersInput = {
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -3575,6 +3666,7 @@ export type TenantUpdateWithoutStripeCustomersInput = {
   products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -3608,6 +3700,7 @@ export type TenantUncheckedUpdateWithoutStripeCustomersInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -3641,6 +3734,7 @@ export type TenantCreateWithoutAuditLogsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -3674,6 +3768,7 @@ export type TenantUncheckedCreateWithoutAuditLogsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -3723,6 +3818,7 @@ export type TenantUpdateWithoutAuditLogsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -3756,6 +3852,7 @@ export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -3790,6 +3887,7 @@ export type TenantCreateWithoutUserConsentsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
@@ -3823,6 +3921,7 @@ export type TenantUncheckedCreateWithoutUserConsentsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
@@ -3872,6 +3971,7 @@ export type TenantUpdateWithoutUserConsentsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
@@ -3905,8 +4005,161 @@ export type TenantUncheckedUpdateWithoutUserConsentsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutTasksInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutTasksInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutTasksInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutTasksInput, Prisma.TenantUncheckedCreateWithoutTasksInput>
+}
+
+export type TenantUpsertWithoutTasksInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutTasksInput, Prisma.TenantUncheckedUpdateWithoutTasksInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutTasksInput, Prisma.TenantUncheckedCreateWithoutTasksInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutTasksInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutTasksInput, Prisma.TenantUncheckedUpdateWithoutTasksInput>
+}
+
+export type TenantUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
 }
 
@@ -3937,6 +4190,7 @@ export type TenantCreateWithoutOauthClientsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -3970,6 +4224,7 @@ export type TenantUncheckedCreateWithoutOauthClientsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -4019,6 +4274,7 @@ export type TenantUpdateWithoutOauthClientsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -4052,6 +4308,7 @@ export type TenantUncheckedUpdateWithoutOauthClientsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -4085,6 +4342,7 @@ export type TenantCreateWithoutChatSessionsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -4118,6 +4376,7 @@ export type TenantUncheckedCreateWithoutChatSessionsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -4167,6 +4426,7 @@ export type TenantUpdateWithoutChatSessionsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -4200,6 +4460,7 @@ export type TenantUncheckedUpdateWithoutChatSessionsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -4234,6 +4495,7 @@ export type TenantCreateWithoutThreadsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
@@ -4267,6 +4529,7 @@ export type TenantUncheckedCreateWithoutThreadsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
@@ -4316,6 +4579,7 @@ export type TenantUpdateWithoutThreadsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
@@ -4349,6 +4613,7 @@ export type TenantUncheckedUpdateWithoutThreadsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
@@ -4382,6 +4647,7 @@ export type TenantCreateWithoutUserSkillsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -4415,6 +4681,7 @@ export type TenantUncheckedCreateWithoutUserSkillsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -4464,6 +4731,7 @@ export type TenantUpdateWithoutUserSkillsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -4497,6 +4765,7 @@ export type TenantUncheckedUpdateWithoutUserSkillsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -4529,6 +4798,7 @@ export type TenantCreateWithoutConnectorsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -4562,6 +4832,7 @@ export type TenantUncheckedCreateWithoutConnectorsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -4611,6 +4882,7 @@ export type TenantUpdateWithoutConnectorsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -4644,6 +4916,7 @@ export type TenantUncheckedUpdateWithoutConnectorsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -4677,6 +4950,7 @@ export type TenantCreateWithoutCodeRedemptionsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -4710,6 +4984,7 @@ export type TenantUncheckedCreateWithoutCodeRedemptionsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -4759,6 +5034,7 @@ export type TenantUpdateWithoutCodeRedemptionsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -4792,6 +5068,7 @@ export type TenantUncheckedUpdateWithoutCodeRedemptionsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -4825,6 +5102,7 @@ export type TenantCreateWithoutFeedbackReportsInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -4858,6 +5136,7 @@ export type TenantUncheckedCreateWithoutFeedbackReportsInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -4907,6 +5186,7 @@ export type TenantUpdateWithoutFeedbackReportsInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -4940,6 +5220,7 @@ export type TenantUncheckedUpdateWithoutFeedbackReportsInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -4973,6 +5254,7 @@ export type TenantCreateWithoutAtelierCanvasesInput = {
   requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
@@ -5006,6 +5288,7 @@ export type TenantUncheckedCreateWithoutAtelierCanvasesInput = {
   requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
   threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
@@ -5055,6 +5338,7 @@ export type TenantUpdateWithoutAtelierCanvasesInput = {
   requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
@@ -5088,6 +5372,7 @@ export type TenantUncheckedUpdateWithoutAtelierCanvasesInput = {
   requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
   stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
   threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
@@ -5122,6 +5407,7 @@ export type TenantCountOutputType = {
   requestLogs: number
   stripeCustomers: number
   subscriptions: number
+  tasks: number
   threads: number
   usageLedgerEntries: number
   userConsents: number
@@ -5151,6 +5437,7 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   requestLogs?: boolean | TenantCountOutputTypeCountRequestLogsArgs
   stripeCustomers?: boolean | TenantCountOutputTypeCountStripeCustomersArgs
   subscriptions?: boolean | TenantCountOutputTypeCountSubscriptionsArgs
+  tasks?: boolean | TenantCountOutputTypeCountTasksArgs
   threads?: boolean | TenantCountOutputTypeCountThreadsArgs
   usageLedgerEntries?: boolean | TenantCountOutputTypeCountUsageLedgerEntriesArgs
   userConsents?: boolean | TenantCountOutputTypeCountUserConsentsArgs
@@ -5324,6 +5611,13 @@ export type TenantCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.
 /**
  * TenantCountOutputType without action
  */
+export type TenantCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
 export type TenantCountOutputTypeCountThreadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ThreadWhereInput
 }
@@ -5380,6 +5674,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   requestLogs?: boolean | Prisma.Tenant$requestLogsArgs<ExtArgs>
   stripeCustomers?: boolean | Prisma.Tenant$stripeCustomersArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Tenant$subscriptionsArgs<ExtArgs>
+  tasks?: boolean | Prisma.Tenant$tasksArgs<ExtArgs>
   threads?: boolean | Prisma.Tenant$threadsArgs<ExtArgs>
   usageLedgerEntries?: boolean | Prisma.Tenant$usageLedgerEntriesArgs<ExtArgs>
   userConsents?: boolean | Prisma.Tenant$userConsentsArgs<ExtArgs>
@@ -5441,6 +5736,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   requestLogs?: boolean | Prisma.Tenant$requestLogsArgs<ExtArgs>
   stripeCustomers?: boolean | Prisma.Tenant$stripeCustomersArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Tenant$subscriptionsArgs<ExtArgs>
+  tasks?: boolean | Prisma.Tenant$tasksArgs<ExtArgs>
   threads?: boolean | Prisma.Tenant$threadsArgs<ExtArgs>
   usageLedgerEntries?: boolean | Prisma.Tenant$usageLedgerEntriesArgs<ExtArgs>
   userConsents?: boolean | Prisma.Tenant$userConsentsArgs<ExtArgs>
@@ -5483,6 +5779,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     requestLogs: Prisma.$RequestLogPayload<ExtArgs>[]
     stripeCustomers: Prisma.$StripeCustomerPayload<ExtArgs>[]
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
+    tasks: Prisma.$TaskPayload<ExtArgs>[]
     threads: Prisma.$ThreadPayload<ExtArgs>[]
     usageLedgerEntries: Prisma.$UsageLedgerEntryPayload<ExtArgs>[]
     userConsents: Prisma.$UserConsentPayload<ExtArgs>[]
@@ -5912,6 +6209,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   requestLogs<T extends Prisma.Tenant$requestLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$requestLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RequestLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stripeCustomers<T extends Prisma.Tenant$stripeCustomersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$stripeCustomersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StripeCustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.Tenant$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tasks<T extends Prisma.Tenant$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   threads<T extends Prisma.Tenant$threadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$threadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   usageLedgerEntries<T extends Prisma.Tenant$usageLedgerEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$usageLedgerEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsageLedgerEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userConsents<T extends Prisma.Tenant$userConsentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$userConsentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserConsentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6909,6 +7207,30 @@ export type Tenant$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
+}
+
+/**
+ * Tenant.tasks
+ */
+export type Tenant$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Task
+   */
+  select?: Prisma.TaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Task
+   */
+  omit?: Prisma.TaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
 }
 
 /**

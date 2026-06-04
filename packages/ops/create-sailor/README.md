@@ -108,6 +108,15 @@ npm create sailor@latest my-app \
 | `--dry-run` | preview actions without writing | — |
 | `--json` | machine-readable output | — |
 
+`--deploy` remains a bootstrap shortcut. The generated project also writes a
+provider-switchable `deployTargets` map into `nebutra.config.json` and appends
+matching `DEPLOY_TARGET_*` values to `.env.example`:
+
+- `vercel` → Vercel frontends, Cloudflare Workers gateway, ECS Docker origin
+- `cloudflare` → Cloudflare Pages frontends, Cloudflare Workers gateway, ECS Docker origin
+- `railway` → Railway for frontends, gateway, and origin
+- `selfhost` → standalone frontends, ECS/Docker-style gateway and origin
+
 ## Region Presets
 
 | Region | Email | Storage | Analytics | Monitoring | SMS | Payment |

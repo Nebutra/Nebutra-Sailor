@@ -1,0 +1,176 @@
+name: Deploy ECS Origin
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: "python-ai deploy target to activate"
+        required: true
+        default: "ecs-docker"
+        type: choice
+        options:
+          - ecs-docker
+          - k8s
+          - aws
+          - railway
+      image_tag:
+        description: "Container tag to deploy for ghcr.io/<owner>/nebutra-ai"
+        required: false
+        default: "latest"
+  workflow_run:
+    workflows: ["Docker Build & Push"]
+    branches: [main]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-origin-ecs
+  cancel-in-progress: false
+
+jobs:
+  python-ai:
+    name: Deploy python-ai ECS origin
+    runs-on: ubuntu-latest
+    environment: ecs-origin
+    if: >-
+      (github.event_name == 'workflow_dispatch' && inputs.deploy_target == 'ecs-docker') ||
+      (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        vars.DEPLOY_TARGET_PYTHON_AI == 'ecs-docker')
+    env:
+      ECS_HOST: ${{ vars.ECS_HOST }}
+      ECS_USER: ${{ vars.ECS_USER }}
+      ECS_SSH_PORT: ${{ vars.ECS_SSH_PORT || '22' }}
+      ECS_ORIGIN_ROOT: ${{ vars.ECS_ORIGIN_ROOT || '/opt/nebutra/origin' }}
+      CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+      DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL || secrets.DATABASE_URL }}
+      SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+    steps:
+      - name: Checkout origin deploy manifests
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          sparse-checkout: |
+            infra/runtime/docker/docker-compose.origin.yml
+            backends/python/ai
+
+      - name: Resolve image
+        id: image
+        env:
+          INPUT_TAG: ${{ inputs.image_tag }}
+        run: |
+          set -euo pipefail
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            tag="sha-${SOURCE_SHA:0:7}"
+          else
+            tag="${INPUT_TAG:-latest}"
+          fi
+          echo "image=ghcr.io/${owner}/nebutra-ai:${tag}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate ECS secrets
+        run: |
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::ECS_HOST repository variable is not set"; exit 1; }
+          [ -n "${ECS_USER:-}" ] || { echo "::error::ECS_USER repository variable is not set"; exit 1; }
+          [ -n "${{ secrets.ECS_SSH_PRIVATE_KEY }}" ] || { echo "::error::ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
+          [ -n "${{ secrets.ECS_SSH_KNOWN_HOSTS }}" ] || { echo "::error::ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
+          [ -n "${{ secrets.GATEWAY_SHARED_SECRET }}" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
+          [ -n "${DATABASE_URL:-}" ] || { echo "::error::SUPABASE_DATABASE_URL or DATABASE_URL secret is required for persistent origin tasks"; exit 1; }
+          [ -n "${CELERY_BROKER_URL:-}" ] || { echo "::error::CELERY_BROKER_URL, UPSTASH_REDIS_URL, or REDIS_URL secret is required for ECS Celery"; exit 1; }
+
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.ECS_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          umask 077
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_deploy
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
+
+      - name: Upload compose manifest
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+            -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+            "${ECS_USER}@${ECS_HOST}" \
+            "mkdir -p $(printf '%q' "$ECS_ORIGIN_ROOT")"
+          scp -i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
+            -o StrictHostKeyChecking=yes \
+            infra/runtime/docker/docker-compose.origin.yml \
+            "${ECS_USER}@${ECS_HOST}:${ECS_ORIGIN_ROOT}/docker-compose.origin.yml"
+
+      - name: Write origin env
+        env:
+          NEBUTRA_AI_IMAGE: ${{ steps.image.outputs.image }}
+          DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL || secrets.DATABASE_URL }}
+          REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND || secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_TASK_DEFAULT_QUEUE: default
+          CELERY_WORKER_CONCURRENCY: "1"
+          CELERY_PREFETCH_MULTIPLIER: "1"
+          APP_ENV: production
+          TASK_STORE_PROVIDER: postgres
+          TASK_DISPATCHER_PROVIDER: celery
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+          SERVICE_SECRET: ${{ secrets.SERVICE_SECRET }}
+          GATEWAY_SHARED_SECRET: ${{ secrets.GATEWAY_SHARED_SECRET }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          set -euo pipefail
+          tmp_env="$(mktemp)"
+          write_env() {
+            key="$1"
+            value="${2:-}"
+            value="${value//$'\r'/}"
+            value="${value//$'\n'/}"
+            printf '%s=%s\n' "$key" "$value"
+          }
+          {
+            write_env NEBUTRA_AI_IMAGE "$NEBUTRA_AI_IMAGE"
+            write_env DATABASE_URL "$DATABASE_URL"
+            write_env REDIS_URL "$REDIS_URL"
+            write_env CELERY_BROKER_URL "$CELERY_BROKER_URL"
+            write_env CELERY_RESULT_BACKEND "$CELERY_RESULT_BACKEND"
+            write_env CELERY_TASK_DEFAULT_QUEUE "$CELERY_TASK_DEFAULT_QUEUE"
+            write_env CELERY_WORKER_CONCURRENCY "$CELERY_WORKER_CONCURRENCY"
+            write_env CELERY_PREFETCH_MULTIPLIER "$CELERY_PREFETCH_MULTIPLIER"
+            write_env APP_ENV "$APP_ENV"
+            write_env TASK_STORE_PROVIDER "$TASK_STORE_PROVIDER"
+            write_env TASK_DISPATCHER_PROVIDER "$TASK_DISPATCHER_PROVIDER"
+            write_env UPSTASH_REDIS_REST_URL "$UPSTASH_REDIS_REST_URL"
+            write_env UPSTASH_REDIS_REST_TOKEN "$UPSTASH_REDIS_REST_TOKEN"
+            write_env SERVICE_SECRET "$SERVICE_SECRET"
+            write_env GATEWAY_SHARED_SECRET "$GATEWAY_SHARED_SECRET"
+            write_env OPENAI_API_KEY "$OPENAI_API_KEY"
+            write_env SILICONFLOW_API_KEY "$SILICONFLOW_API_KEY"
+            write_env OPENROUTER_API_KEY "$OPENROUTER_API_KEY"
+            write_env AI_ORIGIN_BIND "${AI_ORIGIN_BIND:-127.0.0.1}"
+          } > "$tmp_env"
+          scp -i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
+            -o StrictHostKeyChecking=yes \
+            "$tmp_env" "${ECS_USER}@${ECS_HOST}:${ECS_ORIGIN_ROOT}/.env.origin"
+          rm -f "$tmp_env"
+
+      - name: Deploy origin
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+            -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+            "${ECS_USER}@${ECS_HOST}" \
+            "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml pull ai-origin ai-worker && docker compose -f docker-compose.origin.yml up -d ai-origin ai-worker"
+
+      - name: Health check origin
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+            -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+            "${ECS_USER}@${ECS_HOST}" \
+            "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml ps ai-origin ai-worker && curl -fsS http://127.0.0.1:8000/health"

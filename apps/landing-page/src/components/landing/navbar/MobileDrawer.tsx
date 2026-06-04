@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
+import { getGroupResources, RESOURCE_GROUPS } from "@/lib/constants/resources-data";
 import { getGroupSolutions, pick, SOLUTION_GROUPS } from "@/lib/constants/solutions-data";
 import { env } from "@/lib/env";
 
@@ -49,80 +50,76 @@ export function MobileDrawer() {
                 <div className="flex-1 flex flex-col gap-4">
                   {NAV_LINKS.map((link) => {
                     if ("mega" in link) {
+                      const groups =
+                        link.labelKey === "resources"
+                          ? RESOURCE_GROUPS.map((group) => ({
+                              id: group.id,
+                              label: group.label,
+                              items: getGroupResources(group).map((resource) => ({
+                                key: resource.href,
+                                href: resource.href,
+                                external: resource.external ?? false,
+                                icon: resource.icon,
+                                label: resource.label,
+                              })),
+                            }))
+                          : SOLUTION_GROUPS.map((group) => ({
+                              id: group.id,
+                              label: group.label,
+                              items: getGroupSolutions(group).map((s) => ({
+                                key: s.slug,
+                                href: `/solutions/${s.slug}`,
+                                external: false,
+                                icon: s.icon,
+                                label: s.label,
+                              })),
+                            }));
+
                       return (
                         <div key={link.labelKey} className="flex flex-col gap-3 py-1">
                           <span className="text-xs font-bold text-muted-foreground/60 uppercase tracking-widest">
                             {t(link.labelKey as NavTranslationKey)}
                           </span>
                           <div className="flex flex-col gap-4 pl-4 border-l-2 border-border/40">
-                            {SOLUTION_GROUPS.map((group) => (
+                            {groups.map((group) => (
                               <div key={group.id} className="flex flex-col gap-2.5">
                                 <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground/50">
                                   {pick(group.label, locale)}
                                 </span>
-                                {getGroupSolutions(group).map((s) => {
-                                  const Icon = s.icon;
-                                  return (
-                                    <Link
-                                      key={s.slug}
-                                      href={`/solutions/${s.slug}` as LocalizedHref}
-                                      onClick={() => setOpen(false)}
-                                      className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12"
-                                    >
+                                {group.items.map((item) => {
+                                  const Icon = item.icon;
+                                  const content = (
+                                    <>
                                       <Icon className="size-4 opacity-70" />
-                                      {pick(s.label, locale)}
+                                      {pick(item.label, locale)}
+                                    </>
+                                  );
+                                  const className =
+                                    "flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12";
+                                  return item.external ? (
+                                    <a
+                                      key={item.key}
+                                      href={item.href}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      onClick={() => setOpen(false)}
+                                      className={className}
+                                    >
+                                      {content}
+                                    </a>
+                                  ) : (
+                                    <Link
+                                      key={item.key}
+                                      href={item.href as LocalizedHref}
+                                      onClick={() => setOpen(false)}
+                                      className={className}
+                                    >
+                                      {content}
                                     </Link>
                                   );
                                 })}
                               </div>
                             ))}
-                          </div>
-                        </div>
-                      );
-                    }
-
-                    if ("children" in link) {
-                      return (
-                        <div key={link.labelKey} className="flex flex-col gap-3 py-1">
-                          <span className="text-xs font-bold text-muted-foreground/60 uppercase tracking-widest">
-                            {t(link.labelKey as NavTranslationKey)}
-                          </span>
-                          <div className="flex flex-col gap-4 pl-4 border-l-2 border-border/40">
-                            {link.children.map((child) => {
-                              const isExternal = child.href.startsWith("http");
-                              const content = (
-                                <>
-                                  {child.icon && <child.icon className="size-4 opacity-70" />}
-                                  {t(child.labelKey as NavTranslationKey)}
-                                </>
-                              );
-
-                              if (isExternal) {
-                                return (
-                                  <a
-                                    key={child.labelKey}
-                                    href={child.href}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    onClick={() => setOpen(false)}
-                                    className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12"
-                                  >
-                                    {content}
-                                  </a>
-                                );
-                              }
-
-                              return (
-                                <Link
-                                  key={child.labelKey}
-                                  href={child.href as LocalizedHref}
-                                  onClick={() => setOpen(false)}
-                                  className="flex items-center gap-2 text-[15px] font-medium text-neutral-11 transition-colors hover:text-neutral-12"
-                                >
-                                  {content}
-                                </Link>
-                              );
-                            })}
                           </div>
                         </div>
                       );
