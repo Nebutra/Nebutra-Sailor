@@ -90,9 +90,9 @@ describe("landing monorepo count copy", () => {
 
   it("uses the current packages count across localized landing copy", () => {
     for (const [locale, messages] of locales) {
-      expect(messages.monorepoTree.title, locale).toContain("104");
+      expect(messages.monorepoTree.title, locale).toContain("102");
       expect(messages.monorepoTree.title, locale).not.toContain("55");
-      expect(messages.landing.socialProof.metrics.projects.value, locale).toBe("104");
+      expect(messages.landing.socialProof.metrics.projects.value, locale).toBe("102");
     }
   });
 });

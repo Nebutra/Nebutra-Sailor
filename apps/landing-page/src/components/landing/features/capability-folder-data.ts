@@ -79,11 +79,11 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     icon: Bot,
     layout: "wide",
     sourceStats: {
-      unitCount: 40,
+      unitCount: 38,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 196,
-      testFiles: 97,
-      readmes: 33,
+      sourceFiles: 192,
+      testFiles: 95,
+      readmes: 31,
     },
     title: copy("AI Runtime & Agent Substrate", "AI 运行时与智能体底座"),
     summary: copy(
@@ -95,7 +95,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       "这张卡按工作台设计：@nebutra/agent-runtime 位于中心，检索、工具、沙箱、供应商与媒体包围绕它协同。",
     ),
     signature: {
-      value: "40",
+      value: "38",
       label: copy("AI packages", "AI 包"),
       detail: copy(
         "196 runtime source files and 97 tests, with the heaviest coverage in agent-runtime, knowledge-rag, reel, graph, and execution policies.",
@@ -228,8 +228,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 18,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 143,
-      testFiles: 28,
+      sourceFiles: 148,
+      testFiles: 30,
       readmes: 12,
     },
     title: copy("Platform Control Plane", "平台控制平面"),
@@ -378,8 +378,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 8,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 81,
-      testFiles: 25,
+      sourceFiles: 91,
+      testFiles: 27,
       readmes: 8,
     },
     title: copy("Identity, Access & Tenant Trust", "身份、访问与租户信任"),
@@ -504,10 +504,10 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     icon: Palette,
     layout: "standard",
     sourceStats: {
-      unitCount: 7,
+      unitCount: 8,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 1123,
-      testFiles: 15,
+      sourceFiles: 1139,
+      testFiles: 27,
       readmes: 8,
     },
     title: copy("Design System Supply Chain", "设计系统供应链"),
@@ -642,7 +642,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       unitCount: 17,
       unitLabel: copy("packages", "包"),
       sourceFiles: 103,
-      testFiles: 32,
+      testFiles: 34,
       readmes: 14,
     },
     title: copy("Integration Runtime Layer", "集成运行时层"),
@@ -770,8 +770,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 9,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 85,
-      testFiles: 20,
+      sourceFiles: 86,
+      testFiles: 21,
       readmes: 9,
     },
     title: copy("Commercial System of Record", "商业系统记录源"),
@@ -908,8 +908,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 1,
       unitLabel: copy("backend", "后端"),
-      sourceFiles: 59,
-      testFiles: 13,
+      sourceFiles: 66,
+      testFiles: 20,
       readmes: 0,
     },
     title: copy("Typed API Gateway Boundary", "类型化 API 网关边界"),
@@ -922,7 +922,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       "这张卡按请求路径设计，因为 gateway 的价值只有把 middleware 顺序、route 契约与异步 jobs 放在一起才看得清。",
     ),
     signature: {
-      value: "13",
+      value: "20",
       label: copy("gateway tests", "gateway 测试"),
       detail: copy(
         "Billing idempotency, RBAC, middleware, queue delivery, events, health, notifications, and AI gateway routes are covered.",

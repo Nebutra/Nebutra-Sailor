@@ -106,7 +106,7 @@
   },
   "monorepoTree": {
     "badge": "ESTRUCTURA TURBOREPO",
-    "title": "10 apps. 104 paquetes. 4 líneas backend.",
+    "title": "10 apps. 102 paquetes. 4 líneas backend.",
     "description": "Código compartido, builds paralelos y cero duplicación. Tipado end-to-end completo desde la base de datos hasta el frontend.",
     "metricApps": "aplicaciones",
     "metricBackends": "líneas backend",
@@ -1622,7 +1622,7 @@
         },
         "why-turborepo": {
           "question": "¿Por qué Turborepo en lugar de una aplicación Next.js estándar?",
-          "answer": "Sailor es 10 apps + 104 paquetes compartidos bajo packages/*/* + 4 líneas backend (Hono gateway, FastAPI/Python, Go, Rust) — muy por encima del punto donde una sola mega-app Next.js es mantenible. Turborepo nos da builds solo para los afectados, caché remoto transparente y una única fuente de verdad para tokens de diseño compartidos, autenticación, facturación y observabilidad — sin forzar a todos los equipos al mismo proceso Next.js."
+          "answer": "Sailor es 10 apps + 102 paquetes compartidos bajo packages/*/* + 4 líneas backend (Hono gateway, FastAPI/Python, Go, Rust) — muy por encima del punto donde una sola mega-app Next.js es mantenible. Turborepo nos da builds solo para los afectados, caché remoto transparente y una única fuente de verdad para tokens de diseño compartidos, autenticación, facturación y observabilidad — sin forzar a todos los equipos al mismo proceso Next.js."
         },
         "multi-tenancy": {
           "question": "¿Cómo se gestiona el multi-tenancy?",
@@ -1676,7 +1676,7 @@
           "label": "Proveedores de IA compatibles"
         },
         "projects": {
-          "value": "104",
+          "value": "102",
           "label": "paquetes del monorepo"
         },
         "uptime": {
