@@ -10,6 +10,7 @@ dist
 .next
 .turbo
 out
+storybook-static
 
 # Environment
 .env
