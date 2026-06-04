@@ -45,9 +45,7 @@ export function ResourcesMegaMenu() {
                     const Icon = item.icon;
                     const inner = (
                       <>
-                        <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-lg)] border border-border/60 bg-muted/40 text-muted-foreground/70 transition-colors group-hover/child:border-border group-hover/child:text-foreground">
-                          <Icon className="size-4" />
-                        </span>
+                        <Icon className="mt-0.5 size-[18px] shrink-0 text-muted-foreground/60 transition-colors group-hover/child:text-foreground" />
                         <span className="flex flex-col">
                           <span className="inline-flex items-center gap-1 text-sm font-semibold text-neutral-12">
                             {pick(item.label, locale)}
