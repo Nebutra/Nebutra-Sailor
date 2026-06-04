@@ -33,6 +33,42 @@ const TEMPLATE_SOURCES = {
   },
 } as const;
 
+/**
+ * Local-filesystem template source (offline / headless / CI).
+ *
+ * When SAILOR_TEMPLATE_LOCAL_DIR points at a directory, the scaffold path is
+ * exercised by copying that directory instead of downloading a GitHub tarball.
+ * This makes a real, full end-to-end scaffold reproducible without network
+ * access — e.g. point it at a checkout of the template repo in CI.
+ *
+ * The copy skips node_modules/.git/dist (mirroring collectPaths) and then runs
+ * the same `.templateignore` stripping the live GitHub source gets, so a local
+ * clone produces a byte-for-byte equivalent layout to the `main` source.
+ */
+function localTemplateDir(): string | undefined {
+  const dir = process.env.SAILOR_TEMPLATE_LOCAL_DIR;
+  if (!dir || dir.trim().length === 0) return undefined;
+  return path.resolve(dir.trim());
+}
+
+const COPY_SKIP_DIRS = new Set(["node_modules", ".git", "dist", ".next", ".turbo"]);
+
+function copyTemplateDir(sourceDir: string, targetDir: string): void {
+  const stat = fs.statSync(sourceDir);
+  if (!stat.isDirectory()) {
+    throw new Error(`SAILOR_TEMPLATE_LOCAL_DIR is not a directory: ${sourceDir}`);
+  }
+
+  fs.cpSync(sourceDir, targetDir, {
+    recursive: true,
+    dereference: true,
+    filter: (src) => {
+      const base = path.basename(src);
+      return !COPY_SKIP_DIRS.has(base);
+    },
+  });
+}
+
 function mutableTarballUrl(repo: string, ref: string): string {
   return `https://github.com/${repo}/archive/refs/heads/${ref}.tar.gz`;
 }
@@ -233,6 +269,29 @@ async function downloadTemplateSource(
 
 export async function cloneTemplate(targetDir: string): Promise<void> {
   fs.mkdirSync(targetDir, { recursive: true });
+
+  // Offline / headless path — copy from a local directory instead of fetching a
+  // GitHub tarball. Exercises the full scaffold end-to-end in CI without network.
+  const localDir = localTemplateDir();
+  if (localDir) {
+    if (!fs.existsSync(localDir)) {
+      throw new Error(`SAILOR_TEMPLATE_LOCAL_DIR does not exist: ${localDir}`);
+    }
+    resetDirectory(targetDir);
+    copyTemplateDir(localDir, targetDir);
+    // A local checkout is "live source"-equivalent: apply .templateignore so the
+    // resulting layout matches what the `main` GitHub source would produce.
+    try {
+      applyTemplateIgnore(targetDir);
+    } catch (error) {
+      throw new Error(
+        `Local template copied, but .templateignore processing failed: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
+    return;
+  }
 
   const explicitSource = process.env.SAILOR_TEMPLATE_SOURCE as "main" | "mirror" | undefined;
 
