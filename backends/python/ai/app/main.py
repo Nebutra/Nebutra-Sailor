@@ -18,6 +18,7 @@ from app.api.v1 import (
     routes_sandbox,
     routes_tasks,
     routes_translate,
+    routes_uploads,
 )
 
 
@@ -54,6 +55,7 @@ app.include_router(
 app.include_router(routes_sandbox.router, prefix="/api/v1/sandbox", tags=["sandbox"])
 app.include_router(routes_agents.router, prefix="/api/v1/agents", tags=["agents"])
 app.include_router(routes_tasks.router, prefix="/api/v1/tasks", tags=["tasks"])
+app.include_router(routes_uploads.router, prefix="/api/v1/uploads", tags=["uploads"])
 
 
 @app.get("/")

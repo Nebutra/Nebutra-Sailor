@@ -53,6 +53,7 @@ import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
 import { statusRoutes } from "./routes/system/status.js";
 import { taskRoutes } from "./routes/tasks/index.js";
+import { uploadRoutes } from "./routes/uploads/index.js";
 import { getAuthWebhookRoutes, stripeWebhookRoutes } from "./routes/webhooks/index.js";
 
 initOtel({ serviceName: "api-gateway" });
@@ -221,6 +222,7 @@ app.route("/api/v1/agents", agentRoutes);
 app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/tasks", taskRoutes);
+app.route("/api/v1/uploads", uploadRoutes);
 
 // AI Gateway — build shared deps once, mount route + register completion worker.
 // Graceful degradation: a missing Redis/queue must not prevent app startup.

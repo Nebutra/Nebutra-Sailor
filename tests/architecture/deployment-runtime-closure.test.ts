@@ -21,13 +21,22 @@ const GATEWAY_AI_ORIGIN_HEADERS_PATH = resolve(
   "backends/gateway/src/routes/ai/origin-headers.ts",
 );
 const GATEWAY_TASK_ROUTES_PATH = resolve(ROOT, "backends/gateway/src/routes/tasks/index.ts");
+const GATEWAY_UPLOAD_ROUTES_PATH = resolve(ROOT, "backends/gateway/src/routes/uploads/index.ts");
 const PYTHON_AI_MAIN_PATH = resolve(ROOT, "backends/python/ai/app/main.py");
 const PYTHON_AI_TASK_ROUTES_PATH = resolve(ROOT, "backends/python/ai/app/api/v1/routes_tasks.py");
+const PYTHON_AI_UPLOAD_ROUTES_PATH = resolve(
+  ROOT,
+  "backends/python/ai/app/api/v1/routes_uploads.py",
+);
 const PYTHON_AI_TASK_DISPATCHER_PATH = resolve(ROOT, "backends/python/ai/app/tasks/dispatcher.py");
 const DB_SCHEMA_PATH = resolve(ROOT, "packages/platform/db/prisma/schema.prisma");
 const TASK_MIGRATION_PATH = resolve(
   ROOT,
   "packages/platform/db/prisma/migrations/20260604010000_add_task_envelope/migration.sql",
+);
+const UPLOAD_MIGRATION_PATH = resolve(
+  ROOT,
+  "packages/platform/db/prisma/migrations/20260604020000_add_upload_records/migration.sql",
 );
 const DEPLOY_GATEWAY_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/deploy-gateway.yml");
 const DEPLOY_ORIGIN_ECS_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/deploy-origin-ecs.yml");
@@ -175,6 +184,10 @@ describe("production runtime closure", () => {
     expect(workflow).toContain("CELERY_BROKER_URL");
     expect(workflow).toContain("TASK_STORE_PROVIDER");
     expect(workflow).toContain("TASK_DISPATCHER_PROVIDER");
+    expect(workflow).toContain("UPLOAD_STORE_PROVIDER");
+    expect(workflow).toContain("UPLOAD_STORAGE_PROVIDER must be r2, s3, or oss for ECS origin");
+    expect(workflow).toContain("R2_ACCESS_KEY_ID secret is required for R2 uploads");
+    expect(workflow).toContain("OSS_ACCESS_KEY_SECRET secret is required for OSS uploads");
     expect(workflow).toContain(
       "SUPABASE_DATABASE_URL or DATABASE_URL secret is required for persistent origin tasks",
     );
@@ -254,5 +267,40 @@ describe("production runtime closure", () => {
     expect(routes).not.toContain("CELERY_BROKER_URL");
     expect(routes).not.toContain("QSTASH_TOKEN");
     expect(routes).not.toContain("REDIS_URL");
+  });
+
+  it("keeps uploads as direct object-storage metadata instead of ECS file ingress", () => {
+    expect(existsSync(UPLOAD_MIGRATION_PATH), `${UPLOAD_MIGRATION_PATH} must exist`).toBe(true);
+    expect(
+      existsSync(PYTHON_AI_UPLOAD_ROUTES_PATH),
+      `${PYTHON_AI_UPLOAD_ROUTES_PATH} must exist`,
+    ).toBe(true);
+    expect(existsSync(GATEWAY_UPLOAD_ROUTES_PATH), `${GATEWAY_UPLOAD_ROUTES_PATH} must exist`).toBe(
+      true,
+    );
+
+    const schema = readFileSync(DB_SCHEMA_PATH, "utf8");
+    const migration = readFileSync(UPLOAD_MIGRATION_PATH, "utf8");
+    const main = readFileSync(PYTHON_AI_MAIN_PATH, "utf8");
+    const originRoutes = readFileSync(PYTHON_AI_UPLOAD_ROUTES_PATH, "utf8");
+    const gatewayIndex = readFileSync(GATEWAY_INDEX_PATH, "utf8");
+    const gatewayRoutes = readFileSync(GATEWAY_UPLOAD_ROUTES_PATH, "utf8");
+
+    expect(schema).toContain("enum UploadStatus");
+    expect(schema).toContain("model UploadRecord");
+    expect(migration).toContain('CREATE TABLE "public"."uploads"');
+    expect(main).toContain("routes_uploads");
+    expect(main).toContain('prefix="/api/v1/uploads"');
+    expect(originRoutes).toContain("/presign");
+    expect(originRoutes).toContain("/complete");
+    expect(originRoutes).toContain("resolve_upload_storage_provider");
+    expect(originRoutes).not.toContain("UploadFile");
+    expect(originRoutes).not.toContain("File(");
+    expect(gatewayIndex).toContain('app.route("/api/v1/uploads", uploadRoutes)');
+    expect(gatewayRoutes).toContain("/api/v1/uploads/presign");
+    expect(gatewayRoutes).toContain("/api/v1/uploads/complete");
+    expect(gatewayRoutes).toContain("buildAuthenticatedAiOriginHeaders");
+    expect(gatewayRoutes).not.toContain("R2_ACCESS_KEY_ID");
+    expect(gatewayRoutes).not.toContain("OSS_ACCESS_KEY_ID");
   });
 });

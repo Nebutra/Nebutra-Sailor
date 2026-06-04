@@ -691,6 +691,23 @@ export type EnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>
 }
 
+export type EnumUploadStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.UploadStatus | Prisma.EnumUploadStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.UploadStatus[] | Prisma.ListEnumUploadStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UploadStatus[] | Prisma.ListEnumUploadStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUploadStatusFilter<$PrismaModel> | $Enums.UploadStatus
+}
+
+export type EnumUploadStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UploadStatus | Prisma.EnumUploadStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.UploadStatus[] | Prisma.ListEnumUploadStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UploadStatus[] | Prisma.ListEnumUploadStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUploadStatusWithAggregatesFilter<$PrismaModel> | $Enums.UploadStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUploadStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUploadStatusFilter<$PrismaModel>
+}
+
 export type EnumOAuthClientTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.OAuthClientType | Prisma.EnumOAuthClientTypeFieldRefInput<$PrismaModel>
   in?: $Enums.OAuthClientType[] | Prisma.ListEnumOAuthClientTypeFieldRefInput<$PrismaModel>
@@ -1461,6 +1478,23 @@ export type NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>
+}
+
+export type NestedEnumUploadStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.UploadStatus | Prisma.EnumUploadStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.UploadStatus[] | Prisma.ListEnumUploadStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UploadStatus[] | Prisma.ListEnumUploadStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUploadStatusFilter<$PrismaModel> | $Enums.UploadStatus
+}
+
+export type NestedEnumUploadStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UploadStatus | Prisma.EnumUploadStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.UploadStatus[] | Prisma.ListEnumUploadStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UploadStatus[] | Prisma.ListEnumUploadStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUploadStatusWithAggregatesFilter<$PrismaModel> | $Enums.UploadStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUploadStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUploadStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumOAuthClientTypeFilter<$PrismaModel = never> = {

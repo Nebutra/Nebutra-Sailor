@@ -92,6 +92,7 @@ export const ModelName = {
   CookieConsent: 'CookieConsent',
   ContactSubmission: 'ContactSubmission',
   Task: 'Task',
+  UploadRecord: 'UploadRecord',
   OAuthClient: 'OAuthClient',
   OAuthAuthorization: 'OAuthAuthorization',
   OAuthAccessToken: 'OAuthAccessToken',
@@ -841,6 +842,30 @@ export const TaskScalarFieldEnum = {
 } as const
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const UploadRecordScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  status: 'status',
+  provider: 'provider',
+  bucket: 'bucket',
+  objectKey: 'objectKey',
+  filename: 'filename',
+  contentType: 'contentType',
+  sizeBytes: 'sizeBytes',
+  metadata: 'metadata',
+  idempotencyKey: 'idempotencyKey',
+  uploadUrlExpiresAt: 'uploadUrlExpiresAt',
+  etag: 'etag',
+  checksumSha256: 'checksumSha256',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  completedAt: 'completedAt'
+} as const
+
+export type UploadRecordScalarFieldEnum = (typeof UploadRecordScalarFieldEnum)[keyof typeof UploadRecordScalarFieldEnum]
 
 
 export const OAuthClientScalarFieldEnum = {
