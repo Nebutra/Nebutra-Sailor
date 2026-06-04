@@ -1124,20 +1124,20 @@
     },
     "faq": {
       "title": "FAQ zu Preisen & Lizenzen",
-      "description": "Häufige Fragen zu Abonnement, Rückerstattung und kommerzieller Lizenz.",
+      "description": "Fragen zu Lizenzstufen, Rückerstattungen und kommerziellen Nutzungsrechten.",
       "q1": {
-        "q": "Ist das ein Abonnement?",
-        "a": "Ja, unser Pro-Plan wird monatlich abgerechnet. Sie können jederzeit kündigen, ohne versteckte Gebühren."
+        "q": "Ist Sailor ein monatliches SaaS-Abonnement?",
+        "a": "Nein. Diese Preise gelten für Sailor-Quellcodelizenzen: Independent ist kostenlos, Startup wird jährlich abgerechnet und Enterprise ist individuell."
       },
       "q2": {
         "q": "Bieten Sie Erstattungen an?",
-        "a": "Wir bieten eine 14-tägige Geld-zurück-Garantie ohne Rückfragen."
+        "a": "Startup-Kommerzlizenzen enthalten für Erstkäufe ein 14-tägiges Rückerstattungsfenster. Enterprise-Bedingungen werden im unterzeichneten Vertrag geregelt."
       },
       "q3": {
-        "q": "Kann ich das für Kundenprojekte nutzen?",
-        "a": "Absolut. Die kommerzielle Lizenz gilt für unbegrenzte Kundenprojekte."
+        "q": "Kann ich Sailor für Kundenprojekte nutzen?",
+        "a": "Ja. Eine kommerzielle Lizenz erlaubt Ihrem Team, geschlossene Kunden- oder interne Produkte im lizenzierten Umfang auszuliefern; White-Label-Rechte erfordern Enterprise-Freigabe."
       },
-      "contactNudge": "Noch Fragen? Sprechen Sie mit unserem Engineering-Team →"
+      "contactNudge": "Noch Fragen? Sprechen Sie mit dem Nebutra-Team →"
     },
     "cta": {
       "eyebrow": "Loslegen",
