@@ -11,10 +11,13 @@ export function initSentry(): void {
     return; // Sentry disabled in local dev
   }
 
+  const release = process.env.SENTRY_RELEASE;
   const options = {
     dsn: process.env.SENTRY_DSN,
     environment: process.env.NODE_ENV ?? "development",
-    release: process.env.SENTRY_RELEASE || undefined,
+    // Only set `release` when defined — `exactOptionalPropertyTypes` forbids
+    // assigning an explicit `undefined` to the optional NodeOptions.release.
+    ...(release ? { release } : {}),
     tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
     profilesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
     beforeSend(event: ErrorEvent) {
