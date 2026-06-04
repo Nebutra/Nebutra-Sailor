@@ -442,6 +442,8 @@ export const ModelName = {
   FeedbackReport: 'FeedbackReport',
   AuthAccount: 'AuthAccount',
   AuthSession: 'AuthSession',
+  DesktopAuthHandoff: 'DesktopAuthHandoff',
+  DesktopAuthSession: 'DesktopAuthSession',
   AuthVerification: 'AuthVerification',
   CommunityProfile: 'CommunityProfile',
   License: 'License',
@@ -470,7 +472,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
+    modelProps: "organization" | "tenant" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4750,6 +4752,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DesktopAuthHandoff: {
+      payload: Prisma.$DesktopAuthHandoffPayload<ExtArgs>
+      fields: Prisma.DesktopAuthHandoffFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DesktopAuthHandoffFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DesktopAuthHandoffFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>
+        }
+        findFirst: {
+          args: Prisma.DesktopAuthHandoffFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DesktopAuthHandoffFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>
+        }
+        findMany: {
+          args: Prisma.DesktopAuthHandoffFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>[]
+        }
+        create: {
+          args: Prisma.DesktopAuthHandoffCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>
+        }
+        createMany: {
+          args: Prisma.DesktopAuthHandoffCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DesktopAuthHandoffCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>[]
+        }
+        delete: {
+          args: Prisma.DesktopAuthHandoffDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>
+        }
+        update: {
+          args: Prisma.DesktopAuthHandoffUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>
+        }
+        deleteMany: {
+          args: Prisma.DesktopAuthHandoffDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DesktopAuthHandoffUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DesktopAuthHandoffUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>[]
+        }
+        upsert: {
+          args: Prisma.DesktopAuthHandoffUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthHandoffPayload>
+        }
+        aggregate: {
+          args: Prisma.DesktopAuthHandoffAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDesktopAuthHandoff>
+        }
+        groupBy: {
+          args: Prisma.DesktopAuthHandoffGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DesktopAuthHandoffGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DesktopAuthHandoffCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DesktopAuthHandoffCountAggregateOutputType> | number
+        }
+      }
+    }
+    DesktopAuthSession: {
+      payload: Prisma.$DesktopAuthSessionPayload<ExtArgs>
+      fields: Prisma.DesktopAuthSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DesktopAuthSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DesktopAuthSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.DesktopAuthSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DesktopAuthSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>
+        }
+        findMany: {
+          args: Prisma.DesktopAuthSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>[]
+        }
+        create: {
+          args: Prisma.DesktopAuthSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>
+        }
+        createMany: {
+          args: Prisma.DesktopAuthSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DesktopAuthSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.DesktopAuthSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>
+        }
+        update: {
+          args: Prisma.DesktopAuthSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DesktopAuthSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DesktopAuthSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DesktopAuthSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DesktopAuthSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DesktopAuthSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.DesktopAuthSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDesktopAuthSession>
+        }
+        groupBy: {
+          args: Prisma.DesktopAuthSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DesktopAuthSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DesktopAuthSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DesktopAuthSessionCountAggregateOutputType> | number
+        }
+      }
+    }
     AuthVerification: {
       payload: Prisma.$AuthVerificationPayload<ExtArgs>
       fields: Prisma.AuthVerificationFieldRefs
@@ -6725,6 +6875,40 @@ export const AuthSessionScalarFieldEnum = {
 export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
 
 
+export const DesktopAuthHandoffScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  userId: 'userId',
+  scheme: 'scheme',
+  state: 'state',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+} as const
+
+export type DesktopAuthHandoffScalarFieldEnum = (typeof DesktopAuthHandoffScalarFieldEnum)[keyof typeof DesktopAuthHandoffScalarFieldEnum]
+
+
+export const DesktopAuthSessionScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  handoffId: 'handoffId',
+  userId: 'userId',
+  scheme: 'scheme',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  lastUsedAt: 'lastUsedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DesktopAuthSessionScalarFieldEnum = (typeof DesktopAuthSessionScalarFieldEnum)[keyof typeof DesktopAuthSessionScalarFieldEnum]
+
+
 export const AuthVerificationScalarFieldEnum = {
   id: 'id',
   identifier: 'identifier',
@@ -7574,6 +7758,8 @@ export type GlobalOmitConfig = {
   feedbackReport?: Prisma.FeedbackReportOmit
   authAccount?: Prisma.AuthAccountOmit
   authSession?: Prisma.AuthSessionOmit
+  desktopAuthHandoff?: Prisma.DesktopAuthHandoffOmit
+  desktopAuthSession?: Prisma.DesktopAuthSessionOmit
   authVerification?: Prisma.AuthVerificationOmit
   communityProfile?: Prisma.CommunityProfileOmit
   license?: Prisma.LicenseOmit

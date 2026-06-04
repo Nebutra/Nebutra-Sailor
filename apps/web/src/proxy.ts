@@ -16,6 +16,7 @@ const publicRoutePaths = [
   "/sign-in",
   "/sign-up",
   "/login/success",
+  "/desktop-auth",
   "/onboarding",
   "/select-org",
   "/sso-callback",
@@ -46,6 +47,10 @@ function isPublicPathname(pathname: string): boolean {
       publicPath !== "/" &&
       (normalizedPathname === publicPath || normalizedPathname.startsWith(`${publicPath}/`)),
   );
+}
+
+function isDesktopAuthRemotePath(pathname: string): boolean {
+  return pathname === "/signup/remote" || pathname === "/login/remote";
 }
 
 const authProvider = getConfiguredAuthProvider();
@@ -131,6 +136,12 @@ function withNonce(request: NextRequest, response: NextResponse): NextResponse {
  * For others: simple locale + CSP handler
  */
 export async function proxy(req: NextRequest, event: NextFetchEvent) {
+  const { pathname } = req.nextUrl;
+
+  if (isDesktopAuthRemotePath(pathname)) {
+    return withNonce(req, NextResponse.next());
+  }
+
   if (authProvider === "clerk" && hasClerkKey) {
     // For Clerk provider, dynamically import and use clerkMiddleware
     // Note: In production with Clerk, consider importing clerkMiddleware at the top
@@ -164,7 +175,6 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
 
   // Skip intl locale detection for API routes — they don't need locale processing
   // and next-intl rewrites them into /en/api/... which causes 404s.
-  const { pathname } = req.nextUrl;
   if (pathname.startsWith("/api/")) {
     const response = NextResponse.next();
     return withNonce(req, response);

@@ -244,6 +244,8 @@ export type AuthUserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"AuthUser"> | Date | string
   accounts?: Prisma.AuthAccountListRelationFilter
   sessions?: Prisma.AuthSessionListRelationFilter
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffListRelationFilter
+  desktopAuthSessions?: Prisma.DesktopAuthSessionListRelationFilter
   baMembers?: Prisma.BAMemberListRelationFilter
   baPasskeys?: Prisma.BAPasskeyListRelationFilter
   chatSessions?: Prisma.ChatSessionListRelationFilter
@@ -265,6 +267,8 @@ export type AuthUserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AuthAccountOrderByRelationAggregateInput
   sessions?: Prisma.AuthSessionOrderByRelationAggregateInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffOrderByRelationAggregateInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionOrderByRelationAggregateInput
   baMembers?: Prisma.BAMemberOrderByRelationAggregateInput
   baPasskeys?: Prisma.BAPasskeyOrderByRelationAggregateInput
   chatSessions?: Prisma.ChatSessionOrderByRelationAggregateInput
@@ -289,6 +293,8 @@ export type AuthUserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"AuthUser"> | Date | string
   accounts?: Prisma.AuthAccountListRelationFilter
   sessions?: Prisma.AuthSessionListRelationFilter
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffListRelationFilter
+  desktopAuthSessions?: Prisma.DesktopAuthSessionListRelationFilter
   baMembers?: Prisma.BAMemberListRelationFilter
   baPasskeys?: Prisma.BAPasskeyListRelationFilter
   chatSessions?: Prisma.ChatSessionListRelationFilter
@@ -348,6 +354,8 @@ export type AuthUserCreateInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutUserInput
@@ -369,6 +377,8 @@ export type AuthUserUncheckedCreateInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutUserInput
@@ -390,6 +400,8 @@ export type AuthUserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutUserNestedInput
@@ -411,6 +423,8 @@ export type AuthUserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutUserNestedInput
@@ -566,6 +580,34 @@ export type AuthUserUpdateOneRequiredWithoutSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AuthUserUpdateToOneWithWhereWithoutSessionsInput, Prisma.AuthUserUpdateWithoutSessionsInput>, Prisma.AuthUserUncheckedUpdateWithoutSessionsInput>
 }
 
+export type AuthUserCreateNestedOneWithoutDesktopAuthHandoffsInput = {
+  create?: Prisma.XOR<Prisma.AuthUserCreateWithoutDesktopAuthHandoffsInput, Prisma.AuthUserUncheckedCreateWithoutDesktopAuthHandoffsInput>
+  connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutDesktopAuthHandoffsInput
+  connect?: Prisma.AuthUserWhereUniqueInput
+}
+
+export type AuthUserUpdateOneRequiredWithoutDesktopAuthHandoffsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthUserCreateWithoutDesktopAuthHandoffsInput, Prisma.AuthUserUncheckedCreateWithoutDesktopAuthHandoffsInput>
+  connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutDesktopAuthHandoffsInput
+  upsert?: Prisma.AuthUserUpsertWithoutDesktopAuthHandoffsInput
+  connect?: Prisma.AuthUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthUserUpdateToOneWithWhereWithoutDesktopAuthHandoffsInput, Prisma.AuthUserUpdateWithoutDesktopAuthHandoffsInput>, Prisma.AuthUserUncheckedUpdateWithoutDesktopAuthHandoffsInput>
+}
+
+export type AuthUserCreateNestedOneWithoutDesktopAuthSessionsInput = {
+  create?: Prisma.XOR<Prisma.AuthUserCreateWithoutDesktopAuthSessionsInput, Prisma.AuthUserUncheckedCreateWithoutDesktopAuthSessionsInput>
+  connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutDesktopAuthSessionsInput
+  connect?: Prisma.AuthUserWhereUniqueInput
+}
+
+export type AuthUserUpdateOneRequiredWithoutDesktopAuthSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.AuthUserCreateWithoutDesktopAuthSessionsInput, Prisma.AuthUserUncheckedCreateWithoutDesktopAuthSessionsInput>
+  connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutDesktopAuthSessionsInput
+  upsert?: Prisma.AuthUserUpsertWithoutDesktopAuthSessionsInput
+  connect?: Prisma.AuthUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AuthUserUpdateToOneWithWhereWithoutDesktopAuthSessionsInput, Prisma.AuthUserUpdateWithoutDesktopAuthSessionsInput>, Prisma.AuthUserUncheckedUpdateWithoutDesktopAuthSessionsInput>
+}
+
 export type AuthUserCreateNestedOneWithoutBaMembersInput = {
   create?: Prisma.XOR<Prisma.AuthUserCreateWithoutBaMembersInput, Prisma.AuthUserUncheckedCreateWithoutBaMembersInput>
   connectOrCreate?: Prisma.AuthUserCreateOrConnectWithoutBaMembersInput
@@ -610,6 +652,8 @@ export type AuthUserCreateWithoutChatSessionsInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
 }
@@ -630,6 +674,8 @@ export type AuthUserUncheckedCreateWithoutChatSessionsInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
 }
@@ -666,6 +712,8 @@ export type AuthUserUpdateWithoutChatSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
 }
@@ -686,6 +734,8 @@ export type AuthUserUncheckedUpdateWithoutChatSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -705,6 +755,8 @@ export type AuthUserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutUserInput
@@ -725,6 +777,8 @@ export type AuthUserUncheckedCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutUserInput
@@ -761,6 +815,8 @@ export type AuthUserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutUserNestedInput
@@ -781,6 +837,8 @@ export type AuthUserUncheckedUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutUserNestedInput
@@ -801,6 +859,8 @@ export type AuthUserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutUserInput
@@ -821,6 +881,8 @@ export type AuthUserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutUserInput
@@ -857,6 +919,8 @@ export type AuthUserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutUserNestedInput
@@ -877,6 +941,216 @@ export type AuthUserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AuthUserCreateWithoutDesktopAuthHandoffsInput = {
+  id?: string
+  email?: string | null
+  phone?: string | null
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  name?: string | null
+  image?: string | null
+  passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutUserInput
+}
+
+export type AuthUserUncheckedCreateWithoutDesktopAuthHandoffsInput = {
+  id?: string
+  email?: string | null
+  phone?: string | null
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  name?: string | null
+  image?: string | null
+  passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AuthUserCreateOrConnectWithoutDesktopAuthHandoffsInput = {
+  where: Prisma.AuthUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthUserCreateWithoutDesktopAuthHandoffsInput, Prisma.AuthUserUncheckedCreateWithoutDesktopAuthHandoffsInput>
+}
+
+export type AuthUserUpsertWithoutDesktopAuthHandoffsInput = {
+  update: Prisma.XOR<Prisma.AuthUserUpdateWithoutDesktopAuthHandoffsInput, Prisma.AuthUserUncheckedUpdateWithoutDesktopAuthHandoffsInput>
+  create: Prisma.XOR<Prisma.AuthUserCreateWithoutDesktopAuthHandoffsInput, Prisma.AuthUserUncheckedCreateWithoutDesktopAuthHandoffsInput>
+  where?: Prisma.AuthUserWhereInput
+}
+
+export type AuthUserUpdateToOneWithWhereWithoutDesktopAuthHandoffsInput = {
+  where?: Prisma.AuthUserWhereInput
+  data: Prisma.XOR<Prisma.AuthUserUpdateWithoutDesktopAuthHandoffsInput, Prisma.AuthUserUncheckedUpdateWithoutDesktopAuthHandoffsInput>
+}
+
+export type AuthUserUpdateWithoutDesktopAuthHandoffsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutUserNestedInput
+}
+
+export type AuthUserUncheckedUpdateWithoutDesktopAuthHandoffsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type AuthUserCreateWithoutDesktopAuthSessionsInput = {
+  id?: string
+  email?: string | null
+  phone?: string | null
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  name?: string | null
+  image?: string | null
+  passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutUserInput
+}
+
+export type AuthUserUncheckedCreateWithoutDesktopAuthSessionsInput = {
+  id?: string
+  email?: string | null
+  phone?: string | null
+  emailVerified?: boolean
+  phoneVerified?: boolean
+  name?: string | null
+  image?: string | null
+  passwordHash?: string | null
+  twoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  backupCodes?: Prisma.AuthUserCreatebackupCodesInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedCreateNestedManyWithoutUserInput
+  baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
+  baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type AuthUserCreateOrConnectWithoutDesktopAuthSessionsInput = {
+  where: Prisma.AuthUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.AuthUserCreateWithoutDesktopAuthSessionsInput, Prisma.AuthUserUncheckedCreateWithoutDesktopAuthSessionsInput>
+}
+
+export type AuthUserUpsertWithoutDesktopAuthSessionsInput = {
+  update: Prisma.XOR<Prisma.AuthUserUpdateWithoutDesktopAuthSessionsInput, Prisma.AuthUserUncheckedUpdateWithoutDesktopAuthSessionsInput>
+  create: Prisma.XOR<Prisma.AuthUserCreateWithoutDesktopAuthSessionsInput, Prisma.AuthUserUncheckedCreateWithoutDesktopAuthSessionsInput>
+  where?: Prisma.AuthUserWhereInput
+}
+
+export type AuthUserUpdateToOneWithWhereWithoutDesktopAuthSessionsInput = {
+  where?: Prisma.AuthUserWhereInput
+  data: Prisma.XOR<Prisma.AuthUserUpdateWithoutDesktopAuthSessionsInput, Prisma.AuthUserUncheckedUpdateWithoutDesktopAuthSessionsInput>
+}
+
+export type AuthUserUpdateWithoutDesktopAuthSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUpdateManyWithoutUserNestedInput
+  baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
+  baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutUserNestedInput
+}
+
+export type AuthUserUncheckedUpdateWithoutDesktopAuthSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backupCodes?: Prisma.AuthUserUpdatebackupCodesInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutUserNestedInput
@@ -898,6 +1172,8 @@ export type AuthUserCreateWithoutBaMembersInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutUserInput
 }
@@ -918,6 +1194,8 @@ export type AuthUserUncheckedCreateWithoutBaMembersInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedCreateNestedManyWithoutUserInput
   baPasskeys?: Prisma.BAPasskeyUncheckedCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -954,6 +1232,8 @@ export type AuthUserUpdateWithoutBaMembersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutUserNestedInput
 }
@@ -974,6 +1254,8 @@ export type AuthUserUncheckedUpdateWithoutBaMembersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedUpdateManyWithoutUserNestedInput
   baPasskeys?: Prisma.BAPasskeyUncheckedUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -994,6 +1276,8 @@ export type AuthUserCreateWithoutBaPasskeysInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutUserInput
 }
@@ -1014,6 +1298,8 @@ export type AuthUserUncheckedCreateWithoutBaPasskeysInput = {
   updatedAt?: Date | string
   accounts?: Prisma.AuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedCreateNestedManyWithoutUserInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedCreateNestedManyWithoutUserInput
   baMembers?: Prisma.BAMemberUncheckedCreateNestedManyWithoutUserInput
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1050,6 +1336,8 @@ export type AuthUserUpdateWithoutBaPasskeysInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutUserNestedInput
 }
@@ -1070,6 +1358,8 @@ export type AuthUserUncheckedUpdateWithoutBaPasskeysInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthHandoffs?: Prisma.DesktopAuthHandoffUncheckedUpdateManyWithoutUserNestedInput
+  desktopAuthSessions?: Prisma.DesktopAuthSessionUncheckedUpdateManyWithoutUserNestedInput
   baMembers?: Prisma.BAMemberUncheckedUpdateManyWithoutUserNestedInput
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1082,6 +1372,8 @@ export type AuthUserUncheckedUpdateWithoutBaPasskeysInput = {
 export type AuthUserCountOutputType = {
   accounts: number
   sessions: number
+  desktopAuthHandoffs: number
+  desktopAuthSessions: number
   baMembers: number
   baPasskeys: number
   chatSessions: number
@@ -1090,6 +1382,8 @@ export type AuthUserCountOutputType = {
 export type AuthUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | AuthUserCountOutputTypeCountAccountsArgs
   sessions?: boolean | AuthUserCountOutputTypeCountSessionsArgs
+  desktopAuthHandoffs?: boolean | AuthUserCountOutputTypeCountDesktopAuthHandoffsArgs
+  desktopAuthSessions?: boolean | AuthUserCountOutputTypeCountDesktopAuthSessionsArgs
   baMembers?: boolean | AuthUserCountOutputTypeCountBaMembersArgs
   baPasskeys?: boolean | AuthUserCountOutputTypeCountBaPasskeysArgs
   chatSessions?: boolean | AuthUserCountOutputTypeCountChatSessionsArgs
@@ -1117,6 +1411,20 @@ export type AuthUserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Typ
  */
 export type AuthUserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AuthSessionWhereInput
+}
+
+/**
+ * AuthUserCountOutputType without action
+ */
+export type AuthUserCountOutputTypeCountDesktopAuthHandoffsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DesktopAuthHandoffWhereInput
+}
+
+/**
+ * AuthUserCountOutputType without action
+ */
+export type AuthUserCountOutputTypeCountDesktopAuthSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DesktopAuthSessionWhereInput
 }
 
 /**
@@ -1157,6 +1465,8 @@ export type AuthUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updatedAt?: boolean
   accounts?: boolean | Prisma.AuthUser$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.AuthUser$sessionsArgs<ExtArgs>
+  desktopAuthHandoffs?: boolean | Prisma.AuthUser$desktopAuthHandoffsArgs<ExtArgs>
+  desktopAuthSessions?: boolean | Prisma.AuthUser$desktopAuthSessionsArgs<ExtArgs>
   baMembers?: boolean | Prisma.AuthUser$baMembersArgs<ExtArgs>
   baPasskeys?: boolean | Prisma.AuthUser$baPasskeysArgs<ExtArgs>
   chatSessions?: boolean | Prisma.AuthUser$chatSessionsArgs<ExtArgs>
@@ -1215,6 +1525,8 @@ export type AuthUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type AuthUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.AuthUser$accountsArgs<ExtArgs>
   sessions?: boolean | Prisma.AuthUser$sessionsArgs<ExtArgs>
+  desktopAuthHandoffs?: boolean | Prisma.AuthUser$desktopAuthHandoffsArgs<ExtArgs>
+  desktopAuthSessions?: boolean | Prisma.AuthUser$desktopAuthSessionsArgs<ExtArgs>
   baMembers?: boolean | Prisma.AuthUser$baMembersArgs<ExtArgs>
   baPasskeys?: boolean | Prisma.AuthUser$baPasskeysArgs<ExtArgs>
   chatSessions?: boolean | Prisma.AuthUser$chatSessionsArgs<ExtArgs>
@@ -1228,6 +1540,8 @@ export type $AuthUserPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     accounts: Prisma.$AuthAccountPayload<ExtArgs>[]
     sessions: Prisma.$AuthSessionPayload<ExtArgs>[]
+    desktopAuthHandoffs: Prisma.$DesktopAuthHandoffPayload<ExtArgs>[]
+    desktopAuthSessions: Prisma.$DesktopAuthSessionPayload<ExtArgs>[]
     baMembers: Prisma.$BAMemberPayload<ExtArgs>[]
     baPasskeys: Prisma.$BAPasskeyPayload<ExtArgs>[]
     chatSessions: Prisma.$ChatSessionPayload<ExtArgs>[]
@@ -1642,6 +1956,8 @@ export interface Prisma__AuthUserClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accounts<T extends Prisma.AuthUser$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.AuthUser$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  desktopAuthHandoffs<T extends Prisma.AuthUser$desktopAuthHandoffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$desktopAuthHandoffsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DesktopAuthHandoffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  desktopAuthSessions<T extends Prisma.AuthUser$desktopAuthSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$desktopAuthSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DesktopAuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   baMembers<T extends Prisma.AuthUser$baMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$baMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BAMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   baPasskeys<T extends Prisma.AuthUser$baPasskeysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$baPasskeysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BAPasskeyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   chatSessions<T extends Prisma.AuthUser$chatSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUser$chatSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2120,6 +2436,54 @@ export type AuthUser$sessionsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
+}
+
+/**
+ * AuthUser.desktopAuthHandoffs
+ */
+export type AuthUser$desktopAuthHandoffsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DesktopAuthHandoff
+   */
+  select?: Prisma.DesktopAuthHandoffSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DesktopAuthHandoff
+   */
+  omit?: Prisma.DesktopAuthHandoffOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DesktopAuthHandoffInclude<ExtArgs> | null
+  where?: Prisma.DesktopAuthHandoffWhereInput
+  orderBy?: Prisma.DesktopAuthHandoffOrderByWithRelationInput | Prisma.DesktopAuthHandoffOrderByWithRelationInput[]
+  cursor?: Prisma.DesktopAuthHandoffWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DesktopAuthHandoffScalarFieldEnum | Prisma.DesktopAuthHandoffScalarFieldEnum[]
+}
+
+/**
+ * AuthUser.desktopAuthSessions
+ */
+export type AuthUser$desktopAuthSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DesktopAuthSession
+   */
+  select?: Prisma.DesktopAuthSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DesktopAuthSession
+   */
+  omit?: Prisma.DesktopAuthSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DesktopAuthSessionInclude<ExtArgs> | null
+  where?: Prisma.DesktopAuthSessionWhereInput
+  orderBy?: Prisma.DesktopAuthSessionOrderByWithRelationInput | Prisma.DesktopAuthSessionOrderByWithRelationInput[]
+  cursor?: Prisma.DesktopAuthSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DesktopAuthSessionScalarFieldEnum | Prisma.DesktopAuthSessionScalarFieldEnum[]
 }
 
 /**

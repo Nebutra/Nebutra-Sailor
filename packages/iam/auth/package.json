@@ -9,6 +9,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./client": "./src/client.ts",
+    "./desktop": "./src/desktop-auth.ts",
     "./server": "./src/server.ts",
     "./s2s": "./src/s2s.ts",
     "./middleware": "./src/middleware.ts",

@@ -313,6 +313,16 @@ export type AuthAccount = Prisma.AuthAccountModel
  */
 export type AuthSession = Prisma.AuthSessionModel
 /**
+ * Model DesktopAuthHandoff
+ * @conditional(auth=betterauth)
+ */
+export type DesktopAuthHandoff = Prisma.DesktopAuthHandoffModel
+/**
+ * Model DesktopAuthSession
+ * @conditional(auth=betterauth)
+ */
+export type DesktopAuthSession = Prisma.DesktopAuthSessionModel
+/**
  * Model AuthVerification
  * @conditional(auth=betterauth)
  */

@@ -94,7 +94,9 @@ vi.mock("@nebutra/ui/primitives", () => ({
 }));
 
 vi.mock("../oauth-buttons", () => ({
-  OAuthButtons: () => <div data-testid="oauth-buttons" />,
+  OAuthButtons: ({ returnUrl }: { returnUrl?: string }) => (
+    <div data-return-url={returnUrl} data-testid="oauth-buttons" />
+  ),
 }));
 
 describe("SignUpForm access gate", () => {
@@ -144,5 +146,36 @@ describe("SignUpForm access gate", () => {
       }),
     );
     expect(pushMock).toHaveBeenCalledWith("/onboarding");
+  });
+
+  it("uses a sanitized returnUrl after email sign-up", async () => {
+    vi.stubEnv("NEXT_PUBLIC_ACCESS_GATE_MODE", "open");
+    const user = userEvent.setup();
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+    const { SignUpForm } = await import("../sign-up-form");
+
+    render(<SignUpForm returnUrl="/en/desktop-auth/complete?scheme=foundry" />);
+
+    expect(screen.getByTestId("oauth-buttons")).toHaveAttribute(
+      "data-return-url",
+      "/en/desktop-auth/complete?scheme=foundry",
+    );
+    expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute(
+      "href",
+      "/sign-in?returnUrl=%2Fen%2Fdesktop-auth%2Fcomplete%3Fscheme%3Dfoundry",
+    );
+
+    await user.type(screen.getByLabelText("First name"), "Ada");
+    await user.type(screen.getByLabelText("Last name"), "Lovelace");
+    await user.type(screen.getByLabelText("Email"), "ada@example.com");
+    await user.type(screen.getByLabelText("Password"), "correct horse battery staple");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    await waitFor(() =>
+      expect(pushMock).toHaveBeenCalledWith("/en/desktop-auth/complete?scheme=foundry"),
+    );
   });
 });

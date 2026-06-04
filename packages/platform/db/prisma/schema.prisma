@@ -1354,6 +1354,8 @@ model AuthUser {
   updatedAt        DateTime      @updatedAt @map("updated_at")
   accounts         AuthAccount[]
   sessions         AuthSession[]
+  desktopAuthHandoffs DesktopAuthHandoff[]
+  desktopAuthSessions DesktopAuthSession[]
   // Wave 2 Phase 1.1 — back-relations to BA plugin tables in `auth.*` schema.
   // These exist purely to satisfy Prisma's bidirectional-relation requirement
   // and do not alter `public.auth_users` itself.
@@ -1698,6 +1700,54 @@ model AuthSession {
   @@index([token])
   @@index([activeOrganizationId])
   @@map("auth_sessions")
+  @@schema("public")
+}
+
+/// @conditional(auth=betterauth)
+model DesktopAuthHandoff {
+  id         String    @id @default(cuid())
+  tokenHash  String    @unique @map("token_hash") @db.VarChar(64)
+  userId     String    @map("user_id")
+  scheme     String    @db.VarChar(40)
+  state      String    @db.VarChar(64)
+  expiresAt  DateTime  @map("expires_at")
+  consumedAt DateTime? @map("consumed_at")
+  ipAddress  String?   @map("ip_address") @db.VarChar(45)
+  userAgent  String?   @map("user_agent") @db.VarChar(500)
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user    AuthUser            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session DesktopAuthSession?
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([scheme, state])
+  @@index([expiresAt])
+  @@map("desktop_auth_handoffs")
+  @@schema("public")
+}
+
+/// @conditional(auth=betterauth)
+model DesktopAuthSession {
+  id         String    @id @default(cuid())
+  tokenHash  String    @unique @map("token_hash") @db.VarChar(64)
+  handoffId  String    @unique @map("handoff_id")
+  userId     String    @map("user_id")
+  scheme     String    @db.VarChar(40)
+  expiresAt  DateTime  @map("expires_at")
+  revokedAt  DateTime? @map("revoked_at")
+  lastUsedAt DateTime? @map("last_used_at")
+  ipAddress  String?   @map("ip_address") @db.VarChar(45)
+  userAgent  String?   @map("user_agent") @db.VarChar(500)
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  user    AuthUser           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  handoff DesktopAuthHandoff @relation(fields: [handoffId], references: [id], onDelete: Cascade)
+
+  @@index([userId, revokedAt, expiresAt])
+  @@index([scheme, createdAt(sort: Desc)])
+  @@index([expiresAt])
+  @@map("desktop_auth_sessions")
   @@schema("public")
 }
 

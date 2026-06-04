@@ -29,12 +29,18 @@ const detailsSchema = z.object({
 });
 type DetailsValues = z.infer<typeof detailsSchema>;
 
-export function SignUpForm() {
+interface SignUpFormProps {
+  /** Server-sanitized returnUrl to land on after successful sign-up. */
+  returnUrl?: string;
+}
+
+export function SignUpForm({ returnUrl }: SignUpFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
   const initialInviteCode = searchParams.get("invite") ?? "";
   const tenantId = searchParams.get("tenantId") ?? undefined;
+  const fallbackTarget = returnUrl ?? "/onboarding";
 
   const form = useForm<DetailsValues>({
     resolver: zodResolver(detailsSchema),
@@ -91,7 +97,7 @@ export function SignUpForm() {
 
       // Better Auth auto-signs in after registration — skip email verification
       // and go directly to onboarding
-      router.push("/onboarding");
+      router.push(fallbackTarget);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
     }
@@ -118,7 +124,7 @@ export function SignUpForm() {
         return;
       }
 
-      router.push("/onboarding");
+      router.push(fallbackTarget);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Invalid code. Please try again.");
     }
@@ -216,7 +222,7 @@ export function SignUpForm() {
         </p>
       ) : (
         <>
-          <OAuthButtons mode="signUp" />
+          <OAuthButtons mode="signUp" returnUrl={returnUrl} />
 
           <div className="relative">
             <Separator />
@@ -321,7 +327,9 @@ export function SignUpForm() {
       <p className="text-center text-sm text-[var(--neutral-9)]">
         Already have an account?{" "}
         <Link
-          href="/sign-in"
+          href={
+            returnUrl ? `/sign-in?${new URLSearchParams({ returnUrl }).toString()}` : "/sign-in"
+          }
           className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
         >
           Sign in

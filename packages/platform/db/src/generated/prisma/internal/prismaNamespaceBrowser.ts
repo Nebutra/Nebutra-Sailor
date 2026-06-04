@@ -109,6 +109,8 @@ export const ModelName = {
   FeedbackReport: 'FeedbackReport',
   AuthAccount: 'AuthAccount',
   AuthSession: 'AuthSession',
+  DesktopAuthHandoff: 'DesktopAuthHandoff',
+  DesktopAuthSession: 'DesktopAuthSession',
   AuthVerification: 'AuthVerification',
   CommunityProfile: 'CommunityProfile',
   License: 'License',
@@ -1112,6 +1114,40 @@ export const AuthSessionScalarFieldEnum = {
 } as const
 
 export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
+
+
+export const DesktopAuthHandoffScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  userId: 'userId',
+  scheme: 'scheme',
+  state: 'state',
+  expiresAt: 'expiresAt',
+  consumedAt: 'consumedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+} as const
+
+export type DesktopAuthHandoffScalarFieldEnum = (typeof DesktopAuthHandoffScalarFieldEnum)[keyof typeof DesktopAuthHandoffScalarFieldEnum]
+
+
+export const DesktopAuthSessionScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  handoffId: 'handoffId',
+  userId: 'userId',
+  scheme: 'scheme',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  lastUsedAt: 'lastUsedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DesktopAuthSessionScalarFieldEnum = (typeof DesktopAuthSessionScalarFieldEnum)[keyof typeof DesktopAuthSessionScalarFieldEnum]
 
 
 export const AuthVerificationScalarFieldEnum = {
