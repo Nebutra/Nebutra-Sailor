@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { CapabilityError } from "@nebutra/errors";
+import pLimit from "p-limit";
 
 export type NebuSpanKind = "agent" | "tool" | "llm";
 
@@ -29,6 +30,7 @@ export async function initTraceStoreTelemetry(serviceName = "trace-store"): Prom
 }
 
 const REDACT_KEYS = /api[_-]?key|token|secret|password|authorization|cookie|email/i;
+const TRACE_DEBUG_WRITE_CONCURRENCY = 4;
 
 export function redactTracePayload(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(redactTracePayload);
@@ -48,6 +50,13 @@ async function appendTraceDebug(record: NebuSpanRecord): Promise<void> {
   const path = traceDebugPath();
   await mkdir(dirname(path), { recursive: true });
   await writeFile(path, `${JSON.stringify(record)}\n`, { flag: "a" });
+}
+
+function createTraceDebugExporter(): TraceExporter {
+  const limit = pLimit(TRACE_DEBUG_WRITE_CONCURRENCY);
+  return async (batch) => {
+    await Promise.all(batch.map((record) => limit(() => appendTraceDebug(record))));
+  };
 }
 
 export class NebuSpan {
@@ -95,11 +104,7 @@ export class TraceStore {
   #lastSpanAt: string | undefined;
 
   constructor(options: TraceStoreOptions = {}) {
-    this.#exporter =
-      options.exporter ??
-      (async (batch) => {
-        await Promise.all(batch.map((record) => appendTraceDebug(record)));
-      });
+    this.#exporter = options.exporter ?? createTraceDebugExporter();
     this.#flushIntervalMs = options.flushIntervalMs ?? 250;
   }
 

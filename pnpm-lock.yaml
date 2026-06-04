@@ -4300,6 +4300,9 @@ importers:
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../logger
+      p-limit:
+        specifier: ^7.3.0
+        version: 7.3.0
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
