@@ -187,7 +187,7 @@ function TocBackdrop({ isExpanded, onClose }: TocBackdropProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ ...islandTween, duration: motionDurationSec.flow }}
-          className="fixed inset-0 -z-10 bg-foreground/20 backdrop-blur-[4px]"
+          className="pointer-events-auto fixed inset-0 -z-10 bg-foreground/20 backdrop-blur-[4px]"
           onClick={onClose}
           aria-hidden="true"
         />
@@ -550,7 +550,14 @@ export function DynamicIslandTOC({
       <nav
         aria-label={ariaLabel}
         className={cn(
-          "fixed bottom-[30px] left-1/2 z-[var(--z-overlay,9999)] flex -translate-x-1/2 flex-col items-center",
+          // No `transform` on this element. A transform here becomes the containing
+          // block for the position:fixed backdrop below, which would clamp the
+          // full-viewport scrim to this nav's shrink-wrapped (pill-sized) box — the
+          // scrim then sits directly behind the card and leaks gray triangles through
+          // its rounded corners. Center the pill with a full-width flex row instead.
+          // The nav is click-transparent so its full-width bottom strip never swallows
+          // page clicks; the backdrop and pill opt back into pointer events.
+          "pointer-events-none fixed inset-x-0 bottom-[30px] z-[var(--z-overlay,9999)] flex flex-col items-center",
           className,
         )}
       >
@@ -558,6 +565,7 @@ export function DynamicIslandTOC({
 
         {/* Pill entrance + morph wrapper */}
         <m.div
+          className="pointer-events-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={reduceMotion ? { duration: 0 } : brandSpring.default}
