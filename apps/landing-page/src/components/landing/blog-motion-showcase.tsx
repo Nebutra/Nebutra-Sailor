@@ -1,7 +1,9 @@
 "use client";
 
+import { motionDurationSec } from "@nebutra/brand";
 import { ArrowRight, BookOpen, ChevronDown, Copy, Message } from "@nebutra/icons";
 import { useCopyToClipboard } from "@nebutra/ui/primitives";
+import { motion, useAnimationFrame, useMotionValue } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -113,7 +115,7 @@ function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
               className="size-4 shrink-0 text-[var(--neutral-10)] transition-colors group-hover:text-[var(--blue-9)]"
               aria-hidden
             />
-            {copied ? (isZh ? "已复制" : "Copied") : isZh ? "复制为 Markdown" : "Copy as markdown"}
+            {copied ? (isZh ? "已复制" : "Copied") : isZh ? "复制链接" : "Copy link"}
           </button>
         </div>
       ) : null}
@@ -132,7 +134,7 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
         <div className="flex flex-col justify-center gap-5">
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-[var(--neutral-2)] px-3 py-1 text-xs font-medium text-[var(--neutral-11)]">
             <BookOpen className="size-3.5" aria-hidden />
-            {isZh ? "Nebutra 技术博客" : "Nebutra Journal"}
+            {isZh ? "Nebutra Journal · 技术札记" : "Nebutra Journal"}
           </div>
           <h1 className="text-balance text-4xl font-semibold text-[var(--neutral-12)] sm:text-5xl">
             {isZh ? "工程、产品与治理笔记" : "Notes on engineering, product, and governance"}
@@ -161,13 +163,13 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
                 >
                   <span
                     className={`flex min-w-0 items-center gap-3 text-3xl font-semibold leading-[1.05] text-[var(--neutral-12)] transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none sm:text-4xl lg:text-5xl ${
-                      active ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-40"
+                      active ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-70"
                     }`}
                   >
                     <span className="min-w-0 text-balance">{topic.label}</span>
                     <span
                       className={`shrink-0 transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none ${
-                        active ? "translate-x-1.5 opacity-100" : "translate-x-0 opacity-50"
+                        active ? "translate-x-1.5 opacity-100" : "translate-x-0 opacity-70"
                       }`}
                     >
                       <ArrowRight className="size-8 sm:size-9 lg:size-10" aria-hidden />
@@ -226,13 +228,24 @@ function BlogRailPostCard({
   );
 }
 
+// Marquee speed in pixels-per-ms, derived from the cinematic motion rail
+// (0.5s) rather than a magic number — a slow, ambient drift that reads as
+// "alive" without competing for attention.
+const RAIL_SPEED_PX_PER_MS = motionDurationSec.cinematic * 0.044;
+
+// How many recent posts the rail surfaces. The page only mounts the rail once
+// the library exceeds this count, so "latest" stays a real subset, not a repeat.
+// Exported so the index page derives its gate from the same source of truth.
+export const RAIL_POST_COUNT = 8;
+
 export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const [activePostId, setActivePostId] = useState<string | null>(null);
   const [halfWidth, setHalfWidth] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [trackX, setTrackX] = useState(0);
-  const railPosts = posts.slice(0, 8);
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const trackX = useMotionValue(0);
+  const railPosts = posts.slice(0, RAIL_POST_COUNT);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -248,25 +261,20 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   }, []);
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduceMotion.matches || paused || halfWidth <= 0) return;
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
 
-    let frameId = 0;
-    let previousTime = performance.now();
+  const running = !reduceMotion && !paused && halfWidth > 0;
 
-    const tick = (time: number) => {
-      const delta = time - previousTime;
-      previousTime = time;
-      setTrackX((current) => {
-        const next = current - delta * 0.022;
-        return Math.abs(next) >= halfWidth ? next + halfWidth : next;
-      });
-      frameId = window.requestAnimationFrame(tick);
-    };
-
-    frameId = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(frameId);
-  }, [halfWidth, paused]);
+  useAnimationFrame((_time, delta) => {
+    if (!running) return;
+    const next = trackX.get() - delta * RAIL_SPEED_PX_PER_MS;
+    trackX.set(Math.abs(next) >= halfWidth ? next + halfWidth : next);
+  });
 
   if (railPosts.length === 0) return null;
 
@@ -292,9 +300,9 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
     >
       <div className="border-t border-[var(--neutral-6)]" />
       <div className="relative overflow-hidden">
-        <div
+        <motion.div
           ref={trackRef}
-          style={{ transform: `translate3d(${trackX}px, 0, 0)` }}
+          style={{ x: trackX }}
           className="flex w-max will-change-transform motion-reduce:transform-none"
         >
           {renderedPosts.map((post, index) => (
@@ -306,7 +314,7 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
               setActivePostId={setActivePostId}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
       <div
         className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[var(--neutral-1)] to-transparent sm:w-24"

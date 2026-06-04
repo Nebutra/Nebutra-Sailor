@@ -25,9 +25,17 @@ import {
   BlogMotionHero,
   type BlogRailPost,
   LatestPostMotionRail,
+  RAIL_POST_COUNT,
 } from "@/components/landing/blog-motion-showcase";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
+
+// The motion rail surfaces the RAIL_POST_COUNT most recent posts. When the
+// library is at or below that size, "latest" is just a copy of the grid below —
+// so the rail becomes pure duplication. Only render it once there are clearly
+// more posts than the rail can show, keeping it a meaningful subset. Derived
+// from RAIL_POST_COUNT so the gate and the rail can never drift out of sync.
+const LATEST_RAIL_THRESHOLD = RAIL_POST_COUNT;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -239,9 +247,11 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
           </AnimateIn>
         ) : (
           <div className="pb-20">
-            <AnimateIn preset="fadeUp" inView>
-              <LatestPostMotionRail isZh={isZh} posts={latestRailPosts} />
-            </AnimateIn>
+            {posts.length > LATEST_RAIL_THRESHOLD ? (
+              <AnimateIn preset="fadeUp" inView>
+                <LatestPostMotionRail isZh={isZh} posts={latestRailPosts} />
+              </AnimateIn>
+            ) : null}
 
             <AnimateIn preset="fadeUp" inView>
               <BlogIndexExplorer

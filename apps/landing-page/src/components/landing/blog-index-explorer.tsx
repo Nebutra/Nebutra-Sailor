@@ -55,11 +55,29 @@ function TagPill({ tag }: { tag: string }) {
   );
 }
 
+// Unified tag-display strategy shared by grid + list views: show up to 2 tags,
+// collapse the remainder into a single "+N" overflow pill.
+const MAX_VISIBLE_TAGS = 2;
+
+function TagPillGroup({ tags }: { tags: string[] }) {
+  if (tags.length === 0) return null;
+  const visible = tags.slice(0, MAX_VISIBLE_TAGS);
+  const overflow = tags.length - visible.length;
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {visible.map((tag) => (
+        <TagPill key={tag} tag={tag} />
+      ))}
+      {overflow > 0 && <TagPill tag={`+${overflow}`} />}
+    </div>
+  );
+}
+
 function GridCard({ post }: { post: BlogIndexPost }) {
   return (
     <Link
       href={post.href}
-      className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]"
+      className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)]"
     >
       <div
         className="relative h-52 overflow-hidden bg-[var(--neutral-3)]"
@@ -75,13 +93,13 @@ function GridCard({ post }: { post: BlogIndexPost }) {
           blurDataURL={post.imageBlurDataURL}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-          className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
+          className="object-cover transition-transform [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:scale-[1.015]"
         />
       </div>
 
       <div className="flex flex-1 flex-col p-5">
         <PostMeta post={post} />
-        <h2 className="mt-3 text-lg font-semibold leading-snug text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
+        <h2 className="mt-3 text-lg font-semibold leading-snug text-[var(--neutral-12)] transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-[var(--blue-9)]">
           {post.title}
         </h2>
         {post.excerpt && (
@@ -99,7 +117,7 @@ function GridCard({ post }: { post: BlogIndexPost }) {
               </span>
             )}
           </div>
-          {post.tags[0] && <TagPill tag={post.tags[0]} />}
+          <TagPillGroup tags={post.tags} />
         </div>
       </div>
     </Link>
@@ -110,7 +128,7 @@ function ListCard({ post }: { post: BlogIndexPost }) {
   return (
     <Link
       href={post.href}
-      className="group grid gap-5 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] sm:grid-cols-[220px_1fr]"
+      className="group grid gap-5 rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] sm:grid-cols-[220px_1fr]"
     >
       <div
         className="relative min-h-40 overflow-hidden rounded-[calc(var(--radius-md)-2px)] bg-[var(--neutral-3)]"
@@ -126,13 +144,13 @@ function ListCard({ post }: { post: BlogIndexPost }) {
           blurDataURL={post.imageBlurDataURL}
           fill
           sizes="(max-width: 640px) 100vw, 220px"
-          className="object-cover transition-transform duration-200 group-hover:scale-[1.015]"
+          className="object-cover transition-transform [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:scale-[1.015]"
         />
       </div>
 
       <div className="flex min-w-0 flex-col py-1 pr-2">
         <PostMeta post={post} />
-        <h2 className="mt-3 text-xl font-semibold leading-snug text-[var(--neutral-12)] transition-colors group-hover:text-[var(--blue-9)]">
+        <h2 className="mt-3 text-xl font-semibold leading-snug text-[var(--neutral-12)] transition-colors [transition-duration:var(--motion-duration-flow)] [transition-timing-function:var(--ease-out)] motion-reduce:transition-none group-hover:text-[var(--blue-9)]">
           {post.title}
         </h2>
         {post.excerpt && (
@@ -149,13 +167,7 @@ function ListCard({ post }: { post: BlogIndexPost }) {
               </span>
             )}
           </div>
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {post.tags.slice(0, 3).map((tag) => (
-                <TagPill key={tag} tag={tag} />
-              ))}
-            </div>
-          )}
+          <TagPillGroup tags={post.tags} />
         </div>
       </div>
     </Link>
