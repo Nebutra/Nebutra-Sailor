@@ -213,17 +213,47 @@ export function LogoShowcase() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <LogoComponentCard title="Logomark (JSX Component)" code="<LogomarkSVG />">
             <div className="flex flex-col items-center justify-center gap-6">
-              <LogomarkSVG width={48} height={48} className="text-[#0033FE] dark:text-[#0BF1C3]" />
+              <LogomarkSVG
+                width={48}
+                height={48}
+                className="text-[#0033FE] dark:text-[#0BF1C3]"
+                aria-label="Nebutra logomark"
+              />
               <div className="flex items-center gap-4 opacity-60">
-                <LogomarkSVG width={16} height={16} className="text-foreground" />
-                <LogomarkSVG width={16} height={16} className="text-muted-foreground" />
-                <LogomarkSVG width={16} height={16} className="text-[#0033FE]" />
-                <LogomarkSVG width={16} height={16} className="text-[#0BF1C3]" />
+                <LogomarkSVG
+                  width={16}
+                  height={16}
+                  className="text-foreground"
+                  aria-label="Foreground Nebutra logomark"
+                />
+                <LogomarkSVG
+                  width={16}
+                  height={16}
+                  className="text-muted-foreground"
+                  aria-label="Muted Nebutra logomark"
+                />
+                <LogomarkSVG
+                  width={16}
+                  height={16}
+                  className="text-[#0033FE]"
+                  aria-label="Blue Nebutra logomark"
+                />
+                <LogomarkSVG
+                  width={16}
+                  height={16}
+                  className="text-[#0BF1C3]"
+                  aria-label="Cyan Nebutra logomark"
+                />
               </div>
             </div>
           </LogoComponentCard>
           <LogoComponentCard title="Wordmark (JSX Component)" code="<WordmarkEnSVG />">
-            <WordmarkEnSVG width={180} className="max-w-[80%] text-foreground" />
+            <WordmarkEnSVG
+              width={180}
+              height={34}
+              className="max-w-[80%] text-foreground"
+              aria-label="Nebutra wordmark"
+            />
           </LogoComponentCard>
         </div>
       </div>
@@ -237,7 +267,12 @@ export function BrandPhilosophyVisual() {
       {/* Header section */}
       <div className="flex flex-col gap-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-[var(--neutral-6)] bg-background/50 backdrop-blur-md px-3 py-1 text-sm font-medium text-muted-foreground w-fit shadow-sm">
-          <LogomarkSVG width={14} height={14} className="text-foreground" />
+          <LogomarkSVG
+            width={14}
+            height={14}
+            className="text-foreground"
+            aria-label="Nebutra visual philosophy"
+          />
           Visual Philosophy
         </div>
         <h3 className="text-3xl md:text-5xl font-display font-bold tracking-tight text-foreground">

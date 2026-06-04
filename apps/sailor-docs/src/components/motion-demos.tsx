@@ -10,8 +10,16 @@ import {
   User,
 } from "@nebutra/icons";
 import { AnimatedBeam, AnimatedList, FlickeringGrid, MagicCard } from "@nebutra/ui/primitives";
-import { motion } from "framer-motion";
+import { motion, type Transition } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+
+const emergeLoopTransition: Transition = {
+  duration: brandMotion.emerge.transition.duration,
+  ease: [...brandMotion.brandEasing.brand] as [number, number, number, number],
+  repeat: Infinity,
+  repeatType: "reverse",
+  repeatDelay: 2,
+};
 
 export function MotionDemos() {
   const [isClient, setIsClient] = useState(false);
@@ -52,12 +60,7 @@ export function MotionDemos() {
                   animate: {
                     ...brandMotion.emerge.animate,
                     y: 0,
-                    transition: {
-                      ...brandMotion.emerge.transition,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      repeatDelay: 2,
-                    },
+                    transition: emergeLoopTransition,
                   },
                 }}
               >
