@@ -3786,6 +3786,9 @@ importers:
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
+      p-timeout:
+        specifier: ^6.1.4
+        version: 6.1.4
       picocolors:
         specifier: ^1.1.0
         version: 1.1.1
@@ -17230,6 +17233,10 @@ packages:
   p-retry@8.0.0:
     resolution: {integrity: sha512-kFVqH1HxOHp8LupNsOys7bSV09VYTRLxarH/mokO4Rqhk6wGi70E0jh4VzvVGXfEVNggHoHLAMWsQqHyU1Ey9A==}
     engines: {node: '>=22'}
+
+  p-timeout@6.1.4:
+    resolution: {integrity: sha512-MyIV3ZA/PmyBN/ud8vV9XzwTrNtR4jFrObymZYnZqMmW0zA8Z17vnT0rBgFE/TlohB+YCHqXMgZzb3Csp49vqg==}
+    engines: {node: '>=14.16'}
 
   p-timeout@7.0.1:
     resolution: {integrity: sha512-AxTM2wDGORHGEkPCt8yqxOTMgpfbEHqF51f/5fJCmwFC3C/zNcGT63SymH2ttOAaiIws2zVg4+izQCjrakcwHg==}
@@ -35840,6 +35847,8 @@ snapshots:
   p-retry@8.0.0:
     dependencies:
       is-network-error: 1.3.2
+
+  p-timeout@6.1.4: {}
 
   p-timeout@7.0.1: {}
 

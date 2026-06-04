@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import pTimeout from "p-timeout";
 import pc from "picocolors";
 import { logger } from "./logger";
 
@@ -19,6 +20,7 @@ const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 const CACHE_DIR = join(homedir(), ".nebutra");
 const CACHE_FILE = join(CACHE_DIR, "update-check.json");
 const NPM_REGISTRY_URL = "https://registry.npmjs.org/nebutra";
+const UPDATE_CHECK_TIMEOUT_MS = 5000;
 
 /**
  * Ensure the cache directory exists
@@ -75,21 +77,27 @@ async function writeCache(latestVersion: string): Promise<void> {
 /**
  * Fetch the latest version from npm registry
  */
-async function fetchLatestVersion(): Promise<string | null> {
+export async function fetchLatestVersion(): Promise<string | null> {
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-    const response = await fetch(NPM_REGISTRY_URL, {
-      signal: controller.signal,
-      headers: {
-        Accept: "application/json",
+    const response = await pTimeout(
+      fetch(NPM_REGISTRY_URL, {
+        signal: controller.signal,
+        headers: {
+          Accept: "application/json",
+        },
+      }),
+      {
+        milliseconds: UPDATE_CHECK_TIMEOUT_MS,
+        fallback: () => {
+          controller.abort();
+          return null;
+        },
       },
-    });
+    );
 
-    clearTimeout(timeout);
-
-    if (!response.ok) {
+    if (!response?.ok) {
       return null;
     }
 
