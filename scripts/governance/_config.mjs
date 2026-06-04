@@ -23,8 +23,16 @@ const DEFAULTS = {
     // UI primitives package the project uses for form controls.
     primitivesImport: "@nebutra/ui/primitives",
     // Whitelisted path fragments (regex strings) — exempt from the check.
-    // Fresh scaffold only exempts stories + tests; no per-app carve-outs.
-    whitelist: ["/storybook/src/stories/", "\\.test\\.tsx?$", "/__tests__/"],
+    // Storybook stories and docs-shell preview/demo components (the Fumadocs
+    // skeleton the scaffold keeps) intentionally render raw native form controls
+    // to demonstrate browser behavior — they are documentation, not product UI.
+    whitelist: [
+      "/storybook/src/stories/",
+      "/design-docs/src/components/previews/",
+      "/sailor-docs/src/components/previews/",
+      "\\.test\\.tsx?$",
+      "/__tests__/",
+    ],
   },
   repositorySeam: {
     // CORE business domains where the repository seam is REQUIRED. Patterns are
@@ -41,7 +49,15 @@ const DEFAULTS = {
     // Override if a downstream project renames its tenant-db helper.
     dbAccessors: ["getTenantDb", "getSystemDb"],
     // Core-domain files that currently bypass the seam. SHRINK-ONLY ratchet.
-    // Fresh scaffold has ZERO bypasses → empty baseline.
+    //
+    // This BUILT-IN default is intentionally EMPTY: when no governance.config.json
+    // is present the safe stance is "nothing is pre-allowed → every core-domain
+    // bypass is a NEW violation". create-sailor ALWAYS emits a
+    // governance.config.json whose repositorySeam.allowlist is seeded with the
+    // exact set of shipped core-domain files that legitimately bypass the seam
+    // (the scaffold's real baseline), so the generated project passes out of the
+    // box while still ratcheting against new bypasses. Keeping this fallback
+    // empty is what makes a configless project treat any bypass as new.
     allowlist: [],
   },
 };

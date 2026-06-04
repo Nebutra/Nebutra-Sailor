@@ -3,6 +3,7 @@ import os from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import type { NebutraConfig } from "./config";
+import { resolveScaffoldDeployTargets } from "./deploy";
 import { applyGovernanceLints } from "./governance-lints";
 
 // Wiring tests for applyGovernanceLints — proves the scaffold step:
@@ -21,6 +22,7 @@ function baseConfig(overrides: Partial<NebutraConfig> = {}): NebutraConfig {
     payment: "none",
     aiProviders: [],
     deployTarget: "none",
+    deployTargets: resolveScaffoldDeployTargets("none"),
     i18n: false,
     ...overrides,
   };
@@ -79,7 +81,7 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
     );
   });
 
-  it("(c) writes governance.config.json with only enabled sections + empty ratchet", async () => {
+  it("(c) writes governance.config.json with only enabled sections + seeded ratchet baseline", async () => {
     dir = fs.mkdtempSync(path.join(os.tmpdir(), "gov-wire-cfg-"));
     writePkg(dir, "biome check .");
 
@@ -91,8 +93,19 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
 
     expect(cfg.rawInputs).toBeDefined();
     expect(cfg.repositorySeam).toBeDefined();
-    // Fresh scaffold has ZERO bypasses → empty shrink-only ratchet baseline.
-    expect(cfg.repositorySeam?.allowlist).toEqual([]);
+    // The scaffold ships working core-domain code that bypasses the seam, so the
+    // shrink-only ratchet baseline is the seeded set of those shipped files (NOT
+    // empty — an empty baseline would make a clean scaffold fail its own lint).
+    const allowlist = cfg.repositorySeam?.allowlist as string[];
+    expect(Array.isArray(allowlist)).toBe(true);
+    expect(allowlist.length).toBeGreaterThan(0);
+    // No monorepo-absolute paths leak in — entries are project-root-relative.
+    for (const entry of allowlist) {
+      expect(entry).not.toMatch(/^\/|Nebutra-Sailor|node_modules/);
+    }
+    // Representative shipped core-domain bypasses are present.
+    expect(allowlist).toContain("backends/gateway/src/routes/billing/index.ts");
+    expect(allowlist).toContain("packages/commerce/license/src/issue-license.ts");
   });
 
   it("(c) omits repositorySeam section from config when database=none", async () => {

@@ -46,7 +46,19 @@ const MONOREPO_ROOT_LINT_CMD_RE = /\bnode\s+scripts\/lint-[\w-]+\.mjs/;
 const RAW_INPUTS_DEFAULTS = {
   scanRoots: ["apps"],
   primitivesImport: "@nebutra/ui/primitives",
-  whitelist: ["/storybook/src/stories/", "\\.test\\.tsx?$", "/__tests__/"],
+  // The scaffold ships docs-shell preview/demo components (e.g. the Fumadocs
+  // skeleton under apps/design-docs/src/components/previews/, kept by
+  // .templateignore) that intentionally render raw native form controls to
+  // demonstrate browser behavior. Storybook stories do the same. These are
+  // documentation demos, not product UI, so they are exempt — exactly as the
+  // monorepo's own lint-no-raw-inputs.mjs whitelists them.
+  whitelist: [
+    "/storybook/src/stories/",
+    "/design-docs/src/components/previews/",
+    "/sailor-docs/src/components/previews/",
+    "\\.test\\.tsx?$",
+    "/__tests__/",
+  ],
 };
 
 const REPOSITORY_SEAM_DEFAULTS = {
@@ -57,8 +69,31 @@ const REPOSITORY_SEAM_DEFAULTS = {
   ],
   seamPaths: ["^packages/platform/repositories/", "^packages/platform/db/"],
   dbAccessors: ["getTenantDb", "getSystemDb"],
-  // Fresh scaffold has ZERO bypasses → shrink-only ratchet starts empty.
-  allowlist: [] as string[],
+  // SHRINK-ONLY ratchet baseline. The scaffold ships working core-domain code
+  // (billing/license/audit/admin/webhook routes, team-invitation flows) that
+  // currently accesses the DB client directly via the configured dbAccessors
+  // rather than through a platform repository. These pre-existing bypasses are
+  // the scaffold's starting baseline — the ratchet's job is to prevent NEW ones
+  // and to flag any of these once they migrate. Mirrors the monorepo's own
+  // KNOWN_SEAM_BYPASS, filtered to the files that actually ship (internal-only
+  // files like the inngest functions and side packages are stripped by
+  // .templateignore, so they are intentionally absent here).
+  allowlist: [
+    "apps/web/src/app/api/invitations/[invitationId]/accept/route.ts",
+    "apps/web/src/app/api/onboarding/invite-members/route.ts",
+    "apps/web/src/app/api/startup-os/projects/[projectId]/runs/[runId]/execute/route.ts",
+    "backends/gateway/src/routes/admin/index.ts",
+    "backends/gateway/src/routes/ai/api-keys.ts",
+    "backends/gateway/src/routes/ai/usage.ts",
+    "backends/gateway/src/routes/billing/index.ts",
+    "backends/gateway/src/routes/integrations/index.ts",
+    "backends/gateway/src/routes/legal/consent.ts",
+    "backends/gateway/src/routes/webhooks/clerk.ts",
+    "backends/gateway/src/routes/webhooks/stripe.ts",
+    "packages/commerce/license/src/issue-license.ts",
+    "packages/commerce/license/src/validate-license.ts",
+    "packages/iam/audit/src/index.ts",
+  ] as string[],
 };
 
 export interface GovernanceLintsResult {
