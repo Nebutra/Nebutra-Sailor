@@ -39,20 +39,20 @@ describe("Deploy substrate governance", () => {
     ).toBe(true);
   });
 
-  it("legacy ECS workflow is still visible as the current migration bridge", () => {
+  it("legacy ECS PM2 workflow is manual-only so it cannot auto-deploy frontends or gateway", () => {
     const yml = read("deploy-ecs.yml");
-    // This assertion documents current workflow reality only. The desired
-    // long-term contract is per-service `DEPLOY_TARGET_*` gating.
-    expect(yml).not.toContain("vars.DEPLOY_TARGET == 'ecs");
+    expect(yml).toContain("workflow_dispatch:");
+    expect(yml).not.toMatch(/\n\s+push:\n/);
+    expect(yml).not.toContain("branches: [main]");
+    expect(yml).not.toContain("backends/gateway/**");
   });
 
-  it("deploys the complete ECS service set on push once any target changes", () => {
+  it("legacy ECS workflow no longer claims to be the default-active backend substrate", () => {
     const yml = read("deploy-ecs.yml");
+    const k8s = read("deploy.yml");
 
-    expect(yml).toContain('TARGET_ALL="$CHANGED_ANY"');
-    expect(yml).toContain("a later app-only push can cancel an earlier");
-    expect(yml).toContain('echo "api=$TARGET_ALL"');
-    expect(yml).toContain('echo "design-docs=$TARGET_ALL"');
-    expect(yml).toContain('echo "sailor-docs=$TARGET_ALL"');
+    expect(yml).not.toContain("DEFAULT-ACTIVE");
+    expect(k8s).not.toContain("DEFAULT-ACTIVE backend substrate");
+    expect(yml).not.toContain("vars.DEPLOY_TARGET == 'ecs");
   });
 });

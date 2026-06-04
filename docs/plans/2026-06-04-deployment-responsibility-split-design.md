@@ -61,7 +61,8 @@
 |---|---|---|---|
 | **Frontend** (landing, web, design-docs, sailor-docs) | **Vercel** | `standalone` self-host (Aliyun/Docker/Nginx) | edge / preview / ISR |
 | **`web` server logic** | **Layered**: thin BFF → Vercel Functions; heavy → gateway | — | see §5 |
-| **Backend** (gateway, python/ai) | **`ecs-pm2`** (Aliyun) | **`k8s`**, **`aws`** (ECS/Fargate or EKS), (fly/railway later) | all three first-class adapters; one active |
+| **Gateway** (`backends/gateway`) | **`cloudflare-workers`** | `vercel-functions`, `ecs-docker`, `k8s`, `aws`, `railway` | edge/API entry by default; one active target |
+| **Origin backend** (`backends/python/ai`) | **`ecs-docker`** (Aliyun ECS) | `k8s`, `aws`, `railway` | FastAPI/Celery heavy runtime; one active target |
 | **Database** | **Supabase** | Prisma adapter swap (Neon/RDS) | unchanged |
 | **Cache + Queue** | **Upstash** (REST + QStash) | self-host Redis / BullMQ | converge `idp` into `@nebutra/cache` |
 | **Market** | **single** | **dual** (region overlay) | Vercel CN-reachability handled via `standalone` CN edge when dual |
@@ -81,10 +82,12 @@ A new **switchable deployment dimension**, modeled exactly like the existing pro
 - Surfaced through the existing **preset system** (`packages/ops/preset`) so a scaffold picks a coherent set; documented in one place.
 
 ### 4.2 Adapters (all retained, only one active)
-Each backend adapter is a **gated CI job + its manifest**, none of which fire unless selected:
-- `ecs-pm2` → `deploy-ecs.yml` (PM2/SSH; already the cheapest path)
+Each adapter is a **gated CI/job target + its manifest**, none of which fire unless selected:
+- `cloudflare-workers` → Wrangler/Workers gateway adapter (gateway default)
+- `ecs-docker` → ECS Origin Docker/PM2/SSH adapter (python-ai default; gateway dormant fallback)
 - `k8s` → `deploy.yml` + `infra/iac/k8s/**` + `docker-build-push.yml`
-- `aws` → new `deploy-aws.yml` (ECS/Fargate via the image already pushable to ECR) + IaC stub
+- `aws` → ECS/Fargate via the image already pushable to ECR + IaC stub
+- `railway` → create-sailor provider target for bootstrap DX
 
 Each adapter job begins with a guard:
 ```yaml
@@ -98,7 +101,7 @@ The **shared build artifact** (Docker image, or Next standalone bundle) is produ
 - Dormant adapters stay in-repo as **documented, tested, ready-to-activate** paths — that is the "可切 DX", not parallel-live pipelines.
 
 ### 4.4 Why all three (per decision)
-ECS-PM2 (cheap MVP) ↔ k8s (elastic scale) ↔ AWS (managed cloud) are the three substrates a SaaS realistically graduates through. Keeping all three as switchable adapters — with a cheap default — gives boilerplate users the upgrade path without forcing the ops cost upfront.
+Cloudflare Workers (cheap edge gateway) ↔ ECS Docker (cheap origin) ↔ k8s/AWS/Railway (scale or hosted-provider choices) are the substrates a SaaS realistically graduates through. Keeping them as switchable adapters — with cheap defaults — gives boilerplate users the upgrade path without forcing the ops cost upfront.
 
 ---
 
@@ -135,7 +138,8 @@ ECS-PM2 (cheap MVP) ↔ k8s (elastic scale) ↔ AWS (managed cloud) are the thre
 
 Target end-state of CI:
 - **Frontend:** Vercel git-integration (default) — remove frontends from `deploy-ecs.yml` and `deploy.yml` matrices; their `standalone` path stays as the dormant self-host adapter.
-- **Backend:** the three gated adapters (§4.2). `gateway` converges to `ecs-pm2` active (k8s/aws dormant). `python/ai` joins (ecs-pm2 active, was k8s-only).
+- **Gateway:** `cloudflare-workers` active by default; `vercel-functions`, `ecs-docker`, `k8s`, `aws`, and `railway` dormant unless selected.
+- **Origin backend:** `python/ai` defaults to `ecs-docker`; `k8s`, `aws`, and `railway` are dormant unless selected.
 - `docker-build-push.yml` retained — it feeds k8s/aws adapters and is harmless when those are dormant (image build only).
 - Add the **one-active-substrate** architecture test (§4.3).
 
@@ -145,7 +149,7 @@ Target end-state of CI:
 
 1. **Abstraction skeleton:** define `DEPLOY_TARGET_*` selector + preset wiring + the one-active-substrate guard test. No behavior change yet.
 2. **Frontend → Vercel:** make `web`/`design-docs`/`sailor-docs` Vercel-deployable (configs, env, crons), remove them from ECS/k8s matrices, keep `standalone` dormant.
-3. **Backend adapters:** gate `deploy-ecs.yml` (ecs-pm2) + `deploy.yml` (k8s) behind selector; add `deploy-aws.yml`; bring `python/ai` into the abstraction (add ecs-pm2 path).
+3. **Backend adapters:** gate Cloudflare Workers, ECS Docker, k8s, AWS, and Railway adapters behind per-service selectors; bring `python/ai` into the abstraction with `ecs-docker` as default.
 4. **`web` BFF boundary:** write the BFF-vs-gateway rule + lint guard; migrate heavy routes on-touch.
 5. **Cache convergence:** Upstash defaults everywhere; converge `idp` ioredis + `python/ai` redis onto the switchable abstraction.
 6. **Dual-market overlay (docs + optional):** document the region overlay; leave implementation behind the opt-in.

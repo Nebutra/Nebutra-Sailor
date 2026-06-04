@@ -63,13 +63,11 @@ jobs:
     runs-on: ubuntu-latest
 
     # SUBSTRATE GATE (single-active-substrate governance):
-    # deploy-ecs.yml (Aliyun ECS / PM2) is the DEFAULT-ACTIVE backend substrate.
-    # This Kubernetes path stays DORMANT on the automatic (workflow_run) trigger
-    # unless the repo variable DEPLOY_TARGET is explicitly set to 'k8s', so no
-    # service is auto-deployed to two substrates at once — the drift behind
-    # #141-class incidents (gateway/landing were deploying to ECS + k8s + Vercel
-    # simultaneously). Manual workflow_dispatch always works as an explicit,
-    # intentional override.
+    # Kubernetes stays DORMANT on the automatic (workflow_run) trigger unless the
+    # repo variable DEPLOY_TARGET is explicitly set to 'k8s'. The production
+    # default is governed by per-service DEPLOY_TARGET_* selectors documented in
+    # docs/architecture/2026-06-04-production-runtime-closure.md; the old ECS PM2
+    # workflow is manual fallback only.
     if: |
       github.event_name == 'workflow_dispatch' ||
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && vars.DEPLOY_TARGET == 'k8s')
@@ -131,6 +129,7 @@ jobs:
       # kustomize reads the base manifests and merges environment-specific patches.
       - name: Apply kustomize overlay
         run: |
+          DEPLOY_ENV="${DEPLOY_ENV:?DEPLOY_ENV is required}"
           echo "Applying kustomize overlay for environment: $DEPLOY_ENV"
           kubectl apply -k "infra/iac/k8s/overlays/$DEPLOY_ENV"
 
@@ -140,6 +139,7 @@ jobs:
       # environment name (e.g. nebutra-staging, nebutra-prod).
       - name: Update image tags — Node apps
         run: |
+          DEPLOY_ENV="${DEPLOY_ENV:?DEPLOY_ENV is required}"
           NAMESPACE="nebutra-$DEPLOY_ENV"
           REGISTRY="ghcr.io/${{ github.repository_owner }}"
 
@@ -157,6 +157,7 @@ jobs:
 
       - name: Update image tags — Python services
         run: |
+          DEPLOY_ENV="${DEPLOY_ENV:?DEPLOY_ENV is required}"
           NAMESPACE="nebutra-$DEPLOY_ENV"
           REGISTRY="ghcr.io/${{ github.repository_owner }}"
 
@@ -177,6 +178,7 @@ jobs:
       # If any rollout fails the step fails, which marks the overall job as failed.
       - name: Wait for rollouts — Node apps
         run: |
+          DEPLOY_ENV="${DEPLOY_ENV:?DEPLOY_ENV is required}"
           NAMESPACE="nebutra-$DEPLOY_ENV"
           for APP in web landing-page api-gateway; do
             DEPLOYMENT="$(echo "$APP" | tr '[:upper:]' '[:lower:]')"
@@ -189,6 +191,7 @@ jobs:
 
       - name: Wait for rollouts — Python services
         run: |
+          DEPLOY_ENV="${DEPLOY_ENV:?DEPLOY_ENV is required}"
           NAMESPACE="nebutra-$DEPLOY_ENV"
           for SVC in ai; do
             DEPLOYMENT="$(echo "$SVC" | tr '[:upper:]' '[:lower:]')"
@@ -203,6 +206,7 @@ jobs:
       - name: Print deployment summary
         if: always()
         run: |
+          DEPLOY_ENV="${DEPLOY_ENV:?DEPLOY_ENV is required}"
           NAMESPACE="nebutra-$DEPLOY_ENV"
           echo "=== Deployment summary for namespace: $NAMESPACE ==="
           kubectl get deployments --namespace "$NAMESPACE" || true

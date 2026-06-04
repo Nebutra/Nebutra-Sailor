@@ -11,6 +11,7 @@ import { SpanStatusCode, trace } from "@opentelemetry/api";
 import { env } from "../../config/env.js";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 import { aiServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
+import { buildAiOriginHeaders, resolveAiOriginClientIp } from "./origin-headers.js";
 
 const tracer = trace.getTracer("api-gateway.ai");
 
@@ -37,22 +38,21 @@ const EmbedRequestSchema = z.object({
   model: z.string().default("text-embedding-3-small"),
 });
 
-// ── Helper ────────────────────────────────────────────────────────────────────
-
 async function proxyToAiService(
   path: string,
   method: string,
   body: unknown,
-  tenantId: string,
+  context: {
+    tenantId: string;
+    requestId?: string | null | undefined;
+    clientIp?: string | null | undefined;
+  },
 ): Promise<Response> {
   const url = `${env.AI_SERVICE_URL}${path}`;
   return aiServiceBreaker.call(() =>
     fetch(url, {
       method,
-      headers: {
-        "Content-Type": "application/json",
-        "X-Tenant-ID": tenantId,
-      },
+      headers: buildAiOriginHeaders(context),
       body: JSON.stringify(body),
       signal: AbortSignal.timeout(120_000), // 2-min timeout for long generations
     }),
@@ -87,12 +87,11 @@ aiRoutes.openapi(chatRoute, async (c) => {
     });
 
     try {
-      const upstream = await proxyToAiService(
-        "/v1/chat/completions",
-        "POST",
-        body,
-        tenant?.organizationId ?? "anonymous",
-      );
+      const upstream = await proxyToAiService("/v1/chat/completions", "POST", body, {
+        tenantId: tenant?.organizationId ?? "anonymous",
+        requestId: c.get("requestId"),
+        clientIp: resolveAiOriginClientIp(c.req.raw.headers),
+      });
 
       span.setAttributes({ "http.upstream_status": upstream.status });
       span.setStatus({ code: upstream.ok ? SpanStatusCode.OK : SpanStatusCode.ERROR });
@@ -135,12 +134,11 @@ aiRoutes.openapi(embedRoute, async (c) => {
     });
 
     try {
-      const upstream = await proxyToAiService(
-        "/v1/embeddings",
-        "POST",
-        body,
-        tenant?.organizationId ?? "anonymous",
-      );
+      const upstream = await proxyToAiService("/v1/embeddings", "POST", body, {
+        tenantId: tenant?.organizationId ?? "anonymous",
+        requestId: c.get("requestId"),
+        clientIp: resolveAiOriginClientIp(c.req.raw.headers),
+      });
 
       span.setAttributes({ "http.upstream_status": upstream.status });
       span.setStatus({ code: upstream.ok ? SpanStatusCode.OK : SpanStatusCode.ERROR });

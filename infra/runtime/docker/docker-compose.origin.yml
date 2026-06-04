@@ -1,0 +1,19 @@
+services:
+  ai-origin:
+    image: ${NEBUTRA_AI_IMAGE:-ghcr.io/nebutra/nebutra-ai:latest}
+    container_name: nebutra-ai-origin
+    restart: unless-stopped
+    env_file:
+      - .env.origin
+    environment:
+      SERVICE_NAME: python-ai
+      PORT: "8000"
+      GATEWAY_SHARED_SECRET: ${GATEWAY_SHARED_SECRET:?GATEWAY_SHARED_SECRET is required}
+    ports:
+      - "${AI_ORIGIN_BIND:-127.0.0.1}:8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s

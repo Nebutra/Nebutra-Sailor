@@ -84,6 +84,16 @@ function deployTargetEnvKey(service: string): string {
   return `DEPLOY_TARGET_${service.toUpperCase().replace(/-/g, "_")}`;
 }
 
+async function copyGatewayWorkerManifest(targetDir: string, templatesDir: string): Promise<void> {
+  const gatewayDir = path.join(targetDir, "backends", "gateway");
+  if (!fs.existsSync(gatewayDir)) return;
+
+  await fs.promises.copyFile(
+    path.join(templatesDir, "wrangler.gateway.toml"),
+    path.join(gatewayDir, "wrangler.toml"),
+  );
+}
+
 export async function appendDeployTargetEnv(
   targetDir: string,
   deployTargets: ScaffoldDeployTargetMap,
@@ -112,6 +122,7 @@ export async function applyDeployTarget(targetDir: string, target: ScaffoldDeplo
       path.join(templatesDir, "vercel.json"),
       path.join(targetDir, "vercel.json"),
     );
+    await copyGatewayWorkerManifest(targetDir, templatesDir);
   } else if (target === "railway") {
     await fs.promises.copyFile(
       path.join(templatesDir, "railway.toml"),
@@ -122,6 +133,7 @@ export async function applyDeployTarget(targetDir: string, target: ScaffoldDeplo
       path.join(templatesDir, "wrangler.toml"),
       path.join(targetDir, "wrangler.toml"),
     );
+    await copyGatewayWorkerManifest(targetDir, templatesDir);
   } else if (target === "selfhost") {
     await fs.promises.copyFile(
       path.join(templatesDir, "docker-compose.yml"),

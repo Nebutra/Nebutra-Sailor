@@ -21,6 +21,7 @@ Stack flags (region-based smart defaults):
       --db <id>             postgres | mysql | sqlite | none        (default: postgres)
       --payment <id>        stripe | lemon | wechat | alipay | none (default: region-based)
       --deploy <target>     vercel | railway | cloudflare | selfhost (default: vercel)
+                             also writes per-service DEPLOY_TARGET_* selectors
       --docs <id>           fumadocs | mintlify | docusaurus | nextra | vitepress | none
 
 Feature flags (region-based smart defaults):
