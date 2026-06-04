@@ -44,6 +44,7 @@ jobs:
       ECS_USER: ${{ vars.ECS_USER }}
       ECS_SSH_PORT: ${{ vars.ECS_SSH_PORT || '22' }}
       ECS_ORIGIN_ROOT: ${{ vars.ECS_ORIGIN_ROOT || '/opt/nebutra/origin' }}
+      CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
       SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
     steps:
       - name: Checkout origin deploy manifests
@@ -74,6 +75,7 @@ jobs:
           [ -n "${{ secrets.ECS_SSH_PRIVATE_KEY }}" ] || { echo "::error::ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
           [ -n "${{ secrets.ECS_SSH_KNOWN_HOSTS }}" ] || { echo "::error::ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
           [ -n "${{ secrets.GATEWAY_SHARED_SECRET }}" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
+          [ -n "${CELERY_BROKER_URL:-}" ] || { echo "::error::CELERY_BROKER_URL, UPSTASH_REDIS_URL, or REDIS_URL secret is required for ECS Celery"; exit 1; }
 
       - name: Configure SSH
         env:
@@ -104,6 +106,10 @@ jobs:
           NEBUTRA_AI_IMAGE: ${{ steps.image.outputs.image }}
           DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL || secrets.DATABASE_URL }}
           REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND || secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_WORKER_CONCURRENCY: "1"
+          CELERY_PREFETCH_MULTIPLIER: "1"
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
           SERVICE_SECRET: ${{ secrets.SERVICE_SECRET }}
@@ -125,6 +131,10 @@ jobs:
             write_env NEBUTRA_AI_IMAGE "$NEBUTRA_AI_IMAGE"
             write_env DATABASE_URL "$DATABASE_URL"
             write_env REDIS_URL "$REDIS_URL"
+            write_env CELERY_BROKER_URL "$CELERY_BROKER_URL"
+            write_env CELERY_RESULT_BACKEND "$CELERY_RESULT_BACKEND"
+            write_env CELERY_WORKER_CONCURRENCY "$CELERY_WORKER_CONCURRENCY"
+            write_env CELERY_PREFETCH_MULTIPLIER "$CELERY_PREFETCH_MULTIPLIER"
             write_env UPSTASH_REDIS_REST_URL "$UPSTASH_REDIS_REST_URL"
             write_env UPSTASH_REDIS_REST_TOKEN "$UPSTASH_REDIS_REST_TOKEN"
             write_env SERVICE_SECRET "$SERVICE_SECRET"
@@ -145,7 +155,7 @@ jobs:
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
             -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
             "${ECS_USER}@${ECS_HOST}" \
-            "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml pull ai-origin && docker compose -f docker-compose.origin.yml up -d ai-origin"
+            "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml pull ai-origin ai-worker && docker compose -f docker-compose.origin.yml up -d ai-origin ai-worker"
 
       - name: Health check origin
         run: |
@@ -153,4 +163,4 @@ jobs:
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
             -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
             "${ECS_USER}@${ECS_HOST}" \
-            "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml ps ai-origin && curl -fsS http://127.0.0.1:8000/health"
+            "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml ps ai-origin ai-worker && curl -fsS http://127.0.0.1:8000/health"

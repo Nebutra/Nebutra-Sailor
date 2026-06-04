@@ -137,6 +137,13 @@ describe("production runtime closure", () => {
     expect(workflow).toContain("ecs-docker");
     expect(workflow).toContain("docker compose");
     expect(workflow).toContain("docker-compose.origin.yml");
+    expect(workflow).toContain("CELERY_BROKER_URL");
+    expect(workflow).toContain(
+      "docker compose -f docker-compose.origin.yml up -d ai-origin ai-worker",
+    );
+    expect(workflow).toContain(
+      "docker compose -f docker-compose.origin.yml ps ai-origin ai-worker",
+    );
     expect(workflow).toContain("backends/python/ai");
     expect(workflow).not.toContain("backends/gateway");
     expect(workflow).not.toContain("DEPLOY_TARGET_GATEWAY");
@@ -147,10 +154,25 @@ describe("production runtime closure", () => {
     const compose = readFileSync(ORIGIN_COMPOSE_PATH, "utf8");
 
     expect(compose).toContain("ai-origin");
+    expect(compose).toContain("ai-worker");
+    expect(compose).toContain("ai-beat");
     expect(compose).toContain("nebutra-ai");
     expect(compose).toContain("GATEWAY_SHARED_SECRET");
+    expect(compose).toContain("uvicorn app.main:app --host 0.0.0.0 --port 8000");
+    expect(compose).toContain("celery -A app.workers.celery_app");
+    expect(compose).toContain("--concurrency=$${CELERY_WORKER_CONCURRENCY:-1}");
+    expect(compose).toContain("--prefetch-multiplier=$${CELERY_PREFETCH_MULTIPLIER:-1}");
     expect(compose).toContain("8000:8000");
     expect(compose).not.toContain("api-gateway");
     expect(compose).not.toContain("landing-page");
+  });
+
+  it("documents the Celery origin runtime in the Python AI env example", () => {
+    const envExample = readFileSync(resolve(ROOT, "backends/python/ai/.env.example"), "utf8");
+
+    expect(envExample).toContain("CELERY_BROKER_URL=");
+    expect(envExample).toContain("CELERY_RESULT_BACKEND=");
+    expect(envExample).toContain("CELERY_WORKER_CONCURRENCY=1");
+    expect(envExample).toContain("CELERY_PREFETCH_MULTIPLIER=1");
   });
 });
