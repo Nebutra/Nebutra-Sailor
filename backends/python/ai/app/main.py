@@ -16,6 +16,7 @@ from app.api.v1 import (
     routes_embed,
     routes_generate,
     routes_sandbox,
+    routes_tasks,
     routes_translate,
 )
 
@@ -52,6 +53,7 @@ app.include_router(
 )
 app.include_router(routes_sandbox.router, prefix="/api/v1/sandbox", tags=["sandbox"])
 app.include_router(routes_agents.router, prefix="/api/v1/agents", tags=["agents"])
+app.include_router(routes_tasks.router, prefix="/api/v1/tasks", tags=["tasks"])
 
 
 @app.get("/")

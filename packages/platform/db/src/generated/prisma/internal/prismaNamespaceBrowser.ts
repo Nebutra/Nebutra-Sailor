@@ -91,6 +91,7 @@ export const ModelName = {
   UserConsent: 'UserConsent',
   CookieConsent: 'CookieConsent',
   ContactSubmission: 'ContactSubmission',
+  Task: 'Task',
   OAuthClient: 'OAuthClient',
   OAuthAuthorization: 'OAuthAuthorization',
   OAuthAccessToken: 'OAuthAccessToken',
@@ -814,6 +815,32 @@ export const ContactSubmissionScalarFieldEnum = {
 } as const
 
 export type ContactSubmissionScalarFieldEnum = (typeof ContactSubmissionScalarFieldEnum)[keyof typeof ContactSubmissionScalarFieldEnum]
+
+
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  type: 'type',
+  status: 'status',
+  priority: 'priority',
+  progress: 'progress',
+  payload: 'payload',
+  result: 'result',
+  error: 'error',
+  metadata: 'metadata',
+  idempotencyKey: 'idempotencyKey',
+  queueName: 'queueName',
+  dispatcherProvider: 'dispatcherProvider',
+  providerJobId: 'providerJobId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  expiresAt: 'expiresAt'
+} as const
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
 export const OAuthClientScalarFieldEnum = {

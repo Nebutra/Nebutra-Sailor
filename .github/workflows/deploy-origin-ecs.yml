@@ -45,6 +45,7 @@ jobs:
       ECS_SSH_PORT: ${{ vars.ECS_SSH_PORT || '22' }}
       ECS_ORIGIN_ROOT: ${{ vars.ECS_ORIGIN_ROOT || '/opt/nebutra/origin' }}
       CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+      DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL || secrets.DATABASE_URL }}
       SOURCE_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
     steps:
       - name: Checkout origin deploy manifests
@@ -75,6 +76,7 @@ jobs:
           [ -n "${{ secrets.ECS_SSH_PRIVATE_KEY }}" ] || { echo "::error::ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
           [ -n "${{ secrets.ECS_SSH_KNOWN_HOSTS }}" ] || { echo "::error::ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
           [ -n "${{ secrets.GATEWAY_SHARED_SECRET }}" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
+          [ -n "${DATABASE_URL:-}" ] || { echo "::error::SUPABASE_DATABASE_URL or DATABASE_URL secret is required for persistent origin tasks"; exit 1; }
           [ -n "${CELERY_BROKER_URL:-}" ] || { echo "::error::CELERY_BROKER_URL, UPSTASH_REDIS_URL, or REDIS_URL secret is required for ECS Celery"; exit 1; }
 
       - name: Configure SSH
@@ -108,8 +110,12 @@ jobs:
           REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
           CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
           CELERY_RESULT_BACKEND: ${{ secrets.CELERY_RESULT_BACKEND || secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
+          CELERY_TASK_DEFAULT_QUEUE: default
           CELERY_WORKER_CONCURRENCY: "1"
           CELERY_PREFETCH_MULTIPLIER: "1"
+          APP_ENV: production
+          TASK_STORE_PROVIDER: postgres
+          TASK_DISPATCHER_PROVIDER: celery
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
           SERVICE_SECRET: ${{ secrets.SERVICE_SECRET }}
@@ -133,8 +139,12 @@ jobs:
             write_env REDIS_URL "$REDIS_URL"
             write_env CELERY_BROKER_URL "$CELERY_BROKER_URL"
             write_env CELERY_RESULT_BACKEND "$CELERY_RESULT_BACKEND"
+            write_env CELERY_TASK_DEFAULT_QUEUE "$CELERY_TASK_DEFAULT_QUEUE"
             write_env CELERY_WORKER_CONCURRENCY "$CELERY_WORKER_CONCURRENCY"
             write_env CELERY_PREFETCH_MULTIPLIER "$CELERY_PREFETCH_MULTIPLIER"
+            write_env APP_ENV "$APP_ENV"
+            write_env TASK_STORE_PROVIDER "$TASK_STORE_PROVIDER"
+            write_env TASK_DISPATCHER_PROVIDER "$TASK_DISPATCHER_PROVIDER"
             write_env UPSTASH_REDIS_REST_URL "$UPSTASH_REDIS_REST_URL"
             write_env UPSTASH_REDIS_REST_TOKEN "$UPSTASH_REDIS_REST_TOKEN"
             write_env SERVICE_SECRET "$SERVICE_SECRET"

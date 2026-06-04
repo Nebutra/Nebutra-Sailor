@@ -20,6 +20,14 @@ const GATEWAY_AI_ORIGIN_HEADERS_PATH = resolve(
   ROOT,
   "backends/gateway/src/routes/ai/origin-headers.ts",
 );
+const PYTHON_AI_MAIN_PATH = resolve(ROOT, "backends/python/ai/app/main.py");
+const PYTHON_AI_TASK_ROUTES_PATH = resolve(ROOT, "backends/python/ai/app/api/v1/routes_tasks.py");
+const PYTHON_AI_TASK_DISPATCHER_PATH = resolve(ROOT, "backends/python/ai/app/tasks/dispatcher.py");
+const DB_SCHEMA_PATH = resolve(ROOT, "packages/platform/db/prisma/schema.prisma");
+const TASK_MIGRATION_PATH = resolve(
+  ROOT,
+  "packages/platform/db/prisma/migrations/20260604010000_add_task_envelope/migration.sql",
+);
 const DEPLOY_GATEWAY_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/deploy-gateway.yml");
 const DEPLOY_ORIGIN_ECS_WORKFLOW_PATH = resolve(ROOT, ".github/workflows/deploy-origin-ecs.yml");
 const ORIGIN_COMPOSE_PATH = resolve(ROOT, "infra/runtime/docker/docker-compose.origin.yml");
@@ -138,6 +146,11 @@ describe("production runtime closure", () => {
     expect(workflow).toContain("docker compose");
     expect(workflow).toContain("docker-compose.origin.yml");
     expect(workflow).toContain("CELERY_BROKER_URL");
+    expect(workflow).toContain("TASK_STORE_PROVIDER");
+    expect(workflow).toContain("TASK_DISPATCHER_PROVIDER");
+    expect(workflow).toContain(
+      "SUPABASE_DATABASE_URL or DATABASE_URL secret is required for persistent origin tasks",
+    );
     expect(workflow).toContain(
       "docker compose -f docker-compose.origin.yml up -d ai-origin ai-worker",
     );
@@ -172,7 +185,47 @@ describe("production runtime closure", () => {
 
     expect(envExample).toContain("CELERY_BROKER_URL=");
     expect(envExample).toContain("CELERY_RESULT_BACKEND=");
+    expect(envExample).toContain("CELERY_TASK_DEFAULT_QUEUE=default");
     expect(envExample).toContain("CELERY_WORKER_CONCURRENCY=1");
     expect(envExample).toContain("CELERY_PREFETCH_MULTIPLIER=1");
+  });
+
+  it("persists long-running origin work behind a standard task envelope", () => {
+    expect(existsSync(TASK_MIGRATION_PATH), `${TASK_MIGRATION_PATH} must exist`).toBe(true);
+    expect(existsSync(PYTHON_AI_TASK_ROUTES_PATH), `${PYTHON_AI_TASK_ROUTES_PATH} must exist`).toBe(
+      true,
+    );
+
+    const schema = readFileSync(DB_SCHEMA_PATH, "utf8");
+    const migration = readFileSync(TASK_MIGRATION_PATH, "utf8");
+    const main = readFileSync(PYTHON_AI_MAIN_PATH, "utf8");
+    const routes = readFileSync(PYTHON_AI_TASK_ROUTES_PATH, "utf8");
+
+    expect(schema).toContain("enum TaskStatus");
+    expect(schema).toContain("model Task");
+    expect(schema).toContain('@@map("tasks")');
+    expect(migration).toContain('CREATE TABLE "public"."tasks"');
+    expect(migration).toContain("tasks_tenant_id_idempotency_key_key");
+    expect(main).toContain("routes_tasks");
+    expect(main).toContain('prefix="/api/v1/tasks"');
+    expect(routes).toContain("TaskEnvelope");
+    expect(routes).toContain("StreamingResponse");
+  });
+
+  it("keeps task dispatch provider-switchable instead of exposing Celery as the product API", () => {
+    expect(
+      existsSync(PYTHON_AI_TASK_DISPATCHER_PATH),
+      `${PYTHON_AI_TASK_DISPATCHER_PATH} must exist`,
+    ).toBe(true);
+    const dispatcher = readFileSync(PYTHON_AI_TASK_DISPATCHER_PATH, "utf8");
+    const routes = readFileSync(PYTHON_AI_TASK_ROUTES_PATH, "utf8");
+
+    expect(dispatcher).toContain("TASK_DISPATCHER_PROVIDER");
+    expect(dispatcher).toContain('provider == "celery"');
+    expect(dispatcher).toContain('provider == "queue"');
+    expect(dispatcher).toContain('provider == "memory"');
+    expect(routes).not.toContain("CELERY_BROKER_URL");
+    expect(routes).not.toContain("QSTASH_TOKEN");
+    expect(routes).not.toContain("REDIS_URL");
   });
 });

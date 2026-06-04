@@ -46,7 +46,12 @@ def build_celery_config() -> CeleryRuntimeConfig:
 
 def create_celery_app() -> Celery:
     config = build_celery_config()
-    app = Celery("nebutra_ai", broker=config.broker_url, backend=config.result_backend)
+    app = Celery(
+        "nebutra_ai",
+        broker=config.broker_url,
+        backend=config.result_backend,
+        include=["app.workers.task_envelope"],
+    )
 
     app.conf.update(
         accept_content=["json"],
@@ -59,6 +64,7 @@ def create_celery_app() -> Celery:
             "app.workers.celery_app.ai_healthcheck": {"queue": "ai"},
             "app.workers.document_tasks.*": {"queue": "document"},
             "app.workers.agent_tasks.*": {"queue": "ai"},
+            "app.workers.task_envelope.*": {"queue": "ai"},
             "app.workers.maintenance_tasks.*": {"queue": "maintenance"},
             "app.workers.webhook_tasks.*": {"queue": "webhook"},
         },

@@ -21,6 +21,7 @@ dependencies = [
     "opentelemetry-instrumentation-fastapi>=0.48b0",
     "e2b-code-interpreter>=1.0.0",
     "tenacity>=9.1",
+    "asyncpg>=0.31.0",
 ]
 
 [tool.uv]

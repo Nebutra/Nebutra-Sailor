@@ -95,6 +95,24 @@ enum AccessInviteStatus {
   @@schema("public")
 }
 
+enum TaskStatus {
+  QUEUED
+  RUNNING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+
+  @@schema("public")
+}
+
+enum TaskPriority {
+  LOW
+  NORMAL
+  HIGH
+
+  @@schema("public")
+}
+
 // ============================================
 // Multi-Tenant Core
 // ============================================
@@ -162,6 +180,7 @@ model Tenant {
   requestLogs             RequestLog[]
   stripeCustomers         StripeCustomer[]
   subscriptions           Subscription[]
+  tasks                   Task[]
   threads                 Thread[]
   usageLedgerEntries      UsageLedgerEntry[]
   userConsents            UserConsent[]
@@ -1226,6 +1245,39 @@ model ContactSubmission {
   @@index([status])
   @@index([createdAt])
   @@map("contact_submissions")
+  @@schema("public")
+}
+
+// Standard task envelope for origin-owned long-running work. The API surface is
+// stable across Celery, QStash/arq, and test memory dispatchers.
+model Task {
+  id                 String       @id
+  tenantId           String       @map("tenant_id")
+  userId             String?      @map("user_id")
+  type               String       @db.VarChar(80)
+  status             TaskStatus   @default(QUEUED)
+  priority           TaskPriority @default(NORMAL)
+  progress           Int          @default(0)
+  payload            Json         @default("{}")
+  result             Json?
+  error              Json?
+  metadata           Json         @default("{}")
+  idempotencyKey     String?      @map("idempotency_key") @db.VarChar(120)
+  queueName          String       @default("ai") @map("queue_name") @db.VarChar(64)
+  dispatcherProvider String?      @map("dispatcher_provider") @db.VarChar(32)
+  providerJobId      String?      @map("provider_job_id") @db.VarChar(160)
+  createdAt          DateTime     @default(now()) @map("created_at")
+  updatedAt          DateTime     @updatedAt @map("updated_at")
+  startedAt          DateTime?    @map("started_at")
+  completedAt        DateTime?    @map("completed_at")
+  expiresAt          DateTime?    @map("expires_at")
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, status, createdAt(sort: Desc)])
+  @@index([tenantId, type, createdAt(sort: Desc)])
+  @@index([tenantId, updatedAt(sort: Desc)])
+  @@map("tasks")
   @@schema("public")
 }
 
