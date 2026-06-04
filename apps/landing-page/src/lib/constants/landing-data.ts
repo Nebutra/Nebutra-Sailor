@@ -449,6 +449,7 @@ export const NAV_LINKS = [
     children: [
       { labelKey: "ideas", href: "/ideas", icon: SparklesNebutra },
       { labelKey: "opc", href: "/about/products", icon: Users },
+      { labelKey: "news", href: "/news", icon: Megaphone },
       { labelKey: "changelog", href: "/changelog", icon: GitPullRequest },
       { labelKey: "roadmap", href: "/roadmap", icon: Route },
       { labelKey: "docs", href: createPublicDocsUrl(), icon: BookOpenNebutra },

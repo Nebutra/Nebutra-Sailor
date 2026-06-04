@@ -77,6 +77,12 @@ export const PUBLIC_SEO_ROUTES: ReadonlyArray<PublicSeoRoute> = [
     sitelinkCandidate: { label: "Blog" },
   },
   {
+    path: "/news",
+    changeFrequency: "weekly",
+    priority: 0.8,
+    sitelinkCandidate: { label: "Newsroom" },
+  },
+  {
     path: "/changelog",
     changeFrequency: "weekly",
     priority: 0.7,
