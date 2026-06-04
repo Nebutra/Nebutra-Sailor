@@ -1,6 +1,5 @@
 import {
   BookOpen,
-  BookOpen as BookOpenNebutra,
   Robot as Bot,
   Box,
   CreditCard,
@@ -11,7 +10,6 @@ import {
   FileText,
   FolderOpen,
   GitBranch,
-  GitPullRequest,
   Globe,
   Key,
   LockClosed,
@@ -22,19 +20,16 @@ import {
   Box as Package,
   BlendMode as Palette,
   Pen as PenTool,
-  Route,
   Servers as Server,
   SettingsGear as Settings,
   Shield,
   ShieldCheck,
-  Sparkles as SparklesNebutra,
   Users,
   Workflow,
 } from "@nebutra/icons";
 import { PaintBrush as Paintbrush } from "@phosphor-icons/react/dist/ssr";
 import type { ReactNode } from "react";
 import React from "react";
-import { createPublicDocsUrl } from "@/lib/docs-links";
 
 export interface FileNode {
   id: string;
@@ -444,18 +439,9 @@ export const NAV_LINKS = [
   { labelKey: "solutions", mega: true },
   { labelKey: "pricing", href: "/pricing" },
   { labelKey: "about", href: "/about" },
-  {
-    labelKey: "resources",
-    children: [
-      { labelKey: "ideas", href: "/ideas", icon: SparklesNebutra },
-      { labelKey: "opc", href: "/about/products", icon: Users },
-      { labelKey: "news", href: "/news", icon: Megaphone },
-      { labelKey: "changelog", href: "/changelog", icon: GitPullRequest },
-      { labelKey: "roadmap", href: "/roadmap", icon: Route },
-      { labelKey: "docs", href: createPublicDocsUrl(), icon: BookOpenNebutra },
-      { labelKey: "designDocs", href: "https://design.nebutra.com", icon: Paintbrush },
-    ],
-  },
+  // Two-column mega menu (DEVELOPERS / COMPANY) — content lives in
+  // `resources-data.ts`, rendered by ResourcesMegaMenu / MobileDrawer.
+  { labelKey: "resources", mega: true },
   {
     labelKey: "npm",
     href: "https://www.npmjs.com/package/create-sailor",
