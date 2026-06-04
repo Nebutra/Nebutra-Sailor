@@ -800,31 +800,31 @@ function StartupBuilderHome({
 }) {
   return (
     <AnimateIn preset="emerge">
-      <section className="min-h-screen bg-neutral-1 text-neutral-12 dark:bg-neutral-12 dark:text-white">
+      <section className="min-h-screen bg-neutral-1 text-neutral-12">
         <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-5 py-14 sm:px-8">
           <div className="mx-auto w-full max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-semibold text-neutral-10 dark:border-white/10 dark:bg-neutral-12 dark:text-white/55">
+            <span className="inline-flex items-center gap-2 rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-semibold text-neutral-10">
               <Lightning className="size-3.5" aria-hidden="true" />
               Startup Agent OS
             </span>
-            <h2 className="mt-6 text-4xl font-semibold tracking-[-0.06em] text-neutral-12 dark:text-white sm:text-6xl">
+            <h2 className="mt-6 text-4xl font-semibold tracking-[-0.06em] text-neutral-12 sm:text-6xl">
               What are we building?
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-neutral-10 dark:text-white/55">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-neutral-10">
               One proposition becomes company context, launch artifacts, files, canvas, and
               approval-gated runs.
             </p>
 
-            <div className="mx-auto mt-8 overflow-hidden rounded-[30px] border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5 dark:border-white/10 dark:bg-neutral-12">
+            <div className="mx-auto mt-8 overflow-hidden rounded-[30px] border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5">
               <Textarea
                 aria-label="Startup proposition"
                 value={thesis}
                 onChange={(event) => onThesisChange(event.target.value)}
                 disabled={disabled || isLoading}
                 placeholder="Describe the startup proposition to compile into a tenant-scoped company workspace..."
-                className="min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 shadow-none outline-none placeholder:text-neutral-9 disabled:cursor-not-allowed disabled:opacity-60 dark:text-white dark:placeholder:text-white/35 sm:p-6"
+                className="min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 shadow-none outline-none placeholder:text-neutral-9 disabled:cursor-not-allowed disabled:opacity-60 sm:p-6"
               />
-              <div className="flex flex-col gap-3 border-t border-neutral-6 bg-neutral-2 px-4 py-3 dark:border-white/10 dark:bg-white/[0.03] sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-3 border-t border-neutral-6 bg-neutral-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                 <Select
                   value={arena}
                   onValueChange={(value) => onArenaChange(value as StartupArena)}
@@ -832,7 +832,7 @@ function StartupBuilderHome({
                 >
                   <SelectTrigger
                     aria-label="Startup arena"
-                    className="h-auto w-fit rounded-full border border-neutral-7 bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 shadow-none transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-neutral-12 dark:text-white/70"
+                    className="h-auto w-fit rounded-full border border-neutral-7 bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 shadow-none transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     <SelectValue />
                   </SelectTrigger>
@@ -848,7 +848,7 @@ function StartupBuilderHome({
                   type="button"
                   disabled={!canCompile}
                   onClick={onCompile}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-12 px-5 py-2.5 text-sm font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-12 px-5 py-2.5 text-sm font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
                 >
                   {isSaving ? "Building..." : "Build"}
                   <ArrowRight className="size-4" aria-hidden="true" />
@@ -860,7 +860,7 @@ function StartupBuilderHome({
               {STARTUP_OS_PROMISES.map((promise) => (
                 <span
                   key={promise}
-                  className="rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-10 dark:border-white/10 dark:bg-neutral-12 dark:text-white/45"
+                  className="rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-10"
                 >
                   {promise}
                 </span>
@@ -878,7 +878,7 @@ function StartupBuilderHome({
                     className={`rounded-2xl border p-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
                       project.id === selectedProjectId
                         ? "border-blue-8 bg-blue-2 text-blue-12 dark:border-blue-7/70 dark:bg-blue-9/18 dark:text-blue-4"
-                        : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2 dark:border-white/10 dark:bg-neutral-12 dark:text-white/58 dark:hover:bg-white/[0.05]"
+                        : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2"
                     }`}
                   >
                     <span className="block truncate text-sm font-semibold">
@@ -962,26 +962,26 @@ function StartupBuilderWorkspace({
 
   return (
     <AnimateIn preset="fadeUp">
-      <section className="h-[calc(100vh-32px)] min-h-[720px] overflow-hidden bg-neutral-1 text-neutral-12 dark:bg-neutral-12 dark:text-white">
+      <section className="h-[calc(100vh-32px)] min-h-[720px] overflow-hidden bg-neutral-1 text-neutral-12">
         <div className="grid h-full xl:grid-cols-[360px_minmax(0,1fr)]">
-          <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-1 dark:border-white/10 dark:bg-neutral-12">
-            <div className="border-b border-neutral-6 p-4 dark:border-white/10">
+          <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-1">
+            <div className="border-b border-neutral-6 p-4">
               <div className="flex min-w-0 items-center">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <h2 className="truncate text-sm font-semibold tracking-[-0.02em] text-neutral-12 dark:text-white">
+                    <h2 className="truncate text-sm font-semibold tracking-[-0.02em] text-neutral-12">
                       {project.companyContext.name}
                     </h2>
                     <StatusPill
                       status={project.status === "review_ready" ? "completed" : "planned"}
                     />
                   </div>
-                  <p className="mt-0.5 truncate text-xs text-neutral-10 dark:text-white/45">
+                  <p className="mt-0.5 truncate text-xs text-neutral-10">
                     {project.slug} / {project.arena}
                   </p>
                 </div>
               </div>
-              <p className="mt-4 line-clamp-2 text-xs leading-5 text-neutral-10 dark:text-white/50">
+              <p className="mt-4 line-clamp-2 text-xs leading-5 text-neutral-10">
                 {project.companyContext.promise}
               </p>
             </div>
@@ -995,28 +995,26 @@ function StartupBuilderWorkspace({
                       ? "border-blue-6 bg-blue-2 dark:border-blue-8/40 dark:bg-blue-9/15"
                       : item.tone === "amber"
                         ? "border-amber-6 bg-amber-2 dark:border-amber-8/40 dark:bg-amber-9/15"
-                        : "border-neutral-6 bg-neutral-1 dark:border-white/10 dark:bg-white/[0.03]"
+                        : "border-neutral-6 bg-neutral-1"
                   }`}
                 >
-                  <p className="text-xs font-semibold tracking-[-0.01em] text-neutral-12 dark:text-white">
+                  <p className="text-xs font-semibold tracking-[-0.01em] text-neutral-12">
                     {item.title}
                   </p>
-                  <p className="mt-1 text-xs leading-5 text-neutral-10 dark:text-white/55">
-                    {item.body}
-                  </p>
+                  <p className="mt-1 text-xs leading-5 text-neutral-10">{item.body}</p>
                 </div>
               ))}
             </div>
 
-            <div className="border-t border-neutral-6 p-3 dark:border-white/10">
-              <div className="rounded-[22px] border border-neutral-6 bg-neutral-2 p-3 dark:border-white/10 dark:bg-white/[0.03]">
-                <div className="text-xs leading-5 text-neutral-10 dark:text-white/50">
+            <div className="border-t border-neutral-6 p-3">
+              <div className="rounded-[22px] border border-neutral-6 bg-neutral-2 p-3">
+                <div className="text-xs leading-5 text-neutral-10">
                   {activityCount > 0
                     ? `${activityCount} persisted API event${activityCount > 1 ? "s" : ""}.`
                     : "Select a run to approve or execute through the governed API."}
                 </div>
                 <div className="mt-3 flex items-center justify-between gap-2">
-                  <span className="rounded-full border border-neutral-6 bg-neutral-1 px-2.5 py-1 text-[11px] font-semibold text-neutral-10 dark:border-white/10 dark:bg-neutral-12 dark:text-white/50">
+                  <span className="rounded-full border border-neutral-6 bg-neutral-1 px-2.5 py-1 text-[11px] font-semibold text-neutral-10">
                     {selectedRun?.approval === "pending_review" ? "Review" : "Build"}
                   </span>
                   {selectedRun?.approval === "pending_review" ? (
@@ -1033,7 +1031,7 @@ function StartupBuilderWorkspace({
                       type="button"
                       disabled={!selectedRun || !isExecutableRun(selectedRun) || isExecuting}
                       onClick={() => onExecuteRun(selectedRun?.id)}
-                      className="grid size-9 place-items-center rounded-full bg-neutral-12 text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
+                      className="grid size-9 place-items-center rounded-full bg-neutral-12 text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
                       aria-label="Execute selected run"
                     >
                       <ArrowRight className="size-4" aria-hidden="true" />
@@ -1044,17 +1042,17 @@ function StartupBuilderWorkspace({
             </div>
           </aside>
 
-          <main className="flex min-h-0 min-w-0 flex-col bg-neutral-1 dark:bg-neutral-12">
-            <div className="flex h-14 items-center justify-between gap-3 border-b border-neutral-6 px-4 dark:border-white/10">
+          <main className="flex min-h-0 min-w-0 flex-col bg-neutral-1">
+            <div className="flex h-14 items-center justify-between gap-3 border-b border-neutral-6 px-4">
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-neutral-12 dark:text-white">
+                <p className="truncate text-sm font-semibold text-neutral-12">
                   {selectedFile?.path ?? selectedArtifact?.title ?? "Startup OS workspace"}
                 </p>
-                <p className="mt-0.5 truncate text-[11px] text-neutral-9 dark:text-white/35">
+                <p className="mt-0.5 truncate text-[11px] text-neutral-9">
                   {project.companyContext.name}
                 </p>
               </div>
-              <div className="flex shrink-0 rounded-full border border-neutral-6 bg-neutral-2 p-1 dark:border-white/10 dark:bg-white/[0.03]">
+              <div className="flex shrink-0 rounded-full border border-neutral-6 bg-neutral-2 p-1">
                 {(["code", "canvas"] as const).map((surface) => (
                   <button
                     key={surface}
@@ -1062,8 +1060,8 @@ function StartupBuilderWorkspace({
                     onClick={() => setActiveSurface(surface)}
                     className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-colors ${
                       activeSurface === surface
-                        ? "bg-neutral-12 text-neutral-1 dark:bg-white dark:text-neutral-12"
-                        : "text-neutral-10 hover:bg-neutral-1 dark:text-white/45 dark:hover:bg-white/[0.06]"
+                        ? "bg-neutral-12 text-neutral-1 dark:text-neutral-12"
+                        : "text-neutral-10 hover:bg-neutral-1"
                     }`}
                   >
                     {surface}
@@ -1133,22 +1131,18 @@ function StartupExplorerNodes({
         parentPath={parentPath}
       >
         <TreeNodeTrigger
-          className={`group/trigger min-h-8 w-full rounded-[var(--radius-md)] border border-transparent py-1 pr-2 transition-colors hover:border-neutral-6 hover:bg-neutral-1 dark:hover:border-white/10 dark:hover:bg-white/[0.055] ${
-            node.type === "folder"
-              ? "font-medium text-neutral-11 dark:text-white/62"
-              : "text-neutral-10 dark:text-white/50"
+          className={`group/trigger min-h-8 w-full rounded-[var(--radius-md)] border border-transparent py-1 pr-2 transition-colors hover:border-neutral-6 hover:bg-neutral-1 ${
+            node.type === "folder" ? "font-medium text-neutral-11" : "text-neutral-10"
           }`}
           title={node.path}
         >
           <TreeExpander
-            className="mr-1 size-4 shrink-0 text-neutral-8 group-hover/trigger:text-neutral-10 dark:text-white/30 dark:group-hover/trigger:text-white/58"
+            className="mr-1 size-4 shrink-0 text-neutral-8 group-hover/trigger:text-neutral-10"
             hasChildren={hasChildren}
           />
           <TreeIcon
             className={`mr-2 size-4 shrink-0 ${
-              node.type === "folder"
-                ? "text-amber-9 dark:text-amber-5/80"
-                : "text-neutral-8 dark:text-white/35"
+              node.type === "folder" ? "text-amber-9 dark:text-amber-5/80" : "text-neutral-8"
             }`}
             hasChildren={hasChildren}
           />
@@ -1156,7 +1150,7 @@ function StartupExplorerNodes({
             {node.label}
           </TreeLabel>
           {node.file ? (
-            <span className="ml-auto rounded-full border border-neutral-6 bg-neutral-1 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.08em] text-neutral-8 opacity-0 transition-opacity group-hover/trigger:opacity-100 dark:border-white/10 dark:bg-neutral-12 dark:text-white/35">
+            <span className="ml-auto rounded-full border border-neutral-6 bg-neutral-1 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.08em] text-neutral-8 opacity-0 transition-opacity group-hover/trigger:opacity-100">
               {node.file.language}
             </span>
           ) : null}
@@ -1178,7 +1172,7 @@ function StartupExplorerNodes({
 function ExplorerReferenceSection({ children, title }: { children: ReactNode; title: string }) {
   return (
     <section className="mt-3 first:mt-0">
-      <h3 className="px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-8 dark:text-white/30">
+      <h3 className="px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-8">
         {title}
       </h3>
       <div className="mt-1 grid gap-0.5">{children}</div>
@@ -1238,19 +1232,19 @@ function WorkspaceFilesPanel({
 
   return (
     <AnimateIn preset="fadeUp" className="h-full min-h-0">
-      <section className="flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1 dark:bg-neutral-12">
-        <div className="flex flex-col gap-3 border-b border-neutral-6 bg-neutral-1 p-3 dark:border-white/10 dark:bg-neutral-12 md:flex-row md:items-center md:justify-between">
+      <section className="flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1">
+        <div className="flex flex-col gap-3 border-b border-neutral-6 bg-neutral-1 p-3 md:flex-row md:items-center md:justify-between">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <Code className="size-4 text-neutral-10 dark:text-white/45" aria-hidden="true" />
-              <h2 className="text-sm font-semibold tracking-[-0.02em] text-neutral-12 dark:text-white">
+              <Code className="size-4 text-neutral-10" aria-hidden="true" />
+              <h2 className="text-sm font-semibold tracking-[-0.02em] text-neutral-12">
                 Code and preview
               </h2>
-              <span className="rounded-full bg-neutral-2 px-2 py-0.5 text-[11px] font-semibold text-neutral-10 ring-1 ring-neutral-6 dark:bg-white/[0.04] dark:text-white/45 dark:ring-white/10">
+              <span className="rounded-full bg-neutral-2 px-2 py-0.5 text-[11px] font-semibold text-neutral-10 ring-1 ring-neutral-6">
                 {files.length} files
               </span>
             </div>
-            <p className="mt-1 truncate text-xs text-neutral-10 dark:text-white/45">
+            <p className="mt-1 truncate text-xs text-neutral-10">
               {selectedFile ? selectedFile.path : "Select a persisted file to edit the app."}
             </p>
           </div>
@@ -1259,7 +1253,7 @@ function WorkspaceFilesPanel({
               type="button"
               disabled={!selectedFile || !isDirty || isSavingFile}
               onClick={() => void save()}
-              className="rounded-full bg-neutral-12 px-3.5 py-1.5 text-xs font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
+              className="rounded-full bg-neutral-12 px-3.5 py-1.5 text-xs font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
             >
               {isSavingFile ? "Saving..." : isDirty ? "Save file" : "Saved"}
             </button>
@@ -1267,19 +1261,17 @@ function WorkspaceFilesPanel({
         </div>
 
         <div className="grid min-h-0 flex-1 xl:grid-cols-[280px_minmax(0,1fr)]">
-          <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-2/60 dark:border-white/10 dark:bg-white/[0.02]">
-            <div className="border-b border-neutral-6 px-3 py-2 dark:border-white/10">
-              <p className="text-xs font-semibold text-neutral-12 dark:text-white">Files</p>
-              <p className="mt-0.5 text-[11px] text-neutral-9 dark:text-white/35">
-                Persisted workspace
-              </p>
+          <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-2/60">
+            <div className="border-b border-neutral-6 px-3 py-2">
+              <p className="text-xs font-semibold text-neutral-12">Files</p>
+              <p className="mt-0.5 text-[11px] text-neutral-9">Persisted workspace</p>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto px-2 py-2">
               {tree.length > 0 ? (
                 <TreeProvider
                   key={files.map((file) => file.path).join("|")}
                   animateExpand
-                  className="font-mono text-neutral-8 dark:text-white/20"
+                  className="font-mono text-neutral-8"
                   defaultExpandedIds={expandedIds}
                   indent={14}
                   onSelectionChange={(selectedIds) => {
@@ -1296,12 +1288,12 @@ function WorkspaceFilesPanel({
                   </TreeView>
                 </TreeProvider>
               ) : (
-                <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-6 px-3 py-4 text-xs leading-5 text-neutral-10 dark:border-white/10 dark:text-white/45">
+                <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-6 px-3 py-4 text-xs leading-5 text-neutral-10">
                   The project API returned no persisted files.
                 </p>
               )}
             </div>
-            <div className="border-t border-neutral-6 p-2 dark:border-white/10">
+            <div className="border-t border-neutral-6 p-2">
               <ExplorerReferenceSection title="Artifacts">
                 {artifacts.slice(0, 3).map((artifact) => (
                   <button
@@ -1311,7 +1303,7 @@ function WorkspaceFilesPanel({
                     className={`flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] px-2.5 py-2 text-left text-[11px] transition-colors ${
                       selectedArtifactId === artifact.id
                         ? "bg-blue-3 text-blue-12 dark:bg-blue-9/20 dark:text-blue-5"
-                        : "text-neutral-10 hover:bg-neutral-1 dark:text-white/45 dark:hover:bg-white/[0.05]"
+                        : "text-neutral-10 hover:bg-neutral-1"
                     }`}
                   >
                     <span className="min-w-0 truncate">{artifact.title}</span>
@@ -1328,7 +1320,7 @@ function WorkspaceFilesPanel({
                     className={`flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] px-2.5 py-2 text-left text-[11px] transition-colors ${
                       selectedRunId === run.id
                         ? "bg-blue-3 text-blue-12 dark:bg-blue-9/20 dark:text-blue-5"
-                        : "text-neutral-10 hover:bg-neutral-1 dark:text-white/45 dark:hover:bg-white/[0.05]"
+                        : "text-neutral-10 hover:bg-neutral-1"
                     }`}
                   >
                     <span className="min-w-0 truncate">{run.stage}</span>
@@ -1340,8 +1332,8 @@ function WorkspaceFilesPanel({
           </aside>
 
           <div className="grid min-h-0 xl:grid-cols-[minmax(0,1fr)_minmax(380px,0.82fr)] 2xl:grid-cols-[minmax(0,1fr)_minmax(460px,0.82fr)]">
-            <div className="flex min-h-0 flex-col border-b border-neutral-6 dark:border-white/10 xl:border-b-0 xl:border-r">
-              <div className="flex gap-1 overflow-x-auto border-b border-neutral-6 bg-neutral-2 p-2 dark:border-white/10 dark:bg-white/[0.025]">
+            <div className="flex min-h-0 flex-col border-b border-neutral-6 xl:border-b-0 xl:border-r">
+              <div className="flex gap-1 overflow-x-auto border-b border-neutral-6 bg-neutral-2 p-2">
                 {files.map((file) => (
                   <button
                     key={file.path}
@@ -1349,8 +1341,8 @@ function WorkspaceFilesPanel({
                     onClick={() => onSelectFile(file.path)}
                     className={`shrink-0 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
                       selectedFile?.path === file.path
-                        ? "bg-neutral-12 text-neutral-1 dark:bg-white dark:text-neutral-12"
-                        : "text-neutral-10 hover:bg-neutral-1 dark:text-white/45 dark:hover:bg-white/[0.06]"
+                        ? "bg-neutral-12 text-neutral-1 dark:text-neutral-12"
+                        : "text-neutral-10 hover:bg-neutral-1"
                     }`}
                   >
                     {file.path}
@@ -1365,23 +1357,19 @@ function WorkspaceFilesPanel({
                   onChange={(event) => {
                     setDraftContent(event.target.value);
                   }}
-                  className="min-h-[360px] flex-1 resize-none border-0 bg-neutral-12 p-4 font-mono text-[13px] leading-6 text-neutral-1 shadow-none outline-none placeholder:text-neutral-6 dark:bg-black dark:text-white"
+                  className="min-h-[360px] flex-1 resize-none border-0 bg-neutral-12 p-4 font-mono text-[13px] leading-6 text-neutral-1 shadow-none outline-none placeholder:text-neutral-6 dark:bg-black"
                 />
               ) : (
-                <div className="grid min-h-[360px] flex-1 place-items-center p-8 text-center text-sm text-neutral-10 dark:text-white/45">
+                <div className="grid min-h-[360px] flex-1 place-items-center p-8 text-center text-sm text-neutral-10">
                   Select a persisted file from the workspace.
                 </div>
               )}
             </div>
 
-            <div className="flex min-h-0 flex-col bg-neutral-2 dark:bg-white/[0.018]">
-              <div className="flex items-center justify-between border-b border-neutral-6 px-3 py-2 dark:border-white/10">
-                <span className="text-xs font-semibold text-neutral-12 dark:text-white">
-                  Live preview
-                </span>
-                <span className="text-[11px] text-neutral-9 dark:text-white/35">
-                  iframe srcDoc / no deploy
-                </span>
+            <div className="flex min-h-0 flex-col bg-neutral-2">
+              <div className="flex items-center justify-between border-b border-neutral-6 px-3 py-2">
+                <span className="text-xs font-semibold text-neutral-12">Live preview</span>
+                <span className="text-[11px] text-neutral-9">iframe srcDoc / no deploy</span>
               </div>
               {livePreviewHtml ? (
                 <iframe
@@ -1391,7 +1379,7 @@ function WorkspaceFilesPanel({
                   className="min-h-0 flex-1 border-0 bg-white"
                 />
               ) : (
-                <div className="grid flex-1 place-items-center p-8 text-center text-sm text-neutral-10 dark:text-white/45">
+                <div className="grid flex-1 place-items-center p-8 text-center text-sm text-neutral-10">
                   Preview is unavailable until the project API returns persisted files.
                 </div>
               )}
@@ -1555,45 +1543,45 @@ function StartupCanvasPanel({
 
   return (
     <AnimateIn preset="fadeUp" className="h-full min-h-0">
-      <div className="flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1 dark:bg-neutral-12">
-        <div className="flex flex-col gap-3 border-b border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-neutral-12 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1">
+        <div className="flex flex-col gap-3 border-b border-neutral-6 bg-neutral-1 p-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-sm font-semibold tracking-[-0.02em] text-neutral-12 dark:text-white">
+              <h2 className="text-sm font-semibold tracking-[-0.02em] text-neutral-12">
                 Company canvas
               </h2>
               <span className="rounded-full bg-blue-3 px-2 py-0.5 text-[11px] font-semibold text-blue-11 dark:bg-blue-9/20 dark:text-blue-5">
                 Spatial graph
               </span>
             </div>
-            <p className="mt-1 max-w-3xl text-xs leading-5 text-neutral-10 dark:text-white/45">
+            <p className="mt-1 max-w-3xl text-xs leading-5 text-neutral-10">
               Drag nodes, inspect dependencies, and start eligible runs from the same company-state
               surface. The graph is derived from persisted artifacts and runs; success state is only
               accepted from the API response.
             </p>
           </div>
-          <div className="flex w-fit items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 p-1 dark:border-white/10 dark:bg-white/[0.03]">
+          <div className="flex w-fit items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 p-1">
             <button
               type="button"
               onClick={() => changeZoom(Math.max(0.54, Number((zoom - 0.08).toFixed(2))))}
-              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1 dark:text-white/60 dark:hover:bg-white/[0.06]"
+              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
             >
               -
             </button>
-            <span className="min-w-12 shrink-0 whitespace-nowrap text-center text-[11px] font-medium text-neutral-10 dark:text-white/45">
+            <span className="min-w-12 shrink-0 whitespace-nowrap text-center text-[11px] font-medium text-neutral-10">
               {Math.round(zoom * 100)}%
             </span>
             <button
               type="button"
               onClick={() => changeZoom(Math.min(1.08, Number((zoom + 0.08).toFixed(2))))}
-              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1 dark:text-white/60 dark:hover:bg-white/[0.06]"
+              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
             >
               +
             </button>
             <button
               type="button"
               onClick={resetLayout}
-              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1 dark:text-white/60 dark:hover:bg-white/[0.06]"
+              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
             >
               Reset
             </button>
@@ -1601,7 +1589,7 @@ function StartupCanvasPanel({
         </div>
 
         <div className="grid min-h-0 flex-1 2xl:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="min-h-0 overflow-auto bg-neutral-2 p-4 dark:bg-white/[0.02]">
+          <div className="min-h-0 overflow-auto bg-neutral-2 p-4">
             <div
               className="relative"
               style={{ width: model.width * zoom, height: model.height * zoom }}
@@ -1672,19 +1660,15 @@ function StartupCanvasPanel({
             </div>
           </div>
 
-          <aside className="min-h-0 overflow-y-auto border-t border-neutral-6 bg-neutral-1 p-4 dark:border-white/10 dark:bg-neutral-12 2xl:border-l 2xl:border-t-0">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-9 dark:text-white/35">
+          <aside className="min-h-0 overflow-y-auto border-t border-neutral-6 bg-neutral-1 p-4 2xl:border-l 2xl:border-t-0">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-9">
               Canvas inspector
             </h3>
             {selectedArtifact ? (
-              <div className="mt-3 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-3 dark:border-white/10 dark:bg-white/[0.03]">
-                <p className="text-sm font-semibold text-neutral-12 dark:text-white">
-                  {selectedArtifact.title}
-                </p>
-                <p className="mt-1 text-xs leading-5 text-neutral-10 dark:text-white/50">
-                  {selectedArtifact.summary}
-                </p>
-                <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-10 dark:text-white/45">
+              <div className="mt-3 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-3">
+                <p className="text-sm font-semibold text-neutral-12">{selectedArtifact.title}</p>
+                <p className="mt-1 text-xs leading-5 text-neutral-10">{selectedArtifact.summary}</p>
+                <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-10">
                   <span>Status: {selectedArtifact.status}</span>
                   <span>Owner: {selectedArtifact.owner}</span>
                   <span>
@@ -1698,19 +1682,15 @@ function StartupCanvasPanel({
             ) : null}
 
             {selectedRun ? (
-              <div className="mt-3 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-3 dark:border-white/10 dark:bg-white/[0.03]">
+              <div className="mt-3 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-1 p-3">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-sm font-semibold text-neutral-12 dark:text-white">
-                      {selectedRun.stage}
-                    </p>
-                    <p className="mt-1 text-xs leading-5 text-neutral-10 dark:text-white/50">
-                      {selectedRun.summary}
-                    </p>
+                    <p className="text-sm font-semibold text-neutral-12">{selectedRun.stage}</p>
+                    <p className="mt-1 text-xs leading-5 text-neutral-10">{selectedRun.summary}</p>
                   </div>
                   <StatusPill status={selectedRun.status} />
                 </div>
-                <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-10 dark:text-white/45">
+                <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-10">
                   <span>Adapter: {selectedRun.adapter}</span>
                   <span>Approval: {selectedRun.approval}</span>
                   <span>Budget: ${selectedRun.costEstimateUsd.toFixed(2)}</span>
@@ -1719,7 +1699,7 @@ function StartupCanvasPanel({
                   type="button"
                   disabled={!selectedRunExecutable || isExecuting}
                   onClick={() => onExecuteRun(selectedRun.id)}
-                  className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-2 text-[13px] font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:bg-white dark:text-neutral-12 dark:hover:bg-white/90"
+                  className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-2 text-[13px] font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
                 >
                   <Lightning className="size-3.5" aria-hidden="true" />
                   {isExecuting
@@ -1765,8 +1745,7 @@ function CanvasNodeButton({
       "border-blue-8 bg-blue-3 text-blue-12 shadow-lg dark:border-blue-7 dark:bg-blue-9/20 dark:text-blue-4",
     failed:
       "border-red-7 bg-red-2 text-red-12 dark:border-red-8/60 dark:bg-red-9/15 dark:text-red-4",
-    planned:
-      "border-neutral-6 bg-neutral-1 text-neutral-12 dark:border-white/10 dark:bg-neutral-12 dark:text-white",
+    planned: "border-neutral-6 bg-neutral-1 text-neutral-12",
     ready:
       "border-green-7 bg-green-2 text-green-12 dark:border-green-8/60 dark:bg-green-9/15 dark:text-green-4",
     review:
@@ -1793,7 +1772,7 @@ function CanvasNodeButton({
           <p className="truncate text-sm font-semibold">{node.title}</p>
           <p className="mt-1 line-clamp-2 text-[11px] leading-4 opacity-75">{node.subtitle}</p>
         </div>
-        <span className="shrink-0 rounded-full bg-neutral-1 px-2 py-0.5 text-[10px] font-medium text-neutral-12 ring-1 ring-neutral-6 dark:bg-neutral-12 dark:text-white/80 dark:ring-white/10">
+        <span className="shrink-0 rounded-full bg-neutral-1 px-2 py-0.5 text-[10px] font-medium text-neutral-12 ring-1 ring-neutral-6">
           {node.kind}
         </span>
       </div>
@@ -1812,7 +1791,7 @@ function StatusPill({ status }: { status: StartupOperatingRun["status"] }) {
         ? "bg-red-3 text-red-11 dark:bg-red-9/20 dark:text-red-5"
         : status === "waiting_for_review"
           ? "bg-amber-3 text-amber-11 dark:bg-amber-9/20 dark:text-amber-5"
-          : "bg-neutral-3 text-neutral-11 dark:bg-white/[0.06] dark:text-white/60";
+          : "bg-neutral-3 text-neutral-11";
   return (
     <span className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${className}`}>
       {formatRunStatus(status)}

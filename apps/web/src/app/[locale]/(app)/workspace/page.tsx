@@ -152,9 +152,9 @@ async function WorkspaceMetrics() {
           {snapshotMeta.map((item) => (
             <span
               key={item.label}
-              className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] bg-neutral-2 px-1.5 py-0.5 text-[11px] text-neutral-10 dark:bg-white/[0.05] dark:text-white/45"
+              className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] bg-neutral-2 px-1.5 py-0.5 text-[11px] text-neutral-10"
             >
-              <span className="font-medium text-neutral-11 dark:text-white/65">{item.label}</span>
+              <span className="font-medium text-neutral-11">{item.label}</span>
               <span className="max-w-32 truncate tabular-nums">{item.value}</span>
             </span>
           ))}

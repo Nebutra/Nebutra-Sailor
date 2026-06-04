@@ -17,7 +17,7 @@ const MODE_META: Record<string, { label: string; icon: LucideIcon; accent: strin
   chat: { label: "Chat", icon: MessageSquare, accent: "text-blue-11 dark:text-blue-9" },
   data: { label: "Data", icon: Database, accent: "text-cyan-11 dark:text-cyan-9" },
   workflow: { label: "Workflow", icon: Workflow, accent: "text-green-11 dark:text-green-9" },
-  search: { label: "Search", icon: Search, accent: "text-neutral-11 dark:text-white/70" },
+  search: { label: "Search", icon: Search, accent: "text-neutral-11" },
   code: { label: "Code", icon: Code2, accent: "text-amber-11 dark:text-amber-9" },
 };
 
@@ -65,19 +65,19 @@ export async function RecentSessions() {
   const t = await getTranslations("dashboard.recentSessions");
 
   return (
-    <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3.5 dark:border-white/10 dark:bg-white/[0.03] sm:p-4">
+    <div className="rounded-[var(--radius-xl)] border border-neutral-6 bg-neutral-1 p-3.5 sm:p-4">
       <AnimateIn preset="fadeUp">
         <div className="mb-3 flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-neutral-12 dark:text-white">{t("title")}</h2>
-            <p className="mt-0.5 text-xs text-neutral-10 dark:text-white/40">
+            <h2 className="text-sm font-semibold text-neutral-12">{t("title")}</h2>
+            <p className="mt-0.5 text-xs text-neutral-10">
               {t("subtitle", { count: sessions.length })}
             </p>
           </div>
           <div className="flex items-center gap-3">
             <ViewTransitionLink
               href="/chat/history"
-              className="text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12 dark:text-white/50 dark:hover:text-white"
+              className="text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12"
             >
               {t("viewAll")}
             </ViewTransitionLink>
@@ -100,23 +100,23 @@ export async function RecentSessions() {
           return (
             <AnimateIn key={session.id} preset="fadeUp">
               <ViewTransitionLink href={href} className="block">
-                <div className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-lg)] border border-neutral-5 bg-neutral-1 px-3 py-2.5 transition-colors duration-150 hover:border-neutral-7 hover:bg-neutral-2 dark:border-white/10 dark:bg-white/[0.02] dark:hover:border-white/20 dark:hover:bg-white/[0.05]">
+                <div className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-lg)] border border-neutral-5 bg-neutral-1 px-3 py-2.5 transition-colors duration-150 hover:border-neutral-7 hover:bg-neutral-2">
                   <div className="min-w-0">
                     <span
-                      className={`inline-flex items-center gap-1 rounded-full bg-neutral-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider dark:bg-white/10 ${meta.accent}`}
+                      className={`inline-flex items-center gap-1 rounded-full bg-neutral-2 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${meta.accent}`}
                     >
                       <Icon className="size-3" aria-hidden="true" />
                       {meta.label}
                     </span>
-                    <p className="mt-1 truncate text-sm font-medium text-neutral-12 dark:text-white">
+                    <p className="mt-1 truncate text-sm font-medium text-neutral-12">
                       {session.title || t("untitled")}
                     </p>
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="text-[11px] tabular-nums text-neutral-10 dark:text-white/45">
+                    <p className="text-[11px] tabular-nums text-neutral-10">
                       {formatSessionTime(session.lastMessageAt, locale)}
                     </p>
-                    <p className="mt-1 text-[11px] text-neutral-10 dark:text-white/45">
+                    <p className="mt-1 text-[11px] text-neutral-10">
                       {t("messageCount", { count: session.messageCount })}
                     </p>
                   </div>
