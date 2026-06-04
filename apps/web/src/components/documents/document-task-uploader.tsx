@@ -117,8 +117,23 @@ export function DocumentTaskUploader({
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState<UploadDocumentAndCreateTaskResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
   const taskId = result?.task.id ?? null;
+
+  async function runUpload(input: UploadRunnerInput) {
+    if (onUpload) {
+      return onUpload(input);
+    }
+
+    const operationId = createOperationId();
+    const apiClient = await getApiClient();
+    return uploadDocumentAndCreateTask({
+      apiClient,
+      file: input.file,
+      metadata: input.metadata,
+      idempotencyKey: `upload:${operationId}`,
+      taskIdempotencyKey: `task:${operationId}`,
+    });
+  }
 
   async function runGetTask(taskId: string) {
     if (onGetTask) {
@@ -137,6 +152,22 @@ export function DocumentTaskUploader({
     const apiClient = await getApiClient();
     return cancelDocumentTask(taskId, apiClient);
   }
+
+  const uploadMutation = useMutation({
+    mutationKey: queryKeys.tasks.uploadDocument(),
+    mutationFn: runUpload,
+    onMutate() {
+      setError(null);
+      setResult(null);
+    },
+    onSuccess(uploaded) {
+      setResult(uploaded);
+      queryClient.setQueryData(queryKeys.tasks.detail(uploaded.task.id), uploaded.task);
+    },
+    onError(err) {
+      setError(getErrorMessage(err, text.fallbackError));
+    },
+  });
 
   const taskQuery = useQuery({
     queryKey: taskId ? queryKeys.tasks.detail(taskId) : queryKeys.tasks.detail("idle"),
@@ -167,45 +198,18 @@ export function DocumentTaskUploader({
   });
 
   const currentTask = taskQuery.data ?? result?.task ?? null;
+  const uploadPending = uploadMutation.isPending;
 
-  async function runUpload(input: UploadRunnerInput) {
-    if (onUpload) {
-      return onUpload(input);
-    }
-
-    const operationId = createOperationId();
-    const apiClient = await getApiClient();
-    return uploadDocumentAndCreateTask({
-      apiClient,
-      file: input.file,
-      metadata: input.metadata,
-      idempotencyKey: `upload:${operationId}`,
-      taskIdempotencyKey: `task:${operationId}`,
-    });
-  }
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!file || pending) {
+    if (!file || uploadPending) {
       return;
     }
 
-    setPending(true);
-    setError(null);
-    setResult(null);
-
-    try {
-      const uploaded = await runUpload({
-        file,
-        metadata: { source: "workspace" },
-      });
-      setResult(uploaded);
-      queryClient.setQueryData(queryKeys.tasks.detail(uploaded.task.id), uploaded.task);
-    } catch (err) {
-      setError(getErrorMessage(err, text.fallbackError));
-    } finally {
-      setPending(false);
-    }
+    uploadMutation.mutate({
+      file,
+      metadata: { source: "workspace" },
+    });
   }
 
   return (
@@ -277,7 +281,13 @@ export function DocumentTaskUploader({
           aria-label={text.fileInputLabel}
           ref={inputRef}
           className="sr-only"
+          disabled={uploadPending}
           onChange={(event) => {
+            if (uploadPending) {
+              event.currentTarget.value = "";
+              return;
+            }
+
             const nextFile = event.target.files?.[0] ?? null;
             setFile(nextFile);
             setResult(null);
@@ -289,11 +299,12 @@ export function DocumentTaskUploader({
           variant="outline"
           size="sm"
           prefix={<CloudUpload />}
+          disabled={uploadPending}
           onClick={() => inputRef.current?.click()}
         >
           {text.chooseDocument}
         </Button>
-        <Button type="submit" size="sm" loading={pending} disabled={!file}>
+        <Button type="submit" size="sm" loading={uploadPending} disabled={!file || uploadPending}>
           {text.startParseTask}
         </Button>
       </div>

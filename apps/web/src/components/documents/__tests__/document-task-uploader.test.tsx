@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import type { TaskRecord, UploadDocumentAndCreateTaskResult } from "@/lib/api/document-upload-task";
 import { DocumentTaskUploader } from "../document-task-uploader";
 
 vi.mock("@nebutra/auth/client", () => ({
@@ -12,8 +13,8 @@ vi.mock("@nebutra/auth/client", () => ({
   }),
 }));
 
-function makeFile() {
-  return new File(["markdown"], "strategy.md", { type: "text/markdown" });
+function makeFile(name = "strategy.md") {
+  return new File(["markdown"], name, { type: "text/markdown" });
 }
 
 function makeTestClient() {
@@ -30,8 +31,19 @@ function renderWithClient(ui: ReactElement) {
   return render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
 }
 
-function makeUploadResult(overrides: Record<string, unknown> = {}) {
-  const task = {
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((promiseResolve, promiseReject) => {
+    resolve = promiseResolve;
+    reject = promiseReject;
+  });
+
+  return { promise, resolve, reject };
+}
+
+function makeUploadResult(overrides: Partial<TaskRecord> = {}): UploadDocumentAndCreateTaskResult {
+  const task: TaskRecord = {
     id: "task_1",
     type: "document.parse",
     status: "queued",
@@ -141,5 +153,50 @@ describe("DocumentTaskUploader", () => {
 
     await waitFor(() => expect(onCancelTask).toHaveBeenCalledWith("task_1"));
     expect(await screen.findByText("Cancelled")).toBeTruthy();
+  });
+
+  it("does not start a second document upload while the first task is pending", async () => {
+    const pendingUpload = deferred<ReturnType<typeof makeUploadResult>>();
+    const onUpload = vi.fn(() => pendingUpload.promise);
+
+    renderWithClient(<DocumentTaskUploader onUpload={onUpload} />);
+
+    fireEvent.change(screen.getByLabelText("Document file"), {
+      target: { files: [makeFile()] },
+    });
+    const submitButton = screen.getByRole("button", { name: "Start parse task" });
+
+    fireEvent.click(submitButton);
+    fireEvent.click(submitButton);
+
+    await waitFor(() => expect(onUpload).toHaveBeenCalledTimes(1));
+
+    pendingUpload.resolve(makeUploadResult());
+    expect(await screen.findByText("task_1")).toBeTruthy();
+  });
+
+  it("keeps the selected file stable while the upload mutation is pending", async () => {
+    const pendingUpload = deferred<ReturnType<typeof makeUploadResult>>();
+    const onUpload = vi.fn(() => pendingUpload.promise);
+
+    renderWithClient(<DocumentTaskUploader onUpload={onUpload} />);
+
+    const input = screen.getByLabelText("Document file");
+    fireEvent.change(input, {
+      target: { files: [makeFile("strategy.md")] },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Start parse task" }));
+
+    await waitFor(() => expect(onUpload).toHaveBeenCalledTimes(1));
+
+    fireEvent.change(input, {
+      target: { files: [makeFile("second.md")] },
+    });
+
+    expect(screen.getByText("strategy.md")).toBeTruthy();
+    expect(screen.queryByText("second.md")).toBeNull();
+
+    pendingUpload.resolve(makeUploadResult());
+    expect(await screen.findByText("task_1")).toBeTruthy();
   });
 });

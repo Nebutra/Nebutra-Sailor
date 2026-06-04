@@ -127,6 +127,7 @@ export const queryKeys = {
   tasks: {
     all: ["tasks"] as const,
     detail: (taskId: string) => ["tasks", "detail", taskId] as const,
+    uploadDocument: () => ["tasks", "upload-document"] as const,
   },
 } as const;
 
