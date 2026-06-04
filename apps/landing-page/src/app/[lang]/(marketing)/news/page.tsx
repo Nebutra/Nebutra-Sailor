@@ -22,6 +22,7 @@ import {
   type NewsRailItem,
 } from "@/components/landing/news-featured";
 import { NewsroomHero } from "@/components/landing/news-hero";
+import type { NewsRailSlide } from "@/components/landing/news-rail-carousel";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllPosts } from "@/lib/blog";
 
@@ -72,11 +73,11 @@ function articleHref(lang: string, slug: string): string {
   return `${localePrefix(lang)}/blog/${slug}`;
 }
 
-function getFeaturedCover(post: BlogPostWithSource) {
+function getCover(post: BlogPostWithSource, width: number, height: number) {
   const imageUrl = post.mainImage
     ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
-        width: 840,
-        height: 520,
+        width,
+        height,
         format: "webp",
       })
     : null;
@@ -84,7 +85,7 @@ function getFeaturedCover(post: BlogPostWithSource) {
 }
 
 function toFeaturedItem(post: BlogPostWithSource, lang: string, isZh: boolean): NewsFeaturedItem {
-  const cover = getFeaturedCover(post);
+  const cover = getCover(post, 840, 520);
   return {
     id: post.id,
     title: post.title,
@@ -122,6 +123,21 @@ function toArchiveItem(post: BlogPostWithSource, lang: string, isZh: boolean): N
   };
 }
 
+function toRailSlide(post: BlogPostWithSource, lang: string): NewsRailSlide {
+  const cover = getCover(post, 600, 800);
+  return {
+    id: post.id,
+    href: articleHref(lang, post.slug),
+    title: post.title,
+    category: getCategory(post),
+    imageUrl: cover.src,
+    imageAlt: cover.alt,
+    fallbackImageUrl: cover.fallbackSrc,
+    fallbackImageAlt: cover.fallbackAlt,
+    imageBlurDataURL: cover.blurDataURL,
+  };
+}
+
 export default function NewsPage({ params }: { params: Promise<{ lang: string }> }) {
   return (
     <Suspense fallback={<NewsPageSkeleton />}>
@@ -144,6 +160,7 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
   const featured = posts[0] ? toFeaturedItem(posts[0], lang, isZh) : null;
   const rail = posts.slice(1, 5).map((post) => toRailItem(post, lang, isZh));
   const archive = posts.map((post) => toArchiveItem(post, lang, isZh));
+  const railSlides = posts.slice(0, 6).map((post) => toRailSlide(post, lang));
 
   return (
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
@@ -164,7 +181,7 @@ async function NewsPageLoader({ params }: { params: Promise<{ lang: string }> })
 
             <AnimateIn preset="fadeUp" inView>
               <div className="mt-20 border-t border-[var(--neutral-6)] pb-24 pt-14">
-                <NewsArchive items={archive} isZh={isZh} />
+                <NewsArchive items={archive} railSlides={railSlides} isZh={isZh} />
               </div>
             </AnimateIn>
           </>

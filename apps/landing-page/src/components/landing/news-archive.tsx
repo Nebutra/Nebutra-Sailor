@@ -4,7 +4,7 @@ import { ArrowRight, MagnifyingGlass as Search } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { NewsDecorTile } from "./news-decor-tile";
+import { NewsRailCarousel, type NewsRailSlide } from "./news-rail-carousel";
 
 export type NewsArchiveItem = {
   id: string;
@@ -17,7 +17,15 @@ export type NewsArchiveItem = {
 
 const PAGE_SIZE = 10;
 
-export function NewsArchive({ items, isZh }: { items: NewsArchiveItem[]; isZh: boolean }) {
+export function NewsArchive({
+  items,
+  railSlides,
+  isZh,
+}: {
+  items: NewsArchiveItem[];
+  railSlides: NewsRailSlide[];
+  isZh: boolean;
+}) {
   const [query, setQuery] = useState("");
   const [visible, setVisible] = useState(PAGE_SIZE);
 
@@ -120,10 +128,7 @@ export function NewsArchive({ items, isZh }: { items: NewsArchiveItem[]; isZh: b
         </div>
 
         <aside className="hidden lg:block">
-          <div className="sticky top-24 flex flex-col gap-6">
-            <NewsDecorTile variant="cyan" className="aspect-square" glyphClassName="size-28" />
-            <NewsDecorTile variant="violet" className="aspect-square" glyphClassName="size-28" />
-          </div>
+          <NewsRailCarousel slides={railSlides} isZh={isZh} />
         </aside>
       </div>
     </section>
