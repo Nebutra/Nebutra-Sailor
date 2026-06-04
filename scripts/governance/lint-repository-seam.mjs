@@ -43,10 +43,25 @@ const allowlist = new Set(cfg.allowlist);
 
 // ORM operations that indicate direct data access bypassing the seam.
 const ORM_OPS = [
-  "findMany", "findFirst", "findUnique", "findUniqueOrThrow", "findFirstOrThrow",
-  "create", "createMany", "createManyAndReturn", "update", "updateMany", "upsert",
-  "delete", "deleteMany", "aggregate", "groupBy", "count",
-  "\\$transaction", "\\$queryRaw", "\\$executeRaw",
+  "findMany",
+  "findFirst",
+  "findUnique",
+  "findUniqueOrThrow",
+  "findFirstOrThrow",
+  "create",
+  "createMany",
+  "createManyAndReturn",
+  "update",
+  "updateMany",
+  "upsert",
+  "delete",
+  "deleteMany",
+  "aggregate",
+  "groupBy",
+  "count",
+  "\\$transaction",
+  "\\$queryRaw",
+  "\\$executeRaw",
 ];
 const OP_RE = new RegExp(`\\.(${ORM_OPS.join("|")})\\(`);
 
@@ -57,9 +72,7 @@ const EXEMPT = [...seamPaths, /\.test\.tsx?$/, /\/__tests__\//, /\/generated\//]
 const isExempt = (p) => EXEMPT.some((re) => re.test(p));
 
 // Build a grep alternation from the configured DB accessors.
-const accessorAlt = dbAccessors
-  .map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
-  .join("|");
+const accessorAlt = dbAccessors.map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
 
 let raw = "";
 try {
