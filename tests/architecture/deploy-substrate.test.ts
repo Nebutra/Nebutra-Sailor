@@ -45,4 +45,14 @@ describe("Deploy substrate governance", () => {
     // long-term contract is per-service `DEPLOY_TARGET_*` gating.
     expect(yml).not.toContain("vars.DEPLOY_TARGET == 'ecs");
   });
+
+  it("deploys the complete ECS service set on push once any target changes", () => {
+    const yml = read("deploy-ecs.yml");
+
+    expect(yml).toContain('TARGET_ALL="$CHANGED_ANY"');
+    expect(yml).toContain("a later app-only push can cancel an earlier");
+    expect(yml).toContain('echo "api=$TARGET_ALL"');
+    expect(yml).toContain('echo "design-docs=$TARGET_ALL"');
+    expect(yml).toContain('echo "sailor-docs=$TARGET_ALL"');
+  });
 });
