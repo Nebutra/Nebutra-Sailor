@@ -3,6 +3,12 @@
 import { ArrowRight, Code, Lightning } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea,
   TreeExpander,
   TreeIcon,
   TreeLabel,
@@ -810,27 +816,34 @@ function StartupBuilderHome({
             </p>
 
             <div className="mx-auto mt-8 overflow-hidden rounded-[30px] border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5 dark:border-white/10 dark:bg-neutral-12">
-              <textarea
+              <Textarea
                 aria-label="Startup proposition"
                 value={thesis}
                 onChange={(event) => onThesisChange(event.target.value)}
                 disabled={disabled || isLoading}
                 placeholder="Describe the startup proposition to compile into a tenant-scoped company workspace..."
-                className="min-h-[150px] w-full resize-none bg-transparent p-5 text-lg leading-7 text-neutral-12 outline-none placeholder:text-neutral-9 disabled:cursor-not-allowed disabled:opacity-60 dark:text-white dark:placeholder:text-white/35 sm:p-6"
+                className="min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 shadow-none outline-none placeholder:text-neutral-9 disabled:cursor-not-allowed disabled:opacity-60 dark:text-white dark:placeholder:text-white/35 sm:p-6"
               />
               <div className="flex flex-col gap-3 border-t border-neutral-6 bg-neutral-2 px-4 py-3 dark:border-white/10 dark:bg-white/[0.03] sm:flex-row sm:items-center sm:justify-between">
-                <select
+                <Select
                   value={arena}
-                  onChange={(event) => onArenaChange(event.target.value as StartupArena)}
+                  onValueChange={(value) => onArenaChange(value as StartupArena)}
                   disabled={disabled || isLoading}
-                  className="w-fit rounded-full border border-neutral-7 bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 outline-none transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-neutral-12 dark:text-white/70"
                 >
-                  {STARTUP_ARENAS.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                  <SelectTrigger
+                    aria-label="Startup arena"
+                    className="h-auto w-fit rounded-full border border-neutral-7 bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 shadow-none transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-neutral-12 dark:text-white/70"
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STARTUP_ARENAS.map((option) => (
+                      <SelectItem key={option} value={option}>
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <button
                   type="button"
                   disabled={!canCompile}
@@ -1345,14 +1358,14 @@ function WorkspaceFilesPanel({
                 ))}
               </div>
               {selectedFile ? (
-                <textarea
+                <Textarea
                   aria-label={`Edit ${selectedFile.path}`}
                   spellCheck={false}
                   value={draftContent}
                   onChange={(event) => {
                     setDraftContent(event.target.value);
                   }}
-                  className="min-h-[360px] flex-1 resize-none border-0 bg-neutral-12 p-4 font-mono text-[13px] leading-6 text-neutral-1 outline-none placeholder:text-neutral-6 dark:bg-black dark:text-white"
+                  className="min-h-[360px] flex-1 resize-none border-0 bg-neutral-12 p-4 font-mono text-[13px] leading-6 text-neutral-1 shadow-none outline-none placeholder:text-neutral-6 dark:bg-black dark:text-white"
                 />
               ) : (
                 <div className="grid min-h-[360px] flex-1 place-items-center p-8 text-center text-sm text-neutral-10 dark:text-white/45">
