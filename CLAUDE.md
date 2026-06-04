@@ -639,34 +639,50 @@ const db = withRls(prisma, tenant.tenantId);
 
 ---
 
-## Data Access — Repository Seam (lint-enforced, incremental)
+## Data Access — Repository Seam (selective, lint-enforced)
 
-Direct Prisma query access (`db.<model>.findMany()`, `$transaction`, `$queryRaw`, …)
-belongs ONLY inside the **data-access seam**. Everything else (routes, services,
-jobs, UI) goes through a repository from `@nebutra/repositories`. This keeps the
-ORM swappable (Prisma → Drizzle, or anything) without a big-bang rewrite — a
-future swap re-implements repositories, not the whole app.
+Repository seam is a best practice for **core, long-evolving business modules —
+NOT every table**. Wrapping a trivial CRUD table in a repository that only
+forwards to Prisma is over-abstraction (Prisma already gives type-safe queries).
+So the seam is enforced **only in core domains**; simple CRUD stays direct.
+
+**Decision test** for a piece of data access — *"could this ever change
+implementation, or add caching / permissions / multi-tenancy / RLS / audit /
+async workers / external stores (S3·OSS·vector·search)?"*
+→ **yes → repository seam**; → **no (simple read/write) → direct Prisma is fine**.
+
+| Module | Seam? |
+|---|---|
+| users · teams · permissions · tenancy · identity | ✅ required |
+| subscriptions · quota · payments · license · metering | ✅ required |
+| agent runs · execution · logs | ✅ required |
+| file · PDF · markdown · upload/object-store tasks | ✅ required |
+| simple CMS content · config tables | ➖ optional (direct Prisma OK) |
+| one-off scripts · marketing surfaces · side apps | ❌ not governed |
 
 **The seam** (may touch the Prisma client directly): `packages/platform/repositories/**`
-and `packages/platform/db/**`.
+and `packages/platform/db/**`. Keeps the ORM swappable (Prisma → Drizzle) without
+a big-bang rewrite — a future swap re-implements repositories, not the whole app.
 
 ```ts
-// ✅ Correct — route/service depends on the repository seam
+// ✅ Core module — depend on the repository seam
 import { UserRepository } from "@nebutra/repositories";
 import { getTenantDb } from "@nebutra/db";
-const users = new UserRepository(getTenantDb(tenantId));
-await users.findPaginated({ take: 20 });
+await new UserRepository(getTenantDb(tenantId)).findPaginated({ take: 20 });
 
-// ❌ Wrong — direct Prisma query outside the seam
-await getTenantDb(tenantId).user.findMany();
+// ✅ Simple CMS read outside core domains — direct Prisma is fine, don't over-abstract
+await getTenantDb(tenantId).post.findMany();
 ```
 
 **Shrink-only ratchet** (`scripts/lint-repository-seam.mjs`, wired into `pnpm lint`):
-new files that bypass the seam **fail CI**; the ~29 existing bypasses are tracked
-in `KNOWN_SEAM_BYPASS` and migrated **on-touch** — when you next edit one, route
-its data access through a repository (create one in `@nebutra/repositories` if the
-entity has none) and delete its entry. The list may only shrink. Legitimate
+enforced ONLY in the core domains listed in `CORE_SEAM_DOMAINS`. A new core-domain
+file that bypasses the seam **fails CI**; the 26 existing core bypasses are tracked
+in `KNOWN_SEAM_BYPASS` and migrated **on-touch** (route through a repository, create
+one if the entity has none, then delete its entry — the list may only shrink).
+Anything outside the core domains is intentionally ungoverned. Legitimate
 raw-SQL/migration/store cases use a top-level `// @seam-exempt: <reason>` comment.
+New core modules should follow `modules/<domain>/{service, repository}` with the
+Prisma implementation behind the repository interface.
 
 ---
 

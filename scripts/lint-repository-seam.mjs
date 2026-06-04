@@ -1,30 +1,32 @@
 #!/usr/bin/env node
 
-// CI guard: the Repository Seam (incremental convergence toward swappable ORM).
+// CI guard: the Repository Seam — applied SELECTIVELY, not dogmatically.
 //
-// Goal — keep the door open to a future Prisma -> Drizzle swap (or any ORM)
-// WITHOUT a big-bang rewrite. The rule: direct Prisma query access
-// (`db.<model>.findMany()`, `$transaction`, `$queryRaw`, …) belongs ONLY inside
-// the data-access seam. Everything else (routes, services, jobs, UI) must go
-// through a repository from `@nebutra/repositories`.
+// Repository seam is a best practice for CORE, long-evolving business modules —
+// NOT for every table. Wrapping a trivial CRUD table in a repository that just
+// forwards to Prisma is over-abstraction (Prisma already gives type-safe
+// queries). So this guard only enforces the seam in CORE_SEAM_DOMAINS: the
+// modules whose data access is most likely to grow caching / multi-tenancy /
+// RLS / async workers / external stores (S3/OSS, vector/search) over time.
 //
-// The seam (allowed to touch the Prisma client directly):
-//   • packages/platform/repositories/**   — the repositories themselves
-//   • packages/platform/db/**             — the client/pool/RLS wrapper + scripts
+// Decision test for a piece of data access:
+//   "Could this ever change implementation, or add caching / permissions /
+//    multi-tenancy / audit / async tasks?"  yes -> seam.  no (simple read) -> direct Prisma is fine.
 //
-// This is a SHRINK-ONLY ratchet, exactly like the OpenAPI content-drift guard:
-//   • KNOWN_SEAM_BYPASS lists the files that currently bypass the seam.
-//   • A NEW file that bypasses the seam (not on the list) => FAIL. New code must
-//     use a repository (create one in @nebutra/repositories if missing).
-//   • An allowlisted file that no longer bypasses (got migrated) but is still
-//     listed => FAIL. Remove it from the list. The list may only shrink.
+// CORE (seam required): users/teams/permissions, subscriptions/quota/payments,
+//   agent runs/exec/logs, file/PDF/markdown tasks, license/audit/tenancy/identity.
+// NOT governed (direct Prisma OK): simple CMS content, config tables, one-off
+//   scripts, marketing surfaces, side apps.
 //
-// Migration policy: existing bypasses are migrated ON-TOUCH — when you next edit
-// one of these files, route its data access through a repository and delete its
-// entry here. Do not mass-migrate.
+// The seam (may touch the Prisma client directly):
+//   packages/platform/repositories/** and packages/platform/db/**.
 //
-// Escape hatch: a file with a top-level `// @seam-exempt: <reason>` comment is
-// skipped (for legitimate raw-SQL/migration/store cases). Use sparingly.
+// SHRINK-ONLY ratchet (like the OpenAPI content-drift guard):
+//   • A NEW core-domain file that bypasses the seam => FAIL (use / create a
+//     repository in @nebutra/repositories).
+//   • A listed file that no longer bypasses (migrated) => FAIL — remove it.
+//   • Existing core bypasses migrate ON-TOUCH; the list may only shrink.
+// Escape hatch: top-level `// @seam-exempt: <reason>` (raw SQL / migration / store).
 //
 // Run: node scripts/lint-repository-seam.mjs
 
@@ -32,29 +34,36 @@ import { execSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 const PRISMA_OPS = [
-  "findMany",
-  "findFirst",
-  "findUnique",
-  "findUniqueOrThrow",
-  "findFirstOrThrow",
-  "create",
-  "createMany",
-  "createManyAndReturn",
-  "update",
-  "updateMany",
-  "upsert",
-  "delete",
-  "deleteMany",
-  "aggregate",
-  "groupBy",
-  "count",
-  "\\$transaction",
-  "\\$queryRaw",
-  "\\$executeRaw",
+  "findMany", "findFirst", "findUnique", "findUniqueOrThrow", "findFirstOrThrow",
+  "create", "createMany", "createManyAndReturn", "update", "updateMany", "upsert",
+  "delete", "deleteMany", "aggregate", "groupBy", "count",
+  "\\$transaction", "\\$queryRaw", "\\$executeRaw",
 ];
 const OP_RE = new RegExp(`\\.(${PRISMA_OPS.join("|")})\\(`);
 
-// Seam dirs (allowed to touch Prisma directly) + non-shipped files.
+// CORE business domains where the seam is REQUIRED. Everything outside these is
+// intentionally NOT governed — keep simple CRUD simple.
+const CORE_SEAM_DOMAINS = [
+  // subscriptions / quota / payments / license / metering
+  /^packages\/commerce\/(billing|license|metering)\//,
+  // users / teams / permissions / audit / tenancy / identity
+  /^packages\/iam\/(auth|audit|permissions|identity|tenant)\//,
+  // agent runs / execution / logs
+  /^packages\/ai\/agent-runtime\//,
+  // file / object-store / async task surfaces
+  /^packages\/integrations\/(uploads|storage)\//,
+  /^packages\/integrations\/queue\/src\/scheduled\//,
+  // gateway core domains: billing, ai/agent, admin, legal/consent, integrations, webhooks, async fns
+  /^backends\/gateway\/src\/inngest\//,
+  /^backends\/gateway\/src\/routes\/(billing|ai|admin|legal|integrations|webhooks)\//,
+  // web: teams/invitations, onboarding, startup-os (agent runs)
+  /^apps\/web\/src\/app\/api\/(invitations|onboarding|startup-os)\//,
+  /^apps\/web\/src\/app\/\[locale\]\/\(app\)\/organization-invitation\//,
+  /^apps\/web\/src\/lib\/invitations\.ts$/,
+];
+const isCore = (p) => CORE_SEAM_DOMAINS.some((re) => re.test(p));
+
+// The seam + non-shipped files are never violations.
 const EXEMPT = [
   /^packages\/platform\/repositories\//,
   /^packages\/platform\/db\//,
@@ -64,10 +73,8 @@ const EXEMPT = [
 ];
 const isExempt = (p) => EXEMPT.some((re) => re.test(p));
 
-// Files that currently bypass the seam. SHRINK-ONLY — remove on migration.
+// Core-domain files that currently bypass the seam. SHRINK-ONLY.
 const KNOWN_SEAM_BYPASS = new Set([
-  "apps/landing-page/src/app/api/license/route.ts",
-  "apps/sleptons/src/lib/members.ts",
   "apps/web/src/app/[locale]/(app)/organization-invitation/[invitationId]/page.tsx",
   "apps/web/src/app/api/invitations/[invitationId]/accept/route.ts",
   "apps/web/src/app/api/onboarding/invite-members/route.ts",
@@ -85,7 +92,6 @@ const KNOWN_SEAM_BYPASS = new Set([
   "backends/gateway/src/routes/webhooks/clerk.ts",
   "backends/gateway/src/routes/webhooks/stripe.ts",
   "packages/ai/agent-runtime/src/adapters/prisma-rollout.ts",
-  "packages/ai/atelier-canvas/src/store/prisma.ts",
   "packages/commerce/billing/src/credits/service.ts",
   "packages/commerce/billing/src/usage/ledger.ts",
   "packages/commerce/license/src/handlers/on-license-issued.ts",
@@ -97,10 +103,6 @@ const KNOWN_SEAM_BYPASS = new Set([
   "packages/integrations/queue/src/scheduled/jobs/session-cleanup.ts",
 ]);
 
-// Candidate files: use a Prisma client accessor. Passing the client into a
-// repository (`new UserRepository(getTenantDb(t))`) is fine; calling a Prisma
-// op on it is the bypass. We approximate that by requiring BOTH the accessor
-// and an op call in the same file.
 let raw = "";
 try {
   raw = execSync(
@@ -116,7 +118,7 @@ const candidates = raw
   .split("\n")
   .map((p) => p.replace(/^\.\//, ""))
   .filter(Boolean)
-  .filter((p) => !isExempt(p));
+  .filter((p) => isCore(p) && !isExempt(p));
 
 const detected = new Set();
 for (const file of candidates) {
@@ -133,9 +135,10 @@ let failed = false;
 if (newViolations.length > 0) {
   failed = true;
   process.stderr.write(
-    "\n❌ Repository-seam violation — these files access Prisma directly but are NOT in the seam.\n" +
-      "   Route their data access through a repository from @nebutra/repositories\n" +
-      "   (add one if the entity has none), or add `// @seam-exempt: <reason>`:\n" +
+    "\n❌ Repository-seam violation in a CORE business domain — these files access\n" +
+      "   Prisma directly. Route their data access through a repository from\n" +
+      "   @nebutra/repositories (create one if the entity has none), or add\n" +
+      "   `// @seam-exempt: <reason>`:\n" +
       newViolations.map((f) => `   - ${f}`).join("\n") +
       "\n",
   );
@@ -144,7 +147,7 @@ if (newViolations.length > 0) {
 if (fixedButListed.length > 0) {
   failed = true;
   process.stderr.write(
-    "\n❌ These files no longer bypass the seam (migrated 🎉) — remove them from\n" +
+    "\n❌ These core files no longer bypass the seam (migrated 🎉) — remove them from\n" +
       "   KNOWN_SEAM_BYPASS in scripts/lint-repository-seam.mjs (the list is shrink-only):\n" +
       fixedButListed.map((f) => `   - ${f}`).join("\n") +
       "\n",
@@ -154,6 +157,6 @@ if (fixedButListed.length > 0) {
 if (failed) process.exit(1);
 
 process.stdout.write(
-  `✓ repository-seam: ${detected.size} known bypass(es), 0 new. ` +
-    "Direct Prisma access stays inside the seam.\n",
+  `✓ repository-seam: ${detected.size} known core-domain bypass(es), 0 new. ` +
+    "Simple CRUD outside core domains is intentionally ungoverned.\n",
 );
