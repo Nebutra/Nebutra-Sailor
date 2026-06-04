@@ -5,7 +5,7 @@
   "files": [
     {
       "path": "registry/examples/input-otp-numeric-demo.tsx",
-      "content": "\"use client\";\n\nexport function InputOTPNumericDemo() {\n  return null;\n}\n",
+      "content": "\"use client\";\n\nimport { InputOTP, InputOTPGroup, InputOTPSlot } from \"@nebutra/ui/primitives\";\nimport { REGEXP_ONLY_DIGITS } from \"input-otp\";\n\nexport function InputOTPNumericDemo() {\n  return (\n    <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS}>\n      <InputOTPGroup>\n        <InputOTPSlot index={0} />\n        <InputOTPSlot index={1} />\n        <InputOTPSlot index={2} />\n        <InputOTPSlot index={3} />\n      </InputOTPGroup>\n    </InputOTP>\n  );\n}\n",
       "type": "registry:example"
     }
   ]
