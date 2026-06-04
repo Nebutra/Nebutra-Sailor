@@ -76,3 +76,7 @@ const response = await orchestrator.chat("Hello", ctx);
 
 Every agent operation requires a `tenantId`. Usage events are emitted for
 billing and metering integration (see `@nebutra/billing/credits`).
+
+## License
+
+MIT

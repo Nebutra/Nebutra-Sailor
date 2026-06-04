@@ -1,8 +1,8 @@
-# Releasing to npm
+# Releasing Packages
 
-> **TL;DR**: write code → `pnpm changeset` → PR to main → merge → CI opens a "version packages" PR → merge it → CI publishes to npm.
+> **TL;DR**: write code → `pnpm changeset` → PR to main → merge → run the manual Release workflow → merge the "version packages" PR or publish from it → mirror package artifacts to GitHub Packages.
 
-No manual `npm publish`, no OTP typing, no juggling `.npmrc` with tokens. Everything goes through GitHub Actions using the `NPM_TOKEN` secret.
+No ad hoc `npm publish`, no OTP typing, no juggling `.npmrc` with tokens. Everything goes through GitHub Actions using trusted publishing or `NPM_TOKEN`.
 
 ---
 
@@ -36,9 +36,9 @@ git push origin feat/my-change
 
 Open a PR to `main` and merge as usual.
 
-### 3. Merge your PR to main → CI opens a "version packages" PR
+### 3. Merge your PR to main → run Release
 
-Once your PR lands on `main`, `.github/workflows/release.yml` runs:
+Once your PR lands on `main`, run `.github/workflows/release.yml` from the Actions tab:
 - `changesets/action@v1` detects the pending `.changeset/*.md` file
 - Opens (or updates) a PR titled **`chore(release): version packages`**
 - That PR contains:
@@ -48,15 +48,14 @@ Once your PR lands on `main`, `.github/workflows/release.yml` runs:
 
 **Don't merge this PR immediately** — batch up more changesets into it if you have multiple features shipping together. Each new changeset merged to main updates the same "version packages" PR.
 
-### 4. Merge the "version packages" PR → CI publishes to npm
+### 4. Merge the "version packages" PR → run Release again to publish
 
-When you merge **`chore(release): version packages`** to main:
-- `release.yml` runs again
+When you merge **`chore(release): version packages`** to main, run `release.yml` again:
 - This time, no `.changeset/*.md` files remain, and `package.json` versions differ from what's on npm
 - `changesets/action@v1` calls `bash ./scripts/release-publish.sh`
 - That script reads `NPM_TOKEN` from secrets, runs `pnpm exec changeset publish`
-- Packages go up to npm with provenance attestation (OIDC-signed)
-- GitHub Releases are auto-created with the changelog
+- Packages go up to npm with provenance attestation when trusted publishing is enabled
+- Published scoped packages are mirrored to GitHub Packages
 
 Confirm on https://www.npmjs.com/package/create-sailor (or whatever you shipped).
 
@@ -67,8 +66,9 @@ Confirm on https://www.npmjs.com/package/create-sailor (or whatever you shipped)
 | File / Location | What it does |
 |---|---|
 | `.changeset/config.json` | Changesets CLI config (baseBranch, changelog repo, access level) |
-| `.github/workflows/release.yml` | GitHub Actions that runs on every main push |
+| `.github/workflows/release.yml` | Manual GitHub Actions release workflow |
 | `scripts/release-publish.sh` | Picks `NPM_TRUSTED_PUBLISHING` (OIDC) or `NPM_TOKEN` and runs `changeset publish` |
+| `scripts/release-publish-github-packages.sh` | Mirrors scoped packages to GitHub Packages |
 | `package.json` root scripts | `pnpm version:packages` → `changeset version` |
 | GitHub secrets | `NPM_TOKEN` — a granular access token with `bypass_2fa: true` scoped to the `nebutra` org |
 
@@ -76,12 +76,30 @@ Confirm on https://www.npmjs.com/package/create-sailor (or whatever you shipped)
 
 ## Publishable packages today
 
-Anything in `packages/*/package.json` **without** `"private": true` gets published. Currently:
+Anything in `apps/*`, `backends/*`, or `packages/*/*` with a `package.json` and without `"private": true` is part of the release surface. Verify it with:
 
-- `create-sailor` — the scaffolder invoked by `npm create sailor@latest`
-- `nebutra` — the CLI (`npx nebutra ...`)
+```bash
+pnpm verify:release-surface
+node scripts/print-release-filters.mjs
+```
 
-All `apps/*` and all other `packages/*` are marked `private: true` so they never ship to npm.
+The current publishable surface includes the `@nebutra/*` infrastructure packages, `create-sailor`, and `nebutra`. Publishable packages must not depend at runtime on private workspace packages, must declare a license, and scoped packages must use `publishConfig.access=public`.
+
+## GitHub Packages and subrepo mirrors
+
+After npm publish, `release.yml` mirrors scoped packages to GitHub Packages and runs `scripts/verify-package-registry.mjs`. That check intentionally fails on missing mirrors, private packages, orphan GitHub Packages, and unexpected container packages.
+
+Public package subrepos are generated mirrors, not source-of-truth repos. The first-wave manifest lives in `config/subrepo-mirrors.json`.
+
+```bash
+pnpm verify:subrepo-mirrors
+pnpm subrepo:create -- --cohort=first-wave
+pnpm subrepo:create -- --cohort=first-wave --apply
+pnpm subrepo:sync -- --cohort=first-wave --all --out=/tmp/nebutra-subrepo-mirrors
+pnpm subrepo:sync -- --cohort=first-wave --all --out=/tmp/nebutra-subrepo-mirrors --push
+```
+
+Use `SUBREPO_MIRROR_TOKEN` for Actions-based mirror creation and pushes. Accepted external changes from subrepos must be ported back to the package source in `Nebutra-Sailor` before release. Packages with private workspace dependencies, including optional peers or dev-only imports, must not enter the mirror manifest until that boundary is made public.
 
 ---
 

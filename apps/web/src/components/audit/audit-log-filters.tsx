@@ -55,6 +55,12 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
     debouncedOnChange(pruneFilters(filters));
   }, [filters, debouncedOnChange]);
 
+  useEffect(() => {
+    return () => {
+      debouncedOnChange.cancel();
+    };
+  }, [debouncedOnChange]);
+
   function setField<K extends keyof AuditLogFilterValues>(
     key: K,
     value: AuditLogFilterValues[K] | undefined,

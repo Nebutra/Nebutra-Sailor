@@ -106,7 +106,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO 架构",
-    "title": "10 个应用 · 102 个包 · 4 条后端线",
+    "title": "10 个应用 · 104 个包 · 4 条后端线",
     "description": "共享代码、并行构建、零冗余。从数据库到前端的完整端到端类型安全。",
     "metricApps": "应用",
     "metricBackends": "后端线",
@@ -1622,7 +1622,7 @@
         },
         "why-turborepo": {
           "question": "为什么用 Turborepo 而不是单一 Next.js 项目？",
-          "answer": "Sailor 由 10 个应用 + packages/*/* 下的 102 个共享包 + 4 条后端线（Hono gateway、FastAPI/Python、Go、Rust）组成，单一 Next.js 巨型应用早就维护不过来。Turborepo 提供 affected-only 增量构建、透明的远程缓存，以及共享设计 token / 认证 / 计费 / 可观测性的单一来源——而不需要把所有团队塞进同一个 Next.js 进程。"
+          "answer": "Sailor 由 10 个应用 + packages/*/* 下的 104 个共享包 + 4 条后端线（Hono gateway、FastAPI/Python、Go、Rust）组成，单一 Next.js 巨型应用早就维护不过来。Turborepo 提供 affected-only 增量构建、透明的远程缓存，以及共享设计 token / 认证 / 计费 / 可观测性的单一来源——而不需要把所有团队塞进同一个 Next.js 进程。"
         },
         "multi-tenancy": {
           "question": "多租户怎么实现？",
@@ -1676,7 +1676,7 @@
           "label": "AI 提供商支持"
         },
         "projects": {
-          "value": "102",
+          "value": "104",
           "label": "monorepo 包"
         },
         "uptime": {

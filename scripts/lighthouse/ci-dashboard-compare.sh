@@ -168,12 +168,14 @@ run_snapshot_once() {
 
   ensure_public_target_route "$snapshot_dir"
 
-  docker run --rm \
-    -v "$snapshot_dir:/workspace" \
-    -v "$OUTPUT_DIR:/out" \
-    -v "$STORE_DIR:/pnpm-store" \
-    -w /workspace \
-    "$CONTAINER_IMAGE" \
+	  docker run --rm \
+	    -v "$snapshot_dir:/workspace" \
+	    -v "$OUTPUT_DIR:/out" \
+	    -v "$STORE_DIR:/pnpm-store" \
+	    -e DATABASE_URL="${DATABASE_URL:-postgresql://stub:stub@localhost:5432/stub}" \
+	    -e NEXT_TELEMETRY_DISABLED="${NEXT_TELEMETRY_DISABLED:-1}" \
+	    -w /workspace \
+	    "$CONTAINER_IMAGE" \
     bash -lc "
       set -euo pipefail
       corepack enable

@@ -42,6 +42,19 @@ describe("AuditLogFilters", () => {
     expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ action: "user.login" }));
   });
 
+  it("cancels pending filter updates on unmount", () => {
+    const onChange = vi.fn();
+    const { unmount } = render(<AuditLogFilters onChange={onChange} />);
+
+    unmount();
+
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it("changes outcome and entityType immediately on select change", () => {
     const onChange = vi.fn();
     render(<AuditLogFilters onChange={onChange} />);

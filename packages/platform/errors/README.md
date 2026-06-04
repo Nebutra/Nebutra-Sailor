@@ -74,7 +74,7 @@ try {
 } catch (error) {
   if (isAppError(error)) {
     // Known error with code and status
-    console.log(error.code, error.statusCode);
+    return handleKnownError(error.code, error.statusCode);
   } else {
     // Unknown error
     throw new InternalError("Unexpected error");

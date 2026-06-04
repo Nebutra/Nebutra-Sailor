@@ -1,22 +1,11 @@
 # @nebutra/ui
 
-UI layer for the **AI Chat** product feature (`apps/web /chat` route).
-Built on [Lobe UI](https://github.com/lobehub/lobe-ui) + [Lobe Icons](https://github.com/lobehub/lobe-icons) + Lucide Icons.
+Nebutra design-system UI primitives, layouts, patterns, hooks, typography, and
+token-integrated React components.
 
-## Design Intent
-
-| Dependency       | Purpose                                                                       |
-| ---------------- | ----------------------------------------------------------------------------- |
-| `@lobehub/ui`    | Chat bubbles, streaming text, model selector, chat input, markdown renderer   |
-| `@lobehub/icons` | AI provider icons: OpenAI, Anthropic, Claude, Gemini, Mistral, DeepSeek, etc. |
-| `antd`           | Back-office admin tables / forms if needed in enterprise tier                 |
-
-Usage in `apps/web`:
-
-```tsx
-import { ChatList, ChatInputArea } from "@nebutra/ui/components";
-import { Anthropic, Claude } from "@nebutra/ui/icons";
-```
+This package is the shared UI layer for Nebutra products. It combines Nebutra
+runtime tokens with selected Lobe UI, Lucide, Geist-compatible icons, and
+product-ready SaaS composition patterns.
 
 ## Installation
 
@@ -24,117 +13,123 @@ import { Anthropic, Claude } from "@nebutra/ui/icons";
 pnpm add @nebutra/ui
 ```
 
+For app rendering, load Nebutra runtime tokens once at the application root:
+
+```tsx
+import "@nebutra/tokens/styles.css";
+```
+
 ## Usage
 
-### Theme Provider
+### Theme Bridge
 
-Wrap your app with `NebutraThemeProvider` to apply Nebutra design tokens:
+Use `NebutraThemeProvider` when consuming Lobe UI or Ant Design based surfaces:
 
 ```tsx
 import { NebutraThemeProvider } from "@nebutra/ui";
+import { Button } from "@nebutra/ui/components";
 
-function App() {
+export function App() {
   return (
     <NebutraThemeProvider appearance="auto">
-      <YourApp />
+      <Button type="primary">Create workspace</Button>
     </NebutraThemeProvider>
   );
 }
 ```
 
-### Components
+### Product Layouts
 
 ```tsx
-import { Button, ChatList, ActionIcon } from "@nebutra/ui/components";
+import { AppShell, EmptyState, PageHeader } from "@nebutra/ui/layout";
 
-<Button type="primary">Submit</Button>
-<ActionIcon icon={<Settings />} />
+export function DashboardEmptyState() {
+  return (
+    <AppShell>
+      <PageHeader title="Projects" description="Manage reusable product surfaces." />
+      <EmptyState title="No projects yet" description="Create one to start shipping." />
+    </AppShell>
+  );
+}
 ```
 
-### AI Provider Icons
+### Components And Patterns
 
 ```tsx
-import { OpenAI, Anthropic, Google, Claude, Gemini } from "@nebutra/ui/icons";
+import { AnimateIn, Button } from "@nebutra/ui/components";
+import { DashboardPanel } from "@nebutra/ui/patterns";
 
-// In a model selector
-<OpenAI size={24} />
-<Anthropic size={24} />
-<Google size={24} />
+export function WorkspaceSurface() {
+  return (
+    <DashboardPanel
+      title="Workspace"
+      description="Reusable command surfaces for product teams."
+    >
+      <AnimateIn preset="fadeUp">
+        <Button type="primary">Open command center</Button>
+      </AnimateIn>
+    </DashboardPanel>
+  );
+}
 ```
 
-### All Lobe Icons
+### Icons
 
 ```tsx
-import { HuggingFace, Mistral, DeepSeek, Qwen } from "@nebutra/ui/icons";
-```
+import { OpenAI, Search, Settings } from "@nebutra/ui/icons";
 
-### General UI Icons (Lucide)
-
-```tsx
-import { Settings, Search, Menu, Plus, Check } from "@nebutra/ui/icons";
-
+<OpenAI size={24} />;
+<Search size={20} />;
 <Settings size={20} />;
 ```
 
-### Design Tokens
-
-Runtime design tokens live in `@nebutra/tokens/styles.css` (CSS variables).
-Use Tailwind classes or `var()` in your components:
-
-```tsx
-// Tailwind classes (preferred)
-<div className="bg-primary text-foreground border-border" />
-
-// CSS variables (when Tailwind isn't available)
-<div style={{ color: "var(--color-primary)" }} />
-```
-
-> **Note:** `@nebutra/ui/theme` also exports JS token objects (`tokens`, `colors`, etc.)
-> but these are an internal Lobe UI bridge and are deprecated for app use.
-
 ## Exports
 
-| Path                     | Description                                             |
-| ------------------------ | ------------------------------------------------------- |
-| `@nebutra/ui`            | Main exports (theme provider + common components/icons) |
-| `@nebutra/ui/components` | All Lobe UI components + AnimateIn                      |
-| `@nebutra/ui/layout`     | Layout components (PageHeader, EmptyState, etc.)        |
-| `@nebutra/ui/icons`      | All icons (Lobe + Lucide)                               |
-| `@nebutra/ui/theme`      | Lobe UI theme provider (NebutraThemeProvider)           |
-| `@nebutra/ui/primitives` | Design primitive tokens (spacing, typography, etc.)     |
-| `@nebutra/ui/typography` | Typography system (font families, type styles)          |
-| `@nebutra/ui/utils`      | Utilities (cn, etc.)                                    |
-
-## Available AI Icons
-
-- **OpenAI**: `OpenAI`, `ChatGPT`, `Gpt`
-- **Anthropic**: `Anthropic`, `Claude`
-- **Google**: `Google`, `Gemini`, `GoogleColor`
-- **Meta**: `Meta`, `Llama`
-- **Mistral**: `Mistral`
-- **Cohere**: `Cohere`
-- **Hugging Face**: `HuggingFace`
-- **Perplexity**: `Perplexity`
-- **Groq**: `Groq`
-- **DeepSeek**: `DeepSeek`
-- **Qwen/Tongyi**: `Qwen`, `Tongyi`
-- **Baidu/Wenxin**: `Baidu`, `Wenxin`
-- **Zhipu**: `Zhipu`
-- **Moonshot**: `Moonshot`
-- **Yi**: `Yi`
-- And many more from `@lobehub/icons`
+| Path | Description |
+| --- | --- |
+| `@nebutra/ui` | Theme bridge plus selected common icon exports |
+| `@nebutra/ui/components` | Lobe UI components, chat input/list surfaces, animation helpers, AI prompt box, node graph canvas, and product widgets |
+| `@nebutra/ui/layout` | App shell, page header, status, section, and empty/loading/error states |
+| `@nebutra/ui/layouts` | Section container, themed section, and bento grid layouts |
+| `@nebutra/ui/icons` | Lobe, Lucide, and Nebutra icon exports |
+| `@nebutra/ui/theme` | `NebutraThemeProvider` and Lobe UI theme bridge types |
+| `@nebutra/ui/primitives` | Low-level UI primitives and visual building blocks |
+| `@nebutra/ui/primitives/canonical` | Canonical primitive token exports |
+| `@nebutra/ui/patterns` | SaaS dashboard, command, card, terminal, QA, sidebar, and workspace patterns |
+| `@nebutra/ui/typography` | Font utilities and typography tokens |
+| `@nebutra/ui/typography/fonts.css` | Font-face CSS for Nebutra typography |
+| `@nebutra/ui/hooks` | Responsive, focus, undo, hotkey, media query, and interaction hooks |
+| `@nebutra/ui/utils` | Shared utilities such as `cn` |
+| `@nebutra/ui/tailwind.preset` | Tailwind preset integration |
 
 ## Token Architecture
 
+Runtime design tokens live in `@nebutra/tokens/styles.css` as CSS variables.
+Use Tailwind classes backed by those variables, or `var()` directly in places
+where Tailwind is not available.
+
+```tsx
+<div className="bg-primary text-foreground border-border" />
+<div style={{ color: "var(--color-primary)" }} />
 ```
-@nebutra/brand    → Brand primitives (color definitions, motion language)
-@nebutra/tokens   → Runtime CSS variables (light/dark, 12-step scales)  ★ SOURCE OF TRUTH
-@nebutra/theme    → Multi-theme presets (6 oklch variants for SaaS)
-@nebutra/ui       → Component library (consumes tokens via CSS variables)
+
+Source-of-truth flow:
+
+```text
+@nebutra/brand  -> brand primitives
+@nebutra/tokens -> runtime CSS variables and theme provider primitives
+@nebutra/ui     -> token-consuming components, layouts, hooks, and patterns
 ```
+
+## Repository Model
+
+The canonical source for this package lives in the Nebutra Sailor monorepo at
+`packages/design/ui`. Public subrepo mirrors are generated from that source for
+discovery, standalone cloning, and contribution intake.
 
 ## License
 
-AGPL-3.0 (inherits from Lobe UI)
+MIT
 
-> ⚠️ AI provider icons may be subject to their respective trademark guidelines.
+AI provider and third-party icons may be subject to their respective trademark
+guidelines.

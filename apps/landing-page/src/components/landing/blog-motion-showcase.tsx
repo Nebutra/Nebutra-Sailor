@@ -35,6 +35,31 @@ type LatestPostMotionRailProps = {
   posts: BlogRailPost[];
 };
 
+function useAnimationFrame(callback: (deltaMs: number) => void, enabled: boolean) {
+  const callbackRef = useRef(callback);
+
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    let frameId = 0;
+    let previousTime = performance.now();
+
+    const tick = (time: number) => {
+      const delta = time - previousTime;
+      previousTime = time;
+      callbackRef.current(delta);
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    frameId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [enabled]);
+}
+
 function BlogExploreMenu({ contactHref, isZh }: BlogExploreMenuProps) {
   const [open, setOpen] = useState(false);
   const { copied, copy } = useCopyToClipboard({ timeout: 1600, showToast: false });
@@ -244,7 +269,6 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   const [paused, setPaused] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [trackX, setTrackX] = useState(0);
-  const trackXRef = useRef(0);
   const railPosts = posts.slice(0, RAIL_POST_COUNT);
 
   useEffect(() => {
@@ -261,6 +285,8 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sync = () => setReduceMotion(query.matches);
     sync();
@@ -270,23 +296,12 @@ export function LatestPostMotionRail({ isZh, posts }: LatestPostMotionRailProps)
 
   const running = !reduceMotion && !paused && halfWidth > 0;
 
-  useEffect(() => {
-    if (!running) return;
-
-    let frame = 0;
-    let lastTime = performance.now();
-    const tick = (time: number) => {
-      const delta = time - lastTime;
-      lastTime = time;
-      const next = trackXRef.current - delta * RAIL_SPEED_PX_PER_MS;
-      trackXRef.current = Math.abs(next) >= halfWidth ? next + halfWidth : next;
-      setTrackX(trackXRef.current);
-      frame = requestAnimationFrame(tick);
-    };
-
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [halfWidth, running]);
+  useAnimationFrame((delta) => {
+    setTrackX((current) => {
+      const next = current - delta * RAIL_SPEED_PX_PER_MS;
+      return Math.abs(next) >= halfWidth ? next + halfWidth : next;
+    });
+  }, running);
 
   if (railPosts.length === 0) return null;
 

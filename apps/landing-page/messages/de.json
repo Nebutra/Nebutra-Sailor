@@ -106,7 +106,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO-STRUKTUR",
-    "title": "10 Apps. 102 Pakete. 4 Backend-Lanes.",
+    "title": "10 Apps. 104 Pakete. 4 Backend-Lanes.",
     "description": "Gemeinsamer Code, parallele Builds, keine Duplizierung. Vollständige End-to-End-Typisierung von der Datenbank bis zum Frontend.",
     "metricApps": "Apps",
     "metricBackends": "Backend-Lanes",
@@ -1622,7 +1622,7 @@
         },
         "why-turborepo": {
           "question": "Warum Turborepo statt einer Standard-Next.js-App?",
-          "answer": "Sailor umfasst 10 Apps + 102 gemeinsame Pakete unter packages/*/* + 4 Backend-Lanes (Hono gateway, FastAPI/Python, Go, Rust) — weit über den Punkt hinaus, an dem eine einzelne Next.js-Mega-App wartbar bleibt. Turborepo bietet affected-only Builds, transparentes Remote-Caching und eine einzige Quelle der Wahrheit für gemeinsame Design-Tokens, Auth, Billing und Observability."
+          "answer": "Sailor umfasst 10 Apps + 104 gemeinsame Pakete unter packages/*/* + 4 Backend-Lanes (Hono gateway, FastAPI/Python, Go, Rust) — weit über den Punkt hinaus, an dem eine einzelne Next.js-Mega-App wartbar bleibt. Turborepo bietet affected-only Builds, transparentes Remote-Caching und eine einzige Quelle der Wahrheit für gemeinsame Design-Tokens, Auth, Billing und Observability."
         },
         "multi-tenancy": {
           "question": "Wie wird Multi-Tenancy gehandhabt?",
@@ -1676,7 +1676,7 @@
           "label": "unterstützte KI-Anbieter"
         },
         "projects": {
-          "value": "102",
+          "value": "104",
           "label": "Monorepo-Pakete"
         },
         "uptime": {

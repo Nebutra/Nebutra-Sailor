@@ -5,8 +5,7 @@
 ## Installation
 
 ```bash
-# Internal monorepo dependency
-pnpm add @nebutra/tokens@workspace:*
+pnpm add @nebutra/tokens
 ```
 
 ## Usage
@@ -70,10 +69,13 @@ function ThemeToggle() {
 ```
 @nebutra/brand   --> Brand primitives (source data, not runtime)
 @nebutra/tokens  --> Runtime CSS variables (THIS PACKAGE)
-@nebutra/theme   --> Multi-theme presets (oklch, 6 variants)
 @nebutra/ui      --> Components (consume tokens via CSS vars)
 ```
 
 ## Peer Dependencies
 
 - `react` ^19
+
+## License
+
+MIT

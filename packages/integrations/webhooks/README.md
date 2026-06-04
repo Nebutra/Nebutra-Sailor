@@ -1,8 +1,8 @@
-> **Status: Foundation** — Type definitions, factory pattern, provider adapters, and injectable dead-letter storage are complete. Production custom deployments still need durable store adapters and queue infrastructure.
-
 # @nebutra/webhooks
 
 Provider-agnostic webhook outbound management system for Nebutra. Supports **Svix** (managed) and **custom** (self-hosted) webhook delivery.
+
+> **Status: Foundation** — Type definitions, factory pattern, provider adapters, and injectable dead-letter storage are complete. Production custom deployments still need durable store adapters and queue infrastructure.
 
 ## Installation
 
@@ -42,8 +42,8 @@ const endpoint = await webhooks.createEndpoint(
   }
 );
 
-console.log(endpoint.id);     // whe_...
-console.log(endpoint.secret); // signing secret
+const endpointId = endpoint.id; // whe_...
+const signingSecret = endpoint.secret;
 ```
 
 ### 3. Dispatch an event
@@ -59,7 +59,7 @@ const messageId = await webhooks.sendEvent({
   tenantId: "org_123",
 });
 
-console.log(messageId); // msg_...
+const deliveryMessageId = messageId; // msg_...
 ```
 
 ### 4. Verify incoming webhooks (consumer side)
@@ -376,7 +376,7 @@ const endpoint = await webhooks.createEndpoint("org_123", {
 
 // List
 const endpoints = await webhooks.listEndpoints("org_123");
-console.log(endpoints);
+return endpoints;
 
 // Delete
 await webhooks.deleteEndpoint(endpoint.id);
@@ -398,11 +398,11 @@ const messageId = await webhooks.sendEvent({
 
 // Check delivery status
 const attempts = await webhooks.getDeliveryAttempts(messageId);
-for (const attempt of attempts) {
-  console.log(
-    `Endpoint ${attempt.endpointId}: ${attempt.status} (attempt ${attempt.attemptNumber})`
-  );
-}
+const deliverySummary = attempts.map((attempt) => ({
+  endpointId: attempt.endpointId,
+  status: attempt.status,
+  attemptNumber: attempt.attemptNumber,
+}));
 
 // Manual retry
 if (attempts.some((a) => a.status === "failed")) {
@@ -414,7 +414,6 @@ if (attempts.some((a) => a.status === "failed")) {
 
 ```typescript
 const newSecret = await webhooks.rotateSecret(endpoint.id);
-console.log(`New secret: ${newSecret}`);
 
 // Store in your DB / notifiable secret manager
 // Consumers need to be notified of the rotation
@@ -460,4 +459,4 @@ When adding new features:
 
 ## License
 
-Proprietary — Nebutra-Sailor
+MIT

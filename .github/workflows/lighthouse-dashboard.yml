@@ -66,6 +66,9 @@ jobs:
       - name: Run Lighthouse Compare
         id: run_compare
         shell: bash
+        env:
+          DATABASE_URL: ${{ secrets.CI_DATABASE_URL || 'postgresql://stub:stub@localhost:5432/stub' }}
+          NEXT_TELEMETRY_DISABLED: "1"
         run: |
           set -euo pipefail
 

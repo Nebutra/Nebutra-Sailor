@@ -25,3 +25,7 @@ import { IconGitHub, IconVercel } from "@nebutra/icons";
 pnpm --filter @nebutra/icons generate
 pnpm --filter @nebutra/icons build
 ```
+
+## License
+
+MIT

@@ -1,0 +1,89 @@
+name: Sync package subrepo mirrors
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Build only; do not create repos or push"
+        type: boolean
+        default: true
+      package:
+        description: "Optional package name, e.g. @nebutra/agents"
+        type: string
+        required: false
+  push:
+    branches: [main]
+    paths:
+      - "config/subrepo-mirrors.json"
+      - "packages/**"
+      - "scripts/lib/release-surface.mjs"
+      - "scripts/lib/subrepo-mirrors.mjs"
+      - "scripts/create-subrepo-mirrors.mjs"
+      - "scripts/sync-subrepo-mirrors.mjs"
+      - "scripts/verify-subrepo-mirrors.mjs"
+      - "scripts/verify-subrepo-readmes.mjs"
+
+concurrency:
+  group: sync-subrepo-mirrors-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version: 22
+
+      - name: Verify mirror manifest
+        run: node scripts/verify-subrepo-mirrors.mjs --cohort=first-wave
+
+      - name: Verify mirror READMEs
+        run: node scripts/verify-subrepo-readmes.mjs --cohort=first-wave
+
+      - name: Create missing mirror repositories
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        env:
+          SUBREPO_MIRROR_TOKEN: ${{ secrets.SUBREPO_MIRROR_TOKEN }}
+        run: |
+          set -euo pipefail
+          args=(--cohort=first-wave --apply)
+          if [ -n "${{ inputs.package }}" ]; then
+            args+=(--package="${{ inputs.package }}")
+          fi
+          node scripts/create-subrepo-mirrors.mjs "${args[@]}"
+
+      - name: Build mirrors
+        run: |
+          set -euo pipefail
+          args=(--cohort=first-wave --out=/tmp/nebutra-subrepo-mirrors)
+          if [ -n "${{ inputs.package }}" ]; then
+            args+=(--package="${{ inputs.package }}")
+          else
+            args+=(--all)
+          fi
+          node scripts/sync-subrepo-mirrors.mjs "${args[@]}"
+
+      - name: Push mirrors
+        if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
+        env:
+          SUBREPO_MIRROR_TOKEN: ${{ secrets.SUBREPO_MIRROR_TOKEN }}
+        run: |
+          set -euo pipefail
+          args=(--cohort=first-wave --out=/tmp/nebutra-subrepo-mirrors --push)
+          if [ -n "${{ inputs.package }}" ]; then
+            args+=(--package="${{ inputs.package }}")
+          else
+            args+=(--all)
+          fi
+          node scripts/sync-subrepo-mirrors.mjs "${args[@]}"
