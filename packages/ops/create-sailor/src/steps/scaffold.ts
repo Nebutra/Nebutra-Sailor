@@ -30,6 +30,7 @@ import { injectEnv } from "../utils/env";
 import { generateEnvSecrets } from "../utils/env-secrets";
 import { applyFeatureFlagsSelection } from "../utils/feature-flags";
 import { cloneTemplate } from "../utils/git";
+import { applyGovernanceLints } from "../utils/governance-lints";
 import { emitIndependentLicense } from "../utils/license-emit";
 import { applyMcpSwitch } from "../utils/mcp";
 import { applyMeteringSwitch } from "../utils/metering";
@@ -197,6 +198,22 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   emitJson(useJson, { event: "step", step: "config", status: "start" });
   await writeNebutraConfig(resolvedTarget, config);
   emitJson(useJson, { event: "step", step: "config", status: "ok" });
+
+  // -- governance lints --
+  // Wire the generalized, config-driven governance lints into the output's
+  // `pnpm lint`, feature-gated per lint: no-raw-inputs always, repository-seam
+  // only when a database is scaffolded. Writes governance.config.json with
+  // scaffold-layout defaults (empty ratchet allowlists) and patches the root
+  // package.json "lint" script. The lint *.mjs files themselves arrive via the
+  // cloned template (scripts/governance/**).
+  emitJson(useJson, { event: "step", step: "governance-lints", status: "start" });
+  const governance = await applyGovernanceLints(resolvedTarget, config);
+  emitJson(useJson, {
+    event: "step",
+    step: "governance-lints",
+    status: "ok",
+    lints: governance.lints,
+  });
 
   // -- prune template --
   emitJson(useJson, { event: "step", step: "prune", status: "start" });

@@ -90,6 +90,7 @@ function printDryRunPlan(
   const plan = [
     `clone template → ${resolvedTarget}`,
     `write nebutra.config.json`,
+    `governance-lints → write governance.config.json + wire pnpm lint (no-raw-inputs${database !== "none" ? " + repository-seam" : ""})`,
     `prune template (orm=${orm}, i18n=${resolved.i18n})`,
     `region → ${region}`,
     `auth → ${resolved.auth === "none" ? "skip (remove packages/auth)" : `configure ${resolved.auth}`}`,

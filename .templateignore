@@ -154,6 +154,16 @@ scripts/lighthouse/
 scripts/check-legal-keys.js
 scripts/check-missing-keys.js
 scripts/show-extra-keys.js
+# Monorepo's own path-hardcoded governance lints (design-system-specific +
+# tied to this repo's exact bypass list). Scaffolds get the generalized,
+# config-driven versions under scripts/governance/** instead (wired into the
+# output's `pnpm lint` by create-sailor's applyGovernanceLints step).
+scripts/lint-no-raw-inputs.mjs
+scripts/lint-no-dark-overrides.mjs
+scripts/lint-no-spacing-opacity.mjs
+scripts/lint-no-arbitrary-breakpoints.mjs
+scripts/lint-phosphor-marketing-only.mjs
+scripts/lint-repository-seam.mjs
 
 # ---------------------------------------------------------------------------
 # E2E + load tests tied to Nebutra-specific flows

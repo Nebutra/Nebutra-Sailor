@@ -22,6 +22,8 @@ not a second source of truth for runtime package behavior after scaffolding.
   `src/utils/*.ts`
 - Provider template rendering and marker semantics:
   `src/utils/providers.ts`
+- Governance-lint wiring (emits `governance.config.json`, patches the output's
+  root `package.json` `lint` script): `src/utils/governance-lints.ts`
 - Prompting and completion UI:
   `src/ui/*.ts`
 - Scaffold source assets:
@@ -58,6 +60,29 @@ update the source of truth here instead of patching downstream generated apps.
   be treated as a checked-in source of truth.
 - If generated output changes, update `templates/` or the relevant `src/utils/`
   transform instead of patching artifacts after generation.
+
+## Governance Lints Emitted Into The Scaffold
+
+The scaffold ships generalized, config-driven governance lints (NOT the
+monorepo's own path-hardcoded `scripts/lint-*.mjs`, which are stripped at
+mirror-sync time via `.templateignore`):
+
+- Lint script files travel into the output via the cloned template under
+  `scripts/governance/**` (`_config.mjs` loader + `lint-no-raw-inputs.mjs` +
+  `lint-repository-seam.mjs`). They read `governance.config.json` from the
+  project root and fall back to scaffold-layout defaults — NO monorepo paths.
+- `src/utils/governance-lints.ts` (`applyGovernanceLints`) writes
+  `governance.config.json` and patches the output's root `package.json` `lint`
+  script, **feature-gated per lint**:
+  - `no-raw-inputs` — always wired (the scaffold always ships the UI layer +
+    `apps/`).
+  - `repository-seam` — wired only when a database is scaffolded
+    (`config.database !== "none"`); its config section is omitted otherwise.
+- A fresh scaffold has ZERO existing bypasses, so every ratchet allowlist is
+  emitted empty (`repositorySeam.allowlist: []`).
+- The four design-system-specific lints (dark-overrides, spacing-opacity,
+  arbitrary-breakpoints, phosphor-zone) are intentionally NOT shipped — they
+  encode internal token-authoring invariants, not rules a downstream SaaS needs.
 
 ## Validation
 
