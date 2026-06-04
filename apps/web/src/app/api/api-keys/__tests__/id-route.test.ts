@@ -47,7 +47,9 @@ describe("/api/api-keys/[id] DELETE (revoke)", () => {
   beforeEach(() => {
     vi.resetModules();
     getAuthMock.mockReset();
-    Object.values(dbMock.aPIKey).forEach((fn) => fn.mockReset());
+    for (const fn of Object.values(dbMock.aPIKey)) {
+      fn.mockReset();
+    }
   });
 
   it("returns 401 when unauthenticated", async () => {
@@ -83,7 +85,7 @@ describe("/api/api-keys/[id] DELETE (revoke)", () => {
     getAuthMock.mockResolvedValue(MEMBER_AUTH);
     dbMock.aPIKey.findUnique.mockResolvedValue({
       id: "k1",
-      organizationId: "org_1",
+      tenantId: "org_1",
       createdById: "user_other",
       revokedAt: null,
     });
@@ -101,7 +103,7 @@ describe("/api/api-keys/[id] DELETE (revoke)", () => {
     getAuthMock.mockResolvedValue(ADMIN_AUTH);
     dbMock.aPIKey.findUnique.mockResolvedValue({
       id: "k1",
-      organizationId: "org_1",
+      tenantId: "org_1",
       createdById: "someone_else",
       revokedAt: null,
     });
@@ -125,7 +127,7 @@ describe("/api/api-keys/[id] DELETE (revoke)", () => {
     getAuthMock.mockResolvedValue(MEMBER_AUTH);
     dbMock.aPIKey.findUnique.mockResolvedValue({
       id: "k1",
-      organizationId: "org_1",
+      tenantId: "org_1",
       createdById: "user_member",
       revokedAt: null,
     });

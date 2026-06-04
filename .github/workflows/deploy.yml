@@ -82,12 +82,17 @@ jobs:
 
     steps:
       # ── Checkout ─────────────────────────────────────────────────────────────
+      # SECURITY: this job runs in a privileged context (it holds KUBECONFIG_BASE64
+      # and other deploy secrets) and is triggered via `workflow_run`. We must NOT
+      # check out `github.event.workflow_run.head_sha` here — that is attacker-
+      # influenceable code in a secret-bearing job (CodeQL Dangerous-Workflow /
+      # GitHub "pwn request"). Instead we check out the trusted default-branch
+      # source for the kustomize overlays. The exact built artifact is still
+      # deployed precisely: IMAGE_TAG (above) pins the GHCR image to the built
+      # head_sha, and that image is pulled from the trusted registry by
+      # `kubectl set image` — no untrusted source ever executes in this job.
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-        with:
-          # Check out the SHA that was actually built and pushed so the kustomize
-          # overlays we apply match the images we just pushed.
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       # ── Install kubectl ──────────────────────────────────────────────────────
       - name: Install kubectl

@@ -11,9 +11,11 @@ import {
 import type { NotificationInboxItem, NotificationSettingsSnapshot } from "@nebutra/notifications";
 import { Dialog, DialogContent } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useLocale } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { queryKeys } from "@/lib/query-keys";
 
 type Tab = "all" | "changelog" | "messages";
 
@@ -63,6 +65,20 @@ function formatDate(iso: string, locale: string): string {
   return new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(d);
 }
 
+async function fetchNotificationSnapshot(signal: AbortSignal): Promise<Snapshot> {
+  const response = await fetch("/api/notifications", { credentials: "include", signal });
+  if (!response.ok) {
+    throw new Error("Failed to load notifications.");
+  }
+
+  const data = (await response.json()) as { snapshot?: Snapshot };
+  if (!data.snapshot) {
+    throw new Error("Notification snapshot missing.");
+  }
+
+  return data.snapshot;
+}
+
 /**
  * In-shell notifications modal. The notification bell in the content header
  * opens this dialog instead of navigating to /notifications, so users never
@@ -72,20 +88,16 @@ function formatDate(iso: string, locale: string): string {
 export function NotificationsDialog() {
   const locale = useLocale();
   const [open, setOpen] = useState(false);
-  const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
-  const [loading, setLoading] = useState(false);
   const [tab, setTab] = useState<Tab>("all");
 
-  useEffect(() => {
-    if (!open || snapshot || loading) return;
-    setLoading(true);
-    fetch("/api/notifications", { credentials: "include" })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data: { snapshot?: Snapshot } | null) => {
-        if (data?.snapshot) setSnapshot(data.snapshot);
-      })
-      .finally(() => setLoading(false));
-  }, [open, snapshot, loading]);
+  const snapshotQuery = useQuery({
+    queryKey: queryKeys.notifications.settings(),
+    queryFn: ({ signal }) => fetchNotificationSnapshot(signal),
+    enabled: open,
+    staleTime: 30_000,
+  });
+
+  const snapshot = snapshotQuery.data ?? null;
 
   const items = snapshot?.inboxItems ?? [];
   const filtered =
@@ -152,8 +164,24 @@ export function NotificationsDialog() {
 
           {/* Feed */}
           <div className="max-h-[68vh] overflow-y-auto px-6 py-6">
-            {loading && !snapshot ? (
+            {snapshotQuery.isPending && !snapshot ? (
               <p className="py-10 text-center text-sm text-muted-foreground">加载中…</p>
+            ) : snapshotQuery.isError && !snapshot ? (
+              <div
+                role="alert"
+                className="flex flex-col items-center gap-3 py-10 text-center text-sm text-muted-foreground"
+              >
+                <p>通知加载失败</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    void snapshotQuery.refetch();
+                  }}
+                  className="inline-flex h-8 items-center rounded-[var(--radius-md)] border border-border px-3 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                >
+                  重试
+                </button>
+              </div>
             ) : filtered.length === 0 ? (
               <p className="py-10 text-center text-sm text-muted-foreground">
                 {tab === "changelog" ? "暂无更新日志" : "暂无通知"}

@@ -138,7 +138,7 @@ describe("billing self-service routes", () => {
 
     expect(response.status).toBe(200);
     expect(stripeCustomerFindUniqueMock).toHaveBeenCalledWith({
-      where: { organizationId: "org_alpha" },
+      where: { tenantId: "org_alpha" },
       select: { stripeId: true },
     });
     expect(createCheckoutSessionMock).toHaveBeenCalledWith(

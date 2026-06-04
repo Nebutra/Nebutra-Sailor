@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createKnowledgeRag } from "./pipeline";
 import { InMemoryVectorStore } from "./stores/memory";
 import type { KnowledgeRag } from "./types";
@@ -16,6 +16,10 @@ describe("knowledge-rag pipeline", () => {
   let kb: KnowledgeRag;
   beforeEach(() => {
     kb = makeKb();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it("ingest → query roundtrip returns the relevant chunk (local embedder)", async () => {
@@ -92,6 +96,14 @@ describe("knowledge-rag pipeline", () => {
     expect(report).toHaveProperty("ok");
     expect(Array.isArray(report.components)).toBe(true);
     expect(report.components.some((c) => c.name.includes("vector"))).toBe(true);
+  });
+
+  it("doctor() clears timeout timers after fast successful health probes", async () => {
+    vi.useFakeTimers();
+    const report = await kb.doctor();
+
+    expect(report.ok).toBe(true);
+    expect(vi.getTimerCount()).toBe(0);
   });
 
   it("respects topK", async () => {

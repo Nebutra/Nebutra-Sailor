@@ -11,8 +11,6 @@ import {
   FolderPlus,
   Message,
   MoreHorizontal,
-  SidebarLeft as PanelLeftClose,
-  SidebarLeft as PanelLeftOpen,
 } from "@nebutra/icons";
 import { AppShell } from "@nebutra/ui/layout";
 import type {
@@ -149,7 +147,7 @@ function renderNextLink({
 function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
-  const { collapsed, toggle } = useSidebar();
+  const { collapsed } = useSidebar();
   const { can } = usePermission();
   const isAdmin = can("admin:access");
   const workspaceMode = productCapabilities?.workspace.mode ?? "organization";
@@ -475,48 +473,17 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Sidebar header slot — logo + workspace switcher ─────────────────────
   const sidebarHeader = (
     <div className="flex flex-col gap-2">
-      <div
-        className={cn("flex items-center px-2", collapsed ? "justify-center" : "justify-between")}
-      >
-        {collapsed ? (
-          // Collapsed rail: the brand mark morphs into the expand icon on
-          // sidebar hover — no room for a separate button.
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label="Expand sidebar"
-            title="Expand sidebar"
-            className="relative inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
-          >
-            <span className="flex items-center justify-center transition-opacity duration-150 group-hover/sidebar:opacity-0">
-              <BrandLogo variant="mark" className="size-7" />
-            </span>
-            <span className="absolute inset-0 flex items-center justify-center text-sidebar-foreground/70 opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100">
-              <PanelLeftOpen className="size-5" aria-hidden="true" />
-            </span>
-          </button>
-        ) : (
-          // Expanded: logo (home link) on the left, an always-visible collapse
-          // button on the right — like Lovable.
-          <>
-            <ViewTransitionLink
-              href="/workspace"
-              aria-label={webBrandLabels.homeLink}
-              className="inline-flex items-center rounded-[var(--radius-sm)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
-            >
-              <BrandLogo variant="horizontal" className="h-6 w-[8.5rem]" />
-            </ViewTransitionLink>
-            <button
-              type="button"
-              onClick={toggle}
-              aria-label="Collapse sidebar"
-              title="Collapse sidebar"
-              className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-            >
-              <PanelLeftClose className="size-4" aria-hidden="true" />
-            </button>
-          </>
-        )}
+      <div className="flex items-center justify-center px-2">
+        <ViewTransitionLink
+          href="/workspace"
+          aria-label={webBrandLabels.homeLink}
+          className="inline-flex min-w-0 items-center justify-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
+        >
+          <BrandLogo
+            variant={collapsed ? "mark" : "horizontal"}
+            className={collapsed ? "size-7" : "h-6 w-[8.5rem]"}
+          />
+        </ViewTransitionLink>
       </div>
       {supportsWorkspaceSwitching && workspacesForSwitcher.length > 0 && (
         <div className={collapsed ? "flex justify-center" : "px-2"}>

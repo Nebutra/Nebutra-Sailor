@@ -77,6 +77,7 @@ import {
   type BaseTokenEstimator,
   estimateTokens as estimatePrimitiveTokens,
 } from "@nebutra/ai-primitives";
+import pLimit from "p-limit";
 import { z } from "zod";
 
 /** Tokenizers undercount real BPE by ~15-30%; scale the base estimate up. */
@@ -281,29 +282,12 @@ function buildPrompt(rendered: string): string {
   ].join("\n");
 }
 
-/**
- * Hand-rolled bounded-concurrency map (no p-limit dependency). Runs `worker`
- * over `items` with at most {@link CONCURRENCY} in flight, preserving result
- * order. Any rejection propagates (caught by the orchestrator → fail-closed).
- */
 async function mapLimited<T, R>(
   items: readonly T[],
   worker: (item: T, index: number) => Promise<R>,
 ): Promise<R[]> {
-  const results = new Array<R>(items.length);
-  let cursor = 0;
-
-  async function run(): Promise<void> {
-    while (cursor < items.length) {
-      const index = cursor;
-      cursor += 1;
-      results[index] = await worker(items[index] as T, index);
-    }
-  }
-
-  const lanes = Math.min(CONCURRENCY, items.length);
-  await Promise.all(Array.from({ length: lanes }, () => run()));
-  return results;
+  const limit = pLimit(CONCURRENCY);
+  return limit.map(items, worker);
 }
 
 /**

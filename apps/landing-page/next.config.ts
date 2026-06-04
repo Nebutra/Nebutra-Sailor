@@ -47,6 +47,17 @@ const nextConfig: NextConfig = {
   // deploy-ecs.yml relies on .next/standalone/ existing.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
 
+  // Prune build-time-only native toolchains from the standalone runtime trace.
+  // Next's output-file-tracing was pulling @swc/core (~226MB of platform
+  // binaries, dragged in by reactCompiler/SWC) and esbuild into
+  // .next/standalone/node_modules, even though `node server.js` never loads
+  // them at runtime. That bloat is what broke the ECS scp upload (issue #141).
+  // NOTE: `sharp` is intentionally NOT excluded — it is loaded at runtime by
+  // next/image optimization; the host-arch binary must stay in the trace.
+  outputFileTracingExcludes: {
+    "*": ["**/@swc/core/**", "**/@swc/core-*/**", "**/@esbuild/**", "**/esbuild/**"],
+  },
+
   // Enable Partial Prerendering — Next.js 16 merged experimental.ppr into cacheComponents.
   cacheComponents: true,
   experimental: {
@@ -78,6 +89,7 @@ const nextConfig: NextConfig = {
     "@nebutra/queue",
     "@nebutra/rls",
     "@nebutra/tokens",
+    "@nebutra/vault",
   ],
   reactCompiler: true,
 

@@ -344,6 +344,27 @@ describe("concurrency limiter", () => {
     expect(tracker.maxInFlight).toBeLessThanOrEqual(CONCURRENCY);
     expect(tracker.maxInFlight).toBeGreaterThan(1);
   });
+
+  it("preserves chunk order even when later summaries settle first", async () => {
+    const transcript: Transcript = Array.from({ length: 6 }, (_, i) =>
+      text("user", `m${i}-${"x".repeat(5000)}`),
+    );
+    const summarize = async (prompt: string): Promise<string> => {
+      const id = Number(prompt.match(/m(\d)-/)?.[1] ?? 0);
+      for (let i = id; i < transcript.length; i += 1) {
+        await Promise.resolve();
+      }
+      return `chunk-${id}`;
+    };
+    const out = await compactTranscript({
+      transcript,
+      usableTokens: 2000,
+      summarize,
+    });
+    expect(out).toBe(
+      ["chunk-0", "chunk-1", "chunk-2", "chunk-3", "chunk-4", "chunk-5"].join("\n\n"),
+    );
+  });
 });
 
 describe("reduce — recursive map-reduce", () => {

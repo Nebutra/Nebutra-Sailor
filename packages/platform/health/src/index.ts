@@ -117,16 +117,13 @@ export function createHttpCheck(
     name,
     check: async () => {
       const start = Date.now();
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), timeout);
 
       try {
         const response = await fetch(url, {
           method: "GET",
-          signal: controller.signal,
+          signal: AbortSignal.timeout(timeout),
         });
 
-        clearTimeout(timeoutId);
         const latency = Date.now() - start;
 
         if (response.status === expectedStatus) {
@@ -139,7 +136,6 @@ export function createHttpCheck(
           message: `Expected status ${expectedStatus}, got ${response.status}`,
         };
       } catch (error) {
-        clearTimeout(timeoutId);
         return {
           status: "fail",
           latency_ms: Date.now() - start,

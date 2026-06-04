@@ -3837,7 +3837,15 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              total: number;
+              activeCount: number;
+              byType: {
+                [key: string]: number;
+              };
+            };
+          };
         };
         /** @description Unauthorized */
         401: {

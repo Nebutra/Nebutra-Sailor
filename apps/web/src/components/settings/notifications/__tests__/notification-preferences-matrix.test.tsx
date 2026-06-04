@@ -1,7 +1,9 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NotificationPreferencesMatrix } from "@/components/settings/notifications/notification-preferences-matrix";
 
@@ -31,6 +33,16 @@ const labels: Record<string, string> = {
 };
 
 const t = (key: string) => labels[key] ?? key;
+
+function renderWithQueryClient(ui: ReactNode) {
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+      mutations: { retry: false },
+    },
+  });
+  return render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+}
 
 afterEach(() => {
   cleanup();
@@ -65,7 +77,7 @@ describe("NotificationPreferencesMatrix", () => {
   });
 
   it("renders a loading skeleton while fetching initial preferences", async () => {
-    render(
+    renderWithQueryClient(
       <NotificationPreferencesMatrix
         t={t}
         capabilities={{ hasPushSubscription: false, phoneVerified: false }}
@@ -79,7 +91,7 @@ describe("NotificationPreferencesMatrix", () => {
   });
 
   it("renders all 6 event-type rows after load", async () => {
-    render(
+    renderWithQueryClient(
       <NotificationPreferencesMatrix
         t={t}
         capabilities={{ hasPushSubscription: false, phoneVerified: false }}
@@ -95,7 +107,7 @@ describe("NotificationPreferencesMatrix", () => {
   });
 
   it("hides push and sms columns when capabilities are missing", async () => {
-    render(
+    renderWithQueryClient(
       <NotificationPreferencesMatrix
         t={t}
         capabilities={{ hasPushSubscription: false, phoneVerified: false }}
@@ -111,7 +123,7 @@ describe("NotificationPreferencesMatrix", () => {
   });
 
   it("shows push and sms columns when user has those capabilities", async () => {
-    render(
+    renderWithQueryClient(
       <NotificationPreferencesMatrix
         t={t}
         capabilities={{ hasPushSubscription: true, phoneVerified: true }}
@@ -126,7 +138,7 @@ describe("NotificationPreferencesMatrix", () => {
 
   it("toggling a cell sends a PATCH with the correct payload", async () => {
     const user = userEvent.setup();
-    render(
+    renderWithQueryClient(
       <NotificationPreferencesMatrix
         t={t}
         capabilities={{ hasPushSubscription: false, phoneVerified: false }}
@@ -163,7 +175,7 @@ describe("NotificationPreferencesMatrix", () => {
 
   it("reverts the cell state when PATCH fails", async () => {
     const user = userEvent.setup();
-    render(
+    renderWithQueryClient(
       <NotificationPreferencesMatrix
         t={t}
         capabilities={{ hasPushSubscription: false, phoneVerified: false }}
@@ -196,7 +208,7 @@ describe("NotificationPreferencesMatrix", () => {
       "product.marketing": { in_app: false, email: false },
     });
 
-    render(
+    renderWithQueryClient(
       <NotificationPreferencesMatrix
         t={t}
         capabilities={{ hasPushSubscription: false, phoneVerified: false }}
@@ -219,7 +231,7 @@ describe("NotificationPreferencesMatrix", () => {
       "product.marketing": { email: false },
     });
 
-    render(
+    renderWithQueryClient(
       <NotificationPreferencesMatrix
         t={t}
         capabilities={{ hasPushSubscription: false, phoneVerified: false }}
@@ -243,5 +255,34 @@ describe("NotificationPreferencesMatrix", () => {
 
     // After reset, marketing.email should snap back to its default (true per defaults)
     await waitFor(() => expect(marketingEmail.getAttribute("aria-checked")).toBe("true"));
+  });
+
+  it("passes the React Query abort signal to the preference GET", async () => {
+    renderWithQueryClient(
+      <NotificationPreferencesMatrix
+        t={t}
+        capabilities={{ hasPushSubscription: false, phoneVerified: false }}
+      />,
+    );
+
+    await waitFor(() => expect(screen.getByText("Security alerts")).toBeInTheDocument());
+
+    const getCall = fetchSpy.mock.calls.find(
+      (call: unknown[]) => (call[1] as RequestInit | undefined)?.method === "GET",
+    );
+    expect((getCall?.[1] as RequestInit | undefined)?.signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it("exposes failed preference loads as an alert", async () => {
+    fetchSpy.mockRejectedValueOnce(new Error("network down"));
+
+    renderWithQueryClient(
+      <NotificationPreferencesMatrix
+        t={t}
+        capabilities={{ hasPushSubscription: false, phoneVerified: false }}
+      />,
+    );
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Save failed");
   });
 });

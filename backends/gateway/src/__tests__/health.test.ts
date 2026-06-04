@@ -5,7 +5,7 @@
  * app.request() pattern with a mocked @nebutra/db module.
  */
 
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // ---------------------------------------------------------------------------
 // Mock @nebutra/db BEFORE importing the health route.
@@ -49,6 +49,10 @@ function getHealth() {
 beforeEach(() => {
   vi.clearAllMocks();
   mockPing.mockResolvedValue("PONG");
+});
+
+afterEach(() => {
+  vi.useRealTimers();
 });
 
 // ===========================================================================
@@ -142,6 +146,18 @@ describe("GET /health — response structure", () => {
     const { latencyMs } = body.dependencies.database;
     expect(typeof latencyMs).toBe("number");
     expect(latencyMs).toBeGreaterThanOrEqual(0);
+  });
+
+  it("clears dependency timeout timers after successful checks", async () => {
+    vi.useFakeTimers();
+    mockQueryRaw.mockResolvedValueOnce([{ "?column?": 1 }]);
+    mockPing.mockResolvedValueOnce("PONG");
+
+    const res = await getHealth();
+    const body = await res.json();
+
+    expect(body.status).toBe("healthy");
+    expect(vi.getTimerCount()).toBe(0);
   });
 
   it("timestamp is a valid ISO 8601 string", async () => {

@@ -2,46 +2,50 @@
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, patch
+from types import SimpleNamespace
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
 EMBED_URL = "/api/v1/embed/"
 
-MOCK_RESULT = {
-    "embedding": [0.1, 0.2, 0.3],
-    "model": "text-embedding-3-small",
-    "dimensions": 3,
-}
+MOCK_RESULT = SimpleNamespace(
+    embeddings=[[0.1, 0.2, 0.3]],
+    model="text-embedding-3-small",
+    usage={"total_tokens": 3},
+)
 
 
 @pytest.mark.asyncio
 async def test_embed_success(client):
+    provider = SimpleNamespace(name="mock", embed=AsyncMock(return_value=MOCK_RESULT))
+
     with patch(
-        "app.api.v1.routes_embed.create_embedding",
-        new_callable=AsyncMock,
-        return_value=MOCK_RESULT,
+        "app.api.v1.routes_embed.get_default_provider",
+        Mock(return_value=provider),
     ):
-        response = await client.post(EMBED_URL, json={"text": "hello world"})
+        response = await client.post(EMBED_URL, json={"input": "hello world"})
 
     assert response.status_code == 200
     data = response.json()
-    assert data["embedding"] == [0.1, 0.2, 0.3]
+    assert data["embeddings"] == [[0.1, 0.2, 0.3]]
     assert data["dimensions"] == 3
 
 
 @pytest.mark.asyncio
 async def test_embed_custom_model(client):
+    provider = SimpleNamespace(name="mock", embed=AsyncMock(return_value=MOCK_RESULT))
+
     with patch(
-        "app.api.v1.routes_embed.create_embedding",
-        new_callable=AsyncMock,
-        return_value=MOCK_RESULT,
-    ) as mock_fn:
+        "app.api.v1.routes_embed.get_default_provider",
+        Mock(return_value=provider),
+    ):
         await client.post(
             EMBED_URL,
-            json={"text": "test", "model": "text-embedding-3-large"},
+            json={"input": "test", "model": "text-embedding-3-large"},
         )
-        assert mock_fn.call_args.kwargs.get("model") == "text-embedding-3-large"
+        embed_request = provider.embed.call_args.args[0]
+        assert embed_request.model == "text-embedding-3-large"
 
 
 @pytest.mark.asyncio
@@ -54,11 +58,14 @@ async def test_embed_empty_text_returns_422(client):
 
 @pytest.mark.asyncio
 async def test_embed_service_error_returns_500(client):
-    with patch(
-        "app.api.v1.routes_embed.create_embedding",
-        new_callable=AsyncMock,
-        side_effect=ConnectionError("OpenAI unreachable"),
-    ):
-        response = await client.post(EMBED_URL, json={"text": "fail"})
+    provider = SimpleNamespace(
+        name="mock", embed=AsyncMock(side_effect=ConnectionError("OpenAI unreachable"))
+    )
 
-    assert response.status_code == 500
+    with patch(
+        "app.api.v1.routes_embed.get_default_provider",
+        Mock(return_value=provider),
+    ):
+        response = await client.post(EMBED_URL, json={"input": "fail"})
+
+    assert response.status_code == 502

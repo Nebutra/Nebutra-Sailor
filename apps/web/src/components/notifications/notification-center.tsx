@@ -16,6 +16,7 @@ import type {
   NotificationSettingsSnapshot,
 } from "@nebutra/notifications";
 import Link from "next/link";
+import { useFormatter } from "next-intl";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -33,18 +34,24 @@ interface NotificationCenterProps {
   defaultOpen?: boolean;
 }
 
-function getInboxIcon(groupId: NotificationInboxItem["groupId"]) {
+function InboxIcon({
+  groupId,
+  className,
+}: {
+  groupId: NotificationInboxItem["groupId"];
+  className?: string;
+}) {
   switch (groupId) {
     case "workspace":
-      return Users;
+      return <Users className={className} aria-hidden />;
     case "billing":
-      return CreditCard;
+      return <CreditCard className={className} aria-hidden />;
     case "security":
-      return Shield;
+      return <Shield className={className} aria-hidden />;
     case "product":
-      return Sparkles;
+      return <Sparkles className={className} aria-hidden />;
     default:
-      return BellDot;
+      return <BellDot className={className} aria-hidden />;
   }
 }
 
@@ -68,7 +75,9 @@ function NotificationCenterItem({
   locale: string;
   runtime: NotificationRuntimeStatus;
 }) {
-  const Icon = getInboxIcon(item.groupId);
+  const format = useFormatter();
+  const createdAt = new Date(item.createdAt);
+  const createdAtLabel = Number.isNaN(createdAt.getTime()) ? "" : format.relativeTime(createdAt);
 
   return (
     <li
@@ -80,7 +89,7 @@ function NotificationCenterItem({
     >
       <div className="flex gap-3">
         <div className="mt-0.5 rounded-[var(--radius-lg)] bg-neutral-2 p-2 text-neutral-11">
-          <Icon className="h-4 w-4" aria-hidden />
+          <InboxIcon groupId={item.groupId} className="size-4" />
         </div>
 
         <div className="min-w-0 flex-1">
@@ -93,9 +102,9 @@ function NotificationCenterItem({
             ) : null}
           </div>
           <p className="mt-1 line-clamp-2 text-sm text-neutral-11">{item.body}</p>
-          <p className="mt-2 text-xs text-neutral-10">
-            {new Date(item.createdAt).toLocaleString()}
-          </p>
+          <time className="mt-2 block text-xs text-neutral-10" dateTime={item.createdAt}>
+            {createdAtLabel}
+          </time>
         </div>
       </div>
 
@@ -106,7 +115,7 @@ function NotificationCenterItem({
             className="inline-flex items-center gap-1 rounded-[var(--radius-lg)] border border-neutral-7 px-2.5 py-1.5 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-2"
           >
             Open
-            <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+            <ExternalLink className="size-3.5" aria-hidden />
           </Link>
         ) : null}
 
@@ -149,9 +158,9 @@ export function NotificationCenter({
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="relative flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1"
+        className="relative flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-1"
       >
-        <Bell className="h-4 w-4" aria-hidden />
+        <Bell className="size-4" aria-hidden />
         {unreadBadge ? (
           <span className="-right-1 -top-1 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold leading-none text-white">
             {unreadBadge}
@@ -193,7 +202,7 @@ export function NotificationCenter({
             </div>
 
             {snapshot.inboxSource === "unavailable" ? (
-              <div className="mx-3 mt-3 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 px-3 py-3 text-sm text-neutral-11">
+              <div className="mx-3 mt-3 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 p-3 text-sm text-neutral-11">
                 {snapshot.inboxReason ??
                   "No live inbox storage is connected yet for this environment."}
               </div>

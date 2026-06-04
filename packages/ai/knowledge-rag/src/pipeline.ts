@@ -10,6 +10,7 @@
 // Tenant isolation is enforced by the stores; the pipeline never widens scope.
 // =============================================================================
 
+import pTimeout from "p-timeout";
 import { RecursiveCharChunker } from "./chunker";
 import { LocalHashEmbedder } from "./embedder";
 import { KnowledgeRagError } from "./errors";
@@ -239,21 +240,13 @@ class KnowledgeRagPipeline implements KnowledgeRag {
 }
 
 function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
-  return Promise.race([
-    p,
-    new Promise<T>((_, reject) =>
-      setTimeout(
-        () =>
-          reject(
-            new KnowledgeRagError(`timeout after ${ms}ms`, {
-              code: "E_HEALTH_TIMEOUT",
-              suggestion: "External dependency is slow/unreachable; check its URL/credentials.",
-            }),
-          ),
-        ms,
-      ),
-    ),
-  ]);
+  return pTimeout(p, {
+    milliseconds: ms,
+    message: new KnowledgeRagError(`timeout after ${ms}ms`, {
+      code: "E_HEALTH_TIMEOUT",
+      suggestion: "External dependency is slow/unreachable; check its URL/credentials.",
+    }),
+  });
 }
 
 /** Synchronous factory — fully usable with zero config. */

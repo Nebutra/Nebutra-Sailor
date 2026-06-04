@@ -43,7 +43,9 @@ const findManyMock = vi.fn(async () => [
     status: "ACTIVE",
     maxRedemptions: 1,
     redemptionCount: 0,
-    expiresAt: new Date("2026-06-01T00:00:00.000Z"),
+    // Far-future expiry so this fixture stays "active" regardless of wall-clock
+    // (route derives "expired" from expiresAt < now). Avoids a time-bomb.
+    expiresAt: new Date("2099-01-01T00:00:00.000Z"),
     revokedAt: null,
     createdAt: new Date("2026-05-01T00:00:00.000Z"),
     updatedAt: new Date("2026-05-01T00:00:00.000Z"),

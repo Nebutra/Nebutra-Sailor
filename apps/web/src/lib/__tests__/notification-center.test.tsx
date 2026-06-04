@@ -5,6 +5,12 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { NotificationCenter } from "@/components/notifications/notification-center";
 
+vi.mock("next-intl", () => ({
+  useFormatter: () => ({
+    relativeTime: () => "localized relative time",
+  }),
+}));
+
 vi.mock("@/app/[locale]/(app)/settings/notifications/actions", () => ({
   markAllNotificationsRead: vi.fn(),
   markNotificationRead: vi.fn(),
@@ -66,6 +72,7 @@ describe("NotificationCenter", () => {
     expect(screen.getByText("3")).toBeTruthy();
     expect(screen.getByText("Invite accepted")).toBeTruthy();
     expect(screen.getByText("Ada joined the workspace.")).toBeTruthy();
+    expect(screen.getByText("localized relative time")).toBeTruthy();
     expect(screen.getByRole("link", { name: /Open/ }).getAttribute("href")).toBe("/en/team");
     expect(screen.getByText("Mark read")).toBeTruthy();
     expect(screen.getByText("Mark all read")).toBeTruthy();

@@ -55,6 +55,7 @@
     "@trpc/server": "^11.15.1",
     "hono": "catalog:",
     "inngest": "^4.4.0",
+    "p-timeout": "^7.0.1",
     "stripe": "^20.4.0",
     "svix": "^1.86.0",
     "tsx": "catalog:",

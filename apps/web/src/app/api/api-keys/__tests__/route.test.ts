@@ -49,7 +49,9 @@ describe("/api/api-keys", () => {
   beforeEach(() => {
     vi.resetModules();
     getAuthMock.mockReset();
-    Object.values(dbMock.aPIKey).forEach((fn) => fn.mockReset());
+    for (const fn of Object.values(dbMock.aPIKey)) {
+      fn.mockReset();
+    }
   });
 
   describe("GET", () => {
@@ -110,7 +112,7 @@ describe("/api/api-keys", () => {
       // Verify findMany scoped to org and excluded revoked keys
       expect(dbMock.aPIKey.findMany).toHaveBeenCalledWith(
         expect.objectContaining({
-          where: { organizationId: "org_1", revokedAt: null },
+          where: { tenantId: "org_1", revokedAt: null },
         }),
       );
     });
@@ -198,7 +200,7 @@ describe("/api/api-keys", () => {
       const createCall = dbMock.aPIKey.create.mock.calls[0][0];
       expect(createCall.data.keyHash).toMatch(/^[a-f0-9]{64}$/); // sha256 hex
       expect(createCall.data.keyHash).not.toBe(body.key);
-      expect(createCall.data.organizationId).toBe("org_1");
+      expect(createCall.data.tenantId).toBe("org_1");
       expect(createCall.data.scopes).toEqual(["read", "write"]);
       expect(createCall.data.keyPrefix).toHaveLength(12);
     });

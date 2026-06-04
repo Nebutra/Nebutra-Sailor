@@ -91,8 +91,6 @@ function normalizeApiState(payload: unknown, fallback: ServiceState): ServiceSta
 async function probeService(target: ServiceTarget): Promise<ServiceProbe> {
   const startedAt = Date.now();
   const checkedAt = new Date().toISOString();
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
   try {
     const response = await fetch(target.url, {
@@ -102,7 +100,7 @@ async function probeService(target: ServiceTarget): Promise<ServiceProbe> {
         "user-agent": "Nebutra-Status/1.0",
       },
       redirect: "follow",
-      signal: controller.signal,
+      signal: AbortSignal.timeout(TIMEOUT_MS),
     });
     const latencyMs = Date.now() - startedAt;
     let state = classifyHttpStatus(response.status);
@@ -130,17 +128,16 @@ async function probeService(target: ServiceTarget): Promise<ServiceProbe> {
       note,
     };
   } catch (error) {
-    const isAbort = error instanceof Error && error.name === "AbortError";
+    const isTimeout =
+      error instanceof Error && (error.name === "AbortError" || error.name === "TimeoutError");
     return {
       ...target,
-      state: isAbort ? "degraded" : "outage",
+      state: isTimeout ? "degraded" : "outage",
       statusCode: null,
       latencyMs: Date.now() - startedAt,
       checkedAt,
-      note: isAbort ? "Timed out before the health deadline" : "No successful response",
+      note: isTimeout ? "Timed out before the health deadline" : "No successful response",
     };
-  } finally {
-    clearTimeout(timeout);
   }
 }
 

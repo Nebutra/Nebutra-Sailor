@@ -305,6 +305,51 @@ describe("NotificationsPageClient (react-query integration)", () => {
     });
   });
 
+  it("caps mark-all PATCH concurrency so large unread batches do not burst the endpoint", async () => {
+    const user = userEvent.setup();
+    const items = Array.from({ length: 6 }, (_, index) =>
+      makeNotification(`n${index + 1}`, { title: `Unread ${index + 1}` }),
+    );
+
+    let activePatchRequests = 0;
+    let maxPatchConcurrency = 0;
+
+    const fetcher = vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+      if (init?.method === "PATCH") {
+        activePatchRequests += 1;
+        maxPatchConcurrency = Math.max(maxPatchConcurrency, activePatchRequests);
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        activePatchRequests -= 1;
+        return jsonResponse({ success: true, data: { id: url.split("/").pop(), read: true } });
+      }
+      return jsonResponse({
+        success: true,
+        data: {
+          notifications: items,
+          total: items.length,
+          unreadCount: items.length,
+          nextCursor: null,
+        },
+      });
+    });
+
+    renderWithClient(<NotificationsPageClient fetcher={fetcher} />);
+
+    await waitFor(() => {
+      expect(screen.getByText("Unread 1")).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole("button", { name: /actions\.markAllRead/i }));
+
+    await waitFor(() => {
+      const patchCalls = fetcher.mock.calls.filter(
+        (call: unknown[]) => (call[1] as RequestInit | undefined)?.method === "PATCH",
+      );
+      expect(patchCalls.length).toBe(items.length);
+    });
+    expect(maxPatchConcurrency).toBeLessThanOrEqual(5);
+  });
+
   it("appends more notifications when 'Load more' is clicked using nextCursor", async () => {
     const user = userEvent.setup();
 
