@@ -113,6 +113,14 @@ enum TaskPriority {
   @@schema("public")
 }
 
+enum UploadStatus {
+  PENDING
+  COMPLETED
+  FAILED
+
+  @@schema("public")
+}
+
 // ============================================
 // Multi-Tenant Core
 // ============================================
@@ -182,6 +190,7 @@ model Tenant {
   subscriptions           Subscription[]
   tasks                   Task[]
   threads                 Thread[]
+  uploads                 UploadRecord[]
   usageLedgerEntries      UsageLedgerEntry[]
   userConsents            UserConsent[]
   userSkills              UserSkill[]
@@ -1278,6 +1287,36 @@ model Task {
   @@index([tenantId, type, createdAt(sort: Desc)])
   @@index([tenantId, updatedAt(sort: Desc)])
   @@map("tasks")
+  @@schema("public")
+}
+
+// Direct-to-object-storage upload metadata. File bytes go to R2/S3/OSS via
+// presigned URLs; ECS only stores tenant-scoped metadata for downstream tasks.
+model UploadRecord {
+  id                 String       @id
+  tenantId           String       @map("tenant_id")
+  userId             String?      @map("user_id")
+  status             UploadStatus @default(PENDING)
+  provider           String       @db.VarChar(32)
+  bucket             String       @db.VarChar(160)
+  objectKey          String       @map("object_key") @db.VarChar(700)
+  filename           String       @db.VarChar(255)
+  contentType        String       @map("content_type") @db.VarChar(255)
+  sizeBytes          BigInt       @map("size_bytes")
+  metadata           Json         @default("{}")
+  idempotencyKey     String?      @map("idempotency_key") @db.VarChar(120)
+  uploadUrlExpiresAt DateTime     @map("upload_url_expires_at")
+  etag               String?      @db.VarChar(255)
+  checksumSha256     String?      @map("checksum_sha256") @db.VarChar(64)
+  createdAt          DateTime     @default(now()) @map("created_at")
+  updatedAt          DateTime     @updatedAt @map("updated_at")
+  completedAt        DateTime?    @map("completed_at")
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, status, createdAt(sort: Desc)])
+  @@index([tenantId, updatedAt(sort: Desc)])
+  @@map("uploads")
   @@schema("public")
 }
 

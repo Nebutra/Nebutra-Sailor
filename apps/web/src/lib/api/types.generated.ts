@@ -1719,6 +1719,125 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/tasks": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Create a long-running origin task */
+    post: operations["createTask"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/tasks/{taskId}/events": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Stream task state changes */
+    get: operations["streamTaskEvents"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/tasks/{taskId}/cancel": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Cancel a long-running origin task */
+    post: operations["cancelTask"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/tasks/{taskId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get a task envelope */
+    get: operations["getTask"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/uploads/presign": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Create a direct object-storage upload URL */
+    post: operations["presignUpload"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/uploads/complete": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Mark an object-storage upload complete */
+    post: operations["completeUpload"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/uploads/{uploadId}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get upload metadata */
+    get: operations["getUpload"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/ai/gateway/chat/completions": {
     parameters: {
       query?: never;
@@ -4402,6 +4521,581 @@ export interface operations {
           [name: string]: unknown;
         };
         content?: never;
+      };
+    };
+  };
+  createTask: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          type: string;
+          /** @default {} */
+          payload?: {
+            [key: string]: unknown;
+          };
+          idempotency_key?: string;
+          /** @default ai */
+          queue?: string;
+          /**
+           * @default normal
+           * @enum {string}
+           */
+          priority?: "low" | "normal" | "high";
+          /** @default {} */
+          metadata?: {
+            [key: string]: unknown;
+          };
+        };
+      };
+    };
+    responses: {
+      /** @description Task envelope */
+      202: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            type: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "succeeded" | "failed" | "cancelled";
+            progress: number;
+            queue: string;
+            /** @enum {string} */
+            priority: "low" | "normal" | "high";
+            metadata: {
+              [key: string]: unknown;
+            };
+            result: {
+              [key: string]: unknown;
+            } | null;
+            error: {
+              [key: string]: unknown;
+            } | null;
+            dispatcher_provider: string | null;
+            provider_job_id: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            started_at: string | null;
+            /** Format: date-time */
+            completed_at: string | null;
+          };
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Organization membership required */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Task origin unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  streamTaskEvents: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        taskId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Server-sent task events */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "text/event-stream": string;
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Organization membership required */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Task origin unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  cancelTask: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        taskId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Task envelope */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            type: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "succeeded" | "failed" | "cancelled";
+            progress: number;
+            queue: string;
+            /** @enum {string} */
+            priority: "low" | "normal" | "high";
+            metadata: {
+              [key: string]: unknown;
+            };
+            result: {
+              [key: string]: unknown;
+            } | null;
+            error: {
+              [key: string]: unknown;
+            } | null;
+            dispatcher_provider: string | null;
+            provider_job_id: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            started_at: string | null;
+            /** Format: date-time */
+            completed_at: string | null;
+          };
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Organization membership required */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Task not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Task origin unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  getTask: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        taskId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Task envelope */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            type: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "succeeded" | "failed" | "cancelled";
+            progress: number;
+            queue: string;
+            /** @enum {string} */
+            priority: "low" | "normal" | "high";
+            metadata: {
+              [key: string]: unknown;
+            };
+            result: {
+              [key: string]: unknown;
+            } | null;
+            error: {
+              [key: string]: unknown;
+            } | null;
+            dispatcher_provider: string | null;
+            provider_job_id: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            started_at: string | null;
+            /** Format: date-time */
+            completed_at: string | null;
+          };
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Organization membership required */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Task not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Task origin unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  presignUpload: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          filename: string;
+          content_type: string;
+          size: number;
+          /** @default {} */
+          metadata?: {
+            [key: string]: string;
+          };
+          idempotency_key?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description Upload metadata with presigned upload instructions */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            /** @enum {string} */
+            status: "pending" | "completed" | "failed";
+            provider: string;
+            bucket: string;
+            key: string;
+            filename: string;
+            content_type: string;
+            size: number;
+            metadata: {
+              [key: string]: string;
+            };
+            presigned_upload: {
+              /** Format: uri */
+              url: string;
+              /** @enum {string} */
+              method: "PUT" | "POST";
+              headers: {
+                [key: string]: string;
+              };
+              /** Format: date-time */
+              expires_at: string;
+            } | null;
+            etag: string | null;
+            checksum_sha256: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            completed_at: string | null;
+          };
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Organization membership required */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Upload origin unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  completeUpload: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: {
+      content: {
+        "application/json": {
+          upload_id: string;
+          size: number;
+          etag?: string;
+          checksum_sha256?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description Upload metadata */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            /** @enum {string} */
+            status: "pending" | "completed" | "failed";
+            provider: string;
+            bucket: string;
+            key: string;
+            filename: string;
+            content_type: string;
+            size: number;
+            metadata: {
+              [key: string]: string;
+            };
+            presigned_upload: {
+              /** Format: uri */
+              url: string;
+              /** @enum {string} */
+              method: "PUT" | "POST";
+              headers: {
+                [key: string]: string;
+              };
+              /** Format: date-time */
+              expires_at: string;
+            } | null;
+            etag: string | null;
+            checksum_sha256: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            completed_at: string | null;
+          };
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Organization membership required */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Upload not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Upload origin unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+    };
+  };
+  getUpload: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        uploadId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Upload metadata */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            id: string;
+            /** @enum {string} */
+            status: "pending" | "completed" | "failed";
+            provider: string;
+            bucket: string;
+            key: string;
+            filename: string;
+            content_type: string;
+            size: number;
+            metadata: {
+              [key: string]: string;
+            };
+            presigned_upload: {
+              /** Format: uri */
+              url: string;
+              /** @enum {string} */
+              method: "PUT" | "POST";
+              headers: {
+                [key: string]: string;
+              };
+              /** Format: date-time */
+              expires_at: string;
+            } | null;
+            etag: string | null;
+            checksum_sha256: string | null;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** Format: date-time */
+            completed_at: string | null;
+          };
+        };
+      };
+      /** @description Authentication required */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Organization membership required */
+      403: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Upload not found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Upload origin unavailable */
+      503: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };

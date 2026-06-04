@@ -117,6 +117,15 @@ export const TaskPriority = {
 export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority]
 
 
+export const UploadStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type UploadStatus = (typeof UploadStatus)[keyof typeof UploadStatus]
+
+
 export const TenantKind = {
   ORGANIZATION: 'ORGANIZATION',
   INDIVIDUAL: 'INDIVIDUAL'
