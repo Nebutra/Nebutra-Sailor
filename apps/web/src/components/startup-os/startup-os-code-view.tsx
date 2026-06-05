@@ -137,8 +137,7 @@ export function StartupOsCodeView({
     >
       {/* Toolbar — Edit / Done + Save live here so the highlighted view stays clean. */}
       {editable ? (
-        <div className="flex items-center justify-between gap-2 bg-neutral-2 px-3 py-2">
-          <span className="truncate font-mono text-[11px] text-neutral-9">{file.path}</span>
+        <div className="flex items-center justify-end gap-2 bg-neutral-2 px-3 py-2">
           <div className="flex shrink-0 items-center gap-2">
             {isEditing ? (
               <>
@@ -197,7 +196,6 @@ export function StartupOsCodeView({
         <div className="min-h-0 flex-1 overflow-hidden" data-testid="startup-os-code-highlight">
           <CodeBlock
             aria-label={`Source of ${file.path}`}
-            filename={file.path}
             language={language}
             maxHeight={maxHeight}
             className="h-full rounded-none border-0"
