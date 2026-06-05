@@ -53,6 +53,7 @@ import {
 } from "@/lib/startup-os/compiler";
 import { buildStartupPreviewHtml, type StartupOSFile } from "@/lib/startup-os/files";
 import { StartupChatPanel } from "./startup-chat-panel";
+import { StartupConnectorsMenu } from "./startup-connectors-menu";
 
 const PROJECTS_ENDPOINT = "/api/startup-os/projects";
 const DEFAULT_THESIS = "";
@@ -807,6 +808,7 @@ export function StartupCommandCenter() {
             isApproving={isApproving}
             isExecuting={isExecutingRun}
             isSavingFile={isSavingFile}
+            onChatApplied={() => void loadProjectFiles(selectedProject.id)}
             onApprove={approveReviewGate}
             onExecuteRun={requestRunExecution}
             onPersistLayout={(layout) => persistCanvasLayout(selectedProject.id, layout)}
@@ -902,8 +904,8 @@ function StartupBuilderHome({
               What are we building?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-neutral-10">
-              One sentence compiles into a whole governed company — context, launch artifacts,
-              live files, spatial canvas, and approval-gated runs.
+              One sentence compiles into a whole governed company — context, launch artifacts, live
+              files, spatial canvas, and approval-gated runs.
             </p>
 
             <div className="mx-auto mt-8 overflow-hidden rounded-[30px] border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5">
@@ -964,6 +966,7 @@ function StartupBuilderHome({
                       ))}
                     </SelectContent>
                   </Select>
+                  <StartupConnectorsMenu disabled={disabled || isLoading} />
                 </div>
                 <button
                   type="button"
@@ -1059,6 +1062,7 @@ function StartupBuilderWorkspace({
   isApproving,
   isExecuting,
   isSavingFile,
+  onChatApplied,
   onApprove,
   onExecuteRun,
   onPersistLayout,
@@ -1078,6 +1082,7 @@ function StartupBuilderWorkspace({
   isApproving: boolean;
   isExecuting: boolean;
   isSavingFile: boolean;
+  onChatApplied: () => void;
   onApprove: () => void;
   onExecuteRun: (runId?: string) => void;
   onPersistLayout: (layout: StartupCanvasLayout) => Promise<void>;
@@ -1264,7 +1269,7 @@ function StartupBuilderWorkspace({
             </div>
 
             <div className={activeSurface === "chat" ? "min-h-0 flex-1" : "hidden"}>
-              <StartupChatPanel projectId={project.id} />
+              <StartupChatPanel onApplied={onChatApplied} projectId={project.id} />
             </div>
           </main>
         </div>

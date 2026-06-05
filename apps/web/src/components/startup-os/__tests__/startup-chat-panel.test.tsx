@@ -2,7 +2,10 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { UseStartupConversationResult } from "../use-startup-conversation";
+import type {
+  StartupConversationSummary,
+  UseStartupConversationResult,
+} from "../use-startup-conversation";
 
 // ─── Module stubs ─────────────────────────────────────────────────────────────
 // The real @nebutra/ui barrels pull heavyweight deps (emoji-mart JSON imports,
@@ -94,6 +97,20 @@ function makeConversation(
     send: vi.fn(async () => {}),
     cancel: vi.fn(),
     reset: vi.fn(),
+    ...overrides,
+  };
+}
+
+function makeSummary(
+  overrides: Partial<StartupConversationSummary> = {},
+): StartupConversationSummary {
+  return {
+    summary: "Added a pricing page and restyled the hero.",
+    fileCount: 2,
+    artifactCount: 1,
+    provider: "test",
+    model: "fast",
+    totalTokens: 42,
     ...overrides,
   };
 }
@@ -234,5 +251,115 @@ describe("StartupChatPanel", () => {
     render(<StartupChatPanel projectId="proj_1" conversation={makeConversation({ send })} />);
     fireEvent.click(screen.getByTestId("composer-send"));
     expect(send).not.toHaveBeenCalled();
+  });
+
+  it("marks the most recent file as 'writing' while the turn streams", () => {
+    render(
+      <StartupChatPanel projectId="proj_1" conversation={makeConversation(STREAMING_STATE)} />,
+    );
+    const chips = screen.getAllByTestId("startup-chat-file");
+    // Earlier rows are settled; only the last in-flight write is active.
+    expect(chips[0]).toHaveAttribute("data-state", "written");
+    expect(chips[1]).toHaveAttribute("data-state", "writing");
+    expect(chips[1]).toHaveTextContent("Writing");
+  });
+
+  it("settles every file row to 'written' once the turn is done", () => {
+    render(
+      <StartupChatPanel
+        projectId="proj_1"
+        conversation={makeConversation({
+          ...STREAMING_STATE,
+          status: "done",
+          isStreaming: false,
+          summary: makeSummary(),
+        })}
+      />,
+    );
+    for (const chip of screen.getAllByTestId("startup-chat-file")) {
+      expect(chip).toHaveAttribute("data-state", "written");
+    }
+  });
+});
+
+describe("StartupChatPanel onApplied loop closure", () => {
+  it("fires onApplied once when a turn completes with file changes", () => {
+    const onApplied = vi.fn();
+    render(
+      <StartupChatPanel
+        projectId="proj_1"
+        onApplied={onApplied}
+        conversation={makeConversation({ status: "done", summary: makeSummary({ fileCount: 2 }) })}
+      />,
+    );
+    expect(onApplied).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not re-fire onApplied on a re-render of the same completed turn", () => {
+    const onApplied = vi.fn();
+    const done = makeConversation({ status: "done", summary: makeSummary({ fileCount: 2 }) });
+    const { rerender } = render(
+      <StartupChatPanel projectId="proj_1" onApplied={onApplied} conversation={done} />,
+    );
+    // Re-render with the *same* completed turn — the latch must hold.
+    rerender(<StartupChatPanel projectId="proj_1" onApplied={onApplied} conversation={done} />);
+    expect(onApplied).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not fire onApplied when the turn fails", () => {
+    const onApplied = vi.fn();
+    render(
+      <StartupChatPanel
+        projectId="proj_1"
+        onApplied={onApplied}
+        conversation={makeConversation({ status: "error", error: "boom" })}
+      />,
+    );
+    expect(onApplied).not.toHaveBeenCalled();
+  });
+
+  it("does not fire onApplied for a completed turn that changed no files", () => {
+    const onApplied = vi.fn();
+    render(
+      <StartupChatPanel
+        projectId="proj_1"
+        onApplied={onApplied}
+        conversation={makeConversation({
+          status: "done",
+          summary: makeSummary({ fileCount: 0 }),
+          fileEvents: [],
+        })}
+      />,
+    );
+    expect(onApplied).not.toHaveBeenCalled();
+  });
+
+  it("fires onApplied again on the next completed turn (latch re-arms)", () => {
+    const onApplied = vi.fn();
+    const { rerender } = render(
+      <StartupChatPanel
+        projectId="proj_1"
+        onApplied={onApplied}
+        conversation={makeConversation({ status: "done", summary: makeSummary({ fileCount: 1 }) })}
+      />,
+    );
+    expect(onApplied).toHaveBeenCalledTimes(1);
+
+    // A new turn starts (streaming re-arms the latch), then completes again.
+    rerender(
+      <StartupChatPanel
+        projectId="proj_1"
+        onApplied={onApplied}
+        conversation={makeConversation({ status: "streaming", isStreaming: true })}
+      />,
+    );
+    rerender(
+      <StartupChatPanel
+        projectId="proj_1"
+        onApplied={onApplied}
+        conversation={makeConversation({ status: "done", summary: makeSummary({ fileCount: 3 }) })}
+      />,
+    );
+    expect(onApplied).toHaveBeenCalledTimes(2);
   });
 });

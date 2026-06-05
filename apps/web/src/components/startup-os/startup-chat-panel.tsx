@@ -9,6 +9,7 @@ import {
   AlertIcon,
   AlertTitle,
 } from "@nebutra/ui/primitives";
+import { useEffect, useRef } from "react";
 import { Streamdown } from "streamdown";
 import {
   type UseStartupConversationResult,
@@ -30,6 +31,14 @@ export interface StartupChatPanelProps {
   readonly projectId: string;
   /** Injectable hook result — defaults to the real `useStartupConversation`. */
   readonly conversation?: UseStartupConversationResult;
+  /**
+   * Fired exactly once per turn that completes successfully *and* changed at
+   * least one file — this is the signal for the command center to reload the
+   * project's files so the Code/Preview tabs reflect the generated edits. It is
+   * NOT fired on error, cancellation, or a no-op turn (zero files), and never
+   * fires twice for the same completed turn.
+   */
+  readonly onApplied?: () => void;
 }
 
 const SUGGESTION_PROMPTS = ["再加一个定价页", "把 hero 改成品牌渐变", "生成 README"] as const;
@@ -42,7 +51,7 @@ const STATUS_LABELS: Record<UseStartupConversationResult["status"], string> = {
   cancelled: "Turn cancelled",
 };
 
-export function StartupChatPanel({ projectId, conversation }: StartupChatPanelProps) {
+export function StartupChatPanel({ projectId, conversation, onApplied }: StartupChatPanelProps) {
   // Hooks must run unconditionally; the injected result simply shadows the live
   // one for tests. Both calls are cheap and side-effect-free until `send`.
   const live = useStartupConversation({ projectId });
@@ -50,6 +59,26 @@ export function StartupChatPanel({ projectId, conversation }: StartupChatPanelPr
 
   const { status, isStreaming, plan, fileEvents, artifactEvents, summary, error, send, cancel } =
     state;
+
+  // Close the conversational-generation loop: when a turn finishes (status →
+  // "done") and it actually wrote files, notify the host once so it can reload
+  // the workspace. A ref latch guards against re-firing on unrelated re-renders
+  // (e.g. the parent re-rendering while still on the same completed turn) — the
+  // latch only re-arms once we leave the "done" state (next streaming turn).
+  const appliedTurnRef = useRef(false);
+  useEffect(() => {
+    if (status !== "done") {
+      // A new turn (streaming/idle/error/cancelled) re-arms the latch.
+      appliedTurnRef.current = false;
+      return;
+    }
+    if (appliedTurnRef.current) return;
+    // Only a turn that changed files is worth a workspace reload.
+    const changedFiles = summary?.fileCount ?? fileEvents.length;
+    if (changedFiles <= 0) return;
+    appliedTurnRef.current = true;
+    onApplied?.();
+  }, [status, summary, fileEvents.length, onApplied]);
 
   const hasPlan = plan.trim().length > 0;
   const handleSend = (message: string) => {
@@ -87,7 +116,9 @@ export function StartupChatPanel({ projectId, conversation }: StartupChatPanelPr
         <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-5">
           <PlanArea hasPlan={hasPlan} isStreaming={isStreaming} plan={plan} />
 
-          {fileEvents.length > 0 ? <FileEventList events={fileEvents} /> : null}
+          {fileEvents.length > 0 ? (
+            <FileEventList events={fileEvents} isStreaming={isStreaming} />
+          ) : null}
 
           {artifactEvents.length > 0 ? <ArtifactEventList events={artifactEvents} /> : null}
 
@@ -185,43 +216,81 @@ function PlanArea({
   );
 }
 
-function FileEventList({ events }: { events: UseStartupConversationResult["fileEvents"] }) {
+function FileEventList({
+  events,
+  isStreaming,
+}: {
+  events: UseStartupConversationResult["fileEvents"];
+  isStreaming: boolean;
+}) {
+  // While the turn is live, the most recent file event is the one being written
+  // *right now* — surface it as an active "Writing" affordance with a pulsing
+  // dot, and settle every earlier row to its committed action. Once the turn
+  // ends, nothing is active and all rows read as settled writes.
+  const activeIndex = isStreaming ? events.length - 1 : -1;
+
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-9">
-        Files written
-      </h3>
+      <div className="flex items-center gap-2">
+        <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-9">
+          {isStreaming ? "Writing files" : "Files written"}
+        </h3>
+        <span className="rounded-full bg-neutral-2 px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-neutral-9">
+          {events.length}
+        </span>
+      </div>
       <AnimateInGroup stagger="fast" className="grid gap-1.5">
-        {events.map((event, index) => (
-          <AnimateIn
-            // File paths can repeat across a turn; pair with index for a stable key.
-            key={`${event.path}-${index}`}
-            preset="fadeUp"
-          >
-            <div
-              data-testid="startup-chat-file"
-              className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 px-3 py-2"
+        {events.map((event, index) => {
+          const isActive = index === activeIndex;
+          return (
+            <AnimateIn
+              // File paths can repeat across a turn; pair with index for a stable key.
+              key={`${event.path}-${index}`}
+              preset="fadeUp"
             >
-              <FileText
-                className="size-4 shrink-0"
-                style={{ color: "var(--brand-primary)" }}
-                aria-hidden="true"
-              />
-              <span className="min-w-0 flex-1 truncate font-mono text-[12px] leading-5 text-neutral-11">
-                {event.path}
-              </span>
-              <span
-                className="shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em]"
-                style={{
-                  borderColor: "hsl(var(--success) / 0.25)",
-                  color: "var(--status-success)",
-                }}
+              <div
+                data-testid="startup-chat-file"
+                data-state={isActive ? "writing" : "written"}
+                className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-2 px-3 py-2"
               >
-                {event.action}
-              </span>
-            </div>
-          </AnimateIn>
-        ))}
+                {isActive ? (
+                  <span
+                    className="size-2 shrink-0 animate-pulse rounded-full"
+                    style={{ background: "var(--brand-accent)" }}
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <FileText
+                    className="size-4 shrink-0"
+                    style={{ color: "var(--brand-primary)" }}
+                    aria-hidden="true"
+                  />
+                )}
+                <span className="min-w-0 flex-1 truncate font-mono text-[12px] leading-5 text-neutral-11">
+                  {event.path}
+                </span>
+                {isActive ? (
+                  <span
+                    className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.08em]"
+                    style={{ color: "var(--brand-accent)" }}
+                  >
+                    Writing
+                  </span>
+                ) : (
+                  <span
+                    className="shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em]"
+                    style={{
+                      borderColor: "hsl(var(--success) / 0.25)",
+                      color: "var(--status-success)",
+                    }}
+                  >
+                    {event.action}
+                  </span>
+                )}
+              </div>
+            </AnimateIn>
+          );
+        })}
       </AnimateInGroup>
     </div>
   );
