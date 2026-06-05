@@ -888,15 +888,15 @@ function StartupBuilderHome({
   };
 
   return (
-    <AnimateIn preset="emerge">
-      <section className="relative flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1 text-neutral-12">
+    <AnimateIn preset="emerge" className="h-full min-h-0">
+      <section className="relative flex h-full min-h-0 flex-col justify-center overflow-y-auto bg-neutral-1 text-neutral-12">
         {/* Ambient brand glow — subtle (governed/enterprise), not a loud aurora. */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[380px] w-full max-w-3xl opacity-10 blur-3xl"
           style={{ background: "var(--brand-gradient)" }}
         />
-        <div className="relative mx-auto flex min-h-0 flex-1 w-full max-w-5xl flex-col justify-center overflow-y-auto px-5 py-16 sm:px-8">
+        <div className="relative mx-auto flex w-full max-w-5xl flex-col px-5 py-16 sm:px-8">
           <div className="mx-auto w-full max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
               <Lightning className="size-3.5 text-blue-9" aria-hidden="true" />
