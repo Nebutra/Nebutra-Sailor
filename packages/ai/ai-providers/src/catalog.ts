@@ -420,6 +420,74 @@ export async function resolveFrontierModel(tier: ModelTier): Promise<string> {
   }
 }
 
+// ─── Per-node model spec resolution ─────────────────────────────────────────────
+//
+// Resolves a node's model HINTS (id pin OR modality/effort/capability) to a
+// concrete model id. Mirrors agent-runtime NodeModelSpec structurally (plain
+// object — no cross-package dependency). Used by the workflow/agent executor.
+
+export interface ModelSpecHints {
+  /** Explicit pin — wins over every hint. Preset alias or `provider/model` id. */
+  id?: string;
+  reasoningEffort?: "low" | "medium" | "high" | "xhigh";
+  modality?: ModelModality;
+  capabilities?: { vision?: boolean; toolCall?: boolean; reasoning?: boolean };
+}
+
+const EFFORT_TIER: Record<NonNullable<ModelSpecHints["reasoningEffort"]>, ModelTier> = {
+  low: "fast",
+  medium: "flagship",
+  high: "flagship",
+  xhigh: "reasoning",
+};
+
+function pickByCapabilities(
+  models: CatalogModel[],
+  caps?: ModelSpecHints["capabilities"],
+): CatalogModel | null {
+  const filtered = caps
+    ? models.filter(
+        (m) =>
+          (!caps.vision || m.capabilities.vision) &&
+          (!caps.toolCall || m.capabilities.toolCall) &&
+          (!caps.reasoning || m.capabilities.reasoning),
+      )
+    : models;
+  return filtered[0] ?? null;
+}
+
+/**
+ * Resolve a per-node model spec to a concrete model id. Precedence: explicit
+ * `id` → non-text `modality` (most-available matching model) → `reasoningEffort`
+ * tier (text frontier) → text `capabilities` match → `fallback` (the run
+ * default). Never throws — degrades to `fallback`.
+ */
+export async function resolveModelSpec(spec: ModelSpecHints, fallback: string): Promise<string> {
+  try {
+    if (spec.id) return spec.id;
+
+    if (spec.modality && spec.modality !== "text") {
+      const match = pickByCapabilities(
+        await listModelsByModality(spec.modality),
+        spec.capabilities,
+      );
+      if (match) return match.offerings[0]?.id ?? match.key;
+      return fallback;
+    }
+
+    if (spec.reasoningEffort) return resolveFrontierModel(EFFORT_TIER[spec.reasoningEffort]);
+
+    if (spec.capabilities) {
+      const match = pickByCapabilities(await listModelsByModality("text"), spec.capabilities);
+      if (match) return match.offerings[0]?.id ?? match.key;
+    }
+
+    return fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 /**
  * Default OpenAI-compatible base URL per provider bucket (env-overridable).
  * Single home for these — BYOK and any other caller import from here.

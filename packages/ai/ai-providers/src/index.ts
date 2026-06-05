@@ -36,6 +36,7 @@ export {
   type ModelInfo,
   type ModelModality,
   type ModelOffering,
+  type ModelSpecHints,
   type ModelTier,
   mapProvider,
   PROVIDER_MAP,
@@ -43,6 +44,7 @@ export {
   providerForModel,
   providerFromIdHeuristic,
   resolveFrontierModel,
+  resolveModelSpec,
 } from "./catalog";
 export {
   getProvider,
