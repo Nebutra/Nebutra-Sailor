@@ -200,6 +200,10 @@ export async function POST(request: Request, context: RouteContext) {
       const enqueue = (chunk: string) => controller.enqueue(encoder.encode(chunk));
 
       try {
+        // Stable id for this turn, emitted up-front so the client can later
+        // revert-and-resend from the pre-turn snapshot captured below.
+        const turnId = globalThis.crypto.randomUUID();
+        enqueue(eventFrame({ type: "turn", turnId }));
         const generator = streamStartupConversation(existing.project, instruction, {
           tenantId: orgId,
           userId,
@@ -226,7 +230,7 @@ export async function POST(request: Request, context: RouteContext) {
         if (!failed) {
           // Pre-turn workspace snapshot — the basis for revert-and-resend / undo.
           const turnSnapshot: StartupTurnSnapshot = {
-            turnId: globalThis.crypto.randomUUID(),
+            turnId,
             prompt: instruction,
             files: workspaceFiles,
             createdAt: new Date().toISOString(),

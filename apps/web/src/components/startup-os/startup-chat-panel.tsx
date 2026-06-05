@@ -5,6 +5,7 @@ import {
   CheckCircle,
   Copy,
   FileText,
+  PencilEdit,
   Lightning,
   Sparkles,
   StopFill,
@@ -21,6 +22,7 @@ import {
   AlertTitle,
   Badge,
   Button,
+  Textarea,
 } from "@nebutra/ui/primitives";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
@@ -97,6 +99,8 @@ export function StartupChatPanel({
     artifactEvents,
     summary,
     durationMs,
+    turnId,
+    userPrompt,
     error,
     send,
     cancel,
@@ -160,6 +164,16 @@ export function StartupChatPanel({
         {/* Scrollable stream — thread history (when merged) sits above the live plan. */}
         <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-5">
           {history}
+          {userPrompt ? (
+            <UserMessage
+              prompt={userPrompt}
+              turnId={turnId}
+              projectId={projectId}
+              canRevert={status === "done" && Boolean(turnId)}
+              onResend={handleSend}
+              onReverted={() => onApplied?.()}
+            />
+          ) : null}
           <PlanArea hasPlan={hasPlan} isStreaming={isStreaming} plan={plan} />
 
           {fileEvents.length > 0 ? (
@@ -363,6 +377,151 @@ function ArtifactEventList({ events }: { events: UseStartupConversationResult["a
             {event.status ? <span className="opacity-60">/ {event.status}</span> : null}
           </span>
         ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * User message bubble with a Lovable-style "revert and resend": edit the message,
+ * revert the workspace to the snapshot taken before that turn (real /revert
+ * endpoint), then re-run the edited instruction from that state.
+ */
+function UserMessage({
+  prompt,
+  turnId,
+  projectId,
+  canRevert,
+  onResend,
+  onReverted,
+}: {
+  prompt: string;
+  turnId: string | null;
+  projectId: string;
+  canRevert: boolean;
+  onResend: (next: string) => void;
+  onReverted: () => void;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(prompt);
+  const [copied, setCopied] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  // Re-sync when the live turn's prompt changes (e.g. after a resend).
+  useEffect(() => {
+    setDraft(prompt);
+    setEditing(false);
+  }, [prompt]);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(prompt);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* clipboard unavailable — non-fatal */
+    }
+  };
+
+  const revertAndResend = async () => {
+    const next = draft.trim();
+    if (!next || busy || !turnId) return;
+    setBusy(true);
+    try {
+      const res = await fetch(
+        `/api/startup-os/projects/${encodeURIComponent(projectId)}/revert`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ turnId }),
+        },
+      );
+      if (res.ok) {
+        onReverted(); // reload the reverted workspace
+        setEditing(false);
+        onResend(next); // re-run from the reverted state
+      }
+    } catch {
+      /* surfaced via the disabled button resetting below */
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  if (editing) {
+    return (
+      <div className="rounded-2xl border border-neutral-6 bg-neutral-2 p-3">
+        <p className="text-xs font-semibold text-neutral-12">Revert and resend message?</p>
+        <Textarea
+          value={draft}
+          onChange={(event) => setDraft(event.target.value)}
+          rows={3}
+          aria-label="Edit message"
+          className="mt-2"
+        />
+        <p className="mt-2 text-[11px] leading-4 text-neutral-9">
+          Your message will be updated and the conversation continues from here — the workspace
+          reverts to before this turn, then re-runs.
+        </p>
+        <div className="mt-2 flex items-center justify-end gap-2">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="rounded-full"
+            onClick={() => {
+              setEditing(false);
+              setDraft(prompt);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            variant="ink"
+            size="sm"
+            className="rounded-full"
+            disabled={busy || draft.trim().length === 0}
+            onClick={() => void revertAndResend()}
+          >
+            {busy ? "Reverting…" : "Revert and resend"}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="group flex flex-col items-end gap-1">
+      <div className="max-w-[85%] rounded-2xl border border-neutral-6 bg-neutral-2 px-3 py-2 text-sm text-neutral-12">
+        {prompt}
+      </div>
+      <div className="flex items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100">
+        {canRevert ? (
+          <button
+            type="button"
+            aria-label="Edit and resend"
+            title="Edit and resend"
+            onClick={() => setEditing(true)}
+            className="flex size-7 items-center justify-center rounded-md text-neutral-9 transition-colors hover:bg-neutral-3"
+          >
+            <PencilEdit className="size-3.5" aria-hidden="true" />
+          </button>
+        ) : null}
+        <button
+          type="button"
+          aria-label={copied ? "Copied" : "Copy"}
+          title="Copy"
+          onClick={() => void copy()}
+          className="flex size-7 items-center justify-center rounded-md text-neutral-9 transition-colors hover:bg-neutral-3"
+        >
+          {copied ? (
+            <Check className="size-3.5 text-green-10" aria-hidden="true" />
+          ) : (
+            <Copy className="size-3.5" aria-hidden="true" />
+          )}
+        </button>
       </div>
     </div>
   );

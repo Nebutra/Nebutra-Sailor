@@ -70,6 +70,9 @@ export type StartupConversationStreamer = (
 // ─── Event union (yielded by the generator) ──────────────────────────────────
 
 export type StartupConversationEvent =
+  // Emitted by the chat route (not the generator) up-front so the client can
+  // revert-and-resend this turn from its pre-patch snapshot.
+  | { readonly type: "turn"; readonly turnId: string }
   | {
       readonly type: "status";
       readonly phase: "started" | "planning" | "generating" | "applying" | "done";

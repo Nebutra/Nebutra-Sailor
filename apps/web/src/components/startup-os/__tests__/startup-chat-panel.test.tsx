@@ -73,6 +73,7 @@ vi.mock("@nebutra/ui/primitives", () => ({
       {children}
     </button>
   ),
+  Textarea: (props: Record<string, unknown>) => <textarea {...props} />,
 }));
 
 vi.mock("@nebutra/icons", () => {
@@ -83,6 +84,7 @@ vi.mock("@nebutra/icons", () => {
     Check: Stub,
     CheckCircle: Stub,
     Copy: Stub,
+    PencilEdit: Stub,
     FileText: Stub,
     Lightning: Stub,
     Sparkles: Stub,
@@ -115,6 +117,8 @@ function makeConversation(
     summary: null,
     startedAt: null,
     durationMs: null,
+    turnId: null,
+    userPrompt: null,
     error: null,
     send: vi.fn(async () => {}),
     cancel: vi.fn(),

@@ -48,6 +48,10 @@ export interface UseStartupConversationState {
   readonly startedAt: string | null;
   /** Wall-clock duration of the completed turn, in ms (null until done). */
   readonly durationMs: number | null;
+  /** Server-assigned id of the current turn (for revert-and-resend). */
+  readonly turnId: string | null;
+  /** The instruction the user sent for the current turn (the user message). */
+  readonly userPrompt: string | null;
 }
 
 export interface UseStartupConversationResult extends UseStartupConversationState {
@@ -74,6 +78,8 @@ const INITIAL_STATE: UseStartupConversationState = {
   error: null,
   startedAt: null,
   durationMs: null,
+  turnId: null,
+  userPrompt: null,
 };
 
 // ─── SSE frame parsing (buffered, chunk-boundary safe) ────────────────────────
@@ -147,6 +153,8 @@ function applyEvent(
   event: StartupConversationEvent,
 ): UseStartupConversationState {
   switch (event.type) {
+    case "turn":
+      return { ...state, turnId: event.turnId };
     case "status":
       return applyStatus(state, event);
     case "plan-delta":
@@ -241,7 +249,7 @@ export function useStartupConversation(
       const doFetch: FetchImpl = fetchImpl ?? globalThis.fetch.bind(globalThis);
       const url = `/api/startup-os/projects/${encodeURIComponent(projectId)}/chat`;
 
-      setState({ ...INITIAL_STATE, status: "streaming", isStreaming: true });
+      setState({ ...INITIAL_STATE, status: "streaming", isStreaming: true, userPrompt: instruction });
 
       try {
         const response = await doFetch(url, {
