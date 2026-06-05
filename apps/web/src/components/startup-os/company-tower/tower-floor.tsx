@@ -67,7 +67,7 @@ function previewLine(layer: ContextLayer, manifestEntry: ContextManifestLayer): 
   return keys.length > 0 ? `${fillText} · ${keys}` : fillText;
 }
 
-/** The default expanded body: a responsive hairline grid of FieldCards. */
+/** The default expanded body: a dense divided stack of FieldCard rows. */
 function DefaultFloorBody({
   layer,
   handlers,
@@ -77,7 +77,7 @@ function DefaultFloorBody({
 }) {
   const keys = Object.keys(layer.fields);
   return (
-    <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+    <div className="flex flex-col divide-y divide-neutral-6/60">
       {keys.map((fieldKey) => (
         <FieldCard
           key={fieldKey}
