@@ -177,6 +177,54 @@ describe("deriveColorNodes — unit tests (static import, no subprocess)", () =>
     expect(derivedDescFirst).toBe(existingDescFirst);
   });
 
+  // I1 guard: missing 500-stop in existingCore must throw loudly.
+  it("throws a descriptive error when nebutra-blue 500-stop is absent from existingCore (I1 guard)", () => {
+    const coreWithoutBlue500 = {
+      color: {
+        "nebutra-blue": { ...existingCore.color["nebutra-blue"], "500": undefined },
+        "nebutra-cyan": existingCore.color["nebutra-cyan"],
+        "nebutra-neutral": existingCore.color["nebutra-neutral"],
+      },
+    };
+    expect(() => deriveColorNodes(DEFAULT_BRAND.colors, coreWithoutBlue500 as never)).toThrowError(
+      /nebutra-blue is missing the 500 stop/,
+    );
+  });
+
+  it("throws a descriptive error when nebutra-cyan 500-stop is absent from existingCore (I1 guard)", () => {
+    const coreWithoutCyan500 = {
+      color: {
+        "nebutra-blue": existingCore.color["nebutra-blue"],
+        "nebutra-cyan": { ...existingCore.color["nebutra-cyan"], "500": undefined },
+        "nebutra-neutral": existingCore.color["nebutra-neutral"],
+      },
+    };
+    expect(() => deriveColorNodes(DEFAULT_BRAND.colors, coreWithoutCyan500 as never)).toThrowError(
+      /nebutra-cyan is missing the 500 stop/,
+    );
+  });
+
+  // I2 guard: incomplete or malformed palette must throw loudly.
+  it("throws a descriptive error when a required palette step is missing (I2 guard)", () => {
+    const incompletePalette = {
+      ...DEFAULT_BRAND.colors,
+      primary: { ...DEFAULT_BRAND.colors.primary, 500: undefined as unknown as string },
+    };
+    expect(() => deriveColorNodes(incompletePalette as never, existingCore)).toThrowError(
+      /colors\.primary\[500\] must be a #rrggbb hex string/,
+    );
+  });
+
+  it("throws a descriptive error when a palette step is not a valid hex string (I2 guard)", () => {
+    const badPalette = {
+      ...DEFAULT_BRAND.colors,
+      accent: { ...DEFAULT_BRAND.colors.accent, 200: "notahex" },
+    };
+    expect(() => deriveColorNodes(badPalette as never, existingCore)).toThrowError(
+      /colors\.accent\[200\] must be a #rrggbb hex string/,
+    );
+  });
+
   it("byte-derivability: $value for all 11 steps of each scale matches on-disk core.json (case-insensitive)", () => {
     const derived = deriveColorNodes(DEFAULT_BRAND.colors, existingCore);
 

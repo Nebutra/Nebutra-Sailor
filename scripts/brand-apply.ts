@@ -96,9 +96,11 @@ export interface DerivedColorScales {
  *   (display-p3). The existing on-disk node is spread and only `$value` is
  *   replaced; `$extensions` is overridden only if `p3Overrides` is set.
  * - `nebutra-neutral` carries a scale-root `$description` copied from
- *   `existingCore.color["nebutra-neutral"]["$description"]`. Built as
- *   `{ $description, ...steps }` (description first) for key-order stability.
- *   The idempotency test in brand-metadata-drift.test.ts guards regressions.
+ *   `existingCore.color["nebutra-neutral"]["$description"]`. V8 always places
+ *   integer-index-coercible keys ("50","100",…) before string keys in
+ *   Object.keys() output, so $description ends up LAST in the serialized JSON
+ *   regardless of insertion order. The idempotency test in
+ *   brand-metadata-drift.test.ts verifies that the round-trip is stable.
  *
  * @param colors  The palette from DEFAULT_BRAND.colors (or brand.config.ts).
  * @param existingCore  The parsed on-disk core.json (used to preserve metadata
@@ -114,6 +116,44 @@ export function deriveColorNodes(
     };
   },
 ): DerivedColorScales {
+  // I2: Boundary validation — brand.config.ts is an external boundary; validate
+  // every required scale step before touching anything, so a hand-authored config
+  // with a missing or malformed stop fails loudly here rather than silently
+  // writing `undefined` / `"undefined"` into core.json.
+  const HEX_RE = /^#[0-9a-fA-F]{6}$/;
+  const PALETTE_SCALES: Array<{
+    name: "primary" | "accent" | "neutral";
+    scale: typeof colors.primary;
+  }> = [
+    { name: "primary", scale: colors.primary },
+    { name: "accent", scale: colors.accent },
+    { name: "neutral", scale: colors.neutral },
+  ];
+  for (const { name, scale } of PALETTE_SCALES) {
+    for (const step of COLOR_SCALE_STEPS) {
+      const value = scale[Number(step) as keyof typeof scale];
+      if (typeof value !== "string" || !HEX_RE.test(value)) {
+        throw new Error(
+          `deriveColorNodes: colors.${name}[${step}] must be a #rrggbb hex string — got ${JSON.stringify(value)}. Inspect brand-types.ts (DEFAULT_BRAND.colors) or brand.config.ts.`,
+        );
+      }
+    }
+  }
+
+  // I1: Loud guard — the 500-stop of blue/cyan carries $description/$extensions
+  // that we must preserve. If core.json is missing either stop, we cannot
+  // perform a safe merge and must fail rather than silently drop metadata.
+  if (existingCore.color["nebutra-blue"]["500"] === undefined) {
+    throw new Error(
+      "core.json color.nebutra-blue is missing the 500 stop — cannot preserve $description/$extensions. Inspect core.json.",
+    );
+  }
+  if (existingCore.color["nebutra-cyan"]["500"] === undefined) {
+    throw new Error(
+      "core.json color.nebutra-cyan is missing the 500 stop — cannot preserve $description/$extensions. Inspect core.json.",
+    );
+  }
+
   // Helper to build a standard leaf (no special metadata).
   const leaf = (hex: string): DtcgLeaf => ({ $value: hex.toLowerCase(), $type: "color" });
 
@@ -124,8 +164,9 @@ export function deriveColorNodes(
     const hex = colors.primary[Number(step) as keyof typeof colors.primary];
     if (step === "500") {
       // Spread existing node (preserves $description + $extensions), then replace $value.
+      // existingBlue500 is guaranteed non-undefined by the I1 guard above.
       const base: DtcgLeaf = {
-        ...(existingBlue500 ?? { $type: "color" }),
+        ...existingBlue500,
         $value: hex.toLowerCase(),
       };
       if (colors.p3Overrides?.primary500 !== undefined) {
@@ -146,8 +187,9 @@ export function deriveColorNodes(
   for (const step of COLOR_SCALE_STEPS) {
     const hex = colors.accent[Number(step) as keyof typeof colors.accent];
     if (step === "500") {
+      // existingCyan500 is guaranteed non-undefined by the I1 guard above.
       const base: DtcgLeaf = {
-        ...(existingCyan500 ?? { $type: "color" }),
+        ...existingCyan500,
         $value: hex.toLowerCase(),
       };
       if (colors.p3Overrides?.accent500 !== undefined) {
@@ -236,6 +278,9 @@ export function updateCoreJson(config: BrandConfig): void {
     },
   };
 
+  // M2: No Biome pass here — `JSON.stringify(obj, null, 2) + "\n"` is already
+  // byte-identical to Biome's JSON formatter output (verified). Running Biome
+  // on core.json would be a no-op and adds ~200 ms to brand:apply for nothing.
   fs.writeFileSync(CORE_JSON_PATH, JSON.stringify(updated, null, 2) + "\n", "utf-8");
   logSuccess("Updated packages/design/design-tokens/tokens/core.json");
 }
@@ -615,4 +660,7 @@ async function main() {
   updateEnvTemplate(config);
 }
 
-main().catch(console.error);
+main().catch((e) => {
+  console.error(e);
+  process.exitCode = 1;
+});
