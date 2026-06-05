@@ -1326,7 +1326,6 @@ function WorkspaceFilesPanel({
 }) {
   const [draftContent, setDraftContent] = useState(selectedFile?.content ?? "");
   const deferredDraftContent = useDeferredValue(draftContent);
-  const isDirty = Boolean(selectedFile && draftContent !== selectedFile.content);
   const tree = buildStartupExplorerTree(files);
   const expandedIds = getStartupExplorerExpandedIds(files);
 
@@ -1342,45 +1341,9 @@ function WorkspaceFilesPanel({
   const livePreviewHtml =
     previewFiles.length > 0 ? buildStartupPreviewHtml(previewFiles) : previewHtml;
 
-  async function save() {
-    if (!selectedFile || !isDirty) return;
-    await onSaveFile(selectedFile.path, draftContent);
-  }
-
   return (
     <AnimateIn preset="fadeUp" className="h-full min-h-0">
       <section className="flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1">
-        {/* Toolbar only matters when editing code — in preview it just repeats the
-            top bar's file name/tabs and offers a Save button with nothing to save. */}
-        {view === "code" ? (
-        <div className="flex flex-col gap-3 border-b border-neutral-6 bg-neutral-1 p-3 md:flex-row md:items-center md:justify-between">
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <Code className="size-4 text-neutral-10" aria-hidden="true" />
-              <h2 className="text-sm font-semibold tracking-tight text-neutral-12">
-                Code and preview
-              </h2>
-              <span className="rounded-full bg-neutral-2 px-2 py-0.5 text-[11px] font-semibold text-neutral-10 ring-1 ring-neutral-6">
-                {files.length} files
-              </span>
-            </div>
-            <p className="mt-1 truncate text-xs text-neutral-10">
-              {selectedFile ? selectedFile.path : "Select a file to begin editing."}
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              disabled={!selectedFile || !isDirty || isSavingFile}
-              onClick={() => void save()}
-              className="rounded-full bg-neutral-12 px-3.5 py-1.5 text-xs font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
-            >
-              {isSavingFile ? "Saving..." : isDirty ? "Save file" : "Saved"}
-            </button>
-          </div>
-        </div>
-        ) : null}
-
         <div
           className={`grid min-h-0 flex-1 ${view === "code" ? "xl:grid-cols-[280px_minmax(0,1fr)]" : "grid-cols-1"}`}
         >
