@@ -181,7 +181,7 @@ export type AutomationScheduleKind = (typeof AutomationScheduleKind)[keyof typeo
 
 export const AutomationRunStatus = {
   RUNNING: 'RUNNING',
-  SUCCESS: 'SUCCESS',
+  SUCCEEDED: 'SUCCEEDED',
   FAILED: 'FAILED',
   BLOCKED: 'BLOCKED',
   PARTIAL: 'PARTIAL'

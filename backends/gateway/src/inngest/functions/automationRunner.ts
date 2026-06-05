@@ -97,11 +97,11 @@ export const automationRunner: InngestFunction.Any = inngest.createFunction(
 
     await step.run("finish-run", () =>
       runRepo.finish(run.id, {
-        status: result.ok ? "SUCCESS" : "FAILED",
+        status: result.ok ? "SUCCEEDED" : "FAILED",
         summary: result.summary,
         tokenUsage: { inputTokens: result.inputTokens, outputTokens: result.outputTokens },
         memorySnapshot: {
-          lastOutcome: result.ok ? "SUCCESS" : "FAILED",
+          lastOutcome: result.ok ? "SUCCEEDED" : "FAILED",
           recentSummaries: [result.summary.slice(0, 200)],
           knownIssues: automation.knownIssues,
         },

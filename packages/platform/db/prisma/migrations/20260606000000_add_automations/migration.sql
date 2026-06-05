@@ -4,7 +4,7 @@
 
 CREATE TYPE "public"."AutomationStatus" AS ENUM ('ACTIVE', 'PAUSED', 'DISABLED');
 CREATE TYPE "public"."AutomationScheduleKind" AS ENUM ('CRON', 'RRULE');
-CREATE TYPE "public"."AutomationRunStatus" AS ENUM ('RUNNING', 'SUCCESS', 'FAILED', 'BLOCKED', 'PARTIAL');
+CREATE TYPE "public"."AutomationRunStatus" AS ENUM ('RUNNING', 'SUCCEEDED', 'FAILED', 'BLOCKED', 'PARTIAL');
 CREATE TYPE "public"."ReasoningEffort" AS ENUM ('LOW', 'MEDIUM', 'HIGH', 'XHIGH');
 
 CREATE TABLE "public"."automations" (
