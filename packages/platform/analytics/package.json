@@ -55,6 +55,7 @@
   "dependencies": {
     "@nebutra/billing": "workspace:*",
     "dub": "^0.71.5",
+    "p-limit": "^7.3.0",
     "posthog-js": "^1.360.1",
     "zod": "catalog:"
   },

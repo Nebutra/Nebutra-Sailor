@@ -1,4 +1,5 @@
 import { Dub } from "dub";
+import pLimit from "p-limit";
 
 import type {
   AnalyticsQuery,
@@ -16,11 +17,14 @@ import type {
   WebhookEvent,
 } from "./types";
 
+const DUB_BULK_CONCURRENCY = 5;
+
 /**
  * Analytics Client powered by Dub
  */
 export class AnalyticsClient {
   private dub: Dub;
+  private readonly limitDubBulkOperation = pLimit(DUB_BULK_CONCURRENCY);
   private config: MultiTenantConfig;
 
   constructor(config: MultiTenantConfig) {
@@ -61,7 +65,9 @@ export class AnalyticsClient {
      * Create multiple links at once
      */
     createMany: async (inputs: CreateLinkInput[]): Promise<Link[]> => {
-      const links = await Promise.all(inputs.map((input) => this.links.create(input)));
+      const links = await Promise.all(
+        inputs.map((input) => this.limitDubBulkOperation(() => this.links.create(input))),
+      );
       return links;
     },
 
@@ -403,10 +409,12 @@ export class AnalyticsClient {
     // For each link belonging to this tenant/user, anonymize the metadata
     await Promise.all(
       links.map((link) =>
-        this.dub.links.update(link.id, {
-          externalId: `anonymized_${Date.now()}`,
-          // Clear any potentially PII-bearing tags/keys
-        }),
+        this.limitDubBulkOperation(() =>
+          this.dub.links.update(link.id, {
+            externalId: `anonymized_${Date.now()}`,
+            // Clear any potentially PII-bearing tags/keys
+          }),
+        ),
       ),
     );
   }
@@ -419,7 +427,9 @@ export class AnalyticsClient {
     const { links } = await this.links.list({ search: idToSearch });
 
     // Batch delete all links explicitly associated with this user
-    await Promise.all(links.map((link) => this.dub.links.delete(link.id)));
+    await Promise.all(
+      links.map((link) => this.limitDubBulkOperation(() => this.dub.links.delete(link.id))),
+    );
   }
 
   /**
@@ -431,7 +441,7 @@ export class AnalyticsClient {
 
     // Fetch click and conversion totals for context
     const analyticsTasks = links.map((link) =>
-      this.getAnalytics({ linkId: link.id, interval: "all" }),
+      this.limitDubBulkOperation(() => this.getAnalytics({ linkId: link.id, interval: "all" })),
     );
 
     const aggregatedStats = await Promise.all(analyticsTasks);
