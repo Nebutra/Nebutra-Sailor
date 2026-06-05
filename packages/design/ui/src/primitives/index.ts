@@ -114,6 +114,7 @@ export {
 } from "./checkbox-group";
 export * from "./choicebox";
 export * from "./code-block";
+export * from "./code-block-language-icon";
 /**
  * Geist-style flat Collapse / CollapseGroup API on top of Accordion.
  * Use when consumers expect the Geist surface (title prop + defaultExpanded

@@ -7,6 +7,11 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { cn } from "../utils";
 import {
+  CodeBlockLanguageIcon,
+  type CodeBlockLanguageIconMap,
+  type CodeBlockLanguageIconValue,
+} from "./code-block-language-icon";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -42,6 +47,17 @@ export interface CodeBlockFile {
   addedLines?: number[];
   /** Line numbers to mark as removed / diff-red (1-indexed). Geist alias: `removedLinesNumbers`. */
   removedLines?: number[];
+  /** Optional per-file language logo override. Defaults from `language` / file extension. */
+  icon?: CodeBlockLanguageIconValue;
+}
+
+export interface CodeBlockSwitcherOption {
+  /** Human-readable label displayed in the switcher. */
+  label: string;
+  /** Language value passed to the syntax highlighter. */
+  value: string;
+  /** Optional language logo override for this option. */
+  icon?: CodeBlockLanguageIconValue;
 }
 
 /**
@@ -50,7 +66,7 @@ export interface CodeBlockFile {
  * legacy uncontrolled `showLanguageSwitcher` + `languages` for back-compat.
  */
 export interface CodeBlockSwitcher {
-  options: ReadonlyArray<{ label: string; value: string }>;
+  options: ReadonlyArray<CodeBlockSwitcherOption>;
   value: string;
   onChange: (next: string) => void;
 }
@@ -68,6 +84,10 @@ interface CommonCodeBlockProps {
   enableLineReferences?: boolean;
   /** Callback when a line reference is clicked. */
   onLineReference?: (lineNumber: number) => void;
+  /** Language logo overrides keyed by language name or alias (`python`, `py`, `tsx`, etc.). */
+  languageIcons?: CodeBlockLanguageIconMap;
+  /** Show language logos in the header/tabs/switcher. Defaults to true. */
+  showLanguageIcon?: boolean;
   /** Accessible label for the code block. Pass via the standard `aria-label` attribute. */
   "aria-label"?: string;
 }
@@ -108,6 +128,8 @@ export interface CodeBlockSingleProps extends CommonCodeBlockProps {
   removedLinesNumbers?: number[];
   /** Controlled language switcher. */
   switcher?: CodeBlockSwitcher;
+  /** Optional single-file language logo override. Defaults from `language`. */
+  languageIcon?: CodeBlockLanguageIconValue;
   // Mutually exclusive with multi-file props:
   files?: never;
   defaultTitle?: never;
@@ -244,6 +266,34 @@ function FileIcon({ fileName }: { fileName: string }) {
   }
 }
 
+function HeaderIcon({
+  fileName,
+  icon,
+  language,
+  languageIcons,
+  showLanguageIcon,
+}: {
+  fileName: string;
+  icon?: CodeBlockLanguageIconValue | undefined;
+  language?: string | null | undefined;
+  languageIcons?: CodeBlockLanguageIconMap | undefined;
+  showLanguageIcon: boolean;
+}) {
+  const fallback = <FileIcon fileName={fileName} />;
+
+  if (!showLanguageIcon) return fallback;
+
+  return (
+    <CodeBlockLanguageIcon
+      className="size-4"
+      fallback={fallback}
+      icon={icon}
+      icons={languageIcons}
+      language={language || fileName}
+    />
+  );
+}
+
 // =============================================================================
 // Component
 // =============================================================================
@@ -307,6 +357,7 @@ export function CodeBlock(props: CodeBlockProps) {
         if (single.highlightedLines !== undefined) f.highlightedLines = single.highlightedLines;
         if (single.addedLinesNumbers !== undefined) f.addedLines = single.addedLinesNumbers;
         if (single.removedLinesNumbers !== undefined) f.removedLines = single.removedLinesNumbers;
+        if (single.languageIcon !== undefined) f.icon = single.languageIcon;
         return [f];
       })()
     : (props as CodeBlockFilesProps).files;
@@ -320,6 +371,8 @@ export function CodeBlock(props: CodeBlockProps) {
     maxHeight = 400,
     enableLineReferences = false,
     onLineReference,
+    languageIcons,
+    showLanguageIcon = true,
     "aria-label": ariaLabel,
   } = props;
 
@@ -392,6 +445,10 @@ export function CodeBlock(props: CodeBlockProps) {
   const detectedLanguage = activeFile?.language || getLanguageFromFileName(activeTitle || "");
   // Priority: controlled switcher > local override > detected/passed language.
   const effectiveLanguage = controlledSwitcher?.value ?? languageOverride ?? detectedLanguage;
+  const selectedControlledOption = controlledSwitcher?.options.find(
+    (option) => option.value === controlledSwitcher.value,
+  );
+  const selectedControlledLabel = selectedControlledOption?.label ?? controlledSwitcher?.value;
 
   // Memoized Set lookups for O(1) per-line checks + stable useCallback deps
   const highlightedSet = useMemo(
@@ -532,7 +589,7 @@ export function CodeBlock(props: CodeBlockProps) {
         <div className="flex items-center justify-between border-b px-4 py-2">
           <div className="flex gap-1 overflow-x-auto">
             {hasMultipleFiles ? (
-              normalizedFiles.map(({ title }) => (
+              normalizedFiles.map(({ icon, language, title }) => (
                 <button
                   key={title}
                   type="button"
@@ -544,13 +601,25 @@ export function CodeBlock(props: CodeBlockProps) {
                       : "hover:bg-accent hover:text-accent-foreground",
                   )}
                 >
-                  <FileIcon fileName={title} />
+                  <HeaderIcon
+                    fileName={title}
+                    icon={icon}
+                    language={language || title}
+                    languageIcons={languageIcons}
+                    showLanguageIcon={showLanguageIcon}
+                  />
                   <span className="hidden sm:inline">{title}</span>
                 </button>
               ))
             ) : showFilenameHeader && activeTitle ? (
               <span className="inline-flex items-center gap-2 px-2 py-1.5 text-muted-foreground text-sm">
-                <FileIcon fileName={activeTitle} />
+                <HeaderIcon
+                  fileName={activeTitle}
+                  icon={activeFile?.icon}
+                  language={effectiveLanguage}
+                  languageIcons={languageIcons}
+                  showLanguageIcon={showLanguageIcon}
+                />
                 <span>{activeTitle}</span>
               </span>
             ) : null}
@@ -564,14 +633,18 @@ export function CodeBlock(props: CodeBlockProps) {
                   <button
                     type="button"
                     aria-label={`Switch language, current: ${
-                      controlledSwitcher.options.find((o) => o.value === controlledSwitcher.value)
-                        ?.label ?? controlledSwitcher.value
+                      selectedControlledLabel ?? controlledSwitcher.value
                     }`}
                     aria-haspopup="menu"
                     className="inline-flex items-center gap-1 rounded-[var(--radius-md)] px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   >
-                    {controlledSwitcher.options.find((o) => o.value === controlledSwitcher.value)
-                      ?.label ?? controlledSwitcher.value}
+                    <CodeBlockLanguageIcon
+                      className="size-3.5"
+                      icon={selectedControlledOption?.icon}
+                      icons={languageIcons}
+                      language={controlledSwitcher.value}
+                    />
+                    <span>{selectedControlledLabel ?? controlledSwitcher.value}</span>
                     <ChevronDown className="h-3 w-3" />
                   </button>
                 </DropdownMenuTrigger>
@@ -585,6 +658,12 @@ export function CodeBlock(props: CodeBlockProps) {
                         opt.value === controlledSwitcher.value && "bg-accent font-medium",
                       )}
                     >
+                      <CodeBlockLanguageIcon
+                        className="mr-1 size-3.5"
+                        icon={opt.icon}
+                        icons={languageIcons}
+                        language={opt.value}
+                      />
                       {opt.label}
                     </DropdownMenuItem>
                   ))}
@@ -602,7 +681,12 @@ export function CodeBlock(props: CodeBlockProps) {
                     aria-haspopup="menu"
                     className="inline-flex items-center gap-1 rounded-[var(--radius-md)] px-2 py-1 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   >
-                    {effectiveLanguage}
+                    <CodeBlockLanguageIcon
+                      className="size-3.5"
+                      icons={languageIcons}
+                      language={effectiveLanguage}
+                    />
+                    <span>{effectiveLanguage}</span>
                     <ChevronDown className="h-3 w-3" />
                   </button>
                 </DropdownMenuTrigger>
@@ -616,6 +700,11 @@ export function CodeBlock(props: CodeBlockProps) {
                         lang === effectiveLanguage && "bg-accent font-medium",
                       )}
                     >
+                      <CodeBlockLanguageIcon
+                        className="mr-1 size-3.5"
+                        icons={languageIcons}
+                        language={lang}
+                      />
                       {lang}
                     </DropdownMenuItem>
                   ))}

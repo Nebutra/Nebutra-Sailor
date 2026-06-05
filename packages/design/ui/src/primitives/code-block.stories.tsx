@@ -62,6 +62,14 @@ const jsonCode = `{
   }
 }`;
 
+const pythonCode = `import asyncio
+
+async def main():
+    results = await asyncio.gather(*[
+        run_tool(call) for call in assistant_turn.tool_use_blocks
+    ])
+    return results`;
+
 export const SingleFile: Story = {
   render: () => (
     <div className="w-[600px]">
@@ -112,6 +120,16 @@ export const JsonOnly: Story = {
 // =============================================================================
 // Geist-aligned features
 // =============================================================================
+
+export const WithLanguageLogo: Story = {
+  render: () => (
+    <div className="w-[600px]">
+      <CodeBlock filename="parallel-tools.py" language="python">
+        {pythonCode}
+      </CodeBlock>
+    </div>
+  ),
+};
 
 export const HighlightedLines: Story = {
   render: () => (
