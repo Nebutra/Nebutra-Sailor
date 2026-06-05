@@ -134,6 +134,34 @@ export const TenantKind = {
 export type TenantKind = (typeof TenantKind)[keyof typeof TenantKind]
 
 
+export const TenantLifecycleState = {
+  personal_draft: 'personal_draft',
+  personal_paid: 'personal_paid',
+  workspace_ready: 'workspace_ready',
+  organization_owned: 'organization_owned'
+} as const
+
+export type TenantLifecycleState = (typeof TenantLifecycleState)[keyof typeof TenantLifecycleState]
+
+
+export const TenantTransferKind = {
+  company_context: 'company_context',
+  startup_project: 'startup_project',
+  license: 'license'
+} as const
+
+export type TenantTransferKind = (typeof TenantTransferKind)[keyof typeof TenantTransferKind]
+
+
+export const TenantTransferStatus = {
+  pending: 'pending',
+  applied: 'applied',
+  failed: 'failed'
+} as const
+
+export type TenantTransferStatus = (typeof TenantTransferStatus)[keyof typeof TenantTransferStatus]
+
+
 export const AutomationStatus = {
   ACTIVE: 'ACTIVE',
   PAUSED: 'PAUSED',

@@ -33,6 +33,16 @@ export type Organization = Prisma.OrganizationModel
  */
 export type Tenant = Prisma.TenantModel
 /**
+ * Model TenantTransferJournal
+ * Audit + execution journal for personal-to-workspace asset transfers. A
+ * form-team request records `pending` rows BEFORE the destination org Tenant
+ * exists (it is provisioned asynchronously via the Clerk webhook), keyed by the
+ * known `toOrganizationId`. The provisioning worker fills `toTenantId`,
+ * re-points the named asset, and marks the row `applied` (or `failed` with
+ * `error`). No implicit copy — each row is an explicit ownership change.
+ */
+export type TenantTransferJournal = Prisma.TenantTransferJournalModel
+/**
  * Model APIKey
  * 
  */

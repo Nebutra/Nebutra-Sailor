@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Organization: 'Organization',
   Tenant: 'Tenant',
+  TenantTransferJournal: 'TenantTransferJournal',
   APIKey: 'APIKey',
   User: 'User',
   OrganizationMember: 'OrganizationMember',
@@ -481,7 +482,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -630,6 +631,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TenantCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TenantCountAggregateOutputType> | number
+        }
+      }
+    }
+    TenantTransferJournal: {
+      payload: Prisma.$TenantTransferJournalPayload<ExtArgs>
+      fields: Prisma.TenantTransferJournalFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TenantTransferJournalFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TenantTransferJournalFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>
+        }
+        findFirst: {
+          args: Prisma.TenantTransferJournalFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TenantTransferJournalFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>
+        }
+        findMany: {
+          args: Prisma.TenantTransferJournalFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>[]
+        }
+        create: {
+          args: Prisma.TenantTransferJournalCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>
+        }
+        createMany: {
+          args: Prisma.TenantTransferJournalCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TenantTransferJournalCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>[]
+        }
+        delete: {
+          args: Prisma.TenantTransferJournalDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>
+        }
+        update: {
+          args: Prisma.TenantTransferJournalUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>
+        }
+        deleteMany: {
+          args: Prisma.TenantTransferJournalDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TenantTransferJournalUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TenantTransferJournalUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>[]
+        }
+        upsert: {
+          args: Prisma.TenantTransferJournalUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TenantTransferJournalPayload>
+        }
+        aggregate: {
+          args: Prisma.TenantTransferJournalAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTenantTransferJournal>
+        }
+        groupBy: {
+          args: Prisma.TenantTransferJournalGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TenantTransferJournalGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TenantTransferJournalCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TenantTransferJournalCountAggregateOutputType> | number
         }
       }
     }
@@ -6593,12 +6668,31 @@ export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[k
 export const TenantScalarFieldEnum = {
   id: 'id',
   kind: 'kind',
+  lifecycleState: 'lifecycleState',
   organizationId: 'organizationId',
   userId: 'userId',
   createdAt: 'createdAt'
 } as const
 
 export type TenantScalarFieldEnum = (typeof TenantScalarFieldEnum)[keyof typeof TenantScalarFieldEnum]
+
+
+export const TenantTransferJournalScalarFieldEnum = {
+  id: 'id',
+  fromTenantId: 'fromTenantId',
+  toTenantId: 'toTenantId',
+  toOrganizationId: 'toOrganizationId',
+  kind: 'kind',
+  subjectId: 'subjectId',
+  status: 'status',
+  initiatedByUserId: 'initiatedByUserId',
+  cofounderProfileId: 'cofounderProfileId',
+  error: 'error',
+  createdAt: 'createdAt',
+  appliedAt: 'appliedAt'
+} as const
+
+export type TenantTransferJournalScalarFieldEnum = (typeof TenantTransferJournalScalarFieldEnum)[keyof typeof TenantTransferJournalScalarFieldEnum]
 
 
 export const APIKeyScalarFieldEnum = {
@@ -8084,6 +8178,48 @@ export type ListEnumTenantKindFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'TenantLifecycleState'
+ */
+export type EnumTenantLifecycleStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TenantLifecycleState'>
+    
+
+
+/**
+ * Reference to a field of type 'TenantLifecycleState[]'
+ */
+export type ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TenantLifecycleState[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TenantTransferKind'
+ */
+export type EnumTenantTransferKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TenantTransferKind'>
+    
+
+
+/**
+ * Reference to a field of type 'TenantTransferKind[]'
+ */
+export type ListEnumTenantTransferKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TenantTransferKind[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TenantTransferStatus'
+ */
+export type EnumTenantTransferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TenantTransferStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TenantTransferStatus[]'
+ */
+export type ListEnumTenantTransferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TenantTransferStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -8704,6 +8840,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   organization?: Prisma.OrganizationOmit
   tenant?: Prisma.TenantOmit
+  tenantTransferJournal?: Prisma.TenantTransferJournalOmit
   aPIKey?: Prisma.APIKeyOmit
   user?: Prisma.UserOmit
   organizationMember?: Prisma.OrganizationMemberOmit

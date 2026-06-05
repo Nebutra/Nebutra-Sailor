@@ -32,6 +32,7 @@ export type AggregateTenant = {
 export type TenantMinAggregateOutputType = {
   id: string | null
   kind: $Enums.TenantKind | null
+  lifecycleState: $Enums.TenantLifecycleState | null
   organizationId: string | null
   userId: string | null
   createdAt: Date | null
@@ -40,6 +41,7 @@ export type TenantMinAggregateOutputType = {
 export type TenantMaxAggregateOutputType = {
   id: string | null
   kind: $Enums.TenantKind | null
+  lifecycleState: $Enums.TenantLifecycleState | null
   organizationId: string | null
   userId: string | null
   createdAt: Date | null
@@ -48,6 +50,7 @@ export type TenantMaxAggregateOutputType = {
 export type TenantCountAggregateOutputType = {
   id: number
   kind: number
+  lifecycleState: number
   organizationId: number
   userId: number
   createdAt: number
@@ -58,6 +61,7 @@ export type TenantCountAggregateOutputType = {
 export type TenantMinAggregateInputType = {
   id?: true
   kind?: true
+  lifecycleState?: true
   organizationId?: true
   userId?: true
   createdAt?: true
@@ -66,6 +70,7 @@ export type TenantMinAggregateInputType = {
 export type TenantMaxAggregateInputType = {
   id?: true
   kind?: true
+  lifecycleState?: true
   organizationId?: true
   userId?: true
   createdAt?: true
@@ -74,6 +79,7 @@ export type TenantMaxAggregateInputType = {
 export type TenantCountAggregateInputType = {
   id?: true
   kind?: true
+  lifecycleState?: true
   organizationId?: true
   userId?: true
   createdAt?: true
@@ -155,6 +161,7 @@ export type TenantGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type TenantGroupByOutputType = {
   id: string
   kind: $Enums.TenantKind
+  lifecycleState: $Enums.TenantLifecycleState
   organizationId: string | null
   userId: string | null
   createdAt: Date
@@ -184,6 +191,7 @@ export type TenantWhereInput = {
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   id?: Prisma.StringFilter<"Tenant"> | string
   kind?: Prisma.EnumTenantKindFilter<"Tenant"> | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFilter<"Tenant"> | $Enums.TenantLifecycleState
   organizationId?: Prisma.StringNullableFilter<"Tenant"> | string | null
   userId?: Prisma.StringNullableFilter<"Tenant"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
@@ -223,11 +231,14 @@ export type TenantWhereInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryListRelationFilter
   userConsents?: Prisma.UserConsentListRelationFilter
   userSkills?: Prisma.UserSkillListRelationFilter
+  transferJournalsOut?: Prisma.TenantTransferJournalListRelationFilter
+  transferJournalsIn?: Prisma.TenantTransferJournalListRelationFilter
 }
 
 export type TenantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   kind?: Prisma.SortOrder
+  lifecycleState?: Prisma.SortOrder
   organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -267,6 +278,8 @@ export type TenantOrderByWithRelationInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryOrderByRelationAggregateInput
   userConsents?: Prisma.UserConsentOrderByRelationAggregateInput
   userSkills?: Prisma.UserSkillOrderByRelationAggregateInput
+  transferJournalsOut?: Prisma.TenantTransferJournalOrderByRelationAggregateInput
+  transferJournalsIn?: Prisma.TenantTransferJournalOrderByRelationAggregateInput
 }
 
 export type TenantWhereUniqueInput = Prisma.AtLeast<{
@@ -277,6 +290,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.TenantWhereInput[]
   NOT?: Prisma.TenantWhereInput | Prisma.TenantWhereInput[]
   kind?: Prisma.EnumTenantKindFilter<"Tenant"> | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFilter<"Tenant"> | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFilter<"Tenant"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -314,11 +328,14 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   usageLedgerEntries?: Prisma.UsageLedgerEntryListRelationFilter
   userConsents?: Prisma.UserConsentListRelationFilter
   userSkills?: Prisma.UserSkillListRelationFilter
+  transferJournalsOut?: Prisma.TenantTransferJournalListRelationFilter
+  transferJournalsIn?: Prisma.TenantTransferJournalListRelationFilter
 }, "id" | "organizationId" | "userId">
 
 export type TenantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   kind?: Prisma.SortOrder
+  lifecycleState?: Prisma.SortOrder
   organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -333,6 +350,7 @@ export type TenantScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TenantScalarWhereWithAggregatesInput | Prisma.TenantScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Tenant"> | string
   kind?: Prisma.EnumTenantKindWithAggregatesFilter<"Tenant"> | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateWithAggregatesFilter<"Tenant"> | $Enums.TenantLifecycleState
   organizationId?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   userId?: Prisma.StringNullableWithAggregatesFilter<"Tenant"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Tenant"> | Date | string
@@ -341,6 +359,7 @@ export type TenantScalarWhereWithAggregatesInput = {
 export type TenantCreateInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -378,11 +397,14 @@ export type TenantCreateInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -420,11 +442,14 @@ export type TenantUncheckedCreateInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -462,11 +487,14 @@ export type TenantUpdateInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -504,11 +532,14 @@ export type TenantUncheckedUpdateInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateManyInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -517,12 +548,14 @@ export type TenantCreateManyInput = {
 export type TenantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TenantUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -536,6 +569,7 @@ export type TenantNullableScalarRelationFilter = {
 export type TenantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   kind?: Prisma.SortOrder
+  lifecycleState?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -544,6 +578,7 @@ export type TenantCountOrderByAggregateInput = {
 export type TenantMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   kind?: Prisma.SortOrder
+  lifecycleState?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -552,6 +587,7 @@ export type TenantMaxOrderByAggregateInput = {
 export type TenantMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   kind?: Prisma.SortOrder
+  lifecycleState?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -596,6 +632,40 @@ export type TenantUncheckedUpdateOneWithoutOrganizationNestedInput = {
 
 export type EnumTenantKindFieldUpdateOperationsInput = {
   set?: $Enums.TenantKind
+}
+
+export type EnumTenantLifecycleStateFieldUpdateOperationsInput = {
+  set?: $Enums.TenantLifecycleState
+}
+
+export type TenantCreateNestedOneWithoutTransferJournalsOutInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutTransferJournalsOutInput, Prisma.TenantUncheckedCreateWithoutTransferJournalsOutInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutTransferJournalsOutInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantCreateNestedOneWithoutTransferJournalsInInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutTransferJournalsInInput, Prisma.TenantUncheckedCreateWithoutTransferJournalsInInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutTransferJournalsInInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutTransferJournalsOutNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutTransferJournalsOutInput, Prisma.TenantUncheckedCreateWithoutTransferJournalsOutInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutTransferJournalsOutInput
+  upsert?: Prisma.TenantUpsertWithoutTransferJournalsOutInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutTransferJournalsOutInput, Prisma.TenantUpdateWithoutTransferJournalsOutInput>, Prisma.TenantUncheckedUpdateWithoutTransferJournalsOutInput>
+}
+
+export type TenantUpdateOneWithoutTransferJournalsInNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutTransferJournalsInInput, Prisma.TenantUncheckedCreateWithoutTransferJournalsInInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutTransferJournalsInInput
+  upsert?: Prisma.TenantUpsertWithoutTransferJournalsInInput
+  disconnect?: Prisma.TenantWhereInput | boolean
+  delete?: Prisma.TenantWhereInput | boolean
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutTransferJournalsInInput, Prisma.TenantUpdateWithoutTransferJournalsInInput>, Prisma.TenantUncheckedUpdateWithoutTransferJournalsInInput>
 }
 
 export type TenantCreateNestedOneWithoutApiKeysInput = {
@@ -1121,6 +1191,7 @@ export type TenantUpdateOneRequiredWithoutAtelierCanvasesNestedInput = {
 export type TenantCreateWithoutOrganizationInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
@@ -1157,11 +1228,14 @@ export type TenantCreateWithoutOrganizationInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutOrganizationInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   userId?: string | null
   createdAt?: Date | string
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
@@ -1198,6 +1272,8 @@ export type TenantUncheckedCreateWithoutOrganizationInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutOrganizationInput = {
@@ -1219,6 +1295,7 @@ export type TenantUpdateToOneWithWhereWithoutOrganizationInput = {
 export type TenantUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
@@ -1255,11 +1332,14 @@ export type TenantUpdateWithoutOrganizationInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
@@ -1296,11 +1376,398 @@ export type TenantUncheckedUpdateWithoutOrganizationInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantCreateWithoutTransferJournalsOutInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantUncheckedCreateWithoutTransferJournalsOutInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
+}
+
+export type TenantCreateOrConnectWithoutTransferJournalsOutInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutTransferJournalsOutInput, Prisma.TenantUncheckedCreateWithoutTransferJournalsOutInput>
+}
+
+export type TenantCreateWithoutTransferJournalsInInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+}
+
+export type TenantUncheckedCreateWithoutTransferJournalsInInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedCreateNestedManyWithoutTenantInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+}
+
+export type TenantCreateOrConnectWithoutTransferJournalsInInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutTransferJournalsInInput, Prisma.TenantUncheckedCreateWithoutTransferJournalsInInput>
+}
+
+export type TenantUpsertWithoutTransferJournalsOutInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutTransferJournalsOutInput, Prisma.TenantUncheckedUpdateWithoutTransferJournalsOutInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutTransferJournalsOutInput, Prisma.TenantUncheckedCreateWithoutTransferJournalsOutInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutTransferJournalsOutInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutTransferJournalsOutInput, Prisma.TenantUncheckedUpdateWithoutTransferJournalsOutInput>
+}
+
+export type TenantUpdateWithoutTransferJournalsOutInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutTransferJournalsOutInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
+}
+
+export type TenantUpsertWithoutTransferJournalsInInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutTransferJournalsInInput, Prisma.TenantUncheckedUpdateWithoutTransferJournalsInInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutTransferJournalsInInput, Prisma.TenantUncheckedCreateWithoutTransferJournalsInInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutTransferJournalsInInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutTransferJournalsInInput, Prisma.TenantUncheckedUpdateWithoutTransferJournalsInInput>
+}
+
+export type TenantUpdateWithoutTransferJournalsInInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutTransferJournalsInInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
+  workflowDefinitions?: Prisma.WorkflowDefinitionUncheckedUpdateManyWithoutTenantNestedInput
+  workflowRuns?: Prisma.WorkflowRunUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
 }
 
 export type TenantCreateWithoutApiKeysInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -1337,11 +1804,14 @@ export type TenantCreateWithoutApiKeysInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutApiKeysInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -1378,6 +1848,8 @@ export type TenantUncheckedCreateWithoutApiKeysInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutApiKeysInput = {
@@ -1399,6 +1871,7 @@ export type TenantUpdateToOneWithWhereWithoutApiKeysInput = {
 export type TenantUpdateWithoutApiKeysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -1435,11 +1908,14 @@ export type TenantUpdateWithoutApiKeysInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutApiKeysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1476,11 +1952,14 @@ export type TenantUncheckedUpdateWithoutApiKeysInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutUserInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
@@ -1517,11 +1996,14 @@ export type TenantCreateWithoutUserInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUserInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   createdAt?: Date | string
   apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
@@ -1558,6 +2040,8 @@ export type TenantUncheckedCreateWithoutUserInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUserInput = {
@@ -1579,6 +2063,7 @@ export type TenantUpdateToOneWithWhereWithoutUserInput = {
 export type TenantUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
@@ -1615,11 +2100,14 @@ export type TenantUpdateWithoutUserInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
@@ -1656,11 +2144,14 @@ export type TenantUncheckedUpdateWithoutUserInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutContentsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -1697,11 +2188,14 @@ export type TenantCreateWithoutContentsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutContentsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -1738,6 +2232,8 @@ export type TenantUncheckedCreateWithoutContentsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutContentsInput = {
@@ -1759,6 +2255,7 @@ export type TenantUpdateToOneWithWhereWithoutContentsInput = {
 export type TenantUpdateWithoutContentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -1795,11 +2292,14 @@ export type TenantUpdateWithoutContentsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutContentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1836,11 +2336,14 @@ export type TenantUncheckedUpdateWithoutContentsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutProductsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -1877,11 +2380,14 @@ export type TenantCreateWithoutProductsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutProductsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -1918,6 +2424,8 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutProductsInput = {
@@ -1939,6 +2447,7 @@ export type TenantUpdateToOneWithWhereWithoutProductsInput = {
 export type TenantUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -1975,11 +2484,14 @@ export type TenantUpdateWithoutProductsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2016,11 +2528,14 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutOrdersInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -2057,11 +2572,14 @@ export type TenantCreateWithoutOrdersInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutOrdersInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -2098,6 +2616,8 @@ export type TenantUncheckedCreateWithoutOrdersInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutOrdersInput = {
@@ -2119,6 +2639,7 @@ export type TenantUpdateToOneWithWhereWithoutOrdersInput = {
 export type TenantUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -2155,11 +2676,14 @@ export type TenantUpdateWithoutOrdersInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2196,11 +2720,14 @@ export type TenantUncheckedUpdateWithoutOrdersInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutIntegrationsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -2237,11 +2764,14 @@ export type TenantCreateWithoutIntegrationsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutIntegrationsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -2278,6 +2808,8 @@ export type TenantUncheckedCreateWithoutIntegrationsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutIntegrationsInput = {
@@ -2299,6 +2831,7 @@ export type TenantUpdateToOneWithWhereWithoutIntegrationsInput = {
 export type TenantUpdateWithoutIntegrationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -2335,11 +2868,14 @@ export type TenantUpdateWithoutIntegrationsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutIntegrationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2376,11 +2912,14 @@ export type TenantUncheckedUpdateWithoutIntegrationsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutTenantProviderKeysInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -2417,11 +2956,14 @@ export type TenantCreateWithoutTenantProviderKeysInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutTenantProviderKeysInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -2458,6 +3000,8 @@ export type TenantUncheckedCreateWithoutTenantProviderKeysInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutTenantProviderKeysInput = {
@@ -2479,6 +3023,7 @@ export type TenantUpdateToOneWithWhereWithoutTenantProviderKeysInput = {
 export type TenantUpdateWithoutTenantProviderKeysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -2515,11 +3060,14 @@ export type TenantUpdateWithoutTenantProviderKeysInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutTenantProviderKeysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2556,11 +3104,14 @@ export type TenantUncheckedUpdateWithoutTenantProviderKeysInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutAutomationsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -2597,11 +3148,14 @@ export type TenantCreateWithoutAutomationsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAutomationsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -2638,6 +3192,8 @@ export type TenantUncheckedCreateWithoutAutomationsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAutomationsInput = {
@@ -2659,6 +3215,7 @@ export type TenantUpdateToOneWithWhereWithoutAutomationsInput = {
 export type TenantUpdateWithoutAutomationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -2695,11 +3252,14 @@ export type TenantUpdateWithoutAutomationsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAutomationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2736,11 +3296,14 @@ export type TenantUncheckedUpdateWithoutAutomationsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutAutomationRunsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -2777,11 +3340,14 @@ export type TenantCreateWithoutAutomationRunsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAutomationRunsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -2818,6 +3384,8 @@ export type TenantUncheckedCreateWithoutAutomationRunsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAutomationRunsInput = {
@@ -2839,6 +3407,7 @@ export type TenantUpdateToOneWithWhereWithoutAutomationRunsInput = {
 export type TenantUpdateWithoutAutomationRunsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -2875,11 +3444,14 @@ export type TenantUpdateWithoutAutomationRunsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAutomationRunsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2916,11 +3488,14 @@ export type TenantUncheckedUpdateWithoutAutomationRunsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutWorkflowDefinitionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -2957,11 +3532,14 @@ export type TenantCreateWithoutWorkflowDefinitionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutWorkflowDefinitionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -2998,6 +3576,8 @@ export type TenantUncheckedCreateWithoutWorkflowDefinitionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutWorkflowDefinitionsInput = {
@@ -3019,6 +3599,7 @@ export type TenantUpdateToOneWithWhereWithoutWorkflowDefinitionsInput = {
 export type TenantUpdateWithoutWorkflowDefinitionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -3055,11 +3636,14 @@ export type TenantUpdateWithoutWorkflowDefinitionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutWorkflowDefinitionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3096,11 +3680,14 @@ export type TenantUncheckedUpdateWithoutWorkflowDefinitionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutWorkflowRunsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -3137,11 +3724,14 @@ export type TenantCreateWithoutWorkflowRunsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutWorkflowRunsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -3178,6 +3768,8 @@ export type TenantUncheckedCreateWithoutWorkflowRunsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutWorkflowRunsInput = {
@@ -3199,6 +3791,7 @@ export type TenantUpdateToOneWithWhereWithoutWorkflowRunsInput = {
 export type TenantUpdateWithoutWorkflowRunsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -3235,11 +3828,14 @@ export type TenantUpdateWithoutWorkflowRunsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutWorkflowRunsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3276,11 +3872,14 @@ export type TenantUncheckedUpdateWithoutWorkflowRunsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutRequestLogsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -3317,11 +3916,14 @@ export type TenantCreateWithoutRequestLogsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutRequestLogsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -3358,6 +3960,8 @@ export type TenantUncheckedCreateWithoutRequestLogsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutRequestLogsInput = {
@@ -3379,6 +3983,7 @@ export type TenantUpdateToOneWithWhereWithoutRequestLogsInput = {
 export type TenantUpdateWithoutRequestLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -3415,11 +4020,14 @@ export type TenantUpdateWithoutRequestLogsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutRequestLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3456,11 +4064,14 @@ export type TenantUncheckedUpdateWithoutRequestLogsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutCustomerPlanVersionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -3497,11 +4108,14 @@ export type TenantCreateWithoutCustomerPlanVersionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCustomerPlanVersionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -3538,6 +4152,8 @@ export type TenantUncheckedCreateWithoutCustomerPlanVersionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCustomerPlanVersionsInput = {
@@ -3559,6 +4175,7 @@ export type TenantUpdateToOneWithWhereWithoutCustomerPlanVersionsInput = {
 export type TenantUpdateWithoutCustomerPlanVersionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -3595,11 +4212,14 @@ export type TenantUpdateWithoutCustomerPlanVersionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCustomerPlanVersionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3636,11 +4256,14 @@ export type TenantUncheckedUpdateWithoutCustomerPlanVersionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutCustomerFeatureOverridesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -3677,11 +4300,14 @@ export type TenantCreateWithoutCustomerFeatureOverridesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCustomerFeatureOverridesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -3718,6 +4344,8 @@ export type TenantUncheckedCreateWithoutCustomerFeatureOverridesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCustomerFeatureOverridesInput = {
@@ -3739,6 +4367,7 @@ export type TenantUpdateToOneWithWhereWithoutCustomerFeatureOverridesInput = {
 export type TenantUpdateWithoutCustomerFeatureOverridesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -3775,11 +4404,14 @@ export type TenantUpdateWithoutCustomerFeatureOverridesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCustomerFeatureOverridesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3816,11 +4448,14 @@ export type TenantUncheckedUpdateWithoutCustomerFeatureOverridesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutCustomerUsageLimitsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -3857,11 +4492,14 @@ export type TenantCreateWithoutCustomerUsageLimitsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCustomerUsageLimitsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -3898,6 +4536,8 @@ export type TenantUncheckedCreateWithoutCustomerUsageLimitsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCustomerUsageLimitsInput = {
@@ -3919,6 +4559,7 @@ export type TenantUpdateToOneWithWhereWithoutCustomerUsageLimitsInput = {
 export type TenantUpdateWithoutCustomerUsageLimitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -3955,11 +4596,14 @@ export type TenantUpdateWithoutCustomerUsageLimitsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCustomerUsageLimitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3996,11 +4640,14 @@ export type TenantUncheckedUpdateWithoutCustomerUsageLimitsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutSubscriptionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -4037,11 +4684,14 @@ export type TenantCreateWithoutSubscriptionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -4078,6 +4728,8 @@ export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutSubscriptionsInput = {
@@ -4099,6 +4751,7 @@ export type TenantUpdateToOneWithWhereWithoutSubscriptionsInput = {
 export type TenantUpdateWithoutSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -4135,11 +4788,14 @@ export type TenantUpdateWithoutSubscriptionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4176,11 +4832,14 @@ export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutInvoicesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -4217,11 +4876,14 @@ export type TenantCreateWithoutInvoicesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutInvoicesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -4258,6 +4920,8 @@ export type TenantUncheckedCreateWithoutInvoicesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutInvoicesInput = {
@@ -4279,6 +4943,7 @@ export type TenantUpdateToOneWithWhereWithoutInvoicesInput = {
 export type TenantUpdateWithoutInvoicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -4315,11 +4980,14 @@ export type TenantUpdateWithoutInvoicesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutInvoicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4356,11 +5024,14 @@ export type TenantUncheckedUpdateWithoutInvoicesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutPaymentsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -4397,11 +5068,14 @@ export type TenantCreateWithoutPaymentsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutPaymentsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -4438,6 +5112,8 @@ export type TenantUncheckedCreateWithoutPaymentsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutPaymentsInput = {
@@ -4459,6 +5135,7 @@ export type TenantUpdateToOneWithWhereWithoutPaymentsInput = {
 export type TenantUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -4495,11 +5172,14 @@ export type TenantUpdateWithoutPaymentsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4536,11 +5216,14 @@ export type TenantUncheckedUpdateWithoutPaymentsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutPaymentMethodsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -4577,11 +5260,14 @@ export type TenantCreateWithoutPaymentMethodsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutPaymentMethodsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -4618,6 +5304,8 @@ export type TenantUncheckedCreateWithoutPaymentMethodsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutPaymentMethodsInput = {
@@ -4639,6 +5327,7 @@ export type TenantUpdateToOneWithWhereWithoutPaymentMethodsInput = {
 export type TenantUpdateWithoutPaymentMethodsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -4675,11 +5364,14 @@ export type TenantUpdateWithoutPaymentMethodsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutPaymentMethodsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4716,11 +5408,14 @@ export type TenantUncheckedUpdateWithoutPaymentMethodsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutUsageLedgerEntriesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -4757,11 +5452,14 @@ export type TenantCreateWithoutUsageLedgerEntriesInput = {
   uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUsageLedgerEntriesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -4798,6 +5496,8 @@ export type TenantUncheckedCreateWithoutUsageLedgerEntriesInput = {
   uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUsageLedgerEntriesInput = {
@@ -4819,6 +5519,7 @@ export type TenantUpdateToOneWithWhereWithoutUsageLedgerEntriesInput = {
 export type TenantUpdateWithoutUsageLedgerEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -4855,11 +5556,14 @@ export type TenantUpdateWithoutUsageLedgerEntriesInput = {
   uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUsageLedgerEntriesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4896,11 +5600,14 @@ export type TenantUncheckedUpdateWithoutUsageLedgerEntriesInput = {
   uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutCreditBalancesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -4937,11 +5644,14 @@ export type TenantCreateWithoutCreditBalancesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCreditBalancesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -4978,6 +5688,8 @@ export type TenantUncheckedCreateWithoutCreditBalancesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCreditBalancesInput = {
@@ -4999,6 +5711,7 @@ export type TenantUpdateToOneWithWhereWithoutCreditBalancesInput = {
 export type TenantUpdateWithoutCreditBalancesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -5035,11 +5748,14 @@ export type TenantUpdateWithoutCreditBalancesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCreditBalancesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5076,11 +5792,14 @@ export type TenantUncheckedUpdateWithoutCreditBalancesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutStripeCustomersInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -5117,11 +5836,14 @@ export type TenantCreateWithoutStripeCustomersInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutStripeCustomersInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -5158,6 +5880,8 @@ export type TenantUncheckedCreateWithoutStripeCustomersInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutStripeCustomersInput = {
@@ -5179,6 +5903,7 @@ export type TenantUpdateToOneWithWhereWithoutStripeCustomersInput = {
 export type TenantUpdateWithoutStripeCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -5215,11 +5940,14 @@ export type TenantUpdateWithoutStripeCustomersInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutStripeCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5256,11 +5984,14 @@ export type TenantUncheckedUpdateWithoutStripeCustomersInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutAuditLogsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -5297,11 +6028,14 @@ export type TenantCreateWithoutAuditLogsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAuditLogsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -5338,6 +6072,8 @@ export type TenantUncheckedCreateWithoutAuditLogsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAuditLogsInput = {
@@ -5359,6 +6095,7 @@ export type TenantUpdateToOneWithWhereWithoutAuditLogsInput = {
 export type TenantUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -5395,11 +6132,14 @@ export type TenantUpdateWithoutAuditLogsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5436,11 +6176,14 @@ export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutUserConsentsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -5477,11 +6220,14 @@ export type TenantCreateWithoutUserConsentsInput = {
   uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUserConsentsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -5518,6 +6264,8 @@ export type TenantUncheckedCreateWithoutUserConsentsInput = {
   uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUserConsentsInput = {
@@ -5539,6 +6287,7 @@ export type TenantUpdateToOneWithWhereWithoutUserConsentsInput = {
 export type TenantUpdateWithoutUserConsentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -5575,11 +6324,14 @@ export type TenantUpdateWithoutUserConsentsInput = {
   uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUserConsentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5616,11 +6368,14 @@ export type TenantUncheckedUpdateWithoutUserConsentsInput = {
   uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutTasksInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -5657,11 +6412,14 @@ export type TenantCreateWithoutTasksInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutTasksInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -5698,6 +6456,8 @@ export type TenantUncheckedCreateWithoutTasksInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutTasksInput = {
@@ -5719,6 +6479,7 @@ export type TenantUpdateToOneWithWhereWithoutTasksInput = {
 export type TenantUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -5755,11 +6516,14 @@ export type TenantUpdateWithoutTasksInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5796,11 +6560,14 @@ export type TenantUncheckedUpdateWithoutTasksInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutUploadsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -5837,11 +6604,14 @@ export type TenantCreateWithoutUploadsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUploadsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -5878,6 +6648,8 @@ export type TenantUncheckedCreateWithoutUploadsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUploadsInput = {
@@ -5899,6 +6671,7 @@ export type TenantUpdateToOneWithWhereWithoutUploadsInput = {
 export type TenantUpdateWithoutUploadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -5935,11 +6708,14 @@ export type TenantUpdateWithoutUploadsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUploadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5976,11 +6752,14 @@ export type TenantUncheckedUpdateWithoutUploadsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutOauthClientsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -6017,11 +6796,14 @@ export type TenantCreateWithoutOauthClientsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutOauthClientsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -6058,6 +6840,8 @@ export type TenantUncheckedCreateWithoutOauthClientsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutOauthClientsInput = {
@@ -6079,6 +6863,7 @@ export type TenantUpdateToOneWithWhereWithoutOauthClientsInput = {
 export type TenantUpdateWithoutOauthClientsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -6115,11 +6900,14 @@ export type TenantUpdateWithoutOauthClientsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutOauthClientsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6156,11 +6944,14 @@ export type TenantUncheckedUpdateWithoutOauthClientsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutChatSessionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -6197,11 +6988,14 @@ export type TenantCreateWithoutChatSessionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutChatSessionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -6238,6 +7032,8 @@ export type TenantUncheckedCreateWithoutChatSessionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutChatSessionsInput = {
@@ -6259,6 +7055,7 @@ export type TenantUpdateToOneWithWhereWithoutChatSessionsInput = {
 export type TenantUpdateWithoutChatSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -6295,11 +7092,14 @@ export type TenantUpdateWithoutChatSessionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutChatSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6336,11 +7136,14 @@ export type TenantUncheckedUpdateWithoutChatSessionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutThreadsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -6377,11 +7180,14 @@ export type TenantCreateWithoutThreadsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutThreadsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -6418,6 +7224,8 @@ export type TenantUncheckedCreateWithoutThreadsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutThreadsInput = {
@@ -6439,6 +7247,7 @@ export type TenantUpdateToOneWithWhereWithoutThreadsInput = {
 export type TenantUpdateWithoutThreadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -6475,11 +7284,14 @@ export type TenantUpdateWithoutThreadsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutThreadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6516,11 +7328,14 @@ export type TenantUncheckedUpdateWithoutThreadsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutUserSkillsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -6557,11 +7372,14 @@ export type TenantCreateWithoutUserSkillsInput = {
   uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutUserSkillsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -6598,6 +7416,8 @@ export type TenantUncheckedCreateWithoutUserSkillsInput = {
   uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutUserSkillsInput = {
@@ -6619,6 +7439,7 @@ export type TenantUpdateToOneWithWhereWithoutUserSkillsInput = {
 export type TenantUpdateWithoutUserSkillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -6655,11 +7476,14 @@ export type TenantUpdateWithoutUserSkillsInput = {
   uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutUserSkillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6696,11 +7520,14 @@ export type TenantUncheckedUpdateWithoutUserSkillsInput = {
   uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutConnectorsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -6737,11 +7564,14 @@ export type TenantCreateWithoutConnectorsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutConnectorsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -6778,6 +7608,8 @@ export type TenantUncheckedCreateWithoutConnectorsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutConnectorsInput = {
@@ -6799,6 +7631,7 @@ export type TenantUpdateToOneWithWhereWithoutConnectorsInput = {
 export type TenantUpdateWithoutConnectorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -6835,11 +7668,14 @@ export type TenantUpdateWithoutConnectorsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutConnectorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -6876,11 +7712,14 @@ export type TenantUncheckedUpdateWithoutConnectorsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutCofounderProfileInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -6917,11 +7756,14 @@ export type TenantCreateWithoutCofounderProfileInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCofounderProfileInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -6958,6 +7800,8 @@ export type TenantUncheckedCreateWithoutCofounderProfileInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCofounderProfileInput = {
@@ -6979,6 +7823,7 @@ export type TenantUpdateToOneWithWhereWithoutCofounderProfileInput = {
 export type TenantUpdateWithoutCofounderProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -7015,11 +7860,14 @@ export type TenantUpdateWithoutCofounderProfileInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCofounderProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7056,11 +7904,14 @@ export type TenantUncheckedUpdateWithoutCofounderProfileInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutCodeRedemptionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -7097,11 +7948,14 @@ export type TenantCreateWithoutCodeRedemptionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutCodeRedemptionsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -7138,6 +7992,8 @@ export type TenantUncheckedCreateWithoutCodeRedemptionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutCodeRedemptionsInput = {
@@ -7159,6 +8015,7 @@ export type TenantUpdateToOneWithWhereWithoutCodeRedemptionsInput = {
 export type TenantUpdateWithoutCodeRedemptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -7195,11 +8052,14 @@ export type TenantUpdateWithoutCodeRedemptionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutCodeRedemptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7236,11 +8096,14 @@ export type TenantUncheckedUpdateWithoutCodeRedemptionsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutFeedbackReportsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -7277,11 +8140,14 @@ export type TenantCreateWithoutFeedbackReportsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutFeedbackReportsInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -7318,6 +8184,8 @@ export type TenantUncheckedCreateWithoutFeedbackReportsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutFeedbackReportsInput = {
@@ -7339,6 +8207,7 @@ export type TenantUpdateToOneWithWhereWithoutFeedbackReportsInput = {
 export type TenantUpdateWithoutFeedbackReportsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -7375,11 +8244,14 @@ export type TenantUpdateWithoutFeedbackReportsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutFeedbackReportsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7416,11 +8288,14 @@ export type TenantUncheckedUpdateWithoutFeedbackReportsInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantCreateWithoutAtelierCanvasesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   createdAt?: Date | string
   organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
   user?: Prisma.UserCreateNestedOneWithoutTenantInput
@@ -7457,11 +8332,14 @@ export type TenantCreateWithoutAtelierCanvasesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantUncheckedCreateWithoutAtelierCanvasesInput = {
   id?: string
   kind: $Enums.TenantKind
+  lifecycleState?: $Enums.TenantLifecycleState
   organizationId?: string | null
   userId?: string | null
   createdAt?: Date | string
@@ -7498,6 +8376,8 @@ export type TenantUncheckedCreateWithoutAtelierCanvasesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
   userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
   userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutFromTenantInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedCreateNestedManyWithoutToTenantInput
 }
 
 export type TenantCreateOrConnectWithoutAtelierCanvasesInput = {
@@ -7519,6 +8399,7 @@ export type TenantUpdateToOneWithWhereWithoutAtelierCanvasesInput = {
 export type TenantUpdateWithoutAtelierCanvasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
   user?: Prisma.UserUpdateOneWithoutTenantNestedInput
@@ -7555,11 +8436,14 @@ export type TenantUpdateWithoutAtelierCanvasesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUpdateManyWithoutToTenantNestedInput
 }
 
 export type TenantUncheckedUpdateWithoutAtelierCanvasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  lifecycleState?: Prisma.EnumTenantLifecycleStateFieldUpdateOperationsInput | $Enums.TenantLifecycleState
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -7596,6 +8480,8 @@ export type TenantUncheckedUpdateWithoutAtelierCanvasesInput = {
   usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
   userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
   userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+  transferJournalsOut?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutFromTenantNestedInput
+  transferJournalsIn?: Prisma.TenantTransferJournalUncheckedUpdateManyWithoutToTenantNestedInput
 }
 
 
@@ -7637,6 +8523,8 @@ export type TenantCountOutputType = {
   usageLedgerEntries: number
   userConsents: number
   userSkills: number
+  transferJournalsOut: number
+  transferJournalsIn: number
 }
 
 export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -7673,6 +8561,8 @@ export type TenantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   usageLedgerEntries?: boolean | TenantCountOutputTypeCountUsageLedgerEntriesArgs
   userConsents?: boolean | TenantCountOutputTypeCountUserConsentsArgs
   userSkills?: boolean | TenantCountOutputTypeCountUserSkillsArgs
+  transferJournalsOut?: boolean | TenantCountOutputTypeCountTransferJournalsOutArgs
+  transferJournalsIn?: boolean | TenantCountOutputTypeCountTransferJournalsInArgs
 }
 
 /**
@@ -7916,10 +8806,25 @@ export type TenantCountOutputTypeCountUserSkillsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.UserSkillWhereInput
 }
 
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountTransferJournalsOutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TenantTransferJournalWhereInput
+}
+
+/**
+ * TenantCountOutputType without action
+ */
+export type TenantCountOutputTypeCountTransferJournalsInArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TenantTransferJournalWhereInput
+}
+
 
 export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   kind?: boolean
+  lifecycleState?: boolean
   organizationId?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -7959,12 +8864,15 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   usageLedgerEntries?: boolean | Prisma.Tenant$usageLedgerEntriesArgs<ExtArgs>
   userConsents?: boolean | Prisma.Tenant$userConsentsArgs<ExtArgs>
   userSkills?: boolean | Prisma.Tenant$userSkillsArgs<ExtArgs>
+  transferJournalsOut?: boolean | Prisma.Tenant$transferJournalsOutArgs<ExtArgs>
+  transferJournalsIn?: boolean | Prisma.Tenant$transferJournalsInArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tenant"]>
 
 export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   kind?: boolean
+  lifecycleState?: boolean
   organizationId?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -7975,6 +8883,7 @@ export type TenantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   kind?: boolean
+  lifecycleState?: boolean
   organizationId?: boolean
   userId?: boolean
   createdAt?: boolean
@@ -7985,12 +8894,13 @@ export type TenantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type TenantSelectScalar = {
   id?: boolean
   kind?: boolean
+  lifecycleState?: boolean
   organizationId?: boolean
   userId?: boolean
   createdAt?: boolean
 }
 
-export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "organizationId" | "userId" | "createdAt", ExtArgs["result"]["tenant"]>
+export type TenantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "kind" | "lifecycleState" | "organizationId" | "userId" | "createdAt", ExtArgs["result"]["tenant"]>
 export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.Tenant$organizationArgs<ExtArgs>
   user?: boolean | Prisma.Tenant$userArgs<ExtArgs>
@@ -8028,6 +8938,8 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   usageLedgerEntries?: boolean | Prisma.Tenant$usageLedgerEntriesArgs<ExtArgs>
   userConsents?: boolean | Prisma.Tenant$userConsentsArgs<ExtArgs>
   userSkills?: boolean | Prisma.Tenant$userSkillsArgs<ExtArgs>
+  transferJournalsOut?: boolean | Prisma.Tenant$transferJournalsOutArgs<ExtArgs>
+  transferJournalsIn?: boolean | Prisma.Tenant$transferJournalsInArgs<ExtArgs>
   _count?: boolean | Prisma.TenantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TenantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -8078,10 +8990,13 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     usageLedgerEntries: Prisma.$UsageLedgerEntryPayload<ExtArgs>[]
     userConsents: Prisma.$UserConsentPayload<ExtArgs>[]
     userSkills: Prisma.$UserSkillPayload<ExtArgs>[]
+    transferJournalsOut: Prisma.$TenantTransferJournalPayload<ExtArgs>[]
+    transferJournalsIn: Prisma.$TenantTransferJournalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     kind: $Enums.TenantKind
+    lifecycleState: $Enums.TenantLifecycleState
     organizationId: string | null
     userId: string | null
     createdAt: Date
@@ -8515,6 +9430,8 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   usageLedgerEntries<T extends Prisma.Tenant$usageLedgerEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$usageLedgerEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsageLedgerEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userConsents<T extends Prisma.Tenant$userConsentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$userConsentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserConsentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   userSkills<T extends Prisma.Tenant$userSkillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$userSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transferJournalsOut<T extends Prisma.Tenant$transferJournalsOutArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$transferJournalsOutArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TenantTransferJournalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transferJournalsIn<T extends Prisma.Tenant$transferJournalsInArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$transferJournalsInArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TenantTransferJournalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8546,6 +9463,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
 export interface TenantFieldRefs {
   readonly id: Prisma.FieldRef<"Tenant", 'String'>
   readonly kind: Prisma.FieldRef<"Tenant", 'TenantKind'>
+  readonly lifecycleState: Prisma.FieldRef<"Tenant", 'TenantLifecycleState'>
   readonly organizationId: Prisma.FieldRef<"Tenant", 'String'>
   readonly userId: Prisma.FieldRef<"Tenant", 'String'>
   readonly createdAt: Prisma.FieldRef<"Tenant", 'DateTime'>
@@ -9791,6 +10709,54 @@ export type Tenant$userSkillsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.UserSkillScalarFieldEnum | Prisma.UserSkillScalarFieldEnum[]
+}
+
+/**
+ * Tenant.transferJournalsOut
+ */
+export type Tenant$transferJournalsOutArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TenantTransferJournal
+   */
+  select?: Prisma.TenantTransferJournalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TenantTransferJournal
+   */
+  omit?: Prisma.TenantTransferJournalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TenantTransferJournalInclude<ExtArgs> | null
+  where?: Prisma.TenantTransferJournalWhereInput
+  orderBy?: Prisma.TenantTransferJournalOrderByWithRelationInput | Prisma.TenantTransferJournalOrderByWithRelationInput[]
+  cursor?: Prisma.TenantTransferJournalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TenantTransferJournalScalarFieldEnum | Prisma.TenantTransferJournalScalarFieldEnum[]
+}
+
+/**
+ * Tenant.transferJournalsIn
+ */
+export type Tenant$transferJournalsInArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TenantTransferJournal
+   */
+  select?: Prisma.TenantTransferJournalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TenantTransferJournal
+   */
+  omit?: Prisma.TenantTransferJournalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TenantTransferJournalInclude<ExtArgs> | null
+  where?: Prisma.TenantTransferJournalWhereInput
+  orderBy?: Prisma.TenantTransferJournalOrderByWithRelationInput | Prisma.TenantTransferJournalOrderByWithRelationInput[]
+  cursor?: Prisma.TenantTransferJournalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TenantTransferJournalScalarFieldEnum | Prisma.TenantTransferJournalScalarFieldEnum[]
 }
 
 /**

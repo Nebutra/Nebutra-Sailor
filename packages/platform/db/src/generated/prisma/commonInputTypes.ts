@@ -134,6 +134,13 @@ export type EnumTenantKindFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumTenantKindFilter<$PrismaModel> | $Enums.TenantKind
 }
 
+export type EnumTenantLifecycleStateFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantLifecycleState | Prisma.EnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantLifecycleState[] | Prisma.ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantLifecycleState[] | Prisma.ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantLifecycleStateFilter<$PrismaModel> | $Enums.TenantLifecycleState
+}
+
 export type EnumTenantKindWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.TenantKind | Prisma.EnumTenantKindFieldRefInput<$PrismaModel>
   in?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
@@ -142,6 +149,30 @@ export type EnumTenantKindWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTenantKindFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTenantKindFilter<$PrismaModel>
+}
+
+export type EnumTenantLifecycleStateWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantLifecycleState | Prisma.EnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantLifecycleState[] | Prisma.ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantLifecycleState[] | Prisma.ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantLifecycleStateWithAggregatesFilter<$PrismaModel> | $Enums.TenantLifecycleState
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTenantLifecycleStateFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTenantLifecycleStateFilter<$PrismaModel>
+}
+
+export type EnumTenantTransferKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantTransferKind | Prisma.EnumTenantTransferKindFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantTransferKind[] | Prisma.ListEnumTenantTransferKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantTransferKind[] | Prisma.ListEnumTenantTransferKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantTransferKindFilter<$PrismaModel> | $Enums.TenantTransferKind
+}
+
+export type EnumTenantTransferStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantTransferStatus | Prisma.EnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantTransferStatus[] | Prisma.ListEnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantTransferStatus[] | Prisma.ListEnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantTransferStatusFilter<$PrismaModel> | $Enums.TenantTransferStatus
 }
 
 export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -155,15 +186,24 @@ export type DateTimeNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
 }
 
-export type IntFilter<$PrismaModel = never> = {
-  equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
-  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
-  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
-  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
-  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
-  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
-  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedIntFilter<$PrismaModel> | number
+export type EnumTenantTransferKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantTransferKind | Prisma.EnumTenantTransferKindFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantTransferKind[] | Prisma.ListEnumTenantTransferKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantTransferKind[] | Prisma.ListEnumTenantTransferKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantTransferKindWithAggregatesFilter<$PrismaModel> | $Enums.TenantTransferKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTenantTransferKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTenantTransferKindFilter<$PrismaModel>
+}
+
+export type EnumTenantTransferStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantTransferStatus | Prisma.EnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantTransferStatus[] | Prisma.ListEnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantTransferStatus[] | Prisma.ListEnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantTransferStatusWithAggregatesFilter<$PrismaModel> | $Enums.TenantTransferStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTenantTransferStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTenantTransferStatusFilter<$PrismaModel>
 }
 
 export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -178,6 +218,17 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type IntFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntFilter<$PrismaModel> | number
 }
 
 export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -1096,6 +1147,13 @@ export type NestedEnumTenantKindFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumTenantKindFilter<$PrismaModel> | $Enums.TenantKind
 }
 
+export type NestedEnumTenantLifecycleStateFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantLifecycleState | Prisma.EnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantLifecycleState[] | Prisma.ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantLifecycleState[] | Prisma.ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantLifecycleStateFilter<$PrismaModel> | $Enums.TenantLifecycleState
+}
+
 export type NestedEnumTenantKindWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.TenantKind | Prisma.EnumTenantKindFieldRefInput<$PrismaModel>
   in?: $Enums.TenantKind[] | Prisma.ListEnumTenantKindFieldRefInput<$PrismaModel>
@@ -1104,6 +1162,30 @@ export type NestedEnumTenantKindWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumTenantKindFilter<$PrismaModel>
   _max?: Prisma.NestedEnumTenantKindFilter<$PrismaModel>
+}
+
+export type NestedEnumTenantLifecycleStateWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantLifecycleState | Prisma.EnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantLifecycleState[] | Prisma.ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantLifecycleState[] | Prisma.ListEnumTenantLifecycleStateFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantLifecycleStateWithAggregatesFilter<$PrismaModel> | $Enums.TenantLifecycleState
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTenantLifecycleStateFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTenantLifecycleStateFilter<$PrismaModel>
+}
+
+export type NestedEnumTenantTransferKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantTransferKind | Prisma.EnumTenantTransferKindFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantTransferKind[] | Prisma.ListEnumTenantTransferKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantTransferKind[] | Prisma.ListEnumTenantTransferKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantTransferKindFilter<$PrismaModel> | $Enums.TenantTransferKind
+}
+
+export type NestedEnumTenantTransferStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantTransferStatus | Prisma.EnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantTransferStatus[] | Prisma.ListEnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantTransferStatus[] | Prisma.ListEnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantTransferStatusFilter<$PrismaModel> | $Enums.TenantTransferStatus
 }
 
 export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -1115,6 +1197,26 @@ export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
   gt?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   gte?: Date | string | Prisma.DateTimeFieldRefInput<$PrismaModel>
   not?: Prisma.NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+}
+
+export type NestedEnumTenantTransferKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantTransferKind | Prisma.EnumTenantTransferKindFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantTransferKind[] | Prisma.ListEnumTenantTransferKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantTransferKind[] | Prisma.ListEnumTenantTransferKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantTransferKindWithAggregatesFilter<$PrismaModel> | $Enums.TenantTransferKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTenantTransferKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTenantTransferKindFilter<$PrismaModel>
+}
+
+export type NestedEnumTenantTransferStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TenantTransferStatus | Prisma.EnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.TenantTransferStatus[] | Prisma.ListEnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TenantTransferStatus[] | Prisma.ListEnumTenantTransferStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTenantTransferStatusWithAggregatesFilter<$PrismaModel> | $Enums.TenantTransferStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTenantTransferStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTenantTransferStatusFilter<$PrismaModel>
 }
 
 export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {

@@ -585,10 +585,6 @@ export type APIKeyCreatescopesInput = {
   set: string[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type APIKeyUpdatescopesInput = {
   set?: string[]
   push?: string | string[]
