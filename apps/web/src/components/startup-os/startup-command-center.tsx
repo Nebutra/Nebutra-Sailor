@@ -915,7 +915,7 @@ function StartupBuilderHome({
                 placeholder="Describe the startup proposition to compile into a tenant-scoped company workspace..."
                 className="min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 shadow-none outline-none placeholder:text-neutral-9 disabled:cursor-not-allowed disabled:opacity-60 sm:p-6"
               />
-              <div className="flex flex-col gap-3 bg-neutral-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-3 px-4 pb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-2">
                   <input
                     data-allow-native
