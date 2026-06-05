@@ -67,6 +67,21 @@ export async function GET(request: Request) {
   const context = await getRequestContext(request, "project:read");
   if ("response" in context) return context.response;
 
+  // Symmetric with POST: the dev fixture tenant ("dev-org-001") is never seeded
+  // by the real user-sync path, so a fresh dev session that lists before it has
+  // created anything hits an unseeded tenant. Seed it idempotently (dev-only,
+  // best-effort — a seeding failure must not block the read, which still returns
+  // []). No-op for every real provider.
+  if (getConfiguredAuthProvider() === "dev") {
+    try {
+      await ensureDevTenant();
+    } catch (error) {
+      logger.warn("[startup-os.projects.GET] dev tenant seed skipped", {
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
   try {
     const projects = await listStartupProjects(context.db, context.orgId);
     return NextResponse.json({ projects });
