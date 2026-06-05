@@ -1,5 +1,6 @@
 import { getSystemDb } from "@nebutra/db";
 import { ClerkUserDataSchema } from "@nebutra/event-bus";
+import { issueLicense } from "@nebutra/license";
 import { UserRepository } from "@nebutra/repositories";
 import { eventType, type InngestFunction } from "inngest";
 import { inngest } from "../client.js";
@@ -52,6 +53,22 @@ export const syncUserToDB: InngestFunction.Any = inngest.createFunction(
           create: { id: user.id, kind: "INDIVIDUAL", userId: user.id },
         });
       }
+    });
+
+    // Grant the Sailor commercial-exemption license on signup. Web signup/login
+    // and the create-sailor CLI both confer this exemption over AGPL; a raw
+    // GitHub fork stays AGPL. tier OPC -> perpetual FREE license, user-scoped, so
+    // it carries into any team the founder later forms. Idempotent on userId+tier
+    // (safe on user.updated re-runs); its own step so a transient failure retries
+    // without re-running the user/tenant upserts.
+    await step.run("grant-sailor-license", async () => {
+      await issueLicense({
+        userId,
+        tier: "OPC",
+        displayName: fullName ?? email?.split("@")[0] ?? "Founder",
+        email: email ?? null,
+        projectName: "Sailor",
+      });
     });
   },
 );
