@@ -24,6 +24,8 @@ export const webBrandAssets = {
 export const webBrandLabels = {
   homeLink: "Open product home",
   primaryNavigation: "Primary navigation",
+  collapseSidebar: "Collapse sidebar",
+  expandSidebar: "Expand sidebar",
 } as const;
 
 interface BrandLogoProps {
