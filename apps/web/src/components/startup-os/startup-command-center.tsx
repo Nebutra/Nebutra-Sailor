@@ -18,6 +18,7 @@ import {
   Badge,
   type BadgeProps,
   Button,
+  CodeBlockLanguageIcon,
   Select,
   SelectContent,
   SelectItem,
@@ -1365,12 +1366,13 @@ function WorkspaceFilesPanel({
                     key={file.path}
                     type="button"
                     onClick={() => onSelectFile(file.path)}
-                    className={`shrink-0 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
+                    className={`inline-flex shrink-0 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[11px] font-semibold transition-colors ${
                       selectedFile?.path === file.path
                         ? "bg-neutral-12 text-neutral-1 dark:text-neutral-12"
                         : "text-neutral-10 hover:bg-neutral-1"
                     }`}
                   >
+                    <CodeBlockLanguageIcon language={file.language} className="size-3.5" />
                     {file.path}
                   </button>
                 ))}
