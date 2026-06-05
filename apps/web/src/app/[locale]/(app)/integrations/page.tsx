@@ -7,11 +7,9 @@ import {
   LoaderCircle as Loader2,
   Plus,
   SettingsGear as Settings,
-  Cart as ShoppingBag,
-  Store,
   Cross as X,
-  Lightning as Zap,
 } from "@nebutra/icons";
+import { INTEGRATION_CATALOG } from "@/lib/integrations/catalog";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card, EmptyState, PageHeader } from "@nebutra/ui/layout";
 import { DashboardPanel } from "@nebutra/ui/patterns";
@@ -32,44 +30,9 @@ interface Integration {
 
 // ── Integration Catalog ──────────────────────────────────────────────────────
 
-const CATALOG = [
-  {
-    type: "SHOPIFY" as const,
-    name: "Shopify",
-    description: "Sync products, orders, and customers from your Shopify store.",
-    icon: ShoppingBag,
-    color: "text-green-10",
-    bgColor: "bg-green-3 dark:bg-green-9/20",
-    docUrl: "https://docs.nebutra.ai/integrations/shopify",
-  },
-  {
-    type: "SHOPLINE" as const,
-    name: "Shopline",
-    description: "Connect your Shopline storefront for unified commerce analytics.",
-    icon: Store,
-    color: "text-blue-10",
-    bgColor: "bg-blue-3 dark:bg-blue-9/20",
-    docUrl: "https://docs.nebutra.ai/integrations/shopline",
-  },
-  {
-    type: "STRIPE" as const,
-    name: "Stripe",
-    description: "Synchronize payment data, invoices, and subscription events.",
-    icon: Zap,
-    color: "text-purple-10",
-    bgColor: "bg-purple-3 dark:bg-purple-9/20",
-    docUrl: "https://docs.nebutra.ai/integrations/stripe",
-  },
-  {
-    type: "CUSTOM" as const,
-    name: "Custom Webhook",
-    description: "Send and receive events via custom HTTP webhooks.",
-    icon: Activity,
-    color: "text-amber-10",
-    bgColor: "bg-amber-3 dark:bg-amber-9/20",
-    docUrl: "https://docs.nebutra.ai/integrations/webhooks",
-  },
-];
+// Single source of truth — see @/lib/integrations/catalog (shared with the
+// Startup OS connectors menu so the two surfaces can never drift apart).
+const CATALOG = INTEGRATION_CATALOG;
 
 // ── Document Pipeline ─────────────────────────────────────────────────────────
 
