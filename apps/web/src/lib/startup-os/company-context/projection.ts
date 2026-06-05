@@ -16,7 +16,11 @@ const DEFAULT_NAME = "Nebutra Venture";
 const DEFAULT_PROMISE = "A company workspace compiled from the submitted proposition.";
 
 function rawValue(ctx: CompanyContext, layerId: LayerId, fieldKey: string): unknown {
-  return ctx.layers[layerId]?.values[fieldKey]?.value;
+  // Guard `ctx.layers` itself: a legacy flat-shape companyContext persisted
+  // before the tower refactor has no `layers` map, so an unguarded
+  // `ctx.layers[layerId]` throws "reading 'L5'". Honour this helper's documented
+  // contract ("legacy flat shape stays total") by projecting absent → undefined.
+  return ctx.layers?.[layerId]?.values?.[fieldKey]?.value;
 }
 
 function asText(value: unknown): string | undefined {
