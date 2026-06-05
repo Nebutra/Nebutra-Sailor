@@ -86,10 +86,14 @@ export function MatchesList() {
         <AnimateIn key={match.profileId} preset="fadeUp">
           <div className="flex flex-col items-center gap-3">
             <CofounderCard data={match} />
-            <div className="flex w-full max-w-sm items-center justify-center gap-2 rounded-full border border-blue-7 bg-blue-2 px-4 py-2.5 text-sm font-semibold text-blue-11 dark:bg-blue-9/20">
+            <Link
+              href={`/${locale}/cofounder/room/${match.profileId}`}
+              className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-white"
+              style={{ background: "var(--brand-gradient)" }}
+            >
               <Sparkles className="size-4" aria-hidden="true" />
-              Mutual match — Cofounder Room opens next
-            </div>
+              Open Cofounder Room
+            </Link>
           </div>
         </AnimateIn>
       ))}
