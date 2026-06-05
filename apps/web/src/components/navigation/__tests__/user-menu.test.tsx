@@ -19,8 +19,9 @@ vi.mock("@nebutra/tokens", () => ({
   useTheme: () => ({ theme: "system", setTheme: vi.fn() }),
 }));
 
+const routerPushMock = vi.fn();
 vi.mock("@nebutra/i18n/routing", () => ({
-  useRouter: () => ({ replace: vi.fn() }),
+  useRouter: () => ({ replace: vi.fn(), push: routerPushMock }),
   usePathname: () => "/workspace",
 }));
 
@@ -35,18 +36,6 @@ vi.mock("@/components/account/account-dialog", () => ({
     open: false,
     activeTab: "profile" as const,
     openDialog: openDialogMock,
-    closeDialog: vi.fn(),
-    setOpen: vi.fn(),
-    setActiveTab: vi.fn(),
-  }),
-}));
-
-const openSettingsMock = vi.fn();
-vi.mock("@/components/settings/settings-dialog", () => ({
-  useSettingsDialog: () => ({
-    open: false,
-    activeTab: "general" as const,
-    openDialog: openSettingsMock,
     closeDialog: vi.fn(),
     setOpen: vi.fn(),
     setActiveTab: vi.fn(),
@@ -109,6 +98,14 @@ describe("UserMenu", () => {
     expect(screen.getByRole("menuitem", { name: /userMenu\.profile/ })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: /userMenu\.settings/ })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: /userMenu\.signOut/ })).toBeTruthy();
+  });
+
+  it("navigates to the settings page when Settings is clicked", () => {
+    withUser({ name: "Alice", email: "alice@example.com" });
+    render(<UserMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /userMenu\.ariaLabel/ }));
+    fireEvent.click(screen.getByRole("menuitem", { name: /userMenu\.settings/ }));
+    expect(routerPushMock).toHaveBeenCalledWith("/settings");
   });
 
   it("renders the Theme submenu trigger with three theme choices when expanded", () => {
