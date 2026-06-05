@@ -11,6 +11,12 @@ import {
   startStartupRun,
 } from "./compiler";
 import { patchStartupProjectFile, type StartupOSFile } from "./files";
+import {
+  buildStartupEffortProviderOptions,
+  type StartupEffortLevel,
+  type StartupModelTier,
+  selectStartupModelTier,
+} from "./model-tier";
 import type { StartupOSEventInput } from "./store";
 
 type EnvLike = Record<string, string | undefined>;
@@ -19,6 +25,13 @@ export interface StartupRunModelRequest {
   readonly project: StartupOSProject;
   readonly run: StartupOperatingRun;
   readonly prompt: string;
+  /**
+   * Chosen model tier (preset alias for runWithFallback) and thinking effort.
+   * Optional + defaulted so existing callers/tests stay backward compatible
+   * (omitting them keeps the legacy always-"fast"/low behavior).
+   */
+  readonly tier?: StartupModelTier;
+  readonly effort?: StartupEffortLevel;
 }
 
 export interface StartupRunModelResult {
@@ -197,6 +210,14 @@ export function buildStartupRunPrompt(
 }
 
 export const invokeRealStartupRunModel: StartupRunModelInvoker = async (request) => {
+  // Backward-compatible defaults: callers that don't route stay on fast/low.
+  const tier = request.tier ?? "fast";
+  const effort = request.effort ?? "low";
+  // Top-level call providerOptions carrying the chosen thinking effort. Only
+  // the active fallback provider's namespace is applied; the rest are ignored.
+  // This sits at the CALL level — cache-control (if ever added) lives at the
+  // system-MESSAGE level, so there is no collision and no merge is needed here.
+  const providerOptions = buildStartupEffortProviderOptions(effort);
   const { result, provider } = await runWithFallback(
     async (model) =>
       generateAIText({
@@ -206,8 +227,9 @@ export const invokeRealStartupRunModel: StartupRunModelInvoker = async (request)
         messages: [{ role: "user", content: request.prompt }],
         temperature: 0.35,
         maxOutputTokens: 1600,
+        providerOptions,
       }),
-    { model: "fast" },
+    { model: tier },
   );
   const usage =
     (result as { usage?: unknown; totalUsage?: unknown }).usage ??
@@ -221,7 +243,9 @@ export const invokeRealStartupRunModel: StartupRunModelInvoker = async (request)
   return {
     text: result.text,
     provider,
-    model: "fast",
+    // The model field reports the chosen preset alias (was literally "fast"),
+    // not the resolved model id — matches existing usage-event semantics.
+    model: tier,
     usage: {
       ...(inputTokens !== undefined ? { inputTokens } : {}),
       ...(outputTokens !== undefined ? { outputTokens } : {}),
@@ -243,8 +267,36 @@ export async function executeStartupRun(
   if (initialRun.approval === "pending_review") {
     throw new Error("Startup OS run requires governance review before execution.");
   }
+
+  // Pure tier/effort decision, computed from the run as found (before any state
+  // transition). The instruction is SYNTHETIC: the run carries no free-text
+  // prompt, so we score `${stage} ${targetArtifactTitles}` — stage names like
+  // "governance.review" carry the keyword signal. fileCount comes from the
+  // editable workspace; the retry signal is the original failed status.
+  const wasFailedRetry = initialRun.status === "failed";
+  const targetArtifactTitles = project.artifacts
+    .filter((artifact) => initialRun.artifactIds.includes(artifact.id))
+    .map((artifact) => artifact.title)
+    .join(" ");
+  const decision = selectStartupModelTier({
+    instruction: `${initialRun.stage} ${targetArtifactTitles}`.trim(),
+    fileCount: input.files?.length ?? 0,
+    isRetryAfterFailure: wasFailedRetry,
+  });
+
+  // A retry re-plans a previously-failed run so it can start again. This is a
+  // legitimate failed → planned transition kept local to startup-os.
+  const executableProject = wasFailedRetry
+    ? {
+        ...project,
+        runs: project.runs.map((run) =>
+          run.id === runId ? { ...run, status: "planned" as const } : run,
+        ),
+      }
+    : project;
+
   const startedAt = now();
-  const startedProject = startStartupRun(project, runId, {
+  const startedProject = startStartupRun(executableProject, runId, {
     now: startedAt,
     provider: "ai-runtime",
     summary: `Started real execution for ${initialRun.stage}.`,
@@ -259,6 +311,9 @@ export async function executeStartupRun(
       runId,
       stage: startedRun.stage,
       provider: startedRun.provider ?? "ai-runtime",
+      tier: decision.tier,
+      effort: decision.effort,
+      reason: decision.reason,
     },
   };
 
@@ -267,6 +322,8 @@ export async function executeStartupRun(
       project: startedProject,
       run: startedRun,
       prompt: buildStartupRunPrompt(startedProject, startedRun, input.files),
+      tier: decision.tier,
+      effort: decision.effort,
     });
     const completedAt = now();
     const generated = parseGeneratedRunResult(modelResult.text);
@@ -311,6 +368,9 @@ export async function executeStartupRun(
             model: modelResult.model,
             totalTokens,
             filePatchCount: generated.filePatches.length,
+            tier: decision.tier,
+            effort: decision.effort,
+            reason: decision.reason,
           },
         },
       ],

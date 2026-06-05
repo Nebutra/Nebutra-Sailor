@@ -13,6 +13,12 @@ import {
   type StartupRunUsageEvent,
 } from "./execution";
 import type { StartupOSFile } from "./files";
+import {
+  buildStartupEffortProviderOptions,
+  type StartupEffortLevel,
+  type StartupModelTier,
+  selectStartupModelTier,
+} from "./model-tier";
 import type { StartupOSEventInput } from "./store";
 
 /**
@@ -33,6 +39,13 @@ export interface StartupConversationStreamRequest {
   readonly project: StartupOSProject;
   readonly instruction: string;
   readonly prompt: string;
+  /**
+   * Chosen model tier (preset alias for runWithFallback) and thinking effort.
+   * Optional + defaulted so the default streamer and existing tests stay on
+   * the legacy fast/low behavior when omitted.
+   */
+  readonly tier?: StartupModelTier;
+  readonly effort?: StartupEffortLevel;
 }
 
 export interface StartupConversationStreamFinish {
@@ -201,13 +214,27 @@ export async function* streamStartupConversation(
   const stream = input.streamModel ?? createRealStartupConversationStreamer();
   const originalFiles = input.files;
 
+  // Pure tier/effort decision. A conversation turn already has the raw founder
+  // instruction, so it is scored directly (no synthetic instruction needed).
+  // v1 has no retry concept on a fresh turn → isRetryAfterFailure: false.
+  const decision = selectStartupModelTier({
+    instruction,
+    fileCount: originalFiles?.length ?? 0,
+    isRetryAfterFailure: false,
+  });
+
   const startedAt = now();
   const conversationStartedEvent: StartupOSEventInput = {
     type: "conversation_started",
     occurredAt: startedAt,
     actorId: input.userId,
     summary: `Started conversational build turn: ${instruction}`.slice(0, 280),
-    metadata: { instruction },
+    metadata: {
+      instruction,
+      tier: decision.tier,
+      effort: decision.effort,
+      reason: decision.reason,
+    },
   };
 
   yield { type: "status", phase: "started", occurredAt: startedAt };
@@ -223,6 +250,8 @@ export async function* streamStartupConversation(
       project,
       instruction,
       prompt: buildStartupConversationPrompt(project, instruction, originalFiles),
+      tier: decision.tier,
+      effort: decision.effort,
     });
 
     let next = await iterator.next();
@@ -375,6 +404,13 @@ export async function* streamStartupConversation(
 
 export function createRealStartupConversationStreamer(): StartupConversationStreamer {
   return async function* realStreamer(request) {
+    // Backward-compatible defaults: omitted tier/effort keeps fast/low.
+    const tier = request.tier ?? "fast";
+    const effort = request.effort ?? "low";
+    // Top-level call providerOptions carrying the chosen thinking effort. Only
+    // the active fallback provider's namespace is applied; cache-control (if
+    // ever added) lives at the system-MESSAGE level, so no merge is needed.
+    const providerOptions = buildStartupEffortProviderOptions(effort);
     const { result, provider } = await runWithFallback(
       async (model) =>
         streamText({
@@ -383,8 +419,9 @@ export function createRealStartupConversationStreamer(): StartupConversationStre
           messages: [{ role: "user", content: request.prompt }],
           temperature: 0.4,
           maxOutputTokens: 2400,
+          providerOptions,
         }),
-      { model: "fast" },
+      { model: tier },
     );
 
     for await (const delta of result.textStream) {
@@ -405,7 +442,9 @@ export function createRealStartupConversationStreamer(): StartupConversationStre
 
     return {
       provider,
-      model: "fast",
+      // Reports the chosen preset alias (was literally "fast"), not the
+      // resolved model id — matches existing usage-event semantics.
+      model: tier,
       usage: {
         ...(inputTokens !== undefined ? { inputTokens } : {}),
         ...(outputTokens !== undefined ? { outputTokens } : {}),

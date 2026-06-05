@@ -327,6 +327,74 @@ describe("Startup OS streaming conversation engine", () => {
     ]);
   });
 
+  it("A9: routes a multi-keyword instruction to the reasoning tier at medium effort", async () => {
+    const project = fixtureProject();
+    // Only the index route is in scope (fc<=5) so the keyword rule fires, not scope.
+    const files = buildStartupProjectFiles(project).filter(
+      (file) => file.path === "src/routes/index.tsx",
+    );
+
+    let capturedTier: string | undefined;
+    let capturedEffort: string | undefined;
+    const inner = fakeStreamer({ result: VALID_RESULT });
+    const capturingStreamer: StartupConversationStreamer = (request) => {
+      capturedTier = (request as { tier?: string }).tier;
+      capturedEffort = (request as { effort?: string }).effort;
+      return inner(request);
+    };
+
+    const generator = streamStartupConversation(
+      project,
+      "refactor the landing route across files",
+      {
+        tenantId: "org_123",
+        userId: "user_123",
+        files,
+        now: clock(["2026-05-29T00:02:00.000Z"]),
+        streamModel: capturingStreamer,
+      },
+    );
+
+    const { result } = await drain(generator);
+    expect(capturedTier).toBe("reasoning");
+    expect(capturedEffort).toBe("medium");
+
+    const resolved = result as {
+      events: readonly { type: string; metadata?: { reason?: string } }[];
+    };
+    const startedEvent = resolved.events.find((event) => event.type === "conversation_started");
+    expect(startedEvent?.metadata).toMatchObject({ reason: "reasoning-keyword:refactor" });
+  });
+
+  it("A10: keeps a trivial copy tweak on the fast tier at low effort", async () => {
+    const project = fixtureProject();
+    // Single file in scope (fc<=1) so the trivial fast keyword rule applies.
+    const files = buildStartupProjectFiles(project).filter(
+      (file) => file.path === "src/routes/index.tsx",
+    );
+
+    let capturedTier: string | undefined;
+    let capturedEffort: string | undefined;
+    const inner = fakeStreamer({ result: VALID_RESULT });
+    const capturingStreamer: StartupConversationStreamer = (request) => {
+      capturedTier = (request as { tier?: string }).tier;
+      capturedEffort = (request as { effort?: string }).effort;
+      return inner(request);
+    };
+
+    const generator = streamStartupConversation(project, "tweak the headline copy", {
+      tenantId: "org_123",
+      userId: "user_123",
+      files,
+      now: clock(["2026-05-29T00:02:00.000Z"]),
+      streamModel: capturingStreamer,
+    });
+
+    await drain(generator);
+    expect(capturedTier).toBe("fast");
+    expect(capturedEffort).toBe("low");
+  });
+
   it("A8: builds appendable events with the actor on every event", async () => {
     const project = fixtureProject();
     const files = buildStartupProjectFiles(project);

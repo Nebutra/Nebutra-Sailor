@@ -34,6 +34,10 @@ describe("Startup OS real execution service", () => {
       invokeModel: async (request) => {
         expect(request.prompt).toContain("landing.draft");
         expect(request.prompt).toContain(project.companyContext.name);
+        // Default routing path: a landing.draft run with 0 files and a
+        // non-failed initial run stays on the fast tier (no regression).
+        expect(request.tier).toBe("fast");
+        expect(request.effort).toBe("low");
         return {
           text: JSON.stringify({
             summary: "Generated a launch landing page from CompanyContext.",
@@ -190,6 +194,102 @@ describe("Startup OS real execution service", () => {
       content: expect.stringContaining("Real patched launch surface"),
       generatedFrom: "user-edit",
       updatedAt: "2026-05-29T00:03:00.000Z",
+    });
+  });
+
+  it("routes a re-executed failed run to the reasoning tier at high effort", async () => {
+    const compiled = approveGovernanceReview(
+      compileStartupProject({
+        thesis: "A Startup Agent OS that escalates effort on the second attempt.",
+        arena: "AI SaaS",
+        now: "2026-05-29T00:00:00.000Z",
+      }),
+      "2026-05-29T00:01:00.000Z",
+    );
+    const targetRun = compiled.runs.find((item) => item.stage === "landing.draft");
+    // Simulate a previously-failed run that is being retried.
+    const project = {
+      ...compiled,
+      runs: compiled.runs.map((run) =>
+        run.id === targetRun?.id ? { ...run, status: "failed" as const } : run,
+      ),
+    };
+
+    let capturedTier: string | undefined;
+    let capturedEffort: string | undefined;
+    const result = await executeStartupRun(project, targetRun?.id ?? "", {
+      tenantId: "org_123",
+      userId: "user_123",
+      now: (() => {
+        const values = ["2026-05-29T00:02:00.000Z", "2026-05-29T00:03:00.000Z"];
+        return () => values.shift() ?? "2026-05-29T00:04:00.000Z";
+      })(),
+      invokeModel: async (request) => {
+        capturedTier = request.tier;
+        capturedEffort = request.effort;
+        return {
+          text: JSON.stringify({ summary: "Recovered on the reasoning tier." }),
+          provider: "anthropic",
+          model: request.tier ?? "fast",
+        };
+      },
+    });
+
+    expect(capturedTier).toBe("reasoning");
+    expect(capturedEffort).toBe("high");
+    const startedEvent = result.events.find((event) => event.type === "run_started");
+    expect(startedEvent?.metadata).toMatchObject({
+      tier: "reasoning",
+      reason: "retry-after-failure",
+    });
+  });
+
+  it("routes a governance.review stage to the reasoning tier at medium effort", async () => {
+    const compiled = approveGovernanceReview(
+      compileStartupProject({
+        thesis: "A Startup Agent OS whose governance stage demands deeper reasoning.",
+        arena: "AI SaaS",
+        now: "2026-05-29T00:00:00.000Z",
+      }),
+      "2026-05-29T00:01:00.000Z",
+    );
+    const governanceRun = compiled.runs.find((item) => item.stage === "governance.review");
+    // Re-plan the governance run so it is executable (stage keyword still fires RULE 4).
+    const project = {
+      ...compiled,
+      runs: compiled.runs.map((run) =>
+        run.id === governanceRun?.id
+          ? { ...run, status: "planned" as const, approval: "approved" as const }
+          : run,
+      ),
+    };
+
+    let capturedTier: string | undefined;
+    let capturedEffort: string | undefined;
+    const result = await executeStartupRun(project, governanceRun?.id ?? "", {
+      tenantId: "org_123",
+      userId: "user_123",
+      now: (() => {
+        const values = ["2026-05-29T00:02:00.000Z", "2026-05-29T00:03:00.000Z"];
+        return () => values.shift() ?? "2026-05-29T00:04:00.000Z";
+      })(),
+      invokeModel: async (request) => {
+        capturedTier = request.tier;
+        capturedEffort = request.effort;
+        return {
+          text: JSON.stringify({ summary: "Reviewed governance gates." }),
+          provider: "anthropic",
+          model: request.tier ?? "fast",
+        };
+      },
+    });
+
+    expect(capturedTier).toBe("reasoning");
+    expect(capturedEffort).toBe("medium");
+    const startedEvent = result.events.find((event) => event.type === "run_started");
+    expect(startedEvent?.metadata).toMatchObject({
+      tier: "reasoning",
+      reason: "reasoning-keyword:governance",
     });
   });
 
