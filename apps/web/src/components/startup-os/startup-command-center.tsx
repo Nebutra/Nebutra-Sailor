@@ -1109,12 +1109,12 @@ function StartupBuilderWorkspace({
     {
       title: "Proposition captured",
       body: project.thesis,
-      tone: "neutral",
+      role: "user" as const,
     },
     {
       title: "CompanyContext compiled",
       body: valueProposition(project.companyContext),
-      tone: "blue",
+      role: "assistant" as const,
     },
     selectedRun
       ? {
@@ -1122,10 +1122,12 @@ function StartupBuilderWorkspace({
           body: `${selectedRun.summary} Approval: ${selectedRun.approval}. Status: ${formatRunStatus(
             selectedRun.status,
           )}.`,
-          tone: selectedRun.approval === "pending_review" ? "amber" : "neutral",
+          role: "assistant" as const,
         }
       : null,
-  ].filter((item): item is { title: string; body: string; tone: string } => Boolean(item));
+  ].filter(
+    (item): item is { title: string; body: string; role: "user" | "assistant" } => Boolean(item),
+  );
 
   // Thread history (Proposition / CompanyContext / selected-run) — rendered at
   // the top of the conversational stream, above the live plan + composer.
@@ -1134,13 +1136,11 @@ function StartupBuilderWorkspace({
       {threadItems.map((item) => (
         <div
           key={item.title}
-          className={`rounded-2xl border p-3 ${
-            item.tone === "blue"
-              ? "border-blue-6 bg-blue-2 dark:border-blue-8/40 dark:bg-blue-9/15"
-              : item.tone === "amber"
-                ? "border-amber-6 bg-amber-2 dark:border-amber-8/40 dark:bg-amber-9/15"
-                : "border-neutral-6 bg-neutral-1"
-          }`}
+          className={
+            item.role === "user"
+              ? "rounded-2xl border border-neutral-6 bg-neutral-2 p-3"
+              : "px-1"
+          }
         >
           <p className="text-xs font-semibold tracking-tight text-neutral-12">{item.title}</p>
           <p className="mt-1 text-xs leading-5 text-neutral-10">{item.body}</p>
