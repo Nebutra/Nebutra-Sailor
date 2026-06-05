@@ -40,7 +40,7 @@ export function LanguageSwitcher() {
               <motion.div
                 layoutId="lang-pill"
                 className="absolute inset-0 z-0 bg-background rounded-full shadow-sm"
-                transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
+                transition={shouldReduceMotion ? { duration: 0 } : brandSpring.default}
               />
             )}
             <span

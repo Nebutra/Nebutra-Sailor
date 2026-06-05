@@ -254,7 +254,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
           <motion.div
             initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
+            transition={shouldReduceMotion ? { duration: 0 } : brandSpring.default}
             className="flex h-full flex-col items-center justify-center gap-6 text-center"
           >
             <SoulOrb size="lg" />
@@ -288,7 +288,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
                 animate={
                   shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }
                 }
-                transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
+                transition={shouldReduceMotion ? { duration: 0 } : brandSpring.default}
                 className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
               >
                 {msg.role === "assistant" && <SoulOrb isError={msg.isError} />}
@@ -315,7 +315,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
               animate={
                 shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }
               }
-              transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
+              transition={shouldReduceMotion ? { duration: 0 } : brandSpring.default}
               className="flex gap-4"
             >
               <SoulOrb />

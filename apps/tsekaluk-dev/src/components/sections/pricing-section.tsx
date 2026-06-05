@@ -470,7 +470,7 @@ function ServiceCarousel() {
               shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }
             }
             exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10, filter: "blur(4px)" }}
-            transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
+            transition={shouldReduceMotion ? { duration: 0 } : brandSpring.default}
             className="w-full max-w-lg"
           >
             {/* Header */}

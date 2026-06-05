@@ -21,7 +21,9 @@
     "paths": {
       "@/*": ["./src/*"],
       "@nebutra/fonts": ["../../packages/design/fonts/src/index.ts"],
-      "@nebutra/fonts/next": ["../../packages/design/fonts/src/next.ts"]
+      "@nebutra/fonts/next": ["../../packages/design/fonts/src/next.ts"],
+      "@nebutra/ui": ["../../packages/design/ui/src/index.ts"],
+      "@nebutra/ui/*": ["../../packages/design/ui/src/*"]
     }
   },
   "include": [

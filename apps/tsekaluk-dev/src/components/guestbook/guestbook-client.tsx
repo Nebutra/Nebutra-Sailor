@@ -52,7 +52,7 @@ function EndorsementCard({ entry }: { entry: Endorsement }) {
     <AnimateIn preset="fadeUp" inView>
       <motion.div
         whileHover={{ y: -4, scale: 1.01 }}
-        transition={brandSpring}
+        transition={brandSpring.default}
         className="group relative rounded-3xl border border-black/5 dark:border-white/5 bg-white/70 dark:bg-black/40 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-xl transition-colors hover:bg-white/90 dark:hover:bg-black/60 overflow-hidden break-inside-avoid"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/0 dark:from-white/5 dark:to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
