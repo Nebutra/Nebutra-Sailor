@@ -289,3 +289,36 @@ ALTER TABLE "public"."webhook_events" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "webhook_events_rls" ON "public"."webhook_events";
 CREATE POLICY "webhook_events_rls" ON "public"."webhook_events" AS PERMISSIVE FOR ALL TO app_user USING (true);
 
+-- ── Match Your Cofounder + tenant lifecycle (non-standard policies) ──────────
+-- cofounder_profiles: the pool is intentionally discoverable, so SELECT exposes
+-- ACTIVE profiles to every tenant; writes are restricted to the owner's own row.
+ALTER TABLE "public"."cofounder_profiles" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "cofounder_profiles_select" ON "public"."cofounder_profiles";
+CREATE POLICY "cofounder_profiles_select" ON "public"."cofounder_profiles" AS PERMISSIVE FOR SELECT TO app_user USING ("is_active" = true OR "tenant_id" = public.current_tenant_id());
+DROP POLICY IF EXISTS "cofounder_profiles_write" ON "public"."cofounder_profiles";
+CREATE POLICY "cofounder_profiles_write" ON "public"."cofounder_profiles" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id()) WITH CHECK ("tenant_id" = public.current_tenant_id());
+
+-- cofounder_interests: no tenant_id column — ownership derives from the profile.
+-- Read interests touching your profile (incoming + outgoing, for match detection);
+-- write only FROM your own profile.
+ALTER TABLE "public"."cofounder_interests" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "cofounder_interests_select" ON "public"."cofounder_interests";
+CREATE POLICY "cofounder_interests_select" ON "public"."cofounder_interests" AS PERMISSIVE FOR SELECT TO app_user USING (
+  EXISTS (SELECT 1 FROM "public"."cofounder_profiles" p WHERE (p."id" = "from_profile_id" OR p."id" = "to_profile_id") AND p."tenant_id" = public.current_tenant_id())
+);
+DROP POLICY IF EXISTS "cofounder_interests_write" ON "public"."cofounder_interests";
+CREATE POLICY "cofounder_interests_write" ON "public"."cofounder_interests" AS PERMISSIVE FOR ALL TO app_user USING (
+  EXISTS (SELECT 1 FROM "public"."cofounder_profiles" p WHERE p."id" = "from_profile_id" AND p."tenant_id" = public.current_tenant_id())
+) WITH CHECK (
+  EXISTS (SELECT 1 FROM "public"."cofounder_profiles" p WHERE p."id" = "from_profile_id" AND p."tenant_id" = public.current_tenant_id())
+);
+
+-- tenant_transfer_journals: a tenant reads rows it sent or received; it writes
+-- rows only from itself (form-team). The async provisioning worker runs as a
+-- BYPASSRLS service role, so it applies/updates rows without these policies.
+ALTER TABLE "public"."tenant_transfer_journals" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "tenant_transfer_journals_select" ON "public"."tenant_transfer_journals";
+CREATE POLICY "tenant_transfer_journals_select" ON "public"."tenant_transfer_journals" AS PERMISSIVE FOR SELECT TO app_user USING ("from_tenant_id" = public.current_tenant_id() OR "to_tenant_id" = public.current_tenant_id());
+DROP POLICY IF EXISTS "tenant_transfer_journals_write" ON "public"."tenant_transfer_journals";
+CREATE POLICY "tenant_transfer_journals_write" ON "public"."tenant_transfer_journals" AS PERMISSIVE FOR ALL TO app_user USING ("from_tenant_id" = public.current_tenant_id()) WITH CHECK ("from_tenant_id" = public.current_tenant_id());
+
