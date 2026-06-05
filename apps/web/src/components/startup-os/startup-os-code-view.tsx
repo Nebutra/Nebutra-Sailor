@@ -135,47 +135,32 @@ export function StartupOsCodeView({
       data-mode={isEditing ? "edit" : "view"}
       className={`flex min-h-0 flex-1 flex-col bg-neutral-1 ${className ?? ""}`}
     >
-      {/* Toolbar — Edit / Done + Save live here so the highlighted view stays clean. */}
-      {editable ? (
+      {/* Edit lives in a toolbar only while editing; in view mode it floats over
+          the code so the highlighted source starts flush under the file tabs —
+          no empty header bar. */}
+      {editable && isEditing ? (
         <div className="flex items-center justify-end gap-2 bg-neutral-2 px-3 py-2">
-          <div className="flex shrink-0 items-center gap-2">
-            {isEditing ? (
-              <>
-                <Button
-                  type="button"
-                  variant="ink"
-                  size="sm"
-                  className="rounded-full"
-                  onClick={() => void save()}
-                  disabled={!isDirty || isSaving}
-                >
-                  <Check className="size-3.5" aria-hidden="true" />
-                  {isSaving ? "Saving..." : isDirty ? "Save" : "Saved"}
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="rounded-full"
-                  onClick={exitEdit}
-                >
-                  <Cross className="size-3.5" aria-hidden="true" />
-                  Done
-                </Button>
-              </>
-            ) : (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="rounded-full"
-                onClick={enterEdit}
-              >
-                <PencilEdit className="size-3.5" aria-hidden="true" />
-                Edit
-              </Button>
-            )}
-          </div>
+          <Button
+            type="button"
+            variant="ink"
+            size="sm"
+            className="rounded-full"
+            onClick={() => void save()}
+            disabled={!isDirty || isSaving}
+          >
+            <Check className="size-3.5" aria-hidden="true" />
+            {isSaving ? "Saving..." : isDirty ? "Save" : "Saved"}
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            className="rounded-full"
+            onClick={exitEdit}
+          >
+            <Cross className="size-3.5" aria-hidden="true" />
+            Done
+          </Button>
         </div>
       ) : null}
 
@@ -193,11 +178,25 @@ export function StartupOsCodeView({
           className="min-h-0 flex-1 resize-none border-0 bg-neutral-12 p-4 font-mono text-[13px] leading-6 text-neutral-1 shadow-none outline-none placeholder:text-neutral-6 dark:bg-black"
         />
       ) : (
-        <div className="min-h-0 flex-1 overflow-hidden" data-testid="startup-os-code-highlight">
+        <div
+          className="relative min-h-0 flex-1 overflow-hidden"
+          data-testid="startup-os-code-highlight"
+        >
+          {editable ? (
+            <button
+              type="button"
+              onClick={enterEdit}
+              className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1/90 px-2.5 py-1 text-xs font-medium text-neutral-11 shadow-sm backdrop-blur transition-colors hover:bg-neutral-2"
+            >
+              <PencilEdit className="size-3.5" aria-hidden="true" />
+              Edit
+            </button>
+          ) : null}
           <CodeBlock
             aria-label={`Source of ${file.path}`}
             language={language}
             maxHeight={maxHeight}
+            hideHeader
             className="h-full rounded-none border-0"
           >
             {deferredDraft}

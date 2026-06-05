@@ -88,6 +88,8 @@ interface CommonCodeBlockProps {
   languageIcons?: CodeBlockLanguageIconMap;
   /** Show language logos in the header/tabs/switcher. Defaults to true. */
   showLanguageIcon?: boolean;
+  /** Hide the header bar entirely (filename + copy) — for embedded read-only views. */
+  hideHeader?: boolean;
   /** Accessible label for the code block. Pass via the standard `aria-label` attribute. */
   "aria-label"?: string;
 }
@@ -560,7 +562,9 @@ export function CodeBlock(props: CodeBlockProps) {
   // mode, a filename in single-file mode, a switcher, or the copy affordance.
   const hasMultipleFiles = normalizedFiles.length > 1;
   const hasSwitcher = showLanguageSwitcher || Boolean(controlledSwitcher);
-  const showHeader = hasMultipleFiles || showFilenameHeader || hasSwitcher || true; // copy lives here
+  const showHeader =
+    !(props as CommonCodeBlockProps).hideHeader &&
+    (hasMultipleFiles || showFilenameHeader || hasSwitcher || true); // copy lives here unless hidden
 
   return (
     <div
