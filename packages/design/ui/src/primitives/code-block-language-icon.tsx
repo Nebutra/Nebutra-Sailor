@@ -138,9 +138,22 @@ const LANGUAGE_ALIASES: Record<string, string> = {
  * A clear `{ }` braces glyph for JSON/config files — the official simple-icons
  * JSON mark renders as a single dark blob that's unrecognizable at icon sizes.
  */
-function JsonBracesIcon({ className, color }: { className?: string; color?: string }) {
+type JsonBracesIconProps = SVGProps<SVGSVGElement> & {
+  color?: string | undefined;
+  size?: number | string | undefined;
+  title?: string | undefined;
+};
+
+function JsonBracesIcon({
+  className,
+  color,
+  size: _size,
+  title,
+  ...svgProps
+}: JsonBracesIconProps) {
   return (
     <svg
+      {...svgProps}
       viewBox="0 0 24 24"
       className={className}
       fill="none"
@@ -150,6 +163,7 @@ function JsonBracesIcon({ className, color }: { className?: string; color?: stri
       strokeLinejoin="round"
       aria-hidden="true"
     >
+      {title ? <title>{title}</title> : null}
       <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" />
       <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" />
     </svg>
