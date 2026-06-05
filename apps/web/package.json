@@ -43,6 +43,7 @@
     "@nebutra/metering": "workspace:*",
     "@nebutra/notifications": "workspace:*",
     "@nebutra/onboarding": "workspace:*",
+    "@nebutra/preset": "workspace:*",
     "@nebutra/queue": "workspace:*",
     "@nebutra/reel": "workspace:*",
     "@nebutra/sanity": "workspace:*",
