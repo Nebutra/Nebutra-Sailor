@@ -30,15 +30,34 @@ export const PROVIDER_MAP: Record<string, AIProviderId> = {
   "google-vertex-anthropic": "ANTHROPIC",
   "amazon-bedrock": "ANTHROPIC", // most bedrock usage is claude
   siliconflow: "SILICONFLOW",
+  "siliconflow-cn": "SILICONFLOW", // SiliconFlow ecosystem (GLM / Qwen / DeepSeek / MiniMax / …)
   deepseek: "SILICONFLOW", // deepseek is siliconflow-compatible
   alibaba: "SILICONFLOW",
+  "alibaba-token-plan": "SILICONFLOW",
   qwen: "SILICONFLOW",
   moonshot: "SILICONFLOW",
   zhipu: "SILICONFLOW",
+  minimax: "SILICONFLOW",
 };
 
 export function mapProvider(modelsDevProviderId: string): AIProviderId {
   return PROVIDER_MAP[modelsDevProviderId] ?? "CUSTOM";
+}
+
+/**
+ * Output modality — the primary dimension for canvas orchestration ("give me a
+ * video model", "an image model", …). Derived from models.dev `modalities.output`.
+ */
+export type ModelModality = "text" | "image" | "video" | "audio" | "embedding";
+
+/** Classify a model by what it PRODUCES (not what it consumes). */
+function classifyModality(model: ProviderModel): ModelModality {
+  const out = model.modalities?.output ?? [];
+  if (out.includes("video")) return "video";
+  if (out.includes("image")) return "image";
+  if (out.includes("audio")) return "audio";
+  if (/embedding/i.test(model.id) || out.includes("embedding")) return "embedding";
+  return "text";
 }
 
 /** Normalized, provider-agnostic model facts surfaced to the rest of the app. */
@@ -49,6 +68,8 @@ export interface ModelInfo {
   provider: AIProviderId;
   /** The raw models.dev provider id (e.g. "google-vertex"). */
   rawProvider: string;
+  /** What the model produces — the canvas-orchestration grouping key. */
+  modality: ModelModality;
   contextWindow?: number;
   maxOutput?: number;
   pricing?: { inputPerMTok?: number; outputPerMTok?: number };
@@ -62,6 +83,7 @@ function toModelInfo(rawProvider: string, model: ProviderModel): ModelInfo {
     name: model.name ?? model.id,
     provider: mapProvider(rawProvider),
     rawProvider,
+    modality: classifyModality(model),
     contextWindow: model.limit?.context,
     maxOutput: model.limit?.output,
     pricing: {
@@ -76,10 +98,49 @@ function toModelInfo(rawProvider: string, model: ProviderModel): ModelInfo {
   };
 }
 
+// ─── Deduped, modality-grouped view (for canvas orchestration) ─────────────────
+//
+// models.dev lists the SAME logical model under dozens of aggregator providers
+// (e.g. minimax-m2.5 appears under 47). The canvas needs ONE entry per logical
+// model with the list of providers that can serve it (so it can pick a routable
+// id + compare cost). `dedupKey` collapses the bare name across aggregators.
+
+/** A single provider's offering of a logical model. */
+export interface ModelOffering {
+  /** Routable model id as listed by models.dev (aggregator-prefixed). */
+  id: string;
+  rawProvider: string;
+  bucket: AIProviderId;
+  pricing?: { inputPerMTok?: number; outputPerMTok?: number };
+  contextWindow?: number;
+}
+
+/** One deduped logical model, with all the providers that serve it. */
+export interface CatalogModel {
+  key: string;
+  name: string;
+  modality: ModelModality;
+  capabilities: { reasoning: boolean; toolCall: boolean; vision: boolean };
+  /** Distinct provider buckets that serve it (for BYOK key selection). */
+  buckets: AIProviderId[];
+  offerings: ModelOffering[];
+}
+
+/** Collapse a model id to a logical key (drop aggregator path + separators). */
+function dedupKey(modelId: string): string {
+  return modelId
+    .toLowerCase()
+    .replace(/^.*\//, "") // keep only the final path segment
+    .replace(/[._:\-\s]/g, "");
+}
+
 // ─── Runtime cache ────────────────────────────────────────────────────────────
 
 interface CacheEntry {
+  /** Per-id view (exact lookups: providerForModel, getModelInfo, resolveFrontier). */
   index: Map<string, ModelInfo>;
+  /** Deduped logical view (canvas orchestration: listModelsByModality). */
+  logical: CatalogModel[];
   fetchedAt: number;
 }
 
@@ -102,28 +163,73 @@ function buildIndex(catalog: ProvidersCatalog): Map<string, ModelInfo> {
   return index;
 }
 
-async function loadIndex(): Promise<Map<string, ModelInfo>> {
+function buildLogical(catalog: ProvidersCatalog): CatalogModel[] {
+  const byKey = new Map<string, CatalogModel>();
+  for (const [providerId, providerInfo] of Object.entries(catalog)) {
+    for (const model of Object.values(providerInfo.models)) {
+      const key = dedupKey(model.id);
+      if (!key) continue;
+      const bucket = mapProvider(providerId);
+      const offering: ModelOffering = {
+        id: model.id,
+        rawProvider: providerId,
+        bucket,
+        pricing: { inputPerMTok: model.cost?.input, outputPerMTok: model.cost?.output },
+        contextWindow: model.limit?.context,
+      };
+      const existing = byKey.get(key);
+      if (existing) {
+        existing.offerings.push(offering);
+        if (!existing.buckets.includes(bucket)) existing.buckets.push(bucket);
+        // Capabilities are the union across offerings.
+        existing.capabilities.reasoning ||= model.reasoning ?? false;
+        existing.capabilities.toolCall ||= model.tool_call ?? false;
+        existing.capabilities.vision ||= model.modalities?.input?.includes("image") ?? false;
+      } else {
+        byKey.set(key, {
+          key,
+          name: model.name ?? model.id,
+          modality: classifyModality(model),
+          capabilities: {
+            reasoning: model.reasoning ?? false,
+            toolCall: model.tool_call ?? false,
+            vision: model.modalities?.input?.includes("image") ?? false,
+          },
+          buckets: [bucket],
+          offerings: [offering],
+        });
+      }
+    }
+  }
+  return [...byKey.values()];
+}
+
+async function loadCache(): Promise<CacheEntry> {
   const now = Date.now();
-  if (cache && now - cache.fetchedAt < TTL_MS) return cache.index;
-  if (inflight) return (await inflight).index;
+  if (cache && now - cache.fetchedAt < TTL_MS) return cache;
+  if (inflight) return inflight;
 
   inflight = (async () => {
     try {
       const catalog = await fetchModels();
-      cache = { index: buildIndex(catalog), fetchedAt: Date.now() };
+      cache = { index: buildIndex(catalog), logical: buildLogical(catalog), fetchedAt: Date.now() };
       return cache;
     } catch {
       // models.dev unreachable — reuse the last good catalog if we have one,
-      // otherwise an empty index (callers degrade safely, e.g. BYOK → platform).
+      // otherwise empty (callers degrade safely, e.g. BYOK → platform).
       if (cache) return cache;
-      cache = { index: new Map(), fetchedAt: Date.now() };
+      cache = { index: new Map(), logical: [], fetchedAt: Date.now() };
       return cache;
     } finally {
       inflight = null;
     }
   })();
 
-  return (await inflight).index;
+  return inflight;
+}
+
+async function loadIndex(): Promise<Map<string, ModelInfo>> {
+  return (await loadCache()).index;
 }
 
 // ─── Public accessors ─────────────────────────────────────────────────────────
@@ -131,6 +237,32 @@ async function loadIndex(): Promise<Map<string, ModelInfo>> {
 /** Full model list (newest fetch, cached). */
 export async function listModels(): Promise<ModelInfo[]> {
   return [...(await loadIndex()).values()];
+}
+
+/**
+ * Deduped logical models for a given output modality — the canvas-orchestration
+ * entry point. One entry per logical model, with the providers that serve it.
+ * Sorted by offering count (most widely available first).
+ */
+export async function listModelsByModality(modality: ModelModality): Promise<CatalogModel[]> {
+  const { logical } = await loadCache();
+  return logical
+    .filter((m) => m.modality === modality)
+    .sort((a, b) => b.offerings.length - a.offerings.length);
+}
+
+/** Count of deduped logical models per modality (for canvas tab badges, etc.). */
+export async function listModalities(): Promise<Record<ModelModality, number>> {
+  const { logical } = await loadCache();
+  const counts: Record<ModelModality, number> = {
+    text: 0,
+    image: 0,
+    video: 0,
+    audio: 0,
+    embedding: 0,
+  };
+  for (const m of logical) counts[m.modality]++;
+  return counts;
 }
 
 /** Look up a single model by id. `null` if unknown to the catalog. */

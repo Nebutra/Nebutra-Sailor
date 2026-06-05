@@ -27,10 +27,15 @@
 // runtime-fetched + cached). Replaces hand-maintained model/provider lists.
 export {
   type AIProviderId,
+  type CatalogModel,
   FRONTIER_FALLBACK,
   getModelInfo,
+  listModalities,
   listModels,
+  listModelsByModality,
   type ModelInfo,
+  type ModelModality,
+  type ModelOffering,
   type ModelTier,
   mapProvider,
   PROVIDER_MAP,
