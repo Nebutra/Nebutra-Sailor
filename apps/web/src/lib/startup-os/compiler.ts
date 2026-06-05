@@ -1,3 +1,15 @@
+import type { CompanyContext } from "./company-context/model";
+import {
+  companyCategory,
+  companyCoreBet,
+  companyMarket,
+  companyName,
+  valueProposition,
+} from "./company-context/projection";
+import { createEmptyContext, InMemoryCompanyContextRepository } from "./company-context/repository";
+
+export type { CompanyContext };
+
 export const STARTUP_ARENAS = [
   "Developer infrastructure",
   "AI SaaS",
@@ -28,16 +40,6 @@ export type StartupRunStatus =
   | "waiting_for_review"
   | "failed";
 export type StartupRunApproval = "auto_approved" | "pending_review" | "approved";
-
-export interface CompanyContext {
-  readonly name: string;
-  readonly category: string;
-  readonly market: string;
-  readonly coreBet: string;
-  readonly promise: string;
-  readonly moat: string;
-  readonly operatingModel: readonly string[];
-}
 
 export interface StartupArtifact {
   readonly id: string;
@@ -143,15 +145,6 @@ export interface FailStartupRunInput {
 }
 
 const DEFAULT_NOW = "2026-05-29T00:00:00.000Z";
-const LEGACY_PROMISE_MARKER = ["raw", "startup", "thesis"].join(" ");
-
-function normalizeWords(value: string): string[] {
-  return value
-    .replace(/[^a-zA-Z0-9 ]/g, " ")
-    .split(" ")
-    .map((word) => word.trim())
-    .filter((word) => word.length > 2);
-}
 
 function slugify(value: string): string {
   const slug = value
@@ -162,45 +155,6 @@ function slugify(value: string): string {
   return slug || "startup-os-project";
 }
 
-function titleFromThesis(thesis: string): string {
-  const lower = thesis.toLowerCase();
-  if (/\bstartup\s+agent\s+os\b/.test(lower)) return "Startup Agent OS";
-  if (/\bstartup\s+os\b/.test(lower)) return "Startup OS";
-  if (/\bagent\s+os\b/.test(lower)) return "Agent OS";
-
-  const calledMatch = thesis.match(/\bcalled\s+([A-Z][\w-]*(?:\s+[A-Z][\w-]*){0,2})/);
-  if (calledMatch?.[1]) return calledMatch[1];
-
-  const words = normalizeWords(thesis);
-  const capitalized = words.filter(
-    (word) => /^[A-Z]/.test(word) && !["SaaS", "API"].includes(word),
-  );
-  return capitalized.at(-1) ?? (words.slice(1, 3).join(" ") || "Nebutra Venture");
-}
-
-function normalizePromise(thesis: string): string {
-  const promise = thesis.replace(/\s+/g, " ").trim();
-  if (!promise) return "A company workspace compiled from the submitted proposition.";
-  return /[.!?]$/.test(promise) ? promise : `${promise}.`;
-}
-
-function detectMarket(thesis: string): string {
-  const lower = thesis.toLowerCase();
-  if (/\bdeveloper|debug|code|deploy|engineering|devops\b/.test(lower)) {
-    return "software teams shipping AI-era products";
-  }
-  if (/\bfounder|startup|maker|solo\b/.test(lower)) {
-    return "solo founders turning expertise into a company";
-  }
-  if (/\bsales|revenue|pipeline|crm\b/.test(lower)) {
-    return "small revenue teams compressing manual operations";
-  }
-  if (/\bdesign|creative|brand|video\b/.test(lower)) {
-    return "creative operators building launch-ready product systems";
-  }
-  return "early teams looking for a coherent company system";
-}
-
 function artifactId(slug: string, kind: StartupArtifactKind): string {
   return `${slug}:${kind}`;
 }
@@ -209,54 +163,34 @@ function runId(slug: string, index: number): string {
   return `${slug}:run:${String(index).padStart(2, "0")}`;
 }
 
-function buildCompanyContext(thesis: string, arena: StartupArena): CompanyContext {
-  const name = titleFromThesis(thesis);
-  const market = detectMarket(thesis);
-  return {
-    name,
-    category: `${arena} operating system`,
-    market,
-    coreBet:
-      "A startup becomes investable faster when brand, product, code, launch, revenue, and support share one company context.",
-    promise: normalizePromise(thesis),
-    moat: "Cross-time coherence: every artifact, launch decision, agent run, and support answer references the same CompanyContext.",
-    operatingModel: [
-      "CompanyContext is the source of truth.",
-      "Artifacts are typed, dependency-aware, and reviewable.",
-      "Agent runs mutate company state only through approval-aware stages.",
-      "Launch, revenue, support, and iteration stay connected to the same ledger.",
-    ],
-  };
+/**
+ * Seed the nine-layer tower as the project's CompanyContext — keyless and
+ * deterministic. The submitted thesis is stored verbatim as the L5 value
+ * proposition; the arena drives an L4 category. Name, market, moat, and core
+ * bet stay empty so the projection helpers supply their defaults; no regex
+ * heuristics infer them. An AI compile fills the rest later.
+ */
+function compileCompanyTower(
+  projectId: string,
+  thesis: string,
+  arena: StartupArena,
+  now: string,
+): CompanyContext {
+  const repo = new InMemoryCompanyContextRepository();
+  repo.save(createEmptyContext(projectId, "pre_seed", now));
+  repo.upsertField(projectId, "L5", "value_proposition", thesis, { provenance: "user", now });
+  return repo.upsertField(projectId, "L4", "category", `${arena} operating system`, {
+    provenance: "user",
+    now,
+  });
 }
 
 export function normalizeStartupProjectCopy(project: StartupOSProject): StartupOSProject {
-  if (!project.companyContext.promise.includes(LEGACY_PROMISE_MARKER)) {
-    return project;
-  }
-
-  const promise = normalizePromise(project.thesis);
-  return {
-    ...project,
-    companyContext: {
-      ...project.companyContext,
-      promise,
-    },
-    artifacts: project.artifacts.map((artifact) =>
-      artifact.kind === "landing_page"
-        ? {
-            ...artifact,
-            payload: artifact.payload.map((line) =>
-              line.includes(LEGACY_PROMISE_MARKER)
-                ? line.replace(project.companyContext.promise, promise)
-                : line,
-            ),
-          }
-        : artifact,
-    ),
-  };
+  return project;
 }
 
 function buildArtifacts(slug: string, thesis: string, context: CompanyContext): StartupArtifact[] {
+  const name = companyName(context);
   return [
     {
       id: artifactId(slug, "company_context"),
@@ -267,10 +201,10 @@ function buildArtifacts(slug: string, thesis: string, context: CompanyContext): 
       dependencies: [],
       summary: "The system-of-record object that keeps brand, build, launch, and support aligned.",
       payload: [
-        `Name: ${context.name}`,
-        `Category: ${context.category}`,
-        `Market: ${context.market}`,
-        `Core bet: ${context.coreBet}`,
+        `Name: ${name}`,
+        `Category: ${companyCategory(context)}`,
+        `Market: ${companyMarket(context)}`,
+        `Core bet: ${companyCoreBet(context)}`,
       ],
     },
     {
@@ -284,7 +218,7 @@ function buildArtifacts(slug: string, thesis: string, context: CompanyContext): 
       payload: [
         "Palette: Graphite / Signal Blue / Volt Green / Warm White",
         "Typography: precise product grotesk with editorial launch accent",
-        `Voice: technical, direct, founder-grade; anchored on "${context.name}"`,
+        `Voice: technical, direct, founder-grade; anchored on "${name}"`,
       ],
     },
     {
@@ -298,7 +232,7 @@ function buildArtifacts(slug: string, thesis: string, context: CompanyContext): 
         "The first proof artifact: a multimodal launch film brief, not the product category.",
       payload: [
         "Scene 1: founder toggles between disconnected tools and loses context.",
-        `Scene 2: ${context.name} creates one company graph from the startup thesis.`,
+        `Scene 2: ${name} creates one company graph from the startup thesis.`,
         "Scene 3: brand, landing, MVP, launch, and support artifacts share one state model.",
         "Scene 4: the cockpit shows next operating run, risk, cost, and review gates.",
       ],
@@ -312,7 +246,7 @@ function buildArtifacts(slug: string, thesis: string, context: CompanyContext): 
       dependencies: ["company_context", "brand_system"],
       summary: "A conversion surface that matches the company state and launch proof.",
       payload: [
-        `${context.name}: where chaos becomes a company`,
+        `${name}: where chaos becomes a company`,
         thesis,
         "Sections: problem, operating system, proof artifacts, founding waitlist",
       ],
@@ -455,7 +389,7 @@ function buildSignals(context: CompanyContext): StartupSignal[] {
   return [
     {
       label: "Thesis clarity",
-      score: Math.min(92, 58 + context.promise.length / 4),
+      score: Math.min(92, 58 + valueProposition(context).length / 4),
       evidence: "CompanyContext has market, promise, core bet, and operating model.",
     },
     {
@@ -483,13 +417,14 @@ export function compileStartupProject(input: CompileStartupProjectInput): Startu
   }
 
   const now = input.now ?? DEFAULT_NOW;
-  const context = buildCompanyContext(thesis, input.arena);
-  const slug = slugify(`${context.name}-${input.arena}`);
+  const slug = slugify(`${thesis}-${input.arena}`);
+  const id = input.id ?? `startup_${slug}`;
+  const context = compileCompanyTower(id, thesis, input.arena, now);
   const artifacts = buildArtifacts(slug, thesis, context);
   const runs = buildRuns(slug, now, artifacts);
 
   return {
-    id: input.id ?? `startup_${slug}`,
+    id,
     slug,
     thesis,
     arena: input.arena,

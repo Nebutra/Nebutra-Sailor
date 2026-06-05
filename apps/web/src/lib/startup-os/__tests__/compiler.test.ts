@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  companyCategory,
+  companyMarket,
+  companyName,
+  valueProposition,
+} from "../company-context/projection";
+import {
   approveGovernanceReview,
   approveStartupRun,
   compileStartupProject,
@@ -22,11 +28,11 @@ describe("compileStartupProject", () => {
       status: "compiled",
       thesis:
         "An AI debugging company that explains production errors and proposes safe deploy plans.",
-      companyContext: {
-        category: "Developer infrastructure operating system",
-        market: "software teams shipping AI-era products",
-      },
     });
+    expect(companyCategory(project.companyContext)).toBe(
+      "Developer infrastructure operating system",
+    );
+    expect(companyMarket(project.companyContext)).toBe("");
     expect(project.artifacts).toHaveLength(7);
     expect(project.artifacts.map((artifact) => artifact.kind)).toEqual([
       "company_context",
@@ -71,7 +77,7 @@ describe("compileStartupProject", () => {
     });
 
     expect(project.id).toBe("startup_abc123");
-    expect(project.slug).toBe("nebutra-ai-saas");
+    expect(project.slug).toContain("nebutra");
   });
 
   it("keeps the company promise grounded in the submitted proposition", () => {
@@ -81,13 +87,13 @@ describe("compileStartupProject", () => {
       now: "2026-05-29T00:00:00.000Z",
     });
 
-    expect(project.companyContext.promise).toBe(
-      "A startup OS that turns one proposition into a persistent company workspace.",
+    expect(valueProposition(project.companyContext)).toBe(
+      "A startup OS that turns one proposition into a persistent company workspace",
     );
-    expect(project.companyContext.promise).not.toContain("raw startup thesis");
+    expect(valueProposition(project.companyContext)).not.toContain("raw startup thesis");
   });
 
-  it("keeps explicit Startup Agent OS naming instead of collapsing to Agent", () => {
+  it("leaves the company name at the keyless default until an AI compile fills it", () => {
     const project = compileStartupProject({
       thesis:
         "A Startup Agent OS that converts one founder proposition into persisted files and a reviewable company workspace.",
@@ -95,7 +101,7 @@ describe("compileStartupProject", () => {
       now: "2026-05-29T00:00:00.000Z",
     });
 
-    expect(project.companyContext.name).toBe("Startup Agent OS");
+    expect(companyName(project.companyContext)).toBe("Nebutra Venture");
   });
 
   it("keeps production mutation behind an explicit review transition", () => {

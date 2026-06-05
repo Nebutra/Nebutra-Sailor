@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { companyName, valueProposition } from "@/lib/startup-os/company-context/projection";
 import { compileStartupProject } from "@/lib/startup-os/compiler";
 import { buildStartupProjectFiles } from "@/lib/startup-os/files";
 
@@ -89,7 +90,7 @@ describe("/api/startup-os/projects/[projectId]/files", () => {
 
     expect(response.status).toBe(200);
     expect(payload.files.map((file) => file.path)).toContain("src/routes/index.tsx");
-    expect(payload.previewHtml).toContain(project.companyContext.name);
+    expect(payload.previewHtml).toContain(companyName(project.companyContext));
   });
 
   it("backfills missing project files through tenant persistence before returning them", async () => {
@@ -116,7 +117,7 @@ describe("/api/startup-os/projects/[projectId]/files", () => {
       expect.objectContaining({ type: "file_updated" }),
     );
     expect(payload.files.map((file) => file.path)).toContain("src/routes/index.tsx");
-    expect(payload.previewHtml).toContain(project.companyContext.promise);
+    expect(payload.previewHtml).toContain(valueProposition(project.companyContext));
   });
 
   it("patches a file through tenant-scoped persistence", async () => {

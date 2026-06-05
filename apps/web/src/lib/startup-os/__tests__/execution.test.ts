@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { companyName } from "../company-context/projection";
 import { approveGovernanceReview, compileStartupProject } from "../compiler";
 import { executeStartupRun, hasStartupOSAIProviderKey } from "../execution";
 import { buildStartupProjectFiles } from "../files";
@@ -33,7 +34,7 @@ describe("Startup OS real execution service", () => {
       })(),
       invokeModel: async (request) => {
         expect(request.prompt).toContain("landing.draft");
-        expect(request.prompt).toContain(project.companyContext.name);
+        expect(request.prompt).toContain(companyName(project.companyContext));
         // Default routing path: a landing.draft run with 0 files and a
         // non-failed initial run stays on the fast tier (no regression).
         expect(request.tier).toBe("fast");

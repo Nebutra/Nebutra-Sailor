@@ -6,6 +6,7 @@ import { z } from "zod";
 import { getAuth } from "@/lib/auth";
 import { getTenantDb } from "@/lib/db";
 import { hasPermission, resolveRole, type Scope } from "@/lib/permissions";
+import { companyName } from "@/lib/startup-os/company-context/projection";
 import {
   compileStartupProject,
   STARTUP_ARENAS,
@@ -164,7 +165,7 @@ export async function POST(request: Request) {
       resource: {
         type: "startup_os_project",
         id: saved.project.id,
-        name: saved.project.companyContext.name,
+        name: companyName(saved.project.companyContext),
       },
       metadata: {
         arena: saved.project.arena,

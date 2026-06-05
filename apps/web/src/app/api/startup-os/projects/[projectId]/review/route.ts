@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { getAuth } from "@/lib/auth";
 import { getTenantDb } from "@/lib/db";
 import { hasPermission, resolveRole } from "@/lib/permissions";
+import { companyName } from "@/lib/startup-os/company-context/projection";
 import { approveGovernanceReview } from "@/lib/startup-os/compiler";
 import { isStartupOSPrototypeEnabled } from "@/lib/startup-os/feature-flag";
 import {
@@ -100,7 +101,7 @@ export async function POST(request: Request, context: RouteContext) {
       resource: {
         type: "startup_os_project",
         id: saved.project.id,
-        name: saved.project.companyContext.name,
+        name: companyName(saved.project.companyContext),
       },
       severity: "warning",
       metadata: {

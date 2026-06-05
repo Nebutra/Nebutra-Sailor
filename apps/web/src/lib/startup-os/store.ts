@@ -1,4 +1,5 @@
 import { isStartupCanvasLayout, type StartupCanvasLayout } from "./canvas";
+import { companyName } from "./company-context/projection";
 import { normalizeStartupProjectCopy, type StartupOSProject } from "./compiler";
 import { isStartupOSFile, normalizeStartupProjectFiles, type StartupOSFile } from "./files";
 
@@ -287,12 +288,12 @@ export async function saveStartupProjectRecord(
     create: {
       id: toStartupOSCanvasId(project.id),
       tenantId,
-      name: project.companyContext.name,
+      name: companyName(project.companyContext),
       scene,
       thumbnail: null,
     },
     update: {
-      name: project.companyContext.name,
+      name: companyName(project.companyContext),
       scene,
       thumbnail: null,
     },

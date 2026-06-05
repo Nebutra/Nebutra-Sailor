@@ -1,5 +1,6 @@
 import { runWithFallback } from "@nebutra/agents";
 import { streamText } from "ai";
+import { flatCompanyView } from "./company-context/projection";
 import type {
   StartupArtifactKind,
   StartupArtifactStatus,
@@ -165,7 +166,7 @@ export function buildStartupConversationPrompt(
   return JSON.stringify(
     {
       instruction,
-      companyContext: project.companyContext,
+      companyContext: flatCompanyView(project.companyContext),
       thesis: project.thesis,
       arena: project.arena,
       artifacts: project.artifacts.map((artifact) => ({

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { valueProposition } from "../company-context/projection";
 import { compileStartupProject } from "../compiler";
 import { buildStartupProjectFiles, patchStartupProjectFile } from "../files";
 import {
@@ -94,29 +95,22 @@ describe("Startup OS AtelierCanvas persistence contract", () => {
     });
   });
 
-  it("normalizes legacy fallback company copy when reading a persisted scene", () => {
+  it("round-trips the company value proposition through a persisted scene", () => {
+    const thesis = "A founder OS that persists every generated file through the tenant scene.";
     const project = compileStartupProject({
-      thesis: "A founder OS that persists every generated file through the tenant scene.",
+      thesis,
       arena: "AI SaaS",
       now: "2026-05-29T00:00:00.000Z",
     });
-    const legacyProject = {
-      ...project,
-      companyContext: {
-        ...project.companyContext,
-        promise: `${project.companyContext.name} turns a raw startup thesis into a company state that agents can safely mutate.`,
-      },
-    };
 
     const parsed = parseStartupProjectSceneEnvelope({
       kind: "nebutra.startup-os.project",
       version: 1,
-      project: legacyProject,
+      project,
     });
 
-    expect(parsed?.project.companyContext.promise).toBe(
-      "A founder OS that persists every generated file through the tenant scene.",
-    );
+    expect(parsed).not.toBeNull();
+    expect(parsed ? valueProposition(parsed.project.companyContext) : "").toBe(thesis);
   });
 
   it("round-trips explicit project events inside the scene envelope", () => {

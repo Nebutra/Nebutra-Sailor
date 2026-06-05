@@ -7,15 +7,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CofounderCard, type CofounderCardData } from "@/components/cofounder-match/cofounder-card";
+import type { CompanyContext } from "@/lib/startup-os/company-context/model";
+import {
+  companyCategory,
+  companyName,
+  valueProposition,
+} from "@/lib/startup-os/company-context/projection";
 
 interface ProjectSummary {
   readonly arena?: string;
   readonly thesis?: string;
-  readonly companyContext?: {
-    readonly name?: string;
-    readonly category?: string;
-    readonly promise?: string;
-  };
+  readonly companyContext?: CompanyContext;
   readonly artifacts?: ReadonlyArray<unknown>;
 }
 
@@ -56,16 +58,16 @@ export default function CofounderPage() {
         }
         const data = (await res.json()) as { projects?: ProjectSummary[] };
         const project = data.projects?.[0];
-        if (!project?.companyContext?.name) {
+        if (!project?.companyContext) {
           if (!cancelled) setState("empty");
           return;
         }
         const count = project.artifacts?.length ?? 0;
         setCard({
-          companyName: project.companyContext.name,
+          companyName: companyName(project.companyContext),
           arena: project.arena ?? "Startup",
-          oneLiner: project.companyContext.promise || project.thesis || "",
-          category: project.companyContext.category,
+          oneLiner: valueProposition(project.companyContext) || project.thesis || "",
+          category: companyCategory(project.companyContext),
           tractionLabel:
             count > 0 ? `${count} artifact${count === 1 ? "" : "s"} compiled` : undefined,
           trustVerified: true,

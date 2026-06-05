@@ -1,3 +1,4 @@
+import { companyCategory, companyName } from "./company-context/projection";
 import type { StartupArtifact, StartupOperatingRun, StartupOSProject } from "./compiler";
 
 export type StartupCanvasNodeKind = "context" | "artifact" | "run";
@@ -164,8 +165,8 @@ export function buildStartupCanvasModel(project: StartupOSProject): StartupCanva
       {
         id: CONTEXT_NODE_ID,
         kind: "context",
-        title: project.companyContext.name,
-        subtitle: project.companyContext.category,
+        title: companyName(project.companyContext),
+        subtitle: companyCategory(project.companyContext),
         status: project.status,
         x: 44,
         y: TOP + 2 * (ARTIFACT_HEIGHT + ROW_GAP),

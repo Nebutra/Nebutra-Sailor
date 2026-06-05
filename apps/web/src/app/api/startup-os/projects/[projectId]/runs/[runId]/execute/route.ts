@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import { getAuth } from "@/lib/auth";
 import { getTenantDb } from "@/lib/db";
 import { hasPermission, resolveRole } from "@/lib/permissions";
+import { companyName } from "@/lib/startup-os/company-context/projection";
 import {
   executeStartupRun,
   hasStartupOSAIProviderKey,
@@ -192,7 +193,7 @@ export async function POST(request: Request, context: RouteContext) {
       resource: {
         type: "startup_os_project_run",
         id: `${saved.project.id}:${decodedRunId}`,
-        name: saved.project.companyContext.name,
+        name: companyName(saved.project.companyContext),
       },
       severity: "warning",
       metadata: {

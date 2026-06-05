@@ -1034,7 +1034,7 @@ function StartupBuilderHome({
                     }`}
                   >
                     <span className="block truncate text-sm font-semibold">
-                      {project.companyContext.name}
+                      {companyName(project.companyContext)}
                     </span>
                     <span className="mt-1 block truncate text-[11px] opacity-65">
                       {project.arena} / {project.status}
@@ -1100,7 +1100,7 @@ function StartupBuilderWorkspace({
     },
     {
       title: "CompanyContext compiled",
-      body: project.companyContext.promise,
+      body: valueProposition(project.companyContext),
       tone: "blue",
     },
     selectedRun
@@ -1124,7 +1124,7 @@ function StartupBuilderWorkspace({
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <h2 className="truncate text-sm font-semibold tracking-[-0.02em] text-neutral-12">
-                      {project.companyContext.name}
+                      {companyName(project.companyContext)}
                     </h2>
                     <StatusPill
                       status={project.status === "review_ready" ? "completed" : "planned"}
@@ -1136,7 +1136,7 @@ function StartupBuilderWorkspace({
                 </div>
               </div>
               <p className="mt-4 line-clamp-2 text-xs leading-5 text-neutral-10">
-                {project.companyContext.promise}
+                {valueProposition(project.companyContext)}
               </p>
             </div>
 
@@ -1203,7 +1203,7 @@ function StartupBuilderWorkspace({
                   {selectedFile?.path ?? selectedArtifact?.title ?? "Startup OS workspace"}
                 </p>
                 <p className="mt-0.5 truncate text-[11px] text-neutral-9">
-                  {project.companyContext.name}
+                  {companyName(project.companyContext)}
                 </p>
               </div>
               <div className="flex shrink-0 rounded-full border border-neutral-6 bg-neutral-2 p-1">

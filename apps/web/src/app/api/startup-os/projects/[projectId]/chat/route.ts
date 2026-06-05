@@ -10,6 +10,7 @@ import { z } from "zod";
 import { getAuth } from "@/lib/auth";
 import { getTenantDb } from "@/lib/db";
 import { hasPermission, resolveRole } from "@/lib/permissions";
+import { companyName } from "@/lib/startup-os/company-context/projection";
 import {
   type StartupConversationEvent,
   type StreamStartupConversationResult,
@@ -230,7 +231,7 @@ export async function POST(request: Request, context: RouteContext) {
             resource: {
               type: "startup_os_project_chat",
               id: `${saved.project.id}:${CHAT_RUN_ID}`,
-              name: saved.project.companyContext.name,
+              name: companyName(saved.project.companyContext),
             },
             severity: "info",
             metadata: {
@@ -250,7 +251,7 @@ export async function POST(request: Request, context: RouteContext) {
             resource: {
               type: "startup_os_project_chat",
               id: `${result.project.id}:${CHAT_RUN_ID}`,
-              name: result.project.companyContext.name,
+              name: companyName(result.project.companyContext),
             },
             severity: "warning",
             metadata: {

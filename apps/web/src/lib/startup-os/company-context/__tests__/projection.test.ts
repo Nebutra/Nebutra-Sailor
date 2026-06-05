@@ -15,7 +15,9 @@ async function ctxWith(layerId: LayerId, fieldKey: string, value: unknown) {
   const repo = new InMemoryCompanyContextRepository();
   await repo.save(createEmptyContext("p1", "pre_seed", NOW));
   await repo.upsertField("p1", layerId, fieldKey, value, { provenance: "user", now: NOW });
-  return repo.get("p1");
+  const ctx = repo.get("p1");
+  if (!ctx) throw new Error("expected context for p1");
+  return ctx;
 }
 
 describe("projection", () => {
