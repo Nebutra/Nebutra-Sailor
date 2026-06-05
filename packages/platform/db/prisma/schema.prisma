@@ -172,6 +172,7 @@ model Tenant {
   chatSessions            ChatSession[]
   codeRedemptions         CodeRedemption[]
   connectors              Connector[]
+  cofounderProfile        CofounderProfile?
   contents                Content[]
   creditBalances          CreditBalance[]
   customerFeatureOverrides CustomerFeatureOverride[]
@@ -1739,6 +1740,56 @@ model Connector {
 
   @@index([userId, isActive, lastUsedAt(sort: Desc)])
   @@map("connectors")
+  @@schema("public")
+}
+
+// ── Match Your Cofounder (opt-in cofounder matching) ─────────────────────────
+// CofounderProfile = a tenant's OPT-IN entry into the cofounder pool. No row ⇒
+// not in the pool (privacy: opt-OUT by default). One profile per tenant (OPC).
+model CofounderProfile {
+  id        String   @id @default(cuid())
+  tenantId  String   @unique @map("tenant_id")
+  userId    String   @map("user_id")
+  archetype String?  @db.VarChar(40)
+  arena     String   @db.VarChar(60)
+  headline  String   @db.VarChar(280)
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tenant            Tenant              @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  sentInterests     CofounderInterest[] @relation("CofounderInterestFrom")
+  receivedInterests CofounderInterest[] @relation("CofounderInterestTo")
+
+  @@index([isActive, arena])
+  @@map("cofounder_profiles")
+  @@schema("public")
+}
+
+// CofounderInterest = a directional signal between two pool profiles. Mutual
+// INTERESTED (both directions) is a match. PASS hides; PITCH carries a note.
+model CofounderInterest {
+  id            String                @id @default(cuid())
+  fromProfileId String                @map("from_profile_id")
+  toProfileId   String                @map("to_profile_id")
+  kind          CofounderInterestKind
+  pitch         String?               @db.VarChar(1000)
+  createdAt     DateTime              @default(now()) @map("created_at")
+
+  fromProfile CofounderProfile @relation("CofounderInterestFrom", fields: [fromProfileId], references: [id], onDelete: Cascade)
+  toProfile   CofounderProfile @relation("CofounderInterestTo", fields: [toProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([fromProfileId, toProfileId])
+  @@index([toProfileId, kind])
+  @@map("cofounder_interests")
+  @@schema("public")
+}
+
+enum CofounderInterestKind {
+  PASS
+  INTERESTED
+  PITCH
+
   @@schema("public")
 }
 

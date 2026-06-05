@@ -439,6 +439,8 @@ export const ModelName = {
   Skill: 'Skill',
   UserSkill: 'UserSkill',
   Connector: 'Connector',
+  CofounderProfile: 'CofounderProfile',
+  CofounderInterest: 'CofounderInterest',
   AccessInviteCode: 'AccessInviteCode',
   AccessInviteRedemption: 'AccessInviteRedemption',
   Referral: 'Referral',
@@ -477,7 +479,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
+    modelProps: "organization" | "tenant" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4535,6 +4537,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CofounderProfile: {
+      payload: Prisma.$CofounderProfilePayload<ExtArgs>
+      fields: Prisma.CofounderProfileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CofounderProfileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CofounderProfileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>
+        }
+        findFirst: {
+          args: Prisma.CofounderProfileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CofounderProfileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>
+        }
+        findMany: {
+          args: Prisma.CofounderProfileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>[]
+        }
+        create: {
+          args: Prisma.CofounderProfileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>
+        }
+        createMany: {
+          args: Prisma.CofounderProfileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CofounderProfileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>[]
+        }
+        delete: {
+          args: Prisma.CofounderProfileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>
+        }
+        update: {
+          args: Prisma.CofounderProfileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>
+        }
+        deleteMany: {
+          args: Prisma.CofounderProfileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CofounderProfileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CofounderProfileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>[]
+        }
+        upsert: {
+          args: Prisma.CofounderProfileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderProfilePayload>
+        }
+        aggregate: {
+          args: Prisma.CofounderProfileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCofounderProfile>
+        }
+        groupBy: {
+          args: Prisma.CofounderProfileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CofounderProfileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CofounderProfileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CofounderProfileCountAggregateOutputType> | number
+        }
+      }
+    }
+    CofounderInterest: {
+      payload: Prisma.$CofounderInterestPayload<ExtArgs>
+      fields: Prisma.CofounderInterestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CofounderInterestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CofounderInterestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>
+        }
+        findFirst: {
+          args: Prisma.CofounderInterestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CofounderInterestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>
+        }
+        findMany: {
+          args: Prisma.CofounderInterestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>[]
+        }
+        create: {
+          args: Prisma.CofounderInterestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>
+        }
+        createMany: {
+          args: Prisma.CofounderInterestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CofounderInterestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>[]
+        }
+        delete: {
+          args: Prisma.CofounderInterestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>
+        }
+        update: {
+          args: Prisma.CofounderInterestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>
+        }
+        deleteMany: {
+          args: Prisma.CofounderInterestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CofounderInterestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CofounderInterestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>[]
+        }
+        upsert: {
+          args: Prisma.CofounderInterestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CofounderInterestPayload>
+        }
+        aggregate: {
+          args: Prisma.CofounderInterestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCofounderInterest>
+        }
+        groupBy: {
+          args: Prisma.CofounderInterestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CofounderInterestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CofounderInterestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CofounderInterestCountAggregateOutputType> | number
+        }
+      }
+    }
     AccessInviteCode: {
       payload: Prisma.$AccessInviteCodePayload<ExtArgs>
       fields: Prisma.AccessInviteCodeFieldRefs
@@ -7234,6 +7384,33 @@ export const ConnectorScalarFieldEnum = {
 export type ConnectorScalarFieldEnum = (typeof ConnectorScalarFieldEnum)[keyof typeof ConnectorScalarFieldEnum]
 
 
+export const CofounderProfileScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  archetype: 'archetype',
+  arena: 'arena',
+  headline: 'headline',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CofounderProfileScalarFieldEnum = (typeof CofounderProfileScalarFieldEnum)[keyof typeof CofounderProfileScalarFieldEnum]
+
+
+export const CofounderInterestScalarFieldEnum = {
+  id: 'id',
+  fromProfileId: 'fromProfileId',
+  toProfileId: 'toProfileId',
+  kind: 'kind',
+  pitch: 'pitch',
+  createdAt: 'createdAt'
+} as const
+
+export type CofounderInterestScalarFieldEnum = (typeof CofounderInterestScalarFieldEnum)[keyof typeof CofounderInterestScalarFieldEnum]
+
+
 export const AccessInviteCodeScalarFieldEnum = {
   id: 'id',
   codeHash: 'codeHash',
@@ -8099,6 +8276,20 @@ export type ListEnumOAuthClientStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'CofounderInterestKind'
+ */
+export type EnumCofounderInterestKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CofounderInterestKind'>
+    
+
+
+/**
+ * Reference to a field of type 'CofounderInterestKind[]'
+ */
+export type ListEnumCofounderInterestKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CofounderInterestKind[]'>
+    
+
+
+/**
  * Reference to a field of type 'AccessInviteScope'
  */
 export type EnumAccessInviteScopeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AccessInviteScope'>
@@ -8345,6 +8536,8 @@ export type GlobalOmitConfig = {
   skill?: Prisma.SkillOmit
   userSkill?: Prisma.UserSkillOmit
   connector?: Prisma.ConnectorOmit
+  cofounderProfile?: Prisma.CofounderProfileOmit
+  cofounderInterest?: Prisma.CofounderInterestOmit
   accessInviteCode?: Prisma.AccessInviteCodeOmit
   accessInviteRedemption?: Prisma.AccessInviteRedemptionOmit
   referral?: Prisma.ReferralOmit

@@ -304,6 +304,15 @@ export const OAuthClientStatus = {
 export type OAuthClientStatus = (typeof OAuthClientStatus)[keyof typeof OAuthClientStatus]
 
 
+export const CofounderInterestKind = {
+  PASS: 'PASS',
+  INTERESTED: 'INTERESTED',
+  PITCH: 'PITCH'
+} as const
+
+export type CofounderInterestKind = (typeof CofounderInterestKind)[keyof typeof CofounderInterestKind]
+
+
 export const LicenseTier = {
   INDIVIDUAL: 'INDIVIDUAL',
   OPC: 'OPC',

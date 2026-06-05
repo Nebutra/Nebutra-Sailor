@@ -106,6 +106,8 @@ export const ModelName = {
   Skill: 'Skill',
   UserSkill: 'UserSkill',
   Connector: 'Connector',
+  CofounderProfile: 'CofounderProfile',
+  CofounderInterest: 'CofounderInterest',
   AccessInviteCode: 'AccessInviteCode',
   AccessInviteRedemption: 'AccessInviteRedemption',
   Referral: 'Referral',
@@ -1103,6 +1105,33 @@ export const ConnectorScalarFieldEnum = {
 } as const
 
 export type ConnectorScalarFieldEnum = (typeof ConnectorScalarFieldEnum)[keyof typeof ConnectorScalarFieldEnum]
+
+
+export const CofounderProfileScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  userId: 'userId',
+  archetype: 'archetype',
+  arena: 'arena',
+  headline: 'headline',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CofounderProfileScalarFieldEnum = (typeof CofounderProfileScalarFieldEnum)[keyof typeof CofounderProfileScalarFieldEnum]
+
+
+export const CofounderInterestScalarFieldEnum = {
+  id: 'id',
+  fromProfileId: 'fromProfileId',
+  toProfileId: 'toProfileId',
+  kind: 'kind',
+  pitch: 'pitch',
+  createdAt: 'createdAt'
+} as const
+
+export type CofounderInterestScalarFieldEnum = (typeof CofounderInterestScalarFieldEnum)[keyof typeof CofounderInterestScalarFieldEnum]
 
 
 export const AccessInviteCodeScalarFieldEnum = {

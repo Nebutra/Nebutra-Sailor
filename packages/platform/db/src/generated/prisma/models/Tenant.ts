@@ -195,6 +195,7 @@ export type TenantWhereInput = {
   chatSessions?: Prisma.ChatSessionListRelationFilter
   codeRedemptions?: Prisma.CodeRedemptionListRelationFilter
   connectors?: Prisma.ConnectorListRelationFilter
+  cofounderProfile?: Prisma.XOR<Prisma.CofounderProfileNullableScalarRelationFilter, Prisma.CofounderProfileWhereInput> | null
   contents?: Prisma.ContentListRelationFilter
   creditBalances?: Prisma.CreditBalanceListRelationFilter
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideListRelationFilter
@@ -236,6 +237,7 @@ export type TenantOrderByWithRelationInput = {
   chatSessions?: Prisma.ChatSessionOrderByRelationAggregateInput
   codeRedemptions?: Prisma.CodeRedemptionOrderByRelationAggregateInput
   connectors?: Prisma.ConnectorOrderByRelationAggregateInput
+  cofounderProfile?: Prisma.CofounderProfileOrderByWithRelationInput
   contents?: Prisma.ContentOrderByRelationAggregateInput
   creditBalances?: Prisma.CreditBalanceOrderByRelationAggregateInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideOrderByRelationAggregateInput
@@ -280,6 +282,7 @@ export type TenantWhereUniqueInput = Prisma.AtLeast<{
   chatSessions?: Prisma.ChatSessionListRelationFilter
   codeRedemptions?: Prisma.CodeRedemptionListRelationFilter
   connectors?: Prisma.ConnectorListRelationFilter
+  cofounderProfile?: Prisma.XOR<Prisma.CofounderProfileNullableScalarRelationFilter, Prisma.CofounderProfileWhereInput> | null
   contents?: Prisma.ContentListRelationFilter
   creditBalances?: Prisma.CreditBalanceListRelationFilter
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideListRelationFilter
@@ -341,6 +344,7 @@ export type TenantCreateInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -380,6 +384,7 @@ export type TenantUncheckedCreateInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -419,6 +424,7 @@ export type TenantUpdateInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -458,6 +464,7 @@ export type TenantUncheckedUpdateInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -1009,6 +1016,20 @@ export type TenantUpdateOneWithoutConnectorsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutConnectorsInput, Prisma.TenantUpdateWithoutConnectorsInput>, Prisma.TenantUncheckedUpdateWithoutConnectorsInput>
 }
 
+export type TenantCreateNestedOneWithoutCofounderProfileInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutCofounderProfileInput, Prisma.TenantUncheckedCreateWithoutCofounderProfileInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutCofounderProfileInput
+  connect?: Prisma.TenantWhereUniqueInput
+}
+
+export type TenantUpdateOneRequiredWithoutCofounderProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.TenantCreateWithoutCofounderProfileInput, Prisma.TenantUncheckedCreateWithoutCofounderProfileInput>
+  connectOrCreate?: Prisma.TenantCreateOrConnectWithoutCofounderProfileInput
+  upsert?: Prisma.TenantUpsertWithoutCofounderProfileInput
+  connect?: Prisma.TenantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TenantUpdateToOneWithWhereWithoutCofounderProfileInput, Prisma.TenantUpdateWithoutCofounderProfileInput>, Prisma.TenantUncheckedUpdateWithoutCofounderProfileInput>
+}
+
 export type TenantCreateNestedOneWithoutCodeRedemptionsInput = {
   create?: Prisma.XOR<Prisma.TenantCreateWithoutCodeRedemptionsInput, Prisma.TenantUncheckedCreateWithoutCodeRedemptionsInput>
   connectOrCreate?: Prisma.TenantCreateOrConnectWithoutCodeRedemptionsInput
@@ -1066,6 +1087,7 @@ export type TenantCreateWithoutOrganizationInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -1104,6 +1126,7 @@ export type TenantUncheckedCreateWithoutOrganizationInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -1158,6 +1181,7 @@ export type TenantUpdateWithoutOrganizationInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -1196,6 +1220,7 @@ export type TenantUncheckedUpdateWithoutOrganizationInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -1234,6 +1259,7 @@ export type TenantCreateWithoutApiKeysInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -1272,6 +1298,7 @@ export type TenantUncheckedCreateWithoutApiKeysInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -1326,6 +1353,7 @@ export type TenantUpdateWithoutApiKeysInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -1364,6 +1392,7 @@ export type TenantUncheckedUpdateWithoutApiKeysInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -1402,6 +1431,7 @@ export type TenantCreateWithoutUserInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -1440,6 +1470,7 @@ export type TenantUncheckedCreateWithoutUserInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -1494,6 +1525,7 @@ export type TenantUpdateWithoutUserInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -1532,6 +1564,7 @@ export type TenantUncheckedUpdateWithoutUserInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -1571,6 +1604,7 @@ export type TenantCreateWithoutContentsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
@@ -1609,6 +1643,7 @@ export type TenantUncheckedCreateWithoutContentsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
@@ -1663,6 +1698,7 @@ export type TenantUpdateWithoutContentsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
@@ -1701,6 +1737,7 @@ export type TenantUncheckedUpdateWithoutContentsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
@@ -1739,6 +1776,7 @@ export type TenantCreateWithoutProductsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -1777,6 +1815,7 @@ export type TenantUncheckedCreateWithoutProductsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -1831,6 +1870,7 @@ export type TenantUpdateWithoutProductsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -1869,6 +1909,7 @@ export type TenantUncheckedUpdateWithoutProductsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -1907,6 +1948,7 @@ export type TenantCreateWithoutOrdersInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -1945,6 +1987,7 @@ export type TenantUncheckedCreateWithoutOrdersInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -1999,6 +2042,7 @@ export type TenantUpdateWithoutOrdersInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -2037,6 +2081,7 @@ export type TenantUncheckedUpdateWithoutOrdersInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -2075,6 +2120,7 @@ export type TenantCreateWithoutIntegrationsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -2113,6 +2159,7 @@ export type TenantUncheckedCreateWithoutIntegrationsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -2167,6 +2214,7 @@ export type TenantUpdateWithoutIntegrationsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -2205,6 +2253,7 @@ export type TenantUncheckedUpdateWithoutIntegrationsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -2243,6 +2292,7 @@ export type TenantCreateWithoutTenantProviderKeysInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -2281,6 +2331,7 @@ export type TenantUncheckedCreateWithoutTenantProviderKeysInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -2335,6 +2386,7 @@ export type TenantUpdateWithoutTenantProviderKeysInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -2373,6 +2425,7 @@ export type TenantUncheckedUpdateWithoutTenantProviderKeysInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -2411,6 +2464,7 @@ export type TenantCreateWithoutAutomationsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -2449,6 +2503,7 @@ export type TenantUncheckedCreateWithoutAutomationsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -2503,6 +2558,7 @@ export type TenantUpdateWithoutAutomationsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -2541,6 +2597,7 @@ export type TenantUncheckedUpdateWithoutAutomationsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -2579,6 +2636,7 @@ export type TenantCreateWithoutAutomationRunsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -2617,6 +2675,7 @@ export type TenantUncheckedCreateWithoutAutomationRunsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -2671,6 +2730,7 @@ export type TenantUpdateWithoutAutomationRunsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -2709,6 +2769,7 @@ export type TenantUncheckedUpdateWithoutAutomationRunsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -2747,6 +2808,7 @@ export type TenantCreateWithoutRequestLogsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -2785,6 +2847,7 @@ export type TenantUncheckedCreateWithoutRequestLogsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -2839,6 +2902,7 @@ export type TenantUpdateWithoutRequestLogsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -2877,6 +2941,7 @@ export type TenantUncheckedUpdateWithoutRequestLogsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -2915,6 +2980,7 @@ export type TenantCreateWithoutCustomerPlanVersionsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -2953,6 +3019,7 @@ export type TenantUncheckedCreateWithoutCustomerPlanVersionsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -3007,6 +3074,7 @@ export type TenantUpdateWithoutCustomerPlanVersionsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -3045,6 +3113,7 @@ export type TenantUncheckedUpdateWithoutCustomerPlanVersionsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -3083,6 +3152,7 @@ export type TenantCreateWithoutCustomerFeatureOverridesInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
@@ -3121,6 +3191,7 @@ export type TenantUncheckedCreateWithoutCustomerFeatureOverridesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
@@ -3175,6 +3246,7 @@ export type TenantUpdateWithoutCustomerFeatureOverridesInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
@@ -3213,6 +3285,7 @@ export type TenantUncheckedUpdateWithoutCustomerFeatureOverridesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
@@ -3251,6 +3324,7 @@ export type TenantCreateWithoutCustomerUsageLimitsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -3289,6 +3363,7 @@ export type TenantUncheckedCreateWithoutCustomerUsageLimitsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -3343,6 +3418,7 @@ export type TenantUpdateWithoutCustomerUsageLimitsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -3381,6 +3457,7 @@ export type TenantUncheckedUpdateWithoutCustomerUsageLimitsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -3419,6 +3496,7 @@ export type TenantCreateWithoutSubscriptionsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -3457,6 +3535,7 @@ export type TenantUncheckedCreateWithoutSubscriptionsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -3511,6 +3590,7 @@ export type TenantUpdateWithoutSubscriptionsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -3549,6 +3629,7 @@ export type TenantUncheckedUpdateWithoutSubscriptionsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -3587,6 +3668,7 @@ export type TenantCreateWithoutInvoicesInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -3625,6 +3707,7 @@ export type TenantUncheckedCreateWithoutInvoicesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -3679,6 +3762,7 @@ export type TenantUpdateWithoutInvoicesInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -3717,6 +3801,7 @@ export type TenantUncheckedUpdateWithoutInvoicesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -3755,6 +3840,7 @@ export type TenantCreateWithoutPaymentsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -3793,6 +3879,7 @@ export type TenantUncheckedCreateWithoutPaymentsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -3847,6 +3934,7 @@ export type TenantUpdateWithoutPaymentsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -3885,6 +3973,7 @@ export type TenantUncheckedUpdateWithoutPaymentsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -3923,6 +4012,7 @@ export type TenantCreateWithoutPaymentMethodsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -3961,6 +4051,7 @@ export type TenantUncheckedCreateWithoutPaymentMethodsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -4015,6 +4106,7 @@ export type TenantUpdateWithoutPaymentMethodsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -4053,6 +4145,7 @@ export type TenantUncheckedUpdateWithoutPaymentMethodsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -4091,6 +4184,7 @@ export type TenantCreateWithoutUsageLedgerEntriesInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -4129,6 +4223,7 @@ export type TenantUncheckedCreateWithoutUsageLedgerEntriesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -4183,6 +4278,7 @@ export type TenantUpdateWithoutUsageLedgerEntriesInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -4221,6 +4317,7 @@ export type TenantUncheckedUpdateWithoutUsageLedgerEntriesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -4259,6 +4356,7 @@ export type TenantCreateWithoutCreditBalancesInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
@@ -4297,6 +4395,7 @@ export type TenantUncheckedCreateWithoutCreditBalancesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
@@ -4351,6 +4450,7 @@ export type TenantUpdateWithoutCreditBalancesInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
@@ -4389,6 +4489,7 @@ export type TenantUncheckedUpdateWithoutCreditBalancesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
   customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
@@ -4427,6 +4528,7 @@ export type TenantCreateWithoutStripeCustomersInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -4465,6 +4567,7 @@ export type TenantUncheckedCreateWithoutStripeCustomersInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -4519,6 +4622,7 @@ export type TenantUpdateWithoutStripeCustomersInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -4557,6 +4661,7 @@ export type TenantUncheckedUpdateWithoutStripeCustomersInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -4594,6 +4699,7 @@ export type TenantCreateWithoutAuditLogsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -4632,6 +4738,7 @@ export type TenantUncheckedCreateWithoutAuditLogsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -4686,6 +4793,7 @@ export type TenantUpdateWithoutAuditLogsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -4724,6 +4832,7 @@ export type TenantUncheckedUpdateWithoutAuditLogsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -4763,6 +4872,7 @@ export type TenantCreateWithoutUserConsentsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -4801,6 +4911,7 @@ export type TenantUncheckedCreateWithoutUserConsentsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -4855,6 +4966,7 @@ export type TenantUpdateWithoutUserConsentsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -4893,6 +5005,7 @@ export type TenantUncheckedUpdateWithoutUserConsentsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -4931,6 +5044,7 @@ export type TenantCreateWithoutTasksInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -4969,6 +5083,7 @@ export type TenantUncheckedCreateWithoutTasksInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -5023,6 +5138,7 @@ export type TenantUpdateWithoutTasksInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -5061,6 +5177,7 @@ export type TenantUncheckedUpdateWithoutTasksInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -5099,6 +5216,7 @@ export type TenantCreateWithoutUploadsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -5137,6 +5255,7 @@ export type TenantUncheckedCreateWithoutUploadsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -5191,6 +5310,7 @@ export type TenantUpdateWithoutUploadsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -5229,6 +5349,7 @@ export type TenantUncheckedUpdateWithoutUploadsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -5267,6 +5388,7 @@ export type TenantCreateWithoutOauthClientsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -5305,6 +5427,7 @@ export type TenantUncheckedCreateWithoutOauthClientsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -5359,6 +5482,7 @@ export type TenantUpdateWithoutOauthClientsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -5397,6 +5521,7 @@ export type TenantUncheckedUpdateWithoutOauthClientsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -5434,6 +5559,7 @@ export type TenantCreateWithoutChatSessionsInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -5472,6 +5598,7 @@ export type TenantUncheckedCreateWithoutChatSessionsInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -5526,6 +5653,7 @@ export type TenantUpdateWithoutChatSessionsInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -5564,6 +5692,7 @@ export type TenantUncheckedUpdateWithoutChatSessionsInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -5603,6 +5732,7 @@ export type TenantCreateWithoutThreadsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -5641,6 +5771,7 @@ export type TenantUncheckedCreateWithoutThreadsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -5695,6 +5826,7 @@ export type TenantUpdateWithoutThreadsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -5733,6 +5865,7 @@ export type TenantUncheckedUpdateWithoutThreadsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -5771,6 +5904,7 @@ export type TenantCreateWithoutUserSkillsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -5809,6 +5943,7 @@ export type TenantUncheckedCreateWithoutUserSkillsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -5863,6 +5998,7 @@ export type TenantUpdateWithoutUserSkillsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -5901,6 +6037,7 @@ export type TenantUncheckedUpdateWithoutUserSkillsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -5938,6 +6075,7 @@ export type TenantCreateWithoutConnectorsInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -5976,6 +6114,7 @@ export type TenantUncheckedCreateWithoutConnectorsInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -6030,6 +6169,7 @@ export type TenantUpdateWithoutConnectorsInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -6068,6 +6208,179 @@ export type TenantUncheckedUpdateWithoutConnectorsInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
+  contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUncheckedUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUncheckedUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUncheckedUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUncheckedUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUncheckedUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUncheckedUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUncheckedUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUncheckedUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUncheckedUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantCreateWithoutCofounderProfileInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  createdAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTenantInput
+  user?: Prisma.UserCreateNestedOneWithoutTenantInput
+  apiKeys?: Prisma.APIKeyCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillCreateNestedManyWithoutTenantInput
+}
+
+export type TenantUncheckedCreateWithoutCofounderProfileInput = {
+  id?: string
+  kind: $Enums.TenantKind
+  organizationId?: string | null
+  userId?: string | null
+  createdAt?: Date | string
+  apiKeys?: Prisma.APIKeyUncheckedCreateNestedManyWithoutTenantInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedCreateNestedManyWithoutTenantInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
+  chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
+  connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
+  creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUncheckedCreateNestedManyWithoutTenantInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUncheckedCreateNestedManyWithoutTenantInput
+  feedbackReports?: Prisma.FeedbackReportUncheckedCreateNestedManyWithoutTenantInput
+  integrations?: Prisma.IntegrationUncheckedCreateNestedManyWithoutTenantInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUncheckedCreateNestedManyWithoutTenantInput
+  automations?: Prisma.AutomationUncheckedCreateNestedManyWithoutTenantInput
+  automationRuns?: Prisma.AutomationRunUncheckedCreateNestedManyWithoutTenantInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutTenantInput
+  oauthClients?: Prisma.OAuthClientUncheckedCreateNestedManyWithoutTenantInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutTenantInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTenantInput
+  paymentMethods?: Prisma.PaymentMethodUncheckedCreateNestedManyWithoutTenantInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutTenantInput
+  requestLogs?: Prisma.RequestLogUncheckedCreateNestedManyWithoutTenantInput
+  stripeCustomers?: Prisma.StripeCustomerUncheckedCreateNestedManyWithoutTenantInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutTenantInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutTenantInput
+  threads?: Prisma.ThreadUncheckedCreateNestedManyWithoutTenantInput
+  uploads?: Prisma.UploadRecordUncheckedCreateNestedManyWithoutTenantInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUncheckedCreateNestedManyWithoutTenantInput
+  userConsents?: Prisma.UserConsentUncheckedCreateNestedManyWithoutTenantInput
+  userSkills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutTenantInput
+}
+
+export type TenantCreateOrConnectWithoutCofounderProfileInput = {
+  where: Prisma.TenantWhereUniqueInput
+  create: Prisma.XOR<Prisma.TenantCreateWithoutCofounderProfileInput, Prisma.TenantUncheckedCreateWithoutCofounderProfileInput>
+}
+
+export type TenantUpsertWithoutCofounderProfileInput = {
+  update: Prisma.XOR<Prisma.TenantUpdateWithoutCofounderProfileInput, Prisma.TenantUncheckedUpdateWithoutCofounderProfileInput>
+  create: Prisma.XOR<Prisma.TenantCreateWithoutCofounderProfileInput, Prisma.TenantUncheckedCreateWithoutCofounderProfileInput>
+  where?: Prisma.TenantWhereInput
+}
+
+export type TenantUpdateToOneWithWhereWithoutCofounderProfileInput = {
+  where?: Prisma.TenantWhereInput
+  data: Prisma.XOR<Prisma.TenantUpdateWithoutCofounderProfileInput, Prisma.TenantUncheckedUpdateWithoutCofounderProfileInput>
+}
+
+export type TenantUpdateWithoutCofounderProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutTenantNestedInput
+  user?: Prisma.UserUpdateOneWithoutTenantNestedInput
+  apiKeys?: Prisma.APIKeyUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
+  creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
+  customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
+  customerPlanVersions?: Prisma.CustomerPlanVersionUpdateManyWithoutTenantNestedInput
+  customerUsageLimits?: Prisma.CustomerUsageLimitUpdateManyWithoutTenantNestedInput
+  feedbackReports?: Prisma.FeedbackReportUpdateManyWithoutTenantNestedInput
+  integrations?: Prisma.IntegrationUpdateManyWithoutTenantNestedInput
+  tenantProviderKeys?: Prisma.TenantProviderKeyUpdateManyWithoutTenantNestedInput
+  automations?: Prisma.AutomationUpdateManyWithoutTenantNestedInput
+  automationRuns?: Prisma.AutomationRunUpdateManyWithoutTenantNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutTenantNestedInput
+  oauthClients?: Prisma.OAuthClientUpdateManyWithoutTenantNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutTenantNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTenantNestedInput
+  paymentMethods?: Prisma.PaymentMethodUpdateManyWithoutTenantNestedInput
+  products?: Prisma.ProductUpdateManyWithoutTenantNestedInput
+  requestLogs?: Prisma.RequestLogUpdateManyWithoutTenantNestedInput
+  stripeCustomers?: Prisma.StripeCustomerUpdateManyWithoutTenantNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutTenantNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutTenantNestedInput
+  threads?: Prisma.ThreadUpdateManyWithoutTenantNestedInput
+  uploads?: Prisma.UploadRecordUpdateManyWithoutTenantNestedInput
+  usageLedgerEntries?: Prisma.UsageLedgerEntryUpdateManyWithoutTenantNestedInput
+  userConsents?: Prisma.UserConsentUpdateManyWithoutTenantNestedInput
+  userSkills?: Prisma.UserSkillUpdateManyWithoutTenantNestedInput
+}
+
+export type TenantUncheckedUpdateWithoutCofounderProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  kind?: Prisma.EnumTenantKindFieldUpdateOperationsInput | $Enums.TenantKind
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  apiKeys?: Prisma.APIKeyUncheckedUpdateManyWithoutTenantNestedInput
+  atelierCanvases?: Prisma.AtelierCanvasUncheckedUpdateManyWithoutTenantNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
+  chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
+  codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
+  connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -6106,6 +6419,7 @@ export type TenantCreateWithoutCodeRedemptionsInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutTenantInput
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -6144,6 +6458,7 @@ export type TenantUncheckedCreateWithoutCodeRedemptionsInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutTenantInput
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -6198,6 +6513,7 @@ export type TenantUpdateWithoutCodeRedemptionsInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutTenantNestedInput
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -6236,6 +6552,7 @@ export type TenantUncheckedUpdateWithoutCodeRedemptionsInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutTenantNestedInput
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -6275,6 +6592,7 @@ export type TenantCreateWithoutFeedbackReportsInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -6313,6 +6631,7 @@ export type TenantUncheckedCreateWithoutFeedbackReportsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -6367,6 +6686,7 @@ export type TenantUpdateWithoutFeedbackReportsInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -6405,6 +6725,7 @@ export type TenantUncheckedUpdateWithoutFeedbackReportsInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -6442,6 +6763,7 @@ export type TenantCreateWithoutAtelierCanvasesInput = {
   chatSessions?: Prisma.ChatSessionCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideCreateNestedManyWithoutTenantInput
@@ -6480,6 +6802,7 @@ export type TenantUncheckedCreateWithoutAtelierCanvasesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedCreateNestedManyWithoutTenantInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedCreateNestedManyWithoutTenantInput
   connectors?: Prisma.ConnectorUncheckedCreateNestedManyWithoutTenantInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedCreateNestedOneWithoutTenantInput
   contents?: Prisma.ContentUncheckedCreateNestedManyWithoutTenantInput
   creditBalances?: Prisma.CreditBalanceUncheckedCreateNestedManyWithoutTenantInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedCreateNestedManyWithoutTenantInput
@@ -6534,6 +6857,7 @@ export type TenantUpdateWithoutAtelierCanvasesInput = {
   chatSessions?: Prisma.ChatSessionUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUpdateManyWithoutTenantNestedInput
@@ -6572,6 +6896,7 @@ export type TenantUncheckedUpdateWithoutAtelierCanvasesInput = {
   chatSessions?: Prisma.ChatSessionUncheckedUpdateManyWithoutTenantNestedInput
   codeRedemptions?: Prisma.CodeRedemptionUncheckedUpdateManyWithoutTenantNestedInput
   connectors?: Prisma.ConnectorUncheckedUpdateManyWithoutTenantNestedInput
+  cofounderProfile?: Prisma.CofounderProfileUncheckedUpdateOneWithoutTenantNestedInput
   contents?: Prisma.ContentUncheckedUpdateManyWithoutTenantNestedInput
   creditBalances?: Prisma.CreditBalanceUncheckedUpdateManyWithoutTenantNestedInput
   customerFeatureOverrides?: Prisma.CustomerFeatureOverrideUncheckedUpdateManyWithoutTenantNestedInput
@@ -6914,6 +7239,7 @@ export type TenantSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   chatSessions?: boolean | Prisma.Tenant$chatSessionsArgs<ExtArgs>
   codeRedemptions?: boolean | Prisma.Tenant$codeRedemptionsArgs<ExtArgs>
   connectors?: boolean | Prisma.Tenant$connectorsArgs<ExtArgs>
+  cofounderProfile?: boolean | Prisma.Tenant$cofounderProfileArgs<ExtArgs>
   contents?: boolean | Prisma.Tenant$contentsArgs<ExtArgs>
   creditBalances?: boolean | Prisma.Tenant$creditBalancesArgs<ExtArgs>
   customerFeatureOverrides?: boolean | Prisma.Tenant$customerFeatureOverridesArgs<ExtArgs>
@@ -6980,6 +7306,7 @@ export type TenantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   chatSessions?: boolean | Prisma.Tenant$chatSessionsArgs<ExtArgs>
   codeRedemptions?: boolean | Prisma.Tenant$codeRedemptionsArgs<ExtArgs>
   connectors?: boolean | Prisma.Tenant$connectorsArgs<ExtArgs>
+  cofounderProfile?: boolean | Prisma.Tenant$cofounderProfileArgs<ExtArgs>
   contents?: boolean | Prisma.Tenant$contentsArgs<ExtArgs>
   creditBalances?: boolean | Prisma.Tenant$creditBalancesArgs<ExtArgs>
   customerFeatureOverrides?: boolean | Prisma.Tenant$customerFeatureOverridesArgs<ExtArgs>
@@ -7027,6 +7354,7 @@ export type $TenantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     chatSessions: Prisma.$ChatSessionPayload<ExtArgs>[]
     codeRedemptions: Prisma.$CodeRedemptionPayload<ExtArgs>[]
     connectors: Prisma.$ConnectorPayload<ExtArgs>[]
+    cofounderProfile: Prisma.$CofounderProfilePayload<ExtArgs> | null
     contents: Prisma.$ContentPayload<ExtArgs>[]
     creditBalances: Prisma.$CreditBalancePayload<ExtArgs>[]
     customerFeatureOverrides: Prisma.$CustomerFeatureOverridePayload<ExtArgs>[]
@@ -7461,6 +7789,7 @@ export interface Prisma__TenantClient<T, Null = never, ExtArgs extends runtime.T
   chatSessions<T extends Prisma.Tenant$chatSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$chatSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   codeRedemptions<T extends Prisma.Tenant$codeRedemptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$codeRedemptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CodeRedemptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   connectors<T extends Prisma.Tenant$connectorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$connectorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConnectorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cofounderProfile<T extends Prisma.Tenant$cofounderProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$cofounderProfileArgs<ExtArgs>>): Prisma.Prisma__CofounderProfileClient<runtime.Types.Result.GetResult<Prisma.$CofounderProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   contents<T extends Prisma.Tenant$contentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$contentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   creditBalances<T extends Prisma.Tenant$creditBalancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$creditBalancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreditBalancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customerFeatureOverrides<T extends Prisma.Tenant$customerFeatureOverridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tenant$customerFeatureOverridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerFeatureOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -8095,6 +8424,25 @@ export type Tenant$connectorsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ConnectorScalarFieldEnum | Prisma.ConnectorScalarFieldEnum[]
+}
+
+/**
+ * Tenant.cofounderProfile
+ */
+export type Tenant$cofounderProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CofounderProfile
+   */
+  select?: Prisma.CofounderProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CofounderProfile
+   */
+  omit?: Prisma.CofounderProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CofounderProfileInclude<ExtArgs> | null
+  where?: Prisma.CofounderProfileWhereInput
 }
 
 /**

@@ -322,6 +322,16 @@ export type UserSkill = Prisma.UserSkillModel
  */
 export type Connector = Prisma.ConnectorModel
 /**
+ * Model CofounderProfile
+ * 
+ */
+export type CofounderProfile = Prisma.CofounderProfileModel
+/**
+ * Model CofounderInterest
+ * 
+ */
+export type CofounderInterest = Prisma.CofounderInterestModel
+/**
  * Model AccessInviteCode
  * @conditional(access-gate=invite)
  */

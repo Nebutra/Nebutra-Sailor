@@ -810,6 +810,23 @@ export type EnumOAuthClientStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumOAuthClientStatusFilter<$PrismaModel>
 }
 
+export type EnumCofounderInterestKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.CofounderInterestKind | Prisma.EnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  in?: $Enums.CofounderInterestKind[] | Prisma.ListEnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CofounderInterestKind[] | Prisma.ListEnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCofounderInterestKindFilter<$PrismaModel> | $Enums.CofounderInterestKind
+}
+
+export type EnumCofounderInterestKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CofounderInterestKind | Prisma.EnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  in?: $Enums.CofounderInterestKind[] | Prisma.ListEnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CofounderInterestKind[] | Prisma.ListEnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCofounderInterestKindWithAggregatesFilter<$PrismaModel> | $Enums.CofounderInterestKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCofounderInterestKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCofounderInterestKindFilter<$PrismaModel>
+}
+
 export type EnumAccessInviteScopeFilter<$PrismaModel = never> = {
   equals?: $Enums.AccessInviteScope | Prisma.EnumAccessInviteScopeFieldRefInput<$PrismaModel>
   in?: $Enums.AccessInviteScope[] | Prisma.ListEnumAccessInviteScopeFieldRefInput<$PrismaModel>
@@ -1665,6 +1682,23 @@ export type NestedEnumOAuthClientStatusWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumOAuthClientStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumOAuthClientStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumCofounderInterestKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.CofounderInterestKind | Prisma.EnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  in?: $Enums.CofounderInterestKind[] | Prisma.ListEnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CofounderInterestKind[] | Prisma.ListEnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCofounderInterestKindFilter<$PrismaModel> | $Enums.CofounderInterestKind
+}
+
+export type NestedEnumCofounderInterestKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CofounderInterestKind | Prisma.EnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  in?: $Enums.CofounderInterestKind[] | Prisma.ListEnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CofounderInterestKind[] | Prisma.ListEnumCofounderInterestKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCofounderInterestKindWithAggregatesFilter<$PrismaModel> | $Enums.CofounderInterestKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCofounderInterestKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCofounderInterestKindFilter<$PrismaModel>
 }
 
 export type NestedEnumAccessInviteScopeFilter<$PrismaModel = never> = {
