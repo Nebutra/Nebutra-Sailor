@@ -2,6 +2,7 @@
 
 import { AcronymJson, AcronymMarkdown, Code, CodeBracket, File, FileText } from "@nebutra/icons";
 import {
+  CodeBlockLanguageIcon,
   TreeExpander,
   TreeIcon,
   TreeLabel,
@@ -220,7 +221,15 @@ function ExplorerRows({ level, nodes, parentPath, selectedPath }: ExplorerRowsPr
                 : `mr-2 size-4 shrink-0 ${isSelected ? "text-neutral-11" : "text-neutral-8"}`
             }
             hasChildren={hasChildren}
-            icon={FileGlyph ? <FileGlyph aria-hidden="true" className="size-4" /> : undefined}
+            icon={
+              FileGlyph ? (
+                <CodeBlockLanguageIcon
+                  language={node.label}
+                  className="size-4"
+                  fallback={<FileGlyph aria-hidden="true" className="size-4" />}
+                />
+              ) : undefined
+            }
           />
 
           <TreeLabel className="font-mono text-[12px] leading-5 tracking-[-0.01em]">
@@ -287,9 +296,7 @@ export function StartupOsFileTree({
   const selectedIds = selectedPath ? [`file:${selectedPath}`] : [];
 
   if (nodes.length === 0) {
-    return (
-      <p className="px-3 py-4 text-xs leading-5 text-neutral-9">No files to display yet.</p>
-    );
+    return <p className="px-3 py-4 text-xs leading-5 text-neutral-9">No files to display yet.</p>;
   }
 
   return (

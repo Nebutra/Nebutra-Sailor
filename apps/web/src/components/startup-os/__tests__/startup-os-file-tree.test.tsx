@@ -87,6 +87,13 @@ vi.mock("@nebutra/ui/primitives", () => {
     TreeExpander,
     TreeIcon,
     TreeLabel,
+    CodeBlockLanguageIcon: ({
+      fallback,
+    }: {
+      language?: string | null;
+      className?: string;
+      fallback?: ReactNode;
+    }) => fallback ?? null,
   };
 });
 
