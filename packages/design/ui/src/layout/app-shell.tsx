@@ -113,6 +113,17 @@ export function AppShell({
         </div>
       </aside>
 
+      {/* Overlay backdrop — when the sidebar floats over the content (overlay mode)
+          and is expanded, a click on the dimmed content collapses it. */}
+      {overlay && !isCollapsed ? (
+        <button
+          type="button"
+          aria-label="Collapse navigation"
+          onClick={() => onCollapsedChange?.(true)}
+          className="absolute inset-0 z-30 hidden cursor-default bg-foreground/20 backdrop-blur-[1px] md:block"
+        />
+      ) : null}
+
       {/* Mobile sidebar — Sheet overlay */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="w-72 border-r border-sidebar-border bg-sidebar p-0">

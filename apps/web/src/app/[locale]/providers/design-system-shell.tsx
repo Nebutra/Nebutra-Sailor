@@ -459,6 +459,18 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     },
   );
 
+  // Lean builder nav for the Startup OS workspace overlay — keep only the
+  // builder-relevant destinations (drop Theme Playground / Match cofounder /
+  // Projects / Admin) so the floating nav stays focused and distinct from home.
+  const workspaceSidebarSections: SidebarNavSection[] = sidebarSections
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) =>
+        ["/startup-os", "/connectors"].includes(item.href ?? ""),
+      ),
+    }))
+    .filter((section) => section.items.length > 0);
+
   // ─── Workspaces mapped to WorkspaceSwitcher shape ────────────────────────
   const workspacesForSwitcher: Workspace[] = workspaceOptions.map((option) => ({
     id: option.id,
@@ -547,7 +559,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const sidebar = (
     <SidebarNav
       className="group/sidebar"
-      sections={sidebarSections}
+      sections={startupChromeMode === "workspace" ? workspaceSidebarSections : sidebarSections}
       collapsed={collapsed}
       header={sidebarHeader}
       footer={sidebarFooter}
@@ -603,6 +615,10 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       // see chromeMode below. A bare `isStartupOSRoute` here hid the home sidebar too.
       sidebarCollapsedWidth={startupChromeMode === "workspace" ? 0 : undefined}
       overlay={startupChromeMode === "workspace"}
+      // Backdrop click in overlay mode collapses the floating nav (controlled via useSidebar).
+      onCollapsedChange={(next) => {
+        if (next !== collapsed) toggle();
+      }}
       contentClassName={
         isWorkspaceHomeRoute
           ? // Full-bleed gradient canvas: drop padding at every breakpoint
