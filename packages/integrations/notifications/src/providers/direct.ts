@@ -1,4 +1,5 @@
 import { logger } from "@nebutra/logger";
+import pLimit from "p-limit";
 import type { NotificationProviderRuntimeMetadata } from "../runtime";
 import type {
   ChannelResult,
@@ -28,6 +29,8 @@ import type {
 // Useful for custom implementations or when you don't want managed infrastructure.
 // =============================================================================
 
+const NOTIFICATION_DELIVERY_CONCURRENCY = 4;
+
 export class DirectProvider implements NotificationProvider {
   readonly name: NotificationProviderType = "direct";
   private inAppStore: InAppNotificationStore;
@@ -39,6 +42,7 @@ export class DirectProvider implements NotificationProvider {
   private runtimeMetadata: NotificationProviderRuntimeMetadata;
   private maxRetries: number;
   private deliveryObserver: NotificationDeliveryObserver | undefined;
+  private readonly limitDelivery = pLimit(NOTIFICATION_DELIVERY_CONCURRENCY);
 
   constructor(config: DirectProviderConfig) {
     const hasInjectedInAppStore = config.inAppStore !== undefined;
@@ -100,7 +104,9 @@ export class DirectProvider implements NotificationProvider {
 
     const channelResults = await Promise.all(
       payload.channels.map((channel) =>
-        this.dispatchToChannel(channel, payload, notificationId, enabledChannels),
+        this.limitDelivery(() =>
+          this.dispatchToChannel(channel, payload, notificationId, enabledChannels),
+        ),
       ),
     );
 

@@ -1,5 +1,6 @@
 import { logger } from "@nebutra/logger";
 import { Inngest } from "inngest";
+import pLimit from "p-limit";
 import pRetry from "p-retry";
 import { z } from "zod";
 
@@ -18,6 +19,8 @@ export type BaseEvent = z.infer<typeof BaseEventSchema>;
 
 type EventHandler<T extends BaseEvent = BaseEvent> = (event: T) => Promise<void>;
 
+const LOCAL_HANDLER_CONCURRENCY = 4;
+
 /**
  * In-memory event bus for local development
  * In production, replace with Redis Streams or NATS
@@ -26,6 +29,7 @@ export class EventBus {
   private handlers: Map<string, Set<EventHandler>> = new Map();
   private eventLog: BaseEvent[] = [];
   private inngestClient = new Inngest({ id: "nebutra-event-bus" });
+  private limitLocalHandler = pLimit(LOCAL_HANDLER_CONCURRENCY);
 
   /**
    * Subscribe to an event type
@@ -74,27 +78,29 @@ export class EventBus {
     const allHandlers = [...handlers, ...wildcardHandlers];
 
     await Promise.all(
-      allHandlers.map(async (handler) => {
-        try {
-          // Exponential backoff: 3 total attempts (1 initial + 2 retries),
-          // 100ms → 200ms delays — matching the original hand-rolled loop.
-          await pRetry(() => handler(validated), {
-            retries: 2, // 1 initial + 2 retries = 3 total attempts
-            minTimeout: 100,
-            factor: 2,
-            onFailedAttempt: ({ error, attemptNumber, retriesLeft }) => {
-              logger.warn(
-                `Event handler error for ${event.type} (attempt ${attemptNumber}, ${retriesLeft} left)`,
-                { error: error instanceof Error ? error.message : String(error) },
-              );
-            },
-          });
-        } catch (lastError) {
-          // All retries exhausted — send to DLQ
-          const { recordDeadLetter } = await import("./dlq");
-          recordDeadLetter(validated, handler.name || "anonymous", lastError, 3);
-        }
-      }),
+      allHandlers.map((handler) =>
+        this.limitLocalHandler(async () => {
+          try {
+            // Exponential backoff: 3 total attempts (1 initial + 2 retries),
+            // 100ms → 200ms delays — matching the original hand-rolled loop.
+            await pRetry(() => handler(validated), {
+              retries: 2, // 1 initial + 2 retries = 3 total attempts
+              minTimeout: 100,
+              factor: 2,
+              onFailedAttempt: ({ error, attemptNumber, retriesLeft }) => {
+                logger.warn(
+                  `Event handler error for ${event.type} (attempt ${attemptNumber}, ${retriesLeft} left)`,
+                  { error: error instanceof Error ? error.message : String(error) },
+                );
+              },
+            });
+          } catch (lastError) {
+            // All retries exhausted — send to DLQ
+            const { recordDeadLetter } = await import("./dlq");
+            recordDeadLetter(validated, handler.name || "anonymous", lastError, 3);
+          }
+        }),
+      ),
     );
   }
 

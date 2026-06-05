@@ -7,7 +7,7 @@
  * 参考设计规范: docs/design-system/ui-patterns/optimistic-updates.mdx
  */
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export type OptimisticStatus = "idle" | "pending" | "success" | "error";
@@ -25,6 +25,8 @@ export interface UseOptimisticStateOptions<T> {
   onError?: (error: Error) => void;
 }
 
+const STATUS_RESET_DELAY_MS = 1500;
+
 /**
  * 本地乐观状态管理
  * 用于管理乐观更新的 UI 状态
@@ -39,17 +41,36 @@ export function useOptimisticState<T>({
   const [data, setData] = useState<T>(initialData);
   const [previousData, setPreviousData] = useState<T | null>(null);
   const [status, setStatus] = useState<OptimisticStatus>("idle");
+  const statusResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearStatusResetTimer = useCallback(() => {
+    if (statusResetTimerRef.current !== null) {
+      clearTimeout(statusResetTimerRef.current);
+      statusResetTimerRef.current = null;
+    }
+  }, []);
+
+  const scheduleStatusReset = useCallback(() => {
+    clearStatusResetTimer();
+    statusResetTimerRef.current = setTimeout(() => {
+      statusResetTimerRef.current = null;
+      setStatus("idle");
+    }, STATUS_RESET_DELAY_MS);
+  }, [clearStatusResetTimer]);
+
+  useEffect(() => clearStatusResetTimer, [clearStatusResetTimer]);
 
   /**
    * 开始乐观更新
    */
   const startOptimistic = useCallback(
     (optimisticData: T) => {
+      clearStatusResetTimer();
       setPreviousData(data);
       setData(optimisticData);
       setStatus("pending");
     },
-    [data],
+    [clearStatusResetTimer, data],
   );
 
   /**
@@ -64,8 +85,8 @@ export function useOptimisticState<T>({
     onSuccess?.();
 
     // 重置状态
-    setTimeout(() => setStatus("idle"), 1500);
-  }, [successMessage, onSuccess]);
+    scheduleStatusReset();
+  }, [successMessage, onSuccess, scheduleStatusReset]);
 
   /**
    * 回滚更新
@@ -81,18 +102,19 @@ export function useOptimisticState<T>({
       onError?.(error ?? new Error("Unknown error"));
 
       // 重置状态
-      setTimeout(() => setStatus("idle"), 1500);
+      scheduleStatusReset();
     },
-    [previousData, errorMessage, onError],
+    [previousData, errorMessage, onError, scheduleStatusReset],
   );
 
   /**
    * 重置状态
    */
   const reset = useCallback(() => {
+    clearStatusResetTimer();
     setStatus("idle");
     setPreviousData(null);
-  }, []);
+  }, [clearStatusResetTimer]);
 
   return {
     data,

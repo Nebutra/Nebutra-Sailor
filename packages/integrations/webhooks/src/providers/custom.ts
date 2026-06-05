@@ -1,4 +1,5 @@
 import { logger } from "@nebutra/logger";
+import PQueue from "p-queue";
 import {
   formatWebhookSignatureHeader,
   generateSecret,
@@ -51,6 +52,7 @@ interface MessageRecord {
 // Exponential backoff schedule (in seconds)
 // 5s, 30s, 2m, 15m, 1h, 6h (6 attempts total)
 const BACKOFF_SCHEDULE = [5, 30, 120, 900, 3600, 21600];
+const DELIVERY_CONCURRENCY = 4;
 
 class InMemoryDeadLetterStore implements WebhookDeadLetterStore {
   private records: Map<string, WebhookDeadLetterDelivery> = new Map();
@@ -87,6 +89,8 @@ export class CustomProvider implements WebhookProvider {
   private maxRetries: number;
   private initialBackoffSec: number;
   private pendingRetries: Map<string, NodeJS.Timeout> = new Map(); // for graceful shutdown
+  private deliveryQueue = new PQueue({ concurrency: DELIVERY_CONCURRENCY });
+  private pendingDispatches: Set<Promise<void>> = new Set();
 
   constructor(options: CustomProviderOptions = {}) {
     this.maxRetries = options.maxRetries ?? 6;
@@ -185,8 +189,12 @@ export class CustomProvider implements WebhookProvider {
     logger.info("[webhooks:custom] Event created", { messageId: id, eventType: event.eventType });
 
     // Dispatch to matching endpoints immediately
-    this.dispatchEvent(message).catch((err) => {
+    const dispatch = this.dispatchEvent(message).catch((err) => {
       logger.error("[webhooks:custom] Error dispatching event", { messageId: id, error: err });
+    });
+    this.pendingDispatches.add(dispatch);
+    void dispatch.finally(() => {
+      this.pendingDispatches.delete(dispatch);
     });
 
     return id;
@@ -198,17 +206,18 @@ export class CustomProvider implements WebhookProvider {
   private async dispatchEvent(message: WebhookMessage): Promise<void> {
     const endpoints = await this.listEndpoints(message.tenantId);
 
-    for (const endpoint of endpoints) {
-      if (!endpoint.active) continue;
-
-      // Check if endpoint subscribes to this event (empty = all)
-      if (endpoint.eventTypes.length > 0 && !endpoint.eventTypes.includes(message.eventType)) {
-        continue;
-      }
-
-      // Schedule first delivery attempt
-      await this.deliverToEndpoint(message, endpoint, 0);
-    }
+    await Promise.all(
+      endpoints
+        .filter((endpoint) => {
+          if (!endpoint.active) return false;
+          return (
+            endpoint.eventTypes.length === 0 || endpoint.eventTypes.includes(message.eventType)
+          );
+        })
+        .map((endpoint) =>
+          this.deliveryQueue.add(() => this.deliverToEndpoint(message, endpoint, 0)),
+        ),
+    );
   }
 
   /**
@@ -406,6 +415,10 @@ export class CustomProvider implements WebhookProvider {
 
   async close(): Promise<void> {
     logger.info("[webhooks:custom] Closing provider, clearing pending retries");
+
+    await Promise.allSettled(this.pendingDispatches);
+    await this.deliveryQueue.onIdle();
+    this.deliveryQueue.clear();
 
     // Clear all pending timeouts
     for (const timeoutId of this.pendingRetries.values()) {

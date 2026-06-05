@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { createNotification } from "../factory";
 import { DirectProvider } from "../providers/direct";
 import { resolveNotificationRuntimeStatus } from "../runtime";
@@ -228,6 +228,66 @@ describe("DirectProvider", () => {
 
     expect(afterAll.unreadCount).toBe(0);
     expect(otherTenant.unreadCount).toBe(1);
+  });
+
+  it("caps direct dispatcher fan-out during batch delivery", async () => {
+    let activeDispatches = 0;
+    let maxActiveDispatches = 0;
+    const releaseDispatches: Array<() => void> = [];
+    const provider = new DirectProvider({
+      provider: "direct",
+      emailDispatcher: {
+        send: async () => {
+          activeDispatches += 1;
+          maxActiveDispatches = Math.max(maxActiveDispatches, activeDispatches);
+
+          await new Promise<void>((resolve) => {
+            releaseDispatches.push(() => {
+              activeDispatches -= 1;
+              resolve();
+            });
+          });
+
+          return { sent: true, messageId: crypto.randomUUID() };
+        },
+      },
+    });
+
+    const delivery = provider.sendBatch(
+      Array.from({ length: 8 }, (_, index) =>
+        createNotification(
+          "workspace.invitation",
+          `user_batch_${index}`,
+          ["email"],
+          {
+            email: `user-${index}@example.com`,
+            subject: "Invite",
+            body: "Join the workspace",
+          },
+          "tenant_a",
+        ),
+      ),
+    );
+
+    try {
+      await vi.waitFor(() => {
+        expect(releaseDispatches.length).toBeGreaterThan(0);
+      });
+      expect(maxActiveDispatches).toBeLessThanOrEqual(4);
+    } finally {
+      let released = 0;
+      while (released < 8) {
+        await vi.waitFor(() => {
+          expect(releaseDispatches.length).toBeGreaterThan(0);
+        });
+        const releaseBatch = releaseDispatches.splice(0);
+        released += releaseBatch.length;
+        for (const release of releaseBatch) {
+          release();
+        }
+      }
+      await delivery;
+    }
   });
 
   it("honors channel preferences before dispatching", async () => {

@@ -164,4 +164,42 @@ describe("CustomProvider delivery reliability", () => {
       }),
     ]);
   });
+
+  it("drains pending initial deliveries before close clears provider state", async () => {
+    let resolveFetch: ((response: Response) => void) | undefined;
+    const fetchMock = vi.fn(
+      () =>
+        new Promise<Response>((resolve) => {
+          resolveFetch = resolve;
+        }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const provider = new CustomProvider({ maxRetries: 1 });
+    await provider.createEndpoint("tenant_123", {
+      url: "https://example.com/webhooks",
+      tenantId: "tenant_123",
+      eventTypes: ["invoice.paid"],
+      active: true,
+    });
+
+    await provider.sendEvent({
+      eventType: "invoice.paid",
+      payload: { invoiceId: "inv_close" },
+      tenantId: "tenant_123",
+    });
+    await vi.waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledOnce();
+    });
+    let closed = false;
+    const closePromise = provider.close().then(() => {
+      closed = true;
+    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(closed).toBe(false);
+    expect(fetchMock).toHaveBeenCalledOnce();
+    resolveFetch?.(new Response("accepted", { status: 200 }));
+    await closePromise;
+  });
 });

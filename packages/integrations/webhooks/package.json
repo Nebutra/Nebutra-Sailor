@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
+    "p-queue": "^9.3.0",
     "svix": "^1.42.0",
     "zod": "catalog:"
   },

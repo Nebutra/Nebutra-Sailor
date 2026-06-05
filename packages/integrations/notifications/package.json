@@ -54,6 +54,7 @@
   "dependencies": {
     "@nebutra/logger": "workspace:*",
     "@novu/node": "^2.0.0",
+    "p-limit": "^7.3.0",
     "zod": "catalog:"
   },
   "devDependencies": {
