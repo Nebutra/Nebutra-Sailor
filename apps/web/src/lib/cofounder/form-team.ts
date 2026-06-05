@@ -65,9 +65,12 @@ export interface TransferJournalEntry {
 
 /**
  * The explicit, no-implicit-copy transfer intent: carry the whole Startup OS
- * project (which contains the CompanyContext) and the Sailor commercial-exemption
- * license into the new org tenant. Rows are `pending` until the org tenant is
- * provisioned and the worker applies them.
+ * project (which contains the CompanyContext) into the new org tenant. Rows are
+ * `pending` until the org tenant is provisioned and the worker applies them.
+ *
+ * Note: the Sailor commercial-exemption license is NOT journaled here. Licenses
+ * are user-scoped (granted on signup), so each founder keeps their own license —
+ * it carries into the team automatically, with nothing to transfer.
  */
 export function buildTransferJournalEntries(
   input: TransferJournalEntryInput,
@@ -79,8 +82,5 @@ export function buildTransferJournalEntries(
     initiatedByUserId: input.userId,
     status: "pending" as const,
   };
-  return [
-    { ...base, kind: "startup_project", subjectId: input.projectId },
-    { ...base, kind: "license", subjectId: null },
-  ];
+  return [{ ...base, kind: "startup_project", subjectId: input.projectId }];
 }

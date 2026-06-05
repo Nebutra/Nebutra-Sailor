@@ -57,20 +57,19 @@ describe("buildTransferJournalEntries", () => {
     userId: "user_me",
   };
 
-  it("emits a whole-project entry and a license entry, both pending", () => {
+  it("emits a single pending whole-project entry (license is user-scoped, not journaled)", () => {
     const entries = buildTransferJournalEntries(input);
-    expect(entries).toHaveLength(2);
-    expect(entries.every((e) => e.status === "pending")).toBe(true);
-    expect(entries.every((e) => e.fromTenantId === "tenant_indiv")).toBe(true);
-    expect(entries.every((e) => e.toOrganizationId === "org_new")).toBe(true);
+    expect(entries).toHaveLength(1);
+    expect(entries[0].status).toBe("pending");
+    expect(entries[0].fromTenantId).toBe("tenant_indiv");
+    expect(entries[0].toOrganizationId).toBe("org_new");
+    expect(entries.some((e) => e.kind === "license")).toBe(false);
   });
 
-  it("carries the project id on the startup_project entry, null on license", () => {
+  it("carries the project id on the startup_project entry", () => {
     const entries = buildTransferJournalEntries(input);
     const project = entries.find((e) => e.kind === "startup_project");
-    const license = entries.find((e) => e.kind === "license");
     expect(project?.subjectId).toBe("startup_abc");
-    expect(license?.subjectId).toBeNull();
   });
 
   it("attributes the initiator and cofounder", () => {
