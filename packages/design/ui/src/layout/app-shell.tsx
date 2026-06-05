@@ -23,6 +23,10 @@ export interface AppShellProps {
   defaultCollapsed?: boolean;
   /** Fires whenever the collapsed state changes (both controlled + uncontrolled). */
   onCollapsedChange?: (collapsed: boolean) => void;
+  /** Render the desktop sidebar as a floating overlay (absolute, z-40) instead of
+   *  an in-flow rail that compresses main — for full-bleed builder routes that
+   *  drive their own toggle. When collapsed to 0 width it's simply invisible. */
+  overlay?: boolean;
   /** Height in pixels of the sticky header row. Defaults to 48. */
   headerHeight?: number;
   /** Override the default container styles applied to `<main>`. */
@@ -69,6 +73,7 @@ export function AppShell({
   headerHeight = DEFAULT_HEADER_HEIGHT,
   contentClassName,
   className,
+  overlay = false,
 }: AppShellProps) {
   const isControlled = collapsed !== undefined;
   const [internalCollapsed] = React.useState(defaultCollapsed);
@@ -92,9 +97,11 @@ export function AppShell({
       <aside
         aria-label="Primary"
         className={cn(
-          "hidden h-screen shrink-0 overflow-hidden bg-sidebar text-sidebar-foreground md:block",
+          "hidden h-screen overflow-hidden bg-sidebar text-sidebar-foreground md:block",
           "transition-[width] duration-200 ease-out",
+          overlay ? "absolute inset-y-0 left-0 z-40" : "shrink-0",
           railWidth > 0 && "border-r border-sidebar-border",
+          overlay && railWidth > 0 && "shadow-2xl",
         )}
         style={{ width: railWidth }}
       >

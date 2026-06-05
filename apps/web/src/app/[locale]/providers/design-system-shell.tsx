@@ -597,6 +597,9 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
       // sliver. The thread-column logo button drives the shared `toggle()` to
       // bring the dashboard nav back, so the rail stays reachable.
       sidebarCollapsedWidth={isStartupOSRoute ? 0 : undefined}
+      // On the full-bleed builder the expanded nav floats OVER the workspace
+      // (absolute overlay) instead of an in-flow rail that compresses it.
+      overlay={isStartupOSRoute}
       contentClassName={
         isWorkspaceHomeRoute
           ? // Full-bleed gradient canvas: drop padding at every breakpoint
