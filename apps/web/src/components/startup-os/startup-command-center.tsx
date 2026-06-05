@@ -8,6 +8,7 @@ import {
   Layers,
   Lightning,
   Paperclip,
+  PreviewEye,
   ShieldCheck,
   Sparkles,
 } from "@nebutra/icons";
@@ -1096,7 +1097,9 @@ function StartupBuilderWorkspace({
   selectedFile: StartupOSFile | null;
   selectedRun: StartupOperatingRun | null;
 }) {
-  const [activeSurface, setActiveSurface] = useState<"code" | "canvas" | "chat">("code");
+  const [activeSurface, setActiveSurface] = useState<"preview" | "code" | "canvas" | "chat">(
+    "preview",
+  );
   const threadItems = [
     {
       title: "Proposition captured",
@@ -1222,6 +1225,12 @@ function StartupBuilderWorkspace({
                 shape="pill"
               >
                 <TabsList>
+                  <TabsTrigger
+                    value="preview"
+                    icon={<PreviewEye className="size-3.5" aria-hidden="true" />}
+                  >
+                    Preview
+                  </TabsTrigger>
                   <TabsTrigger value="code" icon={<Code className="size-3.5" aria-hidden="true" />}>
                     Code
                   </TabsTrigger>
@@ -1241,8 +1250,15 @@ function StartupBuilderWorkspace({
               </Tabs>
             </div>
 
-            <div className={activeSurface === "code" ? "min-h-0 flex-1" : "hidden"}>
+            <div
+              className={
+                activeSurface === "code" || activeSurface === "preview"
+                  ? "min-h-0 flex-1"
+                  : "hidden"
+              }
+            >
               <WorkspaceFilesPanel
+                view={activeSurface === "preview" ? "preview" : "code"}
                 artifacts={project.artifacts}
                 files={files}
                 isSavingFile={isSavingFile}
@@ -1294,6 +1310,7 @@ function ExplorerReferenceSection({ children, title }: { children: ReactNode; ti
 }
 
 function WorkspaceFilesPanel({
+  view,
   artifacts,
   files,
   isSavingFile,
@@ -1307,6 +1324,7 @@ function WorkspaceFilesPanel({
   selectedFile,
   selectedRunId,
 }: {
+  view: "code" | "preview";
   artifacts: readonly StartupArtifact[];
   files: readonly StartupOSFile[];
   isSavingFile: boolean;
@@ -1373,8 +1391,12 @@ function WorkspaceFilesPanel({
           </div>
         </div>
 
-        <div className="grid min-h-0 flex-1 xl:grid-cols-[280px_minmax(0,1fr)]">
-          <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-2/60">
+        <div
+          className={`grid min-h-0 flex-1 ${view === "code" ? "xl:grid-cols-[280px_minmax(0,1fr)]" : "grid-cols-1"}`}
+        >
+          <aside
+            className={`min-h-0 flex-col bg-neutral-2/60 ${view === "code" ? "flex" : "hidden"}`}
+          >
             <div className="border-b border-neutral-6 px-3 py-2">
               <p className="text-xs font-semibold text-neutral-12">Files</p>
               <p className="mt-0.5 text-[11px] text-neutral-9">Your workspace</p>
@@ -1426,9 +1448,9 @@ function WorkspaceFilesPanel({
             </div>
           </aside>
 
-          <div className="grid min-h-0 xl:grid-cols-[minmax(0,1fr)_minmax(380px,0.82fr)] 2xl:grid-cols-[minmax(0,1fr)_minmax(460px,0.82fr)]">
-            <div className="flex min-h-0 flex-col border-b border-neutral-6 xl:border-b-0 xl:border-r">
-              <div className="flex gap-1 overflow-x-auto border-b border-neutral-6 bg-neutral-2 p-2">
+          <div className="flex min-h-0 flex-1 flex-col">
+            <div className={view === "code" ? "flex min-h-0 flex-1 flex-col" : "hidden"}>
+              <div className="flex gap-1 overflow-x-auto bg-neutral-2 p-2">
                 {files.map((file) => (
                   <button
                     key={file.path}
@@ -1457,9 +1479,13 @@ function WorkspaceFilesPanel({
               )}
             </div>
 
-            <div className="flex min-h-0 flex-col bg-neutral-2">
-              <div className="flex items-center justify-between border-b border-neutral-6 px-3 py-2">
-                <span className="text-xs font-semibold text-neutral-12">Live preview</span>{" "}
+            <div
+              className={
+                view === "preview" ? "flex min-h-0 flex-1 flex-col bg-neutral-2" : "hidden"
+              }
+            >
+              <div className="flex items-center justify-between px-3 py-2">
+                <span className="text-xs font-semibold text-neutral-12">Live preview</span>
               </div>
               {livePreviewHtml ? (
                 <iframe
