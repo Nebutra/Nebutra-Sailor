@@ -144,10 +144,10 @@ describe("POST /api/startup-os/projects/[projectId]/runs/[runId]/execute", () =>
     });
     const files = buildStartupProjectFiles(project);
     const patchedFiles = files.map((file) =>
-      file.path === "index.html"
+      file.path === "src/routes/index.tsx"
         ? {
             ...file,
-            content: "<!doctype html><html><body>Real launch surface</body></html>",
+            content: "// Real launch surface route\n",
             generatedFrom: "user-edit" as const,
             updatedAt: "2026-05-29T00:02:00.000Z",
           }

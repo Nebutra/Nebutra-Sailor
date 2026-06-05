@@ -144,8 +144,8 @@ function completedEvents(): readonly StartupConversationEvent[] {
     { type: "status", phase: "applying", occurredAt: "2026-05-29T00:02:00.300Z" },
     {
       type: "file",
-      path: "index.html",
-      language: "html",
+      path: "src/routes/index.tsx",
+      language: "tsx",
       action: "updated",
       occurredAt: "2026-05-29T00:02:00.300Z",
     },
@@ -236,8 +236,8 @@ describe("POST /api/startup-os/projects/[projectId]/chat", () => {
     const project = fixtureProject();
     const files = buildStartupProjectFiles(project);
     const patchedFiles = files.map((file) =>
-      file.path === "index.html"
-        ? { ...file, content: "<!doctype html><html><body>Sharper</body></html>" }
+      file.path === "src/routes/index.tsx"
+        ? { ...file, content: "// Sharper landing route\n" }
         : file,
     );
     const resultEvents: readonly StartupOSEventInput[] = [

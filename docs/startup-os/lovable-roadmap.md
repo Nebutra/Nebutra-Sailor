@@ -32,6 +32,12 @@ but adopts Lovable's signature mechanics and craft:
   Open sub-decision deferred to the preview phase: **which sandbox provider** the
   runtime routes to (local Docker / remote e2b / Vercel Sandbox) — may need infra + keys.
   Note `@nebutra/code-execution` is self-marked WIP (notebook kernel + approval UI not wired).
+- **Scaffold = TanStack Start** (decided 2026-06-05) — `buildStartupProjectFiles` (`files.ts`)
+  must emit a TanStack Start app (was Vite+React SPA), matching the user's "Tanstack Lovable Core"
+  reference + the server-sandbox preview. Canonical: `@tanstack/react-start` + `@tanstack/react-router`,
+  `vite.config.ts` (`tanstackStart()` before `viteReact()`), `src/router.tsx` + `src/routes/__root.tsx`
+  + `src/routes/index.tsx`, no `index.html`/`main.tsx`, `routeTree.gen.ts` auto-generated. Consequence:
+  static-HTML preview can't render SSR → preview becomes sandbox-dependent (placeholder until sandbox lands).
 - **Providers = wire all + region routing** — add SiliconFlow (硅基流动, OpenAI-compatible,
   `baseURL` already in `ai-providers/meta.ts`) + keep OpenRouter/Anthropic/OpenAI into
   `agents/src/fallback.ts` (`ENV_KEY_BY_PROVIDER` + `createFallbackModel` switch + `FallbackProviderName`),

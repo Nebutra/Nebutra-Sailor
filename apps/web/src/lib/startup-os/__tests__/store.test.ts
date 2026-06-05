@@ -157,8 +157,8 @@ describe("Startup OS AtelierCanvas persistence contract", () => {
     expect(parseStartupProjectSceneEnvelope(scene)).toMatchObject({
       project,
       files: expect.arrayContaining([
-        expect.objectContaining({ path: "index.html" }),
-        expect.objectContaining({ path: "src/App.tsx" }),
+        expect.objectContaining({ path: "src/routes/__root.tsx" }),
+        expect.objectContaining({ path: "src/routes/index.tsx" }),
       ]),
     });
   });

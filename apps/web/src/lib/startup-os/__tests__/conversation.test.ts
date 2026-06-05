@@ -87,9 +87,9 @@ const VALID_RESULT = {
   ],
   filePatches: [
     {
-      path: "index.html",
+      path: "src/routes/index.tsx",
       content:
-        "<!doctype html><html><body><main><h1>Conversational launch surface</h1></main></body></html>",
+        "import { createFileRoute } from '@tanstack/react-router';\nexport const Route = createFileRoute('/')({ component: () => <main><h1>Conversational launch surface</h1></main> });\n",
     },
   ],
 };
@@ -149,7 +149,7 @@ describe("Startup OS streaming conversation engine", () => {
     const project = fixtureProject();
     const files = buildStartupProjectFiles(project);
 
-    const generator = streamStartupConversation(project, "Patch index.html.", {
+    const generator = streamStartupConversation(project, "Patch src/routes/index.tsx.", {
       tenantId: "org_123",
       userId: "user_123",
       files,
@@ -170,10 +170,10 @@ describe("Startup OS streaming conversation engine", () => {
     );
 
     expect(fileEvents).toHaveLength(1);
-    expect(fileEvents[0]).toMatchObject({ path: "index.html", action: "updated" });
+    expect(fileEvents[0]).toMatchObject({ path: "src/routes/index.tsx", action: "updated" });
 
     const resolved = result as { files?: typeof files };
-    const patched = resolved.files?.find((file) => file.path === "index.html");
+    const patched = resolved.files?.find((file) => file.path === "src/routes/index.tsx");
     expect(patched?.content).toContain("Conversational launch surface");
     expect(patched?.generatedFrom).toBe("user-edit");
     expect(patched?.updatedAt).toBe("2026-05-29T00:02:05.000Z");

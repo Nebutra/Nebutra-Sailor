@@ -88,7 +88,7 @@ describe("/api/startup-os/projects/[projectId]/files", () => {
     };
 
     expect(response.status).toBe(200);
-    expect(payload.files.map((file) => file.path)).toContain("src/App.tsx");
+    expect(payload.files.map((file) => file.path)).toContain("src/routes/index.tsx");
     expect(payload.previewHtml).toContain(project.companyContext.name);
   });
 
@@ -112,10 +112,10 @@ describe("/api/startup-os/projects/[projectId]/files", () => {
       dbMock,
       "org_1",
       "project_1",
-      expect.arrayContaining([expect.objectContaining({ path: "src/App.tsx" })]),
+      expect.arrayContaining([expect.objectContaining({ path: "src/routes/index.tsx" })]),
       expect.objectContaining({ type: "file_updated" }),
     );
-    expect(payload.files.map((file) => file.path)).toContain("src/App.tsx");
+    expect(payload.files.map((file) => file.path)).toContain("src/routes/index.tsx");
     expect(payload.previewHtml).toContain(project.companyContext.promise);
   });
 

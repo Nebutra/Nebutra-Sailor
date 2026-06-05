@@ -21,17 +21,48 @@ describe("Startup OS project files", () => {
 
     expect(files.map((file) => file.path)).toEqual([
       "README.md",
-      "index.html",
-      "src/App.tsx",
-      "src/App.css",
-      "src/main.tsx",
-      "src/lib/company-context.ts",
       "package.json",
+      "vite.config.ts",
+      "tsconfig.json",
+      "src/router.tsx",
+      "src/routes/__root.tsx",
+      "src/routes/index.tsx",
+      "src/styles/app.css",
+      "src/lib/company-context.ts",
     ]);
     expect(files.every(isStartupOSFile)).toBe(true);
-    expect(files.find((file) => file.path === "index.html")?.content).toContain(
-      project.companyContext.promise,
+
+    // Does NOT emit Vite-SPA shell files — TanStack Start uses __root.tsx as the html shell,
+    // and routeTree.gen.ts is auto-generated on first `vite dev`.
+    expect(files.map((file) => file.path)).not.toContain("index.html");
+    expect(files.map((file) => file.path)).not.toContain("src/main.tsx");
+    expect(files.map((file) => file.path)).not.toContain("src/routeTree.gen.ts");
+
+    const packageJson = files.find((file) => file.path === "package.json");
+    expect(packageJson?.content).toContain("@tanstack/react-start");
+    expect(packageJson?.content).toContain("@tanstack/react-router");
+    expect(packageJson?.content).toContain('"type": "module"');
+    expect(packageJson?.content).toContain('"dev": "vite dev"');
+
+    const viteConfig = files.find((file) => file.path === "vite.config.ts");
+    expect(viteConfig?.content).toContain(
+      'import { tanstackStart } from "@tanstack/react-start/plugin/vite"',
     );
+    // tanstackStart() must come before viteReact()
+    const tsxStartIndex = (viteConfig?.content ?? "").indexOf("tanstackStart()");
+    const viteReactIndex = (viteConfig?.content ?? "").indexOf("viteReact()");
+    expect(tsxStartIndex).toBeGreaterThanOrEqual(0);
+    expect(viteReactIndex).toBeGreaterThan(tsxStartIndex);
+
+    const rootRoute = files.find((file) => file.path === "src/routes/__root.tsx");
+    expect(rootRoute?.content).toContain("createRootRoute");
+    expect(rootRoute?.content).toContain("HeadContent");
+    expect(rootRoute?.content).toContain("Scripts");
+    expect(rootRoute?.content).toContain(project.companyContext.name);
+
+    const indexRoute = files.find((file) => file.path === "src/routes/index.tsx");
+    expect(indexRoute?.content).toContain('createFileRoute("/")');
+    expect(indexRoute?.content).toContain("companyContext");
   });
 
   it("does not ship fallback marketing copy or fake conversion actions", () => {
@@ -75,7 +106,7 @@ describe("Startup OS project files", () => {
     );
   });
 
-  it("renders preview HTML from the persisted index and stylesheet files", () => {
+  it("renders a self-contained static preview placeholder from CompanyContext", () => {
     const project = compileStartupProject({
       thesis: "A launch OS that turns one proposition into a working startup surface.",
       arena: "AI SaaS",
@@ -85,9 +116,23 @@ describe("Startup OS project files", () => {
 
     const html = buildStartupPreviewHtml(files);
 
+    // Valid standalone HTML — the placeholder inlines its own styles, no external refs.
+    expect(html).toContain("<!doctype html>");
     expect(html).toContain("<style>");
     expect(html).toContain(project.companyContext.name);
+    expect(html).toContain(project.companyContext.promise);
+    expect(html).toContain("Live preview runs in the sandbox runtime");
+    // It cannot SSR a TanStack Start app, so it must NOT reference app source/styles.
     expect(html).not.toContain('href="/src/App.css"');
+    expect(html).not.toContain("src/styles/app.css");
+    expect(html).not.toContain('href="/src/');
+  });
+
+  it("returns valid standalone preview HTML even when company-context is absent", () => {
+    const html = buildStartupPreviewHtml([]);
+
+    expect(html).toContain("<!doctype html>");
+    expect(html).toContain("company-context.ts is missing");
   });
 
   it("refreshes compiler-generated templates without overwriting user edits", () => {
@@ -103,7 +148,7 @@ describe("Startup OS project files", () => {
       updatedAt: "2026-05-29T01:00:00.000Z",
     });
     const staleCompilerFiles = edited.map((file) =>
-      file.path === "src/App.css" && file.generatedFrom === "startup-os-compiler"
+      file.path === "src/styles/app.css" && file.generatedFrom === "startup-os-compiler"
         ? { ...file, content: `${file.content}\n.backdrop { backdrop-filter: blur(22px); }\n` }
         : file,
     );
@@ -111,7 +156,7 @@ describe("Startup OS project files", () => {
     const refreshed = refreshCompilerGeneratedStartupFiles(project, staleCompilerFiles);
 
     expect(refreshed.find((file) => file.path === "README.md")?.content).toBe("# Keep my edit");
-    expect(refreshed.find((file) => file.path === "src/App.css")?.content).not.toContain(
+    expect(refreshed.find((file) => file.path === "src/styles/app.css")?.content).not.toContain(
       "backdrop-filter",
     );
   });

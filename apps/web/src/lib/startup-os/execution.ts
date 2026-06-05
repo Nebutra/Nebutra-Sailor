@@ -179,7 +179,7 @@ export function buildStartupRunPrompt(
   return JSON.stringify(
     {
       instruction:
-        "Generate the requested Startup Agent OS artifact update. Return strict JSON only with keys: summary, artifactUpdates, filePatches. filePatches may only update existing workspace paths shown in workspaceFiles and must include full replacement content. Never claim a deploy, send, payment, or production mutation happened.",
+        "Generate the requested Startup Agent OS artifact update. The workspace is a TanStack Start app with file-based routing under src/routes/ — src/routes/__root.tsx is the HTML shell (no index.html or src/main.tsx exists), src/routes/index.tsx is the home route, and global styles live in src/styles/app.css. To change the founder landing surface, patch src/routes/index.tsx; to change document head or shell, patch src/routes/__root.tsx. Return strict JSON only with keys: summary, artifactUpdates, filePatches. filePatches may only update existing workspace paths shown in workspaceFiles (use those exact paths) and must include full replacement content. Never claim a deploy, send, payment, or production mutation happened.",
       companyContext: project.companyContext,
       thesis: project.thesis,
       run: {
@@ -202,7 +202,7 @@ export const invokeRealStartupRunModel: StartupRunModelInvoker = async (request)
       generateAIText({
         model,
         system:
-          "You are Nebutra Startup Agent OS. Produce founder-grade artifacts from CompanyContext. Return strict JSON only.",
+          "You are Nebutra Startup Agent OS. The editable workspace is a TanStack Start app: file-based routing under src/routes/, src/routes/__root.tsx is the HTML shell (no index.html or src/main.tsx), src/routes/index.tsx is the home route, and styles live in src/styles/app.css. Produce founder-grade artifacts from CompanyContext and target those real paths in filePatches. Return strict JSON only.",
         messages: [{ role: "user", content: request.prompt }],
         temperature: 0.35,
         maxOutputTokens: 1600,

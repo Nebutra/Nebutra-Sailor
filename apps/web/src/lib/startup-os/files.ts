@@ -54,7 +54,7 @@ function file(
   };
 }
 
-function appCss() {
+function appCssContent() {
   return `:root {
   --ink: rgb(17 24 39);
   --paper: rgb(248 250 252);
@@ -160,52 +160,127 @@ h1 {
 `;
 }
 
-function previewHtml(project: StartupOSProject) {
-  const context = project.companyContext;
-  const launchArtifacts = project.artifacts.filter((artifact) =>
-    ["landing_page", "mvp_scaffold", "demand_signal_map", "governance_plan"].includes(
-      artifact.kind,
-    ),
-  );
+function packageJsonContent(project: StartupOSProject) {
+  return `${JSON.stringify(
+    {
+      name: slugClass(project.companyContext.name) || "startup-os-app",
+      private: true,
+      type: "module",
+      scripts: {
+        dev: "vite dev",
+        build: "vite build",
+      },
+      dependencies: {
+        "@tanstack/react-start": "latest",
+        "@tanstack/react-router": "latest",
+        react: "latest",
+        "react-dom": "latest",
+      },
+      devDependencies: {
+        vite: "latest",
+        "@vitejs/plugin-react": "latest",
+        typescript: "latest",
+        "@types/react": "latest",
+        "@types/react-dom": "latest",
+        "@types/node": "latest",
+      },
+    },
+    null,
+    2,
+  )}\n`;
+}
 
-  return `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>${escapeHtml(context.name)}</title>
-    <link rel="stylesheet" href="/src/App.css" />
-  </head>
-  <body>
-    <main class="startup-shell ${slugClass(context.name)}">
-      <section class="hero">
-        <div class="eyebrow">${escapeHtml(project.arena)} / CompanyContext live</div>
-        <h1>${escapeHtml(context.name)}</h1>
-        <p class="promise">${escapeHtml(context.promise)}</p>
-      </section>
+function viteConfigContent() {
+  return `import { defineConfig } from "vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
 
-      <section id="system" class="grid" aria-label="Persisted launch artifacts">
-        ${launchArtifacts
-          .map(
-            (artifact) => `<article class="card">
-          <strong>${escapeHtml(artifact.title)}</strong>
-          <p>${escapeHtml(artifact.summary)}</p>
-          <span class="signal">${escapeHtml(artifact.status)}</span>
-        </article>`,
-          )
-          .join("\n        ")}
-      </section>
-    </main>
-  </body>
-</html>
+export default defineConfig({
+  server: { port: 3000 },
+  plugins: [tanstackStart(), viteReact()],
+});
 `;
 }
 
-function appTsx(project: StartupOSProject) {
-  return `import "./App.css";
-import { companyContext, launchArtifacts } from "./lib/company-context";
+function tsconfigContent() {
+  return `${JSON.stringify(
+    {
+      compilerOptions: {
+        jsx: "react-jsx",
+        module: "ESNext",
+        moduleResolution: "Bundler",
+        target: "ES2022",
+        strict: true,
+        skipLibCheck: true,
+        types: ["vite/client"],
+      },
+      include: ["src"],
+    },
+    null,
+    2,
+  )}\n`;
+}
 
-export default function App() {
+function routerContent() {
+  return `import { createRouter } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
+
+export function getRouter() {
+  return createRouter({ routeTree, scrollRestoration: true });
+}
+`;
+}
+
+function rootRouteContent(project: StartupOSProject) {
+  const title = JSON.stringify(project.companyContext.name);
+  return `import { Outlet, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import appCss from "../styles/app.css?url";
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: ${title} },
+    ],
+    links: [{ rel: "stylesheet", href: appCss }],
+  }),
+  component: RootComponent,
+});
+
+function RootComponent() {
+  return (
+    <RootDocument>
+      <Outlet />
+    </RootDocument>
+  );
+}
+
+function RootDocument({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+`;
+}
+
+function indexRouteContent(project: StartupOSProject) {
+  return `import { createFileRoute } from "@tanstack/react-router";
+import { companyContext, launchArtifacts } from "../lib/company-context";
+
+export const Route = createFileRoute("/")({
+  component: Home,
+});
+
+function Home() {
   return (
     <main className="startup-shell">
       <section className="hero">
@@ -257,6 +332,20 @@ ${project.companyContext.promise}
 
 ${project.thesis}
 
+## Stack
+
+This workspace is a [TanStack Start](https://tanstack.com/start) application.
+
+\`\`\`bash
+npm install
+npm run dev   # vite dev — generates src/routeTree.gen.ts on first run
+npm run build # vite build
+\`\`\`
+
+- \`src/routes/__root.tsx\` is the HTML shell (no index.html / main.tsx needed).
+- \`src/routes/index.tsx\` renders the founder landing from CompanyContext.
+- \`src/routeTree.gen.ts\` is auto-generated by Vite on first \`dev\`.
+
 ## Persisted workspace
 
 - CompanyContext: persisted source of truth.
@@ -273,41 +362,14 @@ export function buildStartupProjectFiles(project: StartupOSProject): StartupOSFi
   const updatedAt = project.updatedAt;
   return [
     file("README.md", "document", "markdown", readme(project), updatedAt),
-    file("index.html", "preview", "html", previewHtml(project), updatedAt),
-    file("src/App.tsx", "source", "tsx", appTsx(project), updatedAt),
-    file("src/App.css", "style", "css", appCss(), updatedAt),
-    file(
-      "src/main.tsx",
-      "source",
-      "tsx",
-      'import App from "./App";\n\nexport default App;\n',
-      updatedAt,
-    ),
+    file("package.json", "config", "json", packageJsonContent(project), updatedAt),
+    file("vite.config.ts", "config", "ts", viteConfigContent(), updatedAt),
+    file("tsconfig.json", "config", "json", tsconfigContent(), updatedAt),
+    file("src/router.tsx", "source", "tsx", routerContent(), updatedAt),
+    file("src/routes/__root.tsx", "source", "tsx", rootRouteContent(project), updatedAt),
+    file("src/routes/index.tsx", "source", "tsx", indexRouteContent(project), updatedAt),
+    file("src/styles/app.css", "style", "css", appCssContent(), updatedAt),
     file("src/lib/company-context.ts", "source", "ts", companyContextTs(project), updatedAt),
-    file(
-      "package.json",
-      "config",
-      "json",
-      JSON.stringify(
-        {
-          scripts: {
-            dev: "vite",
-            build: "vite build",
-          },
-          dependencies: {
-            "@vitejs/plugin-react": "latest",
-            vite: "latest",
-            typescript: "latest",
-            react: "latest",
-            "react-dom": "latest",
-          },
-          devDependencies: {},
-        },
-        null,
-        2,
-      ),
-      updatedAt,
-    ),
   ];
 }
 
@@ -387,12 +449,109 @@ export function patchStartupProjectFile(
   );
 }
 
-export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string {
-  const index = files.find((item) => item.path === "index.html");
-  const css = files.find((item) => item.path === "src/App.css");
-  if (!index) {
-    return "<!doctype html><html><body><p>index.html is missing.</p></body></html>";
+function readCompanyContextField(content: string, field: string): string {
+  const match = content.match(new RegExp(`"${field}":\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+  if (!match?.[1]) return "";
+  try {
+    return JSON.parse(`"${match[1]}"`);
+  } catch {
+    return match[1];
   }
-  const style = css ? `<style>${css.content}</style>` : "";
-  return index.content.replace('<link rel="stylesheet" href="/src/App.css" />', style);
+}
+
+export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string {
+  const companyContextFile = files.find((item) => item.path === "src/lib/company-context.ts");
+  if (!companyContextFile) {
+    return "<!doctype html><html><body><p>company-context.ts is missing.</p></body></html>";
+  }
+
+  const name = readCompanyContextField(companyContextFile.content, "name") || "Startup OS";
+  const promise =
+    readCompanyContextField(companyContextFile.content, "promise") ||
+    "Live preview runs in the sandbox runtime.";
+
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${escapeHtml(name)}</title>
+    <style>
+      :root {
+        --ink: rgb(17 24 39);
+        --paper: rgb(248 250 252);
+        --muted: rgb(102 112 133);
+        --line: rgb(226 232 240);
+        --signal: rgb(20 92 255);
+        --signal-soft: rgb(219 228 255);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .preview-card {
+        display: grid;
+        gap: 1.25rem;
+        justify-items: center;
+        max-width: 640px;
+        margin: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+        padding: clamp(2rem, 5vw, 3.5rem);
+        border: 1px solid var(--line);
+        border-radius: 1.75rem;
+        background: white;
+        text-align: center;
+      }
+      .preview-card .eyebrow {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--paper);
+        padding: 0.5rem 0.8rem;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .preview-card h1 {
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 3.25rem);
+        letter-spacing: -0.04em;
+        line-height: 1;
+      }
+      .preview-card p {
+        margin: 0;
+        max-width: 48ch;
+        color: rgb(52 64 84);
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        line-height: 1.5;
+      }
+      .preview-card .signal {
+        display: inline-grid;
+        border-radius: 999px;
+        background: var(--signal-soft);
+        padding: 0.5rem 0.85rem;
+        color: var(--signal);
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="preview-card ${slugClass(name)}">
+      <div class="eyebrow">TanStack Start</div>
+      <h1>${escapeHtml(name)}</h1>
+      <p>${escapeHtml(promise)}</p>
+      <span class="signal">Live preview runs in the sandbox runtime</span>
+    </main>
+  </body>
+</html>
+`;
 }

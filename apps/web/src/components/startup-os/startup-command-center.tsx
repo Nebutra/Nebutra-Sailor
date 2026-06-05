@@ -343,7 +343,7 @@ export function StartupCommandCenter() {
     : [];
   const selectedFile =
     selectedWorkspaceFiles.find((file) => file.path === selectedFilePath) ??
-    selectedWorkspaceFiles.find((file) => file.path === "src/App.tsx") ??
+    selectedWorkspaceFiles.find((file) => file.path === "src/routes/index.tsx") ??
     selectedWorkspaceFiles[0] ??
     null;
   const selectedPreviewHtml = selectedProject
@@ -369,7 +369,7 @@ export function StartupCommandCenter() {
     setSelectedFilePath((current) =>
       current && nextFiles.some((file) => file.path === current)
         ? current
-        : (nextFiles.find((file) => file.path === "src/App.tsx")?.path ??
+        : (nextFiles.find((file) => file.path === "src/routes/index.tsx")?.path ??
           nextFiles[0]?.path ??
           null),
     );

@@ -168,15 +168,15 @@ describe("Startup OS real execution service", () => {
             {
               kind: "landing_page",
               status: "ready",
-              summary: "AI-generated landing page committed to index.html.",
+              summary: "AI-generated landing page committed to src/routes/index.tsx.",
               payload: ["Updated generated app preview through a file patch."],
             },
           ],
           filePatches: [
             {
-              path: "index.html",
+              path: "src/routes/index.tsx",
               content:
-                "<!doctype html><html><body><main><h1>Real patched launch surface</h1></main></body></html>",
+                "import { createFileRoute } from '@tanstack/react-router';\nexport const Route = createFileRoute('/')({ component: () => <main><h1>Real patched launch surface</h1></main> });\n",
             },
           ],
         }),
@@ -186,7 +186,7 @@ describe("Startup OS real execution service", () => {
     });
 
     expect(result.events.map((event) => event.type)).toEqual(["run_started", "run_completed"]);
-    expect(result.files?.find((file) => file.path === "index.html")).toMatchObject({
+    expect(result.files?.find((file) => file.path === "src/routes/index.tsx")).toMatchObject({
       content: expect.stringContaining("Real patched launch surface"),
       generatedFrom: "user-edit",
       updatedAt: "2026-05-29T00:03:00.000Z",
