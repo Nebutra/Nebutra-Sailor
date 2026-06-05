@@ -1,15 +1,22 @@
 import "server-only";
 import {
   ChartActivity as Activity,
-  Dollar as DollarSign,
+  CreditCard,
   External as ExternalLink,
-  Sparkles,
+  Lightning as Rocket,
+  Users,
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card } from "@nebutra/ui/layout";
+import { DashboardMetricTile, DashboardPanel } from "@nebutra/ui/patterns";
+import { getLocale, getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import { AccessInviteIssuer } from "@/components/admin/access-invite-issuer";
 import { listAdminDirectory } from "@/components/admin/admin-directory-data";
 import { AdminDirectoryPanel } from "@/components/admin/admin-directory-panel";
+import { getAuth } from "@/lib/auth";
+import { getGrowthSummary } from "@/lib/warehouse/gold";
+import { MetricsSkeleton } from "../_dashboard-skeletons";
 
 /**
  * Minimal admin dashboard.
@@ -18,39 +25,118 @@ import { AdminDirectoryPanel } from "@/components/admin/admin-directory-panel";
  * user/org CRUD and customer-support flows belong in Retool/Metabase wired
  * to the internal API, not in self-built UI. See docs/admin/retool-recipe.md.
  *
- * What lives here: high-leverage, at-a-glance product signals.
- *   - MRR / ARR
- *   - AI cost (last 7d)
- *   - Active users
- *
- * Wire real values via @nebutra/metering + @nebutra/billing aggregations.
+ * What lives here: high-leverage, at-a-glance product signals. The Workspace
+ * Snapshot tiles below are backed by real warehouse data (getGrowthSummary →
+ * ClickHouse growth_metrics_daily) and render honest zero values when the
+ * warehouse has no data for the active tenant yet.
  */
 
-const STATS: ReadonlyArray<{
-  label: string;
-  hint: string;
-  value: string;
-  icon: typeof DollarSign;
-}> = [
-  {
-    label: "MRR / ARR",
-    hint: "Recurring revenue: wire from @nebutra/billing",
-    value: "TBD",
-    icon: DollarSign,
-  },
-  {
-    label: "AI cost (last 7d)",
-    hint: "Provider spend: wire from @nebutra/metering",
-    value: "TBD",
-    icon: Sparkles,
-  },
-  {
-    label: "Active users (7d)",
-    hint: "DAU/WAU: wire from session events",
-    value: "TBD",
-    icon: Activity,
-  },
-];
+function fmtCompact(n: number, locale: string) {
+  return n.toLocaleString(locale, {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  });
+}
+
+function fmtUSD(n: number, locale: string) {
+  return n.toLocaleString(locale, {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  });
+}
+
+async function WorkspaceMetrics() {
+  const [t, locale, authState] = await Promise.all([
+    getTranslations("dashboard.workspaceSnapshot"),
+    getLocale(),
+    getAuth().catch(() => null),
+  ]);
+
+  const tenantId = authState?.orgId || process.env.DEFAULT_DASHBOARD_TENANT_ID;
+  // getGrowthSummary never throws — on missing data / warehouse error it
+  // resolves an empty summary (zeros, day=null). Render honest zero tiles
+  // rather than hiding the panel.
+  const summary = await getGrowthSummary(tenantId ?? undefined);
+
+  const dayLabel = summary.day ?? t("meta.daily");
+  const snapshotValue = summary.day ? t("meta.latestDay", { day: summary.day }) : "—";
+  const snapshotMeta = [
+    { label: t("meta.snapshot"), value: snapshotValue },
+    { label: t("meta.cadence"), value: t("meta.daily") },
+    { label: t("meta.tenant"), value: summary.tenantId },
+  ];
+
+  const metrics = [
+    {
+      label: t("metrics.activeUsers"),
+      value: fmtCompact(summary.activeUsers, locale),
+      detail: t("details.activeUsers"),
+      source: t("meta.users"),
+      icon: Users,
+      tone: "green" as const,
+    },
+    {
+      label: t("metrics.totalEvents"),
+      value: fmtCompact(summary.totalEvents, locale),
+      detail: t("details.totalEvents"),
+      source: t("meta.events"),
+      icon: Activity,
+      tone: "blue" as const,
+    },
+    {
+      label: t("metrics.conversions"),
+      value: fmtCompact(summary.conversions, locale),
+      detail: t("details.conversions"),
+      source: t("meta.funnel"),
+      icon: Rocket,
+      tone: "amber" as const,
+    },
+    {
+      label: t("metrics.revenue"),
+      value: fmtUSD(summary.revenue, locale),
+      detail: t("details.revenue"),
+      source: t("meta.billing"),
+      icon: CreditCard,
+      tone: "neutral" as const,
+    },
+  ];
+
+  return (
+    <DashboardPanel
+      title={t("title")}
+      description={t("description", { day: dayLabel })}
+      meta={
+        <div className="flex max-w-full flex-wrap items-center gap-1.5">
+          {snapshotMeta.map((item) => (
+            <span
+              key={item.label}
+              className="inline-flex max-w-full items-center gap-1.5 rounded-[var(--radius-sm)] bg-neutral-2 px-1.5 py-0.5 text-[11px] text-neutral-10"
+            >
+              <span className="font-medium text-neutral-11">{item.label}</span>
+              <span className="max-w-32 truncate tabular-nums">{item.value}</span>
+            </span>
+          ))}
+        </div>
+      }
+    >
+      <AnimateInGroup stagger="fast" className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+        {metrics.map(({ label, value, detail, source, icon: Icon, tone }) => (
+          <AnimateIn key={label} preset="fadeUp">
+            <DashboardMetricTile
+              label={label}
+              value={value}
+              detail={detail}
+              source={source}
+              icon={Icon}
+              tone={tone}
+            />
+          </AnimateIn>
+        ))}
+      </AnimateInGroup>
+    </DashboardPanel>
+  );
+}
 
 type AdminSearchParams = Promise<Record<string, string | string[] | undefined>>;
 
@@ -86,18 +172,6 @@ function RetoolBanner() {
   );
 }
 
-function ChartPlaceholder({ label }: { label: string }) {
-  return (
-    <div
-      role="img"
-      aria-label={`${label} chart placeholder`}
-      className="mt-4 flex h-24 items-center justify-center rounded-[var(--radius-md)] border border-dashed border-neutral-7 bg-neutral-2 text-neutral-10 text-xs"
-    >
-      chart: wire real data
-    </div>
-  );
-}
-
 export default async function AdminPage({ searchParams }: { searchParams: AdminSearchParams }) {
   const params = await searchParams;
   const directory = await listAdminDirectory({
@@ -110,21 +184,9 @@ export default async function AdminPage({ searchParams }: { searchParams: AdminS
     <>
       <RetoolBanner />
 
-      <AnimateInGroup stagger="fast" className="grid gap-4 md:grid-cols-3">
-        {STATS.map(({ label, hint, value, icon: Icon }) => (
-          <AnimateIn key={label} preset="fadeUp">
-            <Card className="p-4 sm:p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium text-neutral-11">{label}</h3>
-                <Icon className="size-4 text-[color:var(--brand-primary)]" />
-              </div>
-              <p className="mt-3 text-3xl font-semibold text-neutral-12">{value}</p>
-              <p className="mt-1 text-neutral-10 text-xs">{hint}</p>
-              <ChartPlaceholder label={label} />
-            </Card>
-          </AnimateIn>
-        ))}
-      </AnimateInGroup>
+      <Suspense fallback={<MetricsSkeleton />}>
+        <WorkspaceMetrics />
+      </Suspense>
 
       <AnimateIn preset="fadeUp">
         <Card className="mt-6 p-4 sm:p-6">

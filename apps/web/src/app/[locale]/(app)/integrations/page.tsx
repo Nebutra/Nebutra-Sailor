@@ -14,7 +14,10 @@ import {
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card, EmptyState, PageHeader } from "@nebutra/ui/layout";
+import { DashboardPanel } from "@nebutra/ui/patterns";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
+import { DocumentTaskUploader } from "@/components/documents/document-task-uploader";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -67,6 +70,46 @@ const CATALOG = [
     docUrl: "https://docs.nebutra.ai/integrations/webhooks",
   },
 ];
+
+// ── Document Pipeline ─────────────────────────────────────────────────────────
+
+// Rehomed from the converged dashboard Home (now a redirect to /startup-os).
+// The document task pipeline is a connector-adjacent surface: it feeds source
+// files into the origin task queue, so it lives alongside the integration
+// catalog. Labels reuse the existing dashboard.documentPipeline.* i18n keys.
+function DocumentPipelineSection() {
+  const t = useTranslations("dashboard.documentPipeline");
+
+  return (
+    <DashboardPanel title={t("title")} description={t("description")}>
+      <DocumentTaskUploader
+        labels={{
+          intakeTitle: t("intakeTitle"),
+          intakeDescription: t("intakeDescription"),
+          chooseDocument: t("chooseDocument"),
+          startParseTask: t("startParseTask"),
+          queued: t("queued"),
+          fileInputLabel: t("fileInputLabel"),
+          fallbackError: t("fallbackError"),
+          taskStatus: t("taskStatus"),
+          progressLabel: t("progressLabel"),
+          refreshStatus: t("refreshStatus"),
+          cancelTask: t("cancelTask"),
+          statusError: t("statusError"),
+          cancelError: t("cancelError"),
+          statusQueued: t("statusQueued"),
+          statusRunning: t("statusRunning"),
+          statusSucceeded: t("statusSucceeded"),
+          statusFailed: t("statusFailed"),
+          statusCancelled: t("statusCancelled"),
+          resultReady: t("resultReady"),
+          taskError: t("taskError"),
+          updatedAt: t("updatedAt"),
+        }}
+      />
+    </DashboardPanel>
+  );
+}
 
 // ── Component ────────────────────────────────────────────────────────────────
 
@@ -145,6 +188,13 @@ export default function IntegrationsPage() {
           title="Integrations"
           description="Connect your favorite tools and services to supercharge your workflow."
         />
+      </AnimateIn>
+
+      {/* Document pipeline — rehomed from the converged dashboard Home */}
+      <AnimateIn preset="fadeUp">
+        <div className="mt-8">
+          <DocumentPipelineSection />
+        </div>
       </AnimateIn>
 
       {/* Connected Integrations */}

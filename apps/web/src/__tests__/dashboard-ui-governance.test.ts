@@ -10,16 +10,16 @@ const GETTING_STARTED = join(APP_ROOT, "src/components/onboarding/getting-starte
 const EXTERNAL_TASTE_PREFIX = ["cu", "lt-"].join("");
 
 describe("@nebutra/web dashboard UI governance", () => {
-  it("consumes dashboard primitives from @nebutra/ui on the overview page", () => {
+  it("redirects the converged workspace route to the Startup OS entry surface", () => {
     const source = readFileSync(WORKSPACE_PAGE, "utf8");
 
-    expect(source).toContain("DashboardCommandSurface");
-    expect(source).toContain("DashboardMetricTile");
-    expect(source).toContain("DashboardPanel");
-    expect(source).toContain("RecentSessions");
-    expect(source).not.toContain("GettingStarted");
-    expect(source).toContain('from "@nebutra/ui/patterns"');
-    expect(source).toContain('data-dashboard-section="workspace-overview"');
+    // Home converged into Startup OS (merge): /workspace is a locale-aware
+    // server redirect to /startup-os, not a duplicate dashboard overview.
+    expect(source).toContain('from "next/navigation"');
+    expect(source).toContain("redirect(`/${locale}/startup-os`)");
+    expect(source).toContain("await params");
+    expect(source).not.toContain("DashboardCommandSurface");
+    expect(source).not.toContain('data-dashboard-section="workspace-overview"');
     expect(source).not.toContain(EXTERNAL_TASTE_PREFIX);
   });
 

@@ -1,6 +1,5 @@
 import { routing } from "@nebutra/i18n/routing";
 import {
-  Home as HomeIcon,
   Lightning,
   type Icon as LucideIcon,
   BlendMode as Palette,
@@ -35,7 +34,6 @@ const STARTUP_OS_NAV_ITEM: DashboardNavItem = {
 };
 
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
-  { href: "/workspace", label: "Home", icon: HomeIcon, group: "Product" },
   STARTUP_OS_NAV_ITEM,
   {
     href: "/theme-playground",

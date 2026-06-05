@@ -164,20 +164,20 @@ describe("UI/UX audit remediation invariants", () => {
     expect(planBadge).not.toContain("shell header");
   });
 
-  it("keeps the dashboard overview decision-led instead of welcome-page centered", () => {
+  it("converges the workspace route into the Startup OS entry surface", () => {
     const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
-    const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
-    expect(dashboard).toContain("CommandCenter");
-    expect(dashboard).toContain("max-w-[1760px]");
-    expect(dashboard).toContain("if (!summary?.day) return null");
-    expect(dashboard).toContain("if (!tenantId) return null");
-    expect(dashboard).toContain("snapshotMeta");
-    expect(dashboard).toContain("details.activeUsers");
-    expect(dashboard).toContain("meta.latestDay");
-    expect(skeletons).toContain("max-w-5xl");
-    expect(translations).toContain('"commandCenter"');
+    // Home converged into Startup OS (merge): /workspace is a locale-aware
+    // server redirect to /startup-os, not a duplicate dashboard overview. The
+    // decision-led overview primitives were rehomed onto the Startup OS surface,
+    // so the route file itself must no longer render welcome-page chrome.
+    expect(dashboard).toContain('from "next/navigation"');
+    expect(dashboard).toContain("redirect(`/${locale}/startup-os`)");
+    expect(dashboard).toContain("await params");
+    expect(dashboard).not.toContain("CommandCenter");
+    expect(dashboard).not.toContain("DashboardMetricTile");
+    expect(dashboard).not.toContain("snapshotMeta");
     expect(dashboard).not.toContain("Atmospheric brand glow");
     expect(dashboard).not.toContain("max-w-2xl flex-col items-center");
     expect(dashboard).not.toContain("DashboardHint");
@@ -185,9 +185,11 @@ describe("UI/UX audit remediation invariants", () => {
     expect(dashboard).not.toContain("CommandSurfaceButton");
     expect(dashboard).not.toContain("ModePills");
     expect(dashboard).not.toContain("demo_org");
+    // The converged dashboard copy still lives in the shared translations.
+    expect(translations).toContain('"commandCenter"');
   });
 
-  it("keeps onboarding scaffolding off the dashboard overview", () => {
+  it("keeps onboarding scaffolding off the converged workspace route", () => {
     const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
     const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
 
@@ -197,23 +199,18 @@ describe("UI/UX audit remediation invariants", () => {
     expect(skeletons).not.toContain("space-y-px overflow-hidden");
   });
 
-  it("uses compact dashboard metric metadata instead of oversized nested cards", () => {
+  it("keeps the converged workspace route minimal instead of rendering metric chrome", () => {
     const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
-    const translations = readFromRepo("packages/platform/i18n/locales/en.json");
 
-    expect(dashboard).toContain("snapshotMeta");
-    expect(dashboard).toContain("meta.snapshot");
-    expect(dashboard).toContain("meta.tenant");
+    // After the Startup OS merge the route is a thin redirect — it must not
+    // re-grow nested metric-card scaffolding.
     expect(dashboard).not.toContain("type MetricMeta");
     expect(dashboard).not.toContain("dailyMeta");
     expect(dashboard).not.toContain("<dl");
-    expect(dashboard).toContain("DashboardMetricTile");
-    expect(dashboard).toContain("xl:grid-cols-4");
+    expect(dashboard).not.toContain("DashboardMetricTile");
+    expect(dashboard).not.toContain("xl:grid-cols-4");
     expect(dashboard).not.toContain("text-3xl font-semibold tabular-nums");
     expect(dashboard).not.toContain("2xl:grid-cols-4");
-    expect(translations).toContain('"snapshot": "Snapshot"');
-    expect(translations).toContain('"cadence": "Cadence"');
-    expect(translations).toContain('"tenant": "Tenant"');
   });
 
   it("keeps the authenticated dashboard shell high-density instead of touch-first oversized", () => {
@@ -247,8 +244,11 @@ describe("UI/UX audit remediation invariants", () => {
 
     // Real Product IA routes (the Operations group — Billing/Tenants/Audit —
     // was intentionally removed from the sidebar; those pages remain reachable
-    // by route but are no longer top-level nav items).
-    expect(navModel).toContain('href: "/workspace"');
+    // by route but are no longer top-level nav items). The Home item was merged
+    // into Startup OS, which is now the top Product entry; /workspace redirects
+    // to /startup-os and is no longer a nav item.
+    expect(navModel).toContain('href: "/startup-os"');
+    expect(navModel).not.toContain('href: "/workspace"');
     expect(navModel).toContain('href: "/integrations"');
     expect(navModel).toContain('href: "/admin"');
     expect(navModel).toContain('import { routing } from "@nebutra/i18n/routing"');
