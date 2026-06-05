@@ -7,6 +7,7 @@ import {
   FolderClosed,
   Layers,
   Lightning,
+  Paperclip,
   ShieldCheck,
   Sparkles,
 } from "@nebutra/icons";
@@ -859,6 +860,21 @@ function StartupBuilderHome({
   thesis: string;
   onThesisChange: (value: string) => void;
 }) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Real local-file attach: fold a text file's content into the proposition so it
+  // actually feeds the compiler. No cloud-source mocks — Drive/Figma/etc. need
+  // real integrations, not dead menu items.
+  const handleAttachFiles = async (fileList: FileList | null) => {
+    if (!fileList || fileList.length === 0) return;
+    const parts: string[] = [];
+    for (const file of Array.from(fileList)) {
+      const text = (await file.text()).trim();
+      if (text) parts.push(`\n\n--- Attached: ${file.name} ---\n${text}`);
+    }
+    if (parts.length > 0) onThesisChange(`${thesis}${parts.join("")}`.trimStart());
+  };
+
   return (
     <AnimateIn preset="emerge">
       <section className="relative min-h-screen overflow-hidden bg-neutral-1 text-neutral-12">
@@ -899,26 +915,50 @@ function StartupBuilderHome({
                 placeholder="Describe the startup proposition to compile into a tenant-scoped company workspace..."
                 className="min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 shadow-none outline-none placeholder:text-neutral-9 disabled:cursor-not-allowed disabled:opacity-60 sm:p-6"
               />
-              <div className="flex flex-col gap-3 border-t border-neutral-6 bg-neutral-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-                <Select
-                  value={arena}
-                  onValueChange={(value) => onArenaChange(value as StartupArena)}
-                  disabled={disabled || isLoading}
-                >
-                  <SelectTrigger
-                    aria-label="Startup arena"
-                    className="h-auto w-fit rounded-full border border-neutral-7 bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 shadow-none transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60"
+              <div className="flex flex-col gap-3 bg-neutral-2 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-2">
+                  <input
+                    data-allow-native
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept=".txt,.md,.markdown,.json,.csv,.yaml,.yml,text/*"
+                    className="sr-only"
+                    onChange={(event) => {
+                      void handleAttachFiles(event.target.files);
+                      event.target.value = "";
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={disabled || isLoading}
+                    aria-label="Attach a file"
+                    title="Attach a text file to fold into the proposition"
+                    className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-neutral-7 bg-neutral-1 text-neutral-11 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {STARTUP_ARENAS.map((option) => (
-                      <SelectItem key={option} value={option}>
-                        {option}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                    <Paperclip className="size-4" aria-hidden="true" />
+                  </button>
+                  <Select
+                    value={arena}
+                    onValueChange={(value) => onArenaChange(value as StartupArena)}
+                    disabled={disabled || isLoading}
+                  >
+                    <SelectTrigger
+                      aria-label="Startup arena"
+                      className="h-auto w-fit rounded-full border border-neutral-7 bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 shadow-none transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STARTUP_ARENAS.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
                 <button
                   type="button"
                   disabled={!canCompile}
