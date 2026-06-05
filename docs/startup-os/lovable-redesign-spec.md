@@ -70,6 +70,20 @@ session that owns sidebar collapse):
   fake/coming-soon UI must go (honest empty states only). Run the discovery workflow's
   mockUi list to completion.
 
+## Round 3 — sidebar overlay + home empty container (feedback 2026-06-05)
+
+Workflow `wmhjgzg9y` landed: chat→thread merge + unified top bar (`d743850c`), embeddable
+chat panel (`d29f57f2`), hide dashboard sidebar on workspace route (`54b4c1f7`), redundant
+banner removal (`166aed94`/`5b9a06a7`). Remaining from user feedback, for the land pass:
+- **Sidebar EXPAND must OVERLAY, not compress.** When the nav expands it floats OVER the
+  workspace (position:absolute/fixed; optionally hover-to-peek), never in the flex flow
+  pushing/squeezing the thread+preview columns (current expand squeezes — wrong).
+- **Project-view sidebar = a DISTINCT, leaner form** than the home/dashboard sidebar
+  (builder-focused, fewer items) — mirror Lovable's separate in-project overlay nav.
+- **Home: remove the big empty container below the feature cards.** `StartupBuilderHome`'s
+  centered column (`justify-center` in the `h-[100dvh]` shell) leaves a large dead band /
+  trailing recent-projects container at the bottom — collapse the column to content height.
+
 ## Notes
 - Implement single-threaded, commit per file/chunk (`git commit -- <file>`) to avoid clobbering the concurrent session on command-center.
 - biome shim (`node_modules/.bin/biome`) is periodically rewritten broken by the other session's worktree pnpm install — re-patch its exec path to absolute (or use `node_modules/@biomejs/cli-darwin-arm64/biome`) if commits fail at biome-check. See [[project-worktree-pnpm-corrupts-main-node-modules]].
