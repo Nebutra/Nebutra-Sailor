@@ -27,14 +27,17 @@
 // runtime-fetched + cached). Replaces hand-maintained model/provider lists.
 export {
   type AIProviderId,
+  FRONTIER_FALLBACK,
   getModelInfo,
   listModels,
   type ModelInfo,
+  type ModelTier,
   mapProvider,
   PROVIDER_MAP,
   providerBaseUrl,
   providerForModel,
   providerFromIdHeuristic,
+  resolveFrontierModel,
 } from "./catalog";
 export {
   getProvider,

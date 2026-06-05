@@ -159,6 +159,135 @@ export function providerFromIdHeuristic(modelId: string): AIProviderId | null {
   return null;
 }
 
+// ─── Frontier resolver (hybrid: live intersection + hardcoded fallback) ─────────
+//
+// Resolves a SEMANTIC tier (e.g. "the latest reasoning model") to a concrete
+// model id, picking the newest from the INTERSECTION of:
+//   - gateway-routable ids (OpenRouter /api/v1/models — the gateway namespace), and
+//   - models.dev catalog metadata (so the pick has pricing/context/capabilities).
+// On any failure (offline / empty) it returns the hardcoded fallback, so callers
+// always get a usable id. This is the "don't hand-maintain model strings" engine.
+
+export type ModelTier =
+  | "reasoning"
+  | "flagship"
+  | "fast"
+  | "openai-flagship"
+  | "google-flagship"
+  | "google-fast";
+
+interface TierRule {
+  /** Match on the OpenRouter (gateway) id. */
+  include: RegExp;
+  /** Drop non-frontier variants (fast/mini/codex/image/…). */
+  exclude: RegExp;
+  /** Current frontier (audited 2026-06-05) — used when the live lists are unavailable. */
+  fallback: string;
+}
+
+const TIER_RULES: Record<ModelTier, TierRule> = {
+  reasoning: {
+    include: /^anthropic\/claude-opus-/,
+    exclude: /-(fast|mini|nano|image|codex)/,
+    fallback: "anthropic/claude-opus-4.8",
+  },
+  flagship: {
+    include: /^anthropic\/claude-sonnet-/,
+    exclude: /-(fast|mini|nano|image|codex)/,
+    fallback: "anthropic/claude-sonnet-4.6",
+  },
+  fast: {
+    include: /^anthropic\/claude-haiku-/,
+    exclude: /-(image|codex)/,
+    fallback: "anthropic/claude-haiku-4.5",
+  },
+  "openai-flagship": {
+    include: /^openai\/gpt-5/,
+    exclude: /-(pro|mini|nano|codex|image|chat)/,
+    fallback: "openai/gpt-5.5",
+  },
+  "google-flagship": {
+    include: /^google\/gemini-.*pro/,
+    exclude: /-(image|tts|customtools)/,
+    fallback: "google/gemini-3.1-pro-preview",
+  },
+  "google-fast": {
+    include: /^google\/gemini-.*flash/,
+    exclude: /-(image|tts|lite)/,
+    fallback: "google/gemini-3.5-flash",
+  },
+};
+
+/** The hardcoded frontier fallbacks, exported so consumers can mirror them. */
+export const FRONTIER_FALLBACK: Record<ModelTier, string> = Object.fromEntries(
+  Object.entries(TIER_RULES).map(([tier, rule]) => [tier, rule.fallback]),
+) as Record<ModelTier, string>;
+
+const OPENROUTER_MODELS_URL =
+  process.env.OPENROUTER_MODELS_URL ?? "https://openrouter.ai/api/v1/models";
+
+let routableCache: { ids: Set<string>; fetchedAt: number } | null = null;
+let routableInflight: Promise<Set<string>> | null = null;
+
+/** Gateway-routable model ids (OpenRouter), cached with the same TTL as the catalog. */
+async function fetchRoutableIds(): Promise<Set<string>> {
+  const now = Date.now();
+  if (routableCache && now - routableCache.fetchedAt < TTL_MS) return routableCache.ids;
+  if (routableInflight) return routableInflight;
+
+  routableInflight = (async () => {
+    try {
+      const res = await fetch(OPENROUTER_MODELS_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = (await res.json()) as { data?: Array<{ id?: string }> };
+      const ids = new Set(
+        (json.data ?? []).map((m) => m.id).filter((x): x is string => typeof x === "string"),
+      );
+      routableCache = { ids, fetchedAt: Date.now() };
+      return ids;
+    } catch {
+      return routableCache?.ids ?? new Set<string>();
+    } finally {
+      routableInflight = null;
+    }
+  })();
+
+  return routableInflight;
+}
+
+/** Collapse separators so `claude-opus-4.8` (OpenRouter) matches `claude-opus-4-8` (models.dev). */
+const collapseId = (s: string): string => s.toLowerCase().replace(/[._-]/g, "");
+const bareId = (id: string): string => id.slice(id.indexOf("/") + 1);
+const versionOf = (id: string): number => {
+  const m = bareId(id).match(/(\d+(?:\.\d+)?)/);
+  return m ? Number.parseFloat(m[1]) : -1;
+};
+
+/**
+ * Resolve a semantic tier to the newest concrete model id that is BOTH
+ * gateway-routable and present in the models.dev catalog. Falls back to the
+ * audited hardcoded frontier when the live lists are unavailable.
+ */
+export async function resolveFrontierModel(tier: ModelTier): Promise<string> {
+  const rule = TIER_RULES[tier];
+  try {
+    const [routable, metaIndex] = await Promise.all([fetchRoutableIds(), loadIndex()]);
+    if (routable.size === 0) return rule.fallback;
+
+    const metaNorm = new Set([...metaIndex.keys()].map(collapseId));
+    const candidates = [...routable].filter(
+      (id) =>
+        rule.include.test(id) && !rule.exclude.test(id) && metaNorm.has(collapseId(bareId(id))),
+    );
+    if (candidates.length === 0) return rule.fallback;
+
+    candidates.sort((a, b) => versionOf(b) - versionOf(a));
+    return candidates[0];
+  } catch {
+    return rule.fallback;
+  }
+}
+
 /**
  * Default OpenAI-compatible base URL per provider bucket (env-overridable).
  * Single home for these — BYOK and any other caller import from here.
