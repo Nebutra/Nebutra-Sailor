@@ -65,6 +65,7 @@ export default function CompanyContextPage() {
   const [draft, setDraft] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -140,6 +141,41 @@ export default function CompanyContextPage() {
     }
   }, [editing, projectId, context, draft, closeEditor]);
 
+  const generate = useCallback(
+    async (layerId: LayerId, fieldKey: string) => {
+      if (projectId === null) return;
+      setNotice(null);
+      try {
+        const res = await fetch(
+          `/api/startup-os/projects/${encodeURIComponent(projectId)}/context`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ layerId, fieldKey }),
+          },
+        );
+        const body = (await res.json()) as {
+          context?: CompanyContext;
+          needsProvider?: boolean;
+          error?: string;
+        };
+        if (body.needsProvider) {
+          setNotice("Connect an AI provider key to auto-fill fields.");
+          return;
+        }
+        if (!res.ok || !body.context) {
+          setNotice(body.error ?? "Generate failed.");
+          return;
+        }
+        setContext(body.context);
+      } catch {
+        setNotice("Generate failed.");
+      }
+    },
+    [projectId],
+  );
+
   const editingLabel =
     editing && context
       ? (context.layers[editing.layerId]?.fields[editing.fieldKey]?.label ?? editing.fieldKey)
@@ -150,7 +186,14 @@ export default function CompanyContextPage() {
       {state === "loading" ? (
         <div className="h-96 w-full animate-pulse rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2" />
       ) : state === "ready" && context ? (
-        <CompanyTower context={context} onEditField={openEditor} />
+        <>
+          {notice ? (
+            <div className="mb-3 rounded-[var(--radius-md)] border border-blue-6 bg-blue-2 px-3 py-2 text-xs text-blue-11">
+              {notice}
+            </div>
+          ) : null}
+          <CompanyTower context={context} onEditField={openEditor} onGenerateField={generate} />
+        </>
       ) : (
         <EmptyState
           title="No company yet"
