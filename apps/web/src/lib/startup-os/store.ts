@@ -13,7 +13,11 @@ export type StartupOSEventType =
   | "file_updated"
   | "run_started"
   | "run_completed"
-  | "run_failed";
+  | "run_failed"
+  | "conversation_started"
+  | "conversation_message"
+  | "conversation_completed"
+  | "conversation_failed";
 
 export interface StartupOSEvent {
   readonly id: string;
@@ -121,6 +125,10 @@ function isStartupOSEvent(value: unknown): value is StartupOSEvent {
       "run_started",
       "run_completed",
       "run_failed",
+      "conversation_started",
+      "conversation_message",
+      "conversation_completed",
+      "conversation_failed",
     ].includes(value.type) &&
     typeof value.projectId === "string" &&
     typeof value.occurredAt === "string" &&

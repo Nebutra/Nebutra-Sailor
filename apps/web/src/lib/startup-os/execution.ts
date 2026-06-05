@@ -80,7 +80,7 @@ const GeneratedFilePatchSchema = z.object({
   content: z.string(),
 });
 
-const GeneratedRunResultSchema = z.object({
+export const GeneratedRunResultSchema = z.object({
   summary: z.string().min(1),
   artifactUpdates: z.array(GeneratedArtifactUpdateSchema).default([]),
   filePatches: z.array(GeneratedFilePatchSchema).default([]),
@@ -90,7 +90,7 @@ export function hasStartupOSAIProviderKey(env: EnvLike = process.env) {
   return Boolean(env.OPENROUTER_API_KEY || env.ANTHROPIC_API_KEY || env.OPENAI_API_KEY);
 }
 
-function currentIso() {
+export function currentIso() {
   return new Date().toISOString();
 }
 
@@ -102,7 +102,7 @@ function findRun(project: StartupOSProject, runId: string) {
   return run;
 }
 
-function parseGeneratedRunResult(text: string): {
+export function parseGeneratedRunResult(text: string): {
   readonly summary: string;
   readonly artifactUpdates: readonly {
     readonly kind: StartupArtifactKind;
@@ -140,7 +140,7 @@ function describeWorkspaceFiles(files: readonly StartupOSFile[] | undefined) {
   }));
 }
 
-function applyGeneratedFilePatches(
+export function applyGeneratedFilePatches(
   files: readonly StartupOSFile[] | undefined,
   patches: readonly { readonly path: string; readonly content: string }[],
   updatedAt: string,

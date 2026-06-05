@@ -352,6 +352,84 @@ describe("Startup OS AtelierCanvas persistence contract", () => {
     });
   });
 
+  it("round-trips conversation events through saveStartupProjectRecord", async () => {
+    const db = createMemoryDb();
+    const project = compileStartupProject({
+      thesis: "A founder OS that builds the launch surface through a conversation.",
+      arena: "AI SaaS",
+      now: "2026-05-29T00:00:00.000Z",
+    });
+
+    await saveStartupProject(db, "org_123", project, {
+      events: [
+        {
+          type: "conversation_started",
+          occurredAt: "2026-05-29T00:01:00.000Z",
+          actorId: "user_123",
+          summary: "Started conversational build turn.",
+        },
+        {
+          type: "conversation_message",
+          occurredAt: "2026-05-29T00:01:01.000Z",
+          actorId: "user_123",
+          summary: "Drafted a launch plan from the founder request.",
+        },
+        {
+          type: "conversation_completed",
+          occurredAt: "2026-05-29T00:01:02.000Z",
+          actorId: "user_123",
+          summary: "Applied generated launch surface to the workspace.",
+        },
+      ],
+    });
+
+    const record = await getStartupProjectRecord(db, "org_123", project.id);
+
+    expect(record?.events.map((event) => event.type)).toEqual([
+      "conversation_started",
+      "conversation_message",
+      "conversation_completed",
+    ]);
+    expect(record?.events).toMatchObject([
+      { projectId: project.id, actorId: "user_123" },
+      { projectId: project.id, actorId: "user_123" },
+      { projectId: project.id, actorId: "user_123" },
+    ]);
+  });
+
+  it("round-trips a conversation_failed event through saveStartupProjectRecord", async () => {
+    const db = createMemoryDb();
+    const project = compileStartupProject({
+      thesis: "A founder OS that fails closed when a conversation turn cannot apply.",
+      arena: "AI SaaS",
+      now: "2026-05-29T00:00:00.000Z",
+    });
+
+    await saveStartupProject(db, "org_123", project, {
+      events: [
+        {
+          type: "conversation_started",
+          occurredAt: "2026-05-29T00:01:00.000Z",
+          actorId: "user_123",
+          summary: "Started conversational build turn.",
+        },
+        {
+          type: "conversation_failed",
+          occurredAt: "2026-05-29T00:01:01.000Z",
+          actorId: "user_123",
+          summary: "Model response must be strict JSON.",
+        },
+      ],
+    });
+
+    const record = await getStartupProjectRecord(db, "org_123", project.id);
+
+    expect(record?.events.map((event) => event.type)).toEqual([
+      "conversation_started",
+      "conversation_failed",
+    ]);
+  });
+
   it("rejects non Startup OS canvas scenes instead of treating them as projects", () => {
     expect(parseStartupProjectScene({ elements: [], files: [] })).toBeNull();
     expect(parseStartupProjectScene(null)).toBeNull();
