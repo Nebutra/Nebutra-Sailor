@@ -1,4 +1,5 @@
 import { auditLogger } from "@nebutra/audit";
+import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -10,6 +11,7 @@ import {
   STARTUP_ARENAS,
   type StartupArena,
 } from "@/lib/startup-os/compiler";
+import { ensureDevTenant } from "@/lib/startup-os/dev-tenant";
 import { isStartupOSPrototypeEnabled } from "@/lib/startup-os/feature-flag";
 import { buildStartupProjectFiles } from "@/lib/startup-os/files";
 import {
@@ -94,6 +96,27 @@ export async function POST(request: Request) {
       { error: "Invalid input.", details: parsed.error.flatten() },
       { status: 400 },
     );
+  }
+
+  // Dev-only: the synthetic `AUTH_PROVIDER=dev` session uses fixture tenant
+  // "dev-org-001", which is never seeded by the real user-sync path. Without a
+  // matching Tenant row the AtelierCanvas upsert below fails its
+  // `atelier_canvas_tenant_id_fkey` FK. Seed it idempotently before saving.
+  // No-op for every real provider.
+  if (getConfiguredAuthProvider() === "dev") {
+    try {
+      await ensureDevTenant();
+    } catch (error) {
+      logger.error("[startup-os.projects.POST] Failed to seed dev tenant fixture", {
+        organizationId: context.orgId,
+        userId: context.auth.userId,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+      return NextResponse.json(
+        { error: "Failed to initialize the dev workspace. Run the database migrations and retry." },
+        { status: 500 },
+      );
+    }
   }
 
   try {
