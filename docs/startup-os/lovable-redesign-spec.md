@@ -34,6 +34,42 @@ CONTENT not line numbers (the file shifts under concurrent edits + rebases).
 - **STEP 12 — files.ts iframe tokens:** add `IFRAME-TOKEN-SNAPSHOT` comment above the `:root` block; fix `--brand-gradient` to `linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%)`.
 - **STEP 13 — verify:** `pnpm --filter @nebutra/web typecheck` + `pnpm lint` (lint-no-raw-inputs + phosphor-marketing-only). Fix Tabs onValueChange wrap.
 
+## Round 2 — Lovable chrome (from user screenshots, 2026-06-05)
+
+DONE: Preview is its own full-width top tab (Preview|Code|Canvas|Chat), Code = file
+tree + editor only (no preview split) — commit `6322c412`. Thread header compacted to
+one row (name + StatusPill), promise paragraph + dividers removed — commit `0352cabc`.
+
+PENDING — a cohesive single-top-bar chrome redesign (do in a fresh context; touches the
+SHARED `design-system-shell.tsx` + cross-component state — coordinate with the other
+session that owns sidebar collapse):
+- **Hide the dashboard sidebar in startup-os + merge its collapse toggle into the
+  thread-header logo.** The shell exposes `const { collapsed, toggle } = useSidebar()`
+  (`design-system-shell.tsx:144`); for `isStartupOSRoute`, default the dashboard sidebar
+  hidden/collapsed and let the Nebutra logo at the top of the thread panel call `toggle`
+  (Lovable hamburger pattern). Verify `useSidebar` is exported + its provider wraps the
+  startup-os route before wiring it into command-center.
+- **Unified single top bar (Lovable model):** one horizontal bar — LEFT: logo/toggle +
+  project-name with a `⌄` **DropdownMenu** (real actions only — back to projects, rename
+  if an API exists, details; NO mock credits/settings/upgrade) + StatusPill; the view Tabs
+  (Preview|Code|Canvas|Chat). CENTER: a route/preview selector (`/`, `/api/...`) like
+  Lovable's. RIGHT: real actions (e.g. Build/Share-equivalent). Collapse the now-redundant
+  second sub-header ("Code and preview / N files / Select a file…") into this single bar —
+  that two-row stack is the remaining "冗余" the user flagged.
+- **"Code and preview" sub-header label** is stale now that Preview is a separate tab —
+  drop it or make it view-aware ("Code" vs "Live preview").
+- **Merge Chat INTO the Thread panel; remove the Chat tab.** The left thread aside and the
+  right Chat surface are redundant (both conversational). Remove `"chat"` from
+  `activeSurface` + its TabsTrigger + surface div (tabs become Preview|Code|Canvas). Move
+  `StartupChatPanel`'s strengths into the left thread aside footer: the prompt input
+  ("再加一个定价页、把 hero 改成品牌渐变、生成 README…"), suggestion chips, streaming PLAN
+  narration, attach/connectors row, and `onCancel` — replacing the current "N recorded
+  actions / Build" footer box. The thread list (Proposition/CompanyContext/runs) stays as
+  the message history above the input. One unified conversational column, Lovable-style.
+- **Full de-mock sweep (reiterated):** audit every startup-os surface again; any placeholder/
+  fake/coming-soon UI must go (honest empty states only). Run the discovery workflow's
+  mockUi list to completion.
+
 ## Notes
 - Implement single-threaded, commit per file/chunk (`git commit -- <file>`) to avoid clobbering the concurrent session on command-center.
 - biome shim (`node_modules/.bin/biome`) is periodically rewritten broken by the other session's worktree pnpm install — re-patch its exec path to absolute (or use `node_modules/@biomejs/cli-darwin-arm64/biome`) if commits fail at biome-check. See [[project-worktree-pnpm-corrupts-main-node-modules]].
