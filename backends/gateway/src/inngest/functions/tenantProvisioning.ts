@@ -90,8 +90,82 @@ export const provisionTenant: InngestFunction.Any = inngest.createFunction(
       await prisma.tenant.upsert({
         where: { id: org.id },
         update: {},
-        create: { id: org.id, kind: "ORGANIZATION", organizationId: org.id },
+        create: {
+          id: org.id,
+          kind: "ORGANIZATION",
+          organizationId: org.id,
+          lifecycleState: "organization_owned",
+        },
       });
+    });
+
+    // ── Step 1.6: Apply pending cofounder form-team asset transfers ────────
+    // form-team records `pending` TenantTransferJournal rows keyed by this org id
+    // BEFORE the org tenant existed (org provisioning is async). Now that the
+    // tenant exists, re-point the carried assets. Idempotent (status-gated);
+    // a failed entry is marked `failed` without aborting provisioning.
+    await step.run("apply-transfer-journal", async () => {
+      const pending = await prisma.tenantTransferJournal.findMany({
+        where: { toOrganizationId: org.id, status: "pending" },
+      });
+      let applied = 0;
+      for (const entry of pending) {
+        try {
+          if (entry.kind === "startup_project" && entry.subjectId) {
+            // Whole-project transfer: re-point the AtelierCanvas (carries the
+            // CompanyContext + scene) from the individual tenant to the org.
+            await prisma.atelierCanvas.updateMany({
+              where: { id: entry.subjectId, tenantId: entry.fromTenantId },
+              data: { tenantId: org.id },
+            });
+            await prisma.tenantTransferJournal.update({
+              where: { id: entry.id },
+              data: { status: "applied", appliedAt: new Date(), toTenantId: org.id },
+            });
+            applied += 1;
+          } else if (entry.kind === "license") {
+            // License carry-over depends on the license-on-signup grant (P5),
+            // not yet wired. Record the destination tenant and leave `pending`
+            // so an idempotent re-run applies it once that grant exists.
+            await prisma.tenantTransferJournal.update({
+              where: { id: entry.id },
+              data: { toTenantId: org.id },
+            });
+            logger.info("Transfer journal: license carry-over deferred (P5)", {
+              entryId: entry.id,
+              organizationId: org.id,
+            });
+          } else {
+            await prisma.tenantTransferJournal.update({
+              where: { id: entry.id },
+              data: { status: "applied", appliedAt: new Date(), toTenantId: org.id },
+            });
+            applied += 1;
+          }
+        } catch (err) {
+          await prisma.tenantTransferJournal.update({
+            where: { id: entry.id },
+            data: {
+              status: "failed",
+              toTenantId: org.id,
+              error: err instanceof Error ? err.message : "Unknown error",
+            },
+          });
+          logger.error("Transfer journal entry failed", {
+            entryId: entry.id,
+            organizationId: org.id,
+            error: err instanceof Error ? err.message : "Unknown error",
+          });
+        }
+      }
+      if (pending.length > 0) {
+        logger.info("Applied cofounder form-team transfers", {
+          organizationId: org.id,
+          applied,
+          total: pending.length,
+        });
+      }
+      return { applied, total: pending.length };
     });
 
     // ── Step 2: Create default API key ────────────────────────────────────
