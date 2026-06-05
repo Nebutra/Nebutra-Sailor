@@ -241,9 +241,12 @@ describe("UI/UX audit remediation invariants", () => {
     const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
     const navModel = readFromRepo("apps/web/src/app/[locale]/providers/dashboard-nav.ts");
 
-    expect(navModel).toContain('href: "/billing"');
-    expect(navModel).toContain('href: "/tenants"');
-    expect(navModel).toContain('href: "/audit"');
+    // Real Product IA routes (the Operations group — Billing/Tenants/Audit —
+    // was intentionally removed from the sidebar; those pages remain reachable
+    // by route but are no longer top-level nav items).
+    expect(navModel).toContain('href: "/workspace"');
+    expect(navModel).toContain('href: "/integrations"');
+    expect(navModel).toContain('href: "/admin"');
     expect(navModel).toContain('import { routing } from "@nebutra/i18n/routing"');
     expect(navModel).toContain("export function stripLocalePrefix");
     expect(navModel).toContain("const normalizedPathname = stripLocalePrefix(pathname)");
@@ -266,7 +269,7 @@ describe("UI/UX audit remediation invariants", () => {
     expect(shell).toMatch(/from "@nebutra\/ui\/patterns"/);
     expect(shell).toContain("./dashboard-nav");
     expect(navModel).toContain("Product");
-    expect(navModel).toContain("Operations");
+    expect(navModel).toContain("Admin");
   });
 
   it("enables View Transition navigation in dashboard shell links", () => {
