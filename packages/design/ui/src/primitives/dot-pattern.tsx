@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import React, { useEffect, useId, useRef, useState } from "react";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils";
 
 // =============================================================================

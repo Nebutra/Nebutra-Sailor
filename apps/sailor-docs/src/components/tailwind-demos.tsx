@@ -61,7 +61,7 @@ function Swatch({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className={`group relative flex h-24 w-full flex-col items-start justify-between p-3 text-left transition-transform hover:z-10 focus:z-10 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:scale-105 rounded-md mx-0.5 ${className} ${contrastClass}`}
+          className={`group relative flex h-24 w-full flex-col items-start justify-between p-3 text-left transition-transform hover:z-10 focus:z-10 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:scale-105 motion-reduce:hover:scale-100 rounded-md mx-0.5 ${className} ${contrastClass}`}
           style={{ backgroundColor: hex }}
         >
           <div className="font-mono text-[10px] font-medium opacity-60 transition-opacity group-hover:opacity-100 uppercase">
@@ -159,7 +159,7 @@ export function TailwindSpacingDemo() {
             <code className="text-xs font-mono text-muted-foreground">{String(value)}</code>
             <div className="flex items-center">
               <div
-                className="bg-primary/20 border border-primary/40 rounded-sm h-8 shrink-0 transition-all hover:bg-primary/30"
+                className="bg-primary/20 border border-primary/40 rounded-sm h-8 shrink-0 transition-colors hover:bg-primary/30"
                 style={{ width: value as string }}
               />
             </div>
@@ -204,7 +204,7 @@ export function TailwindShadowsDemo() {
       {shadows.map(([key, value]) => (
         <div
           key={key}
-          className="bg-card w-full h-32 rounded-lg flex flex-col items-center justify-center transition-all duration-300 hover:-translate-y-1"
+          className="bg-card w-full h-32 rounded-lg flex flex-col items-center justify-center transition-transform duration-300 hover:-translate-y-1 motion-reduce:hover:translate-y-0"
           style={{ boxShadow: value as string }}
         >
           <code className="text-sm font-mono text-primary font-semibold">shadow-{key}</code>
@@ -276,16 +276,18 @@ export function TailwindAnimationsDemo() {
           </div>
 
           <div
-            className="w-10 h-10 rounded-md bg-gradient-to-br from-primary to-accent/50 flex items-center justify-center mb-4"
-            style={{
-              animation:
-                playing === key ||
-                key.includes("spin") ||
-                key.includes("pulse") ||
-                key.includes("bounce")
-                  ? (value as string)
-                  : "none",
-            }}
+            className="w-10 h-10 rounded-md bg-gradient-to-br from-primary to-accent/50 flex items-center justify-center mb-4 [animation:var(--animation-preview)] motion-reduce:animate-none"
+            style={
+              {
+                "--animation-preview":
+                  playing === key ||
+                  key.includes("spin") ||
+                  key.includes("pulse") ||
+                  key.includes("bounce")
+                    ? (value as string)
+                    : "none",
+              } as React.CSSProperties
+            }
           >
             <div className="w-4 h-4 bg-white/50 rounded-full" />
           </div>

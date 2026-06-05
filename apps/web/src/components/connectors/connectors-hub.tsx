@@ -187,7 +187,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
                   onClick={() => setPendingRemove(connector)}
                   disabled={isBusy}
                   aria-label={`Remove ${connector.name}`}
-                  className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-all group-hover:opacity-100 hover:bg-red-2 hover:text-red-11 focus-visible:opacity-100 disabled:cursor-not-allowed dark:hover:bg-red-2/30"
+                  className="absolute right-3 top-3 rounded-[var(--radius-md)] p-1 text-neutral-9 opacity-0 transition-[background-color,color,opacity] duration-150 group-hover:opacity-100 hover:bg-red-2 hover:text-red-11 focus-visible:opacity-100 disabled:cursor-not-allowed dark:hover:bg-red-2/30"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>

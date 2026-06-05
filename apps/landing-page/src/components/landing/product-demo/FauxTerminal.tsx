@@ -1,6 +1,6 @@
 export function FauxTerminal({ children }: { children: React.ReactNode }) {
   return (
-    <div className="h-full w-full rounded-[2rem] overflow-hidden border border-border/60 bg-background/80 dark:bg-zinc-950/80 shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)] ring-1 ring-black/5 flex flex-col transition-all duration-700">
+    <div className="h-full w-full rounded-[2rem] overflow-hidden border border-border/60 bg-background/80 dark:bg-zinc-950/80 shadow-[0_20px_60px_rgba(0,0,0,0.06)] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)] ring-1 ring-black/5 flex flex-col transition-[background-color,border-color,box-shadow] duration-700">
       {/* macOS Control Header */}
       <div className="flex flex-none items-center px-5 h-14 border-b border-border/60 bg-muted/40/[0.02]">
         <div className="flex gap-2">

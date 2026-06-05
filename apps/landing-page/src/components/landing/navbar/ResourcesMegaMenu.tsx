@@ -16,7 +16,7 @@ export function ResourcesMegaMenu() {
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
 
   const itemClass =
-    "group/child flex items-start gap-3 rounded-[var(--radius-xl)] px-2.5 py-2.5 transition-all duration-200 hover:bg-muted/80";
+    "group/child flex items-start gap-3 rounded-[var(--radius-xl)] px-2.5 py-2.5 transition-colors duration-200 hover:bg-muted/80";
 
   return (
     <div className="group/nav relative inline-block py-4">
@@ -29,7 +29,7 @@ export function ResourcesMegaMenu() {
         <ChevronDown className="h-3 w-3 opacity-60 transition-transform duration-300 group-hover/nav:-rotate-180 group-focus-within/nav:-rotate-180" />
       </button>
 
-      <div className="fixed left-1/2 top-16 w-[min(46rem,calc(100vw-2rem))] -translate-x-1/2 origin-top invisible opacity-0 transition-all duration-300 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100">
+      <div className="fixed left-1/2 top-16 w-[min(46rem,calc(100vw-2rem))] -translate-x-1/2 origin-top invisible opacity-0 transition-[opacity,visibility] duration-300 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100">
         <div className="rounded-[var(--radius-2xl)] border border-border/60 bg-white/95 p-5 shadow-[0_20px_40px_-5px_rgba(0,0,0,0.1)] backdrop-blur-xl dark:bg-background/95 dark:shadow-[0_20px_40px_-5px_rgba(0,0,0,0.5)]">
           <div className="grid grid-cols-2 gap-x-8">
             {RESOURCE_GROUPS.map((group, index) => (

@@ -2,10 +2,10 @@
 
 import { brandSpring } from "@nebutra/brand";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { useFormatter, useLocale } from "next-intl";
 import * as React from "react";
+import { motion } from "@/shared/motion";
 import { EndorsementDialog } from "./endorsement-dialog";
 
 export interface Endorsement {

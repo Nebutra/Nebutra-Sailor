@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import React, { useCallback, useMemo, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 type LineKind = "normal" | "added" | "removed" | "comment" | "gap";
@@ -134,12 +134,25 @@ const lineVariants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.2, ease: "easeOut" } },
 };
 
+const reducedContainerVariants = {
+  hidden: {},
+  show: {
+    transition: { duration: 0 },
+  },
+};
+
+const reducedLineVariants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0 } },
+};
+
 export interface CodeDiffProps {
   diff: DiffBlock;
   className?: string;
 }
 
 export function CodeDiff({ diff, className }: CodeDiffProps) {
+  const shouldReduceMotion = useReducedMotion();
   const lineStyles: Record<LineKind, string> = useMemo(
     () => ({
       normal: "",
@@ -176,7 +189,7 @@ export function CodeDiff({ diff, className }: CodeDiffProps) {
         className="grid grid-cols-[auto_1fr] gap-x-0.5 px-1 py-1 font-mono text-[12px] leading-relaxed text-[var(--neutral-12)]"
         role="group"
         aria-label="Code diff"
-        variants={containerVariants}
+        variants={shouldReduceMotion ? reducedContainerVariants : containerVariants}
         initial="hidden"
         animate="show"
         key={diff.fileTag}
@@ -184,13 +197,13 @@ export function CodeDiff({ diff, className }: CodeDiffProps) {
         {diff.lines.map((l, i) => (
           <React.Fragment key={i}>
             <motion.div
-              variants={lineVariants}
+              variants={shouldReduceMotion ? reducedLineVariants : lineVariants}
               className="select-none px-3 text-right text-[var(--neutral-9)]"
             >
               {l.ln ?? ""}
             </motion.div>
             <motion.div
-              variants={lineVariants}
+              variants={shouldReduceMotion ? reducedLineVariants : lineVariants}
               className={"whitespace-pre px-3 " + (l.kind ? lineStyles[l.kind] : "")}
             >
               {l.text}
@@ -245,6 +258,7 @@ export function TerminalControlSectionAnimated({
   className,
 }: TerminalControlSectionAnimatedProps) {
   const [active, setActive] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   const onKey = useCallback(
     (e: React.KeyboardEvent<HTMLUListElement>) => {
@@ -307,13 +321,17 @@ export function TerminalControlSectionAnimated({
                     {/* Animated active background (shared layout) */}
                     {isActive && (
                       <motion.span
-                        layoutId="activeTabBg"
+                        layoutId={shouldReduceMotion ? undefined : "activeTabBg"}
                         className="absolute inset-0 -z-10 rounded-[var(--radius-xl)] ring-1 ring-black/5"
-                        transition={{
-                          type: "spring",
-                          bounce: 0.22,
-                          duration: 0.48,
-                        }}
+                        transition={
+                          shouldReduceMotion
+                            ? { duration: 0 }
+                            : {
+                                type: "spring",
+                                bounce: 0.22,
+                                duration: 0.48,
+                              }
+                        }
                       />
                     )}
 
@@ -342,14 +360,14 @@ export function TerminalControlSectionAnimated({
         >
           <motion.div
             key={active}
-            initial={{ opacity: 0, y: 8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.98 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.98 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25, ease: "easeOut" }}
             className="rounded-[var(--radius-3xl)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] text-[var(--neutral-12)] shadow-xl ring-1 ring-black/5"
           >
             <div className="p-4 sm:p-6">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={!shouldReduceMotion}>
                 <CodeDiff key={items[active].title} diff={items[active].diff} />
               </AnimatePresence>
             </div>

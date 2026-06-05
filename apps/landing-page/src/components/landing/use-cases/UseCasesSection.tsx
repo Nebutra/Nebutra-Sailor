@@ -2,9 +2,9 @@
 
 import { KineticMorphSurface } from "@nebutra/ui/patterns";
 import { AuroraBackground } from "@nebutra/ui/primitives";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { AnimatePresence, domAnimation, LazyMotion, m, useReducedMotion } from "@/shared/motion";
 import { AnimateIn } from "../AnimateIn";
 import { USE_CASES_DATA } from "./use-cases-data";
 
@@ -17,6 +17,7 @@ export function UseCasesSection() {
   const t = useTranslations("useCases");
   type UseCasesTranslationKey = Parameters<typeof t>[0];
   const [activeTab, setActiveTab] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   const ActiveMockup = USE_CASES_DATA[activeTab].mockup;
 
@@ -69,7 +70,7 @@ export function UseCasesSection() {
                       key={uc.key}
                       aria-pressed={isActive}
                       onClick={() => setActiveTab(i)}
-                      className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[var(--radius-card)] transition-transform duration-150 overflow-hidden hover:-translate-y-px ${
+                      className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[var(--radius-card)] transition-transform duration-150 overflow-hidden hover:-translate-y-px motion-reduce:transform-none motion-reduce:transition-none ${
                         isActive
                           ? "bg-background border border-[var(--neutral-6)]"
                           : "hover:bg-[var(--neutral-3)] border border-transparent"
@@ -79,22 +80,26 @@ export function UseCasesSection() {
                       {/* Subtle active state background glow */}
                       {isActive && (
                         <m.div
-                          layoutId="activeGlow"
+                          layoutId={shouldReduceMotion ? undefined : "activeGlow"}
                           className="absolute inset-0 bg-primary/5 z-0"
                           initial={false}
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                          transition={
+                            shouldReduceMotion
+                              ? { duration: 0 }
+                              : { type: "spring", stiffness: 300, damping: 30 }
+                          }
                         />
                       )}
 
                       <div
-                        className={`relative z-10 p-3 rounded-[var(--radius-button)] shrink-0 transition-colors duration-500 ${isActive ? "bg-primary text-primary-foreground" : "bg-muted/50 text-muted-foreground group-hover:bg-muted group-hover:text-foreground"}`}
+                        className={`relative z-10 p-3 rounded-[var(--radius-button)] shrink-0 transition-colors duration-500 motion-reduce:duration-0 ${isActive ? "bg-primary text-primary-foreground" : "bg-muted/50 text-muted-foreground group-hover:bg-muted group-hover:text-foreground"}`}
                       >
                         <Icon className="size-6" />
                       </div>
 
                       <div className="relative z-10 flex-1 pt-1">
                         <h3
-                          className={`text-xl font-semibold transition-colors duration-500 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
+                          className={`text-xl font-semibold transition-colors duration-500 motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
                           style={{ letterSpacing: "var(--tracking-tight)" }}
                         >
                           {t(`tabs.${uc.key}` as UseCasesTranslationKey)}
@@ -103,10 +108,26 @@ export function UseCasesSection() {
                         <AnimatePresence initial={false}>
                           {isActive && (
                             <m.div
-                              initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                              animate={{ height: "auto", opacity: 1, marginTop: 12 }}
-                              exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                              transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                              initial={
+                                shouldReduceMotion
+                                  ? { opacity: 0, marginTop: 12 }
+                                  : { height: 0, opacity: 0, marginTop: 0 }
+                              }
+                              animate={
+                                shouldReduceMotion
+                                  ? { opacity: 1, marginTop: 12 }
+                                  : { height: "auto", opacity: 1, marginTop: 12 }
+                              }
+                              exit={
+                                shouldReduceMotion
+                                  ? { opacity: 0, marginTop: 12 }
+                                  : { height: 0, opacity: 0, marginTop: 0 }
+                              }
+                              transition={
+                                shouldReduceMotion
+                                  ? { duration: 0 }
+                                  : { duration: 0.4, ease: [0.23, 1, 0.32, 1] }
+                              }
                               className="overflow-hidden"
                             >
                               <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-medium">
@@ -150,13 +171,29 @@ export function UseCasesSection() {
                   <div className="absolute inset-0 bg-[radial-gradient(circle_2px_at_center,var(--neutral-5)_1px,transparent_1px)] bg-[length:24px_24px] opacity-30 dark:opacity-20 pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
                   <div className="absolute inset-x-0 -top-px h-px w-full bg-gradient-to-r from-transparent via-foreground/10 to-transparent opacity-50" />
 
-                  <AnimatePresence mode="popLayout" initial={false}>
+                  <AnimatePresence mode={shouldReduceMotion ? "sync" : "popLayout"} initial={false}>
                     <m.div
                       key={activeTab}
-                      initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
-                      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
-                      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                      initial={
+                        shouldReduceMotion
+                          ? { opacity: 0 }
+                          : { opacity: 0, scale: 0.95, filter: "blur(10px)" }
+                      }
+                      animate={
+                        shouldReduceMotion
+                          ? { opacity: 1 }
+                          : { opacity: 1, scale: 1, filter: "blur(0px)" }
+                      }
+                      exit={
+                        shouldReduceMotion
+                          ? { opacity: 0 }
+                          : { opacity: 0, scale: 1.05, filter: "blur(10px)" }
+                      }
+                      transition={
+                        shouldReduceMotion
+                          ? { duration: 0 }
+                          : { duration: 0.5, ease: [0.23, 1, 0.32, 1] }
+                      }
                       className="relative z-10 w-full h-full flex items-center justify-center"
                     >
                       {/* Mockups are desktop-only fixtures; mobile keeps the

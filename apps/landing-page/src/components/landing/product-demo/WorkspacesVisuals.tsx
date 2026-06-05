@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "@/shared/motion";
 
 /** Animated Toggle Role Switcher */
 export function RoleSwitcher() {

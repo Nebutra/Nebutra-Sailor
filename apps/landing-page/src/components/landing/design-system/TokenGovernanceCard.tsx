@@ -31,7 +31,7 @@ export function TokenGovernanceCard() {
         <div className="flex flex-col gap-2 relative">
           {/* Timeline progressive line */}
           <div className="absolute left-[7px] top-2 bottom-4 w-px bg-border group-hover:bg-border/40 transition-colors" />
-          <div className="absolute left-[7px] top-2 h-16 w-px bg-emerald-500/60 dark:bg-emerald-500/80 transition-all duration-1000 group-hover:h-full z-0" />
+          <div className="absolute left-[7px] top-2 h-16 w-px bg-emerald-500/60 dark:bg-emerald-500/80 transition-[height] duration-1000 group-hover:h-full motion-reduce:transition-none z-0" />
 
           <div className="flex items-center gap-3 relative z-10">
             <div className="h-4 w-4 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center bg-background">

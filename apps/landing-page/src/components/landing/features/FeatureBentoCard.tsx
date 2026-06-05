@@ -24,7 +24,7 @@ export function FeatureBentoCard({
   return (
     <AnimateIn preset="fadeUp" className="h-full">
       <div
-        className="group relative flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background transition-all duration-500 hover:border-foreground/20 dark:bg-background dark:hover:border-border"
+        className="group relative flex h-full w-full flex-col overflow-hidden rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background transition-colors duration-500 hover:border-foreground/20 dark:bg-background dark:hover:border-border"
         style={{ boxShadow: "var(--ring-hairline)" }}
       >
         {/* Subtle Ambient Background */}

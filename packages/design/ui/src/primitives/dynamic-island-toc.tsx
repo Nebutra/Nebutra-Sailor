@@ -2,16 +2,17 @@
 
 import { brandSpring, motionDurationSec } from "@nebutra/brand";
 import { Cross as X } from "@nebutra/icons";
+import { type ReactElement, type RefObject, useEffect, useId, useRef, useState } from "react";
 import {
   AnimatePresence,
   domAnimation,
   LazyMotion,
   m,
-  type Transition,
   useReducedMotion,
-} from "framer-motion";
-import { type ReactElement, type RefObject, useEffect, useId, useRef, useState } from "react";
+} from "../shared/animation/motion";
 import { cn } from "../utils/cn";
+
+type MotionTransition = NonNullable<React.ComponentProps<typeof m.div>["transition"]>;
 
 /* -------------------------------------------------------------------------- *\
  *  DynamicIslandTOC — Apple-style bottom-center pill that expands into a
@@ -38,7 +39,7 @@ import { cn } from "../utils/cn";
 
 const ISLAND_EASE = [0.22, 1, 0.36, 1] as const;
 
-const islandTween: Transition = {
+const islandTween: MotionTransition = {
   type: "tween",
   ease: ISLAND_EASE,
   duration: motionDurationSec.cinematic, // 500ms — shape morph reads as cinematic

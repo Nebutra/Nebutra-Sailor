@@ -1,7 +1,9 @@
 "use client";
 
-import { type MotionProps, motion } from "framer-motion";
+import { motion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
+
+type MotionProps = React.ComponentProps<typeof motion.div>;
 
 /**
  * Props for the LineShadowText component

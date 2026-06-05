@@ -58,6 +58,7 @@
     "brand:verify-tokens": "tsx scripts/verify-brand-token-sync.ts",
     "ui:validate-policy": "tsx scripts/validate-ui-governance-policy.ts",
     "ui:verify-governance": "pnpm ui:validate-policy && tsx scripts/verify-ui-governance.ts",
+    "animation:governance": "node scripts/verify-animation-governance.mjs",
     "docs:cli": "tsx scripts/generate-cli-docs.ts",
     "template:check": "tsx scripts/template-check.ts",
     "template:build": "tsx scripts/template-build.ts",

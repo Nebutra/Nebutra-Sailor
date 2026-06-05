@@ -1,8 +1,14 @@
 "use client";
 
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import * as React from "react";
+import {
+  AnimatePresence,
+  domAnimation,
+  LazyMotion,
+  m,
+  useReducedMotion,
+} from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 export type GeistTooltipType = "default" | "success" | "warning" | "error" | "violet";
@@ -68,6 +74,7 @@ export const GeistTooltip = ({
   popupProps,
 }: GeistTooltipProps) => {
   const [open, setOpen] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const delayMs = typeof delay === "number" ? delay : delay ? 500 : 0;
 
@@ -99,20 +106,34 @@ export const GeistTooltip = ({
                     {...popupProps}
                     render={
                       <m.div
-                        initial={{
-                          opacity: 0,
-                          scale: 0.96,
-                          y: position === "top" ? 4 : position === "bottom" ? -4 : 0,
-                          x: position === "left" ? 4 : position === "right" ? -4 : 0,
-                        }}
-                        animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-                        exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.1 } }}
-                        transition={{
-                          type: "spring",
-                          damping: 30,
-                          stiffness: 400,
-                          mass: 0.8,
-                        }}
+                        initial={
+                          shouldReduceMotion
+                            ? { opacity: 0 }
+                            : {
+                                opacity: 0,
+                                scale: 0.96,
+                                y: position === "top" ? 4 : position === "bottom" ? -4 : 0,
+                                x: position === "left" ? 4 : position === "right" ? -4 : 0,
+                              }
+                        }
+                        animate={
+                          shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0, x: 0 }
+                        }
+                        exit={
+                          shouldReduceMotion
+                            ? { opacity: 0, transition: { duration: 0 } }
+                            : { opacity: 0, scale: 0.96, transition: { duration: 0.1 } }
+                        }
+                        transition={
+                          shouldReduceMotion
+                            ? { duration: 0 }
+                            : {
+                                type: "spring",
+                                damping: 30,
+                                stiffness: 400,
+                                mass: 0.8,
+                              }
+                        }
                         className={cn(
                           "z-50 px-3 py-1.5 text-xs leading-tight tracking-tight font-medium rounded-[var(--radius-md)] shadow-md",
                           "flex items-center",

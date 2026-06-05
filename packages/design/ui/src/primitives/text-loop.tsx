@@ -1,8 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion, type Transition, type Variants } from "framer-motion";
 import { Children, useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
+
+type MotionDivProps = React.ComponentProps<typeof motion.div>;
+type MotionTransition = NonNullable<MotionDivProps["transition"]>;
+type MotionVariants = NonNullable<MotionDivProps["variants"]>;
 
 /**
  * Props for the TextLoop component.
@@ -15,9 +19,9 @@ export interface TextLoopProps {
   /** Interval between transitions in seconds (default: 2) */
   interval?: number;
   /** Framer Motion transition config */
-  transition?: Transition;
+  transition?: MotionTransition;
   /** Custom animation variants */
-  variants?: Variants;
+  variants?: MotionVariants;
   /** Callback fired when the active index changes */
   onIndexChange?: (index: number) => void;
 }
@@ -67,10 +71,12 @@ export function TextLoop({
   variants,
   onIndexChange,
 }: TextLoopProps) {
+  const shouldReduceMotion = useReducedMotion() ?? false;
   const [currentIndex, setCurrentIndex] = useState(0);
   const items = Children.toArray(children);
 
   useEffect(() => {
+    if (shouldReduceMotion) return;
     const intervalMs = interval * 1000;
 
     const timer = setInterval(() => {
@@ -82,9 +88,9 @@ export function TextLoop({
     }, intervalMs);
 
     return () => clearInterval(timer);
-  }, [items.length, interval, onIndexChange]);
+  }, [items.length, interval, onIndexChange, shouldReduceMotion]);
 
-  const motionVariants: Variants = {
+  const motionVariants: MotionVariants = {
     initial: { y: 20, opacity: 0 },
     animate: { y: 0, opacity: 1 },
     exit: { y: -20, opacity: 0 },
@@ -92,14 +98,14 @@ export function TextLoop({
 
   return (
     <div className={cn("relative inline-block whitespace-nowrap", className)}>
-      <AnimatePresence mode="popLayout" initial={false}>
+      <AnimatePresence mode={shouldReduceMotion ? "sync" : "popLayout"} initial={false}>
         <motion.div
           key={currentIndex}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          transition={transition}
-          variants={variants || motionVariants}
+          initial={shouldReduceMotion ? { opacity: 1 } : "initial"}
+          animate={shouldReduceMotion ? { opacity: 1 } : "animate"}
+          exit={shouldReduceMotion ? { opacity: 1 } : "exit"}
+          transition={shouldReduceMotion ? { duration: 0 } : transition}
+          {...(!shouldReduceMotion ? { variants: variants || motionVariants } : {})}
         >
           {items[currentIndex]}
         </motion.div>

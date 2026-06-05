@@ -106,12 +106,12 @@ export function TechMarquee({ children }: { children?: React.ReactNode }) {
                     border border-gray-100 dark:border-white/[0.04]
                     shadow-[0_4px_30px_rgb(0,0,0,0.03)] dark:shadow-[0_4px_30px_rgb(0,0,0,0.3)]
                     hover:border-gray-300 dark:hover:border-white/10
-                    opacity-100 transition-all duration-500 ease-out
+                    opacity-100 transition-[border-color,opacity,transform] duration-500 ease-out motion-reduce:transition-colors motion-reduce:transform-none
                     group-hover/marquee:opacity-40 hover:!opacity-100 
-                    hover:scale-[1.02] hover:-translate-y-1
+                    hover:scale-[1.02] hover:-translate-y-1 motion-reduce:hover:scale-100 motion-reduce:hover:translate-y-0
                   "
                 >
-                  <div className="w-8 h-8 flex items-center justify-center shrink-0 opacity-70 transition-all duration-300 group-hover/pill:opacity-100 group-hover/pill:rotate-12 group-hover/pill:scale-110">
+                  <div className="w-8 h-8 flex items-center justify-center shrink-0 opacity-70 transition-[opacity,transform] duration-300 motion-reduce:transition-opacity group-hover/pill:opacity-100 group-hover/pill:rotate-12 group-hover/pill:scale-110 motion-reduce:group-hover/pill:rotate-0 motion-reduce:group-hover/pill:scale-100">
                     {tech.icon}
                   </div>
                   <span className="text-[15px] font-medium tracking-tight text-gray-700 dark:text-gray-300 transition-colors duration-300 group-hover/pill:text-black dark:group-hover/pill:text-white">

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import type * as React from "react";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 export interface NoisePatternCardProps {
@@ -39,6 +39,8 @@ export function NoisePatternCard({
   patternClassName,
   overlayClassName,
 }: NoisePatternCardProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
       className={cn(
@@ -47,9 +49,9 @@ export function NoisePatternCard({
         "border-border",
         className,
       )}
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8, ease: "easeOut" }}
     >
       <div
         className={cn(

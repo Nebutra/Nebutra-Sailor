@@ -152,7 +152,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
           {/* Card 1: AGPL-3.0 */}
           <AnimateIn preset="fadeUp" inView>
             <Card
-              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-all border-[var(--neutral-6)] bg-background/50 h-full"
+              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-[background-color,border-color,box-shadow] border-[var(--neutral-6)] bg-background/50 h-full"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <Badge
@@ -222,7 +222,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
           {/* Card 2: Free Commercial Exception (Highlighted) */}
           <AnimateIn preset="fadeUp" inView>
             <Card
-              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-all border-primary/50 bg-background/80 h-full"
+              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-[background-color,border-color,box-shadow] border-primary/50 bg-background/80 h-full"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
@@ -290,7 +290,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
           {/* Card 3: Startup / Enterprise */}
           <AnimateIn preset="fadeUp" inView>
             <Card
-              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-all border-[var(--neutral-6)] bg-background/50 h-full"
+              className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-[background-color,border-color,box-shadow] border-[var(--neutral-6)] bg-background/50 h-full"
               style={{ boxShadow: "var(--ring-hairline)" }}
             >
               <Suspense

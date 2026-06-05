@@ -1,10 +1,10 @@
 "use client";
 
 import { Check, ChevronDown, Copy, File, FileText as FileCode, FileText } from "@nebutra/icons";
-import { motion } from "framer-motion";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils";
 import {
   CodeBlockLanguageIcon,
@@ -410,6 +410,7 @@ export function CodeBlock(props: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [languageOverride, setLanguageOverride] = useState<string | null>(null);
+  const shouldReduceMotion = useReducedMotion();
   const scopeId = useId().replace(/:/g, "");
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -733,7 +734,12 @@ export function CodeBlock(props: CodeBlockProps) {
               aria-label="Copy code"
             >
               {copied ? (
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>
+                <motion.div
+                  initial={shouldReduceMotion ? { opacity: 0 } : { scale: 0 }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { scale: 1 }}
+                  exit={shouldReduceMotion ? { opacity: 0 } : { scale: 0 }}
+                  transition={{ duration: shouldReduceMotion ? 0 : 0.16 }}
+                >
                   <Check className="h-4 w-4" />
                 </motion.div>
               ) : (

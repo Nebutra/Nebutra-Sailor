@@ -1,7 +1,7 @@
 "use client";
 
-import { type MotionProps, motion } from "framer-motion";
-import { type JSX, useCallback, useEffect, useRef, useState } from "react";
+import { type ElementType, type JSX, useCallback, useEffect, useRef, useState } from "react";
+import { type MotionProps, motion } from "../shared/animation/motion";
 
 /**
  * Default character set for scramble animation
@@ -18,7 +18,7 @@ export interface TextScrambleProps extends MotionProps {
   /** Character set to use for scrambled characters */
   characterSet?: string;
   /** HTML element to render as */
-  as?: React.ElementType;
+  as?: ElementType;
   /** Additional CSS classes */
   className?: string;
   /** Whether to trigger the scramble animation */

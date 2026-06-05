@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import * as React from "react";
+import { motion, useReducedMotion } from "../../shared/animation/motion";
 import { cn } from "../../utils/cn";
 
 export interface TextSparklineProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import * as React from "react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "../../shared/animation/motion";
 import { cn } from "../../utils/cn";
 
 export interface CursorTrailProps extends React.HTMLAttributes<HTMLDivElement> {

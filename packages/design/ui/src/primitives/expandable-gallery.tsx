@@ -1,9 +1,11 @@
 "use client";
 
 import { ArrowLeft } from "@nebutra/icons";
-import { AnimatePresence, LayoutGroup, motion, type Transition } from "framer-motion";
 import { type ReactNode, type Ref, useCallback, useEffect, useId, useRef, useState } from "react";
+import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
+
+type MotionTransition = NonNullable<React.ComponentProps<typeof motion.div>["transition"]>;
 
 /* -------------------------------------------------------------------------- *\
  *  ExpandableGallery — fanned photo stack that animates into a grid.
@@ -69,14 +71,14 @@ export type ExpandableGalleryProps = {
 // Motion config
 // ---------------------------------------------------------------------------
 
-const transition: Transition = {
+const transition: MotionTransition = {
   type: "spring",
   stiffness: 160,
   damping: 18,
   mass: 1,
 };
 
-const hoverTransition: Transition = {
+const hoverTransition: MotionTransition = {
   type: "spring",
   stiffness: 400,
   damping: 25,
@@ -103,6 +105,8 @@ export const ExpandableGallery = function ExpandableGallery({
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const layoutGroupId = useId();
+  const shouldReduceMotion = useReducedMotion() ?? false;
+  const activeTransition = shouldReduceMotion ? { duration: 0 } : transition;
 
   const setOpen = useCallback(
     (next: boolean) => {
@@ -142,9 +146,10 @@ export const ExpandableGallery = function ExpandableGallery({
               <motion.button
                 key="back-button"
                 type="button"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -10 }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -10 }}
+                transition={activeTransition}
                 onClick={() => setOpen(false)}
                 className="group z-50 flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
               >
@@ -159,8 +164,8 @@ export const ExpandableGallery = function ExpandableGallery({
 
         <motion.div
           ref={containerRef}
-          layout
-          transition={transition}
+          layout={!shouldReduceMotion}
+          transition={activeTransition}
           className={cn(
             "relative w-full",
             isOpen
@@ -192,10 +197,10 @@ export const ExpandableGallery = function ExpandableGallery({
 
               const inner = (
                 <motion.div
-                  layoutId={`gallery-image-${photo.id}`}
-                  layout="position"
-                  transition={transition}
+                  layout={shouldReduceMotion ? false : "position"}
+                  transition={activeTransition}
                   className="relative h-full w-full"
+                  {...(shouldReduceMotion ? {} : { layoutId: `gallery-image-${photo.id}` })}
                 >
                   {/* biome-ignore lint/performance/noImgElement: framework-neutral primitive — consumers may not be on Next.js */}
                   <img
@@ -212,14 +217,19 @@ export const ExpandableGallery = function ExpandableGallery({
                 return (
                   <motion.div
                     key={`card-${photo.id}`}
-                    layoutId={`gallery-card-${photo.id}`}
-                    layout
+                    layout={!shouldReduceMotion}
                     aria-hidden="true"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0, x: 0, y: 0, zIndex: 10 }}
-                    transition={transition}
-                    whileHover={{ scale: 1.02 }}
+                    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
+                    animate={
+                      shouldReduceMotion
+                        ? { opacity: 1, zIndex: 10 }
+                        : { opacity: 1, scale: 1, rotate: 0, x: 0, y: 0, zIndex: 10 }
+                    }
+                    transition={activeTransition}
                     className={sharedClass}
+                    {...(shouldReduceMotion
+                      ? {}
+                      : { layoutId: `gallery-card-${photo.id}`, whileHover: { scale: 1.02 } })}
                   >
                     {inner}
                   </motion.div>
@@ -229,29 +239,37 @@ export const ExpandableGallery = function ExpandableGallery({
               return (
                 <motion.button
                   key={`card-${photo.id}`}
-                  layoutId={`gallery-card-${photo.id}`}
                   type="button"
-                  layout
+                  layout={!shouldReduceMotion}
                   aria-label={photo.alt}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1, rotate: rotation, x, y, zIndex: z }}
-                  transition={transition}
-                  whileHover={{
-                    scale: 1.05,
-                    y: y - 15,
-                    rotate: rotation * 0.8,
-                    zIndex: 50,
-                    transition: hoverTransition,
-                  }}
-                  whileFocus={{
-                    scale: 1.05,
-                    y: y - 15,
-                    rotate: rotation * 0.8,
-                    zIndex: 50,
-                    transition: hoverTransition,
-                  }}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
+                  animate={
+                    shouldReduceMotion
+                      ? { opacity: 1, zIndex: z }
+                      : { opacity: 1, scale: 1, rotate: rotation, x, y, zIndex: z }
+                  }
+                  transition={activeTransition}
                   onClick={() => setOpen(true)}
                   className={cn(sharedClass, "appearance-none p-0")}
+                  {...(shouldReduceMotion
+                    ? {}
+                    : {
+                        layoutId: `gallery-card-${photo.id}`,
+                        whileHover: {
+                          scale: 1.05,
+                          y: y - 15,
+                          rotate: rotation * 0.8,
+                          zIndex: 50,
+                          transition: hoverTransition,
+                        },
+                        whileFocus: {
+                          scale: 1.05,
+                          y: y - 15,
+                          rotate: rotation * 0.8,
+                          zIndex: 50,
+                          transition: hoverTransition,
+                        },
+                      })}
                 >
                   {inner}
                 </motion.button>

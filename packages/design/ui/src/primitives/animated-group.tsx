@@ -1,9 +1,11 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 import * as React from "react";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
+
+type MotionVariants = NonNullable<React.ComponentProps<typeof motion.div>["variants"]>;
 
 type PresetType =
   | "fade"
@@ -24,14 +26,14 @@ export interface AnimatedGroupProps {
   className?: string;
   /** Custom animation variants */
   variants?: {
-    container?: Variants;
-    item?: Variants;
+    container?: MotionVariants;
+    item?: MotionVariants;
   };
   /** Animation preset */
   preset?: PresetType;
 }
 
-const defaultContainerVariants: Variants = {
+const defaultContainerVariants: MotionVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -41,12 +43,22 @@ const defaultContainerVariants: Variants = {
   },
 };
 
-const defaultItemVariants: Variants = {
+const defaultItemVariants: MotionVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
 
-const presetVariants: Record<PresetType, { container: Variants; item: Variants }> = {
+const reducedContainerVariants: MotionVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0 } },
+};
+
+const reducedItemVariants: MotionVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0 } },
+};
+
+const presetVariants: Record<PresetType, { container: MotionVariants; item: MotionVariants }> = {
   fade: {
     container: defaultContainerVariants,
     item: {
@@ -155,11 +167,16 @@ const presetVariants: Record<PresetType, { container: Variants; item: Variants }
  * ```
  */
 function AnimatedGroup({ children, className, variants, preset }: AnimatedGroupProps) {
+  const shouldReduceMotion = useReducedMotion();
   const selectedVariants = preset
     ? presetVariants[preset]
     : { container: defaultContainerVariants, item: defaultItemVariants };
-  const containerVariants = variants?.container || selectedVariants.container;
-  const itemVariants = variants?.item || selectedVariants.item;
+  const containerVariants = shouldReduceMotion
+    ? reducedContainerVariants
+    : variants?.container || selectedVariants.container;
+  const itemVariants = shouldReduceMotion
+    ? reducedItemVariants
+    : variants?.item || selectedVariants.item;
 
   return (
     <motion.div

@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useRef } from "react";
 import { cn } from "../utils/cn";
 
 /* -------------------------------------------------------------------------- */
@@ -115,52 +114,6 @@ const COLOR_THEMES: Record<CosmicSpectrumColorTheme, string[]> = {
 
 const DARK_THEMES: CosmicSpectrumColorTheme[] = ["blue-black", "beige-black", "monochrome"];
 
-/* -------------------------------------------------------------------------- */
-/*                              GSAP Type Helpers                             */
-/* -------------------------------------------------------------------------- */
-
-// Extend Window interface for GSAP globals
-declare global {
-  interface Window {
-    gsap?: {
-      registerPlugin: (...plugins: unknown[]) => void;
-      timeline: (config?: Record<string, unknown>) => GSAPTimeline;
-      set: (targets: unknown, vars: Record<string, unknown>) => void;
-      to: (
-        targets: unknown,
-        vars: Record<string, unknown>,
-        position?: number | string,
-      ) => GSAPTimeline;
-    };
-    ScrollTrigger?: {
-      refresh: () => void;
-    };
-  }
-}
-
-interface GSAPTimeline {
-  to: (targets: unknown, vars: Record<string, unknown>, position?: number | string) => GSAPTimeline;
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                 Helpers                                    */
-/* -------------------------------------------------------------------------- */
-
-function loadScript(src: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    // Check if already loaded
-    if (document.querySelector(`script[src="${src}"]`)) {
-      resolve();
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = src;
-    script.onload = () => resolve();
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-}
-
 function splitTextToChars(text: string): React.ReactNode[] {
   return text.split("").map((char, index) => (
     <span key={index} className="char inline-block">
@@ -245,10 +198,10 @@ function SpectrumBars({ colors, blur }: SpectrumBarsProps) {
 /* -------------------------------------------------------------------------- */
 
 /**
- * CosmicSpectrum - Scroll-animated spectrum visualization
+ * CosmicSpectrum - Spectrum storytelling visualization
  *
- * A full-page scroll-triggered animation component with colorful spectrum bars.
- * Uses GSAP for smooth scroll-based animations.
+ * A full-page marketing visualization with colorful spectrum bars.
+ * GSAP timelines for landing pages belong in `apps/landing-page/src/shared/animation/gsap`.
  *
  * @example
  * ```tsx
@@ -268,145 +221,11 @@ export function CosmicSpectrum({
   scrollHint = "Scroll to explore",
   className,
 }: CosmicSpectrumProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const currentColors = COLOR_THEMES[colorTheme];
   const isDarkTheme = DARK_THEMES.includes(colorTheme);
 
-  const setupAnimations = React.useCallback((): (() => void) | undefined => {
-    const gsap = window.gsap;
-    const ScrollTrigger = window.ScrollTrigger;
-
-    if (!gsap || !ScrollTrigger) return;
-
-    // Hero animations
-    const heroTl = gsap.timeline({ delay: 0.5 });
-
-    // Title animation
-    const titleChars = document.querySelectorAll(".hero-title .char");
-    if (titleChars.length > 0) {
-      gsap.set(titleChars, { opacity: 0, filter: "blur(8px)", x: -20 });
-      heroTl.to(
-        titleChars,
-        {
-          opacity: 1,
-          filter: "blur(0px)",
-          x: 0,
-          duration: 0.8,
-          stagger: 0.03,
-          ease: "power2.out",
-        },
-        0,
-      );
-    }
-
-    // Scroll hint animation
-    const scrollHintChars = document.querySelectorAll(".scroll-hint .char");
-    if (scrollHintChars.length > 0) {
-      gsap.set(scrollHintChars, { opacity: 0, filter: "blur(3px)" });
-      gsap.to(scrollHintChars, {
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 0.6,
-        stagger: { each: 0.08, repeat: -1, yoyo: true },
-        ease: "sine.inOut",
-        delay: 1,
-      });
-    }
-
-    // Scroll-triggered animations
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".animation-section",
-        start: "top bottom",
-        end: "bottom bottom",
-        scrub: 1,
-      },
-    });
-
-    const mainTitle = document.querySelector(".main-title");
-    if (mainTitle) {
-      gsap.set(mainTitle, { opacity: 0, y: 30, filter: "blur(8px)" });
-    }
-
-    tl.to(".svg-container", { opacity: 1, duration: 0.01 }, 0)
-      .to(".main-title", { opacity: 1, duration: 0.01 }, 0)
-      .to(
-        ".svg-container",
-        {
-          transform: "scaleY(0.05) translateY(-30px)",
-          duration: 0.3,
-          ease: "power2.out",
-        },
-        0,
-      )
-      .to(
-        ".svg-container",
-        {
-          transform: "scaleY(1) translateY(0px)",
-          duration: 1.2,
-          ease: "power2.out",
-        },
-        0.3,
-      )
-      .to(
-        ".nav-bottom-center",
-        {
-          opacity: 0,
-          duration: 0.6,
-          ease: "power2.out",
-        },
-        0.2,
-      )
-      .to(
-        mainTitle,
-        {
-          duration: 0.8,
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          ease: "power2.out",
-        },
-        0.9,
-      );
-
-    // Refresh on resize
-    const handleResize = () => ScrollTrigger.refresh();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    let cleanup: (() => void) | undefined;
-
-    const initializeAnimations = async () => {
-      try {
-        await Promise.all([
-          loadScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"),
-          loadScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"),
-        ]);
-
-        // Wait for scripts to initialize
-        await new Promise((resolve) => setTimeout(resolve, 100));
-
-        if (window.gsap && window.ScrollTrigger) {
-          window.gsap.registerPlugin(window.ScrollTrigger);
-          cleanup = setupAnimations();
-        }
-      } catch (_error) {}
-    };
-
-    initializeAnimations();
-
-    return () => {
-      cleanup?.();
-    };
-  }, [setupAnimations]);
-
   return (
-    <div ref={containerRef} className={cn("relative min-h-screen overflow-x-hidden", className)}>
+    <div className={cn("relative min-h-screen overflow-x-hidden", className)}>
       {/* Hero Section */}
       <section className="flex h-screen w-full flex-col justify-center p-8">
         <h1 className="hero-title text-center text-5xl font-bold tracking-tighter transition-colors duration-300 sm:text-7xl">
@@ -426,20 +245,13 @@ export function CosmicSpectrum({
       <div className="animation-section relative h-screen">
         <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-10 h-screen">
           {/* SVG Container */}
-          <div
-            className="svg-container absolute bottom-0 left-0 right-0 z-[15] h-screen opacity-0"
-            style={{
-              transformOrigin: "bottom",
-              transform: "scaleY(0.05) translateY(100vh)",
-              willChange: "transform, opacity, filter",
-            }}
-          >
+          <div className="svg-container absolute bottom-0 left-0 right-0 z-[15] h-screen opacity-100">
             <SpectrumBars colors={currentColors} blur={blur} />
           </div>
 
           {/* Main Title */}
           <div
-            className="main-title absolute bottom-1/2 left-1/2 z-20 -translate-x-1/2 translate-y-1/2 text-center text-xs leading-relaxed opacity-0 transition-colors duration-300"
+            className="main-title absolute bottom-1/2 left-1/2 z-20 -translate-x-1/2 translate-y-1/2 text-center text-xs leading-relaxed transition-colors duration-300"
             style={{
               color: isDarkTheme ? "var(--neutral-1, #ffffff)" : "var(--neutral-12, #333333)",
             }}

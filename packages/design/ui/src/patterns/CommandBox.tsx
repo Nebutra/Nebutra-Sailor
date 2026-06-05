@@ -58,7 +58,7 @@ export const CommandBox = React.forwardRef<HTMLDivElement, CommandBoxProps>(
       <div
         ref={ref}
         className={cn(
-          "group relative flex items-center gap-3 px-4 py-2.5 font-mono text-sm cursor-pointer transition-all hover:bg-[var(--neutral-3)]",
+          "group relative flex items-center gap-3 px-4 py-2.5 font-mono text-sm cursor-pointer transition-colors hover:bg-[var(--neutral-3)]",
           variantStyles[variant],
           className,
         )}

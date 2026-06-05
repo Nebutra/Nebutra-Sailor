@@ -406,7 +406,7 @@ git commit -m "feat(tseka-dev): add header and footer shell"
 ```tsx
 // apps/tseka-dev/src/components/sections/hero.tsx
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "@/shared/motion";
 
 const pills = [
   { label: "CEO @ Nebutra Intelligence", icon: "🌌" },
@@ -609,7 +609,7 @@ export const projects: Project[] = [
 ```tsx
 // apps/tseka-dev/src/components/sections/work-grid.tsx
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "@/shared/motion";
 import type { Project } from "@/lib/projects";
 
 const statusLabel: Record<Project["status"], string> = {
@@ -1045,7 +1045,7 @@ git commit -m "feat(tseka-dev): add /thinking page and first article"
 ```tsx
 // apps/tseka-dev/src/app/about/page.tsx
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "@/shared/motion";
 
 const timeline = [
   { year: "2020", role: "Self-taught", org: "Web + Marketing Fundamentals" },

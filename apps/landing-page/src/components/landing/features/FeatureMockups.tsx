@@ -20,7 +20,7 @@ const DATA_BARS = [
 export function MultiTenantMockup() {
   return (
     <div
-      className="relative top-4 w-full max-w-[340px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono text-[11px] leading-relaxed transition-all duration-700 group-hover:top-2 dark:bg-background"
+      className="relative top-4 w-full max-w-[340px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono text-[11px] leading-relaxed transition-[top] duration-700 group-hover:top-2 motion-reduce:transition-none dark:bg-background"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="flex items-center gap-1.5 border-b border-border/60 bg-muted/30 px-4 py-3 dark:bg-muted/30">
@@ -92,7 +92,7 @@ export function AIMockup() {
         {["OpenAI", "Anthropic", "DeepSeek"].map((provider, i) => (
           <div
             key={provider}
-            className={`flex h-8 items-center justify-center rounded-full border px-4 text-[11px] font-bold tracking-wide transition-all duration-300 ${i === 1 ? "border-primary bg-primary text-primary-foreground shadow-md dark:border-foreground dark:bg-foreground dark:text-background" : "border-border/60 bg-background text-muted-foreground hover:bg-muted/50 dark:bg-background dark:text-[var(--neutral-10)] dark:hover:bg-muted/40"}`}
+            className={`flex h-8 items-center justify-center rounded-full border px-4 text-[11px] font-bold tracking-wide transition-colors duration-300 ${i === 1 ? "border-primary bg-primary text-primary-foreground shadow-md dark:border-foreground dark:bg-foreground dark:text-background" : "border-border/60 bg-background text-muted-foreground hover:bg-muted/50 dark:bg-background dark:text-[var(--neutral-10)] dark:hover:bg-muted/40"}`}
           >
             {provider}
           </div>
@@ -105,7 +105,7 @@ export function AIMockup() {
 export function SecurityMockup() {
   return (
     <div
-      className="relative top-6 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono transition-all duration-700 group-hover:top-4 dark:bg-background"
+      className="relative top-6 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono transition-[top] duration-700 group-hover:top-4 motion-reduce:transition-none dark:bg-background"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="flex items-center gap-2 border-b border-border/60 bg-muted/20 px-5 py-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground dark:bg-muted/20 dark:text-[var(--neutral-10)]">
@@ -153,7 +153,7 @@ export function SecurityMockup() {
 export function BillingMockup() {
   return (
     <div
-      className="relative top-4 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background transition-all duration-700 group-hover:top-2 dark:bg-background"
+      className="relative top-4 w-full max-w-[320px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background transition-[top] duration-700 group-hover:top-2 motion-reduce:transition-none dark:bg-background"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="border-b border-border/60 bg-gradient-to-b from-[var(--green-2)] to-transparent p-6 pb-8">
@@ -188,7 +188,7 @@ export function BillingMockup() {
 export function DXMockup() {
   return (
     <div
-      className="relative top-4 w-full max-w-[360px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono text-[11px] leading-relaxed transition-all duration-700 group-hover:top-2 dark:bg-background"
+      className="relative top-4 w-full max-w-[360px] overflow-hidden rounded-t-[1.5rem] border border-b-0 border-[var(--neutral-6)] bg-background font-mono text-[11px] leading-relaxed transition-[top] duration-700 group-hover:top-2 motion-reduce:transition-none dark:bg-background"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="flex items-center gap-4 border-b border-border/60 bg-muted/30 px-5 py-3 dark:bg-muted/30">
@@ -235,7 +235,7 @@ export function DataMockup() {
           style={{ height: "100%" }}
         >
           <div
-            className={`absolute bottom-0 w-full rounded-t-sm transition-all duration-700 ${bar.highlighted ? "bg-primary dark:bg-foreground" : "bg-primary/40 dark:bg-[var(--neutral-4)]"}`}
+            className={`absolute bottom-0 w-full rounded-t-sm transition-[height] duration-700 motion-reduce:transition-none ${bar.highlighted ? "bg-primary dark:bg-foreground" : "bg-primary/40 dark:bg-[var(--neutral-4)]"}`}
             style={{ height: `${bar.height}%` }}
           ></div>
         </div>

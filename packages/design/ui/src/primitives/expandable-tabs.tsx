@@ -1,9 +1,9 @@
 "use client";
 
 import type { Icon as LucideIcon } from "@nebutra/icons";
-import { AnimatePresence, motion } from "framer-motion";
 import * as React from "react";
 import { useOnClickOutside } from "usehooks-ts";
+import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 interface Tab {
@@ -56,6 +56,8 @@ export function ExpandableTabs({
 }: ExpandableTabsProps) {
   const [selected, setSelected] = React.useState<number | null>(null);
   const outsideClickRef = React.useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const activeTransition = shouldReduceMotion ? { duration: 0 } : transition;
 
   useOnClickOutside(outsideClickRef as React.RefObject<HTMLDivElement>, () => {
     setSelected(null);
@@ -103,7 +105,7 @@ export function ExpandableTabs({
             initial={false}
             animate="animate"
             custom={isSelected}
-            transition={transition}
+            transition={activeTransition}
             className="flex items-center"
           >
             <Icon size={20} aria-hidden="true" />
@@ -114,7 +116,7 @@ export function ExpandableTabs({
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  transition={transition}
+                  transition={activeTransition}
                   className="overflow-hidden"
                 >
                   {tab.title}

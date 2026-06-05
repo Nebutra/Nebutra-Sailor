@@ -7,9 +7,9 @@ import {
   SpeakerVolumeLoud as Volume2,
   SpeakerOff as VolumeX,
 } from "@nebutra/icons";
-import { AnimatePresence, motion } from "framer-motion";
 import type React from "react";
 import { useCallback, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils";
 import { Button } from "./button";
 
@@ -85,6 +85,7 @@ const formatTime = (seconds: number): string => {
  * CustomSlider - Animated progress/volume slider
  */
 const CustomSlider: React.FC<CustomSliderProps> = ({ value, onChange, className }) => {
+  const shouldReduceMotion = useReducedMotion() ?? false;
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -100,9 +101,11 @@ const CustomSlider: React.FC<CustomSliderProps> = ({ value, onChange, className 
       <motion.div
         className="absolute left-0 top-0 h-full rounded-full bg-white"
         style={{ width: `${value}%` }}
-        initial={{ width: 0 }}
+        initial={shouldReduceMotion ? { width: `${value}%` } : { width: 0 }}
         animate={{ width: `${value}%` }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        transition={
+          shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }
+        }
       />
     </motion.div>
   );
@@ -146,6 +149,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   initialVolume = 1,
   showControlsOnMount = false,
 }) => {
+  const shouldReduceMotion = useReducedMotion() ?? false;
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [volume, setVolume] = useState(initialVolume);
@@ -224,9 +228,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         "relative mx-auto w-full max-w-4xl overflow-hidden rounded-[var(--radius-xl)] bg-black/60 shadow-lg backdrop-blur-sm",
         className,
       )}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5 }}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
@@ -244,14 +248,18 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         playsInline
       />
 
-      <AnimatePresence>
+      <AnimatePresence initial={!shouldReduceMotion}>
         {showControls && (
           <motion.div
             className="absolute bottom-0 left-0 right-0 m-2 mx-auto max-w-xl rounded-[var(--radius-2xl)] bg-black/60 p-4 backdrop-blur-md"
-            initial={{ y: 20, opacity: 0, filter: "blur(10px)" }}
-            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-            exit={{ y: 20, opacity: 0, filter: "blur(10px)" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            initial={
+              shouldReduceMotion ? { opacity: 0 } : { y: 20, opacity: 0, filter: "blur(10px)" }
+            }
+            animate={
+              shouldReduceMotion ? { opacity: 1 } : { y: 0, opacity: 1, filter: "blur(0px)" }
+            }
+            exit={shouldReduceMotion ? { opacity: 0 } : { y: 20, opacity: 0, filter: "blur(10px)" }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3, ease: "easeOut" }}
           >
             {/* Progress bar */}
             <div className="mb-2 flex items-center gap-2">
@@ -264,7 +272,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 {/* Play/Pause */}
-                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                <motion.div
+                  {...(!shouldReduceMotion
+                    ? { whileHover: { scale: 1.1 }, whileTap: { scale: 0.9 } }
+                    : {})}
+                >
                   <Button
                     onClick={togglePlay}
                     variant="ghost"
@@ -278,7 +290,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
                 {/* Volume */}
                 <div className="flex items-center gap-x-1">
-                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                  <motion.div
+                    {...(!shouldReduceMotion
+                      ? { whileHover: { scale: 1.1 }, whileTap: { scale: 0.9 } }
+                      : {})}
+                  >
                     <Button
                       onClick={toggleMute}
                       variant="ghost"
@@ -298,7 +314,12 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
               {/* Playback speed */}
               <div className="flex items-center gap-1">
                 {speeds.map((speed) => (
-                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} key={speed}>
+                  <motion.div
+                    {...(!shouldReduceMotion
+                      ? { whileHover: { scale: 1.1 }, whileTap: { scale: 0.9 } }
+                      : {})}
+                    key={speed}
+                  >
                     <Button
                       onClick={() => setSpeed(speed)}
                       variant="ghost"

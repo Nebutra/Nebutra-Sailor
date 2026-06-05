@@ -1,13 +1,14 @@
 "use client";
 
 import { Moon, Sun } from "@nebutra/icons";
-import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "@/shared/motion";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     setMounted(true);
@@ -39,10 +40,10 @@ export function ThemeToggle() {
       <AnimatePresence mode="wait">
         <motion.div
           key={resolvedTheme ?? "system"}
-          initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-          animate={{ rotate: 0, opacity: 1, scale: 1 }}
-          exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-          transition={{ duration: 0.2 }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { rotate: -90, opacity: 0, scale: 0.5 }}
+          animate={shouldReduceMotion ? { opacity: 1 } : { rotate: 0, opacity: 1, scale: 1 }}
+          exit={shouldReduceMotion ? { opacity: 0 } : { rotate: 90, opacity: 0, scale: 0.5 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
         >
           {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
         </motion.div>

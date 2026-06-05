@@ -6,7 +6,7 @@ import {
   type Icon as LucideIcon,
   Sparkles,
 } from "@nebutra/icons";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 // Inline CSS for offset-path animations (avoids external CSS dependency)
@@ -77,6 +77,7 @@ export function DatabaseRestApi({
   firstButtonIcon: FirstIcon = HeartHandshake,
   secondButtonIcon: SecondIcon = Folder,
 }: DatabaseRestApiProps) {
+  const shouldReduceMotion = useReducedMotion();
   const {
     first: badge1 = "GET",
     second: badge2 = "POST",
@@ -93,7 +94,7 @@ export function DatabaseRestApi({
         className,
       )}
     >
-      <style>{ANIMATION_STYLES}</style>
+      <style>{shouldReduceMotion ? "" : ANIMATION_STYLES}</style>
 
       {/* SVG Paths */}
       <svg
@@ -250,23 +251,31 @@ export function DatabaseRestApi({
           {/* Animated circles */}
           <motion.div
             className="absolute -bottom-14 h-[100px] w-[100px] rounded-full border-t bg-accent/5"
-            animate={{ scale: [0.98, 1.02, 0.98, 1, 1, 1, 1, 1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={
+              shouldReduceMotion ? { scale: 1 } : { scale: [0.98, 1.02, 0.98, 1, 1, 1, 1, 1, 1] }
+            }
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 2, repeat: Infinity }}
           />
           <motion.div
             className="absolute -bottom-20 h-[145px] w-[145px] rounded-full border-t bg-accent/5"
-            animate={{ scale: [1, 1, 1, 0.98, 1.02, 0.98, 1, 1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={
+              shouldReduceMotion ? { scale: 1 } : { scale: [1, 1, 1, 0.98, 1.02, 0.98, 1, 1, 1] }
+            }
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 2, repeat: Infinity }}
           />
           <motion.div
             className="absolute -bottom-[100px] h-[190px] w-[190px] rounded-full border-t bg-accent/5"
-            animate={{ scale: [1, 1, 1, 1, 1, 0.98, 1.02, 0.98, 1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={
+              shouldReduceMotion ? { scale: 1 } : { scale: [1, 1, 1, 1, 1, 0.98, 1.02, 0.98, 1, 1] }
+            }
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 2, repeat: Infinity }}
           />
           <motion.div
             className="absolute -bottom-[120px] h-[235px] w-[235px] rounded-full border-t bg-accent/5"
-            animate={{ scale: [1, 1, 1, 1, 1, 1, 0.98, 1.02, 0.98, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={
+              shouldReduceMotion ? { scale: 1 } : { scale: [1, 1, 1, 1, 1, 1, 0.98, 1.02, 0.98, 1] }
+            }
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 2, repeat: Infinity }}
           />
         </div>
       </div>

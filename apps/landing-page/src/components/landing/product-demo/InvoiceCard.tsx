@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "@/shared/motion";
 
 export function InvoiceCard() {
   const shouldReduceMotion = useReducedMotion();

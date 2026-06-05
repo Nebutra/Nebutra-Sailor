@@ -1610,7 +1610,7 @@
         },
         "tech-stack": {
           "question": "技术栈是什么？",
-          "answer": "Next.js 16 (App Router) + React 19、TypeScript 5.9、Tailwind v4、Prisma 7 + Postgres（含 pgvector + RLS）、Hono 作为 BFF 网关、FastAPI 承载 ML 与重型服务，组件库基于 Radix + Lobe UI 原语 + framer-motion。AI 能力通过 Vercel AI SDK 接入，可在 OpenAI / OpenRouter / SiliconFlow / Azure / 本地模型间自由切换。"
+          "answer": "Next.js 16 (App Router) + React 19、TypeScript 5.9、Tailwind v4、Prisma 7 + Postgres（含 pgvector + RLS）、Hono 作为 BFF 网关、FastAPI 承载 ML 与重型服务，组件库基于 Radix、Nebutra UI 原语与共享 Motion 层。AI 能力通过 Vercel AI SDK 接入，可在 OpenAI / OpenRouter / SiliconFlow / Azure / 本地模型间自由切换。"
         },
         "license": {
           "question": "授权方式是什么？",

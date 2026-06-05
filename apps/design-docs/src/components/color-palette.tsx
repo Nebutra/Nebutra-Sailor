@@ -42,7 +42,7 @@ function ColorSwatch({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className={`group relative flex h-24 flex-col items-start justify-between p-3 text-left transition-[background-color,border-color,box-shadow,color,opacity,transform] hover:z-10 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
+          className={`group relative flex h-24 flex-col items-start justify-between p-3 text-left transition-shadow hover:z-10 focus-visible:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
           style={{ backgroundColor: hex, color: contrastForeground }}
         >
           <div className="font-mono text-[10px] font-medium opacity-60 transition-opacity group-hover:opacity-100">

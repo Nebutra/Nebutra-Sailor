@@ -10,8 +10,8 @@ import {
   User,
 } from "@nebutra/icons";
 import { AnimatedBeam, AnimatedList, FlickeringGrid, MagicCard } from "@nebutra/ui/primitives";
-import { motion, type Transition } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { motion, type Transition, useReducedMotion } from "@/shared/motion";
 
 const emergeLoopTransition: Transition = {
   duration: brandMotion.emerge.transition.duration,
@@ -23,6 +23,7 @@ const emergeLoopTransition: Transition = {
 
 export function MotionDemos() {
   const [isClient, setIsClient] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   // Refs for AnimatedBeam (Flow Demo)
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ export function MotionDemos() {
             <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden [mask-image:linear-gradient(to_bottom,white_30%,transparent_100%)]">
               <motion.div
                 className="w-12 h-12 rounded-2xl bg-white dark:bg-zinc-900 shadow-md border border-[var(--neutral-5)] flex items-center justify-center z-10 shrink-0 mt-4 mb-2"
-                initial="initial"
+                initial={shouldReduceMotion ? false : "initial"}
                 whileInView="animate"
                 viewport={{ once: false, amount: 0.5 }}
                 variants={{
@@ -60,7 +61,7 @@ export function MotionDemos() {
                   animate: {
                     ...brandMotion.emerge.animate,
                     y: 0,
-                    transition: emergeLoopTransition,
+                    transition: shouldReduceMotion ? { duration: 0 } : emergeLoopTransition,
                   },
                 }}
               >
@@ -210,28 +211,38 @@ export function MotionDemos() {
               {/* Inner Glow Map Wrapper */}
               <motion.div
                 className="absolute inset-0 rounded-full bg-[#0BF1C3] blur-2xl opacity-20"
-                animate={{
-                  scale: [0.8, 1.2, 0.8],
-                  opacity: [0.2, 0.4, 0.2],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                animate={
+                  shouldReduceMotion
+                    ? { opacity: 0.2, scale: 1 }
+                    : {
+                        scale: [0.8, 1.2, 0.8],
+                        opacity: [0.2, 0.4, 0.2],
+                      }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : {
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }
+                }
               />
 
               {/* Core Element */}
               <motion.div
                 className="w-16 h-16 rounded-2xl bg-zinc-900/80 backdrop-blur-sm border border-zinc-700/50 shadow-[0_0_15px_rgba(11,241,195,0.15)] flex items-center justify-center relative z-20"
-                animate={{
-                  scale: [1, 1.02, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+                animate={shouldReduceMotion ? { scale: 1 } : { scale: [1, 1.02, 1] }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : {
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }
+                }
               >
                 <Network className="w-6 h-6 text-[#0BF1C3]" />
               </motion.div>
@@ -241,8 +252,12 @@ export function MotionDemos() {
             <div className="absolute bottom-6 flex items-center gap-2 px-3 py-1.5 rounded-full border border-zinc-800 bg-black/50 backdrop-blur-md z-10 shadow-lg">
               <motion.div
                 className="w-1.5 h-1.5 rounded-full bg-[#0BF1C3]"
-                animate={{ opacity: [1, 0.3, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: [1, 0.3, 1] }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+                }
               />
               <span className="text-[11px] font-mono text-zinc-300 uppercase tracking-wider">
                 System Live

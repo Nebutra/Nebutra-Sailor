@@ -105,7 +105,7 @@ export function CTA({
                     <a
                       href={primaryCTA.href}
                       className={cn(
-                        "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                        "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium transition-[background-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                         isDarkCanvas
                           ? "bg-[var(--neutral-1)] text-[var(--neutral-12)] hover:bg-[var(--neutral-2)] focus-visible:ring-white"
                           : "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] focus-visible:ring-[var(--neutral-12)]",
@@ -119,7 +119,7 @@ export function CTA({
                     <a
                       href={secondaryCTA.href}
                       className={cn(
-                        "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+                        "inline-flex items-center justify-center px-8 py-3.5 rounded-full font-medium border transition-[background-color,border-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
                         isDarkCanvas
                           ? "border-white/20 text-white hover:bg-white/10 focus-visible:ring-white"
                           : "border-[var(--neutral-6)] text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] focus-visible:ring-[var(--neutral-12)]",

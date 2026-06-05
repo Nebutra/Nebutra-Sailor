@@ -32,7 +32,7 @@ export function MemberCard({ member }: MemberCardProps) {
   return (
     <Link
       href={`/members/${member.slug}`}
-      className="group flex flex-col gap-3 rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5 transition-all hover:border-[var(--blue-9)] hover:shadow-md"
+      className="group flex flex-col gap-3 rounded-xl border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5 transition-[border-color,box-shadow] hover:border-[var(--blue-9)] hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-3">

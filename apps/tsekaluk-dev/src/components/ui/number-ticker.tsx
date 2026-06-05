@@ -1,8 +1,8 @@
 "use client";
 
-import { useInView, useMotionValue, useSpring } from "framer-motion";
 import { type ComponentPropsWithoutRef, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
+import { useInView, useMotionValue, useSpring } from "@/shared/motion";
 
 interface NumberTickerProps extends ComponentPropsWithoutRef<"span"> {
   value: number;

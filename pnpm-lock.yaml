@@ -445,6 +445,9 @@ importers:
       '@dicebear/core':
         specifier: ^9.4.2
         version: 9.4.2
+      '@gsap/react':
+        specifier: ^2.1.2
+        version: 2.1.2(gsap@3.15.0)(react@19.2.4)
       '@lottiefiles/dotlottie-react':
         specifier: ^0.18.3
         version: 0.18.3(react@19.2.4)
@@ -526,6 +529,9 @@ importers:
       geist:
         specifier: 'catalog:'
         version: 1.7.0(next@16.2.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+      gsap:
+        specifier: ^3.15.0
+        version: 3.15.0
       katex:
         specifier: ^0.17.0
         version: 0.17.0
@@ -6668,6 +6674,12 @@ packages:
     resolution: {integrity: sha512-rc1hOQtjIWGxcxpb9aHAfLpIctjEnsDehj0DAiVfBlmT84uvR0uUtN2hEi/ecvWVjXUGf5qPF4qEgiLOx1YIMQ==}
     engines: {node: '>=6'}
     hasBin: true
+
+  '@gsap/react@2.1.2':
+    resolution: {integrity: sha512-JqliybO1837UcgH2hVOM4VO+38APk3ECNrsuSM4MuXp+rbf+/2IG2K1YJiqfTcXQHH7XlA0m3ykniFYstfq0Iw==}
+    peerDependencies:
+      gsap: ^3.12.5
+      react: 19.2.4
 
   '@hexagon/base64@1.1.28':
     resolution: {integrity: sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw==}
@@ -15168,6 +15180,9 @@ packages:
     resolution: {integrity: sha512-EzSkxI0r6Wf9BkdDpSpcCmuTe32PcMAZPuWyOixVnOLX4ZrapEqW/UW84SrERGDyiUbm4tmZx3s5HS3IyqAalg==}
     engines: {node: '>=20.19 <22 || >=22.12'}
 
+  gsap@3.15.0:
+    resolution: {integrity: sha512-dMW4CWBTUK1AEEDeZc1g4xpPGIrSf9fJF960qbTZmN/QwZIWY5wgliS6JWl9/25fpTGJrMRtSjGtOmPnfjZB+A==}
+
   gunzip-maybe@1.4.2:
     resolution: {integrity: sha512-4haO1M4mLO91PW57BMsDFf75UmwoRX0GkdD+Faw+Lr+r/OZrOCS0pIBwOL1xCKQqnQzbNFGgK2V2CpBUPeFNTw==}
     hasBin: true
@@ -23466,6 +23481,11 @@ snapshots:
       long: 5.3.2
       protobufjs: 7.5.8
       yargs: 17.7.2
+
+  '@gsap/react@2.1.2(gsap@3.15.0)(react@19.2.4)':
+    dependencies:
+      gsap: 3.15.0
+      react: 19.2.4
 
   '@hexagon/base64@1.1.28': {}
 
@@ -33321,6 +33341,8 @@ snapshots:
   groq@3.88.1-typegen-experimental.0: {}
 
   groq@5.25.1: {}
+
+  gsap@3.15.0: {}
 
   gunzip-maybe@1.4.2:
     dependencies:

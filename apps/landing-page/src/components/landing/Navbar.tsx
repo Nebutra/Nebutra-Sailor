@@ -39,7 +39,7 @@ export function Navbar({ forceDarkTheme = false }: { forceDarkTheme?: boolean })
   return (
     <nav
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
+        "fixed left-0 right-0 top-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300",
         isScrolled
           ? "border-b border-transparent bg-white/85 backdrop-blur-md dark:border-transparent dark:bg-black/80 shadow-sm"
           : "bg-transparent max-lg:border-b max-lg:border-[var(--neutral-6)] max-lg:bg-[var(--neutral-1)]/90 max-lg:backdrop-blur-md dark:max-lg:bg-black/75",

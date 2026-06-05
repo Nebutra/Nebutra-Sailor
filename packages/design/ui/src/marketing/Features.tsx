@@ -78,7 +78,7 @@ export function Features({
               <AnimateIn key={feature.id} preset="fadeUp">
                 <div
                   className={cn(
-                    "group relative flex flex-col justify-between overflow-hidden rounded-[var(--radius-3xl)] bg-[var(--neutral-2)] p-6 sm:p-8 border border-[var(--neutral-6)] transition-all hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)]",
+                    "group relative flex flex-col justify-between overflow-hidden rounded-[var(--radius-3xl)] bg-[var(--neutral-2)] p-6 sm:p-8 border border-[var(--neutral-6)] transition-colors hover:border-[var(--neutral-7)] hover:bg-[var(--neutral-3)]",
                     layout === "alternating" ? "md:flex-row md:items-center md:gap-12" : "h-full",
                     layout === "alternating" && index % 2 === 1 ? "md:flex-row-reverse" : "",
                     isBentoLarge ? "md:col-span-2 md:row-span-2 bg-[var(--neutral-3)]" : "",

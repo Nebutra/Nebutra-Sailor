@@ -53,7 +53,7 @@ function PlaybookCard({ item, locale }: { item: PlaybookItem; locale: string }) 
         {external ? (
           <ExternalLink className="size-4 shrink-0 text-neutral-9 transition-colors group-hover:text-blue-10 dark:group-hover:text-cyan-9" />
         ) : (
-          <ArrowRight className="size-4 shrink-0 text-neutral-9 transition-all group-hover:translate-x-0.5 group-hover:text-blue-10 dark:group-hover:text-cyan-9" />
+          <ArrowRight className="size-4 shrink-0 text-neutral-9 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-blue-10 motion-reduce:group-hover:translate-x-0 dark:group-hover:text-cyan-9" />
         )}
       </div>
       <div className="mt-4">

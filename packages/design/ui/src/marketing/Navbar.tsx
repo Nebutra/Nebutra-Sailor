@@ -8,9 +8,15 @@
 "use client";
 
 import { Bell, ChevronDown, Menu, Cross as X } from "@nebutra/icons";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
+import {
+  AnimatePresence,
+  domAnimation,
+  LazyMotion,
+  m,
+  useReducedMotion,
+} from "../shared/animation/motion";
 import { cn } from "../utils";
 import type { NavbarProps, NavLink } from "./types";
 
@@ -79,6 +85,7 @@ export function Navbar({
     () => true,
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   // Prevent background scrolling when mobile menu opens
   useEffect(() => {
@@ -109,18 +116,22 @@ export function Navbar({
     <LazyMotion features={domAnimation}>
       <header
         className={cn(
-          "fixed top-0 inset-x-0 z-50 flex flex-col transition-all duration-300",
+          "fixed top-0 inset-x-0 z-50 flex flex-col transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300",
           className,
         )}
       >
         {/* Announcement Bar */}
-        <AnimatePresence>
+        <AnimatePresence initial={!shouldReduceMotion}>
           {activeAnnouncement && (
             <m.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0, overflow: "hidden" }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { height: "auto", opacity: 1 }}
+              exit={
+                shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0, overflow: "hidden" }
+              }
+              transition={
+                shouldReduceMotion ? { duration: 0 } : { duration: 0.3, ease: "easeInOut" }
+              }
               className="relative flex items-center justify-center bg-[var(--brand-9)] px-4 py-2.5 text-sm font-medium text-white sm:px-6 lg:px-8"
             >
               <div className="flex items-center gap-2 text-center">
@@ -154,7 +165,7 @@ export function Navbar({
         {/* Main Navbar */}
         <nav
           className={cn(
-            "relative flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8 w-full backdrop-blur-md transition-all duration-300 ease-out border-b border-transparent",
+            "relative flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8 w-full backdrop-blur-md transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out border-b border-transparent",
             isScrolled
               ? "bg-white/80 dark:bg-[var(--neutral-1)]/90 shadow-sm border-[var(--neutral-4)] dark:border-[var(--neutral-3)] py-3"
               : "bg-transparent py-5",
@@ -167,7 +178,7 @@ export function Navbar({
               className="flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)] rounded-[var(--radius-md)]"
             >
               {/* Simple logo placeholder - swap with actual Logo module */}
-              <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-[var(--brand-9)] to-[var(--brand-5)] shadow-sm flex items-center justify-center group-hover:shadow-md transition-all">
+              <div className="size-8 rounded-[var(--radius-lg)] bg-gradient-to-tr from-[var(--brand-9)] to-[var(--brand-5)] shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
                 <span className="text-white font-bold text-lg leading-none">N</span>
               </div>
               <span className="font-semibold text-lg tracking-tight text-[var(--neutral-12)]">
@@ -245,7 +256,7 @@ export function Navbar({
         </nav>
 
         {/* Mobile Menu Slide-out Drawer */}
-        <AnimatePresence>
+        <AnimatePresence initial={!shouldReduceMotion}>
           {isMobileMenuOpen && (
             <>
               {/* Backdrop */}
@@ -253,16 +264,21 @@ export function Navbar({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="fixed inset-0 z-40 bg-[var(--neutral-12)]/40 backdrop-blur-sm dark:bg-[var(--neutral-1)]/60 md:hidden"
               />
 
               {/* Drawer */}
               <m.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                initial={shouldReduceMotion ? { opacity: 0 } : { x: "100%" }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { x: "100%" }}
+                transition={
+                  shouldReduceMotion
+                    ? { duration: 0 }
+                    : { type: "spring", damping: 25, stiffness: 200 }
+                }
                 className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-white dark:bg-[var(--neutral-1)] shadow-2xl ring-1 ring-black/10 overflow-y-auto p-6 md:hidden flex flex-col"
               >
                 <div className="flex items-center justify-between mb-8">

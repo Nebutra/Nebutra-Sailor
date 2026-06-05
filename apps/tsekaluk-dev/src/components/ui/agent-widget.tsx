@@ -1,25 +1,26 @@
 "use client";
 
 import { Cross, Message } from "@nebutra/icons";
-import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { ChatInterface } from "@/components/soul/chat-interface";
+import { AnimatePresence, motion, useReducedMotion } from "@/shared/motion";
 
 export function AgentWidget() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion() ?? false;
   const t = useTranslations("soul");
 
   return (
     <>
-      <AnimatePresence>
+      <AnimatePresence initial={!shouldReduceMotion}>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.95 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.95 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
             className="fixed bottom-24 right-6 z-50 w-[350px] shadow-2xl rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 overflow-hidden flex flex-col h-[500px] max-h-[80vh]"
           >
             {/* Header */}
@@ -65,27 +66,27 @@ export function AgentWidget() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-[51] flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-accent)] text-white shadow-[0_8px_30px_var(--color-accent-shadow)] transition-transform hover:scale-105 active:scale-95"
+        className="fixed bottom-6 right-6 z-[51] flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-accent)] text-white shadow-[0_8px_30px_var(--color-accent-shadow)] transition-transform hover:scale-105 active:scale-95 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
         aria-label="Toggle chat"
       >
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={!shouldReduceMotion}>
           {isOpen ? (
             <motion.div
               key="close"
-              initial={{ opacity: 0, rotate: -90 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              exit={{ opacity: 0, rotate: 90 }}
-              transition={{ duration: 0.15 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: -90 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, rotate: 0 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: 90 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.15 }}
             >
               <Cross className="h-6 w-6" />
             </motion.div>
           ) : (
             <motion.div
               key="open"
-              initial={{ opacity: 0, rotate: 90 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              exit={{ opacity: 0, rotate: -90 }}
-              transition={{ duration: 0.15 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: 90 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, rotate: 0 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, rotate: -90 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.15 }}
             >
               <Message className="h-6 w-6" />
             </motion.div>

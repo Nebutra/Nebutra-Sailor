@@ -9,13 +9,13 @@ import {
   SettingsGear as Settings,
   Cross as X,
 } from "@nebutra/icons";
-import { INTEGRATION_CATALOG } from "@/lib/integrations/catalog";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card, EmptyState, PageHeader } from "@nebutra/ui/layout";
 import { DashboardPanel } from "@nebutra/ui/patterns";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { DocumentTaskUploader } from "@/components/documents/document-task-uploader";
+import { INTEGRATION_CATALOG } from "@/lib/integrations/catalog";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -268,7 +268,7 @@ export default function IntegrationsPage() {
             return (
               <AnimateIn key={item.type} preset="fadeUp">
                 <Card
-                  className={`group flex flex-col p-4 transition-all sm:p-5 ${
+                  className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
                     isConnected
                       ? "border-green-7 opacity-60"
                       : "hover:border-[var(--brand-7)] hover:shadow-md"

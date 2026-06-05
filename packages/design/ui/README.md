@@ -4,7 +4,7 @@ Nebutra design-system UI primitives, layouts, patterns, hooks, typography, and
 token-integrated React components.
 
 This package is the shared UI layer for Nebutra products. It combines Nebutra
-runtime tokens with selected Lobe UI, Lucide, Geist-compatible icons, and
+runtime tokens with Nebutra primitives, selected compatibility bridges, icons, and
 product-ready SaaS composition patterns.
 
 ## Installation
@@ -88,7 +88,7 @@ import { OpenAI, Search, Settings } from "@nebutra/ui/icons";
 | Path | Description |
 | --- | --- |
 | `@nebutra/ui` | Theme bridge plus selected common icon exports |
-| `@nebutra/ui/components` | Lobe UI components, chat input/list surfaces, animation helpers, AI prompt box, node graph canvas, and product widgets |
+| `@nebutra/ui/components` | Nebutra components, chat input/list surfaces, animation helpers, AI prompt box, node graph canvas, and product widgets |
 | `@nebutra/ui/layout` | App shell, page header, status, section, and empty/loading/error states |
 | `@nebutra/ui/layouts` | Section container, themed section, and bento grid layouts |
 | `@nebutra/ui/icons` | Lobe, Lucide, and Nebutra icon exports |

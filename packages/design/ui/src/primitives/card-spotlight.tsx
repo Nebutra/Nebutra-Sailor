@@ -1,8 +1,13 @@
 "use client";
 
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import type * as React from "react";
 import { useEffect, useRef, useState } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+} from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 import { CanvasRevealEffect } from "./canvas-reveal-effect";
 
@@ -41,6 +46,7 @@ export function CardSpotlight({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const rootRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const [isHovering, setIsHovering] = useState(false);
 
@@ -78,7 +84,7 @@ export function CardSpotlight({
       {...props}
     >
       <motion.div
-        className="pointer-events-none absolute z-0 -inset-px rounded-[var(--radius-md)] opacity-0 transition duration-300 group-hover/spotlight:opacity-100"
+        className="pointer-events-none absolute z-0 -inset-px rounded-[var(--radius-md)] opacity-0 transition duration-300 motion-reduce:transition-none group-hover/spotlight:opacity-100"
         style={{
           backgroundColor: color,
           maskImage: useMotionTemplate`
@@ -90,7 +96,7 @@ export function CardSpotlight({
           `,
         }}
       >
-        {isHovering && (
+        {isHovering && !shouldReduceMotion && (
           <CanvasRevealEffect
             animationSpeed={5}
             containerClassName="bg-transparent absolute inset-0 pointer-events-none"

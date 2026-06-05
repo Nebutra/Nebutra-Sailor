@@ -1,7 +1,7 @@
 /**
  * @nebutra/ui
  *
- * Unified UI package built on Lobe UI + Lucide Icons + Nebutra design tokens.
+ * Unified UI package built on Nebutra design tokens, curated primitives, and selected compatibility bridges.
  *
  * Token architecture:
  *   @nebutra/brand    → brand primitives (source data)

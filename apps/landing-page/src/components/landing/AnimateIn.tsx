@@ -1,8 +1,8 @@
 "use client";
 
 import { brandSpring, emerge, flow } from "@nebutra/brand";
-import { domAnimation, LazyMotion, m, useReducedMotion } from "framer-motion";
 import type * as React from "react";
+import { domAnimation, LazyMotion, m, useReducedMotion } from "@/shared/motion";
 
 // LazyMotion is hoisted to the (marketing) route group layout so framer's
 // domAnimation features register exactly once per session. Components in this

@@ -154,7 +154,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
               <button
                 type="button"
                 onClick={() => setActiveFilter(null)}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-all whitespace-nowrap flex-shrink-0 ${
+                className={`px-3 py-1 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                   activeFilter === null
                     ? "bg-[var(--blue-9)] text-white"
                     : "bg-[var(--neutral-2)] text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] dark:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)]"
@@ -167,7 +167,7 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                   key={tag}
                   type="button"
                   onClick={() => setActiveFilter(tag === activeFilter ? null : tag)}
-                  className={`px-3 py-1 rounded-full text-sm font-medium transition-all whitespace-nowrap flex-shrink-0 ${
+                  className={`px-3 py-1 rounded-full text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
                     activeFilter === tag
                       ? "text-white"
                       : "bg-[var(--neutral-2)] text-[var(--neutral-12)] hover:bg-[var(--neutral-3)] dark:bg-[var(--neutral-3)] dark:hover:bg-[var(--neutral-4)]"

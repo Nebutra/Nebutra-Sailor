@@ -405,7 +405,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
               return (
                 <article
                   key={content.subtitle}
-                  className="group h-full rounded-[var(--radius-card)] border border-border/60 bg-muted/20 p-8 md:p-10 transition-all duration-500 hover:border-border hover:bg-muted/40"
+                  className="group h-full rounded-[var(--radius-card)] border border-border/60 bg-muted/20 p-8 md:p-10 transition-colors duration-500 hover:border-border hover:bg-muted/40"
                 >
                   <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
                     0{idx + 1} / 03

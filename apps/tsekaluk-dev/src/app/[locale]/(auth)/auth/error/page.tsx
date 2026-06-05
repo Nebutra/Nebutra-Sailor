@@ -1,16 +1,17 @@
 "use client";
 
 import { ArrowLeft, Warning } from "@nebutra/icons";
-import { motion, type Variants } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
+import { motion, useReducedMotion, type Variants } from "@/shared/motion";
 
 function ErrorContent() {
   const t = useTranslations("auth.error");
   const searchParams = useSearchParams();
   const errorType = searchParams.get("error");
+  const shouldReduceMotion = useReducedMotion();
 
   let errorMessageStr = t("default");
   if (errorType === "Configuration") {
@@ -20,23 +21,27 @@ function ErrorContent() {
   }
 
   const containerVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95, filter: "blur(8px)" },
+    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95, filter: "blur(8px)" },
     visible: {
       opacity: 1,
-      scale: 1,
-      filter: "blur(0px)",
+      scale: shouldReduceMotion ? undefined : 1,
+      filter: shouldReduceMotion ? undefined : "blur(0px)",
       transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-        staggerChildren: 0.1,
+        ...(shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }),
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
       },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: shouldReduceMotion ? undefined : 0,
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : { type: "spring", stiffness: 300, damping: 24 },
+    },
   };
 
   return (
@@ -66,7 +71,7 @@ function ErrorContent() {
       <motion.div variants={itemVariants} className="flex flex-col gap-4">
         <Link
           href="/auth/signin"
-          className="relative flex items-center justify-center w-full py-3 px-4 rounded-xl font-medium transition-all duration-200 bg-gray-900 text-white hover:bg-gray-800 hover:shadow-lg dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+          className="relative flex items-center justify-center w-full py-3 px-4 rounded-xl font-medium transition-[background-color,box-shadow] duration-200 bg-gray-900 text-white hover:bg-gray-800 hover:shadow-lg dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
         >
           {t("try_again")}
         </Link>

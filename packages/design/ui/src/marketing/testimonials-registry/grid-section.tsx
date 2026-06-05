@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
+import { motion, useReducedMotion } from "../../shared/animation/motion";
 import { cn } from "../../utils/cn";
 import { GridPattern } from "../grid-pattern";
 import type { TestimonialsCommonProps } from "./types";
@@ -104,6 +104,7 @@ export function GridTestimonials({
   description = "See how teams are building faster with Nebutra — real stories, real impact, real growth.",
   showHeader = true,
 }: GridTestimonialsProps) {
+  const shouldReduceMotion = useReducedMotion();
   // Map TestimonialItem to internal format, or use defaults
   const testimonials =
     items.length > 0
@@ -140,14 +141,20 @@ export function GridTestimonials({
         <div className="relative grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.map(({ name, role, company, quote, image }, index) => (
             <motion.div
-              initial={{ filter: "blur(4px)", translateY: -8, opacity: 0 }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { filter: "blur(4px)", translateY: -8, opacity: 0 }
+              }
               whileInView={{
-                filter: "blur(0px)",
-                translateY: 0,
+                filter: shouldReduceMotion ? undefined : "blur(0px)",
+                translateY: shouldReduceMotion ? undefined : 0,
                 opacity: 1,
               }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 * index + 0.1, duration: 0.8 }}
+              transition={
+                shouldReduceMotion ? { duration: 0 } : { delay: 0.1 * index + 0.1, duration: 0.8 }
+              }
               key={index}
               className="border-foreground/25 relative grid grid-cols-[auto_1fr] gap-x-3 overflow-hidden border border-dashed p-4"
             >

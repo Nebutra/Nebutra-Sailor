@@ -5,7 +5,7 @@
  * sun/moon morph never shifts surrounding navigation content.
  */
 
-import type { Transition } from "framer-motion";
+import type { Transition } from "../../shared/animation/motion";
 import {
   primitiveRadius,
   primitiveSizing,

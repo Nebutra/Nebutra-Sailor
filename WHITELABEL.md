@@ -280,7 +280,7 @@ packages/design/
 ├── tokens/         # Runtime CSS variables (★ SOURCE OF TRUTH) — colors, spacing, typography
 ├── brand/          # Brand constants, colors, motion language
 ├── theme/          # Multi-theme presets (oklch, 6 variants — neon / dark-dense / etc.)
-├── ui/             # Component library — Radix + HeroUI + Lobe UI re-exports + layout
+├── ui/             # Component library — Radix + HeroUI + Nebutra primitives + layout
 └── icons/          # 541 Geist icons as tree-shakable TSX components
 ```
 
@@ -315,7 +315,7 @@ For multi-theme presets (neon / dark-dense / minimal / vibrant / ocean), see
 | ---------------- | ------------------------ | --------------------------------------------- |
 | **SSOT**         | `@yourbrand/tokens`      | Runtime CSS variables, single source of truth |
 | **Brand**        | `@yourbrand/brand`       | Brand constants, colors, motion language      |
-| **Components**   | `@yourbrand/ui`          | Radix + HeroUI + Lobe UI re-exports + layout  |
+| **Components**   | `@yourbrand/ui`          | Radix + HeroUI + Nebutra primitives + layout  |
 | **Themes**       | `@yourbrand/theme`       | Multi-theme presets (oklch, 6 variants)       |
 
 See [Component Library Policy](docs/COMPONENT-LIBRARY-POLICY.md) for governance rules.

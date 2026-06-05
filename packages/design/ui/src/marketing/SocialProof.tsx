@@ -49,7 +49,7 @@ function LogoCloud({ logos }: { logos: Logo[] }) {
               width={160}
               height={40}
               sizes="(max-width: 768px) 120px, 160px"
-              className="h-8 md:h-10 w-auto object-contain brightness-0 dark:invert transition-all group-hover:brightness-100 group-hover:dark:invert-0"
+              className="h-8 md:h-10 w-auto object-contain brightness-0 dark:invert transition-[filter] group-hover:brightness-100 group-hover:dark:invert-0"
               unoptimized
             />
           ) : (
@@ -67,14 +67,14 @@ function LogoCloud({ logos }: { logos: Logo[] }) {
               href={logo.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300"
+              className="group relative flex items-center justify-center grayscale hover:grayscale-0 transition-[filter] duration-300"
             >
               {logoContent}
             </a>
           ) : (
             <div
               key={logo.name}
-              className="group relative flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300"
+              className="group relative flex items-center justify-center grayscale hover:grayscale-0 transition-[filter] duration-300"
             >
               {logoContent}
             </div>

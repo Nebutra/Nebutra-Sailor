@@ -87,7 +87,7 @@ export function ModePills() {
               title={meta.description}
               onClick={() => setMode(meta.id)}
               onKeyDown={(event) => handleKeyDown(event, index)}
-              className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-8 focus-visible:ring-offset-2 ${
+              className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-medium transition-[background-color,border-color,box-shadow,color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-8 focus-visible:ring-offset-2 ${
                 isActive
                   ? ACCENT_ACTIVE_CLASSES[meta.accent]
                   : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12"

@@ -7,8 +7,8 @@
 "use client";
 
 import { CheckCircle as CheckCircle2, ChevronLeft, ChevronRight } from "@nebutra/icons";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import * as React from "react";
+import { AnimatePresence, domAnimation, LazyMotion, m } from "../shared/animation/motion";
 import { cn } from "../utils";
 import type { UseCase, UseCasesProps } from "./types";
 
@@ -282,7 +282,7 @@ export function UseCases(props: UseCasesProps) {
                       <div className="pt-6 mt-auto border-t border-[var(--neutral-4)]">
                         <a
                           href={activeCase.href}
-                          className="inline-flex items-center justify-center rounded-[var(--radius-lg)] bg-[var(--neutral-12)] px-6 py-3 text-sm font-semibold text-[var(--neutral-1)] shadow-sm hover:bg-[var(--neutral-11)] transition-all hover:-translate-y-0.5"
+                          className="inline-flex items-center justify-center rounded-[var(--radius-lg)] bg-[var(--neutral-12)] px-6 py-3 text-sm font-semibold text-[var(--neutral-1)] shadow-sm hover:bg-[var(--neutral-11)] transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
                         >
                           Explore {activeCase.title} solution
                         </a>
@@ -313,7 +313,7 @@ export function UseCases(props: UseCasesProps) {
               <div className="flex justify-center gap-3 mt-4">
                 <button
                   type="button"
-                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:text-[var(--neutral-12)] hover:border-[var(--neutral-7)] transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
+                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:text-[var(--neutral-12)] hover:border-[var(--neutral-7)] transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
                   onClick={() => scrollCarousel("previous")}
                   aria-label="Previous slide"
                 >
@@ -321,7 +321,7 @@ export function UseCases(props: UseCasesProps) {
                 </button>
                 <button
                   type="button"
-                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:text-[var(--neutral-12)] hover:border-[var(--neutral-7)] transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
+                  className="h-10 w-10 flex items-center justify-center rounded-full border border-[var(--neutral-5)] bg-white dark:bg-[var(--neutral-3)] text-[var(--neutral-11)] hover:text-[var(--neutral-12)] hover:border-[var(--neutral-7)] transition-colors shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-9)]"
                   onClick={() => scrollCarousel("next")}
                   aria-label="Next slide"
                 >

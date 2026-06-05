@@ -1,8 +1,8 @@
 "use client";
 
 import { brandSpring, emerge, flow } from "@nebutra/brand";
-import { domAnimation, LazyMotion, m, useReducedMotion } from "framer-motion";
 import type * as React from "react";
+import { domAnimation, LazyMotion, m, useReducedMotion } from "../shared/animation/motion";
 
 const PRESETS = {
   emerge: {

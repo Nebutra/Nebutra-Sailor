@@ -301,7 +301,7 @@ export function SkipLinkStyleDemo() {
           area below, then press Tab.
         </p>
         <div
-          className="w-full h-[150px] border border-dashed border-fd-border rounded-lg bg-fd-muted/30 relative flex items-center justify-center p-4 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition-all overflow-hidden"
+          className="w-full h-[150px] border border-dashed border-fd-border rounded-lg bg-fd-muted/30 relative flex items-center justify-center p-4 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition-colors overflow-hidden"
           role="tabpanel"
           aria-label="Skip link demo container"
         >

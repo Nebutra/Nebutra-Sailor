@@ -1,10 +1,10 @@
 "use client";
 import { CheckCircle as CheckCircleIcon, Star as StarIcon } from "@nebutra/icons";
-import { motion, type Transition } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../primitives/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../primitives/tooltip";
+import { motion, type Transition, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 type PricingFrequency = "monthly" | "yearly";
@@ -71,6 +71,8 @@ export function PricingFrequencyToggle({
   className,
   ...props
 }: PricingFrequencyToggleProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <div
       className={cn(
@@ -94,8 +96,8 @@ export function PricingFrequencyToggle({
           <span className="relative z-10">{freq}</span>
           {frequency === freq && (
             <motion.span
-              layoutId="frequency"
-              transition={{ type: "spring", duration: 0.4 }}
+              layoutId={shouldReduceMotion ? undefined : "frequency"}
+              transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", duration: 0.4 }}
               className="bg-foreground absolute inset-0 z-0 rounded-full mix-blend-difference"
             />
           )}
@@ -224,6 +226,7 @@ export function BorderTrail({
   onAnimationComplete,
   style,
 }: BorderTrailProps) {
+  const shouldReduceMotion = useReducedMotion();
   const BASE_TRANSITION = {
     repeat: Infinity,
     duration: 5,
@@ -239,12 +242,11 @@ export function BorderTrail({
           ...style,
         }}
         animate={{
-          offsetDistance: ["0%", "100%"],
+          offsetDistance: shouldReduceMotion ? "0%" : ["0%", "100%"],
         }}
-        transition={{
-          ...(transition ?? BASE_TRANSITION),
-          delay: delay,
-        }}
+        transition={
+          shouldReduceMotion ? { duration: 0 } : { ...(transition ?? BASE_TRANSITION), delay }
+        }
         onAnimationComplete={onAnimationComplete}
       />
     </div>

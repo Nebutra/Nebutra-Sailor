@@ -13,7 +13,7 @@
 
 | 子目录 | 描述 | 组件/导出数 |
 |--------|------|------------|
-| `components/` | Lobe UI 薄包装 + AI 组件 | ~8 个具名导出组 (LobeUI re-exports + ai-prompt-box, animate-in, ascii-text, changelog-widget, onboarding-checklist, team-chat) |
+| `components/` | Nebutra 组件入口 + AI/聊天兼容层 | ~8 个具名导出组 (compat exports + ai-prompt-box, animate-in, ascii-text, changelog-widget, onboarding-checklist, team-chat) |
 | `primitives/` | 核心设计系统原语 — 最大层 | ~140 个具名导出 (按 index.ts 统计) |
 | `patterns/` | 复合模式组件 | 3 组 (Card, CommandBox, Terminal 复合组件) |
 | `layout/` | 页面级包装组件 | 8 个 (Card, Container, EmptyState, ErrorState, LoadingState, PageHeader, Section, DesignSystemProvider) |

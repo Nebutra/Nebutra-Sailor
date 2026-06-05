@@ -195,7 +195,7 @@ Nebula • Nurture • Ultra • Future
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
       <strong>AI 原生</strong>
-      <br />内置 LLM、向量检索、MCP Agents，以及高级的 Lobe UI 聊天体验。
+      <br />内置 LLM、向量检索、MCP Agents，以及高级的 Nebutra UI 聊天体验。
     </td>
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
@@ -290,7 +290,7 @@ Nebula • Nurture • Ultra • Future
 <td>
   <a href="https://www.radix-ui.com/"><img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radix-ui&logoColor=white" alt="Radix UI" /></a>
   <img src="https://img.shields.io/badge/HeroUI-000?style=flat-square" alt="HeroUI" />
-  <img src="https://img.shields.io/badge/Lobe_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Lobe UI" />
+  <img src="https://img.shields.io/badge/Nebutra_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Nebutra UI" />
   <img src="https://img.shields.io/badge/Geist_Icons_(541)-000?style=flat-square" alt="Geist Icons" />
   <img src="https://img.shields.io/badge/Inter-000?style=flat-square&logo=googlefonts&logoColor=white&v=1" alt="Inter" />
   <img src="https://img.shields.io/badge/JetBrains_Mono-000?style=flat-square&logo=jetbrains&logoColor=white&v=1" alt="JetBrains Mono" />

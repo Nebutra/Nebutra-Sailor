@@ -1,15 +1,16 @@
 "use client";
 
 import { ArrowLeft, Command, LoaderCircle, LogoGithub, LogoGoogle } from "@nebutra/icons";
-import { motion, type Variants } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { signIn } from "@/lib/auth-client";
+import { motion, useReducedMotion, type Variants } from "@/shared/motion";
 
 export default function SignInPage() {
   const t = useTranslations("auth.signin");
   const [loadingProvider, setLoadingProvider] = useState<string | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleSignIn = (provider: "github" | "google" | "linuxdo") => {
     setLoadingProvider(provider);
@@ -17,23 +18,27 @@ export default function SignInPage() {
   };
 
   const containerVariants: Variants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30, filter: "blur(8px)" },
     visible: {
       opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
+      y: shouldReduceMotion ? undefined : 0,
+      filter: shouldReduceMotion ? undefined : "blur(0px)",
       transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-        staggerChildren: 0.1,
+        ...(shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 300, damping: 30 }),
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
       },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } },
+    hidden: shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: shouldReduceMotion ? undefined : 0,
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : { type: "spring", stiffness: 300, damping: 24 },
+    },
   };
 
   return (
@@ -55,7 +60,7 @@ export default function SignInPage() {
           type="button"
           onClick={() => handleSignIn("github")}
           disabled={loadingProvider !== null}
-          className="relative flex items-center justify-center gap-3 w-full py-3 px-4 rounded-xl font-medium transition-all duration-200 bg-gray-900 text-white hover:bg-gray-800 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+          className="relative flex items-center justify-center gap-3 w-full py-3 px-4 rounded-xl font-medium transition-[background-color,box-shadow,opacity] duration-200 bg-gray-900 text-white hover:bg-gray-800 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
         >
           {loadingProvider === "github" ? (
             <LoaderCircle className="w-5 h-5 animate-spin" />
@@ -69,7 +74,7 @@ export default function SignInPage() {
           type="button"
           onClick={() => handleSignIn("google")}
           disabled={loadingProvider !== null}
-          className="relative flex items-center justify-center gap-3 w-full py-3 px-4 rounded-xl font-medium transition-all duration-200 bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:shadow disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700"
+          className="relative flex items-center justify-center gap-3 w-full py-3 px-4 rounded-xl font-medium transition-[background-color,box-shadow,opacity] duration-200 bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:shadow disabled:opacity-50 disabled:cursor-not-allowed dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700"
         >
           {loadingProvider === "google" ? (
             <LoaderCircle className="w-5 h-5 animate-spin" />
@@ -83,7 +88,7 @@ export default function SignInPage() {
           type="button"
           onClick={() => handleSignIn("linuxdo")}
           disabled={loadingProvider !== null}
-          className="relative flex items-center justify-center gap-3 w-full py-3 px-4 rounded-xl font-medium transition-all duration-200 bg-[#34A853]/10 text-[#34A853] border border-[#34A853]/20 hover:bg-[#34A853]/20 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="relative flex items-center justify-center gap-3 w-full py-3 px-4 rounded-xl font-medium transition-[background-color,opacity] duration-200 bg-[#34A853]/10 text-[#34A853] border border-[#34A853]/20 hover:bg-[#34A853]/20 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loadingProvider === "linuxdo" ? (
             <LoaderCircle className="w-5 h-5 animate-spin" />

@@ -558,12 +558,12 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
 
   brand: ts(
     "brand.ts",
-    `import { brand, motion } from "@nebutra/brand";
+    `import { brand, brandMotion } from "@nebutra/brand";
 
 export const palette = brand.colors.scale("primary"); // 12 oklch steps
 export const accent = brand.colors.solid("accent");
 
-const heroAnimation = motion.preset("emerge"); // brand motion language`,
+const heroAnimation = brandMotion.emerge; // brand motion language`,
     [3, 6],
   ),
 

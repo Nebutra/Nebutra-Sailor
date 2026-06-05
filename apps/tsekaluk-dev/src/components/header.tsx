@@ -1,7 +1,6 @@
 "use client";
 
 import { Cross, Layout, Logout, MagnifyingGlass, Menu } from "@nebutra/icons";
-import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import * as React from "react";
@@ -10,11 +9,13 @@ import { useCommandPalette } from "@/components/providers/command-palette-provid
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "@/i18n/navigation";
 import { signIn, signOut, useSession } from "@/lib/auth-client";
+import { AnimatePresence, motion, useReducedMotion } from "@/shared/motion";
 
 function AuthIndicator() {
   const { data: session, isPending } = useSession();
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   // Close dropdown on outside click
   React.useEffect(() => {
@@ -62,10 +63,10 @@ function AuthIndicator() {
         <AnimatePresence>
           {open && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -4 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -4 }}
-              transition={{ duration: 0.12 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: -4 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.95, y: -4 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.12 }}
               className="right-0 top-8 z-50 min-w-[160px] absolute overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900"
             >
               <div className="border-b border-gray-100 px-3 py-2 dark:border-gray-800">
@@ -135,7 +136,7 @@ function DesktopNavItem({ href, label }: { href: string; label: string }) {
       ) : (
         label
       )}
-      <span className="-bottom-0.5 left-0 w-0 absolute h-px bg-foreground transition-all duration-300 group-hover:w-full" />
+      <span className="-bottom-0.5 left-0 w-0 absolute h-px bg-foreground transition-[width] duration-300 group-hover:w-full motion-reduce:transition-none" />
     </Link>
   );
 }
@@ -144,6 +145,7 @@ export function Header() {
   const t = useTranslations("nav");
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { setOpen: openCommandPalette } = useCommandPalette();
+  const shouldReduceMotion = useReducedMotion();
 
   const NAV_ITEMS = [
     { label: t("work"), href: "/work" },
@@ -201,7 +203,7 @@ export function Header() {
             </div>
             <Link
               href="/about#contact"
-              className="bg-gray-900 px-5 py-2 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 rounded-full transition-all duration-200 hover:scale-[1.03] active:scale-[0.97] dark:hover:bg-gray-200"
+              className="bg-gray-900 px-5 py-2 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-gray-900 rounded-full transition-[background-color,transform] duration-200 hover:scale-[1.03] active:scale-[0.97] dark:hover:bg-gray-200 motion-reduce:transition-colors motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
             >
               {t("contact")}
             </Link>
@@ -223,10 +225,10 @@ export function Header() {
           {mobileOpen && (
             <motion.div
               className="md:hidden overflow-hidden"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { height: "auto", opacity: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.3, ease: "easeInOut" }}
             >
               <div className="gap-4 pt-6 pb-4 flex flex-col">
                 {NAV_ITEMS.map((item) => (

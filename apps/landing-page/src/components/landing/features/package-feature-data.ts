@@ -374,8 +374,8 @@ export const PACKAGE_DESCRIPTIONS: Record<string, { en: string; zh: string }> = 
     zh: "纯 CSS 多 theme 引擎 — 六套 oklch preset,通过 data-theme 切换;关键路径无 JS。",
   },
   ui: {
-    en: "Primary component library — Lobe UI re-exports + custom primitives + layout + framer-motion. The one place to import from.",
-    zh: "主组件库 — Lobe UI 重导出 + 自研原语 + layout + framer-motion;唯一推荐 import 来源。",
+    en: "Primary component library — Nebutra components, custom primitives, layout, theme bridge, and the shared Motion facade. The product UI import boundary.",
+    zh: "主组件库 — Nebutra 组件、自研原语、layout、主题桥接与共享 Motion 门面；产品 UI 的 import 边界。",
   },
   "design-sync": {
     en: "Provider-agnostic design-tool sync — Figma, Penpot, or git-only. Pulls design-tool tokens to repo and pushes repo to design tool, safely dry-run by default.",

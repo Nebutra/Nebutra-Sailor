@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronRight } from "@nebutra/icons";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "@/shared/motion";
 
 const navLinks = ["Products", "Solutions", "Pricing", "Docs"];
 const stats = [
@@ -11,12 +11,14 @@ const stats = [
 ];
 
 export function EnterpriseMockup() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
         className="w-full max-w-2xl h-[420px] bg-background border border-border rounded-[var(--radius-xl)] overflow-hidden shadow-sm flex flex-col"
       >
         {/* Nav */}

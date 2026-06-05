@@ -1,7 +1,7 @@
 "use client";
 
-import { useInView, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
+import { useInView, useMotionValue, useSpring } from "@/shared/motion";
 
 interface CountUpProps {
   target: number;

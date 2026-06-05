@@ -1610,7 +1610,7 @@
         },
         "tech-stack": {
           "question": "¿Cuál es el stack tecnológico?",
-          "answer": "Next.js 16 (App Router) sobre React 19, TypeScript 5.9, Tailwind v4, Prisma 7 sobre Postgres (con pgvector + RLS), Hono para la puerta de enlace BFF, FastAPI para servicios ML/pesados, y una biblioteca de componentes curada sobre Radix + primitivos Lobe UI con framer-motion. Las funciones de IA pasan a través del SDK de IA de Vercel con portabilidad de proveedor (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "answer": "Next.js 16 (App Router) sobre React 19, TypeScript 5.9, Tailwind v4, Prisma 7 sobre Postgres (con pgvector + RLS), Hono para la puerta de enlace BFF, FastAPI para servicios ML/pesados, y una biblioteca de componentes curada sobre Radix, primitivos Nebutra UI y la capa Motion compartida. Las funciones de IA pasan a través del SDK de IA de Vercel con portabilidad de proveedor (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
           "question": "¿Cuál es la licencia?",

@@ -27,7 +27,7 @@ backends/              # No-UI backends (split by language à la vercel/vercel)
 
 packages/              # Shared TypeScript libraries — categorized layout: <category>/<name>
   design/
-    ui/                PRIMARY component library — Lobe UI + custom primitives + layout + framer-motion
+    ui/                PRIMARY component library — Nebutra primitives + layout + shared Motion
     tokens/            Runtime design tokens (CSS variables) + next-themes ThemeProvider  ★ SOURCE OF TRUTH
     design-tokens/     W3C DTCG ($value/$type) tokens — Style Dictionary 4 pipeline
     brand/             Brand colors, gradients, motion language (VI manual)
@@ -84,7 +84,7 @@ tests/                 # architecture/ + load/  (vitest + k6)
 ### 1. Always import from the right package
 
 ```tsx
-// UI components (Lobe UI re-exports + custom primitives)
+// UI components (Nebutra primitives, patterns, and curated AI/chat surfaces)
 // Note: many primitives also live under @nebutra/ui/primitives — prefer
 // /primitives for low-level building blocks, /components for composed patterns.
 import { Button, Input, Card } from "@nebutra/ui/components";
@@ -104,7 +104,7 @@ import { MagnifyingGlass, SettingsGear, ChevronRight, Sparkles } from "@nebutra/
 // Theme switching (light/dark) — from @nebutra/tokens
 import { ThemeProvider, useTheme } from "@nebutra/tokens";
 
-// Lobe UI theme wrapper — from @nebutra/ui
+// Lobe compatibility theme wrapper — from @nebutra/ui
 import { NebutraThemeProvider } from "@nebutra/ui";
 
 // NEVER import from @primer/react — it has been removed

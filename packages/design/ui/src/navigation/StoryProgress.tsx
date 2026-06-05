@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import * as React from "react";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 import { useScrollSpy } from "./ScrollSpyProvider";
 
@@ -27,6 +27,7 @@ export interface StoryProgressProps extends Omit<React.HTMLAttributes<HTMLElemen
 export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
   ({ position = "right", showLabels = true, className, ...props }, ref) => {
     const { sections, activeSection, scrollToSection, scrollProgress } = useScrollSpy();
+    const shouldReduceMotion = useReducedMotion();
 
     if (sections.length === 0) return null;
 
@@ -47,7 +48,7 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
           <motion.div
             className="absolute top-0 w-full bg-primary/50"
             style={{ height: `${scrollProgress * 100}%` }}
-            transition={{ duration: 0.1 }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
           />
         </div>
 
@@ -64,8 +65,8 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
                 "relative z-10 group flex items-center gap-3",
                 position === "right" ? "flex-row-reverse" : "flex-row",
               )}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={shouldReduceMotion ? { opacity: 1 } : { scale: 1.1 }}
+              whileTap={shouldReduceMotion ? { opacity: 1 } : { scale: 0.95 }}
               aria-label={`Go to ${section.label}`}
               aria-current={isActive ? "true" : undefined}
             >
@@ -80,9 +81,9 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
                       : "bg-background border-border hover:border-primary/50",
                 )}
                 animate={{
-                  scale: isActive ? 1.2 : 1,
+                  scale: shouldReduceMotion ? 1 : isActive ? 1.2 : 1,
                 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
               />
 
               {/* Label (shown on hover) */}
@@ -91,11 +92,15 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
                   className={cn(
                     "text-xs font-medium whitespace-nowrap",
                     "opacity-0 group-hover:opacity-100",
-                    "transition-opacity duration-200",
+                    "transition-opacity duration-200 motion-reduce:transition-none",
                     isActive ? "text-foreground" : "text-muted-foreground",
                   )}
-                  initial={{ opacity: 0, x: position === "right" ? 10 : -10 }}
-                  whileHover={{ opacity: 1, x: 0 }}
+                  initial={
+                    shouldReduceMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, x: position === "right" ? 10 : -10 }
+                  }
+                  whileHover={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
                 >
                   {section.label}
                 </motion.span>

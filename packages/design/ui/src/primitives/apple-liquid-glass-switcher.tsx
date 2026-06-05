@@ -1,9 +1,9 @@
 "use client";
 
 import { DeviceDesktop as Laptop, Moon, Sun } from "@nebutra/icons";
-import { motion } from "framer-motion";
 import type React from "react";
 import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 
 type Theme = "light" | "dark" | "dim";
 
@@ -37,6 +37,7 @@ export function AppleLiquidGlassSwitcher({
   onValueChange,
 }: ThemeSwitcherProps) {
   const [internalValue, setInternalValue] = useState(defaultValue);
+  const shouldReduceMotion = useReducedMotion() ?? false;
 
   const activeValue = value ?? internalValue;
 
@@ -98,14 +99,18 @@ export function AppleLiquidGlassSwitcher({
 
               {isActive && (
                 <motion.div
-                  layoutId="apple-glass-switcher-active"
+                  {...(shouldReduceMotion ? {} : { layoutId: "apple-glass-switcher-active" })}
                   className="absolute inset-0 rounded-full bg-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_2px_10px_rgba(0,0,0,0.2)] backdrop-blur-md"
                   initial={false}
-                  transition={{
-                    type: "spring",
-                    stiffness: 400,
-                    damping: 30,
-                  }}
+                  transition={
+                    shouldReduceMotion
+                      ? { duration: 0 }
+                      : {
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 30,
+                        }
+                  }
                 />
               )}
 

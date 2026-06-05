@@ -69,7 +69,7 @@ export function Hero() {
         <AnimateIn
           preset="fade"
           delay={0.4}
-          className="hidden md:flex absolute top-[25%] left-4 lg:left-12 z-30 items-center gap-3 px-5 py-2.5 bg-white dark:bg-gray-950 rounded-full border border-gray-200 dark:border-gray-800 shadow-sm transition-transform hover:-translate-y-0.5"
+          className="hidden md:flex absolute top-[25%] left-4 lg:left-12 z-30 items-center gap-3 px-5 py-2.5 bg-white dark:bg-gray-950 rounded-full border border-gray-200 dark:border-gray-800 shadow-sm transition-transform hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
           <span className="relative flex h-2.5 w-2.5">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#a3e635] opacity-75"></span>
@@ -120,10 +120,10 @@ export function Hero() {
         >
           <Link
             href="/now"
-            className="group inline-flex items-center justify-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-7 py-3.5 rounded-full text-base font-medium transition-all hover:bg-gray-800 dark:hover:bg-gray-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+            className="group inline-flex items-center justify-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-7 py-3.5 rounded-full text-base font-medium transition-[background-color,box-shadow,transform] hover:bg-gray-800 dark:hover:bg-gray-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl motion-reduce:transition-colors motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
           >
             {t("cta_primary")}{" "}
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
           </Link>
         </AnimateIn>
       </div>
@@ -146,10 +146,10 @@ export function Hero() {
 
         <Link
           href="/now"
-          className="group inline-flex items-center justify-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md mx-auto"
+          className="group inline-flex items-center justify-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-full text-sm font-medium transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-md mx-auto motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
         >
           {t("cta_primary")}{" "}
-          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
         </Link>
       </div>
     </section>

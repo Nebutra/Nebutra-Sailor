@@ -177,7 +177,7 @@ Nebutra-Sailor は **Wuxi Nebutra Intelligence Technology Co., Ltd.**（无锡�
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
       <strong>AI ネイティブ</strong>
-      <br />LLM、ベクトル検索、MCPエージェント、および高品質な Lobe UI チャット体験。
+      <br />LLM、ベクトル検索、MCPエージェント、および高品質な Nebutra UI チャット体験。
     </td>
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
@@ -272,7 +272,7 @@ Nebutra-Sailor は **Wuxi Nebutra Intelligence Technology Co., Ltd.**（无锡�
 <td>
   <a href="https://www.radix-ui.com/"><img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radix-ui&logoColor=white" alt="Radix UI" /></a>
   <img src="https://img.shields.io/badge/HeroUI-000?style=flat-square" alt="HeroUI" />
-  <img src="https://img.shields.io/badge/Lobe_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Lobe UI" />
+  <img src="https://img.shields.io/badge/Nebutra_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Nebutra UI" />
   <img src="https://img.shields.io/badge/Geist_Icons_(541)-000?style=flat-square" alt="Geist Icons" />
   <img src="https://img.shields.io/badge/Inter-000?style=flat-square&logo=googlefonts&logoColor=white&v=1" alt="Inter" />
   <img src="https://img.shields.io/badge/JetBrains_Mono-000?style=flat-square&logo=jetbrains&logoColor=white&v=1" alt="JetBrains Mono" />
@@ -600,7 +600,7 @@ Nebutra-Sailor/
 │   ├── brand/             # ブランドアセット、ガイドライン
 │   ├── preset/            # 機能ベースのテンプレート設定
 │   ├── theme/             # グローバルテーマトークン & CSS 変数
-│   ├── ui/                # Radix + HeroUI + Lobe UI コンポーネント
+│   ├── ui/                # Radix + HeroUI + Nebutra UI プリミティブ
 │   ├── icons/             # Geist アイコンライブラリ
 │   ├── identity/          # 認証ヘルパー & テナント ID
 │   ├── contracts/         # 共有 TypeScript 型 & Zod スキーマ

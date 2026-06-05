@@ -1,10 +1,10 @@
 "use client";
 
-import { useInView } from "framer-motion";
 import type React from "react";
 import { useEffect, useRef } from "react";
 import { annotate } from "rough-notation";
 import type { RoughAnnotation } from "rough-notation/lib/model";
+import { useInView } from "../shared/animation/motion";
 
 // =============================================================================
 // Types

@@ -1,8 +1,16 @@
 "use client";
 
-import { domAnimation, LazyMotion, m, type Variants } from "framer-motion";
 import type { Ref } from "react";
+import {
+  domAnimation,
+  LazyMotion,
+  m,
+  useReducedMotion,
+  type Variants,
+} from "../shared/animation/motion";
 import { cn } from "../utils/cn";
+
+type MotionVariants = Variants;
 
 /* -------------------------------------------------------------------------- *\
  *  Folder — decorative animated folder with hover-reveal papers.
@@ -187,28 +195,37 @@ const colorMap: Readonly<Record<FolderColor, FolderColorTokens>> = {
 };
 
 const spring = { type: "spring", stiffness: 300, damping: 22 } as const;
+const instant = { duration: 0 } as const;
 
 // ---------------------------------------------------------------------------
 // Variants (shared between div + button render paths)
 // ---------------------------------------------------------------------------
 
-function buildPaperVariants(s: FolderSizeTokens): {
-  backRight: Variants;
-  backLeft: Variants;
-  front: Variants;
+function buildPaperVariants(
+  s: FolderSizeTokens,
+  shouldReduceMotion: boolean,
+): {
+  backRight: MotionVariants;
+  backLeft: MotionVariants;
+  front: MotionVariants;
 } {
+  const transition = shouldReduceMotion ? instant : spring;
   return {
     backRight: {
-      rest: { rotate: 4, y: 0, transition: spring },
-      hover: { rotate: 6, y: s.hoverBackY, transition: spring },
+      rest: { rotate: 4, y: 0, transition },
+      hover: shouldReduceMotion
+        ? { rotate: 4, y: 0, transition }
+        : { rotate: 6, y: s.hoverBackY, transition },
     },
     backLeft: {
-      rest: { rotate: -4, y: 0, transition: spring },
-      hover: { rotate: -6, y: s.hoverBackY, transition: spring },
+      rest: { rotate: -4, y: 0, transition },
+      hover: shouldReduceMotion
+        ? { rotate: -4, y: 0, transition }
+        : { rotate: -6, y: s.hoverBackY, transition },
     },
     front: {
-      rest: { y: 0, transition: spring },
-      hover: { y: s.hoverY, transition: spring },
+      rest: { y: 0, transition },
+      hover: shouldReduceMotion ? { y: 0, transition } : { y: s.hoverY, transition },
     },
   };
 }
@@ -225,9 +242,10 @@ export const Folder = function Folder({
   onClick,
   className,
 }: FolderProps & { ref?: Ref<HTMLDivElement | HTMLButtonElement> | undefined }) {
+  const shouldReduceMotion = useReducedMotion() ?? false;
   const c = colorMap[color];
   const s = sizeMap[size];
-  const v = buildPaperVariants(s);
+  const v = buildPaperVariants(s, shouldReduceMotion);
   const interactive = typeof onClick === "function";
 
   const containerCls = cn(
@@ -310,16 +328,14 @@ export const Folder = function Folder({
       <LazyMotion features={domAnimation}>
         <m.button
           // Double-cast bridges framer-motion's bundled React types vs @types/react.
-          // Both are Ref<HTMLButtonElement> nominally but TS treats them as distinct.
-          ref={ref as any}
+          ref={ref as unknown as never}
           type="button"
           onClick={onClick}
           aria-label={label ?? "Open folder"}
           initial="rest"
           animate="rest"
-          whileHover="hover"
-          whileFocus="hover"
           className={cn(containerCls, "border-0 p-0")}
+          {...(shouldReduceMotion ? {} : { whileHover: "hover", whileFocus: "hover" })}
         >
           {children}
         </m.button>
@@ -331,12 +347,12 @@ export const Folder = function Folder({
     <LazyMotion features={domAnimation}>
       <m.div
         // Double-cast: framer-motion's React types ≠ @types/react despite same name.
-        ref={ref as any}
+        ref={ref as unknown as never}
         aria-hidden="true"
         initial="rest"
         animate="rest"
-        whileHover="hover"
         className={containerCls}
+        {...(shouldReduceMotion ? {} : { whileHover: "hover" })}
       >
         {children}
       </m.div>

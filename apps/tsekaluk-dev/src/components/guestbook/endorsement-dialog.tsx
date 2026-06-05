@@ -164,7 +164,7 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
       <DialogTrigger asChild>
         <button
           type="button"
-          className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-all hover:bg-gray-800 hover:scale-[1.03] active:scale-[0.97] dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+          className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-[background-color,transform] hover:bg-gray-800 hover:scale-[1.03] active:scale-[0.97] motion-reduce:transition-colors motion-reduce:hover:scale-100 motion-reduce:active:scale-100 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
         >
           <Message className="h-4 w-4" />
           Leave an endorsement

@@ -3,11 +3,11 @@
 import { brandSpring } from "@nebutra/brand";
 import { LoaderCircle, PaperAirplane, SignIn } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { signIn, useSession } from "@/lib/auth-client";
+import { AnimatePresence, motion, useReducedMotion } from "@/shared/motion";
 
 interface Message {
   role: "user" | "assistant";
@@ -22,7 +22,7 @@ function SoulOrb({ size = "sm", isError = false }: { size?: "sm" | "lg"; isError
       className={`relative shrink-0 flex items-center justify-center font-mono ${isError ? "text-destructive" : "text-foreground"} ${isLg ? "w-16 h-16 text-4xl" : "w-10 h-10 text-base"}`}
     >
       {isLg ? (
-        <div className="flex flex-col items-center justify-center leading-none z-10 transition-transform duration-700 ease-in-out hover:scale-110">
+        <div className="flex flex-col items-center justify-center leading-none z-10 transition-transform duration-700 ease-in-out hover:scale-110 motion-reduce:transition-none motion-reduce:hover:scale-100">
           <svg
             aria-hidden="true"
             width="1em"
@@ -70,10 +70,11 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+    bottomRef.current?.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth" });
+  }, [shouldReduceMotion]);
 
   // Abort any in-flight request on unmount
   useEffect(() => {
@@ -230,7 +231,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
               onClick={() =>
                 signIn.social({ provider: "github", callbackURL: window.location.pathname })
               }
-              className="flex items-center gap-2 rounded-full bg-gray-900 px-6 py-2.5 text-body-14 text-white transition-all duration-200 hover:bg-gray-800 hover:scale-[1.03] active:scale-[0.97] dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 will-change-transform"
+              className="flex items-center gap-2 rounded-full bg-gray-900 px-6 py-2.5 text-body-14 text-white transition-[background-color,transform] duration-200 hover:bg-gray-800 hover:scale-[1.03] active:scale-[0.97] dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 will-change-transform motion-reduce:transition-colors motion-reduce:hover:scale-100 motion-reduce:active:scale-100 motion-reduce:will-change-auto"
             >
               <SignIn className="h-4 w-4" />
               {t("auth_button")}
@@ -251,9 +252,9 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
       >
         {messages.length === 0 && (
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={brandSpring}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
             className="flex h-full flex-col items-center justify-center gap-6 text-center"
           >
             <SoulOrb size="lg" />
@@ -267,7 +268,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
                   key={s}
                   type="button"
                   onClick={() => handleStarter(s)}
-                  className="font-mono rounded-md border border-border bg-muted/30 px-4 py-2 text-[11px] uppercase tracking-wider text-muted-foreground transition-all duration-200 hover:border-[var(--color-accent-foreground)] hover:text-foreground"
+                  className="font-mono rounded-md border border-border bg-muted/30 px-4 py-2 text-[11px] uppercase tracking-wider text-muted-foreground transition-[border-color,color] duration-200 hover:border-[var(--color-accent-foreground)] hover:text-foreground"
                 >
                   {s}
                 </button>
@@ -281,9 +282,13 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
             {messages.map((msg, i) => (
               <motion.div
                 key={`${msg.role}-${i}`}
-                initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={brandSpring}
+                initial={
+                  shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, filter: "blur(4px)" }
+                }
+                animate={
+                  shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }
+                }
+                transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
                 className={`flex gap-4 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
               >
                 {msg.role === "assistant" && <SoulOrb isError={msg.isError} />}
@@ -304,9 +309,13 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
 
           {isTyping && (
             <motion.div
-              initial={{ opacity: 0, y: 12, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={brandSpring}
+              initial={
+                shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, filter: "blur(4px)" }
+              }
+              animate={
+                shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }
+              }
+              transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
               className="flex gap-4"
             >
               <SoulOrb />
@@ -322,7 +331,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
 
       {/* Input */}
       <div className="relative border-t border-border/40 bg-background/80 backdrop-blur-md px-5 py-4 pb-safe supports-[padding:max(0px)]:pb-[max(1rem,env(safe-area-inset-bottom))]">
-        <div className="max-w-3xl mx-auto flex items-end gap-3 rounded-xl border border-border bg-background/50 px-4 py-3 shadow-sm transition-all duration-300 focus-within:border-[var(--color-accent-foreground)] focus-within:shadow-md focus-within:bg-background">
+        <div className="max-w-3xl mx-auto flex items-end gap-3 rounded-xl border border-border bg-background/50 px-4 py-3 shadow-sm transition-[background-color,border-color,box-shadow] duration-300 focus-within:border-[var(--color-accent-foreground)] focus-within:shadow-md focus-within:bg-background">
           <textarea
             ref={textareaRef}
             value={input}
@@ -348,7 +357,7 @@ export function ChatInterface({ isWidget = false }: { isWidget?: boolean }) {
             onClick={sendMessage}
             disabled={!input.trim() || isStreaming}
             aria-label="Send message"
-            className="shrink-0 rounded-md bg-foreground p-2 text-background transition-all hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
+            className="shrink-0 rounded-md bg-foreground p-2 text-background transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isStreaming ? (
               <LoaderCircle className="h-4 w-4 animate-spin" />

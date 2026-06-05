@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducedMotion as useFramerReducedMotion } from "framer-motion";
+import { useReducedMotion as useSharedReducedMotion } from "../shared/animation/motion";
 
 /**
  * Returns true if the user has enabled prefers-reduced-motion.
@@ -14,5 +14,5 @@ import { useReducedMotion as useFramerReducedMotion } from "framer-motion";
  * const transition = shouldReduce ? { duration: 0 } : brandSpring.default;
  */
 export function useReducedMotion(): boolean {
-  return useFramerReducedMotion() ?? false;
+  return useSharedReducedMotion() ?? false;
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronRight, File, FolderClosed as Folder, FolderOpen } from "@nebutra/icons";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   type ComponentProps,
   createContext,
@@ -12,6 +11,7 @@ import {
   useId,
   useState,
 } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 type TreeContextType = {
@@ -25,6 +25,7 @@ type TreeContextType = {
   multiSelect?: boolean;
   indent?: number;
   animateExpand?: boolean;
+  reduceMotion?: boolean;
 };
 
 const TreeContext = createContext<TreeContextType | undefined>(undefined);
@@ -81,6 +82,7 @@ export const TreeProvider = ({
   animateExpand = true,
   className,
 }: TreeProviderProps) => {
+  const shouldReduceMotion = useReducedMotion() ?? false;
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set(defaultExpandedIds));
   const [internalSelectedIds, setInternalSelectedIds] = useState<string[]>(selectedIds ?? []);
 
@@ -137,13 +139,14 @@ export const TreeProvider = ({
         multiSelect,
         indent,
         animateExpand,
+        reduceMotion: shouldReduceMotion,
       }}
     >
       <motion.div
-        animate={{ opacity: 1, y: 0 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
         className={cn("w-full", className)}
-        initial={{ opacity: 0, y: 10 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }}
+        transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3, ease: "easeOut" }}
       >
         {children}
       </motion.div>
@@ -216,7 +219,7 @@ export const TreeNodeTrigger = ({
   onClick,
   ...props
 }: TreeNodeTriggerProps) => {
-  const { selectedIds, toggleExpanded, handleSelection, indent } = useTree();
+  const { selectedIds, toggleExpanded, handleSelection, indent, reduceMotion } = useTree();
   const { nodeId, level } = useTreeNode();
   const isSelected = selectedIds.includes(nodeId);
 
@@ -234,7 +237,7 @@ export const TreeNodeTrigger = ({
         onClick?.(e);
       }}
       style={{ paddingLeft: level * (indent ?? 0) + 8 }}
-      whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
+      {...(!reduceMotion ? { whileTap: { scale: 0.98, transition: { duration: 0.1 } } } : {})}
       {...props}
     >
       <TreeLines />
@@ -306,12 +309,12 @@ export const TreeNodeContent = ({
   className,
   ...props
 }: TreeNodeContentProps) => {
-  const { animateExpand, expandedIds } = useTree();
+  const { animateExpand, expandedIds, reduceMotion } = useTree();
   const { nodeId } = useTreeNode();
   const isExpanded = expandedIds.has(nodeId);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={!reduceMotion}>
       {hasChildren && isExpanded && (
         <motion.div
           animate={{ height: "auto", opacity: 1 }}
@@ -319,18 +322,18 @@ export const TreeNodeContent = ({
           exit={{ height: 0, opacity: 0 }}
           initial={{ height: 0, opacity: 0 }}
           transition={{
-            duration: animateExpand ? 0.3 : 0,
+            duration: animateExpand && !reduceMotion ? 0.3 : 0,
             ease: "easeInOut",
           }}
         >
           <motion.div
-            animate={{ y: 0 }}
+            animate={reduceMotion ? { opacity: 1 } : { y: 0 }}
             className={className}
-            exit={{ y: -10 }}
-            initial={{ y: -10 }}
+            exit={reduceMotion ? { opacity: 0 } : { y: -10 }}
+            initial={reduceMotion ? { opacity: 0 } : { y: -10 }}
             transition={{
-              duration: animateExpand ? 0.2 : 0,
-              delay: animateExpand ? 0.1 : 0,
+              duration: animateExpand && !reduceMotion ? 0.2 : 0,
+              delay: animateExpand && !reduceMotion ? 0.1 : 0,
             }}
             {...props}
           >
@@ -352,7 +355,7 @@ export const TreeExpander = ({
   onClick,
   ...props
 }: TreeExpanderProps) => {
-  const { expandedIds, toggleExpanded } = useTree();
+  const { expandedIds, toggleExpanded, reduceMotion } = useTree();
   const { nodeId } = useTreeNode();
   const isExpanded = expandedIds.has(nodeId);
 
@@ -369,7 +372,7 @@ export const TreeExpander = ({
         toggleExpanded(nodeId);
         onClick?.(e);
       }}
-      transition={{ duration: 0.2, ease: "easeInOut" }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.2, ease: "easeInOut" }}
       {...props}
     >
       <ChevronRight className="h-3 w-3 text-muted-foreground" />
@@ -383,7 +386,7 @@ export type TreeIconProps = ComponentProps<typeof motion.div> & {
 };
 
 export const TreeIcon = ({ icon, hasChildren = false, className, ...props }: TreeIconProps) => {
-  const { showIcons, expandedIds } = useTree();
+  const { showIcons, expandedIds, reduceMotion } = useTree();
   const { nodeId } = useTreeNode();
   const isExpanded = expandedIds.has(nodeId);
 
@@ -408,8 +411,8 @@ export const TreeIcon = ({ icon, hasChildren = false, className, ...props }: Tre
         "mr-2 flex h-4 w-4 items-center justify-center text-muted-foreground",
         className,
       )}
-      transition={{ duration: 0.15 }}
-      whileHover={{ scale: 1.1 }}
+      transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
+      {...(!reduceMotion ? { whileHover: { scale: 1.1 } } : {})}
       {...props}
     >
       {icon || getDefaultIcon()}

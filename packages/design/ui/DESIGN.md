@@ -10,7 +10,7 @@
 | Source root | `packages/design/ui/src/` |
 | Storybook | `apps/storybook` (dev: http://localhost:6006) |
 | Subpath exports | `@nebutra/ui/components`, `@nebutra/ui/layout`, `@nebutra/ui/marketing`, `@nebutra/ui/utils` |
-| Composition | Radix UI + HeroUI + Lobe UI re-exports + custom |
+| Composition | Radix UI + HeroUI + Nebutra primitives + curated compatibility bridges |
 
 > **Note**: `@nebutra/design-system` has been **merged into** `@nebutra/ui`. Layout components now live at `@nebutra/ui/layout`.
 
@@ -22,7 +22,7 @@
 
 - **Radix UI** primitives (accessibility-first headless behaviour)
 - **HeroUI** (visual styles where Radix lacks an equivalent — minimal use)
-- **Lobe UI** re-exports (chat / AI-product widgets, themed via `NebutraThemeProvider`)
+- Curated AI/chat compatibility surfaces (themed via `NebutraThemeProvider`)
 - **21st.dev** community-vetted patterns
 - Custom components built strictly on top of `@nebutra/tokens` CSS variables
 
@@ -32,7 +32,7 @@
 
 ## 2. Tokens
 
-This package **consumes** tokens from `@nebutra/tokens` exclusively. It does not declare new tokens. Internal Lobe UI components are bridged via `NebutraThemeProvider` (`packages/design/ui/src/theme/`) which maps Nebutra brand tokens into Lobe UI's expected shape.
+This package **consumes** tokens from `@nebutra/tokens` exclusively. It does not declare new tokens. Compatibility surfaces that depend on Lobe UI are bridged via `NebutraThemeProvider` (`packages/design/ui/src/theme/`) which maps Nebutra brand tokens into Lobe UI's expected shape.
 
 ---
 
@@ -286,7 +286,7 @@ Components style themselves entirely from `@nebutra/tokens` CSS variables. They 
 
 No component-level theming knobs — if you need different visual treatment, define a CVA variant or a new component, not a theme override.
 
-The `NebutraThemeProvider` wrapper in `src/theme/` exists **only** to bridge Lobe UI components to Nebutra brand tokens. App code rarely uses it directly — `DesignSystemProvider` from `@nebutra/ui/layout` composes it correctly.
+The `NebutraThemeProvider` wrapper in `src/theme/` exists **only** to bridge compatibility surfaces to Nebutra brand tokens. App code rarely uses it directly — `DesignSystemProvider` from `@nebutra/ui/layout` composes it correctly.
 
 ---
 

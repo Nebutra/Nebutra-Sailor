@@ -29,7 +29,7 @@ export function HeroInstallPill({ command, copiedLabel }: HeroInstallPillProps) 
   };
 
   return (
-    <div className="mx-auto flex w-fit items-center gap-2 rounded-full border border-black/5 bg-white/60 py-1 pr-1 pl-4 text-xs font-medium shadow-sm transition-all hover:bg-white/75">
+    <div className="mx-auto flex w-fit items-center gap-2 rounded-full border border-black/5 bg-white/60 py-1 pr-1 pl-4 text-xs font-medium shadow-sm transition-colors hover:bg-white/75">
       <code className="font-mono text-[12px] tracking-tight text-zinc-700 dark:text-zinc-200">
         <span className="select-none text-zinc-400 dark:text-zinc-500">$ </span>
         {command}

@@ -1,8 +1,21 @@
 "use client";
 
-import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
 import * as React from "react";
+import {
+  animate,
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "../../shared/animation/motion";
 import { cn } from "../../utils/cn";
+
+const counterEasings = {
+  easeOut: [0.16, 1, 0.3, 1],
+  easeInOut: [0.4, 0, 0.2, 1],
+  easeOutBack: [0.34, 1.56, 0.64, 1],
+} as const;
 
 export interface AnimatedCounterProps
   extends Omit<React.HTMLAttributes<HTMLSpanElement>, "children"> {
@@ -52,15 +65,9 @@ export const AnimatedCounter = React.forwardRef<HTMLSpanElement, AnimatedCounter
   ) => {
     const containerRef = React.useRef<HTMLSpanElement>(null);
     const isInView = useInView(containerRef, { once: true, margin: "-50px" });
+    const shouldReduceMotion = useReducedMotion();
     const count = useMotionValue(0);
     const [displayValue, setDisplayValue] = React.useState("0");
-
-    // Easing configurations
-    const easings = {
-      easeOut: [0.16, 1, 0.3, 1],
-      easeInOut: [0.4, 0, 0.2, 1],
-      easeOutBack: [0.34, 1.56, 0.64, 1],
-    } as const;
 
     const rounded = useTransform(count, (latest) => {
       const rounded = decimals > 0 ? latest.toFixed(decimals) : Math.round(latest).toString();
@@ -80,14 +87,19 @@ export const AnimatedCounter = React.forwardRef<HTMLSpanElement, AnimatedCounter
 
     React.useEffect(() => {
       if (!startOnView || isInView) {
+        if (shouldReduceMotion) {
+          count.set(value);
+          return;
+        }
+
         const controls = animate(count, value, {
           duration,
-          ease: easings[easing] as unknown as [number, number, number, number],
+          ease: counterEasings[easing] as unknown as [number, number, number, number],
         });
 
         return controls.stop;
       }
-    }, [count, value, duration, easing, isInView, startOnView, easings]);
+    }, [count, value, duration, easing, isInView, startOnView, shouldReduceMotion]);
 
     return (
       <span

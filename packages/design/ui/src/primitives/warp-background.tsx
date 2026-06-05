@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import type React from "react";
 import { type HTMLAttributes, useCallback, useMemo } from "react";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils";
 
 // =============================================================================
@@ -75,6 +75,7 @@ export interface WarpBackgroundProps extends HTMLAttributes<HTMLDivElement> {
  * Props for internal Beam component
  */
 interface BeamProps {
+  seed: number;
   width: string | number;
   x: string | number;
   delay: number;
@@ -88,13 +89,12 @@ interface BeamProps {
 /**
  * Animated beam that travels along the grid
  */
-const Beam: React.FC<BeamProps> = ({ width, x, delay, duration }) => {
-  // Generate random hue and aspect ratio for variety
+const Beam: React.FC<BeamProps> = ({ seed, width, x, delay, duration }) => {
   const hue = useMemo(() => {
     const brandHues = [210, 218, 228, 238, 168, 175, 185];
-    return brandHues[Math.floor(Math.random() * brandHues.length)];
-  }, []);
-  const aspectRatio = useMemo(() => Math.floor(Math.random() * 10) + 1, []);
+    return brandHues[seed % brandHues.length];
+  }, [seed]);
+  const aspectRatio = useMemo(() => (seed % 10) + 1, [seed]);
 
   return (
     <motion.div
@@ -164,24 +164,31 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
   gridColor = "var(--border)",
   ...props
 }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   // Generate beam positions and delays for each side
-  const generateBeams = useCallback(() => {
-    const beams: Array<{ x: number; delay: number }> = [];
-    const cellsPerSide = Math.floor(100 / beamSize);
-    const step = cellsPerSide / beamsPerSide;
+  const generateBeams = useCallback(
+    (sideIndex: number) => {
+      const beams: Array<{ seed: number; x: number; delay: number }> = [];
+      const cellsPerSide = Math.floor(100 / beamSize);
+      const step = cellsPerSide / beamsPerSide;
 
-    for (let i = 0; i < beamsPerSide; i++) {
-      const x = Math.floor(i * step);
-      const delay = Math.random() * (beamDelayMax - beamDelayMin) + beamDelayMin;
-      beams.push({ x, delay });
-    }
-    return beams;
-  }, [beamsPerSide, beamSize, beamDelayMax, beamDelayMin]);
+      for (let i = 0; i < beamsPerSide; i++) {
+        const x = Math.floor(i * step);
+        const seed = sideIndex * 101 + i * 37 + cellsPerSide;
+        const delayRatio = (seed % 100) / 100;
+        const delay = delayRatio * (beamDelayMax - beamDelayMin) + beamDelayMin;
+        beams.push({ seed, x, delay });
+      }
+      return beams;
+    },
+    [beamsPerSide, beamSize, beamDelayMax, beamDelayMin],
+  );
 
-  const topBeams = useMemo(() => generateBeams(), [generateBeams]);
-  const rightBeams = useMemo(() => generateBeams(), [generateBeams]);
-  const bottomBeams = useMemo(() => generateBeams(), [generateBeams]);
-  const leftBeams = useMemo(() => generateBeams(), [generateBeams]);
+  const topBeams = useMemo(() => generateBeams(0), [generateBeams]);
+  const rightBeams = useMemo(() => generateBeams(1), [generateBeams]);
+  const bottomBeams = useMemo(() => generateBeams(2), [generateBeams]);
+  const leftBeams = useMemo(() => generateBeams(3), [generateBeams]);
 
   // Common grid background style
   const gridBackgroundClass =
@@ -208,15 +215,17 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
             gridBackgroundClass,
           )}
         >
-          {topBeams.map((beam, index) => (
-            <Beam
-              key={`top-${index}`}
-              width={`${beamSize}%`}
-              x={`${beam.x * beamSize}%`}
-              delay={beam.delay}
-              duration={beamDuration}
-            />
-          ))}
+          {!shouldReduceMotion &&
+            topBeams.map((beam, index) => (
+              <Beam
+                key={`top-${index}`}
+                seed={beam.seed}
+                width={`${beamSize}%`}
+                x={`${beam.x * beamSize}%`}
+                delay={beam.delay}
+                duration={beamDuration}
+              />
+            ))}
         </div>
 
         {/* Bottom side */}
@@ -226,15 +235,17 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
             gridBackgroundClass,
           )}
         >
-          {bottomBeams.map((beam, index) => (
-            <Beam
-              key={`bottom-${index}`}
-              width={`${beamSize}%`}
-              x={`${beam.x * beamSize}%`}
-              delay={beam.delay}
-              duration={beamDuration}
-            />
-          ))}
+          {!shouldReduceMotion &&
+            bottomBeams.map((beam, index) => (
+              <Beam
+                key={`bottom-${index}`}
+                seed={beam.seed}
+                width={`${beamSize}%`}
+                x={`${beam.x * beamSize}%`}
+                delay={beam.delay}
+                duration={beamDuration}
+              />
+            ))}
         </div>
 
         {/* Left side */}
@@ -244,15 +255,17 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
             gridBackgroundClass,
           )}
         >
-          {leftBeams.map((beam, index) => (
-            <Beam
-              key={`left-${index}`}
-              width={`${beamSize}%`}
-              x={`${beam.x * beamSize}%`}
-              delay={beam.delay}
-              duration={beamDuration}
-            />
-          ))}
+          {!shouldReduceMotion &&
+            leftBeams.map((beam, index) => (
+              <Beam
+                key={`left-${index}`}
+                seed={beam.seed}
+                width={`${beamSize}%`}
+                x={`${beam.x * beamSize}%`}
+                delay={beam.delay}
+                duration={beamDuration}
+              />
+            ))}
         </div>
 
         {/* Right side */}
@@ -262,15 +275,17 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
             gridBackgroundClass,
           )}
         >
-          {rightBeams.map((beam, index) => (
-            <Beam
-              key={`right-${index}`}
-              width={`${beamSize}%`}
-              x={`${beam.x * beamSize}%`}
-              delay={beam.delay}
-              duration={beamDuration}
-            />
-          ))}
+          {!shouldReduceMotion &&
+            rightBeams.map((beam, index) => (
+              <Beam
+                key={`right-${index}`}
+                seed={beam.seed}
+                width={`${beamSize}%`}
+                x={`${beam.x * beamSize}%`}
+                delay={beam.delay}
+                duration={beamDuration}
+              />
+            ))}
         </div>
       </div>
 

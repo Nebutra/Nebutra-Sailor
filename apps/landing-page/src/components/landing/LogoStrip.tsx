@@ -30,7 +30,7 @@ export async function LogoStrip({ locale }: { locale: Locale }) {
             ),
           })}
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 opacity-70 grayscale hover:grayscale-0 transition-all duration-500 select-none">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 opacity-70 grayscale hover:grayscale-0 transition-[filter,opacity] duration-500 select-none">
           {logos.map((logo) => {
             const isSmall = logo.name === first.name;
             return (
@@ -40,7 +40,7 @@ export async function LogoStrip({ locale }: { locale: Locale }) {
                 alt={logo.name}
                 width={0}
                 height={isSmall ? 20 : 24}
-                className={`${isSmall ? "h-[18px]" : "h-[22px] md:h-6"} w-auto brightness-0 dark:brightness-200 dark:invert-0 transition-all duration-150 hover:opacity-100 hover:-translate-y-px`}
+                className={`${isSmall ? "h-[18px]" : "h-[22px] md:h-6"} w-auto brightness-0 dark:brightness-200 dark:invert-0 transition-[filter,opacity,transform] duration-150 hover:opacity-100 hover:-translate-y-px motion-reduce:hover:translate-y-0`}
                 style={{ width: "auto" }}
                 unoptimized={false}
                 draggable={false}

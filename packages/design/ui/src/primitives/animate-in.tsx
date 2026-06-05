@@ -1,15 +1,13 @@
 "use client";
 
 import { brandSpring, emerge, flow } from "@nebutra/brand";
+import type * as React from "react";
 import {
   domAnimation,
   LazyMotion,
   m,
-  type TargetAndTransition,
   useReducedMotion as useFramerReducedMotion,
-  type VariantLabels,
-} from "framer-motion";
-import type * as React from "react";
+} from "../shared/animation/motion";
 import { motionVariants, staggerContainers, viewportSettings } from "../tokens/motion";
 
 // ─────────────────────────────────────────────────────────────
@@ -53,6 +51,10 @@ const PRESETS = {
 type Preset = keyof typeof PRESETS;
 
 type MotionDivProps = React.ComponentProps<typeof m.div>;
+type MotionInitial = NonNullable<MotionDivProps["initial"]>;
+type MotionAnimate = NonNullable<MotionDivProps["whileInView"]>;
+type MotionExit = NonNullable<MotionDivProps["exit"]>;
+type MotionTransition = NonNullable<MotionDivProps["transition"]>;
 
 function MotionDiv(props: MotionDivProps) {
   return (
@@ -95,21 +97,16 @@ export function AnimateIn(props: AnimateInProps) {
   const base = PRESETS[preset] || PRESETS.emerge;
 
   // Accessibility: honour prefers-reduced-motion
-  const initial = (shouldReduce ? { opacity: 0 } : base.initial) as
-    | TargetAndTransition
-    | VariantLabels;
-  const animate = (shouldReduce ? { opacity: 1 } : base.animate) as
-    | TargetAndTransition
-    | VariantLabels;
+  const initial = (shouldReduce ? { opacity: 0 } : base.initial) as MotionInitial;
+  const animate = (shouldReduce ? { opacity: 1 } : base.animate) as MotionAnimate;
   const exit = (shouldReduce ? { opacity: 0 } : "exit" in base ? base.exit : undefined) as
-    | TargetAndTransition
-    | VariantLabels
+    | MotionExit
     | undefined;
   const transition = {
     ...(shouldReduce ? { duration: 0.15 } : base.transition),
     delay,
     ...(duration ? { duration } : {}),
-  } as import("framer-motion").Transition;
+  } as MotionTransition;
 
   if (inView) {
     return (
@@ -117,7 +114,7 @@ export function AnimateIn(props: AnimateInProps) {
         className={className}
         initial={initial}
         whileInView={animate}
-        {...(exit && { exit: exit as TargetAndTransition | VariantLabels })}
+        {...(exit && { exit })}
         transition={transition}
         viewport={viewportSettings.once}
       >
@@ -131,7 +128,7 @@ export function AnimateIn(props: AnimateInProps) {
       className={className}
       initial={initial}
       animate={animate}
-      {...(exit && { exit: exit as TargetAndTransition | VariantLabels })}
+      {...(exit && { exit })}
       transition={transition}
     >
       {children}

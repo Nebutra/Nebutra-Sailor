@@ -118,12 +118,12 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function ToolRow({ item }: { item: ToolItem }) {
   return (
-    <div className="group relative overflow-hidden rounded-3xl border border-gray-100 dark:border-white/5 bg-white/40 dark:bg-gray-900/40 p-6 backdrop-blur-xl transition-all duration-500 hover:bg-white/80 dark:hover:bg-gray-800/80 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.02)] hover:-translate-y-1">
+    <div className="group relative overflow-hidden rounded-3xl border border-gray-100 dark:border-white/5 bg-white/40 dark:bg-gray-900/40 p-6 backdrop-blur-xl transition-[background-color,box-shadow,transform] duration-500 hover:bg-white/80 dark:hover:bg-gray-800/80 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.02)] hover:-translate-y-1 motion-reduce:transition-colors motion-reduce:hover:translate-y-0">
       {/* Subtle hover gradient */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/0 via-transparent to-[var(--color-accent)]/0 opacity-0 transition-opacity duration-500 group-hover:from-[var(--color-accent)]/5 group-hover:opacity-100 dark:group-hover:from-[var(--color-accent)]/10" />
 
       <div className="relative z-10 flex flex-col sm:flex-row sm:items-center gap-6">
-        <div className="shrink-0 transition-transform duration-500 group-hover:scale-110 group-hover:drop-shadow-md">
+        <div className="shrink-0 transition-transform duration-500 group-hover:scale-110 group-hover:drop-shadow-md motion-reduce:transition-none motion-reduce:group-hover:scale-100">
           {item.icon}
         </div>
         <div className="min-w-0 flex-1">
@@ -171,12 +171,12 @@ export default async function UsesPage({ params }: { params: Promise<{ locale: s
           <div>
             <AnimateIn preset="fadeUp" delay={0.1}>
               <SectionLabel>{t("section_workstation")}</SectionLabel>
-              <div className="group relative overflow-hidden rounded-[2rem] border border-gray-100 dark:border-white/5 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-900/50 p-8 md:p-10 shadow-sm transition-all duration-500 hover:shadow-xl dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.03)] hover:-translate-y-1">
+              <div className="group relative overflow-hidden rounded-[2rem] border border-gray-100 dark:border-white/5 bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-900/50 p-8 md:p-10 shadow-sm transition-[box-shadow,transform] duration-500 hover:shadow-xl dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.03)] hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
                 {/* Spotlight hover effect container */}
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,var(--color-accent)_0%,transparent_60%)] opacity-0 transition-opacity duration-700 group-hover:opacity-5 dark:group-hover:opacity-10 mix-blend-plus-lighter" />
 
                 <div className="relative z-10">
-                  <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-white dark:bg-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.2)] ring-1 ring-gray-950/5 dark:ring-white/10 transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-3">
+                  <div className="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-white dark:bg-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.2)] ring-1 ring-gray-950/5 dark:ring-white/10 transition-transform duration-500 group-hover:scale-105 group-hover:-rotate-3 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0">
                     <Apple size={44} className="text-gray-800 dark:text-gray-100" />
                   </div>
                   <h3 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl mb-2">
@@ -224,9 +224,9 @@ export default async function UsesPage({ params }: { params: Promise<{ locale: s
           <div>
             <AnimateIn preset="fadeUp" delay={0.3}>
               <SectionLabel>{t("section_dogfooding")}</SectionLabel>
-              <div className="group relative overflow-hidden rounded-[2rem] border border-[var(--color-accent)]/20 bg-gradient-to-br from-[var(--color-accent)]/5 to-transparent p-8 md:p-10 transition-all duration-500 hover:shadow-[0_20px_40px_-15px_var(--color-accent)] dark:hover:shadow-[0_0_40px_rgba(var(--color-accent-rgb),0.1)] hover:-translate-y-1">
+              <div className="group relative overflow-hidden rounded-[2rem] border border-[var(--color-accent)]/20 bg-gradient-to-br from-[var(--color-accent)]/5 to-transparent p-8 md:p-10 transition-[box-shadow,transform] duration-500 hover:shadow-[0_20px_40px_-15px_var(--color-accent)] dark:hover:shadow-[0_0_40px_rgba(var(--color-accent-rgb),0.1)] hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white dark:bg-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.2)] ring-1 ring-gray-950/5 dark:ring-white/10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
+                  <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white dark:bg-gray-800 shadow-[0_2px_10px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.2)] ring-1 ring-gray-950/5 dark:ring-white/10 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0">
                     <Image src={LogoColor.src} alt="Nebutra Logo" width={36} height={36} />
                   </div>
                   <h3 className="mb-2 text-xl font-bold tracking-tight text-foreground transition-colors group-hover:text-[var(--color-accent)]">
@@ -258,9 +258,9 @@ export default async function UsesPage({ params }: { params: Promise<{ locale: s
                 {AI_TOOLS.map((tool) => (
                   <div
                     key={tool.name}
-                    className="group relative flex flex-col items-center justify-center gap-3 rounded-2xl border border-gray-100 dark:border-white/5 bg-white/50 dark:bg-gray-900/50 p-4 transition-all duration-300 hover:bg-white dark:hover:bg-gray-800 hover:border-[var(--color-accent)]/30 hover:shadow-md hover:-translate-y-1"
+                    className="group relative flex flex-col items-center justify-center gap-3 rounded-2xl border border-gray-100 dark:border-white/5 bg-white/50 dark:bg-gray-900/50 p-4 transition-[background-color,border-color,box-shadow,transform] duration-300 hover:bg-white dark:hover:bg-gray-800 hover:border-[var(--color-accent)]/30 hover:shadow-md hover:-translate-y-1 motion-reduce:transition-colors motion-reduce:hover:translate-y-0"
                   >
-                    <div className="transition-transform duration-500 group-hover:scale-125 group-hover:drop-shadow-lg">
+                    <div className="transition-transform duration-500 group-hover:scale-125 group-hover:drop-shadow-lg motion-reduce:transition-none motion-reduce:group-hover:scale-100">
                       {tool.icon}
                     </div>
                     <span className="text-center font-mono text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-500 transition-colors group-hover:text-foreground">

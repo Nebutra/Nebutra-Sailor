@@ -1,7 +1,13 @@
 "use client";
 
-import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import type * as React from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "../shared/animation/motion";
 import { cn } from "../utils";
 
 // =============================================================================
@@ -101,11 +107,12 @@ const SmoothScrollHeroBackground: React.FC<SmoothScrollHeroBackgroundProps> = ({
   className,
 }) => {
   const { scrollY } = useScroll();
+  const shouldReduceMotion = useReducedMotion();
 
   const clipStart = useTransform(scrollY, [0, scrollHeight], [initialClipPercentage, 0]);
   const clipEnd = useTransform(scrollY, [0, scrollHeight], [finalClipPercentage, 100]);
 
-  const clipPath = useMotionTemplate`polygon(${clipStart}% ${clipStart}%, ${clipEnd}% ${clipStart}%, ${clipEnd}% ${clipEnd}%, ${clipStart}% ${clipEnd}%)`;
+  const animatedClipPath = useMotionTemplate`polygon(${clipStart}% ${clipStart}%, ${clipEnd}% ${clipStart}%, ${clipEnd}% ${clipEnd}%, ${clipStart}% ${clipEnd}%)`;
 
   const backgroundSize = useTransform(scrollY, [0, scrollHeight + 500], [initialZoom, finalZoom]);
 
@@ -113,8 +120,8 @@ const SmoothScrollHeroBackground: React.FC<SmoothScrollHeroBackgroundProps> = ({
     <motion.div
       className={cn("sticky top-0 h-screen w-full bg-black", className)}
       style={{
-        clipPath,
-        willChange: "transform, opacity",
+        clipPath: shouldReduceMotion ? "none" : animatedClipPath,
+        willChange: shouldReduceMotion ? "auto" : "transform, opacity",
       }}
     >
       {/* Mobile background */}
@@ -122,7 +129,7 @@ const SmoothScrollHeroBackground: React.FC<SmoothScrollHeroBackgroundProps> = ({
         className="absolute inset-0 md:hidden"
         style={{
           backgroundImage: `url(${mobileImage})`,
-          backgroundSize,
+          backgroundSize: shouldReduceMotion ? finalZoom : backgroundSize,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
@@ -133,7 +140,7 @@ const SmoothScrollHeroBackground: React.FC<SmoothScrollHeroBackgroundProps> = ({
         className="absolute inset-0 hidden md:block"
         style={{
           backgroundImage: `url(${desktopImage})`,
-          backgroundSize,
+          backgroundSize: shouldReduceMotion ? finalZoom : backgroundSize,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}

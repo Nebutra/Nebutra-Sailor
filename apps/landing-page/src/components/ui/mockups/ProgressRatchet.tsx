@@ -27,7 +27,7 @@ export function ProgressRatchet() {
             </div>
             <div className="h-2 rounded-full bg-border/30 dark:bg-zinc-800 overflow-hidden">
               <div
-                className="h-full rounded-full bg-[image:var(--brand-gradient)] transition-all duration-700"
+                className="h-full rounded-full bg-[image:var(--brand-gradient)] transition-[width] duration-700 motion-reduce:transition-none"
                 style={{ width: `${percentage}%` }}
               />
             </div>

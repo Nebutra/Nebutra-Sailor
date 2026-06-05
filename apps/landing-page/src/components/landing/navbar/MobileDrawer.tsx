@@ -1,7 +1,6 @@
 "use client";
 
 import { Cross, Menu } from "@nebutra/icons";
-import { AnimatePresence, domAnimation, LazyMotion, m, useReducedMotion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { Link } from "@/i18n/navigation";
@@ -9,6 +8,7 @@ import { NAV_LINKS } from "@/lib/constants/landing-data";
 import { getGroupResources, RESOURCE_GROUPS } from "@/lib/constants/resources-data";
 import { getGroupSolutions, pick, SOLUTION_GROUPS } from "@/lib/constants/solutions-data";
 import { env } from "@/lib/env";
+import { AnimatePresence, domAnimation, LazyMotion, m, useReducedMotion } from "@/shared/motion";
 
 const APP_URL = env.NEXT_PUBLIC_APP_URL;
 

@@ -36,7 +36,7 @@ export function BrandOverridesDemo() {
           </div>
           <Button
             variant="default"
-            className="rounded-xl bg-indigo-600 hover:bg-indigo-700 h-12 px-6 shadow-md transition-[background-color,border-color,box-shadow,color,opacity,transform]"
+            className="rounded-xl bg-indigo-600 hover:bg-indigo-700 h-12 px-6 shadow-md transition-colors"
           >
             Create Project
           </Button>

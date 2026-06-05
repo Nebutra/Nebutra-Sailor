@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock, Eye } from "@nebutra/icons";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "@/shared/motion";
 
 const navItems = ["Blog", "About", "Projects"];
 const posts = [

@@ -2,9 +2,9 @@
 
 import { Progress as BaseProgress } from "@base-ui/react/progress";
 import { cva, type VariantProps } from "class-variance-authority";
-import { motion } from "framer-motion";
 import type * as React from "react";
 import { useDebounceValue } from "usehooks-ts";
+import { motion } from "../shared/animation/motion";
 import { easings, motionDurations } from "../tokens/motion";
 import { cn } from "../utils/cn";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";

@@ -340,7 +340,9 @@ const THEME_TOGGLE_REGISTRY_TOKENS = `/**
  * registry item can be installed without copying the internal token pipeline.
  */
 
-import type { Transition } from "framer-motion";
+type RegistryTransition =
+  | { duration: number }
+  | { type: "spring"; stiffness: number; damping: number };
 
 export const themeToggleTokens = {
   sizes: {
@@ -375,9 +377,9 @@ export const themeToggleTokens = {
     easing: "ease-out",
     hoverScale: 1.06,
     tapScale: 0.92,
-    morph: { type: "spring", stiffness: 380, damping: 30 } satisfies Transition,
-    press: { type: "spring", stiffness: 420, damping: 28 } satisfies Transition,
-    instant: { duration: 0 } satisfies Transition,
+    morph: { type: "spring", stiffness: 380, damping: 30 } satisfies RegistryTransition,
+    press: { type: "spring", stiffness: 420, damping: 28 } satisfies RegistryTransition,
+    instant: { duration: 0 } satisfies RegistryTransition,
   },
 } as const;
 

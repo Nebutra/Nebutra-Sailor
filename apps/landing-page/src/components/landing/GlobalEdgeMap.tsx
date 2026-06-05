@@ -1,9 +1,9 @@
 "use client";
 
 import { DottedWorldMap } from "@nebutra/ui/primitives";
-import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { createPublicDocsUrl } from "@/lib/docs-links";
+import { motion, useReducedMotion } from "@/shared/motion";
 import { AnimateIn } from "./AnimateIn";
 
 const CDN_NODES = [
@@ -30,7 +30,7 @@ export function GlobalEdgeMap() {
 
   return (
     <article
-      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-all hover:border-primary/40 overflow-hidden"
+      className="group relative flex h-full flex-col rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/60 dark:bg-zinc-950/60 p-8 md:p-10 transition-colors hover:border-primary/40 overflow-hidden"
       style={{ boxShadow: "var(--ring-hairline)" }}
     >
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />

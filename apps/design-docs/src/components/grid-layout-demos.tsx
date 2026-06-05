@@ -215,28 +215,28 @@ export function DashboardGridDemo() {
       {/* Stats row - 4 cols on desktop, 2 on tablet, 1 on mobile */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-white dark:bg-zinc-900 shadow-sm p-4 rounded-lg border border-border flex flex-col gap-2 h-24 justify-center relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-bl-full transition-transform group-hover:scale-110 motion-reduce:group-hover:scale-100"></div>
           <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
             Total Sales
           </span>
           <span className="text-2xl font-bold tracking-tight">$24,000</span>
         </div>
         <div className="bg-white dark:bg-zinc-900 shadow-sm p-4 rounded-lg border border-border flex flex-col gap-2 h-24 justify-center relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 rounded-bl-full transition-transform group-hover:scale-110 motion-reduce:group-hover:scale-100"></div>
           <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
             Active Users
           </span>
           <span className="text-2xl font-bold tracking-tight">+1,245</span>
         </div>
         <div className="bg-white dark:bg-zinc-900 shadow-sm p-4 rounded-lg border border-border flex flex-col gap-2 h-24 justify-center relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/5 rounded-bl-full transition-transform group-hover:scale-110 motion-reduce:group-hover:scale-100"></div>
           <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
             Conversion
           </span>
           <span className="text-2xl font-bold tracking-tight">4.2%</span>
         </div>
         <div className="bg-white dark:bg-zinc-900 shadow-sm p-4 rounded-lg border border-border flex flex-col gap-2 h-24 justify-center relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-16 h-16 bg-rose-500/5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+          <div className="absolute top-0 right-0 w-16 h-16 bg-rose-500/5 rounded-bl-full transition-transform group-hover:scale-110 motion-reduce:group-hover:scale-100"></div>
           <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
             Churn Rate
           </span>

@@ -124,7 +124,7 @@ function UsageGauge({
       {/* Progress bar */}
       <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-neutral-3">
         <div
-          className={`h-full rounded-full transition-all duration-500 ${barColor}`}
+          className={`h-full rounded-full transition-[width] duration-500 motion-reduce:transition-none ${barColor}`}
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -356,7 +356,7 @@ async function UsageContent() {
           {/* Quick-action cards */}
           <AnimateInGroup stagger="fast" className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <AnimateIn preset="fadeUp">
-              <Card className="group cursor-pointer p-4 transition-all hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
+              <Card className="group cursor-pointer p-4 transition-[border-color,box-shadow] duration-150 hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
                 <h3 className="text-sm font-semibold text-neutral-12">Per-Model Breakdown</h3>
                 <p className="mt-1 text-xs text-neutral-10">
                   See token usage per AI model (GPT-4, Claude, Gemini).
@@ -365,7 +365,7 @@ async function UsageContent() {
             </AnimateIn>
 
             <AnimateIn preset="fadeUp">
-              <Card className="group cursor-pointer p-4 transition-all hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
+              <Card className="group cursor-pointer p-4 transition-[border-color,box-shadow] duration-150 hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
                 <h3 className="text-sm font-semibold text-neutral-12">Historical Trends</h3>
                 <p className="mt-1 text-xs text-neutral-10">
                   View daily/weekly/monthly usage trends over time.
@@ -374,7 +374,7 @@ async function UsageContent() {
             </AnimateIn>
 
             <AnimateIn preset="fadeUp">
-              <Card className="group cursor-pointer p-4 transition-all hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
+              <Card className="group cursor-pointer p-4 transition-[border-color,box-shadow] duration-150 hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
                 <h3 className="text-sm font-semibold text-neutral-12">Quota Settings</h3>
                 <p className="mt-1 text-xs text-neutral-10">
                   Configure usage thresholds and alert notifications.

@@ -36,7 +36,7 @@ const pricingVariants = cva("w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8", {
 });
 
 const cardVariants = cva(
-  "relative flex flex-col p-8 rounded-[var(--radius-3xl)] border transition-all h-full bg-[var(--neutral-1)]",
+  "relative flex flex-col p-8 rounded-[var(--radius-3xl)] border transition-[background-color,border-color,box-shadow,transform] h-full bg-[var(--neutral-1)]",
   {
     variants: {
       popular: {
@@ -166,7 +166,7 @@ export function Pricing({
                     href={plan.cta.href}
                     data-analytics={`pricing-cta-${plan.id}`}
                     className={cn(
-                      "w-full inline-flex justify-center items-center px-4 py-3 text-sm font-semibold rounded-[var(--radius-xl)] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--neutral-12)] mb-8",
+                      "w-full inline-flex justify-center items-center px-4 py-3 text-sm font-semibold rounded-[var(--radius-xl)] transition-[background-color,box-shadow,color,transform] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--neutral-12)] mb-8",
                       plan.popular
                         ? "bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] shadow-md hover:shadow-lg"
                         : "bg-[var(--neutral-3)] text-[var(--neutral-12)] hover:bg-[var(--neutral-4)] border border-[var(--neutral-6)]",

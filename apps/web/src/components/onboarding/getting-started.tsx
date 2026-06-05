@@ -115,7 +115,7 @@ export async function GettingStarted() {
           <progress className="sr-only" value={percent} max={100} aria-label={t("progressLabel")} />
           <div className="h-1.5 w-24 overflow-hidden rounded-full bg-neutral-3" aria-hidden="true">
             <div
-              className="h-full rounded-full transition-all duration-500"
+              className="h-full rounded-full transition-[width] duration-500 motion-reduce:transition-none"
               style={{ width: `${percent}%`, background: "var(--brand-gradient)" }}
             />
           </div>
@@ -165,7 +165,7 @@ export async function GettingStarted() {
                       {task.label}
                     </p>
                     <ArrowRight
-                      className={`size-3.5 shrink-0 opacity-0 transition-all duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 ${
+                      className={`size-3.5 shrink-0 opacity-0 transition-[opacity,transform] duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 motion-reduce:group-hover:translate-x-0 ${
                         task.done ? "text-green-11 dark:text-green-9" : "text-neutral-11"
                       }`}
                       aria-hidden="true"

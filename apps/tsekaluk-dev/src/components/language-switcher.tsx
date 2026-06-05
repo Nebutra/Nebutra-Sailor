@@ -1,8 +1,8 @@
 "use client";
 import { brandSpring } from "@nebutra/brand";
-import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { motion, useReducedMotion } from "@/shared/motion";
 
 const LOCALES = [
   { code: "en", label: "EN" },
@@ -13,6 +13,7 @@ export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const shouldReduceMotion = useReducedMotion();
   const switchLocale = (newLocale: string) => {
     if (newLocale === locale) return;
     router.replace(pathname, { locale: newLocale });
@@ -33,13 +34,13 @@ export function LanguageSwitcher() {
             onClick={() => switchLocale(loc.code)}
             aria-pressed={isActive}
             aria-label={`Switch to ${loc.label}`}
-            className="relative px-3 py-1 text-xs font-medium rounded-full transition-transform duration-150 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-1"
+            className="relative px-3 py-1 text-xs font-medium rounded-full transition-transform duration-150 hover:scale-105 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-1 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
           >
             {isActive && (
               <motion.div
                 layoutId="lang-pill"
                 className="absolute inset-0 z-0 bg-background rounded-full shadow-sm"
-                transition={brandSpring}
+                transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
               />
             )}
             <span

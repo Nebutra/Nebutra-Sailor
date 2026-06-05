@@ -74,7 +74,7 @@ function BentoCard({ item }: BentoCardProps) {
   return (
     <div
       className={cn(
-        "group relative p-4 rounded-[var(--radius-xl)] overflow-hidden transition-all duration-300",
+        "group relative p-4 rounded-[var(--radius-xl)] overflow-hidden transition-[box-shadow,transform] duration-300 motion-reduce:transition-none motion-reduce:transform-none",
         "border border-[var(--neutral-6)] bg-white dark:bg-black",
         "hover:shadow-[0_2px_12px_rgba(0,0,0,0.03)] dark:hover:shadow-[0_2px_12px_rgba(255,255,255,0.03)]",
         "hover:-translate-y-0.5 will-change-transform",
@@ -98,7 +98,7 @@ function BentoCard({ item }: BentoCardProps) {
       <div className="relative flex flex-col space-y-3">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <div className="w-8 h-8 rounded-[var(--radius-lg)] flex items-center justify-center bg-black/5 group-hover:bg-gradient-to-br transition-all duration-300">
+          <div className="w-8 h-8 rounded-[var(--radius-lg)] flex items-center justify-center bg-black/5 group-hover:bg-gradient-to-br transition-[background-color,background-image] duration-300">
             {item.icon}
           </div>
           <span
@@ -131,7 +131,7 @@ function BentoCard({ item }: BentoCardProps) {
             {item.tags?.map((tag, i) => (
               <span
                 key={i}
-                className="px-2 py-1 rounded-[var(--radius-md)] bg-black/5 backdrop-blur-sm transition-all duration-200 hover:bg-black/10"
+                className="px-2 py-1 rounded-[var(--radius-md)] bg-black/5 backdrop-blur-sm transition-colors duration-200 hover:bg-black/10"
               >
                 #{tag}
               </span>

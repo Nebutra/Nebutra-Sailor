@@ -1,8 +1,9 @@
 /**
  * @nebutra/ui/components
  *
- * Re-exported components from @lobehub/ui (v5)
- * Use these for AI-focused features and chat interfaces.
+ * Nebutra component entrypoint.
+ * Includes curated compatibility exports from @lobehub/ui (v5) for AI-focused
+ * features and chat interfaces. Treat @lobehub/ui as an implementation detail.
  *
  * Components removed in v5 that we previously re-exported:
  *   - ModelIcon, ModelTag, PluginTag — removed upstream (lobe-chat specific)

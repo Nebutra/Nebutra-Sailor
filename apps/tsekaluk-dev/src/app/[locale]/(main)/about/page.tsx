@@ -195,7 +195,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       {/* Photo + Bio */}
       <AnimateIn preset="fadeUp" delay={0.1} className="mb-32 grid gap-12 md:grid-cols-[280px_1fr]">
         <figure className="relative mx-auto w-full max-w-[280px] md:mx-0 group">
-          <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm transition-all duration-700">
+          <div className="aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm transition-[border-color,box-shadow] duration-700">
             <Image
               src="/images/black.jpeg"
               alt="Tseka Luk"

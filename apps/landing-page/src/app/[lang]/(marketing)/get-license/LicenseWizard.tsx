@@ -111,7 +111,7 @@ const RoleCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col items-center gap-3 rounded-[var(--radius-lg)] border-2 p-4 transition-all duration-200 ${
+    className={`flex flex-col items-center gap-3 rounded-[var(--radius-lg)] border-2 p-4 transition-colors duration-200 ${
       selected
         ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
         : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
@@ -138,7 +138,7 @@ const UseCaseCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col gap-2 rounded-[var(--radius-xl)] border-2 p-5 text-left transition-all duration-200 ${
+    className={`flex flex-col gap-2 rounded-[var(--radius-xl)] border-2 p-5 text-left transition-colors duration-200 ${
       selected
         ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
         : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
@@ -173,7 +173,7 @@ const LicenseTierCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col gap-4 rounded-[var(--radius-xl)] border-2 p-6 text-left transition-all duration-200 ${
+    className={`flex flex-col gap-4 rounded-[var(--radius-xl)] border-2 p-6 text-left transition-colors duration-200 ${
       highlighted ? "ring-2 ring-[var(--brand-primary)] ring-offset-2" : ""
     } ${
       selected
@@ -206,7 +206,7 @@ const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSt
     {WIZARD_STEP_MARKERS.slice(0, totalSteps).map((step) => (
       <div
         key={step.id}
-        className={`h-2 flex-1 rounded-[var(--radius-full)] transition-all duration-300 ${
+        className={`h-2 flex-1 rounded-[var(--radius-full)] transition-colors duration-300 ${
           step.value <= currentStep ? "bg-[var(--blue-9)]" : "bg-[var(--neutral-7)]"
         }`}
       />

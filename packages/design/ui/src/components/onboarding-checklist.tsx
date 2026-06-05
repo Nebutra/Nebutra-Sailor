@@ -1,10 +1,13 @@
 "use client";
 
 import { CheckCircle as CheckCircle2, PlayCircle } from "@nebutra/icons";
-import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
+import type * as React from "react";
 import { Dialog, DialogContent, DialogTrigger } from "../primitives/dialog";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
+
+type MotionVariants = NonNullable<React.ComponentProps<typeof motion.div>["variants"]>;
 
 // =============================================================================
 // Types
@@ -43,7 +46,7 @@ export interface OnboardingChecklistProps {
 // Animation Variants
 // =============================================================================
 
-const containerVariants: Variants = {
+const containerVariants: MotionVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -57,7 +60,7 @@ const containerVariants: Variants = {
   },
 };
 
-const itemVariants: Variants = {
+const itemVariants: MotionVariants = {
   hidden: { opacity: 0, x: -20 },
   visible: {
     opacity: 1,
@@ -66,6 +69,22 @@ const itemVariants: Variants = {
       duration: 0.4,
       ease: "easeOut",
     },
+  },
+};
+
+const reducedContainerVariants: MotionVariants = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0 },
+  },
+};
+
+const reducedItemVariants: MotionVariants = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0 },
   },
 };
 
@@ -108,11 +127,15 @@ export function OnboardingChecklist({
   videoUrl,
   className,
 }: OnboardingChecklistProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const activeContainerVariants = shouldReduceMotion ? reducedContainerVariants : containerVariants;
+  const activeItemVariants = shouldReduceMotion ? reducedItemVariants : itemVariants;
+
   return (
     <motion.div
       initial="hidden"
       animate="visible"
-      variants={containerVariants}
+      variants={activeContainerVariants}
       className={cn(
         "w-full max-w-4xl mx-auto bg-card text-card-foreground border rounded-[var(--radius-2xl)] shadow-sm p-8 overflow-hidden",
         className,
@@ -125,7 +148,7 @@ export function OnboardingChecklist({
           <p className="mt-2 text-muted-foreground">{description}</p>
           <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
             {items.map((item) => (
-              <motion.li key={item.id} variants={itemVariants} className="flex flex-col">
+              <motion.li key={item.id} variants={activeItemVariants} className="flex flex-col">
                 <div className="flex items-start">
                   <CheckCircle2 className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <span className="ml-3 text-sm font-medium">{item.text}</span>
@@ -148,7 +171,7 @@ export function OnboardingChecklist({
 
         {/* Right Side: Video Thumbnail */}
         <motion.div
-          variants={itemVariants}
+          variants={activeItemVariants}
           className="relative group rounded-[var(--radius-lg)] overflow-hidden cursor-pointer w-full aspect-video"
         >
           <Dialog>
@@ -160,11 +183,11 @@ export function OnboardingChecklist({
                 <Image
                   src={videoThumbnailUrl}
                   alt="Video guide thumbnail"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                   fill
                 />
                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                  <PlayCircle className="h-16 w-16 text-white/80 transform transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 group-hover:scale-110 group-hover:text-white" />
+                  <PlayCircle className="h-16 w-16 text-white/80 transform transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 group-hover:scale-110 group-hover:text-white motion-reduce:transition-none motion-reduce:group-hover:scale-100" />
                 </div>
               </button>
             </DialogTrigger>

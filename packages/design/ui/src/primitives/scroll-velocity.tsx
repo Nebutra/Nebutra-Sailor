@@ -1,7 +1,8 @@
 "use client";
 
-import type { MotionValue } from "framer-motion";
+import React, { use, useEffect, useRef, useState } from "react";
 import {
+  type MotionValue,
   motion,
   useAnimationFrame,
   useMotionValue,
@@ -9,8 +10,7 @@ import {
   useSpring,
   useTransform,
   useVelocity,
-} from "framer-motion";
-import React, { use, useEffect, useRef, useState } from "react";
+} from "../shared/animation/motion";
 import { cn } from "../utils";
 
 // =============================================================================
@@ -226,10 +226,11 @@ function ScrollVelocityRowImpl({
 
   useAnimationFrame((_, delta) => {
     if (!isInViewRef.current || !isPageVisibleRef.current) return;
+    if (prefersReducedMotionRef.current) return;
     const dt = delta / 1000;
     const vf = velocityFactor.get();
     const absVf = Math.min(5, Math.abs(vf));
-    const speedMultiplier = prefersReducedMotionRef.current ? 1 : 1 + absVf;
+    const speedMultiplier = 1 + absVf;
 
     if (absVf > 0.1) {
       const scrollDirection = vf >= 0 ? 1 : -1;

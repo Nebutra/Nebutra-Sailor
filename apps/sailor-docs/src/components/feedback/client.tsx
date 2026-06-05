@@ -321,7 +321,7 @@ export function FeedbackBlock({
         <PopoverTrigger
           className={cn(
             buttonVariants({ variant: "secondary", size: "sm" }),
-            "absolute -top-7 end-0 backdrop-blur-sm text-fd-muted-foreground gap-1.5 transition-all duration-100 data-[state=open]:bg-fd-accent data-[state=open]:text-fd-accent-foreground",
+            "absolute -top-7 end-0 backdrop-blur-sm text-fd-muted-foreground gap-1.5 transition-[background-color,color,opacity] duration-100 data-[state=open]:bg-fd-accent data-[state=open]:text-fd-accent-foreground",
             !open &&
               "opacity-0 pointer-events-none group-hover/feedback:pointer-events-auto group-hover/feedback:opacity-100 group-hover/feedback:delay-100 hover:pointer-events-auto hover:opacity-100 hover:delay-100",
           )}

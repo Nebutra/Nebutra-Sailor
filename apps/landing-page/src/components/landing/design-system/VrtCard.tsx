@@ -26,7 +26,7 @@ export function VrtCard() {
       <div className="relative z-10 mt-auto flex h-[160px] w-full rounded-[var(--radius-xl)] border border-border/50 bg-black/5 overflow-hidden flex-col justify-center items-center group shadow-inner">
         <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-[var(--radius-lg)] mx-auto">
           {/* Left side (Base / Raw) */}
-          <div className="absolute inset-y-0 left-0 w-1/2 flex items-center justify-center bg-background border-r border-border/50 overflow-hidden group-hover:w-[40%] transition-all duration-700 ease-in-out z-10 flex-col gap-2">
+          <div className="absolute inset-y-0 left-0 w-1/2 flex items-center justify-center bg-background border-r border-border/50 overflow-hidden group-hover:w-[40%] transition-[width] duration-700 ease-in-out motion-reduce:transition-none z-10 flex-col gap-2">
             <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">
               V1.0
             </span>
@@ -39,13 +39,13 @@ export function VrtCard() {
           </div>
 
           {/* Laser Line Scanner */}
-          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-emerald-500/50 shadow-[0_0-[15px_15px]_rgba(16,185,129,0.3)] z-30 group-hover:left-[40%] transition-all duration-700 ease-in-out flex flex-col items-center justify-center">
+          <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-emerald-500/50 shadow-[0_0-[15px_15px]_rgba(16,185,129,0.3)] z-30 group-hover:left-[40%] transition-[left] duration-700 ease-in-out motion-reduce:transition-none flex flex-col items-center justify-center">
             {/* Glow dot on laser */}
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_8px_rgba(16,185,129,0.4)]" />
           </div>
 
           {/* Right side (Head / Polished) */}
-          <div className="absolute inset-y-0 right-0 w-1/2 flex items-center justify-center bg-background/50 group-hover:w-[60%] transition-all duration-700 ease-in-out z-20 flex-col gap-2">
+          <div className="absolute inset-y-0 right-0 w-1/2 flex items-center justify-center bg-background/50 group-hover:w-[60%] transition-[width] duration-700 ease-in-out motion-reduce:transition-none z-20 flex-col gap-2">
             <span className="text-[10px] uppercase tracking-widest text-emerald-500 font-bold flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3" /> V1.1
             </span>

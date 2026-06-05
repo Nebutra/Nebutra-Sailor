@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import type * as React from "react";
 import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 export interface AssistedPasswordConfirmationProps {
@@ -44,6 +44,7 @@ export function AssistedPasswordConfirmation({
 }: AssistedPasswordConfirmationProps) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [shake, setShake] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (
@@ -78,18 +79,18 @@ export function AssistedPasswordConfirmation({
   };
 
   const bounceAnimation = {
-    x: shake ? [-10, 10, -10, 10, 0] : 0,
-    transition: { duration: 0.5 },
+    x: shouldReduceMotion ? 0 : shake ? [-10, 10, -10, 10, 0] : 0,
+    transition: { duration: shouldReduceMotion ? 0 : 0.5 },
   };
 
   const matchAnimation = {
-    scale: passwordsMatch ? [1, 1.05, 1] : 1,
-    transition: { duration: 0.3 },
+    scale: shouldReduceMotion ? 1 : passwordsMatch ? [1, 1.05, 1] : 1,
+    transition: { duration: shouldReduceMotion ? 0 : 0.3 },
   };
 
   const borderAnimation = {
     borderColor: passwordsMatch ? "hsl(var(--primary))" : "",
-    transition: { duration: 0.3 },
+    transition: { duration: shouldReduceMotion ? 0 : 0.3 },
   };
 
   return (
@@ -123,13 +124,20 @@ export function AssistedPasswordConfirmation({
               <motion.div
                 key={index}
                 className={cn(
-                  "absolute h-full w-4 transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 ease-out",
+                  "absolute h-full w-4 ease-out",
+                  shouldReduceMotion
+                    ? "transition-colors duration-0"
+                    : "transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300",
                   getLetterStatus(letter, index),
                 )}
                 style={{
                   left: `${index * 16}px`,
-                  scaleX: confirmPassword[index] ? 1 : 0,
-                  transformOrigin: "left",
+                  ...(shouldReduceMotion
+                    ? {}
+                    : {
+                        scaleX: confirmPassword[index] ? 1 : 0,
+                        transformOrigin: "left",
+                      }),
                 }}
               />
             ))}

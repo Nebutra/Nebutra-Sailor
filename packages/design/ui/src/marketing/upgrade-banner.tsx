@@ -1,7 +1,7 @@
 "use client";
 import { Cross as X } from "@nebutra/icons";
-import { AnimatePresence, motion } from "framer-motion";
 import * as React from "react";
+import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 export interface UpgradeBannerProps {
   /** Button text for the upgrade CTA */
@@ -32,6 +32,12 @@ const SettingsFilled = ({ className }: { className?: string }) => (
     />
   </svg>
 );
+
+const reducedIconVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0 } },
+};
+
 export function UpgradeBanner({
   buttonText = "Upgrade to Pro",
   description = "for 2x more CPUs and faster builds",
@@ -40,6 +46,7 @@ export function UpgradeBanner({
   className,
 }: UpgradeBannerProps) {
   const [isHovered, setIsHovered] = React.useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const iconVariants = {
     hidden: { x: 0, y: 0, opacity: 0, rotate: 0 },
     visible: (custom: { x: number; y: number }) => ({
@@ -67,19 +74,19 @@ export function UpgradeBanner({
       role="banner"
       aria-label="Upgrade promotion"
     >
-      <AnimatePresence>
+      <AnimatePresence initial={!shouldReduceMotion}>
         <motion.div
           className="relative"
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 30 }}
+          animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.4 }}
         >
           {/* Decorative floating icons - artistic exemption */}
           <motion.div
             initial="hidden"
-            animate={isHovered ? "visible" : "hidden"}
-            variants={iconVariants}
-            custom={{ x: -10, y: -10 }}
+            animate={isHovered && !shouldReduceMotion ? "visible" : "hidden"}
+            variants={shouldReduceMotion ? reducedIconVariants : iconVariants}
+            custom={shouldReduceMotion ? { x: 0, y: 0 } : { x: -10, y: -10 }}
             className="pointer-events-none absolute left-[4px] top-[2px]"
             aria-hidden="true"
           >
@@ -87,9 +94,9 @@ export function UpgradeBanner({
           </motion.div>
           <motion.div
             initial="hidden"
-            animate={isHovered ? "visible" : "hidden"}
-            variants={iconVariants}
-            custom={{ x: 10, y: 10 }}
+            animate={isHovered && !shouldReduceMotion ? "visible" : "hidden"}
+            variants={shouldReduceMotion ? reducedIconVariants : iconVariants}
+            custom={shouldReduceMotion ? { x: 0, y: 0 } : { x: 10, y: 10 }}
             className="pointer-events-none absolute bottom-[2px] left-[6rem]"
             aria-hidden="true"
           >

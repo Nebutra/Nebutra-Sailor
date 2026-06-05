@@ -21,7 +21,7 @@ function ThemeOption({
     <button
       type="button"
       className={cn(
-        "relative flex size-11 cursor-pointer items-center justify-center rounded-full transition-all [&_svg]:size-4",
+        "relative flex size-11 cursor-pointer items-center justify-center rounded-full transition-[background-color,color,box-shadow,transform] [&_svg]:size-4",
         isActive
           ? "text-[var(--neutral-12)]"
           : "text-[var(--neutral-9)] hover:text-[var(--neutral-12)]",

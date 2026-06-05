@@ -8,9 +8,9 @@
 "use client";
 
 import { ArrowRight, Play } from "@nebutra/icons";
-import { domAnimation, LazyMotion, m } from "framer-motion";
 import Image from "next/image";
 import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
+import { domAnimation, LazyMotion, m } from "../shared/animation/motion";
 import { cn } from "../utils";
 import type { HeroProps } from "./types";
 
@@ -130,7 +130,7 @@ export function Hero({
                 >
                   <a
                     href={primaryCTA?.href || "/signup"}
-                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--brand-9)] px-8 text-base font-semibold text-white shadow-lg shadow-[var(--brand-9)]/20 hover:bg-[var(--brand-10)] transition-all hover:scale-105 active:scale-95 group"
+                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] bg-[var(--brand-9)] px-8 text-base font-semibold text-white shadow-lg shadow-[var(--brand-9)]/20 hover:bg-[var(--brand-10)] transition-[background-color,box-shadow,transform] hover:scale-105 active:scale-95 motion-reduce:hover:scale-100 motion-reduce:active:scale-100 group"
                   >
                     {primaryCTA?.text || "Start Free Trial"}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -138,7 +138,7 @@ export function Hero({
 
                   <a
                     href={secondaryCTA?.href || "/demo"}
-                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-white/50 px-8 text-base font-medium text-[var(--neutral-12)] shadow-sm backdrop-blur-sm transition-all hover:scale-[1.02] hover:bg-[var(--neutral-3)] active:scale-[0.98] dark:bg-[var(--neutral-1)]/70 group"
+                    className="inline-flex h-12 items-center justify-center rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-white/50 px-8 text-base font-medium text-[var(--neutral-12)] shadow-sm backdrop-blur-sm transition-[background-color,border-color,box-shadow,transform] hover:scale-[1.02] hover:bg-[var(--neutral-3)] active:scale-[0.98] motion-reduce:hover:scale-100 motion-reduce:active:scale-100 dark:bg-[var(--neutral-1)]/70 group"
                   >
                     <Play className="mr-2 h-4 w-4 text-[var(--neutral-11)] group-hover:text-[var(--neutral-12)] transition-colors" />
                     {secondaryCTA?.text || "Watch Demo"}

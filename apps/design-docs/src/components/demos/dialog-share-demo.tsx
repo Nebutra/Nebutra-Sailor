@@ -85,7 +85,7 @@ export function DialogShareDemo() {
                     >
                       <div
                         className={cn(
-                          "transition-[background-color,border-color,box-shadow,color,opacity,transform]",
+                          "transition-[opacity,transform] motion-reduce:transition-opacity",
                           copied ? "scale-100 opacity-100" : "scale-0 opacity-0",
                         )}
                       >
@@ -93,7 +93,7 @@ export function DialogShareDemo() {
                       </div>
                       <div
                         className={cn(
-                          "absolute transition-[background-color,border-color,box-shadow,color,opacity,transform]",
+                          "absolute transition-[opacity,transform] motion-reduce:transition-opacity",
                           copied ? "scale-0 opacity-0" : "scale-100 opacity-100",
                         )}
                       >

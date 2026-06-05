@@ -61,7 +61,7 @@ export async function SocialProofBar({ locale }: { locale: Locale }) {
                 alt={brand.name}
                 width={0}
                 height={28}
-                className="h-7 w-auto opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 dark:hidden"
+                className="h-7 w-auto opacity-60 grayscale transition-[filter,opacity] duration-300 hover:opacity-100 hover:grayscale-0 dark:hidden"
                 style={{ width: "auto" }}
                 unoptimized={false}
                 draggable={false}
@@ -71,7 +71,7 @@ export async function SocialProofBar({ locale }: { locale: Locale }) {
                 alt={brand.name}
                 width={0}
                 height={28}
-                className="hidden h-7 w-auto opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 dark:block"
+                className="hidden h-7 w-auto opacity-60 grayscale transition-[filter,opacity] duration-300 hover:opacity-100 hover:grayscale-0 dark:block"
                 style={{ width: "auto" }}
                 unoptimized={false}
                 draggable={false}

@@ -10,11 +10,17 @@ import {
   StopCircle,
   StopFill,
 } from "@nebutra/icons";
-import { AnimatePresence, domAnimation, LazyMotion, m } from "framer-motion";
 import React, { useEffectEvent } from "react";
 import { Button } from "../../primitives/button";
 import { Textarea } from "../../primitives/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../primitives/tooltip";
+import {
+  AnimatePresence,
+  domAnimation,
+  LazyMotion,
+  m,
+  useReducedMotion,
+} from "../../shared/animation/motion";
 import { cn } from "../../utils/cn";
 import {
   getFilePreviewKey,
@@ -270,6 +276,7 @@ function PromptModeButton({
   onClick: () => void;
 }) {
   const toneClassName = promptModeToneClassName[tone];
+  const shouldReduceMotion = useReducedMotion();
   return (
     <button
       type="button"
@@ -283,13 +290,23 @@ function PromptModeButton({
     >
       <div className="w-5 h-5 flex items-center justify-center flex-shrink-0">
         <m.div
-          animate={{ rotate: active ? 360 : 0, scale: active ? 1.1 : 1 }}
-          whileHover={{
-            rotate: active ? 360 : 15,
-            scale: 1.1,
-            transition: { type: "spring", stiffness: 300, damping: 10 },
-          }}
-          transition={{ type: "spring", stiffness: 260, damping: 25 }}
+          animate={
+            shouldReduceMotion
+              ? { opacity: active ? 1 : 0.82 }
+              : { rotate: active ? 360 : 0, scale: active ? 1.1 : 1 }
+          }
+          whileHover={
+            shouldReduceMotion
+              ? { opacity: 1 }
+              : {
+                  rotate: active ? 360 : 15,
+                  scale: 1.1,
+                  transition: { type: "spring", stiffness: 300, damping: 10 },
+                }
+          }
+          transition={
+            shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 25 }
+          }
         >
           <PromptModeIcon tone={tone} active={active} />
         </m.div>
@@ -297,10 +314,10 @@ function PromptModeButton({
       <AnimatePresence>
         {active && (
           <m.span
-            initial={{ width: 0, opacity: 0 }}
+            initial={shouldReduceMotion ? { opacity: 1 } : { width: 0, opacity: 0 }}
             animate={{ width: "auto", opacity: 1 }}
-            exit={{ width: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { width: 0, opacity: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
             className={cn(
               "text-xs overflow-hidden whitespace-nowrap flex-shrink-0",
               toneClassName.label,
@@ -401,6 +418,8 @@ function PromptSubmitAction({
   hasContent,
   onActivate,
 }: PromptSubmitActionProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <PromptInputAction
       tooltip={
@@ -428,7 +447,12 @@ function PromptSubmitAction({
         disabled={isLoading && !hasContent}
       >
         {isLoading ? (
-          <StopFill className="h-4 w-4 fill-primary-foreground animate-pulse" />
+          <StopFill
+            className={cn(
+              "h-4 w-4 fill-primary-foreground",
+              shouldReduceMotion ? "opacity-100" : "animate-pulse",
+            )}
+          />
         ) : isRecording ? (
           <StopCircle className="h-5 w-5 text-destructive" />
         ) : hasContent ? (

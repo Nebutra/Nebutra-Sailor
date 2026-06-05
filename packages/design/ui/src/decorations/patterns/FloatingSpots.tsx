@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import * as React from "react";
+import { motion, useReducedMotion } from "../../shared/animation/motion";
 import { cn } from "../../utils/cn";
 
 export interface FloatingSpotsProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -70,6 +70,7 @@ export const FloatingSpots = React.forwardRef<HTMLDivElement, FloatingSpotsProps
     },
     ref,
   ) => {
+    const shouldReduceMotion = useReducedMotion();
     const spots = React.useMemo<Spot[]>(() => {
       return Array.from({ length: count }, (_, i) => ({
         id: i,
@@ -101,21 +102,30 @@ export const FloatingSpots = React.forwardRef<HTMLDivElement, FloatingSpotsProps
               width: spot.size,
               height: spot.size,
               backgroundColor: color,
+              opacity: shouldReduceMotion ? spot.opacity : undefined,
               filter: `blur(${blur}px)`,
               transform: "translate(-50%, -50%)",
             }}
-            animate={{
-              x: [0, spot.driftX, 0, -spot.driftX / 2, 0],
-              y: [0, spot.driftY / 2, spot.driftY, 0],
-              opacity: [spot.opacity, spot.opacity * 1.3, spot.opacity],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: spot.duration,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: spot.delay,
-            }}
+            animate={
+              shouldReduceMotion
+                ? { opacity: spot.opacity }
+                : {
+                    x: [0, spot.driftX, 0, -spot.driftX / 2, 0],
+                    y: [0, spot.driftY / 2, spot.driftY, 0],
+                    opacity: [spot.opacity, spot.opacity * 1.3, spot.opacity],
+                    scale: [1, 1.1, 1],
+                  }
+            }
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : {
+                    duration: spot.duration,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: spot.delay,
+                  }
+            }
           />
         ))}
       </div>

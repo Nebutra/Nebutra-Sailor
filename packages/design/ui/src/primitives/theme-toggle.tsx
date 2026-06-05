@@ -1,10 +1,14 @@
 "use client";
 
-import { type MotionStyle, motion, type Transition } from "framer-motion";
 import * as React from "react";
 import { useReducedMotion } from "../hooks/use-reduced-motion";
+import { motion } from "../shared/animation/motion";
 import { type ThemeToggleSize, themeToggleTokens } from "../tokens/components/theme-toggle";
 import { cn } from "../utils/cn";
+
+type MotionButtonProps = React.ComponentProps<typeof motion.button>;
+type MotionStyle = NonNullable<MotionButtonProps["style"]>;
+type MotionTransition = NonNullable<MotionButtonProps["transition"]>;
 
 export type ThemeToggleValue = "light" | "dark";
 
@@ -174,11 +178,11 @@ export const ThemeToggle = ({
   const actionLabel = isDark
     ? (labels?.light ?? DEFAULT_LABELS.light)
     : (labels?.dark ?? DEFAULT_LABELS.dark);
-  const transition: Transition =
+  const transition: MotionTransition =
     shouldReduceMotion || !mounted
       ? themeToggleTokens.motion.instant
       : themeToggleTokens.motion.morph;
-  const pressTransition: Transition = shouldReduceMotion
+  const pressTransition: MotionTransition = shouldReduceMotion
     ? themeToggleTokens.motion.instant
     : themeToggleTokens.motion.press;
   const interactionMotionProps =

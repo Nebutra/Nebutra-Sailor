@@ -8,10 +8,10 @@ import {
   LoaderCircle as Loader2,
   Anchor as Sailboat,
 } from "@nebutra/icons";
-import { motion } from "framer-motion";
 import React from "react";
 import { Button } from "../primitives/button";
 import { Input } from "../primitives/input";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 // Google Icon SVG component
@@ -45,6 +45,7 @@ const HuggingFaceIcon = (props: React.ComponentProps<"svg">) => (
 
 // Decorative floating paths component (artistic element - exempt from Primer)
 function FloatingPaths({ position }: { position: number }) {
+  const shouldReduceMotion = useReducedMotion();
   const paths = Array.from({ length: 36 }, (_, i) => ({
     id: i,
     d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
@@ -73,17 +74,25 @@ function FloatingPaths({ position }: { position: number }) {
             stroke="currentColor"
             strokeWidth={path.width}
             strokeOpacity={0.1 + path.id * 0.03}
-            initial={{ pathLength: 0.3, opacity: 0.6 }}
-            animate={{
-              pathLength: 1,
-              opacity: [0.3, 0.6, 0.3],
-              pathOffset: [0, 1, 0],
-            }}
-            transition={{
-              duration: 20 + Math.random() * 10,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-            }}
+            initial={shouldReduceMotion ? false : { pathLength: 0.3, opacity: 0.6 }}
+            animate={
+              shouldReduceMotion
+                ? { pathLength: 1, opacity: 0.35, pathOffset: 0 }
+                : {
+                    pathLength: 1,
+                    opacity: [0.3, 0.6, 0.3],
+                    pathOffset: [0, 1, 0],
+                  }
+            }
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : {
+                    duration: 20 + (path.id % 10),
+                    repeat: Number.POSITIVE_INFINITY,
+                    ease: "linear",
+                  }
+            }
           />
         ))}
       </svg>

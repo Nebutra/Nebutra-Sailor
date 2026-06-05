@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import * as React from "react";
 import { useReducedMotion } from "../hooks/use-reduced-motion";
+import { motion } from "../shared/animation/motion";
 import {
   type AnimatedBeamIntensity,
   type AnimatedBeamTone,

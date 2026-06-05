@@ -141,7 +141,7 @@ export function ConstellationSection() {
                       </span>
                     </div>
                     {entry.authorImage ? (
-                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-gray-100 dark:border-gray-800 filter grayscale transition-all hover:grayscale-0">
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-gray-100 dark:border-gray-800 filter grayscale transition-[filter] hover:grayscale-0">
                         <Image
                           src={entry.authorImage}
                           alt={entry.nickname}

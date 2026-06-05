@@ -1,7 +1,12 @@
 "use client";
 
-import { AnimatePresence, type HTMLMotionProps, motion } from "framer-motion";
 import * as React from "react";
+import {
+  AnimatePresence,
+  type HTMLMotionProps,
+  motion,
+  useReducedMotion,
+} from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 export interface DwellHintProps
@@ -33,6 +38,7 @@ export interface DwellHintProps
  */
 export const DwellHint = React.forwardRef<HTMLDivElement, DwellHintProps>(
   ({ show, message, icon, position = "bottom", className, ...props }, ref) => {
+    const shouldReduceMotion = useReducedMotion();
     const positionClasses = {
       top: "top-0 -translate-y-full mb-2",
       bottom: "bottom-0 translate-y-full mt-2",
@@ -40,7 +46,7 @@ export const DwellHint = React.forwardRef<HTMLDivElement, DwellHintProps>(
     };
 
     return (
-      <AnimatePresence>
+      <AnimatePresence initial={!shouldReduceMotion}>
         {show && (
           <motion.div
             ref={ref}
@@ -49,17 +55,29 @@ export const DwellHint = React.forwardRef<HTMLDivElement, DwellHintProps>(
               positionClasses[position],
               className,
             )}
-            initial={{
-              opacity: 0,
-              y: position === "top" ? -10 : 10,
-              scale: 0.95,
-            }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: position === "top" ? -5 : 5, scale: 0.98 }}
-            transition={{
-              duration: 0.4,
-              ease: [0.34, 1.56, 0.64, 1],
-            }}
+            initial={
+              shouldReduceMotion
+                ? { opacity: 1 }
+                : {
+                    opacity: 0,
+                    y: position === "top" ? -10 : 10,
+                    scale: 0.95,
+                  }
+            }
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={
+              shouldReduceMotion
+                ? { opacity: 0 }
+                : { opacity: 0, y: position === "top" ? -5 : 5, scale: 0.98 }
+            }
+            transition={
+              shouldReduceMotion
+                ? { duration: 0 }
+                : {
+                    duration: 0.4,
+                    ease: [0.34, 1.56, 0.64, 1],
+                  }
+            }
             {...props}
           >
             <div

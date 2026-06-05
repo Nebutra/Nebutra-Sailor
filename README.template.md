@@ -187,7 +187,7 @@ Nebula • Nurture • Ultra • Future
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/ai.svg" width="28" alt="AI" /><br />
       <strong>AI‑native</strong>
-      <br />LLMs, vector search, MCP agents, and premium Lobe UI Chat interfaces.
+      <br />LLMs, vector search, MCP agents, and premium Nebutra UI chat interfaces.
     </td>
     <td width="33%" valign="top">
       <img src="packages/design/brand/assets/icons/tenants.svg" width="28" alt="Tenants" /><br />
@@ -282,7 +282,7 @@ Nebula • Nurture • Ultra • Future
 <td>
   <a href="https://www.radix-ui.com/"><img src="https://img.shields.io/badge/Radix_UI-161618?style=flat-square&logo=radix-ui&logoColor=white" alt="Radix UI" /></a>
   <img src="https://img.shields.io/badge/HeroUI-000?style=flat-square" alt="HeroUI" />
-  <img src="https://img.shields.io/badge/Lobe_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Lobe UI" />
+  <img src="https://img.shields.io/badge/Nebutra_UI-000?style=flat-square&logo=react&logoColor=white&v=1" alt="Nebutra UI" />
   <img src="https://img.shields.io/badge/Geist_Icons_(541)-000?style=flat-square" alt="Geist Icons" />
   <img src="https://img.shields.io/badge/Inter-000?style=flat-square&logo=googlefonts&logoColor=white&v=1" alt="Inter" />
   <img src="https://img.shields.io/badge/JetBrains_Mono-000?style=flat-square&logo=jetbrains&logoColor=white&v=1" alt="JetBrains Mono" />

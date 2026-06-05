@@ -1620,7 +1620,7 @@
         },
         "tech-stack": {
           "question": "技術スタックは何ですか？",
-          "answer": "React 19 上の Next.js 16（App Router）、TypeScript 5.9、Tailwind v4、Postgres 上の Prisma 7（pgvector + RLS 付き）、BFF ゲートウェイに Hono、ML・重処理サービスに FastAPI、Radix + Lobe UI プリミティブと framer-motion によるコンポーネントライブラリです。AI 機能はプロバイダー可搬性を持つ Vercel AI SDK 経由（OpenAI / OpenRouter / SiliconFlow / Azure / ローカル）で提供されます。"
+          "answer": "React 19 上の Next.js 16（App Router）、TypeScript 5.9、Tailwind v4、Postgres 上の Prisma 7（pgvector + RLS 付き）、BFF ゲートウェイに Hono、ML・重処理サービスに FastAPI、Radix、Nebutra UI プリミティブ、共有 Motion レイヤーによるコンポーネントライブラリです。AI 機能はプロバイダー可搬性を持つ Vercel AI SDK 経由（OpenAI / OpenRouter / SiliconFlow / Azure / ローカル）で提供されます。"
         },
         "license": {
           "question": "ライセンスは何ですか？",

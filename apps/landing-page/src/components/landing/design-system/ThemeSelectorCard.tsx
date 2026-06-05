@@ -98,9 +98,9 @@ export function ThemeSelectorCard() {
               <div className="h-full rounded bg-muted/30 border border-border/50 flex flex-col gap-1 justify-end items-center p-1 relative overflow-hidden">
                 {/* Bars */}
                 <div className="flex gap-1 items-end w-full h-[80%] px-1">
-                  <div className="h-[40%] w-1/3 rounded-t-sm bg-[var(--green-7)] transition-all duration-500 group-hover:h-[50%]" />
-                  <div className="h-[70%] w-1/3 rounded-t-sm bg-[var(--green-8)] transition-all delay-75 duration-500 group-hover:h-[80%]" />
-                  <div className="h-[90%] w-1/3 rounded-t-sm bg-[var(--green-9)] shadow-[0_0_5px_color-mix(in_oklch,var(--green-9)_45%,transparent)] transition-all delay-150 duration-500 group-hover:h-[100%]" />
+                  <div className="h-[40%] w-1/3 rounded-t-sm bg-[var(--green-7)] transition-[height] duration-500 group-hover:h-[50%] motion-reduce:transition-none" />
+                  <div className="h-[70%] w-1/3 rounded-t-sm bg-[var(--green-8)] transition-[height] delay-75 duration-500 group-hover:h-[80%] motion-reduce:transition-none" />
+                  <div className="h-[90%] w-1/3 rounded-t-sm bg-[var(--green-9)] shadow-[0_0_5px_color-mix(in_oklch,var(--green-9)_45%,transparent)] transition-[height] delay-150 duration-500 group-hover:h-[100%] motion-reduce:transition-none" />
                 </div>
               </div>
             </div>

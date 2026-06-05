@@ -109,7 +109,7 @@ export function HeroMockupWindow() {
     <AnimateIn preset="fadeUp" className="w-full max-w-[1400px] mx-auto relative z-20 px-4 group">
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
-        className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/95 dark:bg-zinc-950/95 overflow-hidden transition-all duration-500"
+        className="relative rounded-[var(--radius-panel)] border border-[var(--neutral-6)] bg-background/95 dark:bg-zinc-950/95 overflow-hidden transition-[background-color,border-color,box-shadow] duration-500"
       >
         {/* Top highlight line */}
         <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />

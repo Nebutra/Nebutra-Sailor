@@ -1,7 +1,9 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils";
+
+type MotionVariants = NonNullable<React.ComponentProps<typeof motion.div>["variants"]>;
 
 // =============================================================================
 // Types
@@ -40,7 +42,7 @@ export interface WordFadeInProps {
    * Custom framer-motion variants
    * @default Fade in with staggered delay
    */
-  variants?: Variants;
+  variants?: MotionVariants;
   /**
    * HTML element to render as
    * @default "h1"
@@ -62,7 +64,7 @@ export interface WordFadeInProps {
 // Default Variants
 // =============================================================================
 
-const createDefaultVariants = (delay: number): Variants => ({
+const createDefaultVariants = (delay: number): MotionVariants => ({
   hidden: { opacity: 0 },
   visible: (i: number) => ({
     y: 0,
@@ -109,9 +111,15 @@ export function WordFadeIn({
   animate = true,
   trigger = "mount",
 }: WordFadeInProps) {
+  const shouldReduceMotion = useReducedMotion();
   const MotionComponent = motion.create(Component);
   const wordArray = words.split(" ");
-  const animationVariants = variants ?? createDefaultVariants(delay);
+  const animationVariants = shouldReduceMotion
+    ? ({
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0 } },
+      } satisfies MotionVariants)
+    : (variants ?? createDefaultVariants(delay));
 
   const animationProps =
     trigger === "inView"

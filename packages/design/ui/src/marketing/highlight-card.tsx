@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
 import * as React from "react";
+import { motion, useReducedMotion, type Variants } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 /**
@@ -75,6 +75,22 @@ const itemVariants: Variants = {
   },
 };
 
+const reducedCardVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0 },
+  },
+};
+
+const reducedItemVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0 },
+  },
+};
+
 /**
  * HighlightCard - Animated card for displaying metrics with color themes
  *
@@ -108,6 +124,9 @@ export const HighlightCard = React.forwardRef<HTMLDivElement, HighlightCardProps
     ref,
   ) => {
     const theme = colorThemes[color] || colorThemes.default;
+    const shouldReduceMotion = useReducedMotion();
+    const cardMotionVariants = shouldReduceMotion ? reducedCardVariants : cardVariants;
+    const itemMotionVariants = shouldReduceMotion ? reducedItemVariants : itemVariants;
 
     return (
       <motion.div
@@ -129,7 +148,7 @@ export const HighlightCard = React.forwardRef<HTMLDivElement, HighlightCardProps
             backgroundSize: "0.5rem 0.5rem, 100% 100%",
           } as React.CSSProperties
         }
-        variants={cardVariants}
+        variants={cardMotionVariants}
         initial="hidden"
         animate="visible"
       >
@@ -146,25 +165,25 @@ export const HighlightCard = React.forwardRef<HTMLDivElement, HighlightCardProps
         <div className="flex h-full flex-col justify-between">
           {/* Top section */}
           <div>
-            <motion.h3 variants={itemVariants} className="text-2xl font-bold tracking-tight">
+            <motion.h3 variants={itemMotionVariants} className="text-2xl font-bold tracking-tight">
               {title}
             </motion.h3>
-            <motion.p variants={itemVariants} className="mt-1 max-w-[80%] text-sm opacity-90">
+            <motion.p variants={itemMotionVariants} className="mt-1 max-w-[80%] text-sm opacity-90">
               {description}
             </motion.p>
           </div>
 
           {/* Divider */}
-          <motion.div variants={itemVariants} className="my-4 h-px w-full bg-white/20" />
+          <motion.div variants={itemMotionVariants} className="my-4 h-px w-full bg-white/20" />
 
           {/* Bottom section */}
           <div className="flex items-end justify-between">
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemMotionVariants}>
               <p className="text-4xl font-bold tracking-tighter">{metricValue}</p>
               <p className="text-sm opacity-90">{metricLabel}</p>
             </motion.div>
             <motion.button
-              variants={itemVariants}
+              variants={itemMotionVariants}
               onClick={onButtonClick}
               className="rounded-full bg-white/30 px-4 py-2 text-sm font-semibold backdrop-blur-sm transition-colors hover:bg-white/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
               aria-label={buttonText}

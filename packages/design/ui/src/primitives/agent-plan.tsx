@@ -7,9 +7,9 @@ import {
   ClockDashed as CircleDotDashed,
   CrossCircle as CircleX,
 } from "@nebutra/icons";
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import type React from "react";
 import { useMemo, useState } from "react";
+import { AnimatePresence, LayoutGroup, motion } from "../shared/animation/motion";
 import { cn } from "../utils";
 
 // =============================================================================

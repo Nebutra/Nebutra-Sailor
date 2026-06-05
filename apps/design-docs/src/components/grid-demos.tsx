@@ -72,7 +72,7 @@ export function GridCell({ children, className, colSpan = 1, rowSpan = 1 }: Grid
   return (
     <div
       className={cn(
-        "flex min-h-[64px] items-center justify-center rounded-md bg-foreground p-4 text-sm font-semibold text-background transition-transform hover:scale-[1.02]",
+        "flex min-h-[64px] items-center justify-center rounded-md bg-foreground p-4 text-sm font-semibold text-background transition-transform hover:scale-[1.02] motion-reduce:hover:scale-100",
         {
           "col-span-1": colSpan === 1,
           "col-span-2": colSpan === 2,

@@ -21,7 +21,7 @@ Layered package map:
        ↓
 @nebutra/theme   → Multi-theme presets (6 oklch variants via [data-theme])
        ↓
-@nebutra/ui      → Component library (Radix + HeroUI + Lobe UI + custom)
+@nebutra/ui      → Component library (Radix + HeroUI + Nebutra primitives)
 @nebutra/icons   → 541 Geist icons as tree-shakable TSX
 ```
 
@@ -328,12 +328,12 @@ Components export accessible primitives by default (Radix under the hood). Do no
 
 | Need | Import from | Notes |
 |-----|-------------|------|
-| UI primitive | `@nebutra/ui/components` | Includes Lobe UI re-exports |
+| UI primitive | `@nebutra/ui/components` | Nebutra primitives, patterns, and curated AI/chat surfaces |
 | Layout wrapper | `@nebutra/ui/layout` | (`@nebutra/design-system` is **deprecated** — merged into `@nebutra/ui/layout`) |
 | Geist icon | `@nebutra/icons` | Tree-shakable |
 | Generic icon | `lucide-react` | Only when no Geist equivalent |
 | Theme switching | `@nebutra/tokens` | Wraps `next-themes` |
-| Lobe theme bridge | `@nebutra/ui` (`NebutraThemeProvider`) | Internal only |
+| Lobe compatibility bridge | `@nebutra/ui` (`NebutraThemeProvider`) | Internal theme bridge only |
 
 ### 5.2 Forbidden patterns (anti-patterns)
 

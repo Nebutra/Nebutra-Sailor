@@ -5,8 +5,8 @@ import { MarketingClientProviders } from "./marketing-client-providers";
 /**
  * Marketing route group provides a single LazyMotion provider for the entire
  * subtree. Children remain RSC — Next.js renders them server-side and threads
- * them through this client wrapper. AnimateIn uses bare `<m.div>` and relies
- * on this provider for feature registration, so framer's `domAnimation`
+ * them through this client wrapper. AnimateIn uses the shared Motion element
+ * facade and relies on this provider for feature registration, so framer's `domAnimation`
  * features module is loaded exactly once per session.
  */
 export default function MarketingLayout({ children }: { children: ReactNode }) {

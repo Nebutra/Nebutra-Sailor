@@ -1,10 +1,13 @@
 "use client";
 
-import { type HTMLMotionProps, motion, type Variants } from "framer-motion";
 import type * as React from "react";
+import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
-export interface InteractiveCardProps extends Omit<HTMLMotionProps<"div">, "ref"> {
+type MotionDivProps = React.ComponentProps<typeof motion.div>;
+type MotionVariants = NonNullable<MotionDivProps["variants"]>;
+
+export interface InteractiveCardProps extends Omit<MotionDivProps, "ref"> {
   /** Step label (e.g., "STEP 1") */
   step: string;
   /** Card title */
@@ -19,27 +22,32 @@ export interface InteractiveCardProps extends Omit<HTMLMotionProps<"div">, "ref"
  * Default animated export icon with hover animation
  */
 function AnimatedExportIcon() {
-  const fileVariants: Variants = {
+  const shouldReduceMotion = useReducedMotion() ?? false;
+  const fileVariants: MotionVariants = {
     initial: { y: 0 },
-    hover: {
-      y: -12,
-      transition: { type: "spring", stiffness: 300, damping: 20 },
-    },
+    hover: shouldReduceMotion
+      ? { y: 0, transition: { duration: 0 } }
+      : {
+          y: -12,
+          transition: { type: "spring", stiffness: 300, damping: 20 },
+        },
   };
 
-  const downloadIconVariants: Variants = {
+  const downloadIconVariants: MotionVariants = {
     initial: { scale: 1 },
-    hover: {
-      scale: 1.15,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 15,
-        repeat: Infinity,
-        repeatType: "reverse",
-        duration: 0.5,
-      },
-    },
+    hover: shouldReduceMotion
+      ? { scale: 1, transition: { duration: 0 } }
+      : {
+          scale: 1.15,
+          transition: {
+            type: "spring",
+            stiffness: 400,
+            damping: 15,
+            repeat: Infinity,
+            repeatType: "reverse",
+            duration: 0.5,
+          },
+        },
   };
 
   return (
@@ -121,6 +129,8 @@ export const InteractiveCard = ({
   ref,
   ...props
 }: InteractiveCardProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
       // Double-cast bridges framer-motion's bundled React types vs @types/react.
@@ -130,7 +140,7 @@ export const InteractiveCard = ({
         className,
       )}
       initial="initial"
-      whileHover="hover"
+      {...(!shouldReduceMotion ? { whileHover: "hover" as const } : {})}
       aria-label={`${title}: ${description}`}
       role="group"
       {...props}

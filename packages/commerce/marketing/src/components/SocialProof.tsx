@@ -444,7 +444,7 @@ export function TrustBadges({
         src={badge.imageUrl}
         alt={badge.altText}
         className={clsx(
-          "object-contain grayscale transition-all hover:grayscale-0",
+          "object-contain grayscale transition-[filter] hover:grayscale-0",
           sizeClasses[size],
         )}
       />

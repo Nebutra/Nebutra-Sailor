@@ -101,7 +101,7 @@ export function CustomersSection({
             },
             ...transitionVariants,
           }}
-          className="mx-auto mt-12 grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 group-hover:blur-sm sm:gap-x-16 sm:gap-y-14"
+          className="mx-auto mt-12 grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-[filter,opacity] duration-500 group-hover:opacity-50 group-hover:blur-sm motion-reduce:transition-opacity motion-reduce:group-hover:blur-none sm:gap-x-16 sm:gap-y-14"
         >
           {customers.map((logo, index) => (
             <div key={index} className="flex">

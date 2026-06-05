@@ -39,7 +39,7 @@ Nebutra 的动效语言取自云计算的数据流。三个核心动效代表数
 | Easing | `cubic-bezier(0.16, 1, 0.3, 1)` |
 
 ```tsx
-import { motion } from "framer-motion"
+import { motion } from "@/shared/motion"
 import { brandMotion } from "@nebutra/brand"
 
 // 使用品牌 preset
@@ -72,7 +72,7 @@ import { brandMotion } from "@nebutra/brand"
 | Easing | `cubic-bezier(0, 0, 0.2, 1)` |
 
 ```tsx
-import { motion } from "framer-motion"
+import { motion } from "@/shared/motion"
 import { brandMotion } from "@nebutra/brand"
 
 // 使用品牌 preset
@@ -105,7 +105,7 @@ import { brandMotion } from "@nebutra/brand"
 | Repeat | `Infinity` |
 
 ```tsx
-import { motion } from "framer-motion"
+import { motion } from "@/shared/motion"
 import { brandMotion } from "@nebutra/brand"
 
 // Using brand preset
@@ -277,7 +277,7 @@ import { brandSpring } from "@nebutra/brand"
 列表与网格入场使用 stagger——每个子元素在前一个之后稍微延迟进入。
 
 ```tsx
-import { motion } from "framer-motion"
+import { motion } from "@/shared/motion"
 import { brandMotion, motionDurationSec, brandEasing } from "@nebutra/brand"
 
 const container = {

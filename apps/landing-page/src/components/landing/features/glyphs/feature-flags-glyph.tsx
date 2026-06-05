@@ -66,7 +66,7 @@ export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
                 }}
               >
                 <span
-                  className="absolute top-0.5 h-2 w-2 rounded-full bg-white shadow-sm transition-all"
+                  className="absolute top-0.5 h-2 w-2 rounded-full bg-white shadow-sm transition-[left,transform]"
                   style={{ left: row.on ? "calc(100% - 10px)" : "2px" }}
                 />
               </div>

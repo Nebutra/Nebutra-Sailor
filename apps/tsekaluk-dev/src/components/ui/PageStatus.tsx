@@ -53,7 +53,7 @@ export function PageStatus(props: PageStatusProps) {
             <button
               type="button"
               onClick={props.reset}
-              className="inline-block rounded-full border border-gray-300 dark:border-gray-700 px-6 py-2.5 text-sm font-medium text-foreground transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+              className="inline-block rounded-full border border-gray-300 dark:border-gray-700 px-6 py-2.5 text-sm font-medium text-foreground transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
             >
               Try again
             </button>
@@ -71,7 +71,7 @@ function HomeLink({ Link, href, children }: { Link: LinkLike; href: string; chil
   return (
     <Link
       href={href}
-      className="inline-block rounded-full bg-gray-900 dark:bg-white px-6 py-2.5 text-sm font-medium text-white dark:text-gray-900 transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+      className="inline-block rounded-full bg-gray-900 dark:bg-white px-6 py-2.5 text-sm font-medium text-white dark:text-gray-900 transition-transform duration-200 hover:scale-[1.03] active:scale-[0.97] motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
     >
       {children}
     </Link>

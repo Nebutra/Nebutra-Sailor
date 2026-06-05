@@ -220,6 +220,9 @@ jobs:
         run: |
           pnpm test:arch
 
+      - name: Verify animation governance
+        run: pnpm --config.verify-deps-before-run=false animation:governance
+
       - name: Generate Prisma Client
         run: pnpm db:generate
 

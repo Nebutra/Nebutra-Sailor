@@ -540,7 +540,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   return (
                     <div
                       key={item.name}
-                      className="h-full rounded-[var(--radius-card)] bg-muted/20 p-6 hover:bg-muted/40 hover:-translate-y-px transition-all duration-150"
+                      className="h-full rounded-[var(--radius-card)] bg-muted/20 p-6 hover:bg-muted/40 hover:-translate-y-px transition-[background-color,transform] duration-150 motion-reduce:hover:translate-y-0"
                       style={{ boxShadow: "var(--ring-hairline)" }}
                     >
                       <div className="flex items-center justify-between mb-4">
@@ -650,7 +650,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               return (
                 <div
                   key={principle.name}
-                  className="h-full rounded-[var(--radius-card)] bg-background p-7 hover:-translate-y-px transition-all duration-150"
+                  className="h-full rounded-[var(--radius-card)] bg-background p-7 hover:-translate-y-px transition-transform duration-150 motion-reduce:hover:translate-y-0"
                   style={{ boxShadow: "var(--ring-hairline)" }}
                 >
                   <div className="flex items-center justify-between mb-5">

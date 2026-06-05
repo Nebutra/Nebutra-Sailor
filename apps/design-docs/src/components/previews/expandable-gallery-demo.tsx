@@ -74,7 +74,7 @@ export function ExpandableGalleryDemo() {
         <div className="flex justify-center">
           <Button variant="default" className="group rounded-full px-8 py-6 font-normal">
             Explore more components
-            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1 motion-reduce:group-hover:translate-x-0" />
           </Button>
         </div>
       </ExpandableGallery>

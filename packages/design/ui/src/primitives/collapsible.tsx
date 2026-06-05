@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import * as React from "react";
+import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
 
 const CollapsibleContext = React.createContext<{
@@ -113,6 +113,7 @@ const CollapsibleContent = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
   const { open } = React.use(CollapsibleContext);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <AnimatePresence initial={false}>
@@ -126,7 +127,9 @@ const CollapsibleContent = ({
             open: { opacity: 1, height: "auto" },
             collapsed: { opacity: 0, height: 0 },
           }}
-          transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+          transition={
+            shouldReduceMotion ? { duration: 0 } : { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }
+          }
           className="overflow-hidden"
         >
           <div ref={ref} data-state="open" className={cn("", className)} {...props}>

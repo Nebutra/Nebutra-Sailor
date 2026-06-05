@@ -114,7 +114,7 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
       {/* Profile header */}
       <div className="mb-20 text-center">
         <AnimateIn preset="fadeUp" duration={800}>
-          <div className="mx-auto mb-8 h-24 w-24 overflow-hidden rounded-full border border-gray-200/50 dark:border-gray-800/50 p-1 shadow-2xl backdrop-blur-md transition-transform duration-500 hover:scale-105">
+          <div className="mx-auto mb-8 h-24 w-24 overflow-hidden rounded-full border border-gray-200/50 dark:border-gray-800/50 p-1 shadow-2xl backdrop-blur-md transition-transform duration-500 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100">
             <Image
               src="/images/black.jpeg"
               alt="Tseka Luk"
@@ -157,7 +157,7 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
                 href={link.url}
                 target={link.url.startsWith("/") ? undefined : "_blank"}
                 rel={link.url.startsWith("/") ? undefined : "noopener noreferrer"}
-                className="group relative flex items-center gap-5 rounded-3xl border border-gray-100 bg-white/60 p-5 shadow-sm backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-accent-muted)] hover:shadow-xl dark:border-gray-800/60 dark:bg-gray-900/40 dark:hover:border-gray-700"
+                className="group relative flex items-center gap-5 rounded-3xl border border-gray-100 bg-white/60 p-5 shadow-sm backdrop-blur-md transition-[border-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:border-[var(--color-accent-muted)] hover:shadow-xl dark:border-gray-800/60 dark:bg-gray-900/40 dark:hover:border-gray-700 motion-reduce:transition-colors motion-reduce:hover:translate-y-0"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gray-50 text-gray-600 transition-colors group-hover:bg-[var(--color-accent-light)] group-hover:text-[var(--color-accent-dark)] dark:bg-gray-800 dark:text-gray-400 dark:group-hover:bg-gray-700 dark:group-hover:text-white">
                   {link.icon}
@@ -198,7 +198,7 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
 
             const InnerContent = (
               <div
-                className={`group relative flex h-full items-center gap-5 rounded-3xl border p-5 transition-all duration-300 ${
+                className={`group relative flex h-full items-center gap-5 rounded-3xl border p-5 transition-[border-color,box-shadow,transform] duration-300 motion-reduce:transition-colors motion-reduce:hover:translate-y-0 ${
                   isComingSoon
                     ? "border-dashed border-gray-200/60 bg-transparent opacity-60 dark:border-gray-800/60 cursor-not-allowed"
                     : "border-gray-100 bg-white/60 shadow-sm backdrop-blur-md hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl dark:border-gray-800/60 dark:bg-gray-900/40 dark:hover:border-gray-700 cursor-pointer"
@@ -300,9 +300,9 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
         <div className="mt-12 text-center pb-24">
           <a
             href="mailto:contact@tsekaluk.dev"
-            className="group inline-flex items-center gap-3 rounded-full bg-gray-900 px-8 py-4 text-sm font-semibold text-white shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+            className="group inline-flex items-center gap-3 rounded-full bg-gray-900 px-8 py-4 text-sm font-semibold text-white shadow-xl transition-[background-color,transform] duration-300 hover:scale-105 hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 motion-reduce:transition-colors motion-reduce:hover:scale-100"
           >
-            <Email className="h-4 w-4 transition-transform group-hover:-rotate-12" />
+            <Email className="h-4 w-4 transition-transform group-hover:-rotate-12 motion-reduce:transition-none motion-reduce:group-hover:rotate-0" />
             <span>contact@tsekaluk.dev</span>
           </a>
         </div>

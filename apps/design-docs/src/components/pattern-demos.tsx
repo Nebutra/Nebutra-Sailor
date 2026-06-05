@@ -104,9 +104,9 @@ export function FlickeringGridCardDemo() {
               </span>
             </div>
             <div className="flex gap-1">
-              <div className="w-1 h-3 rounded-full bg-blue-600 dark:bg-blue-500 animate-[pulse_1s_ease-in-out_infinite]" />
-              <div className="w-1 h-3 rounded-full bg-blue-400 dark:bg-blue-400 animate-[pulse_1s_ease-in-out_0.2s_infinite]" />
-              <div className="w-1 h-3 rounded-full bg-blue-200 dark:bg-blue-300 animate-[pulse_1s_ease-in-out_0.4s_infinite]" />
+              <div className="w-1 h-3 rounded-full bg-blue-600 dark:bg-blue-500 animate-[pulse_1s_ease-in-out_infinite] motion-reduce:animate-none" />
+              <div className="w-1 h-3 rounded-full bg-blue-400 dark:bg-blue-400 animate-[pulse_1s_ease-in-out_0.2s_infinite] motion-reduce:animate-none" />
+              <div className="w-1 h-3 rounded-full bg-blue-200 dark:bg-blue-300 animate-[pulse_1s_ease-in-out_0.4s_infinite] motion-reduce:animate-none" />
             </div>
           </div>
           <div className="space-y-2 mt-1">

@@ -218,7 +218,7 @@ export default async function BusinessPortfolioPage({
                   return (
                     <article
                       key={`${group.key}-${idx}`}
-                      className="group relative h-full flex flex-col gap-4 p-7 md:p-8 rounded-[var(--radius-2xl)] border border-border bg-background hover:border-foreground/40 hover:shadow-lg transition-all duration-300"
+                      className="group relative h-full flex flex-col gap-4 p-7 md:p-8 rounded-[var(--radius-2xl)] border border-border bg-background hover:border-foreground/40 hover:shadow-lg transition-[border-color,box-shadow] duration-300"
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/70">

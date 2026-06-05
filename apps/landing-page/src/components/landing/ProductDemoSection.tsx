@@ -2,9 +2,9 @@
 
 import { KineticConsoleFrame } from "@nebutra/ui/patterns";
 import { AuroraBackground } from "@nebutra/ui/primitives";
-import { domAnimation, LazyMotion, m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { domAnimation, LazyMotion, m, useReducedMotion } from "@/shared/motion";
 import { AnalyticsTerminal } from "./product-demo/AnalyticsTerminal";
 import { BillingTerminal } from "./product-demo/BillingTerminal";
 import { PRODUCT_DEMO_TABS, type ProductDemoTabId } from "./product-demo/product-demo-data";
@@ -27,6 +27,7 @@ export function ProductDemoSection() {
   const t = useTranslations("microLanding.productDemo");
   type ProductDemoTranslationKey = Parameters<typeof t>[0];
   const [activeId, setActiveId] = useState<ProductDemoTabId>(PRODUCT_DEMO_TABS[0].id);
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <section
@@ -74,26 +75,30 @@ export function ProductDemoSection() {
                     key={tab.id}
                     aria-pressed={isActive}
                     onClick={() => setActiveId(tab.id)}
-                    className={`group relative flex items-start text-left py-6 transition-all duration-500 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background w-full ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
+                    className={`group relative flex items-start text-left py-6 transition-opacity duration-500 motion-reduce:duration-0 outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background w-full ${isActive ? "opacity-100" : "opacity-60 hover:opacity-100"}`}
                   >
                     {/* Step Node */}
-                    <div className="relative z-10 mr-6 hidden size-14 shrink-0 items-center justify-center transition-transform duration-300 md:flex">
+                    <div className="relative z-10 mr-6 hidden size-14 shrink-0 items-center justify-center transition-transform duration-300 motion-reduce:transition-none md:flex">
                       {/* The active pill animation */}
                       {isActive && (
                         <m.div
-                          layoutId="activeDemoTab"
+                          layoutId={shouldReduceMotion ? undefined : "activeDemoTab"}
                           className="absolute inset-0 rounded-full bg-foreground border-2 border-background dark:border-[#0A0A0B]"
                           style={{ boxShadow: "var(--ring-hairline)" }}
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                          transition={
+                            shouldReduceMotion
+                              ? { duration: 0 }
+                              : { type: "spring", stiffness: 300, damping: 30 }
+                          }
                         />
                       )}
                       {/* The static inactive background */}
                       {!isActive && (
-                        <div className="absolute inset-0 rounded-full bg-muted ring-1 ring-border/50 group-hover:bg-muted/80 transition-colors" />
+                        <div className="absolute inset-0 rounded-full bg-muted ring-1 ring-border/50 group-hover:bg-muted/80 transition-colors motion-reduce:transition-none" />
                       )}
 
                       <span
-                        className={`relative z-20 font-mono text-sm font-bold transition-colors delay-75 ${
+                        className={`relative z-20 font-mono text-sm font-bold transition-colors delay-75 motion-reduce:delay-0 motion-reduce:transition-none ${
                           isActive ? "text-background" : "text-muted-foreground"
                         }`}
                       >
@@ -104,13 +109,13 @@ export function ProductDemoSection() {
                     {/* Content Fragment */}
                     <div className="flex-1 pt-1">
                       <h3
-                        className={`text-xl md:text-2xl font-semibold mb-3 transition-colors duration-400 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
+                        className={`text-xl md:text-2xl font-semibold mb-3 transition-colors duration-400 motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground"}`}
                         style={{ letterSpacing: "var(--tracking-tight)" }}
                       >
                         {t(tab.labelKey as ProductDemoTranslationKey)}
                       </h3>
                       <p
-                        className={`text-sm md:text-base leading-relaxed font-medium transition-colors duration-400 ${isActive ? "text-muted-foreground" : "text-muted-foreground/60"}`}
+                        className={`text-sm md:text-base leading-relaxed font-medium transition-colors duration-400 motion-reduce:duration-0 ${isActive ? "text-muted-foreground" : "text-muted-foreground/60"}`}
                       >
                         {t(tab.descKey as ProductDemoTranslationKey)}
                       </p>

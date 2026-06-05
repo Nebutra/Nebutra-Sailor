@@ -420,15 +420,15 @@ function toNamespaceIdentifier(value) {
   return value.replace(/-([a-z])/gu, (_, char) => char.toUpperCase());
 }
 
-// The TS platform used to emit `.ts` runtime files. Clear the directory before
-// generation so package builds cannot publish stale, non-runtime artifacts next
-// to the current `.js` entrypoints.
+// Clear shared output directories once. Every mode writes into the same platform
+// folders, so cleaning inside the per-mode loop would remove earlier mode files.
+await rm("build/css", { recursive: true, force: true });
 await rm("build/ts", { recursive: true, force: true });
+await rm("build/tailwind", { recursive: true, force: true });
 
 for (const cfg of configs) {
   const sd = new StyleDictionary(cfg);
   await sd.hasInitialized;
-  await sd.cleanAllPlatforms();
   await sd.buildAllPlatforms();
 }
 

@@ -11,7 +11,7 @@ export function ZIndexDemo() {
       </div>
       <div className="p-8 md:p-12 pl-12 md:pl-24 h-[400px] flex items-center relative overflow-hidden">
         <div
-          className="absolute left-8 md:left-24 top-20 bottom-20 right-8 md:right-24 bg-zinc-200 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 rounded-2xl shadow-sm text-zinc-500 dark:text-zinc-400 p-6 flex flex-col justify-end transition-transform hover:-translate-y-1 hover:shadow-md cursor-default z-[0]"
+          className="absolute left-8 md:left-24 top-20 bottom-20 right-8 md:right-24 bg-zinc-200 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 rounded-2xl shadow-sm text-zinc-500 dark:text-zinc-400 p-6 flex flex-col justify-end transition-transform hover:-translate-y-1 motion-reduce:hover:translate-y-0 hover:shadow-md cursor-default z-[0]"
           style={{ transform: "perspective(1000px) rotateX(15deg) rotateY(-20deg) rotateZ(5deg)" }}
         >
           <div className="flex justify-between items-center w-full">
@@ -25,7 +25,7 @@ export function ZIndexDemo() {
         </div>
 
         <div
-          className="absolute left-16 md:left-32 top-16 bottom-24 right-16 md:right-32 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-xl p-6 flex flex-col justify-end transition-transform hover:-translate-y-2 hover:shadow-2xl cursor-default z-[10]"
+          className="absolute left-16 md:left-32 top-16 bottom-24 right-16 md:right-32 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-xl p-6 flex flex-col justify-end transition-transform hover:-translate-y-2 motion-reduce:hover:translate-y-0 hover:shadow-2xl cursor-default z-[10]"
           style={{
             transform:
               "perspective(1000px) rotateX(15deg) rotateY(-20deg) rotateZ(5deg) translateZ(40px)",

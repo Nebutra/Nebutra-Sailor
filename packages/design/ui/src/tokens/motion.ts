@@ -18,7 +18,7 @@
  * @see @nebutra/brand → motionDurationSec (Framer-ready seconds bridge)
  */
 
-import type { Transition, Variants } from "framer-motion";
+import type { Transition, Variants } from "../shared/animation/motion";
 
 export const motionDurations = {
   /** 100ms — micro-feedback (hover, focus, toggle, button press) */
@@ -186,7 +186,7 @@ export const viewportSettings = {
  * Helper — generate staggered delay for index-based children.
  *
  * @example
- *   <motion.div {...staggerDelay(index)}>
+ *   <MotionItem {...staggerDelay(index)}>
  */
 export const staggerDelay = (index: number, base = 0.1) => ({
   transition: { delay: index * base },

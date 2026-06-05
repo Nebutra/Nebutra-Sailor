@@ -141,7 +141,9 @@ export function DiscoverDeck() {
   }, [state, busy, pitchMode, leaving, commit]);
 
   if (state === "loading") {
-    return <div className="mx-auto h-[420px] w-full max-w-sm animate-pulse rounded-[28px] border border-neutral-6 bg-neutral-2" />;
+    return (
+      <div className="mx-auto h-[420px] w-full max-w-sm animate-pulse rounded-[28px] border border-neutral-6 bg-neutral-2" />
+    );
   }
 
   if (state === "needs-optin") {
@@ -405,7 +407,7 @@ function DeckAction({
       title={label}
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center justify-center rounded-full border border-neutral-7 bg-neutral-1 shadow-sm transition-all hover:shadow-md disabled:opacity-50 ${small ? "size-12" : "size-16"} ${className ?? ""}`}
+      className={`flex items-center justify-center rounded-full border border-neutral-7 bg-neutral-1 shadow-sm transition-[box-shadow,opacity] duration-150 hover:shadow-md disabled:opacity-50 ${small ? "size-12" : "size-16"} ${className ?? ""}`}
     >
       {children}
     </button>

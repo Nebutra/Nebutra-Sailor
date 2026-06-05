@@ -1,8 +1,13 @@
 "use client";
 
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import type React from "react";
 import { useCallback, useEffect } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+} from "../shared/animation/motion";
 
 import { cn } from "../utils/cn";
 
@@ -59,8 +64,19 @@ export function MagicCard({
   gradientFrom = "var(--brand-primary)",
   gradientTo = "var(--brand-accent)",
 }: MagicCardProps) {
+  const shouldReduceMotion = useReducedMotion();
   const mouseX = useMotionValue(-gradientSize);
   const mouseY = useMotionValue(-gradientSize);
+  const borderGradient = useMotionTemplate`
+    radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,
+    ${gradientFrom},
+    ${gradientTo},
+    var(--border) 100%
+    )
+  `;
+  const spotlightGradient = useMotionTemplate`
+    radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)
+  `;
 
   const reset = useCallback(() => {
     mouseX.set(-gradientSize);
@@ -69,11 +85,12 @@ export function MagicCard({
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
+      if (shouldReduceMotion) return;
       const rect = e.currentTarget.getBoundingClientRect();
       mouseX.set(e.clientX - rect.left);
       mouseY.set(e.clientY - rect.top);
     },
-    [mouseX, mouseY],
+    [mouseX, mouseY, shouldReduceMotion],
   );
 
   useEffect(() => {
@@ -114,22 +131,16 @@ export function MagicCard({
       <motion.div
         className="bg-border pointer-events-none absolute inset-0 rounded-[inherit] duration-300 group-hover:opacity-100"
         style={{
-          background: useMotionTemplate`
-          radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,
-          ${gradientFrom}, 
-          ${gradientTo}, 
-          var(--border) 100%
-          )
-          `,
+          background: shouldReduceMotion
+            ? `linear-gradient(135deg, ${gradientFrom}, ${gradientTo}, var(--border) 100%)`
+            : borderGradient,
         }}
       />
       <div className="bg-background absolute inset-px rounded-[inherit]" />
       <motion.div
         className="pointer-events-none absolute inset-px rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          background: useMotionTemplate`
-            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)
-          `,
+          background: shouldReduceMotion ? "transparent" : spotlightGradient,
           opacity: gradientOpacity,
         }}
       />

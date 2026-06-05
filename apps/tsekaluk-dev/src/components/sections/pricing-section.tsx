@@ -37,12 +37,12 @@ import {
 } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import { DotPattern } from "@nebutra/ui/primitives";
-import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import * as React from "react";
 import { useState } from "react";
 import { NumberTicker } from "@/components/ui/number-ticker";
+import { AnimatePresence, motion, useReducedMotion } from "@/shared/motion";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -216,9 +216,9 @@ function TierCard({ tierKey, index }: { tierKey: (typeof TIER_KEYS)[number]; ind
     <AnimateIn preset="fadeUp" delay={index * 0.1} inView>
       <a
         href={href}
-        className={`group relative flex flex-col justify-between rounded-3xl border p-8 lg:p-10 transition-all duration-500 h-full ${
+        className={`group relative flex flex-col justify-between rounded-3xl border p-8 lg:p-10 transition-[border-color,background-color,box-shadow,transform,filter] duration-500 h-full motion-reduce:transition-colors motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 ${
           isAccent
-            ? "border-[var(--color-accent)] bg-gray-900 dark:bg-gray-900 shadow-[0_20px_60px_var(--color-accent-shadow)] scale-[1.02] hover:scale-[1.04]"
+            ? "border-[var(--color-accent)] bg-gray-900 dark:bg-gray-900 shadow-[0_20px_60px_var(--color-accent-shadow)] scale-[1.02] hover:scale-[1.04] motion-reduce:scale-100"
             : "border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950/80 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.3)]"
         }`}
       >
@@ -236,7 +236,7 @@ function TierCard({ tierKey, index }: { tierKey: (typeof TIER_KEYS)[number]; ind
         <div className="relative z-[1]">
           {/* Icon */}
           <div
-            className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${
+            className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0 ${
               isAccent ? "bg-[var(--color-accent)]/15" : "bg-gray-100 dark:bg-gray-800"
             }`}
           >
@@ -314,14 +314,17 @@ function TierCard({ tierKey, index }: { tierKey: (typeof TIER_KEYS)[number]; ind
 
         {/* CTA */}
         <div
-          className={`relative z-[1] mt-8 flex items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold transition-all duration-300 ${
+          className={`relative z-[1] mt-8 flex items-center justify-center gap-2 rounded-full py-3.5 text-sm font-semibold transition-[background-color,box-shadow,filter] duration-300 ${
             isAccent
               ? "bg-[var(--color-accent)] text-gray-900 group-hover:brightness-110 group-hover:shadow-[0_8px_24px_var(--color-accent-shadow)]"
               : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 group-hover:bg-gray-200 dark:group-hover:bg-gray-700"
           }`}
         >
           {t(`tiers.${tierKey}.cta`)}
-          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          <ArrowRight
+            size={16}
+            className="transition-transform group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+          />
         </div>
       </a>
     </AnimateIn>
@@ -344,6 +347,7 @@ function ServiceCarousel() {
   const t = useTranslations("pricing");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const len = SERVICE_KEYS.length;
 
   const nextStep = React.useCallback(() => {
@@ -351,10 +355,10 @@ function ServiceCarousel() {
   }, []);
 
   React.useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || shouldReduceMotion) return;
     const interval = setInterval(nextStep, AUTO_PLAY_INTERVAL);
     return () => clearInterval(interval);
-  }, [nextStep, isPaused]);
+  }, [nextStep, isPaused, shouldReduceMotion]);
 
   const activeKey = SERVICE_KEYS[activeIndex];
   const ActiveIcon = SERVICE_ICONS[activeIndex];
@@ -384,7 +388,7 @@ function ServiceCarousel() {
                 type="button"
                 key={key}
                 onClick={() => setActiveIndex(idx)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider whitespace-nowrap transition-all duration-300 border shrink-0 ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider whitespace-nowrap transition-[background-color,border-color,color,box-shadow] duration-300 border shrink-0 ${
                   isActive
                     ? "bg-gray-900 text-[var(--color-accent)] dark:bg-gray-950 shadow-md border-transparent"
                     : "bg-transparent text-gray-800/70 border-gray-900/10 hover:text-gray-900 hover:border-gray-900/30 dark:text-black/60 dark:border-black/10 dark:hover:text-black dark:hover:border-black/30"
@@ -421,17 +425,16 @@ function ServiceCarousel() {
                   opacity: 1 - Math.abs(wrappedDistance) * 0.2,
                 }}
                 transition={{
-                  type: "spring",
-                  stiffness: 90,
-                  damping: 22,
-                  mass: 1,
+                  ...(shouldReduceMotion
+                    ? { duration: 0 }
+                    : { type: "spring", stiffness: 90, damping: 22, mass: 1 }),
                 }}
                 className="absolute flex items-center justify-start"
               >
                 <button
                   type="button"
                   onClick={() => setActiveIndex(idx)}
-                  className={`relative flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-500 text-left border ${
+                  className={`relative flex items-center gap-3 px-6 py-3 rounded-full transition-[background-color,border-color,color,box-shadow] duration-500 text-left border motion-reduce:transition-none ${
                     isActive
                       ? "bg-gray-900 text-[var(--color-accent)] dark:bg-gray-950 border-transparent z-10 shadow-xl"
                       : "bg-transparent text-gray-800/70 border-gray-900/10 hover:border-gray-900/40 hover:text-gray-900 dark:text-black/60 dark:border-black/10 dark:hover:border-black/30 dark:hover:text-black"
@@ -460,10 +463,14 @@ function ServiceCarousel() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeKey}
-            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-            transition={brandSpring}
+            initial={
+              shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, filter: "blur(4px)" }
+            }
+            animate={
+              shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }
+            }
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -10, filter: "blur(4px)" }}
+            transition={shouldReduceMotion ? { duration: 0 } : brandSpring}
             className="w-full max-w-lg"
           >
             {/* Header */}

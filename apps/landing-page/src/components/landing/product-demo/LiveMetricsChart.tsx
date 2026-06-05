@@ -1,8 +1,8 @@
 "use client";
 
 import NumberFlow from "@number-flow/react";
-import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "@/shared/motion";
 
 /** Spline curve builder */
 function generatePath(points: number[], width: number, height: number, max: number) {

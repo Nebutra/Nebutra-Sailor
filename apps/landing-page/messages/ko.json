@@ -1624,7 +1624,7 @@
         },
         "tech-stack": {
           "question": "기술 스택은 무엇입니까?",
-          "answer": "React 19 기반의 Next.js 16(App Router), TypeScript 5.9, Tailwind v4, Postgres 위의 Prisma 7(pgvector + RLS 포함), BFF 게이트웨이용 Hono, ML/대규모 서비스용 FastAPI, Radix + Lobe UI 프리미티브와 framer-motion으로 큐레이팅된 컴포넌트 라이브러리. AI 기능은 공급자 이식성(OpenAI / OpenRouter / SiliconFlow / Azure / 로컬)을 갖춘 Vercel AI SDK를 통해 처리됩니다."
+          "answer": "React 19 기반의 Next.js 16(App Router), TypeScript 5.9, Tailwind v4, Postgres 위의 Prisma 7(pgvector + RLS 포함), BFF 게이트웨이용 Hono, ML/대규모 서비스용 FastAPI, Radix, Nebutra UI 프리미티브, 공유 Motion 레이어로 큐레이팅된 컴포넌트 라이브러리. AI 기능은 공급자 이식성(OpenAI / OpenRouter / SiliconFlow / Azure / 로컬)을 갖춘 Vercel AI SDK를 통해 처리됩니다."
         },
         "license": {
           "question": "라이선스는 무엇입니까?",

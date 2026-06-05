@@ -23,7 +23,7 @@ const testimonialsVariants = cva("w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
 });
 
 const cardVariants = cva(
-  "relative flex flex-col p-6 md:p-8 rounded-[var(--radius-3xl)] transition-all h-full",
+  "relative flex flex-col p-6 md:p-8 rounded-[var(--radius-3xl)] transition-[background-color,border-color,box-shadow,transform] h-full",
   {
     variants: {
       cardStyle: {
