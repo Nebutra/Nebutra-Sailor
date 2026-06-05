@@ -106,4 +106,18 @@ describe("runWorkflowDefinition (end-to-end closure, injected caller)", () => {
     expect(outcome.ok).toBe(false);
     expect(outcome.error).toContain("maxAgentsPerRun");
   });
+
+  it("emits live events via onEvent in execution order", async () => {
+    const seen: string[] = [];
+    const outcome = await runWorkflowDefinition(
+      {
+        ...baseInput(`phase("p1"); log("hi"); await agent("a"); return "ok";`),
+        onEvent: (e) => seen.push(e.type),
+      },
+      fakeCaller,
+    );
+
+    expect(outcome.ok).toBe(true);
+    expect(seen).toEqual(["phase", "log", "agent_start", "agent_finish"]);
+  });
 });

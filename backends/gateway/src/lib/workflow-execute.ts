@@ -27,6 +27,17 @@ export interface WorkflowEvent {
   readonly message: string;
 }
 
+/**
+ * Live event surfaced via {@link WorkflowExecInput.onEvent} as the run
+ * progresses. Superset of the persisted {@link WorkflowEvent}: adds per-agent
+ * start/finish so a client can render activity, not just narration. Only
+ * log/phase are persisted to WorkflowRun.events.
+ */
+export type WorkflowStreamEvent =
+  | WorkflowEvent
+  | { readonly type: "agent_start"; readonly index: number; readonly label?: string }
+  | { readonly type: "agent_finish"; readonly index: number };
+
 export interface WorkflowExecInput {
   readonly tenantId: string;
   readonly threadId: string;
@@ -34,6 +45,8 @@ export interface WorkflowExecInput {
   readonly scriptSource: string;
   readonly args: unknown;
   readonly limits: SandboxLimits;
+  /** Optional live event sink (e.g. an SSE writer). Omit for a headless run. */
+  readonly onEvent?: (event: WorkflowStreamEvent) => void;
 }
 
 export interface WorkflowUsage {
@@ -99,6 +112,7 @@ export async function runWorkflowDefinition(
   agentCaller: WorkflowAgentCaller = liveAgentCaller,
 ): Promise<WorkflowExecOutcome> {
   const events: WorkflowEvent[] = [];
+  const emit = input.onEvent;
   let inputTokens = 0;
   let outputTokens = 0;
   let reasoningOutputTokens = 0;
@@ -108,6 +122,11 @@ export async function runWorkflowDefinition(
     async agent(prompt, opts) {
       const callIndex = agentCalls;
       agentCalls += 1;
+      emit?.({
+        type: "agent_start",
+        index: callIndex,
+        ...(opts?.label ? { label: opts.label } : {}),
+      });
       const capture = await agentCaller(prompt, opts, {
         tenantId: input.tenantId,
         threadId: `${input.threadId}:a${callIndex}`,
@@ -116,13 +135,18 @@ export async function runWorkflowDefinition(
       inputTokens += capture.inputTokens;
       outputTokens += capture.outputTokens;
       reasoningOutputTokens += capture.reasoningOutputTokens;
+      emit?.({ type: "agent_finish", index: callIndex });
       return capture.output;
     },
     log(message) {
-      events.push({ type: "log", message });
+      const event: WorkflowEvent = { type: "log", message };
+      events.push(event);
+      emit?.(event);
     },
     phase(title) {
-      events.push({ type: "phase", message: title });
+      const event: WorkflowEvent = { type: "phase", message: title };
+      events.push(event);
+      emit?.(event);
     },
   };
 
