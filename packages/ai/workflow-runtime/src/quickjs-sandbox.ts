@@ -34,6 +34,7 @@ function buildProgram(userScript: string): string {
     "globalThis.log = (m) => { __host_log(String(m)); };",
     "globalThis.phase = (t) => { __host_phase(String(t)); };",
     "globalThis.agent = (prompt, opts) => __host_agent(String(prompt), opts === undefined ? null : opts);",
+    "globalThis.runWorkflow = (id, args) => __host_run_workflow(String(id), args === undefined ? null : args);",
     "globalThis.parallel = (thunks) => Promise.all((thunks || []).map((t) => t()));",
     "(async () => {",
     userScript,
@@ -91,6 +92,34 @@ export function createQuickJSSandbox(): WorkflowSandbox {
         });
         ctx.setProp(ctx.global, "__host_agent", agentFn);
         agentFn.dispose();
+
+        // ── runWorkflow(): run a sub-workflow; host resolves the guest Promise ─
+        const runWorkflowFn = ctx.newFunction("__host_run_workflow", (idHandle, argsHandle) => {
+          const workflowId = String(ctx.dump(idHandle));
+          const args = argsHandle ? ctx.dump(argsHandle) : null;
+
+          const deferred = ctx.newPromise();
+          const work = (async () => {
+            try {
+              if (!input.host.runWorkflow) {
+                throw new Error("runWorkflow is not available in this context");
+              }
+              const result = await input.host.runWorkflow(workflowId, args ?? undefined);
+              const valueHandle = marshalToGuest(ctx, result);
+              deferred.resolve(valueHandle);
+              valueHandle.dispose();
+            } catch (err) {
+              const errHandle = ctx.newString(err instanceof Error ? err.message : String(err));
+              deferred.reject(errHandle);
+              errHandle.dispose();
+            }
+          })();
+          inflight.add(work);
+          void work.finally(() => inflight.delete(work));
+          return deferred.handle;
+        });
+        ctx.setProp(ctx.global, "__host_run_workflow", runWorkflowFn);
+        runWorkflowFn.dispose();
 
         const logFn = ctx.newFunction("__host_log", (msgHandle) => {
           input.host.log(String(ctx.dump(msgHandle)));

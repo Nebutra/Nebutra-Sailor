@@ -14,6 +14,7 @@
 
 import { generateStructured, type ModelMessage } from "@nebutra/agents";
 import { resolveModelSpec } from "@nebutra/ai-providers/catalog";
+import { getWorkflowRepository } from "@nebutra/repositories";
 import {
   type AgentCallOpts,
   createQuickJSSandbox,
@@ -21,6 +22,9 @@ import {
   type SandboxLimits,
 } from "@nebutra/workflow-runtime";
 import { runTurnCapture } from "./agent-turn.js";
+
+/** Max runWorkflow() nesting depth — one level, mirroring Claude Code's workflow(). */
+const MAX_WORKFLOW_DEPTH = 1;
 
 export interface WorkflowEvent {
   readonly type: "log" | "phase";
@@ -47,7 +51,29 @@ export interface WorkflowExecInput {
   readonly limits: SandboxLimits;
   /** Optional live event sink (e.g. an SSE writer). Omit for a headless run. */
   readonly onEvent?: (event: WorkflowStreamEvent) => void;
+  /** Nesting depth of this run (0 = top-level). Set by runWorkflow() recursion. */
+  readonly depth?: number;
 }
+
+/** Minimal shape a sub-workflow loader must return (a WorkflowDefinition is assignable). */
+export interface LoadedWorkflow {
+  readonly defaultModel: string;
+  readonly scriptSource: string;
+  readonly maxConcurrency: number;
+  readonly maxAgentsPerRun: number;
+  readonly maxRetries: number;
+  readonly timeoutMs: number;
+  readonly status?: string;
+}
+
+/** Resolve a sub-workflow definition by id, tenant-scoped. Injectable for tests. */
+export type WorkflowLoader = (
+  workflowId: string,
+  tenantId: string,
+) => Promise<LoadedWorkflow | null>;
+
+const liveWorkflowLoader: WorkflowLoader = (workflowId, tenantId) =>
+  getWorkflowRepository(tenantId).findById(workflowId);
 
 export interface WorkflowUsage {
   readonly inputTokens: number;
@@ -110,15 +136,56 @@ const liveAgentCaller: WorkflowAgentCaller = async (prompt, opts, ctx) => {
 export async function runWorkflowDefinition(
   input: WorkflowExecInput,
   agentCaller: WorkflowAgentCaller = liveAgentCaller,
+  loadWorkflow: WorkflowLoader = liveWorkflowLoader,
 ): Promise<WorkflowExecOutcome> {
   const events: WorkflowEvent[] = [];
   const emit = input.onEvent;
+  const depth = input.depth ?? 0;
   let inputTokens = 0;
   let outputTokens = 0;
   let reasoningOutputTokens = 0;
   let agentCalls = 0;
 
   const host: HostBindings = {
+    async runWorkflow(workflowId, subArgs) {
+      if (depth >= MAX_WORKFLOW_DEPTH) {
+        throw new Error(`runWorkflow nesting is limited to ${MAX_WORKFLOW_DEPTH} level`);
+      }
+      const subDef = await loadWorkflow(workflowId, input.tenantId);
+      if (!subDef) throw new Error(`workflow not found: ${workflowId}`);
+      if (subDef.status && subDef.status !== "ACTIVE") {
+        throw new Error(`workflow ${workflowId} is ${subDef.status}`);
+      }
+
+      const sub = await runWorkflowDefinition(
+        {
+          tenantId: input.tenantId,
+          threadId: `${input.threadId}:w${agentCalls}`,
+          defaultModel: subDef.defaultModel,
+          scriptSource: subDef.scriptSource,
+          args: subArgs ?? {},
+          limits: {
+            maxConcurrency: subDef.maxConcurrency,
+            maxAgentsPerRun: subDef.maxAgentsPerRun,
+            maxRetries: subDef.maxRetries,
+            timeoutMs: subDef.timeoutMs,
+          },
+          depth: depth + 1,
+          ...(emit ? { onEvent: emit } : {}),
+        },
+        agentCaller,
+        loadWorkflow,
+      );
+
+      // Roll the sub-run's cost into this run so WorkflowRun stats are complete.
+      inputTokens += sub.usage.inputTokens;
+      outputTokens += sub.usage.outputTokens;
+      reasoningOutputTokens += sub.usage.reasoningOutputTokens;
+      agentCalls += sub.agentCalls;
+
+      if (!sub.ok) throw new Error(sub.error ?? "sub-workflow failed");
+      return sub.returnValue;
+    },
     async agent(prompt, opts) {
       const callIndex = agentCalls;
       agentCalls += 1;

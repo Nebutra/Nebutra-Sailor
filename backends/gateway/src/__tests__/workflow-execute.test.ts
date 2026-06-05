@@ -8,9 +8,11 @@
 
 import { describe, expect, it } from "vitest";
 import {
+  type LoadedWorkflow,
   runWorkflowDefinition,
   type WorkflowAgentCaller,
   type WorkflowExecInput,
+  type WorkflowLoader,
 } from "../lib/workflow-execute.js";
 
 const baseInput = (scriptSource: string): WorkflowExecInput => ({
@@ -119,5 +121,57 @@ describe("runWorkflowDefinition (end-to-end closure, injected caller)", () => {
 
     expect(outcome.ok).toBe(true);
     expect(seen).toEqual(["phase", "log", "agent_start", "agent_finish"]);
+  });
+
+  const child = (scriptSource: string): LoadedWorkflow => ({
+    defaultModel: "fast",
+    scriptSource,
+    maxConcurrency: 16,
+    maxAgentsPerRun: 1000,
+    maxRetries: 2,
+    timeoutMs: 5000,
+    status: "ACTIVE",
+  });
+
+  it("composes a sub-workflow via runWorkflow() and rolls up its result + cost", async () => {
+    const loader: WorkflowLoader = async (id) =>
+      id === "child" ? child(`return await agent("sub:" + args.n);`) : null;
+
+    const outcome = await runWorkflowDefinition(
+      baseInput(`const sub = await runWorkflow("child", { n: 7 }); return sub;`),
+      fakeCaller,
+      loader,
+    );
+
+    expect(outcome.ok).toBe(true);
+    expect(outcome.returnValue).toBe("r:sub:7");
+    expect(outcome.agentCalls).toBe(1); // the sub's one agent rolled up
+    expect(outcome.usage).toEqual({ inputTokens: 2, outputTokens: 3, reasoningOutputTokens: 1 });
+  });
+
+  it("enforces one-level runWorkflow nesting", async () => {
+    const loader: WorkflowLoader = async () => child(`return await runWorkflow("grandchild");`);
+
+    const outcome = await runWorkflowDefinition(
+      baseInput(`return await runWorkflow("child");`),
+      fakeCaller,
+      loader,
+    );
+
+    expect(outcome.ok).toBe(false);
+    expect(outcome.error).toContain("nesting is limited");
+  });
+
+  it("fails when the sub-workflow is not found", async () => {
+    const loader: WorkflowLoader = async () => null;
+
+    const outcome = await runWorkflowDefinition(
+      baseInput(`return await runWorkflow("missing");`),
+      fakeCaller,
+      loader,
+    );
+
+    expect(outcome.ok).toBe(false);
+    expect(outcome.error).toContain("workflow not found");
   });
 });

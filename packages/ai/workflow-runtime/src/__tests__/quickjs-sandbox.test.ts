@@ -162,6 +162,37 @@ describe("createQuickJSSandbox", () => {
     expect(result.ok).toBe(false);
     expect(result.error).toContain("boom");
   });
+
+  it("runs a sub-workflow via runWorkflow() and returns its value", async () => {
+    const host = echoHost({
+      async runWorkflow(id, args) {
+        return { ran: id, got: args };
+      },
+    });
+
+    const sandbox = createQuickJSSandbox();
+    const result = await sandbox.run({
+      scriptSource: `return await runWorkflow("sub-1", { x: 1 });`,
+      args: {},
+      limits: limits(),
+      host,
+    });
+
+    expect(result.ok).toBe(true);
+    expect(result.returnValue).toEqual({ ran: "sub-1", got: { x: 1 } });
+  });
+
+  it("rejects runWorkflow() when the host does not provide it", async () => {
+    const result = await createQuickJSSandbox().run({
+      scriptSource: `return await runWorkflow("x");`,
+      args: {},
+      limits: limits(),
+      host: echoHost(),
+    });
+
+    expect(result.ok).toBe(false);
+    expect(result.error).toContain("runWorkflow is not available");
+  });
 });
 
 describe("REFUSING_WORKFLOW_SANDBOX", () => {

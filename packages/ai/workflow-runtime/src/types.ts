@@ -46,6 +46,12 @@ export interface HostBindings {
   log(message: string): void;
   /** Start a phase grouping (surfaced as a workflow event). */
   phase(title: string): void;
+  /**
+   * Run another workflow as a sub-step and resolve with its return value.
+   * Optional: when unset (or when the host disallows nesting) the guest
+   * `runWorkflow()` rejects. The host owns depth/recursion limits.
+   */
+  runWorkflow?(workflowId: string, args?: unknown): Promise<unknown>;
 }
 
 export interface SandboxRunInput {
