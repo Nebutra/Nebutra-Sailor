@@ -3,7 +3,6 @@
 import {
   ArrowRight,
   BookClosed,
-  ChevronDown,
   Code,
   FolderClosed,
   Layers,
@@ -19,12 +18,6 @@ import {
   Badge,
   type BadgeProps,
   Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
   Select,
   SelectContent,
   SelectItem,
@@ -832,8 +825,6 @@ export function StartupCommandCenter() {
               }
             }}
             project={selectedProject}
-            projects={projects}
-            onSelectProject={selectProject}
             selectedArtifact={selectedArtifact}
             selectedFile={selectedFile}
             files={selectedWorkspaceFiles}
@@ -1081,9 +1072,7 @@ function StartupBuilderWorkspace({
   onSelectArtifact,
   onSelectFile,
   onSelectRun,
-  onSelectProject,
   project,
-  projects,
   files,
   previewHtml,
   selectedArtifact,
@@ -1103,9 +1092,7 @@ function StartupBuilderWorkspace({
   onSelectArtifact: (artifactId: string) => void;
   onSelectFile: (path: string) => void;
   onSelectRun: (runId: string) => void;
-  onSelectProject: (project: StartupOSProject) => void;
   project: StartupOSProject;
-  projects: readonly StartupOSProject[];
   files: readonly StartupOSFile[];
   previewHtml: string;
   selectedArtifact: StartupArtifact | null;
@@ -1118,7 +1105,6 @@ function StartupBuilderWorkspace({
   // The dashboard sidebar is hidden on startup-os; the thread-column logo button
   // drives the same collapse toggle (Lovable hamburger pattern).
   const { toggle: toggleSidebar } = useSidebar();
-  const otherProjects = projects.filter((item) => item.id !== project.id);
   const threadItems = [
     {
       title: "Proposition captured",
@@ -1231,7 +1217,6 @@ function StartupBuilderWorkspace({
               <h2 className="min-w-0 flex-1 truncate text-sm font-semibold tracking-tight text-neutral-12">
                 {companyName(project.companyContext)}
               </h2>
-              <StatusPill status={project.status === "review_ready" ? "completed" : "planned"} />
             </div>
 
             <StartupChatPanel
@@ -1245,41 +1230,7 @@ function StartupBuilderWorkspace({
           <main className="flex min-h-0 min-w-0 flex-col bg-neutral-1">
             {/* Single unified top bar: project switcher dropdown + status on the
                 left, working-surface tabs on the right. */}
-            <div className="flex h-14 items-center justify-between gap-3 px-4">
-              <div className="flex min-w-0 items-center gap-2">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="min-w-0 max-w-full gap-1.5"
-                    >
-                      <span className="truncate font-semibold text-neutral-12">
-                        {companyName(project.companyContext)}
-                      </span>
-                      <ChevronDown className="size-4 shrink-0 text-neutral-10" aria-hidden="true" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" side="bottom" sideOffset={6}>
-                    <DropdownMenuLabel>
-                      {project.arena} / {project.status}
-                    </DropdownMenuLabel>
-                    {otherProjects.length > 0 ? (
-                      <>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuLabel>Switch project</DropdownMenuLabel>
-                        {otherProjects.slice(0, 8).map((item) => (
-                          <DropdownMenuItem key={item.id} onClick={() => onSelectProject(item)}>
-                            {companyName(item.companyContext)}
-                          </DropdownMenuItem>
-                        ))}
-                      </>
-                    ) : null}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <StatusPill status={project.status === "review_ready" ? "completed" : "planned"} />
-              </div>
+            <div className="flex h-14 items-center justify-end gap-3 px-4">
               <Tabs
                 value={activeSurface}
                 onValueChange={(value) => setActiveSurface(value as typeof activeSurface)}
