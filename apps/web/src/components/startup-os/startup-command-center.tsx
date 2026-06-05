@@ -907,13 +907,19 @@ function StartupBuilderHome({
             </p>
 
             <div className="mx-auto mt-8 overflow-hidden rounded-[30px] border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5">
-              <Textarea
+              {/* Chromeless native textarea: the @nebutra/ui Textarea primitive is a
+                  bordered "field" (own border/shadow + inline radius) that leaves a
+                  seam inside this unified box. data-allow-native is the sanctioned
+                  opt-out for a genuinely seamless prompt surface (same as the file
+                  input above). */}
+              <textarea
+                data-allow-native
                 aria-label="Startup proposition"
                 value={thesis}
                 onChange={(event) => onThesisChange(event.target.value)}
                 disabled={disabled || isLoading}
                 placeholder="Describe the startup proposition to compile into a tenant-scoped company workspace..."
-                className="min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 shadow-none outline-none placeholder:text-neutral-9 disabled:cursor-not-allowed disabled:opacity-60 sm:p-6"
+                className="block min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 outline-none placeholder:text-neutral-9 focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60 sm:p-6"
               />
               <div className="flex flex-col gap-3 px-4 pb-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-2">
