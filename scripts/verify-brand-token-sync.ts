@@ -1,16 +1,27 @@
 #!/usr/bin/env tsx
 
 /**
- * Token sync verification — CI guardrail.
+ * Downstream parity guard — verifies that all runtime mirror layers agree
+ * with the generated `core.json` color scales.
  *
- * SSOT: `@nebutra/design-tokens/tokens/*.json` (W3C DTCG).
- * Mirror layers: `@nebutra/brand` (`metadata.ts`, `guidelines/color.ts`),
- *                `@nebutra/tokens/styles.css`,
- *                `@nebutra/theme/themes.css`,
- *                `@nebutra/ui` (`primitive.ts`, `tailwind.preset.ts`).
+ * UPSTREAM SSOT:  `DEFAULT_BRAND.colors` in `scripts/brand-types.ts`
+ *                 (single human-edited color source — Phase 1 collapse).
  *
- * This script enforces that every mirror agrees with the SSOT for the
- * tokens identified by the audit (docs/design-system/token-drift-audit.md).
+ * DERIVED LAYERS (written by `pnpm brand:apply`):
+ *   - `packages/design/design-tokens/tokens/core.json`  ← color DTCG source
+ *   - `packages/design/brand/src/metadata.ts`           ← brand identity object
+ *
+ * DOWNSTREAM MIRRORS (verified by this script):
+ *   - `@nebutra/tokens/styles.css`        (Style Dictionary output)
+ *   - `@nebutra/theme/themes.css`
+ *   - `@nebutra/ui` (`primitive.ts`, `tailwind.preset.ts`)
+ *   - `@nebutra/brand` (`guidelines/color.ts`)
+ *
+ * Upstream guard: `tests/architecture/brand-metadata-drift.test.ts` asserts
+ * that `metadata.ts` and `core.json` are byte-derivable from DEFAULT_BRAND.
+ * THIS script is the downstream parity guard — it asserts that every runtime
+ * mirror agrees with what core.json + metadata.ts currently contain.
+ * Run both: `pnpm brand:apply && pnpm brand:verify-tokens`.
  */
 
 import { readFileSync } from "node:fs";

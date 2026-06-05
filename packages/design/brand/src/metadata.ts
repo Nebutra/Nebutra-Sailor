@@ -18,7 +18,7 @@ export const brand = {
   name: "Nebutra",
   nameCn: "云毓智能",
   nameFull: "无锡云毓智能科技有限公司",
-  nameFullEn: "Wuxi Nebutra Intelligent Technology Co., Ltd.",
+  nameFullEn: "Wuxi Nebutra Intelligence Technology Co., Ltd.",
 
   tagline: "Ship AI products, not boilerplate.",
   taglineCn: "AI原生·快速出海·即刻交付",
@@ -104,6 +104,10 @@ export const colors = {
     primaryReverse: "linear-gradient(135deg, #0BF1C3 0%, #0033FE 100%)",
     primaryVertical: "linear-gradient(180deg, #0033FE 0%, #0BF1C3 100%)",
     primaryRadial: "radial-gradient(circle, #0BF1C3 0%, #0033FE 100%)",
+  },
+  p3Overrides: {
+    primary500: "color(display-p3 0.03 0.19 0.99)",
+    accent500: "color(display-p3 0.07 0.94 0.79)",
   },
   success: "#22c55e",
   warning: "#f59e0b",
