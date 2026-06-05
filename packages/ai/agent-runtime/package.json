@@ -49,6 +49,7 @@
     "@nebutra/ai-primitives": "workspace:*",
     "@nebutra/capability-kit": "workspace:*",
     "@nebutra/execution-policy": "workspace:*",
+    "@nebutra/graph-model": "workspace:*",
     "p-limit": "^7.3.0",
     "zod": "catalog:"
   },

@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { type Brief, costReport, fanOutSubagents, planSubagentDispatch } from "./orchestration";
+import {
+  type Brief,
+  costReport,
+  fanOutSubagents,
+  planSubagentDispatch,
+  planWaves,
+  runAgentWaves,
+} from "./orchestration";
 
 function brief(name: string, dependsOn: readonly string[] = []): Brief {
   return {
@@ -49,5 +56,37 @@ describe("subagent orchestration", () => {
 
   it("requires precise brief fields", () => {
     expect(() => planSubagentDispatch([{ ...brief("bad"), objective: "" }])).toThrow(/objective/i);
+  });
+
+  // ── Node-topology scheduler (wave execution over the dependency graph) ──────
+
+  it("groups briefs into dependency waves (diamond → 3 waves)", () => {
+    // a → {b, c} → d
+    const waves = planWaves([
+      brief("a"),
+      brief("b", ["a"]),
+      brief("c", ["a"]),
+      brief("d", ["b", "c"]),
+    ]);
+    expect(waves.map((wave) => wave.map((b) => b.id))).toEqual([["a"], ["b", "c"], ["d"]]);
+  });
+
+  it("runs waves sequentially with parallelism inside each wave", async () => {
+    const seen: string[] = [];
+    const results = await runAgentWaves([brief("a"), brief("b", ["a"])], async (item) => {
+      seen.push(item.id);
+      return {
+        briefId: item.id,
+        output: {},
+        usage: { inputTokens: 0, cachedInputTokens: 0, outputTokens: 0, reasoningOutputTokens: 0 },
+        durationMs: 0,
+      };
+    });
+    expect(seen).toEqual(["a", "b"]); // dep before dependent
+    expect(results.map((r) => r.briefId)).toEqual(["a", "b"]);
+  });
+
+  it("rejects a dependency cycle via the shared cycle detector", () => {
+    expect(() => planWaves([brief("a", ["b"]), brief("b", ["a"])])).toThrow(/cycle/i);
   });
 });

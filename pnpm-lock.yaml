@@ -1568,6 +1568,9 @@ importers:
       '@nebutra/execution-policy':
         specifier: workspace:*
         version: link:../execution-policy
+      '@nebutra/graph-model':
+        specifier: workspace:*
+        version: link:../../platform/graph-model
       p-limit:
         specifier: ^7.3.0
         version: 7.3.0

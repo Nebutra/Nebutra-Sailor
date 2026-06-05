@@ -1,3 +1,4 @@
+import { type GraphEdge, hasCycleFrom } from "@nebutra/graph-model";
 import { z } from "zod";
 import type { TurnUsage } from "./model";
 
@@ -127,32 +128,69 @@ function dependencySet(briefs: readonly Brief[]): Set<string> {
   return dependencies;
 }
 
-function topologicalOrder(briefs: readonly Brief[]): Brief[] {
-  const byId = new Map(briefs.map((brief) => [brief.id, brief]));
-  const visited = new Set<string>();
-  const visiting = new Set<string>();
-  const ordered: Brief[] = [];
+/** Dependency edges (dep → brief) over the brief set; refs to unknown ids drop. */
+function briefEdges(briefs: readonly Brief[]): GraphEdge[] {
+  const ids = new Set(briefs.map((brief) => brief.id));
+  const edges: GraphEdge[] = [];
+  for (const brief of briefs) {
+    for (const dep of brief.dependsOn ?? []) {
+      if (ids.has(dep)) edges.push({ from: dep, to: brief.id });
+    }
+  }
+  return edges;
+}
 
-  const visit = (brief: Brief): void => {
-    if (visited.has(brief.id)) return;
-    if (visiting.has(brief.id)) {
+/**
+ * Cycle guard via the SINGLE repo-wide cycle-detection algorithm
+ * (`@nebutra/graph-model` `hasCycleFrom`). No private DFS cycle-walker lives here.
+ */
+function assertAcyclic(briefs: readonly Brief[], edges: readonly GraphEdge[]): void {
+  for (const brief of briefs) {
+    if (hasCycleFrom(edges, brief.id)) {
       fail(
         `subagent dependency cycle includes '${brief.id}'`,
         "Remove the cycle or collapse the dependent work into one sequential brief.",
       );
     }
-    visiting.add(brief.id);
-    for (const dep of brief.dependsOn ?? []) {
-      const dependency = byId.get(dep);
-      if (dependency) visit(dependency);
-    }
-    visiting.delete(brief.id);
-    visited.add(brief.id);
-    ordered.push(brief);
-  };
+  }
+}
 
-  for (const brief of briefs) visit(brief);
-  return ordered;
+/**
+ * Dependency-resolved execution WAVES — the agent node-topology scheduler. Each
+ * wave is the set of briefs whose dependencies are satisfied by earlier waves;
+ * waves run in order, briefs within a wave run in parallel. Input order is
+ * preserved within a wave.
+ */
+export function planWaves(briefs: readonly Brief[]): readonly (readonly Brief[])[] {
+  const edges = briefEdges(briefs);
+  assertAcyclic(briefs, edges);
+
+  const byId = new Map(briefs.map((brief) => [brief.id, brief]));
+  const done = new Set<string>();
+  const waves: Brief[][] = [];
+
+  while (done.size < briefs.length) {
+    const wave: Brief[] = [];
+    for (const brief of briefs) {
+      if (done.has(brief.id)) continue;
+      const deps = (brief.dependsOn ?? []).filter((dep) => byId.has(dep));
+      if (deps.every((dep) => done.has(dep))) wave.push(brief);
+    }
+    if (wave.length === 0) {
+      // assertAcyclic already ruled out cycles; only a logic bug reaches here.
+      fail(
+        "subagent dependencies cannot be resolved into waves",
+        "Ensure every dependsOn id references a brief in the set.",
+      );
+    }
+    for (const brief of wave) done.add(brief.id);
+    waves.push(wave);
+  }
+  return waves;
+}
+
+function topologicalOrder(briefs: readonly Brief[]): Brief[] {
+  return planWaves(briefs).flat();
 }
 
 export function planSubagentDispatch(
@@ -186,6 +224,24 @@ export async function fanOutSubagents(
 ): Promise<readonly SubagentResult[]> {
   const plan = planSubagentDispatch(briefs, { strategy: "fanout" });
   return Promise.all(plan.order.map((brief) => run(brief)));
+}
+
+/**
+ * Execute briefs as a dependency graph: each wave runs in parallel, waves run
+ * sequentially. The node-topology execution path — `fanOutSubagents` is the
+ * degenerate single-wave (all-independent) case of this.
+ */
+export async function runAgentWaves(
+  briefs: readonly Brief[],
+  run: (brief: Brief) => Promise<SubagentResult>,
+): Promise<readonly SubagentResult[]> {
+  for (const brief of briefs) validateBrief(brief);
+  const results: SubagentResult[] = [];
+  for (const wave of planWaves(briefs)) {
+    const waveResults = await Promise.all(wave.map((brief) => run(brief)));
+    results.push(...waveResults);
+  }
+  return results;
 }
 
 export function costReport(results: readonly SubagentResult[]): SubagentCostReport {
