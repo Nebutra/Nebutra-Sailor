@@ -1,4 +1,5 @@
 import { getNebutraPackageVersion } from "@nebutra/preset/nebutra-package-versions";
+import { flatCompanyView } from "./company-context/projection";
 import type { StartupOSProject } from "./compiler";
 
 export type StartupOSFileKind = "config" | "source" | "style" | "document" | "preview";
@@ -118,9 +119,10 @@ body {
 }
 
 function packageJsonContent(project: StartupOSProject) {
+  const company = flatCompanyView(project.companyContext);
   return `${JSON.stringify(
     {
-      name: slugClass(project.companyContext.name) || "startup-os-app",
+      name: slugClass(company.name) || "startup-os-app",
       private: true,
       type: "module",
       scripts: {
@@ -192,7 +194,7 @@ export function getRouter() {
 }
 
 function rootRouteContent(project: StartupOSProject) {
-  const title = JSON.stringify(project.companyContext.name);
+  const title = JSON.stringify(flatCompanyView(project.companyContext).name);
   // The Nebutra design tokens drive light/dark via a `class` strategy. We use
   // next-themes' ThemeProvider directly (the @nebutra/tokens "." entry ships
   // raw TS, so importing its re-export from a plain bundler is unsafe — the
@@ -301,16 +303,17 @@ function companyContextTs(project: StartupOSProject) {
       summary: artifact.summary,
     }));
 
-  return `export const companyContext = ${JSON.stringify(project.companyContext, null, 2)} as const;
+  return `export const companyContext = ${JSON.stringify(flatCompanyView(project.companyContext), null, 2)} as const;
 
 export const launchArtifacts = ${JSON.stringify(launchArtifacts, null, 2)} as const;
 `;
 }
 
 function readme(project: StartupOSProject) {
-  return `# ${project.companyContext.name}
+  const company = flatCompanyView(project.companyContext);
+  return `# ${company.name}
 
-${project.companyContext.promise}
+${company.promise}
 
 ## Startup thesis
 
@@ -453,9 +456,7 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
   }
 
   const name = readCompanyContextField(companyContextFile.content, "name") || "Startup OS";
-  const promise =
-    readCompanyContextField(companyContextFile.content, "promise") ||
-    "Live preview runs in the sandbox runtime.";
+  const promise = readCompanyContextField(companyContextFile.content, "promise");
 
   // The static sandbox iframe can't resolve packages, so the core
   // @nebutra/tokens CSS variables (neutrals + brand gradient) are inlined
@@ -532,23 +533,13 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
         font-size: clamp(1rem, 2vw, 1.2rem);
         line-height: 1.5;
       }
-      .preview-card .signal {
-        display: inline-grid;
-        border-radius: 999px;
-        background: var(--brand-gradient);
-        padding: 0.5rem 0.85rem;
-        color: var(--neutral-1);
-        font-size: 0.82rem;
-        font-weight: 800;
-      }
     </style>
   </head>
   <body>
     <main class="preview-card ${slugClass(name)}">
       <div class="eyebrow">Nebutra · TanStack Start</div>
       <h1>${escapeHtml(name)}</h1>
-      <p>${escapeHtml(promise)}</p>
-      <span class="signal">Live preview runs in the sandbox runtime</span>
+      ${promise ? `<p>${escapeHtml(promise)}</p>` : ""}
     </main>
   </body>
 </html>

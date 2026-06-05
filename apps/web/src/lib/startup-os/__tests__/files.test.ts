@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { flatCompanyView } from "../company-context/projection";
 import { compileStartupProject } from "../compiler";
 import {
   buildStartupPreviewHtml,
@@ -68,7 +69,7 @@ describe("Startup OS project files", () => {
     expect(rootRoute?.content).toContain("createRootRoute");
     expect(rootRoute?.content).toContain("HeadContent");
     expect(rootRoute?.content).toContain("Scripts");
-    expect(rootRoute?.content).toContain(project.companyContext.name);
+    expect(rootRoute?.content).toContain(flatCompanyView(project.companyContext).name);
 
     const indexRoute = files.find((file) => file.path === "src/routes/index.tsx");
     expect(indexRoute?.content).toContain('createFileRoute("/")');
@@ -129,7 +130,7 @@ describe("Startup OS project files", () => {
     );
   });
 
-  it("renders a self-contained static preview placeholder from CompanyContext", () => {
+  it("renders a self-contained static preview of the real CompanyContext — no mock/coming-soon badge", () => {
     const project = compileStartupProject({
       thesis: "A launch OS that turns one proposition into a working startup surface.",
       arena: "AI SaaS",
@@ -139,12 +140,15 @@ describe("Startup OS project files", () => {
 
     const html = buildStartupPreviewHtml(files);
 
-    // Valid standalone HTML — the placeholder inlines its own styles, no external refs.
+    // Valid standalone HTML — the static preview inlines its own styles, no external refs.
     expect(html).toContain("<!doctype html>");
     expect(html).toContain("<style>");
-    expect(html).toContain(project.companyContext.name);
-    expect(html).toContain(project.companyContext.promise);
-    expect(html).toContain("Live preview runs in the sandbox runtime");
+    const company = flatCompanyView(project.companyContext);
+    expect(html).toContain(company.name);
+    expect(html).toContain(company.promise);
+    // De-mock: the preview renders ONLY the real CompanyContext — no coming-soon
+    // "sandbox runtime" placeholder badge (it advertised an unbuilt feature).
+    expect(html).not.toContain("Live preview runs in the sandbox runtime");
     // The sandbox iframe can't resolve packages, so the core @nebutra/tokens
     // brand gradient is inlined verbatim so the preview LOOKS Nebutra-branded.
     expect(html).toContain("--brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%)");
