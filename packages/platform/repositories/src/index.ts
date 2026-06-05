@@ -16,7 +16,10 @@ export type {
   UpsertProviderKeyData,
 } from "./tenant-provider-key.repository";
 // TenantProviderKey (BYOK)
-export { TenantProviderKeyRepository } from "./tenant-provider-key.repository";
+export {
+  getTenantProviderKeyRepository,
+  TenantProviderKeyRepository,
+} from "./tenant-provider-key.repository";
 export type {
   ClaimUsageLedgerInput,
   ClaimUsageLedgerResult,

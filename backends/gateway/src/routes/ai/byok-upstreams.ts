@@ -14,9 +14,8 @@
  */
 
 import type { AIProvider } from "@nebutra/db";
-import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
-import { TenantProviderKeyRepository } from "@nebutra/repositories";
+import { getTenantProviderKeyRepository } from "@nebutra/repositories";
 import {
   type AiGatewayResolveInput,
   type AiGatewayUpstream,
@@ -61,8 +60,7 @@ export function createByokResolveUpstreams() {
     if (!orgId || !provider) return fallback;
 
     try {
-      const repo = new TenantProviderKeyRepository(getTenantDb(orgId), orgId);
-      const resolved = await repo.resolveForProvider(provider);
+      const resolved = await getTenantProviderKeyRepository(orgId).resolveForProvider(provider);
       if (!resolved) return fallback;
 
       const baseUrl = resolved.baseUrl ?? providerBaseUrl(provider);

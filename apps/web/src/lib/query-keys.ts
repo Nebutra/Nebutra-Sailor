@@ -25,6 +25,13 @@ export const queryKeys = {
     detail: (id: string) => ["api-keys", "detail", id] as const,
   },
 
+  providerKeys: {
+    all: ["provider-keys"] as const,
+    list: (orgId?: string) =>
+      orgId ? (["provider-keys", "list", orgId] as const) : (["provider-keys", "list"] as const),
+    detail: (provider: string) => ["provider-keys", "detail", provider] as const,
+  },
+
   webhooks: {
     all: ["webhooks"] as const,
     list: (orgId?: string) =>

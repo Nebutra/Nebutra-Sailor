@@ -13,9 +13,12 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { getTenantDb } from "@nebutra/db";
 import { toApiError } from "@nebutra/errors";
-import { type ProviderKeyCredentials, TenantProviderKeyRepository } from "@nebutra/repositories";
+import {
+  getTenantProviderKeyRepository,
+  type ProviderKeyCredentials,
+  type TenantProviderKeyRepository,
+} from "@nebutra/repositories";
 import { requirePermission } from "../../../middlewares/permissions.js";
 import { requireAuth, requireOrganization } from "../../../middlewares/tenantContext.js";
 
@@ -48,7 +51,7 @@ function maskKey(apiKey: string): string {
 }
 
 function toRepo(orgId: string): TenantProviderKeyRepository {
-  return new TenantProviderKeyRepository(getTenantDb(orgId), orgId);
+  return getTenantProviderKeyRepository(orgId);
 }
 
 // ── List provider keys (masked) ─────────────────────────────────────────────

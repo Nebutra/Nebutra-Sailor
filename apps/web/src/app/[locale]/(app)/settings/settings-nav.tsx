@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: "/settings/security", label: "Security" },
   { href: "/settings/team", label: "Team" },
   { href: "/settings/api-keys", label: "API Keys" },
+  { href: "/settings/provider-keys", label: "Provider Keys" },
   { href: "/settings/webhooks", label: "Webhooks" },
   { href: "/settings/notifications", label: "Notifications" },
   { href: "/settings/shortcuts", label: "Shortcuts" },

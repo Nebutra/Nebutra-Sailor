@@ -1,4 +1,5 @@
 import type { AIProvider, PrismaClient, TenantProviderKey } from "@nebutra/db";
+import { getTenantDb } from "@nebutra/db";
 
 /**
  * Plaintext credential shape stored (encrypted at rest) in
@@ -128,4 +129,14 @@ export class TenantProviderKeyRepository {
       alwaysUse: row.alwaysUse,
     };
   }
+}
+
+/**
+ * Seam-owning factory. Constructs the repository with an RLS-scoped client.
+ * Callers (routes, resolvers) MUST use this instead of calling `getTenantDb`
+ * directly so that ORM access stays inside the repository seam (see
+ * governance.config.json → repositorySeam.seamPaths).
+ */
+export function getTenantProviderKeyRepository(tenantId: string): TenantProviderKeyRepository {
+  return new TenantProviderKeyRepository(getTenantDb(tenantId), tenantId);
 }
