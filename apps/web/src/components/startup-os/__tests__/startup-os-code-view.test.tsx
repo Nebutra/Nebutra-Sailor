@@ -31,6 +31,21 @@ vi.mock("@nebutra/ui/primitives", () => ({
       <pre>{children}</pre>
     </section>
   ),
+  Button: ({
+    children,
+    onClick,
+    disabled,
+    type,
+  }: {
+    children: ReactNode;
+    onClick?: () => void;
+    disabled?: boolean;
+    type?: "button" | "submit" | "reset";
+  }) => (
+    <button type={type ?? "button"} onClick={onClick} disabled={disabled}>
+      {children}
+    </button>
+  ),
 }));
 
 vi.mock("@nebutra/icons", () => {

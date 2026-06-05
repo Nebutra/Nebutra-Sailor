@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Cross, PencilEdit } from "@nebutra/icons";
-import { CodeBlock } from "@nebutra/ui/primitives";
+import { Button, CodeBlock } from "@nebutra/ui/primitives";
 import { type KeyboardEvent, useCallback, useDeferredValue, useEffect, useState } from "react";
 
 // =============================================================================
@@ -142,33 +142,39 @@ export function StartupOsCodeView({
           <div className="flex shrink-0 items-center gap-2">
             {isEditing ? (
               <>
-                <button
+                <Button
                   type="button"
+                  variant="ink"
+                  size="sm"
+                  className="rounded-full"
                   onClick={() => void save()}
                   disabled={!isDirty || isSaving}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-neutral-12 px-3 py-1 text-[11px] font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
                 >
                   <Check className="size-3.5" aria-hidden="true" />
                   {isSaving ? "Saving..." : isDirty ? "Save" : "Saved"}
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="rounded-full"
                   onClick={exitEdit}
-                  className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium text-neutral-10 transition-colors hover:bg-neutral-3"
                 >
                   <Cross className="size-3.5" aria-hidden="true" />
                   Done
-                </button>
+                </Button>
               </>
             ) : (
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="sm"
+                className="rounded-full"
                 onClick={enterEdit}
-                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-medium text-neutral-10 transition-colors hover:bg-neutral-3"
               >
                 <PencilEdit className="size-3.5" aria-hidden="true" />
                 Edit
-              </button>
+              </Button>
             )}
           </div>
         </div>
