@@ -32,7 +32,7 @@ export function CofounderCard({
   preview?: boolean;
 }) {
   return (
-    <div className="flex w-full max-w-sm flex-col overflow-hidden rounded-[28px] border border-neutral-7 bg-neutral-1 shadow-lg shadow-neutral-12/5">
+    <div className="flex min-h-[380px] w-full max-w-sm flex-col overflow-hidden rounded-[28px] border border-neutral-7 bg-neutral-1 shadow-lg shadow-neutral-12/5">
       {/* Brand-tinted header band */}
       <div
         className="flex items-center justify-between px-5 py-3"
