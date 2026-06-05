@@ -95,9 +95,9 @@ description: "Nebutra brand do's and don'ts — comprehensive rules for logo, co
 | Context | Required Font | Fallback |
 |---------|--------------|----------|
 | Hero/display text | Geist Sans | System sans-serif |
-| English body | Poppins | System sans-serif |
-| Chinese body | vivo Sans | PingFang SC, Microsoft YaHei |
-| Code | JetBrains Mono | Fira Code, system monospace |
+| English body | Geist Sans | System sans-serif |
+| Chinese body | Noto Sans SC | PingFang SC, Microsoft YaHei |
+| Code | Geist Mono | Fira Code, system monospace |
 
 ### Prohibited Typography
 
@@ -105,9 +105,9 @@ description: "Nebutra brand do's and don'ts — comprehensive rules for logo, co
 |-----------|--------|
 | Inter, Roboto, or Arial for body text | Non-brand fonts |
 | SF Pro in web applications | Apple-only, not cross-platform |
-| Poppins for hero headlines | Use Geist Sans for display text |
-| Geist Sans for body copy | Use Poppins for body text |
-| Poppins weights below 400 or above 700 | Only 400, 500, 600, 700 are approved |
+| Poppins in product UI | Retired legacy VI face; use Geist Sans |
+| Bare font-family names for registered fonts | Prefix registered stacks with `var(--font-*)` |
+| Faux weights outside the loaded variable range | Use Geist variable weights 100-900 |
 | Custom or decorative fonts | Only brand-approved typefaces |
 | Letter-spacing on body text | Tracking adjustments are for headings/buttons/overlines only |
 
@@ -115,11 +115,11 @@ description: "Nebutra brand do's and don'ts — comprehensive rules for logo, co
 
 | Heading Weight | Body Weight | Context |
 |---------------|-------------|---------|
-| Geist 700 (Bold) | Poppins 400 (Regular) | Hero + body |
-| Geist 600 (SemiBold) | Poppins 400 (Regular) | Section heading + body |
-| Poppins 700 (Bold) | Poppins 400 (Regular) | App heading + body |
-| Poppins 600 (SemiBold) | Poppins 400 (Regular) | Subheading + body |
-| Poppins 500 (Medium) | Poppins 400 (Regular) | Label + description |
+| Geist 700 (Bold) | Geist 400 (Regular) | Hero + body |
+| Geist 600 (SemiBold) | Geist 400 (Regular) | Section heading + body |
+| Geist 700 (Bold) | Geist 500 (Medium) | App heading + body |
+| Geist 600 (SemiBold) | Geist 400 (Regular) | Subheading + body |
+| Geist 500 (Medium) | Geist 400 (Regular) | Label + description |
 
 ---
 
@@ -320,7 +320,7 @@ Use this checklist before shipping any Nebutra-branded surface:
 | Info semantic = brand blue | Not sky/teal |
 | Gradient angle is 135deg | Primary gradient |
 | Geist Sans for display text | Not Poppins |
-| Poppins for body text | Not Inter/Roboto |
+| Geist Sans for body text | Not Inter/Roboto/Poppins |
 | Brand easing curves used | Not generic ease |
 | Max transition duration ≤ 0.8s | No sluggish motion |
 | Dark-first design verified | Primary QA surface |

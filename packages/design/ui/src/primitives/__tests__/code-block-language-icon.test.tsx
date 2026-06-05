@@ -33,4 +33,14 @@ describe("CodeBlock language icons", () => {
 
     expect(screen.getByTestId("custom-python-icon")).toBeInTheDocument();
   });
+
+  it("keeps rendered code surfaces on the token mono stack", () => {
+    const { container } = render(
+      <CodeBlock filename="example.py" language="python">
+        {"print('hello')"}
+      </CodeBlock>,
+    );
+
+    expect(container.querySelector("pre")?.getAttribute("style")).toContain("var(--font-mono)");
+  });
 });

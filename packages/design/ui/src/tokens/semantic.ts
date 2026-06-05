@@ -164,6 +164,10 @@ export type SemanticGradient = keyof typeof semanticGradients;
 // ─── Global Design Refinements ────────────────────────────────────────────────
 // Values consumed directly by globals.css and tailwind.preset.ts
 
+function fontVar(variable: string, registryVariable: string, fallback: string): string {
+  return `var(${variable}, var(${registryVariable}, ${fallback}))`;
+}
+
 export const semanticGlobals = {
   // Border radius — 6px (Geist-matching, more rounded than typical 4px)
   defaultRadius: primitiveRadius.md,
@@ -180,10 +184,10 @@ export const semanticGlobals = {
   borderColor: "hsl(240 5.9% 90%)",
 
   // Typography — VI §Typography
-  fontSans: primitiveFontFamily.sans,
+  fontSans: fontVar("--font-sans", "--font-geist-sans", primitiveFontFamily.sans),
   fontCnSans: primitiveFontFamily.cnSans,
-  fontDisplay: primitiveFontFamily.display,
-  fontMono: primitiveFontFamily.mono,
+  fontDisplay: fontVar("--font-display", "--font-geist-sans", primitiveFontFamily.display),
+  fontMono: fontVar("--font-mono", "--font-geist-mono", primitiveFontFamily.mono),
 } as const;
 
 export type SemanticTheme = "light" | "dark";

@@ -508,8 +508,12 @@ export async function BlogPortableText({
           margin: 0;
           background: transparent !important;
           padding: 1rem 0;
+          font-family: var(--font-mono);
           font-size: 0.875rem;
           line-height: 1.75;
+        }
+        .blog-code-html .shiki code {
+          font-family: inherit;
         }
         .blog-code-html .line {
           display: block;

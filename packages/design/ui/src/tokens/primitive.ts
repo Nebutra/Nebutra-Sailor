@@ -193,7 +193,7 @@ export const primitiveFontFamily = {
   /** Heading (alias of display) */
   heading: '"Geist", "Noto Sans SC", sans-serif',
   /** Code / monospace — Geist Mono pairs with Geist for full family coverage */
-  mono: '"Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace',
+  mono: '"Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
 } as const;
 
 export type PrimitiveFontFamily = keyof typeof primitiveFontFamily;

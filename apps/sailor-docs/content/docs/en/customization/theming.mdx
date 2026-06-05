@@ -268,12 +268,12 @@ Fonts are loaded via `next/font` and injected as CSS variables. No external font
 ```css
 /* packages/design/tokens/styles.css */
 :root {
-  --font-geist-sans: "Geist", system-ui, sans-serif;   /* UI text */
-  --font-geist-mono: "Geist Mono", monospace;           /* Code, metrics */
+  --font-sans: var(--font-geist-sans), "Geist", system-ui, sans-serif;       /* UI text */
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace; /* Code, metrics */
 }
 ```
 
-To change the font family, update the `next/font` configuration in `apps/web/src/app/layout.tsx` and `apps/landing-page/src/app/layout.tsx`, then update the CSS variable fallbacks in `packages/design/tokens/styles.css`.
+To change the font family, update the `next/font` configuration in the app layout, then update the token fallbacks in `packages/design/tokens/styles.css`.
 
 ## Storybook Design Tokens reference
 

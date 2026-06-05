@@ -124,8 +124,8 @@ Tailwind CSS 4 中通过 CSS `@source` 直接导入样式，不再强依赖 JS �
 
 | Token | 字体栈 |
 |---|---|
-| `sans` | `Inter, system-ui, -apple-system, …, sans-serif` |
-| `mono` | `"JetBrains Mono", ui-monospace, …, monospace` |
+| `sans` | `var(--font-sans, var(--font-geist-sans, "Geist", …, sans-serif))` |
+| `mono` | `var(--font-mono, var(--font-geist-mono, "Geist Mono", …, monospace))` |
 
 **字号**（xs → 4xl，与核心字号尺度一致）：
 

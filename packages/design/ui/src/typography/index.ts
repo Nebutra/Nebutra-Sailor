@@ -18,8 +18,8 @@
  * // Use type preset
  * const headingStyle = typeStyles.h1;
  *
- * // Get Google Fonts URL
- * const fontsUrl = getGoogleFontsUrl(["inter", "jetbrainsMono"]);
+ * // Get optional CJK Google Fonts URL; Geist itself is loaded by next/font.
+ * const fontsUrl = getGoogleFontsUrl(["sourceHanSans"]);
  * ```
  */
 

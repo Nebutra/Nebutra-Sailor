@@ -10,13 +10,13 @@
 // ============================================
 
 /**
- * Primary font stack - Used for body text and UI
+ * Primary font stack - Used for body text and UI.
  *
- * Poppins is the primary font for English text. vivo Sans is for Chinese.
- * Falls back through system fonts for maximum compatibility.
+ * Token-first so next/font's generated face wins when available; the literal
+ * family stack remains as a standalone fallback for docs/tests.
  */
 export const FONT_FAMILY_PRIMARY =
-  '"Poppins", "vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+  'var(--font-sans, var(--font-geist-sans, "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif))';
 
 /**
  * Heading font stack - Used for titles and emphasis
@@ -24,13 +24,13 @@ export const FONT_FAMILY_PRIMARY =
  * Geist Sans is the primary display typeface.
  */
 export const FONT_FAMILY_HEADING =
-  '"Geist", "Poppins", "vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+  'var(--font-heading, var(--font-geist-sans, "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif))';
 
 /**
  * Monospace font stack - Used for code and technical content
  */
 export const FONT_FAMILY_MONO =
-  '"JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace';
+  'var(--font-mono, var(--font-geist-mono, "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace))';
 
 /**
  * CJK (Chinese/Japanese/Korean) fallback stack

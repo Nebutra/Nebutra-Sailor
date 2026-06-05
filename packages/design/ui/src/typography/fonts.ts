@@ -36,6 +36,26 @@ export interface FontConfig {
  * Registered fonts for the design system
  */
 export const fonts: Record<string, FontConfig> = {
+  geistSans: {
+    family: "Geist",
+    weights: [300, 400, 500, 600, 700],
+    italic: false,
+    display: "swap",
+    variable: true,
+    license: "OFL",
+    licenseUrl: "https://github.com/vercel/geist-font/blob/main/LICENSE.txt",
+  },
+
+  geistMono: {
+    family: "Geist Mono",
+    weights: [400, 500, 600, 700],
+    italic: false,
+    display: "swap",
+    variable: true,
+    license: "OFL",
+    licenseUrl: "https://github.com/vercel/geist-font/blob/main/LICENSE.txt",
+  },
+
   inter: {
     family: "Inter",
     weights: [300, 400, 500, 600, 700],
@@ -102,7 +122,7 @@ export function getGoogleFontsUrl(fontKeys: (keyof typeof fonts)[]): string {
 /**
  * Default fonts to load
  */
-export const defaultFonts: (keyof typeof fonts)[] = ["inter", "jetbrainsMono"];
+export const defaultFonts: (keyof typeof fonts)[] = ["geistSans", "geistMono"];
 
 /**
  * Fonts for CJK (Chinese) support
@@ -187,7 +207,7 @@ export const fontSmoothing = {
 } as const;
 
 /**
- * Font feature settings for Inter
+ * Font feature settings for Geist
  */
 export const fontFeatureSettings = {
   /** Enable common ligatures and contextual alternates */
@@ -229,6 +249,8 @@ Fonts used in this project are licensed under open-source licenses:
 
 - Inter: SIL Open Font License 1.1
 - Public Sans: SIL Open Font License 1.1
+- Geist: SIL Open Font License 1.1
+- Geist Mono: SIL Open Font License 1.1
 - JetBrains Mono: SIL Open Font License 1.1
 - Noto Sans SC (Source Han Sans): SIL Open Font License 1.1
 

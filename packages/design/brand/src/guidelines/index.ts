@@ -72,8 +72,8 @@ export const brandGuidelines = {
   // Typography
   typography: {
     cn: "vivo Sans",
-    en: "Poppins",
-    weights: ["Light", "Regular", "Medium", "DemiBold", "Bold"],
+    en: "Geist",
+    weights: ["Regular", "Medium", "SemiBold", "Bold"],
   },
 } as const;
 

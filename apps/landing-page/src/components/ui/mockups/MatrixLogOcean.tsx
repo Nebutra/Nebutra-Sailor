@@ -82,7 +82,8 @@ export function MatrixLogOcean() {
 
     const fontSize = 11;
     const lineHeight = 18;
-    const fontDesc = `${fontSize}px ui-monospace, SFMono-Regular, Consolas, monospace`;
+    const fontFamily = getComputedStyle(wrapper).fontFamily;
+    const fontDesc = `${fontSize}px ${fontFamily}`;
     ctx.font = fontDesc;
 
     // Use PRETEXT to pre-process the text segmentation ONCE.
@@ -213,6 +214,8 @@ export function MatrixLogOcean() {
       ref={wrapperRef}
       className="absolute inset-0 z-0 overflow-hidden opacity-60 pointer-events-auto cursor-crosshair"
       style={{
+        fontFamily:
+          'var(--font-mono, var(--font-geist-mono, "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace))',
         maskImage: "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
         WebkitMaskImage:
           "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",

@@ -95,9 +95,9 @@ description: "Nebutra 品牌应做与禁止规则：覆盖 Logo、颜色、排�
 | 场景 | 指定字体 | 回退字体 |
 |---------|--------------|----------|
 | Hero / 展示文字 | Geist Sans | 系统 sans-serif |
-| 英文正文 | Poppins | 系统 sans-serif |
-| 中文正文 | vivo Sans | PingFang SC, Microsoft YaHei |
-| 代码 | JetBrains Mono | Fira Code, system monospace |
+| 英文正文 | Geist Sans | 系统 sans-serif |
+| 中文正文 | Noto Sans SC | PingFang SC, Microsoft YaHei |
+| 代码 | Geist Mono | Fira Code, system monospace |
 
 ### 禁止的排版方式
 
@@ -105,9 +105,9 @@ description: "Nebutra 品牌应做与禁止规则：覆盖 Logo、颜色、排�
 |-----------|--------|
 | 正文使用 Inter、Roboto 或 Arial | 非品牌字体 |
 | Web 应用使用 SF Pro | Apple 平台专属，非跨平台 |
-| Hero 标题使用 Poppins | 展示文字应使用 Geist Sans |
-| 正文使用 Geist Sans | 英文正文应使用 Poppins |
-| 使用 400 以下或 700 以上的 Poppins 字重 | 只批准 400、500、600、700 |
+| 产品 UI 使用 Poppins | 已退役的旧 VI 字体，应使用 Geist Sans |
+| 对已注册字体直接写裸 `font-family` | 已注册字体栈必须加 `var(--font-*)` 前缀 |
+| 使用变量字体范围外的伪字重 | 使用 Geist 变量字重 100-900 |
 | 使用自定义或装饰字体 | 只允许品牌批准字体 |
 | 正文使用 letter-spacing | 字距调整仅用于标题、按钮和 overline |
 
@@ -115,11 +115,11 @@ description: "Nebutra 品牌应做与禁止规则：覆盖 Logo、颜色、排�
 
 | 标题字重 | 正文字重 | 场景 |
 |---------------|-------------|---------|
-| Geist 700 (Bold) | Poppins 400 (Regular) | Hero + 正文 |
-| Geist 600 (SemiBold) | Poppins 400 (Regular) | 区块标题 + 正文 |
-| Poppins 700 (Bold) | Poppins 400 (Regular) | 应用标题 + 正文 |
-| Poppins 600 (SemiBold) | Poppins 400 (Regular) | 小标题 + 正文 |
-| Poppins 500 (Medium) | Poppins 400 (Regular) | 标签 + 描述 |
+| Geist 700 (Bold) | Geist 400 (Regular) | Hero + 正文 |
+| Geist 600 (SemiBold) | Geist 400 (Regular) | 区块标题 + 正文 |
+| Geist 700 (Bold) | Geist 500 (Medium) | 应用标题 + 正文 |
+| Geist 600 (SemiBold) | Geist 400 (Regular) | 小标题 + 正文 |
+| Geist 500 (Medium) | Geist 400 (Regular) | 标签 + 描述 |
 
 ---
 
@@ -319,7 +319,7 @@ focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bra
 | 信息语义等于品牌蓝 | 不是 sky / teal |
 | 渐变角度为 135deg | 主渐变 |
 | 展示文字使用 Geist Sans | 不是 Poppins |
-| 英文正文使用 Poppins | 不是 Inter / Roboto |
+| 英文正文使用 Geist Sans | 不是 Inter / Roboto / Poppins |
 | 使用品牌缓动曲线 | 不是通用 ease |
 | 最大过渡时长 ≤ 0.8s | 不拖慢交互 |
 | 已验证深色优先设计 | 主要 QA 表面 |

@@ -103,7 +103,7 @@
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
   --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
-  --font-mono: var(--font-geist-mono), "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   --transition-duration: 200ms; /** Default transition duration — 200ms flow rail. */
   --transition-easing: ease-out; /** ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1). */
   --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
@@ -379,7 +379,7 @@
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
   --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
   --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
-  --font-mono: var(--font-geist-mono), "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   --transition-duration: 200ms; /** Default transition duration — 200ms flow rail. */
   --transition-easing: ease-out; /** ease-out keyword form (CSS-friendly). Equivalent to cubic-bezier(0,0,0.2,1). */
   --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
@@ -749,11 +749,11 @@
   --duration-cinematic: 500ms;
 
   /* Font family — Geist primary stack with CJK fallbacks */
-  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
-  --font-display: "Geist", "Noto Sans SC", sans-serif;
-  --font-heading: "Geist", "Noto Sans SC", sans-serif;
-  --font-mono: "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
+  --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }
 
 /* ============================================

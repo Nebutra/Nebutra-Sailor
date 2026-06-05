@@ -45,7 +45,7 @@ const gradient = colors.gradient.primary; // "linear-gradient(135deg, #0033FE 0%
 
 // Typography
 const fontCn = typography.fontFamily.cn; // vivo Sans
-const fontEn = typography.fontFamily.en; // Poppins
+const fontEn = typography.fontFamily.en; // Geist
 ```
 
 ### Brand Guidelines (品牌使用规范)
@@ -139,8 +139,8 @@ linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%)
 ### 中文 - vivo Sans
 - Light (300) / Regular (400) / Medium (500) / DemiBold (600) / Bold (700)
 
-### 英文 - Poppins
-- Regular (400) / Medium (500) / SemiBold (600)
+### 英文 - Geist
+- Regular (400) / Medium (500) / SemiBold (600) / Bold (700)
 
 ## Logo Usage Rules (标志使用规范)
 

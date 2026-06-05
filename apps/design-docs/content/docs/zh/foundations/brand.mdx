@@ -66,15 +66,15 @@ background: linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%);
 ### 字体栈
 
 ```
-"Geist", "Poppins", "vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif
+var(--font-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif
 ```
 
 | 角色 | 字体 | 字重 |
 |------|------|---------|
 | 展示字 / 标题 | Geist Sans | Variable 100-900 |
-| 英文正文 | Poppins | 400, 500, 600, 700 |
-| 中文正文 | vivo Sans | 300-700 |
-| 代码 | JetBrains Mono / Fira Code | 400, 700 |
+| 英文正文 | Geist Sans | 400, 500, 600, 700 |
+| 中文正文 | Noto Sans SC / PingFang SC / Microsoft YaHei | 系统字重 |
+| 代码 | Geist Mono / Fira Code | 400, 500, 700 |
 
 ---
 
@@ -82,7 +82,7 @@ background: linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%);
 
 <CardGroup cols={2}>
   <Card title="颜色系统" icon="palette" href="/zh/docs/foundations/brand-colors">完整的 11 阶蓝色与青色阶、品牌中性色、语义颜色、可访问性与代码引用。</Card>
-  <Card title="排版系统" icon="type" href="/zh/docs/foundations/typography">Geist Display、Poppins、vivo Sans、JetBrains Mono 的字号尺度、CJK 节奏与代码示例。</Card>
+  <Card title="排版系统" icon="type" href="/zh/docs/foundations/typography">Geist Sans、Geist Mono 与 CJK 回退栈的字号尺度、CJK 节奏与代码示例。</Card>
   <Card title="渐变与纹理" icon="paintbrush" href="/zh/docs/foundations/brand-gradients">品牌渐变、颗粒纹理、mesh/neural noise 背景与性能边界。</Card>
   <Card title="动效语言" icon="play" href="/zh/docs/foundations/brand-motion">Emerge、Flow、Pulse 三类核心动效、缓动曲线、spring 配置与 Framer Motion 示例。</Card>
   <Card title="视觉图案与 DNA" icon="hexagon" href="/zh/docs/foundations/brand-patterns">六边形网格、点阵、玻璃拟态、深色优先设计与图案组合规则。</Card>

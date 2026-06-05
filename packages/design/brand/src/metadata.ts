@@ -119,7 +119,7 @@ export const typography = {
     en: '"Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif',
     cn: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif',
     sans: '"Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
-    mono: '"Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace',
+    mono: '"Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
     display: '"Geist", "Noto Sans SC", sans-serif',
     heading: '"Geist", "Noto Sans SC", sans-serif',
     brandPrint: '"vivo Sans", "PingFang SC", sans-serif',

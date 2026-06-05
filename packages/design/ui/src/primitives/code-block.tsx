@@ -143,15 +143,19 @@ export type CodeBlockProps = CodeBlockFilesProps | CodeBlockSingleProps;
 // Themes
 // =============================================================================
 
+const CODE_FONT_FAMILY = "var(--font-mono)";
+
 const lightTheme = {
   ...nightOwl,
   'pre[class*="language-"]': {
     ...nightOwl['pre[class*="language-"]'],
     background: "transparent",
+    fontFamily: CODE_FONT_FAMILY,
   },
   'code[class*="language-"]': {
     ...nightOwl['code[class*="language-"]'],
     color: "hsl(var(--foreground))",
+    fontFamily: CODE_FONT_FAMILY,
   },
   comment: {
     color: "hsl(var(--muted-foreground))",
@@ -188,6 +192,11 @@ const darkTheme = {
   'pre[class*="language-"]': {
     ...nightOwl['pre[class*="language-"]'],
     background: "transparent",
+    fontFamily: CODE_FONT_FAMILY,
+  },
+  'code[class*="language-"]': {
+    ...nightOwl['code[class*="language-"]'],
+    fontFamily: CODE_FONT_FAMILY,
   },
 };
 
@@ -751,6 +760,7 @@ export function CodeBlock(props: CodeBlockProps) {
             margin: 0,
             padding: "1rem",
             background: "transparent",
+            fontFamily: CODE_FONT_FAMILY,
             fontSize: "0.875rem",
           }}
         >

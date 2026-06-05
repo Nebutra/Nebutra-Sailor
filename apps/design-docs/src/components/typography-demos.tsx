@@ -262,7 +262,7 @@ export function TypographyHierarchyDemos() {
   return (
     <div className="mt-8 flex flex-col gap-8">
       <FontFaceDemo
-        fontName="Inter"
+        fontName="Geist Sans"
         fontClass="font-sans"
         letters="Aa"
         sampleText="Enterprise SaaS Platform for AI-Native Products"
@@ -276,7 +276,7 @@ export function TypographyHierarchyDemos() {
         usage="Chinese · UI & Body"
       />
       <FontFaceDemo
-        fontName="JetBrains Mono"
+        fontName="Geist Mono"
         fontClass="font-mono"
         letters="</>"
         sampleText="npm install @nebutra/ui"

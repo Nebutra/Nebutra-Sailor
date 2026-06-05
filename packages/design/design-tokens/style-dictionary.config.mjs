@@ -28,6 +28,42 @@ const themeRegistry = JSON.parse(
 );
 const MULTI_THEMES = themeRegistry.themes.map((theme) => theme.id);
 
+const FONT_REGISTRY = {
+  geist: "--font-geist-sans",
+  "geist sans": "--font-geist-sans",
+  "geist mono": "--font-geist-mono",
+  inter: "--font-inter",
+  "space grotesk": "--font-space-grotesk",
+  "playfair display": "--font-playfair-display",
+  "jetbrains mono": "--font-jetbrains-mono",
+  manrope: "--font-reg-manrope",
+  sora: "--font-reg-sora",
+  "work sans": "--font-reg-work-sans",
+  "dm sans": "--font-reg-dm-sans",
+  "plus jakarta sans": "--font-reg-plus-jakarta-sans",
+  outfit: "--font-reg-outfit",
+  figtree: "--font-reg-figtree",
+  montserrat: "--font-reg-montserrat",
+  lexend: "--font-reg-lexend",
+  "fira code": "--font-reg-fira-code",
+  "roboto mono": "--font-reg-roboto-mono",
+  "source code pro": "--font-reg-source-code-pro",
+};
+
+function normalizeFontFamily(name) {
+  return name.replace(/['"]/g, "").trim().toLowerCase();
+}
+
+function primaryFontFamily(stack) {
+  return normalizeFontFamily(String(stack).split(",")[0] ?? "");
+}
+
+function withRegistryFont(stack) {
+  if (typeof stack !== "string" || stack.includes("var(--font-")) return stack;
+  const variable = FONT_REGISTRY[primaryFontFamily(stack)];
+  return variable ? `var(${variable}), ${stack}` : stack;
+}
+
 /**
  * Custom CSS variable namer.
  *
@@ -256,6 +292,13 @@ StyleDictionary.registerTransform({
   transform: (token) => token.$value ?? token.value,
 });
 
+StyleDictionary.registerTransform({
+  name: "fontFamily/nebutra/registry",
+  type: "value",
+  filter: (token) => token.$type === "fontFamily" || token.type === "fontFamily",
+  transform: (token) => withRegistryFont(token.$value ?? token.value),
+});
+
 const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/nebutra/css" }) => {
   const cssNameTransform = registerLayeredNameTransform({
     name: `${nameTransform}/${mode}/layered`,
@@ -279,6 +322,7 @@ const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/
           "attribute/cti",
           "color/nebutra/passthrough",
           "string/nebutra/passthrough",
+          "fontFamily/nebutra/registry",
           cssNameTransform,
         ],
         buildPath: "build/css/",
@@ -304,6 +348,7 @@ const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/
           "attribute/cti",
           "color/nebutra/passthrough",
           "string/nebutra/passthrough",
+          "fontFamily/nebutra/registry",
           tsNameTransform,
         ],
         buildPath: "build/ts/",
@@ -322,6 +367,7 @@ const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/
           "attribute/cti",
           "color/nebutra/passthrough",
           "string/nebutra/passthrough",
+          "fontFamily/nebutra/registry",
           cssNameTransform,
         ],
         buildPath: "build/tailwind/",
@@ -749,11 +795,11 @@ function buildTailwindThemeInline() {
   --duration-cinematic: 500ms;
 
   /* Font family — Geist primary stack with CJK fallbacks */
-  --font-sans: "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "vivo Sans", sans-serif;
-  --font-display: "Geist", "Noto Sans SC", sans-serif;
-  --font-heading: "Geist", "Noto Sans SC", sans-serif;
-  --font-mono: "Geist Mono", "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  --font-display: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
+  --font-heading: var(--font-geist-sans), "Geist", "Noto Sans SC", sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }
 `;
 }

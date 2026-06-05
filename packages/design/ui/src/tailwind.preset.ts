@@ -132,12 +132,16 @@ export const nebutraShadows = {
 
 // ─── Typography — VI §Typography ─────────────────────────────────────────────
 
+function fontVar(variable: string, registryVariable: string, fallback: string): string {
+  return `var(${variable}, var(${registryVariable}, ${fallback}))`;
+}
+
 export const nebutraTypography = {
   fontFamily: {
-    sans: primitiveFontFamily.sans,
+    sans: fontVar("--font-sans", "--font-geist-sans", primitiveFontFamily.sans),
     cn: primitiveFontFamily.cnSans,
-    display: primitiveFontFamily.display,
-    mono: primitiveFontFamily.mono,
+    display: fontVar("--font-display", "--font-geist-sans", primitiveFontFamily.display),
+    mono: fontVar("--font-mono", "--font-geist-mono", primitiveFontFamily.mono),
   },
   fontSize: {
     xs: `${primitiveFontSize.xs / 16}rem`, // 12px

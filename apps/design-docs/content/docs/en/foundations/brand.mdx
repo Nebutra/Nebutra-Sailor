@@ -66,15 +66,15 @@ background: linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%);
 ### Typography Stack
 
 ```
-"Geist", "Poppins", "vivo Sans", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif
+var(--font-sans), "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif
 ```
 
 | Role | Font | Weights |
 |------|------|---------|
 | Display / Headlines | Geist Sans | Variable 100-900 |
-| Body EN | Poppins | 400, 500, 600, 700 |
-| Body CN | vivo Sans | 300-700 |
-| Code | JetBrains Mono / Fira Code | 400, 700 |
+| Body EN | Geist Sans | 400, 500, 600, 700 |
+| Body CN | Noto Sans SC / PingFang SC / Microsoft YaHei | System weights |
+| Code | Geist Mono / Fira Code | 400, 500, 700 |
 
 ---
 
@@ -82,7 +82,7 @@ background: linear-gradient(135deg, #0033FE 0%, #0BF1C3 100%);
 
 <CardGroup cols={2}>
   <Card title="Color System" icon="palette" href="/en/docs/foundations/brand-colors">Complete 11-step blue and cyan scales, neutral palette, semantic colors, accessibility, and code references.</Card>
-  <Card title="Typography System" icon="type" href="/en/docs/foundations/typography">Geist Display, Poppins, vivo Sans, JetBrains Mono — type scale, CJK rhythm, and code examples.</Card>
+  <Card title="Typography System" icon="type" href="/en/docs/foundations/typography">Geist Sans, Geist Mono, and CJK fallbacks — type scale, CJK rhythm, and code examples.</Card>
   <Card title="Gradients & Textures" icon="paintbrush" href="/en/docs/foundations/brand-gradients">Brand gradients, grain textures, mesh/neural noise backgrounds, and performance considerations.</Card>
   <Card title="Motion Language" icon="play" href="/en/docs/foundations/brand-motion">Emerge, Flow, and Pulse core motions — easing curves, spring configs, and Framer Motion code.</Card>
   <Card title="Visual Patterns & DNA" icon="hexagon" href="/en/docs/foundations/brand-patterns">Hexagonal grids, dot patterns, glassmorphism, dark-first design, and pattern combinations.</Card>

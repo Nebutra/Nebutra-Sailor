@@ -78,16 +78,16 @@ export const FontFamilies: StoryObj = {
         >
           The quick brown fox jumps over the lazy dog
         </p>
-        <p className="mt-1 text-sm text-[var(--neutral-10)]">Geist Sans → Inter → system-ui</p>
+        <p className="mt-1 text-sm text-[var(--neutral-10)]">
+          Geist Sans → Noto Sans SC → system-ui
+        </p>
       </div>
       <div>
         <p className="mb-1 font-mono text-xs text-[var(--neutral-10)]">--font-mono / font-mono</p>
         <p className="font-mono text-2xl text-[var(--neutral-12)]">
           const deploy = () =&gt; ship()
         </p>
-        <p className="mt-1 text-sm text-[var(--neutral-10)]">
-          JetBrains Mono → Fira Code → monospace
-        </p>
+        <p className="mt-1 text-sm text-[var(--neutral-10)]">Geist Mono → Fira Code → monospace</p>
       </div>
     </div>
   ),

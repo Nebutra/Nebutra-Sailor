@@ -29,8 +29,7 @@
 
   /* Monospace — Geist Mono */
   --font-mono:
-    var(--font-geist-mono), "Geist Mono", "Fira Code", ui-monospace, SFMono-Regular, "SF Mono",
-    Menlo, Consolas, "Liberation Mono", monospace;
+    var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
   /* CJK — local/system fallback, no build-time font fetch */
   --font-cjk:

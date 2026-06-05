@@ -3,8 +3,9 @@
 /**
  * global-error.tsx — root-level Next.js error boundary.
  *
- * Renders outside the root layout: no globals.css, no design tokens, no @nebutra/ui.
- * Inline styles only. light-dark() handles theme without media queries.
+ * Renders outside the root layout: inline styles only. CSS variable references
+ * are token-first but include literal fallbacks because globals.css may be absent.
+ * light-dark() handles theme without media queries.
  * Hardcoded hex is permitted here per CLAUDE.md "Exception: global-error.tsx".
  */
 
@@ -17,8 +18,9 @@ interface GlobalErrorProps {
 }
 
 const SYSTEM_STACK =
-  '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
-const MONO_STACK = 'ui-monospace, "SF Mono", Menlo, Consolas, "Roboto Mono", monospace';
+  'var(--font-sans, var(--font-geist-sans, "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif))';
+const MONO_STACK =
+  'var(--font-mono, var(--font-geist-mono, "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace))';
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {

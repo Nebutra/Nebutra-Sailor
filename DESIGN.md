@@ -61,10 +61,10 @@ Sub-specs (per package):
 
 | Role | Family | CSS variable | Notes |
 |------|--------|-------------|-------|
-| Display / heading | Poppins | `--font-display` | Western — locked |
-| UI sans (body, label, button) | Poppins → vivo Sans → PingFang SC → Microsoft YaHei → Noto Sans SC → system | `--font-sans` | CJK-aware fallback chain |
-| CJK body | vivo Sans → PingFang SC → Microsoft YaHei → Noto Sans SC | `--font-cn` | Auto-activates via `:lang(zh|ja|ko)` |
-| Mono | JetBrains Mono → Fira Code → ui-monospace | `--font-mono` | Code, tabular figures |
+| Display / heading | Geist Sans → Noto Sans SC | `--font-display` | Loaded through `--font-geist-sans`; CJK falls through |
+| UI sans (body, label, button) | Geist Sans → Noto Sans SC → PingFang SC → Microsoft YaHei → system | `--font-sans` | CJK-aware fallback chain |
+| CJK body | Noto Sans SC → PingFang SC → Microsoft YaHei → vivo Sans | `--font-cn` | Appended as fallback, not a blanket theme override |
+| Mono | Geist Mono → ui-monospace → SF Mono / Menlo | `--font-mono` | Code, tabular figures |
 
 Loaded via `next/font` per app — never via `<link>` or `@import`.
 

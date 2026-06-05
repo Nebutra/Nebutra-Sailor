@@ -21,7 +21,9 @@ import {
   nebutraCyanScale,
   nebutraNeutralScale,
 } from "../packages/design/brand/src/guidelines/color.ts";
+import { brandGuidelines } from "../packages/design/brand/src/guidelines/index.ts";
 import { colors, typography } from "../packages/design/brand/src/metadata.ts";
+import { FONT_REGISTRY } from "../packages/design/fonts/src/index.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,6 +50,36 @@ function fail(check: string, detail: string): void {
 
 function ok(label: string): void {
   process.stdout.write(`  ✓ ${label}\n`);
+}
+
+function cssVariableDefinitions(css: string, variable: string): string[] {
+  const escaped = variable.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return Array.from(css.matchAll(new RegExp(`--${escaped}:\\s*([^;]+);`, "g")), (match) =>
+    String(match[1]).trim(),
+  );
+}
+
+function normalizeFontFamily(name: string): string {
+  return name.replace(/['"]/g, "").trim().toLowerCase();
+}
+
+function primaryFontFamily(stack: string): string {
+  return normalizeFontFamily(stack.split(",")[0] ?? "");
+}
+
+function registryFontPrefixFailures(
+  css: string,
+  variables: readonly string[],
+): Array<{ variable: string; expected: string; value: string }> {
+  const drifts: Array<{ variable: string; expected: string; value: string }> = [];
+  for (const variable of variables) {
+    for (const value of cssVariableDefinitions(css, variable)) {
+      if (value.includes("var(--font-")) continue;
+      const expected = FONT_REGISTRY[primaryFontFamily(value)];
+      if (expected) drifts.push({ variable, expected, value });
+    }
+  }
+  return drifts;
 }
 
 interface DtcgLeaf {
@@ -88,6 +120,60 @@ const themeRegistry = readJson<ThemeRegistry>("packages/design/theme/src/registr
 const tokensCss = read("packages/design/tokens/styles.css");
 const themesCss = read("packages/design/theme/themes.css");
 const primitiveTs = read("packages/design/ui/src/tokens/primitive.ts");
+const semanticTs = read("packages/design/ui/src/tokens/semantic.ts");
+const typographyTs = read("packages/design/ui/src/typography/tokens.ts");
+const typographyFontsCss = read("packages/design/ui/src/typography/fonts.css");
+const typographyFontsTs = read("packages/design/ui/src/typography/fonts.ts");
+const tailwindPresetTs = read("packages/design/ui/src/tailwind.preset.ts");
+const uiThemeTokensTs = read("packages/design/ui/src/theme/tokens.ts");
+const docsDriftSources = [
+  "apps/design-docs/content/docs/en/foundations/brand.mdx",
+  "apps/design-docs/content/docs/zh/foundations/brand.mdx",
+  "apps/design-docs/content/docs/en/foundations/brand-guidelines.mdx",
+  "apps/design-docs/content/docs/zh/foundations/brand-guidelines.mdx",
+  "apps/design-docs/content/docs/en/foundations/tailwind.mdx",
+  "apps/design-docs/content/docs/zh/foundations/tailwind.mdx",
+  "apps/design-docs/content/docs/en/foundations/theming.mdx",
+  "apps/design-docs/content/docs/zh/foundations/theming.mdx",
+  "apps/design-docs/content/docs/en/foundations/typography.mdx",
+  "apps/design-docs/content/docs/zh/foundations/typography.mdx",
+  "apps/sailor-docs/content/docs/en/customization/theming.mdx",
+  "apps/sailor-docs/content/docs/zh/customization/theming.mdx",
+  "DESIGN.md",
+  "packages/design/brand/README.md",
+  "apps/storybook/src/stories/Typography.stories.tsx",
+  "apps/design-docs/src/components/typography-demos.tsx",
+  "apps/sailor-docs/src/components/typography-demos.tsx",
+].map((relativePath) => ({ relativePath, content: read(relativePath) }));
+const runtimeFontSources = [
+  {
+    relativePath: "packages/design/design-tokens/tokens/core.json",
+    content: JSON.stringify(core.fontFamily),
+  },
+  {
+    relativePath: "packages/design/design-tokens/style-dictionary.config.mjs",
+    content: read("packages/design/design-tokens/style-dictionary.config.mjs"),
+  },
+  { relativePath: "packages/design/tokens/styles.css", content: tokensCss },
+  {
+    relativePath: "packages/design/brand/src/metadata.ts",
+    content: read("packages/design/brand/src/metadata.ts"),
+  },
+  { relativePath: "packages/design/ui/src/tokens/primitive.ts", content: primitiveTs },
+  { relativePath: "packages/design/ui/src/tokens/semantic.ts", content: semanticTs },
+  { relativePath: "packages/design/ui/src/typography/tokens.ts", content: typographyTs },
+  { relativePath: "packages/design/ui/src/typography/fonts.css", content: typographyFontsCss },
+  { relativePath: "packages/design/ui/src/tailwind.preset.ts", content: tailwindPresetTs },
+  { relativePath: "packages/design/ui/src/theme/tokens.ts", content: uiThemeTokensTs },
+  {
+    relativePath: "apps/landing-page/src/components/ui/mockups/MatrixLogOcean.tsx",
+    content: read("apps/landing-page/src/components/ui/mockups/MatrixLogOcean.tsx"),
+  },
+  {
+    relativePath: "apps/web/src/app/global-error.tsx",
+    content: read("apps/web/src/app/global-error.tsx"),
+  },
+] as const;
 
 function hexToRgb(hex: string): [number, number, number] {
   const match = /^#?([0-9a-f]{6})$/iu.exec(hex.trim());
@@ -258,16 +344,142 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
     ok("metadata.ts: Poppins removed from sans stack");
   }
 
+  if (brandGuidelines.typography.en !== "Geist") {
+    fail(
+      "guidelines.typography.en",
+      `brand guidelines must name Geist as the English UI face, got ${brandGuidelines.typography.en}`,
+    );
+  } else {
+    ok("guidelines/index.ts: typography.en === Geist");
+  }
+
   if (!primitiveTs.includes('"Geist"') || primitiveTs.includes('"Poppins"')) {
     fail("ui.primitive.fontFamily", "primitive.ts must use Geist and must NOT use Poppins");
   } else {
     ok("ui/primitive.ts: Geist primary, Poppins removed");
   }
 
+  if (typographyTs.includes("Poppins") || !typographyTs.includes("var(--font-mono,")) {
+    fail(
+      "ui.typography.fontFamily",
+      "typography/tokens.ts must use token-first Geist stacks and must NOT reference Poppins",
+    );
+  } else {
+    ok("ui/typography/tokens.ts: token-first Geist stacks, Poppins removed");
+  }
+
+  const legacyMonoFallbackFragments = [
+    "Consolas",
+    '"Courier New"',
+    "Monaco",
+    '"Andale Mono"',
+    '"Ubuntu Mono"',
+    '"JetBrains Mono"',
+  ];
+  const legacyMonoFallbackHits = runtimeFontSources.flatMap(({ relativePath, content }) =>
+    legacyMonoFallbackFragments
+      .filter((fragment) => content.includes(fragment))
+      .map((fragment) => `${relativePath}: ${fragment}`),
+  );
+  if (legacyMonoFallbackHits.length > 0) {
+    fail(
+      "runtime default mono fallback",
+      `default runtime stacks must not fall back to legacy/raw mono faces: ${legacyMonoFallbackHits.join(" | ")}`,
+    );
+  } else {
+    ok("runtime defaults: mono stacks avoid legacy/raw fallback faces");
+  }
+
+  if (!typographyFontsTs.includes('["geistSans", "geistMono"]')) {
+    fail(
+      "ui.typography.defaultFonts",
+      "typography/fonts.ts defaultFonts must be Geist Sans + Geist Mono, not legacy Google font defaults",
+    );
+  } else {
+    ok("ui/typography/fonts.ts: defaultFonts are Geist Sans + Geist Mono");
+  }
+
+  if (
+    !semanticTs.includes('fontVar("--font-sans"') ||
+    !semanticTs.includes('fontVar("--font-mono"')
+  ) {
+    fail("ui.semanticGlobals.fontFamily", "semantic globals must emit token-first font stacks");
+  } else {
+    ok("ui/semantic.ts: semantic globals emit token-first font stacks");
+  }
+
+  if (
+    !tailwindPresetTs.includes('fontVar("--font-sans"') ||
+    !tailwindPresetTs.includes('fontVar("--font-mono"')
+  ) {
+    fail("ui.tailwind.preset.fontFamily", "Tailwind preset must emit token-first font stacks");
+  } else {
+    ok("ui/tailwind.preset.ts: legacy preset emits token-first font stacks");
+  }
+
+  const staleDocsFragments = [
+    '"Geist", "Poppins"',
+    "| Body EN | Poppins |",
+    "| 英文正文 | Poppins |",
+    "Geist Display, Poppins",
+    "Poppins、vivo Sans",
+    "| English body | Poppins |",
+    "Use Poppins for body text",
+    '| `mono` | `"JetBrains Mono"',
+    "normal: '\"BrandFont\", Inter, sans-serif'",
+    'mono: \'"BrandMono", "JetBrains Mono", monospace\'',
+    "const fontEn = typography.fontFamily.en; // Poppins",
+    "### 英文 - Poppins",
+    "JetBrains Mono → Fira Code → monospace",
+    '--font-geist-mono: "Geist Mono", monospace',
+    "Display / heading | Poppins",
+    "UI sans (body, label, button) | Poppins",
+    "Mono | JetBrains Mono",
+    'fontName="Inter"',
+    'fontName="JetBrains Mono"',
+    "ui-monospace, SFMono-Regular, Consolas",
+  ];
+  const docsDrifts = docsDriftSources.flatMap(({ relativePath, content }) =>
+    staleDocsFragments
+      .filter((fragment) => content.includes(fragment))
+      .map((fragment) => `${relativePath}: ${fragment}`),
+  );
+  if (docsDrifts.length > 0) {
+    fail("design-system docs font drift", docsDrifts.join(" | "));
+  } else {
+    ok("design-system docs: no stale positive Poppins/JetBrains font guidance");
+  }
+
   if (!tokensCss.includes("Geist") || tokensCss.includes("Poppins")) {
     fail("tokens/styles.css fontFamily", "styles.css must use Geist and must NOT use Poppins");
   } else {
     ok("tokens/styles.css: Geist primary, Poppins removed");
+  }
+
+  const fontSansDefinitions = cssVariableDefinitions(tokensCss, "font-sans");
+  const fontMonoDefinitions = cssVariableDefinitions(tokensCss, "font-mono");
+  if (
+    !fontSansDefinitions.length ||
+    !fontSansDefinitions.every((value) => value.includes("var(--font-geist-sans)"))
+  ) {
+    fail(
+      "tokens/styles.css --font-sans",
+      `every --font-sans definition must prefix next/font's var(--font-geist-sans), got: ${fontSansDefinitions.join(" | ")}`,
+    );
+  } else {
+    ok("tokens/styles.css: --font-sans keeps next/font variable prefix");
+  }
+
+  if (
+    !fontMonoDefinitions.length ||
+    !fontMonoDefinitions.every((value) => value.includes("var(--font-geist-mono)"))
+  ) {
+    fail(
+      "tokens/styles.css --font-mono",
+      `every --font-mono definition must prefix next/font's var(--font-geist-mono), got: ${fontMonoDefinitions.join(" | ")}`,
+    );
+  } else {
+    ok("tokens/styles.css: --font-mono keeps next/font variable prefix");
   }
 }
 
@@ -428,6 +640,25 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
     fail("themes.css @theme inline", "Missing keyframe @theme inline block");
   } else {
     ok("themes.css: @theme inline (keyframes) present");
+  }
+
+  const fontRegistryDrifts = registryFontPrefixFailures(themesCss, [
+    "font-sans",
+    "font-heading",
+    "font-mono",
+  ]);
+  if (fontRegistryDrifts.length > 0) {
+    fail(
+      "themes.css font registry",
+      fontRegistryDrifts
+        .map(
+          ({ variable, expected, value }) =>
+            `--${variable} must prefix var(${expected}) before registered family stack: ${value}`,
+        )
+        .join(" | "),
+    );
+  } else {
+    ok("themes.css: registered theme font stacks keep next/font variable prefixes");
   }
 }
 

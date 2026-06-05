@@ -217,7 +217,7 @@
       "$type": "fontFamily"
     },
     "mono": {
-      "$value": "var(--font-geist-mono), \"Geist Mono\", \"Fira Code\", ui-monospace, Consolas, \"Courier New\", monospace",
+      "$value": "var(--font-geist-mono), \"Geist Mono\", ui-monospace, SFMono-Regular, \"SF Mono\", Menlo, monospace",
       "$type": "fontFamily"
     }
   },

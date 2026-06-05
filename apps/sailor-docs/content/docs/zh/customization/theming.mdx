@@ -268,12 +268,12 @@ export function ThemePresetSelector() {
 ```css
 /* packages/design/tokens/styles.css */
 :root {
-  --font-geist-sans: "Geist", system-ui, sans-serif;   /* UI 文本 */
-  --font-geist-mono: "Geist Mono", monospace;           /* 代码、指标 */
+  --font-sans: var(--font-geist-sans), "Geist", system-ui, sans-serif;       /* UI 文本 */
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace; /* 代码、指标 */
 }
 ```
 
-如需更换字体族，请更新 `apps/web/src/app/layout.tsx` 和 `apps/landing-page/src/app/layout.tsx` 中的 `next/font` 配置，然后同步更新 `packages/design/tokens/styles.css` 中的 CSS 变量备用字体。
+如需更换字体族，请更新应用 layout 中的 `next/font` 配置，然后同步更新 `packages/design/tokens/styles.css` 中的 token 回退栈。
 
 ## Storybook Design Tokens 参考
 
