@@ -19,8 +19,6 @@ import {
   SiHtml5Hex,
   SiJavascript,
   SiJavascriptHex,
-  SiJson,
-  SiJsonHex,
   SiKotlin,
   SiKotlinHex,
   SiMarkdown,
@@ -136,6 +134,28 @@ const LANGUAGE_ALIASES: Record<string, string> = {
   zsh: "bash",
 };
 
+/**
+ * A clear `{ }` braces glyph for JSON/config files — the official simple-icons
+ * JSON mark renders as a single dark blob that's unrecognizable at icon sizes.
+ */
+function JsonBracesIcon({ className, color }: { className?: string; color?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke={color ?? "currentColor"}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" />
+      <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" />
+    </svg>
+  );
+}
+
 const LANGUAGE_ICON_REGISTRY: Record<string, LanguageIconSpec> = {
   bash: { color: SiGnubashHex, icon: SiGnubash, label: "Bash" },
   bun: { color: SiBunHex, icon: SiBun, label: "Bun" },
@@ -148,7 +168,7 @@ const LANGUAGE_ICON_REGISTRY: Record<string, LanguageIconSpec> = {
   html: { color: SiHtml5Hex, icon: SiHtml5, label: "HTML" },
   java: { color: SiOpenjdkHex, icon: SiOpenjdk, label: "Java" },
   javascript: { color: SiJavascriptHex, icon: SiJavascript, label: "JavaScript" },
-  json: { color: SiJsonHex, icon: SiJson, label: "JSON" },
+  json: { icon: JsonBracesIcon, label: "JSON" },
   kotlin: { color: SiKotlinHex, icon: SiKotlin, label: "Kotlin" },
   markdown: { color: SiMarkdownHex, icon: SiMarkdown, label: "Markdown" },
   node: { color: SiNodedotjsHex, icon: SiNodedotjs, label: "Node.js" },
