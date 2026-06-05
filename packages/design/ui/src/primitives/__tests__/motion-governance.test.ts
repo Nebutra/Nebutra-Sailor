@@ -5,6 +5,9 @@ import { describe, expect, it } from "vitest";
 const source = (relativePath: string) =>
   readFileSync(join(process.cwd(), "src", "primitives", relativePath), "utf8");
 
+const designFile = (relativePath: string) =>
+  readFileSync(join(process.cwd(), "..", relativePath), "utf8");
+
 describe("primitive motion governance", () => {
   it("keeps Loader on the canonical tokenized loading primitives", () => {
     const loaderSource = source("loader.tsx");
@@ -27,6 +30,15 @@ describe("primitive motion governance", () => {
     expect(progressSource).toMatch(/scaleX/u);
     expect(progressSource).toMatch(/transformOrigin:\s*"left center"/u);
     expect(progressSource).not.toMatch(/translateX\(/u);
+  });
+
+  it.each([
+    "design-tokens/static/base.css",
+    "tokens/styles.css",
+  ] as const)("keeps the global border default in Tailwind base layer: %s", (relativePath) => {
+    expect(designFile(relativePath)).toMatch(
+      /@layer\s+base\s*\{\s*\*,\s*\*::before,\s*\*::after\s*\{[^}]*border-color:\s*hsl\(var\(--border\)\);/su,
+    );
   });
 
   it.each([

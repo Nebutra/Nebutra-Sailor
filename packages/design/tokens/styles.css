@@ -780,15 +780,20 @@
   --halo-faint: rgb(255 255 255 / 0.03);
 }
 
-*,
-*::before,
-*::after {
-  /* Token-aware default border — resolves via cascade:
-     :root → light (hsl 240 5.9% 90% ≈ #e4e4e7)
-     .dark → dark  (hsl 0 0% 14.9%  ≈ #262626)
-     Previously hardcoded to the light value, which leaked a near-white border
-     into every element in dark mode regardless of component. See ADR 2026-05-11. */
-  border-color: hsl(var(--border));
+@layer base {
+  *,
+  *::before,
+  *::after {
+    /* Token-aware default border — resolves via cascade:
+       :root → light (hsl 240 5.9% 90% ≈ #e4e4e7)
+       .dark → dark  (hsl 0 0% 14.9%  ≈ #262626)
+       Previously hardcoded to the light value, which leaked a near-white border
+       into every element in dark mode regardless of component. See ADR 2026-05-11.
+
+       Keep this in Tailwind's base layer so component utilities such as
+       border-r-transparent can override it. */
+    border-color: hsl(var(--border));
+  }
 }
 
 body {
