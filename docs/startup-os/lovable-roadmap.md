@@ -20,6 +20,12 @@ but adopts Lovable's signature mechanics and craft:
    utilitarian ("很丑/混乱"). Redesign to Lovable polish using ONLY the design system
    (`@nebutra/ui`, `@nebutra/ui/primitives`, `@nebutra/icons`, tokens, `AnimateIn`).
    No hand-crafting (手搓禁止).
+   → **Entry-surface (command-center hero "What are we building?") redesign spec:
+     `docs/plans/2026-06-05-startup-os-home-redesign-design.md`** — 3-band narrative
+     ("one sentence → a whole *governed* company"), brand-gradient ambient hero +
+     arena-varying example theses, 5-card artifact strip (Governed-runs = differentiator
+     hero), real-projects-only gallery (NO fabricated samples). Locked trade-offs in §6.
+     Consume this when polishing the command-center hero (~L50/L801–898).
 4. **Root-cause de-mock (根治)** — wire the Cloud/More surfaces (Usage, Payments,
    Logs, Security) to the REAL backends (`@nebutra/metering`, `@nebutra/billing`,
    `@nebutra/audit`). NOTE: reel/atelier/cinema "mock provider" demos are *deliberate
