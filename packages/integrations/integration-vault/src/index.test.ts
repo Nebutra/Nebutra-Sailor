@@ -3,6 +3,7 @@ import {
   CapabilityError,
   InMemoryIntegrationProvider,
   InMemorySaasConsentStore,
+  type IntegrationProvider,
   IntegrationVault,
 } from "./index";
 
@@ -82,5 +83,37 @@ describe("IntegrationVault", () => {
       provider: "local",
       result: { app: "notion", action: "create_page", title: "Layer 1" },
     });
+  });
+
+  it("caps provider doctor concurrency to avoid burst health checks", async () => {
+    let active = 0;
+    let maxActive = 0;
+    const providers = Array.from({ length: 12 }, (_, index): IntegrationProvider => {
+      const id = `provider_${index}`;
+      return {
+        id,
+        supports: () => true,
+        startOAuth: async (request) => ({
+          provider: id,
+          app: request.app,
+          url: `https://example.test/${id}`,
+          state: `state_${id}`,
+          scopes: request.scopes ?? [],
+        }),
+        invoke: async () => ({ provider: id }),
+        doctor: async () => {
+          active += 1;
+          maxActive = Math.max(maxActive, active);
+          await new Promise((resolve) => setTimeout(resolve, 0));
+          active -= 1;
+          return { ok: true, provider: id };
+        },
+      };
+    });
+
+    const vault = IntegrationVault.local({ providers });
+
+    await expect(vault.doctor()).resolves.toMatchObject({ ok: true });
+    expect(maxActive).toBeLessThanOrEqual(4);
   });
 });

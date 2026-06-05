@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { CapabilityError } from "@nebutra/errors";
 import { type EncryptedSecret, LocalProvider, type VaultProvider } from "@nebutra/vault";
+import pLimit from "p-limit";
 
 export { CapabilityError } from "@nebutra/errors";
 
@@ -87,6 +88,8 @@ export interface IntegrationVaultOptions {
   readonly providers?: readonly IntegrationProvider[];
   readonly consent?: SaasConsentStore;
 }
+
+const PROVIDER_DOCTOR_CONCURRENCY = 4;
 
 function requireTenant(tenantId: string): void {
   if (!tenantId.trim()) {
@@ -360,7 +363,10 @@ export class IntegrationVault {
     ok: boolean;
     providers: Array<{ ok: boolean; provider: string; suggestion?: string }>;
   }> {
-    const providers = await Promise.all(this.#providers.map((provider) => provider.doctor()));
+    const limit = pLimit(PROVIDER_DOCTOR_CONCURRENCY);
+    const providers = await Promise.all(
+      this.#providers.map((provider) => limit(() => provider.doctor())),
+    );
     return { ok: providers.some((provider) => provider.ok), providers };
   }
 

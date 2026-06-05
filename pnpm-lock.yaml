@@ -3929,6 +3929,9 @@ importers:
       dub:
         specifier: ^0.71.5
         version: 0.71.5
+      p-limit:
+        specifier: ^7.3.0
+        version: 7.3.0
       posthog-js:
         specifier: ^1.360.1
         version: 1.360.1

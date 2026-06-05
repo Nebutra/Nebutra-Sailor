@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@nebutra/errors": "workspace:*",
-    "@nebutra/vault": "workspace:*"
+    "@nebutra/vault": "workspace:*",
+    "p-limit": "^7.3.0"
   },
   "devDependencies": {
     "@types/node": "catalog:",
