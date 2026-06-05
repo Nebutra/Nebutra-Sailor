@@ -44,6 +44,16 @@ describe("Startup OS project files", () => {
     expect(packageJson?.content).toContain('"type": "module"');
     expect(packageJson?.content).toContain('"dev": "vite dev"');
 
+    // The scaffold natively injects the Nebutra design system as published caret
+    // deps (NOT workspace:* — that token would break `npm install` for users).
+    const pkg = JSON.parse(packageJson?.content ?? "{}") as {
+      dependencies: Record<string, string>;
+    };
+    expect(pkg.dependencies["@nebutra/ui"]).toMatch(/^\^\d/);
+    expect(pkg.dependencies["@nebutra/tokens"]).toMatch(/^\^\d/);
+    expect(pkg.dependencies["@nebutra/icons"]).toMatch(/^\^\d/);
+    expect(packageJson?.content).not.toContain("workspace:*");
+
     const viteConfig = files.find((file) => file.path === "vite.config.ts");
     expect(viteConfig?.content).toContain(
       'import { tanstackStart } from "@tanstack/react-start/plugin/vite"',
@@ -63,6 +73,19 @@ describe("Startup OS project files", () => {
     const indexRoute = files.find((file) => file.path === "src/routes/index.tsx");
     expect(indexRoute?.content).toContain('createFileRoute("/")');
     expect(indexRoute?.content).toContain("companyContext");
+    // The founder hero is built from the pre-wired Nebutra component library.
+    expect(indexRoute?.content).toContain('from "@nebutra/ui/primitives"');
+    expect(indexRoute?.content).toContain('from "@nebutra/icons"');
+
+    // app.css imports the Nebutra token sheet (single source of truth) and drops
+    // the old hand-rolled raw rgb custom-props.
+    const appCss = files.find((file) => file.path === "src/styles/app.css");
+    expect(appCss?.content).toContain('@import "@nebutra/tokens/styles.css";');
+    expect(appCss?.content).not.toContain("--signal-soft: rgb(");
+
+    // __root.tsx wraps the app in a theme provider inside the document body.
+    const rootShell = files.find((file) => file.path === "src/routes/__root.tsx");
+    expect(rootShell?.content).toContain("ThemeProvider");
   });
 
   it("does not ship fallback marketing copy or fake conversion actions", () => {
@@ -122,6 +145,10 @@ describe("Startup OS project files", () => {
     expect(html).toContain(project.companyContext.name);
     expect(html).toContain(project.companyContext.promise);
     expect(html).toContain("Live preview runs in the sandbox runtime");
+    // The sandbox iframe can't resolve packages, so the core @nebutra/tokens
+    // brand gradient is inlined verbatim so the preview LOOKS Nebutra-branded.
+    expect(html).toContain("--brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%)");
+    expect(html).toContain("background: var(--brand-gradient)");
     // It cannot SSR a TanStack Start app, so it must NOT reference app source/styles.
     expect(html).not.toContain('href="/src/App.css"');
     expect(html).not.toContain("src/styles/app.css");

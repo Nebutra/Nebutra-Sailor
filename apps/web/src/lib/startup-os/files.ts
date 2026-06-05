@@ -1,3 +1,4 @@
+import { getNebutraPackageVersion } from "@nebutra/preset/nebutra-package-versions";
 import type { StartupOSProject } from "./compiler";
 
 export type StartupOSFileKind = "config" | "source" | "style" | "document" | "preview";
@@ -55,14 +56,10 @@ function file(
 }
 
 function appCssContent() {
-  return `:root {
-  --ink: rgb(17 24 39);
-  --paper: rgb(248 250 252);
-  --muted: rgb(102 112 133);
-  --line: rgb(226 232 240);
-  --signal: rgb(20 92 255);
-  --signal-soft: rgb(219 228 255);
-}
+  // The Nebutra design-token sheet is the single source of truth for color,
+  // gradient, and neutral scales (light + dark via next-themes). Everything
+  // below consumes those CSS variables — no hand-rolled raw rgb custom-props.
+  return `@import "@nebutra/tokens/styles.css";
 
 * {
   box-sizing: border-box;
@@ -71,8 +68,8 @@ function appCssContent() {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--paper);
-  color: rgb(17 24 39);
+  background: var(--neutral-2);
+  color: var(--neutral-12);
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -92,30 +89,21 @@ body {
   max-width: 980px;
 }
 
-.eyebrow {
-  width: max-content;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: white;
-  padding: 0.5rem 0.8rem;
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-h1 {
+.hero h1 {
   margin: 0;
   max-width: 14ch;
   font-size: clamp(2.75rem, 6.8vw, 6.2rem);
   letter-spacing: -0.045em;
   line-height: 0.92;
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .promise {
   max-width: 700px;
-  color: rgb(52 64 84);
+  color: var(--neutral-11);
   font-size: clamp(1.1rem, 2vw, 1.45rem);
   line-height: 1.5;
 }
@@ -124,37 +112,6 @@ h1 {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-.card {
-  min-height: 190px;
-  border: 1px solid var(--line);
-  border-radius: 1.5rem;
-  background: white;
-  padding: 1.3rem;
-}
-
-.card strong {
-  display: block;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.card p {
-  color: var(--muted);
-  line-height: 1.55;
-}
-
-.signal {
-  display: inline-grid;
-  margin-top: 1rem;
-  border-radius: 999px;
-  background: var(--signal-soft);
-  padding: 0.45rem 0.65rem;
-  color: var(--signal);
-  font-size: 0.78rem;
-  font-weight: 800;
 }
 
 `;
@@ -171,6 +128,9 @@ function packageJsonContent(project: StartupOSProject) {
         build: "vite build",
       },
       dependencies: {
+        "@nebutra/ui": getNebutraPackageVersion("@nebutra/ui"),
+        "@nebutra/tokens": getNebutraPackageVersion("@nebutra/tokens"),
+        "@nebutra/icons": getNebutraPackageVersion("@nebutra/icons"),
         "@tanstack/react-start": "latest",
         "@tanstack/react-router": "latest",
         react: "latest",
@@ -233,7 +193,13 @@ export function getRouter() {
 
 function rootRouteContent(project: StartupOSProject) {
   const title = JSON.stringify(project.companyContext.name);
+  // The Nebutra design tokens drive light/dark via a `class` strategy. We use
+  // next-themes' ThemeProvider directly (the @nebutra/tokens "." entry ships
+  // raw TS, so importing its re-export from a plain bundler is unsafe — the
+  // CSS variable sheet is consumed via the safe "@nebutra/tokens/styles.css"
+  // import in src/styles/app.css).
   return `import { Outlet, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { ThemeProvider } from "next-themes";
 import appCss from "../styles/app.css?url";
 
 export const Route = createRootRoute({
@@ -258,12 +224,14 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          {children}
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>
@@ -273,7 +241,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 }
 
 function indexRouteContent(project: StartupOSProject) {
+  const arena = JSON.stringify(`${project.arena} / CompanyContext live`);
+  // Founder hero built from the pre-wired Nebutra component library — Radix-
+  // based primitives (SSR-safe under TanStack Start) + a @nebutra/icons glyph.
   return `import { createFileRoute } from "@tanstack/react-router";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@nebutra/ui/primitives";
+import { ArrowRight, Sparkles } from "@nebutra/icons";
 import { companyContext, launchArtifacts } from "../lib/company-context";
 
 export const Route = createFileRoute("/")({
@@ -284,18 +257,29 @@ function Home() {
   return (
     <main className="startup-shell">
       <section className="hero">
-        <div className="eyebrow">${project.arena} / CompanyContext live</div>
+        <Badge variant="secondary">
+          <Sparkles className="size-3.5" aria-hidden />
+          {${arena}}
+        </Badge>
         <h1>{companyContext.name}</h1>
         <p className="promise">{companyContext.promise}</p>
+        <div>
+          <Button type="button">
+            Open the launch workspace
+            <ArrowRight className="size-4" aria-hidden />
+          </Button>
+        </div>
       </section>
 
       <section id="system" className="grid" aria-label="Persisted launch artifacts">
         {launchArtifacts.map((artifact) => (
-          <article className="card" key={artifact.title}>
-            <strong>{artifact.title}</strong>
-            <p>{artifact.summary}</p>
-            <span className="signal">{artifact.status}</span>
-          </article>
+          <Card key={artifact.title}>
+            <CardHeader>
+              <CardTitle>{artifact.title}</CardTitle>
+              <Badge variant="outline">{artifact.status}</Badge>
+            </CardHeader>
+            <CardContent>{artifact.summary}</CardContent>
+          </Card>
         ))}
       </section>
     </main>
@@ -334,7 +318,9 @@ ${project.thesis}
 
 ## Stack
 
-This workspace is a [TanStack Start](https://tanstack.com/start) application.
+This workspace is a [TanStack Start](https://tanstack.com/start) application,
+pre-wired with the Nebutra design system: \`@nebutra/ui\` components,
+\`@nebutra/tokens\` design tokens, and \`@nebutra/icons\`.
 
 \`\`\`bash
 npm install
@@ -342,8 +328,9 @@ npm run dev   # vite dev — generates src/routeTree.gen.ts on first run
 npm run build # vite build
 \`\`\`
 
-- \`src/routes/__root.tsx\` is the HTML shell (no index.html / main.tsx needed).
-- \`src/routes/index.tsx\` renders the founder landing from CompanyContext.
+- \`src/routes/__root.tsx\` is the HTML shell; it wraps the app in next-themes' \`ThemeProvider\` (light/dark via the Nebutra token sheet).
+- \`src/routes/index.tsx\` renders the founder landing from CompanyContext using \`@nebutra/ui\` primitives + \`@nebutra/icons\`.
+- \`src/styles/app.css\` imports \`@nebutra/tokens/styles.css\` (the design-token source of truth).
 - \`src/routeTree.gen.ts\` is auto-generated by Vite on first \`dev\`.
 
 ## Persisted workspace
@@ -470,6 +457,9 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
     readCompanyContextField(companyContextFile.content, "promise") ||
     "Live preview runs in the sandbox runtime.";
 
+  // The static sandbox iframe can't resolve packages, so the core
+  // @nebutra/tokens CSS variables (neutrals + brand gradient) are inlined
+  // here verbatim so the preview LOOKS Nebutra-branded without a bundler.
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -478,12 +468,17 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
     <title>${escapeHtml(name)}</title>
     <style>
       :root {
-        --ink: rgb(17 24 39);
-        --paper: rgb(248 250 252);
-        --muted: rgb(102 112 133);
-        --line: rgb(226 232 240);
-        --signal: rgb(20 92 255);
-        --signal-soft: rgb(219 228 255);
+        /* Inlined from @nebutra/tokens/styles.css (light theme). */
+        --neutral-1: #ffffff;
+        --neutral-2: #f8fafc;
+        --neutral-7: #cbd5e1;
+        --neutral-11: #334155;
+        --neutral-12: #0f172a;
+        --blue-9: #0033fe;
+        --cyan-9: #0bf1c3;
+        --brand-primary: #0033fe;
+        --brand-accent: #0bf1c3;
+        --brand-gradient: linear-gradient(135deg, #2f5bff 0%, #047c9a 100%);
       }
       * {
         box-sizing: border-box;
@@ -493,8 +488,8 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
         min-height: 100vh;
         display: grid;
         place-items: center;
-        background: var(--paper);
-        color: var(--ink);
+        background: var(--neutral-2);
+        color: var(--neutral-12);
         font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       .preview-card {
@@ -504,17 +499,17 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
         max-width: 640px;
         margin: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
         padding: clamp(2rem, 5vw, 3.5rem);
-        border: 1px solid var(--line);
+        border: 1px solid var(--neutral-7);
         border-radius: 1.75rem;
-        background: white;
+        background: var(--neutral-1);
         text-align: center;
       }
       .preview-card .eyebrow {
-        border: 1px solid var(--line);
+        border: 1px solid transparent;
         border-radius: 999px;
-        background: var(--paper);
-        padding: 0.5rem 0.8rem;
-        color: var(--muted);
+        background: var(--brand-gradient);
+        padding: 0.5rem 0.85rem;
+        color: var(--neutral-1);
         font-size: 0.78rem;
         font-weight: 700;
         letter-spacing: 0.08em;
@@ -525,20 +520,24 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
         font-size: clamp(2rem, 5vw, 3.25rem);
         letter-spacing: -0.04em;
         line-height: 1;
+        background: var(--brand-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
       .preview-card p {
         margin: 0;
         max-width: 48ch;
-        color: rgb(52 64 84);
+        color: var(--neutral-11);
         font-size: clamp(1rem, 2vw, 1.2rem);
         line-height: 1.5;
       }
       .preview-card .signal {
         display: inline-grid;
         border-radius: 999px;
-        background: var(--signal-soft);
+        background: var(--brand-gradient);
         padding: 0.5rem 0.85rem;
-        color: var(--signal);
+        color: var(--neutral-1);
         font-size: 0.82rem;
         font-weight: 800;
       }
@@ -546,7 +545,7 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
   </head>
   <body>
     <main class="preview-card ${slugClass(name)}">
-      <div class="eyebrow">TanStack Start</div>
+      <div class="eyebrow">Nebutra · TanStack Start</div>
       <h1>${escapeHtml(name)}</h1>
       <p>${escapeHtml(promise)}</p>
       <span class="signal">Live preview runs in the sandbox runtime</span>

@@ -49,3 +49,9 @@ export {
   getActivePackages,
   getFeatureEnvVars,
 } from "./feature-map";
+// Nebutra package version registry (single source of truth for generated apps)
+export {
+  getNebutraPackageVersion,
+  getNebutraPackageVersionOrNull,
+  NEBUTRA_PACKAGE_VERSIONS,
+} from "./nebutra-package-versions";

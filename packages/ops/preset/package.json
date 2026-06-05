@@ -8,7 +8,8 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./deploy-target": "./src/deploy-target.ts"
+    "./deploy-target": "./src/deploy-target.ts",
+    "./nebutra-package-versions": "./src/nebutra-package-versions.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
