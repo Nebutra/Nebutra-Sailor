@@ -114,6 +114,16 @@ export default function CofounderPage() {
               Turn your one-person company into a team — matched with a complementary cofounder by
               your compiled company, not a résumé.
             </p>
+            <div className="mt-6 flex items-center justify-center">
+              <Link
+                href={`/${locale}/cofounder/discover`}
+                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white"
+                style={{ background: "var(--brand-gradient)" }}
+              >
+                Enter Discover
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </AnimateIn>
 
