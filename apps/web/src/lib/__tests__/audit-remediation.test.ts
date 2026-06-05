@@ -233,7 +233,11 @@ describe("UI/UX audit remediation invariants", () => {
       'const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto"',
     );
     expect(workspaceSwitcher).toContain("px-2 py-1 text-left");
-    expect(shell).toContain('className={collapsed ? "size-7" : "h-6 w-[8.5rem]"}');
+    // High-density brand logo: size-7 collapsed, h-6 w-[8.5rem] expanded. The
+    // collapse-toggle refactor (fb42789f) split the single conditional className
+    // into separate collapsed/expanded branches — assert both governed sizes.
+    expect(shell).toContain('className="size-7"');
+    expect(shell).toContain('className="h-6 w-[8.5rem]"');
     expect(shell).not.toContain("Workspace: {currentWorkspaceLabel}");
   });
 

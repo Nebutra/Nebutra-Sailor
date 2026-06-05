@@ -27,7 +27,12 @@ describe("@nebutra/web dashboard UI governance", () => {
     const shellSource = readFileSync(SHELL, "utf8");
 
     expect(shellSource).toContain("dashboard-app-content");
-    expect(shellSource).toContain("items-center justify-center px-2");
+    // Brand-header wrapper stays high-density (px-2, items-center) and centers
+    // the mark when collapsed. The collapse-toggle refactor (fb42789f) split the
+    // wrapper into a conditional justify, so assert the governed parts rather
+    // than the old single concatenated string.
+    expect(shellSource).toContain("flex items-center px-2");
+    expect(shellSource).toContain('collapsed ? "justify-center"');
     expect(shellSource).toContain("border-0 bg-transparent shadow-none");
     expect(shellSource).not.toContain('collapsed ? "justify-center" : "justify-start');
     expect(shellSource).not.toContain(EXTERNAL_TASTE_PREFIX);
