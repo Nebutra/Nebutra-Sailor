@@ -89,6 +89,7 @@ export const SEED_FIELDS: Readonly<Record<LayerId, readonly ContextFieldDefiniti
       field("icp", "Ideal customer profile", "structured", true),
       field("personas", "Personas", "list"),
       field("trigger_event", "Trigger event", "line"),
+      field("market", "Market", "line"),
     ]),
     L7: Object.freeze([
       field("narrative", "Narrative", "text"),
@@ -97,6 +98,7 @@ export const SEED_FIELDS: Readonly<Record<LayerId, readonly ContextFieldDefiniti
       field("messaging", "Messaging", "list"),
     ]),
     L8: Object.freeze([
+      field("name", "Company name", "line", true),
       field("logo", "Logo", "asset"),
       field("colors", "Colors", "asset"),
       field("fonts", "Fonts", "asset"),

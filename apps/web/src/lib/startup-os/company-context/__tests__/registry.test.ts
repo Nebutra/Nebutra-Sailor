@@ -128,12 +128,24 @@ describe("SEED_FIELDS", () => {
     expect(byKey.bets.kind).toBe("list");
   });
 
+  it("seeds L8 with a required company name (identity label)", () => {
+    const name = getSeedFields("L8").find((field) => field.key === "name");
+    expect(name).toMatchObject({ key: "name", kind: "line", required: true });
+  });
+
+  it("seeds L6 with a market line field", () => {
+    expect(
+      getSeedFields("L6").some((field) => field.key === "market" && field.kind === "line"),
+    ).toBe(true);
+  });
+
   it("never marks a field as required outside the spec-required set", () => {
     const requiredByLayer: Partial<Record<LayerId, readonly string[]>> = {
       L1: ["mission"],
       L4: ["positioning"],
       L5: ["jtbd"],
       L6: ["icp"],
+      L8: ["name"],
     };
 
     for (const layer of LAYER_REGISTRY) {
