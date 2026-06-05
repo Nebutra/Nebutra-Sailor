@@ -1,6 +1,17 @@
 "use client";
 
-import { CheckCircle, FileText, Lightning, Sparkles, StopFill, Warning } from "@nebutra/icons";
+import {
+  Check,
+  CheckCircle,
+  Copy,
+  FileText,
+  Lightning,
+  Sparkles,
+  StopFill,
+  ThumbDown,
+  ThumbUp,
+  Warning,
+} from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup, PromptInputBox } from "@nebutra/ui/components";
 import {
   Alert,
@@ -11,9 +22,10 @@ import {
   Badge,
   Button,
 } from "@nebutra/ui/primitives";
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
 import {
+  type StartupConversationSummary,
   type UseStartupConversationResult,
   useStartupConversation,
 } from "./use-startup-conversation";
@@ -77,8 +89,18 @@ export function StartupChatPanel({
   const live = useStartupConversation({ projectId });
   const state = conversation ?? live;
 
-  const { status, isStreaming, plan, fileEvents, artifactEvents, summary, error, send, cancel } =
-    state;
+  const {
+    status,
+    isStreaming,
+    plan,
+    fileEvents,
+    artifactEvents,
+    summary,
+    durationMs,
+    error,
+    send,
+    cancel,
+  } = state;
 
   // Close the conversational-generation loop: when a turn finishes (status →
   // "done") and it actually wrote files, notify the host once so it can reload
@@ -146,7 +168,7 @@ export function StartupChatPanel({
 
           {artifactEvents.length > 0 ? <ArtifactEventList events={artifactEvents} /> : null}
 
-          {summary ? <SummaryCard summary={summary.summary} /> : null}
+          {summary ? <SummaryCard summary={summary} durationMs={durationMs} /> : null}
 
           {error ? (
             <AnimateIn preset="fadeUp">
@@ -346,19 +368,147 @@ function ArtifactEventList({ events }: { events: UseStartupConversationResult["a
   );
 }
 
-function SummaryCard({ summary }: { summary: string }) {
+function formatDuration(ms: number): string {
+  const total = Math.max(1, Math.round(ms / 1000));
+  if (total < 60) return `${total}s`;
+  return `${Math.floor(total / 60)}m ${total % 60}s`;
+}
+
+/** Persist a thumbs up/down on the AI response as a real FeedbackReport. */
+async function recordSummaryFeedback(vote: "up" | "down", text: string) {
+  await fetch("/api/feedback", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({
+      area: "chat",
+      mode: "chat",
+      description: `[Startup OS · ${vote === "up" ? "helpful" : "not helpful"}] ${text}`.slice(
+        0,
+        9000,
+      ),
+    }),
+  });
+}
+
+function ToolbarButton({
+  label,
+  active,
+  disabled,
+  onClick,
+  children,
+}: {
+  label: string;
+  active?: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      disabled={disabled}
+      onClick={onClick}
+      className={`flex size-7 items-center justify-center rounded-md text-neutral-9 transition-colors hover:bg-neutral-3 disabled:cursor-default disabled:opacity-60 ${active ? "bg-neutral-3" : ""}`}
+    >
+      {children}
+    </button>
+  );
+}
+
+/**
+ * AI response — bubble-less plain text with a Lovable-style action toolbar.
+ * Every value is real: copy uses the response text, the thumbs persist a
+ * FeedbackReport via /api/feedback, and the metadata (worked-for duration, token
+ * usage) comes from the streamed turn.
+ */
+function SummaryCard({
+  summary,
+  durationMs,
+}: {
+  summary: StartupConversationSummary;
+  durationMs: number | null;
+}) {
+  const [copied, setCopied] = useState(false);
+  const [vote, setVote] = useState<"up" | "down" | null>(null);
+  const [voting, setVoting] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(summary.summary);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* clipboard unavailable — non-fatal */
+    }
+  };
+
+  const sendVote = async (next: "up" | "down") => {
+    if (voting || vote) return;
+    setVoting(true);
+    try {
+      await recordSummaryFeedback(next, summary.summary);
+      setVote(next);
+    } catch {
+      /* feedback is best-effort */
+    } finally {
+      setVoting(false);
+    }
+  };
+
+  const meta = [
+    durationMs ? `Worked for ${formatDuration(durationMs)}` : null,
+    summary.totalTokens > 0 ? `${summary.totalTokens.toLocaleString()} tokens` : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
     <AnimateIn preset="fadeUp">
-      <div
-        data-testid="startup-chat-summary"
-        className="flex items-start gap-2.5 rounded-2xl border border-neutral-6 bg-neutral-2 p-4"
-      >
-        <CheckCircle
-          className="mt-0.5 size-4 shrink-0"
-          style={{ color: "var(--status-success)" }}
-          aria-hidden="true"
-        />
-        <p className="text-sm leading-6 text-neutral-11">{summary}</p>
+      <div data-testid="startup-chat-summary" className="px-1">
+        <div className="flex items-start gap-2.5">
+          <CheckCircle
+            className="mt-0.5 size-4 shrink-0"
+            style={{ color: "var(--status-success)" }}
+            aria-hidden="true"
+          />
+          <p className="text-sm leading-6 text-neutral-11">{summary.summary}</p>
+        </div>
+
+        <div className="mt-2 flex flex-wrap items-center gap-1 pl-6">
+          <ToolbarButton label={copied ? "Copied" : "Copy"} onClick={() => void copy()}>
+            {copied ? (
+              <Check className="size-3.5 text-green-10" aria-hidden="true" />
+            ) : (
+              <Copy className="size-3.5" aria-hidden="true" />
+            )}
+          </ToolbarButton>
+          <ToolbarButton
+            label="Helpful"
+            active={vote === "up"}
+            disabled={Boolean(vote) || voting}
+            onClick={() => void sendVote("up")}
+          >
+            <ThumbUp
+              className={`size-3.5 ${vote === "up" ? "text-green-10" : ""}`}
+              aria-hidden="true"
+            />
+          </ToolbarButton>
+          <ToolbarButton
+            label="Not helpful"
+            active={vote === "down"}
+            disabled={Boolean(vote) || voting}
+            onClick={() => void sendVote("down")}
+          >
+            <ThumbDown
+              className={`size-3.5 ${vote === "down" ? "text-[color:var(--status-danger)]" : ""}`}
+              aria-hidden="true"
+            />
+          </ToolbarButton>
+          {meta ? <span className="ml-1.5 text-[11px] text-neutral-9">{meta}</span> : null}
+        </div>
       </div>
     </AnimateIn>
   );

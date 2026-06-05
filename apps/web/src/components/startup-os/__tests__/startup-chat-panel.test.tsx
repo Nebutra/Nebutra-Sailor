@@ -80,11 +80,15 @@ vi.mock("@nebutra/icons", () => {
     <svg aria-hidden={ariaHidden} />
   );
   return {
+    Check: Stub,
     CheckCircle: Stub,
+    Copy: Stub,
     FileText: Stub,
     Lightning: Stub,
     Sparkles: Stub,
     StopFill: Stub,
+    ThumbDown: Stub,
+    ThumbUp: Stub,
     Warning: Stub,
   };
 });
@@ -109,6 +113,8 @@ function makeConversation(
     fileEvents: [],
     artifactEvents: [],
     summary: null,
+    startedAt: null,
+    durationMs: null,
     error: null,
     send: vi.fn(async () => {}),
     cancel: vi.fn(),

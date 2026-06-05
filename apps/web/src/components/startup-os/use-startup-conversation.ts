@@ -44,6 +44,10 @@ export interface UseStartupConversationState {
   readonly artifactEvents: readonly ArtifactEvent[];
   readonly summary: StartupConversationSummary | null;
   readonly error: string | null;
+  /** ISO timestamp of the first status event of the current turn. */
+  readonly startedAt: string | null;
+  /** Wall-clock duration of the completed turn, in ms (null until done). */
+  readonly durationMs: number | null;
 }
 
 export interface UseStartupConversationResult extends UseStartupConversationState {
@@ -68,6 +72,8 @@ const INITIAL_STATE: UseStartupConversationState = {
   artifactEvents: [],
   summary: null,
   error: null,
+  startedAt: null,
+  durationMs: null,
 };
 
 // ─── SSE frame parsing (buffered, chunk-boundary safe) ────────────────────────
@@ -171,7 +177,12 @@ function applyStatus(
     return state;
   }
   if (state.status === "error") return state;
-  return { ...state, status: "streaming", isStreaming: true };
+  return {
+    ...state,
+    status: "streaming",
+    isStreaming: true,
+    startedAt: state.startedAt ?? event.occurredAt,
+  };
 }
 
 function applyDone(
@@ -182,6 +193,9 @@ function applyDone(
     ...state,
     status: "done",
     isStreaming: false,
+    durationMs: state.startedAt
+      ? Date.parse(event.occurredAt) - Date.parse(state.startedAt)
+      : null,
     summary: {
       summary: event.summary,
       fileCount: event.fileCount,
