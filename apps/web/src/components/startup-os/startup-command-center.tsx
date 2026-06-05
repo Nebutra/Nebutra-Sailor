@@ -969,9 +969,10 @@ function StartupBuilderHome({
                   type="button"
                   disabled={!canCompile}
                   onClick={onCompile}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-12 px-5 py-2.5 text-sm font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
+                  aria-label={isSaving ? "Building" : "Build"}
+                  title={isSaving ? "Building…" : "Build"}
+                  className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-neutral-12 text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
                 >
-                  {isSaving ? "Building..." : "Build"}
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </button>
               </div>
