@@ -9,7 +9,6 @@ import {
   ChevronRight,
   FolderClosed,
   FolderPlus,
-  Message,
   MoreHorizontal,
   SidebarLeft,
 } from "@nebutra/icons";
@@ -40,7 +39,6 @@ import { useTranslations } from "next-intl";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
-import { useFeedbackDialog } from "@/components/feedback/feedback-dialog-provider";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
 import {
   useSidebarExpansion,
@@ -161,7 +159,6 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // session preference) — kept local, never in React Query cache.
   const [workspace, setWorkspace] = useState<string>("");
   const tSidebar = useTranslations("Sidebar");
-  const { openDialog: openFeedback } = useFeedbackDialog();
 
   // ─── Server read: organization list (replaces loadWorkspaces useEffect) ────
   const organizationsQuery = useQuery({
@@ -558,53 +555,38 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // ─── Content header — one quiet page title plus a progressive breadcrumb.
   // Shallow routes keep the title for screen readers only, so page content can
   // own the visible H1 without duplicating dashboard chrome.
-  const contentHeader = (
-    <div className="mb-4 flex shrink-0 items-center gap-1.5">
-      <div className="min-w-0 flex-1">
-        <h1
-          className={cn(
-            "truncate text-sm font-semibold text-foreground",
-            breadcrumbs.length <= 1 && "sr-only",
-          )}
-        >
-          {currentBreadcrumb?.label ?? "Dashboard"}
-        </h1>
-        {breadcrumbs.length > 1 ? (
-          <nav aria-label="Breadcrumb">
-            <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
-              {breadcrumbs.map((crumb, index) => {
-                const isLast = index === breadcrumbs.length - 1;
-                return (
-                  <li key={crumb.href} className="flex min-w-0 items-center gap-1">
-                    {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
-                    {isLast ? (
-                      <span className="truncate font-medium text-foreground">{crumb.label}</span>
-                    ) : (
-                      <ViewTransitionLink
-                        href={crumb.href}
-                        className="truncate transition-colors hover:text-foreground"
-                      >
-                        {crumb.label}
-                      </ViewTransitionLink>
-                    )}
-                  </li>
-                );
-              })}
-            </ol>
-          </nav>
-        ) : null}
+  // ─── Content header — progressive breadcrumb trail, ONLY on nested routes.
+  // Shallow routes (Startup OS, Connectors, …) own their visible H1 in the page
+  // body, so the shell renders NO chrome strip there. Feedback now lives solely
+  // in the user menu (next to Settings); the duplicate header button is removed.
+  const contentHeader =
+    breadcrumbs.length > 1 ? (
+      <div className="mb-4 flex min-w-0 shrink-0 items-center">
+        <h1 className="sr-only">{currentBreadcrumb?.label ?? "Dashboard"}</h1>
+        <nav aria-label="Breadcrumb" className="min-w-0">
+          <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
+            {breadcrumbs.map((crumb, index) => {
+              const isLast = index === breadcrumbs.length - 1;
+              return (
+                <li key={crumb.href} className="flex min-w-0 items-center gap-1">
+                  {index > 0 && <ChevronRight className="size-3 shrink-0" aria-hidden="true" />}
+                  {isLast ? (
+                    <span className="truncate font-medium text-foreground">{crumb.label}</span>
+                  ) : (
+                    <ViewTransitionLink
+                      href={crumb.href}
+                      className="truncate transition-colors hover:text-foreground"
+                    >
+                      {crumb.label}
+                    </ViewTransitionLink>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </nav>
       </div>
-      <button
-        type="button"
-        aria-label="Open feedback dialog"
-        onClick={openFeedback}
-        className="inline-flex h-8 items-center gap-1.5 rounded-[var(--radius-md)] border border-border bg-background px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-      >
-        <Message className="size-3.5" aria-hidden="true" />
-        <span className="hidden xl:inline">Feedback</span>
-      </button>
-    </div>
-  );
+    ) : null;
 
   return (
     <AppShell
