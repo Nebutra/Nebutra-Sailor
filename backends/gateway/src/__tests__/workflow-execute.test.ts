@@ -23,7 +23,7 @@ const baseInput = (scriptSource: string): WorkflowExecInput => ({
 });
 
 const fakeCaller: WorkflowAgentCaller = async (prompt) => ({
-  text: `r:${prompt}`,
+  output: `r:${prompt}`,
   inputTokens: 2,
   outputTokens: 3,
   reasoningOutputTokens: 1,
@@ -51,7 +51,7 @@ describe("runWorkflowDefinition (end-to-end closure, injected caller)", () => {
     const models: Array<unknown> = [];
     const capturingCaller: WorkflowAgentCaller = async (prompt, opts) => {
       models.push(opts?.model);
-      return { text: prompt, inputTokens: 0, outputTokens: 0, reasoningOutputTokens: 0 };
+      return { output: prompt, inputTokens: 0, outputTokens: 0, reasoningOutputTokens: 0 };
     };
 
     const outcome = await runWorkflowDefinition(
@@ -61,6 +61,26 @@ describe("runWorkflowDefinition (end-to-end closure, injected caller)", () => {
 
     expect(outcome.ok).toBe(true);
     expect(models).toEqual([{ reasoningEffort: "xhigh" }]);
+  });
+
+  it("round-trips a structured object from agent({ schema }) through the sandbox", async () => {
+    const schemaCaller: WorkflowAgentCaller = async (_prompt, opts) => ({
+      output: opts?.schema ? { city: "SF", temp: 18 } : "text",
+      inputTokens: 1,
+      outputTokens: 1,
+      reasoningOutputTokens: 0,
+    });
+
+    const outcome = await runWorkflowDefinition(
+      baseInput(
+        `const r = await agent("weather", { schema: { type: "object" } });
+         return { picked: r.city, hot: r.temp > 10 };`,
+      ),
+      schemaCaller,
+    );
+
+    expect(outcome.ok).toBe(true);
+    expect(outcome.returnValue).toEqual({ picked: "SF", hot: true });
   });
 
   it("records phase() calls as events", async () => {

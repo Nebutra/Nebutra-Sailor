@@ -41,6 +41,7 @@
     "@nebutra/logger": "workspace:*",
     "@openrouter/ai-sdk-provider": "^2.3.3",
     "ai": "^6.0.0",
+    "ajv": "^8.18.0",
     "langfuse": "^3.38.20",
     "langfuse-vercel": "^3.38.20",
     "zod": "catalog:"

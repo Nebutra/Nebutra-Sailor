@@ -64,7 +64,9 @@ export {
   embed,
   embedMany,
   type GenerateOptions,
+  type GenerateStructuredResult,
   type GenerateTextResult,
+  generateStructured,
   generateText,
   getConfig,
   type ModelMessage,
@@ -77,6 +79,7 @@ export {
   resolveModel,
   type StreamTextResult,
   streamText,
+  validateStructured,
 } from "./sdk/index";
 // ─── Tenant ───────────────────────────────────────────────────────────────────
 export { checkAgentQuota, createAgentContext } from "./tenant";

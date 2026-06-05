@@ -12,6 +12,7 @@
  * closure — sandbox + host + aggregation — is testable without a provider.
  */
 
+import { generateStructured, type ModelMessage } from "@nebutra/agents";
 import { resolveModelSpec } from "@nebutra/ai-providers/catalog";
 import {
   type AgentCallOpts,
@@ -50,22 +51,47 @@ export interface WorkflowExecOutcome {
   readonly agentCalls: number;
 }
 
-/** One agent call → text + usage. Injectable so the closure is provider-free testable. */
+/**
+ * One agent call → output + usage. `output` is the model text, OR — when the
+ * call carries a `schema` — a schema-validated object. Injectable so the whole
+ * closure is provider-free testable.
+ */
 export type WorkflowAgentCaller = (
   prompt: string,
   opts: AgentCallOpts | undefined,
   ctx: { readonly tenantId: string; readonly threadId: string; readonly defaultModel: string },
 ) => Promise<{
-  readonly text: string;
+  readonly output: unknown;
   readonly inputTokens: number;
   readonly outputTokens: number;
   readonly reasoningOutputTokens: number;
 }>;
 
-/** Default caller: resolve the per-call model from opts.model, then run a turn. */
+/**
+ * Default caller: resolve the per-call model, then either force a
+ * schema-validated structured object (opts.schema) or run a text turn.
+ */
 const liveAgentCaller: WorkflowAgentCaller = async (prompt, opts, ctx) => {
   const model = await resolveModelSpec(opts?.model ?? {}, ctx.defaultModel);
-  return runTurnCapture({ tenantId: ctx.tenantId, threadId: ctx.threadId, model, input: prompt });
+
+  if (opts?.schema) {
+    const messages: ModelMessage[] = [{ role: "user", content: prompt }];
+    const { output, usage } = await generateStructured(messages, opts.schema, { model });
+    return { output, ...usage };
+  }
+
+  const capture = await runTurnCapture({
+    tenantId: ctx.tenantId,
+    threadId: ctx.threadId,
+    model,
+    input: prompt,
+  });
+  return {
+    output: capture.text,
+    inputTokens: capture.inputTokens,
+    outputTokens: capture.outputTokens,
+    reasoningOutputTokens: capture.reasoningOutputTokens,
+  };
 };
 
 export async function runWorkflowDefinition(
@@ -90,7 +116,7 @@ export async function runWorkflowDefinition(
       inputTokens += capture.inputTokens;
       outputTokens += capture.outputTokens;
       reasoningOutputTokens += capture.reasoningOutputTokens;
-      return capture.text;
+      return capture.output;
     },
     log(message) {
       events.push({ type: "log", message });

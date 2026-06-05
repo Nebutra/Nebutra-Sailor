@@ -212,3 +212,8 @@ export {
 export type { ModelPreset } from "./models";
 export { models, resolveModel } from "./models";
 export { createEmbeddingModel, createModel } from "./provider";
+export {
+  type GenerateStructuredResult,
+  generateStructured,
+  validateStructured,
+} from "./structured";
