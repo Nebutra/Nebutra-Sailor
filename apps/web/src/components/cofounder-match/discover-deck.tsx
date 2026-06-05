@@ -265,8 +265,10 @@ export function DiscoverDeck() {
           ))
           .reverse()}
 
-        {/* Top, draggable card */}
+        {/* Top, draggable card — keyed so the next card mounts fresh at center
+            instead of sliding in from the previous card's fly-out position. */}
         <div
+          key={current.profileId}
           className="absolute inset-x-0 top-0 flex touch-none select-none justify-center"
           style={{
             transform: cardTransform,
