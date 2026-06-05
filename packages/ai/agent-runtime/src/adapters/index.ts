@@ -13,6 +13,7 @@
  * log() swallows transient failures and is not suitable as source-of-truth).
  */
 
+export * from "./agents-model-invoker";
 export * from "./dispatcher-sse";
 export * from "./mcp-catalog";
 export * from "./prisma-rollout";
