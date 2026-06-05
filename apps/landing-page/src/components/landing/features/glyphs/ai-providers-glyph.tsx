@@ -1,19 +1,11 @@
 import { Brain, Cpu } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
+// Rows are derived from the live model catalog (models.dev + OpenRouter) — never
+// hand-typed. Refresh with `pnpm --filter @nebutra/landing-page gen:ai-showcase`.
+import { AI_SHOWCASE_PROVIDER_COUNT, AI_SHOWCASE_ROWS } from "./ai-showcase.generated";
 import type { SubpackageGlyphProps } from "./types";
 
-type ModelRow = {
-  model: string;
-  context: string;
-  price: string;
-};
-
-const ROWS: ReadonlyArray<ModelRow> = [
-  { model: "claude-sonnet-4-6", context: "1M", price: "$3" },
-  { model: "gpt-5.5", context: "256K", price: "$5" },
-  { model: "deepseek-v3.2", context: "128K", price: "$0.28" },
-  { model: "gemini-3-pro", context: "1M", price: "$2.5" },
-];
+const ROWS = AI_SHOWCASE_ROWS;
 
 export function AiProvidersGlyph(_props: SubpackageGlyphProps) {
   return (
@@ -28,7 +20,7 @@ export function AiProvidersGlyph(_props: SubpackageGlyphProps) {
         </div>
         <Badge variant="outline" className="h-4 gap-1 px-1.5 text-[9px] font-medium">
           <Cpu className="h-2.5 w-2.5" />
-          12 providers · 41 models
+          {AI_SHOWCASE_PROVIDER_COUNT} providers · live catalog
         </Badge>
       </div>
 
