@@ -11,7 +11,7 @@ import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
-import { type BrandConfig, DEFAULT_BRAND } from "./brand-types";
+import { type BrandColorPalette, type BrandConfig, DEFAULT_BRAND } from "./brand-types";
 
 // `import.meta.dirname` is unset under tsx CJS transform on Node 25.
 // Compute it from `import.meta.url` for cross-runtime compatibility.
@@ -36,6 +36,227 @@ function logSuccess(_message: string) {}
 function logSkip(_message: string) {}
 
 function _logError(_message: string) {}
+
+// ─── Phase 1 exports — color SSOT collapse ──────────────────────────────────
+
+/**
+ * The 11 scale steps written to core.json for each brand color scale.
+ *
+ * NOTE: The "0" key (NeutralColorScale.0 = "#ffffff") is intentionally
+ * excluded from the scale. It maps to `color.white` in core.json, NOT to a
+ * scale step. deriveColorNodes iterates only these 11 steps for all three
+ * scales. (M6 — explicit exclusion; see brand-apply-pipeline.test.ts assertion.)
+ */
+const COLOR_SCALE_STEPS = [
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "950",
+] as const;
+
+type ColorScaleStep = (typeof COLOR_SCALE_STEPS)[number];
+
+/** Shape of a DTCG leaf node (minimal, as used by core.json). */
+interface DtcgLeaf {
+  $value: string;
+  $type?: string;
+  $description?: string;
+  $extensions?: Record<string, unknown>;
+}
+
+/** Shape of a derived scale — the three brand scales brand:apply writes. */
+export interface DerivedColorScales {
+  "nebutra-blue": Record<string, DtcgLeaf>;
+  "nebutra-cyan": Record<string, DtcgLeaf>;
+  "nebutra-neutral": Record<ColorScaleStep, DtcgLeaf> & { $description?: string };
+}
+
+/**
+ * Derive the three brand color scales (`nebutra-blue`, `nebutra-cyan`,
+ * `nebutra-neutral`) from a `BrandColorPalette` and the existing on-disk
+ * `core.json` structure.
+ *
+ * Design invariants:
+ * - All hex written to core.json is **lowercased** (`#0033fe`, not `#0033FE`).
+ *   This is a deliberate asymmetry: `metadata.ts` keeps uppercase from
+ *   DEFAULT_BRAND.colors; core.json follows its own existing convention.
+ *   Do NOT "fix" the metadata.ts serializer to match — they serve different
+ *   consumers.
+ * - `nebutra-neutral` has **no `"0"` key**. `NeutralColorScale.0` ("#ffffff")
+ *   maps to `color.white` in core.json, not a scale step. This function
+ *   iterates `COLOR_SCALE_STEPS` (50–950) only for all three scales.
+ * - The 500-stop of blue/cyan has leaf-level `$description` + `$extensions`
+ *   (display-p3). The existing on-disk node is spread and only `$value` is
+ *   replaced; `$extensions` is overridden only if `p3Overrides` is set.
+ * - `nebutra-neutral` carries a scale-root `$description` copied from
+ *   `existingCore.color["nebutra-neutral"]["$description"]`. Built as
+ *   `{ $description, ...steps }` (description first) for key-order stability.
+ *   The idempotency test in brand-metadata-drift.test.ts guards regressions.
+ *
+ * @param colors  The palette from DEFAULT_BRAND.colors (or brand.config.ts).
+ * @param existingCore  The parsed on-disk core.json (used to preserve metadata
+ *   on 500-stops and the neutral $description).
+ */
+export function deriveColorNodes(
+  colors: BrandColorPalette,
+  existingCore: {
+    color: {
+      "nebutra-blue": Record<string, unknown>;
+      "nebutra-cyan": Record<string, unknown>;
+      "nebutra-neutral": Record<string, unknown> & { $description?: string };
+    };
+  },
+): DerivedColorScales {
+  // Helper to build a standard leaf (no special metadata).
+  const leaf = (hex: string): DtcgLeaf => ({ $value: hex.toLowerCase(), $type: "color" });
+
+  // Build nebutra-blue scale — spread existing 500-stop to preserve $description/$extensions.
+  const existingBlue500 = existingCore.color["nebutra-blue"]["500"] as DtcgLeaf | undefined;
+  const blueScale: Record<string, DtcgLeaf> = {};
+  for (const step of COLOR_SCALE_STEPS) {
+    const hex = colors.primary[Number(step) as keyof typeof colors.primary];
+    if (step === "500") {
+      // Spread existing node (preserves $description + $extensions), then replace $value.
+      const base: DtcgLeaf = {
+        ...(existingBlue500 ?? { $type: "color" }),
+        $value: hex.toLowerCase(),
+      };
+      if (colors.p3Overrides?.primary500 !== undefined) {
+        base.$extensions = {
+          ...(existingBlue500?.$extensions ?? {}),
+          "com.nebutra.display-p3": colors.p3Overrides.primary500,
+        };
+      }
+      blueScale[step] = base;
+    } else {
+      blueScale[step] = leaf(hex);
+    }
+  }
+
+  // Build nebutra-cyan scale — same pattern as blue.
+  const existingCyan500 = existingCore.color["nebutra-cyan"]["500"] as DtcgLeaf | undefined;
+  const cyanScale: Record<string, DtcgLeaf> = {};
+  for (const step of COLOR_SCALE_STEPS) {
+    const hex = colors.accent[Number(step) as keyof typeof colors.accent];
+    if (step === "500") {
+      const base: DtcgLeaf = {
+        ...(existingCyan500 ?? { $type: "color" }),
+        $value: hex.toLowerCase(),
+      };
+      if (colors.p3Overrides?.accent500 !== undefined) {
+        base.$extensions = {
+          ...(existingCyan500?.$extensions ?? {}),
+          "com.nebutra.display-p3": colors.p3Overrides.accent500,
+        };
+      }
+      cyanScale[step] = base;
+    } else {
+      cyanScale[step] = leaf(hex);
+    }
+  }
+
+  // Build nebutra-neutral scale — NO "0" key; copy $description from existingCore.
+  // Key order: { $description, ...steps } for byte-stable idempotent JSON serialization.
+  // V8 sorts purely numeric keys before string keys in insertion order, so we
+  // must build the object by setting $description on it FIRST, then adding the
+  // step keys — rather than spreading { $description, ...steps } which lets V8
+  // re-order the numeric-ish step keys ("50","100",…) before "$description".
+  const neutralDesc = existingCore.color["nebutra-neutral"].$description as string | undefined;
+  const neutralObj: Record<string, DtcgLeaf | string | undefined> = {};
+  if (neutralDesc !== undefined) {
+    neutralObj.$description = neutralDesc;
+  }
+  for (const step of COLOR_SCALE_STEPS) {
+    const hex = colors.neutral[Number(step) as keyof typeof colors.neutral];
+    neutralObj[step] = leaf(hex);
+  }
+  const neutralScale = neutralObj as DerivedColorScales["nebutra-neutral"];
+
+  return {
+    "nebutra-blue": blueScale,
+    "nebutra-cyan": cyanScale,
+    "nebutra-neutral": neutralScale,
+  };
+}
+
+const CORE_JSON_PATH = path.join(
+  ROOT,
+  "packages",
+  "design",
+  "design-tokens",
+  "tokens",
+  "core.json",
+);
+
+/**
+ * Read core.json, derive the three brand color scales from `config.colors`,
+ * surgical-merge only those three scales back, and write the result.
+ *
+ * All other top-level keys in core.json (`$schema`, `$description`,
+ * `nebutra-gray`, `white`, `black`, `status`, `size`, `duration`, etc.)
+ * are untouched — only the `color.nebutra-blue`, `color.nebutra-cyan`,
+ * and `color.nebutra-neutral` sub-trees are replaced.
+ *
+ * The output is `JSON.stringify(updated, null, 2) + "\n"` — idempotent
+ * given stable key order from V8's insertion-order preservation.
+ */
+export function updateCoreJson(config: BrandConfig): void {
+  logStep("Updating design-tokens/tokens/core.json from DEFAULT_BRAND.colors");
+
+  const raw = fs.readFileSync(CORE_JSON_PATH, "utf-8");
+  const existingCore = JSON.parse(raw) as {
+    color: {
+      "nebutra-blue": Record<string, unknown>;
+      "nebutra-cyan": Record<string, unknown>;
+      "nebutra-neutral": Record<string, unknown> & { $description?: string };
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
+  };
+
+  const derived = deriveColorNodes(config.colors, existingCore);
+
+  // Surgical merge: spread the full existing core, then overlay only the three
+  // brand scales. All other top-level keys and all non-brand color keys are
+  // preserved unchanged.
+  const updated = {
+    ...existingCore,
+    color: {
+      ...existingCore.color,
+      "nebutra-blue": derived["nebutra-blue"],
+      "nebutra-cyan": derived["nebutra-cyan"],
+      "nebutra-neutral": derived["nebutra-neutral"],
+    },
+  };
+
+  fs.writeFileSync(CORE_JSON_PATH, JSON.stringify(updated, null, 2) + "\n", "utf-8");
+  logSuccess("Updated packages/design/design-tokens/tokens/core.json");
+}
+
+/**
+ * Run the @nebutra/design-tokens build so that Style Dictionary regenerates
+ * `packages/design/tokens/styles.css` from the updated `core.json`.
+ *
+ * Uses `execFileSync` (already imported) with `stdio: "inherit"` so the
+ * Style Dictionary output is visible in the terminal during `pnpm brand:apply`.
+ */
+export function runDesignTokensBuild(): void {
+  logStep("Running @nebutra/design-tokens build (Style Dictionary → styles.css)");
+  execFileSync("pnpm", ["--filter", "@nebutra/design-tokens", "build"], {
+    cwd: ROOT,
+    stdio: "inherit",
+  });
+  logSuccess("Regenerated packages/design/tokens/styles.css");
+}
+
+// ─── end Phase 1 exports ──────────────────────────────────────────────────────
 
 /**
  * Load brand config or use defaults
@@ -385,6 +606,10 @@ async function main() {
   // Apply changes
   copyCustomAssets(config);
   updateBrandMetadata(config);
+  // Phase 1: derive + write core.json from DEFAULT_BRAND.colors, then
+  // trigger the Style Dictionary build so styles.css regenerates.
+  updateCoreJson(config);
+  runDesignTokensBuild();
   updatePackageScopes(config);
   updateREADMEs(config);
   updateEnvTemplate(config);

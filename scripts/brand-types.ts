@@ -44,6 +44,19 @@ export interface BrandColorPalette {
     primaryRadial: string;
   };
 
+  /**
+   * Display-P3 wide-gamut overrides for the 500-stop of each brand scale.
+   * These are preserved as `$extensions` on the blue/cyan 500-stop in
+   * `packages/design/design-tokens/tokens/core.json` when `deriveColorNodes`
+   * writes that file. Optional — omit for sRGB-only brands.
+   */
+  p3Overrides?: {
+    /** Display-P3 string for primary[500] (e.g. "color(display-p3 0.03 0.19 0.99)"). */
+    primary500?: string;
+    /** Display-P3 string for accent[500] (e.g. "color(display-p3 0.07 0.94 0.79)"). */
+    accent500?: string;
+  };
+
   /** Semantic palette wired into the design-tokens DTCG SSOT. */
   success: string;
   warning: string;
@@ -269,7 +282,7 @@ export const DEFAULT_BRAND: BrandConfig = {
     name: "Nebutra",
     nameCn: "云毓智能",
     nameFull: "无锡云毓智能科技有限公司",
-    nameFullEn: "Wuxi Nebutra Intelligent Technology Co., Ltd.",
+    nameFullEn: "Wuxi Nebutra Intelligence Technology Co., Ltd.",
     tagline: "Ship AI products, not boilerplate.",
     taglineCn: "AI原生·快速出海·即刻交付",
     description:
@@ -383,6 +396,13 @@ export const DEFAULT_BRAND: BrandConfig = {
       primaryReverse: "linear-gradient(135deg, #0BF1C3 0%, #0033FE 100%)",
       primaryVertical: "linear-gradient(180deg, #0033FE 0%, #0BF1C3 100%)",
       primaryRadial: "radial-gradient(circle, #0BF1C3 0%, #0033FE 100%)",
+    },
+    // Display-P3 wide-gamut overrides — must exactly match the $extensions in
+    // packages/design/design-tokens/tokens/core.json (lines 16 and 36).
+    // deriveColorNodes() preserves these on the blue/cyan 500-stop.
+    p3Overrides: {
+      primary500: "color(display-p3 0.03 0.19 0.99)",
+      accent500: "color(display-p3 0.07 0.94 0.79)",
     },
     success: "#22c55e",
     warning: "#f59e0b",
