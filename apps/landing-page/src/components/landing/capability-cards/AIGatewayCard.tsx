@@ -73,8 +73,8 @@ export function AIGatewayCard() {
               strategy: <span className="text-[var(--green-11)]">'lowest-latency'</span>,
             </div>
             <div className="pl-4">
-              models: [<span className="text-[var(--green-11)]">'gpt-4'</span>,{" "}
-              <span className="text-[var(--green-11)]">'claude-3'</span>],
+              models: [<span className="text-[var(--green-11)]">'gpt-5.5'</span>,{" "}
+              <span className="text-[var(--green-11)]">'claude-sonnet-4.6'</span>],
             </div>
             <div className="pl-4">
               stream: <span className="text-[var(--brand-primary)]">true</span>

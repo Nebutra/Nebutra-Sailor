@@ -140,7 +140,7 @@ const result = await sandbox.run(code, {
 const { provider, model } = resolveProvider("claude-sonnet-4-6");
 // → { provider: "anthropic", model: "claude-sonnet-4-6", contextWindow: 1_000_000 }
 
-const fallback = resolveProvider("openai/gpt-4o", {
+const fallback = resolveProvider("openai/gpt-5.5", {
   fallback: "anthropic/claude-haiku-4-5",
 });`,
     [3, 6],

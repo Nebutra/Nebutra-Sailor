@@ -10,9 +10,9 @@ type ModelRow = {
 
 const ROWS: ReadonlyArray<ModelRow> = [
   { model: "claude-sonnet-4-6", context: "1M", price: "$3" },
-  { model: "gpt-4o", context: "128K", price: "$5" },
-  { model: "deepseek-v3", context: "64K", price: "$0.27" },
-  { model: "gemini-pro-2.5", context: "2M", price: "$2.5" },
+  { model: "gpt-5.5", context: "256K", price: "$5" },
+  { model: "deepseek-v3.2", context: "128K", price: "$0.28" },
+  { model: "gemini-3-pro", context: "1M", price: "$2.5" },
 ];
 
 export function AiProvidersGlyph(_props: SubpackageGlyphProps) {
