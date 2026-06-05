@@ -5,6 +5,7 @@ import {
   BlendMode as Palette,
   Connection as Plug,
   Shield,
+  Users,
 } from "@nebutra/icons";
 
 export interface DashboardNavBadge {
@@ -43,6 +44,7 @@ export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
     badge: { label: "Beta", tone: "beta" },
   },
   { href: "/integrations", label: "Connectors", icon: Plug, group: "Product" },
+  { href: "/cofounder", label: "Match your cofounder", icon: Users, group: "Product" },
   {
     href: "/admin",
     label: "Admin",
