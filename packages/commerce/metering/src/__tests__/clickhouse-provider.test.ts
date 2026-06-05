@@ -65,6 +65,16 @@ function makeEvent(value: number, props?: Record<string, unknown>): UsageEvent {
   };
 }
 
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, reject, resolve };
+}
+
 describe("ClickHouseProvider", () => {
   beforeEach(() => {
     queryResults.clear();
@@ -293,6 +303,32 @@ describe("ClickHouseProvider", () => {
       await provider.close();
       // Only the first close should have invoked the underlying client.
       expect(lastClient.close).toHaveBeenCalledTimes(1);
+    });
+
+    it("waits for a scheduled flush already in flight before closing the client", async () => {
+      vi.useFakeTimers();
+      const provider = new ClickHouseProvider({
+        url: "http://ch:8123",
+        batchSize: 1000,
+        flushIntervalMs: 500,
+        skipBootstrap: true,
+      });
+      await provider.defineMeter(API_CALLS);
+      const insert = deferred<{ executed: true }>();
+      lastClient.insert.mockReturnValueOnce(insert.promise);
+
+      await provider.ingest(makeEvent(1));
+      await vi.advanceTimersByTimeAsync(600);
+      expect(lastClient.insert).toHaveBeenCalledTimes(1);
+
+      const closePromise = provider.close();
+      await Promise.resolve();
+      expect(lastClient.close).not.toHaveBeenCalled();
+
+      insert.resolve({ executed: true });
+      await closePromise;
+      expect(lastClient.close).toHaveBeenCalledTimes(1);
+      vi.useRealTimers();
     });
   });
 

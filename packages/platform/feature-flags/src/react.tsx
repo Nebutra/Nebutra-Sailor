@@ -17,7 +17,16 @@
 
 "use client";
 
-import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { type FeatureFlag, FLAGS } from "./index";
 
 // ── Context ────────────────────────────────────────────────────────────────
@@ -35,6 +44,47 @@ const FeatureFlagContext = createContext<FeatureFlagContextValue>({
   isEnabled: () => false,
   refetch: async () => {},
 });
+
+interface FeatureFlagSnapshot {
+  flags: Record<string, boolean>;
+}
+
+const FEATURE_FLAGS_STALE_MS = 30_000;
+
+let featureFlagQueryClient: QueryClient | undefined;
+
+function getFeatureFlagQueryClient(): QueryClient {
+  featureFlagQueryClient ??= new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+        staleTime: FEATURE_FLAGS_STALE_MS,
+      },
+    },
+  });
+  return featureFlagQueryClient;
+}
+
+function featureFlagsQueryKey(endpoint: string) {
+  return ["feature-flags", endpoint] as const;
+}
+
+async function fetchFeatureFlags(
+  endpoint: string,
+  signal?: AbortSignal,
+): Promise<FeatureFlagSnapshot> {
+  const requestInit: RequestInit = { credentials: "include" };
+  if (signal) {
+    requestInit.signal = signal;
+  }
+  const res = await fetch(endpoint, requestInit);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch feature flags (${res.status})`);
+  }
+  const data = (await res.json()) as Partial<FeatureFlagSnapshot>;
+  return { flags: data.flags ?? {} };
+}
 
 // ── Provider ───────────────────────────────────────────────────────────────
 
@@ -58,35 +108,51 @@ export function FeatureFlagProvider({
   initialFlags = {},
   endpoint = "/api/v1/feature-flags",
 }: FeatureFlagProviderProps) {
-  const [flags, setFlags] = useState<Record<string, boolean>>(initialFlags);
-  const [isLoading, setIsLoading] = useState(Object.keys(initialFlags).length === 0);
+  const [queryClient] = useState(getFeatureFlagQueryClient);
 
-  const fetchFlags = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch(endpoint, { credentials: "include" });
-      if (res.ok) {
-        const data = (await res.json()) as { flags: Record<string, boolean> };
-        setFlags(data.flags ?? {});
-      }
-    } catch {
-      // Network failure — keep existing flags, degrade gracefully
-    } finally {
-      setIsLoading(false);
-    }
-  }, [endpoint]);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <FeatureFlagProviderContent initialFlags={initialFlags} endpoint={endpoint}>
+        {children}
+      </FeatureFlagProviderContent>
+    </QueryClientProvider>
+  );
+}
+
+function FeatureFlagProviderContent({
+  children,
+  initialFlags,
+  endpoint,
+}: Required<FeatureFlagProviderProps>) {
+  const queryClient = useQueryClient();
+  const queryKey = useMemo(() => featureFlagsQueryKey(endpoint), [endpoint]);
+  const hasInitialFlags = Object.keys(initialFlags).length > 0;
 
   useEffect(() => {
-    // Only fetch if we didn't get SSR-initialised flags
-    if (Object.keys(initialFlags).length === 0) {
-      void fetchFlags();
+    if (hasInitialFlags) {
+      queryClient.setQueryData<FeatureFlagSnapshot>(queryKey, { flags: initialFlags });
     }
-  }, [fetchFlags, initialFlags]);
+  }, [hasInitialFlags, initialFlags, queryClient, queryKey]);
+
+  const flagsQuery = useQuery({
+    queryKey,
+    queryFn: ({ signal }) => fetchFeatureFlags(endpoint, signal),
+    enabled: !hasInitialFlags,
+    initialData: hasInitialFlags ? { flags: initialFlags } : undefined,
+  });
+
+  const flags = flagsQuery.data?.flags ?? {};
+
+  const refetch = useCallback(async () => {
+    await flagsQuery.refetch();
+  }, [flagsQuery]);
 
   const isEnabled = useCallback((flag: string) => flags[flag] ?? false, [flags]);
 
   return (
-    <FeatureFlagContext.Provider value={{ flags, isLoading, isEnabled, refetch: fetchFlags }}>
+    <FeatureFlagContext.Provider
+      value={{ flags, isLoading: flagsQuery.isFetching, isEnabled, refetch }}
+    >
       {children}
     </FeatureFlagContext.Provider>
   );

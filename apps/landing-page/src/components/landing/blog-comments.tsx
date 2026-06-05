@@ -2,8 +2,10 @@
 
 import { Heart, HeartFill, Message, PaperAirplane, Star, StarFill } from "@nebutra/icons";
 import { Textarea } from "@nebutra/ui/primitives";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ComponentType, SVGProps } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import { queryKeys } from "@/lib/query-keys";
 
 interface BlogComment {
   id: string;
@@ -52,6 +54,73 @@ interface BlogCommentsProps {
     signInToLike: string;
     signInToSave: string;
   };
+}
+
+type ReactionKind = "like" | "save";
+
+interface CommentCreateResponse {
+  comment: BlogComment;
+}
+
+interface ReactionResponse {
+  likeCount?: number;
+  liked?: boolean;
+  saveCount?: number;
+  saved?: boolean;
+}
+
+async function fetchComments(
+  endpoint: string,
+  signal?: AbortSignal,
+): Promise<BlogCommentsResponse> {
+  const requestInit: RequestInit = {
+    credentials: "include",
+    headers: { Accept: "application/json" },
+  };
+  if (signal) {
+    requestInit.signal = signal;
+  }
+  const response = await fetch(endpoint, requestInit);
+  if (!response.ok) {
+    throw new Error(`Failed to load blog comments (${response.status})`);
+  }
+  return (await response.json()) as BlogCommentsResponse;
+}
+
+async function createComment(input: {
+  body: string;
+  language: "en" | "zh";
+  slug: string;
+  translationKey: string;
+}): Promise<CommentCreateResponse> {
+  const response = await fetch("/api/blog/comments", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to create blog comment (${response.status})`);
+  }
+  return (await response.json()) as CommentCreateResponse;
+}
+
+async function submitReaction(input: {
+  kind: ReactionKind;
+  language: "en" | "zh";
+  slug: string;
+  translationKey: string;
+}): Promise<ReactionResponse> {
+  const response = await fetch("/api/blog/reactions", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify(input),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to update blog reaction (${response.status})`);
+  }
+  return (await response.json()) as ReactionResponse;
 }
 
 function initialsFor(name: string): string {
@@ -113,147 +182,124 @@ export function BlogComments({
   slug,
   translationKey,
 }: BlogCommentsProps) {
-  const [comments, setComments] = useState<BlogComment[]>([]);
-  const [viewer, setViewer] = useState<BlogCommentsResponse["viewer"] | null>(null);
+  const queryClient = useQueryClient();
   const [body, setBody] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const isReactingRef = useRef(false);
-  const [reactionPending, setReactionPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [reactions, setReactions] = useState<BlogCommentsResponse["reactions"]>({
-    likeCount: 0,
-    saveCount: 0,
-    viewerLiked: false,
-    viewerSaved: false,
-  });
 
   const endpoint = `/api/blog/comments?${new URLSearchParams({
     language,
     slug,
     translationKey,
   }).toString()}`;
+  const commentsKey = useMemo(
+    () => queryKeys.blogComments.detail({ language, slug, translationKey }),
+    [language, slug, translationKey],
+  );
 
-  useEffect(() => {
-    let cancelled = false;
-    async function loadComments() {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(endpoint, {
-          credentials: "include",
-          headers: { Accept: "application/json" },
-        });
-        if (!response.ok) {
-          if (!cancelled) setError(labels.error);
-          if (!cancelled) setIsLoading(false);
-          return;
-        }
-        const data = (await response.json()) as BlogCommentsResponse;
-        if (cancelled) return;
-        setComments(data.comments);
-        setViewer(data.viewer);
-        setReactions(data.reactions);
-      } catch {
-        if (!cancelled) setError(labels.error);
+  const commentsQuery = useQuery({
+    queryKey: commentsKey,
+    queryFn: ({ signal }) => fetchComments(endpoint, signal),
+  });
+
+  const snapshot = commentsQuery.data;
+  const comments = snapshot?.comments ?? [];
+  const viewer = snapshot?.viewer ?? null;
+  const reactions = snapshot?.reactions ?? {
+    likeCount: 0,
+    saveCount: 0,
+    viewerLiked: false,
+    viewerSaved: false,
+  };
+
+  const submitMutation = useMutation({
+    mutationFn: (trimmedBody: string) =>
+      createComment({ translationKey, slug, language, body: trimmedBody }),
+    onSuccess: (data) => {
+      queryClient.setQueryData<BlogCommentsResponse>(commentsKey, (current) => {
+        if (!current) return current;
+        return {
+          ...current,
+          comments: [
+            ...current.comments,
+            {
+              ...data.comment,
+              authorName: current.viewer.name || current.viewer.email || "Nebutra reader",
+              authorImageUrl: current.viewer.avatarUrl ?? null,
+              status: "pending",
+            },
+          ],
+        };
+      });
+      setBody("");
+    },
+  });
+
+  const reactionMutation = useMutation<
+    ReactionResponse,
+    Error,
+    ReactionKind,
+    { previous?: BlogCommentsResponse }
+  >({
+    mutationFn: (kind) => submitReaction({ translationKey, slug, language, kind }),
+    onMutate: async (kind) => {
+      await queryClient.cancelQueries({ queryKey: commentsKey });
+      const previous = queryClient.getQueryData<BlogCommentsResponse>(commentsKey);
+      queryClient.setQueryData<BlogCommentsResponse>(commentsKey, (current) => {
+        if (!current) return current;
+        const activeField = kind === "like" ? "viewerLiked" : "viewerSaved";
+        const countField = kind === "like" ? "likeCount" : "saveCount";
+        const optimisticActive = !current.reactions[activeField];
+        return {
+          ...current,
+          reactions: {
+            ...current.reactions,
+            [activeField]: optimisticActive,
+            [countField]: Math.max(0, current.reactions[countField] + (optimisticActive ? 1 : -1)),
+          },
+        };
+      });
+      return { previous };
+    },
+    onError: (_error, _kind, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(commentsKey, context.previous);
       }
-      if (!cancelled) setIsLoading(false);
-    }
-
-    void loadComments();
-    return () => {
-      cancelled = true;
-    };
-  }, [endpoint, labels.error]);
+    },
+    onSuccess: (data, kind) => {
+      queryClient.setQueryData<BlogCommentsResponse>(commentsKey, (current) => {
+        if (!current) return current;
+        return {
+          ...current,
+          reactions:
+            kind === "like"
+              ? {
+                  ...current.reactions,
+                  likeCount: data.likeCount ?? current.reactions.likeCount,
+                  viewerLiked: Boolean(data.liked),
+                }
+              : {
+                  ...current.reactions,
+                  saveCount: data.saveCount ?? current.reactions.saveCount,
+                  viewerSaved: Boolean(data.saved),
+                },
+        };
+      });
+    },
+  });
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmed = body.trim();
-    if (!trimmed || isSubmitting) return;
-
-    setIsSubmitting(true);
-    setError(null);
-    try {
-      const response = await fetch("/api/blog/comments", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ translationKey, slug, language, body: trimmed }),
-      });
-      if (!response.ok) {
-        setError(labels.error);
-        setIsSubmitting(false);
-        return;
-      }
-      const data = (await response.json()) as { comment: BlogComment };
-      setComments((current) => [
-        ...current,
-        {
-          ...data.comment,
-          authorName: viewer?.name || viewer?.email || "Nebutra reader",
-          authorImageUrl: viewer?.avatarUrl ?? null,
-          status: "pending",
-        },
-      ]);
-      setBody("");
-    } catch {
-      setError(labels.error);
-    }
-    setIsSubmitting(false);
+    if (!trimmed || submitMutation.isPending) return;
+    submitMutation.mutate(trimmed);
   }
 
-  async function handleReaction(kind: "like" | "save") {
-    if (isReactingRef.current) return;
+  function handleReaction(kind: ReactionKind) {
+    if (reactionMutation.isPending) return;
     if (!viewer?.isSignedIn) {
       window.location.href = `${appUrl}/sign-in`;
       return;
     }
-
-    const previous = reactions;
-    const activeField = kind === "like" ? "viewerLiked" : "viewerSaved";
-    const countField = kind === "like" ? "likeCount" : "saveCount";
-    const optimisticActive = !previous[activeField];
-    isReactingRef.current = true;
-    setReactionPending(true);
-    setError(null);
-    setReactions({
-      ...previous,
-      [activeField]: optimisticActive,
-      [countField]: Math.max(0, previous[countField] + (optimisticActive ? 1 : -1)),
-    });
-
-    try {
-      const response = await fetch("/api/blog/reactions", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ translationKey, slug, language, kind }),
-      });
-      if (!response.ok) {
-        setReactions(previous);
-        setError(labels.error);
-        isReactingRef.current = false;
-        setReactionPending(false);
-        return;
-      }
-      const data = (await response.json()) as {
-        likeCount?: number;
-        liked?: boolean;
-        saveCount?: number;
-        saved?: boolean;
-      };
-      setReactions((current) => ({
-        ...current,
-        ...(kind === "like"
-          ? { likeCount: data.likeCount ?? current.likeCount, viewerLiked: Boolean(data.liked) }
-          : { saveCount: data.saveCount ?? current.saveCount, viewerSaved: Boolean(data.saved) }),
-      }));
-    } catch {
-      setReactions(previous);
-      setError(labels.error);
-    }
-    isReactingRef.current = false;
-    setReactionPending(false);
+    reactionMutation.mutate(kind);
   }
 
   const LikeIcon = reactions.viewerLiked ? HeartFill : Heart;
@@ -297,28 +343,28 @@ export function BlogComments({
           <ReactionButton
             active={reactions.viewerLiked}
             count={reactions.likeCount}
-            disabled={reactionPending}
+            disabled={reactionMutation.isPending}
             icon={LikeIcon}
             label={getReactionLabel("like")}
             onClick={() => {
-              void handleReaction("like");
+              handleReaction("like");
             }}
           />
           <ReactionButton
             active={reactions.viewerSaved}
             count={reactions.saveCount}
-            disabled={reactionPending}
+            disabled={reactionMutation.isPending}
             icon={SaveIcon}
             label={getReactionLabel("save")}
             onClick={() => {
-              void handleReaction("save");
+              handleReaction("save");
             }}
           />
         </div>
       </div>
 
       <div className="mt-8 space-y-5">
-        {isLoading ? (
+        {commentsQuery.isPending ? (
           <div className="h-20 animate-pulse rounded-[var(--radius-xl)] bg-[var(--neutral-3)]" />
         ) : comments.length > 0 ? (
           comments.map((comment) => (
@@ -383,11 +429,11 @@ export function BlogComments({
               <span className="text-xs text-[var(--neutral-10)]">{body.trim().length}/1200</span>
               <button
                 type="submit"
-                disabled={body.trim().length < 2 || isSubmitting}
+                disabled={body.trim().length < 2 || submitMutation.isPending}
                 className="inline-flex items-center gap-1.5 rounded-full bg-[var(--neutral-12)] px-4 py-2 text-sm font-medium text-[var(--neutral-1)] transition-opacity disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <PaperAirplane className="size-4" aria-hidden />
-                {isSubmitting ? labels.submitting : labels.submit}
+                {submitMutation.isPending ? labels.submitting : labels.submit}
               </button>
             </div>
           </form>
@@ -401,7 +447,9 @@ export function BlogComments({
         )}
       </div>
 
-      {error && <p className="mt-4 text-sm text-[color:var(--status-danger)]">{error}</p>}
+      {(commentsQuery.isError || submitMutation.isError || reactionMutation.isError) && (
+        <p className="mt-4 text-sm text-[color:var(--status-danger)]">{labels.error}</p>
+      )}
     </section>
   );
 }

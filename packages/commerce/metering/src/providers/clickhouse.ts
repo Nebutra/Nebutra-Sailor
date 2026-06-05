@@ -1,5 +1,6 @@
 import { type ClickHouseClient, createClient } from "@clickhouse/client";
 import { logger } from "@nebutra/logger";
+import PQueue from "p-queue";
 import type {
   AggregationType,
   ClickHouseProviderConfig,
@@ -65,7 +66,7 @@ export class ClickHouseProvider implements MeteringProvider {
   private client: ClickHouseClient | null = null;
   private queue: QueuedRow[] = [];
   private flushTimer: ReturnType<typeof setTimeout> | null = null;
-  private flushInFlight: Promise<void> | null = null;
+  private readonly flushQueue = new PQueue({ concurrency: 1 });
   private readonly meters = new Map<string, MeterDefinition>();
   private bootstrapped = false;
   private closed = false;
@@ -272,22 +273,26 @@ export class ClickHouseProvider implements MeteringProvider {
   }
 
   /**
-   * Flush the in-memory buffer. Concurrent calls coalesce onto the same promise.
+   * Flush the in-memory buffer. Flush tasks are serialized by p-queue so inserts
+   * and close-time drains cannot race the underlying ClickHouse client.
    */
   async flush(): Promise<void> {
-    if (this.flushInFlight) return this.flushInFlight;
-    if (this.queue.length === 0) return;
-
-    if (this.flushTimer) {
-      clearTimeout(this.flushTimer);
-      this.flushTimer = null;
+    if (this.queue.length === 0 && this.flushQueue.pending === 0 && this.flushQueue.size === 0) {
+      return;
     }
 
-    const batch = this.queue;
-    this.queue = [];
-    const client = this.getClient();
+    await this.flushQueue.add(async () => {
+      if (this.queue.length === 0) return;
 
-    this.flushInFlight = (async () => {
+      if (this.flushTimer) {
+        clearTimeout(this.flushTimer);
+        this.flushTimer = null;
+      }
+
+      const batch = this.queue;
+      this.queue = [];
+      const client = this.getClient();
+
       try {
         await client.insert({
           table: "usage_events",
@@ -303,11 +308,8 @@ export class ClickHouseProvider implements MeteringProvider {
           requeued: batch.length,
         });
         throw error;
-      } finally {
-        this.flushInFlight = null;
       }
-    })();
-    return this.flushInFlight;
+    });
   }
 
   // ── Reads ───────────────────────────────────────────────────────────────
@@ -533,6 +535,7 @@ export class ClickHouseProvider implements MeteringProvider {
       if (this.queue.length > 0 && this.config.url) {
         await this.flush();
       }
+      await this.flushQueue.onIdle();
     } catch (err) {
       logger.error("[metering:clickhouse] Drain on close failed", { err });
     }
