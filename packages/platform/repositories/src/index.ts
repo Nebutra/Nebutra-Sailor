@@ -19,6 +19,14 @@ export {
   AutomationRunRepository,
   getAutomationRunRepository,
 } from "./automation-run.repository";
+// Workflows
+export type { CreateWorkflowData, UpdateWorkflowData } from "./workflow.repository";
+export { getWorkflowRepository, WorkflowRepository } from "./workflow.repository";
+export type {
+  FinishWorkflowRunData,
+  StartWorkflowRunData,
+} from "./workflow-run.repository";
+export { getWorkflowRunRepository, WorkflowRunRepository } from "./workflow-run.repository";
 export type {
   CreateOrganizationData,
   UpdateOrganizationData,

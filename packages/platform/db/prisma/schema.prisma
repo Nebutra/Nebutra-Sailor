@@ -183,6 +183,8 @@ model Tenant {
   tenantProviderKeys      TenantProviderKey[]
   automations             Automation[]
   automationRuns          AutomationRun[]
+  workflowDefinitions     WorkflowDefinition[]
+  workflowRuns            WorkflowRun[]
   invoices                Invoice[]
   oauthClients            OAuthClient[]
   orders                  Order[]
@@ -623,6 +625,88 @@ model AutomationRun {
   @@index([tenantId, automationId, createdAt(sort: Desc)])
   @@index([tenantId, status, createdAt(sort: Desc)])
   @@map("automation_runs")
+  @@schema("public")
+}
+
+// ── Agent Workflows (multi-agent orchestration runtime) ─────────────────────────
+// A WorkflowDefinition holds a TENANT-AUTHORED orchestration script (untrusted JS,
+// executed only inside a QuickJS WASM sandbox — never eval'd in our process).
+// WorkflowRun is the append-only run record: status, captured observability
+// events, the script's return value, and token usage.
+
+enum WorkflowStatus {
+  ACTIVE
+  DISABLED
+
+  @@schema("public")
+}
+
+enum WorkflowRunStatus {
+  QUEUED
+  RUNNING
+  SUCCEEDED
+  FAILED
+
+  @@schema("public")
+}
+
+model WorkflowDefinition {
+  id              String         @id @default(cuid())
+  tenantId        String         @map("tenant_id")
+  name            String         @db.VarChar(200)
+  description     String?        @db.VarChar(500)
+  // Tenant-authored orchestration JS. Runs ONLY inside the QuickJS sandbox.
+  scriptSource    String         @map("script_source") @db.Text
+  status          WorkflowStatus @default(ACTIVE)
+  defaultModel    String         @default("flagship") @map("default_model") @db.VarChar(128)
+  // Runtime caps (also a cost guardrail).
+  maxConcurrency  Int            @default(16) @map("max_concurrency")
+  maxAgentsPerRun Int            @default(1000) @map("max_agents_per_run")
+  maxRetries      Int            @default(2) @map("max_retries")
+  timeoutMs       Int            @default(60000) @map("timeout_ms")
+  metadata        Json           @default("{}")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+
+  tenant Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  runs   WorkflowRun[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId, status, createdAt(sort: Desc)])
+  @@map("workflow_definitions")
+  @@schema("public")
+}
+
+model WorkflowRun {
+  id             String            @id @default(cuid())
+  tenantId       String            @map("tenant_id")
+  workflowId     String            @map("workflow_id")
+  status         WorkflowRunStatus @default(QUEUED)
+  idempotencyKey String            @map("idempotency_key") @db.VarChar(191)
+  // Fresh per run → links AgentRolloutLine(tenant, thread, seq) for replay.
+  threadId       String            @map("thread_id")
+  triggeredBy    String            @default("api") @map("triggered_by") @db.VarChar(20)
+  args           Json              @default("{}")
+  // The script's return value (capped). null until SUCCEEDED.
+  result         Json?
+  // Captured observability events (phase/agent_*), size-capped.
+  events         Json              @default("[]")
+  error          String?           @db.Text
+  // { agentCalls, maxConcurrency, ... }
+  stats          Json              @default("{}")
+  tokenUsage     Json              @default("{}") @map("token_usage")
+  startedAt      DateTime?         @map("started_at")
+  finishedAt     DateTime?         @map("finished_at")
+  createdAt      DateTime          @default(now()) @map("created_at")
+  updatedAt      DateTime          @updatedAt @map("updated_at")
+
+  tenant   Tenant             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workflow WorkflowDefinition @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, idempotencyKey])
+  @@index([tenantId, workflowId, createdAt(sort: Desc)])
+  @@index([tenantId, status, createdAt(sort: Desc)])
+  @@map("workflow_runs")
   @@schema("public")
 }
 

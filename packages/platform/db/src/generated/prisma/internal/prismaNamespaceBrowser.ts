@@ -69,6 +69,8 @@ export const ModelName = {
   TenantProviderKey: 'TenantProviderKey',
   Automation: 'Automation',
   AutomationRun: 'AutomationRun',
+  WorkflowDefinition: 'WorkflowDefinition',
+  WorkflowRun: 'WorkflowRun',
   ModelConfig: 'ModelConfig',
   RequestLog: 'RequestLog',
   FeatureDefinition: 'FeatureDefinition',
@@ -432,6 +434,49 @@ export const AutomationRunScalarFieldEnum = {
 } as const
 
 export type AutomationRunScalarFieldEnum = (typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum]
+
+
+export const WorkflowDefinitionScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  description: 'description',
+  scriptSource: 'scriptSource',
+  status: 'status',
+  defaultModel: 'defaultModel',
+  maxConcurrency: 'maxConcurrency',
+  maxAgentsPerRun: 'maxAgentsPerRun',
+  maxRetries: 'maxRetries',
+  timeoutMs: 'timeoutMs',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkflowDefinitionScalarFieldEnum = (typeof WorkflowDefinitionScalarFieldEnum)[keyof typeof WorkflowDefinitionScalarFieldEnum]
+
+
+export const WorkflowRunScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  workflowId: 'workflowId',
+  status: 'status',
+  idempotencyKey: 'idempotencyKey',
+  threadId: 'threadId',
+  triggeredBy: 'triggeredBy',
+  args: 'args',
+  result: 'result',
+  events: 'events',
+  error: 'error',
+  stats: 'stats',
+  tokenUsage: 'tokenUsage',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkflowRunScalarFieldEnum = (typeof WorkflowRunScalarFieldEnum)[keyof typeof WorkflowRunScalarFieldEnum]
 
 
 export const ModelConfigScalarFieldEnum = {

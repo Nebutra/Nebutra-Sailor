@@ -172,6 +172,24 @@ export const ReasoningEffort = {
 export type ReasoningEffort = (typeof ReasoningEffort)[keyof typeof ReasoningEffort]
 
 
+export const WorkflowStatus = {
+  ACTIVE: 'ACTIVE',
+  DISABLED: 'DISABLED'
+} as const
+
+export type WorkflowStatus = (typeof WorkflowStatus)[keyof typeof WorkflowStatus]
+
+
+export const WorkflowRunStatus = {
+  QUEUED: 'QUEUED',
+  RUNNING: 'RUNNING',
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED'
+} as const
+
+export type WorkflowRunStatus = (typeof WorkflowRunStatus)[keyof typeof WorkflowRunStatus]
+
+
 export const AIProvider = {
   OPENAI: 'OPENAI',
   ANTHROPIC: 'ANTHROPIC',

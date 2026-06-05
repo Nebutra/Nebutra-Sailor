@@ -22,6 +22,7 @@ export type Resource =
   | "Integration"
   | "AiProviderKey"
   | "Automation"
+  | "Workflow"
   | string;
 
 export type Role = "owner" | "admin" | "member" | "viewer" | "billing_admin" | "guest" | string;

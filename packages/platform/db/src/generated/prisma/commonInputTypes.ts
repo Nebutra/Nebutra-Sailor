@@ -491,6 +491,40 @@ export type EnumAutomationRunStatusWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
 }
 
+export type EnumWorkflowStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkflowStatus | Prisma.EnumWorkflowStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkflowStatusFilter<$PrismaModel> | $Enums.WorkflowStatus
+}
+
+export type EnumWorkflowStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkflowStatus | Prisma.EnumWorkflowStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkflowStatusWithAggregatesFilter<$PrismaModel> | $Enums.WorkflowStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWorkflowStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWorkflowStatusFilter<$PrismaModel>
+}
+
+export type EnumWorkflowRunStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkflowRunStatus | Prisma.EnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkflowRunStatus[] | Prisma.ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkflowRunStatus[] | Prisma.ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkflowRunStatusFilter<$PrismaModel> | $Enums.WorkflowRunStatus
+}
+
+export type EnumWorkflowRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkflowRunStatus | Prisma.EnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkflowRunStatus[] | Prisma.ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkflowRunStatus[] | Prisma.ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkflowRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.WorkflowRunStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWorkflowRunStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWorkflowRunStatusFilter<$PrismaModel>
+}
+
 export type DecimalNullableFilter<$PrismaModel = never> = {
   equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
   in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
@@ -1363,6 +1397,40 @@ export type NestedEnumAutomationRunStatusWithAggregatesFilter<$PrismaModel = nev
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumWorkflowStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkflowStatus | Prisma.EnumWorkflowStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkflowStatusFilter<$PrismaModel> | $Enums.WorkflowStatus
+}
+
+export type NestedEnumWorkflowStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkflowStatus | Prisma.EnumWorkflowStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkflowStatus[] | Prisma.ListEnumWorkflowStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkflowStatusWithAggregatesFilter<$PrismaModel> | $Enums.WorkflowStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWorkflowStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWorkflowStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumWorkflowRunStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkflowRunStatus | Prisma.EnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkflowRunStatus[] | Prisma.ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkflowRunStatus[] | Prisma.ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkflowRunStatusFilter<$PrismaModel> | $Enums.WorkflowRunStatus
+}
+
+export type NestedEnumWorkflowRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkflowRunStatus | Prisma.EnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkflowRunStatus[] | Prisma.ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkflowRunStatus[] | Prisma.ListEnumWorkflowRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkflowRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.WorkflowRunStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWorkflowRunStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWorkflowRunStatusFilter<$PrismaModel>
 }
 
 export type NestedDecimalNullableFilter<$PrismaModel = never> = {

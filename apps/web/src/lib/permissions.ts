@@ -41,6 +41,12 @@ export type Scope =
   | "automation:update"
   | "automation:delete"
   | "automation:run"
+  // Agent workflows
+  | "workflow:read"
+  | "workflow:create"
+  | "workflow:update"
+  | "workflow:delete"
+  | "workflow:run"
   // Analytics / usage
   | "analytics:read"
   // Settings
@@ -81,6 +87,11 @@ const ROLE_PERMISSIONS: Record<Role, ReadonlySet<Scope>> = {
     "automation:update",
     "automation:delete",
     "automation:run",
+    "workflow:read",
+    "workflow:create",
+    "workflow:update",
+    "workflow:delete",
+    "workflow:run",
     "analytics:read",
     "settings:read",
     "settings:update",
@@ -100,6 +111,7 @@ const ROLE_PERMISSIONS: Record<Role, ReadonlySet<Scope>> = {
     "api_key:read",
     "api_key:create",
     "automation:read",
+    "workflow:read",
     "analytics:read",
     "settings:read",
   ]),

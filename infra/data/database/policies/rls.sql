@@ -249,6 +249,14 @@ ALTER TABLE "public"."automation_runs" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "automation_runs_rls" ON "public"."automation_runs";
 CREATE POLICY "automation_runs_rls" ON "public"."automation_runs" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
 
+ALTER TABLE "public"."workflow_definitions" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "workflow_definitions_rls" ON "public"."workflow_definitions";
+CREATE POLICY "workflow_definitions_rls" ON "public"."workflow_definitions" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
+
+ALTER TABLE "public"."workflow_runs" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "workflow_runs_rls" ON "public"."workflow_runs";
+CREATE POLICY "workflow_runs_rls" ON "public"."workflow_runs" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
+
 ALTER TABLE "public"."threads" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "threads_rls" ON "public"."threads";
 CREATE POLICY "threads_rls" ON "public"."threads" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());

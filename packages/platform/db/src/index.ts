@@ -43,6 +43,11 @@ export type {
   UsageLedgerSource,
   UsageType,
   User,
+  // Agent Workflows
+  WorkflowDefinition,
+  WorkflowRun,
+  WorkflowRunStatus,
+  WorkflowStatus,
   // Webhooks
   WebhookEvent,
 } from "./generated/prisma/client";

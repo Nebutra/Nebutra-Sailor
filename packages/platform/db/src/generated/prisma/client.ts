@@ -137,6 +137,16 @@ export type Automation = Prisma.AutomationModel
  */
 export type AutomationRun = Prisma.AutomationRunModel
 /**
+ * Model WorkflowDefinition
+ * 
+ */
+export type WorkflowDefinition = Prisma.WorkflowDefinitionModel
+/**
+ * Model WorkflowRun
+ * 
+ */
+export type WorkflowRun = Prisma.WorkflowRunModel
+/**
  * Model ModelConfig
  * 
  */
