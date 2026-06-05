@@ -107,10 +107,12 @@ function buildManifestLayer(
  * stored field value (progressive disclosure invariant).
  */
 export function buildManifest(ctx: CompanyContext): ContextManifest {
-  const pending = new Set<LayerId>(STAGE_PENDING_LAYERS[ctx.stage]);
+  // Defensive against a legacy/empty context that lacks `.layers` (e.g. a flat
+  // companyContext persisted before the tower) — never throw; project empties.
+  const pending = new Set<LayerId>(STAGE_PENDING_LAYERS[ctx.stage] ?? []);
 
   const layers = LAYER_IDS.map((id) => {
-    const layer = ctx.layers[id] ?? { id, fields: {}, values: {} };
+    const layer = ctx.layers?.[id] ?? { id, fields: {}, values: {} };
     return buildManifestLayer(layer, pending);
   });
 

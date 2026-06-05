@@ -4,6 +4,7 @@ import { z } from "zod";
 import { getAuth } from "@/lib/auth";
 import { getTenantDb } from "@/lib/db";
 import { hasPermission, resolveRole } from "@/lib/permissions";
+import { ensureTower } from "@/lib/startup-os/company-context/migrate";
 import { InMemoryCompanyContextRepository } from "@/lib/startup-os/company-context/repository";
 import { isStartupOSPrototypeEnabled } from "@/lib/startup-os/feature-flag";
 import {
@@ -103,10 +104,11 @@ export async function PATCH(request: Request, context: RouteContext) {
     }
 
     const now = new Date().toISOString();
+    const tower = ensureTower(project.companyContext, decodedProjectId, now);
     const repo = new InMemoryCompanyContextRepository();
-    repo.save(project.companyContext);
+    repo.save(tower);
     const nextContext = repo.upsertField(
-      project.companyContext.projectId,
+      tower.projectId,
       parsed.data.layerId,
       parsed.data.fieldKey,
       parsed.data.value,
