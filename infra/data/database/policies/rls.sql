@@ -241,6 +241,14 @@ ALTER TABLE "public"."tenant_provider_keys" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "tenant_provider_keys_rls" ON "public"."tenant_provider_keys";
 CREATE POLICY "tenant_provider_keys_rls" ON "public"."tenant_provider_keys" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
 
+ALTER TABLE "public"."automations" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "automations_rls" ON "public"."automations";
+CREATE POLICY "automations_rls" ON "public"."automations" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
+
+ALTER TABLE "public"."automation_runs" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "automation_runs_rls" ON "public"."automation_runs";
+CREATE POLICY "automation_runs_rls" ON "public"."automation_runs" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
+
 ALTER TABLE "public"."threads" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "threads_rls" ON "public"."threads";
 CREATE POLICY "threads_rls" ON "public"."threads" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());

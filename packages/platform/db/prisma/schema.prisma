@@ -180,6 +180,8 @@ model Tenant {
   feedbackReports         FeedbackReport[]
   integrations            Integration[]
   tenantProviderKeys      TenantProviderKey[]
+  automations             Automation[]
+  automationRuns          AutomationRun[]
   invoices                Invoice[]
   oauthClients            OAuthClient[]
   orders                  Order[]
@@ -508,6 +510,118 @@ model TenantProviderKey {
   @@unique([tenantId, provider])
   @@index([tenantId])
   @@map("tenant_provider_keys")
+  @@schema("public")
+}
+
+// ── Agent Automations (Local Agent Automation, cloud-reconciled) ────────────────
+// Recurring AI-agent tasks. `Automation` maps the Codex `automation.toml`
+// definition; `AutomationRun` maps each append-only `memory.md` run record.
+// Cloud reconciliation vs the local reference: `execution_environment`/`cwds[]`
+// are dropped (no user-local FS); `scopeRef` is the single logical cloud context.
+
+enum AutomationStatus {
+  ACTIVE
+  PAUSED
+  DISABLED
+
+  @@schema("public")
+}
+
+enum AutomationScheduleKind {
+  CRON
+  RRULE // reserved — 422-gated at the API until a recurrence util lands
+
+  @@schema("public")
+}
+
+enum AutomationRunStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+  BLOCKED
+  PARTIAL
+
+  @@schema("public")
+}
+
+enum ReasoningEffort {
+  LOW
+  MEDIUM
+  HIGH
+  XHIGH
+
+  @@schema("public")
+}
+
+model Automation {
+  id              String                 @id @default(cuid())
+  tenantId        String                 @map("tenant_id")
+  name            String                 @db.VarChar(200)
+  prompt          String                 @db.Text
+  status          AutomationStatus       @default(ACTIVE)
+  scheduleKind    AutomationScheduleKind @default(CRON) @map("schedule_kind")
+  scheduleExpr    String                 @map("schedule_expr") @db.VarChar(256)
+  timezone        String                 @default("UTC") @db.VarChar(64)
+  model           String                 @default("flagship") @db.VarChar(128)
+  reasoningEffort ReasoningEffort        @default(MEDIUM) @map("reasoning_effort")
+  // Replaces the reference `cwds[]` — one logical cloud context (thread id /
+  // project slug / free-form label), not an FS-path array.
+  scopeRef        String?                @map("scope_ref") @db.VarChar(120)
+  // Standing config note — the only definition-level memory field; evolves
+  // independently of the append-only run log.
+  knownIssues     String[]               @default([]) @map("known_issues")
+  nextRunAt       DateTime?              @map("next_run_at")
+  lastRunAt       DateTime?              @map("last_run_at")
+  metadata        Json                   @default("{}")
+  createdAt       DateTime               @default(now()) @map("created_at")
+  updatedAt       DateTime               @updatedAt @map("updated_at")
+
+  tenant Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  runs   AutomationRun[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId, status, nextRunAt])
+  @@index([tenantId, createdAt(sort: Desc)])
+  @@map("automations")
+  @@schema("public")
+}
+
+model AutomationRun {
+  id           String              @id @default(cuid())
+  tenantId     String              @map("tenant_id")
+  automationId String              @map("automation_id")
+  status       AutomationRunStatus @default(RUNNING)
+  // "${automationId}::${scheduledAt.toISOString()}" — blocks double-fire on retry.
+  idempotencyKey String            @map("idempotency_key") @db.VarChar(191)
+  // Fresh per run (== runId) → links to AgentRolloutLine(tenant, thread, seq).
+  threadId     String              @map("thread_id")
+  triggeredBy  String              @default("scheduler") @map("triggered_by") @db.VarChar(20)
+  scheduledAt  DateTime?           @map("scheduled_at")
+  startedAt    DateTime?           @map("started_at")
+  finishedAt   DateTime?           @map("finished_at")
+  // memory.md per-run fields. git*/changedFiles stay null until a git connector
+  // is wired into the runtime ToolRegistry (deferred).
+  summary      String?             @db.Text
+  changedFiles String[]            @default([]) @map("changed_files")
+  blockers     String[]            @default([])
+  verifications Json               @default("[]") // [{ command, result }]
+  gitBranch     String?            @map("git_branch") @db.VarChar(200)
+  gitCommitHash String?            @map("git_commit_hash") @db.VarChar(40)
+  gitPushStatus String?            @map("git_push_status") @db.VarChar(20)
+  tokenUsage   Json                @default("{}") @map("token_usage")
+  // Precomputed read-back context ({knownIssues,lastOutcome,recentSummaries[]}).
+  memorySnapshot Json              @default("{}") @map("memory_snapshot")
+  taskId       String?             @map("task_id") // soft FK to tasks.id (no relation)
+  createdAt    DateTime            @default(now()) @map("created_at")
+  updatedAt    DateTime            @updatedAt @map("updated_at")
+
+  tenant     Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  automation Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, idempotencyKey])
+  @@index([tenantId, automationId, createdAt(sort: Desc)])
+  @@index([tenantId, status, createdAt(sort: Desc)])
+  @@map("automation_runs")
   @@schema("public")
 }
 

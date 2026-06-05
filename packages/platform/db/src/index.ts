@@ -11,6 +11,12 @@ export type {
   AIProvider,
   // Audit
   AuditLog,
+  // Agent Automations
+  Automation,
+  AutomationRun,
+  AutomationRunStatus,
+  AutomationScheduleKind,
+  AutomationStatus,
   // Content
   Content,
   ContentEmbedding,
@@ -27,6 +33,7 @@ export type {
   Plan,
   // E-Commerce
   Product,
+  ReasoningEffort,
   Role,
   // Billing
   Subscription,

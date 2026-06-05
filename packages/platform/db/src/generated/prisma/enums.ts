@@ -134,6 +134,44 @@ export const TenantKind = {
 export type TenantKind = (typeof TenantKind)[keyof typeof TenantKind]
 
 
+export const AutomationStatus = {
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  DISABLED: 'DISABLED'
+} as const
+
+export type AutomationStatus = (typeof AutomationStatus)[keyof typeof AutomationStatus]
+
+
+export const AutomationScheduleKind = {
+  CRON: 'CRON',
+  RRULE: 'RRULE'
+} as const
+
+export type AutomationScheduleKind = (typeof AutomationScheduleKind)[keyof typeof AutomationScheduleKind]
+
+
+export const AutomationRunStatus = {
+  RUNNING: 'RUNNING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  BLOCKED: 'BLOCKED',
+  PARTIAL: 'PARTIAL'
+} as const
+
+export type AutomationRunStatus = (typeof AutomationRunStatus)[keyof typeof AutomationRunStatus]
+
+
+export const ReasoningEffort = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  XHIGH: 'XHIGH'
+} as const
+
+export type ReasoningEffort = (typeof ReasoningEffort)[keyof typeof ReasoningEffort]
+
+
 export const AIProvider = {
   OPENAI: 'OPENAI',
   ANTHROPIC: 'ANTHROPIC',

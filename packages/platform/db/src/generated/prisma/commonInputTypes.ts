@@ -423,6 +423,74 @@ export type EnumAIProviderWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumAIProviderFilter<$PrismaModel>
 }
 
+export type EnumAutomationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationStatus | Prisma.EnumAutomationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationStatus[] | Prisma.ListEnumAutomationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationStatus[] | Prisma.ListEnumAutomationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationStatusFilter<$PrismaModel> | $Enums.AutomationStatus
+}
+
+export type EnumAutomationScheduleKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationScheduleKind | Prisma.EnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationScheduleKind[] | Prisma.ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationScheduleKind[] | Prisma.ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationScheduleKindFilter<$PrismaModel> | $Enums.AutomationScheduleKind
+}
+
+export type EnumReasoningEffortFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReasoningEffort | Prisma.EnumReasoningEffortFieldRefInput<$PrismaModel>
+  in?: $Enums.ReasoningEffort[] | Prisma.ListEnumReasoningEffortFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReasoningEffort[] | Prisma.ListEnumReasoningEffortFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReasoningEffortFilter<$PrismaModel> | $Enums.ReasoningEffort
+}
+
+export type EnumAutomationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationStatus | Prisma.EnumAutomationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationStatus[] | Prisma.ListEnumAutomationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationStatus[] | Prisma.ListEnumAutomationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationStatusWithAggregatesFilter<$PrismaModel> | $Enums.AutomationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAutomationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAutomationStatusFilter<$PrismaModel>
+}
+
+export type EnumAutomationScheduleKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationScheduleKind | Prisma.EnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationScheduleKind[] | Prisma.ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationScheduleKind[] | Prisma.ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationScheduleKindWithAggregatesFilter<$PrismaModel> | $Enums.AutomationScheduleKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAutomationScheduleKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAutomationScheduleKindFilter<$PrismaModel>
+}
+
+export type EnumReasoningEffortWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReasoningEffort | Prisma.EnumReasoningEffortFieldRefInput<$PrismaModel>
+  in?: $Enums.ReasoningEffort[] | Prisma.ListEnumReasoningEffortFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReasoningEffort[] | Prisma.ListEnumReasoningEffortFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReasoningEffortWithAggregatesFilter<$PrismaModel> | $Enums.ReasoningEffort
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReasoningEffortFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReasoningEffortFilter<$PrismaModel>
+}
+
+export type EnumAutomationRunStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationRunStatus | Prisma.EnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationRunStatus[] | Prisma.ListEnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationRunStatus[] | Prisma.ListEnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel> | $Enums.AutomationRunStatus
+}
+
+export type EnumAutomationRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationRunStatus | Prisma.EnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationRunStatus[] | Prisma.ListEnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationRunStatus[] | Prisma.ListEnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.AutomationRunStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
+}
+
 export type DecimalNullableFilter<$PrismaModel = never> = {
   equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
   in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
@@ -1210,6 +1278,74 @@ export type NestedEnumAIProviderWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumAIProviderFilter<$PrismaModel>
   _max?: Prisma.NestedEnumAIProviderFilter<$PrismaModel>
+}
+
+export type NestedEnumAutomationStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationStatus | Prisma.EnumAutomationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationStatus[] | Prisma.ListEnumAutomationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationStatus[] | Prisma.ListEnumAutomationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationStatusFilter<$PrismaModel> | $Enums.AutomationStatus
+}
+
+export type NestedEnumAutomationScheduleKindFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationScheduleKind | Prisma.EnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationScheduleKind[] | Prisma.ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationScheduleKind[] | Prisma.ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationScheduleKindFilter<$PrismaModel> | $Enums.AutomationScheduleKind
+}
+
+export type NestedEnumReasoningEffortFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReasoningEffort | Prisma.EnumReasoningEffortFieldRefInput<$PrismaModel>
+  in?: $Enums.ReasoningEffort[] | Prisma.ListEnumReasoningEffortFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReasoningEffort[] | Prisma.ListEnumReasoningEffortFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReasoningEffortFilter<$PrismaModel> | $Enums.ReasoningEffort
+}
+
+export type NestedEnumAutomationStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationStatus | Prisma.EnumAutomationStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationStatus[] | Prisma.ListEnumAutomationStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationStatus[] | Prisma.ListEnumAutomationStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationStatusWithAggregatesFilter<$PrismaModel> | $Enums.AutomationStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAutomationStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAutomationStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumAutomationScheduleKindWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationScheduleKind | Prisma.EnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationScheduleKind[] | Prisma.ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationScheduleKind[] | Prisma.ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationScheduleKindWithAggregatesFilter<$PrismaModel> | $Enums.AutomationScheduleKind
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAutomationScheduleKindFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAutomationScheduleKindFilter<$PrismaModel>
+}
+
+export type NestedEnumReasoningEffortWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReasoningEffort | Prisma.EnumReasoningEffortFieldRefInput<$PrismaModel>
+  in?: $Enums.ReasoningEffort[] | Prisma.ListEnumReasoningEffortFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReasoningEffort[] | Prisma.ListEnumReasoningEffortFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReasoningEffortWithAggregatesFilter<$PrismaModel> | $Enums.ReasoningEffort
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReasoningEffortFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReasoningEffortFilter<$PrismaModel>
+}
+
+export type NestedEnumAutomationRunStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationRunStatus | Prisma.EnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationRunStatus[] | Prisma.ListEnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationRunStatus[] | Prisma.ListEnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel> | $Enums.AutomationRunStatus
+}
+
+export type NestedEnumAutomationRunStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AutomationRunStatus | Prisma.EnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AutomationRunStatus[] | Prisma.ListEnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AutomationRunStatus[] | Prisma.ListEnumAutomationRunStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAutomationRunStatusWithAggregatesFilter<$PrismaModel> | $Enums.AutomationRunStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAutomationRunStatusFilter<$PrismaModel>
 }
 
 export type NestedDecimalNullableFilter<$PrismaModel = never> = {

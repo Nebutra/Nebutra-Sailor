@@ -1,5 +1,24 @@
 // Pagination
 
+// Automations
+export type {
+  CreateAutomationData,
+  UpdateAutomationData,
+} from "./automation.repository";
+export {
+  AutomationRepository,
+  findDueAutomations,
+  getAutomationRepository,
+} from "./automation.repository";
+export type {
+  FinishRunData,
+  MemoryContext,
+  StartRunData,
+} from "./automation-run.repository";
+export {
+  AutomationRunRepository,
+  getAutomationRunRepository,
+} from "./automation-run.repository";
 export type {
   CreateOrganizationData,
   UpdateOrganizationData,

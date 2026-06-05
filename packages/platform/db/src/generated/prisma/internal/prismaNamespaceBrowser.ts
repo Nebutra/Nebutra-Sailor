@@ -67,6 +67,8 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   Integration: 'Integration',
   TenantProviderKey: 'TenantProviderKey',
+  Automation: 'Automation',
+  AutomationRun: 'AutomationRun',
   ModelConfig: 'ModelConfig',
   RequestLog: 'RequestLog',
   FeatureDefinition: 'FeatureDefinition',
@@ -377,6 +379,57 @@ export const TenantProviderKeyScalarFieldEnum = {
 } as const
 
 export type TenantProviderKeyScalarFieldEnum = (typeof TenantProviderKeyScalarFieldEnum)[keyof typeof TenantProviderKeyScalarFieldEnum]
+
+
+export const AutomationScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  prompt: 'prompt',
+  status: 'status',
+  scheduleKind: 'scheduleKind',
+  scheduleExpr: 'scheduleExpr',
+  timezone: 'timezone',
+  model: 'model',
+  reasoningEffort: 'reasoningEffort',
+  scopeRef: 'scopeRef',
+  knownIssues: 'knownIssues',
+  nextRunAt: 'nextRunAt',
+  lastRunAt: 'lastRunAt',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AutomationScalarFieldEnum = (typeof AutomationScalarFieldEnum)[keyof typeof AutomationScalarFieldEnum]
+
+
+export const AutomationRunScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  automationId: 'automationId',
+  status: 'status',
+  idempotencyKey: 'idempotencyKey',
+  threadId: 'threadId',
+  triggeredBy: 'triggeredBy',
+  scheduledAt: 'scheduledAt',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  summary: 'summary',
+  changedFiles: 'changedFiles',
+  blockers: 'blockers',
+  verifications: 'verifications',
+  gitBranch: 'gitBranch',
+  gitCommitHash: 'gitCommitHash',
+  gitPushStatus: 'gitPushStatus',
+  tokenUsage: 'tokenUsage',
+  memorySnapshot: 'memorySnapshot',
+  taskId: 'taskId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AutomationRunScalarFieldEnum = (typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum]
 
 
 export const ModelConfigScalarFieldEnum = {

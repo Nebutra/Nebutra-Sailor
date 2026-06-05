@@ -400,6 +400,8 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   Integration: 'Integration',
   TenantProviderKey: 'TenantProviderKey',
+  Automation: 'Automation',
+  AutomationRun: 'AutomationRun',
   ModelConfig: 'ModelConfig',
   RequestLog: 'RequestLog',
   FeatureDefinition: 'FeatureDefinition',
@@ -475,7 +477,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
+    modelProps: "organization" | "tenant" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditTransaction" | "stripeCustomer" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "atelierCanvas" | "agentRolloutLine"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1644,6 +1646,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TenantProviderKeyCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TenantProviderKeyCountAggregateOutputType> | number
+        }
+      }
+    }
+    Automation: {
+      payload: Prisma.$AutomationPayload<ExtArgs>
+      fields: Prisma.AutomationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AutomationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AutomationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>
+        }
+        findFirst: {
+          args: Prisma.AutomationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AutomationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>
+        }
+        findMany: {
+          args: Prisma.AutomationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>[]
+        }
+        create: {
+          args: Prisma.AutomationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>
+        }
+        createMany: {
+          args: Prisma.AutomationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AutomationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>[]
+        }
+        delete: {
+          args: Prisma.AutomationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>
+        }
+        update: {
+          args: Prisma.AutomationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>
+        }
+        deleteMany: {
+          args: Prisma.AutomationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AutomationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AutomationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>[]
+        }
+        upsert: {
+          args: Prisma.AutomationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationPayload>
+        }
+        aggregate: {
+          args: Prisma.AutomationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAutomation>
+        }
+        groupBy: {
+          args: Prisma.AutomationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutomationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AutomationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutomationCountAggregateOutputType> | number
+        }
+      }
+    }
+    AutomationRun: {
+      payload: Prisma.$AutomationRunPayload<ExtArgs>
+      fields: Prisma.AutomationRunFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AutomationRunFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AutomationRunFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        findFirst: {
+          args: Prisma.AutomationRunFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AutomationRunFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        findMany: {
+          args: Prisma.AutomationRunFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+        }
+        create: {
+          args: Prisma.AutomationRunCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        createMany: {
+          args: Prisma.AutomationRunCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AutomationRunCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+        }
+        delete: {
+          args: Prisma.AutomationRunDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        update: {
+          args: Prisma.AutomationRunUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        deleteMany: {
+          args: Prisma.AutomationRunDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AutomationRunUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AutomationRunUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+        }
+        upsert: {
+          args: Prisma.AutomationRunUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+        }
+        aggregate: {
+          args: Prisma.AutomationRunAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAutomationRun>
+        }
+        groupBy: {
+          args: Prisma.AutomationRunGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutomationRunGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AutomationRunCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutomationRunCountAggregateOutputType> | number
         }
       }
     }
@@ -6360,6 +6510,57 @@ export const TenantProviderKeyScalarFieldEnum = {
 export type TenantProviderKeyScalarFieldEnum = (typeof TenantProviderKeyScalarFieldEnum)[keyof typeof TenantProviderKeyScalarFieldEnum]
 
 
+export const AutomationScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  name: 'name',
+  prompt: 'prompt',
+  status: 'status',
+  scheduleKind: 'scheduleKind',
+  scheduleExpr: 'scheduleExpr',
+  timezone: 'timezone',
+  model: 'model',
+  reasoningEffort: 'reasoningEffort',
+  scopeRef: 'scopeRef',
+  knownIssues: 'knownIssues',
+  nextRunAt: 'nextRunAt',
+  lastRunAt: 'lastRunAt',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AutomationScalarFieldEnum = (typeof AutomationScalarFieldEnum)[keyof typeof AutomationScalarFieldEnum]
+
+
+export const AutomationRunScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  automationId: 'automationId',
+  status: 'status',
+  idempotencyKey: 'idempotencyKey',
+  threadId: 'threadId',
+  triggeredBy: 'triggeredBy',
+  scheduledAt: 'scheduledAt',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  summary: 'summary',
+  changedFiles: 'changedFiles',
+  blockers: 'blockers',
+  verifications: 'verifications',
+  gitBranch: 'gitBranch',
+  gitCommitHash: 'gitCommitHash',
+  gitPushStatus: 'gitPushStatus',
+  tokenUsage: 'tokenUsage',
+  memorySnapshot: 'memorySnapshot',
+  taskId: 'taskId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AutomationRunScalarFieldEnum = (typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum]
+
+
 export const ModelConfigScalarFieldEnum = {
   id: 'id',
   modelName: 'modelName',
@@ -7632,6 +7833,62 @@ export type ListEnumAIProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'AutomationStatus'
+ */
+export type EnumAutomationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AutomationStatus[]'
+ */
+export type ListEnumAutomationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AutomationScheduleKind'
+ */
+export type EnumAutomationScheduleKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationScheduleKind'>
+    
+
+
+/**
+ * Reference to a field of type 'AutomationScheduleKind[]'
+ */
+export type ListEnumAutomationScheduleKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationScheduleKind[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReasoningEffort'
+ */
+export type EnumReasoningEffortFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReasoningEffort'>
+    
+
+
+/**
+ * Reference to a field of type 'ReasoningEffort[]'
+ */
+export type ListEnumReasoningEffortFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReasoningEffort[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AutomationRunStatus'
+ */
+export type EnumAutomationRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationRunStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AutomationRunStatus[]'
+ */
+export type ListEnumAutomationRunStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AutomationRunStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'BillingInterval'
  */
 export type EnumBillingIntervalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BillingInterval'>
@@ -8049,6 +8306,8 @@ export type GlobalOmitConfig = {
   orderItem?: Prisma.OrderItemOmit
   integration?: Prisma.IntegrationOmit
   tenantProviderKey?: Prisma.TenantProviderKeyOmit
+  automation?: Prisma.AutomationOmit
+  automationRun?: Prisma.AutomationRunOmit
   modelConfig?: Prisma.ModelConfigOmit
   requestLog?: Prisma.RequestLogOmit
   featureDefinition?: Prisma.FeatureDefinitionOmit

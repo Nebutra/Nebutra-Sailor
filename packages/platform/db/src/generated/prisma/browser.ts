@@ -103,6 +103,16 @@ export type Integration = Prisma.IntegrationModel
  */
 export type TenantProviderKey = Prisma.TenantProviderKeyModel
 /**
+ * Model Automation
+ * 
+ */
+export type Automation = Prisma.AutomationModel
+/**
+ * Model AutomationRun
+ * 
+ */
+export type AutomationRun = Prisma.AutomationRunModel
+/**
  * Model ModelConfig
  * 
  */
