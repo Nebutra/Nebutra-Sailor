@@ -35,6 +35,7 @@ import {
   type StartupCanvasNode,
   type StartupCanvasPoint,
 } from "@/lib/startup-os/canvas";
+import { companyName, valueProposition } from "@/lib/startup-os/company-context/projection";
 import {
   STARTUP_ARENAS,
   type StartupArena,
@@ -771,7 +772,7 @@ export function StartupCommandCenter() {
   }
 
   return (
-    <div className="relative min-h-[calc(100vh-0px)]">
+    <div className="relative h-full min-h-0">
       {lastError ? (
         <div className="absolute left-4 top-4 z-20 rounded-full bg-red-3 px-3 py-1.5 text-xs font-medium text-red-11 shadow-sm dark:bg-red-9/20 dark:text-red-5">
           {lastError}
@@ -1114,8 +1115,8 @@ function StartupBuilderWorkspace({
   ].filter((item): item is { title: string; body: string; tone: string } => Boolean(item));
 
   return (
-    <AnimateIn preset="fadeUp">
-      <section className="h-[calc(100vh-32px)] min-h-[720px] overflow-hidden bg-neutral-1 text-neutral-12">
+    <AnimateIn preset="fadeUp" className="h-full min-h-0">
+      <section className="h-full min-h-0 overflow-hidden bg-neutral-1 text-neutral-12">
         <div className="grid h-full xl:grid-cols-[360px_minmax(0,1fr)]">
           <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-1">
             <div className="border-b border-neutral-6 p-4">
