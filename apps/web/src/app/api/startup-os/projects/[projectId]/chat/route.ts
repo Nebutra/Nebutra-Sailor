@@ -24,6 +24,7 @@ import {
   getStartupProjectRecord,
   type StartupOSDb,
   type StartupOSProjectRecord,
+  type StartupTurnSnapshot,
   saveStartupProjectRecord,
 } from "@/lib/startup-os/store";
 
@@ -88,6 +89,7 @@ async function persistChatResult(input: {
   readonly db: StartupOSRuntimeDb;
   readonly tenantId: string;
   readonly result: StreamStartupConversationResult;
+  readonly snapshot?: StartupTurnSnapshot;
 }): Promise<{
   readonly saved: StartupOSProjectRecord;
   readonly rollout: { readonly threadId: string };
@@ -96,6 +98,7 @@ async function persistChatResult(input: {
     const saved = await saveStartupProjectRecord(db, input.tenantId, input.result.project, {
       events: input.result.events,
       ...(input.result.files ? { files: input.result.files } : {}),
+      ...(input.snapshot ? { snapshot: input.snapshot } : {}),
     });
     const rollout = await recordStartupOSRunRollout({
       db,
@@ -221,7 +224,19 @@ export async function POST(request: Request, context: RouteContext) {
         const failed = result.events.some((event) => event.type === "conversation_failed");
 
         if (!failed) {
-          const { saved, rollout } = await persistChatResult({ db, tenantId: orgId, result });
+          // Pre-turn workspace snapshot — the basis for revert-and-resend / undo.
+          const turnSnapshot: StartupTurnSnapshot = {
+            turnId: globalThis.crypto.randomUUID(),
+            prompt: instruction,
+            files: workspaceFiles,
+            createdAt: new Date().toISOString(),
+          };
+          const { saved, rollout } = await persistChatResult({
+            db,
+            tenantId: orgId,
+            result,
+            snapshot: turnSnapshot,
+          });
           await auditLogger(request, {
             actor: { id: userId, type: "user" },
             tenantId: orgId,

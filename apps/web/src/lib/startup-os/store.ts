@@ -5,6 +5,8 @@ import { isStartupOSFile, normalizeStartupProjectFiles, type StartupOSFile } fro
 
 const STARTUP_OS_SCENE_KIND = "nebutra.startup-os.project";
 const STARTUP_OS_SCENE_VERSION = 1;
+/** Keep the most recent N per-turn snapshots in the scene to bound growth. */
+const SNAPSHOT_CAP = 50;
 const STARTUP_OS_CANVAS_PREFIX = "startup-os:";
 
 export type StartupOSEventType =
@@ -33,11 +35,21 @@ export interface StartupOSEvent {
 export type StartupOSEventInput = Omit<StartupOSEvent, "id" | "projectId"> &
   Partial<Pick<StartupOSEvent, "id" | "projectId">>;
 
+/** A pre-turn workspace snapshot, captured before a chat turn applies its file
+ *  patches — the basis for "revert and resend" and undo. */
+export interface StartupTurnSnapshot {
+  readonly turnId: string;
+  readonly prompt: string;
+  readonly files: readonly StartupOSFile[];
+  readonly createdAt: string;
+}
+
 export interface StartupOSProjectRecord {
   readonly project: StartupOSProject;
   readonly events: readonly StartupOSEvent[];
   readonly files?: readonly StartupOSFile[];
   readonly canvasLayout?: StartupCanvasLayout;
+  readonly snapshots?: readonly StartupTurnSnapshot[];
 }
 
 export interface StartupOSSceneEnvelope {
@@ -47,6 +59,7 @@ export interface StartupOSSceneEnvelope {
   readonly events: readonly StartupOSEvent[];
   readonly files?: readonly StartupOSFile[];
   readonly canvasLayout?: StartupCanvasLayout;
+  readonly snapshots?: readonly StartupTurnSnapshot[];
 }
 
 interface AtelierCanvasRow {
@@ -155,12 +168,24 @@ function toStartupOSEvent(
   };
 }
 
+function isStartupTurnSnapshot(value: unknown): value is StartupTurnSnapshot {
+  return (
+    isRecord(value) &&
+    typeof value.turnId === "string" &&
+    typeof value.prompt === "string" &&
+    typeof value.createdAt === "string" &&
+    Array.isArray(value.files) &&
+    value.files.every(isStartupOSFile)
+  );
+}
+
 export function serializeStartupProjectScene(
   project: StartupOSProject,
   options?: {
     readonly events?: readonly StartupOSEvent[];
     readonly files?: readonly StartupOSFile[];
     readonly canvasLayout?: StartupCanvasLayout;
+    readonly snapshots?: readonly StartupTurnSnapshot[];
   },
 ): StartupOSSceneEnvelope {
   return {
@@ -170,6 +195,9 @@ export function serializeStartupProjectScene(
     events: options?.events ?? [],
     ...(options?.files ? { files: normalizeStartupProjectFiles(options.files) } : {}),
     ...(options?.canvasLayout ? { canvasLayout: options.canvasLayout } : {}),
+    ...(options?.snapshots && options.snapshots.length > 0
+      ? { snapshots: options.snapshots }
+      : {}),
   };
 }
 
@@ -189,12 +217,18 @@ export function parseStartupProjectSceneEnvelope(scene: unknown): StartupOSProje
         : null;
   if (files === null) return null;
 
+  const snapshots =
+    Array.isArray(scene.snapshots) && scene.snapshots.every(isStartupTurnSnapshot)
+      ? (scene.snapshots as StartupTurnSnapshot[])
+      : undefined;
+
   if (scene.events === undefined) {
     return {
       project: normalizeStartupProjectCopy(scene.project),
       events: [],
       ...(files ? { files } : {}),
       ...(canvasLayout ? { canvasLayout } : {}),
+      ...(snapshots ? { snapshots } : {}),
     };
   }
   if (!Array.isArray(scene.events) || !scene.events.every(isStartupOSEvent)) {
@@ -206,6 +240,7 @@ export function parseStartupProjectSceneEnvelope(scene: unknown): StartupOSProje
     events: scene.events,
     ...(files ? { files } : {}),
     ...(canvasLayout ? { canvasLayout } : {}),
+    ...(snapshots ? { snapshots } : {}),
   };
 }
 
@@ -262,6 +297,7 @@ export async function saveStartupProjectRecord(
     readonly events?: readonly StartupOSEventInput[];
     readonly files?: readonly StartupOSFile[];
     readonly canvasLayout?: StartupCanvasLayout;
+    readonly snapshot?: StartupTurnSnapshot;
   },
 ): Promise<StartupOSProjectRecord> {
   const existing = await getStartupProjectRecord(db, tenantId, project.id);
@@ -278,10 +314,14 @@ export async function saveStartupProjectRecord(
       : existingEvents;
   const files = options?.files ? normalizeStartupProjectFiles(options.files) : existing?.files;
   const canvasLayout = options?.canvasLayout ?? existing?.canvasLayout;
+  const snapshots = options?.snapshot
+    ? [...(existing?.snapshots ?? []), options.snapshot].slice(-SNAPSHOT_CAP)
+    : existing?.snapshots;
   const scene = serializeStartupProjectScene(project, {
     events,
     ...(files ? { files } : {}),
     ...(canvasLayout ? { canvasLayout } : {}),
+    ...(snapshots ? { snapshots } : {}),
   });
   const row = await db.atelierCanvas.upsert({
     where: { tenantId_id: { tenantId, id: toStartupOSCanvasId(project.id) } },

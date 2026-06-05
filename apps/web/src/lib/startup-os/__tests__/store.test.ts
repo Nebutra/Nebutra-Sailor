@@ -11,6 +11,7 @@ import {
   saveStartupCanvasLayout,
   saveStartupProject,
   saveStartupProjectFiles,
+  saveStartupProjectRecord,
   serializeStartupProjectScene,
   toStartupOSCanvasId,
 } from "../store";
@@ -191,6 +192,45 @@ describe("Startup OS AtelierCanvas persistence contract", () => {
         "startup-canvas:company-context": { x: 72, y: 128 },
       },
     });
+  });
+
+  it("captures and round-trips per-turn snapshots, appended in order", async () => {
+    const db = createMemoryDb();
+    const project = compileStartupProject({
+      thesis: "A founder OS with revertible AI turns.",
+      arena: "AI SaaS",
+      now: "2026-06-06T00:00:00.000Z",
+    });
+    const files = buildStartupProjectFiles(project);
+
+    await saveStartupProjectRecord(db, "org_123", project, {
+      event: {
+        type: "project_created",
+        occurredAt: "2026-06-06T00:00:00.000Z",
+        actorId: "u",
+        summary: "created",
+      },
+      files,
+      snapshot: {
+        turnId: "turn-1",
+        prompt: "add a pricing page",
+        files,
+        createdAt: "2026-06-06T00:01:00.000Z",
+      },
+    });
+    await saveStartupProjectRecord(db, "org_123", project, {
+      snapshot: {
+        turnId: "turn-2",
+        prompt: "restyle the hero",
+        files,
+        createdAt: "2026-06-06T00:02:00.000Z",
+      },
+    });
+
+    const record = await getStartupProjectRecord(db, "org_123", project.id);
+    expect(record?.snapshots?.map((snapshot) => snapshot.turnId)).toEqual(["turn-1", "turn-2"]);
+    expect(record?.snapshots?.[0]).toMatchObject({ prompt: "add a pricing page" });
+    expect(record?.snapshots?.[0]?.files.length).toBe(files.length);
   });
 
   it("persists user-edited files without dropping events or canvas layout", async () => {
