@@ -1373,7 +1373,7 @@
       },
       "design": {
         "title": "Système de design & bibliothèque de composants leader",
-        "desc": "Une architecture à 4 couches pilotée par tokens : Marque → Tokens → Thème → UI. Construite sur Radix + framer-motion avec thème oklch multi-preset, docs Storybook et tests de régression visuelle.",
+        "desc": "Une architecture à 4 couches pilotée par tokens : Marque → Tokens → Thème → UI. Construite sur Radix + la couche Motion partagée avec thème oklch multi-preset, docs Storybook et tests de régression visuelle.",
         "features": {
           "f1": "Gouvernance de tokens à 4 couches",
           "f2": "Multi-thème oklch + Storybook"

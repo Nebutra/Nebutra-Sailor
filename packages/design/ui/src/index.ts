@@ -7,7 +7,7 @@
  *   @nebutra/brand    → brand primitives (source data)
  *   @nebutra/tokens   → runtime CSS variables (@import styles.css)
  *   @nebutra/theme    → multi-theme presets (oklch, 6 variants)
- *   @nebutra/ui/theme → Lobe UI Ant Design bridge (internal)
+ *   @nebutra/ui/theme → Compatibility theme bridge (internal)
  *
  * @example
  * ```tsx
@@ -27,7 +27,7 @@
  */
 
 export type { NebutraThemeProviderProps, NebutraTokens, ThemeMode } from "./theme";
-// Theme — Lobe UI integration
+// Theme — compatibility bridge
 export { NebutraThemeProvider } from "./theme";
 
 // Re-export everything from subpaths for convenience

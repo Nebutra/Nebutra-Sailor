@@ -1373,7 +1373,7 @@
       },
       "design": {
         "title": "Leading Design System & Component Library",
-        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + framer-motion with oklch multi-theme, Storybook docs, and visual regression testing.",
+        "desc": "A 4-layer token-driven architecture: Brand → Tokens → Theme → UI. Built on Radix + the shared Motion layer with oklch multi-theme, Storybook docs, and visual regression testing.",
         "features": {
           "f1": "4-Layer Token Governance",
           "f2": "oklch Multi-Theme + Storybook"

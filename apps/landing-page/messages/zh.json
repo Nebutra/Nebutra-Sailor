@@ -1373,7 +1373,7 @@
       },
       "design": {
         "title": "领先的设计系统与现代组件库",
-        "desc": "四层 Token 驱动架构：品牌 → 令牌 → 主题 → UI。基于 Radix + framer-motion 构建，配合 oklch 多主题、Storybook 文档和视觉回归测试。",
+        "desc": "四层 Token 驱动架构：品牌 → 令牌 → 主题 → UI。基于 Radix + 共享 Motion 层构建，配合 oklch 多主题、Storybook 文档和视觉回归测试。",
         "features": {
           "f1": "四层令牌治理",
           "f2": "oklch 多主题 + Storybook"

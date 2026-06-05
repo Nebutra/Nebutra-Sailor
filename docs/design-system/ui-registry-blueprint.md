@@ -39,7 +39,7 @@
 | 依赖 | 用途 | 层级归属 |
 |------|------|---------|
 | `@base-ui/react` | command-menu dialog 底层 | primitives |
-| `framer-motion` / `motion` | AnimateIn, AnimatedBeam, MagicCard 等 | primitives + components |
+| shared Motion layer | AnimateIn, AnimatedBeam, MagicCard 等 | primitives + components |
 | `recharts` | ChartContainer | primitives |
 | `cobe` | Globe (WebGL 地球) | primitives |
 | `canvas-confetti` | Confetti | primitives |
@@ -183,47 +183,47 @@ Radix headless 包装、Token 驱动、跨所有 app 一致使用、不期望 fo
 
 ### TIER B — 改为 Registry copy-paste
 
-#### B1: 动画 / 视觉装饰（高定制需求 + framer-motion 强绑定）
+#### B1: 动画 / 视觉装饰（高定制需求 + shared Motion 绑定）
 
 | 组件 | 文件 | 重型依赖 | registry 名称 |
 |------|------|---------|--------------|
-| `AnimateIn` / `AnimateInGroup` | `primitives/animate-in.tsx` | framer-motion, @nebutra/brand | `animate-in` |
-| `AnimatedBeam` | `primitives/animated-beam.tsx` | framer-motion | `animated-beam` |
-| `AnimatedCircularProgressBar` | `primitives/animated-circular-progress-bar.tsx` | framer-motion | `animated-circular-progress-bar` |
+| `AnimateIn` / `AnimateInGroup` | `primitives/animate-in.tsx` | shared Motion, @nebutra/brand | `animate-in` |
+| `AnimatedBeam` | `primitives/animated-beam.tsx` | shared Motion | `animated-beam` |
+| `AnimatedCircularProgressBar` | `primitives/animated-circular-progress-bar.tsx` | shared Motion | `animated-circular-progress-bar` |
 | `AnimatedGradientText` | `primitives/animated-gradient-text.tsx` | 纯 CSS | `animated-gradient-text` |
-| `AnimatedGroup` | `primitives/animated-group.tsx` | framer-motion | `animated-group` |
-| `AnimatedHikeCard` | `primitives/animated-hike-card.tsx` | framer-motion | `animated-hike-card` |
-| `AnimatedList` | `primitives/animated-list.tsx` | framer-motion | `animated-list` |
+| `AnimatedGroup` | `primitives/animated-group.tsx` | shared Motion | `animated-group` |
+| `AnimatedHikeCard` | `primitives/animated-hike-card.tsx` | shared Motion | `animated-hike-card` |
+| `AnimatedList` | `primitives/animated-list.tsx` | shared Motion | `animated-list` |
 | `AnimatedShinyText` | `primitives/animated-shiny-text.tsx` | 纯 CSS | `animated-shiny-text` |
 | `AuroraText` | `primitives/aurora-text.tsx` | CSS animation | `aurora-text` |
-| `BorderTrail` | `primitives/border-trail.tsx` | framer-motion | `border-trail` |
-| `BubbleText` | `primitives/bubble-text.tsx` | framer-motion | `bubble-text` |
+| `BorderTrail` | `primitives/border-trail.tsx` | shared Motion | `border-trail` |
+| `BubbleText` | `primitives/bubble-text.tsx` | shared Motion | `bubble-text` |
 | `CanvasRevealEffect` | `primitives/canvas-reveal-effect.tsx` | three.js (optional) | `canvas-reveal-effect` |
 | `CardSpotlight` | `primitives/card-spotlight.tsx` | 纯 CSS | `card-spotlight` |
-| `DisplayCards` | `primitives/display-cards.tsx` | framer-motion | `display-cards` |
+| `DisplayCards` | `primitives/display-cards.tsx` | shared Motion | `display-cards` |
 | `DitheringBackground` / `DitheringShader` | `primitives/dithering-*.tsx` | @paper-design/shaders-react | `dithering-shader` |
 | `DotPattern` | `primitives/dot-pattern.tsx` | 纯 SVG | `dot-pattern` |
 | `FlickeringGrid` | `primitives/flickering-grid.tsx` | Canvas API | `flickering-grid` |
-| `GlowingEffect` | `primitives/glowing-effect.tsx` | framer-motion | `glowing-effect` |
-| `GradientAnimatedText` | `primitives/gradient-animated-text.tsx` | framer-motion | `gradient-animated-text` |
+| `GlowingEffect` | `primitives/glowing-effect.tsx` | shared Motion | `glowing-effect` |
+| `GradientAnimatedText` | `primitives/gradient-animated-text.tsx` | shared Motion | `gradient-animated-text` |
 | `GrainGradientBackground` | `primitives/grain-gradient-background.tsx` | Canvas/SVG | `grain-gradient-bg` |
 | `GridPatternCard` | `primitives/grid-pattern-card.tsx` | 纯 SVG | `grid-pattern-card` |
 | `LightRays` | `primitives/light-rays.tsx` | Canvas | `light-rays` |
 | `LineShadowText` | `primitives/line-shadow-text.tsx` | 纯 CSS | `line-shadow-text` |
-| `MagicCard` | `primitives/magic-card.tsx` | framer-motion | `magic-card` |
+| `MagicCard` | `primitives/magic-card.tsx` | shared Motion | `magic-card` |
 | `MeshGradientBg` | `primitives/mesh-gradient-bg.tsx` | Canvas | `mesh-gradient-bg` |
 | `NeuroNoiseBg` | `primitives/neuro-noise-bg.tsx` | @paper-design/shaders-react | `neuro-noise-bg` |
 | `NoisePatternCard` | `primitives/noise-pattern-card.tsx` | Canvas | `noise-pattern-card` |
-| `ProgressiveBlur` | `primitives/progressive-blur.tsx` | framer-motion | `progressive-blur` |
+| `ProgressiveBlur` | `primitives/progressive-blur.tsx` | shared Motion | `progressive-blur` |
 | `ShineBorder` | `primitives/shine-border.tsx` | 纯 CSS | `shine-border` |
 | `StarsCanvas` | `primitives/stars-canvas.tsx` | Canvas API | `stars-canvas` |
-| `TextLoop` | `primitives/text-loop.tsx` | framer-motion | `text-loop` |
+| `TextLoop` | `primitives/text-loop.tsx` | shared Motion | `text-loop` |
 | `TextScramble` | `primitives/text-scramble.tsx` | 纯 JS | `text-scramble` |
 | `TextShimmer` | `primitives/text-shimmer.tsx` | 纯 CSS | `text-shimmer` |
-| `WarpBackground` | `primitives/warp-background.tsx` | framer-motion | `warp-background` |
+| `WarpBackground` | `primitives/warp-background.tsx` | shared Motion | `warp-background` |
 | `WaveAnimation` / `WavesBg` | `primitives/wave-*.tsx` | Canvas | `waves-bg` |
-| `WordFadeIn` | `primitives/word-fade-in.tsx` | framer-motion | `word-fade-in` |
-| `ScrollVelocity` | `primitives/scroll-velocity.tsx` | framer-motion | `scroll-velocity` |
+| `WordFadeIn` | `primitives/word-fade-in.tsx` | shared Motion | `word-fade-in` |
+| `ScrollVelocity` | `primitives/scroll-velocity.tsx` | shared Motion | `scroll-velocity` |
 
 #### B2: 数据可视化 / 重型（WebGL / Canvas / 外部 API）
 
@@ -254,10 +254,10 @@ Radix headless 包装、Token 驱动、跨所有 app 一致使用、不期望 fo
 | `Announcement` | `primitives/announcement.tsx` | `announcement` |
 | `AvatarCircles` | `primitives/avatar-circles.tsx` | `avatar-circles` |
 | `ThemedSection` / `SectionTheme` | `layouts/SectionTheme.tsx` | `themed-section` |
-| `InfiniteSlider` | `primitives/infinite-slider.tsx` | framer-motion | `infinite-slider` |
-| `ExpandableTabs` | `primitives/expandable-tabs.tsx` | framer-motion | `expandable-tabs` |
+| `InfiniteSlider` | `primitives/infinite-slider.tsx` | shared Motion | `infinite-slider` |
+| `ExpandableTabs` | `primitives/expandable-tabs.tsx` | shared Motion | `expandable-tabs` |
 | `ChoiceBox` | `primitives/choicebox.tsx` | cva | `choicebox` |
-| `InteractiveFrostedGlassCard` | `primitives/interactive-frosted-glass-card.tsx` | framer-motion | `frosted-glass-card` |
+| `InteractiveFrostedGlassCard` | `primitives/interactive-frosted-glass-card.tsx` | shared Motion | `frosted-glass-card` |
 
 #### B4: Dashboard / SaaS 业务组件
 

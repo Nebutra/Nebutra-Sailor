@@ -1373,7 +1373,7 @@
       },
       "design": {
         "title": "Leading Modern Component Library System",
-        "desc": "A beautiful, token-driven architecture using Radix + framer-motion. Perfect for teams building their own opinionated UI libraries.",
+        "desc": "A beautiful, token-driven architecture using Radix + the shared Motion layer. Perfect for teams building their own opinionated UI libraries.",
         "features": {
           "f1": "4-Layer Tokens",
           "f2": "CSS Variables"

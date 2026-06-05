@@ -67,7 +67,7 @@ The library exports ~250 components organized into 5 categories. Storybook is th
 | `Badge`, `StatusBadge`, `ColorBadge`, `Kbd` | semantic intent variants | CVA |
 | `Avatar`, `AvatarCircles`, `AvatarSmartGroup` | size scale, fallback initials | Radix |
 | `Skeleton`, `Spinner`, `LoadingDots`, `Loader` | brand-aware loading | CSS |
-| `AnimateIn`, `AnimateInGroup`, `AnimatedGroup`, `AnimatedList` | Framer Motion entrance presets | brand motion |
+| `AnimateIn`, `AnimateInGroup`, `AnimatedGroup`, `AnimatedList` | Shared Motion entrance presets | brand motion |
 | `Heading`, `Text` | Geist-style typography utilities | tokens |
 | `Gauge`, `KpiCard`, `MetricCard`, `Chart` | data viz, semantic chart colors | recharts |
 

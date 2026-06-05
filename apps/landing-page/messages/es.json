@@ -1373,7 +1373,7 @@
       },
       "design": {
         "title": "Sistema de Diseño y Biblioteca de Componentes Líder",
-        "desc": "Una arquitectura de 4 capas orientada por tokens: Marca → Tokens → Tema → UI. Construida sobre Radix + framer-motion con multi-tema oklch, documentación Storybook y pruebas de regresión visual.",
+        "desc": "Una arquitectura de 4 capas orientada por tokens: Marca → Tokens → Tema → UI. Construida sobre Radix + la capa Motion compartida con multi-tema oklch, documentación Storybook y pruebas de regresión visual.",
         "features": {
           "f1": "Gobernanza de Tokens de 4 Capas",
           "f2": "Multi-Tema oklch + Storybook"

@@ -23,7 +23,7 @@ import "@nebutra/tokens/styles.css";
 
 ### Theme Bridge
 
-Use `NebutraThemeProvider` when consuming Lobe UI or Ant Design based surfaces:
+Use `NebutraThemeProvider` when consuming compatibility surfaces that depend on Lobe UI or Ant Design:
 
 ```tsx
 import { NebutraThemeProvider } from "@nebutra/ui";
@@ -92,7 +92,7 @@ import { OpenAI, Search, Settings } from "@nebutra/ui/icons";
 | `@nebutra/ui/layout` | App shell, page header, status, section, and empty/loading/error states |
 | `@nebutra/ui/layouts` | Section container, themed section, and bento grid layouts |
 | `@nebutra/ui/icons` | Lobe, Lucide, and Nebutra icon exports |
-| `@nebutra/ui/theme` | `NebutraThemeProvider` and Lobe UI theme bridge types |
+| `@nebutra/ui/theme` | `NebutraThemeProvider` and compatibility theme bridge types |
 | `@nebutra/ui/primitives` | Low-level UI primitives and visual building blocks |
 | `@nebutra/ui/primitives/canonical` | Canonical primitive token exports |
 | `@nebutra/ui/patterns` | SaaS dashboard, command, card, terminal, QA, sidebar, and workspace patterns |
