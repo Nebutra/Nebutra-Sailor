@@ -13,11 +13,16 @@ import {
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import {
+  Badge,
+  type BadgeProps,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Tabs,
+  TabsList,
+  TabsTrigger,
 } from "@nebutra/ui/primitives";
 import {
   type ReactNode,
@@ -1211,29 +1216,29 @@ function StartupBuilderWorkspace({
                   {companyName(project.companyContext)}
                 </p>
               </div>
-              <div className="flex shrink-0 rounded-full border border-neutral-6 bg-neutral-2 p-1">
-                {(
-                  [
-                    { key: "code", label: "Code", Icon: Code },
-                    { key: "canvas", label: "Canvas", Icon: Lightning },
-                    { key: "chat", label: "Chat", Icon: Sparkles },
-                  ] as const
-                ).map(({ key, label, Icon }) => (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => setActiveSurface(key)}
-                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                      activeSurface === key
-                        ? "bg-neutral-12 text-neutral-1 dark:text-neutral-12"
-                        : "text-neutral-10 hover:bg-neutral-1"
-                    }`}
+              <Tabs
+                value={activeSurface}
+                onValueChange={(value) => setActiveSurface(value as typeof activeSurface)}
+                shape="pill"
+              >
+                <TabsList>
+                  <TabsTrigger value="code" icon={<Code className="size-3.5" aria-hidden="true" />}>
+                    Code
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="canvas"
+                    icon={<Lightning className="size-3.5" aria-hidden="true" />}
                   >
-                    <Icon className="size-3.5" aria-hidden="true" />
-                    {label}
-                  </button>
-                ))}
-              </div>
+                    Canvas
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="chat"
+                    icon={<Sparkles className="size-3.5" aria-hidden="true" />}
+                  >
+                    Chat
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
             </div>
 
             <div className={activeSurface === "code" ? "min-h-0 flex-1" : "hidden"}>
@@ -1868,18 +1873,17 @@ function CanvasNodeButton({
   );
 }
 
+const STATUS_BADGE_VARIANT: Record<string, BadgeProps["variant"]> = {
+  completed: "success",
+  failed: "destructive",
+  waiting_for_review: "warning",
+  planned: "secondary",
+};
+
 function StatusPill({ status }: { status: StartupOperatingRun["status"] }) {
-  const className =
-    status === "completed"
-      ? "bg-green-3 text-green-11 dark:bg-green-9/20 dark:text-green-5"
-      : status === "failed"
-        ? "bg-red-3 text-red-11 dark:bg-red-9/20 dark:text-red-5"
-        : status === "waiting_for_review"
-          ? "bg-amber-3 text-amber-11 dark:bg-amber-9/20 dark:text-amber-5"
-          : "bg-neutral-3 text-neutral-11";
   return (
-    <span className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${className}`}>
+    <Badge variant={STATUS_BADGE_VARIANT[status] ?? "secondary"} size="sm">
       {formatRunStatus(status)}
-    </span>
+    </Badge>
   );
 }
