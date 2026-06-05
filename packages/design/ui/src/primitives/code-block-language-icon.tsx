@@ -168,7 +168,7 @@ const LANGUAGE_ICON_REGISTRY: Record<string, LanguageIconSpec> = {
   html: { color: SiHtml5Hex, icon: SiHtml5, label: "HTML" },
   java: { color: SiOpenjdkHex, icon: SiOpenjdk, label: "Java" },
   javascript: { color: SiJavascriptHex, icon: SiJavascript, label: "JavaScript" },
-  json: { icon: JsonBracesIcon, label: "JSON" },
+  json: { color: "currentColor", icon: JsonBracesIcon, label: "JSON" },
   kotlin: { color: SiKotlinHex, icon: SiKotlin, label: "Kotlin" },
   markdown: { color: SiMarkdownHex, icon: SiMarkdown, label: "Markdown" },
   node: { color: SiNodedotjsHex, icon: SiNodedotjs, label: "Node.js" },
