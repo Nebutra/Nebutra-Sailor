@@ -1,8 +1,8 @@
 "use client";
 
-import { ArrowRight, Sparkles, Users } from "@nebutra/icons";
-import { AnimateIn } from "@nebutra/ui/components";
-import { EmptyState, PageHeader } from "@nebutra/ui/layout";
+import { ArrowRight, Lightning, Sparkles, Users } from "@nebutra/icons";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { EmptyState } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,6 +20,24 @@ interface ProjectSummary {
 }
 
 type LoadState = "loading" | "ready" | "empty";
+
+const STEPS = [
+  {
+    icon: Lightning,
+    title: "Compile your company",
+    body: "Your card is built from your Startup OS CompanyContext — thesis, arena, traction.",
+  },
+  {
+    icon: Sparkles,
+    title: "Get matched",
+    body: "Ranked by complementarity — what a cofounder brings vs the gap in your OPC.",
+  },
+  {
+    icon: Users,
+    title: "Form the team",
+    body: "Mutual interest opens a Cofounder Room; form the team and the company carries over.",
+  },
+] as const;
 
 export default function CofounderPage() {
   const pathname = usePathname();
@@ -63,54 +81,43 @@ export default function CofounderPage() {
   }, []);
 
   return (
-    <div className="mx-auto w-full max-w-[var(--container-content)] px-5 py-8 sm:px-8">
-      <PageHeader
-        title="Match your cofounder"
-        description="Turn your one-person company into a team — matched with a complementary cofounder by your compiled company, not a résumé."
+    <section className="relative overflow-hidden">
+      {/* Ambient brand glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[320px] w-full max-w-2xl opacity-[0.12] blur-3xl"
+        style={{ background: "var(--brand-gradient)" }}
       />
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:items-start">
-        {/* Value prop */}
-        <AnimateIn preset="fadeUp">
-          <div className="flex flex-col gap-4">
-            {[
-              {
-                icon: Sparkles,
-                title: "Matched on your compiled company",
-                body: "Candidates are ranked by complementarity — what they bring vs the gap in your OPC — using your real CompanyContext, thesis, arena, and traction.",
-              },
-              {
-                icon: Users,
-                title: "Match → Cofounder Room → team",
-                body: "Mutual interest opens a Cofounder Room. Form the team and your whole compiled company carries over — the OPC becomes an organization.",
-              },
-            ].map((row) => {
-              const RowIcon = row.icon;
-              return (
-                <div
-                  key={row.title}
-                  className="flex gap-3 rounded-2xl border border-neutral-6 bg-neutral-1 p-4"
-                >
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-blue-3 dark:bg-blue-9/20">
-                    <RowIcon className="size-4 text-blue-10" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-neutral-12">{row.title}</p>
-                    <p className="mt-1 text-xs leading-5 text-neutral-10">{row.body}</p>
-                  </div>
-                </div>
-              );
-            })}
-            <p className="text-xs text-neutral-9">
-              The cofounder pool is opt-in and opens in the matching release. This page previews how
-              your company will appear.
+      <div className="relative mx-auto w-full max-w-3xl px-5 py-14 sm:px-8">
+        {/* Hero */}
+        <AnimateIn preset="emerge">
+          <div className="text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
+              <Users className="size-3.5 text-blue-9" aria-hidden="true" />
+              OPC → Team
+            </span>
+            <h1
+              className="mt-5 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl"
+              style={{
+                background: "var(--brand-gradient)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Match your cofounder
+            </h1>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-neutral-10">
+              Turn your one-person company into a team — matched with a complementary cofounder by
+              your compiled company, not a résumé.
             </p>
           </div>
         </AnimateIn>
 
-        {/* Preview: how you'll appear */}
-        <AnimateIn preset="emerge">
-          <div className="flex flex-col items-center gap-3">
+        {/* Showcase: your card */}
+        <AnimateIn preset="scale">
+          <div className="mt-10 flex flex-col items-center gap-3">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-neutral-9">
               Preview · how cofounders see you
             </p>
@@ -135,7 +142,35 @@ export default function CofounderPage() {
             )}
           </div>
         </AnimateIn>
+
+        {/* How it works — 3 steps */}
+        <AnimateInGroup stagger="normal" className="mt-14 grid gap-3 sm:grid-cols-3">
+          {STEPS.map((step, index) => {
+            const StepIcon = step.icon;
+            return (
+              <AnimateIn key={step.title} preset="fadeUp">
+                <div className="flex h-full flex-col gap-2 rounded-2xl border border-neutral-6 bg-neutral-1 p-4">
+                  <div className="flex items-center gap-2">
+                    <span className="flex size-7 items-center justify-center rounded-lg bg-blue-3 dark:bg-blue-9/20">
+                      <StepIcon className="size-3.5 text-blue-10" aria-hidden="true" />
+                    </span>
+                    <span className="text-[11px] font-semibold text-neutral-9">
+                      Step {index + 1}
+                    </span>
+                  </div>
+                  <p className="text-sm font-semibold text-neutral-12">{step.title}</p>
+                  <p className="text-xs leading-5 text-neutral-10">{step.body}</p>
+                </div>
+              </AnimateIn>
+            );
+          })}
+        </AnimateInGroup>
+
+        <p className="mt-8 text-center text-xs text-neutral-9">
+          The cofounder pool is opt-in and opens in the matching release. This page previews how
+          your company will appear.
+        </p>
       </div>
-    </div>
+    </section>
   );
 }
