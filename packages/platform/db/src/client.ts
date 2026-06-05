@@ -12,26 +12,28 @@ const RLS_ROLE = (() => {
   return role && /^[a-z_][a-z0-9_]*$/.test(role) ? role : null;
 })();
 
+// PostgreSQL statement_timeout (ms) — prevents runaway queries from holding
+// locks or exhausting the pool. Applied transaction-locally via
+// `SET LOCAL statement_timeout` in getTenantDb (see below), NOT as a connection
+// startup parameter. A startup-time `options=-c statement_timeout=…` is rejected
+// by transaction-pooling poolers (Neon/Supabase PgBouncer) with
+// "unsupported startup parameter in options: statement_timeout", and a session
+// `SET` cannot survive a transaction pooler anyway. `SET LOCAL` inside the
+// per-query transaction is the only form that works on every topology.
+// Override via DB_STATEMENT_TIMEOUT_MS env var (default 30 s).
+const STATEMENT_TIMEOUT_MS = (() => {
+  const n = parseInt(process.env.DB_STATEMENT_TIMEOUT_MS ?? "30000", 10);
+  return Number.isFinite(n) && n >= 0 ? n : 30000;
+})();
+
 function createPrismaClient(): PrismaClient {
   if (!process.env.DATABASE_URL) {
     throw new Error("[db] DATABASE_URL is not set. Cannot initialize database connection pool.");
   }
 
-  // PostgreSQL statement_timeout — prevents runaway queries from holding
-  // locks or exhausting the pool. Set via libpq's `-c` connection option so
-  // it lands in the server session at HANDSHAKE time, BEFORE the pool hands
-  // the client to a query. The previous implementation used a
-  // `pool.on("connect", c => c.query("SET ..."))` fire-and-forget pattern
-  // which raced with Prisma's first query on the same client and tripped
-  // pg's "client already executing a query" deprecation (hard error in pg v9).
-  // Override via DB_STATEMENT_TIMEOUT_MS env var (default 30 s).
-  const statementTimeout = parseInt(process.env.DB_STATEMENT_TIMEOUT_MS ?? "30000", 10);
-
   // Use connection pool for PostgreSQL with explicit production-ready settings.
   const pool = new pg.Pool({
     connectionString: process.env.DATABASE_URL,
-    // libpq command-line options applied at connection time — see note above.
-    options: `-c statement_timeout=${statementTimeout}`,
     // Max connections per pool instance.
     // Rule of thumb: (2 × CPU cores) + effective_spindle_count
     // Default 10 is fine for most apps; override via env for large deployments.
@@ -243,16 +245,20 @@ export function getTenantDb(tenantId: string): PrismaClient {
     query: {
       $allModels: {
         async $allOperations({ args, query }) {
+          // `STATEMENT_TIMEOUT_MS` is a validated non-negative integer, so it is
+          // safe to interpolate into the SET LOCAL (which cannot be bind-parameterized).
           if (RLS_ROLE) {
-            const [, , result] = await client.$transaction([
+            const [, , , result] = await client.$transaction([
               client.$executeRawUnsafe(`SET LOCAL ROLE "${RLS_ROLE}"`),
+              client.$executeRawUnsafe(`SET LOCAL statement_timeout = ${STATEMENT_TIMEOUT_MS}`),
               client.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
               query(args),
             ]);
             return result as unknown;
           }
 
-          const [, result] = await client.$transaction([
+          const [, , result] = await client.$transaction([
+            client.$executeRawUnsafe(`SET LOCAL statement_timeout = ${STATEMENT_TIMEOUT_MS}`),
             client.$executeRaw`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
             query(args),
           ]);
