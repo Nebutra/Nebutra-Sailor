@@ -287,7 +287,9 @@ export function StartupOsFileTree({
   const selectedIds = selectedPath ? [`file:${selectedPath}`] : [];
 
   if (nodes.length === 0) {
-    return <p className="px-3 py-4 text-xs leading-5 text-neutral-9">No files to display yet.</p>;
+    return (
+      <p className="px-3 py-4 text-xs leading-5 text-neutral-9">No files to display yet.</p>
+    );
   }
 
   return (

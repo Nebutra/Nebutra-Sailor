@@ -35,6 +35,12 @@ export type Scope =
   | "provider_key:read"
   | "provider_key:create"
   | "provider_key:delete"
+  // Agent automations
+  | "automation:read"
+  | "automation:create"
+  | "automation:update"
+  | "automation:delete"
+  | "automation:run"
   // Analytics / usage
   | "analytics:read"
   // Settings
@@ -70,6 +76,11 @@ const ROLE_PERMISSIONS: Record<Role, ReadonlySet<Scope>> = {
     "provider_key:read",
     "provider_key:create",
     "provider_key:delete",
+    "automation:read",
+    "automation:create",
+    "automation:update",
+    "automation:delete",
+    "automation:run",
     "analytics:read",
     "settings:read",
     "settings:update",
@@ -88,6 +99,7 @@ const ROLE_PERMISSIONS: Record<Role, ReadonlySet<Scope>> = {
     "project:update",
     "api_key:read",
     "api_key:create",
+    "automation:read",
     "analytics:read",
     "settings:read",
   ]),

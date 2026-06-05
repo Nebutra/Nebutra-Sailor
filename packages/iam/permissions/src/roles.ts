@@ -28,6 +28,7 @@ export const DEFAULT_ROLES: Record<string, RoleDefinition> = {
           "Invite",
           "Integration",
           "AiProviderKey",
+          "Automation",
         ],
       },
     ],
@@ -59,6 +60,7 @@ export const DEFAULT_ROLES: Record<string, RoleDefinition> = {
           "Invite",
           "Integration",
           "AiProviderKey",
+          "Automation",
         ],
       },
       {

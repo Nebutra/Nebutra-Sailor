@@ -1,6 +1,8 @@
 import type { InngestFunction } from "inngest";
 import { serve } from "inngest/hono";
 import { inngest } from "./client.js";
+import { automationRunner } from "./functions/automationRunner.js";
+import { automationScheduler } from "./functions/automationScheduler.js";
 import { processBillingEvent } from "./functions/billingSync.js";
 import { processGdprDeletion } from "./functions/gdprDeletion.js";
 import { provisionTenant } from "./functions/tenantProvisioning.js";
@@ -12,6 +14,8 @@ export const inngestFunctions: InngestFunction.Any[] = [
   processBillingEvent,
   processGdprDeletion,
   provisionTenant,
+  automationScheduler,
+  automationRunner,
 ];
 export { inngest };
 
