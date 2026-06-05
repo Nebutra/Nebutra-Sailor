@@ -1350,6 +1350,9 @@ function WorkspaceFilesPanel({
   return (
     <AnimateIn preset="fadeUp" className="h-full min-h-0">
       <section className="flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1">
+        {/* Toolbar only matters when editing code — in preview it just repeats the
+            top bar's file name/tabs and offers a Save button with nothing to save. */}
+        {view === "code" ? (
         <div className="flex flex-col gap-3 border-b border-neutral-6 bg-neutral-1 p-3 md:flex-row md:items-center md:justify-between">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
@@ -1376,6 +1379,7 @@ function WorkspaceFilesPanel({
             </button>
           </div>
         </div>
+        ) : null}
 
         <div
           className={`grid min-h-0 flex-1 ${view === "code" ? "xl:grid-cols-[280px_minmax(0,1fr)]" : "grid-cols-1"}`}
