@@ -592,6 +592,11 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     <AppShell
       sidebar={sidebar}
       collapsed={collapsed}
+      // Startup OS is a full-bleed Lovable-style workspace: when its sidebar is
+      // collapsed it disappears entirely (0px rail) rather than leaving an icon
+      // sliver. The thread-column logo button drives the shared `toggle()` to
+      // bring the dashboard nav back, so the rail stays reachable.
+      sidebarCollapsedWidth={isStartupOSRoute ? 0 : undefined}
       contentClassName={
         isWorkspaceHomeRoute
           ? // Full-bleed gradient canvas: drop padding at every breakpoint

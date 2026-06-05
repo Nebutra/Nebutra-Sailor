@@ -86,12 +86,15 @@ export function AppShell({
         className,
       )}
     >
-      {/* Desktop sidebar — fixed rail, hidden on small screens */}
+      {/* Desktop sidebar — fixed rail, hidden on small screens. When the rail
+          width collapses to 0 (e.g. a full-bleed route that drives its own
+          navigation toggle), drop the border so no seam line remains. */}
       <aside
         aria-label="Primary"
         className={cn(
-          "hidden h-screen shrink-0 overflow-hidden border-r border-sidebar-border bg-sidebar text-sidebar-foreground md:block",
+          "hidden h-screen shrink-0 overflow-hidden bg-sidebar text-sidebar-foreground md:block",
           "transition-[width] duration-200 ease-out",
+          railWidth > 0 && "border-r border-sidebar-border",
         )}
         style={{ width: railWidth }}
       >
