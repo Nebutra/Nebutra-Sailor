@@ -57,6 +57,16 @@ function createPrismaClient(): PrismaClient {
   const baseClient = new PrismaClient({
     adapter,
     log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    // The pool is cold on the first request, and getTenantDb wraps EVERY query in
+    // a transaction (SET LOCAL ROLE + set_config for RLS). Prisma's default
+    // transaction maxWait (2s) is too short to acquire that first connection when
+    // the database is a remote pooler (e.g. Supabase ap-southeast-1) — it surfaces
+    // as "Unable to start a transaction in the given time". Give it room. Both are
+    // env-overridable for tuning per-deployment without a code change.
+    transactionOptions: {
+      maxWait: parseInt(process.env.DB_TX_MAX_WAIT_MS ?? "10000", 10),
+      timeout: parseInt(process.env.DB_TX_TIMEOUT_MS ?? "20000", 10),
+    },
   });
 
   return baseClient.$extends({
