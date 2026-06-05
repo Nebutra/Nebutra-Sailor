@@ -86,18 +86,6 @@ export function getDashboardNavGroups(capabilities?: DashboardNavCapabilities) {
 
 export const DASHBOARD_NAV_GROUPS = getDashboardNavGroups();
 
-export const WORKSPACES = [
-  { id: "starter", label: "Starter Workspace" },
-  { id: "growth", label: "Growth Workspace" },
-  { id: "enterprise", label: "Enterprise Workspace" },
-] as const;
-
-export type WorkspaceId = (typeof WORKSPACES)[number]["id"];
-
-export function isWorkspaceId(value: string): value is WorkspaceId {
-  return WORKSPACES.some((item) => item.id === value);
-}
-
 const LOCALE_PREFIXES = new Set<string>(routing.locales);
 
 export function stripLocalePrefix(pathname: string) {

@@ -52,12 +52,7 @@ import { usePermission } from "@/hooks/usePermission";
 import type { WebProductCapabilities } from "@/lib/product-capabilities";
 import { queryKeys } from "@/lib/query-keys";
 import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
-import {
-  buildBreadcrumbs,
-  getDashboardNavGroups,
-  isActiveRoute,
-  WORKSPACES,
-} from "./dashboard-nav";
+import { buildBreadcrumbs, getDashboardNavGroups, isActiveRoute } from "./dashboard-nav";
 
 interface OrganizationSummary {
   id: string;
@@ -163,7 +158,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const queryClient = useQueryClient();
   // Active-workspace selection is PURE CLIENT STATE (driven by localStorage /
   // session preference) — kept local, never in React Query cache.
-  const [workspace, setWorkspace] = useState<string>(WORKSPACES[0].id);
+  const [workspace, setWorkspace] = useState<string>("");
   const tSidebar = useTranslations("Sidebar");
   const { openDialog: openFeedback } = useFeedbackDialog();
 
@@ -174,18 +169,14 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     enabled: isSignedIn && supportsWorkspaceSwitching,
   });
 
-  // Startup OS must not render seed workspaces: its project list is backed by
-  // the Startup OS API, so sidebar workspaces only appear after real orgs load.
+  // Sidebar workspaces are ALWAYS backed by real organizations — no mock/seed
+  // fallback. When the org list is empty (new user, or still loading/errored),
+  // the Projects section simply renders no workspace items rather than fake ones.
   const organizations = organizationsQuery.data ?? [];
-  const workspaceOptions: WorkspaceOption[] =
-    organizations.length > 0
-      ? organizations.map((organization) => ({
-          id: organization.id,
-          label: organization.name || organization.slug || "Untitled workspace",
-        }))
-      : isStartupOSRoute
-        ? []
-        : WORKSPACES.map((ws) => ({ id: ws.id, label: ws.label }));
+  const workspaceOptions: WorkspaceOption[] = organizations.map((organization) => ({
+    id: organization.id,
+    label: organization.name || organization.slug || "Untitled workspace",
+  }));
   const activeWorkspaceId = workspaceOptions.some((option) => option.id === workspace)
     ? workspace
     : null;
@@ -265,8 +256,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // Order: Product → Projects → Admin. Projects lists workspaces; the active
   // workspace expands with its 5 most-recent threads pre-loaded. Inactive
   // workspace parents act as workspace-switch triggers and do not prefetch.
-  // Rendered whenever workspaces are available — including single-user / dev-auth
-  // modes where the seed WORKSPACES provide a meaningful project list.
+  // The Projects section renders only when real organizations exist; with none
+  // it stays empty (no mock/seed workspaces).
   const projectsAllExpanded = Object.values(expansionMap).some((v) => v);
 
   const handleExpandAllToggle = () => {

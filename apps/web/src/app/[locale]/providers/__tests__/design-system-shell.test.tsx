@@ -218,7 +218,7 @@ describe("DesignSystemShell (react-query integration)", () => {
     vi.unstubAllGlobals();
   });
 
-  it("loads organizations then threads: seed workspaces first, then org labels + thread titles", async () => {
+  it("loads real org labels then threads — never renders mock/seed workspaces", async () => {
     const fetchMock = vi.fn().mockImplementation((url: string, init?: RequestInit) => {
       const method = init?.method ?? "GET";
       if (url === "/api/organizations" && method === "GET") {
@@ -237,14 +237,14 @@ describe("DesignSystemShell (react-query integration)", () => {
       </DesignSystemShell>,
     );
 
-    // Before the organizations query resolves the seed WORKSPACES render
-    // (loading fallback for the org list — equivalent to the old initial state).
+    // No mock/seed workspaces ever render — not before the org query resolves,
+    // and not after. The sidebar is backed exclusively by real organizations.
     expect(screen.getAllByText("Startup OS").length).toBeGreaterThan(0);
-    expect(screen.getByText("Starter Workspace")).toBeInTheDocument();
+    expect(screen.queryByText("Starter Workspace")).not.toBeInTheDocument();
 
-    // After the org list resolves, the real org labels replace the seeds and
-    // the active workspace (org_alpha via resolvePreferredWorkspaceId →
-    // options[0]) loads its threads.
+    // Once the org list resolves, the real org labels render and the active
+    // workspace (org_alpha via resolvePreferredWorkspaceId → options[0]) loads
+    // its threads.
     await waitFor(() => {
       expect(screen.getByText("Alpha Org")).toBeInTheDocument();
     });
@@ -262,7 +262,7 @@ describe("DesignSystemShell (react-query integration)", () => {
     );
   });
 
-  it("falls back to seed workspaces and empty thread list when both fetches fail", async () => {
+  it("renders no workspaces (no seed, no crash) when the organizations fetch fails", async () => {
     const fetchMock = vi
       .fn()
       .mockImplementation(() => Promise.resolve(jsonResponse({}, { status: 500 })));
@@ -274,18 +274,18 @@ describe("DesignSystemShell (react-query integration)", () => {
       </DesignSystemShell>,
     );
 
-    // Org query errors → workspaceOptions keep the seed WORKSPACES (no crash,
-    // equivalent to the old swallowed-error fallback).
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith("/api/organizations", expect.any(Object));
     });
-    expect(screen.getByText("Starter Workspace")).toBeInTheDocument();
 
-    // Threads query errors → empty list (the old code set [] on failure; here
-    // data stays undefined → `?? []`). The active workspace shows no threads.
+    // Org query errors → NO mock/seed workspaces appear (the Projects section
+    // stays empty). The shell degrades gracefully and still renders page content.
     await waitFor(() => {
-      expect(screen.getByText("noThreads")).toBeInTheDocument();
+      expect(screen.getByTestId("page-content")).toBeInTheDocument();
     });
+    expect(screen.queryByText("Starter Workspace")).not.toBeInTheDocument();
+    expect(screen.queryByText("Growth Workspace")).not.toBeInTheDocument();
+    expect(screen.queryByText("Enterprise Workspace")).not.toBeInTheDocument();
   });
 
   it("does not render seed workspace copy on Startup OS when no organizations are returned", async () => {
