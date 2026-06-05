@@ -48,7 +48,8 @@ export default function CofounderPage() {
           arena: project.arena ?? "Startup",
           oneLiner: project.companyContext.promise || project.thesis || "",
           category: project.companyContext.category,
-          tractionLabel: count > 0 ? `${count} artifact${count === 1 ? "" : "s"} compiled` : undefined,
+          tractionLabel:
+            count > 0 ? `${count} artifact${count === 1 ? "" : "s"} compiled` : undefined,
           trustVerified: true,
         });
         setState("ready");
@@ -101,8 +102,8 @@ export default function CofounderPage() {
               );
             })}
             <p className="text-xs text-neutral-9">
-              The cofounder pool is opt-in and opens in the matching release. This page previews
-              how your company will appear.
+              The cofounder pool is opt-in and opens in the matching release. This page previews how
+              your company will appear.
             </p>
           </div>
         </AnimateIn>

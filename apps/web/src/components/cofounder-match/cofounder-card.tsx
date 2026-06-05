@@ -69,9 +69,7 @@ export function CofounderCard({
           </div>
           <p className="mt-1 text-xs text-neutral-10">
             {data.complementarity ??
-              (preview
-                ? "Computed against each viewer once you join the cofounder pool."
-                : "—")}
+              (preview ? "Computed against each viewer once you join the cofounder pool." : "—")}
           </p>
         </div>
 
