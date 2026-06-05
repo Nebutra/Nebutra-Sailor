@@ -9,9 +9,11 @@ import {
   getBlogViewTransitionName,
   getFallbackBlogCover,
   getPostCopyText,
+  getTableCellBlock,
   hasTemplatePlaceholders,
   normalizePortableTextBlocks,
   type PortableTextBlock,
+  type PortableTextTableCell,
   parseMarkdownTableText,
   resolveBlogCover,
   toBlogLanguage,
@@ -24,6 +26,15 @@ function block(key: string, style: PortableTextBlock["style"], text: string): Po
     style,
     children: [{ _key: `${key}-span`, _type: "span", text }],
   };
+}
+
+function cellSpans(cell: PortableTextTableCell | undefined) {
+  return (
+    getTableCellBlock(cell).children?.map((span) => ({
+      marks: span.marks ?? [],
+      text: span.text,
+    })) ?? []
+  );
 }
 
 describe("blog content helpers", () => {
@@ -74,7 +85,7 @@ describe("blog content helpers", () => {
     ]);
 
     expect(intro?._type).toBe("block");
-    expect(table).toEqual({
+    expect(table).toMatchObject({
       _key: "raw-table-table",
       _type: "table",
       rows: [
@@ -82,6 +93,45 @@ describe("blog content helpers", () => {
         { _key: "markdown-row-0", cells: ["行为增量", "4", "2", "2"] },
       ],
     });
+    expect(table?.rows?.[0]?.richCells?.map((cell) => cellSpans(cell))).toEqual([
+      [{ marks: [], text: "维度" }],
+      [{ marks: [], text: "superpowers" }],
+      [{ marks: [], text: "gstack" }],
+      [{ marks: [], text: "ECC" }],
+    ]);
+  });
+
+  test("normalizes markdown table cell inline formatting into structured spans", () => {
+    const [table] = normalizePortableTextBlocks([
+      block(
+        "raw-table",
+        "normal",
+        "| 维度 | Workflow（工作流） | Agent（智能体） |\n|---|---|---|\n| 控制权 | LLM 与工具被**预定义代码路径**编排 | LLM **自己决定**流程与工具调用 |",
+      ),
+    ]);
+
+    expect(table).toMatchObject({
+      _key: "raw-table-table",
+      _type: "table",
+      rows: [
+        {
+          cells: ["维度", "Workflow（工作流）", "Agent（智能体）"],
+        },
+        {
+          cells: ["控制权", "LLM 与工具被**预定义代码路径**编排", "LLM **自己决定**流程与工具调用"],
+        },
+      ],
+    });
+    expect(cellSpans(table?.rows?.[1]?.richCells?.[1])).toEqual([
+      { marks: [], text: "LLM 与工具被" },
+      { marks: ["strong"], text: "预定义代码路径" },
+      { marks: [], text: "编排" },
+    ]);
+    expect(cellSpans(table?.rows?.[1]?.richCells?.[2])).toEqual([
+      { marks: [], text: "LLM " },
+      { marks: ["strong"], text: "自己决定" },
+      { marks: [], text: "流程与工具调用" },
+    ]);
   });
 
   test("detects template placeholders consistently across repeated calls", () => {

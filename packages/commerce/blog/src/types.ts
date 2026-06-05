@@ -27,7 +27,7 @@ export type PortableTextBlock = {
   body?: string | null;
   ctaHref?: string | null;
   ctaLabel?: string | null;
-  rows?: Array<{ _key?: string; cells?: string[] }>;
+  rows?: PortableTextTableRow[];
   items?: Array<{ _key?: string; title?: string | null; body?: string | null }>;
   asset?: { _ref?: string; _type?: string } | null;
   alt?: string | null;
@@ -38,6 +38,20 @@ export type PortableTextBlock = {
   html?: string | null;
   language?: string | null;
   math?: string | null;
+};
+
+export type PortableTextTableCell = {
+  _key?: string;
+  children?: PortableTextSpan[];
+  content?: PortableTextBlock[];
+  markDefs?: Array<Record<string, unknown>>;
+  text?: string | null;
+};
+
+export type PortableTextTableRow = {
+  _key?: string;
+  cells?: string[];
+  richCells?: PortableTextTableCell[];
 };
 
 export type BlogPostBase = {

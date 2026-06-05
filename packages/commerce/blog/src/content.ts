@@ -1,3 +1,6 @@
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import type {
   BlogLanguage,
   BlogPostWithSource,
@@ -5,10 +8,29 @@ import type {
   BlogTocItem,
   PortableTextBlock,
   PortableTextSpan,
+  PortableTextTableCell,
+  PortableTextTableRow,
 } from "./types";
 
 export const TEMPLATE_PLACEHOLDER_MARK = "templatePlaceholder";
 export const TEMPLATE_PLACEHOLDER_PATTERN = /\[[^[\]\n]{1,120}\]/g;
+const markdownInlineProcessor = remark().use(remarkGfm).use(remarkMath);
+
+type MarkdownNode = {
+  children?: MarkdownNode[];
+  identifier?: string;
+  type?: string;
+  url?: string;
+  value?: string;
+};
+
+type InlineParseState = {
+  markDefIndex: number;
+  markDefs: Array<Record<string, unknown>>;
+  spanIndex: number;
+  spans: PortableTextSpan[];
+  prefix: string;
+};
 
 export function toBlogLanguage(locale: string): BlogLanguage {
   return locale.toLowerCase().startsWith("zh") ? "zh" : "en";
@@ -25,6 +47,30 @@ export function hasTemplatePlaceholders(text: string): boolean {
 
 export function getBlockText(block: PortableTextBlock | undefined): string {
   return block?.children?.map((child) => child.text ?? "").join("") ?? "";
+}
+
+export function getTableCellBlock(cell: PortableTextTableCell | undefined): PortableTextBlock {
+  const contentBlock = cell?.content?.find((block) => block._type === "block");
+  if (contentBlock) return contentBlock;
+
+  return {
+    _type: "block",
+    style: "normal",
+    children: cell?.children ?? [
+      {
+        _key: `${cell?._key ?? "cell"}-text`,
+        _type: "span",
+        text: cell?.text ?? "",
+        marks: [],
+      },
+    ],
+    markDefs: cell?.markDefs ?? [],
+    ...(cell?._key ? { _key: cell._key } : {}),
+  };
+}
+
+export function getTableCellText(cell: PortableTextTableCell | undefined): string {
+  return getBlockText(getTableCellBlock(cell));
 }
 
 export function hasVisibleText(block: PortableTextBlock): boolean {
@@ -81,6 +127,172 @@ export function decorateTemplatePlaceholders(block: PortableTextBlock): Portable
   return { ...block, children: block.children.flatMap(splitSpanTemplatePlaceholders) };
 }
 
+function makeInlineSpan(state: InlineParseState, text: string, marks: string[] = []): void {
+  if (!text) return;
+  state.spans.push({
+    _key: `${state.prefix}-span-${state.spanIndex++}`,
+    _type: "span",
+    text,
+    marks,
+  });
+}
+
+function pushTextWithCitationMarks(state: InlineParseState, text: string, marks: string[]): void {
+  const citationPattern = /\[(\d{1,2})\]/g;
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = citationPattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      makeInlineSpan(state, text.slice(lastIndex, match.index), marks);
+    }
+
+    const markKey = `${state.prefix}-citation-${state.markDefIndex++}`;
+    const refNumber = Number.parseInt(match[1] ?? "", 10);
+    state.markDefs.push({
+      _type: "citation",
+      _key: markKey,
+      refNumber,
+      href: `#ref${refNumber}`,
+    });
+    makeInlineSpan(state, String(refNumber), [...marks, markKey]);
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    makeInlineSpan(state, text.slice(lastIndex), marks);
+  }
+}
+
+function appendMarkdownInlineNode(
+  state: InlineParseState,
+  node: MarkdownNode,
+  marks: string[] = [],
+): void {
+  switch (node.type) {
+    case "root":
+    case "paragraph":
+    case "delete":
+      for (const child of node.children ?? []) {
+        appendMarkdownInlineNode(state, child, marks);
+      }
+      return;
+    case "strong":
+      for (const child of node.children ?? []) {
+        appendMarkdownInlineNode(state, child, [...marks, "strong"]);
+      }
+      return;
+    case "emphasis":
+      for (const child of node.children ?? []) {
+        appendMarkdownInlineNode(state, child, [...marks, "em"]);
+      }
+      return;
+    case "inlineCode":
+      makeInlineSpan(state, node.value ?? "", [...marks, "code"]);
+      return;
+    case "inlineMath":
+      makeInlineSpan(state, node.value ?? "", [...marks, "mathInline"]);
+      return;
+    case "link": {
+      const markKey = `${state.prefix}-link-${state.markDefIndex++}`;
+      state.markDefs.push({
+        _type: "link",
+        _key: markKey,
+        href: node.url ?? "#",
+      });
+      for (const child of node.children ?? []) {
+        appendMarkdownInlineNode(state, child, [...marks, markKey]);
+      }
+      return;
+    }
+    case "text":
+      pushTextWithCitationMarks(state, node.value ?? "", marks);
+      return;
+    case "break":
+      makeInlineSpan(state, "\n", marks);
+      return;
+    case "footnoteReference":
+      makeInlineSpan(state, `[^${node.identifier ?? ""}]`, marks);
+      return;
+    default:
+      if (node.children?.length) {
+        for (const child of node.children) {
+          appendMarkdownInlineNode(state, child, marks);
+        }
+        return;
+      }
+      makeInlineSpan(state, node.value ?? "", marks);
+  }
+}
+
+export function markdownInlineToTableCell(
+  text: string,
+  prefix = "markdown-cell",
+): PortableTextTableCell {
+  const state: InlineParseState = {
+    markDefIndex: 0,
+    markDefs: [],
+    spanIndex: 0,
+    spans: [],
+    prefix,
+  };
+
+  try {
+    const tree = markdownInlineProcessor.parse(text) as MarkdownNode;
+    for (const child of tree.children ?? []) {
+      appendMarkdownInlineNode(state, child);
+    }
+  } catch {
+    makeInlineSpan(state, text, []);
+  }
+
+  const children = state.spans.length
+    ? state.spans
+    : [
+        {
+          _key: `${prefix}-span-0`,
+          _type: "span" as const,
+          text: "",
+          marks: [],
+        },
+      ];
+  const block: PortableTextBlock = {
+    _key: `${prefix}-block`,
+    _type: "block",
+    style: "normal",
+    children,
+    markDefs: state.markDefs,
+  };
+
+  return {
+    _key: prefix,
+    content: [block],
+  };
+}
+
+function normalizeTableRow(row: PortableTextTableRow, rowIndex: number): PortableTextTableRow {
+  const cells = row.cells ?? row.richCells?.map((cell) => getTableCellText(cell)) ?? [];
+  const richCells =
+    row.richCells && row.richCells.length > 0
+      ? row.richCells
+      : cells.map((cell, cellIndex) =>
+          markdownInlineToTableCell(cell, `${row._key ?? `row-${rowIndex}`}-cell-${cellIndex}`),
+        );
+
+  return {
+    ...row,
+    cells,
+    richCells,
+  };
+}
+
+function normalizeTableBlock(block: PortableTextBlock): PortableTextBlock {
+  return {
+    ...block,
+    rows: block.rows?.map(normalizeTableRow) ?? [],
+  };
+}
+
 export function parseMarkdownTableText(text: string): PortableTextBlock["rows"] | null {
   const trimmed = text.trim();
   if (!trimmed.startsWith("|") || !trimmed.includes("---")) return null;
@@ -123,12 +335,16 @@ export function normalizePortableTextBlock(block: PortableTextBlock): PortableTe
   if (block._type === "block" && block.style === "normal") {
     const rows = parseMarkdownTableText(getBlockText(block));
     if (rows) {
-      return {
+      return normalizeTableBlock({
         _key: `${block._key ?? "markdown"}-table`,
         _type: "table",
         rows,
-      };
+      });
     }
+  }
+
+  if (block._type === "table") {
+    return normalizeTableBlock(block);
   }
 
   return decorateTemplatePlaceholders(block);
@@ -208,6 +424,11 @@ export function getSpanCopyText(span: PortableTextSpan, block: PortableTextBlock
   return href ? `[${text}](${href})` : text;
 }
 
+export function getTableCellCopyText(cell: PortableTextTableCell): string {
+  const block = getTableCellBlock(cell);
+  return block.children?.map((child) => getSpanCopyText(child, block)).join("") ?? "";
+}
+
 export function getPortableBlockCopyText(block: PortableTextBlock): string | null {
   if (block._type === "mathBlock") {
     const math = block.math?.trim();
@@ -229,11 +450,16 @@ export function getPortableBlockCopyText(block: PortableTextBlock): string | nul
   }
 
   if (block._type === "table") {
-    const rows = block.rows?.filter((row) => row.cells?.some((cell) => cell.trim())) ?? [];
+    const rows =
+      normalizeTableBlock(block).rows?.filter((row) =>
+        row.richCells?.some((cell) => getTableCellText(cell).trim()),
+      ) ?? [];
     if (!rows.length) return null;
 
-    const tableRows = rows.map((row) => `| ${(row.cells ?? []).join(" | ")} |`);
-    const separator = `| ${(rows[0]?.cells ?? []).map(() => "---").join(" | ")} |`;
+    const tableRows = rows.map(
+      (row) => `| ${(row.richCells ?? []).map(getTableCellCopyText).join(" | ")} |`,
+    );
+    const separator = `| ${(rows[0]?.richCells ?? []).map(() => "---").join(" | ")} |`;
     return [tableRows[0], separator, ...tableRows.slice(1)].join("\n");
   }
 
@@ -292,7 +518,11 @@ export function extractBodyText(post: BlogPostWithSource): string {
     post.body
       ?.flatMap((block) => {
         if (block._type === "table") {
-          return block.rows?.flatMap((row) => row.cells ?? []) ?? [];
+          return (
+            normalizeTableBlock(block).rows?.flatMap(
+              (row) => row.richCells?.map((cell) => getTableCellText(cell)) ?? [],
+            ) ?? []
+          );
         }
         if (block._type === "mathBlock") {
           return block.math ? [block.math] : [];

@@ -5,11 +5,15 @@ import { createReadStream } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { createClient } from "@sanity/client";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 
 const DEFAULT_PROJECT_ID = "wyfqr24v";
 const DEFAULT_DATASET = "production";
 const DEFAULT_API_VERSION = "2024-01-01";
 const DEFAULT_SITE_URL = "https://nebutra.com";
+const markdownInlineProcessor = remark().use(remarkGfm).use(remarkMath);
 
 function printHelp() {
   process.stdout.write(`Publish or update one localized Nebutra blog post in Sanity.
@@ -155,47 +159,92 @@ function pushTextWithCitations(children, markDefs, text, marks = []) {
   }
 }
 
-function parseInline(text) {
-  const children = [];
-  const markDefs = [];
-  const tokenPattern =
-    /(\[([^\]]+)\]\(([^)\s]+)\)|`([^`]+)`|\*\*([^*]+)\*\*|\*([^*]+)\*|\$([^$\n]+)\$)/g;
-  let lastIndex = 0;
-  let match;
-
-  while ((match = tokenPattern.exec(text)) !== null) {
-    if (match.index > lastIndex) {
-      pushTextWithCitations(children, markDefs, text.slice(lastIndex, match.index));
-    }
-
-    if (match[2] && match[3]) {
+function appendInlineNode(children, markDefs, node, marks = []) {
+  switch (node?.type) {
+    case "root":
+    case "paragraph":
+    case "delete":
+      for (const child of node.children ?? []) {
+        appendInlineNode(children, markDefs, child, marks);
+      }
+      return;
+    case "strong":
+      for (const child of node.children ?? []) {
+        appendInlineNode(children, markDefs, child, [...marks, "strong"]);
+      }
+      return;
+    case "emphasis":
+      for (const child of node.children ?? []) {
+        appendInlineNode(children, markDefs, child, [...marks, "em"]);
+      }
+      return;
+    case "inlineCode":
+      children.push(makeSpan(node.value ?? "", [...marks, "code"]));
+      return;
+    case "inlineMath":
+      children.push(makeSpan(node.value ?? "", [...marks, "mathInline"]));
+      return;
+    case "link": {
       const markKey = key();
       markDefs.push({
         _type: "link",
         _key: markKey,
-        href: match[3],
+        href: node.url ?? "#",
       });
-      children.push(makeSpan(match[2], [markKey]));
-    } else if (match[4]) {
-      children.push(makeSpan(match[4], ["code"]));
-    } else if (match[5]) {
-      pushTextWithCitations(children, markDefs, match[5], ["strong"]);
-    } else if (match[6]) {
-      pushTextWithCitations(children, markDefs, match[6], ["em"]);
-    } else if (match[7]) {
-      children.push(makeSpan(match[7], ["mathInline"]));
+      for (const child of node.children ?? []) {
+        appendInlineNode(children, markDefs, child, [...marks, markKey]);
+      }
+      return;
     }
-
-    lastIndex = match.index + match[0].length;
+    case "text":
+      pushTextWithCitations(children, markDefs, node.value ?? "", marks);
+      return;
+    case "break":
+      children.push(makeSpan("\n", marks));
+      return;
+    case "footnoteReference":
+      children.push(makeSpan(`[^${node.identifier ?? ""}]`, marks));
+      return;
+    default:
+      if (node?.children?.length) {
+        for (const child of node.children) {
+          appendInlineNode(children, markDefs, child, marks);
+        }
+        return;
+      }
+      if (node?.value) {
+        children.push(makeSpan(node.value, marks));
+      }
   }
+}
 
-  if (lastIndex < text.length) {
-    pushTextWithCitations(children, markDefs, text.slice(lastIndex));
+function parseInline(text) {
+  const children = [];
+  const markDefs = [];
+
+  try {
+    const tree = markdownInlineProcessor.parse(text);
+    for (const node of tree.children ?? []) {
+      appendInlineNode(children, markDefs, node);
+    }
+  } catch {
+    pushTextWithCitations(children, markDefs, text);
   }
 
   return {
     children: children.length ? children : [makeSpan("")],
     markDefs,
+  };
+}
+
+function tableCellBlock(text) {
+  const inline = parseInline(text);
+  return {
+    _type: "block",
+    _key: key(),
+    style: "normal",
+    children: inline.children,
+    markDefs: inline.markDefs,
   };
 }
 
@@ -243,6 +292,11 @@ function tableBlock(rows) {
       _type: "tableRow",
       _key: key(),
       cells,
+      richCells: cells.map((cell) => ({
+        _type: "tableCell",
+        _key: key(),
+        content: [tableCellBlock(cell)],
+      })),
     })),
   };
 }

@@ -1,9 +1,13 @@
 import {
   getBlockText,
+  getTableCellBlock,
+  getTableCellText,
   hasTemplatePlaceholders,
   hasVisibleText,
   normalizePortableTextBlocks,
   type PortableTextBlock,
+  type PortableTextSpan,
+  type PortableTextTableCell,
   TEMPLATE_PLACEHOLDER_MARK,
 } from "@nebutra/blog";
 import { Hash } from "@nebutra/icons";
@@ -18,10 +22,152 @@ import { BlogCopyButton } from "./blog-copy-button";
 import { BlogCtaBlock, type BlogCtaBlockItem } from "./blog-cta-block";
 import { BlogMermaidDiagram } from "./blog-mermaid-diagram";
 
+function getTableCellMarkDef(
+  block: PortableTextBlock,
+  mark: string,
+): Record<string, unknown> | null {
+  return block.markDefs?.find((markDef) => markDef._key === mark) ?? null;
+}
+
+function renderTableCellMark(
+  mark: string,
+  children: ReactNode,
+  block: PortableTextBlock,
+  key: string,
+): ReactNode {
+  const markDef = getTableCellMarkDef(block, mark);
+
+  if (markDef?._type === "link") {
+    const href = typeof markDef.href === "string" ? markDef.href : "#";
+    const isExternal = /^https?:\/\//.test(href);
+    return (
+      <a
+        key={key}
+        href={href}
+        className="font-medium text-[var(--neutral-12)] underline decoration-[var(--neutral-7)] underline-offset-4 transition-colors hover:decoration-[var(--blue-9)]"
+        rel={isExternal ? "noopener noreferrer" : undefined}
+        target={isExternal ? "_blank" : undefined}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  if (markDef?._type === "citation") {
+    const href = typeof markDef.href === "string" ? markDef.href : "#";
+    return (
+      <sup key={key} className="mx-0.5 font-mono font-semibold text-[0.68em] leading-none">
+        [
+        <a
+          href={href}
+          className="text-[var(--blue-11)] no-underline decoration-[var(--blue-7)] decoration-dotted hover:underline"
+        >
+          {children}
+        </a>
+        ]
+      </sup>
+    );
+  }
+
+  if (mark === "strong") {
+    return (
+      <strong key={key} className="font-semibold text-[var(--neutral-12)]">
+        {children}
+      </strong>
+    );
+  }
+
+  if (mark === "em") {
+    return (
+      <em key={key} className="italic text-[var(--neutral-12)]">
+        {children}
+      </em>
+    );
+  }
+
+  if (mark === "code") {
+    return (
+      <code
+        key={key}
+        className="rounded-[var(--radius-sm)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.9em] text-[var(--neutral-12)]"
+      >
+        {children}
+      </code>
+    );
+  }
+
+  if (mark === "mathInline") {
+    return <BlogInlineMath key={key}>{children}</BlogInlineMath>;
+  }
+
+  if (mark === TEMPLATE_PLACEHOLDER_MARK) {
+    return (
+      <span
+        key={key}
+        className="mx-0.5 inline-flex rounded-[var(--radius-sm)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.88em] font-medium text-[var(--neutral-12)]"
+      >
+        {children}
+      </span>
+    );
+  }
+
+  return children;
+}
+
+function BlogTableCellSpan({
+  block,
+  index,
+  span,
+}: {
+  block: PortableTextBlock;
+  index: number;
+  span: PortableTextSpan;
+}) {
+  const marks = span.marks ?? [];
+  let node: ReactNode = span.text ?? "";
+
+  for (let markIndex = marks.length - 1; markIndex >= 0; markIndex -= 1) {
+    const mark = marks[markIndex];
+    if (!mark) continue;
+    node = renderTableCellMark(mark, node, block, `${span._key ?? index}-${mark}-${markIndex}`);
+  }
+
+  return <span key={span._key ?? index}>{node}</span>;
+}
+
+function BlogTableCellContent({ cell }: { cell: PortableTextTableCell }) {
+  const block = getTableCellBlock(cell);
+
+  return (
+    <>
+      {block.children?.map((span, index) => (
+        <BlogTableCellSpan
+          key={span._key ?? `${block._key ?? "cell"}-${index}`}
+          block={block}
+          index={index}
+          span={span}
+        />
+      ))}
+    </>
+  );
+}
+
 function BlogTable({ value }: { value: PortableTextBlock }) {
-  const rows = value.rows?.filter((row) => row.cells?.some((cell) => cell.trim())) ?? [];
+  const rows =
+    value.rows
+      ?.map((row, rowIndex) => ({
+        key: row._key ?? `${value._key ?? "table"}-row-${rowIndex}`,
+        cells:
+          row.richCells && row.richCells.length > 0
+            ? row.richCells
+            : (row.cells ?? []).map((cell, cellIndex) => ({
+                _key: `${row._key ?? rowIndex}-cell-${cellIndex}`,
+                text: cell,
+              })),
+      }))
+      .filter((row) => row.cells.some((cell) => getTableCellText(cell).trim())) ?? [];
   const [header, ...bodyRows] = rows;
-  if (!header?.cells?.length) return null;
+  if (!header?.cells.length) return null;
 
   return (
     <div className="my-8 overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] shadow-sm">
@@ -34,23 +180,17 @@ function BlogTable({ value }: { value: PortableTextBlock }) {
                 className="border-b border-[var(--neutral-6)] px-4 py-3 font-semibold"
                 scope="col"
               >
-                {cell}
+                <BlogTableCellContent cell={cell} />
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {bodyRows.map((row, rowIndex) => (
-            <tr
-              key={row._key ?? `${value._key ?? "table"}-row-${rowIndex}`}
-              className="border-b border-[var(--neutral-5)] last:border-b-0"
-            >
-              {(row.cells ?? []).map((cell, cellIndex) => (
-                <td
-                  key={`${row._key ?? rowIndex}-cell-${cellIndex}`}
-                  className="px-4 py-3 align-top leading-6"
-                >
-                  {cell}
+          {bodyRows.map((row) => (
+            <tr key={row.key} className="border-b border-[var(--neutral-5)] last:border-b-0">
+              {row.cells.map((cell, cellIndex) => (
+                <td key={`${row.key}-cell-${cellIndex}`} className="px-4 py-3 align-top leading-6">
+                  <BlogTableCellContent cell={cell} />
                 </td>
               ))}
             </tr>

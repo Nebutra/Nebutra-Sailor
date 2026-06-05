@@ -14,6 +14,9 @@
     "@sanity/vision": "^5.25.1",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
     "sanity": "^5.25.1",
     "styled-components": "^6.3.11"
   },

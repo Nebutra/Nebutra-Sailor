@@ -318,6 +318,77 @@ export const post = defineType({
                       type: "array",
                       of: [{ type: "string" }],
                     }),
+                    defineField({
+                      name: "richCells",
+                      title: "Rich cells",
+                      type: "array",
+                      description:
+                        "Generated Portable Text cell content. Keep cells as plain-text fallback.",
+                      of: [
+                        {
+                          name: "tableCell",
+                          title: "Table cell",
+                          type: "object",
+                          fields: [
+                            defineField({
+                              name: "content",
+                              title: "Content",
+                              type: "array",
+                              of: [
+                                {
+                                  type: "block",
+                                  styles: [{ title: "Normal", value: "normal" }],
+                                  lists: [],
+                                  marks: {
+                                    annotations: [
+                                      {
+                                        name: "link",
+                                        title: "Link",
+                                        type: "object",
+                                        fields: [
+                                          defineField({
+                                            name: "href",
+                                            title: "URL or anchor",
+                                            type: "string",
+                                            validation: (Rule) => Rule.required(),
+                                          }),
+                                        ],
+                                      },
+                                      {
+                                        name: "citation",
+                                        title: "Citation",
+                                        type: "object",
+                                        fields: [
+                                          defineField({
+                                            name: "refNumber",
+                                            title: "Reference number",
+                                            type: "number",
+                                            validation: (Rule) =>
+                                              Rule.required().integer().positive(),
+                                          }),
+                                          defineField({
+                                            name: "href",
+                                            title: "Reference anchor",
+                                            type: "string",
+                                            validation: (Rule) => Rule.required(),
+                                          }),
+                                        ],
+                                      },
+                                    ],
+                                    decorators: [
+                                      { title: "Strong", value: "strong" },
+                                      { title: "Emphasis", value: "em" },
+                                      { title: "Code", value: "code" },
+                                      { title: "Inline math", value: "mathInline" },
+                                    ],
+                                  },
+                                },
+                              ],
+                            }),
+                          ],
+                        },
+                      ],
+                    }),
                   ],
                 },
               ],
