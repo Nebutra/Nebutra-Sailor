@@ -3,6 +3,7 @@
 import {
   ArrowRight,
   BookClosed,
+  ChevronDown,
   Code,
   FolderClosed,
   Layers,
@@ -19,6 +20,11 @@ import {
   type BadgeProps,
   Button,
   CodeBlockLanguageIcon,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
   Select,
   SelectContent,
   SelectItem,
@@ -834,6 +840,8 @@ export function StartupCommandCenter() {
               }
             }}
             project={selectedProject}
+            projects={projects}
+            onSelectProject={selectProject}
             selectedArtifact={selectedArtifact}
             selectedFile={selectedFile}
             files={selectedWorkspaceFiles}
@@ -1082,6 +1090,8 @@ function StartupBuilderWorkspace({
   onSelectFile,
   onSelectRun,
   project,
+  projects,
+  onSelectProject,
   files,
   previewHtml,
   selectedArtifact,
@@ -1102,6 +1112,8 @@ function StartupBuilderWorkspace({
   onSelectFile: (path: string) => void;
   onSelectRun: (runId: string) => void;
   project: StartupOSProject;
+  projects: readonly StartupOSProject[];
+  onSelectProject: (project: StartupOSProject) => void;
   files: readonly StartupOSFile[];
   previewHtml: string;
   selectedArtifact: StartupArtifact | null;
@@ -1221,9 +1233,40 @@ function StartupBuilderWorkspace({
               >
                 <SidebarLeft className="size-4" aria-hidden="true" />
               </Button>
-              <h2 className="min-w-0 flex-1 truncate text-sm font-semibold tracking-tight text-neutral-12">
-                {companyName(project.companyContext)}
-              </h2>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    className="inline-flex min-w-0 flex-1 items-center gap-1 rounded-[var(--radius-md)] px-1.5 py-0.5 text-sm font-semibold tracking-tight text-neutral-12 outline-none transition-colors hover:bg-neutral-2"
+                  >
+                    <span className="truncate">{companyName(project.companyContext)}</span>
+                    <ChevronDown className="size-3.5 shrink-0 text-neutral-9" aria-hidden="true" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-64">
+                  <div className="px-2 py-1.5">
+                    <p className="truncate text-sm font-semibold text-neutral-12">
+                      {companyName(project.companyContext)}
+                    </p>
+                    <p className="mt-0.5 truncate text-[11px] text-neutral-9">
+                      {project.slug} · {project.arena} · {project.status}
+                    </p>
+                  </div>
+                  {projects.filter((item) => item.id !== project.id).length > 0 ? (
+                    <>
+                      <DropdownMenuSeparator />
+                      {projects
+                        .filter((item) => item.id !== project.id)
+                        .slice(0, 8)
+                        .map((item) => (
+                          <DropdownMenuItem key={item.id} onClick={() => onSelectProject(item)}>
+                            <span className="truncate">{companyName(item.companyContext)}</span>
+                          </DropdownMenuItem>
+                        ))}
+                    </>
+                  ) : null}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
             <StartupChatPanel
