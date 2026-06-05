@@ -1,0 +1,52 @@
+{
+  "name": "@nebutra/workflow-runtime",
+  "version": "0.1.0",
+  "private": false,
+  "license": "MIT",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/agent-runtime for NodeModelSpec + orchestration grammar",
+      "@nebutra/agents for model execution (injected by the host)"
+    ],
+    "gaps": [
+      "QuickJS sandbox adapter is the only safe executor; the default seam refuses to run",
+      "Inngest workflowRunner + gateway /api/v1/workflows not yet wired",
+      "SSE streaming + the agent-callable run_workflow tool are deferred"
+    ],
+    "featureId": "workflow-runtime",
+    "category": "ai",
+    "surface": "workflow-runtime",
+    "summary": "Tenant-authored workflow orchestration (agent/parallel/phase JS) executed inside a fail-closed QuickJS sandbox, layered on @nebutra/agents + @nebutra/agent-runtime"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./sandbox": "./src/sandbox.ts",
+    "./quickjs": "./src/quickjs-sandbox.ts"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nebutra/agent-runtime": "workspace:*",
+    "@nebutra/logger": "workspace:*",
+    "p-limit": "^7.3.0",
+    "quickjs-emscripten": "^0.32.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
