@@ -101,9 +101,9 @@ describe("StartupOsCodeView — highlighted view", () => {
     expect(screen.getByTestId("code-block")).toHaveAttribute("data-language", "css");
   });
 
-  it("passes the file path as the CodeBlock filename", () => {
+  it("does not pass a filename to CodeBlock (the path lives in the workspace tab bar, not duplicated)", () => {
     render(<StartupOsCodeView file={TSX_FILE} />);
-    expect(screen.getByTestId("code-block")).toHaveAttribute("data-filename", "src/App.tsx");
+    expect(screen.getByTestId("code-block")).not.toHaveAttribute("data-filename");
   });
 
   it("hides the Edit toolbar when no onSave is provided (pure viewer)", () => {
