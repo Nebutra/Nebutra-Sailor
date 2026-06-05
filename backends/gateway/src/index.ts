@@ -57,6 +57,7 @@ import { statusRoutes } from "./routes/system/status.js";
 import { taskRoutes } from "./routes/tasks/index.js";
 import { uploadRoutes } from "./routes/uploads/index.js";
 import { getAuthWebhookRoutes, stripeWebhookRoutes } from "./routes/webhooks/index.js";
+import { workflowRoutes } from "./routes/workflows/index.js";
 
 initOtel({ serviceName: "api-gateway" });
 initSentry();
@@ -222,6 +223,7 @@ app.route("/api/v1/legal", consentRoutes);
 app.route("/api/v1/events", eventRoutes);
 app.route("/api/v1/agents", agentRoutes);
 app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
+app.route("/api/v1/workflows", workflowRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/tasks", taskRoutes);
 app.route("/api/v1/uploads", uploadRoutes);
