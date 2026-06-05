@@ -1,8 +1,6 @@
 "use client";
 
-import { Check, Cross, PencilEdit } from "@nebutra/icons";
-import { Button, CodeBlock } from "@nebutra/ui/primitives";
-import { type KeyboardEvent, useCallback, useDeferredValue, useEffect, useState } from "react";
+import { CodeBlock } from "@nebutra/ui/primitives";
 
 // =============================================================================
 // Language mapping — file.language → react-syntax-highlighter language id.
@@ -56,11 +54,14 @@ export interface StartupOsCodeViewFile {
 }
 
 export interface StartupOsCodeViewProps {
-  /** The file to render — path drives the header + filename, content is the source. */
+  /** The file to render — path drives language detection, content is the source. */
   file: StartupOsCodeViewFile;
-  /** Persist handler invoked from the editor's Save. Omit for a read-only viewer. */
+  /**
+   * @deprecated Workspace code is AI-generated and the view is read-only; manual
+   * editing was removed. Accepted (no-op) for back-compat with existing callers.
+   */
   onSave?: (content: string) => void | Promise<void>;
-  /** External save-in-flight flag — disables Save and shows a saving label. */
+  /** @deprecated No-op — see {@link StartupOsCodeViewProps.onSave}. */
   isSaving?: boolean;
   /** Cap the rendered height of the highlighted view (CodeBlock `maxHeight`). */
   maxHeight?: string | number;
@@ -72,137 +73,36 @@ export interface StartupOsCodeViewProps {
 // =============================================================================
 
 /**
- * StartupOsCodeView — a Lovable-style code panel for the Startup OS workspace.
+ * StartupOsCodeView — a read-only, syntax-highlighted view of a generated file
+ * via the `@nebutra/ui` {@link CodeBlock} primitive.
  *
- * The default mode is a syntax-highlighted, read-only render of the file via the
- * `@nebutra/ui` {@link CodeBlock} primitive (dark night-owl theme, language logo
- * + path in the header). When `onSave` is supplied an **Edit** toggle swaps to a
- * draft `<textarea>` (the existing editor flow, deferred for a cheap live
- * preview elsewhere) plus a **Save** that calls `onSave`. **Done** or **Esc**
- * returns to the highlighted view.
- *
- * So it looks highlighted like Lovable but stays editable.
+ * The Startup OS workspace is AI-generated: code changes flow through the chat /
+ * plan, not a manual editor. So there is no Edit/Save UX — the panel only
+ * renders the source. The path lives in the workspace tab bar, so the header is
+ * hidden here to avoid duplication.
  */
 export function StartupOsCodeView({
   file,
-  onSave,
-  isSaving = false,
   maxHeight = "100%",
   className,
 }: StartupOsCodeViewProps) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [draft, setDraft] = useState(file.content);
-  const deferredDraft = useDeferredValue(draft);
   const language = toHighlighterLanguage(file.language, file.path);
-  const isDirty = draft !== file.content;
-  const editable = typeof onSave === "function";
-
-  // Re-sync the draft whenever the selected file changes underneath us (a
-  // different path, or an external save that changed content). Leaving edit
-  // mode here keeps the highlighted view authoritative for the new file.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: file.path resets on file *identity* change, not only content — two files can share identical content.
-  useEffect(() => {
-    setDraft(file.content);
-    setIsEditing(false);
-  }, [file.path, file.content]);
-
-  const enterEdit = useCallback(() => setIsEditing(true), []);
-
-  const exitEdit = useCallback(() => {
-    setDraft(file.content);
-    setIsEditing(false);
-  }, [file.content]);
-
-  const save = useCallback(async () => {
-    if (!editable || !isDirty || isSaving) return;
-    await onSave?.(draft);
-    setIsEditing(false);
-  }, [editable, isDirty, isSaving, onSave, draft]);
-
-  const onTextareaKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLTextAreaElement>) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        exitEdit();
-      }
-    },
-    [exitEdit],
-  );
 
   return (
     <section
       data-testid="startup-os-code-view"
-      data-mode={isEditing ? "edit" : "view"}
-      className={`flex min-h-0 flex-1 flex-col bg-neutral-1 ${className ?? ""}`}
+      data-mode="view"
+      className={`min-h-0 flex-1 overflow-hidden bg-neutral-1 ${className ?? ""}`}
     >
-      {/* Edit lives in a toolbar only while editing; in view mode it floats over
-          the code so the highlighted source starts flush under the file tabs —
-          no empty header bar. */}
-      {editable && isEditing ? (
-        <div className="flex items-center justify-end gap-2 bg-neutral-2 px-3 py-2">
-          <Button
-            type="button"
-            variant="ink"
-            size="sm"
-            className="rounded-full"
-            onClick={() => void save()}
-            disabled={!isDirty || isSaving}
-          >
-            <Check className="size-3.5" aria-hidden="true" />
-            {isSaving ? "Saving..." : isDirty ? "Save" : "Saved"}
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="rounded-full"
-            onClick={exitEdit}
-          >
-            <Cross className="size-3.5" aria-hidden="true" />
-            Done
-          </Button>
-        </div>
-      ) : null}
-
-      {isEditing ? (
-        // Edit mode — the existing draft textarea flow. data-allow-native is the
-        // sanctioned opt-out for the one editor surface that needs a raw control.
-        <textarea
-          data-allow-native
-          data-testid="startup-os-code-editor"
-          aria-label={`Edit ${file.path}`}
-          spellCheck={false}
-          value={draft}
-          onChange={(event) => setDraft(event.target.value)}
-          onKeyDown={onTextareaKeyDown}
-          className="min-h-0 flex-1 resize-none border-0 bg-neutral-12 p-4 font-mono text-[13px] leading-6 text-neutral-1 shadow-none outline-none placeholder:text-neutral-6 dark:bg-black"
-        />
-      ) : (
-        <div
-          className="relative min-h-0 flex-1 overflow-hidden"
-          data-testid="startup-os-code-highlight"
-        >
-          {editable ? (
-            <button
-              type="button"
-              onClick={enterEdit}
-              className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1/90 px-2.5 py-1 text-xs font-medium text-neutral-11 shadow-sm backdrop-blur transition-colors hover:bg-neutral-2"
-            >
-              <PencilEdit className="size-3.5" aria-hidden="true" />
-              Edit
-            </button>
-          ) : null}
-          <CodeBlock
-            aria-label={`Source of ${file.path}`}
-            language={language}
-            maxHeight={maxHeight}
-            hideHeader
-            className="h-full rounded-none border-0"
-          >
-            {deferredDraft}
-          </CodeBlock>
-        </div>
-      )}
+      <CodeBlock
+        aria-label={`Source of ${file.path}`}
+        language={language}
+        maxHeight={maxHeight}
+        hideHeader
+        className="h-full rounded-none border-0"
+      >
+        {file.content}
+      </CodeBlock>
     </section>
   );
 }
