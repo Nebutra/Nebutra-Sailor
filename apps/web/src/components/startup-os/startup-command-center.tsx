@@ -877,7 +877,7 @@ function StartupBuilderHome({
         {/* Ambient brand glow — subtle (governed/enterprise), not a loud aurora. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[380px] w-full max-w-3xl opacity-[0.12] blur-3xl"
+          className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[380px] w-full max-w-3xl opacity-10 blur-3xl"
           style={{ background: "var(--brand-gradient)" }}
         />
         <div className="relative mx-auto flex min-h-0 flex-1 w-full max-w-5xl flex-col justify-center overflow-y-auto px-5 py-16 sm:px-8">
@@ -887,7 +887,7 @@ function StartupBuilderHome({
               Startup Agent OS
             </span>
             <h2
-              className="mt-6 text-4xl font-semibold tracking-[-0.06em] sm:text-6xl"
+              className="mt-6 text-4xl font-semibold tracking-tight sm:text-6xl"
               style={{
                 background: "var(--brand-gradient)",
                 WebkitBackgroundClip: "text",
@@ -902,7 +902,7 @@ function StartupBuilderHome({
               files, spatial canvas, and approval-gated runs.
             </p>
 
-            <div className="mx-auto mt-8 overflow-hidden rounded-[30px] border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5">
+            <div className="mx-auto mt-8 overflow-hidden rounded-3xl border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5">
               {/* Chromeless native textarea: the @nebutra/ui Textarea primitive is a
                   bordered "field" (own border/shadow + inline radius) that leaves a
                   seam inside this unified box. data-allow-native is the sanctioned
@@ -1029,7 +1029,7 @@ function StartupBuilderHome({
                     onClick={() => onProjectSelect(project)}
                     className={`rounded-2xl border p-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
                       project.id === selectedProjectId
-                        ? "border-blue-8 bg-blue-2 text-blue-12 dark:border-blue-7/70 dark:bg-blue-9/18 dark:text-blue-4"
+                        ? "border-blue-8 bg-blue-2 text-blue-12 dark:border-blue-7/70 dark:bg-blue-9/20 dark:text-blue-4"
                         : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2"
                     }`}
                   >
@@ -1128,7 +1128,7 @@ function StartupBuilderWorkspace({
               <div className="flex min-w-0 items-center">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <h2 className="truncate text-sm font-semibold tracking-[-0.02em] text-neutral-12">
+                    <h2 className="truncate text-sm font-semibold tracking-tight text-neutral-12">
                       {companyName(project.companyContext)}
                     </h2>
                     <StatusPill
@@ -1149,7 +1149,7 @@ function StartupBuilderWorkspace({
               {threadItems.map((item) => (
                 <div
                   key={item.title}
-                  className={`rounded-[20px] border p-3 ${
+                  className={`rounded-2xl border p-3 ${
                     item.tone === "blue"
                       ? "border-blue-6 bg-blue-2 dark:border-blue-8/40 dark:bg-blue-9/15"
                       : item.tone === "amber"
@@ -1157,7 +1157,7 @@ function StartupBuilderWorkspace({
                         : "border-neutral-6 bg-neutral-1"
                   }`}
                 >
-                  <p className="text-xs font-semibold tracking-[-0.01em] text-neutral-12">
+                  <p className="text-xs font-semibold tracking-tight text-neutral-12">
                     {item.title}
                   </p>
                   <p className="mt-1 text-xs leading-5 text-neutral-10">{item.body}</p>
@@ -1166,7 +1166,7 @@ function StartupBuilderWorkspace({
             </div>
 
             <div className="border-t border-neutral-6 p-3">
-              <div className="rounded-[22px] border border-neutral-6 bg-neutral-2 p-3">
+              <div className="rounded-2xl border border-neutral-6 bg-neutral-2 p-3">
                 <div className="text-xs leading-5 text-neutral-10">
                   {activityCount > 0
                     ? `${activityCount} recorded action${activityCount !== 1 ? "s" : ""}.`
@@ -1280,7 +1280,7 @@ function StartupBuilderWorkspace({
 function ExplorerReferenceSection({ children, title }: { children: ReactNode; title: string }) {
   return (
     <section className="mt-3 first:mt-0">
-      <h3 className="px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-8">
+      <h3 className="px-2 text-[10px] font-semibold uppercase tracking-widest text-neutral-8">
         {title}
       </h3>
       <div className="mt-1 grid gap-0.5">{children}</div>
@@ -1345,7 +1345,7 @@ function WorkspaceFilesPanel({
           <div className="min-w-0">
             <div className="flex items-center gap-2">
               <Code className="size-4 text-neutral-10" aria-hidden="true" />
-              <h2 className="text-sm font-semibold tracking-[-0.02em] text-neutral-12">
+              <h2 className="text-sm font-semibold tracking-tight text-neutral-12">
                 Code and preview
               </h2>
               <span className="rounded-full bg-neutral-2 px-2 py-0.5 text-[11px] font-semibold text-neutral-10 ring-1 ring-neutral-6">
@@ -1632,7 +1632,7 @@ function StartupCanvasPanel({
         <div className="flex flex-col gap-3 border-b border-neutral-6 bg-neutral-1 p-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-sm font-semibold tracking-[-0.02em] text-neutral-12">
+              <h2 className="text-sm font-semibold tracking-tight text-neutral-12">
                 Company canvas
               </h2>
               <span className="rounded-full bg-blue-3 px-2 py-0.5 text-[11px] font-semibold text-blue-11 dark:bg-blue-9/20 dark:text-blue-5">
@@ -1649,7 +1649,7 @@ function StartupCanvasPanel({
             <button
               type="button"
               onClick={() => changeZoom(Math.max(0.54, Number((zoom - 0.08).toFixed(2))))}
-              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
+              className="shrink-0 whitespace-nowrap rounded-xl px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
             >
               -
             </button>
@@ -1659,14 +1659,14 @@ function StartupCanvasPanel({
             <button
               type="button"
               onClick={() => changeZoom(Math.min(1.08, Number((zoom + 0.08).toFixed(2))))}
-              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
+              className="shrink-0 whitespace-nowrap rounded-xl px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
             >
               +
             </button>
             <button
               type="button"
               onClick={resetLayout}
-              className="shrink-0 whitespace-nowrap rounded-[12px] px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
+              className="shrink-0 whitespace-nowrap rounded-xl px-2 py-1 text-xs font-semibold text-neutral-11 hover:bg-neutral-1"
             >
               Reset
             </button>
@@ -1746,7 +1746,7 @@ function StartupCanvasPanel({
           </div>
 
           <aside className="min-h-0 overflow-y-auto border-t border-neutral-6 bg-neutral-1 p-4 2xl:border-l 2xl:border-t-0">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-9">
+            <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">
               Canvas inspector
             </h3>
             {selectedArtifact ? (
@@ -1861,7 +1861,7 @@ function CanvasNodeButton({
           {node.kind}
         </span>
       </div>
-      <p className="mt-3 text-[11px] font-medium uppercase tracking-[0.12em] opacity-70">
+      <p className="mt-3 text-[11px] font-medium uppercase tracking-widest opacity-70">
         {node.status}
       </p>
     </button>
