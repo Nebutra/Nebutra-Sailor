@@ -66,6 +66,7 @@ export const ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   Integration: 'Integration',
+  TenantProviderKey: 'TenantProviderKey',
   ModelConfig: 'ModelConfig',
   RequestLog: 'RequestLog',
   FeatureDefinition: 'FeatureDefinition',
@@ -360,6 +361,22 @@ export const IntegrationScalarFieldEnum = {
 } as const
 
 export type IntegrationScalarFieldEnum = (typeof IntegrationScalarFieldEnum)[keyof typeof IntegrationScalarFieldEnum]
+
+
+export const TenantProviderKeyScalarFieldEnum = {
+  id: 'id',
+  tenantId: 'tenantId',
+  provider: 'provider',
+  label: 'label',
+  credentials: 'credentials',
+  isActive: 'isActive',
+  alwaysUse: 'alwaysUse',
+  lastTestedAt: 'lastTestedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TenantProviderKeyScalarFieldEnum = (typeof TenantProviderKeyScalarFieldEnum)[keyof typeof TenantProviderKeyScalarFieldEnum]
 
 
 export const ModelConfigScalarFieldEnum = {

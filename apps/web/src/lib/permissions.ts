@@ -31,6 +31,10 @@ export type Scope =
   | "api_key:read"
   | "api_key:create"
   | "api_key:delete"
+  // BYOK — tenant-owned AI provider keys
+  | "provider_key:read"
+  | "provider_key:create"
+  | "provider_key:delete"
   // Analytics / usage
   | "analytics:read"
   // Settings
@@ -63,6 +67,9 @@ const ROLE_PERMISSIONS: Record<Role, ReadonlySet<Scope>> = {
     "api_key:read",
     "api_key:create",
     "api_key:delete",
+    "provider_key:read",
+    "provider_key:create",
+    "provider_key:delete",
     "analytics:read",
     "settings:read",
     "settings:update",

@@ -177,6 +177,89 @@ function createPrismaClient(): PrismaClient {
           return result as unknown as typeof result;
         },
       },
+      // ── BYOK: tenant-owned AI provider keys ────────────────────────────────
+      // Mirrors the integration block but only encrypts `credentials` and binds
+      // the AAD to the row's own `tenantId` (not organizationId) under a distinct
+      // `kind` so ciphertext cannot be replayed across models.
+      tenantProviderKey: {
+        async $allOperations({ operation, args, query }) {
+          if (["create", "update", "upsert"].includes(operation)) {
+            const { encryptJSON, isEncryptedSecret } = await import("@nebutra/vault");
+
+            const encryptCredentials = async (
+              data: Record<string, unknown> | undefined,
+            ): Promise<void> => {
+              if (!data) return;
+              const value = data.credentials;
+              if (value === undefined || value === null) return;
+              // Already encrypted (e.g. update round-tripping the decrypted shape).
+              if (isEncryptedSecret(value)) return;
+              // Empty object is a legitimate "no key yet" state.
+              if (
+                typeof value === "object" &&
+                !Array.isArray(value) &&
+                Object.keys(value as Record<string, unknown>).length === 0
+              ) {
+                return;
+              }
+              const tenantId = typeof data.tenantId === "string" ? data.tenantId : undefined;
+              data.credentials = (await encryptJSON(value, {
+                context: {
+                  ...(tenantId ? { tenantId } : {}),
+                  kind: "provider_key.credentials",
+                },
+              })) as unknown as typeof value;
+            };
+
+            const typedArgs = args as {
+              create?: Record<string, unknown>;
+              update?: Record<string, unknown>;
+              data?: Record<string, unknown>;
+            };
+
+            if (operation === "upsert") {
+              await encryptCredentials(typedArgs.create);
+              await encryptCredentials(typedArgs.update);
+            } else if (typedArgs.data) {
+              await encryptCredentials(typedArgs.data);
+            }
+          }
+
+          const result = await query(args);
+
+          if (result) {
+            const { decryptJSON, isEncryptedSecret } = await import("@nebutra/vault");
+
+            const decryptRecord = async (record: unknown): Promise<void> => {
+              if (!record || typeof record !== "object") return;
+              const r = record as Record<string, unknown>;
+              const value = r.credentials;
+              if (!isEncryptedSecret(value)) return;
+              const tenantId = typeof r.tenantId === "string" ? r.tenantId : undefined;
+              try {
+                r.credentials = (await decryptJSON(value, {
+                  context: tenantId ? { tenantId } : {},
+                })) as unknown as typeof value;
+              } catch (err) {
+                logger.warn("[db] Failed to decrypt tenantProviderKey.credentials", {
+                  error: err instanceof Error ? err.message : String(err),
+                  providerKeyId: typeof r.id === "string" ? r.id : undefined,
+                });
+                // On decrypt failure, null out rather than leaking ciphertext.
+                r.credentials = null;
+              }
+            };
+
+            if (Array.isArray(result)) {
+              await Promise.all(result.map(decryptRecord));
+            } else {
+              await decryptRecord(result);
+            }
+          }
+
+          return result as unknown as typeof result;
+        },
+      },
     },
   }) as unknown as PrismaClient; // Cast to retain type compatibility if needed, or let Prisma infer it
 }

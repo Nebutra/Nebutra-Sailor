@@ -11,6 +11,13 @@ export type { UpsertMemberData } from "./organization-member.repository";
 export { OrganizationMemberRepository } from "./organization-member.repository";
 export type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
 export type {
+  ProviderKeyCredentials,
+  ResolvedProviderKey,
+  UpsertProviderKeyData,
+} from "./tenant-provider-key.repository";
+// TenantProviderKey (BYOK)
+export { TenantProviderKeyRepository } from "./tenant-provider-key.repository";
+export type {
   ClaimUsageLedgerInput,
   ClaimUsageLedgerResult,
 } from "./usage-ledger.repository";

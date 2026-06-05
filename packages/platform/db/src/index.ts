@@ -30,6 +30,8 @@ export type {
   Role,
   // Billing
   Subscription,
+  // BYOK — tenant-owned AI provider keys
+  TenantProviderKey,
   UsageLedgerEntry,
   UsageLedgerSource,
   UsageType,

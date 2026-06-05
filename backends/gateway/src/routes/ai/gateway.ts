@@ -203,7 +203,7 @@ function parseConfiguredUpstreams(): readonly AiGatewayUpstream[] {
   }
 }
 
-function defaultEnvUpstreams(): readonly AiGatewayUpstream[] {
+export function defaultEnvUpstreams(): readonly AiGatewayUpstream[] {
   const explicit = parseConfiguredUpstreams();
   if (explicit.length > 0) return orderUpstreams(explicit);
 

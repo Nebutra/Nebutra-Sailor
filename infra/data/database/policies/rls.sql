@@ -237,6 +237,10 @@ ALTER TABLE "public"."tenants" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "tenants_rls" ON "public"."tenants";
 CREATE POLICY "tenants_rls" ON "public"."tenants" AS PERMISSIVE FOR ALL TO app_user USING ("id" = public.current_tenant_id());
 
+ALTER TABLE "public"."tenant_provider_keys" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "tenant_provider_keys_rls" ON "public"."tenant_provider_keys";
+CREATE POLICY "tenant_provider_keys_rls" ON "public"."tenant_provider_keys" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
+
 ALTER TABLE "public"."threads" ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "threads_rls" ON "public"."threads";
 CREATE POLICY "threads_rls" ON "public"."threads" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());

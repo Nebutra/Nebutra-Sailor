@@ -179,6 +179,7 @@ model Tenant {
   customerUsageLimits     CustomerUsageLimit[]
   feedbackReports         FeedbackReport[]
   integrations            Integration[]
+  tenantProviderKeys      TenantProviderKey[]
   invoices                Invoice[]
   oauthClients            OAuthClient[]
   orders                  Order[]
@@ -479,6 +480,34 @@ model Integration {
 
   @@unique([tenantId, type, name])
   @@map("integrations")
+  @@schema("public")
+}
+
+// ── Tenant AI Provider Keys (BYOK) ──────────────────────────────────────────────
+// Customer-owned AI provider API keys (OpenRouter-style "Bring Your Own Key").
+// `credentials` (shape: { apiKey }) is encrypted at rest by the @nebutra/db client
+// extension (vault envelope encryption, tenant-bound GCM AAD, kind
+// "provider_key.credentials"). The AI gateway prefers a tenant key when present
+// and falls back to the platform key unless `alwaysUse` is set for that provider.
+model TenantProviderKey {
+  id           String     @id @default(cuid())
+  tenantId     String     @map("tenant_id")
+  provider     AIProvider
+  label        String     @default("")
+  credentials  Json       @default("{}") // { apiKey } — encrypted in app layer
+  isActive     Boolean    @default(true) @map("is_active")
+  // "Always use this key": when true, never fall back to the platform key for
+  // this provider (mirrors OpenRouter's per-key option).
+  alwaysUse    Boolean    @default(false) @map("always_use")
+  lastTestedAt DateTime?  @map("last_tested_at")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, provider])
+  @@index([tenantId])
+  @@map("tenant_provider_keys")
   @@schema("public")
 }
 

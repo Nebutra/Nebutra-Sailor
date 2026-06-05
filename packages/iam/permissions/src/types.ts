@@ -20,6 +20,7 @@ export type Resource =
   | "Team"
   | "Invite"
   | "Integration"
+  | "AiProviderKey"
   | string;
 
 export type Role = "owner" | "admin" | "member" | "viewer" | "billing_admin" | "guest" | string;

@@ -443,10 +443,6 @@ export type ModelConfigSumOrderByAggregateInput = {
   outputPricePerMillion?: Prisma.SortOrder
 }
 
-export type EnumAIProviderFieldUpdateOperationsInput = {
-  set?: $Enums.AIProvider
-}
-
 
 
 export type ModelConfigSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{

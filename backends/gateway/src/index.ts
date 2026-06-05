@@ -38,8 +38,10 @@ import { adminRoutes } from "./routes/admin/index.js";
 import { agentRuntimeRoutes } from "./routes/agent-runtime/index.js";
 import { agentRoutes } from "./routes/agents/index.js";
 import { apiKeysRoutes } from "./routes/ai/api-keys.js";
+import { createByokResolveUpstreams } from "./routes/ai/byok-upstreams.js";
 import { createAiGatewayRoutes } from "./routes/ai/gateway.js";
 import { aiRoutes } from "./routes/ai/index.js";
+import { providerKeyRoutes } from "./routes/ai/provider-keys/index.js";
 import { usageRoutes } from "./routes/ai/usage.js";
 import { creditsRoutes } from "./routes/billing/credits.js";
 import { billingRoutes } from "./routes/billing/index.js";
@@ -234,7 +236,12 @@ export function areGatewayDepsInitialized(): boolean {
 
 try {
   const gatewayDeps = await buildGatewayDeps();
-  app.route("/api/v1/ai/gateway", createAiGatewayRoutes(gatewayDeps));
+  // BYOK: prefer the tenant's own provider key (decrypted server-side) and fall
+  // back to the platform env upstreams. See routes/ai/byok-upstreams.ts.
+  app.route(
+    "/api/v1/ai/gateway",
+    createAiGatewayRoutes(gatewayDeps, { resolveUpstreams: createByokResolveUpstreams() }),
+  );
 
   try {
     registerCompletionWorker(gatewayDeps.queue as never, {
@@ -270,6 +277,7 @@ try {
 }
 
 app.route("/api/v1/ai/api-keys", apiKeysRoutes);
+app.route("/api/v1/ai/provider-keys", providerKeyRoutes);
 app.route("/api/v1/ai/usage", usageRoutes);
 app.route("/api/v1/billing", billingRoutes);
 app.route("/api/v1/billing/credits", creditsRoutes);
