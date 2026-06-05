@@ -541,6 +541,9 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      p-limit:
+        specifier: ^7.3.0
+        version: 7.3.0
       p-retry:
         specifier: ^8.0.0
         version: 8.0.0
@@ -2465,6 +2468,9 @@ importers:
       '@nebutra/errors':
         specifier: workspace:*
         version: link:../../platform/errors
+      p-limit:
+        specifier: ^7.3.0
+        version: 7.3.0
     devDependencies:
       '@types/node':
         specifier: 'catalog:'

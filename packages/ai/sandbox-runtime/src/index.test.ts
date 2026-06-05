@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createLocalMacSandbox, SandboxRuntime } from "./index";
+import { createLocalMacSandbox, type Sandbox, SandboxRuntime } from "./index";
 
 describe("SandboxRuntime", () => {
   it("plans deterministic provider routing without asking a model", () => {
@@ -37,5 +37,33 @@ describe("SandboxRuntime", () => {
       exitCode: 0,
       executedOn: "local_mac",
     });
+  });
+
+  it("caps provider doctor concurrency to avoid burst diagnostics", async () => {
+    let active = 0;
+    let maxActive = 0;
+    const providers = Array.from({ length: 12 }, (_, index): Sandbox => {
+      const id = `sandbox_${index}`;
+      return {
+        id,
+        exec: async () => ({
+          exitCode: 0,
+          aggregatedOutput: "ok",
+          executedOn: id,
+        }),
+        doctor: async () => {
+          active += 1;
+          maxActive = Math.max(maxActive, active);
+          await new Promise((resolve) => setTimeout(resolve, 0));
+          active -= 1;
+          return { provider: id, ok: true };
+        },
+      };
+    });
+
+    const runtime = SandboxRuntime.fromConfig({ providers });
+
+    await expect(runtime.doctor()).resolves.toHaveLength(12);
+    expect(maxActive).toBeLessThanOrEqual(4);
   });
 });

@@ -1,3 +1,4 @@
+import pLimit from "p-limit";
 import { env } from "@/lib/env";
 
 export type ServiceState = "operational" | "degraded" | "outage" | "unknown";
@@ -29,6 +30,7 @@ interface ServiceTarget {
 }
 
 const TIMEOUT_MS = 4500;
+const STATUS_PROBE_CONCURRENCY = 2;
 
 function trimTrailingSlash(value: string): string {
   return value.replace(/\/+$/, "");
@@ -150,7 +152,10 @@ function summarize(services: ServiceProbe[]): StatusSnapshot["overall"] {
 }
 
 export async function getStatusSnapshot(): Promise<StatusSnapshot> {
-  const services = await Promise.all(getServiceTargets().map((target) => probeService(target)));
+  const limit = pLimit(STATUS_PROBE_CONCURRENCY);
+  const services = await Promise.all(
+    getServiceTargets().map((target) => limit(() => probeService(target))),
+  );
   return {
     checkedAt: new Date().toISOString(),
     overall: summarize(services),

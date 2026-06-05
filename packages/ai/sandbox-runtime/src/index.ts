@@ -4,6 +4,7 @@ import {
   readCapabilityDebug,
 } from "@nebutra/capability-kit/debug";
 import { CapabilityError } from "@nebutra/errors";
+import pLimit from "p-limit";
 
 export interface ExecHints {
   readonly durationS?: number;
@@ -46,6 +47,8 @@ export interface SandboxRuntimeConfig {
   readonly providers?: readonly Sandbox[];
   readonly routes?: readonly RouteRule[];
 }
+
+const SANDBOX_DOCTOR_CONCURRENCY = 4;
 
 export function sandboxDebugPath(): string {
   return capabilityDebugPath("sandbox-runtime");
@@ -192,7 +195,10 @@ export class SandboxRuntime {
   }
 
   async doctor(): Promise<SandboxHealth[]> {
-    return Promise.all(Array.from(this.#providers.values()).map((provider) => provider.doctor()));
+    const limit = pLimit(SANDBOX_DOCTOR_CONCURRENCY);
+    return Promise.all(
+      Array.from(this.#providers.values()).map((provider) => limit(() => provider.doctor())),
+    );
   }
 }
 

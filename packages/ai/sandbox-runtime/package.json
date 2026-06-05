@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "@nebutra/capability-kit": "workspace:*",
-    "@nebutra/errors": "workspace:*"
+    "@nebutra/errors": "workspace:*",
+    "p-limit": "^7.3.0"
   },
   "devDependencies": {
     "@types/node": "catalog:",
