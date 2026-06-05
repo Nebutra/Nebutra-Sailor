@@ -97,7 +97,6 @@ export type {
   AgentUsageEvent,
   MemoryConfig,
   OrchestratorConfig,
-  PipelineStep,
   RouterConfig,
   TokenUsage,
   ToolCallResult,

@@ -94,11 +94,6 @@ export interface RouterConfig {
   readonly customRouter?: (message: string, context: AgentContext) => Promise<string>;
 }
 
-export interface PipelineStep {
-  readonly agentId: string;
-  readonly transformInput?: (prevOutput: string) => string;
-}
-
 // ─── Usage / Billing ──────────────────────────────────────────────────────────
 
 export interface AgentUsageEvent {
