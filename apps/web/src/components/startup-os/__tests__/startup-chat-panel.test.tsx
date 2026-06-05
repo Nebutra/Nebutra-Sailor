@@ -57,6 +57,22 @@ vi.mock("@nebutra/ui/primitives", () => ({
   AlertDescription: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   AlertIcon: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,
   AlertTitle: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Badge: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,
+  Button: ({
+    children,
+    onClick,
+    "aria-label": ariaLabel,
+    disabled,
+  }: {
+    children: React.ReactNode;
+    onClick?: () => void;
+    "aria-label"?: string;
+    disabled?: boolean;
+  }) => (
+    <button type="button" onClick={onClick} aria-label={ariaLabel} disabled={disabled}>
+      {children}
+    </button>
+  ),
 }));
 
 vi.mock("@nebutra/icons", () => {

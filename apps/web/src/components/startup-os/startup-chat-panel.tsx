@@ -8,8 +8,10 @@ import {
   AlertDescription,
   AlertIcon,
   AlertTitle,
+  Badge,
+  Button,
 } from "@nebutra/ui/primitives";
-import { useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 import { Streamdown } from "streamdown";
 import {
   type UseStartupConversationResult,
@@ -39,6 +41,18 @@ export interface StartupChatPanelProps {
    * fires twice for the same completed turn.
    */
   readonly onApplied?: () => void;
+  /**
+   * Render the panel's own brand header. Default `true`. The unified thread
+   * column in the workspace already shows the company name + status, so it
+   * mounts the panel with `showHeader={false}` to avoid a duplicate header.
+   */
+  readonly showHeader?: boolean;
+  /**
+   * Extra history rendered at the top of the scrollable stream — the thread
+   * column passes its Proposition / CompanyContext / run cards here so the
+   * conversation reads as one column (history above, live plan + composer below).
+   */
+  readonly history?: ReactNode;
 }
 
 const SUGGESTION_PROMPTS = ["再加一个定价页", "把 hero 改成品牌渐变", "生成 README"] as const;
@@ -51,7 +65,13 @@ const STATUS_LABELS: Record<UseStartupConversationResult["status"], string> = {
   cancelled: "Turn cancelled",
 };
 
-export function StartupChatPanel({ projectId, conversation, onApplied }: StartupChatPanelProps) {
+export function StartupChatPanel({
+  projectId,
+  conversation,
+  onApplied,
+  showHeader = true,
+  history,
+}: StartupChatPanelProps) {
   // Hooks must run unconditionally; the injected result simply shadows the live
   // one for tests. Both calls are cheap and side-effect-free until `send`.
   const live = useStartupConversation({ projectId });
@@ -93,27 +113,31 @@ export function StartupChatPanel({ projectId, conversation, onApplied }: Startup
         aria-label="Startup OS conversational build"
         className="flex h-full min-h-0 flex-col bg-neutral-1 text-neutral-12"
       >
-        {/* Header */}
-        <header className="flex items-center gap-3 border-b border-neutral-6 px-5 py-4">
-          <span
-            className="grid size-9 shrink-0 place-items-center rounded-[var(--radius-lg)] text-white"
-            style={{ background: "var(--brand-gradient)" }}
-            aria-hidden="true"
-          >
-            <Sparkles className="size-4.5" />
-          </span>
-          <div className="min-w-0">
-            <h2 className="truncate text-sm font-semibold tracking-[-0.02em] text-neutral-12">
-              Build with conversation
-            </h2>
-            <p className="mt-0.5 truncate text-xs text-neutral-10">
-              Describe a change and the agent edits your workspace live.
-            </p>
-          </div>
-        </header>
+        {/* Header — suppressed when the workspace thread column already shows the
+            company name + status above this panel. */}
+        {showHeader ? (
+          <header className="flex items-center gap-3 px-5 py-4">
+            <span
+              className="grid size-9 shrink-0 place-items-center rounded-2xl text-white"
+              style={{ background: "var(--brand-gradient)" }}
+              aria-hidden="true"
+            >
+              <Sparkles className="size-4.5" />
+            </span>
+            <div className="min-w-0">
+              <h2 className="truncate text-sm font-semibold tracking-tight text-neutral-12">
+                Build with conversation
+              </h2>
+              <p className="mt-0.5 truncate text-xs text-neutral-10">
+                Describe a change and the agent edits your workspace live.
+              </p>
+            </div>
+          </header>
+        ) : null}
 
-        {/* Scrollable stream */}
+        {/* Scrollable stream — thread history (when merged) sits above the live plan. */}
         <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-5">
+          {history}
           <PlanArea hasPlan={hasPlan} isStreaming={isStreaming} plan={plan} />
 
           {fileEvents.length > 0 ? (
@@ -139,8 +163,9 @@ export function StartupChatPanel({ projectId, conversation, onApplied }: Startup
           ) : null}
         </div>
 
-        {/* Composer footer */}
-        <footer className="border-t border-neutral-6 bg-neutral-1 px-5 py-4">
+        {/* Composer footer — separated from the stream by background tint + spacing,
+            not a border (Lovable-style region separation). */}
+        <footer className="bg-neutral-2/40 px-5 py-4">
           <StatusRow
             isStreaming={isStreaming}
             label={STATUS_LABELS[status]}
@@ -150,15 +175,17 @@ export function StartupChatPanel({ projectId, conversation, onApplied }: Startup
 
           <div className="mt-3 flex flex-wrap gap-2">
             {SUGGESTION_PROMPTS.map((prompt) => (
-              <button
+              <Button
                 key={prompt}
                 type="button"
+                variant="outline"
+                size="sm"
+                className="rounded-full"
                 disabled={isStreaming}
                 onClick={() => handleSend(prompt)}
-                className="rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-45"
               >
                 {prompt}
-              </button>
+              </Button>
             ))}
           </div>
 
@@ -185,10 +212,10 @@ function PlanArea({
   plan: string;
 }) {
   return (
-    <div className="rounded-[20px] border border-neutral-6 bg-neutral-1 p-4">
+    <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-4">
       <div className="flex items-center gap-2">
         <Lightning className="size-4 text-neutral-10" aria-hidden="true" />
-        <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-9">Plan</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">Plan</h3>
         {isStreaming ? (
           <span className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-medium text-neutral-9">
             <span
@@ -209,7 +236,7 @@ function PlanArea({
         </div>
       ) : (
         <p className="mt-3 text-sm leading-6 text-neutral-9">
-          The founder-facing plan will appear here as the agent thinks.
+          Describe a change to start building your workspace.
         </p>
       )}
     </div>
@@ -232,12 +259,12 @@ function FileEventList({
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
-        <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-9">
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">
           {isStreaming ? "Writing files" : "Files written"}
         </h3>
-        <span className="rounded-full bg-neutral-2 px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-neutral-9">
+        <Badge variant="secondary" size="sm" className="tabular-nums">
           {events.length}
-        </span>
+        </Badge>
       </div>
       <AnimateInGroup stagger="fast" className="grid gap-1.5">
         {events.map((event, index) => {
@@ -280,7 +307,7 @@ function FileEventList({
                   <span
                     className="shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em]"
                     style={{
-                      borderColor: "hsl(var(--success) / 0.25)",
+                      borderColor: "color-mix(in srgb, var(--status-success) 25%, transparent)",
                       color: "var(--status-success)",
                     }}
                   >
@@ -299,7 +326,7 @@ function FileEventList({
 function ArtifactEventList({ events }: { events: UseStartupConversationResult["artifactEvents"] }) {
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-9">
+      <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">
         Artifacts touched
       </h3>
       <div className="flex flex-wrap gap-2">
@@ -324,7 +351,7 @@ function SummaryCard({ summary }: { summary: string }) {
     <AnimateIn preset="fadeUp">
       <div
         data-testid="startup-chat-summary"
-        className="flex items-start gap-2.5 rounded-[20px] border border-neutral-6 bg-neutral-2 p-4"
+        className="flex items-start gap-2.5 rounded-2xl border border-neutral-6 bg-neutral-2 p-4"
       >
         <CheckCircle
           className="mt-0.5 size-4 shrink-0"
@@ -368,15 +395,17 @@ function StatusRow({
         {label}
       </span>
       {isStreaming ? (
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="sm"
+          className="rounded-full"
           onClick={onCancel}
           aria-label="Stop generating"
-          className="inline-flex items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-semibold text-neutral-11 transition-colors hover:bg-neutral-2"
         >
           <StopFill className="size-3.5" aria-hidden="true" />
           Stop
-        </button>
+        </Button>
       ) : null}
     </div>
   );
