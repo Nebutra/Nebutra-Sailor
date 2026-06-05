@@ -109,6 +109,13 @@ export function TowerFloor({
   const isCrown = layerId === "L9";
   const isBase = layerId === "L1";
 
+  // Display completeness is over ALL fields (intuitive: "100%" = every field
+  // filled), not just the required ones — keeps the % consistent with the
+  // filled/total preview. The ring colour follows the same all-fields reading.
+  const { filled, total } = countFilledFields(layer.values, manifestEntry.fieldKeys);
+  const fillRatio = total > 0 ? filled / total : 0;
+  const fillStatus = filled === 0 ? "empty" : filled >= total ? "ready" : "partial";
+
   return (
     <Collapsible
       defaultOpen={defaultOpen}
@@ -154,11 +161,7 @@ export function TowerFloor({
         </span>
 
         {/* Completeness — thin Gauge + adjacent mono %. */}
-        <CompletenessRing
-          value={manifestEntry.completeness}
-          status={manifestEntry.status}
-          className="ml-auto shrink-0"
-        />
+        <CompletenessRing value={fillRatio} status={fillStatus} className="ml-auto shrink-0" />
 
         {/* Stability cadence — quiet mono ColorBadge. */}
         <StabilityBadge

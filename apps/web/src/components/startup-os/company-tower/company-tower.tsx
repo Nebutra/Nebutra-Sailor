@@ -5,12 +5,18 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Badge, Button, DotPattern } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { buildManifest } from "@/lib/startup-os/company-context/completeness";
-import type { ContextManifestLayer, LayerId, Stage } from "@/lib/startup-os/company-context/model";
+import type {
+  CompanyContext,
+  ContextManifestLayer,
+  LayerId,
+  Stage,
+} from "@/lib/startup-os/company-context/model";
 import { companyName } from "@/lib/startup-os/company-context/projection";
 import { BrandKitFloor } from "./brand-kit-floor";
 import { ControlDeck } from "./control-deck";
 import { TowerFloor } from "./tower-floor";
 import type { CompanyTowerProps, FieldActionHandlers } from "./types";
+import { countFilledFields } from "./types";
 
 /**
  * CompanyTower — the nine-floor "stratigraphy" surface for a Startup OS project.
@@ -37,13 +43,19 @@ const STAGE_LABEL: Readonly<Record<Stage, string>> = {
   post_a: "Post-A",
 };
 
-/** Average completeness across the nine layers, 0..1. */
-function overallCompleteness(layers: readonly ContextManifestLayer[]): number {
-  if (layers.length === 0) {
-    return 0;
+/** Total-fields completeness across the nine layers, 0..1 (all fields filled = 1). */
+function overallCompleteness(
+  context: CompanyContext,
+  layers: readonly ContextManifestLayer[],
+): number {
+  let filled = 0;
+  let total = 0;
+  for (const entry of layers) {
+    const counts = countFilledFields(context.layers[entry.id]?.values ?? {}, entry.fieldKeys);
+    filled += counts.filled;
+    total += counts.total;
   }
-  const sum = layers.reduce((running, layer) => running + layer.completeness, 0);
-  return sum / layers.length;
+  return total > 0 ? filled / total : 0;
 }
 
 /** Whole-percent integer for the header ring's mono label. */
@@ -64,7 +76,7 @@ export function CompanyTower({
     manifest.layers.map((layer) => [layer.id, layer]),
   );
   const name = companyName(context);
-  const overall = overallCompleteness(manifest.layers);
+  const overall = overallCompleteness(context, manifest.layers);
   const overallPercent = toPercent(overall);
   const handlers: FieldActionHandlers = { onGenerateField, onUploadField, onEditField };
 
