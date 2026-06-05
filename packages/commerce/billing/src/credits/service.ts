@@ -1,6 +1,6 @@
-import { getTenantDb } from "@nebutra/db";
+import { getTenantDb, type Prisma, type PrismaClient } from "@nebutra/db";
 import { dollarsToCents } from "../money";
-import type { CreditTransactionType } from "../types";
+import type { CreditTransactionType, Plan } from "../types";
 import { BillingError } from "../types";
 
 // ============================================
@@ -26,6 +26,13 @@ export interface CreditTransaction {
   createdAt: Date;
 }
 
+export interface CreditAllowance {
+  plan: Plan;
+  includedMonthly: number;
+  dailyRefresh: number;
+  refreshTime: string;
+}
+
 export interface AddCreditsInput {
   organizationId: string;
   amount: number;
@@ -44,6 +51,8 @@ export interface DeductCreditsInput {
   metadata?: Record<string, unknown>;
 }
 
+type CreditLedgerClient = Pick<PrismaClient, "creditBalance" | "creditTransaction">;
+
 // ============================================
 // Database & Cache Layer
 // ============================================
@@ -55,8 +64,30 @@ interface CacheEntry {
 }
 const balanceCache = new Map<string, CacheEntry>();
 
+const DEFAULT_CREDIT_ALLOWANCES: Record<Plan, Omit<CreditAllowance, "plan">> = {
+  FREE: {
+    includedMonthly: 1500,
+    dailyRefresh: 300,
+    refreshTime: "08:00 UTC",
+  },
+  PRO: {
+    includedMonthly: 10_000,
+    dailyRefresh: 1000,
+    refreshTime: "08:00 UTC",
+  },
+  ENTERPRISE: {
+    includedMonthly: -1,
+    dailyRefresh: -1,
+    refreshTime: "08:00 UTC",
+  },
+};
+
 export function invalidateCreditCache(organizationId: string) {
   balanceCache.delete(organizationId);
+}
+
+function toJsonInput(metadata: Record<string, unknown> | undefined): Prisma.InputJsonValue {
+  return (metadata ?? {}) as Prisma.InputJsonValue;
 }
 
 /**
@@ -103,30 +134,51 @@ export async function getCreditBalance(organizationId: string): Promise<CreditBa
  * Add credits to an organization's balance
  */
 export async function addCredits(input: AddCreditsInput): Promise<CreditTransaction> {
+  if (input.amount <= 0) {
+    throw new BillingError("Credit amount must be positive", "INVALID_CREDIT_AMOUNT", 400);
+  }
+
   const db = getTenantDb(input.organizationId);
-  const transactionData = await db.$transaction(async (tx: any) => {
+  const transactionData = await db.$transaction(async (tx: CreditLedgerClient) => {
     const balance = await tx.creditBalance.upsert({
-      where: { organizationId: input.organizationId },
+      where: { tenantId: input.organizationId },
       create: {
-        organizationId: input.organizationId,
-        balance: input.amount,
+        tenantId: input.organizationId,
+        balance: 0,
         currency: "USD",
       },
-      update: {
-        balance: { increment: input.amount },
-      },
+      update: {},
     });
 
-    return await tx.creditTransaction.create({
+    if (input.relatedId) {
+      const existing = await tx.creditTransaction.findFirst({
+        where: {
+          creditBalanceId: balance.id,
+          relatedId: input.relatedId,
+          type: input.type,
+        },
+      });
+
+      if (existing) {
+        return existing;
+      }
+    }
+
+    const updatedBalance = await tx.creditBalance.update({
+      where: { tenantId: input.organizationId },
+      data: { balance: { increment: input.amount } },
+    });
+
+    return tx.creditTransaction.create({
       data: {
-        creditBalanceId: balance.id,
+        creditBalanceId: updatedBalance.id,
         type: input.type,
         amount: input.amount,
-        balanceAfter: balance.balance,
+        balanceAfter: updatedBalance.balance,
         description: input.description,
         expiresAt: input.expiresAt,
         relatedId: input.relatedId,
-        metadata: input.metadata || {},
+        metadata: toJsonInput(input.metadata),
       },
     });
   });
@@ -151,28 +203,55 @@ export async function addCredits(input: AddCreditsInput): Promise<CreditTransact
  * Deduct credits from an organization's balance
  */
 export async function deductCredits(input: DeductCreditsInput): Promise<CreditTransaction> {
-  const balance = await getCreditBalance(input.organizationId);
-
-  if (balance.balance < input.amount) {
-    throw new BillingError(
-      `Insufficient credits. Available: ${balance.balance}, Required: ${input.amount}`,
-      "INSUFFICIENT_CREDITS",
-      402,
-    );
+  if (input.amount <= 0) {
+    throw new BillingError("Credit amount must be positive", "INVALID_CREDIT_AMOUNT", 400);
   }
 
   const db = getTenantDb(input.organizationId);
-  const transactionData = await db.$transaction(async (tx: any) => {
-    const freshBalance = await tx.creditBalance.update({
-      where: { organizationId: input.organizationId },
-      data: { balance: { decrement: input.amount } },
+  const transactionData = await db.$transaction(async (tx: CreditLedgerClient) => {
+    const balance = await tx.creditBalance.findUnique({
+      where: { tenantId: input.organizationId },
     });
 
-    if (Number(freshBalance.balance) < 0) {
+    if (!balance) {
       throw new BillingError("Insufficient credits", "INSUFFICIENT_CREDITS", 402);
     }
 
-    return await tx.creditTransaction.create({
+    if (input.relatedId) {
+      const existing = await tx.creditTransaction.findFirst({
+        where: {
+          creditBalanceId: balance.id,
+          relatedId: input.relatedId,
+          type: "USAGE",
+        },
+      });
+
+      if (existing) {
+        return existing;
+      }
+    }
+
+    const updateResult = await tx.creditBalance.updateMany({
+      where: {
+        tenantId: input.organizationId,
+        balance: { gte: input.amount },
+      },
+      data: { balance: { decrement: input.amount } },
+    });
+
+    if (updateResult.count === 0) {
+      throw new BillingError("Insufficient credits", "INSUFFICIENT_CREDITS", 402);
+    }
+
+    const freshBalance = await tx.creditBalance.findUnique({
+      where: { tenantId: input.organizationId },
+    });
+
+    if (!freshBalance) {
+      throw new BillingError("Credit balance not found", "CREDIT_BALANCE_NOT_FOUND", 404);
+    }
+
+    return tx.creditTransaction.create({
       data: {
         creditBalanceId: freshBalance.id,
         type: "USAGE",
@@ -180,7 +259,7 @@ export async function deductCredits(input: DeductCreditsInput): Promise<CreditTr
         balanceAfter: freshBalance.balance,
         description: input.description,
         relatedId: input.relatedId,
-        metadata: input.metadata || {},
+        metadata: toJsonInput(input.metadata),
       },
     });
   });
@@ -264,6 +343,21 @@ export function dollarsToCredits(dollars: number): number {
  */
 export function creditsToDollars(credits: number): number {
   return credits / 100;
+}
+
+/**
+ * Return plan-scoped included credits for app display and allowance policies.
+ *
+ * `-1` means unlimited. These defaults are deliberately centralized in the
+ * billing package so dashboard UI, API routes, and future scheduled refresh
+ * jobs do not drift.
+ */
+export function getCreditAllowanceForPlan(plan: Plan | string | null | undefined): CreditAllowance {
+  const normalized = plan === "PRO" || plan === "ENTERPRISE" ? plan : "FREE";
+  return {
+    plan: normalized,
+    ...DEFAULT_CREDIT_ALLOWANCES[normalized],
+  };
 }
 
 /**

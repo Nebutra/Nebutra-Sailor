@@ -107,9 +107,15 @@
     "rules": [
       {
         "name": "web-dashboard-overview-high-resolution-density",
-        "description": "Dashboard overview must be decision-led and capability-backed; it must not fabricate empty modules, onboarding billboards, or mock metric cards before real data exists.",
+        "description": "The legacy dashboard overview must stay converged into Startup OS; /workspace redirects instead of reintroducing a parallel prompt-first home.",
         "file": "apps/web/src/app/[locale]/(app)/workspace/page.tsx",
         "requiredContains": [
+          "redirect(`/${locale}/startup-os`)",
+          "params: Promise<{ locale: string }>",
+          "Promise<never>",
+          "/workspace — redirect to Startup OS"
+        ],
+        "forbiddenContains": [
           "CommandCenter",
           "max-w-[1760px]",
           "if (!tenantId) return null",
@@ -121,9 +127,7 @@
           "meta.cadence",
           "meta.tenant",
           "xl:grid-cols-4",
-          "RecentSessions"
-        ],
-        "forbiddenContains": [
+          "RecentSessions",
           "DashboardHint",
           "GettingStarted",
           "OnboardingSkeleton",
@@ -167,18 +171,22 @@
       },
       {
         "name": "web-dashboard-header-chrome-single-source",
-        "description": "Dashboard header chrome must stay quiet and single-purpose: one page title, progressive breadcrumb only when useful, no duplicated top nav.",
+        "description": "Dashboard header chrome must stay quiet and single-purpose: shallow routes own their page title, nested routes get one breadcrumb trail, and global utility actions stay in the sidebar/user menu.",
         "file": "apps/web/src/app/[locale]/providers/design-system-shell.tsx",
         "requiredContains": [
           "currentBreadcrumb?.label ?? \"Dashboard\"",
-          "breadcrumbs.length <= 1 && \"sr-only\"",
-          "aria-label=\"Open feedback dialog\"",
           "BrandLogo",
           "webBrandLabels.homeLink",
-          "flex shrink-0 items-center gap-1.5",
-          "<span className=\"hidden xl:inline\">Feedback</span>"
+          "WorkspaceSwitcher",
+          "NotificationsDialog",
+          "UserMenu",
+          "breadcrumbs.length > 1 ?",
+          "aria-label=\"Breadcrumb\"",
+          "Feedback now lives solely"
         ],
         "forbiddenContains": [
+          "aria-label=\"Open feedback dialog\"",
+          "<span className=\"hidden xl:inline\">Feedback</span>",
           "DASHBOARD_NAV_ITEMS.slice",
           "planBadge",
           "Nebutra Sailor",

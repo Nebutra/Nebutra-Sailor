@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { LayerId } from "../model";
+import type { CompanyContext, LayerId } from "../model";
 import {
   companyCategory,
   companyName,
@@ -11,12 +11,20 @@ import { createEmptyContext, InMemoryCompanyContextRepository } from "../reposit
 
 const NOW = "2026-06-05T00:00:00.000Z";
 
-async function ctxWith(layerId: LayerId, fieldKey: string, value: unknown) {
+async function ctxWith(
+  layerId: LayerId,
+  fieldKey: string,
+  value: unknown,
+): Promise<CompanyContext> {
   const repo = new InMemoryCompanyContextRepository();
   await repo.save(createEmptyContext("p1", "pre_seed", NOW));
   await repo.upsertField("p1", layerId, fieldKey, value, { provenance: "user", now: NOW });
-  const ctx = repo.get("p1");
-  if (!ctx) throw new Error("expected context for p1");
+  const ctx = await repo.get("p1");
+
+  if (!ctx) {
+    throw new Error("Expected seeded company context to exist.");
+  }
+
   return ctx;
 }
 

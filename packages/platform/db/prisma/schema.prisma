@@ -1185,6 +1185,7 @@ model CreditTransaction {
   @@index([creditBalanceId])
   @@index([type])
   @@index([createdAt])
+  @@unique([creditBalanceId, type, relatedId], map: "credit_transactions_credit_balance_id_type_related_id_key")
   @@map("credit_transactions")
   @@schema("public")
 }
