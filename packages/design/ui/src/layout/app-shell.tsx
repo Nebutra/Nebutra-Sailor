@@ -70,6 +70,7 @@ export function AppShell({
   sidebarCollapsedWidth = DEFAULT_COLLAPSED_WIDTH,
   collapsed,
   defaultCollapsed = false,
+  onCollapsedChange,
   headerHeight = DEFAULT_HEADER_HEIGHT,
   contentClassName,
   className,
