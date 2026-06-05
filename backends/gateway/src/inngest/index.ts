@@ -7,6 +7,7 @@ import { processBillingEvent } from "./functions/billingSync.js";
 import { processGdprDeletion } from "./functions/gdprDeletion.js";
 import { provisionTenant } from "./functions/tenantProvisioning.js";
 import { deleteUserFromDB, syncUserToDB } from "./functions/userSync.js";
+import { workflowRunner } from "./functions/workflowRunner.js";
 
 export const inngestFunctions: InngestFunction.Any[] = [
   syncUserToDB,
@@ -16,6 +17,7 @@ export const inngestFunctions: InngestFunction.Any[] = [
   provisionTenant,
   automationScheduler,
   automationRunner,
+  workflowRunner,
 ];
 export { inngest };
 

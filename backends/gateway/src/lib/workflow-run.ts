@@ -16,24 +16,13 @@
 import {
   type Brief,
   costReport,
-  type ModelInvoker,
-  PersistentRolloutStore,
-  type RolloutStore,
   runAgentWaves,
-  runTurn,
   type SubagentCostReport,
   type SubagentResult,
-  ToolRegistry,
-  type TurnConfig,
 } from "@nebutra/agent-runtime";
-import { createAgentsModelInvoker } from "@nebutra/agent-runtime/adapters";
-import {
-  createPrismaRolloutPersistence,
-  type PrismaRolloutDelegate,
-} from "@nebutra/agent-runtime/adapters/prisma-rollout";
 import { resolveModelSpec } from "@nebutra/ai-providers/catalog";
-import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
+import { runTurnCapture } from "./agent-turn.js";
 
 export interface WorkflowRunInput {
   readonly tenantId: string;
@@ -58,78 +47,29 @@ export interface WorkflowRunResult {
 export type BriefRunner = (brief: Brief, input: WorkflowRunInput) => Promise<SubagentResult>;
 
 /**
- * Durable rollout store (rollout lines persist for replay/debug).
- * NOTE: the same builder exists in lib/agent-run.ts and routes/agent-runtime;
- * consolidate into one shared module on next touch.
- */
-function durableRolloutStore(): RolloutStore {
-  return new PersistentRolloutStore(
-    createPrismaRolloutPersistence(async (tid: string) => {
-      const db = await getTenantDb(tid);
-      return (db as unknown as { agentRolloutLine: PrismaRolloutDelegate }).agentRolloutLine;
-    }),
-  );
-}
-
-/**
  * Execute ONE brief as a runTurn against the real provider stack. The node's
- * model is resolved from its NodeModelSpec; output text + token usage are
- * captured by wrapping the AgentsModelInvoker. Tools are an empty registry and
- * approvals auto-deny so an automated wave never stalls on a human.
+ * model is resolved from its NodeModelSpec; the shared {@link runTurnCapture}
+ * drives the turn and returns the final text + usage.
  */
 async function runBriefAsTurn(brief: Brief, input: WorkflowRunInput): Promise<SubagentResult> {
   const startedAt = Date.now();
   const model = await resolveModelSpec(brief.model ?? {}, input.defaultModel);
-
-  let lastText = "";
-  let inputTokens = 0;
-  let outputTokens = 0;
-  let reasoningOutputTokens = 0;
-
-  const base = createAgentsModelInvoker();
-  const invoker: ModelInvoker = {
-    async invoke(request) {
-      const round = await base.invoke(request);
-      for (const emission of round.emissions) {
-        if (emission.kind === "text") lastText = emission.text;
-      }
-      inputTokens += round.usage?.inputTokens ?? 0;
-      outputTokens += round.usage?.outputTokens ?? 0;
-      reasoningOutputTokens += round.usage?.reasoningOutputTokens ?? 0;
-      return round;
-    },
-  };
-
-  const config: TurnConfig = {
-    model,
-    provider: "gateway",
-    approvalPolicy: "on_request",
-    capabilityPolicy: "external_sandbox",
-  };
-
-  const events = runTurn(brief.objective, {
+  const capture = await runTurnCapture({
     tenantId: input.tenantId,
     threadId: `${input.threadId}:${brief.id}`,
-    config,
-    approvalPolicy: { kind: "on_request" },
-    model: invoker,
-    tools: new ToolRegistry(),
-    store: durableRolloutStore(),
-    approvalGate: {
-      async request() {
-        return { kind: "denied" };
-      },
-    },
+    model,
+    input: brief.objective,
   });
-  // Drain to completion; the invoker closure captures the final text + usage.
-  for await (const _event of events) {
-    // no-op: the rollout store persists the trace; we keep the wave's result.
-  }
 
   return {
     briefId: brief.id,
-    output: lastText,
-    usage: { inputTokens, cachedInputTokens: 0, outputTokens, reasoningOutputTokens },
+    output: capture.text,
+    usage: {
+      inputTokens: capture.inputTokens,
+      cachedInputTokens: 0,
+      outputTokens: capture.outputTokens,
+      reasoningOutputTokens: capture.reasoningOutputTokens,
+    },
     durationMs: Date.now() - startedAt,
   };
 }
