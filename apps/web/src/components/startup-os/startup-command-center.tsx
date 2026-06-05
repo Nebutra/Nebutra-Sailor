@@ -1,7 +1,16 @@
 "use client";
 
-import { ArrowRight, Code, Lightning, Sparkles } from "@nebutra/icons";
-import { AnimateIn } from "@nebutra/ui/components";
+import {
+  ArrowRight,
+  BookClosed,
+  Code,
+  FolderClosed,
+  Layers,
+  Lightning,
+  ShieldCheck,
+  Sparkles,
+} from "@nebutra/icons";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import {
   Select,
   SelectContent,
@@ -48,13 +57,64 @@ const PROJECTS_ENDPOINT = "/api/startup-os/projects";
 const DEFAULT_THESIS = "";
 const DEFAULT_CANVAS_ZOOM = 0.62;
 
-const STARTUP_OS_PROMISES = [
-  "CompanyContext",
-  "Launch artifacts",
-  "Live files",
-  "Spatial canvas",
-  "Governed runs",
+// What one sentence compiles into. `Governed runs` is the differentiator — it is
+// what makes Startup OS a *governed company* compiler, not just an app builder.
+const COMPILE_OUTPUTS = [
+  {
+    icon: BookClosed,
+    title: "CompanyContext",
+    desc: "Mission, ICP, and positioning — the company's source of truth.",
+    highlight: false,
+  },
+  {
+    icon: Sparkles,
+    title: "Launch artifacts",
+    desc: "Brand, landing page, and pitch, generated together.",
+    highlight: false,
+  },
+  {
+    icon: FolderClosed,
+    title: "Live files",
+    desc: "A real, runnable app scaffold you can edit.",
+    highlight: false,
+  },
+  {
+    icon: Layers,
+    title: "Spatial canvas",
+    desc: "Every artifact mapped on one zoomable canvas.",
+    highlight: false,
+  },
+  {
+    icon: ShieldCheck,
+    title: "Governed runs",
+    desc: "Every agent run is approval-gated and audited.",
+    highlight: true,
+  },
 ] as const;
+
+// Arena-specific example theses — clickable starters that defeat the blank page.
+const EXAMPLE_THESES: Record<StartupArena, readonly string[]> = {
+  "Developer infrastructure": [
+    "A usage-metered API gateway for AI apps",
+    "A self-host vector database with one-click cloud",
+  ],
+  "AI SaaS": [
+    "An AI meeting-notes tool that drafts the follow-up email",
+    "A support-deflection copilot for B2B SaaS",
+  ],
+  "Consumer product": [
+    "A habit tracker that rewards streaks with friends",
+    "A local-first journal with weekly AI reflection",
+  ],
+  "B2B operations": [
+    "An approvals + audit workspace for finance teams",
+    "A vendor-onboarding portal with compliance checks",
+  ],
+  "Creative tooling": [
+    "A storyboard-to-video generator for marketers",
+    "A brand-kit generator from a single logo",
+  ],
+};
 interface ProjectsResponse {
   readonly projects: readonly StartupOSProject[];
   readonly activity?: unknown;
@@ -801,19 +861,33 @@ function StartupBuilderHome({
 }) {
   return (
     <AnimateIn preset="emerge">
-      <section className="min-h-screen bg-neutral-1 text-neutral-12">
-        <div className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-5 py-14 sm:px-8">
+      <section className="relative min-h-screen overflow-hidden bg-neutral-1 text-neutral-12">
+        {/* Ambient brand glow — subtle (governed/enterprise), not a loud aurora. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[380px] w-full max-w-3xl opacity-[0.12] blur-3xl"
+          style={{ background: "var(--brand-gradient)" }}
+        />
+        <div className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-5 py-16 sm:px-8">
           <div className="mx-auto w-full max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-semibold text-neutral-10">
-              <Lightning className="size-3.5" aria-hidden="true" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
+              <Lightning className="size-3.5 text-blue-9" aria-hidden="true" />
               Startup Agent OS
             </span>
-            <h2 className="mt-6 text-4xl font-semibold tracking-[-0.06em] text-neutral-12 sm:text-6xl">
+            <h2
+              className="mt-6 text-4xl font-semibold tracking-[-0.06em] sm:text-6xl"
+              style={{
+                background: "var(--brand-gradient)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
               What are we building?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-neutral-10">
-              One proposition becomes company context, launch artifacts, files, canvas, and
-              approval-gated runs.
+              One sentence compiles into a whole governed company — context, launch artifacts,
+              live files, spatial canvas, and approval-gated runs.
             </p>
 
             <div className="mx-auto mt-8 overflow-hidden rounded-[30px] border border-neutral-7 bg-neutral-1 text-left shadow-lg shadow-neutral-12/5">
@@ -857,16 +931,49 @@ function StartupBuilderHome({
               </div>
             </div>
 
-            <div className="mt-5 flex flex-wrap justify-center gap-2">
-              {STARTUP_OS_PROMISES.map((promise) => (
-                <span
-                  key={promise}
-                  className="rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-10"
-                >
-                  {promise}
-                </span>
-              ))}
-            </div>
+            {thesis.trim().length === 0 ? (
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+                <span className="text-xs text-neutral-9">Try</span>
+                {EXAMPLE_THESES[arena].map((example) => (
+                  <button
+                    key={example}
+                    type="button"
+                    disabled={disabled || isLoading}
+                    onClick={() => onThesisChange(example)}
+                    className="rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:border-blue-7 hover:bg-blue-2 hover:text-blue-11 disabled:cursor-not-allowed disabled:opacity-45"
+                  >
+                    {example}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+
+            <AnimateInGroup
+              stagger="normal"
+              className="mt-10 grid grid-cols-2 gap-3 text-left sm:grid-cols-3 lg:grid-cols-5"
+            >
+              {COMPILE_OUTPUTS.map((output) => {
+                const OutputIcon = output.icon;
+                return (
+                  <AnimateIn key={output.title} preset="fadeUp">
+                    <div
+                      className={`flex h-full flex-col gap-2 rounded-2xl border p-3.5 ${
+                        output.highlight
+                          ? "border-blue-7 bg-blue-2/60 dark:border-blue-7/60 dark:bg-blue-9/15"
+                          : "border-neutral-6 bg-neutral-1"
+                      }`}
+                    >
+                      <OutputIcon
+                        className={`size-4 ${output.highlight ? "text-blue-9" : "text-neutral-10"}`}
+                        aria-hidden="true"
+                      />
+                      <span className="text-sm font-semibold text-neutral-12">{output.title}</span>
+                      <span className="text-xs leading-5 text-neutral-10">{output.desc}</span>
+                    </div>
+                  </AnimateIn>
+                );
+              })}
+            </AnimateInGroup>
 
             {projects.length > 0 ? (
               <div className="mx-auto mt-8 grid max-w-2xl gap-2 sm:grid-cols-2">
