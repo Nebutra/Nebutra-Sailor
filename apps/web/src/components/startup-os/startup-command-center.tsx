@@ -1115,8 +1115,13 @@ function StartupBuilderWorkspace({
   ].filter((item): item is { title: string; body: string; tone: string } => Boolean(item));
 
   return (
-    <AnimateIn preset="fadeUp" className="h-full min-h-0">
-      <section className="h-full min-h-0 overflow-hidden bg-neutral-1 text-neutral-12">
+    <AnimateIn preset="fadeUp" className="h-[100dvh] min-h-0">
+      {/* Fixed full-height app shell (Lovable-style): the workspace is exactly the
+          viewport, so the OUTER container never scrolls — only the inner panels
+          (thread list, code, preview) scroll within their own min-h-0 regions.
+          `h-full` percentage doesn't resolve through AppShell's overflow-y-auto
+          block <main>, so the dynamic-viewport height is pinned here instead. */}
+      <section className="h-[100dvh] min-h-0 overflow-hidden bg-neutral-1 text-neutral-12">
         <div className="grid h-full xl:grid-cols-[360px_minmax(0,1fr)]">
           <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-1">
             <div className="border-b border-neutral-6 p-4">
