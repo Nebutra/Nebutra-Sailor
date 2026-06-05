@@ -101,3 +101,6 @@ apps/*/.source/
 # tsup temp bundled configs — auto-generated next to tsup.config.ts on build,
 # safe to delete, never commit
 **/tsup.config.bundled*.mjs
+
+# Brainstorm visual companion scratch
+.superpowers/
