@@ -50,7 +50,7 @@ export interface StartupOSSceneEnvelope {
 
 interface AtelierCanvasRow {
   readonly id: string;
-  readonly organizationId: string;
+  readonly tenantId: string;
   readonly name: string;
   readonly scene: unknown;
   readonly updatedAt: Date | string;
@@ -58,17 +58,17 @@ interface AtelierCanvasRow {
 
 interface AtelierCanvasDelegate {
   findMany(args: {
-    where: { organizationId: string; id: { startsWith: string } };
+    where: { tenantId: string; id: { startsWith: string } };
     orderBy: { updatedAt: "desc" };
   }): Promise<AtelierCanvasRow[]>;
   findUnique(args: {
-    where: { organizationId_id: { organizationId: string; id: string } };
+    where: { tenantId_id: { tenantId: string; id: string } };
   }): Promise<AtelierCanvasRow | null>;
   upsert(args: {
-    where: { organizationId_id: { organizationId: string; id: string } };
+    where: { tenantId_id: { tenantId: string; id: string } };
     create: {
       id: string;
-      organizationId: string;
+      tenantId: string;
       name: string;
       scene: StartupOSSceneEnvelope;
       thumbnail: string | null;
@@ -222,10 +222,10 @@ function toProjectRecord(row: AtelierCanvasRow): StartupOSProjectRecord | null {
 
 export async function listStartupProjects(
   db: StartupOSDb,
-  organizationId: string,
+  tenantId: string,
 ): Promise<StartupOSProject[]> {
   const rows = await db.atelierCanvas.findMany({
-    where: { organizationId, id: { startsWith: STARTUP_OS_CANVAS_PREFIX } },
+    where: { tenantId, id: { startsWith: STARTUP_OS_CANVAS_PREFIX } },
     orderBy: { updatedAt: "desc" },
   });
 
@@ -234,19 +234,19 @@ export async function listStartupProjects(
 
 export async function getStartupProject(
   db: StartupOSDb,
-  organizationId: string,
+  tenantId: string,
   projectId: string,
 ): Promise<StartupOSProject | null> {
-  return (await getStartupProjectRecord(db, organizationId, projectId))?.project ?? null;
+  return (await getStartupProjectRecord(db, tenantId, projectId))?.project ?? null;
 }
 
 export async function getStartupProjectRecord(
   db: StartupOSDb,
-  organizationId: string,
+  tenantId: string,
   projectId: string,
 ): Promise<StartupOSProjectRecord | null> {
   const row = await db.atelierCanvas.findUnique({
-    where: { organizationId_id: { organizationId, id: toStartupOSCanvasId(projectId) } },
+    where: { tenantId_id: { tenantId, id: toStartupOSCanvasId(projectId) } },
   });
 
   return row ? toProjectRecord(row) : null;
@@ -254,7 +254,7 @@ export async function getStartupProjectRecord(
 
 export async function saveStartupProjectRecord(
   db: StartupOSDb,
-  organizationId: string,
+  tenantId: string,
   project: StartupOSProject,
   options?: {
     readonly event?: StartupOSEventInput;
@@ -263,7 +263,7 @@ export async function saveStartupProjectRecord(
     readonly canvasLayout?: StartupCanvasLayout;
   },
 ): Promise<StartupOSProjectRecord> {
-  const existing = await getStartupProjectRecord(db, organizationId, project.id);
+  const existing = await getStartupProjectRecord(db, tenantId, project.id);
   const existingEvents = existing?.events ?? [];
   const inputEvents = [...(options?.event ? [options.event] : []), ...(options?.events ?? [])];
   const events =
@@ -283,10 +283,10 @@ export async function saveStartupProjectRecord(
     ...(canvasLayout ? { canvasLayout } : {}),
   });
   const row = await db.atelierCanvas.upsert({
-    where: { organizationId_id: { organizationId, id: toStartupOSCanvasId(project.id) } },
+    where: { tenantId_id: { tenantId, id: toStartupOSCanvasId(project.id) } },
     create: {
       id: toStartupOSCanvasId(project.id),
-      organizationId,
+      tenantId,
       name: project.companyContext.name,
       scene,
       thumbnail: null,
@@ -307,7 +307,7 @@ export async function saveStartupProjectRecord(
 
 export async function saveStartupProject(
   db: StartupOSDb,
-  organizationId: string,
+  tenantId: string,
   project: StartupOSProject,
   options?: {
     readonly event?: StartupOSEventInput;
@@ -316,34 +316,34 @@ export async function saveStartupProject(
     readonly canvasLayout?: StartupCanvasLayout;
   },
 ): Promise<StartupOSProject> {
-  return (await saveStartupProjectRecord(db, organizationId, project, options)).project;
+  return (await saveStartupProjectRecord(db, tenantId, project, options)).project;
 }
 
 export async function saveStartupCanvasLayout(
   db: StartupOSDb,
-  organizationId: string,
+  tenantId: string,
   projectId: string,
   canvasLayout: StartupCanvasLayout,
 ): Promise<StartupOSProjectRecord> {
-  const existing = await getStartupProjectRecord(db, organizationId, projectId);
+  const existing = await getStartupProjectRecord(db, tenantId, projectId);
   if (!existing) {
     throw new Error("Startup OS project not found.");
   }
-  return saveStartupProjectRecord(db, organizationId, existing.project, { canvasLayout });
+  return saveStartupProjectRecord(db, tenantId, existing.project, { canvasLayout });
 }
 
 export async function saveStartupProjectFiles(
   db: StartupOSDb,
-  organizationId: string,
+  tenantId: string,
   projectId: string,
   files: readonly StartupOSFile[],
   event?: StartupOSEventInput,
 ): Promise<StartupOSProjectRecord> {
-  const existing = await getStartupProjectRecord(db, organizationId, projectId);
+  const existing = await getStartupProjectRecord(db, tenantId, projectId);
   if (!existing) {
     throw new Error("Startup OS project not found.");
   }
-  return saveStartupProjectRecord(db, organizationId, existing.project, {
+  return saveStartupProjectRecord(db, tenantId, existing.project, {
     files,
     ...(event ? { event } : {}),
   });

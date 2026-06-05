@@ -19,7 +19,7 @@ function createMemoryDb(): StartupOSDb {
     string,
     {
       id: string;
-      organizationId: string;
+      tenantId: string;
       name: string;
       scene: unknown;
       updatedAt: Date;
@@ -32,24 +32,19 @@ function createMemoryDb(): StartupOSDb {
         return Array.from(rows.values())
           .filter(
             (row) =>
-              row.organizationId === args.where.organizationId &&
-              row.id.startsWith(args.where.id.startsWith),
+              row.tenantId === args.where.tenantId && row.id.startsWith(args.where.id.startsWith),
           )
           .sort((left, right) => right.updatedAt.getTime() - left.updatedAt.getTime());
       },
       async findUnique(args) {
-        return (
-          rows.get(
-            `${args.where.organizationId_id.organizationId}:${args.where.organizationId_id.id}`,
-          ) ?? null
-        );
+        return rows.get(`${args.where.tenantId_id.tenantId}:${args.where.tenantId_id.id}`) ?? null;
       },
       async upsert(args) {
-        const key = `${args.where.organizationId_id.organizationId}:${args.where.organizationId_id.id}`;
+        const key = `${args.where.tenantId_id.tenantId}:${args.where.tenantId_id.id}`;
         const existing = rows.get(key);
         const row = {
           id: existing?.id ?? args.create.id,
-          organizationId: existing?.organizationId ?? args.create.organizationId,
+          tenantId: existing?.tenantId ?? args.create.tenantId,
           name: args.update.name,
           scene: args.update.scene,
           updatedAt: new Date(),
