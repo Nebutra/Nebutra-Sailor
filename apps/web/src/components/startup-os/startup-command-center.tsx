@@ -1131,26 +1131,12 @@ function StartupBuilderWorkspace({
           block <main>, so the dynamic-viewport height is pinned here instead. */}
       <section className="h-[100dvh] min-h-0 overflow-hidden bg-neutral-1 text-neutral-12">
         <div className="grid h-full xl:grid-cols-[360px_minmax(0,1fr)]">
-          <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-1">
-            <div className="border-b border-neutral-6 p-4">
-              <div className="flex min-w-0 items-center">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h2 className="truncate text-sm font-semibold tracking-tight text-neutral-12">
-                      {companyName(project.companyContext)}
-                    </h2>
-                    <StatusPill
-                      status={project.status === "review_ready" ? "completed" : "planned"}
-                    />
-                  </div>
-                  <p className="mt-0.5 truncate text-xs text-neutral-10">
-                    {project.slug} / {project.arena}
-                  </p>
-                </div>
-              </div>
-              <p className="mt-4 line-clamp-2 text-xs leading-5 text-neutral-10">
-                {valueProposition(project.companyContext)}
-              </p>
+          <aside className="flex min-h-0 flex-col bg-neutral-2/40">
+            <div className="flex min-w-0 items-center gap-2 px-4 py-3">
+              <h2 className="min-w-0 truncate text-sm font-semibold tracking-tight text-neutral-12">
+                {companyName(project.companyContext)}
+              </h2>
+              <StatusPill status={project.status === "review_ready" ? "completed" : "planned"} />
             </div>
 
             <div className="flex-1 space-y-4 overflow-y-auto p-4">
