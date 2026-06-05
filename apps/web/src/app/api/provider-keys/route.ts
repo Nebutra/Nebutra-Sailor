@@ -1,6 +1,10 @@
 import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
-import { getTenantProviderKeyRepository, type ProviderKeyCredentials } from "@nebutra/repositories";
+import {
+  getTenantProviderKeyRepository,
+  isSafeUpstreamBaseUrl,
+  type ProviderKeyCredentials,
+} from "@nebutra/repositories";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAuth } from "@/lib/auth";
@@ -13,13 +17,25 @@ import { hasPermission, resolveRole } from "@/lib/permissions";
 
 const ProviderEnum = z.enum(["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]);
 
-const CreateBody = z.object({
-  provider: ProviderEnum,
-  apiKey: z.string().trim().min(8).max(400),
-  baseUrl: z.string().url().max(300).optional(),
-  label: z.string().trim().max(80).optional(),
-  alwaysUse: z.boolean().optional(),
-});
+const CreateBody = z
+  .object({
+    provider: ProviderEnum,
+    apiKey: z.string().trim().min(8).max(400),
+    baseUrl: z
+      .string()
+      .url()
+      .max(300)
+      .refine(isSafeUpstreamBaseUrl, {
+        message: "baseUrl must be a public https endpoint (no private/loopback/metadata hosts).",
+      })
+      .optional(),
+    label: z.string().trim().max(80).optional(),
+    alwaysUse: z.boolean().optional(),
+  })
+  .refine((v) => v.provider !== "CUSTOM" || (v.baseUrl !== undefined && v.baseUrl.length > 0), {
+    message: "baseUrl is required for the CUSTOM provider.",
+    path: ["baseUrl"],
+  });
 
 function maskKey(apiKey: string): string {
   return apiKey.length <= 4 ? "••••" : `••••${apiKey.slice(-4)}`;

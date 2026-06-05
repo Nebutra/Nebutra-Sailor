@@ -8,14 +8,16 @@
  * write / decrypts on read.
  *
  * The list/get responses NEVER return the raw key — only a masked preview
- * (`••••last4`). Mutations require `manage` on the `AiProviderKey` CASL resource
- * (owner/admin); reads require auth + organization context only.
+ * (`••••last4`). Reads require `read` and mutations require `manage` on the
+ * `AiProviderKey` CASL resource (owner/admin) — aligned with the web
+ * provider_key:* scope matrix.
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { toApiError } from "@nebutra/errors";
+import { getStatusCode, toApiError } from "@nebutra/errors";
 import {
   getTenantProviderKeyRepository,
+  isSafeUpstreamBaseUrl,
   type ProviderKeyCredentials,
   type TenantProviderKeyRepository,
 } from "@nebutra/repositories";
@@ -26,23 +28,34 @@ export const providerKeyRoutes = new OpenAPIHono();
 
 providerKeyRoutes.use("*", requireAuth, requireOrganization);
 
-// Reads are open to any org member; mutations require `manage` on AiProviderKey
-// (owner/admin). Applied as a single gate so GET stays unguarded while
-// POST/DELETE go through CASL.
+// CASL-gated, aligned with the web provider_key:* matrix (admin/owner only):
+// reads require `read`, mutations require `manage` on AiProviderKey.
 providerKeyRoutes.use("*", async (c, next) => {
-  if (c.req.method === "GET") return next();
-  return requirePermission("manage", "AiProviderKey")(c, next);
+  const action = c.req.method === "GET" ? "read" : "manage";
+  return requirePermission(action, "AiProviderKey")(c, next);
 });
 
 const ProviderEnum = z.enum(["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]);
 
-const UpsertProviderKeySchema = z.object({
-  provider: ProviderEnum,
-  apiKey: z.string().min(8).max(400),
-  baseUrl: z.string().url().max(300).optional(),
-  label: z.string().max(80).optional(),
-  alwaysUse: z.boolean().optional(),
-});
+const UpsertProviderKeySchema = z
+  .object({
+    provider: ProviderEnum,
+    apiKey: z.string().min(8).max(400),
+    baseUrl: z
+      .string()
+      .url()
+      .max(300)
+      .refine(isSafeUpstreamBaseUrl, {
+        message: "baseUrl must be a public https endpoint (no private/loopback/metadata hosts).",
+      })
+      .optional(),
+    label: z.string().max(80).optional(),
+    alwaysUse: z.boolean().optional(),
+  })
+  .refine((v) => v.provider !== "CUSTOM" || (v.baseUrl !== undefined && v.baseUrl.length > 0), {
+    message: "baseUrl is required for the CUSTOM provider.",
+    path: ["baseUrl"],
+  });
 
 /** Mask a secret for display — keep the last 4 chars only. */
 function maskKey(apiKey: string): string {
@@ -131,7 +144,7 @@ providerKeyRoutes.openapi(upsertRoute, async (c) => {
     );
   } catch (err) {
     const apiError = toApiError(err);
-    return c.json({ error: apiError.error.message }, 400);
+    return c.json({ error: apiError.error.message }, getStatusCode(err) as 400 | 500);
   }
 });
 
@@ -153,11 +166,19 @@ providerKeyRoutes.openapi(deleteRoute, async (c) => {
   const orgId = c.get("tenant").organizationId as string;
   const provider = c.req.valid("param").provider;
   try {
-    const existing = await toRepo(orgId).findByProvider(provider);
-    if (!existing) return c.json({ error: "Provider key not found" }, 404);
+    // Delete directly and map Prisma's "record not found" (P2025) to 404. This
+    // avoids a check-then-delete race between two repository calls.
     await toRepo(orgId).delete(provider);
     return c.json({ deleted: true, provider });
   } catch (err) {
+    if (
+      err &&
+      typeof err === "object" &&
+      "code" in err &&
+      (err as { code: string }).code === "P2025"
+    ) {
+      return c.json({ error: "Provider key not found" }, 404);
+    }
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 500);
   }

@@ -11,6 +11,7 @@ import {
   type ProviderKey,
   ProviderKeysList,
 } from "@/components/provider-keys/provider-keys-list";
+import { usePermission } from "@/hooks/usePermission";
 import { queryKeys } from "@/lib/query-keys";
 
 async function fetchKeys(signal?: AbortSignal): Promise<ProviderKey[]> {
@@ -50,6 +51,9 @@ async function deleteKey(provider: ProviderId): Promise<void> {
 export function ProviderKeysClient() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { can } = usePermission();
+  const canCreate = can("provider_key:create");
+  const canDelete = can("provider_key:delete");
   const listKey = queryKeys.providerKeys.list();
 
   const keysQuery = useQuery({
@@ -101,16 +105,18 @@ export function ProviderKeysClient() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-end">
-        <button
-          type="button"
-          onClick={() => setDialogOpen(true)}
-          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-          style={{ background: "var(--brand-gradient)" }}
-        >
-          Add provider key
-        </button>
-      </div>
+      {canCreate ? (
+        <div className="flex items-center justify-end">
+          <button
+            type="button"
+            onClick={() => setDialogOpen(true)}
+            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            style={{ background: "var(--brand-gradient)" }}
+          >
+            Add provider key
+          </button>
+        </div>
+      ) : null}
 
       {error ? (
         <p className="rounded-[var(--radius-md)] border border-red-6 bg-red-2 px-3 py-2 text-sm text-red-11">
@@ -121,7 +127,13 @@ export function ProviderKeysClient() {
       {keysQuery.isPending ? (
         <p className="text-sm text-[var(--neutral-11)]">Loading…</p>
       ) : (
-        <ProviderKeysList keys={keys} onAdd={() => setDialogOpen(true)} onDelete={handleDelete} />
+        <ProviderKeysList
+          keys={keys}
+          onAdd={() => setDialogOpen(true)}
+          onDelete={handleDelete}
+          canCreate={canCreate}
+          canDelete={canDelete}
+        />
       )}
 
       <CreateProviderKeyDialog

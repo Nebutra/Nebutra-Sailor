@@ -53,6 +53,15 @@ export async function DELETE(request: Request, context: RouteContext) {
 
     return NextResponse.json({ deleted: true, provider });
   } catch (error) {
+    // Lost the check-then-delete race (row removed concurrently) → 404, not 500.
+    if (
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
+      (error as { code: string }).code === "P2025"
+    ) {
+      return NextResponse.json({ error: "Provider key not found." }, { status: 404 });
+    }
     logger.error("[provider-keys.DELETE] Failed to delete key", {
       error: error instanceof Error ? error.message : "Unknown error",
     });

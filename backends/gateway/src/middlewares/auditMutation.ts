@@ -25,6 +25,10 @@ const MUTATION_METHODS = new Set(["POST", "PUT", "PATCH", "DELETE"]);
 function inferAction(method: string, path: string): AuditAction {
   const p = path.toLowerCase();
 
+  if (p.includes("/provider-keys")) {
+    if (method === "POST") return "provider_key.create";
+    if (method === "DELETE") return "provider_key.revoke";
+  }
   if (p.includes("/api-keys") || p.includes("/apikeys")) {
     if (method === "POST") return "api.key_create";
     if (method === "DELETE") return "api.key_revoke";

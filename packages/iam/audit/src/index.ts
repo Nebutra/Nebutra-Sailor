@@ -61,6 +61,8 @@ export type AuditAction =
   | "billing.payment_failed"
   | "api.key_create"
   | "api.key_revoke"
+  | "provider_key.create"
+  | "provider_key.revoke"
   | "data.export"
   | "data.delete"
   | "admin.impersonate"

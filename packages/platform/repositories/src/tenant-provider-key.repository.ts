@@ -12,6 +12,45 @@ export interface ProviderKeyCredentials {
   baseUrl?: string;
 }
 
+/**
+ * SSRF guard for tenant-supplied upstream base URLs. The AI gateway makes a
+ * credentialed fetch to this URL, so a tenant must not be able to point it at
+ * the gateway's private network (cloud metadata IMDS, internal services) or a
+ * plaintext endpoint. Enforces https + rejects loopback / private / link-local
+ * literals and obvious internal hostnames. (Does not resolve DNS — pair with a
+ * network-egress policy for rebinding defence.)
+ */
+export function isSafeUpstreamBaseUrl(raw: string): boolean {
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    return false;
+  }
+  if (url.protocol !== "https:") return false;
+  const host = url.hostname.replace(/^\[|\]$/g, "").toLowerCase();
+
+  if (host === "localhost" || host.endsWith(".localhost")) return false;
+  if (host === "metadata.google.internal") return false;
+
+  if (host.includes(":")) {
+    // IPv6 literal: loopback (::1), ULA (fc00::/7 = fc/fd), link-local (fe80::/10).
+    if (host === "::1") return false;
+    if (/^f[cd][0-9a-f]{0,2}:/.test(host)) return false;
+    if (host.startsWith("fe80:")) return false;
+    return true;
+  }
+
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(host)) {
+    // IPv4 literal: 0/8, 10/8, 127/8, 169.254/16 (incl. IMDS), 192.168/16, 172.16-31.
+    if (/^(0|10|127)\./.test(host)) return false;
+    if (/^169\.254\./.test(host)) return false;
+    if (/^192\.168\./.test(host)) return false;
+    if (/^172\.(1[6-9]|2\d|3[01])\./.test(host)) return false;
+  }
+  return true;
+}
+
 export interface UpsertProviderKeyData {
   provider: AIProvider;
   apiKey: string;

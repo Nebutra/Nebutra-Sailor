@@ -57,21 +57,33 @@ interface ProviderKeysListProps {
   keys: ProviderKey[];
   onAdd: () => void;
   onDelete: (provider: ProviderId) => void | Promise<void>;
+  /** Gates the empty-state add button (provider_key:create). */
+  canCreate: boolean;
+  /** Gates the per-row Remove action (provider_key:delete). */
+  canDelete: boolean;
 }
 
-export function ProviderKeysList({ keys, onAdd, onDelete }: ProviderKeysListProps) {
+export function ProviderKeysList({
+  keys,
+  onAdd,
+  onDelete,
+  canCreate,
+  canDelete,
+}: ProviderKeysListProps) {
   if (keys.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] py-10 text-center">
         <p className="mb-3 text-sm text-[var(--neutral-11)]">No provider keys configured</p>
-        <button
-          type="button"
-          onClick={onAdd}
-          className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-          style={{ background: "var(--brand-gradient)" }}
-        >
-          Add your first provider key
-        </button>
+        {canCreate ? (
+          <button
+            type="button"
+            onClick={onAdd}
+            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            style={{ background: "var(--brand-gradient)" }}
+          >
+            Add your first provider key
+          </button>
+        ) : null}
       </div>
     );
   }
@@ -119,7 +131,11 @@ export function ProviderKeysList({ keys, onAdd, onDelete }: ProviderKeysListProp
                 )}
               </td>
               <td className="px-4 py-3 text-right">
-                <DeleteButton provider={k.provider} onDelete={onDelete} />
+                {canDelete ? (
+                  <DeleteButton provider={k.provider} onDelete={onDelete} />
+                ) : (
+                  <span className="text-xs text-[var(--neutral-9)]">—</span>
+                )}
               </td>
             </tr>
           ))}

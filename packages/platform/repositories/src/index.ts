@@ -18,6 +18,7 @@ export type {
 // TenantProviderKey (BYOK)
 export {
   getTenantProviderKeyRepository,
+  isSafeUpstreamBaseUrl,
   TenantProviderKeyRepository,
 } from "./tenant-provider-key.repository";
 export type {

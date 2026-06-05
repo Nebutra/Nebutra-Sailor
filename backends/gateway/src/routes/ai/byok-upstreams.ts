@@ -15,7 +15,7 @@
 
 import type { AIProvider } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
-import { getTenantProviderKeyRepository } from "@nebutra/repositories";
+import { getTenantProviderKeyRepository, isSafeUpstreamBaseUrl } from "@nebutra/repositories";
 import {
   type AiGatewayResolveInput,
   type AiGatewayUpstream,
@@ -65,6 +65,16 @@ export function createByokResolveUpstreams() {
 
       const baseUrl = resolved.baseUrl ?? providerBaseUrl(provider);
       if (!baseUrl) return fallback; // CUSTOM without a baseUrl — cannot route.
+
+      // SSRF guard: a tenant-supplied baseUrl must be a public https endpoint —
+      // never the gateway's private network / cloud metadata. Reject → platform.
+      if (resolved.baseUrl && !isSafeUpstreamBaseUrl(resolved.baseUrl)) {
+        logger.warn("[byok] Rejected tenant baseUrl (non-public/non-https); using platform", {
+          orgId,
+          provider,
+        });
+        return fallback;
+      }
 
       const tenantUpstream: AiGatewayUpstream = {
         id: `byok-${provider.toLowerCase()}-${orgId}`,
