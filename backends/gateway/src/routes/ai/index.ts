@@ -6,6 +6,7 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { listModels } from "@nebutra/ai-providers/catalog";
 import { toApiError } from "@nebutra/errors";
 import { SpanStatusCode, trace } from "@opentelemetry/api";
 import { env } from "../../config/env.js";
@@ -168,22 +169,22 @@ const modelsRoute = createRoute({
 });
 
 aiRoutes.openapi(modelsRoute, async (c) => {
-  return c.json({
-    models: [
-      { id: "gpt-4o", name: "GPT-4o", provider: "openai", capabilities: ["chat", "vision"] },
-      { id: "gpt-4o-mini", name: "GPT-4o Mini", provider: "openai", capabilities: ["chat"] },
-      {
-        id: "text-embedding-3-small",
-        name: "Embedding 3 Small",
-        provider: "openai",
-        capabilities: ["embeddings"],
-      },
-      {
-        id: "text-embedding-3-large",
-        name: "Embedding 3 Large",
-        provider: "openai",
-        capabilities: ["embeddings"],
-      },
-    ],
+  // Sourced from the models.dev-backed catalog (single registry), not a
+  // hand-maintained list. Cached; a catalog outage yields the last good set.
+  const models = (await listModels()).map((m) => {
+    const capabilities = ["chat"];
+    if (m.capabilities.vision) capabilities.push("vision");
+    if (m.capabilities.toolCall) capabilities.push("tools");
+    if (m.capabilities.reasoning) capabilities.push("reasoning");
+    return {
+      id: m.id,
+      name: m.name,
+      provider: m.rawProvider,
+      contextWindow: m.contextWindow ?? null,
+      maxOutput: m.maxOutput ?? null,
+      pricing: m.pricing ?? null,
+      capabilities,
+    };
   });
+  return c.json({ models, total: models.length });
 });

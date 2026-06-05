@@ -13,7 +13,7 @@
  * the platform key, so a bad BYOK row can never take down inference.
  */
 
-import type { AIProvider } from "@nebutra/db";
+import { providerBaseUrl, providerForModel } from "@nebutra/ai-providers/catalog";
 import { logger } from "@nebutra/logger";
 import { getTenantProviderKeyRepository, isSafeUpstreamBaseUrl } from "@nebutra/repositories";
 import {
@@ -22,40 +22,13 @@ import {
   defaultEnvUpstreams,
 } from "./gateway.js";
 
-/** Default OpenAI-compatible base URL per provider (env-overridable). */
-function providerBaseUrl(provider: AIProvider): string | null {
-  switch (provider) {
-    case "OPENAI":
-      return process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1";
-    case "ANTHROPIC":
-      return process.env.ANTHROPIC_BASE_URL ?? "https://api.anthropic.com/v1";
-    case "GOOGLE":
-      return (
-        process.env.GOOGLE_BASE_URL ?? "https://generativelanguage.googleapis.com/v1beta/openai"
-      );
-    case "SILICONFLOW":
-      return process.env.SILICONFLOW_BASE_URL ?? "https://api.siliconflow.cn/v1";
-    default:
-      // CUSTOM has no canonical endpoint — the tenant must supply a baseUrl.
-      return null;
-  }
-}
-
-/** Map a model id to the AIProvider that serves it. null = unknown → no BYOK. */
-export function providerForModel(model: string): AIProvider | null {
-  const m = model.toLowerCase();
-  if (/^(gpt-|o1|o3|o4|chatgpt|text-|davinci|babbage)/.test(m)) return "OPENAI";
-  if (m.startsWith("claude")) return "ANTHROPIC";
-  if (m.startsWith("gemini")) return "GOOGLE";
-  if (/deepseek|qwen|glm|yi-|internlm|siliconflow/.test(m)) return "SILICONFLOW";
-  return null;
-}
-
 export function createByokResolveUpstreams() {
   return async (input: AiGatewayResolveInput): Promise<readonly AiGatewayUpstream[]> => {
     const fallback = defaultEnvUpstreams();
     const orgId = input.apiKey.organizationId;
-    const provider = providerForModel(input.body.model);
+    // Model→provider comes from the models.dev-backed catalog (single source),
+    // not a hand-maintained regex. null = unknown → platform default.
+    const provider = await providerForModel(input.body.model);
 
     if (!orgId || !provider) return fallback;
 

@@ -24,6 +24,10 @@
       "types": "./dist/meta.d.ts",
       "import": "./dist/meta.js"
     },
+    "./catalog": {
+      "types": "./dist/catalog.d.ts",
+      "import": "./dist/catalog.js"
+    },
     "./templates/*": "./templates/*"
   },
   "files": [
@@ -35,6 +39,10 @@
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@tokenlens/core": "^1.3.0",
+    "@tokenlens/fetch": "^1.3.0"
   },
   "devDependencies": {
     "@types/node": "catalog:",

@@ -23,6 +23,19 @@
  * ```
  */
 
+// Model catalog — the single source of model/provider FACTS (models.dev-backed,
+// runtime-fetched + cached). Replaces hand-maintained model/provider lists.
+export {
+  type AIProviderId,
+  getModelInfo,
+  listModels,
+  type ModelInfo,
+  mapProvider,
+  PROVIDER_MAP,
+  providerBaseUrl,
+  providerForModel,
+  providerFromIdHeuristic,
+} from "./catalog";
 export {
   getProvider,
   isCNCompatible,

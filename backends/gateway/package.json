@@ -24,6 +24,7 @@
     "@hono/zod-validator": "^0.7.6",
     "@nebutra/agent-runtime": "workspace:*",
     "@nebutra/agents": "workspace:*",
+    "@nebutra/ai-providers": "workspace:*",
     "@nebutra/alerting": "workspace:*",
     "@nebutra/analytics": "workspace:*",
     "@nebutra/audit": "workspace:*",
