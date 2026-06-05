@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Code, Lightning } from "@nebutra/icons";
+import { ArrowRight, Code, Lightning, Sparkles } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
 import {
   Select,
@@ -42,6 +42,7 @@ import {
   type StartupOSProject,
 } from "@/lib/startup-os/compiler";
 import { buildStartupPreviewHtml, type StartupOSFile } from "@/lib/startup-os/files";
+import { StartupChatPanel } from "./startup-chat-panel";
 
 const PROJECTS_ENDPOINT = "/api/startup-os/projects";
 const DEFAULT_THESIS = "";
@@ -937,7 +938,7 @@ function StartupBuilderWorkspace({
   selectedFile: StartupOSFile | null;
   selectedRun: StartupOperatingRun | null;
 }) {
-  const [activeSurface, setActiveSurface] = useState<"code" | "canvas">("code");
+  const [activeSurface, setActiveSurface] = useState<"code" | "canvas" | "chat">("code");
   const threadItems = [
     {
       title: "Proposition captured",
@@ -1053,18 +1054,25 @@ function StartupBuilderWorkspace({
                 </p>
               </div>
               <div className="flex shrink-0 rounded-full border border-neutral-6 bg-neutral-2 p-1">
-                {(["code", "canvas"] as const).map((surface) => (
+                {(
+                  [
+                    { key: "code", label: "Code", Icon: Code },
+                    { key: "canvas", label: "Canvas", Icon: Lightning },
+                    { key: "chat", label: "Chat", Icon: Sparkles },
+                  ] as const
+                ).map(({ key, label, Icon }) => (
                   <button
-                    key={surface}
+                    key={key}
                     type="button"
-                    onClick={() => setActiveSurface(surface)}
-                    className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-colors ${
-                      activeSurface === surface
+                    onClick={() => setActiveSurface(key)}
+                    className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                      activeSurface === key
                         ? "bg-neutral-12 text-neutral-1 dark:text-neutral-12"
                         : "text-neutral-10 hover:bg-neutral-1"
                     }`}
                   >
-                    {surface}
+                    <Icon className="size-3.5" aria-hidden="true" />
+                    {label}
                   </button>
                 ))}
               </div>
@@ -1099,6 +1107,10 @@ function StartupBuilderWorkspace({
                 selectedArtifactId={selectedArtifact?.id ?? null}
                 selectedRun={selectedRun}
               />
+            </div>
+
+            <div className={activeSurface === "chat" ? "min-h-0 flex-1" : "hidden"}>
+              <StartupChatPanel projectId={project.id} />
             </div>
           </main>
         </div>
