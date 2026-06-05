@@ -772,7 +772,7 @@ export function StartupCommandCenter() {
   }
 
   return (
-    <div className="relative h-full min-h-0">
+    <div className="relative h-[100dvh] min-h-0 overflow-hidden">
       {lastError ? (
         <div className="absolute left-4 top-4 z-20 rounded-full bg-red-3 px-3 py-1.5 text-xs font-medium text-red-11 shadow-sm dark:bg-red-9/20 dark:text-red-5">
           {lastError}
@@ -795,7 +795,7 @@ export function StartupCommandCenter() {
           onThesisChange={setThesis}
         />
       ) : (
-        <div>
+        <div className="h-full min-h-0">
           <StartupBuilderWorkspace
             activityCount={activityEvents.length}
             canvasLayout={selectedCanvasLayout}
@@ -873,14 +873,14 @@ function StartupBuilderHome({
 
   return (
     <AnimateIn preset="emerge">
-      <section className="relative min-h-screen overflow-hidden bg-neutral-1 text-neutral-12">
+      <section className="relative flex h-full min-h-0 flex-col overflow-hidden bg-neutral-1 text-neutral-12">
         {/* Ambient brand glow — subtle (governed/enterprise), not a loud aurora. */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[380px] w-full max-w-3xl opacity-[0.12] blur-3xl"
           style={{ background: "var(--brand-gradient)" }}
         />
-        <div className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-5 py-16 sm:px-8">
+        <div className="relative mx-auto flex min-h-0 flex-1 w-full max-w-5xl flex-col justify-center overflow-y-auto px-5 py-16 sm:px-8">
           <div className="mx-auto w-full max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
               <Lightning className="size-3.5 text-blue-9" aria-hidden="true" />
@@ -1169,8 +1169,8 @@ function StartupBuilderWorkspace({
               <div className="rounded-[22px] border border-neutral-6 bg-neutral-2 p-3">
                 <div className="text-xs leading-5 text-neutral-10">
                   {activityCount > 0
-                    ? `${activityCount} persisted API event${activityCount > 1 ? "s" : ""}.`
-                    : "Select a run to approve or execute through the governed API."}
+                    ? `${activityCount} recorded action${activityCount !== 1 ? "s" : ""}.`
+                    : "Select an action below to continue building your startup."}
                 </div>
                 <div className="mt-3 flex items-center justify-between gap-2">
                   <span className="rounded-full border border-neutral-6 bg-neutral-1 px-2.5 py-1 text-[11px] font-semibold text-neutral-10">
@@ -1353,7 +1353,7 @@ function WorkspaceFilesPanel({
               </span>
             </div>
             <p className="mt-1 truncate text-xs text-neutral-10">
-              {selectedFile ? selectedFile.path : "Select a persisted file to edit the app."}
+              {selectedFile ? selectedFile.path : "Select a file to begin editing."}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -1372,7 +1372,7 @@ function WorkspaceFilesPanel({
           <aside className="flex min-h-0 flex-col border-r border-neutral-6 bg-neutral-2/60">
             <div className="border-b border-neutral-6 px-3 py-2">
               <p className="text-xs font-semibold text-neutral-12">Files</p>
-              <p className="mt-0.5 text-[11px] text-neutral-9">Persisted workspace</p>
+              <p className="mt-0.5 text-[11px] text-neutral-9">Your workspace</p>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto px-2 py-2">
               <StartupOsFileTree
@@ -1447,15 +1447,14 @@ function WorkspaceFilesPanel({
                 />
               ) : (
                 <div className="grid min-h-[360px] flex-1 place-items-center p-8 text-center text-sm text-neutral-10">
-                  Select a persisted file from the workspace.
+                  Select a file to start editing.
                 </div>
               )}
             </div>
 
             <div className="flex min-h-0 flex-col bg-neutral-2">
               <div className="flex items-center justify-between border-b border-neutral-6 px-3 py-2">
-                <span className="text-xs font-semibold text-neutral-12">Live preview</span>
-                <span className="text-[11px] text-neutral-9">iframe srcDoc / no deploy</span>
+                <span className="text-xs font-semibold text-neutral-12">Live preview</span>{" "}
               </div>
               {livePreviewHtml ? (
                 <iframe
@@ -1466,7 +1465,7 @@ function WorkspaceFilesPanel({
                 />
               ) : (
                 <div className="grid flex-1 place-items-center p-8 text-center text-sm text-neutral-10">
-                  Preview is unavailable until the project API returns persisted files.
+                  Preview will appear once the project generates files.
                 </div>
               )}
             </div>

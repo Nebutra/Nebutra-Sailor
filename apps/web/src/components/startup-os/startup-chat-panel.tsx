@@ -88,7 +88,7 @@ export function StartupChatPanel({ projectId, conversation, onApplied }: Startup
   };
 
   return (
-    <AnimateIn preset="emerge">
+    <AnimateIn preset="emerge" className="h-full min-h-0">
       <section
         aria-label="Startup OS conversational build"
         className="flex h-full min-h-0 flex-col bg-neutral-1 text-neutral-12"
