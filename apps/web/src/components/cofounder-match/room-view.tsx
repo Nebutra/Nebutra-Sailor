@@ -5,7 +5,7 @@ import { AnimateIn } from "@nebutra/ui/components";
 import { EmptyState } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CofounderCard, type CofounderCardData } from "./cofounder-card";
 
 interface RoomMatch extends CofounderCardData {
@@ -26,6 +26,20 @@ export function RoomView({ profileId }: { profileId: string }) {
   const [state, setState] = useState<LoadState>("loading");
   const [match, setMatch] = useState<RoomMatch | null>(null);
   const [access, setAccess] = useState<RoomAccess | null>(null);
+  const [formState, setFormState] = useState<"idle" | "forming" | "formed" | "error">("idle");
+
+  const formTeam = useCallback(async () => {
+    setFormState("forming");
+    try {
+      const res = await fetch(`/api/cofounder/room/${profileId}/form-team`, {
+        method: "POST",
+        credentials: "include",
+      });
+      setFormState(res.ok ? "formed" : "error");
+    } catch {
+      setFormState("error");
+    }
+  }, [profileId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -103,14 +117,31 @@ export function RoomView({ profileId }: { profileId: string }) {
               You both want to build together.
             </p>
             <p className="mt-1 text-xs leading-5 text-neutral-10">
-              The next step turns your one-person company into a shared team — your OPC becomes an
-              Organization and your whole compiled company carries over. Team formation ships in the
-              next release.
+              Forming the team turns your one-person company into a shared Organization — your whole
+              compiled company carries over and your cofounder is invited as an equal founder.
             </p>
-            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-neutral-7 px-4 py-2 text-sm font-semibold text-neutral-11">
-              <Users className="size-4" aria-hidden="true" />
-              Form the team — coming next
-            </div>
+            {formState === "formed" ? (
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-green-7 bg-green-2 px-4 py-2 text-sm font-semibold text-green-11 dark:bg-green-9/20">
+                <Sparkles className="size-4" aria-hidden="true" />
+                Team forming — invitation sent
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={formTeam}
+                disabled={formState === "forming"}
+                className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                style={{ background: "var(--brand-gradient)" }}
+              >
+                <Users className="size-4" aria-hidden="true" />
+                {formState === "forming" ? "Forming…" : "Form the team"}
+              </button>
+            )}
+            {formState === "error" ? (
+              <p className="mt-2 text-xs text-[color:var(--status-danger)]">
+                Couldn't form the team. Please try again.
+              </p>
+            ) : null}
           </div>
         </AnimateIn>
       ) : (
