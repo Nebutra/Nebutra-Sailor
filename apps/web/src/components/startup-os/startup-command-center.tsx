@@ -53,6 +53,7 @@ import {
 } from "@/lib/startup-os/compiler";
 import { buildStartupPreviewHtml, type StartupOSFile } from "@/lib/startup-os/files";
 import { StartupChatPanel } from "./startup-chat-panel";
+import { setStartupChromeMode } from "./startup-chrome-store";
 import { StartupConnectorsMenu } from "./startup-connectors-menu";
 import { StartupOsCodeView } from "./startup-os-code-view";
 import { StartupOsFileTree } from "./startup-os-file-tree";
@@ -386,6 +387,13 @@ export function StartupCommandCenter() {
   const detailRequestSeq = useRef(0);
   const selectedProject =
     projects.find((project) => project.id === selectedProjectId) ?? projects[0] ?? null;
+  // Publish chrome mode to the design-system shell: home (no project) keeps the
+  // full dashboard nav; the workspace (project selected) hides/overlays it.
+  const inWorkspace = selectedProject !== null;
+  useEffect(() => {
+    setStartupChromeMode(inWorkspace ? "workspace" : "home");
+    return () => setStartupChromeMode("home");
+  }, [inWorkspace]);
   const selectedArtifact =
     selectedProject?.artifacts.find((artifact) => artifact.id === selectedArtifactId) ??
     selectedProject?.artifacts[0] ??
@@ -1125,8 +1133,8 @@ function StartupBuilderWorkspace({
           role: "assistant" as const,
         }
       : null,
-  ].filter(
-    (item): item is { title: string; body: string; role: "user" | "assistant" } => Boolean(item),
+  ].filter((item): item is { title: string; body: string; role: "user" | "assistant" } =>
+    Boolean(item),
   );
 
   // Thread history (Proposition / CompanyContext / selected-run) — rendered at
@@ -1137,9 +1145,7 @@ function StartupBuilderWorkspace({
         <div
           key={item.title}
           className={
-            item.role === "user"
-              ? "rounded-2xl border border-neutral-6 bg-neutral-2 p-3"
-              : "px-1"
+            item.role === "user" ? "rounded-2xl border border-neutral-6 bg-neutral-2 p-3" : "px-1"
           }
         >
           <p className="text-xs font-semibold tracking-tight text-neutral-12">{item.title}</p>

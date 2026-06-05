@@ -47,6 +47,7 @@ import {
 import { UserMenu } from "@/components/navigation/user-menu";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { NotificationsDialog } from "@/components/notifications/notifications-dialog";
+import { useStartupChromeMode } from "@/components/startup-os/startup-chrome-store";
 import { usePermission } from "@/hooks/usePermission";
 import type { WebProductCapabilities } from "@/lib/product-capabilities";
 import { queryKeys } from "@/lib/query-keys";
@@ -149,6 +150,11 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const navCapabilities = { startupAgentOS: startupAgentOSEnabled };
   const isWorkspaceCanvasRoute = pathname.includes("/theme-playground");
   const isStartupOSRoute = pathname.includes("/startup-os");
+  // Single signal governing startup-os sidebar chrome: the command center
+  // publishes home|workspace; hook is called unconditionally and route-guarded
+  // so the home keeps its full nav and only the workspace hides/overlays it.
+  const liveStartupChromeMode = useStartupChromeMode();
+  const startupChromeMode = isStartupOSRoute ? liveStartupChromeMode : "home";
   // /workspace home is a full-bleed gradient canvas — drop main padding and
   // skip the `contain: paint` content-area wrapper so the gradient reaches
   // the viewport edges.
@@ -592,14 +598,11 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     <AppShell
       sidebar={sidebar}
       collapsed={collapsed}
-      // Startup OS is a full-bleed Lovable-style workspace: when its sidebar is
-      // collapsed it disappears entirely (0px rail) rather than leaving an icon
-      // sliver. The thread-column logo button drives the shared `toggle()` to
-      // bring the dashboard nav back, so the rail stays reachable.
-      sidebarCollapsedWidth={isStartupOSRoute ? 0 : undefined}
-      // On the full-bleed builder the expanded nav floats OVER the workspace
-      // (absolute overlay) instead of an in-flow rail that compresses it.
-      overlay={isStartupOSRoute}
+      // NOTE: startup-os sidebar chrome (hide/overlay on the WORKSPACE only, full
+      // nav on the home) is governed by workspace state, not this flat route flag —
+      // see chromeMode below. A bare `isStartupOSRoute` here hid the home sidebar too.
+      sidebarCollapsedWidth={startupChromeMode === "workspace" ? 0 : undefined}
+      overlay={startupChromeMode === "workspace"}
       contentClassName={
         isWorkspaceHomeRoute
           ? // Full-bleed gradient canvas: drop padding at every breakpoint
