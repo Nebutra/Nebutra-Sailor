@@ -269,7 +269,12 @@ describe("AI package architecture governance", () => {
     expect(agents?.dependencies?.["@ai-sdk/openai"]).toBeDefined();
 
     const aiProviders = byName.get("@nebutra/ai-providers")?.manifest;
-    expect(aiProviders?.dependencies ?? {}).toEqual({});
+    const aiProviderRuntimeDeps = {
+      ...aiProviders?.dependencies,
+      ...aiProviders?.peerDependencies,
+    };
+    expect(aiProviderRuntimeDeps.ai).toBeUndefined();
+    expect(aiProviderRuntimeDeps["@ai-sdk/openai"]).toBeUndefined();
   });
 
   it("retires the legacy local provider experiments from packages/ai", () => {

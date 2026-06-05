@@ -63,6 +63,7 @@ const nextConfig: NextConfig = {
   transpilePackages: [
     "@nebutra/agents",
     "@nebutra/auth",
+    "@nebutra/billing",
     "@nebutra/china-compliance",
     "@nebutra/db",
     "@nebutra/design-tokens",

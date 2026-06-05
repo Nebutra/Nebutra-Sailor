@@ -116,13 +116,19 @@ describe("UI/UX audit remediation invariants", () => {
     expect(shell).toMatch(/from "@nebutra\/ui\/patterns"/);
   });
 
-  it("exposes the global feedback dialog from the dashboard header", () => {
+  it("exposes the global feedback dialog from the sidebar user menu", () => {
     const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const userMenu = readFromRepo("apps/web/src/components/navigation/user-menu.tsx");
 
-    expect(shell).toContain("useFeedbackDialog");
-    expect(shell).toContain("openFeedback");
-    expect(shell).toContain('aria-label="Open feedback dialog"');
-    expect(shell).toContain("Feedback");
+    expect(shell).toContain("UserMenu");
+    expect(shell).toContain('<UserMenu variant="row" />');
+    expect(shell).not.toContain("useFeedbackDialog");
+    expect(shell).not.toContain("openFeedback");
+    expect(shell).not.toContain('aria-label="Open feedback dialog"');
+    expect(userMenu).toContain("useFeedbackDialog");
+    expect(userMenu).toContain("openFeedback");
+    expect(userMenu).toContain('aria-label={t("feedback")}');
+    expect(userMenu).toContain("LifeBuoy");
   });
 
   it("uses governed brand logo assets instead of hardcoded app-shell wordmarks", () => {
@@ -167,13 +173,14 @@ describe("UI/UX audit remediation invariants", () => {
   it("converges the workspace route into the Startup OS entry surface", () => {
     const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
+    const localePlaceholder = "$" + "{locale}";
 
     // Home converged into Startup OS (merge): /workspace is a locale-aware
     // server redirect to /startup-os, not a duplicate dashboard overview. The
     // decision-led overview primitives were rehomed onto the Startup OS surface,
     // so the route file itself must no longer render welcome-page chrome.
     expect(dashboard).toContain('from "next/navigation"');
-    expect(dashboard).toContain("redirect(`/${locale}/startup-os`)");
+    expect(dashboard).toContain(`redirect(\`/${localePlaceholder}/startup-os\`)`);
     expect(dashboard).toContain("await params");
     expect(dashboard).not.toContain("CommandCenter");
     expect(dashboard).not.toContain("DashboardMetricTile");

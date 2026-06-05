@@ -93,6 +93,7 @@ export {
   deductCredits,
   dollarsToCredits,
   formatCredits,
+  getCreditAllowanceForPlan,
   getCreditBalance,
   getCreditTransactions,
   hasEnoughCredits,

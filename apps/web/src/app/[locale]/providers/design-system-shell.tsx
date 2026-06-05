@@ -520,8 +520,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   );
 
   // ─── Sidebar footer slot — user row + notification bell.
-  // The user menu absorbs Language / Theme; feedback stays in the content
-  // header so every route has a stable global issue-report affordance.
+  // The user menu absorbs Feedback / Language / Theme; every route gets the
+  // same global issue-report affordance without duplicating header chrome.
   const sidebarFooter = isSignedIn ? (
     collapsed ? (
       <div className="flex flex-col items-center gap-1">

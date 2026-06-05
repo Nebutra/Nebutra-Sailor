@@ -275,6 +275,7 @@ export type CreditTransactionOrderByWithRelationInput = {
 
 export type CreditTransactionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  creditBalanceId_type_relatedId?: Prisma.CreditTransactionCreditBalanceIdTypeRelatedIdCompoundUniqueInput
   AND?: Prisma.CreditTransactionWhereInput | Prisma.CreditTransactionWhereInput[]
   OR?: Prisma.CreditTransactionWhereInput[]
   NOT?: Prisma.CreditTransactionWhereInput | Prisma.CreditTransactionWhereInput[]
@@ -288,7 +289,7 @@ export type CreditTransactionWhereUniqueInput = Prisma.AtLeast<{
   metadata?: Prisma.JsonFilter<"CreditTransaction">
   createdAt?: Prisma.DateTimeFilter<"CreditTransaction"> | Date | string
   creditBalance?: Prisma.XOR<Prisma.CreditBalanceScalarRelationFilter, Prisma.CreditBalanceWhereInput>
-}, "id">
+}, "id" | "creditBalanceId_type_relatedId">
 
 export type CreditTransactionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -422,6 +423,12 @@ export type CreditTransactionListRelationFilter = {
 
 export type CreditTransactionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type CreditTransactionCreditBalanceIdTypeRelatedIdCompoundUniqueInput = {
+  creditBalanceId: string
+  type: $Enums.CreditTransactionType
+  relatedId: string
 }
 
 export type CreditTransactionCountOrderByAggregateInput = {

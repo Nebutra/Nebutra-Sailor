@@ -20,6 +20,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@nebutra/billing": ["../../packages/commerce/billing/src/index.ts"],
+      "@nebutra/billing/*": ["../../packages/commerce/billing/src/*"],
       "@nebutra/design-sync/design-md": [
         "../../packages/design/design-sync/src/providers/design-md.ts"
       ],

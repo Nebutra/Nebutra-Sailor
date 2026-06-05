@@ -1169,6 +1169,9 @@ importers:
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
+      '@nebutra/billing':
+        specifier: workspace:*
+        version: link:../../packages/commerce/billing
       '@nebutra/china-compliance':
         specifier: workspace:*
         version: link:../../packages/ops/china-compliance

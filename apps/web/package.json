@@ -29,6 +29,7 @@
     "@nebutra/atelier-canvas": "workspace:*",
     "@nebutra/audit": "workspace:*",
     "@nebutra/auth": "workspace:*",
+    "@nebutra/billing": "workspace:*",
     "@nebutra/china-compliance": "workspace:*",
     "@nebutra/cinema": "workspace:*",
     "@nebutra/db": "workspace:*",
