@@ -107,14 +107,19 @@ not Phosphor.
 - Tenant-naming change (OPC / Match-your-cofounder label) ships independently as a small
   safe slice; the matchmaking surfaces are the larger build.
 
-## 12. Open decisions (for the user)
+## 12. Decisions (locked 2026-06-05, by user)
 
-1. **Opt-in model:** founders must explicitly opt into the cofounder pool (privacy) — confirm
-   the default is opt-OUT until a founder joins Discover.
-2. **Free-tier swipe limit** (e.g. N/day) — pick a number, or defer to billing config.
-3. **Match paywall side:** does *one* paying founder unlock the Cofounder Room, or must *both*
-   pay? (Recommend: the initiator pays to open the Room; the other joins free — classic
-   marketplace liquidity.)
+1. **Opt-in model:** ✅ default **opt-OUT** — a founder is NOT in the cofounder pool until
+   they explicitly join Discover (privacy-first).
+2. **Free-tier swipe limit:** **deferred to billing config** — the daily limit is a billing/
+   plan-driven value (`@nebutra/billing`), not a hardcoded constant.
+3. **Match paywall side:** **the initiator pays** to open the Cofounder Room; the matched
+   counterpart joins free (marketplace-liquidity model).
+
+> Note: the tenant-naming change (Individual → OPC / 一人公司; "create team" → "Match your
+> cofounder") targets Nebutra's *own* workspace switcher / org-create entry — its exact
+> location is resolved in the implementation plan's first task (it is not a 1:1 string in the
+> Manus reference screenshot).
 
 Implementation: tenant-naming slice first (safe), then Discover → Match → Cofounder Room as
 new components under `apps/web/src/components/cofounder-match/**` (new files — does not touch
