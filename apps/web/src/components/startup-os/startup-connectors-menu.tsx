@@ -63,8 +63,10 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
       >
         <Connection className="size-4" aria-hidden="true" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-72">
-        <DropdownMenuLabel>Connect a data source</DropdownMenuLabel>
+      <DropdownMenuContent align="start" sideOffset={8} className="w-80 p-1.5">
+        <DropdownMenuLabel className="px-2 pb-1.5 pt-1 text-[11px] font-medium uppercase tracking-wide text-neutral-9">
+          Connect a data source
+        </DropdownMenuLabel>
         {INTEGRATION_CATALOG.map((entry) => {
           const Icon = entry.icon;
           const connected = connectedTypes.has(entry.type);
@@ -72,31 +74,35 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
             <DropdownMenuItem
               key={entry.type}
               onSelect={() => router.push(integrationsHref)}
-              className="flex cursor-pointer items-center gap-2.5"
+              className="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-2"
             >
               <span
-                className={`flex size-6 shrink-0 items-center justify-center rounded-md ${entry.bgColor}`}
+                className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${entry.bgColor}`}
               >
-                <Icon className={`size-3.5 ${entry.color}`} aria-hidden="true" />
+                <Icon className={`size-4 ${entry.color}`} aria-hidden="true" />
               </span>
-              <span className="min-w-0 flex-1 truncate">{entry.name}</span>
+              <span className="min-w-0 flex-1 truncate text-sm font-medium text-neutral-12">
+                {entry.name}
+              </span>
               {connected ? (
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-green-10">
+                <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-green-10">
                   <CheckCircle className="size-3.5" aria-hidden="true" />
                   Connected
                 </span>
               ) : (
-                <span className="text-[11px] font-medium text-blue-10">Connect</span>
+                <span className="shrink-0 text-xs font-medium text-blue-10">Connect</span>
               )}
             </DropdownMenuItem>
           );
         })}
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="my-1.5" />
         <DropdownMenuItem
           onSelect={() => router.push(integrationsHref)}
-          className="flex cursor-pointer items-center gap-2 text-neutral-11"
+          className="flex cursor-pointer items-center gap-2.5 rounded-lg px-2 py-2 text-sm font-medium text-neutral-11"
         >
-          <Plus className="size-3.5" aria-hidden="true" />
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-dashed border-neutral-7 text-neutral-10">
+            <Plus className="size-4" aria-hidden="true" />
+          </span>
           Manage connectors
         </DropdownMenuItem>
       </DropdownMenuContent>
