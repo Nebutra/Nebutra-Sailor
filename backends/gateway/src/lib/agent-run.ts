@@ -17,36 +17,11 @@ import {
   createPrismaRolloutPersistence,
   type PrismaRolloutDelegate,
 } from "@nebutra/agent-runtime/adapters/prisma-rollout";
-import type { AgentConfig, AgentResponse } from "@nebutra/agents";
-import { AgentOrchestrator, createAgentContext } from "@nebutra/agents";
+import type { AgentResponse } from "@nebutra/agents";
+import { createAgentContext } from "@nebutra/agents";
 import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
-import { DEFAULT_AGENTS } from "../agents/default-agents.js";
-
-let orchestrator: AgentOrchestrator | null = null;
-let initAttempted = false;
-
-function getOrchestrator(): AgentOrchestrator | null {
-  if (orchestrator) return orchestrator;
-  if (initAttempted) return null;
-  initAttempted = true;
-  try {
-    const agents: AgentConfig[] = DEFAULT_AGENTS.map((a) => ({
-      id: a.id,
-      name: a.name,
-      description: a.description,
-      model: a.model,
-      instructions: a.instructions,
-      maxSteps: a.maxSteps,
-      memory: a.memory,
-    }));
-    orchestrator = new AgentOrchestrator({ agents, defaultAgentId: "assistant" });
-  } catch (err) {
-    logger.warn("agent-run: orchestrator unavailable", { error: err });
-    orchestrator = null;
-  }
-  return orchestrator;
-}
+import { getGatewayOrchestrator } from "../agents/orchestrator-singleton.js";
 
 /** Automation runs are durable: rollout lines persist for replay/debugging. */
 function durableRolloutStore(): RolloutStore {
@@ -78,7 +53,7 @@ export interface AgentTurnResult {
  * an automated run never stalls waiting for a human.
  */
 export async function runAgentTurn(opts: AgentTurnInput): Promise<AgentTurnResult> {
-  const orch = getOrchestrator();
+  const orch = getGatewayOrchestrator();
   if (!orch) {
     return { ok: false, summary: "model stack unavailable", inputTokens: 0, outputTokens: 0 };
   }

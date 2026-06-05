@@ -33,49 +33,18 @@ import {
   createPrismaRolloutPersistence,
   type PrismaRolloutDelegate,
 } from "@nebutra/agent-runtime/adapters/prisma-rollout";
-import type { AgentConfig, AgentResponse } from "@nebutra/agents";
-import { AgentOrchestrator, createAgentContext } from "@nebutra/agents";
+import type { AgentResponse } from "@nebutra/agents";
+import { type AgentOrchestrator, createAgentContext } from "@nebutra/agents";
 import { getTenantDb } from "@nebutra/db";
 import { FLAGS, featureFlagMiddleware } from "@nebutra/feature-flags";
-import { logger } from "@nebutra/logger";
 import { streamSSE } from "hono/streaming";
-import { DEFAULT_AGENTS } from "../../agents/default-agents.js";
+import { getGatewayOrchestrator } from "../../agents/orchestrator-singleton.js";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 
 export const agentRuntimeRoutes = new OpenAPIHono();
 
 agentRuntimeRoutes.use("*", requireAuth);
 agentRuntimeRoutes.use("*", featureFlagMiddleware(FLAGS.AGENT_RUNTIME_DEMO));
-
-// ── Lazy singletons ──────────────────────────────────────────────────────────
-
-let orchestrator: AgentOrchestrator | null = null;
-let initAttempted = false;
-
-function getOrchestrator(): AgentOrchestrator | null {
-  if (orchestrator) return orchestrator;
-  if (initAttempted) return null;
-  initAttempted = true;
-  try {
-    // DefaultAgentConfig has string tool refs; AgentConfig expects AgentTool[].
-    // Drop tools (resolved when a concrete provider adapter is registered),
-    // mirroring the existing /api/v1/agents route.
-    const agents: AgentConfig[] = DEFAULT_AGENTS.map((a) => ({
-      id: a.id,
-      name: a.name,
-      description: a.description,
-      model: a.model,
-      instructions: a.instructions,
-      maxSteps: a.maxSteps,
-      memory: a.memory,
-    }));
-    orchestrator = new AgentOrchestrator({ agents, defaultAgentId: "assistant" });
-  } catch (err) {
-    logger.warn("agent-runtime: orchestrator unavailable", { error: err });
-    orchestrator = null;
-  }
-  return orchestrator;
-}
 
 /**
  * Rollout store selector. Default = process-local in-memory. The durable
@@ -152,7 +121,7 @@ const turnRoute = createRoute({
 });
 
 agentRuntimeRoutes.openapi(turnRoute, async (c) => {
-  const orch = getOrchestrator();
+  const orch = getGatewayOrchestrator();
   if (!orch) return c.json({ error: "model stack unavailable" }, 503);
 
   const tenant = c.get("tenant") as {

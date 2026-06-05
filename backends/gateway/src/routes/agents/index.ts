@@ -8,11 +8,12 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import type { AgentConfig, AgentResponse } from "@nebutra/agents";
-import { AgentOrchestrator, clearMemory, createAgentContext, getMemory } from "@nebutra/agents";
+import type { AgentResponse } from "@nebutra/agents";
+import { clearMemory, createAgentContext, getMemory } from "@nebutra/agents";
 import { logger } from "@nebutra/logger";
 import { SpanStatusCode, trace } from "@opentelemetry/api";
 import { DEFAULT_AGENTS } from "../../agents/default-agents.js";
+import { getGatewayOrchestrator } from "../../agents/orchestrator-singleton.js";
 import { requireAuth } from "../../middlewares/tenantContext.js";
 
 const tracer = trace.getTracer("api-gateway.agents");
@@ -21,54 +22,6 @@ export const agentRoutes = new OpenAPIHono();
 
 // Apply auth guard to all agent routes
 agentRoutes.use("*", requireAuth);
-
-// ── Lazy orchestrator singleton ──────────────────────────────────────────────
-
-let orchestrator: AgentOrchestrator | null = null;
-let initAttempted = false;
-
-/**
- * Lazily create the AgentOrchestrator from DEFAULT_AGENTS.
- * Returns null when agents cannot be configured (e.g. missing provider config).
- */
-function getOrCreateOrchestrator(): AgentOrchestrator | null {
-  if (orchestrator) return orchestrator;
-  if (initAttempted) return null;
-
-  initAttempted = true;
-
-  try {
-    // Convert DefaultAgentConfig (string tools) to AgentConfig (AgentTool[])
-    // Tool resolution is deferred — agents with string tool references will
-    // use BaseAgent (no-op execute). Callers should register concrete agents
-    // via orchestrator.registerAgent() for production use.
-    const agentConfigs: AgentConfig[] = DEFAULT_AGENTS.map((a) => ({
-      id: a.id,
-      name: a.name,
-      description: a.description,
-      model: a.model,
-      instructions: a.instructions,
-      maxSteps: a.maxSteps,
-      memory: a.memory,
-      // Tools are referenced by name — resolved when a concrete provider adapter
-      // is registered. BaseAgent's execute() throws until a provider is attached.
-    }));
-
-    orchestrator = new AgentOrchestrator({
-      agents: agentConfigs,
-      defaultAgentId: "assistant",
-    });
-
-    logger.info("Agent orchestrator initialized", {
-      agentCount: agentConfigs.length,
-    });
-
-    return orchestrator;
-  } catch (err) {
-    logger.warn("Failed to initialize agent orchestrator", { error: err });
-    return null;
-  }
-}
 
 // ── Schemas ──────────────────────────────────────────────────────────────────
 
@@ -155,7 +108,7 @@ const chatRoute = createRoute({
 });
 
 agentRoutes.openapi(chatRoute, async (c) => {
-  const orch = getOrCreateOrchestrator();
+  const orch = getGatewayOrchestrator();
   if (!orch) {
     return c.json({ error: "Agent service not configured" }, 503);
   }
