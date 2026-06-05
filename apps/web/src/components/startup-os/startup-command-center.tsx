@@ -18,15 +18,6 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Textarea,
-  TreeExpander,
-  TreeIcon,
-  TreeLabel,
-  TreeNode,
-  TreeNodeContent,
-  TreeNodeTrigger,
-  TreeProvider,
-  TreeView,
 } from "@nebutra/ui/primitives";
 import {
   type ReactNode,
@@ -54,6 +45,8 @@ import {
 import { buildStartupPreviewHtml, type StartupOSFile } from "@/lib/startup-os/files";
 import { StartupChatPanel } from "./startup-chat-panel";
 import { StartupConnectorsMenu } from "./startup-connectors-menu";
+import { StartupOsCodeView } from "./startup-os-code-view";
+import { StartupOsFileTree } from "./startup-os-file-tree";
 
 const PROJECTS_ENDPOINT = "/api/startup-os/projects";
 const DEFAULT_THESIS = "";
@@ -1278,68 +1271,6 @@ function StartupBuilderWorkspace({
   );
 }
 
-const EMPTY_EXPLORER_PARENT_PATH: boolean[] = [];
-
-function StartupExplorerNodes({
-  level = 0,
-  nodes,
-  parentPath = EMPTY_EXPLORER_PARENT_PATH,
-}: {
-  level?: number;
-  nodes: readonly StartupExplorerNode[];
-  parentPath?: boolean[];
-}): ReactNode {
-  return nodes.map((node, index) => {
-    const hasChildren = node.children.length > 0;
-    const isLast = index === nodes.length - 1;
-
-    return (
-      <TreeNode
-        key={node.id}
-        isLast={isLast}
-        level={level}
-        nodeId={node.id}
-        parentPath={parentPath}
-      >
-        <TreeNodeTrigger
-          className={`group/trigger min-h-8 w-full rounded-[var(--radius-md)] border border-transparent py-1 pr-2 transition-colors hover:border-neutral-6 hover:bg-neutral-1 ${
-            node.type === "folder" ? "font-medium text-neutral-11" : "text-neutral-10"
-          }`}
-          title={node.path}
-        >
-          <TreeExpander
-            className="mr-1 size-4 shrink-0 text-neutral-8 group-hover/trigger:text-neutral-10"
-            hasChildren={hasChildren}
-          />
-          <TreeIcon
-            className={`mr-2 size-4 shrink-0 ${
-              node.type === "folder" ? "text-amber-9 dark:text-amber-5/80" : "text-neutral-8"
-            }`}
-            hasChildren={hasChildren}
-          />
-          <TreeLabel className="font-mono text-[12px] leading-5 tracking-[-0.01em]">
-            {node.label}
-          </TreeLabel>
-          {node.file ? (
-            <span className="ml-auto rounded-full border border-neutral-6 bg-neutral-1 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.08em] text-neutral-8 opacity-0 transition-opacity group-hover/trigger:opacity-100">
-              {node.file.language}
-            </span>
-          ) : null}
-        </TreeNodeTrigger>
-        {hasChildren ? (
-          <TreeNodeContent hasChildren>
-            <StartupExplorerNodes
-              level={level + 1}
-              nodes={node.children}
-              parentPath={[...parentPath, isLast]}
-            />
-          </TreeNodeContent>
-        ) : null}
-      </TreeNode>
-    );
-  });
-}
-
 function ExplorerReferenceSection({ children, title }: { children: ReactNode; title: string }) {
   return (
     <section className="mt-3 first:mt-0">
@@ -1438,31 +1369,13 @@ function WorkspaceFilesPanel({
               <p className="mt-0.5 text-[11px] text-neutral-9">Persisted workspace</p>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto px-2 py-2">
-              {tree.length > 0 ? (
-                <TreeProvider
-                  key={files.map((file) => file.path).join("|")}
-                  animateExpand
-                  className="font-mono text-neutral-8"
-                  defaultExpandedIds={expandedIds}
-                  indent={14}
-                  onSelectionChange={(selectedIds) => {
-                    const fileId = selectedIds.find((id) => id.startsWith("file:"));
-                    if (fileId) onSelectFile(fileId.slice("file:".length));
-                  }}
-                  selectable
-                  selectedIds={selectedFile ? [`file:${selectedFile.path}`] : []}
-                  showIcons={false}
-                  showLines
-                >
-                  <TreeView className="p-0">
-                    <StartupExplorerNodes nodes={tree} />
-                  </TreeView>
-                </TreeProvider>
-              ) : (
-                <p className="rounded-[var(--radius-md)] border border-dashed border-neutral-6 px-3 py-4 text-xs leading-5 text-neutral-10">
-                  The project API returned no persisted files.
-                </p>
-              )}
+              <StartupOsFileTree
+                defaultExpandedIds={expandedIds}
+                nodes={tree}
+                onSelect={onSelectFile}
+                selectedPath={selectedFile?.path ?? null}
+                treeKey={files.map((file) => file.path).join("|")}
+              />
             </div>
             <div className="border-t border-neutral-6 p-2">
               <ExplorerReferenceSection title="Artifacts">
@@ -1521,14 +1434,10 @@ function WorkspaceFilesPanel({
                 ))}
               </div>
               {selectedFile ? (
-                <Textarea
-                  aria-label={`Edit ${selectedFile.path}`}
-                  spellCheck={false}
-                  value={draftContent}
-                  onChange={(event) => {
-                    setDraftContent(event.target.value);
-                  }}
-                  className="min-h-[360px] flex-1 resize-none border-0 bg-neutral-12 p-4 font-mono text-[13px] leading-6 text-neutral-1 shadow-none outline-none placeholder:text-neutral-6 dark:bg-black"
+                <StartupOsCodeView
+                  file={selectedFile}
+                  isSaving={isSavingFile}
+                  onSave={(content) => onSaveFile(selectedFile.path, content)}
                 />
               ) : (
                 <div className="grid min-h-[360px] flex-1 place-items-center p-8 text-center text-sm text-neutral-10">
