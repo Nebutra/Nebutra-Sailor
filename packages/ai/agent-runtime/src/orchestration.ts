@@ -8,6 +8,35 @@ export interface BudgetCap {
   readonly tokenLimit: number;
 }
 
+/** Thinking/reasoning effort for a node (maps to provider reasoning controls). */
+export type ReasoningEffort = "low" | "medium" | "high" | "xhigh";
+
+/** Output modality a node produces. Mirrors @nebutra/ai-providers ModelModality. */
+export type ModelModality = "text" | "image" | "video" | "audio" | "embedding";
+
+/**
+ * Per-node model selection — the full model meta-info a node can declare. ALL
+ * fields optional; an unset field inherits the run-level default
+ * (WorkflowDefinition.defaultModel / runTurn config). The executor resolves
+ * these HINTS against @nebutra/ai-providers/catalog (listModelsByModality /
+ * resolveFrontierModel) to a concrete model — so a node can either PIN one
+ * (`id`) or DESCRIBE what it needs ("the latest fast text model with vision").
+ */
+export interface NodeModelSpec {
+  /** Explicit pin: preset alias (`flagship`/`reasoning`/`fast`) or `provider/model` id. */
+  readonly id?: string;
+  /** Thinking effort: `low` → cheap/quick, `xhigh` → deepest reasoning. */
+  readonly reasoningEffort?: ReasoningEffort;
+  /** Output modality — selects a model of this modality when `id` is unset. */
+  readonly modality?: ModelModality;
+  /** Capabilities the selected model MUST have (e.g. a node needing image input). */
+  readonly capabilities?: {
+    readonly vision?: boolean;
+    readonly toolCall?: boolean;
+    readonly reasoning?: boolean;
+  };
+}
+
 export interface Brief {
   readonly id: string;
   readonly objective: string;
@@ -17,6 +46,8 @@ export interface Brief {
   readonly boundaries: readonly string[];
   readonly budget: BudgetCap;
   readonly dependsOn?: readonly string[];
+  /** Per-node model meta-info (id/preset · thinking effort · modality · capabilities). */
+  readonly model?: NodeModelSpec;
 }
 
 /**
@@ -40,6 +71,20 @@ const briefSchema = z.object({
   boundaries: z.array(z.string()).min(1),
   budget: budgetCapSchema,
   dependsOn: z.array(z.string()).optional(),
+  model: z
+    .object({
+      id: z.string().trim().min(1).optional(),
+      reasoningEffort: z.enum(["low", "medium", "high", "xhigh"]).optional(),
+      modality: z.enum(["text", "image", "video", "audio", "embedding"]).optional(),
+      capabilities: z
+        .object({
+          vision: z.boolean().optional(),
+          toolCall: z.boolean().optional(),
+          reasoning: z.boolean().optional(),
+        })
+        .optional(),
+    })
+    .optional(),
 });
 
 export type DispatchStrategy = "auto" | "sequential" | "fanout";
@@ -106,6 +151,10 @@ const BRIEF_FIELD_FAILURE: Record<string, { message: string; suggestion: string 
   dependsOn: {
     message: "brief.dependsOn is invalid",
     suggestion: "List dependency brief ids as an array of strings.",
+  },
+  model: {
+    message: "brief.model is invalid",
+    suggestion: "Use a preset alias or 'provider/model' id, or omit to inherit the run default.",
   },
 };
 

@@ -89,4 +89,32 @@ describe("subagent orchestration", () => {
   it("rejects a dependency cycle via the shared cycle detector", () => {
     expect(() => planWaves([brief("a", ["b"]), brief("b", ["a"])])).toThrow(/cycle/i);
   });
+
+  it("carries full per-node model meta-info (id · effort · modality · capabilities) through the topology", () => {
+    const fast: Brief = {
+      ...brief("b", ["a"]),
+      model: { id: "fast", reasoningEffort: "low" },
+    };
+    const visionNode: Brief = {
+      ...brief("c", ["a"]),
+      model: { modality: "image", capabilities: { vision: true } },
+    };
+    const waves = planWaves([brief("a"), fast, visionNode]);
+    expect(waves[0]?.[0]?.model).toBeUndefined(); // node "a" inherits the run default
+    expect(waves[1]?.find((b) => b.id === "b")?.model).toEqual({
+      id: "fast",
+      reasoningEffort: "low",
+    });
+    expect(waves[1]?.find((b) => b.id === "c")?.model).toEqual({
+      modality: "image",
+      capabilities: { vision: true },
+    });
+  });
+
+  it("rejects an invalid per-node reasoning effort", () => {
+    expect(() =>
+      // @ts-expect-error — 'extreme' is not a ReasoningEffort
+      planSubagentDispatch([{ ...brief("a"), model: { reasoningEffort: "extreme" } }]),
+    ).toThrow(/model/i);
+  });
 });
