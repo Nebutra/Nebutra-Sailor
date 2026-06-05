@@ -63,8 +63,17 @@ but adopts Lovable's signature mechanics and craft:
 
 ## Status
 
-- **P0 DONE** (2026-06-05) — discovery workflow ran; contract at `docs/startup-os/p1p2-contract.md`,
-  UI redesign spec + de-mock inventory captured. P1/P2 implementation workflow next.
+- **P0 DONE** (2026-06-05) — discovery workflow; contract at `docs/startup-os/p1p2-contract.md`,
+  UI redesign spec + de-mock inventory captured.
+- **P1/P2 DONE** (2026-06-05, commit `5b967b33`) — streaming conversation engine
+  (`lib/startup-os/conversation.ts`) + SSE chat route (`api/startup-os/.../chat`). 66/66 green.
+- ⚠️ **Multi-session collision**: another session is actively committing dashboard chrome
+  (`5023e148` remove mock seed workspaces from sidebar, `fb42789f` sidebar collapse toggle).
+  → **P3.5 Home redesign DEFERRED** (touches `workspace/page.tsx`/dashboard — their territory).
+  Stay in startup-os files this session. Re-check before touching dashboard chrome.
+- **P3a NEXT** — SSE client hook + Lovable chat panel as NEW startup-os components (zero
+  collision), unit-tested keyless + Storybook story for visual verification. Command-center
+  integration + screenshot follows. Live streaming needs a provider key (ask user at that point).
 
 ## De-mock inventory (P5 — 2026-06-05 audit; classification = "wire-real" only)
 
