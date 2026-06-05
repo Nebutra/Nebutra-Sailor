@@ -3,6 +3,7 @@
 import {
   ArrowRight,
   BookClosed,
+  ChevronDown,
   Code,
   FolderClosed,
   Layers,
@@ -10,12 +11,20 @@ import {
   Paperclip,
   PreviewEye,
   ShieldCheck,
+  SidebarLeft,
   Sparkles,
 } from "@nebutra/icons";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import {
   Badge,
   type BadgeProps,
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
   Select,
   SelectContent,
   SelectItem,
@@ -26,7 +35,6 @@ import {
   TabsTrigger,
 } from "@nebutra/ui/primitives";
 import {
-  type ReactNode,
   type PointerEvent as ReactPointerEvent,
   useDeferredValue,
   useEffect,
@@ -34,6 +42,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useSidebar } from "@/components/navigation/sidebar-context";
 import {
   buildStartupCanvasModel,
   type StartupCanvasEdge,
@@ -823,6 +832,8 @@ export function StartupCommandCenter() {
               }
             }}
             project={selectedProject}
+            projects={projects}
+            onSelectProject={selectProject}
             selectedArtifact={selectedArtifact}
             selectedFile={selectedFile}
             files={selectedWorkspaceFiles}
@@ -1070,7 +1081,9 @@ function StartupBuilderWorkspace({
   onSelectArtifact,
   onSelectFile,
   onSelectRun,
+  onSelectProject,
   project,
+  projects,
   files,
   previewHtml,
   selectedArtifact,
@@ -1090,16 +1103,22 @@ function StartupBuilderWorkspace({
   onSelectArtifact: (artifactId: string) => void;
   onSelectFile: (path: string) => void;
   onSelectRun: (runId: string) => void;
+  onSelectProject: (project: StartupOSProject) => void;
   project: StartupOSProject;
+  projects: readonly StartupOSProject[];
   files: readonly StartupOSFile[];
   previewHtml: string;
   selectedArtifact: StartupArtifact | null;
   selectedFile: StartupOSFile | null;
   selectedRun: StartupOperatingRun | null;
 }) {
-  const [activeSurface, setActiveSurface] = useState<"preview" | "code" | "canvas" | "chat">(
-    "preview",
-  );
+  // Chat is no longer a separate surface — it lives in the unified left thread
+  // column. Tabs switch only the working surface (preview / code / canvas).
+  const [activeSurface, setActiveSurface] = useState<"preview" | "code" | "canvas">("preview");
+  // The dashboard sidebar is hidden on startup-os; the thread-column logo button
+  // drives the same collapse toggle (Lovable hamburger pattern).
+  const { toggle: toggleSidebar } = useSidebar();
+  const otherProjects = projects.filter((item) => item.id !== project.id);
   const threadItems = [
     {
       title: "Proposition captured",
@@ -1122,6 +1141,69 @@ function StartupBuilderWorkspace({
       : null,
   ].filter((item): item is { title: string; body: string; tone: string } => Boolean(item));
 
+  // Thread history (Proposition / CompanyContext / selected-run) — rendered at
+  // the top of the conversational stream, above the live plan + composer.
+  const threadHistory = (
+    <div className="space-y-3">
+      {threadItems.map((item) => (
+        <div
+          key={item.title}
+          className={`rounded-2xl border p-3 ${
+            item.tone === "blue"
+              ? "border-blue-6 bg-blue-2 dark:border-blue-8/40 dark:bg-blue-9/15"
+              : item.tone === "amber"
+                ? "border-amber-6 bg-amber-2 dark:border-amber-8/40 dark:bg-amber-9/15"
+                : "border-neutral-6 bg-neutral-1"
+          }`}
+        >
+          <p className="text-xs font-semibold tracking-tight text-neutral-12">{item.title}</p>
+          <p className="mt-1 text-xs leading-5 text-neutral-10">{item.body}</p>
+          {/* Governed-run actions stay attached to the selected-run card — they
+              are real API calls (approve gate / execute run), not chrome. */}
+          {item.title.startsWith("Selected run") && selectedRun ? (
+            <div className="mt-3 flex items-center justify-between gap-2">
+              <Badge
+                variant={selectedRun.approval === "pending_review" ? "warning" : "secondary"}
+                size="sm"
+              >
+                {selectedRun.approval === "pending_review" ? "Review" : "Build"}
+              </Badge>
+              {selectedRun.approval === "pending_review" ? (
+                <Button
+                  type="button"
+                  variant="warning"
+                  size="sm"
+                  className="rounded-full"
+                  disabled={isApproving}
+                  onClick={onApprove}
+                >
+                  {isApproving ? "Approving" : "Approve"}
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  variant="ink"
+                  shape="circle"
+                  size="default"
+                  disabled={!isExecutableRun(selectedRun) || isExecuting}
+                  onClick={() => onExecuteRun(selectedRun.id)}
+                  aria-label="Execute selected run"
+                >
+                  <ArrowRight className="size-4" aria-hidden="true" />
+                </Button>
+              )}
+            </div>
+          ) : null}
+        </div>
+      ))}
+      {activityCount > 0 ? (
+        <p className="px-1 text-[11px] text-neutral-9">
+          {activityCount} recorded action{activityCount !== 1 ? "s" : ""}.
+        </p>
+      ) : null}
+    </div>
+  );
+
   return (
     <AnimateIn preset="fadeUp" className="h-[100dvh] min-h-0">
       {/* Fixed full-height app shell (Lovable-style): the workspace is exactly the
@@ -1131,79 +1213,72 @@ function StartupBuilderWorkspace({
           block <main>, so the dynamic-viewport height is pinned here instead. */}
       <section className="h-[100dvh] min-h-0 overflow-hidden bg-neutral-1 text-neutral-12">
         <div className="grid h-full xl:grid-cols-[360px_minmax(0,1fr)]">
+          {/* Unified conversational column: logo-toggle + company name header,
+              then the thread history + live plan + composer (one column). */}
           <aside className="flex min-h-0 flex-col bg-neutral-2/40">
             <div className="flex min-w-0 items-center gap-2 px-4 py-3">
-              <h2 className="min-w-0 truncate text-sm font-semibold tracking-tight text-neutral-12">
+              <Button
+                type="button"
+                variant="ghost"
+                shape="square"
+                size="icon"
+                onClick={toggleSidebar}
+                aria-label="Toggle navigation"
+                title="Toggle navigation"
+              >
+                <SidebarLeft className="size-4" aria-hidden="true" />
+              </Button>
+              <h2 className="min-w-0 flex-1 truncate text-sm font-semibold tracking-tight text-neutral-12">
                 {companyName(project.companyContext)}
               </h2>
               <StatusPill status={project.status === "review_ready" ? "completed" : "planned"} />
             </div>
 
-            <div className="flex-1 space-y-4 overflow-y-auto p-4">
-              {threadItems.map((item) => (
-                <div
-                  key={item.title}
-                  className={`rounded-2xl border p-3 ${
-                    item.tone === "blue"
-                      ? "border-blue-6 bg-blue-2 dark:border-blue-8/40 dark:bg-blue-9/15"
-                      : item.tone === "amber"
-                        ? "border-amber-6 bg-amber-2 dark:border-amber-8/40 dark:bg-amber-9/15"
-                        : "border-neutral-6 bg-neutral-1"
-                  }`}
-                >
-                  <p className="text-xs font-semibold tracking-tight text-neutral-12">
-                    {item.title}
-                  </p>
-                  <p className="mt-1 text-xs leading-5 text-neutral-10">{item.body}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t border-neutral-6 p-3">
-              <div className="rounded-2xl border border-neutral-6 bg-neutral-2 p-3">
-                <div className="text-xs leading-5 text-neutral-10">
-                  {activityCount > 0
-                    ? `${activityCount} recorded action${activityCount !== 1 ? "s" : ""}.`
-                    : "Select an action below to continue building your startup."}
-                </div>
-                <div className="mt-3 flex items-center justify-between gap-2">
-                  <span className="rounded-full border border-neutral-6 bg-neutral-1 px-2.5 py-1 text-[11px] font-semibold text-neutral-10">
-                    {selectedRun?.approval === "pending_review" ? "Review" : "Build"}
-                  </span>
-                  {selectedRun?.approval === "pending_review" ? (
-                    <button
-                      type="button"
-                      disabled={isApproving}
-                      onClick={onApprove}
-                      className="rounded-full bg-amber-9 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-amber-10 disabled:cursor-not-allowed disabled:opacity-45"
-                    >
-                      {isApproving ? "Approving" : "Approve"}
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      disabled={!selectedRun || !isExecutableRun(selectedRun) || isExecuting}
-                      onClick={() => onExecuteRun(selectedRun?.id)}
-                      className="grid size-9 place-items-center rounded-full bg-neutral-12 text-neutral-1 transition-colors hover:bg-neutral-11 disabled:cursor-not-allowed disabled:opacity-45 dark:text-neutral-12"
-                      aria-label="Execute selected run"
-                    >
-                      <ArrowRight className="size-4" aria-hidden="true" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
+            <StartupChatPanel
+              history={threadHistory}
+              onApplied={onChatApplied}
+              projectId={project.id}
+              showHeader={false}
+            />
           </aside>
 
           <main className="flex min-h-0 min-w-0 flex-col bg-neutral-1">
-            <div className="flex h-14 items-center justify-between gap-3 border-b border-neutral-6 px-4">
-              <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-neutral-12">
-                  {selectedFile?.path ?? selectedArtifact?.title ?? "Startup OS workspace"}
-                </p>
-                <p className="mt-0.5 truncate text-[11px] text-neutral-9">
-                  {companyName(project.companyContext)}
-                </p>
+            {/* Single unified top bar: project switcher dropdown + status on the
+                left, working-surface tabs on the right. */}
+            <div className="flex h-14 items-center justify-between gap-3 px-4">
+              <div className="flex min-w-0 items-center gap-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="min-w-0 max-w-full gap-1.5"
+                    >
+                      <span className="truncate font-semibold text-neutral-12">
+                        {companyName(project.companyContext)}
+                      </span>
+                      <ChevronDown className="size-4 shrink-0 text-neutral-10" aria-hidden="true" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" side="bottom" sideOffset={6}>
+                    <DropdownMenuLabel>
+                      {project.arena} / {project.status}
+                    </DropdownMenuLabel>
+                    {otherProjects.length > 0 ? (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Switch project</DropdownMenuLabel>
+                        {otherProjects.slice(0, 8).map((item) => (
+                          <DropdownMenuItem key={item.id} onClick={() => onSelectProject(item)}>
+                            {companyName(item.companyContext)}
+                          </DropdownMenuItem>
+                        ))}
+                      </>
+                    ) : null}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <StatusPill status={project.status === "review_ready" ? "completed" : "planned"} />
               </div>
               <Tabs
                 value={activeSurface}
@@ -1226,12 +1301,6 @@ function StartupBuilderWorkspace({
                   >
                     Canvas
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="chat"
-                    icon={<Sparkles className="size-3.5" aria-hidden="true" />}
-                  >
-                    Chat
-                  </TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
@@ -1245,18 +1314,12 @@ function StartupBuilderWorkspace({
             >
               <WorkspaceFilesPanel
                 view={activeSurface === "preview" ? "preview" : "code"}
-                artifacts={project.artifacts}
                 files={files}
                 isSavingFile={isSavingFile}
                 onSaveFile={onSaveFile}
-                onSelectArtifact={onSelectArtifact}
                 onSelectFile={onSelectFile}
-                onSelectRun={onSelectRun}
                 previewHtml={previewHtml}
-                runs={project.runs}
-                selectedArtifactId={selectedArtifact?.id ?? null}
                 selectedFile={selectedFile}
-                selectedRunId={selectedRun?.id ?? null}
               />
             </div>
 
@@ -1273,10 +1336,6 @@ function StartupBuilderWorkspace({
                 selectedRun={selectedRun}
               />
             </div>
-
-            <div className={activeSurface === "chat" ? "min-h-0 flex-1" : "hidden"}>
-              <StartupChatPanel onApplied={onChatApplied} projectId={project.id} />
-            </div>
           </main>
         </div>
       </section>
@@ -1284,45 +1343,22 @@ function StartupBuilderWorkspace({
   );
 }
 
-function ExplorerReferenceSection({ children, title }: { children: ReactNode; title: string }) {
-  return (
-    <section className="mt-3 first:mt-0">
-      <h3 className="px-2 text-[10px] font-semibold uppercase tracking-widest text-neutral-8">
-        {title}
-      </h3>
-      <div className="mt-1 grid gap-0.5">{children}</div>
-    </section>
-  );
-}
-
 function WorkspaceFilesPanel({
   view,
-  artifacts,
   files,
   isSavingFile,
   onSaveFile,
-  onSelectArtifact,
   onSelectFile,
-  onSelectRun,
   previewHtml,
-  runs,
-  selectedArtifactId,
   selectedFile,
-  selectedRunId,
 }: {
   view: "code" | "preview";
-  artifacts: readonly StartupArtifact[];
   files: readonly StartupOSFile[];
   isSavingFile: boolean;
   onSaveFile: (path: string, content: string) => Promise<void>;
-  onSelectArtifact: (artifactId: string) => void;
   onSelectFile: (path: string) => void;
-  onSelectRun: (runId: string) => void;
   previewHtml: string;
-  runs: readonly StartupOperatingRun[];
-  selectedArtifactId: string | null;
   selectedFile: StartupOSFile | null;
-  selectedRunId: string | null;
 }) {
   const [draftContent, setDraftContent] = useState(selectedFile?.content ?? "");
   const deferredDraftContent = useDeferredValue(draftContent);
@@ -1352,7 +1388,6 @@ function WorkspaceFilesPanel({
           >
             <div className="border-b border-neutral-6 px-3 py-2">
               <p className="text-xs font-semibold text-neutral-12">Files</p>
-              <p className="mt-0.5 text-[11px] text-neutral-9">Your workspace</p>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto px-2 py-2">
               <StartupOsFileTree
@@ -1362,42 +1397,6 @@ function WorkspaceFilesPanel({
                 selectedPath={selectedFile?.path ?? null}
                 treeKey={files.map((file) => file.path).join("|")}
               />
-            </div>
-            <div className="border-t border-neutral-6 p-2">
-              <ExplorerReferenceSection title="Artifacts">
-                {artifacts.slice(0, 3).map((artifact) => (
-                  <button
-                    key={artifact.id}
-                    type="button"
-                    onClick={() => onSelectArtifact(artifact.id)}
-                    className={`flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] px-2.5 py-2 text-left text-[11px] transition-colors ${
-                      selectedArtifactId === artifact.id
-                        ? "bg-blue-3 text-blue-12 dark:bg-blue-9/20 dark:text-blue-5"
-                        : "text-neutral-10 hover:bg-neutral-1"
-                    }`}
-                  >
-                    <span className="min-w-0 truncate">{artifact.title}</span>
-                    <span className="shrink-0 opacity-60">{artifact.status}</span>
-                  </button>
-                ))}
-              </ExplorerReferenceSection>
-              <ExplorerReferenceSection title="Runs">
-                {runs.slice(0, 3).map((run) => (
-                  <button
-                    key={run.id}
-                    type="button"
-                    onClick={() => onSelectRun(run.id)}
-                    className={`flex w-full items-center justify-between gap-3 rounded-[var(--radius-md)] px-2.5 py-2 text-left text-[11px] transition-colors ${
-                      selectedRunId === run.id
-                        ? "bg-blue-3 text-blue-12 dark:bg-blue-9/20 dark:text-blue-5"
-                        : "text-neutral-10 hover:bg-neutral-1"
-                    }`}
-                  >
-                    <span className="min-w-0 truncate">{run.stage}</span>
-                    <span className="shrink-0 opacity-60">{formatRunStatus(run.status)}</span>
-                  </button>
-                ))}
-              </ExplorerReferenceSection>
             </div>
           </aside>
 
@@ -1437,9 +1436,6 @@ function WorkspaceFilesPanel({
                 view === "preview" ? "flex min-h-0 flex-1 flex-col bg-neutral-2" : "hidden"
               }
             >
-              <div className="flex items-center justify-between px-3 py-2">
-                <span className="text-xs font-semibold text-neutral-12">Live preview</span>
-              </div>
               {livePreviewHtml ? (
                 <iframe
                   title="Startup OS generated app preview"
