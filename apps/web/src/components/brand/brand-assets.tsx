@@ -32,9 +32,42 @@ interface BrandLogoProps {
   className?: string;
   imgClassName?: string;
   variant?: "horizontal" | "mark";
+  /**
+   * Tenant-uploaded logo URL. When provided and non-null, the tenant image
+   * is rendered instead of the static brand asset. Falls back to the static
+   * mark/horizontal logo when absent or null.
+   * No dark variant for tenant logos — the image is user-supplied.
+   */
+  tenantLogoUrl?: string | null;
 }
 
-export function BrandLogo({ className, imgClassName, variant = "horizontal" }: BrandLogoProps) {
+export function BrandLogo({
+  className,
+  imgClassName,
+  variant = "horizontal",
+  tenantLogoUrl,
+}: BrandLogoProps) {
+  // Tenant-uploaded logo takes priority over the static brand asset.
+  if (tenantLogoUrl) {
+    return (
+      <span
+        className={cn("inline-flex shrink-0 items-center", className)}
+        data-brand-asset="tenant"
+      >
+        <Image
+          src={tenantLogoUrl}
+          alt=""
+          width={200}
+          height={200}
+          unoptimized
+          aria-hidden="true"
+          draggable={false}
+          className={cn("block h-full w-full object-contain", imgClassName)}
+        />
+      </span>
+    );
+  }
+
   const asset = webBrandAssets[variant];
   // Pick the brand-compliant dark variant: either an already-white asset
   // (srcDark, no filter) or a dark-mono asset that needs invert() to flip
