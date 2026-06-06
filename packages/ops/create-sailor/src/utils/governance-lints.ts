@@ -27,11 +27,13 @@ import type { NebutraConfig } from "./config";
 const RAW_INPUTS_CMD = "node scripts/governance/lint-no-raw-inputs.mjs";
 const REPOSITORY_SEAM_CMD = "node scripts/governance/lint-repository-seam.mjs";
 const BRAND_LITERALS_CMD = "node scripts/governance/lint-brand-literals.mjs";
+const MICROCOPY_CMD = "node scripts/governance/lint-microcopy.mjs";
 
 // All command fragments this util manages. Any inherited reference to one of
 // these (or to the monorepo's own path-hardcoded scripts/lint-*.mjs, which are
 // design-system-specific and not shipped to scaffolds) is rebuilt from scratch
 // so the output's lint chain contains exactly the enabled, generalized lints.
+// Regex also matches lint-microcopy so inherited monorepo references are pruned.
 const MONOREPO_LINT_CMD_RE = /\bnode\s+scripts\/(governance\/)?lint-[\w-]+\.mjs/g;
 
 // The monorepo's per-lint helper scripts reference scripts/lint-*.mjs at the
@@ -95,6 +97,30 @@ const REPOSITORY_SEAM_DEFAULTS = {
     "packages/commerce/license/src/validate-license.ts",
     "packages/iam/audit/src/index.ts",
   ] as string[],
+};
+
+// Microcopy ratchet defaults. Always-on — scaffolded projects enforce the
+// seven-prohibition rule from day one. The bannedPatterns array is intentionally
+// EMPTY: a fresh scaffold has no Nebutra-specific Chinese copy rules baked in.
+// Project operators add their own patterns to governance.config.json. The
+// allowlist is also empty — no pre-existing microcopy debt on a clean scaffold.
+const MICROCOPY_DEFAULTS = {
+  scanRoots: ["apps/web/src"],
+  excludePaths: [
+    "/api/",
+    "\\.test\\.tsx?$",
+    "/__tests__/",
+    "/storybook/src/stories/",
+    "/design-docs/",
+    "/sailor-docs/",
+  ],
+  // Project-specific banned copy patterns go here (array of { pattern, label }).
+  // See scripts/governance/lint-microcopy.mjs for the mechanically-lintable
+  // subset (禁七/禁四/禁一 partial + emoji/exclamation). Human-review patterns
+  // (禁二/禁三/禁五/禁六 + §6.5 IP red lines) must NOT be added as mechanical rules.
+  bannedPatterns: [] as { pattern: string; label: string }[],
+  // SHRINK-ONLY ratchet. Fresh scaffolds start with ZERO microcopy debt.
+  allowlist: [] as string[],
 };
 
 // Brand-literal ratchet defaults. Always-on — scaffolded projects enforce
@@ -169,11 +195,13 @@ export async function applyGovernanceLints(
   const lints: string[] = [RAW_INPUTS_CMD]; // always
   if (databaseEnabled) lints.push(REPOSITORY_SEAM_CMD);
   lints.push(BRAND_LITERALS_CMD); // always — enforce single-source brand identity
+  lints.push(MICROCOPY_CMD); // always — enforce seven-prohibition microcopy rule
 
   // -- 2. write governance.config.json with only enabled sections --
   const governanceConfig: Record<string, unknown> = {
     rawInputs: RAW_INPUTS_DEFAULTS,
     brandLiterals: BRAND_LITERALS_DEFAULTS,
+    microcopyRules: MICROCOPY_DEFAULTS,
   };
   if (databaseEnabled) {
     governanceConfig.repositorySeam = REPOSITORY_SEAM_DEFAULTS;
