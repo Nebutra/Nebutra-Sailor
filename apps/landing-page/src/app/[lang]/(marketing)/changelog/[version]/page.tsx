@@ -1,10 +1,9 @@
-"use cache";
-
 import { getChangelogEntries } from "@nebutra/sanity/queries";
 import { AnimateIn } from "@nebutra/ui/components";
 import { format as dateFnsFormat } from "date-fns";
 import { zhCN } from "date-fns/locale";
 import type { Metadata } from "next";
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -256,42 +255,34 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
 export const dynamicParams = true;
 
 /**
- * Generate static parameters for the default locale only.
- * Other locales render on-demand and are then cached via PPR.
+ * Cached data-fetching helper — inputs are plain strings so Next.js can
+ * compute a deterministic cache key. `"use cache"` must NOT be placed at
+ * module level (would wrap setRequestLocale inside a cache boundary) nor
+ * directly on generateMetadata/generateStaticParams (params is a Promise,
+ * not a serializable cache key).
  */
-export async function generateStaticParams() {
-  // Get versions from CMS, fall back to static data
-  const cmsEntries: CmsEntry[] = await getChangelogEntries().catch(() => []);
-  const versions =
-    cmsEntries.length > 0
-      ? cmsEntries.map((e) => e.version)
-      : STATIC_RELEASES.map((r) => r.version);
-
-  return versions.map((version) => ({ lang: routing.defaultLocale, version }));
+async function fetchChangelogEntries(): Promise<CmsEntry[]> {
+  "use cache";
+  cacheLife("hours");
+  return getChangelogEntries().catch(() => []);
 }
 
 /**
- * Generate dynamic metadata for each version page
+ * Build metadata from serializable inputs so the inner `"use cache"` has a
+ * stable key — mirrors the buildLegalMetadata pattern in legal/[slug]/page.tsx.
  */
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ lang: string; version: string }>;
-}): Promise<Metadata> {
-  const { lang, version } = await params;
+async function buildChangelogMetadata(version: string, lang: string): Promise<Metadata> {
+  "use cache";
+  cacheLife("hours");
 
-  if (!hasLocale(routing.locales, lang)) return {};
-
-  // Try CMS first
   const cmsEntries: CmsEntry[] = await getChangelogEntries().catch(() => []);
   const cmsEntry = cmsEntries.find((e) => e.version === version);
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
+  const canonicalUrl = lang === "en" ? `/changelog/${version}` : `/${lang}/changelog/${version}`;
 
   if (cmsEntry) {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
-    const canonicalUrl = lang === "en" ? `/changelog/${version}` : `/${lang}/changelog/${version}`;
     const title = `v${version}: ${cmsEntry.title} — Nebutra Changelog`;
     const description = cmsEntry.summary || cmsEntry.title;
-
     return {
       title,
       description,
@@ -302,25 +293,15 @@ export async function generateMetadata({
         type: "article",
         publishedTime: cmsEntry.publishedAt,
       },
-      twitter: {
-        card: "summary_large_image",
-        title,
-        description,
-      },
-      alternates: {
-        canonical: canonicalUrl,
-      },
+      twitter: { card: "summary_large_image", title, description },
+      alternates: { canonical: canonicalUrl },
     };
   }
 
-  // Fall back to static data
   const staticRelease = STATIC_RELEASES.find((r) => r.version === version);
   if (staticRelease) {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
-    const canonicalUrl = lang === "en" ? `/changelog/${version}` : `/${lang}/changelog/${version}`;
     const title = `v${version}: ${staticRelease.title} — Nebutra Changelog`;
     const description = staticRelease.summary;
-
     return {
       title,
       description,
@@ -331,18 +312,41 @@ export async function generateMetadata({
         type: "article",
         publishedTime: new Date(staticRelease.date).toISOString(),
       },
-      twitter: {
-        card: "summary_large_image",
-        title,
-        description,
-      },
-      alternates: {
-        canonical: canonicalUrl,
-      },
+      twitter: { card: "summary_large_image", title, description },
+      alternates: { canonical: canonicalUrl },
     };
   }
 
   return {};
+}
+
+/**
+ * Generate static parameters for the default locale only.
+ * Other locales render on-demand and are then cached via PPR.
+ */
+export async function generateStaticParams() {
+  // Get versions from CMS via the cached helper, fall back to static data
+  const cmsEntries = await fetchChangelogEntries();
+  const versions =
+    cmsEntries.length > 0
+      ? cmsEntries.map((e) => e.version)
+      : STATIC_RELEASES.map((r) => r.version);
+
+  return versions.map((version) => ({ lang: routing.defaultLocale, version }));
+}
+
+/**
+ * Generate dynamic metadata for each version page.
+ * Delegates to buildChangelogMetadata so the cache directive has serializable keys.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string; version: string }>;
+}): Promise<Metadata> {
+  const { lang, version } = await params;
+  if (!hasLocale(routing.locales, lang)) return {};
+  return buildChangelogMetadata(version, lang);
 }
 
 /**
@@ -361,8 +365,8 @@ export default async function ChangelogVersionPage({
 
   setRequestLocale(lang as Locale);
 
-  // Try CMS first
-  const cmsEntries: CmsEntry[] = await getChangelogEntries().catch(() => []);
+  // Try CMS first — reuses the per-request deduplicated cached fetch
+  const cmsEntries = await fetchChangelogEntries();
   const cmsEntry = cmsEntries.find((e) => e.version === version);
 
   if (cmsEntry) {
