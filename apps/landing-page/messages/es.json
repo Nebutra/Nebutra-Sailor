@@ -1189,28 +1189,28 @@
     },
     "workflow": {
       "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "title": "De cero a producción en tiempo récord.",
       "step1": {
         "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "desc": "Clone el monorepo de {brandName} al instante y ejecute pnpm install."
       },
       "step2": {
         "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "desc": "Configure Prisma, Clerk y Stripe mediante el CLI interactivo en minutos."
       },
       "step3": {
         "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "desc": "Concéntrese en la lógica del producto y la interfaz mientras la base de plataforma ya está conectada."
       },
       "step4": {
         "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "desc": "Haga push a Vercel y AWS para distribución global instantánea."
       },
       "speedometer": {
         "number": "10",
         "unit": "mins",
         "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "comparison": "Ahorre meses de trabajo de plataforma.",
         "phases": {
           "scaffold": "Init",
           "wire": "Core",
@@ -1218,7 +1218,7 @@
           "scale": "Scale",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "Empieza tu cronómetro"
       },
       "presetHint": {
         "badge": "Preajuste de {brandName}",

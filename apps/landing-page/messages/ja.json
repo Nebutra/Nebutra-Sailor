@@ -1189,28 +1189,28 @@
     },
     "workflow": {
       "badge": "Velocity",
-      "title": "From zero to production in record time.",
+      "title": "ゼロから本番環境へ、記録的なスピードで。",
       "step1": {
         "title": "1. Clone",
-        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
+        "desc": "{brandName} モノレポを即座にクローンし、pnpm install を実行します。"
       },
       "step2": {
         "title": "2. Configure",
-        "desc": "Set up Prisma, Clerk, and Stripe via the interactive CLI in minutes."
+        "desc": "インタラクティブ CLI で Prisma、Clerk、Stripe を数分でセットアップ。"
       },
       "step3": {
         "title": "3. Build",
-        "desc": "Focus on product logic and UI while the platform baseline is already wired."
+        "desc": "プラットフォームの基盤はすでに接続済み。プロダクトロジックと UI に集中できます。"
       },
       "step4": {
         "title": "4. Deploy",
-        "desc": "Push to Vercel and AWS for instant global distribution."
+        "desc": "Vercel と AWS にプッシュして、即座にグローバル配信を実現します。"
       },
       "speedometer": {
         "number": "10",
         "unit": "mins",
         "subtitle": "TIME TO MARKET",
-        "comparison": "Skip months of platform work.",
+        "comparison": "数ヶ月分のプラットフォーム作業をスキップ。",
         "phases": {
           "scaffold": "Init",
           "wire": "Core",
@@ -1218,7 +1218,7 @@
           "scale": "Scale",
           "ongoing": "∞"
         },
-        "cta": "Start your timer"
+        "cta": "タイマーを開始"
       },
       "presetHint": {
         "badge": "{brandName}プリセット",
