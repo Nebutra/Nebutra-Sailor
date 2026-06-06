@@ -56,6 +56,7 @@
     "@orpc/zod": "^1.13.13",
     "@sentry/node": "^9.0.0",
     "@trpc/server": "^11.15.1",
+    "cron-parser": "^5.5.0",
     "hono": "catalog:",
     "inngest": "^4.4.0",
     "p-timeout": "^7.0.1",
