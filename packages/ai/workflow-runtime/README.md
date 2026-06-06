@@ -37,6 +37,6 @@ const result = await sandbox.run({
 });
 ```
 
-> **Status:** WIP. The QuickJS adapter and guest primitives are landing
+> Status: WIP. The QuickJS adapter and guest primitives are landing
 > incrementally; the default seam refuses to run until a concrete sandbox is
 > wired.
