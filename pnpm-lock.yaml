@@ -1178,6 +1178,9 @@ importers:
       '@nebutra/billing':
         specifier: workspace:*
         version: link:../../packages/commerce/billing
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../packages/design/brand
       '@nebutra/china-compliance':
         specifier: workspace:*
         version: link:../../packages/ops/china-compliance
@@ -2822,6 +2825,9 @@ importers:
 
   packages/commerce/legal:
     dependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../design/brand
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../platform/db
@@ -2875,6 +2881,9 @@ importers:
 
   packages/commerce/marketing:
     dependencies:
+      '@nebutra/brand':
+        specifier: workspace:*
+        version: link:../../design/brand
       '@nebutra/ui':
         specifier: workspace:*
         version: link:../../design/ui
