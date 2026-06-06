@@ -136,6 +136,37 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
   setRequestLocale(locale);
   const messages = await getMessages({ locale });
 
+  // Only ship the namespaces that are actually consumed by client components
+  // ("use client") to the browser — server-only namespaces (metadata, hero,
+  // featuresPage, comingSoon, roadmapMeta, blogMeta, getLicenseMeta,
+  // changelogMeta, licensing, notFound, ui, logoStrip, icpFooter) are stripped
+  // to keep the JS bundle lean (~979 keys → client-relevant subset).
+  const CLIENT_NAMESPACES = [
+    "nav",
+    "cookieConsent",
+    "licenseWizard",
+    "legalPages",
+    "monorepoTree",
+    "microLanding",
+    "landing",
+    "designSystem",
+    "cta",
+    "footer",
+    "blogShowcase",
+    "useCases",
+    "stats",
+    "features",
+    "compliance",
+  ] as const;
+
+  type Messages = typeof messages;
+  const clientMessages = Object.fromEntries(
+    CLIENT_NAMESPACES.filter((ns) => ns in messages).map((ns) => [
+      ns,
+      messages[ns as keyof Messages],
+    ]),
+  ) as Partial<Messages>;
+
   return (
     <>
       <a
@@ -151,7 +182,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
 
       <Providers>
         <ErrorBoundary>
-          <NextIntlClientProvider locale={locale} messages={messages}>
+          <NextIntlClientProvider locale={locale} messages={clientMessages}>
             {children}
             <CookieConsentBanner apiEndpoint={process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENDPOINT} />
             {process.env.NEXT_PUBLIC_ICP_NUMBER ? (

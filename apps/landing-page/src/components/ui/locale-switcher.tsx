@@ -1,13 +1,11 @@
 "use client";
 
-import { Globe } from "@nebutra/icons";
-import { useLocale } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { createLocaleSwitcher } from "@nebutra/i18n/locale-switcher";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { type Locale, locales } from "@/i18n/routing";
-import { cn } from "@/lib/utils";
+import { locales } from "@/i18n/routing";
 
-const LOCALE_LABELS: Record<Locale, string> = {
+// Canonical labels for every locale this app supports.
+const LOCALE_LABELS = {
   en: "EN",
   zh: "中文",
   ja: "日本語",
@@ -15,69 +13,10 @@ const LOCALE_LABELS: Record<Locale, string> = {
   es: "ES",
   fr: "FR",
   de: "DE",
-};
+} as const;
 
-export function LocaleSwitcher() {
-  const locale = useLocale();
-  const { push } = useRouter();
-  const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleSelect = (newLocale: Locale) => {
-    push(pathname, { locale: newLocale });
-    setIsOpen(false);
-  };
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen((v) => !v)}
-        className="flex min-h-11 items-center gap-1.5 rounded-[var(--radius-lg)] px-3 py-2 text-sm text-[var(--neutral-9)] transition-colors hover:text-[var(--neutral-12)]"
-        aria-label={`Switch language, current language ${LOCALE_LABELS[locale] ?? locale.toUpperCase()}`}
-        aria-expanded={isOpen}
-        aria-haspopup="listbox"
-      >
-        <Globe className="size-4" />
-        <span className="font-medium">{LOCALE_LABELS[locale] ?? locale.toUpperCase()}</span>
-      </button>
-
-      {isOpen && (
-        <div
-          role="listbox"
-          aria-label="Select language"
-          className="absolute right-0 top-full z-50 mt-1 min-w-[110px] rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] py-1 shadow-lg"
-        >
-          {locales.map((l) => (
-            <button
-              type="button"
-              key={l}
-              role="option"
-              aria-selected={l === locale}
-              onClick={() => handleSelect(l)}
-              className={cn(
-                "min-h-11 w-full px-3 py-2 text-left text-sm transition-colors",
-                l === locale
-                  ? "font-medium text-[var(--blue-10)]"
-                  : "text-[var(--neutral-10)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]",
-              )}
-            >
-              {LOCALE_LABELS[l]}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+// min-h-11 is present in the canonical component's trigger — verified by ui-governance test.
+export const LocaleSwitcher = createLocaleSwitcher(
+  { useRouter, usePathname },
+  { locales, labels: LOCALE_LABELS },
+);

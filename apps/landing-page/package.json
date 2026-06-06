@@ -28,6 +28,7 @@
     "@nebutra/blog": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/db": "workspace:*",
+    "@nebutra/i18n": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/license": "workspace:*",
     "@nebutra/logger": "workspace:*",
