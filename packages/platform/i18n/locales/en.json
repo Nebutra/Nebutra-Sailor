@@ -1141,5 +1141,35 @@
     "sortCreated": "Date created",
     "archiveAll": "Archive all",
     "comingV2": "Coming in v2"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "The first room is ready.",
+      "firstFolder": "Many companies begin as a folder.",
+      "firstTable": "The first table has a second seat.",
+      "firstSignal": "The real world has started talking.",
+      "firstShip": "The world sees it for the first time.",
+      "firstBeliever": "From today, you are no longer building only for yourself.",
+      "firstRevenue": "The dream has cash flow now.",
+      "firstReturn": "Returning matters more than visiting.",
+      "firstTeam": "Three people can begin to form a company.",
+      "firstCrowd": "The first table is getting crowded.",
+      "firstReset": "A restart is a more honest beginning.",
+      "firstPublic": "Put a piece of the future in public.",
+      "firstDemo": "This is not a show. It is a test.",
+      "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
+    },
+    "emptyState": "Many companies begin as a folder.",
+    "success": "The first room is ready.",
+    "failure": "A restart is a more honest beginning.",
+    "team": "One can start. A few can build.",
+    "revenue": "The dream has cash flow now.",
+    "growth": "The signal is getting stronger.",
+    "deployment": {
+      "primary": "The world sees it for the first time.",
+      "echo": "It finally left localhost."
+    },
+    "onboarding": "You don't need to be ready. You need to begin.",
+    "graduation": "You've outgrown the basics. Try {tool} for the road ahead."
   }
 }

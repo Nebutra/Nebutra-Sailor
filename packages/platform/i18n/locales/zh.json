@@ -1141,5 +1141,35 @@
     "sortCreated": "创建时间",
     "archiveAll": "全部归档",
     "comingV2": "将在 v2 推出"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "第一间房间已经准备好。",
+      "firstFolder": "许多公司，最初只是一个文件夹。",
+      "firstTable": "第一张桌子有了第二个人。",
+      "firstSignal": "真实世界开始说话了。",
+      "firstShip": "世界第一次看见它。",
+      "firstBeliever": "从今天起，你不再只为自己开发。",
+      "firstRevenue": "梦想开始拥有现金流。",
+      "firstReturn": "回来，比来过更重要。",
+      "firstTeam": "三个人，局就开始成形。",
+      "firstCrowd": "第一张桌子坐不下了。",
+      "firstReset": "重启不是失败，是更诚实的开始。",
+      "firstPublic": "把一部分未来，交给世界。",
+      "firstDemo": "这不是展示，是接受检验。",
+      "graduation": "你出师了。下一程需要更强的装备。"
+    },
+    "emptyState": "许多公司，最初只是一个文件夹。",
+    "success": "第一间房间已经准备好。",
+    "failure": "重启不是失败，是更诚实的开始。",
+    "team": "一个人可以开始，几个人才能成局。",
+    "revenue": "梦想开始拥有现金流。",
+    "growth": "信号开始变强。",
+    "deployment": {
+      "primary": "世界第一次看见它。",
+      "echo": "它终于离开了 localhost。"
+    },
+    "onboarding": "你不需要准备完美，先给它一个开始。",
+    "graduation": "你出师了。试试 {tool}，它能让你的团队走得更远。"
   }
 }
