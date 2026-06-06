@@ -1171,10 +1171,25 @@
       "usageData": "Usage data will appear once your organization starts making requests.",
       "apiKeys": "No keys yet.",
       "apiKeysCta": "Create your first key",
-      "teamMembers": "Add a teammate to get started."
+      "teamMembers": "Add a teammate to get started.",
+      "cofounders": "The first person who believes in you has not appeared yet.",
+      "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
+      "cofoundersAction": "Find cofounders",
+      "growthChart": "Trend data will appear once activity begins.",
+      "revenueChart": "Revenue data will appear once transactions begin.",
+      "webhookDeliveries": "Deliveries will appear here after the first event.",
+      "webhookEndpoints": "Add an endpoint above to start receiving events.",
+      "accessInvites": "No invite codes issued."
     },
     "success": "The first room is ready.",
     "failure": "A restart is a more honest beginning.",
+    "errors": {
+      "loadMatches": "Matches could not be loaded.",
+      "loadMatchesDescription": "Something went wrong on our end. Refresh to try again.",
+      "loadWebhookDeliveries": "Deliveries could not be loaded.",
+      "replayWebhookDelivery": "Replay did not go through.",
+      "loadWebhookEndpoints": "Endpoints could not be loaded."
+    },
     "team": "One can start. A few can build.",
     "revenue": "The dream has cash flow now.",
     "growth": "The signal is getting stronger.",

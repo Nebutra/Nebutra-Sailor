@@ -5,6 +5,7 @@ import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { EmptyState } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { CofounderCard, type CofounderCardData } from "./cofounder-card";
 
@@ -15,6 +16,7 @@ interface MatchEntry extends CofounderCardData {
 type LoadState = "loading" | "ready" | "empty" | "error";
 
 export function MatchesList() {
+  const t = useTranslations("startupOs");
   const pathname = usePathname();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
   const [state, setState] = useState<LoadState>("loading");
@@ -55,8 +57,8 @@ export function MatchesList() {
   if (state === "error") {
     return (
       <EmptyState
-        title="Couldn't load your matches"
-        description="Something went wrong. Please refresh to try again."
+        title={t("errors.loadMatches")}
+        description={t("errors.loadMatchesDescription")}
       />
     );
   }
@@ -64,15 +66,15 @@ export function MatchesList() {
   if (state === "empty") {
     return (
       <EmptyState
-        title="No matches yet"
-        description="When you and another founder both signal interest, they appear here — and you can open the Cofounder Room."
+        title={t("emptyState.cofounders")}
+        description={t("emptyState.cofoundersDescription")}
         action={
           <Link
             href={`/${locale}/cofounder/discover`}
             className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white"
             style={{ background: "var(--brand-gradient)" }}
           >
-            Discover cofounders
+            {t("emptyState.cofoundersAction")}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         }

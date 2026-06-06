@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { queryKeys } from "@/lib/query-keys";
 
 export interface WebhookEndpointView {
@@ -40,6 +41,7 @@ export function WebhooksList({
   onViewDeliveries,
   onEdit,
 }: WebhooksListProps) {
+  const t = useTranslations("startupOs");
   const queryClient = useQueryClient();
   const listKey = queryKeys.webhooks.list();
 
@@ -113,7 +115,7 @@ export function WebhooksList({
   if (endpointsQuery.error) {
     return (
       <p className="py-4 text-center text-sm text-red-11" role="alert">
-        Failed to load webhooks
+        {t("errors.loadWebhookEndpoints")}
       </p>
     );
   }
@@ -121,7 +123,7 @@ export function WebhooksList({
   if (endpoints.length === 0) {
     return (
       <p className="py-4 text-sm text-center text-[var(--neutral-11)]">
-        No webhook endpoints yet. Create one above.
+        {t("emptyState.webhookEndpoints")}
       </p>
     );
   }

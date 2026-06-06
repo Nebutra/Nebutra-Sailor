@@ -1171,10 +1171,25 @@
       "usageData": "组织发起第一次请求后，用量数据将显示在这里。",
       "apiKeys": "还没有密钥。",
       "apiKeysCta": "创建第一个密钥",
-      "teamMembers": "邀请一位队友，协作就此开始。"
+      "teamMembers": "邀请一位队友，协作就此开始。",
+      "cofounders": "第一位相信你的人，还没有出现。",
+      "cofoundersDescription": "你和另一位创始人都表达了兴趣，才会在这里碰面。",
+      "cofoundersAction": "发现联创",
+      "growthChart": "有活动数据后，趋势图将在这里显示。",
+      "revenueChart": "有交易记录后，收入图将在这里显示。",
+      "webhookDeliveries": "第一个事件触发后，投递记录将显示在这里。",
+      "webhookEndpoints": "在上方添加一个端点，开始接收事件。",
+      "accessInvites": "还没有发放邀请码。"
     },
     "success": "第一间房间已经准备好。",
     "failure": "重启不是失败，是更诚实的开始。",
+    "errors": {
+      "loadMatches": "联创匹配加载失败。",
+      "loadMatchesDescription": "出了点问题，刷新页面重试。",
+      "loadWebhookDeliveries": "投递记录加载失败。",
+      "replayWebhookDelivery": "重放请求未能发出。",
+      "loadWebhookEndpoints": "端点列表加载失败。"
+    },
     "team": "一个人可以开始，几个人才能成局。",
     "revenue": "梦想开始拥有现金流。",
     "growth": "信号开始变强。",

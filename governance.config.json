@@ -271,13 +271,6 @@
         "label": "禁一 (partial): over-incentive words (加油/你能行/冲鸭/梦想成真)"
       }
     ],
-    "allowlist": [
-      "apps/web/src/components/admin/access-invite-issuer.tsx",
-      "apps/web/src/components/charts/GrowthAreaChart.tsx",
-      "apps/web/src/components/charts/RevenueBarChart.tsx",
-      "apps/web/src/components/cofounder-match/matches-list.tsx",
-      "apps/web/src/components/webhooks/webhook-deliveries-panel.tsx",
-      "apps/web/src/components/webhooks/webhooks-list.tsx"
-    ]
+    "allowlist": []
   }
 }

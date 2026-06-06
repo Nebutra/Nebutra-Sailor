@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   Bar,
   BarChart,
@@ -34,10 +35,11 @@ function formatUSD(value: number) {
  * 30-day revenue bar chart with gradient-highlighted latest bar.
  */
 export function RevenueBarChart({ series }: Props) {
+  const t = useTranslations("startupOs");
   if (series.length === 0) {
     return (
       <div className="flex h-48 items-center justify-center text-sm text-[var(--neutral-11)]">
-        No revenue data available yet.
+        {t("emptyState.revenueChart")}
       </div>
     );
   }

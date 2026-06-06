@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -61,6 +62,7 @@ const issueSchema = z.object({
 type IssueValues = z.infer<typeof issueSchema>;
 
 export function AccessInviteIssuer() {
+  const t = useTranslations("startupOs");
   const [message, setMessage] = useState<string | null>(null);
   const [issued, setIssued] = useState<IssuedInvite[]>([]);
   const [managedInvites, setManagedInvites] = useState<ManagedInvite[]>([]);
@@ -320,7 +322,7 @@ export function AccessInviteIssuer() {
           </button>
         </div>
         {managedInvites.length === 0 ? (
-          <p className="text-[var(--neutral-10)] text-sm">No access invites issued yet.</p>
+          <p className="text-[var(--neutral-10)] text-sm">{t("emptyState.accessInvites")}</p>
         ) : (
           <ul className="space-y-2">
             {managedInvites.map((invite) => (

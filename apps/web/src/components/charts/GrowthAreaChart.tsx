@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   Area,
   AreaChart,
@@ -31,10 +32,11 @@ function formatNumber(value: number) {
  * Rendered client-side; data fetched server-side and passed as prop.
  */
 export function GrowthAreaChart({ series }: Props) {
+  const t = useTranslations("startupOs");
   if (series.length === 0) {
     return (
       <div className="flex h-48 items-center justify-center text-sm text-[var(--neutral-11)]">
-        No trend data available yet.
+        {t("emptyState.growthChart")}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { queryKeys } from "@/lib/query-keys";
 
@@ -69,6 +70,7 @@ export function WebhookDeliveriesPanel({
   onReplay,
   onClose,
 }: WebhookDeliveriesPanelProps) {
+  const t = useTranslations("startupOs");
   // Pure UI state (which payload is expanded) stays local — not server cache.
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -103,8 +105,8 @@ export function WebhookDeliveriesPanel({
   const error =
     deliveriesQuery.error || replayMutation.error
       ? deliveriesQuery.error
-        ? "Failed to load deliveries"
-        : "Failed to replay delivery"
+        ? t("errors.loadWebhookDeliveries")
+        : t("errors.replayWebhookDelivery")
       : null;
   // Track the in-flight replay id so only its row shows the "Replaying…" label,
   // mirroring the previous single-replay-at-a-time behaviour.
@@ -141,7 +143,7 @@ export function WebhookDeliveriesPanel({
       )}
 
       {!isLoading && !error && deliveries.length === 0 && (
-        <p className="text-sm text-[var(--neutral-11)]">No deliveries yet.</p>
+        <p className="text-sm text-[var(--neutral-11)]">{t("emptyState.webhookDeliveries")}</p>
       )}
 
       <ul className="space-y-2">
