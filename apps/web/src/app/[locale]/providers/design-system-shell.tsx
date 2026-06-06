@@ -80,7 +80,9 @@ async function fetchActiveOrgLogo(orgId: string, signal?: AbortSignal): Promise<
     credentials: "include",
     signal,
   });
-  if (!response.ok) return null;
+  if (!response.ok) {
+    throw new Error(`Failed to load org logo (${response.status})`);
+  }
   const payload = (await response.json().catch(() => null)) as { logoUrl?: string | null } | null;
   return payload?.logoUrl ?? null;
 }
