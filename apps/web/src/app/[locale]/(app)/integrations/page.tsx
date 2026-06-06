@@ -77,6 +77,7 @@ function DocumentPipelineSection() {
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function IntegrationsPage() {
+  const tSos = useTranslations("startupOs");
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [loading, setLoading] = useState(true);
   const [connecting, setConnecting] = useState<string | null>(null);
@@ -330,7 +331,7 @@ export default function IntegrationsPage() {
         <AnimateIn preset="fadeUp">
           <Card className="mt-8 p-8">
             <EmptyState
-              title="No integrations available"
+              title={tSos("emptyState.integrations")}
               description="Integration connectors will be added in future updates."
             />
           </Card>

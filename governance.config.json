@@ -272,12 +272,7 @@
       }
     ],
     "allowlist": [
-      "apps/web/src/app/[locale]/(app)/integrations/page.tsx",
-      "apps/web/src/app/[locale]/(app)/settings/api-keys/ApiKeyList.tsx",
-      "apps/web/src/app/[locale]/(app)/settings/team/TeamMemberList.tsx",
-      "apps/web/src/app/[locale]/(app)/usage/page.tsx",
       "apps/web/src/components/admin/access-invite-issuer.tsx",
-      "apps/web/src/components/api-keys/api-keys-list.tsx",
       "apps/web/src/components/charts/GrowthAreaChart.tsx",
       "apps/web/src/components/charts/RevenueBarChart.tsx",
       "apps/web/src/components/cofounder-match/matches-list.tsx",

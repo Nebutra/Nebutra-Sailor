@@ -1164,7 +1164,15 @@
       "firstDemo": "这不是展示，是接受检验。",
       "graduation": "你出师了。下一程需要更强的装备。"
     },
-    "emptyState": "许多公司，最初只是一个文件夹。",
+    "emptyState": {
+      "default": "许多公司，最初只是一个文件夹。",
+      "integrations": "还没有配置连接器。",
+      "creditActivity": "第一次请求完成后，积分记录会显示在这里。",
+      "usageData": "组织发起第一次请求后，用量数据将显示在这里。",
+      "apiKeys": "还没有密钥。",
+      "apiKeysCta": "创建第一个密钥",
+      "teamMembers": "邀请一位队友，协作就此开始。"
+    },
     "success": "第一间房间已经准备好。",
     "failure": "重启不是失败，是更诚实的开始。",
     "team": "一个人可以开始，几个人才能成局。",

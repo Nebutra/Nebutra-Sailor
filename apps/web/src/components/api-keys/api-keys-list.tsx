@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormatter } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 
 export interface ApiKey {
@@ -71,11 +71,14 @@ export function ApiKeysList({
   keys,
   onCreate,
   onRevoke,
-  emptyTitle = "No API keys yet",
-  emptyCta = "Create your first API key",
+  emptyTitle,
+  emptyCta,
   columnLabels = {},
 }: ApiKeysListProps) {
   const format = useFormatter();
+  const tSos = useTranslations("startupOs");
+  const resolvedEmptyTitle = emptyTitle ?? tSos("emptyState.apiKeys");
+  const resolvedEmptyCta = emptyCta ?? tSos("emptyState.apiKeysCta");
 
   function formatDate(value: string | null, neverLabel: string): string {
     if (!value) return neverLabel;
@@ -99,14 +102,14 @@ export function ApiKeysList({
   if (keys.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] py-10 text-center">
-        <p className="mb-3 text-sm text-[var(--neutral-11)]">{emptyTitle}</p>
+        <p className="mb-3 text-sm text-[var(--neutral-11)]">{resolvedEmptyTitle}</p>
         <button
           type="button"
           onClick={onCreate}
           className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
           style={{ background: "var(--brand-gradient)" }}
         >
-          {emptyCta}
+          {resolvedEmptyCta}
         </button>
       </div>
     );

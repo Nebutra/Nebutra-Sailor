@@ -1,6 +1,7 @@
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Card, EmptyState, LoadingState, PageHeader } from "@nebutra/ui/layout";
 import { headers } from "next/headers";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { getTypedApi } from "@/lib/api/client";
 import { resolveServerRequestOrigin } from "@/lib/auth";
@@ -191,7 +192,13 @@ function formatCreditDate(value: string): string {
   }).format(date);
 }
 
-function CreditSummarySection({ creditSummary }: { creditSummary: CreditSummaryData | null }) {
+function CreditSummarySection({
+  creditSummary,
+  emptyActivityLabel,
+}: {
+  creditSummary: CreditSummaryData | null;
+  emptyActivityLabel: string;
+}) {
   if (!creditSummary) {
     return (
       <AnimateIn preset="fadeUp">
@@ -250,7 +257,7 @@ function CreditSummarySection({ creditSummary }: { creditSummary: CreditSummaryD
 
           {creditSummary.transactions.length === 0 ? (
             <p className="mt-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 px-4 py-3 text-sm text-neutral-11">
-              No credit activity recorded yet.
+              {emptyActivityLabel}
             </p>
           ) : (
             <div className="mt-4 divide-y divide-neutral-6">
@@ -293,6 +300,7 @@ function CreditSummarySection({ creditSummary }: { creditSummary: CreditSummaryD
 // ── Main Content ─────────────────────────────────────────────────────────────
 
 async function UsageContent() {
+  const t = await getTranslations("startupOs");
   const [usage, creditSummary] = await Promise.all([fetchUsage(), fetchCreditSummary()]);
 
   return (
@@ -304,14 +312,17 @@ async function UsageContent() {
         />
       </AnimateIn>
 
-      <CreditSummarySection creditSummary={creditSummary} />
+      <CreditSummarySection
+        creditSummary={creditSummary}
+        emptyActivityLabel={t("emptyState.creditActivity")}
+      />
 
       {!usage ? (
         <AnimateIn preset="fadeUp">
           <EmptyState
             tone="branded"
             size="lg"
-            title="No usage data yet"
+            title={t("emptyState.usageData")}
             description="Usage metrics will appear once your organization starts making API calls. Ensure the API gateway is connected."
           />
         </AnimateIn>

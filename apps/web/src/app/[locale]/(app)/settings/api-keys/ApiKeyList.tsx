@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 import { PermissionGate } from "@/components/PermissionGate";
 import { type RevokeKeyState, revokeApiKey } from "./actions";
@@ -39,11 +40,11 @@ function RevokeButton({ keyId, orgId }: { keyId: string; orgId: string }) {
 }
 
 export function ApiKeyList({ orgId, keys = [] }: Props) {
+  const t = useTranslations("startupOs");
+
   if (keys.length === 0) {
     return (
-      <p className="py-4 text-sm text-center text-[var(--neutral-11)]">
-        No API keys yet. Create one above.
-      </p>
+      <p className="py-4 text-sm text-center text-[var(--neutral-11)]">{t("emptyState.apiKeys")}</p>
     );
   }
 

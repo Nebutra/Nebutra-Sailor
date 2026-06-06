@@ -10,6 +10,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { dicebearAvatarUrl } from "@/lib/avatar";
 import { queryKeys } from "@/lib/query-keys";
@@ -100,6 +101,7 @@ async function deleteMember(
 }
 
 export function TeamMemberList({ orgId }: Props) {
+  const t = useTranslations("startupOs");
   const queryClient = useQueryClient();
   const listKey = queryKeys.teamMembers.list(orgId);
 
@@ -358,7 +360,7 @@ export function TeamMemberList({ orgId }: Props) {
             {payload.members.length === 0 && (
               <tr>
                 <td className="px-4 py-8 text-center text-[var(--neutral-11)]" colSpan={4}>
-                  No members yet. Invite a teammate to get started.
+                  {t("emptyState.teamMembers")}
                 </td>
               </tr>
             )}

@@ -1164,7 +1164,15 @@
       "firstDemo": "This is not a show. It is a test.",
       "graduation": "You've outgrown the basics. The road ahead needs stronger tools."
     },
-    "emptyState": "Many companies begin as a folder.",
+    "emptyState": {
+      "default": "Many companies begin as a folder.",
+      "integrations": "No connectors configured.",
+      "creditActivity": "Credit activity will appear after your first request.",
+      "usageData": "Usage data will appear once your organization starts making requests.",
+      "apiKeys": "No keys yet.",
+      "apiKeysCta": "Create your first key",
+      "teamMembers": "Add a teammate to get started."
+    },
     "success": "The first room is ready.",
     "failure": "A restart is a more honest beginning.",
     "team": "One can start. A few can build.",
