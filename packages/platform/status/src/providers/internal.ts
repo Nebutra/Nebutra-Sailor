@@ -10,7 +10,7 @@
 
 import type { StatusProvider } from "../provider";
 import type { InternalStatusConfig, StatusPageData, StatusState } from "../types";
-import { getDefaultStatusData } from "./shared";
+import { fetchWithStatusTimeout, getDefaultStatusData } from "./shared";
 
 export class InternalStatusProvider implements StatusProvider {
   private readonly config: InternalStatusConfig;
@@ -21,7 +21,7 @@ export class InternalStatusProvider implements StatusProvider {
 
   async fetchSummary(): Promise<StatusPageData> {
     try {
-      const response = await fetch(this.config.healthUrl, {
+      const response = await fetchWithStatusTimeout(this.config.healthUrl, {
         headers: { Accept: "application/json" },
       });
 
