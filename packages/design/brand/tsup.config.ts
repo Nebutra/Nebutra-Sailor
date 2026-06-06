@@ -7,6 +7,7 @@ export default defineConfig({
     "src/components/Logo.tsx",
     "src/metadata-helpers.ts",
     "src/og/index.ts",
+    "src/microcopy.ts",
   ],
   format: ["esm"],
   dts: true,

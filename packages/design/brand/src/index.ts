@@ -74,6 +74,19 @@ export {
   getSiteMetadata,
   getSiteUrl,
 } from "./metadata-helpers";
+// Microcopy SSOT — typed projection of docs/microcopy/nebutra-microcopy-system.md
+export type {
+  EasterEggEntry,
+  MilestoneCopyEntry,
+  MilestoneId,
+  NebutraMicrocopy,
+  SupportedLocale,
+} from "./microcopy";
+export {
+  EASTER_EGG_REGISTRY,
+  getMilestoneCopy,
+  MILESTONE_COPY_PACK,
+} from "./microcopy";
 // Brand Motion Language (品牌运动语言)
 export {
   brandEasing,

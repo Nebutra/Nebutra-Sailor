@@ -23,6 +23,10 @@
       "types": "./dist/metadata-helpers.d.ts",
       "import": "./dist/metadata-helpers.js"
     },
+    "./microcopy": {
+      "types": "./dist/microcopy.d.ts",
+      "import": "./dist/microcopy.js"
+    },
     "./og": {
       "types": "./dist/og/index.d.ts",
       "import": "./dist/og/index.js"

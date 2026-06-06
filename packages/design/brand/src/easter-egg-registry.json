@@ -1,0 +1,38 @@
+[
+  {
+    "id": "echo-localhost",
+    "layer": "echo",
+    "primaryCopy": "它终于离开了 localhost。",
+    "secondaryCopy": "It finally left localhost.",
+    "sourceInspiration": "开发者第一次把服务跑出本地机器的那一刻 — the moment a service escapes the developer's own machine",
+    "usedInSurface": "deployment",
+    "riskLevel": "low"
+  },
+  {
+    "id": "echo-general-magic",
+    "layer": "echo",
+    "primaryCopy": "有些项目不是失败，是把团队练出来了。",
+    "secondaryCopy": "Some projects don't fail. They train the team that comes next.",
+    "sourceInspiration": "General Magic — 伟大的失败孕育了改变世界的一代工程师 (the project failed but its alumni built the next era)",
+    "usedInSurface": "failure_state",
+    "riskLevel": "low"
+  },
+  {
+    "id": "echo-ramen",
+    "layer": "echo",
+    "primaryCopy": "先活下来，不丢人。",
+    "secondaryCopy": "Staying alive is not shameful. Ramen counts.",
+    "sourceInspiration": "ramen profitability — Paul Graham 提出的生存美学：赚够吃泡面的钱就是真正的盈利起点",
+    "usedInSurface": "revenue",
+    "riskLevel": "low"
+  },
+  {
+    "id": "echo-first-room",
+    "layer": "echo",
+    "primaryCopy": "第一间房间不必体面，但方向必须真实。",
+    "secondaryCopy": "The first room doesn't have to be impressive. The direction does.",
+    "sourceInspiration": "车库/湖畔花园 — 所有伟大公司的共同起点：非正式空间里诞生的认真事业 (HP garage, Alibaba's Lakeside apartment)",
+    "usedInSurface": "onboarding",
+    "riskLevel": "low"
+  }
+]
