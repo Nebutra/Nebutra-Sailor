@@ -322,3 +322,16 @@ CREATE POLICY "tenant_transfer_journals_select" ON "public"."tenant_transfer_jou
 DROP POLICY IF EXISTS "tenant_transfer_journals_write" ON "public"."tenant_transfer_journals";
 CREATE POLICY "tenant_transfer_journals_write" ON "public"."tenant_transfer_journals" AS PERMISSIVE FOR ALL TO app_user USING ("from_tenant_id" = public.current_tenant_id()) WITH CHECK ("from_tenant_id" = public.current_tenant_id());
 
+-- tasks / uploads: tenant-scoped (tenant_id) work tables from the 2026-06-04
+-- migrations. The `ensure_rls` event trigger auto-enables RLS on every new public
+-- table, so without an explicit policy they are deny-all for app_user. The Python
+-- AI workers reach them via the BYPASSRLS postgres role (app-level tenant filter),
+-- but any app_user (getTenantDb) access needs this policy for tenant isolation.
+ALTER TABLE "public"."tasks" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "tasks_rls" ON "public"."tasks";
+CREATE POLICY "tasks_rls" ON "public"."tasks" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
+
+ALTER TABLE "public"."uploads" ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "uploads_rls" ON "public"."uploads";
+CREATE POLICY "uploads_rls" ON "public"."uploads" AS PERMISSIVE FOR ALL TO app_user USING ("tenant_id" = public.current_tenant_id());
+
