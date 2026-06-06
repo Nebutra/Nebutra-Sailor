@@ -686,6 +686,40 @@ Prisma implementation behind the repository interface.
 
 ---
 
+## Microcopy governance — seven-prohibition rule (lint-enforced)
+
+Governed path: `apps/web/src` (the authenticated product surface). The engine
+enforces only the **mechanically-lintable** families — do not add semantic rules
+as bannedPatterns; those belong to human review via the 黄金50 acceptance gate.
+
+**Lint-enforced (CI fails on new violations):**
+- **禁七** — generic empty-state strings: `暂无…` / `No X (yet|available)`
+- **禁四** — LinkedIn/corporate-speak: `赋能` / `闭环` / `抓手` / `颗粒度` / `打法` / `系统检测到` / `请您`
+- **禁一 (partial)** — over-incentive words: `加油` / `你能行` / `冲鸭` / `梦想成真`
+- **禁标点** — emoji in JSX string literals; trailing `!` / full-caps shout
+
+**Human-review only (黄金50 acceptance gate, NOT lint-enforced):**
+禁二 (空洞成功学 / empty motivational copy), 禁三 (自我感动 / self-moved copy),
+禁五 (subtle 尬梗/谐音), 禁六 (裸引用 / naked references), §6.5 IP red lines.
+
+**Escape hatch** — add a top-level comment in the file:
+```ts
+// @microcopy-exempt: <reason>  ← e.g. "technical API label, not user-facing copy"
+```
+Use sparingly; API route error bodies are already excluded structurally via
+`excludePaths: ["/api/"]`.
+
+**Shrink-only ratchet:** existing offenders are listed in
+`governance.config.json` → `microcopyRules.allowlist` and migrate on-touch
+(list may only shrink). New violations in governed paths fail CI immediately.
+
+`create-sailor` ships an empty `microcopyRules` section into every scaffold's
+`governance.config.json` so downstream projects inherit the engine on day one.
+
+Authoritative bible: `docs/microcopy/nebutra-microcopy-system.md`
+
+---
+
 ## What NOT to do
 
 ```tsx
