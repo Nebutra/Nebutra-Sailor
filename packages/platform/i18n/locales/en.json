@@ -1014,7 +1014,7 @@
       "inbox": {
         "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
         "emptyCaughtUp": "Inbox is clear.",
-        "emptyChangelog": "No changelog entries."
+        "emptyChangelog": "Changelog updates will show up here."
       }
     }
   },
@@ -1171,7 +1171,7 @@
       "usageData": "Usage data will appear once your organization starts making requests.",
       "apiKeys": "No keys yet.",
       "apiKeysCta": "Create your first key",
-      "teamMembers": "Add a teammate to get started.",
+      "teamMembers": "One can start. A few can build.",
       "cofounders": "The first person who believes in you has not appeared yet.",
       "cofoundersDescription": "When you and another founder both signal interest, they appear here.",
       "cofoundersAction": "Find cofounders",
@@ -1200,13 +1200,13 @@
     "onboarding": "You don't need to be ready. You need to begin.",
     "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
     "company": {
-      "emptyTitle": "The first tower starts here.",
+      "emptyTitle": "Your first context tower starts here.",
       "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
       "emptyAction": "Open Startup OS",
       "notice": {
         "needsProvider": "Connect an AI provider key to auto-fill fields.",
-        "generateFailed": "The generation did not complete.",
-        "saveFailed": "The change did not save."
+        "generateFailed": "The generation didn't finish.",
+        "saveFailed": "Your changes weren't saved."
       },
       "action": {
         "save": "Save",
@@ -1216,11 +1216,11 @@
       }
     },
     "execution": {
-      "noBets": "No bets placed.",
+      "noBets": "No bets yet.",
       "noRuns": "No active runs."
     },
     "fileTree": {
-      "empty": "The project has no files yet."
+      "empty": "This project has no files yet."
     }
   },
   "selectOrg": {
@@ -1234,7 +1234,7 @@
     },
     "default": {
       "emptyTitle": "The first workspace begins here.",
-      "emptyDescription": "Create a workspace to continue."
+      "emptyDescription": "Create a workspace to begin."
     }
   }
 }

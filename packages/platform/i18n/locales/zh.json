@@ -1001,7 +1001,7 @@
         "selected": "已选 {count} 条"
       },
       "empty": {
-        "all": "你已经处理完了 ✨",
+        "all": "都处理完了。",
         "unread": "没有未读通知。"
       },
       "errors": {
@@ -1013,8 +1013,8 @@
       },
       "inbox": {
         "noBackend": "收件箱需要持久通知后端。请检查供应商配置。",
-        "emptyCaughtUp": "收件箱为空。",
-        "emptyChangelog": "暂时没有更新日志。"
+        "emptyCaughtUp": "收件箱已清空。",
+        "emptyChangelog": "更新日志会出现在这里。"
       }
     }
   },
@@ -1171,7 +1171,7 @@
       "usageData": "组织发起第一次请求后，用量数据将显示在这里。",
       "apiKeys": "还没有密钥。",
       "apiKeysCta": "创建第一个密钥",
-      "teamMembers": "邀请一位队友，协作就此开始。",
+      "teamMembers": "一个人可以开始，几个人才能成局。",
       "cofounders": "第一位相信你的人，还没有出现。",
       "cofoundersDescription": "你和另一位创始人都表达了兴趣，才会在这里碰面。",
       "cofoundersAction": "发现联创",
@@ -1200,7 +1200,7 @@
     "onboarding": "你不需要准备完美，先给它一个开始。",
     "graduation": "你出师了。试试 {tool}，它能让你的团队走得更远。",
     "company": {
-      "emptyTitle": "第一座塔，从这里开始搭。",
+      "emptyTitle": "第一座上下文塔，从这里开始搭。",
       "emptyDescription": "在 Startup OS 中编译一家公司，就能在这里查看和编辑它的上下文塔。",
       "emptyAction": "打开 Startup OS",
       "notice": {
@@ -1233,8 +1233,8 @@
       "emptyDescription": "计费操作需要一个有效的工作空间，创建后再回来处理订阅。"
     },
     "default": {
-      "emptyTitle": "第一个工作空间从这里开始。",
-      "emptyDescription": "创建一个工作空间以继续。"
+      "emptyTitle": "第一个工作空间，从这里开始。",
+      "emptyDescription": "创建一个工作空间，开始你的旅程。"
     }
   }
 }
