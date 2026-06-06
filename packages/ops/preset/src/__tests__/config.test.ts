@@ -109,6 +109,18 @@ describe("ThemeId", () => {
   });
 });
 
+describe("NebutraConfigSchema — brandConfigPath", () => {
+  it("defaults brandConfigPath to 'brand.config.ts'", () => {
+    const result = NebutraConfigSchema.parse({});
+    expect(result.brandConfigPath).toBe("brand.config.ts");
+  });
+
+  it("accepts a custom brandConfigPath override", () => {
+    const result = NebutraConfigSchema.parse({ brandConfigPath: "custom/brand.config.ts" });
+    expect(result.brandConfigPath).toBe("custom/brand.config.ts");
+  });
+});
+
 describe("defineConfig", () => {
   it("returns parsed config with defaults", () => {
     const config = defineConfig({});

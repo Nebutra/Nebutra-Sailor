@@ -106,6 +106,10 @@ export const NebutraConfigSchema = z.object({
   apiProtocols: z.array(ApiProtocolId).default(["rest"]),
   authProvider: AuthProviderId.default("clerk"),
   deployTargets: DeployTargetsSchema,
+  // Relative path (from repo root) to the project's brand config file.
+  // Emitted as NEBUTRA_BRAND_CONFIG env var by getFeatureEnvVars.
+  // Does NOT duplicate brand identity fields — preset is a sibling pointer only.
+  brandConfigPath: z.string().default("brand.config.ts"),
 });
 
 export type NebutraConfig = z.infer<typeof NebutraConfigSchema>;
@@ -122,6 +126,7 @@ export interface ResolvedConfig {
   apiProtocols: z.infer<typeof ApiProtocolId>[];
   authProvider: z.infer<typeof AuthProviderId>;
   deployTargets: DeployTargetMap;
+  brandConfigPath: string;
 }
 
 // ─── Public API ───
@@ -140,5 +145,6 @@ export function resolveConfig(config: NebutraConfig): ResolvedConfig {
     apiProtocols: config.apiProtocols,
     authProvider: config.authProvider,
     deployTargets: config.deployTargets,
+    brandConfigPath: config.brandConfigPath,
   };
 }

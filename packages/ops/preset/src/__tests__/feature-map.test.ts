@@ -42,6 +42,7 @@ const mockConfig: ResolvedConfig = {
     gateway: "cloudflare-workers",
     "python-ai": "ecs-docker",
   },
+  brandConfigPath: "brand.config.ts",
 };
 
 describe("getFeatureEnvVars", () => {
@@ -67,6 +68,20 @@ describe("getFeatureEnvVars", () => {
     expect(vars.DEPLOY_TARGET_LANDING_PAGE).toBe("vercel");
     expect(vars.DEPLOY_TARGET_GATEWAY).toBe("cloudflare-workers");
     expect(vars.DEPLOY_TARGET_PYTHON_AI).toBe("ecs-docker");
+  });
+
+  it("emits NEBUTRA_BRAND_CONFIG from brandConfigPath", () => {
+    const vars = getFeatureEnvVars(mockConfig);
+    expect(vars.NEBUTRA_BRAND_CONFIG).toBe("brand.config.ts");
+  });
+
+  it("emits NEBUTRA_BRAND_CONFIG with a custom path when overridden", () => {
+    const customConfig: ResolvedConfig = {
+      ...mockConfig,
+      brandConfigPath: "config/brand.config.ts",
+    };
+    const vars = getFeatureEnvVars(customConfig);
+    expect(vars.NEBUTRA_BRAND_CONFIG).toBe("config/brand.config.ts");
   });
 });
 

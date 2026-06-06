@@ -23,6 +23,7 @@ export function getFeatureEnvVars(config: ResolvedConfig): Record<string, string
   }
 
   vars.NEBUTRA_THEME = config.theme;
+  vars.NEBUTRA_BRAND_CONFIG = config.brandConfigPath;
   vars.NEBUTRA_LOCALES = config.locales.join(",");
   vars.NEBUTRA_DEFAULT_LOCALE = config.defaultLocale;
 
