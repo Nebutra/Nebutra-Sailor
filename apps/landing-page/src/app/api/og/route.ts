@@ -1,3 +1,4 @@
+import { brand, colors } from "@nebutra/brand/metadata";
 import { ImageResponse } from "next/og";
 import type * as React from "react";
 import { type CSSProperties, createElement, type ReactNode } from "react";
@@ -20,24 +21,26 @@ const CACHE_HEADER = {
   "cache-control": "public, immutable, no-transform, s-maxage=31536000, max-age=31536000",
 } as const;
 
+// Satori does NOT resolve CSS var() — all colors must be explicit hex/rgba values
+// sourced from @nebutra/brand/metadata colors object.
 const themePalette = {
   dark: {
-    bg: "#020617",
+    bg: colors.neutral["950"], // "#020617"
     grid: "rgba(255,255,255,0.04)",
-    glowA: "rgba(0,51,254,0.28)",
-    glowB: "rgba(11,241,195,0.22)",
+    glowA: "rgba(0,51,254,0.28)", // colors.primary["500"] at 28% opacity
+    glowB: "rgba(11,241,195,0.22)", // colors.accent["500"] at 22% opacity
     title: "#ffffff",
     subtitle: "rgba(255,255,255,0.72)",
-    accent: "#0BF1C3",
+    accent: colors.accent["500"], // "#0BF1C3"
   },
   light: {
     bg: "#ffffff",
     grid: "rgba(0,0,0,0.05)",
-    glowA: "rgba(0,51,254,0.22)",
-    glowB: "rgba(11,241,195,0.20)",
+    glowA: "rgba(0,51,254,0.22)", // colors.primary["500"] at 22% opacity
+    glowB: "rgba(11,241,195,0.20)", // colors.accent["500"] at 20% opacity
     title: "#0a0a0a",
     subtitle: "rgba(10,10,10,0.66)",
-    accent: "#0033FE",
+    accent: colors.primary["500"], // "#0033FE"
   },
 } as const;
 
@@ -102,7 +105,7 @@ function buildOgTree(title: string, subtitle: string | undefined, palette: Palet
 
   return div(containerStyle, [
     div(gridStyle),
-    createElement("div", { key: "brand", style: brandStyle }, "Nebutra"),
+    createElement("div", { key: "brand", style: brandStyle }, brand.name),
     createElement("div", { key: "title", style: titleStyle }, title),
     subtitle ? createElement("div", { key: "subtitle", style: subtitleStyle }, subtitle) : null,
   ]);

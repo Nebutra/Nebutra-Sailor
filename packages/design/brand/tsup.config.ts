@@ -1,7 +1,13 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/metadata.ts", "src/components/Logo.tsx", "src/metadata-helpers.ts"],
+  entry: [
+    "src/index.ts",
+    "src/metadata.ts",
+    "src/components/Logo.tsx",
+    "src/metadata-helpers.ts",
+    "src/og/index.ts",
+  ],
   format: ["esm"],
   dts: true,
   splitting: false,

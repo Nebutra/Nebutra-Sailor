@@ -1,8 +1,15 @@
+import { brand, colors } from "@nebutra/brand/metadata";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Nebutra Sailor - Enterprise SaaS Framework";
+// Satori does NOT resolve CSS var() — all colors must be explicit hex/rgba values
+// sourced from @nebutra/brand/metadata colors object.
+const BG = colors.neutral["950"]; // "#020617"
+const GLOW_A = `rgba(0,51,254,0.27)`; // colors.primary["500"] at 27% opacity
+const GLOW_B = `rgba(11,241,195,0.20)`; // colors.accent["500"] at 20% opacity
+
+export const alt = `${brand.name} Sailor - Enterprise SaaS Framework`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,9 +23,8 @@ export default async function Image() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#020617",
-        backgroundImage:
-          "radial-gradient(ellipse 76% 48% at 50% 40%, rgba(0,51,254,0.27) 0%, transparent 72%), radial-gradient(ellipse 58% 35% at 70% 72%, rgba(11,241,195,0.20) 0%, transparent 75%)",
+        backgroundColor: BG,
+        backgroundImage: `radial-gradient(ellipse 76% 48% at 50% 40%, ${GLOW_A} 0%, transparent 72%), radial-gradient(ellipse 58% 35% at 70% 72%, ${GLOW_B} 0%, transparent 75%)`,
       }}
     >
       <span
@@ -30,7 +36,7 @@ export default async function Image() {
           marginBottom: 22,
         }}
       >
-        Nebutra Sailor
+        {brand.name} Sailor
       </span>
       <span
         style={{

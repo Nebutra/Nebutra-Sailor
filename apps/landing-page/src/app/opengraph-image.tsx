@@ -1,3 +1,4 @@
+import { brand, colors } from "@nebutra/brand/metadata";
 import { ImageResponse } from "next/og";
 import { seoContent } from "@/lib/landing-content";
 
@@ -7,8 +8,15 @@ export const alt = seoContent.title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Satori does NOT resolve CSS var() — all colors must be explicit hex/rgba values
+// sourced from @nebutra/brand/metadata colors object.
+const BG = colors.neutral["950"]; // "#020617"
+const GLOW_A = `rgba(0,51,254,0.28)`; // colors.primary["500"] at 28% opacity
+const GLOW_B = `rgba(11,241,195,0.22)`; // colors.accent["500"] at 22% opacity
+const GRID = "rgba(255,255,255,0.04)";
+
 const socialHeadline = "Ship your Startup,";
-const socialSubheadline = "powered by Nebutra Agent OS.";
+const socialSubheadline = `powered by ${brand.name} Agent OS.`;
 
 export default async function Image() {
   return new ImageResponse(
@@ -20,17 +28,15 @@ export default async function Image() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#020617",
-        backgroundImage:
-          "radial-gradient(ellipse 80% 50% at 50% 42%, rgba(0,51,254,0.28) 0%, transparent 72%), radial-gradient(ellipse 60% 40% at 72% 70%, rgba(11,241,195,0.22) 0%, transparent 75%)",
+        backgroundColor: BG,
+        backgroundImage: `radial-gradient(ellipse 80% 50% at 50% 42%, ${GLOW_A} 0%, transparent 72%), radial-gradient(ellipse 60% 40% at 72% 70%, ${GLOW_B} 0%, transparent 75%)`,
       }}
     >
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)",
+          backgroundImage: `linear-gradient(${GRID} 1px, transparent 1px), linear-gradient(90deg, ${GRID} 1px, transparent 1px)`,
           backgroundSize: "56px 56px",
         }}
       />
@@ -44,7 +50,7 @@ export default async function Image() {
           marginBottom: 22,
         }}
       >
-        Nebutra Sailor
+        {brand.name} Sailor
       </span>
 
       <span

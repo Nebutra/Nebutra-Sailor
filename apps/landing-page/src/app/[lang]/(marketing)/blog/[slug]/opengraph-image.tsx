@@ -1,4 +1,5 @@
 import { resolveBlogCover, toBlogLanguage } from "@nebutra/blog";
+import { brand } from "@nebutra/brand/metadata";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { ImageResponse } from "next/og";
 import { hasLocale } from "next-intl";
@@ -8,7 +9,7 @@ import { getSiteUrl } from "@/lib/seo/site-routes";
 
 type Params = { lang: string; slug: string };
 
-export const alt = "Nebutra Blog";
+export const alt = `${brand.name} Blog`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -90,7 +91,7 @@ export default async function Image({ params }: { params: Promise<Params> }) {
                 textTransform: "uppercase",
               }}
             >
-              Nebutra Originals
+              {brand.name} Originals
             </div>
             <div
               style={{
@@ -100,7 +101,7 @@ export default async function Image({ params }: { params: Promise<Params> }) {
                 marginTop: 34,
               }}
             >
-              {post?.title ?? "Nebutra Blog"}
+              {post?.title ?? `${brand.name} Blog`}
             </div>
             {post?.excerpt && (
               <div
@@ -127,7 +128,7 @@ export default async function Image({ params }: { params: Promise<Params> }) {
             }}
           >
             <span>{isZh ? "面向 AI SaaS 的工程笔记" : "Engineering notes for AI SaaS"}</span>
-            <span>nebutra.com</span>
+            <span>{brand.domains.landing}</span>
           </div>
         </div>
       </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { brand } from "../metadata";
+
 export type LogoVariant =
   | "color"
   | "inverse"
@@ -135,7 +137,7 @@ export function Logo({
   return (
     <img
       src={src}
-      alt="Nebutra"
+      alt={brand.name}
       width={size}
       height={height}
       className={className}
@@ -176,7 +178,7 @@ export function Logomark({
   return (
     <img
       src={src}
-      alt="Nebutra"
+      alt={brand.name}
       width={size}
       height={size}
       className={className}
@@ -213,7 +215,7 @@ export function Wordmark({
   return (
     <img
       src={src}
-      alt="Nebutra"
+      alt={brand.name}
       width={size}
       height={height}
       className={className}

@@ -11,6 +11,7 @@ import { execFileSync } from "node:child_process";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
+import { generateFavicons } from "../packages/design/brand/scripts/generate-favicons";
 import { type BrandColorPalette, type BrandConfig, DEFAULT_BRAND } from "./brand-types";
 
 // `import.meta.dirname` is unset under tsx CJS transform on Node 25.
@@ -655,6 +656,11 @@ async function main() {
 
   // Apply changes
   copyCustomAssets(config);
+  // Phase 5: generate favicon set from logo-inverse.svg after copyCustomAssets
+  // has had a chance to copy operator-supplied SVGs into brand/assets/.
+  const brandAssetsDir = path.join(ROOT, "packages", "design", "brand", "assets");
+  logStep("Generating favicon set from logo-inverse.svg");
+  await generateFavicons(brandAssetsDir);
   updateBrandMetadata(config);
   // Phase 1: derive + write core.json from DEFAULT_BRAND.colors, then
   // trigger the Style Dictionary build so styles.css regenerates.
