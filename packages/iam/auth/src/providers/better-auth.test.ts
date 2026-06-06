@@ -22,6 +22,7 @@ import {
   createBetterAuthProvider,
   loadBetterAuthOneTapPlugin,
   resolveBetterAuthPrismaClient,
+  resolveBetterAuthTrustedOrigins,
 } from "./better-auth";
 
 const ORIGINAL_ENV = { ...process.env };
@@ -94,6 +95,37 @@ describe("createBetterAuthProvider conditional social providers", () => {
     process.env.GITHUB_CLIENT_ID = "test-id";
     process.env.GITHUB_CLIENT_SECRET = "test-secret";
     expect(() => createBetterAuthProvider({ provider: "better-auth" })).not.toThrow();
+  });
+});
+
+describe("Better Auth trusted origins (cross-origin One Tap / OAuth)", () => {
+  beforeEach(() => {
+    for (const key of [
+      "BETTER_AUTH_URL",
+      "NEXT_PUBLIC_SITE_URL",
+      "NEXT_PUBLIC_APP_URL",
+      "NEBUTRA_LANDING_ORIGIN",
+      "BETTER_AUTH_TRUSTED_ORIGINS",
+    ]) {
+      delete process.env[key];
+    }
+  });
+
+  it("returns [] when no cross-origin env is configured (keeps BA single-origin default)", () => {
+    expect(resolveBetterAuthTrustedOrigins()).toEqual([]);
+  });
+
+  it("collects, trims, and dedupes first-party origins so the landing One Tap is trusted", () => {
+    process.env.BETTER_AUTH_URL = "https://app.nebutra.com";
+    process.env.NEXT_PUBLIC_SITE_URL = "https://nebutra.com";
+    process.env.NEXT_PUBLIC_APP_URL = "https://app.nebutra.com"; // duplicate of BETTER_AUTH_URL
+    process.env.BETTER_AUTH_TRUSTED_ORIGINS = " https://staging.nebutra.com , ";
+
+    expect(resolveBetterAuthTrustedOrigins()).toEqual([
+      "https://app.nebutra.com",
+      "https://nebutra.com",
+      "https://staging.nebutra.com",
+    ]);
   });
 });
 

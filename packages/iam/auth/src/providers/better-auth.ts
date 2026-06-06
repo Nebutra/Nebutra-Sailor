@@ -13,6 +13,10 @@
  * Environment variables:
  * - BETTER_AUTH_SECRET (required)
  * - BETTER_AUTH_URL (optional, base URL for auth endpoints)
+ * - BETTER_AUTH_TRUSTED_ORIGINS (optional, comma-separated extra origins trusted
+ *   for cross-origin auth; NEXT_PUBLIC_SITE_URL / NEXT_PUBLIC_APP_URL /
+ *   NEBUTRA_LANDING_ORIGIN are also trusted — needed for the landing-page Google
+ *   One Tap that posts cross-origin to the app's /api/auth)
  * - GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET (optional, enables Google OAuth)
  * - GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET (optional, enables GitHub OAuth)
  * - APPLE_CLIENT_ID / APPLE_CLIENT_SECRET (optional, enables Sign in with Apple — App Store compliance for SaaS apps that ship Google/Facebook login)
@@ -42,6 +46,7 @@ import { buildPasskeysCapability } from "./better-auth/passkey";
 import { loadBetterAuthOneTapPlugin, loadOptionalPlugin } from "./better-auth/plugin-loaders";
 import { resolveBetterAuthPrismaClient } from "./better-auth/prisma";
 import { buildTwoFactorCapability } from "./better-auth/totp";
+import { resolveBetterAuthTrustedOrigins } from "./better-auth/trusted-origins";
 import type { BetterAuthApi } from "./better-auth/types";
 
 // ─── Re-exports: keep the historical `providers/better-auth` public surface ──
@@ -59,6 +64,7 @@ export { buildPasskeysCapability } from "./better-auth/passkey";
 export { loadBetterAuthOneTapPlugin } from "./better-auth/plugin-loaders";
 export { resolveBetterAuthPrismaClient } from "./better-auth/prisma";
 export { buildTwoFactorCapability } from "./better-auth/totp";
+export { resolveBetterAuthTrustedOrigins } from "./better-auth/trusted-origins";
 
 /**
  * Create a Better Auth provider instance.
@@ -113,6 +119,15 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         "Set GOOGLE_CLIENT_ID/SECRET, GITHUB_CLIENT_ID/SECRET, APPLE_CLIENT_ID/SECRET, or MICROSOFT_CLIENT_ID/SECRET to enable social login.",
     );
   }
+
+  // ── Cross-origin trust ──
+  // First-party surfaces sign in against this auth instance from a DIFFERENT
+  // origin than baseURL — e.g. the marketing site (nebutra.com) mounts Google
+  // One Tap that posts the credential to the app's /api/auth (app.nebutra.com).
+  // Better Auth rejects any state-changing request whose Origin isn't trusted,
+  // so without this the cross-origin One Tap / OAuth flow silently 403s. The
+  // option is omitted when empty so a single-origin deploy keeps BA's default.
+  const trustedOrigins = resolveBetterAuthTrustedOrigins();
 
   // ── Lazy auth instance ──
   // We defer creation until first use so that import-time errors are avoided
@@ -259,6 +274,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     const auth = betterAuth({
       secret,
       baseURL: process.env.BETTER_AUTH_URL,
+      ...(trustedOrigins.length > 0 ? { trustedOrigins } : {}),
       emailAndPassword: { enabled: true },
       socialProviders,
       database: prismaAdapter(
