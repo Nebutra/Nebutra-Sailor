@@ -272,6 +272,12 @@ jobs:
       - name: i18n integrity (landing-page locales)
         run: pnpm --filter @nebutra/landing-page check:i18n
 
+      # ── Brand-literal governance lint ────────────────────────────────────
+      # Shrink-only ratchet: flags raw brand literals in governed app code.
+      # New literals fail immediately; allowlisted files migrate on-touch.
+      - name: Brand-literal governance lint
+        run: node scripts/lint-brand-literals.mjs
+
   # ── Python services — lint + test (matrix, parallel) ──────────────────────
   python-ci:
     name: Python CI (${{ matrix.service }})

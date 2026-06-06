@@ -26,6 +26,7 @@ import type { NebutraConfig } from "./config";
 
 const RAW_INPUTS_CMD = "node scripts/governance/lint-no-raw-inputs.mjs";
 const REPOSITORY_SEAM_CMD = "node scripts/governance/lint-repository-seam.mjs";
+const BRAND_LITERALS_CMD = "node scripts/governance/lint-brand-literals.mjs";
 
 // All command fragments this util manages. Any inherited reference to one of
 // these (or to the monorepo's own path-hardcoded scripts/lint-*.mjs, which are
@@ -96,6 +97,39 @@ const REPOSITORY_SEAM_DEFAULTS = {
   ] as string[],
 };
 
+// Brand-literal ratchet defaults. Always-on — scaffolded projects enforce
+// single-source brand identity from day one. The allowlist starts empty:
+// a fresh scaffold has zero brand debt (no pre-seeded raw brand literals).
+// Operators who add brand identity to their apps must import from the
+// brand package rather than hardcoding strings.
+const BRAND_LITERALS_DEFAULTS = {
+  governedPaths: ["apps", "packages/commerce", "packages/integrations/email"],
+  allowExpressions: [
+    "Nebutra",
+    "云毓智能",
+    "云毓",
+    "nebutra\\.com",
+    "nebutra\\.ai",
+    "#0033FE",
+    "#0BF1C3",
+  ],
+  knownExemptPatterns: [
+    "\\.stories\\.tsx?$",
+    "/__tests__/",
+    "\\.test\\.tsx?$",
+    "/previews/",
+    "^packages/design/brand/",
+    "^packages/design/tokens/",
+    "^packages/design/design-tokens/",
+  ],
+  // SHRINK-ONLY ratchet. Fresh scaffolds start with ZERO brand debt — the
+  // allowlist is intentionally empty. Unlike repositorySeam, no shipped files
+  // legitimately contain raw brand literals at scaffold time (they all
+  // import from @nebutra/brand/metadata). If a downstream project accumulates
+  // legacy literals, they add them here and migrate on-touch.
+  allowlist: [] as string[],
+};
+
 export interface GovernanceLintsResult {
   /** Lint command fragments appended to the package.json "lint" script. */
   lints: string[];
@@ -134,10 +168,12 @@ export async function applyGovernanceLints(
 
   const lints: string[] = [RAW_INPUTS_CMD]; // always
   if (databaseEnabled) lints.push(REPOSITORY_SEAM_CMD);
+  lints.push(BRAND_LITERALS_CMD); // always — enforce single-source brand identity
 
   // -- 2. write governance.config.json with only enabled sections --
   const governanceConfig: Record<string, unknown> = {
     rawInputs: RAW_INPUTS_DEFAULTS,
+    brandLiterals: BRAND_LITERALS_DEFAULTS,
   };
   if (databaseEnabled) {
     governanceConfig.repositorySeam = REPOSITORY_SEAM_DEFAULTS;

@@ -60,6 +60,45 @@ const DEFAULTS = {
     // empty is what makes a configless project treat any bypass as new.
     allowlist: [],
   },
+  brandLiterals: {
+    // Directories scanned for raw brand literals (app code + commerce + email).
+    // Standard scaffold uses apps/ only (no commerce/integrations sub-packages).
+    governedPaths: ["apps", "packages/commerce", "packages/integrations/email"],
+    // Raw brand literal patterns to detect (regex strings). Covers:
+    //   - Product name: Nebutra
+    //   - Chinese brand names: 云毓智能, 云毓
+    //   - Brand domains: nebutra.com, nebutra.ai
+    //   - Brand hex colors: #0033FE (primary), #0BF1C3 (accent)
+    // Use @nebutra/brand metadata + CSS vars instead of these literals.
+    allowExpressions: [
+      "Nebutra",
+      "云毓智能",
+      "云毓",
+      "nebutra\\.com",
+      "nebutra\\.ai",
+      "#0033FE",
+      "#0BF1C3",
+    ],
+    // Path patterns (regex strings) that are permanently exempt from the check.
+    // Stories, tests, previews, and the brand/tokens source packages themselves
+    // are intentionally illustrative or are the source of truth.
+    knownExemptPatterns: [
+      "\\.stories\\.tsx?$",
+      "/__tests__/",
+      "\\.test\\.tsx?$",
+      "/previews/",
+      "^packages/design/brand/",
+      "^packages/design/tokens/",
+      "^packages/design/design-tokens/",
+    ],
+    // Files that currently contain raw brand literals. SHRINK-ONLY ratchet.
+    //
+    // Default is EMPTY: fresh scaffolds start with zero brand debt. The monorepo's
+    // own governance.config.json seeds this with the actual remaining offender set
+    // (migrated on-touch). Keeping this empty ensures new scaffolds enforce
+    // single-source brand identity from day one.
+    allowlist: [],
+  },
 };
 
 const isPlainObject = (value) =>
@@ -90,6 +129,7 @@ try {
 export const config = {
   rawInputs: mergeSection(DEFAULTS.rawInputs, fileConfig.rawInputs),
   repositorySeam: mergeSection(DEFAULTS.repositorySeam, fileConfig.repositorySeam),
+  brandLiterals: mergeSection(DEFAULTS.brandLiterals, fileConfig.brandLiterals),
 };
 
 export { DEFAULTS };
