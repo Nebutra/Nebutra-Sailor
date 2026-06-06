@@ -4,6 +4,7 @@ import { EmptyState } from "@nebutra/ui/layout";
 import { Button, Field, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { CompanyTower } from "@/components/startup-os/company-tower";
 import { ensureTower } from "@/lib/startup-os/company-context/migrate";
@@ -55,6 +56,7 @@ function draftToValue(draft: string, kind: string): unknown {
 }
 
 export default function CompanyContextPage() {
+  const t = useTranslations("startupOs");
   const pathname = usePathname();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
 
@@ -129,13 +131,13 @@ export default function CompanyContextPage() {
       });
       const body = (await res.json()) as { context?: CompanyContext; error?: string };
       if (!res.ok || !body.context) {
-        setError(body.error ?? "Failed to save.");
+        setError(body.error ?? t("company.notice.saveFailed"));
         return;
       }
       setContext(body.context);
       closeEditor();
     } catch {
-      setError("Failed to save.");
+      setError(t("company.notice.saveFailed"));
     } finally {
       setSaving(false);
     }
@@ -161,16 +163,16 @@ export default function CompanyContextPage() {
           error?: string;
         };
         if (body.needsProvider) {
-          setNotice("Connect an AI provider key to auto-fill fields.");
+          setNotice(t("company.notice.needsProvider"));
           return;
         }
         if (!res.ok || !body.context) {
-          setNotice(body.error ?? "Generate failed.");
+          setNotice(body.error ?? t("company.notice.generateFailed"));
           return;
         }
         setContext(body.context);
       } catch {
-        setNotice("Generate failed.");
+        setNotice(t("company.notice.generateFailed"));
       }
     },
     [projectId],
@@ -196,14 +198,14 @@ export default function CompanyContextPage() {
         </>
       ) : (
         <EmptyState
-          title="No company yet"
-          description="Compile a company in Startup OS to see and edit its context tower."
+          title={t("company.emptyTitle")}
+          description={t("company.emptyDescription")}
           action={
             <Link
               href={`/${locale}/startup-os`}
               className="inline-flex items-center rounded-full bg-neutral-12 px-4 py-2 text-sm font-semibold text-neutral-1 dark:text-neutral-12"
             >
-              Open Startup OS
+              {t("company.action.open")}
             </Link>
           }
         />
@@ -235,7 +237,7 @@ export default function CompanyContextPage() {
                 onClick={closeEditor}
                 disabled={saving}
               >
-                Cancel
+                {t("company.action.cancel")}
               </Button>
               <Button
                 type="button"
@@ -246,7 +248,7 @@ export default function CompanyContextPage() {
                 className="border-0 text-white"
                 style={{ background: "var(--brand-gradient)" }}
               >
-                {saving ? "Saving…" : "Save"}
+                {saving ? t("company.action.saving") : t("company.action.save")}
               </Button>
             </div>
           </div>

@@ -1170,6 +1170,43 @@
       "echo": "它终于离开了 localhost。"
     },
     "onboarding": "你不需要准备完美，先给它一个开始。",
-    "graduation": "你出师了。试试 {tool}，它能让你的团队走得更远。"
+    "graduation": "你出师了。试试 {tool}，它能让你的团队走得更远。",
+    "company": {
+      "emptyTitle": "第一座塔，从这里开始搭。",
+      "emptyDescription": "在 Startup OS 中编译一家公司，就能在这里查看和编辑它的上下文塔。",
+      "emptyAction": "打开 Startup OS",
+      "notice": {
+        "needsProvider": "绑定一个 AI 供应商密钥，字段才能自动填充。",
+        "generateFailed": "这次生成没有完成。",
+        "saveFailed": "这次修改没有保存。"
+      },
+      "action": {
+        "save": "保存",
+        "saving": "保存中…",
+        "cancel": "取消",
+        "open": "打开 Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "还没有押注。",
+      "noRuns": "没有正在运行的任务。"
+    },
+    "fileTree": {
+      "empty": "这个项目还没有文件。"
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "工作空间正在同步。",
+      "emptyDescription": "邀请可能还在同步中，刷新页面或新建一个独立的工作空间。"
+    },
+    "billing": {
+      "emptyTitle": "先创建一个工作空间。",
+      "emptyDescription": "计费操作需要一个有效的工作空间，创建后再回来处理订阅。"
+    },
+    "default": {
+      "emptyTitle": "第一个工作空间从这里开始。",
+      "emptyDescription": "创建一个工作空间以继续。"
+    }
   }
 }

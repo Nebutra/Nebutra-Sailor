@@ -275,9 +275,7 @@
       "apps/web/src/app/[locale]/(app)/integrations/page.tsx",
       "apps/web/src/app/[locale]/(app)/settings/api-keys/ApiKeyList.tsx",
       "apps/web/src/app/[locale]/(app)/settings/team/TeamMemberList.tsx",
-      "apps/web/src/app/[locale]/(app)/startup-os/company/page.tsx",
       "apps/web/src/app/[locale]/(app)/usage/page.tsx",
-      "apps/web/src/app/[locale]/select-org/journey-state.ts",
       "apps/web/src/components/admin/access-invite-issuer.tsx",
       "apps/web/src/components/api-keys/api-keys-list.tsx",
       "apps/web/src/components/charts/GrowthAreaChart.tsx",
@@ -286,8 +284,6 @@
       "apps/web/src/components/notifications/notification-center.tsx",
       "apps/web/src/components/notifications/notification-inbox-preview.tsx",
       "apps/web/src/components/notifications/notifications-dialog.tsx",
-      "apps/web/src/components/startup-os/company-tower/control-deck.tsx",
-      "apps/web/src/components/startup-os/startup-os-file-tree.tsx",
       "apps/web/src/components/webhooks/webhook-deliveries-panel.tsx",
       "apps/web/src/components/webhooks/webhooks-list.tsx"
     ]

@@ -12,6 +12,7 @@ import {
   TreeProvider,
   TreeView,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import type { ComponentType, ReactNode, SVGProps } from "react";
 import type { StartupOSFile } from "@/lib/startup-os/files";
 
@@ -292,11 +293,12 @@ export function StartupOsFileTree({
   treeKey,
   className,
 }: StartupOsFileTreeProps) {
+  const t = useTranslations("startupOs");
   const expandedIds = defaultExpandedIds ?? collectFolderIds(nodes);
   const selectedIds = selectedPath ? [`file:${selectedPath}`] : [];
 
   if (nodes.length === 0) {
-    return <p className="px-3 py-4 text-xs leading-5 text-neutral-9">No files to display yet.</p>;
+    return <p className="px-3 py-4 text-xs leading-5 text-neutral-9">{t("fileTree.empty")}</p>;
   }
 
   return (

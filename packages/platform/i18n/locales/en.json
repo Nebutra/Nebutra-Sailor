@@ -1170,6 +1170,43 @@
       "echo": "It finally left localhost."
     },
     "onboarding": "You don't need to be ready. You need to begin.",
-    "graduation": "You've outgrown the basics. Try {tool} for the road ahead."
+    "graduation": "You've outgrown the basics. Try {tool} for the road ahead.",
+    "company": {
+      "emptyTitle": "The first tower starts here.",
+      "emptyDescription": "Compile a company in Startup OS to see and edit its context tower.",
+      "emptyAction": "Open Startup OS",
+      "notice": {
+        "needsProvider": "Connect an AI provider key to auto-fill fields.",
+        "generateFailed": "The generation did not complete.",
+        "saveFailed": "The change did not save."
+      },
+      "action": {
+        "save": "Save",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "open": "Open Startup OS"
+      }
+    },
+    "execution": {
+      "noBets": "No bets placed.",
+      "noRuns": "No active runs."
+    },
+    "fileTree": {
+      "empty": "The project has no files yet."
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "The workspace is on its way.",
+      "emptyDescription": "The invitation may still be syncing. Refresh this page or create a separate workspace."
+    },
+    "billing": {
+      "emptyTitle": "Create a workspace before billing.",
+      "emptyDescription": "Billing actions need an active workspace. Create one first, then return to billing."
+    },
+    "default": {
+      "emptyTitle": "The first workspace begins here.",
+      "emptyDescription": "Create a workspace to continue."
+    }
   }
 }

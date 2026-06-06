@@ -5,6 +5,7 @@ import { Button } from "@nebutra/ui/components";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { queryKeys } from "@/lib/query-keys";
 import { resolveSelectOrgJourneyCopy, type SelectOrgSearchParams } from "./journey-state";
@@ -32,7 +33,10 @@ async function fetchOrganizations(signal?: AbortSignal): Promise<Organization[]>
 export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) {
   const router = useRouter();
   const { organization, setActive } = useOrganization();
+  const tSelectOrg = useTranslations("selectOrg");
   const copy = resolveSelectOrgJourneyCopy(initialJourneyParams);
+  const emptyTitle = tSelectOrg(`${copy.variant}.emptyTitle`);
+  const emptyDescription = tSelectOrg(`${copy.variant}.emptyDescription`);
 
   // Redirect is a navigation side effect, not server cache — keep it in an
   // effect. When an organization is already active there is nothing to choose.
@@ -97,8 +101,8 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
           </div>
         ) : organizations.length === 0 ? (
           <div className="text-center">
-            <h2 className="text-base font-semibold text-neutral-12">{copy.emptyTitle}</h2>
-            <p className="mb-4 mt-2 text-sm text-muted-foreground">{copy.emptyDescription}</p>
+            <h2 className="text-base font-semibold text-neutral-12">{emptyTitle}</h2>
+            <p className="mb-4 mt-2 text-sm text-muted-foreground">{emptyDescription}</p>
             <Link href={copy.emptyActionHref}>
               <Button className="w-full">{copy.emptyActionLabel}</Button>
             </Link>

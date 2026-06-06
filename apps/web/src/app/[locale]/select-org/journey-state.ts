@@ -1,10 +1,17 @@
 export type SelectOrgSearchParams = Record<string, string | string[] | undefined>;
 
+/**
+ * Discriminant that identifies which journey variant the select-org page is in.
+ * Consumers (e.g. select-org-client.tsx) use this to look up the correct
+ * translated empty-state copy from the `selectOrg` i18n namespace.
+ */
+export type SelectOrgJourneyVariant = "invitation" | "billing" | "default";
+
 export interface SelectOrgJourneyCopy {
+  /** i18n variant key — used by the client to resolve translated empty-state strings. */
+  variant: SelectOrgJourneyVariant;
   title: string;
   description: string;
-  emptyTitle: string;
-  emptyDescription: string;
   emptyActionHref: string;
   emptyActionLabel: string;
   createActionLabel: string;
@@ -17,12 +24,10 @@ function firstValue(value: string | string[] | undefined) {
 export function resolveSelectOrgJourneyCopy(params: SelectOrgSearchParams): SelectOrgJourneyCopy {
   if (firstValue(params.invitation) === "accepted" || firstValue(params.invite) === "accepted") {
     return {
+      variant: "invitation",
       title: "Invitation accepted",
       description:
         "Select the workspace you were invited to, or create a new one if it is not listed yet.",
-      emptyTitle: "No invited workspace yet",
-      emptyDescription:
-        "The invitation may still be syncing. You can refresh this page or create a separate workspace.",
       emptyActionHref: "/onboarding",
       emptyActionLabel: "Create a workspace instead",
       createActionLabel: "Create another workspace",
@@ -31,12 +36,10 @@ export function resolveSelectOrgJourneyCopy(params: SelectOrgSearchParams): Sele
 
   if (firstValue(params.from) === "billing") {
     return {
+      variant: "billing",
       title: "Choose a workspace for billing",
       description:
         "Billing changes are scoped to a workspace. Select one to continue managing the subscription.",
-      emptyTitle: "Create a workspace before billing",
-      emptyDescription:
-        "Billing actions need an active workspace. Create one first, then return to billing.",
       emptyActionHref: "/onboarding?next=/billing",
       emptyActionLabel: "Create workspace",
       createActionLabel: "Create new workspace",
@@ -44,10 +47,9 @@ export function resolveSelectOrgJourneyCopy(params: SelectOrgSearchParams): Sele
   }
 
   return {
+    variant: "default",
     title: "Select a workspace",
     description: "Choose a workspace to continue, or create a new one.",
-    emptyTitle: "No workspaces yet",
-    emptyDescription: "No workspaces yet. Create one to get started.",
     emptyActionHref: "/onboarding",
     emptyActionLabel: "Create workspace",
     createActionLabel: "Create new workspace",

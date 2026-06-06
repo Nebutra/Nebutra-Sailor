@@ -11,6 +11,7 @@ import {
   StatusBadge,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import type { ContextLayer, FieldValue } from "@/lib/startup-os/company-context/model";
 
 /**
@@ -163,6 +164,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 function NorthStarRow({ layer }: { layer: ContextLayer }) {
+  const t = useTranslations("startupOs");
   const nsm = asText(fieldValueOf(layer, "nsm"));
   const bets = parseBets(fieldValueOf(layer, "bets"));
 
@@ -179,7 +181,7 @@ function NorthStarRow({ layer }: { layer: ContextLayer }) {
           label="Active bets"
           value={bets.length}
           icon={<ChartActivity aria-hidden="true" />}
-          description={bets.length > 0 ? bets.slice(0, 2).join(" · ") : "No bets placed yet."}
+          description={bets.length > 0 ? bets.slice(0, 2).join(" · ") : t("execution.noBets")}
         />
       </div>
     </div>
@@ -253,12 +255,13 @@ function RoadmapSection({ layer }: { layer: ContextLayer }) {
 }
 
 function LiveRunsSection({ layer }: { layer: ContextLayer }) {
+  const t = useTranslations("startupOs");
   const runs = parseLiveRuns(fieldValueOf(layer, "live_runs"));
   return (
     <section className="flex flex-col gap-2">
       <SectionLabel>Live runs</SectionLabel>
       {runs.length === 0 ? (
-        <p className="text-xs italic text-neutral-9">No active runs.</p>
+        <p className="text-xs italic text-neutral-9">{t("execution.noRuns")}</p>
       ) : (
         <ul className="flex flex-col gap-1.5">
           {runs.map((run) => (
