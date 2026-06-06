@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
+import { notFound } from "next/navigation";
+import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { getLegalDocument } from "@/lib/legal-documents";
 import { LegalDocumentContent, LegalDocumentSkeleton } from "./_components/legal-document-content";
 
 // Known canonical legal documents — enumerated so Next.js 16 cacheComponents
-// can build a finite prerender set instead of trying (and failing) to render
-// the literal `[slug]` placeholder route. Slugs that fall outside this list
-// render dynamically at request time via dynamicParams = true.
+// can build a finite prerender set. Slugs outside this list render on-demand
+// at request time and are cached via PPR — no dynamicParams = true needed
+// (on-demand is the default; the export is forbidden under cacheComponents).
 const KNOWN_LEGAL_SLUGS = [
   "privacy-policy",
   "terms-of-service",
@@ -19,10 +22,8 @@ const KNOWN_LEGAL_SLUGS = [
   "acceptable-use",
 ] as const;
 
-export const dynamicParams = true;
-
 export function generateStaticParams() {
-  return KNOWN_LEGAL_SLUGS.map((slug) => ({ lang: routing.defaultLocale, slug }));
+  return prerenderDefaultLocale([...KNOWN_LEGAL_SLUGS], (slug) => ({ slug }));
 }
 
 interface LegalSlugPageProps {
@@ -72,6 +73,7 @@ export default function LegalSlugPage({ params }: LegalSlugPageProps) {
 
 async function LegalDocumentLoader({ params }: LegalSlugPageProps) {
   const { lang, slug } = await params;
+  if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
   return <LegalDocumentContent slug={slug} lang={lang} />;
 }

@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 
 // Static fallback changelog data — same 8 releases from main changelog page
@@ -252,8 +253,6 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
   );
 }
 
-export const dynamicParams = true;
-
 /**
  * Cached data-fetching helper — inputs are plain strings so Next.js can
  * compute a deterministic cache key. `"use cache"` must NOT be placed at
@@ -321,18 +320,18 @@ async function buildChangelogMetadata(version: string, lang: string): Promise<Me
 }
 
 /**
- * Generate static parameters for the default locale only.
- * Other locales render on-demand and are then cached via PPR.
+ * Pre-build the default locale only. Other locales render on-demand and are
+ * then cached via PPR — `dynamicParams = true` is forbidden under
+ * cacheComponents and also redundant (on-demand is the default).
  */
 export async function generateStaticParams() {
-  // Get versions from CMS via the cached helper, fall back to static data
   const cmsEntries = await fetchChangelogEntries();
   const versions =
     cmsEntries.length > 0
       ? cmsEntries.map((e) => e.version)
       : STATIC_RELEASES.map((r) => r.version);
 
-  return versions.map((version) => ({ lang: routing.defaultLocale, version }));
+  return prerenderDefaultLocale(versions, (version) => ({ version }));
 }
 
 /**

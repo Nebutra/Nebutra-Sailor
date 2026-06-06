@@ -22,6 +22,7 @@ import {
 } from "@/components/landing/features/package-feature-data";
 import { resolveShowcase } from "@/components/landing/features/showcases";
 import { ShowcaseFrame } from "@/components/landing/features/showcases/showcase-frame";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { createPublicDocsUrl } from "@/lib/docs-links";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -72,13 +73,8 @@ function scopeLabel(group: string, locale: "en" | "zh") {
   return COPY.govScopeGlobal[locale];
 }
 
-export const dynamicParams = true;
-
 export function generateStaticParams() {
-  return PACKAGE_FEATURE_ENTRIES.map((entry) => ({
-    lang: routing.defaultLocale,
-    name: entry.slug,
-  }));
+  return prerenderDefaultLocale(PACKAGE_FEATURE_ENTRIES, (entry) => ({ name: entry.slug }));
 }
 
 export async function generateMetadata({ params }: FeatureDetailPageProps): Promise<Metadata> {

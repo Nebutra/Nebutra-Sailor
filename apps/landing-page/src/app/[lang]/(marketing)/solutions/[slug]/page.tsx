@@ -6,6 +6,7 @@ import { FooterMinimal, Navbar } from "@/components/landing";
 import { ChinaVcSolution } from "@/components/landing/solutions/china-vc/ChinaVcSolution";
 import { GlobalVcSolution } from "@/components/landing/solutions/global-vc/GlobalVcSolution";
 import { SolutionPage } from "@/components/landing/solutions/SolutionPage";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { getAllSolutionSlugs, getSolution, pick } from "@/lib/constants/solutions-data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -14,10 +15,8 @@ type SolutionDetailPageProps = {
   params: Promise<{ lang: string; slug: string }>;
 };
 
-export const dynamicParams = true;
-
 export function generateStaticParams() {
-  return getAllSolutionSlugs().map((slug) => ({ lang: routing.defaultLocale, slug }));
+  return prerenderDefaultLocale(getAllSolutionSlugs(), (slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: SolutionDetailPageProps): Promise<Metadata> {
@@ -37,6 +36,7 @@ export async function generateMetadata({ params }: SolutionDetailPageProps): Pro
 
 export default async function SolutionDetailPage({ params }: SolutionDetailPageProps) {
   const { lang, slug } = await params;
+  if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
   const solution = getSolution(slug);

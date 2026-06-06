@@ -4,6 +4,7 @@ import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { VcProfile } from "@/components/landing/solutions/vc/VcProfile";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { GLOBAL_VC_ORGS, getGlobalVc, globalVcLogoFor } from "@/lib/constants/global-vc";
 import { similarVcs } from "@/lib/constants/vc";
@@ -11,10 +12,8 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ lang: string; id: string }> };
 
-export const dynamicParams = true;
-
 export function generateStaticParams() {
-  return GLOBAL_VC_ORGS.map((o) => ({ lang: routing.defaultLocale, id: String(o.id) }));
+  return prerenderDefaultLocale(GLOBAL_VC_ORGS, (o) => ({ id: String(o.id) }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -32,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GlobalVcProfilePage({ params }: Props) {
   const { lang, id } = await params;
+  if (!hasLocale(routing.locales, lang)) notFound();
   setRequestLocale(lang as Locale);
 
   const raw = getGlobalVc(Number(id));
