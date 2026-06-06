@@ -5,8 +5,10 @@ export default defineConfig({
     projects: [
       // Apps
       "apps/*/vitest.config.ts",
-      // Packages
+      // Packages (top-level)
       "packages/*/vitest.config.ts",
+      // Packages (two-level deep, e.g. packages/design/brand)
+      "packages/*/*/vitest.config.ts",
     ],
   },
 });
