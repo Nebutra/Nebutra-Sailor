@@ -1,4 +1,5 @@
 import type { Organization, Plan, PrismaClient } from "@nebutra/db";
+import { getSystemDb } from "@nebutra/db";
 import type { CursorPaginationParams, CursorPaginationResult } from "./pagination";
 import { normalizePaginationParams } from "./pagination";
 
@@ -80,4 +81,32 @@ export class OrganizationRepository {
   async deleteByClerkId(clerkId: string): Promise<void> {
     await this.prisma.organization.delete({ where: { clerkId } });
   }
+
+  /**
+   * Returns the raw storage key for the organization's logo, or null if the
+   * organization does not exist or has no logo set.
+   *
+   * The caller is responsible for resolving the key to a public URL via
+   * `resolveLogoUrl`. This method is intended for gateway callers only;
+   * apps/web routes use `db` from `@/lib/db` directly.
+   *
+   * AUDIT(no-tenant): organization logo is a system-scope read — no RLS
+   * filter is applied. The caller (gateway) authorizes the request before
+   * invoking this method.
+   */
+  async findLogoKey(id: string): Promise<string | null> {
+    const org = await this.prisma.organization.findUnique({
+      where: { id },
+      select: { logo: true },
+    });
+    return org?.logo ?? null;
+  }
+}
+
+/**
+ * Factory for gateway callers. Uses `getSystemDb()` (no tenant filter).
+ * The caller owns the AUDIT(no-tenant) justification.
+ */
+export function getOrganizationRepository(): OrganizationRepository {
+  return new OrganizationRepository(getSystemDb());
 }

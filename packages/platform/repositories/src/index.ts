@@ -19,20 +19,12 @@ export {
   AutomationRunRepository,
   getAutomationRunRepository,
 } from "./automation-run.repository";
-// Workflows
-export type { CreateWorkflowData, UpdateWorkflowData } from "./workflow.repository";
-export { getWorkflowRepository, WorkflowRepository } from "./workflow.repository";
-export type {
-  FinishWorkflowRunData,
-  StartWorkflowRunData,
-} from "./workflow-run.repository";
-export { getWorkflowRunRepository, WorkflowRunRepository } from "./workflow-run.repository";
 export type {
   CreateOrganizationData,
   UpdateOrganizationData,
 } from "./organization.repository";
 // Organization
-export { OrganizationRepository } from "./organization.repository";
+export { getOrganizationRepository, OrganizationRepository } from "./organization.repository";
 export type { UpsertMemberData } from "./organization-member.repository";
 // OrganizationMember
 export { OrganizationMemberRepository } from "./organization-member.repository";
@@ -67,3 +59,11 @@ export type {
 } from "./webhook-event.repository";
 // WebhookEvent
 export { WebhookEventRepository } from "./webhook-event.repository";
+// Workflows
+export type { CreateWorkflowData, UpdateWorkflowData } from "./workflow.repository";
+export { getWorkflowRepository, WorkflowRepository } from "./workflow.repository";
+export type {
+  FinishWorkflowRunData,
+  StartWorkflowRunData,
+} from "./workflow-run.repository";
+export { getWorkflowRunRepository, WorkflowRunRepository } from "./workflow-run.repository";
