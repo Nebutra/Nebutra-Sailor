@@ -28,7 +28,7 @@
   },
   "hero": {
     "headline1": "Ship your Startup,",
-    "headline2": "powered by Nebutra Agent OS.",
+    "headline2": "powered by {brandName} Agent OS.",
     "subheadline": "Skip weeks of platform work on a <highlight>production-ready</highlight> foundation with <highlight>governed architecture</highlight>, built for <highlight>AI coding agents & founders</highlight> going global.",
     "copyLabel": "Copy Command",
     "copiedLabel": "Copied",
@@ -59,7 +59,7 @@
     "startBuilding": "Start Building"
   },
   "footer": {
-    "brandDescription": "Ship your Startup with Nebutra Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
+    "brandDescription": "Ship your Startup with {brandName} Agent OS. Multi-tenancy, billing, auth, and AI — production-ready from day one.",
     "columns": {
       "product": "Product",
       "resources": "Resources",
@@ -93,7 +93,7 @@
       "discord": "Discord",
       "twitter": "X (Twitter)"
     },
-    "copyright": "© 2026 Nebutra Intelligence. All rights reserved.",
+    "copyright": "© 2026 {brandName} Intelligence. All rights reserved.",
     "statusOnline": "All systems operational",
     "newsletterTitle": "Stay up to date",
     "newsletterPlaceholder": "you@example.com",
@@ -128,11 +128,11 @@
   "legalPages": {
     "about": {
       "title": "About Us — The Governed AI Platform",
-      "description": "Discover the commercial vision and engineering principles behind Nebutra's governed AI platform.",
+      "description": "Discover the commercial vision and engineering principles behind {brandName}'s governed AI platform.",
       "heading": "The Era of Lean Product Teams",
       "subheading": "Replace repeated platform work with governed infrastructure, strong automation, and durable engineering leverage.",
       "missionTitle": "A New Order Resisting Administrative Decay",
-      "missionP1": "Nebutra is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
+      "missionP1": "{brandName} is building a governed AI platform for teams that need durable infrastructure instead of short-lived starter stacks. Traditional scale often comes with bureaucracy and entropy; we respond with code governance, automation, and a platform baseline that stays auditable as it grows.",
       "missionP2": "Commerce still suffers from coordination overhead, fragmented tooling, and weak upgrade paths. We care about reducing those frictions through clearer platform contracts, stronger delivery primitives, and runtime behavior teams can actually observe and trust.",
       "missionP3": "We reject the habit of solving scale problems with more organizational drag. Automation, tests, and governance should absorb repeated operational work so teams can stay focused on product, architecture, and customer outcomes.",
       "missionP4": "",
@@ -170,7 +170,7 @@
       "ctaButton": "Establish Contact"
     },
     "contact": {
-      "title": "Technical & Commercial Inquiry — Nebutra Intelligence",
+      "title": "Technical & Commercial Inquiry — {brandName} Intelligence",
       "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
       "heading": "Establish Support Connection",
       "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
@@ -228,14 +228,14 @@
         "successMessage": "Data transmitted successfully. The responsible operational team will issue a detailed response within 1-2 standard business days."
       },
       "companyInfoTitle": "Operational Telemetry",
-      "companyNameChinese": "无锡云毓智能科技有限公司",
-      "companyNameEnglish": "Wuxi Nebutra Intelligence Technology Co., Ltd.",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
       "companyAddress": "Wuxi, Jiangsu Province, China",
       "socialMedia": "Primary Network Links"
     },
     "cookies": {
-      "title": "Cookie Policy — Nebutra",
-      "description": "How Nebutra uses cookies and similar tracking technologies on our website and services.",
+      "title": "Cookie Policy — {brandName}",
+      "description": "How {brandName} uses cookies and similar tracking technologies on our website and services.",
       "heading": "Cookie Policy",
       "effectiveDate": "Effective Date",
       "lastUpdated": "Last Updated",
@@ -243,7 +243,7 @@
         "effective": "January 1, 2025",
         "updated": "January 1, 2025"
       },
-      "intro": "This Cookie Policy explains how Nebutra Co., Ltd. (\"Nebutra,\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
+      "intro": "This Cookie Policy explains how {brandName} Co., Ltd. (\"{brandName},\" \"we,\" \"us,\" or \"our\") uses cookies and similar tracking technologies on our website and services.",
       "whatAreCookies": {
         "title": "What Are Cookies?",
         "content": "Cookies are small text files placed on your device when you visit a website. They are widely used to make websites work more efficiently and provide information to website owners."
@@ -287,7 +287,7 @@
         "cookies": {
           "0": {
             "name": "__session",
-            "provider": "Nebutra",
+            "provider": "{brandName}",
             "purpose": "User authentication session",
             "duration": "Session"
           },
@@ -299,7 +299,7 @@
           },
           "2": {
             "name": "cookie_consent",
-            "provider": "Nebutra",
+            "provider": "{brandName}",
             "purpose": "Stores cookie consent preferences",
             "duration": "1 year"
           }
@@ -311,13 +311,13 @@
         "cookies": {
           "0": {
             "name": "locale",
-            "provider": "Nebutra",
+            "provider": "{brandName}",
             "purpose": "Stores language preference",
             "duration": "1 year"
           },
           "1": {
             "name": "theme",
-            "provider": "Nebutra",
+            "provider": "{brandName}",
             "purpose": "Stores theme preference",
             "duration": "1 year"
           }
@@ -428,13 +428,13 @@
       "contactUs": {
         "title": "Contact Us",
         "intro": "If you have questions about our use of cookies, please contact us:",
-        "company": "Nebutra Co., Ltd.",
+        "company": "{brandName} Co., Ltd.",
         "privacyNote": "For more information about how we collect and process your data, please see our",
         "privacyLink": "Privacy Policy"
       }
     },
     "faq": {
-      "title": "Engineering Guidance & FAQ — Nebutra",
+      "title": "Engineering Guidance & FAQ — {brandName}",
       "description": "Comprehensive analysis of framework architecture, baseline topologies, and commercial deployment strategies.",
       "heading": "Executive Deep Dive",
       "subheading": "Supporting material optimized for systems engineering integration and executive commercial decision-making.",
@@ -443,8 +443,8 @@
           "name": "Architectural Overview",
           "questions": {
             "0": {
-              "q": "What is the explicit operational purpose of Nebutra Sailor?",
-              "a": "Nebutra Sailor is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
+              "q": "What is the explicit operational purpose of {productName}?",
+              "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
             },
             "1": {
               "q": "How is the repository licensing structured?",
@@ -527,7 +527,7 @@
       "ctaEmail": "Transmit Direct Message"
     },
     "privacy": {
-      "title": "Privacy & Information Defense Protocol — Nebutra",
+      "title": "Privacy & Information Defense Protocol — {brandName}",
       "description": "Extensively documenting precisely how the infrastructure mechanics govern user autonomy and machine data isolation.",
       "heading": "Information Protection Directives",
       "effectiveDate": "Effective Date",
@@ -536,7 +536,7 @@
         "effective": "January 1, 2025",
         "updated": "January 1, 2025"
       },
-      "intro": "At Nebutra (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
+      "intro": "At {brandName} (\"Company,\" \"we,\" \"us,\" or \"our\"), we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website, applications, and services (collectively, the \"Services\").",
       "infoWeCollect": {
         "title": "1. Information We Collect",
         "youProvide": {
@@ -724,11 +724,11 @@
       "contactUs": {
         "title": "8. Contact Us",
         "intro": "If you have questions about this Privacy Policy, please contact us:",
-        "company": "Nebutra Co., Ltd."
+        "company": "{brandName} Co., Ltd."
       }
     },
     "refund": {
-      "title": "Transaction Anomaly Protocols — Nebutra",
+      "title": "Transaction Anomaly Protocols — {brandName}",
       "description": "Rigorous delineation regarding exact capital rollback parameters across diverse structural engagement models.",
       "heading": "Dispute Execution Framework",
       "effectiveDate": "Enforcement Implementation Date",
@@ -737,7 +737,7 @@
         "effective": "January 1, 2025",
         "updated": "January 1, 2025"
       },
-      "intro": "At Nebutra, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
+      "intro": "At {brandName}, we want you to be completely satisfied with our services. This Refund Policy outlines the circumstances under which refunds are available and the process for requesting them.",
       "subscriptionPlans": {
         "title": "Subscription Plans",
         "monthly": {
@@ -906,19 +906,19 @@
       "contactUs": {
         "title": "Contact Us",
         "intro": "For refund requests or questions about this policy:",
-        "company": "Nebutra Co., Ltd.",
+        "company": "{brandName} Co., Ltd.",
         "billingLabel": "Billing",
         "supportLabel": "Support",
         "legalLabel": "Legal",
         "responseNote": "We aim to respond to all refund requests within 5 business days.",
         "termsNote": "This policy is part of our",
         "termsLink": "Terms of Service",
-        "termsAgreement": "By using Nebutra, you agree to these refund terms."
+        "termsAgreement": "By using {brandName}, you agree to these refund terms."
       }
     },
     "terms": {
-      "title": "Terms of Service — Nebutra",
-      "description": "The Terms of Service governing your access to and use of Nebutra's website, applications, APIs, and services.",
+      "title": "Terms of Service — {brandName}",
+      "description": "The Terms of Service governing your access to and use of {brandName}'s website, applications, APIs, and services.",
       "heading": "Terms of Service",
       "effectiveDate": "Effective Date",
       "lastUpdated": "Last Updated",
@@ -926,7 +926,7 @@
         "effective": "January 1, 2025",
         "updated": "January 1, 2025"
       },
-      "intro1": "Welcome to Nebutra! These Terms of Service (\"Terms\") govern your access to and use of Nebutra's website, applications, APIs, and services (collectively, the \"Services\") provided by Nebutra Co., Ltd. (\"Nebutra,\" \"Company,\" \"we,\" \"us,\" or \"our\").",
+      "intro1": "Welcome to {brandName}! These Terms of Service (\"Terms\") govern your access to and use of {brandName}'s website, applications, APIs, and services (collectively, the \"Services\") provided by {brandName} Co., Ltd. (\"{brandName},\" \"Company,\" \"we,\" \"us,\" or \"our\").",
       "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
       "intro2PrivacyLink": "Privacy Policy",
       "intro2End": ". If you do not agree to these Terms, do not use our Services.",
@@ -948,7 +948,7 @@
       },
       "services": {
         "title": "2. Description of Services",
-        "intro": "Nebutra provides a SaaS platform that includes:",
+        "intro": "{brandName} provides a SaaS platform that includes:",
         "items": {
           "0": "AI-powered features and content generation",
           "1": "Content management and community tools",
@@ -1008,7 +1008,7 @@
         "title": "6. Intellectual Property",
         "ours": {
           "title": "6.1 Our Intellectual Property",
-          "content": "Nebutra and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
+          "content": "{brandName} and its licensors own all rights, title, and interest in the Services, including all software, designs, trademarks, and content created by us."
         },
         "yours": {
           "title": "6.2 Your Content",
@@ -1055,22 +1055,22 @@
       "contactUs": {
         "title": "11. Contact Us",
         "intro": "If you have questions about these Terms, please contact us:",
-        "company": "Nebutra Co., Ltd.",
+        "company": "{brandName} Co., Ltd.",
         "emailLabel": "Email",
         "supportLabel": "Support"
       },
-      "acknowledgement": "By using Nebutra, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+      "acknowledgement": "By using {brandName}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
     }
   },
   "metadata": {
-    "title": "Nebutra Agent OS | The Startup Agent OS",
+    "title": "{brandName} Agent OS | The Startup Agent OS",
     "description": "The Startup Agent OS for founders going global. Production-ready Next.js foundation with governed architecture, auth, billing, agents, and i18n — built for AI coding agents and serious teams."
   },
   "microLanding": {
     "architecture": {
       "badge": "SYSTEM TOPOLOGY",
       "title": "Transparent architecture, no black boxes.",
-      "description": "Nebutra Sailor is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
+      "description": "{productName} is engineered with a hyper-modular Turborepo structure, giving you complete ownership of your entire software lifecycle.",
       "database": {
         "title": "PostgreSQL + Prisma v7",
         "desc": "Fully typed ORM with Row-Level Security (RLS) policies baked in natively."
@@ -1101,7 +1101,7 @@
         "price": "$799",
         "period": "/ year",
         "desc": "For teams of 2–50 people. Closed-source commercial use, annual renewal.",
-        "cta": "Get Nebutra for Startups",
+        "cta": "Get {brandName} for Startups",
         "f1": "Closed-source use (commercial license, 2–50 FTE)",
         "f2": "Unlimited team projects",
         "f3": "12 months of updates included",
@@ -1137,12 +1137,12 @@
         "q": "Can I use Sailor for client work?",
         "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
       },
-      "contactNudge": "Still have questions? Talk to the Nebutra team →"
+      "contactNudge": "Still have questions? Talk to the {brandName} team →"
     },
     "cta": {
       "eyebrow": "Get Started",
       "title": "Stop configuring. Start building.",
-      "description": "Initialize a scalable SaaS architecture locally with the Nebutra CLI.",
+      "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
       "button": "Deploy Architecture",
       "license": "Open source under AGPL-3.0 license. No credit card required."
     },
@@ -1192,7 +1192,7 @@
       "title": "From zero to production in record time.",
       "step1": {
         "title": "1. Clone",
-        "desc": "Instantly clone the Nebutra monorepo and run pnpm install."
+        "desc": "Instantly clone the {brandName} monorepo and run pnpm install."
       },
       "step2": {
         "title": "2. Configure",
@@ -1233,7 +1233,7 @@
       "badge": "Platform Capabilities",
       "headlinePrefix": "Everything you need to ",
       "headlineHighlight": "ship with confidence.",
-      "description": "Nebutra is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
+      "description": "{brandName} is a full-stack SaaS platform—AI, billing, multi-tenancy, observability, and security baked in from day one. Stop rebuilding the platform layer."
     },
     "sections": {
       "exploreFeature": "Explore feature",
@@ -1320,7 +1320,7 @@
   "useCases": {
     "badge": "SCALABLE SCENARIOS",
     "title": "One foundation. Infinite possibilities.",
-    "description": "Nebutra Sailor powers the next generation of SaaS products across global markets.",
+    "description": "{productName} powers the next generation of SaaS products across global markets.",
     "tabs": {
       "opc": "Agentic Operations",
       "ip": "Personal IP Matrix",
@@ -1416,7 +1416,7 @@
   "notFound": {
     "title": "Page Not Found",
     "desc": "The link may be outdated, or the page may have moved.",
-    "home": "Back to Nebutra",
+    "home": "Back to {brandName}",
     "docs": "Open docs"
   },
   "ui": {
@@ -1439,7 +1439,7 @@
   "licensing": {
     "hero": {
       "title": "Dual <hl>License</hl> Model",
-      "description": "Nebutra-Sailor is open source under AGPL-3.0. We also offer commercial licenses for teams building closed-source products."
+      "description": "{brandName}-Sailor is open source under AGPL-3.0. We also offer commercial licenses for teams building closed-source products."
     },
     "plans": {
       "agpl": {
@@ -1450,7 +1450,7 @@
         "features": {
           "sourceAccess": "Full source code access",
           "mustOpenSource": "Must open-source your product",
-          "mustCredit": "Must credit Nebutra-Sailor",
+          "mustCredit": "Must credit {brandName}-Sailor",
           "communitySupport": "Community support only"
         },
         "cta": "View on GitHub"
@@ -1509,7 +1509,7 @@
       }
     },
     "meta": {
-      "title": "Licensing — Nebutra",
+      "title": "Licensing — {brandName}",
       "description": "Dual license model: AGPL-3.0 open source or commercial licenses."
     }
   },
@@ -1526,21 +1526,21 @@
     }
   },
   "changelogMeta": {
-    "title": "Changelog — Nebutra",
+    "title": "Changelog — {brandName}",
     "description": "Every release, shipped with obsessive attention to detail.",
-    "versionTitleSuffix": "Nebutra Changelog"
+    "versionTitleSuffix": "{brandName} Changelog"
   },
   "roadmapMeta": {
-    "title": "Platform Roadmap — Nebutra",
-    "description": "The roadmap for Nebutra's governed platform baseline, Harness runtime, and upgrade path."
+    "title": "Platform Roadmap — {brandName}",
+    "description": "The roadmap for {brandName}'s governed platform baseline, Harness runtime, and upgrade path."
   },
   "blogMeta": {
-    "title": "Blog — Nebutra",
-    "description": "Engineering insights, product updates, and SaaS best practices from the Nebutra team."
+    "title": "Blog — {brandName}",
+    "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — Nebutra",
-    "description": "Get your Nebutra license and platform access in 2 minutes."
+    "title": "Get Your License — {brandName}",
+    "description": "Get your {brandName} license and platform access in 2 minutes."
   },
   "cookieConsent": {
     "banner": {
@@ -1577,7 +1577,7 @@
       "subtitle": "Everything you need to know before shipping.",
       "items": {
         "what-is-sailor": {
-          "question": "What exactly is Nebutra Sailor?",
+          "question": "What exactly is {productName}?",
           "answer": "Sailor is an opinionated Next.js + Tailwind v4 SaaS foundation with auth, billing, multi-tenancy, AI, queues, search, and email already wired up. You clone it, configure providers, and ship — typically within a week."
         },
         "who-is-it-for": {
@@ -1610,7 +1610,7 @@
         },
         "tech-stack": {
           "question": "What is the tech stack?",
-          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, Nebutra UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
+          "answer": "Next.js 16 (App Router) on React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (with pgvector + RLS), Hono for the BFF gateway, FastAPI for ML/heavy services, and a curated component library on Radix, {brandName} UI primitives, and the shared Motion layer. AI features go through the Vercel AI SDK with provider portability (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
           "question": "What is the license?",

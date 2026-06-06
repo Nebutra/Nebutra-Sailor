@@ -59,7 +59,7 @@
     "startBuilding": "开始使用"
   },
   "footer": {
-    "brandDescription": "用 Nebutra Agent OS 发布你的 Startup。多租户、计费、身份验证及 AI 能力——开箱即用的生产级架构。",
+    "brandDescription": "用 {brandName} Agent OS 发布你的 Startup。多租户、计费、身份验证及 AI 能力——开箱即用的生产级架构。",
     "columns": {
       "product": "产品",
       "resources": "资源",
@@ -93,7 +93,7 @@
       "twitter": "X (Twitter)",
       "licensing": "授权与协议"
     },
-    "copyright": "© 2026 Nebutra Intelligence. 保留所有权利。",
+    "copyright": "© 2026 {brandName} Intelligence. 保留所有权利。",
     "statusOnline": "所有子系统在线运行",
     "newsletterTitle": "保持最新动态",
     "newsletterPlaceholder": "you@example.com",
@@ -128,11 +128,11 @@
   "legalPages": {
     "about": {
       "title": "关于我们 — 受治理的 AI 平台",
-      "description": "了解 Nebutra 围绕受治理 AI 平台所建立的商业判断与工程原则。",
+      "description": "了解 {brandName} 围绕受治理 AI 平台所建立的商业判断与工程原则。",
       "heading": "精干产品团队时代",
       "subheading": "用受治理的平台基础设施、自动化与工程杠杆，替代重复的平台体力劳动。",
       "missionTitle": "抵抗人治腐化的新秩序",
-      "missionP1": "Nebutra 正在构建一套面向长期主义交付的受治理 AI 平台，让团队依赖的不是短生命周期的 starter，而是可审计、可扩展、可持续演进的平台基线。面对规模增长带来的官僚化和熵增，我们选择用代码治理、自动化与平台纪律来回应。",
+      "missionP1": "{brandName} 正在构建一套面向长期主义交付的受治理 AI 平台，让团队依赖的不是短生命周期的 starter，而是可审计、可扩展、可持续演进的平台基线。面对规模增长带来的官僚化和熵增，我们选择用代码治理、自动化与平台纪律来回应。",
       "missionP2": "商业系统今天依然被协作成本、工具割裂和升级路径薄弱所拖累。我们更关心如何通过清晰的平台契约、更稳的交付原语和可观测的运行时，把这些摩擦系统性地降下来。",
       "missionP3": "我们不接受靠增加层级和组织阻力来解决规模问题。自动化、测试与治理规则应该吞掉重复运营工作，让团队把注意力放回产品、架构与客户结果。",
       "missionP4": "",
@@ -170,7 +170,7 @@
       "ctaButton": "建立通讯"
     },
     "contact": {
-      "title": "技术与商务联络 — Nebutra Intelligence",
+      "title": "技术与商务联络 — {brandName} Intelligence",
       "description": "针对商务授权、企业私有化部署以及疑难技术支持的联系通道。",
       "heading": "建立支持联结",
       "subheading": "我们将指派对应的技术专员或架构师跟进您的具体需求。",
@@ -228,14 +228,14 @@
         "successMessage": "数据流转成功。相关的责任团队将会在 1-2 个基准工作日内予以详实答复。"
       },
       "companyInfoTitle": "对外运营资讯",
-      "companyNameChinese": "无锡云毓智能科技有限公司",
-      "companyNameEnglish": "Wuxi Nebutra Intelligence Technology Co., Ltd.",
+      "companyNameChinese": "{companyLegal}",
+      "companyNameEnglish": "{companyLegalEn}",
       "companyAddress": "无锡市，江苏省，中国",
       "socialMedia": "主流社交链路"
     },
     "cookies": {
-      "title": "Cookie 政策 — Nebutra",
-      "description": "Nebutra 如何在网站和服务中使用 Cookie 及类似追踪技术。",
+      "title": "Cookie 政策 — {brandName}",
+      "description": "{brandName} 如何在网站和服务中使用 Cookie 及类似追踪技术。",
       "heading": "Cookie 政策",
       "effectiveDate": "生效日期",
       "lastUpdated": "最后更新",
@@ -243,7 +243,7 @@
         "effective": "2025 年 1 月 1 日",
         "updated": "2025 年 1 月 1 日"
       },
-      "intro": "本 Cookie 政策说明了无锡云毓智能科技有限公司（以下简称「Nebutra」、「我们」或「本公司」）如何在网站和服务中使用 Cookie 及类似追踪技术。",
+      "intro": "本 Cookie 政策说明了{companyLegal}（以下简称「{brandName}」、「我们」或「本公司」）如何在网站和服务中使用 Cookie 及类似追踪技术。",
       "whatAreCookies": {
         "title": "什么是 Cookie？",
         "content": "Cookie 是您访问网站时存放在设备上的小型文本文件。它们被广泛用于提升网站运行效率，并向网站所有者提供访问信息。"
@@ -287,7 +287,7 @@
         "cookies": {
           "0": {
             "name": "__session",
-            "provider": "Nebutra",
+            "provider": "{brandName}",
             "purpose": "用户身份验证会话",
             "duration": "会话期间"
           },
@@ -299,7 +299,7 @@
           },
           "2": {
             "name": "cookie_consent",
-            "provider": "Nebutra",
+            "provider": "{brandName}",
             "purpose": "存储 Cookie 同意偏好",
             "duration": "1 年"
           }
@@ -311,13 +311,13 @@
         "cookies": {
           "0": {
             "name": "locale",
-            "provider": "Nebutra",
+            "provider": "{brandName}",
             "purpose": "存储语言偏好",
             "duration": "1 年"
           },
           "1": {
             "name": "theme",
-            "provider": "Nebutra",
+            "provider": "{brandName}",
             "purpose": "存储主题偏好",
             "duration": "1 年"
           }
@@ -428,13 +428,13 @@
       "contactUs": {
         "title": "联系我们",
         "intro": "如果您对我们使用 Cookie 有任何疑问，请联系我们：",
-        "company": "无锡云毓智能科技有限公司",
+        "company": "{companyLegal}",
         "privacyNote": "如需了解更多关于我们如何收集和处理您的数据的信息，请参阅我们的",
         "privacyLink": "隐私政策"
       }
     },
     "faq": {
-      "title": "技术指导与应用问答 (FAQ) — Nebutra",
+      "title": "技术指导与应用问答 (FAQ) — {brandName}",
       "description": "关于系统框架搭建、技术栈原理和商业实施策略的详细说明与解析。",
       "heading": "执行级深度解析",
       "subheading": "为系统的工程集成和高管商业决策提供有力支撑的资料。",
@@ -443,8 +443,8 @@
           "name": "工程架构综述",
           "questions": {
             "0": {
-              "q": "Nebutra Sailor 准确的业务作用是什么？",
-              "a": "Nebutra Sailor 是一套高度结构化的生产级 Next.js AI SaaS 基础建设框架。它内置整合了包括企业计费、鉴权认证以及多端隔离在内的微服务能力，让研发团队得以摆脱边缘业务开发负担，直达核心 AI 功能变现环节。"
+              "q": "{productName} 准确的业务作用是什么？",
+              "a": "{productName} 是一套高度结构化的生产级 Next.js AI SaaS 基础建设框架。它内置整合了包括企业计费、鉴权认证以及多端隔离在内的微服务能力，让研发团队得以摆脱边缘业务开发负担，直达核心 AI 功能变现环节。"
             },
             "1": {
               "q": "项目本身的授权许可费用如何界定？",
@@ -527,7 +527,7 @@
       "ctaEmail": "投递至专职对接账户"
     },
     "privacy": {
-      "title": "隐私及信息保护协定 — Nebutra",
+      "title": "隐私及信息保护协定 — {brandName}",
       "description": "详尽透明地剖析公司系统基础设施架构在对个人乃至设备机密数据管控的机制。",
       "heading": "信息保护及治理细则",
       "effectiveDate": "生效日期",
@@ -536,7 +536,7 @@
         "effective": "2025 年 1 月 1 日",
         "updated": "2025 年 1 月 1 日"
       },
-      "intro": "无锡云毓智能科技有限公司（以下简称「Nebutra」、「我们」或「本公司」）致力于保护您的隐私。本隐私政策说明了我们在您使用本公司网站、应用程序及服务（统称「服务」）时，如何收集、使用、披露和保护您的信息。",
+      "intro": "{companyLegal}（以下简称「{brandName}」、「我们」或「本公司」）致力于保护您的隐私。本隐私政策说明了我们在您使用本公司网站、应用程序及服务（统称「服务」）时，如何收集、使用、披露和保护您的信息。",
       "infoWeCollect": {
         "title": "一、我们收集的信息",
         "youProvide": {
@@ -724,11 +724,11 @@
       "contactUs": {
         "title": "八、联系我们",
         "intro": "若您对本隐私政策有任何疑问，请通过以下方式联系我们：",
-        "company": "无锡云毓智能科技有限公司"
+        "company": "{companyLegal}"
       }
     },
     "refund": {
-      "title": "订单结算异常协定 — Nebutra",
+      "title": "订单结算异常协定 — {brandName}",
       "description": "严格约束退费及金额返还程序和相关符合执行标准的重要政策规章。",
       "heading": "执行类订单争端处理框架",
       "effectiveDate": "正式强制实施日",
@@ -737,7 +737,7 @@
         "effective": "2025年1月1日",
         "updated": "2025年1月1日"
       },
-      "intro": "Nebutra 致力于确保您对我们服务的完全满意。本退款政策阐明了可申请退款的情形及相应的申请流程。",
+      "intro": "{brandName} 致力于确保您对我们服务的完全满意。本退款政策阐明了可申请退款的情形及相应的申请流程。",
       "subscriptionPlans": {
         "title": "订阅方案",
         "monthly": {
@@ -906,19 +906,19 @@
       "contactUs": {
         "title": "联系我们",
         "intro": "如需申请退款或就本政策提出咨询，请通过以下方式联系我们：",
-        "company": "Nebutra Co., Ltd.",
+        "company": "{brandName} Co., Ltd.",
         "billingLabel": "账单",
         "supportLabel": "支持",
         "legalLabel": "法务",
         "responseNote": "我们致力于在5个工作日内回复所有退款申请。",
         "termsNote": "本政策为我们",
         "termsLink": "服务条款",
-        "termsAgreement": "的组成部分。使用 Nebutra 即表示您同意本退款条款。"
+        "termsAgreement": "的组成部分。使用 {brandName} 即表示您同意本退款条款。"
       }
     },
     "terms": {
-      "title": "服务条款 — Nebutra",
-      "description": "规范您访问和使用 Nebutra 网站、应用程序、API 及相关服务的服务条款协议。",
+      "title": "服务条款 — {brandName}",
+      "description": "规范您访问和使用 {brandName} 网站、应用程序、API 及相关服务的服务条款协议。",
       "heading": "服务条款",
       "effectiveDate": "生效日期",
       "lastUpdated": "最后更新",
@@ -926,7 +926,7 @@
         "effective": "2025年1月1日",
         "updated": "2025年1月1日"
       },
-      "intro1": "欢迎使用 Nebutra！本服务条款（「条款」）规范您访问和使用 Nebutra 网站、应用程序、API 及服务（统称「服务」）的方式，上述服务由 Nebutra Co., Ltd.（「Nebutra」、「公司」、「我们」或「本公司」）提供。",
+      "intro1": "欢迎使用 {brandName}！本服务条款（「条款」）规范您访问和使用 {brandName} 网站、应用程序、API 及服务（统称「服务」）的方式，上述服务由 {brandName} Co., Ltd.（「{brandName}」、「公司」、「我们」或「本公司」）提供。",
       "intro2": "访问或使用本服务即表示您同意受本条款及我们的",
       "intro2PrivacyLink": "隐私政策",
       "intro2End": "的约束。如您不同意本条款，请勿使用本服务。",
@@ -948,7 +948,7 @@
       },
       "services": {
         "title": "二、服务描述",
-        "intro": "Nebutra 提供的 SaaS 平台包含以下功能：",
+        "intro": "{brandName} 提供的 SaaS 平台包含以下功能：",
         "items": {
           "0": "AI 驱动的功能与内容生成",
           "1": "内容管理与社区工具",
@@ -1008,7 +1008,7 @@
         "title": "六、知识产权",
         "ours": {
           "title": "6.1 我们的知识产权",
-          "content": "Nebutra 及其许可方对本服务拥有全部权利、所有权及利益，包括我们创作的所有软件、设计、商标和内容。"
+          "content": "{brandName} 及其许可方对本服务拥有全部权利、所有权及利益，包括我们创作的所有软件、设计、商标和内容。"
         },
         "yours": {
           "title": "6.2 您的内容",
@@ -1021,7 +1021,7 @@
       },
       "liability": {
         "title": "八、责任限制",
-        "para1": "在法律允许的最大范围内，Nebutra 不对间接性、附带性、特殊性、衍生性或惩罚性损害，以及利润损失、数据损失、使用损失或商誉损失承担责任。",
+        "para1": "在法律允许的最大范围内，{brandName} 不对间接性、附带性、特殊性、衍生性或惩罚性损害，以及利润损失、数据损失、使用损失或商誉损失承担责任。",
         "para2": "在任何情况下，我们的总责任不超过以下两者中的较大值：（A）索赔前12个月内您向我们支付的金额，或（B）100美元。"
       },
       "termination": {
@@ -1055,22 +1055,22 @@
       "contactUs": {
         "title": "十一、联系我们",
         "intro": "如您对本条款有任何疑问，请通过以下方式联系我们：",
-        "company": "Nebutra Co., Ltd.",
+        "company": "{brandName} Co., Ltd.",
         "emailLabel": "电子邮件",
         "supportLabel": "支持"
       },
-      "acknowledgement": "使用 Nebutra 即表示您确认已阅读、理解并同意受本服务条款约束。"
+      "acknowledgement": "使用 {brandName} 即表示您确认已阅读、理解并同意受本服务条款约束。"
     }
   },
   "metadata": {
-    "title": "Nebutra Agent OS | 出海创业的起点",
+    "title": "{brandName} Agent OS | 出海创业的起点",
     "description": "面向出海创始人的 Startup Agent OS。生产就绪的 Next.js 底座，受治理的架构，内置鉴权、计费、智能体与 i18n —— 为 AI 编程智能体与严肃团队打造。"
   },
   "microLanding": {
     "architecture": {
       "badge": "系统拓扑架构",
       "title": "透明架构，拒绝技术黑盒",
-      "description": "Nebutra Sailor 采用高度模块化的 Turborepo 结构进行工程设计，让您完全掌控整个软件生命周期。",
+      "description": "{productName} 采用高度模块化的 Turborepo 结构进行工程设计，让您完全掌控整个软件生命周期。",
       "database": {
         "title": "PostgreSQL + Prisma v7",
         "desc": "原生内置行级安全 (RLS) 策略的完全强类型 ORM。"
@@ -1088,7 +1088,7 @@
         "badge": "STARTUP / 敏捷初创",
         "price": "$799",
         "period": "/ 年",
-        "desc": "适合建立在 Nebutra 平台基线之上的小团队。",
+        "desc": "适合建立在 {brandName} 平台基线之上的小团队。",
         "cta": "购买 Startup 商业授权",
         "f1": "闭源商用授权",
         "f2": "团队主体无界限商用的企业级应用下放额度",
@@ -1137,12 +1137,12 @@
         "q": "可以用于客户项目交付吗？",
         "a": "可以。商业授权允许团队在授权范围内交付闭源客户项目或内部产品；白标权益需通过 Enterprise 书面确认。"
       },
-      "contactNudge": "还有疑问？与 Nebutra 团队沟通 →"
+      "contactNudge": "还有疑问？与 {brandName} 团队沟通 →"
     },
     "cta": {
       "eyebrow": "立即开始",
       "title": "停止折腾配置，立即开始构建",
-      "description": "使用 Nebutra CLI 即可在本地初始化您的高可用可扩展 SaaS 架构。",
+      "description": "使用 {brandName} CLI 即可在本地初始化您的高可用可扩展 SaaS 架构。",
       "button": "部署云端架构",
       "license": "基于 AGPL-3.0 开源协议。无需信用卡。"
     },
@@ -1192,7 +1192,7 @@
       "title": "以破纪录的速度从零走向生产",
       "step1": {
         "title": "1. 快速克隆",
-        "desc": "瞬间克隆全功能 Nebutra Monorepo，并运行 pnpm install 初始化工作空间。"
+        "desc": "瞬间克隆全功能 {brandName} Monorepo，并运行 pnpm install 初始化工作空间。"
       },
       "step2": {
         "title": "2. 交互式配置",
@@ -1233,7 +1233,7 @@
       "badge": "平台能力",
       "headlinePrefix": "构建独角兽所需的",
       "headlineHighlight": "一切就绪。",
-      "description": "Nebutra 是全栈 SaaS 平台——AI、计费、多租户、可观测性和安全性从第一天起就内置其中。停止重复造轮子。"
+      "description": "{brandName} 是全栈 SaaS 平台——AI、计费、多租户、可观测性和安全性从第一天起就内置其中。停止重复造轮子。"
     },
     "sections": {
       "exploreFeature": "探索功能",
@@ -1305,7 +1305,7 @@
   "comingSoon": {
     "badge": "🚧 建设中",
     "description": {
-      "ideas": "我们正在为您打造极具极客精神的全新体验模块，它将随 Nebutra-Sailor 的下一次核心架构更新同步上线。",
+      "ideas": "我们正在为您打造极具极客精神的全新体验模块，它将随 {brandName}-Sailor 的下一次核心架构更新同步上线。",
       "opc": "更完整的平台能力介绍正在整理中。请关注更新日志与路线图获取后续发布。",
       "roadmap": "从基础架构到企业规模——产品阶段、大版本里程碑与融资愿景一览。"
     },
@@ -1320,7 +1320,7 @@
   "useCases": {
     "badge": "无限应用场景",
     "title": "一个基座，无限可能。",
-    "description": "Nebutra Sailor 驱动全球市场的下一代 SaaS 产品。",
+    "description": "{productName} 驱动全球市场的下一代 SaaS 产品。",
     "tabs": {
       "opc": "智能体运营中枢",
       "ip": "个人 IP 矩阵",
@@ -1416,7 +1416,7 @@
   "notFound": {
     "title": "页面未找到",
     "desc": "链接可能已过期，或页面已迁移。",
-    "home": "返回 Nebutra",
+    "home": "返回 {brandName}",
     "docs": "打开文档"
   },
   "ui": {
@@ -1439,7 +1439,7 @@
   "licensing": {
     "hero": {
       "title": "双<hl>许可证</hl>模式",
-      "description": "Nebutra-Sailor 基于 AGPL-3.0 开源。我们同时为构建闭源产品的团队提供商业授权。"
+      "description": "{brandName}-Sailor 基于 AGPL-3.0 开源。我们同时为构建闭源产品的团队提供商业授权。"
     },
     "plans": {
       "agpl": {
@@ -1450,7 +1450,7 @@
         "features": {
           "sourceAccess": "完整源码访问权限",
           "mustOpenSource": "产品必须同步开源",
-          "mustCredit": "必须署名 Nebutra-Sailor",
+          "mustCredit": "必须署名 {brandName}-Sailor",
           "communitySupport": "仅限社区支持"
         },
         "cta": "在 GitHub 上查看"
@@ -1509,7 +1509,7 @@
       }
     },
     "meta": {
-      "title": "授权方案 — Nebutra",
+      "title": "授权方案 — {brandName}",
       "description": "双许可证模式：AGPL-3.0 开源或商业授权。"
     }
   },
@@ -1526,21 +1526,21 @@
     }
   },
   "changelogMeta": {
-    "title": "更新日志 — Nebutra",
+    "title": "更新日志 — {brandName}",
     "description": "每一次发布，都倾注极致的打磨。",
-    "versionTitleSuffix": "Nebutra 更新日志"
+    "versionTitleSuffix": "{brandName} 更新日志"
   },
   "roadmapMeta": {
-    "title": "平台路线图 — Nebutra",
-    "description": "Nebutra 平台基线、Harness 运行时与升级路径的演进路线。"
+    "title": "平台路线图 — {brandName}",
+    "description": "{brandName} 平台基线、Harness 运行时与升级路径的演进路线。"
   },
   "blogMeta": {
-    "title": "博客 — Nebutra",
-    "description": "Nebutra 团队的工程洞察、产品更新与 SaaS 最佳实践。"
+    "title": "博客 — {brandName}",
+    "description": "{brandName} 团队的工程洞察、产品更新与 SaaS 最佳实践。"
   },
   "getLicenseMeta": {
-    "title": "获取授权 — Nebutra",
-    "description": "2 分钟获取 Nebutra 授权与平台访问权限。"
+    "title": "获取授权 — {brandName}",
+    "description": "2 分钟获取 {brandName} 授权与平台访问权限。"
   },
   "cookieConsent": {
     "banner": {
@@ -1577,7 +1577,7 @@
       "subtitle": "在动手之前你需要知道的一切。",
       "items": {
         "what-is-sailor": {
-          "question": "Nebutra Sailor 到底是什么？",
+          "question": "{productName} 到底是什么？",
           "answer": "Sailor 是一个观点鲜明的 Next.js + Tailwind v4 SaaS 基础脚手架，认证、计费、多租户、AI、队列、搜索与邮件等模块开箱即用。克隆代码、配置提供商，通常一周内就能上线。"
         },
         "who-is-it-for": {
@@ -1610,7 +1610,7 @@
         },
         "tech-stack": {
           "question": "技术栈是什么？",
-          "answer": "Next.js 16 (App Router) + React 19、TypeScript 5.9、Tailwind v4、Prisma 7 + Postgres（含 pgvector + RLS）、Hono 作为 BFF 网关、FastAPI 承载 ML 与重型服务，组件库基于 Radix、Nebutra UI 原语与共享 Motion 层。AI 能力通过 Vercel AI SDK 接入，可在 OpenAI / OpenRouter / SiliconFlow / Azure / 本地模型间自由切换。"
+          "answer": "Next.js 16 (App Router) + React 19、TypeScript 5.9、Tailwind v4、Prisma 7 + Postgres（含 pgvector + RLS）、Hono 作为 BFF 网关、FastAPI 承载 ML 与重型服务，组件库基于 Radix、{brandName} UI 原语与共享 Motion 层。AI 能力通过 Vercel AI SDK 接入，可在 OpenAI / OpenRouter / SiliconFlow / Azure / 本地模型间自由切换。"
         },
         "license": {
           "question": "授权方式是什么？",

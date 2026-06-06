@@ -326,6 +326,23 @@ const ADVISORY_CEILINGS = {
 const PLACEHOLDER_RE = /\{\s*([a-zA-Z_][a-zA-Z0-9_]*)\b/g;
 
 /**
+ * Brand-variable placeholder names injected by injectBrandVars() in
+ * apps/landing-page/src/i18n/request.ts at request time — BEFORE next-intl
+ * processes the messages. These are not standard ICU runtime placeholders;
+ * they are pre-substituted by the brand layer. Exclude them from the
+ * placeholder-parity check so that locale files that translate brand-name
+ * references differently (e.g. zh.json using {companyLegal} vs en.json using
+ * {brandName} for the same company-name field) do not raise false mismatches.
+ */
+const BRAND_PLACEHOLDER_NAMES = new Set([
+  "brandName",
+  "brandNameCn",
+  "companyLegal",
+  "companyLegalEn",
+  "productName",
+]);
+
+/**
  * Recursively flatten an object into dot-path leaf keys.
  * Treats arrays as leaves (matches next-intl ICU array semantics).
  */
@@ -418,7 +435,12 @@ function extractPlaceholders(value) {
   if (typeof value !== "string") return new Set();
   const names = new Set();
   for (const match of value.matchAll(PLACEHOLDER_RE)) {
-    names.add(match[1]);
+    // Exclude brand-variable placeholders — they are pre-substituted by
+    // injectBrandVars() before next-intl processes the messages, so they
+    // are not ICU runtime variables that need to be parity-checked.
+    if (!BRAND_PLACEHOLDER_NAMES.has(match[1])) {
+      names.add(match[1]);
+    }
   }
   return names;
 }
