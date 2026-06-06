@@ -61,6 +61,7 @@ export default defineConfig({
       timeout: webServerTimeout,
       env: {
         ...nextDevWatcherEnv,
+        E2E_SKIP_CMS: "1",
         SKIP_ENV_VALIDATION: "true",
         NEXT_PUBLIC_APP_URL: appBaseUrl,
         NEXT_PUBLIC_API_URL: apiBaseUrl,

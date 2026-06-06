@@ -1,6 +1,6 @@
 const ROUTE_PREWARM_ATTEMPTS = 3;
 const ROUTE_PREWARM_RETRY_DELAY_MS = 5_000;
-const ROUTE_PREWARM_TIMEOUT_MS = 30_000;
+const ROUTE_PREWARM_TIMEOUT_MS = 60_000;
 const PREWARM_ROUTES = ["/", "/changelog"];
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

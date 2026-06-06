@@ -50,6 +50,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 async function getShowcaseProjectsSafe(): Promise<ShowcaseProject[]> {
+  if (process.env.E2E_SKIP_CMS === "1") return [];
+
   return getShowcaseProjects().catch(() => [] as ShowcaseProject[]);
 }
 
