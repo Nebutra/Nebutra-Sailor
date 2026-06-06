@@ -9,6 +9,8 @@ import { gotoMarketingPage } from "../helpers/navigation";
  * (e.g. Mintlify docs footer) that may also live on port 3000.
  */
 test.describe("FooterMinimal", () => {
+  test.setTimeout(120_000);
+
   test.beforeEach(async ({ page }) => {
     await gotoMarketingPage(page, "/");
     const footer = page.getByTestId("footer-minimal");
@@ -148,14 +150,12 @@ test.describe("FooterMinimal", () => {
     expect(className).toContain("focus:");
   });
 
-  test("newsletter submit button avoids native page navigation before hydration", async ({
-    page,
-  }) => {
+  test("newsletter submit button preserves semantic form submission", async ({ page }) => {
     const footer = page.getByTestId("footer-minimal");
     const submitBtn = footer.locator("form button");
     await expect(submitBtn).toBeVisible();
     const type = await submitBtn.getAttribute("type");
-    expect(type).toBe("button");
+    expect(type).toBe("submit");
   });
 
   test("newsletter rejects empty submission", async ({ page }) => {

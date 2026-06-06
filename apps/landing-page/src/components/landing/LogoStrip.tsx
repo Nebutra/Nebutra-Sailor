@@ -38,7 +38,7 @@ export async function LogoStrip({ locale }: { locale: Locale }) {
                 key={logo.name}
                 src={logo.url}
                 alt={logo.name}
-                width={0}
+                width={isSmall ? 20 : 24}
                 height={isSmall ? 20 : 24}
                 className={`${isSmall ? "h-[18px]" : "h-[22px] md:h-6"} w-auto brightness-0 dark:brightness-200 dark:invert-0 transition-[filter,opacity,transform] duration-150 hover:opacity-100 hover:-translate-y-px motion-reduce:hover:translate-y-0`}
                 style={{ width: "auto" }}

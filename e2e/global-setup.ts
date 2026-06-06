@@ -1,5 +1,5 @@
 const ROUTE_PREWARM_ATTEMPTS = 3;
-const ROUTE_PREWARM_RETRY_DELAY_MS = 5_000;
+const ROUTE_PREWARM_RETRY_DELAY_MS = 2_000;
 const ROUTE_PREWARM_TIMEOUT_MS = 60_000;
 const PREWARM_ROUTES = ["/", "/changelog"];
 
@@ -39,8 +39,7 @@ async function prewarmRoute(url: URL) {
     } catch (error) {
       const detail = describeError(error);
       if (attempt === ROUTE_PREWARM_ATTEMPTS) {
-        process.stdout.write(`[e2e-global-setup] prewarm skipped ${url.toString()}: ${detail}\n`);
-        return;
+        throw new Error(`Prewarm failed for ${url.toString()}: ${detail}`);
       }
 
       process.stdout.write(

@@ -72,13 +72,7 @@ export function NewsletterForm() {
         required
         className="min-h-11 sm:w-48"
       />
-      <Button
-        type="button"
-        size="sm"
-        disabled={status === "loading"}
-        className="min-h-11"
-        onClick={() => void submitNewsletter()}
-      >
+      <Button type="submit" size="sm" disabled={status === "loading"} className="min-h-11">
         {status === "loading" ? "…" : t("newsletterSubscribe")}
       </Button>
       {status === "error" && (
