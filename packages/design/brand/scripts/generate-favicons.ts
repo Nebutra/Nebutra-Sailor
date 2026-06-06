@@ -173,17 +173,18 @@ export async function generateFavicons(assetsDir: string): Promise<void> {
     writeFileSync(join(faviconDir, "android-chrome-192x192.png"), png192);
     log("android-chrome-192x192.png");
   } else {
-    warn("android-chrome-192x192.png skipped — resvg-wasm unavailable");
-    // Write a minimal valid PNG as placeholder so the arch test sees the file.
-    writeFileSync(join(faviconDir, "android-chrome-192x192.png"), Buffer.alloc(0));
+    warn("android-chrome-192x192.png skipped — resvg-wasm unavailable; keeping existing file");
+    // Leave existing file in place — same pattern as favicon.ico fallback.
+    // Writing Buffer.alloc(0) would produce a corrupt zero-byte PNG that breaks
+    // Next.js manifest, PWA install, and Lighthouse audits.
   }
 
   if (png512) {
     writeFileSync(join(faviconDir, "android-chrome-512x512.png"), png512);
     log("android-chrome-512x512.png");
   } else {
-    warn("android-chrome-512x512.png skipped — resvg-wasm unavailable");
-    writeFileSync(join(faviconDir, "android-chrome-512x512.png"), Buffer.alloc(0));
+    warn("android-chrome-512x512.png skipped — resvg-wasm unavailable; keeping existing file");
+    // Leave existing file in place — same pattern as favicon.ico fallback.
   }
 
   // ── 3. apple-touch-icon.png — 180×180 rounded corners via sharp ───────────
@@ -227,8 +228,9 @@ export async function generateFavicons(assetsDir: string): Promise<void> {
       }
     }
   } else {
-    warn("apple-touch-icon.png skipped — no PNG source available");
-    writeFileSync(join(faviconDir, "apple-touch-icon.png"), Buffer.alloc(0));
+    warn("apple-touch-icon.png skipped — no PNG source available; keeping existing file");
+    // Leave existing file in place — writing Buffer.alloc(0) would produce a
+    // corrupt zero-byte PNG that breaks PWA install and Lighthouse audits.
   }
 
   // ── 4. favicon.ico — 16+32+48 multi-size ICO ─────────────────────────────

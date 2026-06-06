@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -23,8 +23,15 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "../..");
 const BRAND_ASSETS_DIR = join(ROOT, "packages/design/brand/assets");
 
+// PNG magic bytes: 89 50 4E 47 0D 0A 1A 0A
+const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+
+function hasPngMagic(buf: Buffer): boolean {
+  return buf.length >= 8 && buf.subarray(0, 8).equals(PNG_MAGIC);
+}
+
 describe("brand favicon completeness", () => {
-  it("all faviconAssets paths declared in metadata.ts exist on disk", () => {
+  it("all faviconAssets paths declared in metadata.ts exist on disk and are non-empty", () => {
     // These are the 5 paths declared in packages/design/brand/src/metadata.ts
     // faviconAssets — all 5 must exist after brand:apply runs generate-favicons.
     const expectedFavicons = [
@@ -41,6 +48,37 @@ describe("brand favicon completeness", () => {
         existsSync(fullPath),
         `faviconAssets declares "${relPath}" but the file does not exist at ${fullPath}. ` +
           "Run `pnpm brand:apply` to generate the favicon set via generate-favicons.ts.",
+      ).toBe(true);
+
+      // Guard against zero-byte placeholders — a corrupt file is worse than a missing one
+      // because it silently breaks Next.js manifest, PWA install, and Lighthouse audits.
+      const size = statSync(fullPath).size;
+      expect(
+        size,
+        `faviconAssets file "${relPath}" is zero bytes — this is a corrupt placeholder. ` +
+          "Run `pnpm brand:apply` to regenerate the file with valid content.",
+      ).toBeGreaterThan(0);
+    }
+  });
+
+  it("PNG favicon assets have valid PNG magic bytes", () => {
+    // Catch cases where a file exists and is non-empty but is not a valid PNG
+    // (e.g. a raw SVG written into a .png path, or a truncated render).
+    const pngFavicons = [
+      "favicon/apple-touch-icon.png",
+      "favicon/android-chrome-192x192.png",
+      "favicon/android-chrome-512x512.png",
+    ];
+
+    for (const relPath of pngFavicons) {
+      const fullPath = join(BRAND_ASSETS_DIR, relPath);
+      if (!existsSync(fullPath)) continue; // existence checked in the previous test
+
+      const buf = readFileSync(fullPath);
+      expect(
+        hasPngMagic(buf),
+        `"${relPath}" does not start with PNG magic bytes (89 50 4E 47). ` +
+          "The file may be corrupt. Run `pnpm brand:apply` to regenerate it.",
       ).toBe(true);
     }
   });
