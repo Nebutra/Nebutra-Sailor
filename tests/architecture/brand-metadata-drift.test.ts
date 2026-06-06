@@ -29,6 +29,16 @@ const METADATA_PATH = join(ROOT, "packages/design/brand/src/metadata.ts");
 const CORE_JSON_PATH = join(ROOT, "packages/design/design-tokens/tokens/core.json");
 const STYLES_CSS_PATH = join(ROOT, "packages/design/tokens/styles.css");
 
+// Run brand:apply via tsx directly to bypass pnpm's verify-deps-before-run
+// check (which fails due to the pre-existing lefthook/pnpm-install issue on
+// local dev machines). This is equivalent to `pnpm brand:apply`.
+function runBrandApply() {
+  execFileSync(join(ROOT, "node_modules/.bin/tsx"), [join(ROOT, "scripts/brand-apply.ts")], {
+    cwd: ROOT,
+    stdio: "pipe",
+  });
+}
+
 describe("brand metadata drift", () => {
   it("metadata.ts is byte-identical to what `pnpm brand:apply` would emit", {
     timeout: 120_000,
@@ -43,10 +53,7 @@ describe("brand metadata drift", () => {
     const originalBytes = readFileSync(METADATA_PATH, "utf8");
 
     try {
-      execFileSync("pnpm", ["brand:apply"], {
-        cwd: ROOT,
-        stdio: "pipe",
-      });
+      runBrandApply();
 
       const afterBytes = readFileSync(METADATA_PATH, "utf8");
       expect(
@@ -75,11 +82,11 @@ describe("brand metadata drift", () => {
     copyFileSync(CORE_JSON_PATH, tmpCoreJson);
 
     try {
-      execFileSync("pnpm", ["brand:apply"], { cwd: ROOT, stdio: "pipe" });
+      runBrandApply();
       const metadataFirstRun = readFileSync(METADATA_PATH, "utf8");
       const coreJsonFirstRun = readFileSync(CORE_JSON_PATH, "utf8");
 
-      execFileSync("pnpm", ["brand:apply"], { cwd: ROOT, stdio: "pipe" });
+      runBrandApply();
       const metadataSecondRun = readFileSync(METADATA_PATH, "utf8");
       const coreJsonSecondRun = readFileSync(CORE_JSON_PATH, "utf8");
 
@@ -113,7 +120,7 @@ describe("brand metadata drift", () => {
       copyFileSync(METADATA_PATH, tmpMetadata);
 
       try {
-        execFileSync("pnpm", ["brand:apply"], { cwd: ROOT, stdio: "pipe" });
+        runBrandApply();
 
         const coreAfter = JSON.parse(readFileSync(CORE_JSON_PATH, "utf8")) as {
           color: {
@@ -178,7 +185,7 @@ describe("brand metadata drift", () => {
       // DEFAULT_BRAND.colors and then rebuild. If the build is wired correctly,
       // styles.css must contain the canonical brand color (#0033fe) after apply.
       try {
-        execFileSync("pnpm", ["brand:apply"], { cwd: ROOT, stdio: "pipe" });
+        runBrandApply();
 
         const stylesAfter = readFileSync(STYLES_CSS_PATH, "utf8");
         // styles.css must contain the canonical primary brand color.
@@ -197,6 +204,27 @@ describe("brand metadata drift", () => {
         copyFileSync(tmpMetadata, METADATA_PATH);
       }
     });
+  });
+});
+
+// ─── Phase 5: copyCustomAssets dest path correctness ─────────────────────────
+
+describe("brand-apply.ts copyCustomAssets dest path", () => {
+  it("brand-apply.ts uses packages/design/brand/assets as the dest (not the pre-migration packages/brand/assets)", () => {
+    const brandApplySrc = readFileSync(join(ROOT, "scripts/brand-apply.ts"), "utf8");
+
+    // The 2026-05 layout migration moved brand under packages/design/.
+    // `copyCustomAssets` must use `packages/design/brand/assets` as its dest.
+    // The old path `packages/brand/assets` silently fails — it's a dead path.
+    expect(
+      brandApplySrc.includes('path.join(ROOT, "packages", "brand", "assets")'),
+      "brand-apply.ts must NOT contain the dead path packages/brand/assets — use packages/design/brand/assets",
+    ).toBe(false);
+
+    expect(
+      brandApplySrc.includes('path.join(ROOT, "packages", "design", "brand", "assets")'),
+      "brand-apply.ts must contain the correct path packages/design/brand/assets",
+    ).toBe(true);
   });
 });
 

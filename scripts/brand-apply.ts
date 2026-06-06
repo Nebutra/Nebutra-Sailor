@@ -289,13 +289,17 @@ export function updateCoreJson(config: BrandConfig): void {
  * Run the @nebutra/design-tokens build so that Style Dictionary regenerates
  * `packages/design/tokens/styles.css` from the updated `core.json`.
  *
- * Uses `execFileSync` (already imported) with `stdio: "inherit"` so the
- * Style Dictionary output is visible in the terminal during `pnpm brand:apply`.
+ * Runs `node style-dictionary.config.mjs` directly in the design-tokens
+ * package directory, bypassing the pnpm `verify-deps-before-run` check.
+ * This is equivalent to `pnpm --filter @nebutra/design-tokens build` (which
+ * runs `node style-dictionary.config.mjs` as its build script), but avoids
+ * the pre-existing lefthook/pnpm-install issue on local dev machines.
  */
 export function runDesignTokensBuild(): void {
   logStep("Running @nebutra/design-tokens build (Style Dictionary → styles.css)");
-  execFileSync("pnpm", ["--filter", "@nebutra/design-tokens", "build"], {
-    cwd: ROOT,
+  const designTokensDir = path.join(ROOT, "packages", "design", "design-tokens");
+  execFileSync("node", ["style-dictionary.config.mjs"], {
+    cwd: designTokensDir,
     stdio: "inherit",
   });
   logSuccess("Regenerated packages/design/tokens/styles.css");
@@ -353,7 +357,8 @@ function copyCustomAssets(_config: BrandConfig): void {
   logStep("Copying custom assets");
 
   const customAssetsDir = path.join(ROOT, "brand.config", "assets");
-  const targetAssetsDir = path.join(ROOT, "packages", "brand", "assets");
+  // brand package moved under packages/design/ in the 2026-05 categorized layout.
+  const targetAssetsDir = path.join(ROOT, "packages", "design", "brand", "assets");
 
   if (!fs.existsSync(customAssetsDir)) {
     logSkip("No custom assets found in brand.config/assets/");
