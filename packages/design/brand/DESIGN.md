@@ -104,7 +104,7 @@ Spring presets: `default | bouncy | heavy | gentle` (`packages/design/brand/src/
 ### 3.2 Custom motion (rare — prefer `AnimateIn`)
 
 ```tsx
-import { motion } from "@nebutra/ui/shared/animation/motion";
+import { motion } from "@nebutra/ui/components";
 import { emerge, brandEasing } from "@nebutra/brand/motion";
 
 <motion.div {...emerge}>

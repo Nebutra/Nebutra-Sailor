@@ -54,18 +54,6 @@
       "types": "./dist/hooks/index.d.ts",
       "import": "./dist/hooks/index.js"
     },
-    "./shared/animation": {
-      "types": "./dist/shared/animation/index.d.ts",
-      "import": "./dist/shared/animation/index.js"
-    },
-    "./shared/animation/css": {
-      "types": "./dist/shared/animation/css/index.d.ts",
-      "import": "./dist/shared/animation/css/index.js"
-    },
-    "./shared/animation/motion": {
-      "types": "./dist/shared/animation/motion/index.d.ts",
-      "import": "./dist/shared/animation/motion/index.js"
-    },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/utils/index.js"

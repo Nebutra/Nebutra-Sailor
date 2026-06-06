@@ -69,6 +69,7 @@ export {
 // whose runtime uses Function() and violates the app's production CSP.
 // @ts-expect-error Upstream .d.mts declares a named export, but the runtime .mjs only ships default.
 export { default as Spotlight } from "@lobehub/ui/es/awesome/Spotlight/Spotlight";
+export * from "../shared/animation/motion";
 export * from "./ai-prompt-box";
 // Animation
 export {
