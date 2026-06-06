@@ -16,7 +16,7 @@ export const heroContent = {
   preHeadline: "The SaaS framework for",
   headlineWords: ["builders who ship", "teams who scale", "founders who win"],
   command: "npx create-sailor@latest",
-  ctaPrimary: "Get Started",
+  ctaPrimary: "Create your first workspace",
   ctaSecondary: "Star on GitHub",
   scrollHint: "Scroll to explore",
 } as const;

@@ -56,7 +56,7 @@ function useCountdown(endDate: string | undefined): CountdownTime {
 // ============================================
 function CountdownDisplay({ countdown }: { countdown: CountdownTime }) {
   if (countdown.isExpired) {
-    return <span className="font-bold">🚀 Live Now!</span>;
+    return <span className="font-bold">Live now</span>;
   }
   const TimeUnit = ({ value, label }: { value: number; label: string }) => (
     <div className="flex flex-col items-center">
@@ -184,8 +184,8 @@ export function LaunchBannerTop({
       <div className="mx-auto flex max-w-7xl items-center justify-center gap-4 px-4 py-3">
         <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl" aria-hidden="true">
-              🚀
+            <span className="font-semibold text-xs tracking-wide" aria-hidden="true">
+              PH
             </span>
             <span className="font-semibold">{title}</span>
             {subtitle && <span className="hidden opacity-90 sm:inline">— {subtitle}</span>}
@@ -268,8 +268,8 @@ export function LaunchBannerFloating({
       )}
       <div className="flex flex-col gap-3">
         <div className="flex items-start gap-3">
-          <span className="text-2xl" aria-hidden="true">
-            🚀
+          <span className="font-semibold text-sm tracking-wide" aria-hidden="true">
+            PH
           </span>
           <div>
             <h3 className="font-bold">{title}</h3>
@@ -330,8 +330,8 @@ export function LaunchBannerInline({
       aria-label="Launch announcement"
     >
       <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
-        <span className="text-4xl" aria-hidden="true">
-          🚀
+        <span className="font-semibold text-base tracking-wide" aria-hidden="true">
+          PH
         </span>
         <div className="flex-1">
           <h3 className="text-xl font-bold">{title}</h3>

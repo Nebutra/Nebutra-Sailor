@@ -60,7 +60,7 @@ describe("CreateWebhookDialog", () => {
       }),
     );
     await waitFor(() => expect(screen.getByText("whsec_abcdefghij1234")).toBeTruthy());
-    expect(screen.getByText(/copy the signing secret now/i)).toBeTruthy();
+    expect(screen.getByText(/signing secret appears once/i)).toBeTruthy();
   });
 
   it("surfaces submission errors inline", async () => {

@@ -19,14 +19,14 @@ export interface WaitlistProps {
 }
 
 export function Waitlist({
-  title = "Get Early Access",
-  description = "Join the waitlist to be notified when we launch. Be the first to try out the new features.",
-  buttonText = "Join Waitlist",
+  title = "Join the waitlist",
+  description = "Leave an email and we will send the launch note when it is ready.",
+  buttonText = "Join the list",
   placeholder = "name@example.com",
   socialProofCount = 1205,
   loadingText = "Joining...",
-  successText = "Joined!",
-  successMessage = "Thanks for joining! We'll be in touch soon.",
+  successText = "Joined",
+  successMessage = "You're on the list. We'll be in touch soon.",
   socialProofPrefix = "Join",
   socialProofSuffix = "others on the list",
 }: WaitlistProps) {

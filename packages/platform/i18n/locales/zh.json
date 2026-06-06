@@ -595,7 +595,7 @@
         "revoke": "撤销",
         "revoking": "撤销中…",
         "copy": "复制",
-        "copied": "已复制！",
+        "copied": "已复制",
         "close": "关闭",
         "submit": "创建密钥",
         "submitting": "创建中…"
@@ -606,8 +606,8 @@
         "nameLabel": "名称",
         "namePlaceholder": "例如：生产后端",
         "scopesLabel": "范围",
-        "successWarning": "此密钥不会再次显示——请立即复制并安全保存。",
-        "confirmClose": "确定要关闭吗？关闭对话框后将无法再查看密钥——请确认您已复制。"
+        "successWarning": "此密钥只出现一次。关闭前请妥善保存。",
+        "confirmClose": "关闭后将无法再查看此密钥。请确认它已妥善保存。"
       }
     },
     "auditLog": {
@@ -710,10 +710,10 @@
         "submit": "创建 Endpoint",
         "submitting": "正在创建…",
         "selectEvent": "请至少选择一个事件。",
-        "successTitle": "Endpoint 已创建——请立即复制签名密钥。",
-        "successWarning": "此密钥仅显示一次，请妥善保存到你的应用机密管理服务。",
+        "successTitle": "Endpoint 已创建。签名密钥只出现一次。",
+        "successWarning": "关闭前请将它保存到你的应用机密管理服务。",
         "copy": "复制",
-        "copied": "已复制！"
+        "copied": "已复制"
       },
       "list": {
         "heading": "活动 Endpoint",

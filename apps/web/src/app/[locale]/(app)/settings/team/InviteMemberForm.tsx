@@ -53,7 +53,7 @@ export function InviteMemberForm({ orgId }: Props) {
       </button>
 
       {state.status === "success" && (
-        <p className="self-center text-sm text-green-11">Invitation sent!</p>
+        <p className="self-center text-sm text-green-11">Invitation is on its way.</p>
       )}
       {state.status === "error" && (
         <p className="self-center text-sm text-red-11">{state.message}</p>

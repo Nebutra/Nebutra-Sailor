@@ -78,7 +78,7 @@ describe("CreateApiKeyDialog", () => {
     await waitFor(() => {
       expect(screen.getByText(/nbk_live_secretvalue123/)).toBeInTheDocument();
     });
-    expect(screen.getByText(/will not be shown again|copy it now/i)).toBeInTheDocument();
+    expect(screen.getByText(/appears once|store it before closing/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /copy/i })).toBeInTheDocument();
   });
 

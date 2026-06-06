@@ -605,7 +605,7 @@
         "revoke": "Revoke",
         "revoking": "Revoking…",
         "copy": "Copy",
-        "copied": "Copied!",
+        "copied": "Copied",
         "close": "Close",
         "submit": "Create key",
         "submitting": "Creating…"
@@ -616,8 +616,8 @@
         "nameLabel": "Name",
         "namePlaceholder": "e.g. Production backend",
         "scopesLabel": "Scopes",
-        "successWarning": "This key will not be shown again — copy it now and store it somewhere safe.",
-        "confirmClose": "Are you sure? Closing this dialog will hide the key forever — make sure you have copied it."
+        "successWarning": "This key appears once. Store it before closing.",
+        "confirmClose": "Closing hides this key forever. Make sure it is stored."
       }
     },
     "auditLog": {
@@ -720,10 +720,10 @@
         "submit": "Create endpoint",
         "submitting": "Creating…",
         "selectEvent": "Select at least one event.",
-        "successTitle": "Endpoint created — copy the signing secret now.",
-        "successWarning": "This secret won't be shown again. Store it in your application's secret manager.",
+        "successTitle": "Endpoint created. The signing secret appears once.",
+        "successWarning": "Store it in your application's secret manager before closing.",
         "copy": "Copy",
-        "copied": "Copied!"
+        "copied": "Copied"
       },
       "list": {
         "heading": "Active endpoints",

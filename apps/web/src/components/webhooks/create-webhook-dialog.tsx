@@ -117,9 +117,9 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
         role="alert"
         className="rounded-[var(--radius-md)] border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900"
       >
-        <p className="mb-2 font-medium">Endpoint created — copy the signing secret now.</p>
+        <p className="mb-2 font-medium">Endpoint created. The signing secret appears once.</p>
         <p className="mb-3 text-xs">
-          This secret won&apos;t be shown again. Store it in your application&apos;s secret manager.
+          Store it in your application&apos;s secret manager before closing.
         </p>
         <div className="mb-3 flex items-center gap-2">
           <code className="flex-1 rounded bg-white px-3 py-2 font-mono text-xs text-amber-800 shadow-inner">
@@ -130,7 +130,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
             onClick={() => copySecret(signingSecret)}
             className="rounded-[var(--radius-md)] border border-amber-300 px-3 py-2 text-xs font-medium text-amber-800 hover:bg-amber-100"
           >
-            {copied ? "Copied!" : "Copy"}
+            {copied ? "Copied" : "Copy"}
           </button>
         </div>
         <p className="text-xs text-amber-800">Endpoint URL: {endpoint.url}</p>

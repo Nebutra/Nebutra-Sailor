@@ -138,7 +138,7 @@ describe("ApiKeysPageClient (react-query integration)", () => {
     await waitFor(() => {
       expect(screen.getByText(/nbk_live_secretvalue123/)).toBeInTheDocument();
     });
-    expect(screen.getByText(/will not be shown again/i)).toBeInTheDocument();
+    expect(screen.getByText(/appears once|store it before closing/i)).toBeInTheDocument();
 
     const postCall = fetchMock.mock.calls.find(
       ([, init]) => (init as RequestInit | undefined)?.method === "POST",

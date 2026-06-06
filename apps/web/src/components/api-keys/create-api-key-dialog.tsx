@@ -97,14 +97,10 @@ export function CreateApiKeyDialog({
     submit: labels.submit ?? "Create key",
     submitting: labels.submitting ?? "Creating…",
     close: labels.close ?? "Close",
-    successWarning:
-      labels.successWarning ??
-      "This key will not be shown again — copy it now and store it somewhere safe.",
+    successWarning: labels.successWarning ?? "This key appears once. Store it before closing.",
     copy: labels.copy ?? "Copy",
-    copied: labels.copied ?? "Copied!",
-    confirmClose:
-      labels.confirmClose ??
-      "Are you sure? Closing this dialog will hide the key forever — make sure you have copied it.",
+    copied: labels.copied ?? "Copied",
+    confirmClose: labels.confirmClose ?? "Closing hides this key forever. Make sure it is stored.",
   };
 
   const submitting = form.formState.isSubmitting;

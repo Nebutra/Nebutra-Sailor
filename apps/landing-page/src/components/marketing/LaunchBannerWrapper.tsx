@@ -28,9 +28,9 @@ export function LaunchBannerWrapper({
 
   return (
     <LaunchBanner
-      title="We're live on Product Hunt!"
-      subtitle="Support us and help spread the word"
-      ctaText="Vote Now 🚀"
+      title="Live on Product Hunt"
+      subtitle="The launch page is open for review"
+      ctaText="Vote on Product Hunt"
       ctaLink={phUrl}
       variant="top"
       theme="product-hunt"
