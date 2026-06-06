@@ -553,8 +553,8 @@ export const SOLUTIONS: Solution[] = [
       title: { en: "Find the right", zh: "找到对的" },
       titleAccent: { en: "China investors", zh: "中国投资人" },
       summary: {
-        en: "A searchable directory of China's direct-investment institutions — filter by sector, type and deal volume, head funds with logos.",
-        zh: "覆盖中国主流直投机构的可搜索数据库——按赛道、类型、投资体量筛选,头部机构带 logo。",
+        en: "A searchable directory of China's direct-investment institutions — filter by sector, type and deal volume.",
+        zh: "覆盖中国主流直投机构的可搜索数据库——按赛道、类型、投资体量筛选。",
       },
     },
     useCases: [
