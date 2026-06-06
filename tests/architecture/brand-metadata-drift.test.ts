@@ -199,3 +199,32 @@ describe("brand metadata drift", () => {
     });
   });
 });
+
+// ─── Phase 3: metadata-helpers.ts has zero hardcoded brand literals ───────────
+
+describe("metadata-helpers.ts source-text drift guard", () => {
+  it("metadata-helpers.ts contains zero hardcoded Nebutra/nebutra.com literals", () => {
+    const helpersSrc = readFileSync(
+      join(ROOT, "packages/design/brand/src/metadata-helpers.ts"),
+      "utf8",
+    );
+
+    // These patterns must NOT appear as raw string literals in the helper module.
+    // All brand strings must be derived from the imported `brand` / `colors` objects.
+    const banned = [
+      /"Nebutra"/,
+      /'Nebutra'/,
+      /`Nebutra`/,
+      /"nebutra\.com"/,
+      /'nebutra\.com'/,
+      /`nebutra\.com`/,
+    ];
+
+    for (const pattern of banned) {
+      expect(
+        pattern.test(helpersSrc),
+        `metadata-helpers.ts must not contain literal matching ${pattern} — derive from brand object`,
+      ).toBe(false);
+    }
+  });
+});

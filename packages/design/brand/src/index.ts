@@ -56,6 +56,24 @@ export {
   ogImageDimensions,
   typography,
 } from "./metadata";
+// Metadata helpers — derive Next.js Metadata, JSON-LD, PWA manifest, feeds from brand SSOT
+export type {
+  BrandService,
+  FeedChannelMeta,
+  OrganizationJsonLd,
+  SiteMetadataOptions,
+  SoftwareApplicationJsonLd,
+  WebSiteJsonLd,
+} from "./metadata-helpers";
+export {
+  buildFeedChannelMeta,
+  buildOrganizationJsonLd,
+  buildPwaManifest,
+  buildSoftwareApplicationJsonLd,
+  buildWebSiteJsonLd,
+  getSiteMetadata,
+  getSiteUrl,
+} from "./metadata-helpers";
 // Brand Motion Language (品牌运动语言)
 export {
   brandEasing,
