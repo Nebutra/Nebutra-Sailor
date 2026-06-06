@@ -70,6 +70,7 @@ export const queryKeys = {
     list: () => ["organizations", "list"] as const,
     detail: (orgId: string) => ["organizations", "detail", orgId] as const,
     active: () => ["organizations", "active"] as const,
+    logo: (orgId: string) => ["organizations", "logo", orgId] as const,
   },
 
   orgThreads: {
