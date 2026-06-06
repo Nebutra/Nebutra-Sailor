@@ -84,6 +84,22 @@ const nextConfig: NextConfig = {
 
   reactCompiler: true,
 
+  // Rewrite barrel imports of the heavy internal UI/icon/brand packages into
+  // direct per-module imports so the build-time module graph stays small (80+
+  // files import the ~1MB @nebutra/ui/primitives barrel). Mirrors the
+  // landing-page config; keeps the dashboard build off the compile-phase OOM
+  // pattern. Non-breaking: Next falls back to the barrel for any package it
+  // cannot statically analyse.
+  experimental: {
+    optimizePackageImports: [
+      "@nebutra/ui",
+      "@nebutra/ui/primitives",
+      "@nebutra/ui/components",
+      "@nebutra/icons",
+      "@nebutra/brand",
+    ],
+  },
+
   // Allow Next.js Image to load from external sources used by this app.
   // Add new hostnames here rather than disabling optimization globally.
   images: {
