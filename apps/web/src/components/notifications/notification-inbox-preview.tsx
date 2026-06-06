@@ -12,6 +12,7 @@ import type {
   NotificationRuntimeStatus,
 } from "@nebutra/notifications";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { markNotificationRead } from "@/app/[locale]/(app)/settings/notifications/actions";
 
 interface Props {
@@ -38,7 +39,7 @@ function getInboxIcon(groupId: NotificationInboxItem["groupId"]) {
   }
 }
 
-export function NotificationInboxPreview({
+export async function NotificationInboxPreview({
   locale,
   runtime,
   inboxItems,
@@ -46,6 +47,7 @@ export function NotificationInboxPreview({
   inboxReason,
   unreadCount,
 }: Props) {
+  const t = await getTranslations("notifications.page");
   return (
     <section className="rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
@@ -65,16 +67,14 @@ export function NotificationInboxPreview({
 
       {inboxSource === "unavailable" ? (
         <div className="mt-5 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-4 text-sm text-[var(--neutral-11)]">
-          {inboxReason ?? "No live inbox storage is connected yet for this environment."}
+          {inboxReason ?? t("inbox.noBackend")}
         </div>
       ) : null}
 
       <div className="mt-5 space-y-3">
         {inboxItems.length === 0 ? (
           <div className="rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] px-4 py-6 text-sm text-[var(--neutral-11)]">
-            {inboxSource === "provider"
-              ? "Your inbox is currently empty."
-              : "Inbox messages will appear here once a persistent notification backend is connected."}
+            {inboxSource === "provider" ? t("inbox.emptyCaughtUp") : t("inbox.noBackend")}
           </div>
         ) : (
           inboxItems.map((item) => {

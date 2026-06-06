@@ -16,7 +16,7 @@ import type {
   NotificationSettingsSnapshot,
 } from "@nebutra/notifications";
 import Link from "next/link";
-import { useFormatter } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -58,12 +58,6 @@ function InboxIcon({
 function getUnreadBadgeLabel(unreadCount: number) {
   if (unreadCount <= 0) return null;
   return unreadCount > 99 ? "99+" : String(unreadCount);
-}
-
-function getInboxEmptyCopy(inboxSource: NotificationInboxSource) {
-  return inboxSource === "provider"
-    ? "You are caught up. New workspace, billing, security, and product signals will appear here."
-    : "Inbox messages will appear here once a persistent notification backend is connected.";
 }
 
 function NotificationCenterItem({
@@ -143,6 +137,7 @@ export function NotificationCenter({
   snapshot,
   defaultOpen = false,
 }: NotificationCenterProps) {
+  const t = useTranslations("notifications.page");
   const unreadBadge = getUnreadBadgeLabel(snapshot.unreadCount);
   const unreadItems = snapshot.inboxItems.filter((item) => !item.read);
   const canMarkAllRead = snapshot.runtime.canMarkInboxRead && unreadItems.length > 0;
@@ -203,15 +198,14 @@ export function NotificationCenter({
 
             {snapshot.inboxSource === "unavailable" ? (
               <div className="mx-3 mt-3 rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-2 p-3 text-sm text-neutral-11">
-                {snapshot.inboxReason ??
-                  "No live inbox storage is connected yet for this environment."}
+                {snapshot.inboxReason ?? t("inbox.noBackend")}
               </div>
             ) : null}
 
             <div className="max-h-96 overflow-y-auto p-3">
               {snapshot.inboxItems.length === 0 ? (
                 <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-2 px-4 py-8 text-center text-sm text-neutral-11">
-                  {getInboxEmptyCopy(snapshot.inboxSource)}
+                  {t("inbox.emptyCaughtUp")}
                 </div>
               ) : (
                 <ul className="space-y-2">

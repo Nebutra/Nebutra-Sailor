@@ -13,7 +13,7 @@ import { Dialog, DialogContent } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { queryKeys } from "@/lib/query-keys";
 
@@ -87,6 +87,7 @@ async function fetchNotificationSnapshot(signal: AbortSignal): Promise<Snapshot>
  */
 export function NotificationsDialog() {
   const locale = useLocale();
+  const t = useTranslations("notifications.page");
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("all");
 
@@ -184,7 +185,7 @@ export function NotificationsDialog() {
               </div>
             ) : filtered.length === 0 ? (
               <p className="py-10 text-center text-sm text-muted-foreground">
-                {tab === "changelog" ? "暂无更新日志" : "暂无通知"}
+                {tab === "changelog" ? t("inbox.emptyChangelog") : t("inbox.emptyCaughtUp")}
               </p>
             ) : (
               <ul className="space-y-6">

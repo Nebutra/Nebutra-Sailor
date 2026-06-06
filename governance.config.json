@@ -281,9 +281,6 @@
       "apps/web/src/components/charts/GrowthAreaChart.tsx",
       "apps/web/src/components/charts/RevenueBarChart.tsx",
       "apps/web/src/components/cofounder-match/matches-list.tsx",
-      "apps/web/src/components/notifications/notification-center.tsx",
-      "apps/web/src/components/notifications/notification-inbox-preview.tsx",
-      "apps/web/src/components/notifications/notifications-dialog.tsx",
       "apps/web/src/components/webhooks/webhook-deliveries-panel.tsx",
       "apps/web/src/components/webhooks/webhooks-list.tsx"
     ]

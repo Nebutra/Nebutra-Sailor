@@ -1010,6 +1010,11 @@
         "markRead": "标记已读失败。",
         "archive": "归档失败。",
         "bulkMarkRead": "部分通知未能标记为已读。"
+      },
+      "inbox": {
+        "noBackend": "收件箱需要持久通知后端。请检查供应商配置。",
+        "emptyCaughtUp": "收件箱为空。",
+        "emptyChangelog": "暂时没有更新日志。"
       }
     }
   },

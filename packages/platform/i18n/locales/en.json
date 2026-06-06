@@ -1010,6 +1010,11 @@
         "markRead": "Failed to mark notification as read.",
         "archive": "Failed to archive notification.",
         "bulkMarkRead": "Some notifications could not be marked as read."
+      },
+      "inbox": {
+        "noBackend": "Inbox requires a persistent notification backend. Check your provider configuration.",
+        "emptyCaughtUp": "Inbox is clear.",
+        "emptyChangelog": "No changelog entries."
       }
     }
   },
