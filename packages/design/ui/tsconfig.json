@@ -4,7 +4,8 @@
     "jsx": "react-jsx",
     "outDir": "./dist",
     "rootDir": "./src",
-    "composite": false
+    "composite": false,
+    "preserveSymlinks": false
   },
   "include": [
     "src/index.ts",
