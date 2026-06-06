@@ -4018,6 +4018,10 @@ importers:
         version: 5.9.3
 
   packages/platform/alerting:
+    dependencies:
+      p-limit:
+        specifier: ^7.3.0
+        version: 7.3.0
     devDependencies:
       '@types/node':
         specifier: ^22.19.15

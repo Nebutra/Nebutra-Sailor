@@ -104,6 +104,34 @@ describe("sendAlert", () => {
     expect(received.timestamp).toBeDefined();
     expect(new Date(received.timestamp ?? "").toISOString()).toBe(received.timestamp);
   });
+
+  it("caps channel dispatch concurrency", async () => {
+    let active = 0;
+    let maxActive = 0;
+
+    for (let index = 0; index < 12; index++) {
+      registerChannel({
+        name: `channel-${index}`,
+        send: vi.fn(async () => {
+          active++;
+          maxActive = Math.max(maxActive, active);
+          await new Promise<void>((resolve) => setImmediate(resolve));
+          active--;
+          return true;
+        }),
+      });
+    }
+
+    const resultsPromise = sendAlert(basePayload);
+
+    await new Promise<void>((resolve) => setImmediate(resolve));
+
+    expect(maxActive).toBeLessThanOrEqual(8);
+
+    const results = await resultsPromise;
+    expect(results.size).toBe(12);
+    expect(Array.from(results.values()).every(Boolean)).toBe(true);
+  });
 });
 
 // ─── sendAlertTo ─────────────────────────────────────────────────────────────

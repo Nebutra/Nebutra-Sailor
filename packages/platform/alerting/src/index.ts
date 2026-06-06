@@ -8,6 +8,8 @@
  * - Custom webhooks
  */
 
+import pLimit from "p-limit";
+
 export type AlertSeverity = "info" | "warning" | "error" | "critical";
 
 export interface AlertPayload {
@@ -32,6 +34,7 @@ export interface AlertChannel {
 type AlertErrorHandler = (context: string, error: unknown) => void;
 
 let _errorHandler: AlertErrorHandler = () => {};
+const ALERT_DISPATCH_CONCURRENCY = 8;
 
 /**
  * Configure a handler for internal alerting errors.
@@ -215,31 +218,34 @@ export function createWebhookChannel(
  */
 export async function sendAlert(payload: AlertPayload): Promise<Map<string, boolean>> {
   const results = new Map<string, boolean>();
+  const limit = pLimit(ALERT_DISPATCH_CONCURRENCY);
   const enrichedPayload = {
     ...payload,
     timestamp: payload.timestamp || new Date().toISOString(),
     environment: payload.environment || process.env.NODE_ENV,
   };
 
-  const promises = Array.from(channels.entries()).map(async ([name, channel]) => {
-    try {
-      const finalPayload: AlertPayload = {
-        title: enrichedPayload.title,
-        message: enrichedPayload.message,
-        severity: enrichedPayload.severity,
-      };
-      if (enrichedPayload.service) finalPayload.service = enrichedPayload.service;
-      if (enrichedPayload.timestamp) finalPayload.timestamp = enrichedPayload.timestamp;
-      if (enrichedPayload.environment) finalPayload.environment = enrichedPayload.environment;
-      if (enrichedPayload.metadata) finalPayload.metadata = enrichedPayload.metadata;
+  const promises = Array.from(channels.entries()).map(([name, channel]) =>
+    limit(async () => {
+      try {
+        const finalPayload: AlertPayload = {
+          title: enrichedPayload.title,
+          message: enrichedPayload.message,
+          severity: enrichedPayload.severity,
+        };
+        if (enrichedPayload.service) finalPayload.service = enrichedPayload.service;
+        if (enrichedPayload.timestamp) finalPayload.timestamp = enrichedPayload.timestamp;
+        if (enrichedPayload.environment) finalPayload.environment = enrichedPayload.environment;
+        if (enrichedPayload.metadata) finalPayload.metadata = enrichedPayload.metadata;
 
-      const success = await channel.send(finalPayload);
-      results.set(name, success);
-    } catch (error) {
-      _errorHandler(`Alert channel ${name} failed`, error);
-      results.set(name, false);
-    }
-  });
+        const success = await channel.send(finalPayload);
+        results.set(name, success);
+      } catch (error) {
+        _errorHandler(`Alert channel ${name} failed`, error);
+        results.set(name, false);
+      }
+    }),
+  );
 
   await Promise.allSettled(promises);
   return results;
@@ -253,37 +259,40 @@ export async function sendAlertTo(
   payload: AlertPayload,
 ): Promise<Map<string, boolean>> {
   const results = new Map<string, boolean>();
+  const limit = pLimit(ALERT_DISPATCH_CONCURRENCY);
   const enrichedPayload = {
     ...payload,
     timestamp: payload.timestamp || new Date().toISOString(),
     environment: payload.environment || process.env.NODE_ENV,
   };
 
-  const promises = channelNames.map(async (name) => {
-    const channel = channels.get(name);
-    if (!channel) {
-      results.set(name, false);
-      return;
-    }
+  const promises = channelNames.map((name) =>
+    limit(async () => {
+      const channel = channels.get(name);
+      if (!channel) {
+        results.set(name, false);
+        return;
+      }
 
-    try {
-      const finalPayload: AlertPayload = {
-        title: enrichedPayload.title,
-        message: enrichedPayload.message,
-        severity: enrichedPayload.severity,
-      };
-      if (enrichedPayload.service) finalPayload.service = enrichedPayload.service;
-      if (enrichedPayload.timestamp) finalPayload.timestamp = enrichedPayload.timestamp;
-      if (enrichedPayload.environment) finalPayload.environment = enrichedPayload.environment;
-      if (enrichedPayload.metadata) finalPayload.metadata = enrichedPayload.metadata;
+      try {
+        const finalPayload: AlertPayload = {
+          title: enrichedPayload.title,
+          message: enrichedPayload.message,
+          severity: enrichedPayload.severity,
+        };
+        if (enrichedPayload.service) finalPayload.service = enrichedPayload.service;
+        if (enrichedPayload.timestamp) finalPayload.timestamp = enrichedPayload.timestamp;
+        if (enrichedPayload.environment) finalPayload.environment = enrichedPayload.environment;
+        if (enrichedPayload.metadata) finalPayload.metadata = enrichedPayload.metadata;
 
-      const success = await channel.send(finalPayload);
-      results.set(name, success);
-    } catch (error) {
-      _errorHandler(`Alert channel ${name} failed`, error);
-      results.set(name, false);
-    }
-  });
+        const success = await channel.send(finalPayload);
+        results.set(name, success);
+      } catch (error) {
+        _errorHandler(`Alert channel ${name} failed`, error);
+        results.set(name, false);
+      }
+    }),
+  );
 
   await Promise.allSettled(promises);
   return results;
