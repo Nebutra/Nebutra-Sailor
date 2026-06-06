@@ -1,4 +1,8 @@
+import { buildFeedChannelMeta, getSiteUrl } from "@nebutra/brand/metadata-helpers";
 import { getChangelogEntries } from "@nebutra/sanity/queries";
+
+const feedMeta = buildFeedChannelMeta();
+const SITE_URL = getSiteUrl("landing");
 
 // Static fallback data used when Sanity CMS has no entries
 const STATIC_RELEASES = [
@@ -142,8 +146,8 @@ function buildAtomXml(entries: (ChangelogEntry | (typeof STATIC_RELEASES)[0])[])
 
       return `  <entry>
     <title>v${escapeXml(version)}: ${escapeXml(type)}</title>
-    <id>https://nebutra.com/changelog/${escapeXml(version)}</id>
-    <link href="https://nebutra.com/changelog/${escapeXml(version)}" />
+    <id>${SITE_URL}/changelog/${escapeXml(version)}</id>
+    <link href="${SITE_URL}/changelog/${escapeXml(version)}" />
     <published>${pubDate}</published>
     <updated>${pubDate}</updated>
     <category term="${escapeXml(type)}" />
@@ -154,12 +158,12 @@ function buildAtomXml(entries: (ChangelogEntry | (typeof STATIC_RELEASES)[0])[])
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Nebutra Changelog</title>
-  <link href="https://nebutra.com/changelog" />
-  <link href="https://nebutra.com/api/changelog/atom" rel="self" />
-  <id>https://nebutra.com/changelog</id>
+  <title>${feedMeta.title}</title>
+  <link href="${feedMeta.link}" />
+  <link href="${SITE_URL}/api/changelog/atom" rel="self" />
+  <id>${feedMeta.link}</id>
   <updated>${now}</updated>
-  <subtitle>Every release, shipped with obsessive attention to detail.</subtitle>
+  <subtitle>${feedMeta.description}</subtitle>
 ${entries_xml}
 </feed>`;
 }

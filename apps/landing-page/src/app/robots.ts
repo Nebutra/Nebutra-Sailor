@@ -1,7 +1,8 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? `https://${brand.domains.landing}`;
 
   return {
     rules: [

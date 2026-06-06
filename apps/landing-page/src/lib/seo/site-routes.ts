@@ -1,6 +1,11 @@
+import { brand } from "@nebutra/brand/metadata";
 import { type Locale, routing } from "@/i18n/routing";
 
-export const DEFAULT_SITE_URL = "https://nebutra.com" as const;
+// DEFAULT_SITE_URL is derived from the brand SSOT so a single `pnpm brand:apply`
+// propagates the domain change to all SEO surfaces.
+// Note: no `as const` — the type is `string` because brand.domains.landing
+// is not a compile-time string literal from TypeScript's perspective.
+export const DEFAULT_SITE_URL = `https://${brand.domains.landing}`;
 
 export const HREFLANG_BY_LOCALE = {
   en: "en",

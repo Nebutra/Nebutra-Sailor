@@ -1,4 +1,8 @@
+import { buildFeedChannelMeta, getSiteUrl } from "@nebutra/brand/metadata-helpers";
 import { getChangelogEntries } from "@nebutra/sanity/queries";
+
+const feedMeta = buildFeedChannelMeta();
+const SITE_URL = getSiteUrl("landing");
 
 // Static fallback data used when Sanity CMS has no entries
 const STATIC_RELEASES = [
@@ -146,8 +150,8 @@ function buildRssXml(entries: (ChangelogEntry | (typeof STATIC_RELEASES)[0])[]):
 
       return `  <item>
     <title>v${escapeXml(version)}: ${escapeXml(type)}</title>
-    <link>https://nebutra.com/changelog/${escapeXml(version)}</link>
-    <guid isPermaLink="true">https://nebutra.com/changelog/${escapeXml(version)}</guid>
+    <link>${SITE_URL}/changelog/${escapeXml(version)}</link>
+    <guid isPermaLink="true">${SITE_URL}/changelog/${escapeXml(version)}</guid>
     <pubDate>${pubDate}</pubDate>
     <category>${escapeXml(type)}</category>
     <description>${buildDescription(highlights)}</description>
@@ -158,10 +162,10 @@ function buildRssXml(entries: (ChangelogEntry | (typeof STATIC_RELEASES)[0])[]):
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Nebutra Changelog</title>
-    <link>https://nebutra.com/changelog</link>
-    <description>Every release, shipped with obsessive attention to detail.</description>
-    <language>en-us</language>
+    <title>${feedMeta.title}</title>
+    <link>${feedMeta.link}</link>
+    <description>${feedMeta.description}</description>
+    <language>${feedMeta.language}</language>
     <lastBuildDate>${formatRfc2822(new Date().toISOString())}</lastBuildDate>
     <ttl>3600</ttl>
 ${items}

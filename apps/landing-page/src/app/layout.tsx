@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -38,10 +39,11 @@ const playfairDisplay = Playfair_Display({
  */
 export const metadata: Metadata = {
   keywords: [...seoContent.keywords],
-  authors: [{ name: "Nebutra" }],
-  creator: "Nebutra",
-  publisher: "Nebutra Intelligence",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com"),
+  authors: [{ name: brand.name }],
+  creator: brand.name,
+  publisher: brand.name,
+  // metadataBase localhost fallback allows relative-URL OG images to resolve in dev
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? `https://${brand.domains.landing}`),
   alternates: {
     canonical: "/",
   },
@@ -50,14 +52,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: "https://nebutra.com",
-    siteName: "Nebutra Sailor",
+    url: `https://${brand.domains.landing}`,
+    siteName: `${brand.name} Sailor`,
     images: [
       {
         url: seoContent.ogImage,
         width: 1200,
         height: 630,
-        alt: "Nebutra Sailor",
+        alt: `${brand.name} Sailor`,
       },
     ],
   },

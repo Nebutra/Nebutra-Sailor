@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 import type { routing } from "@/i18n/routing";
 import {
@@ -58,7 +59,7 @@ export function buildPageMetadata(opts: BuildPageMetadataOptions): Metadata {
   const languages = buildHreflangAlternates(baseUrl, opts.path);
   const imageUrl = opts.image ?? defaultOgImageUrl(baseUrl, opts.title, opts.description);
   const ogType: OgType = opts.type ?? "website";
-  const siteName = opts.siteName ?? "Nebutra";
+  const siteName = opts.siteName ?? brand.name;
 
   return {
     title: opts.title,

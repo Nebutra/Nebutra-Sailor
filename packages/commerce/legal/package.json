@@ -53,6 +53,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
     "@nebutra/db": "workspace:*"
   },
   "devDependencies": {

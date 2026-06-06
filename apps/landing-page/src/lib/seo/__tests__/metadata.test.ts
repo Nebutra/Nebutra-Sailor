@@ -1,11 +1,14 @@
+import { brand } from "@nebutra/brand/metadata";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { buildPageMetadata, DEFAULT_SITE_URL } from "../metadata";
+
+const EXPECTED_SITE_URL = `https://${brand.domains.landing}`;
 
 describe("buildPageMetadata", () => {
   const ORIGINAL_ENV = process.env.NEXT_PUBLIC_SITE_URL;
 
   beforeEach(() => {
-    process.env.NEXT_PUBLIC_SITE_URL = "https://nebutra.com";
+    process.env.NEXT_PUBLIC_SITE_URL = EXPECTED_SITE_URL;
   });
 
   afterEach(() => {
@@ -32,7 +35,7 @@ describe("buildPageMetadata", () => {
     });
     expect(meta.title).toBe("Pricing");
     expect(meta.description).toBe("Plans");
-    expect(meta.alternates?.canonical).toBe("https://nebutra.com/pricing");
+    expect(meta.alternates?.canonical).toBe(`${EXPECTED_SITE_URL}/pricing`);
   });
 
   it("includes locale prefix in canonical for non-default locale", () => {
@@ -42,7 +45,7 @@ describe("buildPageMetadata", () => {
       path: "/pricing",
       locale: "zh",
     });
-    expect(meta.alternates?.canonical).toBe("https://nebutra.com/zh/pricing");
+    expect(meta.alternates?.canonical).toBe(`${EXPECTED_SITE_URL}/zh/pricing`);
   });
 
   it("generates hreflang alternates for every supported locale", () => {
@@ -54,9 +57,9 @@ describe("buildPageMetadata", () => {
     });
     const languages = meta.alternates?.languages as Record<string, string>;
     expect(languages).toBeDefined();
-    expect(languages.en).toBe("https://nebutra.com");
-    expect(languages["zh-Hans"]).toBe("https://nebutra.com/zh");
-    expect(languages["x-default"]).toBe("https://nebutra.com");
+    expect(languages.en).toBe(EXPECTED_SITE_URL);
+    expect(languages["zh-Hans"]).toBe(`${EXPECTED_SITE_URL}/zh`);
+    expect(languages["x-default"]).toBe(EXPECTED_SITE_URL);
   });
 
   it("populates openGraph and twitter metadata", () => {
@@ -65,13 +68,13 @@ describe("buildPageMetadata", () => {
       description: "Plans",
       path: "/pricing",
       locale: "en",
-      image: "https://nebutra.com/custom.png",
+      image: `${EXPECTED_SITE_URL}/custom.png`,
     });
     expect(meta.openGraph?.title).toBe("Pricing");
     expect(meta.openGraph?.description).toBe("Plans");
-    expect(meta.openGraph?.url).toBe("https://nebutra.com/pricing");
+    expect(meta.openGraph?.url).toBe(`${EXPECTED_SITE_URL}/pricing`);
     const ogImages = meta.openGraph?.images as Array<{ url: string }>;
-    expect(ogImages?.[0]?.url).toBe("https://nebutra.com/custom.png");
+    expect(ogImages?.[0]?.url).toBe(`${EXPECTED_SITE_URL}/custom.png`);
     const twitter = meta.twitter as { card?: string };
     expect(twitter?.card).toBe("summary_large_image");
   });

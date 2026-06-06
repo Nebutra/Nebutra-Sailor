@@ -1,3 +1,8 @@
+import {
+  buildOrganizationJsonLd,
+  buildSoftwareApplicationJsonLd,
+  buildWebSiteJsonLd,
+} from "@nebutra/brand/metadata-helpers";
 import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -25,16 +30,18 @@ interface LangLayoutProps {
   params: Promise<{ lang: string }>;
 }
 
+// Organization JSON-LD: base from metadata-helpers + company-specific fields spread-merged.
+// legalName and contact emails are intentionally kept manual (not in brand object).
+const orgBase = buildOrganizationJsonLd();
+const websiteBase = buildWebSiteJsonLd();
+const softwareBase = buildSoftwareApplicationJsonLd();
+
 const jsonLd = [
   {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": "https://nebutra.com/#organization",
-    name: "Nebutra",
-    alternateName: "云毓智能",
+    ...orgBase,
+    // Company-specific fields not in the brand object:
     legalName: "无锡云毓智能科技有限公司",
-    url: "https://nebutra.com",
-    logo: "https://nebutra.com/icon.png",
+    logo: `${orgBase.url}/icon.png`,
     foundingDate: "2024",
     address: {
       "@type": "PostalAddress",
@@ -46,40 +53,25 @@ const jsonLd = [
       {
         "@type": "ContactPoint",
         contactType: "customer support",
-        email: "support@nebutra.com",
+        email: `support@${new URL(orgBase.url).hostname}`,
         availableLanguage: ["Chinese", "English"],
       },
       {
         "@type": "ContactPoint",
         contactType: "sales",
-        email: "sales@nebutra.com",
+        email: `sales@${new URL(orgBase.url).hostname}`,
         availableLanguage: ["Chinese", "English"],
       },
     ],
-    sameAs: [
-      "https://github.com/Nebutra/Nebutra-Sailor",
-      "https://x.com/nebutra",
-      "https://linkedin.com/company/nebutra",
-    ],
   },
   {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": "https://nebutra.com/#website",
-    name: "Nebutra",
-    url: "https://nebutra.com",
+    ...websiteBase,
+    // Use the rich seoContent description for the website JSON-LD
     description: seoContent.description,
-    publisher: { "@id": "https://nebutra.com/#organization" },
-    inLanguage: ["en", "zh"],
   },
   {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "Nebutra Sailor",
-    applicationCategory: "DeveloperApplication",
-    url: "https://github.com/Nebutra/Nebutra-Sailor",
+    ...softwareBase,
     description: "The Startup Agent OS — ship global SaaS in days, not months",
-    author: { "@id": "https://nebutra.com/#organization" },
     offers: {
       "@type": "Offer",
       price: "0",

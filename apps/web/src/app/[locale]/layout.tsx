@@ -1,5 +1,7 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
+import { brand } from "@nebutra/brand/metadata";
+import { getSiteMetadata } from "@nebutra/brand/metadata-helpers";
 import { fontRegistryClassName } from "@nebutra/fonts/next";
 import { THEME_STORAGE_KEY } from "@nebutra/tokens";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
@@ -41,20 +43,20 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  // Spread brand-derived base; override service-specific fields below.
+  // metadataBase localhost fallback for local dev (no NEXT_PUBLIC_SITE_URL set).
+  ...getSiteMetadata({ service: "app" }),
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  applicationName: "Nebutra",
   title: {
-    default: "Nebutra - AI-native SaaS console",
-    template: "%s - Nebutra",
+    default: `${brand.name} - AI-native SaaS console`,
+    template: `%s - ${brand.name}`,
   },
-  description:
-    "Public intelligence surface for Nebutra's AI-native SaaS platform. Sign in to activate private workspaces, chat, analytics, billing, and administration.",
+  description: `Public intelligence surface for ${brand.name}'s AI-native SaaS platform. Sign in to activate private workspaces, chat, analytics, billing, and administration.`,
   openGraph: {
     type: "website",
-    siteName: "Nebutra",
-    title: "Nebutra - AI-native SaaS console",
-    description:
-      "Public intelligence surface for Nebutra's AI-native SaaS platform with private services behind account access.",
+    siteName: brand.name,
+    title: `${brand.name} - AI-native SaaS console`,
+    description: `Public intelligence surface for ${brand.name}'s AI-native SaaS platform with private services behind account access.`,
   },
   alternates: {
     canonical: "/",

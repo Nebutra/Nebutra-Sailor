@@ -5,6 +5,7 @@
  * This follows Silicon Valley unicorn patterns for legal infrastructure.
  */
 
+import { brand } from "@nebutra/brand/metadata";
 import type {
   CompanyInfo,
   ContactConfig,
@@ -20,8 +21,9 @@ import type {
 // ============================================
 
 export const companyInfo: CompanyInfo = {
+  // legalName is intentionally kept manual — must match official registration records.
   legalName: "Nebutra, Inc.",
-  tradeName: "Nebutra",
+  tradeName: brand.name,
   jurisdiction: "Delaware, United States",
   registrationNumber: "", // To be filled
   vatNumber: "", // To be filled if applicable
@@ -389,9 +391,9 @@ export const contactConfig: ContactConfig = {
   legalEmail: "legal@nebutra.com",
   privacyEmail: "privacy@nebutra.com",
   social: {
-    twitter: "https://twitter.com/nebutra",
-    linkedin: "https://linkedin.com/company/nebutra",
-    github: "https://github.com/nebutra",
+    twitter: brand.social.twitter,
+    linkedin: brand.social.linkedin,
+    github: brand.social.github,
   },
 };
 

@@ -26,6 +26,7 @@
     "@nebutra/agent-runtime": "workspace:*",
     "@nebutra/agents": "workspace:*",
     "@nebutra/analytics": "workspace:*",
+    "@nebutra/brand": "workspace:*",
     "@nebutra/atelier-canvas": "workspace:*",
     "@nebutra/audit": "workspace:*",
     "@nebutra/auth": "workspace:*",

@@ -2,6 +2,7 @@
  * @nebutra/marketing - Configuration
  */
 
+import { brand } from "@nebutra/brand/metadata";
 import type { MarketingConfig, ProductHuntConfig } from "../types";
 
 // ============================================
@@ -9,13 +10,13 @@ import type { MarketingConfig, ProductHuntConfig } from "../types";
 // ============================================
 
 export const defaultMarketingConfig: MarketingConfig = {
-  companyName: "Nebutra",
-  website: "https://nebutra.com",
+  companyName: brand.name,
+  website: `https://${brand.domains.landing}`,
   social: {
-    twitter: "https://twitter.com/nebutra",
-    github: "https://github.com/nebutra",
-    linkedin: "https://linkedin.com/company/nebutra",
-    discord: "https://discord.gg/nebutra",
+    twitter: brand.social.twitter,
+    github: brand.social.github,
+    linkedin: brand.social.linkedin,
+    discord: brand.social.discord,
   },
   analytics: {
     enableAttribution: true,
