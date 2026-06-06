@@ -57,28 +57,7 @@ const stripComments = (src) =>
 
 const isExcluded = (p) => excludePaths.some((re) => re.test(p));
 
-// Collect all TS/TSX files under the scan roots.
 const grepRoots = scanRoots.join(" ");
-
-// Build all candidate files from the scan roots (fast existence check before
-// per-pattern grep — avoids spawning one process per pattern × file).
-let allCandidateFiles = [];
-if (scanRoots.length > 0) {
-  try {
-    const raw = execSync(
-      `find ${grepRoots} -type f \\( -name '*.ts' -o -name '*.tsx' \\) 2>/dev/null` +
-        " | grep -v node_modules | grep -v '/dist/' | grep -v '/.next/' | grep -v '/generated/'",
-      { encoding: "utf-8" },
-    ).trim();
-    allCandidateFiles = raw
-      .split("\n")
-      .map((p) => p.replace(/^\.\//, ""))
-      .filter(Boolean)
-      .filter((p) => !isExcluded(p));
-  } catch {
-    allCandidateFiles = [];
-  }
-}
 
 // If no patterns are defined (fresh scaffold), nothing to check.
 if (bannedPatterns.length === 0) {
