@@ -11,8 +11,10 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ lang: string; id: string }> };
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return routing.locales.flatMap((lang) => CHINA_VC_ORGS.map((o) => ({ lang, id: String(o.id) })));
+  return CHINA_VC_ORGS.map((o) => ({ lang: routing.defaultLocale, id: String(o.id) }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

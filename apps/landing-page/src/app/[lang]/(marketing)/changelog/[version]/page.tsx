@@ -253,12 +253,13 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
   );
 }
 
+export const dynamicParams = true;
+
 /**
- * Generate static parameters for all locales × all versions
+ * Generate static parameters for the default locale only.
+ * Other locales render on-demand and are then cached via PPR.
  */
 export async function generateStaticParams() {
-  const params: Array<{ lang: string; version: string }> = [];
-
   // Get versions from CMS, fall back to static data
   const cmsEntries: CmsEntry[] = await getChangelogEntries().catch(() => []);
   const versions =
@@ -266,14 +267,7 @@ export async function generateStaticParams() {
       ? cmsEntries.map((e) => e.version)
       : STATIC_RELEASES.map((r) => r.version);
 
-  // Generate params for each locale × version
-  for (const locale of routing.locales) {
-    for (const version of versions) {
-      params.push({ lang: locale, version });
-    }
-  }
-
-  return params;
+  return versions.map((version) => ({ lang: routing.defaultLocale, version }));
 }
 
 /**

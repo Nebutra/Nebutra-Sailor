@@ -14,8 +14,10 @@ type SolutionDetailPageProps = {
   params: Promise<{ lang: string; slug: string }>;
 };
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return routing.locales.flatMap((lang) => getAllSolutionSlugs().map((slug) => ({ lang, slug })));
+  return getAllSolutionSlugs().map((slug) => ({ lang: routing.defaultLocale, slug }));
 }
 
 export async function generateMetadata({ params }: SolutionDetailPageProps): Promise<Metadata> {

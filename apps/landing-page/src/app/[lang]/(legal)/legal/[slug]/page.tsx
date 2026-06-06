@@ -19,8 +19,10 @@ const KNOWN_LEGAL_SLUGS = [
   "acceptable-use",
 ] as const;
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return routing.locales.flatMap((lang) => KNOWN_LEGAL_SLUGS.map((slug) => ({ lang, slug })));
+  return KNOWN_LEGAL_SLUGS.map((slug) => ({ lang: routing.defaultLocale, slug }));
 }
 
 interface LegalSlugPageProps {

@@ -72,10 +72,13 @@ function scopeLabel(group: string, locale: "en" | "zh") {
   return COPY.govScopeGlobal[locale];
 }
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
-  return routing.locales.flatMap((lang) =>
-    PACKAGE_FEATURE_ENTRIES.map((entry) => ({ lang, name: entry.slug })),
-  );
+  return PACKAGE_FEATURE_ENTRIES.map((entry) => ({
+    lang: routing.defaultLocale,
+    name: entry.slug,
+  }));
 }
 
 export async function generateMetadata({ params }: FeatureDetailPageProps): Promise<Metadata> {
