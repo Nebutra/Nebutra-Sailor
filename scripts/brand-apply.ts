@@ -499,12 +499,17 @@ export type LogoAssets = typeof logoAssets;
   // Auto-fix the just-emitted file so brand:apply always lands a
   // lint-clean tree (otherwise `pnpm lint` in CI flags the generator's
   // own output, which kept CI red across runs 26079161015 → 26081453758).
+  //
+  // Use the direct binary path (node_modules/.bin/biome) instead of
+  // `pnpm exec biome` so this works in test contexts where tsx runs
+  // brand-apply.ts directly (pnpm's verify-deps check would block pnpm exec
+  // and the try-catch would swallow the error, leaving unformatted output).
+  const biomeBin = path.join(ROOT, "node_modules", ".bin", "biome");
   try {
-    execFileSync(
-      "pnpm",
-      ["exec", "biome", "check", "--write", "--no-errors-on-unmatched", metadataPath],
-      { cwd: ROOT, stdio: "pipe" },
-    );
+    execFileSync(biomeBin, ["check", "--write", "--no-errors-on-unmatched", metadataPath], {
+      cwd: ROOT,
+      stdio: "pipe",
+    });
   } catch {
     // Biome exits non-zero when it can't auto-fix every diagnostic; the
     // file is still written with whatever fixes did apply, and the CI
