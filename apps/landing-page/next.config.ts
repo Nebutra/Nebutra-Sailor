@@ -64,6 +64,18 @@ const nextConfig: NextConfig = {
     viewTransition: true,
     webpackBuildWorker: true,
     webpackMemoryOptimizations: true,
+    // Rewrite barrel imports of the dist-published internal packages into direct
+    // per-module imports so webpack's build-time module graph stays small.
+    // Without this, 170+ files each pull the full ~1MB @nebutra/ui/primitives
+    // barrel (and the ~382KB canonical chunk) into the graph, which exhausts the
+    // build container on a cold webpack build (the SIGKILL/OOM on the 8GB runner).
+    optimizePackageImports: [
+      "@nebutra/ui",
+      "@nebutra/ui/primitives",
+      "@nebutra/ui/components",
+      "@nebutra/icons",
+      "@nebutra/brand",
+    ],
   },
 
   // Vercel should produce the deployable artifact quickly; type checking stays
