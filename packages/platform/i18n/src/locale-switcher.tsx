@@ -130,7 +130,12 @@ export function createLocaleSwitcher<TLocale extends string>(
         setLocaleCookie(next);
         setOpen(false);
         startTransition(() => {
-          router.replace(pathname, { locale: next });
+          // scroll: false — a locale switch is the *same* page in another
+          // language; the reader must stay exactly where they are. Without this,
+          // App Router's default scroll handling (amplified by any global
+          // `scroll-behavior: smooth`) resets the position and, during PPR
+          // streaming, can land on the footer.
+          router.replace(pathname, { locale: next, scroll: false });
         });
       },
       [locale, pathname, router],
