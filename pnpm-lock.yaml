@@ -4136,6 +4136,9 @@ importers:
       '@prisma/client-runtime-utils':
         specifier: ^7.4.2
         version: 7.4.2
+      p-limit:
+        specifier: ^7.3.0
+        version: 7.3.0
       pg:
         specifier: ^8.20.0
         version: 8.20.0

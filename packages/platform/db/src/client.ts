@@ -1,6 +1,7 @@
 import { logger } from "@nebutra/logger";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
+import { decryptRecordsWithLimit } from "./decrypt-concurrency";
 import { PrismaClient } from "./generated/prisma/client";
 
 const globalForPrisma = globalThis as unknown as {
@@ -168,7 +169,7 @@ function createPrismaClient(): PrismaClient {
             };
 
             if (Array.isArray(result)) {
-              await Promise.all(result.map(decryptRecord));
+              await decryptRecordsWithLimit(result, decryptRecord);
             } else {
               await decryptRecord(result);
             }
@@ -251,7 +252,7 @@ function createPrismaClient(): PrismaClient {
             };
 
             if (Array.isArray(result)) {
-              await Promise.all(result.map(decryptRecord));
+              await decryptRecordsWithLimit(result, decryptRecord);
             } else {
               await decryptRecord(result);
             }
