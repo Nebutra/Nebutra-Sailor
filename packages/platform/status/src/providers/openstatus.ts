@@ -13,7 +13,7 @@ import type {
   StatusPageData,
   StatusState,
 } from "../types";
-import { calculateOverallStatus, getDefaultStatusData } from "./shared";
+import { calculateOverallStatus, fetchWithStatusTimeout, getDefaultStatusData } from "./shared";
 
 const DEFAULT_API_URL = "https://api.openstatus.dev/v1";
 
@@ -29,11 +29,11 @@ export class OpenStatusProvider implements StatusProvider {
     const url = `${apiUrl}/status-page/${this.config.pageSlug}/summary`;
 
     try {
-      const response = await fetch(url, {
+      const response = await fetchWithStatusTimeout(url, {
         headers: { Accept: "application/json" },
         // Next.js ISR: revalidate every 60 s
         next: { revalidate: 60 },
-      } as RequestInit);
+      });
 
       if (!response.ok) {
         throw new Error(`OpenStatus API error: ${response.status}`);

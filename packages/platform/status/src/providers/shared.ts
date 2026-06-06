@@ -4,6 +4,22 @@
 
 import type { StatusPageData, StatusState } from "../types";
 
+export const STATUS_FETCH_TIMEOUT_MS = 5000;
+
+type StatusRequestInit = RequestInit & {
+  next?: { revalidate?: number };
+};
+
+export function fetchWithStatusTimeout(
+  input: string | URL | Request,
+  init: StatusRequestInit = {},
+): Promise<Response> {
+  return fetch(input, {
+    ...init,
+    signal: init.signal ?? AbortSignal.timeout(STATUS_FETCH_TIMEOUT_MS),
+  });
+}
+
 export function calculateOverallStatus(
   monitors: { status: StatusState }[],
   incidents: { impact: string }[],

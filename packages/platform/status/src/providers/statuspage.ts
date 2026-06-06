@@ -29,7 +29,7 @@ import type {
   StatuspageConfig,
   StatusState,
 } from "../types";
-import { calculateOverallStatus, getDefaultStatusData } from "./shared";
+import { calculateOverallStatus, fetchWithStatusTimeout, getDefaultStatusData } from "./shared";
 
 export class AtlassianStatuspageProvider implements StatusProvider {
   private readonly config: StatuspageConfig;
@@ -43,10 +43,10 @@ export class AtlassianStatuspageProvider implements StatusProvider {
     const url = `${baseUrl}/api/v2/summary.json`;
 
     try {
-      const response = await fetch(url, {
+      const response = await fetchWithStatusTimeout(url, {
         headers: { Accept: "application/json" },
         next: { revalidate: 60 },
-      } as RequestInit);
+      });
 
       if (!response.ok) {
         throw new Error(`Statuspage API error: ${response.status}`);
