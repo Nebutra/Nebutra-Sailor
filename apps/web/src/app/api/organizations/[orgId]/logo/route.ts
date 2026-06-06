@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { resolveLogoUrl } from "@/lib/logo-url";
 
 type RouteContext = {
   params: Promise<{ orgId: string }>;
@@ -24,17 +25,6 @@ async function getCurrentMembership(orgId: string, userId: string) {
     where: { organizationId_userId: { organizationId: orgId, userId } },
     select: { id: true, role: true },
   });
-}
-
-/**
- * Resolve a public CDN-style URL from a storage key.
- * If `UPLOADS_PUBLIC_BASE_URL` is configured, the key is prefixed with it; otherwise the
- * key itself is returned (the consumer can resolve it through `/api/uploads/[key]`).
- */
-function resolveLogoUrl(key: string): string {
-  const baseUrl = process.env.UPLOADS_PUBLIC_BASE_URL?.replace(/\/+$/, "");
-  if (baseUrl) return `${baseUrl}/${key}`;
-  return `/api/uploads/${encodeURIComponent(key)}`;
 }
 
 function isManagedLogoKey(value: string | null | undefined): value is string {
@@ -121,23 +111,18 @@ export async function POST(request: Request, context: RouteContext) {
       );
     }
 
-    // TODO(#126 schema): once `Organization.logo` is added to Prisma schema, swap the cast for
-    // typed `data: { logo: parsed.data.key }`. The migration intentionally lives outside
-    // this subagent's allowed paths.
-    const updateData = { logo: parsed.data.key } as unknown as Record<string, unknown>;
-
     const previous = await db.organization.findUnique({
       where: { id: orgId },
-      select: { logo: true } as unknown as { logo: true },
+      select: { logo: true },
     });
 
     const updated = await db.organization.update({
       where: { id: orgId },
-      data: updateData,
+      data: { logo: parsed.data.key },
       select: { id: true, name: true, slug: true },
     });
 
-    const previousLogo = (previous as { logo?: string | null } | null)?.logo;
+    const previousLogo = previous?.logo;
     if (previousLogo !== parsed.data.key) {
       await deleteManagedLogoKey(previousLogo);
     }
@@ -169,17 +154,16 @@ export async function DELETE(_request: Request, context: RouteContext) {
 
     const previous = await db.organization.findUnique({
       where: { id: orgId },
-      select: { logo: true } as unknown as { logo: true },
+      select: { logo: true },
     });
 
-    const updateData = { logo: null } as unknown as Record<string, unknown>;
     const updated = await db.organization.update({
       where: { id: orgId },
-      data: updateData,
+      data: { logo: null },
       select: { id: true, name: true, slug: true },
     });
 
-    await deleteManagedLogoKey((previous as { logo?: string | null } | null)?.logo);
+    await deleteManagedLogoKey(previous?.logo);
 
     return NextResponse.json({
       organization: {
