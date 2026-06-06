@@ -130,4 +130,48 @@ describe("applySessionHint", () => {
     expect(all[0]).toContain("better-auth.session_token=abc");
     expect(all[1]).toContain(`${SESSION_HINT_COOKIE}=1`);
   });
+
+  // OAuth / Google One Tap callbacks SET the session cookie inside a 3xx
+  // redirect to the dashboard — the status+path check (2xx only) misses them,
+  // so without the Set-Cookie signal the landing never reflected a Google
+  // sign-in. These guard that regression.
+  it("sets the hint on a 3xx OAuth/One Tap callback that establishes a session cookie", () => {
+    const req = new Request("https://app.nebutra.com/api/auth/callback/google");
+    const resp = new Response(null, {
+      status: 302,
+      headers: { location: "https://app.nebutra.com/dashboard" },
+    });
+    resp.headers.append(
+      "Set-Cookie",
+      "better-auth.session_token=tok; HttpOnly; Path=/; SameSite=Lax",
+    );
+    // Path check alone would skip this (302 is not 2xx):
+    expect(isSignInSuccessPath("/api/auth/callback/google", 302)).toBe(false);
+    applySessionHint(req, resp);
+    expect(resp.headers.getSetCookie().some((c) => c.includes(`${SESSION_HINT_COOKIE}=1`))).toBe(
+      true,
+    );
+  });
+
+  it("does NOT set the hint on a 3xx callback that established no session (auth failure)", () => {
+    const req = new Request("https://app.nebutra.com/api/auth/callback/google");
+    const resp = new Response(null, {
+      status: 302,
+      headers: { location: "https://app.nebutra.com/sign-in?error=oauth" },
+    });
+    applySessionHint(req, resp);
+    expect(resp.headers.getSetCookie().some((c) => c.includes(SESSION_HINT_COOKIE))).toBe(false);
+  });
+
+  it("clears the hint when the response clears the session cookie", () => {
+    const req = new Request("https://app.nebutra.com/api/auth/revoke");
+    const resp = new Response(null, { status: 200 });
+    resp.headers.append("Set-Cookie", "__Secure-better-auth.session_token=; Path=/; Max-Age=0");
+    applySessionHint(req, resp);
+    expect(
+      resp.headers
+        .getSetCookie()
+        .some((c) => c.includes(`${SESSION_HINT_COOKIE}=;`) && c.includes("Max-Age=0")),
+    ).toBe(true);
+  });
 });

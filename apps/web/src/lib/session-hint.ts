@@ -58,20 +58,66 @@ export function isSignOutSuccessPath(path: string, status: number): boolean {
   return path.endsWith("/sign-out") || path.includes("/sign-out");
 }
 
+// Real session cookie names across providers: better-auth `*.session_token`,
+// NextAuth `*.session-token` / `authjs.session-token` (with optional __Secure-/
+// __Host- prefixes). The hint cookie (`nebutra_session_hint`) deliberately does
+// NOT match, so it's never mistaken for the session cookie.
+const SESSION_COOKIE_NAME_RE = /session[._-]token/i;
+
+function getSetCookieValues(response: Response): string[] {
+  if (typeof response.headers.getSetCookie === "function") {
+    return response.headers.getSetCookie();
+  }
+  const single = response.headers.get("set-cookie");
+  return single ? [single] : [];
+}
+
 /**
- * Inspect a finished auth response and append the session-hint cookie if the
- * path indicates sign-in success (set "1") or sign-out success (clear).
- * No-op for all other paths/statuses.
+ * Did this response establish or clear a real session cookie? This is the
+ * authoritative signal — OAuth / Google One Tap callbacks SET the session
+ * cookie inside a 3xx redirect to the dashboard, which a status+path check
+ * misses entirely.
+ */
+function inspectSessionCookie(response: Response): "set" | "cleared" | "none" {
+  let result: "set" | "cleared" | "none" = "none";
+  for (const raw of getSetCookieValues(response)) {
+    const semi = raw.indexOf(";");
+    const pair = semi >= 0 ? raw.slice(0, semi) : raw;
+    const eq = pair.indexOf("=");
+    const name = (eq >= 0 ? pair.slice(0, eq) : pair).trim();
+    if (!SESSION_COOKIE_NAME_RE.test(name)) continue;
+    const value = eq >= 0 ? pair.slice(eq + 1).trim() : "";
+    const attrs = (semi >= 0 ? raw.slice(semi + 1) : "").toLowerCase();
+    const cleared =
+      value === "" || /max-age=0(?:\b|;|$)/.test(attrs) || attrs.includes("max-age=-");
+    if (cleared) return "cleared"; // a clear (sign-out) is decisive
+    result = "set";
+  }
+  return result;
+}
+
+/**
+ * Inspect a finished auth response and append the session-hint cookie when the
+ * user's session was just established (set "1") or torn down (clear). No-op for
+ * everything else.
+ *
+ * The primary signal is whether the response set/cleared a REAL session cookie
+ * (`inspectSessionCookie`), so redirect-based OAuth / Google One Tap callbacks
+ * are covered — without it the hint only fired on 2xx email/password sign-in and
+ * the landing page never reflected a Google sign-in. The path/status checks stay
+ * as a fallback for flows that 2xx without an inline Set-Cookie.
  *
  * Pure side effect: mutates `response.headers` (intentional — Response is
  * non-cloneable cheap; rewriting would force a copy).
  */
 export function applySessionHint(request: Request, response: Response): Response {
   const path = new URL(request.url).pathname;
-  if (isSignInSuccessPath(path, response.status)) {
-    response.headers.append("Set-Cookie", buildSessionHintCookie("1", SESSION_HINT_MAX_AGE));
-  } else if (isSignOutSuccessPath(path, response.status)) {
+  const sessionCookie = inspectSessionCookie(response);
+
+  if (sessionCookie === "cleared" || isSignOutSuccessPath(path, response.status)) {
     response.headers.append("Set-Cookie", buildSessionHintCookie("", 0));
+  } else if (sessionCookie === "set" || isSignInSuccessPath(path, response.status)) {
+    response.headers.append("Set-Cookie", buildSessionHintCookie("1", SESSION_HINT_MAX_AGE));
   }
   return response;
 }
