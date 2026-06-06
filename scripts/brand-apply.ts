@@ -677,6 +677,6 @@ async function main() {
 }
 
 main().catch((e) => {
-  console.error(e);
+  process.stderr.write(`[brand:apply] Error: ${String(e)}\n`);
   process.exitCode = 1;
 });
