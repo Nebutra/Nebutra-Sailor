@@ -75,6 +75,16 @@ async function fetchOrganizations(signal?: AbortSignal): Promise<OrganizationSum
   return Array.isArray(payload?.organizations) ? payload.organizations : [];
 }
 
+async function fetchActiveOrgLogo(orgId: string, signal?: AbortSignal): Promise<string | null> {
+  const response = await fetch(`/api/organizations/${orgId}/logo-url`, {
+    credentials: "include",
+    signal,
+  });
+  if (!response.ok) return null;
+  const payload = (await response.json().catch(() => null)) as { logoUrl?: string | null } | null;
+  return payload?.logoUrl ?? null;
+}
+
 async function fetchThreads(workspaceId: string, signal?: AbortSignal): Promise<ThreadSummary[]> {
   const response = await fetch(`/api/organizations/${workspaceId}/threads`, {
     credentials: "include",
@@ -216,6 +226,17 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     enabled: isSignedIn && supportsWorkspaceSwitching && Boolean(activeWorkspaceId),
   });
   const activeWorkspaceThreads = threadsQuery.data ?? [];
+
+  // ─── Server read: active workspace tenant logo ────────────────────────────
+  // Fetches the resolved CDN URL for the active org's uploaded logo. Uses the
+  // same enabled-guard + sentinel pattern as threadsQuery so an unauthenticated
+  // or no-workspace state never fires the request.
+  const logoQuery = useQuery({
+    queryKey: queryKeys.organizations.logo(activeWorkspaceId ?? "__none__"),
+    queryFn: ({ signal }) => fetchActiveOrgLogo(activeWorkspaceId ?? "", signal),
+    enabled: isSignedIn && supportsWorkspaceSwitching && Boolean(activeWorkspaceId),
+  });
+  const tenantLogoUrl = logoQuery.data ?? null;
 
   // ─── Persistent Projects-section expansion ────────────────────────────────
   // zustand persist store (localStorage). SSR-safe: rehydration is deferred to
@@ -494,7 +515,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
             className="relative inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
           >
             <span className="flex items-center justify-center transition-opacity duration-150 group-hover/sidebar:opacity-0">
-              <BrandLogo variant="mark" className="size-7" />
+              <BrandLogo variant="mark" className="size-7" tenantLogoUrl={tenantLogoUrl} />
             </span>
             <span className="absolute inset-0 flex items-center justify-center text-sidebar-foreground/70 opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100">
               <SidebarLeft className="size-5" aria-hidden="true" />
@@ -509,7 +530,11 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
               aria-label={webBrandLabels.homeLink}
               className="inline-flex min-w-0 items-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:ring-offset-2"
             >
-              <BrandLogo variant="horizontal" className="h-6 w-[8.5rem]" />
+              <BrandLogo
+                variant="horizontal"
+                className="h-6 w-[8.5rem]"
+                tenantLogoUrl={tenantLogoUrl}
+              />
             </ViewTransitionLink>
             <button
               type="button"

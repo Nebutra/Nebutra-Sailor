@@ -1,10 +1,10 @@
 import { ChangeOrganizationNameForm } from "@/components/organizations/change-organization-name-form";
 import { DeleteOrganizationForm } from "@/components/organizations/delete-organization-form";
-import { OrganizationLogoForm } from "@/components/organizations/organization-logo-form";
 import { PermissionGate } from "@/components/PermissionGate";
 import { requireOrg } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { InviteMemberForm } from "./InviteMemberForm";
+import { OrganizationLogoFormWithInvalidation } from "./OrganizationLogoFormWithInvalidation";
 import { TeamMemberList } from "./TeamMemberList";
 
 export const metadata = { title: "Team — Settings" };
@@ -32,7 +32,11 @@ export default async function TeamPage() {
             Update your organization's branding and display name.
           </p>
           <div className="space-y-6">
-            <OrganizationLogoForm orgId={orgId} orgName={orgName} initialLogoUrl={orgLogo} />
+            <OrganizationLogoFormWithInvalidation
+              orgId={orgId}
+              orgName={orgName}
+              initialLogoUrl={orgLogo}
+            />
             <ChangeOrganizationNameForm orgId={orgId} initialName={orgName} />
           </div>
         </section>
