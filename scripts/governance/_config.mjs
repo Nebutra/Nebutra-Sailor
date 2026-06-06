@@ -99,6 +99,44 @@ const DEFAULTS = {
     // single-source brand identity from day one.
     allowlist: [],
   },
+  microcopyRules: {
+    // Directories scanned for banned microcopy patterns.
+    // Standard scaffold uses apps/web/src (the authenticated product surface).
+    // Override in governance.config.json for project-specific roots.
+    scanRoots: ["apps/web/src"],
+    // Path fragments (regex strings) permanently excluded from the check.
+    // API route error bodies are not user-facing creative copy (excluded
+    // structurally, not via the allowlist). Stories and test files are
+    // intentionally illustrative.
+    excludePaths: [
+      "/api/",
+      "\\.test\\.tsx?$",
+      "/__tests__/",
+      "/storybook/src/stories/",
+      "/design-docs/",
+      "/sailor-docs/",
+    ],
+    // Banned copy patterns to detect (array of { pattern: string, label: string }).
+    // Mechanically-lintable subset only:
+    //   禁七   generic empty-state: 暂无… / "No X (yet|available)"
+    //   禁四   LinkedIn/corporate-speak: 赋能/闭环/抓手/颗粒度/打法/系统检测到/请您
+    //   禁一   (partial) over-incentive: 加油/你能行/冲鸭/梦想成真
+    //   禁标点 emoji in string literals
+    //   禁标点 trailing ! / full-caps shout
+    // NOT enforceable mechanically (human-review only, 黄金50 acceptance gate):
+    //   禁二 empty motivational copy  禁三 self-moved copy
+    //   禁五 subtle 尬梗/谐音         禁六 naked references  §6.5 IP red lines
+    //
+    // Default is EMPTY: fresh scaffolds have no Nebutra-specific Chinese rules.
+    // Project-specific patterns live only in governance.config.json.
+    bannedPatterns: [],
+    // Files that currently contain raw microcopy violations. SHRINK-ONLY ratchet.
+    //
+    // Default is EMPTY: fresh scaffolds start with zero microcopy debt.
+    // The monorepo's own governance.config.json seeds this with the actual
+    // remaining offender set (migrated on-touch).
+    allowlist: [],
+  },
 };
 
 const isPlainObject = (value) =>
@@ -130,6 +168,7 @@ export const config = {
   rawInputs: mergeSection(DEFAULTS.rawInputs, fileConfig.rawInputs),
   repositorySeam: mergeSection(DEFAULTS.repositorySeam, fileConfig.repositorySeam),
   brandLiterals: mergeSection(DEFAULTS.brandLiterals, fileConfig.brandLiterals),
+  microcopyRules: mergeSection(DEFAULTS.microcopyRules, fileConfig.microcopyRules),
 };
 
 export { DEFAULTS };

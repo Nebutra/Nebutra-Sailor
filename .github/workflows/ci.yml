@@ -278,6 +278,13 @@ jobs:
       - name: Brand-literal governance lint
         run: node scripts/lint-brand-literals.mjs
 
+      # ── Microcopy 七禁令 governance lint ──────────────────────────────────
+      # Shrink-only ratchet: flags banned microcopy patterns in apps/web/src.
+      # Mechanically-lintable subset only (禁七/禁四/禁一 partial + emoji).
+      # 禁二/禁三/禁五/禁六 and IP red lines are gated by the golden-50 human review.
+      - name: Microcopy governance lint
+        run: node scripts/lint-microcopy.mjs
+
   # ── Python services — lint + test (matrix, parallel) ──────────────────────
   python-ci:
     name: Python CI (${{ matrix.service }})

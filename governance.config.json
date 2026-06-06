@@ -242,5 +242,54 @@
       "packages/integrations/queue/src/scheduled/jobs/invitation-cleanup.ts",
       "packages/integrations/queue/src/scheduled/jobs/session-cleanup.ts"
     ]
+  },
+  "microcopyRules": {
+    "scanRoots": ["apps/web/src"],
+    "excludePaths": [
+      "/api/",
+      "\\.test\\.tsx?$",
+      "/__tests__/",
+      "/storybook/src/stories/",
+      "/design-docs/",
+      "/sailor-docs/"
+    ],
+    "bannedPatterns": [
+      {
+        "pattern": "暂无",
+        "label": "禁七: 空白状态禁用「暂无」"
+      },
+      {
+        "pattern": "No [A-Za-z].*(yet|available)",
+        "label": "禁七: empty state lacks a 母题 (\"No X yet/available\")"
+      },
+      {
+        "pattern": "赋能|闭环|抓手|颗粒度|打法|系统检测到|请您",
+        "label": "禁四: LinkedIn/corporate-speak (赋能/闭环/抓手/颗粒度/打法/系统检测到/请您)"
+      },
+      {
+        "pattern": "加油|你能行|冲鸭|梦想成真",
+        "label": "禁一 (partial): over-incentive words (加油/你能行/冲鸭/梦想成真)"
+      }
+    ],
+    "allowlist": [
+      "apps/web/src/app/[locale]/(app)/integrations/page.tsx",
+      "apps/web/src/app/[locale]/(app)/settings/api-keys/ApiKeyList.tsx",
+      "apps/web/src/app/[locale]/(app)/settings/team/TeamMemberList.tsx",
+      "apps/web/src/app/[locale]/(app)/startup-os/company/page.tsx",
+      "apps/web/src/app/[locale]/(app)/usage/page.tsx",
+      "apps/web/src/app/[locale]/select-org/journey-state.ts",
+      "apps/web/src/components/admin/access-invite-issuer.tsx",
+      "apps/web/src/components/api-keys/api-keys-list.tsx",
+      "apps/web/src/components/charts/GrowthAreaChart.tsx",
+      "apps/web/src/components/charts/RevenueBarChart.tsx",
+      "apps/web/src/components/cofounder-match/matches-list.tsx",
+      "apps/web/src/components/notifications/notification-center.tsx",
+      "apps/web/src/components/notifications/notification-inbox-preview.tsx",
+      "apps/web/src/components/notifications/notifications-dialog.tsx",
+      "apps/web/src/components/startup-os/company-tower/control-deck.tsx",
+      "apps/web/src/components/startup-os/startup-os-file-tree.tsx",
+      "apps/web/src/components/webhooks/webhook-deliveries-panel.tsx",
+      "apps/web/src/components/webhooks/webhooks-list.tsx"
+    ]
   }
 }
