@@ -20,6 +20,7 @@
       "apps/web/src/app/api/onboarding/invite-members/route.ts",
       "apps/web/src/app/api/startup-os/projects/[projectId]/runs/[runId]/execute/route.ts",
       "apps/web/src/lib/invitations.ts",
+      "backends/gateway/src/inngest/functions/automationScheduler.ts",
       "backends/gateway/src/inngest/functions/gdprDeletion.ts",
       "backends/gateway/src/inngest/functions/tenantProvisioning.ts",
       "backends/gateway/src/inngest/functions/userSync.ts",
