@@ -1,5 +1,18 @@
 # create-sailor
 
+## 1.8.0
+
+### Minor Changes
+
+- [`4769338`](https://github.com/Nebutra/Nebutra-Sailor/commit/47693386093eb725158753e3ca3b16a632b6935b) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Maintenance + dependency upgrades:
+
+  - Bump CLI dependencies: `commander` 12→15, `ignore` 5→7, `@clack/prompts` 0.7→1.5, `@mrleebo/prisma-ast` 0.15→0.16.
+  - Raise the Node engine floor to `>=20.9.0` (Node 18 is EOL; `commander` 15 requires Node 20+).
+  - Migrate `@clack/prompts` `validate` callbacks to v1's stricter `string | undefined` value type.
+  - Drop an unused `@ts-expect-error` on the optional `@nebutra/analytics` import (was failing `tsc` with TS2578).
+
+  CLI commands, flags, and scaffold behavior are unchanged.
+
 ## 1.7.3
 
 ### Patch Changes
@@ -13,6 +26,7 @@
 - [`94adc0a`](https://github.com/Nebutra/Nebutra-Sailor/commit/94adc0ad7d305e92ef62411768b04f8fd79cdb48) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Close drift between the CLI/scaffolder surface and the current monorepo.
 
   `nebutra`:
+
   - Read VERSION from package.json at module load (was hardcoded "0.1.0"
     while published as 0.3.0, breaking --version and update-notifier).
   - Switch `@nebutra/theme` dep from `workspace:*` to published `^0.1.0`
@@ -36,6 +50,7 @@
     pre-merger `packages/ui`).
 
   `create-sailor`:
+
   - Show the same `NEBUTRA_TELEMETRY` first-run banner that the runtime
     CLI shows, using a shared `~/.config/nebutra/first-run-acked` marker
     so the banner only fires once per machine across both tools. Users
@@ -53,6 +68,7 @@
   new code can opt into Drizzle's SQL-shaped query builder while existing
   auth / billing / audit / oauth flows keep working against Prisma. The
   Drizzle package ships with:
+
   - `drizzle.config.ts` targeting Postgres
   - `src/schema/{auth,tenant,billing}.ts` — read-mostly mirrors of the core
     Better Auth (user/session/account/verification/organization/member/
