@@ -32,6 +32,7 @@ import { apiVersionMiddleware } from "./middlewares/apiVersion.js";
 import { auditMutationMiddleware } from "./middlewares/auditMutation.js";
 import { idempotencyMiddleware } from "./middlewares/idempotency.js";
 import { rateLimitMiddleware } from "./middlewares/rateLimit.js";
+import { shouldSkipGlobalRateLimit } from "./middlewares/rateLimitSkip.js";
 import { tenantContextMiddleware } from "./middlewares/tenantContext.js";
 import { usageMeteringMiddleware } from "./middlewares/usageMetering.js";
 import { adminRoutes } from "./routes/admin/index.js";
@@ -193,18 +194,10 @@ app.use(
   }),
 );
 
-// Rate limiting (skip for health/status/webhook/inngest endpoints)
+// Rate limiting (skip for health/status/auth/webhook/inngest endpoints)
 app.use("/api/*", async (c, next) => {
   const path = new URL(c.req.url).pathname;
-  if (
-    path.startsWith("/api/misc") ||
-    path.startsWith("/api/system") ||
-    path.startsWith("/misc") ||
-    path.startsWith("/system") ||
-    path.startsWith("/api/webhooks") ||
-    path.startsWith("/api/queue") ||
-    path.startsWith("/api/inngest")
-  ) {
+  if (shouldSkipGlobalRateLimit(path)) {
     return next();
   }
   return rateLimitMiddleware(c, next);
