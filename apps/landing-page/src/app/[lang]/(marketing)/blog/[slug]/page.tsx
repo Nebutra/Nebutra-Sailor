@@ -453,6 +453,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
               copyLabel={isZh ? "复制此段" : "Copy block"}
               copiedLabel={isZh ? "已复制" : "Copied"}
               headingIds={tableOfContents.headingIds}
+              language={blogLanguage}
               resolveCtaHref={(href) =>
                 href === "#contact" ? localizedPageHref(lang, "/contact") : href
               }

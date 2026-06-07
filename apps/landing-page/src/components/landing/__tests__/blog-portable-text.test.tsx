@@ -153,4 +153,31 @@ describe("BlogPortableText", () => {
     expect(screen.getByText("自己决定").tagName).toBe("STRONG");
     expect(container.querySelectorAll("table strong")).toHaveLength(2);
   });
+
+  it("localizes TLDR blockquote labels on Chinese posts", async () => {
+    const ui = await BlogPortableText({
+      language: "zh",
+      body: [
+        {
+          _key: "summary",
+          _type: "block",
+          style: "blockquote",
+          markDefs: [],
+          children: [
+            {
+              _key: "summary-label",
+              _type: "span",
+              text: "TL;DR",
+              marks: ["strong"],
+            },
+          ],
+        },
+      ],
+    });
+
+    render(ui);
+
+    expect(screen.queryByText("TL;DR")).toBeNull();
+    expect(screen.getByText("太长不看").tagName).toBe("STRONG");
+  });
 });

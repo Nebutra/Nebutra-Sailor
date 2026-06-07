@@ -1,4 +1,5 @@
 import {
+  type BlogLanguage,
   getBlockText,
   getTableCellBlock,
   getTableCellText,
@@ -150,6 +151,35 @@ function BlogTableCellContent({ cell }: { cell: PortableTextTableCell }) {
       ))}
     </>
   );
+}
+
+function localizeTldrLabel(text: string, language: BlogLanguage): string {
+  if (language !== "zh") return text;
+
+  return text.replace(
+    /^(\s*)TL\s*;?\s*DR(?:(:|：))?/i,
+    (_match, leading: string, colon?: string) => `${leading}太长不看${colon ? "：" : ""}`,
+  );
+}
+
+function localizeBlockquoteLabel(
+  block: PortableTextBlock,
+  language: BlogLanguage,
+): PortableTextBlock {
+  if (language !== "zh" || block._type !== "block" || block.style !== "blockquote") {
+    return block;
+  }
+
+  let replaced = false;
+  const children = block.children?.map((child) => {
+    if (replaced || child._type !== "span" || !child.text) return child;
+    const localizedText = localizeTldrLabel(child.text, language);
+    if (localizedText === child.text) return child;
+    replaced = true;
+    return { ...child, text: localizedText };
+  });
+
+  return replaced ? { ...block, children } : block;
 }
 
 function BlogTable({ value }: { value: PortableTextBlock }) {
@@ -487,17 +517,21 @@ export async function BlogPortableText({
   copyLabel = "Copy original",
   copiedLabel = "Copied",
   headingIds,
+  language = "en",
   resolveCtaHref,
 }: {
   body: PortableTextBlock[] | null | undefined;
   copyLabel?: string;
   copiedLabel?: string;
   headingIds?: Record<string, string>;
+  language?: BlogLanguage;
   resolveCtaHref?: (href: string) => string;
 }) {
   if (!body?.length) return null;
   const visibleBody = await prepareBlogPortableTextBlocks(
-    normalizePortableTextBlocks(body).filter(hasVisibleText),
+    normalizePortableTextBlocks(body)
+      .map((block) => localizeBlockquoteLabel(block, language))
+      .filter(hasVisibleText),
   );
   if (!visibleBody.length) return null;
 
