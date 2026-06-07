@@ -29,7 +29,7 @@
 // Run: node scripts/governance/lint-brand-literals.mjs
 
 import { execSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { loadGovernanceConfig } from "./_config.mjs";
 
 const cfg = loadGovernanceConfig("brandLiterals");
@@ -79,7 +79,7 @@ for (const file of candidates) {
 }
 
 const newViolations = [...detected].filter((f) => !allowlist.has(f)).sort();
-const fixedButListed = [...allowlist].filter((f) => !detected.has(f)).sort();
+const fixedButListed = [...allowlist].filter((f) => existsSync(f) && !detected.has(f)).sort();
 
 let failed = false;
 

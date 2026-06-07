@@ -14,6 +14,22 @@ import {
   SidebarLeft,
   Sparkles,
 } from "@nebutra/icons";
+import {
+  buildStartupCanvasModel,
+  type StartupCanvasEdge,
+  type StartupCanvasLayout,
+  type StartupCanvasNode,
+  type StartupCanvasPoint,
+} from "@nebutra/startup-os/canvas";
+import { companyName, valueProposition } from "@nebutra/startup-os/company-context/projection";
+import {
+  STARTUP_ARENAS,
+  type StartupArena,
+  type StartupArtifact,
+  type StartupOperatingRun,
+  type StartupOSProject,
+} from "@nebutra/startup-os/compiler";
+import { buildStartupPreviewHtml, type StartupOSFile } from "@nebutra/startup-os/files";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import {
   Badge,
@@ -43,22 +59,7 @@ import {
   useState,
 } from "react";
 import { useSidebar } from "@/components/navigation/sidebar-context";
-import {
-  buildStartupCanvasModel,
-  type StartupCanvasEdge,
-  type StartupCanvasLayout,
-  type StartupCanvasNode,
-  type StartupCanvasPoint,
-} from "@/lib/startup-os/canvas";
-import { companyName, valueProposition } from "@/lib/startup-os/company-context/projection";
-import {
-  STARTUP_ARENAS,
-  type StartupArena,
-  type StartupArtifact,
-  type StartupOperatingRun,
-  type StartupOSProject,
-} from "@/lib/startup-os/compiler";
-import { buildStartupPreviewHtml, type StartupOSFile } from "@/lib/startup-os/files";
+import { resolveApiUrl } from "@/lib/api/browser-client";
 import { StartupChatPanel } from "./startup-chat-panel";
 import { setStartupChromeMode } from "./startup-chrome-store";
 import { StartupConnectorsMenu } from "./startup-connectors-menu";
@@ -344,6 +345,16 @@ async function readApiJson<T>(response: Response): Promise<T> {
   return payload as T;
 }
 
+function fetchStartupApi(path: string, init?: RequestInit) {
+  return fetch(resolveApiUrl(path), {
+    credentials: "include",
+    ...init,
+    headers: {
+      ...init?.headers,
+    },
+  });
+}
+
 function mergeProjectList(projects: readonly StartupOSProject[], project: StartupOSProject) {
   return [project, ...projects.filter((item) => item.id !== project.id)].slice(0, 12);
 }
@@ -459,7 +470,7 @@ export function StartupCommandCenter() {
     setLastError(null);
     try {
       const payload = await readApiJson<FilesResponse>(
-        await fetch(`${PROJECTS_ENDPOINT}/${encodeURIComponent(projectId)}/files`, {
+        await fetchStartupApi(`${PROJECTS_ENDPOINT}/${encodeURIComponent(projectId)}/files`, {
           headers: { Accept: "application/json" },
           cache: "no-store",
         }),
@@ -480,7 +491,7 @@ export function StartupCommandCenter() {
     setLastError(null);
     try {
       const payload = await readApiJson<ProjectResponse>(
-        await fetch(`${PROJECTS_ENDPOINT}/${encodeURIComponent(projectId)}`, {
+        await fetchStartupApi(`${PROJECTS_ENDPOINT}/${encodeURIComponent(projectId)}`, {
           headers: { Accept: "application/json" },
           cache: "no-store",
         }),
@@ -530,7 +541,7 @@ export function StartupCommandCenter() {
       setLastError(null);
       try {
         const payload = await readApiJson<ProjectsResponse>(
-          await fetch(PROJECTS_ENDPOINT, {
+          await fetchStartupApi(PROJECTS_ENDPOINT, {
             headers: { Accept: "application/json" },
             cache: "no-store",
           }),
@@ -577,7 +588,7 @@ export function StartupCommandCenter() {
     setLastError(null);
     try {
       const payload = await readApiJson<ProjectResponse>(
-        await fetch(
+        await fetchStartupApi(
           `${PROJECTS_ENDPOINT}/${encodeURIComponent(selectedProject.id)}/runs/${encodeURIComponent(
             runId,
           )}/execute`,
@@ -634,7 +645,7 @@ export function StartupCommandCenter() {
     setLastError(null);
     try {
       const payload = await readApiJson<ProjectResponse>(
-        await fetch(PROJECTS_ENDPOINT, {
+        await fetchStartupApi(PROJECTS_ENDPOINT, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -694,10 +705,13 @@ export function StartupCommandCenter() {
     setLastError(null);
     try {
       const payload = await readApiJson<ProjectResponse>(
-        await fetch(`${PROJECTS_ENDPOINT}/${encodeURIComponent(selectedProject.id)}/review`, {
-          method: "POST",
-          headers: { Accept: "application/json" },
-        }),
+        await fetchStartupApi(
+          `${PROJECTS_ENDPOINT}/${encodeURIComponent(selectedProject.id)}/review`,
+          {
+            method: "POST",
+            headers: { Accept: "application/json" },
+          },
+        ),
       );
       if (!isStartupProject(payload.project)) {
         setLastError("Startup OS API returned an invalid project payload.");
@@ -731,7 +745,7 @@ export function StartupCommandCenter() {
     setLastError(null);
     try {
       const payload = await readApiJson<ProjectResponse>(
-        await fetch(`${PROJECTS_ENDPOINT}/${encodeURIComponent(projectId)}/canvas`, {
+        await fetchStartupApi(`${PROJECTS_ENDPOINT}/${encodeURIComponent(projectId)}/canvas`, {
           method: "PATCH",
           headers: {
             Accept: "application/json",
@@ -770,14 +784,17 @@ export function StartupCommandCenter() {
     setLastError(null);
     try {
       const payload = await readApiJson<ProjectResponse & FilesResponse>(
-        await fetch(`${PROJECTS_ENDPOINT}/${encodeURIComponent(selectedProject.id)}/files`, {
-          method: "PATCH",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+        await fetchStartupApi(
+          `${PROJECTS_ENDPOINT}/${encodeURIComponent(selectedProject.id)}/files`,
+          {
+            method: "PATCH",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ path, content }),
           },
-          body: JSON.stringify({ path, content }),
-        }),
+        ),
       );
       if (!isStartupProject(payload.project) || !Array.isArray(payload.files)) {
         setLastError("Startup OS file API returned an invalid payload.");

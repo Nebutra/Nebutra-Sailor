@@ -12,6 +12,7 @@ import Image from "next/image";
 import { AnimateIn, AnimateInGroup } from "../primitives/animate-in";
 import { domAnimation, LazyMotion, m } from "../shared/animation/motion";
 import { cn } from "../utils";
+import { GridPattern } from "./grid-pattern";
 import type { HeroProps } from "./types";
 
 const TRUST_BADGE_IDS = ["runtime", "policy", "deploy", "audit", "ops"] as const;
@@ -42,8 +43,7 @@ function HeroBackground({ backgroundType }: { backgroundType: HeroProps["backgro
           <div className="absolute -top-1/4 -left-1/4 size-[50rem] rounded-full bg-[var(--brand-6)]/20 blur-[100px] opacity-70" />
           <div className="absolute top-1/2 -right-1/4 size-[40rem] rounded-full bg-[var(--brand-9)]/10 blur-[120px] opacity-50" />
           <div className="absolute bottom-0 left-1/3 size-[60rem] rounded-full bg-[var(--brand-5)]/10 blur-[150px] opacity-60" />
-          {/* Subtle grid overlay */}
-          <div className="absolute inset-0 bg-[url('/assets/grid-pattern.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+          <GridPattern className="[mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
         </div>
       );
   }

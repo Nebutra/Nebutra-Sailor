@@ -1,5 +1,5 @@
-import type { StartupOSProject } from "@/lib/startup-os/compiler";
-import { companyName, valueProposition } from "@/lib/startup-os/company-context/projection";
+import { companyName, valueProposition } from "@nebutra/startup-os/company-context/projection";
+import type { StartupOSProject } from "@nebutra/startup-os/compiler";
 
 /**
  * Match-Your-Cofounder derives a founder's pool card from their REAL compiled

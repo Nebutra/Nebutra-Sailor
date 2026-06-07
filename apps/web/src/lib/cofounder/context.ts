@@ -1,9 +1,9 @@
+import { isStartupOSPrototypeEnabled } from "@nebutra/startup-os/feature-flag";
 import { NextResponse } from "next/server";
 import { getAuth } from "@/lib/auth";
 import type { CofounderDb } from "@/lib/cofounder/store";
 import { getTenantDb } from "@/lib/db";
 import { hasPermission, resolveRole, type Scope } from "@/lib/permissions";
-import { isStartupOSPrototypeEnabled } from "@/lib/startup-os/feature-flag";
 
 /**
  * Shared auth/tenant gate for the Match-Your-Cofounder API, mirroring the

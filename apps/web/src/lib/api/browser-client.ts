@@ -2,7 +2,15 @@ import createClient, { type Middleware } from "openapi-fetch";
 
 import type { paths } from "./types.generated";
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_GATEWAY_URL ?? "http://localhost:3002";
+export const API_BASE_URL = import.meta.env.VITE_API_GATEWAY_URL ?? "";
+
+export function resolveApiUrl(path: string) {
+  if (/^https?:\/\//.test(path)) return path;
+  if (API_BASE_URL.length === 0) return path.startsWith("/") ? path : `/${path}`;
+  const normalizedBase = API_BASE_URL.replace(/\/+$/, "");
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${normalizedBase}${normalizedPath}`;
+}
 
 function createAuthMiddleware(token: string): Middleware {
   return {

@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
+import { buildProgram } from "../src/program.js";
 import { runCli } from "./helpers.js";
+
+const registeredCommands = buildProgram({
+  version: "0.0.0-test",
+  isInteractive: false,
+}).commands.map((command) => command.name());
 
 describe("Completions Command", () => {
   it("should generate bash completions", async () => {
@@ -41,13 +47,10 @@ describe("Completions Command", () => {
   it("bash completions should include known commands", async () => {
     const result = await runCli(["completions", "bash"]);
 
-    expect(result.stdout).toContain("init");
-    expect(result.stdout).toContain("add");
-    expect(result.stdout).toContain("create");
-    expect(result.stdout).toContain("completions");
-    expect(result.stdout).not.toContain(" build ");
-    expect(result.stdout).not.toContain(" lint ");
-    expect(result.stdout).not.toContain(" typecheck ");
+    for (const command of registeredCommands) {
+      expect(result.stdout).toContain(command);
+    }
+    expect(result.stdout).not.toContain("preset");
   });
 
   it("zsh completions should include command descriptions", async () => {
@@ -62,9 +65,9 @@ describe("Completions Command", () => {
   it("fish completions should include all subcommands", async () => {
     const result = await runCli(["completions", "fish"]);
 
-    expect(result.stdout).toContain("init");
-    expect(result.stdout).toContain("add");
-    expect(result.stdout).toContain("create");
-    expect(result.stdout).toContain("doctor");
+    for (const command of registeredCommands) {
+      expect(result.stdout).toContain(command);
+    }
+    expect(result.stdout).not.toContain("preset");
   });
 });

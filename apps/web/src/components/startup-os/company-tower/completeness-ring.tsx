@@ -1,8 +1,8 @@
 "use client";
 
+import type { ManifestLayerStatus } from "@nebutra/startup-os/company-context/model";
 import { Gauge, type GaugeSize } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import type { ManifestLayerStatus } from "@/lib/startup-os/company-context/model";
 import { toPercent } from "./types";
 
 /**

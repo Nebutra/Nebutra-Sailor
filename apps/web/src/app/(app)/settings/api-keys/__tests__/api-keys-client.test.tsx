@@ -16,7 +16,7 @@ vi.mock("next-intl", () => ({
   }),
 }));
 
-import { ApiKeysPageClient } from "@/app/[locale]/(app)/settings/api-keys/api-keys-client";
+import { ApiKeysPageClient } from "@/app/(app)/settings/api-keys/api-keys-client";
 
 const KEY_ROW = {
   id: "k1",

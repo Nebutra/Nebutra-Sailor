@@ -1,6 +1,7 @@
 "use client";
 
 import { ChartActivity, LoaderCircle, Target } from "@nebutra/icons";
+import type { ContextLayer, FieldValue } from "@nebutra/startup-os/company-context/model";
 import {
   Badge,
   ColorBadge,
@@ -12,7 +13,6 @@ import {
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
-import type { ContextLayer, FieldValue } from "@/lib/startup-os/company-context/model";
 
 /**
  * ControlDeck — the L9 (执行 · execution) expanded body. A quiet "mission

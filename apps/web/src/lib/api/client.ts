@@ -1,5 +1,5 @@
 /**
- * Typed API client for the Nebutra API gateway.
+ * Typed API client for the product API gateway.
  *
  * Types are auto-generated from the OpenAPI spec via:
  *   pnpm --filter @nebutra/gateway generate:spec

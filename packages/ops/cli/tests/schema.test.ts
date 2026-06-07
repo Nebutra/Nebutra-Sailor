@@ -1,37 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { buildProgram } from "../src/program.js";
 import { runCli } from "./helpers.js";
 
 describe("schema command", () => {
-  const registeredCommands = [
-    "init",
-    "add",
-    "create",
-    "mcp",
-    "schema",
-    "brand",
-    "i18n",
-    "infra",
-    "env",
-    "license",
-    "ai",
-    "auth",
-    "billing",
-    "stats",
-    "db",
-    "generate",
-    "preset",
-    "dev",
-    "test",
-    "admin",
-    "community",
-    "growth",
-    "ecosystem",
-    "services",
-    "search",
-    "secrets",
-    "completions",
-    "doctor",
-  ];
+  const registeredCommands = buildProgram({
+    version: "0.0.0-test",
+    isInteractive: false,
+  }).commands.map((command) => command.name());
 
   it("emits JSON command names with --list", async () => {
     const result = await runCli(["schema", "--list"]);

@@ -2,13 +2,13 @@
 
 import type { Icon } from "@nebutra/icons";
 import { ArrowUp, Image, Link as LinkIcon, LockClosed, Pencil, Sparkles } from "@nebutra/icons";
-import { Badge, Button } from "@nebutra/ui/primitives";
-import { cn } from "@nebutra/ui/utils";
 import type {
   ContextFieldDefinition,
   FieldValue,
   LayerId,
-} from "@/lib/startup-os/company-context/model";
+} from "@nebutra/startup-os/company-context/model";
+import { Badge, Button } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import { ProvenanceBadge } from "./provenance-badge";
 import type { FieldActionHandlers } from "./types";
 import { isFieldFilled } from "./types";

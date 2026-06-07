@@ -6,14 +6,14 @@ import type {
   FieldValue,
   LayerId,
   Stability,
-} from "@/lib/startup-os/company-context/model";
+} from "@nebutra/startup-os/company-context/model";
 
 /**
  * Company Tower — shared view-model contracts for the nine-floor "stratigraphy"
  * surface (L9 crown at top -> L1 engraved base at bottom).
  *
  * These types are the seam between the pure company-context data API
- * (`@/lib/startup-os/company-context/*`) and the presentational tower atoms.
+ * (`@nebutra/startup-os/company-context/*`) and the presentational tower atoms.
  * No logic lives here beyond tiny, pure view-model helpers — every renderer
  * stays dumb and reads the manifest / layer slices it is handed.
  */

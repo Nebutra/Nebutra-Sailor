@@ -11,6 +11,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { resolveApiUrl } from "@/lib/api/browser-client";
 import { INTEGRATION_CATALOG } from "@/lib/integrations/catalog";
 
 /**
@@ -33,7 +34,9 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
     let cancelled = false;
     void (async () => {
       try {
-        const res = await fetch("/api/v1/integrations", { credentials: "include" });
+        const res = await fetch(resolveApiUrl("/api/v1/integrations"), {
+          credentials: "include",
+        });
         if (!res.ok || cancelled) return;
         const data = (await res.json()) as {
           integrations?: Array<{ type?: string; isActive?: boolean }>;

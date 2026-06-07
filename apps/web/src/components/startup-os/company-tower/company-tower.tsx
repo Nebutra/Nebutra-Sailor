@@ -1,17 +1,17 @@
 "use client";
 
 import { ArrowUp, Sparkles } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { Badge, Button, DotPattern } from "@nebutra/ui/primitives";
-import { cn } from "@nebutra/ui/utils";
-import { buildManifest } from "@/lib/startup-os/company-context/completeness";
+import { buildManifest } from "@nebutra/startup-os/company-context/completeness";
 import type {
   CompanyContext,
   ContextManifestLayer,
   LayerId,
   Stage,
-} from "@/lib/startup-os/company-context/model";
-import { companyName } from "@/lib/startup-os/company-context/projection";
+} from "@nebutra/startup-os/company-context/model";
+import { companyName } from "@nebutra/startup-os/company-context/projection";
+import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
+import { Badge, Button, DotPattern } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import { BrandKitFloor } from "./brand-kit-floor";
 import { ControlDeck } from "./control-deck";
 import { TowerFloor } from "./tower-floor";

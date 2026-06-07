@@ -57,7 +57,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  NODE_VERSION: "22"
+  NODE_VERSION: "24"
 
 jobs:
   # ──────────────────────────────────────────────────────────────────────
@@ -155,11 +155,12 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
   # ──────────────────────────────────────────────────────────────────────
-  # build-next — build either Next standalone app, package as tarball.
-  # Runs in parallel for landing and web. Skipped when no changes.
+  # build-next — build frontend docs/app artifacts and package as tarballs.
+  # Next apps still ship standalone bundles; apps/web now ships a Vite SPA
+  # behind the existing PM2 `web` process contract.
   # ──────────────────────────────────────────────────────────────────────
   build-next:
-    name: Build ${{ matrix.app }} (Next standalone)
+    name: Build ${{ matrix.app }} ECS artifact
     needs: detect-changes
     if: needs.detect-changes.outputs.any == 'true'
     runs-on: ubuntu-latest
@@ -170,21 +171,25 @@ jobs:
           - app: landing
             package: "@nebutra/landing-page"
             workspace: apps/landing-page
+            kind: "next-standalone"
             condition: ${{ needs.detect-changes.outputs.landing }}
             site_url: "https://nebutra.com"
           - app: web
             package: "@nebutra/web"
             workspace: apps/web
+            kind: "vite-spa"
             condition: ${{ needs.detect-changes.outputs.web }}
             site_url: "https://app.nebutra.com"
           - app: design-docs
             package: "@nebutra/design-docs"
             workspace: apps/design-docs
+            kind: "next-standalone"
             condition: ${{ needs.detect-changes.outputs['design-docs'] }}
             site_url: "https://design.nebutra.com"
           - app: sailor-docs
             package: "@nebutra/sailor-docs"
             workspace: apps/sailor-docs
+            kind: "next-standalone"
             condition: ${{ needs.detect-changes.outputs['sailor-docs'] }}
             site_url: "https://docs.nebutra.com"
     steps:
@@ -214,7 +219,7 @@ jobs:
         # "dependencies only, not the package itself"). Mirrors the pattern in
         # .github/workflows/ci.yml — required so that workspace packages like
         # @nebutra/brand, @nebutra/icons, @nebutra/ui produce their dist/ files
-        # before Next tries to resolve them.
+        # before the frontend build resolves them.
         env:
           NEXT_TELEMETRY_DISABLED: "1"
         run: pnpm turbo build --filter="${{ matrix.package }}^..."
@@ -233,6 +238,9 @@ jobs:
           NEXT_PUBLIC_API_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_API_GATEWAY_URL: "https://api.nebutra.com"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
+          VITE_API_GATEWAY_URL: ${{ vars.VITE_API_GATEWAY_URL || vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}
+          VITE_AUTH_PROVIDER: ${{ vars.VITE_AUTH_PROVIDER || vars.AUTH_PROVIDER || 'better-auth' }}
+          VITE_AUTH_API_URL: ${{ vars.VITE_AUTH_API_URL || 'https://api.nebutra.com/api/auth' }}
           # Build-time placeholder for server env validation. Next.js collects
           # page data by loading each route module at build time, which triggers
           # @t3-oss/env-nextjs Zod validation (`DATABASE_URL: z.string().url()`).
@@ -247,10 +255,10 @@ jobs:
           NEXT_OUTPUT: standalone
         run: pnpm --filter ${{ matrix.package }} build
 
-      # Next standalone output is at <workspace>/.next/standalone/. We need to
-      # also copy <workspace>/.next/static and <workspace>/public into the
-      # standalone tree so the packaged bundle is self-sufficient.
-      - name: Assemble standalone bundle
+      # Next standalone output is at <workspace>/.next/standalone/. Vite output
+      # is static dist/, so the ECS fallback wraps it in a tiny Node server that
+      # preserves the existing PM2/nginx contract: web/current/apps/web/server.js.
+      - name: Assemble ECS bundle
         if: matrix.condition == 'true'
         run: |
           set -euo pipefail
@@ -258,11 +266,123 @@ jobs:
           STAGE="$RUNNER_TEMP/stage-${{ matrix.app }}"
           rm -rf "$STAGE"
           mkdir -p "$STAGE"
-          cp -r "$WS/.next/standalone/." "$STAGE/"
-          mkdir -p "$STAGE/$WS/.next"
-          cp -r "$WS/.next/static" "$STAGE/$WS/.next/static"
-          if [ -d "$WS/public" ]; then
-            cp -r "$WS/public" "$STAGE/$WS/public"
+
+          if [ "${{ matrix.kind }}" = "vite-spa" ]; then
+            [ -d "$WS/dist" ] || { echo "::error::$WS/dist missing after Vite build"; exit 1; }
+            mkdir -p "$STAGE/$WS"
+            cp -r "$WS/dist" "$STAGE/$WS/dist"
+            cat > "$STAGE/$WS/server.js" <<'NODE'
+          const { createServer } = require("node:http");
+          const { createReadStream } = require("node:fs");
+          const { stat } = require("node:fs/promises");
+          const { extname, join, resolve, sep } = require("node:path");
+
+          const distDir = resolve(__dirname, "dist");
+          const indexFile = join(distDir, "index.html");
+          const hostname = process.env.HOSTNAME || "127.0.0.1";
+          const port = Number(process.env.PORT || 3000);
+
+          const mime = {
+            ".css": "text/css; charset=utf-8",
+            ".gif": "image/gif",
+            ".html": "text/html; charset=utf-8",
+            ".ico": "image/x-icon",
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+            ".js": "text/javascript; charset=utf-8",
+            ".json": "application/json; charset=utf-8",
+            ".map": "application/json; charset=utf-8",
+            ".png": "image/png",
+            ".svg": "image/svg+xml",
+            ".txt": "text/plain; charset=utf-8",
+            ".webp": "image/webp",
+            ".woff": "font/woff",
+            ".woff2": "font/woff2",
+          };
+
+          function sendStatus(res, status, body) {
+            res.writeHead(status, {
+              "content-type": "text/plain; charset=utf-8",
+              "cache-control": "no-store",
+            });
+            res.end(body);
+          }
+
+          async function resolveStaticFile(pathname) {
+            const decoded = decodeURIComponent(pathname);
+            const target = resolve(distDir, `.${decoded}`);
+            if (target !== distDir && !target.startsWith(`${distDir}${sep}`)) {
+              return { forbidden: true };
+            }
+            const info = await stat(target).catch(() => null);
+            if (info?.isFile()) return { file: target };
+            return {};
+          }
+
+          function streamFile(file, req, res, immutable = false) {
+            const type = mime[extname(file)] || "application/octet-stream";
+            res.writeHead(200, {
+              "content-type": type,
+              "cache-control": immutable ? "public, max-age=31536000, immutable" : "no-store",
+            });
+            if (req.method === "HEAD") {
+              res.end();
+              return;
+            }
+            createReadStream(file).pipe(res);
+          }
+
+          const server = createServer(async (req, res) => {
+            try {
+              if (req.method !== "GET" && req.method !== "HEAD") {
+                sendStatus(res, 405, "Method Not Allowed");
+                return;
+              }
+
+              const url = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
+              if (url.pathname === "/healthz") {
+                sendStatus(res, 200, "ok");
+                return;
+              }
+              if (url.pathname.startsWith("/api/")) {
+                sendStatus(res, 404, "Product App API routes are served by the gateway");
+                return;
+              }
+
+              const resolved = await resolveStaticFile(url.pathname);
+              if (resolved.forbidden) {
+                sendStatus(res, 403, "Forbidden");
+                return;
+              }
+              if (resolved.file) {
+                streamFile(resolved.file, req, res, url.pathname.startsWith("/assets/"));
+                return;
+              }
+
+              if (extname(url.pathname)) {
+                sendStatus(res, 404, "Not Found");
+                return;
+              }
+              streamFile(indexFile, req, res, false);
+            } catch (error) {
+              process.stderr.write(`ECS Vite SPA static server failed: ${error?.stack || error}\n`);
+              sendStatus(res, 500, "Internal Server Error");
+            }
+          });
+
+          server.listen(port, hostname, () => {
+            process.stdout.write(
+              `ECS Vite SPA static server listening on http://${hostname}:${port}\n`,
+            );
+          });
+          NODE
+          else
+            cp -r "$WS/.next/standalone/." "$STAGE/"
+            mkdir -p "$STAGE/$WS/.next"
+            cp -r "$WS/.next/static" "$STAGE/$WS/.next/static"
+            if [ -d "$WS/public" ]; then
+              cp -r "$WS/public" "$STAGE/$WS/public"
+            fi
           fi
           ls -la "$STAGE/$WS"
           tar -czf "$RUNNER_TEMP/nebutra-${{ matrix.app }}-${{ github.sha }}.tar.gz" -C "$STAGE" .
@@ -515,6 +635,9 @@ jobs:
           SUPABASE_DIRECT_URL: ${{ secrets.SUPABASE_DIRECT_URL }}
           AUTH_PROVIDER: ${{ vars.AUTH_PROVIDER || 'better-auth' }}
           NEXT_PUBLIC_AUTH_PROVIDER: ${{ vars.NEXT_PUBLIC_AUTH_PROVIDER || vars.AUTH_PROVIDER || 'better-auth' }}
+          VITE_AUTH_PROVIDER: ${{ vars.VITE_AUTH_PROVIDER || vars.AUTH_PROVIDER || 'better-auth' }}
+          VITE_API_GATEWAY_URL: ${{ vars.VITE_API_GATEWAY_URL || vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}
+          VITE_AUTH_API_URL: ${{ vars.VITE_AUTH_API_URL || 'https://api.nebutra.com/api/auth' }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
           BETTER_AUTH_URL: ${{ vars.BETTER_AUTH_URL || 'https://app.nebutra.com' }}
           NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://app.nebutra.com' }}
@@ -662,7 +785,8 @@ jobs:
           add_remote_env BUNDLE_DIR "$ECS_DEPLOY_ROOT/.incoming/${{ github.sha }}"
           add_remote_envs \
             DATABASE_URL DIRECT_URL SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
-            AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER BETTER_AUTH_SECRET BETTER_AUTH_URL \
+            AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL \
+            BETTER_AUTH_SECRET BETTER_AUTH_URL \
             NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL \
             NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN \
             NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO \
@@ -735,14 +859,12 @@ jobs:
 
           if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then
             declare -A web_targets=(
-              [web-health]="https://app.nebutra.com/api/e2e/health"
-              [web-auth-session]="https://app.nebutra.com/api/auth/get-session"
-              [web-public-profile]="https://app.nebutra.com/api/me/public"
+              [web-sign-in]="https://app.nebutra.com/sign-in"
+              [web-gateway-auth-session]="https://api.nebutra.com/api/auth/session"
             )
             declare -A expected_codes=(
-              [web-health]="200"
-              [web-auth-session]="200"
-              [web-public-profile]="401"
+              [web-sign-in]="200"
+              [web-gateway-auth-session]="200"
             )
             for name in "${!web_targets[@]}"; do
               url="${web_targets[$name]}"

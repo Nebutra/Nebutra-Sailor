@@ -5,39 +5,9 @@ import * as p from "@clack/prompts";
 import type { Command } from "commander";
 import pc from "picocolors";
 import { ExitCode } from "../utils/exit-codes";
-import { createSailorValueDomains } from "./metadata";
+import { createSailorValueDomains, nebultraCommand } from "./metadata";
 
-// All known subcommands and their flags
-const KNOWN_COMMANDS = [
-  "init",
-  "add",
-  "create",
-  "mcp",
-  "schema",
-  "brand",
-  "i18n",
-  "infra",
-  "env",
-  "license",
-  "ai",
-  "auth",
-  "billing",
-  "stats",
-  "db",
-  "generate",
-  "preset",
-  "dev",
-  "test",
-  "admin",
-  "community",
-  "growth",
-  "ecosystem",
-  "services",
-  "search",
-  "secrets",
-  "completions",
-  "doctor",
-];
+const KNOWN_COMMANDS = (nebultraCommand.subcommands ?? []).map((command) => command.name);
 
 const COMMAND_DESCRIPTIONS: Record<string, string> = {
   init: "Initialize a Nebutra project and create nebutra.config.json",
@@ -54,9 +24,15 @@ const COMMAND_DESCRIPTIONS: Record<string, string> = {
   license: "Manage Nebutra Sailor commercial license activation and status",
   db: "Database migration and management",
   generate: "Scaffold apps, modules, and code",
-  preset: "List and apply SaaS presets",
   dev: "Start development server",
+  build: "Run build workflows",
+  lint: "Run lint workflows",
+  typecheck: "Run TypeScript checks",
   test: "Run unit and E2E tests",
+  workflow: "Workflow provider scaffolding",
+  backend: "Backend runtime service workflows",
+  e2e: "Run browser E2E suites",
+  theme: "Theme registry and governance metadata",
   ai: "AI provider and gateway routing configuration",
   auth: "Authentication setup",
   billing: "Billing and subscription management",
@@ -68,6 +44,10 @@ const COMMAND_DESCRIPTIONS: Record<string, string> = {
   services: "Microservice management",
   search: "Search index management",
   secrets: "Encrypted secrets management",
+  logout: "Clear local session state",
+  upgrade: "Upgrade local CLI tooling",
+  link: "Link local project metadata",
+  unlink: "Unlink local project metadata",
 };
 
 const KNOWN_FLAGS = [

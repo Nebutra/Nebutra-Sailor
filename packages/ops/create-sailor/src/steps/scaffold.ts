@@ -203,7 +203,7 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   // Wire the generalized, config-driven governance lints into the output's
   // `pnpm lint`, feature-gated per lint: no-raw-inputs always, repository-seam
   // only when a database is scaffolded. Writes governance.config.json with
-  // scaffold-layout defaults (empty ratchet allowlists) and patches the root
+  // scaffold-layout defaults (shrink-only ratchet allowlists) and patches the root
   // package.json "lint" script. The lint *.mjs files themselves arrive via the
   // cloned template (scripts/governance/**).
   emitJson(useJson, { event: "step", step: "governance-lints", status: "start" });

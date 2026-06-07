@@ -5,8 +5,8 @@ import {
   CheckCircle,
   Copy,
   FileText,
-  PencilEdit,
   Lightning,
+  PencilEdit,
   Sparkles,
   StopFill,
   ThumbDown,
@@ -26,6 +26,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
+import { resolveApiUrl } from "@/lib/api/browser-client";
 import {
   type StartupConversationSummary,
   type UseStartupConversationResult,
@@ -429,7 +430,7 @@ function UserMessage({
     setBusy(true);
     try {
       const res = await fetch(
-        `/api/startup-os/projects/${encodeURIComponent(projectId)}/revert`,
+        resolveApiUrl(`/api/startup-os/projects/${encodeURIComponent(projectId)}/revert`),
         {
           method: "POST",
           credentials: "include",
@@ -535,7 +536,7 @@ function formatDuration(ms: number): string {
 
 /** Persist a thumbs up/down on the AI response as a real FeedbackReport. */
 async function recordSummaryFeedback(vote: "up" | "down", text: string) {
-  await fetch("/api/feedback", {
+  await fetch(resolveApiUrl("/api/feedback"), {
     method: "POST",
     headers: { "content-type": "application/json" },
     credentials: "include",

@@ -1,8 +1,8 @@
 "use client";
 
 import { Plus } from "@nebutra/icons";
+import type { ContextLayer } from "@nebutra/startup-os/company-context/model";
 import { Button } from "@nebutra/ui/primitives";
-import type { ContextLayer } from "@/lib/startup-os/company-context/model";
 import { FieldCard } from "./field-card";
 import type { FieldActionHandlers } from "./types";
 

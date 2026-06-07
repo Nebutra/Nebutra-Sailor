@@ -1,7 +1,8 @@
 "use client";
 
+import type { StartupConversationEvent } from "@nebutra/startup-os/conversation";
 import { useCallback, useMemo, useRef, useState } from "react";
-import type { StartupConversationEvent } from "@/lib/startup-os/conversation";
+import { resolveApiUrl } from "@/lib/api/browser-client";
 
 /**
  * Client hook that drives the Startup OS SSE chat route from the browser.
@@ -201,9 +202,7 @@ function applyDone(
     ...state,
     status: "done",
     isStreaming: false,
-    durationMs: state.startedAt
-      ? Date.parse(event.occurredAt) - Date.parse(state.startedAt)
-      : null,
+    durationMs: state.startedAt ? Date.parse(event.occurredAt) - Date.parse(state.startedAt) : null,
     summary: {
       summary: event.summary,
       fileCount: event.fileCount,
@@ -247,13 +246,19 @@ export function useStartupConversation(
       abortRef.current = controller;
 
       const doFetch: FetchImpl = fetchImpl ?? globalThis.fetch.bind(globalThis);
-      const url = `/api/startup-os/projects/${encodeURIComponent(projectId)}/chat`;
+      const url = resolveApiUrl(`/api/startup-os/projects/${encodeURIComponent(projectId)}/chat`);
 
-      setState({ ...INITIAL_STATE, status: "streaming", isStreaming: true, userPrompt: instruction });
+      setState({
+        ...INITIAL_STATE,
+        status: "streaming",
+        isStreaming: true,
+        userPrompt: instruction,
+      });
 
       try {
         const response = await doFetch(url, {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ instruction }),
           signal: controller.signal,

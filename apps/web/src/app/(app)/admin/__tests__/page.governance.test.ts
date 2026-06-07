@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 // with a ChartPlaceholder ("wire from @nebutra/billing / @nebutra/metering").
 // This is the de-mock: admin now renders the getGrowthSummary-backed
 // WorkspaceMetrics block (honest zero values when the warehouse has no data).
-const ADMIN_PAGE = join(process.cwd(), "src/app/[locale]/(app)/admin/page.tsx");
+const ADMIN_PAGE = join(process.cwd(), "src/app/(app)/admin/page.tsx");
 
 describe("@nebutra/web admin metrics de-mock", () => {
   const source = readFileSync(ADMIN_PAGE, "utf8");

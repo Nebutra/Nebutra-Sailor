@@ -1,6 +1,7 @@
 "use client";
 
 import { AcronymJson, AcronymMarkdown, Code, CodeBracket, File, FileText } from "@nebutra/icons";
+import type { StartupOSFile } from "@nebutra/startup-os/files";
 import {
   CodeBlockLanguageIcon,
   TreeExpander,
@@ -14,7 +15,6 @@ import {
 } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import type { ComponentType, ReactNode, SVGProps } from "react";
-import type { StartupOSFile } from "@/lib/startup-os/files";
 
 // =============================================================================
 // Types — the explorer node shape is shared with the command-center workspace.

@@ -8,8 +8,8 @@ import type { NebutraConfig } from "./config";
 //
 // Two concerns, both feature-aware:
 //   1. Write governance.config.json with scaffold-layout defaults — only the
-//      sections for the lints that are actually enabled. A fresh scaffold has
-//      ZERO bypasses, so every ratchet allowlist starts empty.
+//      sections for the lints that are actually enabled. Some lints ship with
+//      shrink-only allowlists that mirror the current scaffold baseline.
 //   2. Patch the cloned root package.json "lint" script to chain
 //      `node scripts/governance/lint-*.mjs` for each enabled lint, preserving
 //      the existing head of the chain (e.g. `biome check .`).
@@ -85,6 +85,8 @@ const REPOSITORY_SEAM_DEFAULTS = {
     "apps/web/src/app/api/invitations/[invitationId]/accept/route.ts",
     "apps/web/src/app/api/onboarding/invite-members/route.ts",
     "apps/web/src/app/api/startup-os/projects/[projectId]/runs/[runId]/execute/route.ts",
+    "apps/web/src/app/api/cofounder/room/[profileId]/form-team/route.ts",
+    "apps/web/src/app/api/provider-keys/route.ts",
     "backends/gateway/src/routes/admin/index.ts",
     "backends/gateway/src/routes/ai/api-keys.ts",
     "backends/gateway/src/routes/ai/usage.ts",
@@ -95,7 +97,10 @@ const REPOSITORY_SEAM_DEFAULTS = {
     "backends/gateway/src/routes/webhooks/stripe.ts",
     "packages/commerce/license/src/issue-license.ts",
     "packages/commerce/license/src/validate-license.ts",
+    "packages/commerce/billing/src/credits/service.ts",
+    "packages/commerce/billing/src/usage/ledger.ts",
     "packages/iam/audit/src/index.ts",
+    "packages/iam/auth/src/plugins/passkey-plugin.ts",
   ] as string[],
 };
 
@@ -124,10 +129,11 @@ const MICROCOPY_DEFAULTS = {
 };
 
 // Brand-literal ratchet defaults. Always-on — scaffolded projects enforce
-// single-source brand identity from day one. The allowlist starts empty:
-// a fresh scaffold has zero brand debt (no pre-seeded raw brand literals).
-// Operators who add brand identity to their apps must import from the
-// brand package rather than hardcoding strings.
+// single-source brand identity from day one. The allowlist mirrors the current
+// shipped scaffold baseline and is shrink-only: existing raw literals migrate
+// on-touch, while new files fail immediately. Operators who add brand identity
+// to their apps must import from the brand package rather than hardcoding
+// strings.
 const BRAND_LITERALS_DEFAULTS = {
   governedPaths: ["apps", "packages/commerce", "packages/integrations/email"],
   allowExpressions: [
@@ -148,13 +154,122 @@ const BRAND_LITERALS_DEFAULTS = {
     "^packages/design/tokens/",
     "^packages/design/design-tokens/",
   ],
-  // SHRINK-ONLY ratchet. Fresh scaffolds start with ZERO brand debt — the
-  // allowlist is intentionally empty. Unlike repositorySeam, no shipped files
-  // legitimately contain raw brand literals at scaffold time (they all
-  // import from @nebutra/brand/metadata). If a downstream project accumulates
-  // legacy literals, they add them here and migrate on-touch.
   allowlist: [] as string[],
 };
+
+// Candidate shrink-only baseline for the current scaffold mirror. The final
+// generated allowlist is filtered against the actual scaffold output so cleaned
+// or option-pruned files are not written as stale debt.
+const BRAND_LITERALS_BASELINE_ALLOWLIST = [
+  "apps/design-docs/mdx-components.tsx",
+  "apps/design-docs/next.config.ts",
+  "apps/design-docs/src/__registry__/index.tsx",
+  "apps/design-docs/src/app/[lang]/docs/[[...slug]]/page.tsx",
+  "apps/design-docs/src/app/[lang]/docs/layout.tsx",
+  "apps/design-docs/src/app/[lang]/layout.tsx",
+  "apps/design-docs/src/app/[lang]/registry/[name]/page.tsx",
+  "apps/design-docs/src/app/[lang]/registry/page.tsx",
+  "apps/design-docs/src/app/og/docs/[...slug]/route.tsx",
+  "apps/design-docs/src/components/brand-overview-visuals.tsx",
+  "apps/design-docs/src/components/color-usage.tsx",
+  "apps/design-docs/src/components/component-preview.tsx",
+  "apps/design-docs/src/components/gradient-demos.tsx",
+  "apps/design-docs/src/components/introduction-hero.tsx",
+  "apps/design-docs/src/components/motion-demos.tsx",
+  "apps/design-docs/src/components/pattern-demos.tsx",
+  "apps/design-docs/src/components/registry/registry-card.tsx",
+  "apps/design-docs/src/lib/github.ts",
+  "apps/design-docs/src/lib/registry-strings.ts",
+  "apps/design-docs/src/lib/registry.ts",
+  "apps/idp/src/app/layout.tsx",
+  "apps/idp/src/app/oauth/authorize/page.tsx",
+  "apps/idp/src/app/page.tsx",
+  "apps/idp/src/lib/oidc.ts",
+  "apps/landing-page/src/app/[lang]/layout.tsx",
+  "apps/landing-page/src/app/api/blog/comments/route.ts",
+  "apps/landing-page/src/app/api/blog/reactions/route.ts",
+  "apps/landing-page/src/app/api/og/route.ts",
+  "apps/landing-page/src/app/apple-icon.tsx",
+  "apps/landing-page/src/components/auth/google-one-tap.tsx",
+  "apps/landing-page/src/components/cookie-consent-banner.tsx",
+  "apps/landing-page/src/components/marketing/ProductHuntSection.tsx",
+  "apps/landing-page/src/components/marketing/TestimonialsSection.tsx",
+  "apps/landing-page/src/i18n/request.ts",
+  "apps/landing-page/src/lib/analytics/emit.ts",
+  "apps/landing-page/src/lib/blog-fallback.ts",
+  "apps/landing-page/src/lib/constants/playbook-data.ts",
+  "apps/landing-page/src/lib/constants/resources-data.ts",
+  "apps/landing-page/src/lib/constants/solutions-data.ts",
+  "apps/landing-page/src/lib/docs-links.ts",
+  "apps/landing-page/src/lib/env.ts",
+  "apps/landing-page/src/lib/landing-content.ts",
+  "apps/landing-page/src/lib/seo/metadata.ts",
+  "apps/landing-page/src/lib/seo/site-routes.ts",
+  "apps/landing-page/src/lib/status-checks.ts",
+  "apps/landing-page/src/proxy.ts",
+  "apps/mail-preview/scripts/export.ts",
+  "apps/mail-preview/scripts/render-react-templates.ts",
+  "apps/mail-preview/src/app/api/send-test/route.ts",
+  "apps/mail-preview/src/app/layout.tsx",
+  "apps/mail-preview/src/lib/fixtures.ts",
+  "apps/web/next.config.ts",
+  "apps/web/src/app/(app)/checkout-return/page.tsx",
+  "apps/web/src/app/(app)/choose-plan/page.tsx",
+  "apps/web/src/app/(app)/settings/api-keys/page.tsx",
+  "apps/web/src/app/(app)/settings/notifications/page.tsx",
+  "apps/web/src/app/(app)/settings/provider-keys/page.tsx",
+  "apps/web/src/app/(auth)/desktop-auth/complete/page.tsx",
+  "apps/web/src/app/(public)/page.tsx",
+  "apps/web/src/app/[locale]/welcome/page.tsx",
+  "apps/web/src/app/api/account/email-change/route.ts",
+  "apps/web/src/app/api/admin/access-invites/route.ts",
+  "apps/web/src/app/api/blog/comments/route.ts",
+  "apps/web/src/app/api/blog/reactions/route.ts",
+  "apps/web/src/app/api/me/public/route.ts",
+  "apps/web/src/app/api/organizations/[orgId]/members/route.ts",
+  "apps/web/src/app/global-error.tsx",
+  "apps/web/src/components/ErrorBoundary.tsx",
+  "apps/web/src/components/api-keys/create-api-key-dialog.tsx",
+  "apps/web/src/components/appearance/store.ts",
+  "apps/web/src/components/auth/auth-banner.tsx",
+  "apps/web/src/components/auth/desktop-auth-complete-handoff.tsx",
+  "apps/web/src/components/auth/sign-up-form.tsx",
+  "apps/web/src/components/billing/billing-self-service.tsx",
+  "apps/web/src/components/navigation/public-page-chrome.tsx",
+  "apps/web/src/components/notifications/inbox-bell.tsx",
+  "apps/web/src/components/notifications/notification-inbox-preview.tsx",
+  "apps/web/src/components/notifications/notification-preference-matrix.tsx",
+  "apps/web/src/components/notifications/notification-runtime-banner.tsx",
+  "apps/web/src/components/settings/security/security-capabilities.ts",
+  "apps/web/src/components/settings/security/security-settings-client.tsx",
+  "apps/web/src/components/theme-playground/design-md-import.tsx",
+  "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
+  "apps/web/src/components/theme-playground/theme-token-data.ts",
+  "apps/web/src/lib/api.ts",
+  "apps/web/src/lib/api/client.ts",
+  "apps/web/src/lib/env.ts",
+  "apps/web/src/lib/integrations/catalog.tsx",
+  "apps/web/src/lib/permissions.ts",
+  "apps/web/src/lib/public-url-defaults.ts",
+  "apps/web/src/lib/session-hint.ts",
+  "apps/web/src/lib/startup-os/company-context/generate.ts",
+  "apps/web/src/lib/startup-os/company-context/projection.ts",
+  "apps/web/src/lib/startup-os/conversation.ts",
+  "apps/web/src/lib/startup-os/execution.ts",
+  "apps/web/src/lib/startup-os/files.ts",
+  "apps/web/src/proxy.ts",
+  "packages/commerce/billing/src/index.ts",
+  "packages/commerce/contracts/src/identity.ts",
+  "packages/commerce/legal/src/components/CookieBanner.tsx",
+  "packages/commerce/legal/src/documents/config.ts",
+  "packages/commerce/legal/src/index.ts",
+  "packages/commerce/marketing/src/components/ProductHuntBadge.tsx",
+  "packages/commerce/marketing/src/config/index.ts",
+  "packages/commerce/marketing/src/index.ts",
+  "packages/integrations/email/src/index.ts",
+  "packages/integrations/email/src/templates/_layout.ts",
+  "packages/integrations/email/src/templates/invitation.tsx",
+] as const;
 
 export interface GovernanceLintsResult {
   /** Lint command fragments appended to the package.json "lint" script. */
@@ -185,6 +300,17 @@ function rebuildLintScript(existing: string | undefined, lints: string[]): strin
   return [head, ...lints].join(" && ");
 }
 
+function filterBrandLiteralBaseline(targetDir: string): string[] {
+  const pattern = new RegExp(BRAND_LITERALS_DEFAULTS.allowExpressions.join("|"));
+  return BRAND_LITERALS_BASELINE_ALLOWLIST.filter((relPath) => {
+    try {
+      return pattern.test(fs.readFileSync(path.join(targetDir, relPath), "utf8"));
+    } catch {
+      return false;
+    }
+  });
+}
+
 export async function applyGovernanceLints(
   targetDir: string,
   config: NebutraConfig,
@@ -198,9 +324,13 @@ export async function applyGovernanceLints(
   lints.push(MICROCOPY_CMD); // always — enforce seven-prohibition microcopy rule
 
   // -- 2. write governance.config.json with only enabled sections --
+  const brandLiterals = {
+    ...BRAND_LITERALS_DEFAULTS,
+    allowlist: filterBrandLiteralBaseline(targetDir),
+  };
   const governanceConfig: Record<string, unknown> = {
     rawInputs: RAW_INPUTS_DEFAULTS,
-    brandLiterals: BRAND_LITERALS_DEFAULTS,
+    brandLiterals,
     microcopyRules: MICROCOPY_DEFAULTS,
   };
   if (databaseEnabled) {

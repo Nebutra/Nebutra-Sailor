@@ -2,7 +2,7 @@
 //
 // Layout assumption (set by infra/scripts/ecs-deploy-remote.sh):
 //   $DEPLOY_ROOT/landing/current/apps/landing-page/server.js     (Next standalone)
-//   $DEPLOY_ROOT/web/current/apps/web/server.js                  (Next standalone)
+//   $DEPLOY_ROOT/web/current/apps/web/server.js                  (Vite SPA static server)
 //   $DEPLOY_ROOT/api/current/dist/index.js                       (pnpm-deploy + tsc)
 //   $DEPLOY_ROOT/design-docs/current/apps/design-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)

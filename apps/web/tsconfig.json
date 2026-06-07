@@ -13,11 +13,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
       "@/*": ["./src/*"],
       "@nebutra/billing": ["../../packages/commerce/billing/src/index.ts"],
@@ -37,13 +32,6 @@
       "@nebutra/ui/*": ["../../packages/design/ui/src/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": ["node_modules"]
+  "include": ["src/main.tsx", "src/vite-env.d.ts", "src/vite-app/**/*.ts", "src/vite-app/**/*.tsx"],
+  "exclude": ["node_modules", "src/app", "src/proxy.ts", "src/instrumentation.ts"]
 }

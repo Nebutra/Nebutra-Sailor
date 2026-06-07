@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 // The dashboard Home converged into Startup OS (merge); its DocumentPipeline
 // (DocumentTaskUploader) was rehomed onto the Connectors/Integrations surface,
 // reusing the existing dashboard.documentPipeline.* i18n keys.
-const INTEGRATIONS_PAGE = join(process.cwd(), "src/app/[locale]/(app)/integrations/page.tsx");
+const INTEGRATIONS_PAGE = join(process.cwd(), "src/app/(app)/integrations/page.tsx");
 
 describe("@nebutra/web integrations document-pipeline rehoming", () => {
   const source = readFileSync(INTEGRATIONS_PAGE, "utf8");

@@ -43,6 +43,7 @@ import { createAiGatewayRoutes } from "./routes/ai/gateway.js";
 import { aiRoutes } from "./routes/ai/index.js";
 import { providerKeyRoutes } from "./routes/ai/provider-keys/index.js";
 import { usageRoutes } from "./routes/ai/usage.js";
+import { authRoutes } from "./routes/auth/index.js";
 import { creditsRoutes } from "./routes/billing/credits.js";
 import { billingRoutes } from "./routes/billing/index.js";
 import { usageLedgerRoutes } from "./routes/billing/usage.js";
@@ -53,6 +54,7 @@ import { healthRoutes } from "./routes/misc/health.js";
 import { notificationRoutes } from "./routes/notifications/index.js";
 import { queueDeliveryRoutes } from "./routes/queue/delivery.js";
 import { searchRoutes } from "./routes/search/index.js";
+import { startupOsRoutes } from "./routes/startup-os/index.js";
 import { statusRoutes } from "./routes/system/status.js";
 import { taskRoutes } from "./routes/tasks/index.js";
 import { uploadRoutes } from "./routes/uploads/index.js";
@@ -223,10 +225,12 @@ app.route("/api/v1/legal", consentRoutes);
 app.route("/api/v1/events", eventRoutes);
 app.route("/api/v1/agents", agentRoutes);
 app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
+app.route("/api/startup-os", startupOsRoutes);
 app.route("/api/v1/workflows", workflowRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/tasks", taskRoutes);
 app.route("/api/v1/uploads", uploadRoutes);
+app.route("/api", authRoutes);
 
 // AI Gateway — build shared deps once, mount route + register completion worker.
 // Graceful degradation: a missing Redis/queue must not prevent app startup.

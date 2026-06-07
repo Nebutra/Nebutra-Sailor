@@ -55,4 +55,22 @@ describe("Deploy substrate governance", () => {
     expect(k8s).not.toContain("DEFAULT-ACTIVE backend substrate");
     expect(yml).not.toContain("vars.DEPLOY_TARGET == 'ecs");
   });
+
+  it("legacy ECS workflow packages apps/web as a Vite SPA behind the existing PM2 web process", () => {
+    const yml = read("deploy-ecs.yml");
+    const remote = readFileSync(
+      resolve(process.cwd(), "infra/ops/scripts/ecs-deploy-remote.sh"),
+      "utf-8",
+    );
+
+    expect(yml).toContain('kind: "vite-spa"');
+    expect(yml).toContain("VITE_API_GATEWAY_URL:");
+    expect(yml).toContain("VITE_AUTH_PROVIDER:");
+    expect(yml).toContain("ECS Vite SPA static server");
+    expect(yml).toContain('cp -r "$WS/dist" "$STAGE/$WS/dist"');
+    expect(yml).toContain("apps/web/server.js");
+
+    expect(remote).toContain("VITE_API_GATEWAY_URL");
+    expect(remote).toContain("VITE_AUTH_PROVIDER");
+  });
 });

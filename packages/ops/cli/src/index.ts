@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
 import { addCommand } from "./commands/add";
@@ -65,24 +65,24 @@ import { maybeNotifyUpdate } from "./utils/update-notifier";
 const PKG_JSON_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "package.json");
 const VERSION = (JSON.parse(readFileSync(PKG_JSON_PATH, "utf8")) as { version: string }).version;
 
-async function main() {
-  // Show first-run telemetry opt-out banner (gated by TTY + env + marker)
-  maybeShowFirstRunBanner();
+export interface BuildProgramOptions {
+  readonly version: string;
+  readonly isInteractive?: boolean;
+}
 
-  // Start update check in background (non-blocking)
-  const notifyUpdate = await maybeNotifyUpdate(VERSION);
-
+export function buildProgram(options: BuildProgramOptions): Command {
   const program = new Command();
 
   // Auto-enable --yes mode when running in non-TTY (piped, CI/CD, Agent environments)
-  const isInteractive = process.stdin.isTTY !== false && process.stdout.isTTY !== false;
+  const isInteractive =
+    options.isInteractive ?? (process.stdin.isTTY !== false && process.stdout.isTTY !== false);
 
   program
     .name("nebutra")
     .description(
       "Nebutra — governance-first CLI for topology scaffolding, registry features, and platform operations",
     )
-    .version(VERSION)
+    .version(options.version)
     // Existing options
     .option("--verbose", "Enable verbose output")
     .option("--quiet", "Suppress non-essential output")
@@ -357,6 +357,21 @@ Environment:
 `,
   );
 
+  return program;
+}
+
+async function main() {
+  // Show first-run telemetry opt-out banner (gated by TTY + env + marker)
+  maybeShowFirstRunBanner();
+
+  // Start update check in background (non-blocking)
+  const notifyUpdate = await maybeNotifyUpdate(VERSION);
+
+  const program = buildProgram({
+    version: VERSION,
+    isInteractive: process.stdin.isTTY !== false && process.stdout.isTTY !== false,
+  });
+
   if (process.argv.length <= 2) {
     program.outputHelp();
     process.exit(ExitCode.SUCCESS);
@@ -368,4 +383,10 @@ Environment:
   await notifyUpdate();
 }
 
-main().catch((err) => logger.error(err instanceof Error ? err.message : String(err)));
+const entrypoint = process.argv[1]
+  ? fileURLToPath(import.meta.url) === resolve(process.argv[1])
+  : false;
+
+if (entrypoint) {
+  main().catch((err) => logger.error(err instanceof Error ? err.message : String(err)));
+}

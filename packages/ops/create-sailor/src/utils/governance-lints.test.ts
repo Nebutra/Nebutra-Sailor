@@ -10,8 +10,8 @@ import { applyGovernanceLints } from "./governance-lints";
 //   (a) always wires no-raw-inputs into the output's lint chain,
 //   (b) gates repository-seam on a scaffolded database,
 //   (b2) always wires microcopy lint regardless of database setting,
-//   (c) writes governance.config.json with only the enabled sections (empty
-//       ratchet allowlists for a fresh scaffold),
+//   (c) writes governance.config.json with only the enabled sections (seeded
+//       shrink-only ratchet baselines for the current scaffold),
 //   (c2) microcopyRules section present with empty bannedPatterns + allowlist,
 //   (d) strips inherited monorepo path-hardcoded lint commands while preserving
 //       the biome head.
@@ -35,6 +35,12 @@ function writePkg(dir: string, lint: string) {
     path.join(dir, "package.json"),
     JSON.stringify({ name: "scaffold", scripts: { lint } }, null, 2) + "\n",
   );
+}
+
+function writeFile(dir: string, relPath: string, contents: string) {
+  const fullPath = path.join(dir, relPath);
+  fs.mkdirSync(path.dirname(fullPath), { recursive: true });
+  fs.writeFileSync(fullPath, contents);
 }
 
 function readPkgLint(dir: string): string {
@@ -92,6 +98,12 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
   it("(c)+(c2) writes governance.config.json with enabled sections + seeded ratchet baselines", async () => {
     dir = fs.mkdtempSync(path.join(os.tmpdir(), "gov-wire-cfg-"));
     writePkg(dir, "biome check .");
+    writeFile(
+      dir,
+      "apps/web/src/app/[locale]/welcome/page.tsx",
+      `export const title = "Nebutra";\n`,
+    );
+    writeFile(dir, "apps/web/src/lib/api/client.ts", `export const title = "Product API";\n`);
 
     await applyGovernanceLints(dir, baseConfig({ database: "postgresql" }));
     const cfg = readGovernance(dir) as {
@@ -119,10 +131,15 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
     expect(seamAllowlist).toContain("backends/gateway/src/routes/billing/index.ts");
     expect(seamAllowlist).toContain("packages/commerce/license/src/issue-license.ts");
 
-    // Brand-literals allowlist is EMPTY for a fresh scaffold — no brand debt.
+    // Brand-literals ships a shrink-only baseline for current scaffold literals.
     const brandAllowlist = cfg.brandLiterals?.allowlist as string[];
     expect(Array.isArray(brandAllowlist)).toBe(true);
-    expect(brandAllowlist).toHaveLength(0);
+    expect(brandAllowlist.length).toBeGreaterThan(0);
+    expect(brandAllowlist).toContain("apps/web/src/app/[locale]/welcome/page.tsx");
+    expect(brandAllowlist).not.toContain("apps/web/src/lib/api/client.ts");
+    for (const entry of brandAllowlist) {
+      expect(entry).not.toMatch(/^\/|Nebutra-Sailor|node_modules/);
+    }
     // Governed paths are present.
     expect(cfg.brandLiterals?.governedPaths).toContain("apps");
 
@@ -141,6 +158,11 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
   it("(c) omits repositorySeam section from config when database=none, keeps brandLiterals and microcopyRules", async () => {
     dir = fs.mkdtempSync(path.join(os.tmpdir(), "gov-wire-cfg-nodb-"));
     writePkg(dir, "biome check .");
+    writeFile(
+      dir,
+      "packages/integrations/email/src/templates/invitation.tsx",
+      `export const brand = "Nebutra";\n`,
+    );
 
     await applyGovernanceLints(dir, baseConfig({ database: "none" }));
     const cfg = readGovernance(dir) as {
@@ -154,7 +176,10 @@ describe("applyGovernanceLints (scaffold wiring)", () => {
     expect(cfg.repositorySeam).toBeUndefined();
     // Brand-literals is always present.
     expect(cfg.brandLiterals).toBeDefined();
-    expect((cfg.brandLiterals?.allowlist as string[]).length).toBe(0);
+    expect((cfg.brandLiterals?.allowlist as string[]).length).toBeGreaterThan(0);
+    expect(cfg.brandLiterals?.allowlist).toContain(
+      "packages/integrations/email/src/templates/invitation.tsx",
+    );
     // microcopyRules is always present — feature-independent.
     expect(cfg.microcopyRules).toBeDefined();
     expect((cfg.microcopyRules?.bannedPatterns as unknown[]).length).toBe(0);

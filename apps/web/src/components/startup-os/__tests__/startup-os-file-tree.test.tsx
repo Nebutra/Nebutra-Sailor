@@ -1,9 +1,9 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
+import type { StartupOSFile } from "@nebutra/startup-os/files";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { StartupOSFile } from "@/lib/startup-os/files";
 
 // ─── Module stubs ─────────────────────────────────────────────────────────────
 // The real @nebutra/ui Tree primitives pull framer-motion + the heavy barrel.

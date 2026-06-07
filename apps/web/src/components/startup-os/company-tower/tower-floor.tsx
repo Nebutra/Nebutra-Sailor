@@ -1,10 +1,10 @@
 "use client";
 
 import { ChevronDown } from "@nebutra/icons";
+import type { ContextLayer, ContextManifestLayer } from "@nebutra/startup-os/company-context/model";
+import { getLayerMeta } from "@nebutra/startup-os/company-context/registry";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import type { ContextLayer, ContextManifestLayer } from "@/lib/startup-os/company-context/model";
-import { getLayerMeta } from "@/lib/startup-os/company-context/registry";
 import { CompletenessRing } from "./completeness-ring";
 import { FieldCard } from "./field-card";
 import { ProvenanceBadge, StabilityBadge } from "./provenance-badge";

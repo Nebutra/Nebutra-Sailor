@@ -11,7 +11,7 @@ vi.mock("next/navigation", () => ({
   useRouter: () => ({ replace: replaceMock, push: vi.fn(), refresh: vi.fn() }),
 }));
 
-import { CheckoutReturnContent } from "@/app/[locale]/(app)/checkout-return/checkout-return-content";
+import { CheckoutReturnContent } from "@/app/(app)/checkout-return/checkout-return-content";
 
 // Mirror of POLL_INTERVAL_MS in the component (2s).
 const POLL_TICK = 2_000;

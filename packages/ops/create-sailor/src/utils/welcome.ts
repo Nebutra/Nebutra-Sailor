@@ -40,7 +40,8 @@ function renderWelcomePageTsx(projectName: string): string {
   // backslashes, and any stray braces inside the generated TSX.
   const safeName = JSON.stringify(projectName);
 
-  return `import Link from "next/link";
+  return `import { brand } from "@nebutra/brand/metadata";
+import Link from "next/link";
 
 export default function WelcomePage() {
   const projectName = ${safeName};
@@ -105,7 +106,7 @@ export default function WelcomePage() {
             </li>
             <li>
               <a
-                href="https://nebutra.com/get-license"
+                href={\`https://\${brand.domains.landing}/get-license\`}
                 className="underline"
               >
                 Get free license (Individual/OPC)

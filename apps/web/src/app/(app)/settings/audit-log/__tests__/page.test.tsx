@@ -27,7 +27,7 @@ vi.mock("@/hooks/usePermission", () => ({
   }),
 }));
 
-import AuditLogPage from "@/app/[locale]/(app)/settings/audit-log/page";
+import AuditLogPage from "@/app/(app)/settings/audit-log/page";
 
 function row(id: string) {
   return {

@@ -498,19 +498,49 @@ export const nebultraCommand: CommandMeta = {
       usage: "nebutra generate [type] [name]",
     },
     {
-      name: "preset",
-      description: "List and apply topology presets for governed SaaS projects",
-      usage: "nebutra preset [subcommand]",
-    },
-    {
       name: "dev",
       description: "Start development workflows for selected Nebutra apps or presets",
       usage: "nebutra dev [options]",
     },
     {
+      name: "build",
+      description: "Run build workflows through the Nebutra CLI",
+      usage: "nebutra build [options]",
+    },
+    {
+      name: "lint",
+      description: "Run lint workflows through the Nebutra CLI",
+      usage: "nebutra lint [options]",
+    },
+    {
+      name: "typecheck",
+      description: "Run TypeScript checks through the Nebutra CLI",
+      usage: "nebutra typecheck [options]",
+    },
+    {
       name: "test",
       description: "Run unit, architecture, and E2E verification workflows",
       usage: "nebutra test [scope]",
+    },
+    {
+      name: "workflow",
+      description: "Initialize and inspect workflow runtime adapters",
+      usage: "nebutra workflow [subcommand]",
+    },
+    {
+      name: "backend",
+      description: "Manage backend runtime service workflows",
+      usage: "nebutra backend [subcommand]",
+    },
+    {
+      name: "e2e",
+      description: "Run browser end-to-end verification suites",
+      usage: "nebutra e2e [suite]",
+    },
+    {
+      name: "theme",
+      description: "Inspect registry-backed Nebutra themes and governance metadata",
+      usage: "nebutra theme [subcommand]",
     },
     {
       name: "admin",
@@ -558,6 +588,26 @@ export const nebultraCommand: CommandMeta = {
           required: false,
         },
       ],
+    },
+    {
+      name: "logout",
+      description: "Clear local Nebutra CLI session state",
+      usage: "nebutra logout",
+    },
+    {
+      name: "upgrade",
+      description: "Upgrade local Nebutra CLI tooling",
+      usage: "nebutra upgrade",
+    },
+    {
+      name: "link",
+      description: "Link a local project to Nebutra platform metadata",
+      usage: "nebutra link",
+    },
+    {
+      name: "unlink",
+      description: "Unlink local Nebutra project metadata",
+      usage: "nebutra unlink",
     },
     {
       name: "doctor",
