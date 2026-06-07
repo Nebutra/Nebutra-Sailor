@@ -72,7 +72,7 @@
       "about": "À propos",
       "showcase": "Vitrine",
       "blog": "Blog",
-      "playbook": "Playbook",
+      "playbook": "Guide pratique",
       "changelog": "Journal des modifications",
       "roadmap": "Feuille de route",
       "docs": "Documentation",
@@ -1526,9 +1526,9 @@
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
+    "title": "Journal des modifications — {brandName}",
     "description": "Chaque version, livrée avec une attention obsessionnelle aux détails.",
-    "versionTitleSuffix": "Changelog {brandName}"
+    "versionTitleSuffix": "Journal des modifications {brandName}"
   },
   "roadmapMeta": {
     "title": "Feuille de route de la plateforme — {brandName}",

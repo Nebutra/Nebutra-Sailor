@@ -72,7 +72,7 @@
       "about": "Über uns",
       "showcase": "Showcase",
       "blog": "Blog",
-      "playbook": "Playbook",
+      "playbook": "Handbuch",
       "changelog": "Änderungsprotokoll",
       "roadmap": "Roadmap",
       "docs": "Dokumentation",
@@ -1526,9 +1526,9 @@
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
+    "title": "Änderungsprotokoll — {brandName}",
     "description": "Jedes Release, mit obsessiver Liebe zum Detail ausgeliefert.",
-    "versionTitleSuffix": "{brandName} Changelog"
+    "versionTitleSuffix": "{brandName} Änderungsprotokoll"
   },
   "roadmapMeta": {
     "title": "Plattform-Roadmap — {brandName}",

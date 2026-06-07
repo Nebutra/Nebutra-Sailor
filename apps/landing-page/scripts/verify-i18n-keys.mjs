@@ -298,8 +298,13 @@ const ALLOWED_IDENTICAL_VALUES = new Set([
   "From zero to production in record time.",
   // Blog / changelog meta titles — brand-name in title, kept consistent
   "Blog — Nebutra",
+  "Blog — {brandName}",
   "Changelog — Nebutra",
   "Nebutra Changelog",
+  "{brandName}",
+  "{brandName} Co., Ltd.",
+  "{companyLegal}",
+  "{companyLegalEn}",
   // nav brand CTA — "Get Sailed" is Nebutra-specific brand language, not a generic phrase
   "Get Sailed",
   // Legal FAQ heading — intentional EN executive-audience label
