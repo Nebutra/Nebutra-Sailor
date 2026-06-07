@@ -4,17 +4,14 @@ import { describe, expect, it } from "vitest";
 
 const APP_ROOT = process.cwd();
 const REPO_ROOT = join(APP_ROOT, "../..");
-const WORKSPACE_PAGE = join(APP_ROOT, "src/app/[locale]/(app)/workspace/page.tsx");
-const SHELL = join(APP_ROOT, "src/app/[locale]/providers/design-system-shell.tsx");
-const SKELETONS = join(APP_ROOT, "src/app/[locale]/(app)/_dashboard-skeletons.tsx");
+const WORKSPACE_PAGE = join(APP_ROOT, "src/app/(app)/workspace/page.tsx");
+const SHELL = join(APP_ROOT, "src/app/providers/design-system-shell.tsx");
+const SKELETONS = join(APP_ROOT, "src/app/(app)/_dashboard-skeletons.tsx");
 const GETTING_STARTED = join(APP_ROOT, "src/components/onboarding/getting-started.tsx");
-const TEAM_INVITE_FORM = join(
-  APP_ROOT,
-  "src/app/[locale]/(app)/settings/team/InviteMemberForm.tsx",
-);
+const TEAM_INVITE_FORM = join(APP_ROOT, "src/app/(app)/settings/team/InviteMemberForm.tsx");
 const SETTINGS_API_KEY_FORM = join(
   APP_ROOT,
-  "src/app/[locale]/(app)/settings/api-keys/CreateApiKeyForm.tsx",
+  "src/app/(app)/settings/api-keys/CreateApiKeyForm.tsx",
 );
 const API_KEY_DIALOG = join(APP_ROOT, "src/components/api-keys/create-api-key-dialog.tsx");
 const WEBHOOK_DIALOG = join(APP_ROOT, "src/components/webhooks/create-webhook-dialog.tsx");

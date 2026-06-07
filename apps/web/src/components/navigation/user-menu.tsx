@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuth } from "@nebutra/auth/client";
-import { usePathname, useRouter } from "@nebutra/i18n/routing";
 import {
   ChevronDown,
   ChevronRight,
@@ -16,6 +15,7 @@ import {
 } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useState, useTransition } from "react";
 import { createPortal } from "react-dom";
@@ -25,7 +25,7 @@ import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 import { dicebearAvatarUrl } from "@/lib/avatar";
 
 type ThemeChoice = "system" | "light" | "dark";
-const LOCALES = ["en", "zh"] as const;
+const LOCALES = ["en", "zh", "de", "es", "fr", "ja", "ko"] as const;
 type LocaleCode = (typeof LOCALES)[number];
 const NEXT_LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
@@ -64,7 +64,6 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
   const { openDialog: openFeedback } = useFeedbackDialog();
   const locale = useLocale() as LocaleCode;
   const router = useRouter();
-  const pathname = usePathname();
   const [, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
@@ -94,11 +93,13 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
       setLocaleCookie(next);
       setOpen(false);
       setLocaleOpen(false);
+      // Cookie mode: write cookie then re-run getRequestConfig server-side via
+      // router.refresh() — no URL change, no navigation, instant switch.
       startTransition(() => {
-        router.replace(pathname, { locale: next });
+        router.refresh();
       });
     },
-    [pathname, router],
+    [router],
   );
 
   if (!isSignedIn || !user) {

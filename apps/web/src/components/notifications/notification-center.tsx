@@ -22,7 +22,7 @@ import { createPortal } from "react-dom";
 import {
   markAllNotificationsRead,
   markNotificationRead,
-} from "@/app/[locale]/(app)/settings/notifications/actions";
+} from "@/app/(app)/settings/notifications/actions";
 import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 
 interface NotificationCenterProps {

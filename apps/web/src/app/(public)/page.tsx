@@ -2,6 +2,7 @@ import type { Icon as NebutraIcon } from "@nebutra/icons";
 import { ArrowRight, CheckCircle, CreditCard, Message, Users } from "@nebutra/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getLocale } from "next-intl/server";
 import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
 
 type Locale = "en" | "zh";
@@ -111,22 +112,18 @@ const COPY: Record<Locale, PublicDashboardCopy> = {
   },
 };
 
+// COPY map covers en/zh only; all other locales fall back to en.
 function resolveLocale(locale: string): Locale {
   return locale === "zh" ? "zh" : "en";
 }
 
-function localizedHref(locale: Locale, href: string) {
-  if (href.startsWith("https://") || href.startsWith("mailto:")) return href;
-  if (href === "/") return `/${locale}`;
-  return `/${locale}${href}`;
+// Cookie-based i18n: no locale prefix in URLs — return href unchanged.
+function localizedHref(href: string) {
+  return href;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
   const currentLocale = resolveLocale(locale);
   const copy = COPY[currentLocale];
 
@@ -137,12 +134,9 @@ export async function generateMetadata({
       index: true,
       follow: true,
     },
+    // Cookie-based i18n: one canonical URL, no per-locale language alternates.
     alternates: {
-      canonical: `/${currentLocale}`,
-      languages: {
-        en: "/en",
-        zh: "/zh",
-      },
+      canonical: "/",
     },
     openGraph: {
       title: copy.seoTitle,
@@ -153,12 +147,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function PublicDashboardPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function PublicDashboardPage() {
+  const locale = await getLocale();
   const currentLocale = resolveLocale(locale);
   const copy = COPY[currentLocale];
 
@@ -167,7 +157,7 @@ export default async function PublicDashboardPage({
       <header className="border-neutral-5 border-b bg-neutral-1/90 dark:bg-neutral-12/90">
         <div className="mx-auto flex h-14 w-full max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6">
           <Link
-            href={localizedHref(currentLocale, "/")}
+            href={localizedHref("/")}
             aria-label={webBrandLabels.homeLink}
             className="inline-flex min-w-0 items-center rounded-[var(--radius-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
@@ -177,7 +167,7 @@ export default async function PublicDashboardPage({
             {copy.nav.map((item) => (
               <Link
                 key={item.href}
-                href={localizedHref(currentLocale, item.href)}
+                href={localizedHref(item.href)}
                 className="rounded-[var(--radius-md)] px-2.5 py-1.5 transition-colors hover:bg-neutral-2 hover:text-neutral-12"
               >
                 {item.label}
@@ -185,7 +175,7 @@ export default async function PublicDashboardPage({
             ))}
           </nav>
           <Link
-            href={localizedHref(currentLocale, "/workspace")}
+            href={localizedHref("/workspace")}
             className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-1.5 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:text-neutral-12"
           >
             {copy.workspaceAction}
@@ -208,14 +198,14 @@ export default async function PublicDashboardPage({
           </div>
           <div className="flex flex-wrap gap-2">
             <Link
-              href={localizedHref(currentLocale, "/workspace")}
+              href={localizedHref("/workspace")}
               className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-[image:var(--brand-gradient)] px-3.5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
               {copy.primaryAction}
               <ArrowRight className="size-3.5" aria-hidden="true" />
             </Link>
             <Link
-              href={localizedHref(currentLocale, "/demo/embed")}
+              href={localizedHref("/demo/embed")}
               className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] border border-neutral-7 px-3.5 py-2 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-1 hover:text-neutral-12"
             >
               {copy.secondaryAction}

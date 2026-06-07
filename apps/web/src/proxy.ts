@@ -1,11 +1,7 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
-import { routing } from "@nebutra/i18n/routing";
 import { logger } from "@nebutra/logger";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import createIntlMiddleware from "next-intl/middleware";
-
-const intlMiddleware = createIntlMiddleware(routing);
 
 /**
  * Define public routes that don't require authentication.
@@ -24,28 +20,15 @@ const publicRoutePaths = [
   "/api/webhook",
 ];
 
-function stripLocalePrefix(pathname: string): string {
-  const segments = pathname.split("/").filter(Boolean);
-  const [firstSegment, ...restSegments] = segments;
-
-  if (firstSegment && routing.locales.includes(firstSegment as (typeof routing.locales)[number])) {
-    return restSegments.length > 0 ? `/${restSegments.join("/")}` : "/";
-  }
-
-  return pathname || "/";
-}
-
 function isPublicPathname(pathname: string): boolean {
-  const normalizedPathname = stripLocalePrefix(pathname);
-
-  if (normalizedPathname === "/") {
+  // Cookie-based i18n: no locale prefix in URLs — compare pathname directly.
+  if (pathname === "/") {
     return true;
   }
 
   return publicRoutePaths.some(
     (publicPath) =>
-      publicPath !== "/" &&
-      (normalizedPathname === publicPath || normalizedPathname.startsWith(`${publicPath}/`)),
+      publicPath !== "/" && (pathname === publicPath || pathname.startsWith(`${publicPath}/`)),
   );
 }
 
@@ -132,8 +115,11 @@ function withNonce(request: NextRequest, response: NextResponse): NextResponse {
 /**
  * Middleware handler — routes to Clerk or generic auth based on provider.
  *
+ * Cookie-based i18n: no next-intl locale middleware runs here. Locale is
+ * resolved from the NEXT_LOCALE cookie in getRequestConfig (request.ts).
+ *
  * For Clerk: requires eager import of clerkMiddleware (top of file if using Clerk in prod)
- * For others: simple locale + CSP handler
+ * For others: simple CSP handler
  */
 export async function proxy(req: NextRequest, event: NextFetchEvent) {
   const { pathname } = req.nextUrl;
@@ -155,12 +141,7 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
           await auth.protect();
         }
 
-        // Run next-intl locale detection/redirect
-        const intlResponse = intlMiddleware(innerReq);
-
-        // Apply CSP nonce to the response
-        const response = intlResponse || NextResponse.next();
-        return withNonce(innerReq, response);
+        return withNonce(innerReq, NextResponse.next());
       });
 
       return clerk(req, event);
@@ -170,21 +151,16 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
     }
   }
 
-  // For non-Clerk providers or Clerk import failure, use simple locale + CSP handler
-  // The AuthProvider in layout.tsx handles session management for non-Clerk providers
+  // For non-Clerk providers or Clerk import failure, use simple CSP handler.
+  // The AuthProvider in layout.tsx handles session management for non-Clerk providers.
+  // Cookie-based i18n: no intl middleware or locale redirects needed.
 
-  // Skip intl locale detection for API routes — they don't need locale processing
-  // and next-intl rewrites them into /en/api/... which causes 404s.
+  // Skip CSP injection for API routes — they don't need nonce processing.
   if (pathname.startsWith("/api/")) {
-    const response = NextResponse.next();
-    return withNonce(req, response);
+    return NextResponse.next();
   }
 
-  // Run next-intl locale detection/redirect
-  const intlResponse = intlMiddleware(req);
-
-  const response = intlResponse || NextResponse.next();
-  return withNonce(req, response);
+  return withNonce(req, NextResponse.next());
 }
 
 export default proxy;

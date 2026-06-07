@@ -5,14 +5,9 @@ import { redirect } from "next/navigation";
 // =============================================================================
 // The dashboard Home and Startup OS were duplicate prompt-first heroes. Home is
 // converged into Startup OS, which is the prompt-first entry surface. This route
-// now redirects to /startup-os, preserving the active locale prefix.
+// now redirects to /startup-os. Cookie-based i18n: no locale prefix in the URL.
 // =============================================================================
 
-interface WorkspacePageProps {
-  params: Promise<{ locale: string }>;
-}
-
-export default async function WorkspacePage({ params }: WorkspacePageProps): Promise<never> {
-  const { locale } = await params;
-  redirect(`/${locale}/startup-os`);
+export default async function WorkspacePage(): Promise<never> {
+  redirect("/startup-os");
 }

@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { NotificationPreferenceMatrix } from "../notification-preference-matrix";
 
-vi.mock("@/app/[locale]/(app)/settings/notifications/actions", () => ({
+vi.mock("@/app/(app)/settings/notifications/actions", () => ({
   updateNotificationPreference: vi.fn(),
 }));
 

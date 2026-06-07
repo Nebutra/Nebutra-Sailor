@@ -2,12 +2,13 @@ import { issueDesktopAuthHandoff, parseDesktopAuthRequest } from "@nebutra/auth/
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
+import { getLocale } from "next-intl/server";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { DesktopAuthCompleteHandoff } from "@/components/auth/desktop-auth-complete-handoff";
 import { createServerRequestFromHeaders, getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 
-type Params = { locale: string };
+type Params = Record<string, never>;
 type SearchParams = {
   scheme?: string;
   state?: string;
@@ -15,13 +16,14 @@ type SearchParams = {
   public_beta?: string;
 };
 
-function buildCompletionPath(locale: string, query: SearchParams): string {
+// Cookie-based i18n: no locale prefix in URLs.
+function buildCompletionPath(query: SearchParams): string {
   const params = new URLSearchParams();
   if (query.scheme) params.set("scheme", query.scheme);
   if (query.state) params.set("state", query.state);
   if (query.mode) params.set("mode", query.mode);
   if (query.public_beta) params.set("public_beta", query.public_beta);
-  return `/${locale}/desktop-auth/complete?${params.toString()}`;
+  return `/desktop-auth/complete?${params.toString()}`;
 }
 
 function buildDesktopRedirectUrl(scheme: string, token: string, state: string): string {
@@ -50,14 +52,12 @@ function DesktopAuthError() {
 }
 
 export default async function DesktopAuthCompletePage({
-  params,
   searchParams,
 }: {
-  params: Promise<Params>;
   searchParams: Promise<SearchParams>;
 }) {
   await connection();
-  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  const query = await searchParams;
   const requestHeaders = new Headers(await headers());
   const currentRequest = createServerRequestFromHeaders(requestHeaders);
   const parsed = parseDesktopAuthRequest(
@@ -76,8 +76,9 @@ export default async function DesktopAuthCompletePage({
   const auth = await getAuth(currentRequest);
   if (!auth.userId) {
     const authPath = mode === "sign-in" ? "sign-in" : "sign-up";
-    const returnUrl = buildCompletionPath(locale, query);
-    redirect(`/${locale}/${authPath}?${new URLSearchParams({ returnUrl }).toString()}`);
+    const returnUrl = buildCompletionPath(query);
+    // Cookie-based i18n: no locale prefix — redirect to /sign-in or /sign-up directly.
+    redirect(`/${authPath}?${new URLSearchParams({ returnUrl }).toString()}`);
   }
 
   const handoff = await issueDesktopAuthHandoff({

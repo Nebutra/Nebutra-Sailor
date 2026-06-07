@@ -18,7 +18,7 @@ import { InboxList, type InboxNotification } from "./inbox-list";
 //   • In Nebutra-Sailor's apps/web, the canonical bell is
 //     <ShellNotificationCenter /> — server-rendered snapshot via
 //     loadNotificationSettingsSnapshot from @nebutra/notifications.
-//     It ships pre-wired in apps/web/src/app/[locale]/(app)/layout.tsx
+//     It ships pre-wired in apps/web/src/app/(app)/layout.tsx
 //     and is preferred when the full @nebutra/notifications stack is wired.
 //   • <InboxBell /> is the lightweight, client-only alternative that
 //     hits /api/notifications/inbox directly. Use it in scaffolded

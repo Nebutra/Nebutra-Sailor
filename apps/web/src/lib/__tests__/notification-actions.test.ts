@@ -35,7 +35,7 @@ vi.mock("@nebutra/notifications", () => ({
 }));
 
 async function loadActions() {
-  return import("@/app/[locale]/(app)/settings/notifications/actions");
+  return import("@/app/(app)/settings/notifications/actions");
 }
 
 function createFormData(entries: Record<string, string>) {

@@ -6,7 +6,7 @@ import type {
 } from "@nebutra/notifications";
 import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
-import { updateNotificationPreference } from "@/app/[locale]/(app)/settings/notifications/actions";
+import { updateNotificationPreference } from "@/app/(app)/settings/notifications/actions";
 
 interface Props {
   locale: string;

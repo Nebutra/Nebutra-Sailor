@@ -32,10 +32,8 @@ const markAllReadSchema = z.object({
   returnTo: z.string().optional(),
 });
 
-function buildNotificationsPath(
-  locale: string,
-  params?: Record<string, string | undefined>,
-): string {
+// Cookie-based i18n: no locale prefix in URLs.
+function buildNotificationsPath(params?: Record<string, string | undefined>): string {
   const searchParams = new URLSearchParams();
 
   for (const [key, value] of Object.entries(params ?? {})) {
@@ -45,11 +43,11 @@ function buildNotificationsPath(
   }
 
   const query = searchParams.toString();
-  return `/${locale}/settings/notifications${query ? `?${query}` : ""}`;
+  return `/settings/notifications${query ? `?${query}` : ""}`;
 }
 
-async function resolveNotificationReturnPath(locale: string, explicitReturnTo?: string | null) {
-  const settingsPath = buildNotificationsPath(locale);
+async function resolveNotificationReturnPath(explicitReturnTo?: string | null) {
+  const settingsPath = buildNotificationsPath();
   const candidate = explicitReturnTo ?? (await headers()).get("referer");
 
   if (!candidate) {
@@ -61,7 +59,8 @@ async function resolveNotificationReturnPath(locale: string, explicitReturnTo?: 
       ? candidate
       : `${new URL(candidate).pathname}${new URL(candidate).search}`;
 
-    if (path.startsWith(`/${locale}`) && !path.startsWith(`//`)) {
+    // Accept any internal path (no locale prefix to check against anymore).
+    if (path.startsWith("/") && !path.startsWith("//")) {
       return path;
     }
   } catch {
@@ -88,18 +87,17 @@ export async function updateNotificationPreference(formData: FormData): Promise<
     enabled: formData.get("enabled"),
   });
 
-  const locale = typeof formData.get("locale") === "string" ? String(formData.get("locale")) : "en";
-  const basePath = buildNotificationsPath(locale);
+  const basePath = buildNotificationsPath();
 
   if (!parsed.success) {
-    redirect(buildNotificationsPath(locale, { error: "Invalid notification preference request." }));
+    redirect(buildNotificationsPath({ error: "Invalid notification preference request." }));
   }
 
   const { type, channel, enabled } = parsed.data;
   const catalogEntry = getNotificationCatalogEntry(type);
 
   if (!catalogEntry) {
-    redirect(buildNotificationsPath(locale, { error: "Unknown notification category." }));
+    redirect(buildNotificationsPath({ error: "Unknown notification category." }));
   }
 
   let provider: NotificationProvider | undefined;
@@ -107,7 +105,7 @@ export async function updateNotificationPreference(formData: FormData): Promise<
     provider = await getNotificationProvider();
   } catch {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error: "Notifications are not configured in this environment yet.",
       }),
     );
@@ -116,7 +114,7 @@ export async function updateNotificationPreference(formData: FormData): Promise<
   const runtime = resolveNotificationRuntimeStatus({ provider });
   if (!runtime.canManagePreferences) {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error:
           runtime.reason ??
           "Notification preferences are read-only until a persistent provider is connected.",
@@ -127,7 +125,7 @@ export async function updateNotificationPreference(formData: FormData): Promise<
   try {
     if (!provider) {
       redirect(
-        buildNotificationsPath(locale, {
+        buildNotificationsPath({
           error: "Notifications are not configured in this environment yet.",
         }),
       );
@@ -146,7 +144,7 @@ export async function updateNotificationPreference(formData: FormData): Promise<
     await provider.updatePreferences(userId, [update], orgId);
   } catch {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error:
           "Failed to update the notification preference. Try again after the provider is wired.",
       }),
@@ -155,7 +153,7 @@ export async function updateNotificationPreference(formData: FormData): Promise<
 
   revalidatePath(basePath);
   redirect(
-    buildNotificationsPath(locale, {
+    buildNotificationsPath({
       notice: toPreferenceNotice(type, channel, enabled),
     }),
   );
@@ -170,15 +168,13 @@ export async function markNotificationRead(formData: FormData): Promise<never> {
     returnTo: formData.get("returnTo") || undefined,
   });
 
-  const locale = typeof formData.get("locale") === "string" ? String(formData.get("locale")) : "en";
-  const basePath = buildNotificationsPath(locale);
+  const basePath = buildNotificationsPath();
   const returnPath = await resolveNotificationReturnPath(
-    locale,
     typeof formData.get("returnTo") === "string" ? String(formData.get("returnTo")) : undefined,
   );
 
   if (!parsed.success) {
-    redirect(buildNotificationsPath(locale, { error: "Invalid notification inbox request." }));
+    redirect(buildNotificationsPath({ error: "Invalid notification inbox request." }));
   }
 
   let provider: NotificationProvider | undefined;
@@ -186,7 +182,7 @@ export async function markNotificationRead(formData: FormData): Promise<never> {
     provider = await getNotificationProvider();
   } catch {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error: "Notifications are not configured in this environment yet.",
       }),
     );
@@ -195,7 +191,7 @@ export async function markNotificationRead(formData: FormData): Promise<never> {
   const runtime = resolveNotificationRuntimeStatus({ provider });
   if (!runtime.canMarkInboxRead) {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error:
           runtime.reason ??
           "Inbox state is read-only until persistent notification storage exists.",
@@ -206,7 +202,7 @@ export async function markNotificationRead(formData: FormData): Promise<never> {
   try {
     if (!provider) {
       redirect(
-        buildNotificationsPath(locale, {
+        buildNotificationsPath({
           error: "Notifications are not configured in this environment yet.",
         }),
       );
@@ -215,7 +211,7 @@ export async function markNotificationRead(formData: FormData): Promise<never> {
     await provider.markAsRead(parsed.data.notificationId, userId, orgId);
   } catch {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error: "Failed to update inbox state. Try again after the provider is wired.",
       }),
     );
@@ -227,7 +223,7 @@ export async function markNotificationRead(formData: FormData): Promise<never> {
     redirect(returnPath);
   }
 
-  redirect(buildNotificationsPath(locale, { notice: "Notification marked as read." }));
+  redirect(buildNotificationsPath({ notice: "Notification marked as read." }));
 }
 
 export async function markAllNotificationsRead(formData: FormData): Promise<never> {
@@ -238,15 +234,13 @@ export async function markAllNotificationsRead(formData: FormData): Promise<neve
     returnTo: formData.get("returnTo") || undefined,
   });
 
-  const locale = typeof formData.get("locale") === "string" ? String(formData.get("locale")) : "en";
-  const basePath = buildNotificationsPath(locale);
+  const basePath = buildNotificationsPath();
   const returnPath = await resolveNotificationReturnPath(
-    locale,
     typeof formData.get("returnTo") === "string" ? String(formData.get("returnTo")) : undefined,
   );
 
   if (!parsed.success) {
-    redirect(buildNotificationsPath(locale, { error: "Invalid notification inbox request." }));
+    redirect(buildNotificationsPath({ error: "Invalid notification inbox request." }));
   }
 
   let provider: NotificationProvider | undefined;
@@ -254,7 +248,7 @@ export async function markAllNotificationsRead(formData: FormData): Promise<neve
     provider = await getNotificationProvider();
   } catch {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error: "Notifications are not configured in this environment yet.",
       }),
     );
@@ -263,7 +257,7 @@ export async function markAllNotificationsRead(formData: FormData): Promise<neve
   const runtime = resolveNotificationRuntimeStatus({ provider });
   if (!runtime.canMarkInboxRead) {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error:
           runtime.reason ??
           "Inbox state is read-only until persistent notification storage exists.",
@@ -274,7 +268,7 @@ export async function markAllNotificationsRead(formData: FormData): Promise<neve
   try {
     if (!provider) {
       redirect(
-        buildNotificationsPath(locale, {
+        buildNotificationsPath({
           error: "Notifications are not configured in this environment yet.",
         }),
       );
@@ -283,7 +277,7 @@ export async function markAllNotificationsRead(formData: FormData): Promise<neve
     await provider.markAllAsRead(userId, orgId);
   } catch {
     redirect(
-      buildNotificationsPath(locale, {
+      buildNotificationsPath({
         error: "Failed to update inbox state. Try again after the provider is wired.",
       }),
     );
@@ -295,5 +289,5 @@ export async function markAllNotificationsRead(formData: FormData): Promise<neve
     redirect(returnPath);
   }
 
-  redirect(buildNotificationsPath(locale, { notice: "All notifications marked as read." }));
+  redirect(buildNotificationsPath({ notice: "All notifications marked as read." }));
 }

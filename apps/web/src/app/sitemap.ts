@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
-const PUBLIC_PATHS = ["/en", "/zh", "/en/demo/embed", "/zh/demo/embed"] as const;
+// Cookie-based i18n: no locale-prefixed URLs — one canonical path per page.
+const PUBLIC_PATHS = ["/", "/demo/embed"] as const;
 
 function siteUrl() {
   return (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");

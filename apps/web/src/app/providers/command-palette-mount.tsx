@@ -11,7 +11,7 @@ interface CommandPaletteMountProps {
 /**
  * Single mount-point that wires the global command palette into the app.
  *
- * Usage — in `apps/web/src/app/[locale]/(app)/layout.tsx`, wrap the
+ * Usage — in `apps/web/src/app/(app)/layout.tsx`, wrap the
  * authenticated page tree with this component (between the auth provider
  * and the page content):
  *

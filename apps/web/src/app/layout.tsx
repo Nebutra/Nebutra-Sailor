@@ -13,13 +13,13 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { getNonce } from "@/lib/nonce";
 import { QueryProvider } from "./providers";
 import { ThemeShell } from "./providers/theme-provider";
-import "../globals.css";
+import "./globals.css";
 
 // GeistSans → --font-geist-sans (variable font, 100–900)
 // GeistMono → --font-geist-mono (variable font, 100–900)
@@ -58,23 +58,16 @@ export const metadata: Metadata = {
     title: `${brand.name} - AI-native SaaS console`,
     description: `Public intelligence surface for ${brand.name}'s AI-native SaaS platform with private services behind account access.`,
   },
+  // Cookie-based i18n: no per-locale URLs exist, so no languages map.
   alternates: {
     canonical: "/",
-    languages: {
-      en: "/en",
-      zh: "/zh",
-    },
   },
 };
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Cookie mode: locale is resolved from the NEXT_LOCALE cookie by getRequestConfig.
+  // getLocale() reads the value set by that config — no params.locale needed.
+  const locale = await getLocale();
   const nonce = await getNonce();
   const messages = await getMessages();
 

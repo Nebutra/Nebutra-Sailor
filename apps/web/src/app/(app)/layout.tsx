@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CommandPaletteMount } from "@/app/[locale]/providers/command-palette-mount";
+import { CommandPaletteMount } from "@/app/providers/command-palette-mount";
 import { AccountDialogMount } from "@/components/account/account-dialog";
 import { AppearanceVarsProvider } from "@/components/appearance";
 import { PlanBadge } from "@/components/billing/plan-badge";
@@ -22,14 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AppLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  await params;
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
   await requireAuth();
 
   return (

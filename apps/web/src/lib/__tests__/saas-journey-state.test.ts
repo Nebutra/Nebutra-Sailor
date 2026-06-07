@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { resolveBillingJourneyNotice } from "@/app/[locale]/(app)/billing/journey-state";
-import { resolveSelectOrgJourneyCopy } from "@/app/[locale]/select-org/journey-state";
+import { resolveBillingJourneyNotice } from "@/app/(app)/billing/journey-state";
+import { resolveSelectOrgJourneyCopy } from "@/app/select-org/journey-state";
 
 describe("resolveBillingJourneyNotice", () => {
   it("surfaces a checkout success return with concrete next steps", () => {

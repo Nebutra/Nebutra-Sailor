@@ -11,7 +11,7 @@ vi.mock("next-intl", () => ({
   }),
 }));
 
-vi.mock("@/app/[locale]/(app)/settings/notifications/actions", () => ({
+vi.mock("@/app/(app)/settings/notifications/actions", () => ({
   markAllNotificationsRead: vi.fn(),
   markNotificationRead: vi.fn(),
 }));

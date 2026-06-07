@@ -106,7 +106,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("provides a dashboard sidebar landmark in the app shell", () => {
-    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
     // The shell now delegates sidebar rendering to @nebutra/ui/patterns's
     // SidebarNav (refactor: a778b48a). The <nav aria-label="Sidebar">
     // landmark lives inside the SidebarNav primitive itself — what we assert
@@ -117,7 +117,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("exposes the global feedback dialog from the sidebar user menu", () => {
-    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
     const userMenu = readFromRepo("apps/web/src/components/navigation/user-menu.tsx");
 
     expect(shell).toContain("UserMenu");
@@ -133,9 +133,9 @@ describe("UI/UX audit remediation invariants", () => {
 
   it("uses governed brand logo assets instead of hardcoded app-shell wordmarks", () => {
     const brandAssets = readFromRepo("apps/web/src/components/brand/brand-assets.tsx");
-    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
     const publicChrome = readFromRepo("apps/web/src/components/navigation/public-page-chrome.tsx");
-    const demoEmbed = readFromRepo("apps/web/src/app/[locale]/demo/embed/page.tsx");
+    const demoEmbed = readFromRepo("apps/web/src/app/demo/embed/page.tsx");
     const themePlayground = readFromRepo(
       "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
     );
@@ -159,8 +159,8 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("keeps subscription plan status out of the dashboard header chrome", () => {
-    const layout = readFromRepo("apps/web/src/app/[locale]/(app)/layout.tsx");
-    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const layout = readFromRepo("apps/web/src/app/(app)/layout.tsx");
+    const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
     const planBadge = readFromRepo("apps/web/src/components/billing/plan-badge.tsx");
 
     expect(layout).toContain("planBadge={<PlanBadge />}");
@@ -171,17 +171,13 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("converges the workspace route into the Startup OS entry surface", () => {
-    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
+    const dashboard = readFromRepo("apps/web/src/app/(app)/workspace/page.tsx");
     const translations = readFromRepo("packages/platform/i18n/locales/en.json");
-    const localePlaceholder = "$" + "{locale}";
 
-    // Home converged into Startup OS (merge): /workspace is a locale-aware
-    // server redirect to /startup-os, not a duplicate dashboard overview. The
-    // decision-led overview primitives were rehomed onto the Startup OS surface,
-    // so the route file itself must no longer render welcome-page chrome.
+    // Home converged into Startup OS (merge): /workspace is a server redirect to
+    // /startup-os. Cookie-based i18n: no locale prefix in the redirect path.
     expect(dashboard).toContain('from "next/navigation"');
-    expect(dashboard).toContain(`redirect(\`/${localePlaceholder}/startup-os\`)`);
-    expect(dashboard).toContain("await params");
+    expect(dashboard).toContain('redirect("/startup-os")');
     expect(dashboard).not.toContain("CommandCenter");
     expect(dashboard).not.toContain("DashboardMetricTile");
     expect(dashboard).not.toContain("snapshotMeta");
@@ -197,8 +193,8 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("keeps onboarding scaffolding off the converged workspace route", () => {
-    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
-    const skeletons = readFromRepo("apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx");
+    const dashboard = readFromRepo("apps/web/src/app/(app)/workspace/page.tsx");
+    const skeletons = readFromRepo("apps/web/src/app/(app)/_dashboard-skeletons.tsx");
 
     expect(dashboard).not.toContain("GettingStarted");
     expect(dashboard).not.toContain("OnboardingSkeleton");
@@ -207,7 +203,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("keeps the converged workspace route minimal instead of rendering metric chrome", () => {
-    const dashboard = readFromRepo("apps/web/src/app/[locale]/(app)/workspace/page.tsx");
+    const dashboard = readFromRepo("apps/web/src/app/(app)/workspace/page.tsx");
 
     // After the Startup OS merge the route is a thin redirect — it must not
     // re-grow nested metric-card scaffolding.
@@ -223,7 +219,7 @@ describe("UI/UX audit remediation invariants", () => {
   it("keeps the authenticated dashboard shell high-density instead of touch-first oversized", () => {
     const appShell = readFromRepo("packages/design/ui/src/layout/app-shell.tsx");
     const sidebarNav = readFromRepo("packages/design/ui/src/patterns/sidebar-nav/sidebar-nav.tsx");
-    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
     const workspaceSwitcher = readFromRepo(
       "packages/design/ui/src/patterns/workspace-switcher.tsx",
     );
@@ -246,8 +242,8 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("uses real dashboard IA routes with breadcrumb navigation", () => {
-    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
-    const navModel = readFromRepo("apps/web/src/app/[locale]/providers/dashboard-nav.ts");
+    const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
+    const navModel = readFromRepo("apps/web/src/app/providers/dashboard-nav.ts");
 
     // Real Product IA routes (the Operations group — Billing/Tenants/Audit —
     // was intentionally removed from the sidebar; those pages remain reachable
@@ -269,8 +265,8 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("includes a workspace switcher and grouped dashboard navigation", () => {
-    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
-    const navModel = readFromRepo("apps/web/src/app/[locale]/providers/dashboard-nav.ts");
+    const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
+    const navModel = readFromRepo("apps/web/src/app/providers/dashboard-nav.ts");
 
     // The aria-label="Workspace switcher" inline JSX was replaced by the
     // WorkspaceSwitcher primitive from @nebutra/ui/patterns (refactor:
@@ -284,7 +280,7 @@ describe("UI/UX audit remediation invariants", () => {
   });
 
   it("enables View Transition navigation in dashboard shell links", () => {
-    const shell = readFromRepo("apps/web/src/app/[locale]/providers/design-system-shell.tsx");
+    const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
     const link = readFromRepo("apps/web/src/components/navigation/view-transition-link.tsx");
     const globals = readFromRepo("apps/web/src/app/globals.css");
 
@@ -370,7 +366,7 @@ describe("UI/UX audit remediation invariants", () => {
 
   it("includes skip-to-content links in both app layouts", () => {
     const landingLayout = readFromRepo("apps/landing-page/src/app/[lang]/layout.tsx");
-    const webLayout = readFromRepo("apps/web/src/app/[locale]/layout.tsx");
+    const webLayout = readFromRepo("apps/web/src/app/layout.tsx");
 
     expect(landingLayout).toMatch(/main-content|skip/i);
     expect(webLayout).toMatch(/main-content|skip/i);

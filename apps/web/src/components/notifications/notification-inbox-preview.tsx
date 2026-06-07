@@ -13,7 +13,7 @@ import type {
 } from "@nebutra/notifications";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { markNotificationRead } from "@/app/[locale]/(app)/settings/notifications/actions";
+import { markNotificationRead } from "@/app/(app)/settings/notifications/actions";
 
 interface Props {
   locale: string;

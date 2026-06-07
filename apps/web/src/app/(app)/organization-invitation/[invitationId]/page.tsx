@@ -1,6 +1,6 @@
 import { getSystemDb } from "@nebutra/db";
 import { redirect } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { OrganizationInvitationModal } from "@/components/organizations/organization-invitation-modal";
 import { getAuth, getUser } from "@/lib/auth";
 import { findInvitationById, type NormalizedInvitation } from "@/lib/invitations";
@@ -8,7 +8,7 @@ import { findInvitationById, type NormalizedInvitation } from "@/lib/invitations
 type InvitationRecord = NormalizedInvitation;
 
 interface OrganizationInvitationPageProps {
-  params: Promise<{ locale: string; invitationId: string }>;
+  params: Promise<{ invitationId: string }>;
 }
 
 interface InvitationStatusViewProps {
@@ -33,7 +33,7 @@ function InvitationStatusView({ title, description }: InvitationStatusViewProps)
 export default async function OrganizationInvitationPage({
   params,
 }: OrganizationInvitationPageProps) {
-  const { locale, invitationId } = await params;
+  const [{ invitationId }, locale] = await Promise.all([params, getLocale()]);
   const t = await getTranslations({ locale, namespace: "organizations.invitation" });
 
   const auth = await getAuth();
