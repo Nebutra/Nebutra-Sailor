@@ -64,6 +64,85 @@ function setLocaleCookie(locale: string): void {
 }
 
 // ---------------------------------------------------------------------------
+// Scroll preservation
+// ---------------------------------------------------------------------------
+
+/**
+ * A language switch is the *same* page in another language — the reader must
+ * stay exactly where they were. `scroll: false` on router.replace handles
+ * Next's own scroll restoration, but it is not enough on its own: switching
+ * locale re-mounts the localized subtree, which re-mounts every `AnimateIn`
+ * entrance animation. Motion's keyframe resolver (`measureAllKeyframes`)
+ * saves-and-restores `window` scroll while it measures, and on a tall page it
+ * restores to the wrong offset — yanking the viewport to the bottom (the
+ * footer). This was the real cause of the "switching language jumps to the
+ * footer" bug, independent of `scroll: false`.
+ *
+ * `pinScrollPosition` captures the offset at select time and re-asserts it for
+ * a short window across the navigation commit + Motion's measurement burst,
+ * using instant (never smooth) scrolls so it can't fight a global
+ * `scroll-behavior: smooth`. It bails the moment the reader expresses scroll
+ * intent (wheel / touch / arrow keys), so it never traps a user who decides to
+ * scroll mid-switch.
+ */
+function pinScrollPosition(durationMs = 2500): void {
+  if (typeof window === "undefined") return;
+  const targetX = window.scrollX;
+  const targetY = window.scrollY;
+  const start = performance.now();
+  let active = true;
+
+  // Re-assert the offset the instant any code (Motion's measurement) moves the
+  // window. The scroll listener fires synchronously after the offending
+  // scrollTo, before paint, so the misplaced frame never renders. User scroll
+  // intent (wheel/touch/pointer/keys) releases the pin *before* its scroll
+  // event, so this never fights the reader. Restoring to the same offset is a
+  // no-op and cannot loop. (Function declarations: hoisted so the listeners
+  // can reference each other regardless of order.)
+  function correct() {
+    if (!active) return;
+    if (window.scrollX !== targetX || window.scrollY !== targetY) {
+      window.scrollTo({ left: targetX, top: targetY, behavior: "instant" as ScrollBehavior });
+    }
+  }
+  function stop() {
+    if (!active) return;
+    active = false;
+    window.removeEventListener("wheel", release);
+    window.removeEventListener("touchmove", release);
+    window.removeEventListener("pointerdown", release);
+    window.removeEventListener("keydown", onKey);
+    window.removeEventListener("scroll", correct);
+  }
+  function release() {
+    stop();
+  }
+  function onKey(e: KeyboardEvent) {
+    if (
+      ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " ", "Spacebar"].includes(e.key)
+    ) {
+      stop();
+    }
+  }
+  window.addEventListener("wheel", release, { passive: true });
+  window.addEventListener("touchmove", release, { passive: true });
+  window.addEventListener("pointerdown", release, { passive: true });
+  window.addEventListener("keydown", onKey);
+  window.addEventListener("scroll", correct, { passive: true });
+
+  const tick = () => {
+    if (!active) return;
+    correct();
+    if (performance.now() - start < durationMs) {
+      requestAnimationFrame(tick);
+    } else {
+      stop();
+    }
+  };
+  requestAnimationFrame(tick);
+}
+
+// ---------------------------------------------------------------------------
 // Factory
 // ---------------------------------------------------------------------------
 
@@ -139,6 +218,11 @@ export function createLocaleSwitcher<TLocale extends string>(
         }
         setLocaleCookie(next);
         setOpen(false);
+        // Keep the reader exactly where they are across the re-mount. See
+        // pinScrollPosition — Motion's keyframe measurement scrolls the window
+        // on the localized subtree re-mount; this re-asserts the offset until it
+        // settles. Applies to both modes (cookie-mode refresh re-mounts too).
+        pinScrollPosition();
         if (mode === "cookie") {
           // Cookie mode: write cookie then re-run getRequestConfig server-side
           // via router.refresh(). No URL change, no navigation, instant switch.
@@ -148,10 +232,8 @@ export function createLocaleSwitcher<TLocale extends string>(
         } else {
           startTransition(() => {
             // scroll: false — a locale switch is the *same* page in another
-            // language; the reader must stay exactly where they are. Without this,
-            // App Router's default scroll handling (amplified by any global
-            // `scroll-behavior: smooth`) resets the position and, during PPR
-            // streaming, can land on the footer.
+            // language; the reader must stay exactly where they are. Pairs with
+            // pinScrollPosition above to defeat Motion's measurement scroll.
             router.replace(pathname, { locale: next, scroll: false });
           });
         }
