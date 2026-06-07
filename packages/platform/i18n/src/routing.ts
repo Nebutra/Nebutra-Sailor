@@ -2,20 +2,20 @@ import { createNavigation } from "next-intl/navigation";
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  locales: ["en", "zh"],
+  locales: ["en", "zh", "de", "es", "fr", "ja", "ko"],
   defaultLocale: "en",
-  // Use "always" instead of "as-needed" to avoid next-intl's internal rewrite
-  // of /<page> → /<defaultLocale>/<page>. Under Next.js 16 standalone behind
-  // nginx (X-Forwarded-Proto: https + listen host 127.0.0.1:3000), the
-  // internal rewrite fetch becomes `https://localhost:3000/...` which the
-  // local server (http-only) rejects with EPROTO ssl3_get_record. Result:
-  // every default-locale URL returned 500 in prod.
+  // apps/web uses cookie-based i18n (no URL locale prefix) via a cookie-aware
+  // getRequestConfig — the NEXT_LOCALE cookie drives locale selection server-side,
+  // and LocaleSwitcher writes the cookie + calls router.refresh() for instant
+  // in-place switching (no navigation, no URL change).
   //
-  // With "always" the middleware issues a 307 REDIRECT (which goes back
-  // through nginx with the correct host/protocol) instead of an internal
-  // rewrite (which uses the listen address). Direct hits on /en/* and /zh/*
-  // bypass the redirect entirely and render normally.
-  localePrefix: "always",
+  // Cookie mode eliminates all next-intl middleware rewrites and redirects.
+  // The previous EPROTO ssl3_get_record prod-500 (nginx X-Forwarded-Proto +
+  // Next.js 16 standalone internal rewrite → https://localhost:3000/...) is
+  // gone entirely: no rewrite ever fires because no middleware runs locale
+  // routing for web. localePrefix is irrelevant in cookie mode (no middleware
+  // emits locale-prefix redirects) but kept as a valid defineRouting field.
+  localePrefix: "never",
 });
 
 export const { Link, redirect, usePathname, useRouter } = createNavigation(routing);

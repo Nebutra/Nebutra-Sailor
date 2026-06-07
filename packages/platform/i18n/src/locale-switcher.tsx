@@ -31,6 +31,17 @@ export interface LocaleSwitcherConfig<TLocale extends string> {
    * When omitted, defaults to "Change language".
    */
   useAriaLabel?: () => string;
+  /**
+   * Switching behaviour.
+   *
+   * - `"path"` (default) — locale-aware router.replace(pathname, {locale})
+   *   + prefetch on dropdown open. Landing page stays on this mode.
+   * - `"cookie"` — writes the NEXT_LOCALE cookie then calls router.refresh().
+   *   No URL change, no prefetch. Correct for apps/web (cookie-based i18n).
+   *
+   * Callers that do not pass mode get "path" so existing usage is unchanged.
+   */
+  mode?: "path" | "cookie";
 }
 
 export interface LocaleSwitcherProps<TLocale extends string = string> {
@@ -82,7 +93,7 @@ export function createLocaleSwitcher<TLocale extends string>(
   config: LocaleSwitcherConfig<TLocale>,
 ) {
   const { useRouter, usePathname } = hooks;
-  const { locales, labels: labelsOrHook, useAriaLabel } = config;
+  const { locales, labels: labelsOrHook, useAriaLabel, mode = "path" } = config;
 
   function LocaleSwitcher({
     ariaLabel: ariaLabelProp,
@@ -104,13 +115,12 @@ export function createLocaleSwitcher<TLocale extends string>(
     const [open, setOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // Prefetch all non-active locales when dropdown opens so the navigation
-    // feels instant. This also warms on-demand non-default-locale pages under
-    // the "as-needed" prefix strategy.
+    // Prefetch all non-active locales when dropdown opens (path mode only).
+    // In cookie mode there are no locale-specific URLs to prefetch.
     // Guard: some test mocks / older router adapters may not expose .prefetch.
     const handleOpen = useCallback(() => {
       setOpen((prev) => {
-        if (!prev && typeof router.prefetch === "function") {
+        if (!prev && mode === "path" && typeof router.prefetch === "function") {
           for (const l of locales) {
             if (l !== locale) {
               router.prefetch(pathname, { locale: l });
@@ -119,7 +129,7 @@ export function createLocaleSwitcher<TLocale extends string>(
         }
         return !prev;
       });
-    }, [locale, pathname, router]);
+    }, [locale, mode, pathname, router]);
 
     const handleSelect = useCallback(
       (next: TLocale) => {
@@ -129,16 +139,24 @@ export function createLocaleSwitcher<TLocale extends string>(
         }
         setLocaleCookie(next);
         setOpen(false);
-        startTransition(() => {
-          // scroll: false — a locale switch is the *same* page in another
-          // language; the reader must stay exactly where they are. Without this,
-          // App Router's default scroll handling (amplified by any global
-          // `scroll-behavior: smooth`) resets the position and, during PPR
-          // streaming, can land on the footer.
-          router.replace(pathname, { locale: next, scroll: false });
-        });
+        if (mode === "cookie") {
+          // Cookie mode: write cookie then re-run getRequestConfig server-side
+          // via router.refresh(). No URL change, no navigation, instant switch.
+          startTransition(() => {
+            router.refresh();
+          });
+        } else {
+          startTransition(() => {
+            // scroll: false — a locale switch is the *same* page in another
+            // language; the reader must stay exactly where they are. Without this,
+            // App Router's default scroll handling (amplified by any global
+            // `scroll-behavior: smooth`) resets the position and, during PPR
+            // streaming, can land on the footer.
+            router.replace(pathname, { locale: next, scroll: false });
+          });
+        }
       },
-      [locale, pathname, router],
+      [locale, mode, pathname, router],
     );
 
     // Close on outside click / Escape

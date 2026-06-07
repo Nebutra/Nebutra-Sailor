@@ -72,6 +72,11 @@
   "LocaleSwitcher": {
     "en": "English",
     "zh": "中文",
+    "de": "ドイツ語",
+    "es": "スペイン語",
+    "fr": "フランス語",
+    "ja": "日本語",
+    "ko": "韓国語",
     "label": "言語",
     "ariaLabel": "言語を変更"
   },

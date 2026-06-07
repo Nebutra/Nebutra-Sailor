@@ -72,6 +72,11 @@
   "LocaleSwitcher": {
     "en": "English",
     "zh": "中文",
+    "de": "Allemand",
+    "es": "Espagnol",
+    "fr": "Français",
+    "ja": "Japonais",
+    "ko": "Coréen",
     "label": "Langue",
     "ariaLabel": "Changer la langue"
   },
