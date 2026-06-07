@@ -26,6 +26,7 @@ import {
   getSiteUrl,
 } from "@/lib/seo/site-routes";
 import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
+import { fontVariables } from "../fonts";
 import { Providers } from "../providers";
 
 interface LangLayoutProps {
@@ -184,47 +185,53 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
   ) as Partial<Messages>;
 
   return (
-    <>
-      <a
-        href="#main-content"
-        className="sr-only fixed left-3 top-3 z-[100] rounded-[var(--radius-md)] bg-[color:var(--blue-9)] px-3 py-2 text-sm font-medium text-white focus:not-sr-only"
-      >
-        Skip to content
-      </a>
+    <html
+      lang={locale}
+      className={`${fontVariables} min-h-screen antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="antialiased">
+        <a
+          href="#main-content"
+          className="sr-only fixed left-3 top-3 z-[100] rounded-[var(--radius-md)] bg-[color:var(--blue-9)] px-3 py-2 text-sm font-medium text-white focus:not-sr-only"
+        >
+          Skip to content
+        </a>
 
-      <Script id="nebutra-jsonld" type="application/ld+json" strategy="beforeInteractive">
-        {toSafeJsonLd(jsonLd)}
-      </Script>
+        <Script id="nebutra-jsonld" type="application/ld+json" strategy="beforeInteractive">
+          {toSafeJsonLd(jsonLd)}
+        </Script>
 
-      <Providers>
-        <ErrorBoundary>
-          <NextIntlClientProvider locale={locale} messages={clientMessages}>
-            {/*
-             * Suspense boundary: the shell (CookieConsentBanner, IcpFooter,
-             * Toaster) is outside so it renders immediately from the cached
-             * layout. Children stream in via RouteSkeleton → reduces the
-             * visible stall on locale switches to near-zero.
-             */}
-            <Suspense fallback={<RouteSkeleton />}>{children}</Suspense>
-            <CookieConsentBanner apiEndpoint={process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENDPOINT} />
-            {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
-              <IcpFooter
-                locale={locale}
-                icpNumber={process.env.NEXT_PUBLIC_ICP_NUMBER}
-                publicSecurityRecord={process.env.NEXT_PUBLIC_PUBLIC_SECURITY_RECORD}
-              />
-            ) : null}
-            {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
-            <Toaster />
-          </NextIntlClientProvider>
-        </ErrorBoundary>
-      </Providers>
-      {ENABLE_VERCEL_TELEMETRY && (
-        <>
-          <SpeedInsights />
-          <Analytics />
-        </>
-      )}
-    </>
+        <Providers>
+          <ErrorBoundary>
+            <NextIntlClientProvider locale={locale} messages={clientMessages}>
+              {/*
+               * Suspense boundary: the shell (CookieConsentBanner, IcpFooter,
+               * Toaster) is outside so it renders immediately from the cached
+               * layout. Children stream in via RouteSkeleton → reduces the
+               * visible stall on locale switches to near-zero.
+               */}
+              <Suspense fallback={<RouteSkeleton />}>{children}</Suspense>
+              <CookieConsentBanner apiEndpoint={process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENDPOINT} />
+              {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
+                <IcpFooter
+                  locale={locale}
+                  icpNumber={process.env.NEXT_PUBLIC_ICP_NUMBER}
+                  publicSecurityRecord={process.env.NEXT_PUBLIC_PUBLIC_SECURITY_RECORD}
+                />
+              ) : null}
+              {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
+              <Toaster />
+            </NextIntlClientProvider>
+          </ErrorBoundary>
+        </Providers>
+        {ENABLE_VERCEL_TELEMETRY && (
+          <>
+            <SpeedInsights />
+            <Analytics />
+          </>
+        )}
+      </body>
+    </html>
   );
 }
