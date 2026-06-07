@@ -7,6 +7,7 @@ import {
   hasVisibleText,
   normalizePortableTextBlocks,
   type PortableTextBlock,
+  type PortableTextImage,
   type PortableTextSpan,
   type PortableTextTableCell,
   TEMPLATE_PLACEHOLDER_MARK,
@@ -99,6 +100,44 @@ function renderTableCellMark(
 
   if (mark === "mathInline") {
     return <BlogInlineMath key={key}>{children}</BlogInlineMath>;
+  }
+
+  if (mark === "highlight") {
+    return (
+      <mark
+        key={key}
+        className="rounded-[var(--radius-sm)] bg-[var(--amber-3)] px-1 text-[var(--neutral-12)]"
+      >
+        {children}
+      </mark>
+    );
+  }
+
+  if (mark === "kbd") {
+    return (
+      <kbd
+        key={key}
+        className="rounded-[var(--radius-sm)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.82em] text-[var(--neutral-12)]"
+      >
+        {children}
+      </kbd>
+    );
+  }
+
+  if (mark === "sup") {
+    return (
+      <sup key={key} className="text-[0.72em] leading-none">
+        {children}
+      </sup>
+    );
+  }
+
+  if (mark === "sub") {
+    return (
+      <sub key={key} className="text-[0.72em] leading-none">
+        {children}
+      </sub>
+    );
   }
 
   if (mark === TEMPLATE_PLACEHOLDER_MARK) {
@@ -291,6 +330,290 @@ function BlogMathBlock({ value }: { value: PortableTextBlock }) {
   );
 }
 
+function BlogCalloutBlock({ value }: { value: PortableTextBlock }) {
+  const tone =
+    value.tone === "warning" || value.tone === "success" || value.tone === "insight"
+      ? value.tone
+      : "note";
+  const toneClass = {
+    insight: "border-[var(--blue-7)] bg-[var(--blue-2)]",
+    note: "border-[var(--neutral-7)] bg-[var(--neutral-1)]",
+    success: "border-[var(--green-7)] bg-[var(--green-2)]",
+    warning: "border-[var(--amber-7)] bg-[var(--amber-2)]",
+  }[tone];
+
+  return (
+    <aside className={`my-8 rounded-[var(--radius-lg)] border px-5 py-4 ${toneClass}`}>
+      {value.title && (
+        <div className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-[var(--neutral-12)]">
+          {value.title}
+        </div>
+      )}
+      {value.body && <p className="text-base leading-8 text-[var(--neutral-11)]">{value.body}</p>}
+    </aside>
+  );
+}
+
+function BlogQuoteBlock({ value }: { value: PortableTextBlock }) {
+  if (!value.quote?.trim()) return null;
+  const attribution = value.sourceHref ? (
+    <a
+      href={value.sourceHref}
+      className="underline decoration-[var(--neutral-7)] underline-offset-4"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      {value.attribution}
+    </a>
+  ) : (
+    value.attribution
+  );
+
+  return (
+    <figure className="my-10 border-y border-[var(--neutral-6)] py-7">
+      <blockquote className="text-xl font-semibold leading-10 text-[var(--neutral-12)]">
+        {value.quote}
+      </blockquote>
+      {value.attribution && (
+        <figcaption className="mt-4 text-sm text-[var(--neutral-10)]">{attribution}</figcaption>
+      )}
+    </figure>
+  );
+}
+
+function BlogStatGrid({ value }: { value: PortableTextBlock }) {
+  const items = Array.isArray(value.items) ? value.items : [];
+  if (!items.length) return null;
+
+  return (
+    <section className="my-9 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
+      {value.title && (
+        <h3 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">{value.title}</h3>
+      )}
+      <div className="grid gap-3 sm:grid-cols-2">
+        {items.map((item, index) => (
+          <div
+            key={item._key ?? `${value._key ?? "stat"}-${index}`}
+            className="rounded-[var(--radius-md)] border border-[var(--neutral-5)] bg-[var(--neutral-2)] p-4"
+          >
+            <div className="font-mono text-2xl font-semibold text-[var(--neutral-12)]">
+              {item.value}
+            </div>
+            <div className="mt-2 text-sm font-medium text-[var(--neutral-12)]">{item.label}</div>
+            {item.caption && (
+              <p className="mt-1 text-sm leading-6 text-[var(--neutral-10)]">{item.caption}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function BlogComparisonTable({ value }: { value: PortableTextBlock }) {
+  const columns = value.columns?.filter(Boolean) ?? [];
+  const rows = value.rows?.filter((row) => row.label || row.cells?.some(Boolean)) ?? [];
+  if (columns.length < 2 || !rows.length) return null;
+
+  return (
+    <section className="my-9">
+      {value.title && (
+        <h3 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">{value.title}</h3>
+      )}
+      <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+        <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+          <thead className="bg-[var(--neutral-2)] text-[var(--neutral-12)]">
+            <tr>
+              <th className="border-b border-[var(--neutral-6)] px-4 py-3">Dimension</th>
+              {columns.map((column) => (
+                <th key={column} className="border-b border-[var(--neutral-6)] px-4 py-3">
+                  {column}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, rowIndex) => (
+              <tr
+                key={row._key ?? `${value._key ?? "comparison"}-${rowIndex}`}
+                className="border-b border-[var(--neutral-5)] last:border-b-0"
+              >
+                <th
+                  className="px-4 py-3 align-top font-semibold text-[var(--neutral-12)]"
+                  scope="row"
+                >
+                  {row.label}
+                </th>
+                {columns.map((column, cellIndex) => (
+                  <td key={`${column}-${cellIndex}`} className="px-4 py-3 align-top leading-6">
+                    {row.cells?.[cellIndex]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+function BlogSourceCard({ value }: { value: PortableTextBlock }) {
+  if (!value.title || !value.url) return null;
+
+  return (
+    <aside className="my-7 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
+      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--neutral-9)]">
+        Source
+      </div>
+      <a
+        href={value.url}
+        className="mt-2 block text-base font-semibold text-[var(--neutral-12)] underline decoration-[var(--neutral-7)] underline-offset-4"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {value.title}
+      </a>
+      {(value.publisher || value.author || value.accessedAt) && (
+        <div className="mt-2 text-sm text-[var(--neutral-10)]">
+          {[value.publisher, value.author, value.accessedAt].filter(Boolean).join(" · ")}
+        </div>
+      )}
+      {value.summary && (
+        <p className="mt-3 text-sm leading-7 text-[var(--neutral-11)]">{value.summary}</p>
+      )}
+    </aside>
+  );
+}
+
+function BlogImageFigure({ image }: { image: PortableTextImage }) {
+  const imageUrl = getImageUrl(image as Parameters<typeof getImageUrl>[0], {
+    width: 1200,
+    format: "webp",
+  });
+  const alt = image.alt ?? "";
+
+  return (
+    <figure>
+      <div className="relative aspect-[16/9] overflow-hidden rounded-[var(--radius-lg)] bg-[var(--neutral-3)]">
+        <Image src={imageUrl} alt={alt} fill className="object-cover" sizes="720px" />
+      </div>
+      {image.caption && (
+        <figcaption className="mt-2 text-center text-sm text-[var(--neutral-10)]">
+          {image.caption}
+        </figcaption>
+      )}
+    </figure>
+  );
+}
+
+function BlogImageSet({ value }: { value: PortableTextBlock }) {
+  const images = value.images?.filter((image) => image.asset?._ref) ?? [];
+  if (!images.length) return null;
+
+  return (
+    <section className="my-9">
+      {value.title && (
+        <h3 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">{value.title}</h3>
+      )}
+      <div className={images.length === 1 ? "" : "grid gap-4 md:grid-cols-2"}>
+        {images.map((image, index) => (
+          <BlogImageFigure
+            key={image._key ?? `${value._key ?? "image-set"}-${index}`}
+            image={image}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function BlogEmbedBlock({ value }: { value: PortableTextBlock }) {
+  if (!value.url || !value.title) return null;
+
+  return (
+    <aside className="my-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
+      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--neutral-9)]">
+        {value.provider ?? "Embed"}
+      </div>
+      <a
+        href={value.url}
+        className="mt-2 block text-lg font-semibold text-[var(--neutral-12)] underline decoration-[var(--neutral-7)] underline-offset-4"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {value.title}
+      </a>
+      {value.caption && (
+        <p className="mt-2 text-sm leading-6 text-[var(--neutral-10)]">{value.caption}</p>
+      )}
+    </aside>
+  );
+}
+
+function BlogDiagramBlock({ value }: { value: PortableTextBlock }) {
+  if (value.diagramType === "mermaid" && value.mermaidCode) {
+    return (
+      <figure className="my-9">
+        {value.title && (
+          <figcaption className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
+            {value.title}
+          </figcaption>
+        )}
+        <BlogMermaidDiagram chart={value.mermaidCode} />
+        {value.caption && (
+          <p className="mt-2 text-center text-sm text-[var(--neutral-10)]">{value.caption}</p>
+        )}
+      </figure>
+    );
+  }
+
+  const image = (value as PortableTextBlock & { image?: PortableTextImage }).image;
+  if (value.diagramType === "image" && image?.asset?._ref) {
+    return (
+      <section className="my-9">
+        {value.title && (
+          <h3 className="mb-4 text-base font-semibold text-[var(--neutral-12)]">{value.title}</h3>
+        )}
+        <BlogImageFigure image={{ ...image, caption: image.caption ?? value.caption }} />
+      </section>
+    );
+  }
+
+  return (
+    <aside className="my-8 rounded-[var(--radius-lg)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-1)] p-5 text-sm text-[var(--neutral-10)]">
+      {value.title || "Diagram"} is recorded as a structured diagram block and needs a supported
+      renderer.
+    </aside>
+  );
+}
+
+function BlogComponentBlock({ value }: { value: PortableTextBlock }) {
+  if (value.componentKey === "articleDivider") {
+    return <div className="my-10 border-t border-[var(--neutral-6)]" aria-hidden />;
+  }
+
+  const props = value.props?.filter((prop) => prop.name && prop.value) ?? [];
+
+  return (
+    <aside className="my-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
+      <div className="text-sm font-semibold text-[var(--neutral-12)]">
+        {value.componentKey ?? "Component"}
+      </div>
+      {props.length > 0 && (
+        <dl className="mt-3 space-y-2 text-sm text-[var(--neutral-10)]">
+          {props.map((prop, index) => (
+            <div key={prop._key ?? `${value._key ?? "component"}-${index}`}>
+              <dt className="font-mono text-xs uppercase tracking-[0.12em]">{prop.name}</dt>
+              <dd className="mt-1 text-[var(--neutral-11)]">{prop.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </aside>
+  );
+}
+
 function getCtaItems(value: PortableTextBlock): BlogCtaBlockItem[] {
   if (!Array.isArray(value.items)) return [];
 
@@ -415,13 +738,15 @@ function createPortableTextComponents(
       link: ({ children, value }) => {
         const href = typeof value?.href === "string" ? value.href : "#";
         const isExternal = /^https?:\/\//.test(href);
+        const openInNewTab = value?.openInNewTab === true || isExternal;
 
         return (
           <a
             href={href}
+            aria-label={typeof value?.label === "string" ? value.label : undefined}
             className="font-medium text-[var(--neutral-12)] underline decoration-[var(--neutral-7)] underline-offset-4 transition-colors hover:decoration-[var(--blue-9)]"
-            rel={isExternal ? "noopener noreferrer" : undefined}
-            target={isExternal ? "_blank" : undefined}
+            rel={openInNewTab ? "noopener noreferrer" : undefined}
+            target={openInNewTab ? "_blank" : undefined}
           >
             {children}
           </a>
@@ -453,6 +778,35 @@ function createPortableTextComponents(
         <strong className="font-semibold text-[var(--neutral-12)]">{children}</strong>
       ),
       em: ({ children }) => <em className="italic text-[var(--neutral-12)]">{children}</em>,
+      highlight: ({ children }) => (
+        <mark className="rounded-[var(--radius-sm)] bg-[var(--amber-3)] px-1 text-[var(--neutral-12)]">
+          {children}
+        </mark>
+      ),
+      kbd: ({ children }) => (
+        <kbd className="rounded-[var(--radius-sm)] border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.82em] text-[var(--neutral-12)]">
+          {children}
+        </kbd>
+      ),
+      sup: ({ children }) => <sup className="text-[0.72em] leading-none">{children}</sup>,
+      sub: ({ children }) => <sub className="text-[0.72em] leading-none">{children}</sub>,
+      footnote: ({ children, value }) => {
+        const note = typeof value?.note === "string" ? value.note : "";
+        return (
+          <span className="group/footnote relative inline-flex">
+            <span className="underline decoration-dotted underline-offset-4">{children}</span>
+            {note && (
+              <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 hidden w-64 -translate-x-1/2 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 text-xs leading-5 text-[var(--neutral-11)] shadow-lg group-hover/footnote:block">
+                {note}
+              </span>
+            )}
+          </span>
+        );
+      },
+      anchor: ({ children, value }) => {
+        const id = typeof value?.id === "string" ? value.id : undefined;
+        return id ? <span id={id}>{children}</span> : children;
+      },
       [TEMPLATE_PLACEHOLDER_MARK]: ({ children }) => (
         <span className="mx-0.5 inline-flex rounded-[var(--radius-sm)] border border-dashed border-[var(--neutral-7)] bg-[var(--neutral-2)] px-1.5 py-0.5 font-mono text-[0.88em] font-medium text-[var(--neutral-12)]">
           {children}
@@ -472,10 +826,19 @@ function createPortableTextComponents(
           />
         );
       },
+      calloutBlock: ({ value }) => <BlogCalloutBlock value={value as PortableTextBlock} />,
+      comparisonTable: ({ value }) => <BlogComparisonTable value={value as PortableTextBlock} />,
+      componentBlock: ({ value }) => <BlogComponentBlock value={value as PortableTextBlock} />,
+      diagramBlock: ({ value }) => <BlogDiagramBlock value={value as PortableTextBlock} />,
+      embedBlock: ({ value }) => <BlogEmbedBlock value={value as PortableTextBlock} />,
+      imageSet: ({ value }) => <BlogImageSet value={value as PortableTextBlock} />,
       mathBlock: ({ value }) => <BlogMathBlock value={value as PortableTextBlock} />,
       mermaid: ({ value }) => (
         <BlogMermaidDiagram chart={typeof value?.code === "string" ? value.code : ""} />
       ),
+      quoteBlock: ({ value }) => <BlogQuoteBlock value={value as PortableTextBlock} />,
+      sourceCard: ({ value }) => <BlogSourceCard value={value as PortableTextBlock} />,
+      statGrid: ({ value }) => <BlogStatGrid value={value as PortableTextBlock} />,
       codeHtml: ({ value }) => (
         <BlogCodeBlock
           code={typeof value?.code === "string" ? value.code : ""}
@@ -486,6 +849,16 @@ function createPortableTextComponents(
           language={typeof value?.language === "string" ? value.language : null}
         />
       ),
+      inlineBadge: ({ value }) => {
+        const label = typeof value?.label === "string" ? value.label : null;
+        if (!label) return null;
+
+        return (
+          <span className="mx-1 inline-flex rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-2)] px-2 py-0.5 align-middle text-xs font-semibold uppercase tracking-[0.12em] text-[var(--neutral-11)]">
+            {label}
+          </span>
+        );
+      },
       table: ({ value }) => <BlogTable value={value as PortableTextBlock} />,
       image: ({ value }) => {
         const imageUrl = getImageUrl(value as Parameters<typeof getImageUrl>[0], {
