@@ -134,6 +134,17 @@ async function getCachedAllPosts(language: BlogLanguage): Promise<BlogPostWithSo
   return getAllPosts(language);
 }
 
+async function getCachedPostTranslation(
+  translationKey: string,
+  language: BlogLanguage,
+): Promise<BlogPostWithSource | null> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blog");
+  cacheTag(`blog-translation:${translationKey}`);
+  return getPostTranslation(translationKey, language);
+}
+
 function postCover(post: BlogPostWithSource) {
   const imageUrl = post.mainImage
     ? getImageUrl(post.mainImage as Parameters<typeof getImageUrl>[0], {
@@ -260,9 +271,9 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   setRequestLocale(lang as Locale);
 
   const blogLanguage = toBlogLanguage(lang);
-  let post = await getPostBySlug(slug, blogLanguage);
+  let post = await getCachedBlogPost(slug, blogLanguage);
   if (!post) {
-    post = await getLocalizedPostForSiblingSlug(slug, blogLanguage);
+    post = await getCachedLocalizedPostForSiblingSlug(slug, blogLanguage);
     if (post?.slug && post.slug !== slug) {
       redirect(localizedPostHref(lang, post.slug));
     }
@@ -270,7 +281,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   if (!post) notFound();
   const targetLanguage = oppositeBlogLanguage(blogLanguage);
   const translation = post.translationKey
-    ? await getPostTranslation(post.translationKey, targetLanguage)
+    ? await getCachedPostTranslation(post.translationKey, targetLanguage)
     : null;
   const translationLocale = localeForBlogLanguage(targetLanguage);
 

@@ -7,13 +7,16 @@ import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
+import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { IcpFooter } from "@/components/icp-footer";
+import RouteSkeleton from "@/components/ui/route-skeleton";
 import { type Locale, routing } from "@/i18n/routing";
 import { seoContent } from "@/lib/landing-content";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -125,6 +128,19 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
 }
 
+/**
+ * Cached message loader — locale is the cache discriminator so each locale
+ * gets its own cache entry. MUST NOT call setRequestLocale / getTranslations
+ * or touch the ALS — those must stay in the layout body outside this function.
+ */
+async function getCachedMessages(locale: Locale) {
+  "use cache";
+  cacheLife("days");
+  cacheTag("i18n-messages");
+  cacheTag(`i18n-messages:${locale}`);
+  return getMessages({ locale });
+}
+
 export default async function LangLayout({ children, params }: LangLayoutProps) {
   const { lang } = await params;
 
@@ -134,7 +150,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
 
   const locale = lang as Locale;
   setRequestLocale(locale);
-  const messages = await getMessages({ locale });
+  const messages = await getCachedMessages(locale);
 
   // Only ship the namespaces that are actually consumed by client components
   // ("use client") to the browser — server-only namespaces (metadata, hero,
@@ -183,7 +199,13 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
       <Providers>
         <ErrorBoundary>
           <NextIntlClientProvider locale={locale} messages={clientMessages}>
-            {children}
+            {/*
+             * Suspense boundary: the shell (CookieConsentBanner, IcpFooter,
+             * Toaster) is outside so it renders immediately from the cached
+             * layout. Children stream in via RouteSkeleton → reduces the
+             * visible stall on locale switches to near-zero.
+             */}
+            <Suspense fallback={<RouteSkeleton />}>{children}</Suspense>
             <CookieConsentBanner apiEndpoint={process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENDPOINT} />
             {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
               <IcpFooter
