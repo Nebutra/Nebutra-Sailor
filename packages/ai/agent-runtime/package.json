@@ -51,19 +51,11 @@
     "@nebutra/capability-kit": "workspace:*",
     "@nebutra/execution-policy": "workspace:*",
     "@nebutra/graph-model": "workspace:*",
+    "@nebutra/mcp": "workspace:*",
     "p-limit": "^7.3.0",
     "zod": "catalog:"
   },
-  "peerDependencies": {
-    "@nebutra/mcp": "workspace:*"
-  },
-  "peerDependenciesMeta": {
-    "@nebutra/mcp": {
-      "optional": true
-    }
-  },
   "devDependencies": {
-    "@nebutra/mcp": "workspace:*",
     "@types/node": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",

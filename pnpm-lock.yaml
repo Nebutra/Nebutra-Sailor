@@ -1619,6 +1619,9 @@ importers:
       '@nebutra/graph-model':
         specifier: workspace:*
         version: link:../../platform/graph-model
+      '@nebutra/mcp':
+        specifier: workspace:*
+        version: link:../mcp
       p-limit:
         specifier: ^7.3.0
         version: 7.3.0
@@ -1626,9 +1629,6 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
     devDependencies:
-      '@nebutra/mcp':
-        specifier: workspace:*
-        version: link:../mcp
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.1

@@ -86,7 +86,7 @@ jobs:
         with:
           commit: "chore(release): version packages"
           title: "chore(release): version packages"
-          version: pnpm version:packages
+          version: bash ./scripts/release-version.sh
           publish: bash ./scripts/release-publish.sh
           createGithubReleases: false
         env:
