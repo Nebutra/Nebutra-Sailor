@@ -1,0 +1,1240 @@
+{
+  "admin": {
+    "title": "管理者",
+    "description": "スーパー管理者パネル — ユーザー、組織、およびシステムの状態を管理します。",
+    "nav": {
+      "overview": "概要",
+      "users": "ユーザー",
+      "organizations": "組織"
+    },
+    "users": {
+      "title": "ユーザー",
+      "description": "すべての組織のユーザーを閲覧、検索、および偽装できます。",
+      "searchPlaceholder": "ユーザーを検索…",
+      "totalCount": "{count, plural, one {# ユーザー} other {# ユーザー}}",
+      "empty": "ユーザーが見つかりません。",
+      "loadError": "ユーザーの読み込みに失敗しました。",
+      "columns": {
+        "email": "メール",
+        "name": "名前",
+        "created": "作成日時",
+        "activeOrgs": "アクティブな組織",
+        "actions": "アクション"
+      },
+      "viewOrgs": "組織を表示"
+    },
+    "organizations": {
+      "title": "組織",
+      "description": "システム内のすべてのワークスペース（最新順）。",
+      "searchPlaceholder": "組織を検索…",
+      "totalCount": "{count, plural, one {# 組織} other {# 組織}}",
+      "empty": "組織が見つかりません。",
+      "loadError": "組織の読み込みに失敗しました。",
+      "columns": {
+        "name": "名前",
+        "slug": "スラッグ",
+        "plan": "プラン",
+        "members": "メンバー",
+        "created": "作成日時",
+        "actions": "アクション"
+      },
+      "view": "表示"
+    },
+    "impersonate": {
+      "trigger": "偽装",
+      "starting": "開始中…",
+      "stop": "偽装を停止",
+      "confirm": "{label} を偽装しますか？停止するまで、このユーザーとしてアプリが表示されます。",
+      "error": "偽装の開始に失敗しました。",
+      "stopError": "偽装の停止に失敗しました。"
+    },
+    "pagination": {
+      "previous": "前へ",
+      "next": "次へ",
+      "pageOf": "ページ {page} / {total}"
+    }
+  },
+  "Common": {
+    "hello": "こんにちは世界",
+    "dashboard": "ダッシュボード",
+    "actions": {
+      "continue": "続行",
+      "confirm": "確認",
+      "done": "完了",
+      "cancel": "キャンセル"
+    }
+  },
+  "theme": {
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "システム"
+  },
+  "LocaleSwitcher": {
+    "en": "English",
+    "zh": "中文",
+    "label": "言語",
+    "ariaLabel": "言語を変更"
+  },
+  "compliance": {
+    "icp": {
+      "recordNumber": "ICP登録番号",
+      "publicSecurity": "公安登録"
+    },
+    "wechat": {
+      "signIn": "WeChatでサインイン",
+      "notConfigured": "WeChat ログインが設定されていません"
+    }
+  },
+  "onboarding": {
+    "title": "ワークスペースをセットアップ",
+    "subtitle": "3つの簡単なステップで準備完了。",
+    "steps": {
+      "workspace": "ワークスペース",
+      "invite": "チームを招待",
+      "plan": "プランを選択"
+    },
+    "progress": {
+      "back": "戻る",
+      "stepCounter": "ステップ {current} / {total}"
+    },
+    "plan": {
+      "title": "プランを選択",
+      "description": "無料で開始するか、容量をアンロック。いつでもプランを変更できます。",
+      "choose": "プランを選択",
+      "skip": "今はスキップ"
+    }
+  },
+  "userMenu": {
+    "ariaLabel": "ユーザーメニューを開く",
+    "profile": "プロフィール",
+    "settings": "設定",
+    "feedback": "フィードバック",
+    "theme": "テーマ",
+    "language": "言語",
+    "signOut": "サインアウト",
+    "signedInAs": "ログイン中"
+  },
+  "account": {
+    "profile": {
+      "title": "プロフィール",
+      "description": "個人情報を更新します。",
+      "nameLabel": "名前",
+      "namePlaceholder": "フルネーム",
+      "emailLabel": "メール",
+      "emailHint": "新しいメールアドレスを確認するための検証リンクを送信します。",
+      "languageLabel": "言語",
+      "submit": "変更を保存",
+      "saving": "保存中…",
+      "verifyEmail": "検証",
+      "verifying": "検証を送信中…",
+      "success": "プロフィールが更新されました。",
+      "verificationSent": "確認メールが送信されました。",
+      "errorRequiredName": "名前は必須です。",
+      "errorInvalidEmail": "メールアドレスが無効です。",
+      "subtitle": "あなたの身元と連絡先情報。",
+      "unknown": "名前なしユーザー",
+      "manageCta": "完全なアカウント設定を開く"
+    },
+    "avatar": {
+      "title": "アバター",
+      "description": "正方形の画像をアップロード（PNG、JPEG、WebP、最大2MB）。",
+      "uploadButton": "アバターをアップロード",
+      "uploading": "アップロード中…",
+      "fileTooBig": "ファイルが大きすぎます。最大サイズは2MBです。",
+      "invalidType": "サポートされていない画像形式。PNG、JPEG、またはWebPを使用してください。",
+      "success": "アバターが更新されました。",
+      "removeButton": "アバターを削除",
+      "removed": "アバターが削除されました。",
+      "deleteError": "アバターの削除に失敗しました。"
+    },
+    "export": {
+      "title": "データをエクスポート",
+      "description": "プロフィール、組織、監査イベント、通知、招待を含む、アカウントの全レコードをダウンロードします。",
+      "compliance": "GDPR 第20条（データ移植権）および PIPL 第45条（個人情報のコピー取得権）に基づいて提供されます。",
+      "export": "データをエクスポート",
+      "pending": "エクスポートを準備中…",
+      "ready": "エクスポートが完了しました。",
+      "download": "JSON をダウンロード",
+      "error": "エクスポートの準備に失敗しました。後でもう一度お試しください。"
+    },
+    "emailChange": {
+      "title": "メールアドレスを変更",
+      "description": "新しいアドレスに検証リンクを送信します。そのインボックスから確認された後に変更が有効になります。",
+      "newEmailLabel": "新しいメールアドレス",
+      "newEmailPlaceholder": "you@example.com",
+      "submit": "検証リンクを送信",
+      "submitting": "送信中…",
+      "verificationSent": "{email} のインボックスで確認メールを確認して変更を完了してください。",
+      "errorInvalidEmail": "メールアドレスが無効です。",
+      "error": "メール変更リクエストに失敗しました。",
+      "confirm": {
+        "successTitle": "メールが更新されました",
+        "successDescription": "サインイン用メールが更新されました。",
+        "successWithEmail": "サインイン用メールが {email} に更新されました。",
+        "failureTitle": "そのリンクを確認できませんでした",
+        "failureDescription": "この確認リンクは無効、期限切れ、またはすでに使用されています。アカウント設定から新しいものを要求してください。",
+        "errorCode": "理由：{code}",
+        "continueCta": "アカウントに戻る",
+        "backCta": "アカウントに戻る"
+      }
+    },
+    "title": "アカウント",
+    "ariaLabel": "アカウント設定",
+    "navLabel": "アカウント設定タブ",
+    "tip": "任意の場所で {key} を押すと、このダイアログを再度開くことができます。",
+    "tabs": {
+      "profile": "プロフィール",
+      "subscription": "サブスクリプション",
+      "billing": "請求",
+      "preferences": "環境設定",
+      "personalization": "個性化"
+    },
+    "subscription": {
+      "title": "サブスクリプション",
+      "subtitle": "プラン、クォータ、および更新。",
+      "currentPlan": "現在のプラン",
+      "upgradeCta": "プランを比較",
+      "manageCta": "サブスクリプションを管理"
+    },
+    "billing": {
+      "title": "請求",
+      "subtitle": "請求書の履歴と支払い方法。",
+      "empty": {
+        "title": "履歴がありません",
+        "description": "初回の有料期間後、請求と請求書がここに表示されます。",
+        "cta": "完全な請求を開く"
+      }
+    },
+    "preferences": {
+      "title": "環境設定",
+      "subtitle": "テーマとアクセシビリティ。",
+      "theme": "テーマ",
+      "light": "ライト",
+      "dark": "ダーク",
+      "system": "システム",
+      "help": "ヘルプ",
+      "reportIssue": "問題を報告",
+      "shortcuts": "キーボード ショートカット"
+    },
+    "personalization": {
+      "title": "個性化",
+      "subtitle": "Sailor に、あなたが誰で、どのように応答してほしいかを伝えます。"
+    }
+  },
+  "impact": {
+    "hero_title": "パラダイムを再定義",
+    "hero_subtitle": "世界に難しいビジネスはない。",
+    "social_title": "社会",
+    "social_headline": "絶対的な技術の平等",
+    "social_description": "エッジイノベーターをエンパワーします。従来のフィルターを破り、ソロ起業家にすぐに使えるインフラを提供します。",
+    "governance_title": "ガバナンス",
+    "governance_headline": "コードは法律",
+    "governance_description": "不透明な官僚制度に代わる、作業証明とビジネス成果に基づく組織構造。",
+    "environment_title": "環境",
+    "environment_headline": "デジタル ミニマリズム",
+    "environment_description": "SaaS の統合を極限まで進め、クラウドフットプリントの削減を促進します。"
+  },
+  "auth": {
+    "security": {
+      "title": "セキュリティ",
+      "description": "パスワード、多要素認証、およびアクティブセッションを管理します。",
+      "managedByProvider": "セキュリティ設定は認証プロバイダーによって管理されます。",
+      "openProviderProfile": "プロフィールを開く",
+      "changePassword": {
+        "title": "パスワードを変更",
+        "description": "他のサイトで再利用しない強力なパスワードを使用します。",
+        "currentPasswordLabel": "現在のパスワード",
+        "newPasswordLabel": "新しいパスワード",
+        "confirmPasswordLabel": "新しいパスワードを確認",
+        "revokeOtherSessions": "他のデバイスからサインアウト",
+        "submit": "パスワードを更新",
+        "pending": "パスワードを更新中…",
+        "success": "パスワードが正常に更新されました。"
+      },
+      "twoFactor": {
+        "title": "2要素認証",
+        "description": "オーセンティケータ アプリを使用して 2 番目の検証ステップを追加します。",
+        "enabled": "有効",
+        "disabled": "無効",
+        "enabledHelp": "パスワードでサインインした後、アカウントはオーセンティケータ コードを 6 桁要求します。",
+        "disabledHelp": "オーセンティケータ アプリの 6 桁コードでアカウントを保護します。",
+        "enable": "2要素認証を有効化",
+        "disable": "2要素認証を無効化",
+        "passwordPrompt": "パスワードを確認",
+        "scanQrCode": "オーセンティケータ アプリでこの QR コードをスキャンし、6 桁のコードを入力してください。",
+        "secretKeyLabel": "または、このシークレットを手動で入力",
+        "verificationCodeLabel": "確認コード",
+        "verify": "確認して有効化",
+        "backupCodesTitle": "バックアップ コード",
+        "backupCodesDescription": "これらのコードを安全な場所に保存してください。オーセンティケータにアクセスできなくなった場合、各コードは 1 回使用できます。",
+        "copyBackupCodes": "コードをコピー",
+        "finishSetup": "セットアップを完了",
+        "successEnabled": "2要素認証が有効になりました。",
+        "successDisabled": "2要素認証が無効になりました。"
+      },
+      "sessions": {
+        "title": "アクティブセッション",
+        "description": "現在アカウントにサインインしているデバイスとブラウザ。",
+        "currentSession": "（現在）",
+        "ipLabel": "IPアドレス",
+        "lastActiveLabel": "最後にアクティブ",
+        "revoke": "サインアウト",
+        "revokeAll": "他のすべてのデバイスからサインアウト",
+        "empty": "他のアクティブセッションはありません。",
+        "successRevoked": "セッションがサインアウトされました。",
+        "successRevokedAll": "他のすべてのセッションがサインアウトされました。"
+      },
+      "deleteAccount": {
+        "title": "アカウントを削除",
+        "description": "アカウントと関連するすべてのデータを永久に削除します。この操作は取り消すことができません。",
+        "passwordPrompt": "確認するためにパスワードを入力",
+        "confirmTextLabel": "DELETE と入力して確認",
+        "submit": "アカウントを削除",
+        "cancel": "キャンセル",
+        "success": "アカウントが削除されました。"
+      },
+      "connectedAccounts": {
+        "title": "接続されたアカウント",
+        "description": "Nebutra ID にリンクされている OAuth サインイン方法を確認します。",
+        "connected": "接続済み",
+        "connect": "接続",
+        "help": "プロバイダーをリンク解除する前に、少なくとも 1 つの信頼できるサインイン方法を利用可能に保ってください。",
+        "unlink": "リンク解除",
+        "notLinked": "リンクされていない"
+      },
+      "passkeys": {
+        "title": "パスキー",
+        "description": "フィッシング耐性のあるサインインにデバイスバインドの認証情報を使用します。",
+        "empty": "登録されたパスキーはありません",
+        "addPasskey": "パスキーを追加",
+        "cancelAdd": "キャンセル",
+        "cancelled": "パスキー セットアップがキャンセルされました。変更はありません。",
+        "defaultName": "パスキー {number}",
+        "nameHelp": "ブラウザが確認を要求する前に、このパスキーに認識可能な名前を付けます。",
+        "nameLabel": "パスキー名",
+        "rename": "名前を変更",
+        "saveRename": "名前を保存",
+        "remove": "削除",
+        "successAdded": "パスキーが追加されました。",
+        "successRemoved": "パスキーが削除されました。",
+        "unavailableBadge": "利用不可"
+      },
+      "setPassword": {
+        "title": "パスワードを設定",
+        "description": "OAuth プロバイダーなしでサインインするためにパスワードを追加します。",
+        "submit": "パスワードを設定",
+        "pending": "パスワード設定リンクを送信中…",
+        "sentMessage": "パスワード設定リンクをメールに送信しました。"
+      }
+    },
+    "banner": {
+      "logoAlt": "Nebutra",
+      "slogan": "スタートアップを船出させる。初日から統治されている。",
+      "tagline": "マルチリージョン エージェント、デフォルトでマルチテナント。プラットフォーム チームは必要ありません。"
+    },
+    "signIn": {
+      "title": "Nebutra にログイン",
+      "subtitle": "サインインする方法を選択します。",
+      "continueWith": "継続する",
+      "continueWithProvider": "{provider} で続行",
+      "providers": {
+        "google": "Google",
+        "github": "GitHub",
+        "apple": "Apple",
+        "microsoft": "Microsoft"
+      },
+      "providerLoading": "リダイレクト中…",
+      "dividerOr": "またはメールで続行",
+      "emailLabel": "メール",
+      "emailPlaceholder": "you@example.com",
+      "continue": "続行",
+      "back": "戻る",
+      "passwordLabel": "パスワード",
+      "passwordPlaceholder": "パスワードを入力",
+      "showPassword": "パスワードを表示",
+      "hidePassword": "パスワードを非表示",
+      "capsLockOn": "キャップス ロックが有効になっています",
+      "forgotPassword": "パスワードを忘れた？",
+      "submit": "ログイン",
+      "submitLoading": "ログイン中…",
+      "useMagicLink": "代わりにマジック リンクを送信してください",
+      "usePasskey": "パスキーでサインイン",
+      "passkeyTitle": "パスキーでサインイン",
+      "passkeyDescription": "Face ID、Touch ID、またはセキュリティ キーを使用します。パスワードは必要ありません。",
+      "passkeyButton": "パスキーで続行",
+      "passkeyCancelled": "パスキー プロンプトがキャンセルされました。",
+      "passkeyUnsupported": "このブラウザはパスキーをサポートしていません。",
+      "passkeyError": "パスキー サインインに失敗しました。別の方法を試してください。",
+      "newToProduct": "Nebutra は初めてですか？",
+      "signUpLink": "サインアップ",
+      "homeLink": "ホーム",
+      "signInFailed": "サインイン失敗",
+      "genericError": "エラーが発生しました。もう一度試してください。",
+      "captchaError": "ボット認証に失敗しました。ページを更新して再度お試しください。"
+    },
+    "passkeys": {
+      "title": "パスキー",
+      "description": "Face ID、Touch ID、Windows Hello、またはセキュリティ キーをパスワードの代わりに使用します。各デバイスは独自のパスキーを持ちます。",
+      "addButton": "パスキーを追加",
+      "adding": "設定中…",
+      "namePlaceholder": "例：MacBook Pro",
+      "nameLabel": "名前（オプション）",
+      "registerSuccess": "パスキーが追加されました。",
+      "registerCancelled": "セットアップがキャンセルされました。",
+      "registerUnsupported": "このブラウザはパスキーをサポートしていません。",
+      "registerError": "パスキーの登録に失敗しました。",
+      "empty": "パスキーはまだありません。",
+      "loadError": "パスキーの読み込みに失敗しました。",
+      "revoke": "削除",
+      "revoking": "削除中…",
+      "revokeConfirm": "このパスキーを削除しますか？その後、それでサインインできなくなります。",
+      "revokeSuccess": "パスキーが削除されました。",
+      "revokeError": "パスキーの削除に失敗しました。",
+      "device": {
+        "singleDevice": "デバイスバインド",
+        "multiDevice": "デバイス全体で同期"
+      },
+      "addedOn": "{date} に追加"
+    },
+    "magicLink": {
+      "title": "マジック リンクでサインイン",
+      "description": "メールアドレスを入力すると、サインインするための 6 桁のコードを送信します。",
+      "emailLabel": "メール",
+      "send": "リンクを送信",
+      "codeLabel": "確認コード",
+      "verify": "確認",
+      "resend": "コードを再送信",
+      "resendCooldown": "{seconds} 秒で再送信可能",
+      "sentTo": "{email} にコードを送信しました"
+    },
+    "forgotPassword": {
+      "title": "パスワードを忘れた？",
+      "description": "メールアドレスを入力すると、パスワードをリセットするためのリンクを送信します。",
+      "emailLabel": "メール",
+      "submit": "リセット リンクを送信",
+      "successTitle": "メールを確認してください",
+      "success": "そのメールが登録されている場合、すぐにリセット リンクが送信されます。"
+    },
+    "resetPassword": {
+      "title": "パスワードをリセット",
+      "description": "アカウント用の新しいパスワードを選択します。",
+      "newPasswordLabel": "新しいパスワード",
+      "confirmPasswordLabel": "新しいパスワードを確認",
+      "submit": "パスワードをリセット",
+      "successTitle": "パスワードがリセットされました",
+      "successDescription": "新しいパスワードでサインインできるようになりました。",
+      "signInCta": "サインイン ページへ",
+      "invalidTitle": "無効なリセット リンク",
+      "invalidDescription": "このパスワード リセット リンクが見つからないか、形式が正しくありません。パスワード忘れページから新しいリクエストを送信してください。"
+    },
+    "verifyEmail": {
+      "successTitle": "メールが確認されました",
+      "successDescription": "メールアドレスが確認されました。",
+      "failureTitle": "確認に失敗しました",
+      "failureDescription": "そのリンクでメールを確認できませんでした。",
+      "continueCta": "続行",
+      "signInCta": "サインイン ページへ"
+    },
+    "loginSuccess": {
+      "eyebrow": "ログインが完了しました",
+      "title": "サインインしました",
+      "description": "セッションの準備ができました。Nebutra ワークスペースを開き、認証フローからのセキュア ハンドオフを保持しています。",
+      "session": "セッション",
+      "verified": "確認済み",
+      "workspace": "ワークスペース",
+      "preparing": "準備中",
+      "redirecting": "{seconds} 秒でワークスペースに入ります",
+      "secureHandoff": "セキュア ハンドオフ",
+      "continueCta": "ワークスペースに続行",
+      "signInCta": "別のアカウントを使用"
+    },
+    "errors": {
+      "invalidCredentials": "メールまたはパスワードが正しくありません。",
+      "userNotFound": "そのメールで見つかったアカウントはありません。",
+      "userAlreadyExists": "そのメールでアカウントがすでに存在します。",
+      "weakPassword": "パスワードの強度が不足しています。8 文字以上で、混合ケースと数字を使用してください。",
+      "passwordsDontMatch": "パスワードが一致しません。",
+      "passwordTooShort": "パスワードは最低 8 文字である必要があります。",
+      "currentPasswordIncorrect": "現在のパスワードが正しくありません。",
+      "samePassword": "新しいパスワードは現在のパスワードと異なる必要があります。",
+      "invalidEmail": "メールアドレスが無効です。",
+      "emailNotVerified": "まずメール アドレスを確認してください。",
+      "sessionExpired": "セッションの有効期限が切れました。もう一度サインインしてください。",
+      "twoFactorRequired": "2要素認証が必要です。",
+      "invalidVerificationCode": "確認コードが正しくないか期限切れです。",
+      "twoFactorAlreadyEnabled": "2要素認証はすでに有効です。",
+      "twoFactorNotEnabled": "2要素認証は有効ではありません。",
+      "tooManyAttempts": "試行が多すぎます。後でもう一度お試しください。",
+      "rateLimited": "それを頻繁に行いすぎています。遅くしてください。",
+      "providerNotSupported": "このアクションは認証プロバイダーで管理されます。",
+      "networkError": "ネットワーク エラー。接続を確認して再度お試しください。",
+      "unknown": "エラーが発生しました。もう一度お試しください。"
+    }
+  },
+  "chat": {
+    "suggestions": {
+      "title": "開始するにはいずれかを試してください",
+      "activity": {
+        "title": "最近のアクティビティを表示",
+        "prompt": "過去 24 時間のワークスペース全体の最新アクティビティを表示してください。"
+      },
+      "debug": {
+        "title": "エラーをデバッグ",
+        "prompt": "実行時エラーをデバッグするのを手伝ってください。スタック トレースを貼り付けるので、ステップバイステップで案内してください。"
+      },
+      "email": {
+        "title": "サマリー メール下書き",
+        "prompt": "チームに送信できる簡潔な週間サマリー メール下書きを作成してください。"
+      },
+      "features": {
+        "title": "プラットフォーム機能を探索",
+        "prompt": "この SaaS プラットフォームの主要機能とその使用方法について説明してください。"
+      }
+    }
+  },
+  "billing": {
+    "activePlan": {
+      "title": "アクティブプラン",
+      "manage": "サブスクリプションを管理",
+      "noPlanTitle": "アクティブなプランなし",
+      "noPlanDescription": "プランを選択して、有料機能とより高い使用制限をアンロックします。",
+      "choosePlan": "プランを選択",
+      "renewsOn": "{date} に更新",
+      "endsOn": "{date} に終了",
+      "trialEndsOn": "試用版は {date} に終了",
+      "status": {
+        "active": "アクティブ",
+        "trialing": "試用中",
+        "past_due": "期限切れ",
+        "canceled": "キャンセルされました",
+        "free": "無料"
+      },
+      "errors": {
+        "loadFailed": "請求ステータスを読み込めませんでした。"
+      }
+    },
+    "pricing": {
+      "trial": "無料 {days} 日間試用版",
+      "seat": "{count, plural, one {# シート} other {# シート}}",
+      "perSeat": "/ シート"
+    }
+  },
+  "organizations": {
+    "settings": {
+      "logo": {
+        "title": "組織ロゴ",
+        "description": "正方形の画像（PNG、JPEG、WebP、最大 2MB）をアップロードして組織を表します。",
+        "uploadButton": "ロゴをアップロード",
+        "uploading": "アップロード中…",
+        "fileTooBig": "ファイルが大きすぎます。最大サイズは 2MB です。",
+        "invalidType": "サポートされていない画像形式。PNG、JPEG、または WebP を使用してください。",
+        "success": "ロゴが更新されました。",
+        "removeButton": "ロゴを削除",
+        "removed": "ロゴが削除されました。"
+      },
+      "name": {
+        "title": "組織名",
+        "description": "チームおよび顧客に表示される表示名を更新します。",
+        "label": "名前",
+        "submit": "保存",
+        "saving": "保存中…",
+        "success": "組織名が更新されました。"
+      },
+      "delete": {
+        "title": "組織を削除",
+        "description": "この組織、すべてのメンバー、招待、および関連データを永久に削除します。この操作は取り消すことができません。",
+        "trigger": "組織を削除",
+        "confirmLabel": "組織名を入力して確認",
+        "submit": "組織を削除",
+        "cancel": "キャンセル",
+        "success": "組織が削除されました。"
+      }
+    },
+    "invitation": {
+      "title": "招待されました",
+      "heading": "{organizationName} に招待されました",
+      "description": "招待を受け入れてチームとの協力を開始します。",
+      "accept": "招待を受け入れ",
+      "accepting": "受け入れ中…",
+      "decline": "拒否",
+      "declining": "拒否中…",
+      "declinedView": "招待が拒否されました",
+      "success": "招待者に通知しました。",
+      "backToDashboard": "ダッシュボードに戻る",
+      "roleLabel": "ロール：{role}",
+      "errorEmailMismatch": "この招待は別のメールに送信されました",
+      "errorEmailMismatchDetail": "招待を受けたメールアドレスでサインインして受け入れてください。",
+      "errorExpired": "招待期限切れ",
+      "errorExpiredDetail": "招待者に新しい招待の送信を依頼してください。",
+      "errorNotFound": "招待が見つかりません",
+      "errorNotFoundDetail": "招待リンクが無効であるか、取り消されています。",
+      "errorNotAvailable": "招待は利用できません",
+      "errorNotAvailableDetail": "この招待はすでに対応されており、使用できなくなりました。",
+      "role": {
+        "owner": "所有者",
+        "admin": "管理者",
+        "member": "メンバー",
+        "viewer": "ビューアー"
+      }
+    }
+  },
+  "settings": {
+    "apiKeys": {
+      "title": "API キー",
+      "description": "Nebutra へのプログラマティック アクセスのために API キーを生成および管理します。",
+      "createButton": "API キーを作成",
+      "noPermission": "API キーを表示する権限がありません。",
+      "loading": "読み込み中…",
+      "loadError": "API キーの読み込みに失敗しました。",
+      "createError": "API キーの作成に失敗しました。",
+      "revokeError": "API キーの取り消しに失敗しました。",
+      "empty": {
+        "title": "API キーがまだありません",
+        "cta": "最初の API キーを作成"
+      },
+      "columns": {
+        "name": "名前",
+        "prefix": "プレフィックス",
+        "lastUsed": "最後に使用",
+        "scopes": "スコープ",
+        "created": "作成日時",
+        "actions": "アクション",
+        "never": "なし"
+      },
+      "actions": {
+        "revoke": "取り消す",
+        "revoking": "取り消し中…",
+        "copy": "コピー",
+        "copied": "コピーしました",
+        "close": "閉じる",
+        "submit": "キーを作成",
+        "submitting": "作成中…"
+      },
+      "dialog": {
+        "title": "API キーを作成",
+        "description": "API キーにより、外部システムが Nebutra にアクセスできます。パスワードのように扱ってください。",
+        "nameLabel": "名前",
+        "namePlaceholder": "例：本番環境バックエンド",
+        "scopesLabel": "スコープ",
+        "successWarning": "このキーは 1 回だけ表示されます。閉じる前に保存してください。",
+        "confirmClose": "閉じるとこのキーは永久に非表示になります。保存されていることを確認してください。"
+      }
+    },
+    "auditLog": {
+      "title": "監査ログ",
+      "description": "ワークスペース内のすべての管理アクションを追跡します。アクター、アクション、エンティティ、または時間範囲でフィルタリングします。",
+      "empty": "監査イベントがありません",
+      "loadMore": "さらに読み込む",
+      "loading": "読み込み中…",
+      "forbidden": "監査ログを表示するには管理者アクセスが必要です。",
+      "columns": {
+        "when": "いつ",
+        "actor": "アクター",
+        "action": "アクション",
+        "entity": "エンティティ",
+        "outcome": "結果",
+        "ip": "IP"
+      },
+      "diff": {
+        "oldValue": "古い値",
+        "newValue": "新しい値"
+      },
+      "filters": {
+        "action": "アクション",
+        "actionPlaceholder": "アクション検索…",
+        "entityType": "エンティティ タイプ",
+        "outcome": "結果",
+        "outcomeSuccess": "成功",
+        "outcomeFailure": "失敗",
+        "outcomePending": "保留中",
+        "startDate": "開始日",
+        "endDate": "終了日",
+        "range24h": "過去 24 時間",
+        "range7d": "過去 7 日間",
+        "range30d": "過去 30 日間",
+        "reset": "リセット",
+        "all": "すべて"
+      }
+    },
+    "notifications": {
+      "title": "通知",
+      "description": "各イベント タイプについて、各配信チャネルで Nebutra がどのように通知するかを選択します。",
+      "actions": {
+        "resetAll": "デフォルトにリセット",
+        "save": "保存"
+      },
+      "status": {
+        "saving": "保存中…",
+        "saved": "保存されました",
+        "error": "保存に失敗しました。もう一度お試しください。"
+      },
+      "eventTypes": {
+        "security": {
+          "label": "セキュリティ アラート",
+          "description": "サインイン アラート、パスワード変更、2要素認証の変更。"
+        },
+        "billing": {
+          "label": "請求",
+          "description": "請求書、支払い失敗、および サブスクリプション変更。"
+        },
+        "invitation": {
+          "label": "チーム招待",
+          "description": "組織への招待、受け入れまたは拒否。"
+        },
+        "activity": {
+          "label": "チーム アクティビティ",
+          "description": "メンバー参加、ロール変更、およびその他のワークスペース アクティビティ。"
+        },
+        "updates": {
+          "label": "製品アップデート",
+          "description": "新機能、変更ログのハイライト、およびリリース ノート。"
+        },
+        "marketing": {
+          "label": "マーケティング",
+          "description": "ニュースレターおよび時折のプロモーション。オプトイン のみ。"
+        }
+      },
+      "channels": {
+        "in_app": {
+          "label": "アプリ内"
+        },
+        "email": {
+          "label": "メール"
+        },
+        "push": {
+          "label": "プッシュ"
+        },
+        "sms": {
+          "label": "SMS"
+        }
+      }
+    },
+    "webhooks": {
+      "title": "ウェブフック",
+      "description": "ワークスペースから出力されたイベントをサブスクライブします。すべてのペイロードにエンドポイントのシークレットで署名するため、真正性を検証できます。",
+      "create": {
+        "heading": "新規エンドポイント",
+        "urlLabel": "エンドポイント URL",
+        "urlPlaceholder": "https://api.example.com/webhooks/nebutra",
+        "eventsLegend": "イベント",
+        "submit": "エンドポイントを作成",
+        "submitting": "作成中…",
+        "selectEvent": "少なくとも 1 つのイベントを選択してください。",
+        "successTitle": "エンドポイントが作成されました。署名シークレットは 1 回だけ表示されます。",
+        "successWarning": "閉じる前にアプリケーションのシークレット マネージャーに保存してください。",
+        "copy": "コピー",
+        "copied": "コピーしました"
+      },
+      "list": {
+        "heading": "アクティブなエンドポイント",
+        "empty": "ウェブフック エンドポイントがありません。上記で作成してください。",
+        "loading": "読み込み中…",
+        "loadFailed": "ウェブフックの読み込みに失敗しました",
+        "columns": {
+          "url": "URL",
+          "events": "イベント",
+          "status": "ステータス",
+          "lastDelivered": "最後に配信",
+          "actions": "アクション"
+        },
+        "status": {
+          "active": "アクティブ",
+          "disabled": "無効"
+        },
+        "actions": {
+          "edit": "編集",
+          "enable": "有効化",
+          "disable": "無効化",
+          "viewDeliveries": "配信を表示",
+          "delete": "削除"
+        }
+      },
+      "deliveries": {
+        "heading": "最近の配信",
+        "close": "閉じる",
+        "loading": "読み込み中…",
+        "loadFailed": "配信の読み込みに失敗しました",
+        "empty": "配信がありません。",
+        "viewPayload": "ペイロードを表示",
+        "hidePayload": "ペイロードを非表示",
+        "replay": "再生",
+        "replaying": "再生中…",
+        "status": {
+          "success": "成功",
+          "failed": "失敗",
+          "retrying": "再試行中"
+        }
+      }
+    },
+    "appearance": {
+      "title": "外観",
+      "theme": {
+        "title": "テーマ",
+        "description": "ライト、ダーク、またはシステム設定に一致させます。"
+      },
+      "themePreset": {
+        "title": "テーマ プリセット",
+        "description": "アプリ全体に任意のテーマ プレイグラウンド テーマを適用します。下のコントロールがそれに層状になり、微調整されます。",
+        "search": "テーマを検索…",
+        "searchLabel": "テーマを検索",
+        "default": "デフォルト",
+        "defaultMood": "Nebutra ベース パレット",
+        "active": "アクティブ",
+        "empty": "テーマが見つかりません。",
+        "count": "{count} テーマ"
+      },
+      "themeEditor": {
+        "title": "テーマ",
+        "description": "プリセットを選択し、DESIGN.md をインポートしてから、下のトークンを微調整します。",
+        "selectLabel": "テーマ プリセット",
+        "import": "インポート",
+        "copy": "テーマをコピー",
+        "copied": "コピーしました",
+        "copyError": "コピーに失敗しました",
+        "custom": "カスタム"
+      },
+      "designMd": {
+        "title": "DESIGN.md をインポート",
+        "description": "DESIGN.md を貼り付けるか、アップロードすると、その色、半径、フォント、スペーシング、および シャドウがアプリ全体に適用され、再読み込み後も保持されます。",
+        "applied": "適用済み：",
+        "remove": "削除"
+      },
+      "themeMode": {
+        "label": "テーマ モード",
+        "light": "ライト",
+        "dark": "ダーク",
+        "system": "システム"
+      },
+      "accent": {
+        "title": "アクセント色",
+        "description": "アプリ全体のアクティブ状態に色合いを付けるブランド アクセントを選択します。",
+        "label": "アクセント色",
+        "options": {
+          "default": "デフォルト",
+          "blue": "青",
+          "cyan": "シアン",
+          "violet": "紫",
+          "pink": "ピンク",
+          "amber": "琥珀",
+          "green": "緑",
+          "red": "赤"
+        }
+      },
+      "colors": {
+        "title": "色",
+        "description": "アクセント、背景、および前景。",
+        "background": {
+          "label": "背景",
+          "description": "サーフェスの背景色をオーバーライドします。"
+        },
+        "foreground": {
+          "label": "前景",
+          "description": "本文のテキスト色をオーバーライドします。"
+        },
+        "resetToDefault": "デフォルトにリセット"
+      },
+      "fontFamily": {
+        "uiLabel": "UI フォント",
+        "uiDescription": "UI 全体で使用されるフォント ファミリー。",
+        "codeLabel": "コード フォント",
+        "codeDescription": "コード サーフェスで使用されるフォント ファミリー。",
+        "options": {
+          "ui": {
+            "theme": "テーマ デフォルト",
+            "system": "システム",
+            "geist": "Geist",
+            "inter": "Inter",
+            "sf": "SF Pro"
+          },
+          "code": {
+            "theme": "テーマ デフォルト",
+            "system": "システム モノスペース",
+            "geist-mono": "Geist Mono",
+            "sf-mono": "SF Mono",
+            "jetbrains-mono": "JetBrains Mono"
+          }
+        }
+      },
+      "contrast": {
+        "title": "コントラスト",
+        "description": "テキスト コントラストを微調整します（50 = 変更なし）。",
+        "label": "コントラスト レベル"
+      },
+      "pointerCursor": {
+        "title": "ポインター カーソルを使用",
+        "description": "ホバー インタラクティブ要素でポインター カーソルに切り替えます。",
+        "label": "インタラクティブ要素でポインター カーソル"
+      },
+      "diffMarkers": {
+        "title": "差分マーカー",
+        "description": "各変更行に色の帯またはプラス/マイナスの記号を表示します。",
+        "label": "差分マーカー スタイル",
+        "color": "色",
+        "plusminus": "+/-"
+      },
+      "fontSmoothing": {
+        "title": "フォント スムージング",
+        "description": "macOS ネイティブ フォント アンチエイリアシングを適用します。",
+        "label": "ネイティブ フォント スムージング"
+      },
+      "typography": {
+        "title": "タイポグラフィ",
+        "description": "UI およびコード サーフェスの基本フォント サイズ。",
+        "uiFontSize": "UI フォント サイズ",
+        "uiFontSizeDescription": "基本 UI フォント サイズを調整します。",
+        "codeFontSize": "コード フォント サイズ",
+        "codeFontSizeDescription": "基本コード フォント サイズを調整します。"
+      },
+      "fontSize": {
+        "followTheme": "テーマに従う",
+        "customize": "カスタマイズ"
+      },
+      "motion": {
+        "title": "動きを減らす",
+        "description": "アニメーションを減らすか、システム設定に一致させます。",
+        "label": "モーション優先設定",
+        "system": "システム",
+        "on": "オン",
+        "off": "オフ"
+      },
+      "surface": {
+        "title": "半透明サイドバー",
+        "description": "サイドバーに半透明素材を適用します。"
+      },
+      "transparency": {
+        "label": "半透明サイドバー",
+        "description": "サイドバーに半透明素材を適用します。"
+      }
+    }
+  },
+  "legal": {
+    "version": "バージョン",
+    "effective": "有効",
+    "notFound": "このドキュメントは利用できません。",
+    "backHome": "ホームに戻る"
+  },
+  "commandPalette": {
+    "ariaLabel": "コマンド パレット",
+    "placeholder": "コマンドを入力または検索…",
+    "empty": "結果が見つかりません。",
+    "sections": {
+      "navigation": "ナビゲーション",
+      "actions": "アクション",
+      "settings": "設定",
+      "account": "アカウント",
+      "admin": "管理",
+      "help": "ヘルプ"
+    },
+    "commands": {
+      "nav": {
+        "home": "ホーム",
+        "settings": "設定",
+        "billing": "請求",
+        "team": "チーム",
+        "apiKeys": "API キー",
+        "notifications": "通知",
+        "auditLog": "監査ログ",
+        "webhooks": "ウェブフック",
+        "admin": "管理"
+      },
+      "action": {
+        "inviteMember": "チーム メンバーを招待",
+        "createApiKey": "API キーを作成",
+        "switchOrganization": "組織を切り替え"
+      },
+      "settings": {
+        "themeLight": "ライト テーマに切り替え",
+        "themeDark": "ダーク テーマに切り替え",
+        "themeSystem": "システム テーマを使用"
+      },
+      "account": {
+        "signOut": "サインアウト"
+      },
+      "help": {
+        "reportIssue": "問題を報告",
+        "shortcuts": "キーボード ショートカット"
+      }
+    }
+  },
+  "cookieConsent": {
+    "banner": {
+      "title": "プライバシーの選択肢",
+      "description": "Cookie を使用してエクスペリエンスを改善し、サイト トラフィックを分析し、コンテンツをパーソナライズします。許可するカテゴリを選択してください。"
+    },
+    "button": {
+      "acceptAll": "すべて承認",
+      "savePreferences": "環境設定を保存"
+    },
+    "toggle": {
+      "necessary": {
+        "label": "必須",
+        "description": "サイト機能に必要。無効化できません。"
+      },
+      "functional": {
+        "label": "機能",
+        "description": "環境設定を記憶（言語、テーマ、レイアウト）。"
+      },
+      "analytics": {
+        "label": "分析",
+        "description": "製品の改善に役立つ匿名使用データ。"
+      },
+      "marketing": {
+        "label": "マーケティング",
+        "description": "サードパーティ プラットフォームでのパーソナライズされた広告とリターゲティング。"
+      }
+    }
+  },
+  "notifications": {
+    "page": {
+      "title": "通知",
+      "description": "すべての通知を 1 か所で。",
+      "filter": {
+        "all": "すべて",
+        "unread": "未読"
+      },
+      "actions": {
+        "markAllRead": "すべてを既読にマーク",
+        "markRead": "既読にマーク",
+        "archive": "アーカイブ",
+        "loadMore": "さらに読み込む",
+        "loading": "読み込み中…",
+        "selected": "{count} 個を選択"
+      },
+      "empty": {
+        "all": "キャッチアップしました。",
+        "unread": "未読通知はありません。"
+      },
+      "errors": {
+        "load": "通知の読み込みに失敗しました。",
+        "network": "ネットワーク エラー。もう一度お試しください。",
+        "markRead": "通知を既読にマークするのに失敗しました。",
+        "archive": "アーカイブに失敗しました。",
+        "bulkMarkRead": "一部の通知を既読にマークできませんでした。"
+      },
+      "inbox": {
+        "noBackend": "インボックスには永続通知バックエンドが必要です。プロバイダー設定を確認してください。",
+        "emptyCaughtUp": "インボックスがクリアされました。",
+        "emptyChangelog": "更新ログがここに表示されます。"
+      }
+    }
+  },
+  "dashboard": {
+    "greeting": {
+      "morning": "おはよう",
+      "afternoon": "こんにちは",
+      "evening": "こんばんは"
+    },
+    "home": {
+      "connectorsPill": "コネクタでアプリを強化",
+      "subtitle": "プロンプトを入力するか、任意の場所から ⌘K を押すか、ワークスペース サーフェスに直接ジャンプしてください。",
+      "promptPlaceholder": "何をお考えですか？",
+      "actions": {
+        "connect": "統合を接続",
+        "theme": "テーマ プレイグラウンド",
+        "audit": "監査ログ",
+        "billing": "請求"
+      }
+    },
+    "commandSurface": {
+      "noAuth": "選択したプロバイダーの認証が設定されていません。プロバイダーのシークレットを設定してユーザー セッションを有効にします。"
+    },
+    "commandCenter": {
+      "description": "1 つのアクションから始めます：Sailor に尋ねる、ワークスペース シグナルを検査する、または作業を自動化サーフェスにルーティングします。",
+      "openSailor": "Sailor AI を開く",
+      "viewAnalytics": "分析を表示"
+    },
+    "workspaceSnapshot": {
+      "title": "ワークスペース スナップショット",
+      "description": "最新ウェアハウス日 · {day}",
+      "viewAnalytics": "分析を表示 →",
+      "metrics": {
+        "activeUsers": "アクティブユーザー",
+        "totalEvents": "総イベント",
+        "conversions": "コンバージョン",
+        "revenue": "売上"
+      },
+      "details": {
+        "activeUsers": "サインインしているユーザー",
+        "totalEvents": "キャプチャされたイベント",
+        "conversions": "適格なアクション",
+        "revenue": "認識された売上"
+      },
+      "meta": {
+        "snapshot": "スナップショット",
+        "cadence": "周期",
+        "tenant": "テナント",
+        "daily": "毎日",
+        "latestDay": "{day}",
+        "users": "テナント ユーザー",
+        "events": "イベント ストリーム",
+        "funnel": "ファネル",
+        "billing": "請求"
+      }
+    },
+    "documentPipeline": {
+      "title": "ドキュメント パイプライン",
+      "description": "ソース ファイルを Origin タスク キューに送信します。",
+      "intakeTitle": "ドキュメント取り込み",
+      "intakeDescription": "PDF、Markdown、テキスト、または Word ドキュメント",
+      "chooseDocument": "ドキュメントを選択",
+      "startParseTask": "解析タスクを開始",
+      "queued": "キューイング済み",
+      "fileInputLabel": "ドキュメント ファイル",
+      "fallbackError": "ドキュメント タスクが失敗しました。",
+      "taskStatus": "タスク ステータス",
+      "progressLabel": "タスク進度",
+      "refreshStatus": "更新",
+      "cancelTask": "キャンセル",
+      "statusError": "タスク ステータスを更新できませんでした。",
+      "cancelError": "タスクをキャンセルできませんでした。",
+      "statusQueued": "キューイング済み",
+      "statusRunning": "実行中",
+      "statusSucceeded": "成功しました",
+      "statusFailed": "失敗しました",
+      "statusCancelled": "キャンセルされました",
+      "resultReady": "結果の準備完了",
+      "taskError": "タスク エラー",
+      "updatedAt": "更新日時"
+    },
+    "recentSessions": {
+      "title": "前回の続きから",
+      "subtitle": "{count, plural, =0 {セッションなし} =1 {1 つの最近のセッション} other {# 個の最近のセッション}}",
+      "viewAll": "すべて表示 →",
+      "newChat": "新しいチャット",
+      "untitled": "無題のセッション",
+      "messageCount": "{count, plural, =1 {1 件のメッセージ} other {# 件のメッセージ}}"
+    },
+    "gettingStarted": {
+      "title": "はじめに",
+      "description": "{done} / {total} 完了 · セットアップを完了してフル ワークスペースをアンロック",
+      "progressLabel": "セットアップ進度",
+      "tasks": {
+        "team": {
+          "label": "チームメイトを招待",
+          "description": "ワークスペースに少なくとも 1 人の協力者を招待します。"
+        },
+        "api": {
+          "label": "API キーを生成",
+          "description": "ワークスペース エンドポイントへのプログラマティック アクセス。"
+        },
+        "integration": {
+          "label": "統合を接続",
+          "description": "Stripe、Slack、ウェブフック、キューなど。"
+        },
+        "ai": {
+          "label": "Sailor AI を開く",
+          "description": "チャット、データ、またはワークフロー モードを試してください。"
+        }
+      }
+    }
+  },
+  "Sidebar": {
+    "projects": "プロジェクト",
+    "noThreads": "スレッドなし",
+    "expandAll": "すべて展開",
+    "collapseAll": "すべて折りたたむ",
+    "sectionMore": "その他のオプション",
+    "newProject": "新規プロジェクト",
+    "restoredGroups": "以前展開されたグループを復元しました",
+    "newProjectPlaceholder": "プロジェクト名",
+    "newProjectDefault": "無題",
+    "newProjectSuccess": "プロジェクトが作成されました",
+    "newProjectError": "プロジェクトを作成できませんでした",
+    "sortBy": "並べ替え",
+    "sortRecent": "最近アクティブ",
+    "sortAlphabetical": "アルファベット順",
+    "sortCreated": "作成日",
+    "archiveAll": "すべてアーカイブ",
+    "comingV2": "v2 で近日公開予定"
+  },
+  "startupOs": {
+    "milestone": {
+      "firstRoom": "最初の部屋の準備ができました。",
+      "firstFolder": "多くの企業は、フォルダから始まります。",
+      "firstTable": "最初のテーブルに 2 番目の席ができました。",
+      "firstSignal": "現実の世界が話し始めました。",
+      "firstShip": "世界が初めてそれを見ます。",
+      "firstBeliever": "今日から、あなたは自分自身だけのために構築することはもうありません。",
+      "firstRevenue": "夢がキャッシュ フローを持つようになりました。",
+      "firstReturn": "戻ることは、来ることより重要です。",
+      "firstTeam": "3 人でチームが形作られ始めます。",
+      "firstCrowd": "最初のテーブルは満員になります。",
+      "firstReset": "リセットはより正直な始まりです。",
+      "firstPublic": "未来の一部を公に置きます。",
+      "firstDemo": "これはショーではありません。テストです。",
+      "graduation": "あなたは基本に成長しました。前の道はより強い道具が必要です。"
+    },
+    "emptyState": {
+      "default": "多くの企業は、フォルダから始まります。",
+      "integrations": "コネクタが設定されていません。",
+      "creditActivity": "最初のリクエスト後、クレジット アクティビティがここに表示されます。",
+      "usageData": "組織が最初のリクエストを開始した後、使用データがここに表示されます。",
+      "apiKeys": "キーがまだありません。",
+      "apiKeysCta": "最初のキーを作成",
+      "teamMembers": "1 人で始められます。数人でチームが成形されます。",
+      "cofounders": "あなたを信じてくれた最初の人はまだ現れていません。",
+      "cofoundersDescription": "あなたと別の創業者の両方が関心を示した場合、ここに表示されます。",
+      "cofoundersAction": "共同創業者を探す",
+      "growthChart": "アクティビティが始まると、トレンド データがここに表示されます。",
+      "revenueChart": "トランザクションが始まると、収益データがここに表示されます。",
+      "webhookDeliveries": "最初のイベント後、配信がここに表示されます。",
+      "webhookEndpoints": "上にエンドポイントを追加してイベントの受信を開始します。",
+      "accessInvites": "招待コードが発行されていません。"
+    },
+    "success": "最初の部屋の準備ができました。",
+    "failure": "リセットはより正直な始まりです。",
+    "errors": {
+      "loadMatches": "マッチを読み込めませんでした。",
+      "loadMatchesDescription": "何か問題がありました。更新して再度お試しください。",
+      "loadWebhookDeliveries": "配信を読み込めませんでした。",
+      "replayWebhookDelivery": "リプレイが通過しませんでした。",
+      "loadWebhookEndpoints": "エンドポイントを読み込めませんでした。"
+    },
+    "team": "1 人で始められます。数人でチームが成形されます。",
+    "revenue": "夢がキャッシュ フローを持つようになりました。",
+    "growth": "シグナルがより強くなっています。",
+    "deployment": {
+      "primary": "世界が初めてそれを見ます。",
+      "echo": "それはついに localhost を離れました。"
+    },
+    "onboarding": "完璧である必要はありません。始める必要があります。",
+    "graduation": "あなたは基本を卒業しました。{tool} を試して、前の道を進んでください。",
+    "company": {
+      "emptyTitle": "最初のコンテキスト タワーはここから始まります。",
+      "emptyDescription": "Startup OS で企業をコンパイルして、ここでコンテキスト タワーを表示および編集します。",
+      "emptyAction": "Startup OS を開く",
+      "notice": {
+        "needsProvider": "AI プロバイダー キーを接続してフィールドを自動入力します。",
+        "generateFailed": "生成が完了しませんでした。",
+        "saveFailed": "変更が保存されませんでした。"
+      },
+      "action": {
+        "save": "保存",
+        "saving": "保存中…",
+        "cancel": "キャンセル",
+        "open": "Startup OS を開く"
+      }
+    },
+    "execution": {
+      "noBets": "まだ賭けはありません。",
+      "noRuns": "アクティブなランはありません。"
+    },
+    "fileTree": {
+      "empty": "このプロジェクトにはまだファイルがありません。"
+    }
+  },
+  "selectOrg": {
+    "invitation": {
+      "emptyTitle": "ワークスペースは同期中です。",
+      "emptyDescription": "招待がまだ同期中の可能性があります。このページを更新するか、別のワークスペースを作成してください。"
+    },
+    "billing": {
+      "emptyTitle": "請求の前にワークスペースを作成します。",
+      "emptyDescription": "請求アクションにはアクティブなワークスペースが必要です。最初に作成してから、請求に戻ります。"
+    },
+    "default": {
+      "emptyTitle": "最初のワークスペースはここから始まります。",
+      "emptyDescription": "ワークスペースを作成して開始します。"
+    }
+  }
+}
