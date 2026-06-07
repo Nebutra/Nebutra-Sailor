@@ -3,7 +3,7 @@
 // Layout assumption (set by infra/scripts/ecs-deploy-remote.sh):
 //   $DEPLOY_ROOT/landing/current/apps/landing-page/server.js     (Next standalone)
 //   $DEPLOY_ROOT/web/current/apps/web/server.js                  (Vite SPA static server)
-//   $DEPLOY_ROOT/api/current/dist/index.js                       (pnpm-deploy + tsc)
+//   $DEPLOY_ROOT/api/current/dist/node.js                        (pnpm-deploy + tsc)
 //   $DEPLOY_ROOT/design-docs/current/apps/design-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)
 //
@@ -86,7 +86,7 @@ module.exports = {
       // directly via package.json `main`/`exports`. Plain `node` ESM cannot
       // load .ts files. tsx as a Node loader compiles them on import. tsx is
       // a runtime dep of api-gateway so it ships in the production bundle.
-      script: "dist/index.js",
+      script: "dist/node.js",
       interpreter: "node",
       interpreter_args: "--import tsx/esm",
       env: {
