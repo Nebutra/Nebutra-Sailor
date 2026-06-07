@@ -3,7 +3,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const replaceMock = vi.fn();
+const refreshMock = vi.fn();
 const useLocaleMock = vi.fn(() => "en");
 const usePathnameMock = vi.fn(() => "/settings");
 
@@ -12,16 +12,21 @@ vi.mock("next-intl", () => ({
   useTranslations: (ns?: string) => (key: string) => (ns ? `${ns}.${key}` : key),
 }));
 
-vi.mock("@nebutra/i18n/routing", () => ({
-  useRouter: () => ({ replace: replaceMock }),
+// apps/web runs cookie-based i18n: the switcher imports next/navigation hooks
+// (not @nebutra/i18n/routing) and, in cookie mode, writes the NEXT_LOCALE
+// cookie then calls router.refresh() — no URL change, no router.replace.
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ refresh: refreshMock }),
   usePathname: () => usePathnameMock(),
 }));
 
 import { LocaleSwitcher } from "../locale-switcher";
 
+const LOCALE_COUNT = 7; // en, zh, de, es, fr, ja, ko
+
 describe("Navigation LocaleSwitcher", () => {
   beforeEach(() => {
-    replaceMock.mockReset();
+    refreshMock.mockReset();
     useLocaleMock.mockReturnValue("en");
     usePathnameMock.mockReturnValue("/settings");
     document.cookie = "";
@@ -38,23 +43,23 @@ describe("Navigation LocaleSwitcher", () => {
     expect(trigger.textContent).toMatch(/EN/i);
   });
 
-  it("shows both locale options when opened", () => {
+  it("shows all locale options when opened", () => {
     render(<LocaleSwitcher />);
     fireEvent.click(screen.getByRole("button", { name: /LocaleSwitcher\.ariaLabel/ }));
     const items = screen.getAllByRole("menuitem");
-    expect(items).toHaveLength(2);
+    expect(items).toHaveLength(LOCALE_COUNT);
     expect(items[0].textContent).toContain("LocaleSwitcher.en");
     expect(items[1].textContent).toContain("LocaleSwitcher.zh");
   });
 
-  it("calls router.replace with the new locale and writes the NEXT_LOCALE cookie", () => {
+  it("writes the NEXT_LOCALE cookie and calls router.refresh (cookie mode, no URL change)", () => {
     render(<LocaleSwitcher />);
     fireEvent.click(screen.getByRole("button", { name: /LocaleSwitcher\.ariaLabel/ }));
     const items = screen.getAllByRole("menuitem");
     fireEvent.click(items[1]); // zh
 
-    expect(replaceMock).toHaveBeenCalledWith("/settings", { locale: "zh" });
     expect(document.cookie).toMatch(/NEXT_LOCALE=zh/);
+    expect(refreshMock).toHaveBeenCalledTimes(1);
   });
 
   it("marks the active locale with aria-current", () => {
