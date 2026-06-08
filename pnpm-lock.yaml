@@ -3973,9 +3973,6 @@ importers:
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
-      '@nebutra/theme':
-        specifier: workspace:*
-        version: link:../../design/theme
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -3989,6 +3986,9 @@ importers:
         specifier: ^1.1.0
         version: 1.1.1
     devDependencies:
+      '@nebutra/theme':
+        specifier: workspace:*
+        version: link:../../design/theme
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.1
