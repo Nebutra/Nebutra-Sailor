@@ -440,6 +440,13 @@ export function getPortableBlockCopyText(block: PortableTextBlock): string | nul
     return code ? `\`\`\`mermaid\n${code}\n\`\`\`` : null;
   }
 
+  if (block._type === "diagramBlock") {
+    if (block.diagramType === "mermaid" && block.mermaidCode?.trim()) {
+      return `\`\`\`mermaid\n${block.mermaidCode.trimEnd()}\n\`\`\``;
+    }
+    return [block.title, block.caption].filter(Boolean).join("\n\n") || null;
+  }
+
   if (block._type === "code" || block._type === "codeHtml") {
     const code = block.code?.trimEnd();
     if (!code) return null;
@@ -478,6 +485,68 @@ export function getPortableBlockCopyText(block: PortableTextBlock): string | nul
     const cta = block.ctaLabel && block.ctaHref ? `[${block.ctaLabel}](${block.ctaHref})` : null;
 
     return [title ? `## ${title}` : null, body, ...items, cta].filter(Boolean).join("\n\n");
+  }
+
+  if (block._type === "calloutBlock") {
+    return [block.title ? `> **${block.title}**` : ">", block.body ? `> ${block.body}` : null]
+      .filter(Boolean)
+      .join("\n");
+  }
+
+  if (block._type === "quoteBlock") {
+    const quote = block.quote?.trim();
+    if (!quote) return null;
+    return [`> ${quote}`, block.attribution ? `> — ${block.attribution}` : null]
+      .filter(Boolean)
+      .join("\n");
+  }
+
+  if (block._type === "statGrid") {
+    const title = block.title ? `## ${block.title}` : null;
+    const stats =
+      block.items
+        ?.map((item) => [item.value, item.label, item.caption].filter(Boolean).join(" — "))
+        .filter(Boolean) ?? [];
+    return [title, ...stats.map((item) => `- ${item}`)].filter(Boolean).join("\n\n") || null;
+  }
+
+  if (block._type === "comparisonTable") {
+    const columns = block.columns?.filter(Boolean) ?? [];
+    const rows = block.rows?.filter((row) => row.label || row.cells?.some(Boolean)) ?? [];
+    if (columns.length < 2 || !rows.length) return null;
+    const header = ["Dimension", ...columns];
+    const tableRows = [
+      `| ${header.join(" | ")} |`,
+      `| ${header.map(() => "---").join(" | ")} |`,
+      ...rows.map((row) => `| ${[row.label ?? "", ...(row.cells ?? [])].join(" | ")} |`),
+    ];
+    return [block.title ? `## ${block.title}` : null, tableRows.join("\n")]
+      .filter(Boolean)
+      .join("\n\n");
+  }
+
+  if (block._type === "sourceCard") {
+    const title = block.url && block.title ? `[${block.title}](${block.url})` : block.title;
+    return [title, block.publisher, block.author, block.summary].filter(Boolean).join("\n");
+  }
+
+  if (block._type === "imageSet") {
+    const captions =
+      block.images
+        ?.map((image) => [image.alt, image.caption].filter(Boolean).join(" — "))
+        .filter(Boolean) ?? [];
+    return [block.title, ...captions].filter(Boolean).join("\n\n") || null;
+  }
+
+  if (block._type === "embedBlock") {
+    const title = block.url && block.title ? `[${block.title}](${block.url})` : block.title;
+    return [title, block.caption].filter(Boolean).join("\n\n") || null;
+  }
+
+  if (block._type === "componentBlock") {
+    return [block.componentKey, ...(block.props?.map((prop) => prop.value).filter(Boolean) ?? [])]
+      .filter(Boolean)
+      .join("\n");
   }
 
   if (block._type !== "block") return null;
@@ -529,6 +598,47 @@ export function extractBodyText(post: BlogPostWithSource): string {
         }
         if (block._type === "mermaid") {
           return block.code ? [block.code] : [];
+        }
+        if (block._type === "diagramBlock") {
+          return [block.title, block.mermaidCode, block.caption].filter((item): item is string =>
+            Boolean(item),
+          );
+        }
+        if (
+          block._type === "calloutBlock" ||
+          block._type === "quoteBlock" ||
+          block._type === "sourceCard" ||
+          block._type === "embedBlock"
+        ) {
+          return [
+            block.title,
+            block.body,
+            block.quote,
+            block.attribution,
+            block.publisher,
+            block.author,
+            block.summary,
+            block.caption,
+          ].filter((item): item is string => Boolean(item));
+        }
+        if (block._type === "statGrid") {
+          return [
+            block.title,
+            ...(block.items?.flatMap((item) => [item.value, item.label, item.caption]) ?? []),
+          ].filter((item): item is string => Boolean(item));
+        }
+        if (block._type === "comparisonTable") {
+          return [
+            block.title,
+            ...(block.columns ?? []),
+            ...(block.rows?.flatMap((row) => [row.label, ...(row.cells ?? [])]) ?? []),
+          ].filter((item): item is string => Boolean(item));
+        }
+        if (block._type === "imageSet") {
+          return [
+            block.title,
+            ...(block.images?.flatMap((image) => [image.alt, image.caption]) ?? []),
+          ].filter((item): item is string => Boolean(item));
         }
         return block.children?.map((child) => child.text ?? "") ?? [];
       })

@@ -323,7 +323,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
     <main id="main-content" className="min-h-screen bg-white dark:bg-zinc-950">
       <Navbar />
 
-      <article className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <article className="px-4 pt-24 pb-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-5xl">
           <AnimateIn preset="fade" inView>
             <Link

@@ -4,10 +4,13 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@nebutra/icons", () => ({
+  ArrowUpRight: () => <span data-testid="arrow-up-right-icon" />,
   ArrowRight: () => <span data-testid="arrow-right-icon" />,
   Check: () => <span data-testid="check-icon" />,
   Copy: () => <span data-testid="copy-icon" />,
   Hash: () => <span data-testid="hash-icon" />,
+  InformationFillSmall: () => <span data-testid="information-icon" />,
+  Sparkles: () => <span data-testid="sparkles-icon" />,
 }));
 
 vi.mock("@nebutra/ui/primitives", () => ({
@@ -179,5 +182,91 @@ describe("BlogPortableText", () => {
 
     expect(screen.queryByText("TL;DR")).toBeNull();
     expect(screen.getByText("太长不看").tagName).toBe("STRONG");
+  });
+
+  it("renders rich Sanity editorial blocks as controlled React UI", async () => {
+    const ui = await BlogPortableText({
+      body: [
+        {
+          _key: "callout",
+          _type: "calloutBlock",
+          tone: "insight",
+          title: "核心判断",
+          body: "Agent 之后的抽象层是协调系统。",
+        },
+        {
+          _key: "quote",
+          _type: "quoteBlock",
+          quote: "用户会从亲自干活的人，变成管理一队 Agent 的管理者。",
+          attribution: "Sequoia",
+          sourceHref: "https://example.com/sequoia",
+        },
+        {
+          _key: "stats",
+          _type: "statGrid",
+          title: "Signals",
+          items: [
+            {
+              _key: "stat-1",
+              value: "$0.99",
+              label: "Per resolution",
+              caption: "Outcome pricing instead of seat pricing",
+            },
+          ],
+        },
+        {
+          _key: "comparison",
+          _type: "comparisonTable",
+          title: "Layer shift",
+          columns: ["Old layer", "New layer"],
+          rows: [{ _key: "row-1", label: "Unit", cells: ["Agent", "Organization"] }],
+        },
+        {
+          _key: "source",
+          _type: "sourceCard",
+          title: "Big Ideas 2026",
+          publisher: "a16z",
+          url: "https://example.com/a16z",
+          summary: "Systems of coordination become the enterprise layer.",
+        },
+        {
+          _key: "source-2",
+          _type: "sourceCard",
+          title: "This Is AGI",
+          publisher: "Sequoia",
+          url: "https://example.com/sequoia-agi",
+          summary: "Agent teams change the enterprise operating model.",
+        },
+        {
+          _key: "embed",
+          _type: "embedBlock",
+          provider: "website",
+          title: "Reference page",
+          url: "https://example.com/reference",
+          caption: "Rendered as a safe link card, not arbitrary iframe HTML.",
+        },
+      ],
+    });
+
+    render(ui);
+    const sourceGrid = document.querySelector("[data-blog-source-grid]");
+
+    expect(screen.getByText("核心判断")).not.toBeNull();
+    expect(screen.getByText("Agent 之后的抽象层是协调系统。")).not.toBeNull();
+    expect(screen.getByRole("link", { name: "Sequoia" }).getAttribute("href")).toBe(
+      "https://example.com/sequoia",
+    );
+    expect(screen.getByText("$0.99")).not.toBeNull();
+    expect(screen.getByRole("cell", { name: "Organization" })).not.toBeNull();
+    expect(screen.getByText("Big Ideas 2026").closest("a")?.getAttribute("href")).toBe(
+      "https://example.com/a16z",
+    );
+    expect(screen.getByText("This Is AGI").closest("a")?.getAttribute("href")).toBe(
+      "https://example.com/sequoia-agi",
+    );
+    expect(sourceGrid?.textContent).toContain("2 sources");
+    expect(screen.getByText("Reference page").getAttribute("href")).toBe(
+      "https://example.com/reference",
+    );
   });
 });

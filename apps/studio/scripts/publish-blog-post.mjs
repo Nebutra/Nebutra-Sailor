@@ -31,6 +31,7 @@ Usage:
 
 Options:
   --file <path>             Markdown file to publish. Required.
+  --portable-json <path>    PortableText JSON file to publish. Use for rich content that should not be downgraded to Markdown.
   --language <en|zh>        Localized document language. Required.
   --slug <slug>             Public slug. Required.
   --translation-key <key>   Shared key across localized versions. Required.
@@ -685,7 +686,14 @@ async function main() {
     return;
   }
 
-  const file = requireValue(args, "file");
+  const file = args.file;
+  const portableJsonFile = args["portable-json"];
+  if (!file && !portableJsonFile) {
+    throw new Error("Missing required option --file or --portable-json.");
+  }
+  if (file && portableJsonFile) {
+    throw new Error("Use either --file or --portable-json, not both.");
+  }
   const language = requireValue(args, "language");
   if (!["en", "zh"].includes(language)) {
     throw new Error("--language must be either en or zh");
@@ -696,26 +704,66 @@ async function main() {
     throw new Error("SANITY_API_TOKEN is required unless --dry-run is set.");
   }
 
-  const source = await readFile(path.resolve(file), "utf8");
-  const { data, markdown } = parseFrontmatter(source);
-  const title = args.title || data.title || markdown.match(/^#\s+(.+)$/m)?.[1]?.trim();
+  const source = file ? await readFile(path.resolve(file), "utf8") : "";
+  const { data, markdown } = file ? parseFrontmatter(source) : { data: {}, markdown: "" };
+  const portableInput = portableJsonFile
+    ? JSON.parse(await readFile(path.resolve(portableJsonFile), "utf8"))
+    : null;
+  const portableBody = Array.isArray(portableInput) ? portableInput : portableInput?.body;
+  if (portableJsonFile && !Array.isArray(portableBody)) {
+    throw new Error(
+      "--portable-json must contain a PortableText array or an object with a body array.",
+    );
+  }
+  const title =
+    args.title ||
+    data.title ||
+    (portableInput && !Array.isArray(portableInput) ? portableInput.title : null) ||
+    markdown.match(/^#\s+(.+)$/m)?.[1]?.trim();
   if (!title) {
     throw new Error("Missing --title and no H1 title found in markdown.");
   }
 
-  const slug = args.slug || data.slug;
-  const translationKey = args["translation-key"] || data.translationKey || data["translation-key"];
-  const excerpt = args.excerpt || data.excerpt || "";
-  const author = args.author || data.author || "Tseka Luk";
-  const categories = csv(args.categories || data.categories, "Nebutra");
-  const mainImage = args["main-image"] || data.mainImage || data["main-image"] || null;
-  const publishedAt = args["published-at"] || data.publishedAt || new Date().toISOString();
+  const slug =
+    args.slug || data.slug || (!Array.isArray(portableInput) ? portableInput?.slug : null);
+  const translationKey =
+    args["translation-key"] ||
+    data.translationKey ||
+    data["translation-key"] ||
+    (!Array.isArray(portableInput) ? portableInput?.translationKey : null);
+  const excerpt =
+    args.excerpt ||
+    data.excerpt ||
+    (!Array.isArray(portableInput) ? portableInput?.excerpt : "") ||
+    "";
+  const author =
+    args.author ||
+    data.author ||
+    (!Array.isArray(portableInput) ? portableInput?.author : null) ||
+    "Tseka Luk";
+  const categories = csv(
+    args.categories ||
+      data.categories ||
+      (!Array.isArray(portableInput) ? portableInput?.categories : null),
+    "Nebutra",
+  );
+  const mainImage =
+    args["main-image"] ||
+    data.mainImage ||
+    data["main-image"] ||
+    (!Array.isArray(portableInput) ? portableInput?.mainImage : null) ||
+    null;
+  const publishedAt =
+    args["published-at"] ||
+    data.publishedAt ||
+    (!Array.isArray(portableInput) ? portableInput?.publishedAt : null) ||
+    new Date().toISOString();
   const siteUrl = args["site-url"] || DEFAULT_SITE_URL;
 
   if (!slug) throw new Error("Missing --slug or frontmatter slug.");
   if (!translationKey) throw new Error("Missing --translation-key or frontmatter translationKey.");
 
-  const body = markdownToPortableText(markdown, title);
+  const body = portableJsonFile ? portableBody : markdownToPortableText(markdown, title);
   const id = documentId(translationKey, language);
 
   const summary = {

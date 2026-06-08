@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Command } from "commander";
@@ -383,9 +383,16 @@ async function main() {
   await notifyUpdate();
 }
 
-const entrypoint = process.argv[1]
-  ? fileURLToPath(import.meta.url) === resolve(process.argv[1])
-  : false;
+function isEntrypoint(): boolean {
+  if (!process.argv[1]) return false;
+  try {
+    return realpathSync(fileURLToPath(import.meta.url)) === realpathSync(resolve(process.argv[1]));
+  } catch {
+    return fileURLToPath(import.meta.url) === resolve(process.argv[1]);
+  }
+}
+
+const entrypoint = isEntrypoint();
 
 if (entrypoint) {
   main().catch((err) => logger.error(err instanceof Error ? err.message : String(err)));

@@ -20,18 +20,43 @@ export type PortableTextBlock = {
   style?: string;
   listItem?: string;
   level?: number;
+  tone?: string | null;
+  variant?: string | null;
   referenceNumber?: number;
   children?: PortableTextSpan[];
   markDefs?: Array<Record<string, unknown>>;
   title?: string | null;
   body?: string | null;
+  quote?: string | null;
+  attribution?: string | null;
+  sourceHref?: string | null;
+  summary?: string | null;
+  publisher?: string | null;
+  author?: string | null;
+  url?: string | null;
+  accessedAt?: string | null;
+  provider?: string | null;
+  embedUrl?: string | null;
+  caption?: string | null;
+  diagramType?: string | null;
+  mermaidCode?: string | null;
   ctaHref?: string | null;
   ctaLabel?: string | null;
+  columns?: string[] | null;
   rows?: PortableTextTableRow[];
-  items?: Array<{ _key?: string; title?: string | null; body?: string | null }>;
+  items?: Array<{
+    _key?: string;
+    title?: string | null;
+    body?: string | null;
+    label?: string | null;
+    value?: string | null;
+    caption?: string | null;
+  }>;
+  images?: PortableTextImage[];
+  componentKey?: string | null;
+  props?: Array<{ _key?: string; name?: string | null; value?: string | null }>;
   asset?: { _ref?: string; _type?: string } | null;
   alt?: string | null;
-  caption?: string | null;
   code?: string | null;
   filename?: string | null;
   highlightedLines?: number[] | null;
@@ -50,8 +75,18 @@ export type PortableTextTableCell = {
 
 export type PortableTextTableRow = {
   _key?: string;
+  label?: string | null;
   cells?: string[];
   richCells?: PortableTextTableCell[];
+};
+
+export type PortableTextImage = {
+  _key?: string;
+  _type?: "image";
+  asset?: { _ref?: string; _type?: string } | null;
+  alt?: string | null;
+  caption?: string | null;
+  role?: string | null;
 };
 
 export type BlogPostBase = {

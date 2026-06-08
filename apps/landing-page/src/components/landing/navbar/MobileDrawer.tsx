@@ -3,6 +3,7 @@
 import { Cross, Menu } from "@nebutra/icons";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
+import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { NAV_LINKS } from "@/lib/constants/landing-data";
 import { getGroupResources, RESOURCE_GROUPS } from "@/lib/constants/resources-data";
@@ -19,6 +20,7 @@ export function MobileDrawer() {
   type LocalizedHref = Parameters<typeof Link>[0]["href"];
   const [open, setOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const themeLabel = locale === "zh" ? "外观" : "Theme";
 
   return (
     <div className="lg:hidden flex items-center">
@@ -48,6 +50,11 @@ export function MobileDrawer() {
             >
               <div className="flex h-full flex-col gap-4 p-6 pb-24">
                 <div className="flex-1 flex flex-col gap-4">
+                  <div className="flex items-center justify-between gap-3 rounded-[var(--radius-lg)] border border-neutral-6/60 px-4 py-3 dark:border-border/60 sm:hidden">
+                    <span className="text-sm font-medium text-neutral-12">{themeLabel}</span>
+                    <ThemeSwitcher />
+                  </div>
+
                   {NAV_LINKS.map((link) => {
                     if ("mega" in link) {
                       const groups =
