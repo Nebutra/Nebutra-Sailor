@@ -4,10 +4,13 @@ import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@nebutra/icons", () => ({
+  ArrowUpRight: () => <span data-testid="arrow-up-right-icon" />,
   ArrowRight: () => <span data-testid="arrow-right-icon" />,
   Check: () => <span data-testid="check-icon" />,
   Copy: () => <span data-testid="copy-icon" />,
   Hash: () => <span data-testid="hash-icon" />,
+  InformationFillSmall: () => <span data-testid="information-icon" />,
+  Sparkles: () => <span data-testid="sparkles-icon" />,
 }));
 
 vi.mock("@nebutra/ui/primitives", () => ({
@@ -227,6 +230,14 @@ describe("BlogPortableText", () => {
           summary: "Systems of coordination become the enterprise layer.",
         },
         {
+          _key: "source-2",
+          _type: "sourceCard",
+          title: "This Is AGI",
+          publisher: "Sequoia",
+          url: "https://example.com/sequoia-agi",
+          summary: "Agent teams change the enterprise operating model.",
+        },
+        {
           _key: "embed",
           _type: "embedBlock",
           provider: "website",
@@ -238,15 +249,22 @@ describe("BlogPortableText", () => {
     });
 
     render(ui);
+    const sourceGrid = document.querySelector("[data-blog-source-grid]");
 
     expect(screen.getByText("核心判断")).not.toBeNull();
     expect(screen.getByText("Agent 之后的抽象层是协调系统。")).not.toBeNull();
-    expect(screen.getByText("Sequoia").getAttribute("href")).toBe("https://example.com/sequoia");
+    expect(screen.getByRole("link", { name: "Sequoia" }).getAttribute("href")).toBe(
+      "https://example.com/sequoia",
+    );
     expect(screen.getByText("$0.99")).not.toBeNull();
     expect(screen.getByRole("cell", { name: "Organization" })).not.toBeNull();
-    expect(screen.getByText("Big Ideas 2026").getAttribute("href")).toBe(
+    expect(screen.getByText("Big Ideas 2026").closest("a")?.getAttribute("href")).toBe(
       "https://example.com/a16z",
     );
+    expect(screen.getByText("This Is AGI").closest("a")?.getAttribute("href")).toBe(
+      "https://example.com/sequoia-agi",
+    );
+    expect(sourceGrid?.textContent).toContain("2 sources");
     expect(screen.getByText("Reference page").getAttribute("href")).toBe(
       "https://example.com/reference",
     );

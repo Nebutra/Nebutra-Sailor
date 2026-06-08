@@ -12,7 +12,7 @@ import {
   type PortableTextTableCell,
   TEMPLATE_PLACEHOLDER_MARK,
 } from "@nebutra/blog";
-import { Hash } from "@nebutra/icons";
+import { ArrowUpRight, Hash, InformationFillSmall, Sparkles } from "@nebutra/icons";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import katex from "katex";
@@ -23,6 +23,10 @@ import { BlogCodeBlock } from "./blog-code-block";
 import { BlogCopyButton } from "./blog-copy-button";
 import { BlogCtaBlock, type BlogCtaBlockItem } from "./blog-cta-block";
 import { BlogMermaidDiagram } from "./blog-mermaid-diagram";
+
+type SourceCardGroupBlock = PortableTextBlock & {
+  sources: PortableTextBlock[];
+};
 
 function getTableCellMarkDef(
   block: PortableTextBlock,
@@ -336,20 +340,36 @@ function BlogCalloutBlock({ value }: { value: PortableTextBlock }) {
       ? value.tone
       : "note";
   const toneClass = {
-    insight: "border-[var(--blue-7)] bg-[var(--blue-2)]",
-    note: "border-[var(--neutral-7)] bg-[var(--neutral-1)]",
-    success: "border-[var(--green-7)] bg-[var(--green-2)]",
-    warning: "border-[var(--amber-7)] bg-[var(--amber-2)]",
+    insight: "border-[var(--blue-7)] bg-[var(--blue-2)] text-[var(--blue-12)]",
+    note: "border-[var(--neutral-7)] bg-[var(--neutral-2)] text-[var(--neutral-12)]",
+    success: "border-[var(--green-7)] bg-[var(--green-2)] text-[var(--green-12)]",
+    warning: "border-[var(--amber-7)] bg-[var(--amber-2)] text-[var(--amber-12)]",
   }[tone];
+  const label = value.title ?? (tone === "insight" ? "Field note" : tone);
 
   return (
-    <aside className={`my-8 rounded-[var(--radius-lg)] border px-5 py-4 ${toneClass}`}>
-      {value.title && (
-        <div className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-[var(--neutral-12)]">
-          {value.title}
+    <aside
+      className={`lg:-mx-8 my-10 overflow-hidden rounded-[var(--radius-lg)] border shadow-sm ${toneClass}`}
+    >
+      <div className="flex gap-4 px-5 py-5 sm:px-6">
+        <div className="mt-1 flex size-8 shrink-0 items-center justify-center rounded-full border border-current/20 bg-white/60 dark:bg-black/20">
+          {tone === "insight" ? (
+            <Sparkles className="size-4" aria-hidden />
+          ) : (
+            <InformationFillSmall className="size-4" aria-hidden />
+          )}
         </div>
-      )}
-      {value.body && <p className="text-base leading-8 text-[var(--neutral-11)]">{value.body}</p>}
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-current/70">
+            {label}
+          </div>
+          {value.body && (
+            <p className="mt-2 text-lg font-medium leading-8 text-[var(--neutral-12)]">
+              {value.body}
+            </p>
+          )}
+        </div>
+      </div>
     </aside>
   );
 }
@@ -370,13 +390,25 @@ function BlogQuoteBlock({ value }: { value: PortableTextBlock }) {
   );
 
   return (
-    <figure className="my-10 border-y border-[var(--neutral-6)] py-7">
-      <blockquote className="text-xl font-semibold leading-10 text-[var(--neutral-12)]">
-        {value.quote}
-      </blockquote>
-      {value.attribution && (
-        <figcaption className="mt-4 text-sm text-[var(--neutral-10)]">{attribution}</figcaption>
-      )}
+    <figure className="lg:-mx-10 my-10 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-6 py-6 shadow-sm">
+      <div className="flex gap-4">
+        <div
+          className="mt-1 font-serif text-5xl leading-none text-[var(--blue-8)]"
+          aria-hidden="true"
+        >
+          "
+        </div>
+        <div>
+          <blockquote className="text-xl font-semibold leading-10 text-[var(--neutral-12)]">
+            {value.quote}
+          </blockquote>
+          {value.attribution && (
+            <figcaption className="mt-4 text-sm font-medium text-[var(--neutral-10)]">
+              {attribution}
+            </figcaption>
+          )}
+        </div>
+      </div>
     </figure>
   );
 }
@@ -462,7 +494,7 @@ function BlogSourceCard({ value }: { value: PortableTextBlock }) {
   if (!value.title || !value.url) return null;
 
   return (
-    <aside className="my-7 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
+    <aside className="my-7 rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5 shadow-sm">
       <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--neutral-9)]">
         Source
       </div>
@@ -483,6 +515,63 @@ function BlogSourceCard({ value }: { value: PortableTextBlock }) {
         <p className="mt-3 text-sm leading-7 text-[var(--neutral-11)]">{value.summary}</p>
       )}
     </aside>
+  );
+}
+
+function BlogSourceCardGroup({
+  language,
+  value,
+}: {
+  language: BlogLanguage;
+  value: SourceCardGroupBlock;
+}) {
+  const sources = value.sources.filter((source) => source.title && source.url);
+  if (!sources.length) return null;
+
+  return (
+    <section className="lg:-mx-16 my-9" data-blog-source-grid>
+      <div className="mb-4 flex items-end justify-between gap-4 border-b border-[var(--neutral-6)] pb-3">
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--neutral-9)]">
+            {language === "zh" ? "资料索引" : "Source index"}
+          </div>
+          <p className="mt-1 text-sm leading-6 text-[var(--neutral-10)]">
+            {language === "zh"
+              ? `${sources.length} 个来源支撑这篇 Frontier 笔记。`
+              : `${sources.length} sources behind this Frontier note.`}
+          </p>
+        </div>
+      </div>
+      <div className="grid gap-3 md:grid-cols-2">
+        {sources.map((source, index) => (
+          <a
+            key={source._key ?? `${value._key ?? "source-group"}-${index}`}
+            href={source.url ?? "#"}
+            className="group flex min-h-32 flex-col rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 transition-colors hover:border-[var(--blue-7)] hover:bg-[var(--neutral-2)]"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--neutral-9)]">
+                {source.publisher ?? (language === "zh" ? "来源" : "Source")}
+              </div>
+              <ArrowUpRight
+                className="size-4 shrink-0 text-[var(--neutral-8)] transition-colors group-hover:text-[var(--blue-9)]"
+                aria-hidden
+              />
+            </div>
+            <h3 className="mt-3 text-base font-semibold leading-6 text-[var(--neutral-12)]">
+              {source.title}
+            </h3>
+            {source.summary && (
+              <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--neutral-10)]">
+                {source.summary}
+              </p>
+            )}
+          </a>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -590,7 +679,13 @@ function BlogDiagramBlock({ value }: { value: PortableTextBlock }) {
 
 function BlogComponentBlock({ value }: { value: PortableTextBlock }) {
   if (value.componentKey === "articleDivider") {
-    return <div className="my-10 border-t border-[var(--neutral-6)]" aria-hidden />;
+    return (
+      <div className="my-14 flex items-center gap-4" aria-hidden>
+        <div className="h-px flex-1 bg-[var(--neutral-6)]" />
+        <div className="size-2 rounded-full bg-[var(--blue-8)]" />
+        <div className="h-px flex-1 bg-[var(--neutral-6)]" />
+      </div>
+    );
   }
 
   const props = value.props?.filter((prop) => prop.name && prop.value) ?? [];
@@ -614,6 +709,37 @@ function BlogComponentBlock({ value }: { value: PortableTextBlock }) {
   );
 }
 
+function groupAdjacentSourceCards(blocks: PortableTextBlock[]): PortableTextBlock[] {
+  const grouped: PortableTextBlock[] = [];
+  let pendingSources: PortableTextBlock[] = [];
+
+  const flushSources = () => {
+    if (pendingSources.length === 0) return;
+    if (pendingSources.length === 1) {
+      grouped.push(pendingSources[0] as PortableTextBlock);
+    } else {
+      grouped.push({
+        _key: `${pendingSources[0]?._key ?? "source"}-group`,
+        _type: "sourceCardGroup",
+        sources: pendingSources,
+      } as SourceCardGroupBlock);
+    }
+    pendingSources = [];
+  };
+
+  for (const block of blocks) {
+    if (block._type === "sourceCard") {
+      pendingSources.push(block);
+      continue;
+    }
+    flushSources();
+    grouped.push(block);
+  }
+
+  flushSources();
+  return grouped;
+}
+
 function getCtaItems(value: PortableTextBlock): BlogCtaBlockItem[] {
   if (!Array.isArray(value.items)) return [];
 
@@ -631,6 +757,7 @@ function getCtaItems(value: PortableTextBlock): BlogCtaBlockItem[] {
 function createPortableTextComponents(
   copyLabel: string,
   copiedLabel: string,
+  language: BlogLanguage,
   headingIds?: Record<string, string>,
   resolveCtaHref: (href: string) => string = (href) => href,
 ): PortableTextComponents {
@@ -838,6 +965,9 @@ function createPortableTextComponents(
       ),
       quoteBlock: ({ value }) => <BlogQuoteBlock value={value as PortableTextBlock} />,
       sourceCard: ({ value }) => <BlogSourceCard value={value as PortableTextBlock} />,
+      sourceCardGroup: ({ value }) => (
+        <BlogSourceCardGroup language={language} value={value as SourceCardGroupBlock} />
+      ),
       statGrid: ({ value }) => <BlogStatGrid value={value as PortableTextBlock} />,
       codeHtml: ({ value }) => (
         <BlogCodeBlock
@@ -902,9 +1032,11 @@ export async function BlogPortableText({
 }) {
   if (!body?.length) return null;
   const visibleBody = await prepareBlogPortableTextBlocks(
-    normalizePortableTextBlocks(body)
-      .map((block) => localizeBlockquoteLabel(block, language))
-      .filter(hasVisibleText),
+    groupAdjacentSourceCards(
+      normalizePortableTextBlocks(body)
+        .map((block) => localizeBlockquoteLabel(block, language))
+        .filter(hasVisibleText),
+    ),
   );
   if (!visibleBody.length) return null;
 
@@ -961,6 +1093,7 @@ export async function BlogPortableText({
         components={createPortableTextComponents(
           copyLabel,
           copiedLabel,
+          language,
           headingIds,
           resolveCtaHref,
         )}
