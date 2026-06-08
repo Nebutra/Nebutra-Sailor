@@ -1,0 +1,802 @@
+{
+  "translationKey": "agent-coordination-layer",
+  "author": "Tseka Luk",
+  "categories": "Nebutra Originals,AI Strategy,Frontier Notes",
+  "mainImage": "content/blog/covers/agent-coordination-layer.png",
+  "publishedAt": "2026-06-08T00:00:00.000Z",
+  "title": "站在旧抽象层上的人：Agent 之后的那一层",
+  "slug": "agent-coordination-layer-zh",
+  "language": "zh",
+  "excerpt": "押注 2027 年的下一次 Manus Moment，关键不在更聪明的 Agent，而在 Agent 之后的那一层：把一群 Agent 编织成可治理、对结果负责的组织。",
+  "body": [
+    {
+      "_key": "block-0001",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0002",
+          "_type": "span",
+          "text": "楔子：一台被买回家的发电机",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0003",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0004",
+          "_type": "span",
+          "text": "一八九〇年代，美国的工厂主们排着队购买电动机。推销员的话术很动人：电比蒸汽干净，比蒸汽安静，比蒸汽便宜。于是他们拆掉锅炉，把一台崭新的大电机装在原来蒸汽机的位置上，然后心满意足地等待利润翻倍。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0005",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0006",
+          "_type": "span",
+          "text": "利润没有翻倍。事实上，往后差不多三四十年，账面上几乎看不出电气化带来了什么。经济史学家 Paul David 在 1990 年把这件事讲透了：工厂主把新引擎装进了旧的身体。老厂房是为一根贯穿全车间的中央传动轴设计的，所有机器靠皮带挂在这根轴上，轴在哪，机器就得挤在哪。他们换掉了动力源，却保留了那根轴。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0007",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0008",
+          "_type": "span",
+          "text": "真正的红利，要等到有人想明白一件事：既然电可以拉到任何一个角落，为什么还要让机器迁就那根轴？于是“一机一电机”出现了，车间被推倒重排，按工序的流动来组织，而不是按那根铁轴。生产率这才起飞。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0009",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "人们以为自己买的是一台更好的引擎。很久以后才发现，真正要换的，是房子的结构。"
+    },
+    {
+      "_key": "block-0010",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0011",
+          "_type": "span",
+          "text": "我把这个故事放在最前面，是因为今天我们正站在同一个路口。只不过这一次，那台被买回家的发电机，叫 Agent。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0012",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0013",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0014",
+          "_type": "span",
+          "text": "第一幕：问题真的是 Agent 吗？",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0015",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0016",
+          "_type": "span",
+          "text": "二〇二五年三月六日，Manus 发布了一段演示。它替你找公寓、做表格、比航班、排行程，一气呵成。二十小时内上百万次观看，邀请码被炒到五万到十万人民币一个。人们说，这是“中国的第二个 DeepSeek 时刻”，是“一窥 AGI 的窗口”。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0017",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0018",
+          "_type": "span",
+          "text": "八个月后，它的年化营收冲过一亿美元。又过了没多久，二〇二五年底，它被 Meta 以据称二十亿美元以上买走，随后这桩交易又在跨境监管的拉锯中被否决。一个惊艳的产品，一个体面却未竟的退出。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0019",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0020",
+          "_type": "span",
+          "text": "但请你停下来，看一眼它的身体：Manus 自己没有模型，它跑在别人的 Claude 和 Qwen 上；它也没有一条只属于自己的、会越用越深的数据。它是一个出色的编排者，一个调度众多能力的指挥。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0021",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "一个没有自己引擎、也没有自己土壤的指挥家，为什么最终的归宿是“被收购”，而不是“成为平台”？"
+    },
+    {
+      "_key": "block-0022",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0023",
+          "_type": "span",
+          "text": "答案藏在那个发电机的故事里。Manus 是一台漂亮的电动机，但它没有重排自己的车间。它证明了“编排”足够动人，动人到能卖掉；却也证明了，光有编排，不足以独自活下去。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0024",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0025",
+          "_type": "span",
+          "text": "所以，当我们问“该押注什么”的时候，第一件要做的事，是别再盯着那台引擎看。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0026",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0027",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0028",
+          "_type": "span",
+          "text": "第二幕：模型每强一寸，谁就少一块地",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0029",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0030",
+          "_type": "span",
+          "text": "有一个开源项目，专门记录“被 AI 杀死的产品”。到现在它列了八十多个，并且仍在增加。名单上 OpenAI 一家就“杀死”了二十多个，Google 十几个。这里的“杀死”不是恶意，只是潮水上涨：昨天还要花钱买的功能，今天变成了模型里一个免费的按钮。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0031",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0032",
+          "_type": "span",
+          "text": "名单上最刺眼的，是 Jasper。二〇二二年它估值十五亿美元，靠的是替你写营销文案。ChatGPT 一出，它的“套壳”生意几乎是一夜之间被掏空，因为它从来没拥有过什么，它只是站在模型前面，转手卖模型本来就会做的事。同样消失的还有一整类“和你的 PDF 聊天”的公司：ChatPDF、PDF.ai、AskYourPDF。当原生文件上传变成模型的标配，它们的存在理由就蒸发了。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0033",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "每一次技术革命，最先消失的，往往不是技术最弱的人，而是站在旧抽象层上、靠转卖下层能力为生的人。"
+    },
+    {
+      "_key": "block-0034",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0035",
+          "_type": "span",
+          "text": "但同一片潮水里，有些公司不但没被淹，反而长得更高了。Cursor、Harvey、Glean、Sierra、Perplexity、Cognition 也都在用别人随时会变强的模型，凭什么活下来？",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0036",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0037",
+          "_type": "span",
+          "text": "把它们摆在一起看，会发现一个朴素的共性。它们活下来，不是因为握住了“智能”，而是因为握住了智能旁边的四样东西：一个深得别人插不进手的工作流；一条只属于自己、越跑越厚的数据闭环；一份用户每天都要回来的习惯与分发；以及最关键的，对结果本身的负责。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0038",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0039",
+          "_type": "span",
+          "text": "注意这四样里没有一样是“模型能力”，也没有一样是“Agent 能力”。模型会变强，Agent 会变成水电煤。而这四样，会在模型变强的时候，跟着一起增值。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0040",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0041",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0042",
+          "_type": "span",
+          "text": "第三幕：Agent 不是终点，是倒数第二级台阶",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0043",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0044",
+          "_type": "span",
+          "text": "让我们把镜头拉远，看整部计算的历史。它其实是一条楼梯，每一级，都是“我们一次能托付出去多少东西”在往上长：汇编语言到编程语言，到框架，到云，到大模型，到 Copilot，到 Agent。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0045",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0046",
+          "_type": "span",
+          "text": "从托付一条指令，到一个函数，到一个应用，到整片基础设施，到一轮思考，再到一个任务。每上一级，下一级就变成了不必再操心的底座。汇编没有消失，但今天没人靠手写汇编立身；云没有消失，但没人再把“能开一台服务器”当成护城河。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0047",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "那么，比“一个 Agent 能做的一个任务”更高一级，该托付出去的，是什么？"
+    },
+    {
+      "_key": "block-0048",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0049",
+          "_type": "span",
+          "text": "顺着这条楼梯往上推，答案几乎是自己浮出来的：比“一个任务”更大的单位，是“一群任务被协调起来、共同完成的一整摊事”，也就是一个组织。Agent 之后的那一层，不是更聪明的 Agent，而是那个站在众多 Agent 之上、像当年操作系统站在一个个进程之上的东西。a16z 给它起了个名字，叫“协调系统”（system of coordination）。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0050",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0051",
+          "_type": "span",
+          "text": "最让我安心的，不是我自己推出了这个结论，而是几股完全独立的力量，在二〇二五年底到二〇二六年间，各自走到了同一个地方。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "quote-0052",
+      "_type": "quoteBlock",
+      "quote": "用户会从一个亲自干活的人，变成一个管理一队 Agent 的管理者。",
+      "attribution": "Sequoia,《2026: This Is AGI》",
+      "sourceHref": "https://sequoiacap.com/article/2026-this-is-agi/"
+    },
+    {
+      "_key": "quote-0053",
+      "_type": "quoteBlock",
+      "quote": "记录系统会退入背景，沦为商品化的存储层；企业真正需要的，是它之上的协调系统。",
+      "attribution": "a16z,《Big Ideas 2026》",
+      "sourceHref": "https://a16z.com/newsletter/big-ideas-2026-part-2/"
+    },
+    {
+      "_key": "quote-0054",
+      "_type": "quoteBlock",
+      "quote": "未来，每家公司的 IT 部门，都会变成 AI Agent 的 HR 部门。",
+      "attribution": "黄仁勋 / NVIDIA, CES 2025",
+      "sourceHref": "https://www.fortune.com/2025/01/09/nvidia-ceo-jensen-huangt-take-over-hr-ai-agents"
+    },
+    {
+      "_key": "block-0055",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0056",
+          "_type": "span",
+          "text": "三个互不通气的聪明脑袋，指向了同一扇门。这通常不是巧合，而是同一个底层规律在不同地方留下的脚印。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0057",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0058",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0059",
+          "_type": "span",
+          "text": "第四幕：当一个 Agent 顶十个工位，“按工位收钱”就塌了",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0060",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0061",
+          "_type": "span",
+          "text": "道理可以骗人，账单很难。SaaS 卖了二十年的“按席位收费”，建立在一个朴素假设上：用的人越多，价值越大。可如果一个 Agent 顶得上十个人，这个假设就从根上断了。客户凭什么为十个工位付钱，当那十个工位都空着？",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0062",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0063",
+          "_type": "span",
+          "text": "市场已经在用真金白银投票。二〇二六年二月，一轮被称作“SaaS 末日”的重新定价，抹掉了大约两千八百五十亿美元市值；Monday.com 股价从年内高点近乎腰斩、一路跌到七八十美元区间，理由写得很坦白：市场在为“AI 席位压缩”重新估值。它的 CEO Eran Zinman 承认，公司原来约百人的销售开发团队，如今“整个职能都由 AI 接手”，响应时间从一天压到三分钟。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0064",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0065",
+          "_type": "span",
+          "text": "与此同时，另一种计价方式正在长出来。Intercom 的客服 Agent 用“每解决一个问题收九毛九美元、外加履约担保”的方式，从一百万美元营收长到一亿以上，如今每周解决超过一百万个问题。HubSpot 按每次解决五毛收，Zendesk 一块五，Salesforce 两块。Sierra 干脆把整家公司都建在了“按结果收钱”之上。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0066",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "人们以为自己在购买软件。后来才发现，他们想买的，从来都是结果。"
+    },
+    {
+      "_key": "block-0067",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0068",
+          "_type": "span",
+          "text": "这件事的深意，比“换种收费方式”大得多。一旦你开始卖结果，你就不得不拥有那个生产结果的整个组织，因为结果不是某个 Agent 的功劳，是一摊被协调好的工作的功劳。收费方式，悄悄地把你推向了协调层。账单，替我们确认了那条楼梯。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "divider-0069",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0070",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0071",
+          "_type": "span",
+          "text": "第五幕：去造组织，而不是去造 Agent",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0072",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0073",
+          "_type": "span",
+          "text": "把前面这些线收成一根，结论其实很安静：最值得押的抽象层，是协调层，那个把一群已经商品化的 Agent，编织成一个可被治理、对结果负责的“组织”的系统。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0074",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0075",
+          "_type": "span",
+          "text": "如果要落到一件具体的事上，我会这样说：去为某一个高价值、今天还被大量外包出去的职能，例如一个财务部门、一家律所、一个研发组织，造一个“一盒装的 AI 原生部门”。它要满足三个条件，每一个都对应前面的一段故事。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0076",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0077",
+          "_type": "span",
+          "text": "其一，模型越强，它越好，而不是越没用。这是为了不上那份死亡名单。选的领域必须是“潮水上涨抬高你的船”，而不是“潮水上涨淹掉你的岛”。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0078",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0079",
+          "_type": "span",
+          "text": "其二，它有一条只属于自己、会复利的数据闭环。这是 Manus 缺的那样东西。每一次协调运行，都让下一次更准，这是模型再强也复制不走的土壤。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0080",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0081",
+          "_type": "span",
+          "text": "其三，它按结果收钱。这既是为了捕获席位捕获不到的价值，也是为了逼自己真的去拥有那个组织，而不是停在“做个工具”的舒适区里。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0082",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0083",
+          "_type": "span",
+          "text": "Y Combinator 在二〇二六年的招募方向，几乎是把这段话又说了一遍：它要找的，是“不卖软件、直接卖服务”的 AI 原生公司。保险经纪、会计审计、合规、医疗行政，“我们就是直接把活干了”。前沿，已经从“一个帮你的 Agent”，移到了“一个交付结果的组织”。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0084",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "title": "关于一个常被押注的方向",
+      "body": "Startup OS、AI-Native Company、Agent Governance、多 Agent 系统这些方向，大体是对的，但只是有条件地对：前提是把产品的最小单位，从 Agent 重新定义为组织/部门，把模式从卖席位换成卖结果。护城河从来不在“能协调”，而在“协调谁、为谁、握着哪一摊别人拿不走的土”。"
+    },
+    {
+      "_key": "divider-0085",
+      "_type": "componentBlock",
+      "componentKey": "articleDivider",
+      "props": []
+    },
+    {
+      "_key": "block-0086",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0087",
+          "_type": "span",
+          "text": "收束：三句话",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "block-0088",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0089",
+          "_type": "span",
+          "text": "这只是一次推演，它可能错。模型可能突然把协调也变成默认功能；结果可能在某些行业根本无法度量；地缘政治可能盖过所有产品逻辑，Manus 那场被否决的收购，就是活生生的提醒。但如果非要把这一路留下三句话，那就是：",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0090",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "body": "别去买更好的引擎，去重排房子的结构。别去握智能，去握智能旁边那条会复利的土壤。别去造一个更聪明的 Agent，去造一个能自己运转、并对结果负责的组织。"
+    },
+    {
+      "_key": "block-0091",
+      "_type": "block",
+      "style": "normal",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0092",
+          "_type": "span",
+          "text": "Agent 之后，不是 Agent。是那个让一群 Agent 像一家公司一样，安静运转的东西。",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "callout-0093",
+      "_type": "calloutBlock",
+      "tone": "insight",
+      "title": "编者注 / Why we care",
+      "body": "这是 Nebutra 的一篇 Frontier 田野笔记。我们做 Nebutra Agent OS 的初衷，恰好就是这篇文章里那个“重排房子的结构”的活儿：给独立开发者与一人公司一套带治理的底座，让一群 Agent 能像一个组织一样被编排、被约束、被信任。这篇文章不是产品介绍，而是我们判断未来时所依据的那张地图。它可能错；如果它错了，我们也想错得清楚。"
+    },
+    {
+      "_key": "block-0094",
+      "_type": "block",
+      "style": "h2",
+      "markDefs": [],
+      "children": [
+        {
+          "_key": "span-0095",
+          "_type": "span",
+          "text": "参考来源",
+          "marks": []
+        }
+      ]
+    },
+    {
+      "_key": "source-0096",
+      "_type": "sourceCard",
+      "title": "Paul A. David, The Dynamo and the Computer",
+      "url": "https://www.researchgate.net/publication/4724731_The_Dynamo_and_the_Computer_An_Historical_Perspective_On_the_Modern_Productivity_Paradox",
+      "publisher": "ResearchGate",
+      "summary": "电气化的单机驱动与生产率延迟。"
+    },
+    {
+      "_key": "source-0097",
+      "_type": "sourceCard",
+      "title": "AEI: The Dynamo, the Computer, and ChatGPT",
+      "url": "https://www.aei.org/articles/the-dynamo-the-computer-and-chatgpt-explaining-todays-productivity-paradox/",
+      "publisher": "AEI",
+      "summary": "关于技术扩散和生产率悖论的背景。"
+    },
+    {
+      "_key": "source-0098",
+      "_type": "sourceCard",
+      "title": "Bloomberg: Meta acquires Manus",
+      "url": "https://www.bloomberg.com/news/articles/2025-12-29/meta-acquires-startup-manus-to-bolster-ai-business",
+      "publisher": "Bloomberg",
+      "summary": "Manus 与 Meta 交易相关报道。"
+    },
+    {
+      "_key": "source-0099",
+      "_type": "sourceCard",
+      "title": "CNBC: Manus ARR and customer reaction",
+      "url": "https://www.cnbc.com/2026/01/21/metas-2b-manus-deal-pushes-away-some-customers-sad-it-happened.html",
+      "publisher": "CNBC",
+      "summary": "Manus 年化收入和交易反应。"
+    },
+    {
+      "_key": "source-0100",
+      "_type": "sourceCard",
+      "title": "TechCrunch: China vetoes Meta Manus deal",
+      "url": "https://techcrunch.com/2026/04/27/china-vetoes-metas-2b-manus-deal-after-months-long-probe/",
+      "publisher": "TechCrunch",
+      "summary": "跨境监管否决交易的报道。"
+    },
+    {
+      "_key": "source-0101",
+      "_type": "sourceCard",
+      "title": "Killed by AI — The AI Graveyard",
+      "url": "https://mixtpatrik.github.io/killedbyai/",
+      "publisher": "Killed by AI",
+      "summary": "AI 原生能力挤压上层应用的案例集合。"
+    },
+    {
+      "_key": "source-0102",
+      "_type": "sourceCard",
+      "title": "Sequoia: 2026, This is AGI",
+      "url": "https://sequoiacap.com/article/2026-this-is-agi/",
+      "publisher": "Sequoia Capital",
+      "summary": "关于用户从执行者变成 Agent 管理者的论述。"
+    },
+    {
+      "_key": "source-0103",
+      "_type": "sourceCard",
+      "title": "a16z: Big Ideas 2026, Part 2",
+      "url": "https://a16z.com/newsletter/big-ideas-2026-part-2/",
+      "publisher": "a16z",
+      "summary": "Systems of coordination 的企业软件方向。"
+    },
+    {
+      "_key": "source-0104",
+      "_type": "sourceCard",
+      "title": "a16z: The Enterprise Orchestration Layer",
+      "url": "https://a16z.com/podcast/big-ideas-2026-the-enterprise-orchestration-layer/",
+      "publisher": "a16z",
+      "summary": "企业编排层相关讨论。"
+    },
+    {
+      "_key": "source-0105",
+      "_type": "sourceCard",
+      "title": "Jensen Huang at CES 2025",
+      "url": "https://www.fortune.com/2025/01/09/nvidia-ceo-jensen-huangt-take-over-hr-ai-agents",
+      "publisher": "Fortune",
+      "summary": "关于 IT 部门成为 AI Agent HR 部门的转述。"
+    },
+    {
+      "_key": "source-0106",
+      "_type": "sourceCard",
+      "title": "How Intercom built outcome-based pricing for Fin",
+      "url": "https://gtmnow.com/how-intercom-built-the-highest-performing-ai-agent-on-the-market-using-outcome-based-pricing-with-archana-agrawal-president-at-intercom/",
+      "publisher": "GTM Now",
+      "summary": "Intercom Fin 按解决结果定价。"
+    },
+    {
+      "_key": "source-0107",
+      "_type": "sourceCard",
+      "title": "Fin.ai pricing comparison",
+      "url": "https://fin.ai/learn/ai-customer-service-agent-pricing-comparison",
+      "publisher": "Fin.ai",
+      "summary": "客服 Agent 结果定价对比。"
+    },
+    {
+      "_key": "source-0108",
+      "_type": "sourceCard",
+      "title": "CNBC: Monday.com stock and AI software",
+      "url": "https://www.cnbc.com/2026/02/09/monday-com-stock-ai-software.html",
+      "publisher": "CNBC",
+      "summary": "AI 席位压缩与 SaaS 重新估值。"
+    },
+    {
+      "_key": "source-0109",
+      "_type": "sourceCard",
+      "title": "The Great SaaS Unbundling",
+      "url": "https://www.taskade.com/blog/great-saas-unbundling",
+      "publisher": "Taskade",
+      "summary": "SaaS unbundling 与重新定价背景。"
+    },
+    {
+      "_key": "source-0110",
+      "_type": "sourceCard",
+      "title": "Y Combinator Requests for Startups",
+      "url": "https://ycombinator.com/rfs",
+      "publisher": "Y Combinator",
+      "summary": "AI 原生服务公司方向。"
+    },
+    {
+      "_key": "source-0111",
+      "_type": "sourceCard",
+      "title": "YC Summer 2026 Requests for Startups Ideas",
+      "url": "https://www.thevccorner.com/p/yc-summer-2026-requests-for-startups-ideas",
+      "publisher": "The VC Corner",
+      "summary": "YC 2026 RFS 解读。"
+    },
+    {
+      "_key": "source-0112",
+      "_type": "sourceCard",
+      "title": "VisiCalc as a killer app",
+      "url": "https://www.cultofmac.com/apple-history/apple-ii-killer-app-visicalc",
+      "publisher": "Cult of Mac",
+      "summary": "VisiCalc 作为杀手级抽象的背景。"
+    }
+  ]
+}
