@@ -27,3 +27,9 @@ export const i18n = {
     },
   },
 };
+
+export function htmlLangForLanguage(language: string): string {
+  if (language === "zh") return "zh-Hans-CN";
+  if (language === "en") return "en-US";
+  return language;
+}

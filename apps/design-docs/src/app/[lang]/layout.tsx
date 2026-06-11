@@ -4,7 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { i18n } from "@/lib/i18n";
+import { htmlLangForLanguage, i18n } from "@/lib/i18n";
 import "../globals.css";
 
 // GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
@@ -26,7 +26,7 @@ export default async function RootLayout({
   const { lang } = await params;
   return (
     <html
-      lang={lang}
+      lang={htmlLangForLanguage(lang)}
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >

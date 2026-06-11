@@ -12,13 +12,13 @@ describe("site SEO route registry", () => {
     const languages = buildHreflangAlternates("https://nebutra.com/", "/pricing");
 
     expect(languages).toMatchObject({
-      en: "https://nebutra.com/pricing",
-      "zh-Hans": "https://nebutra.com/zh/pricing",
-      ja: "https://nebutra.com/ja/pricing",
-      ko: "https://nebutra.com/ko/pricing",
-      es: "https://nebutra.com/es/pricing",
-      fr: "https://nebutra.com/fr/pricing",
-      de: "https://nebutra.com/de/pricing",
+      "en-US": "https://nebutra.com/pricing",
+      "zh-Hans-CN": "https://nebutra.com/zh/pricing",
+      "ja-JP": "https://nebutra.com/ja/pricing",
+      "ko-KR": "https://nebutra.com/ko/pricing",
+      "es-ES": "https://nebutra.com/es/pricing",
+      "fr-FR": "https://nebutra.com/fr/pricing",
+      "de-DE": "https://nebutra.com/de/pricing",
       "x-default": "https://nebutra.com/pricing",
     });
   });
@@ -51,7 +51,9 @@ describe("site SEO route registry", () => {
   });
 
   it("does not expose sitemap alternates with raw locale keys when BCP-47 differs", () => {
-    expect(HREFLANG_BY_LOCALE.zh).toBe("zh-Hans");
+    expect(HREFLANG_BY_LOCALE.en).toBe("en-US");
+    expect(HREFLANG_BY_LOCALE.zh).toBe("zh-Hans-CN");
+    expect(HREFLANG_BY_LOCALE.de).toBe("de-DE");
     expect(PUBLIC_SEO_ROUTES.every((route) => route.path.startsWith("/"))).toBe(true);
   });
 });

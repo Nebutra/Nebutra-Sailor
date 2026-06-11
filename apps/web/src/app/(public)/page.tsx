@@ -1,3 +1,4 @@
+import { toContentLocale, toOpenGraphLocale } from "@nebutra/i18n/locales";
 import type { Icon as NebutraIcon } from "@nebutra/icons";
 import { ArrowRight, CheckCircle, CreditCard, Message, Users } from "@nebutra/icons";
 import type { Metadata } from "next";
@@ -114,7 +115,7 @@ const COPY: Record<Locale, PublicDashboardCopy> = {
 
 // COPY map covers en/zh only; all other locales fall back to en.
 function resolveLocale(locale: string): Locale {
-  return locale === "zh" ? "zh" : "en";
+  return toContentLocale(locale);
 }
 
 // Cookie-based i18n: no locale prefix in URLs — return href unchanged.
@@ -142,7 +143,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: copy.seoTitle,
       description: copy.seoDescription,
       type: "website",
-      locale: currentLocale === "zh" ? "zh_CN" : "en_US",
+      locale: toOpenGraphLocale(currentLocale),
     },
   };
 }

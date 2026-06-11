@@ -400,7 +400,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     {translation && (
                       <a
                         href={languageSwitchPostHref(translationLocale, translation.slug)}
-                        hrefLang={targetLanguage === "zh" ? "zh-CN" : "en"}
+                        hrefLang={targetLanguage === "zh" ? "zh-Hans-CN" : "en-US"}
                         className="inline-flex items-center gap-1.5 rounded-full border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 text-sm font-medium text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
                       >
                         <Globe className="size-4" aria-hidden />

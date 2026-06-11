@@ -1,3 +1,4 @@
+import { toContentLocale } from "@nebutra/i18n/locales";
 import type { MetadataRoute } from "next";
 import { PACKAGE_FEATURE_ENTRIES } from "@/components/landing/features/package-feature-data";
 import { routing } from "@/i18n/routing";
@@ -11,7 +12,7 @@ import {
 } from "@/lib/seo/site-routes";
 
 function contentLanguageForLocale(locale: string): BlogLanguage {
-  return locale === "zh" ? "zh" : "en";
+  return toContentLocale(locale);
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -31,20 +32,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   const docsLanguages = {
-    en: `${baseUrl}/docs`,
-    "zh-Hans": `${baseUrl}/zh/docs`,
+    "en-US": `${baseUrl}/docs`,
+    "zh-Hans-CN": `${baseUrl}/zh/docs`,
     "x-default": `${baseUrl}/docs`,
   };
   const docsEntries = [
     {
-      url: docsLanguages.en,
+      url: docsLanguages["en-US"],
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,
       alternates: { languages: docsLanguages },
     },
     {
-      url: docsLanguages["zh-Hans"],
+      url: docsLanguages["zh-Hans-CN"],
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,

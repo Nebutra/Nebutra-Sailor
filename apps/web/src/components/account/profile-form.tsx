@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUser } from "@nebutra/auth/client";
+import { CANONICAL_LOCALES, type CanonicalLocale, canonicalizeLocale } from "@nebutra/i18n/locales";
 import {
   Form,
   FormControl,
@@ -20,8 +21,17 @@ import { useMemo, useState } from "react";
 import { type FieldErrors, useForm } from "react-hook-form";
 import { z } from "zod";
 
-const SUPPORTED_LOCALES = ["en", "zh"] as const;
-type LocaleCode = (typeof SUPPORTED_LOCALES)[number];
+const SUPPORTED_LOCALES = CANONICAL_LOCALES;
+type LocaleCode = CanonicalLocale;
+const LOCALE_LABELS: Record<LocaleCode, string> = {
+  "en-US": "English",
+  "zh-Hans-CN": "中文",
+  "de-DE": "Deutsch",
+  "es-ES": "Español",
+  "fr-FR": "Français",
+  "ja-JP": "日本語",
+  "ko-KR": "한국어",
+};
 
 const emailSchema = z.string().trim().email("errorInvalidEmail");
 
@@ -73,12 +83,16 @@ async function defaultRequestEmailChange(payload: EmailChangePayload): Promise<u
   return response.json().catch(() => ({}));
 }
 
+function toProfileLocale(locale: string): LocaleCode {
+  return canonicalizeLocale(locale) ?? "en-US";
+}
+
 export function ProfileForm({
   patchAccount = defaultPatchAccount,
   requestEmailChange = defaultRequestEmailChange,
 }: ProfileFormProps = {}) {
   const t = useTranslations("account.profile");
-  const initialLocale = useLocale() as LocaleCode;
+  const initialLocale = toProfileLocale(useLocale());
   const { user, isLoaded } = useUser();
 
   const initialName = user?.name ?? "";
@@ -234,7 +248,7 @@ export function ProfileForm({
               <SelectContent>
                 {SUPPORTED_LOCALES.map((code) => (
                   <SelectItem key={code} value={code}>
-                    {code === "en" ? "English" : "中文"}
+                    {LOCALE_LABELS[code]}
                   </SelectItem>
                 ))}
               </SelectContent>

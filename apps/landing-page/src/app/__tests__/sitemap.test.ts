@@ -14,8 +14,8 @@ describe("sitemap", () => {
     const pricing = entries.find((entry) => entry.url === "https://nebutra.com/pricing");
 
     expect(pricing?.alternates?.languages).toMatchObject({
-      en: "https://nebutra.com/pricing",
-      "zh-Hans": "https://nebutra.com/zh/pricing",
+      "en-US": "https://nebutra.com/pricing",
+      "zh-Hans-CN": "https://nebutra.com/zh/pricing",
       "x-default": "https://nebutra.com/pricing",
     });
     expect(pricing?.alternates?.languages).not.toHaveProperty("zh");
@@ -29,8 +29,8 @@ describe("sitemap", () => {
 
     expect(home).toBeDefined();
     expect(home?.alternates?.languages).toMatchObject({
-      en: "https://nebutra.com",
-      "zh-Hans": "https://nebutra.com/zh",
+      "en-US": "https://nebutra.com",
+      "zh-Hans-CN": "https://nebutra.com/zh",
       "x-default": "https://nebutra.com",
     });
   });

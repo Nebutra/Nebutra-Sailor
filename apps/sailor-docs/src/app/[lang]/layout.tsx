@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { i18n } from "@/lib/i18n";
+import { htmlLangForLanguage, i18n } from "@/lib/i18n";
 import { source } from "@/lib/source";
 import "../globals.css";
 
@@ -82,7 +82,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang={lang}
+      lang={htmlLangForLanguage(lang)}
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >

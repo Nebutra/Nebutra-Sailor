@@ -57,8 +57,8 @@ describe("buildPageMetadata", () => {
     });
     const languages = meta.alternates?.languages as Record<string, string>;
     expect(languages).toBeDefined();
-    expect(languages.en).toBe(EXPECTED_SITE_URL);
-    expect(languages["zh-Hans"]).toBe(`${EXPECTED_SITE_URL}/zh`);
+    expect(languages["en-US"]).toBe(EXPECTED_SITE_URL);
+    expect(languages["zh-Hans-CN"]).toBe(`${EXPECTED_SITE_URL}/zh`);
     expect(languages["x-default"]).toBe(EXPECTED_SITE_URL);
   });
 

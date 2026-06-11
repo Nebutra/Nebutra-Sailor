@@ -1,5 +1,6 @@
+import { isSupportedLocale } from "@nebutra/i18n/locales";
+
 const BILLING_ROUTE_SEGMENT = "billing";
-const SUPPORTED_LOCALES = new Set(["en", "zh"]);
 
 function isBillingPath(pathname: string): boolean {
   const segments = pathname.split("/").filter(Boolean);
@@ -10,7 +11,7 @@ function isBillingPath(pathname: string): boolean {
 
   if (segments.length === 2) {
     const [locale, route] = segments;
-    return SUPPORTED_LOCALES.has(locale ?? "") && route === BILLING_ROUTE_SEGMENT;
+    return isSupportedLocale(locale) && route === BILLING_ROUTE_SEGMENT;
   }
 
   return false;

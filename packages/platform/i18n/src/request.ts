@@ -1,20 +1,18 @@
 import { cookies } from "next/headers";
 import { getRequestConfig } from "next-intl/server";
-import { routing } from "./routing";
+import { canonicalizeLocaleOrDefault, toMessageLocale } from "./locales";
 
 export default getRequestConfig(async () => {
   const store = await cookies();
   const cookieLocale = store.get("NEXT_LOCALE")?.value;
 
-  // Validate the cookie value against the canonical locale list so stale or
-  // tampered cookies fall back to the default cleanly.
-  const locale =
-    cookieLocale && routing.locales.includes(cookieLocale as (typeof routing.locales)[number])
-      ? cookieLocale
-      : routing.defaultLocale;
+  // Cookies use canonical BCP-47 locale tags. Message files and legacy content
+  // still use compact route/storage keys such as zh.json.
+  const locale = canonicalizeLocaleOrDefault(cookieLocale);
+  const messageLocale = toMessageLocale(locale);
 
   return {
     locale,
-    messages: (await import(`../locales/${locale}.json`)).default,
+    messages: (await import(`../locales/${messageLocale}.json`)).default,
   };
 });

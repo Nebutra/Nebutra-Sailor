@@ -6,12 +6,14 @@
   "types": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./locales": "./src/locales.ts",
     "./request": "./src/request.ts",
     "./routing": "./src/routing.ts",
     "./locale-switcher": "./src/locale-switcher.tsx"
   },
   "scripts": {
     "lint": "biome check .",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

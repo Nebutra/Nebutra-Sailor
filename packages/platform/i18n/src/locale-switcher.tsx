@@ -8,11 +8,9 @@ import { useCallback, useRef, useState, useTransition } from "react";
 // Types
 // ---------------------------------------------------------------------------
 
-// Use a loose router interface so this module stays compatible with both
-// apps/landing-page's local routing (7-locale union) and @nebutra/i18n/routing
-// (2-locale union). The canonical component calls replace/prefetch with the
-// TLocale string; each app's concrete router accepts its own locale union.
-// biome-ignore lint/suspicious/noExplicitAny: intentional loose adapter
+// Use a loose router interface so this module stays compatible with both local
+// app routing modules and @nebutra/i18n/routing. They can expose different
+// locale unions; each concrete router accepts its own locale union.
 export interface LocaleSwitcherHooks {
   // biome-ignore lint/suspicious/noExplicitAny: loose adapter for multi-locale routers
   useRouter: () => any;
@@ -42,6 +40,8 @@ export interface LocaleSwitcherConfig<TLocale extends string> {
    * Callers that do not pass mode get "path" so existing usage is unchanged.
    */
   mode?: "path" | "cookie";
+  /** Compact code shown inside the trigger. Defaults to the locale value. */
+  displayLocale?: (locale: TLocale) => string;
 }
 
 export interface LocaleSwitcherProps<TLocale extends string = string> {
@@ -57,6 +57,10 @@ export interface LocaleSwitcherProps<TLocale extends string = string> {
 // ---------------------------------------------------------------------------
 
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
+
+function useDefaultAriaLabel(): string {
+  return "Change language";
+}
 
 function setLocaleCookie(locale: string): void {
   if (typeof document === "undefined") return;
@@ -160,11 +164,14 @@ function pinScrollPosition(durationMs = 2500): void {
  * locale set, etc.).
  *
  * @example
- * // apps/web — uses @nebutra/i18n/routing
- * import { useRouter, usePathname } from "@nebutra/i18n/routing";
+ * // apps/web — uses cookie mode and canonical locale values
  * export const LocaleSwitcher = createLocaleSwitcher(
  *   { useRouter, usePathname },
- *   { locales: ["en", "zh"], labels: { en: "English", zh: "中文" } },
+ *   {
+ *     locales: ["en-US", "zh-Hans-CN"],
+ *     labels: { "en-US": "English", "zh-Hans-CN": "中文" },
+ *     displayLocale: (locale) => (locale === "zh-Hans-CN" ? "zh" : locale.slice(0, 2)),
+ *   },
  * );
  */
 export function createLocaleSwitcher<TLocale extends string>(
@@ -172,7 +179,13 @@ export function createLocaleSwitcher<TLocale extends string>(
   config: LocaleSwitcherConfig<TLocale>,
 ) {
   const { useRouter, usePathname } = hooks;
-  const { locales, labels: labelsOrHook, useAriaLabel, mode = "path" } = config;
+  const {
+    locales,
+    labels: labelsOrHook,
+    useAriaLabel = useDefaultAriaLabel,
+    displayLocale = (locale: TLocale) => locale,
+    mode = "path",
+  } = config;
 
   function LocaleSwitcher({
     ariaLabel: ariaLabelProp,
@@ -186,7 +199,7 @@ export function createLocaleSwitcher<TLocale extends string>(
       ? ({ ...configLabels, ...labelsProp } as Record<TLocale, string>)
       : configLabels;
     // Resolve aria-label — prop > config hook > default.
-    const defaultAriaLabel = useAriaLabel ? useAriaLabel() : "Change language";
+    const defaultAriaLabel = useAriaLabel();
     const ariaLabel = ariaLabelProp ?? defaultAriaLabel;
     const router = useRouter();
     const pathname = usePathname();
@@ -208,7 +221,7 @@ export function createLocaleSwitcher<TLocale extends string>(
         }
         return !prev;
       });
-    }, [locale, mode, pathname, router]);
+    }, [locale, pathname, router]);
 
     const handleSelect = useCallback(
       (next: TLocale) => {
@@ -238,7 +251,7 @@ export function createLocaleSwitcher<TLocale extends string>(
           });
         }
       },
-      [locale, mode, pathname, router],
+      [locale, pathname, router],
     );
 
     // Close on outside click / Escape
@@ -270,7 +283,7 @@ export function createLocaleSwitcher<TLocale extends string>(
           className="inline-flex min-h-11 items-center gap-1.5 rounded-[var(--radius-md)] px-2.5 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:opacity-50"
         >
           <Globe className="h-4 w-4" aria-hidden />
-          <span className="uppercase">{locale}</span>
+          <span className="uppercase">{displayLocale(locale)}</span>
         </button>
 
         {open && (

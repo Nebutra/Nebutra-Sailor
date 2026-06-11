@@ -1,15 +1,36 @@
+import { canonicalizeLocale } from "@nebutra/i18n/locales";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 
-const SUPPORTED_LANGUAGES = ["en", "zh"] as const;
+const SUPPORTED_LANGUAGES = [
+  "en",
+  "en-US",
+  "zh",
+  "zh-Hans",
+  "zh-CN",
+  "zh-Hans-CN",
+  "de",
+  "de-DE",
+  "es",
+  "es-ES",
+  "fr",
+  "fr-FR",
+  "ja",
+  "ja-JP",
+  "ko",
+  "ko-KR",
+] as const;
 
 const patchSchema = z
   .object({
     name: z.string().trim().min(1).max(120).optional(),
-    language: z.enum(SUPPORTED_LANGUAGES).optional(),
+    language: z
+      .enum(SUPPORTED_LANGUAGES)
+      .transform((locale) => canonicalizeLocale(locale) ?? locale)
+      .optional(),
   })
   .refine((value) => value.name !== undefined || value.language !== undefined, {
     message: "At least one of `name` or `language` must be provided.",

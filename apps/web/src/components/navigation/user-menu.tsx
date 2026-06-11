@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@nebutra/auth/client";
+import { CANONICAL_LOCALES, type CanonicalLocale, toLocaleLabelKey } from "@nebutra/i18n/locales";
 import {
   ChevronDown,
   ChevronRight,
@@ -25,8 +26,8 @@ import { useAnchoredMenu } from "@/hooks/use-anchored-menu";
 import { dicebearAvatarUrl } from "@/lib/avatar";
 
 type ThemeChoice = "system" | "light" | "dark";
-const LOCALES = ["en", "zh", "de", "es", "fr", "ja", "ko"] as const;
-type LocaleCode = (typeof LOCALES)[number];
+const LOCALES = CANONICAL_LOCALES;
+type LocaleCode = CanonicalLocale;
 const NEXT_LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 interface UserMenuProps {
@@ -238,7 +239,9 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
                 <span>{tLocale("ariaLabel")}</span>
               </span>
               <span className="flex items-center gap-1">
-                <span className="uppercase text-xs text-neutral-11">{locale}</span>
+                <span className="uppercase text-xs text-neutral-11">
+                  {toLocaleLabelKey(locale)}
+                </span>
                 <ChevronRight className="h-3.5 w-3.5" aria-hidden />
               </span>
             </button>
@@ -257,7 +260,7 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
                       onClick={() => handleLocaleChange(cur)}
                       className="flex w-full items-center justify-between rounded-[var(--radius-sm)] px-3 py-1.5 text-xs text-neutral-12 transition-colors hover:bg-neutral-2"
                     >
-                      <span>{tLocale(cur)}</span>
+                      <span>{tLocale(toLocaleLabelKey(cur))}</span>
                       {isActive && <span aria-hidden>•</span>}
                     </button>
                   );

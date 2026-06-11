@@ -112,7 +112,7 @@ describe("PATCH /api/account", () => {
     );
     expect(response.status).toBe(200);
     const body = (await response.json()) as { language: string };
-    expect(body.language).toBe("zh");
+    expect(body.language).toBe("zh-Hans-CN");
     expect(mockedUserUpdate).not.toHaveBeenCalled();
   });
 
@@ -123,7 +123,7 @@ describe("PATCH /api/account", () => {
       new Request("https://app.example/api/account", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ language: "fr" }),
+        body: JSON.stringify({ language: "pt-BR" }),
       }),
     );
     expect(response.status).toBe(400);

@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { toOpenGraphLocale } from "@nebutra/i18n/locales";
 import type { Metadata } from "next";
 import type { routing } from "@/i18n/routing";
 import {
@@ -9,17 +10,6 @@ import {
 } from "./site-routes";
 
 export { DEFAULT_SITE_URL };
-
-/** Map next-intl locale codes → OpenGraph `og:locale` values. */
-const OG_LOCALE_MAP: Record<string, string> = {
-  en: "en_US",
-  zh: "zh_CN",
-  ja: "ja_JP",
-  ko: "ko_KR",
-  es: "es_ES",
-  fr: "fr_FR",
-  de: "de_DE",
-};
 
 export type SupportedLocale = (typeof routing.locales)[number];
 
@@ -74,7 +64,7 @@ export function buildPageMetadata(opts: BuildPageMetadataOptions): Metadata {
       description: opts.description,
       url: canonical,
       siteName,
-      locale: OG_LOCALE_MAP[opts.locale] ?? "en_US",
+      locale: toOpenGraphLocale(opts.locale),
       images: [{ url: imageUrl, width: 1200, height: 630, alt: opts.title }],
     },
     twitter: {

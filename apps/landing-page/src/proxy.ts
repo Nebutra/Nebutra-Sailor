@@ -1,3 +1,4 @@
+import { CANONICAL_LOCALES, toRouteLocale } from "@nebutra/i18n/locales";
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
@@ -32,6 +33,23 @@ function isAppRedirectablePath(pathname: string): boolean {
   if (pathname === "/" || pathname === "") return true;
   // Bare locale roots like `/en`, `/zh`, `/ja` — same semantics as `/`.
   return routing.locales.some((locale) => pathname === `/${locale}`);
+}
+
+function createLocaleAliasRedirectUrl(url: URL, pathname: string): URL | null {
+  for (const canonicalLocale of CANONICAL_LOCALES) {
+    const canonicalPrefix = `/${canonicalLocale}`;
+    if (pathname !== canonicalPrefix && !pathname.startsWith(`${canonicalPrefix}/`)) {
+      continue;
+    }
+
+    const redirectUrl = new URL(url.toString());
+    const routeLocale = toRouteLocale(canonicalLocale);
+    const routePrefix = routeLocale === routing.defaultLocale ? "" : `/${routeLocale}`;
+    redirectUrl.pathname = pathname.replace(canonicalPrefix, routePrefix) || "/";
+    return redirectUrl;
+  }
+
+  return null;
 }
 
 function withSecurityHeaders(response: NextResponse): NextResponse {
@@ -80,6 +98,11 @@ export default function proxy(request: NextRequest): NextResponse {
   const pathname = request.nextUrl.pathname.replace(/\/+$/, "") || "/";
   const docsRedirectUrl = createDocsRedirectUrl(request.nextUrl, host);
   const legacyAppRedirectUrl = createLegacyAppRedirectUrl(pathname, APP_REDIRECT_URL);
+  const localeAliasRedirectUrl = createLocaleAliasRedirectUrl(request.nextUrl, pathname);
+
+  if (localeAliasRedirectUrl) {
+    return withSecurityHeaders(NextResponse.redirect(localeAliasRedirectUrl, 308));
+  }
 
   if (docsRedirectUrl) {
     return withSecurityHeaders(NextResponse.redirect(docsRedirectUrl, 308));

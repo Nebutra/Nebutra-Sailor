@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const refreshMock = vi.fn();
-const useLocaleMock = vi.fn(() => "en");
+const useLocaleMock = vi.fn(() => "en-US");
 const usePathnameMock = vi.fn(() => "/settings");
 
 vi.mock("next-intl", () => ({
@@ -22,12 +22,12 @@ vi.mock("next/navigation", () => ({
 
 import { LocaleSwitcher } from "../locale-switcher";
 
-const LOCALE_COUNT = 7; // en, zh, de, es, fr, ja, ko
+const LOCALE_COUNT = 7; // en-US, zh-Hans-CN, de-DE, es-ES, fr-FR, ja-JP, ko-KR
 
 describe("Navigation LocaleSwitcher", () => {
   beforeEach(() => {
     refreshMock.mockReset();
-    useLocaleMock.mockReturnValue("en");
+    useLocaleMock.mockReturnValue("en-US");
     usePathnameMock.mockReturnValue("/settings");
     document.cookie = "";
   });
@@ -56,14 +56,14 @@ describe("Navigation LocaleSwitcher", () => {
     render(<LocaleSwitcher />);
     fireEvent.click(screen.getByRole("button", { name: /LocaleSwitcher\.ariaLabel/ }));
     const items = screen.getAllByRole("menuitem");
-    fireEvent.click(items[1]); // zh
+    fireEvent.click(items[1]); // zh-Hans-CN
 
-    expect(document.cookie).toMatch(/NEXT_LOCALE=zh/);
+    expect(document.cookie).toMatch(/NEXT_LOCALE=zh-Hans-CN/);
     expect(refreshMock).toHaveBeenCalledTimes(1);
   });
 
   it("marks the active locale with aria-current", () => {
-    useLocaleMock.mockReturnValue("zh");
+    useLocaleMock.mockReturnValue("zh-Hans-CN");
     render(<LocaleSwitcher />);
     fireEvent.click(screen.getByRole("button", { name: /LocaleSwitcher\.ariaLabel/ }));
     const items = screen.getAllByRole("menuitem");

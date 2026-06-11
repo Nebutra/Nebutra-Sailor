@@ -1,9 +1,10 @@
 import { createNavigation } from "next-intl/navigation";
 import { defineRouting } from "next-intl/routing";
+import { DEFAULT_ROUTE_LOCALE, ROUTE_LOCALES } from "./locales";
 
 export const routing = defineRouting({
-  locales: ["en", "zh", "de", "es", "fr", "ja", "ko"],
-  defaultLocale: "en",
+  locales: ROUTE_LOCALES,
+  defaultLocale: DEFAULT_ROUTE_LOCALE,
   // apps/web uses cookie-based i18n (no URL locale prefix) via a cookie-aware
   // getRequestConfig — the NEXT_LOCALE cookie drives locale selection server-side,
   // and LocaleSwitcher writes the cookie + calls router.refresh() for instant

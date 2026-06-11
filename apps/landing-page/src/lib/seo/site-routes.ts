@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { toHreflang, toRouteLocale } from "@nebutra/i18n/locales";
 import { type Locale, routing } from "@/i18n/routing";
 
 // DEFAULT_SITE_URL is derived from the brand SSOT so a single `pnpm brand:apply`
@@ -8,13 +9,13 @@ import { type Locale, routing } from "@/i18n/routing";
 export const DEFAULT_SITE_URL = `https://${brand.domains.landing}`;
 
 export const HREFLANG_BY_LOCALE = {
-  en: "en",
-  zh: "zh-Hans",
-  ja: "ja",
-  ko: "ko",
-  es: "es",
-  fr: "fr",
-  de: "de",
+  en: toHreflang("en"),
+  zh: toHreflang("zh"),
+  ja: toHreflang("ja"),
+  ko: toHreflang("ko"),
+  es: toHreflang("es"),
+  fr: toHreflang("fr"),
+  de: toHreflang("de"),
 } as const satisfies Record<Locale, string>;
 
 export type PublicSeoRoute = {
@@ -150,7 +151,8 @@ export function normalizeRoutePath(path: string): `/${string}` {
 
 export function localizedPathForLocale(locale: Locale | string, path: string): string {
   const normalizedPath = normalizeRoutePath(path);
-  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  const routeLocale = toRouteLocale(locale);
+  const prefix = routeLocale === routing.defaultLocale ? "" : `/${routeLocale}`;
   return normalizedPath === "/" ? prefix || "/" : `${prefix}${normalizedPath}`;
 }
 

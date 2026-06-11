@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand";
+import { toMessageLocale } from "@nebutra/i18n/locales";
 import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
@@ -62,8 +63,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
   // Always load English as the base, then merge the target locale on top.
   // This prevents MISSING_MESSAGE crashes during SSG when translations are incomplete.
   const enMessages = (await import("../../messages/en.json")).default;
+  const messageLocale = toMessageLocale(locale);
   const localeMessages =
-    locale === "en" ? enMessages : (await import(`../../messages/${locale}.json`)).default;
+    messageLocale === "en"
+      ? enMessages
+      : (await import(`../../messages/${messageLocale}.json`)).default;
 
   const merged = { ...enMessages, ...deepMerge(enMessages, localeMessages) };
 
