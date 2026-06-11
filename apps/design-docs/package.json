@@ -10,7 +10,7 @@
     "build": "node scripts/ensure-pages-manifest.mjs && _FUMADOCS_MDX=1 next build --webpack",
     "start": "next start",
     "pretypecheck": "pnpm prepare:runtime-deps",
-    "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 next typegen && tsc --noEmit",
+    "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
     "lint:ia": "node ./scripts/check-information-architecture.mjs",
     "lint:ui-quality": "node ./scripts/check-ui-quality.mjs",
     "lint:links": "node ./scripts/lint-links.mjs",

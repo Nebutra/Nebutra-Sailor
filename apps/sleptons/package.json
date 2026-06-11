@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check .",
-    "typecheck": "next typegen && tsc --noEmit",
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },

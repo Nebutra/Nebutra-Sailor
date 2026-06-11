@@ -224,6 +224,15 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
         run: pnpm turbo build --filter="${{ matrix.package }}^..."
 
+      - name: Typecheck ${{ matrix.package }}
+        if: matrix.condition == 'true'
+        # Keep the ECS fallback from packaging stale docs/design-system bundles
+        # when Next type generation, Fumadocs MDX, or downstream UI contracts
+        # fail before `next build` starts.
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: pnpm --filter "${{ matrix.package }}" typecheck
+
       - name: Build ${{ matrix.package }}
         if: matrix.condition == 'true'
         # NEXT_PUBLIC_* vars are baked into the client bundle at build time.

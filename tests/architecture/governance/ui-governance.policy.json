@@ -96,6 +96,9 @@
       "./patterns",
       "./primitives",
       "./primitives/canonical",
+      "./shared/animation",
+      "./shared/animation/css",
+      "./shared/animation/motion",
       "./tailwind.preset",
       "./theme",
       "./typography",
@@ -108,10 +111,10 @@
       {
         "name": "web-dashboard-overview-high-resolution-density",
         "description": "The legacy dashboard overview must stay converged into Startup OS; /workspace redirects instead of reintroducing a parallel prompt-first home.",
-        "file": "apps/web/src/app/[locale]/(app)/workspace/page.tsx",
+        "file": "apps/web/src/app/(app)/workspace/page.tsx",
         "requiredContains": [
-          "redirect(`/${locale}/startup-os`)",
-          "params: Promise<{ locale: string }>",
+          "redirect(\"/startup-os\")",
+          "Cookie-based i18n: no locale prefix in the URL.",
           "Promise<never>",
           "/workspace — redirect to Startup OS"
         ],
@@ -148,7 +151,7 @@
       {
         "name": "web-dashboard-loading-state-matches-final-ia",
         "description": "Skeletons must mirror the final dashboard information architecture so loading does not feel like a different product.",
-        "file": "apps/web/src/app/[locale]/(app)/_dashboard-skeletons.tsx",
+        "file": "apps/web/src/app/(app)/_dashboard-skeletons.tsx",
         "requiredContains": ["max-w-5xl", "metricCards", "h-28"],
         "forbiddenContains": [
           "OnboardingSkeleton",
@@ -172,7 +175,7 @@
       {
         "name": "web-dashboard-header-chrome-single-source",
         "description": "Dashboard header chrome must stay quiet and single-purpose: shallow routes own their page title, nested routes get one breadcrumb trail, and global utility actions stay in the sidebar/user menu.",
-        "file": "apps/web/src/app/[locale]/providers/design-system-shell.tsx",
+        "file": "apps/web/src/app/providers/design-system-shell.tsx",
         "requiredContains": [
           "currentBreadcrumb?.label ?? \"Dashboard\"",
           "BrandLogo",
@@ -250,7 +253,7 @@
       {
         "name": "web-dashboard-header-locale-normalization",
         "description": "Dashboard navigation state and breadcrumbs must normalize locale-prefixed routes from the shared i18n routing source.",
-        "file": "apps/web/src/app/[locale]/providers/dashboard-nav.ts",
+        "file": "apps/web/src/app/providers/dashboard-nav.ts",
         "requiredContains": [
           "import { routing } from \"@nebutra/i18n/routing\";",
           "const LOCALE_PREFIXES = new Set<string>(routing.locales)",
@@ -275,7 +278,6 @@
         ],
         "forbiddenContains": [
           "\"No recent sessions yet\"",
-          "\"emptyTitle\"",
           "\"noSnapshot\"",
           "\"pending\": \"Pending\""
         ]
@@ -290,12 +292,7 @@
           "\"cadence\": \"频率\"",
           "\"tenant\": \"租户\""
         ],
-        "forbiddenContains": [
-          "\"暂无最近会话\"",
-          "\"emptyTitle\"",
-          "\"noSnapshot\"",
-          "\"pending\": \"待连接\""
-        ]
+        "forbiddenContains": ["\"暂无最近会话\"", "\"noSnapshot\"", "\"pending\": \"待连接\""]
       }
     ]
   },

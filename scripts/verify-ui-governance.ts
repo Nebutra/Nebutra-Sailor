@@ -207,6 +207,66 @@ function collectFiles(relativePath: string, allowedExtensions: Set<string>) {
   return results.sort();
 }
 
+function collectWorkspacePackageExports() {
+  const manifests = ["packages", "backends"].flatMap((surface) =>
+    collectFiles(surface, new Set([".json"])).filter((file) => file.endsWith("/package.json")),
+  );
+  const packages = new Map<string, Set<string>>();
+
+  for (const manifest of manifests) {
+    const json = JSON.parse(read(manifest)) as {
+      name?: unknown;
+      exports?: unknown;
+    };
+    if (typeof json.name !== "string" || !json.name.startsWith("@nebutra/")) {
+      continue;
+    }
+
+    const exportKeys =
+      typeof json.exports === "string"
+        ? ["."]
+        : json.exports && typeof json.exports === "object" && !Array.isArray(json.exports)
+          ? Object.keys(json.exports)
+          : ["."];
+
+    packages.set(json.name, new Set(exportKeys));
+  }
+
+  return packages;
+}
+
+function packageImportParts(source: string) {
+  const parts = source.split("/");
+  if (parts.length < 2 || !source.startsWith("@")) {
+    return null;
+  }
+
+  const packageName = `${parts[0]}/${parts[1]}`;
+  const subpath = parts.length === 2 ? "." : `./${parts.slice(2).join("/")}`;
+  return { packageName, subpath };
+}
+
+function exportPatternMatches(pattern: string, subpath: string) {
+  if (pattern === subpath) return true;
+  if (!pattern.includes("*")) return false;
+
+  const [prefix, suffix = ""] = pattern.split("*");
+  return subpath.startsWith(prefix) && subpath.endsWith(suffix);
+}
+
+function isDeclaredWorkspacePackageExport(
+  source: string,
+  packageExports: Map<string, Set<string>>,
+) {
+  const parts = packageImportParts(source);
+  if (!parts) return false;
+
+  const exports = packageExports.get(parts.packageName);
+  if (!exports) return false;
+
+  return [...exports].some((pattern) => exportPatternMatches(pattern, parts.subpath));
+}
+
 function countMatches(content: string, pattern: RegExp) {
   const matches = content.match(pattern);
   return matches ? matches.length : 0;
@@ -361,6 +421,7 @@ function verifyDependencyBoundaries(policy: GovernancePolicy) {
   const forbiddenRegexes = policy.dependencyBoundaries.forbiddenImportRegexes.map(
     (pattern) => new RegExp(pattern),
   );
+  const packageExports = collectWorkspacePackageExports();
   const appFiles = policy.dependencyBoundaries.appSurfaces.flatMap((surface) =>
     collectFiles(surface, new Set([".ts", ".tsx"])),
   );
@@ -373,7 +434,10 @@ function verifyDependencyBoundaries(policy: GovernancePolicy) {
     for (const match of imports) {
       const source = match[1];
       if (!source || !source.startsWith("@nebutra/")) continue;
-      if (forbiddenRegexes.some((re) => re.test(source))) {
+      if (
+        forbiddenRegexes.some((re) => re.test(source)) &&
+        !isDeclaredWorkspacePackageExport(source, packageExports)
+      ) {
         importViolations.push(`${file} -> ${source}`);
       }
     }

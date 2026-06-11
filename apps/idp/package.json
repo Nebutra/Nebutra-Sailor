@@ -6,7 +6,7 @@
     "dev": "next dev --port 3100",
     "build": "next build",
     "start": "next start",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit"
   },
   "dependencies": {
     "@nebutra/oauth-server": "workspace:*",

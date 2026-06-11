@@ -8,7 +8,7 @@
     "prebuild": "fumadocs-mdx",
     "build": "_FUMADOCS_MDX=1 next build",
     "start": "next start",
-    "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 next typegen && tsc --noEmit",
+    "typecheck": "fumadocs-mdx && _FUMADOCS_MDX=1 node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",
     "lint:links": "node ./scripts/lint-links.mjs",
     "clean": "rm -rf .next"
   },

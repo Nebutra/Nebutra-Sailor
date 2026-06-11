@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+import sharp from "sharp";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { brand, colors } from "../metadata";
 
@@ -154,6 +156,21 @@ describe("buildPwaManifest", () => {
   it("short_name matches brand.name", () => {
     const manifest = buildPwaManifest();
     expect(manifest.short_name).toBe(brand.name);
+  });
+
+  it("declares square PNG app icons that match checked-in asset dimensions", async () => {
+    const manifest = buildPwaManifest();
+    const pngIcons = manifest.icons?.filter((icon) => icon.type === "image/png") ?? [];
+    const uniquePngIcons = new Map(pngIcons.map((icon) => [icon.src, icon]));
+
+    for (const icon of uniquePngIcons.values()) {
+      const expectedSize = Number(icon.sizes?.split("x").at(0));
+      const assetPath = fileURLToPath(new URL(`../../assets/favicon${icon.src}`, import.meta.url));
+      const metadata = await sharp(assetPath).metadata();
+
+      expect(metadata.width).toBe(expectedSize);
+      expect(metadata.height).toBe(expectedSize);
+    }
   });
 });
 
