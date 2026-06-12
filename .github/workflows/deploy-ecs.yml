@@ -104,6 +104,7 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - '.github/workflows/deploy-ecs.yml'
             api:
+              - 'backends/gateway/**'
               - 'packages/**'
               - 'pnpm-lock.yaml'
               - 'infra/iac/ecs/**'

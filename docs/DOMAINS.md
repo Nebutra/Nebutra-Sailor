@@ -8,7 +8,10 @@
 | `www.nebutra.com` | landing-page | Redirect to apex |
 | `app.nebutra.com` | web | Main SaaS dashboard |
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
-| `studio.nebutra.com` | studio | Sanity CMS |
+| `design.nebutra.com` | design-docs | Design system docs |
+| `docs.nebutra.com` | sailor-docs | Product/docs site |
+| `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
+| `studio.nebutra.com` | studio | Optional branded Studio alias; requires external DNS/hosting binding |
 
 ## DNS Configuration
 
@@ -21,10 +24,15 @@ A       @         76.76.21.21              Auto
 CNAME   www       cname.vercel-dns.com     Auto
 CNAME   app       cname.vercel-dns.com     Auto
 CNAME   api       cname.vercel-dns.com     Auto
-CNAME   studio    cname.vercel-dns.com     Auto
+CNAME   studio    <studio host>            Auto
 ```
 
 > Note: The A record IP (76.76.21.21) is Vercel's. Use CNAME for subdomains.
+> `studio.nebutra.com` must point at the platform that actually serves the
+> Studio. The checked-in Studio CLI currently deploys to Sanity-hosted
+> `nebutra.sanity.studio`; if you want the branded `studio.nebutra.com` URL,
+> self-host the Studio on Vercel/Cloudflare Pages or configure a supported
+> custom-domain binding, then add that domain to Sanity CORS.
 
 ## Vercel Project Configuration
 
@@ -39,7 +47,9 @@ CNAME   studio    cname.vercel-dns.com     Auto
 - Domain: `api.nebutra.com`
 
 ### 4. studio
-- Domain: `studio.nebutra.com`
+- Canonical hosted Studio: `nebutra.sanity.studio`
+- Optional branded domain: `studio.nebutra.com` after the hosting/DNS binding is
+  active
 
 ## Environment Variables (Vercel)
 
@@ -77,7 +87,8 @@ In Sanity dashboard (manage.sanity.io):
 2. Add:
    - `https://nebutra.com`
    - `https://app.nebutra.com`
-   - `https://studio.nebutra.com` (with credentials)
+   - `https://nebutra.sanity.studio` (with credentials)
+   - `https://studio.nebutra.com` (with credentials) if the branded alias is active
 
 ## SSL/TLS
 
@@ -90,3 +101,5 @@ Vercel automatically provisions SSL certificates. No action needed.
 - [ ] CORS working (no console errors)
 - [ ] Clerk auth redirects correctly
 - [ ] API calls from app → api working
+- [ ] Canonical URLs pass `pnpm check:public-urls`
+- [ ] Branded aliases pass `pnpm run check:public-urls -- --include-aliases`

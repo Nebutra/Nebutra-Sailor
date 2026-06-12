@@ -111,6 +111,30 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("pnpm verify:web-release");
   });
 
+  it("keeps public URL reachability checks as a repeatable CI harness", async () => {
+    const rootPackage = JSON.parse(await readFile(join(process.cwd(), "package.json"), "utf8")) as {
+      scripts?: Record<string, string>;
+    };
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/public-url-smoke.yml"),
+      "utf8",
+    );
+    const urlHarness = await readFile(join(process.cwd(), "scripts/check-public-urls.mjs"), "utf8");
+
+    expect(rootPackage.scripts?.["check:public-urls"]).toBe("node scripts/check-public-urls.mjs");
+    expect(workflow).toContain("node scripts/check-public-urls.mjs");
+    expect(workflow).toContain("include_aliases");
+    expect(urlHarness).toContain("https://nebutra.com");
+    expect(urlHarness).toContain("https://app.nebutra.com");
+    expect(urlHarness).toContain("https://api.nebutra.com/api/misc/health");
+    expect(urlHarness).toContain("database.status=up");
+    expect(urlHarness).toContain("https://design.nebutra.com");
+    expect(urlHarness).toContain("https://docs.nebutra.com");
+    expect(urlHarness).toContain("https://nebutra.sanity.studio");
+    expect(urlHarness).toContain("https://www.nebutra.com");
+    expect(urlHarness).toContain("https://studio.nebutra.com");
+  });
+
   it("classifies known web release dependency warnings without suppressing new ones", async () => {
     const { classifyBuildWarnings, knownWarnings } = await import(
       pathToFileURL(join(process.cwd(), "scripts/lib/web-release-warnings.mjs")).href

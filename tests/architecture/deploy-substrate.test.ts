@@ -44,7 +44,13 @@ describe("Deploy substrate governance", () => {
     expect(yml).toContain("workflow_dispatch:");
     expect(yml).not.toMatch(/\n\s+push:\n/);
     expect(yml).not.toContain("branches: [main]");
-    expect(yml).not.toContain("backends/gateway/**");
+  });
+
+  it("legacy ECS PM2 workflow still detects gateway source changes for manual fallback deploys", () => {
+    const yml = read("deploy-ecs.yml");
+    expect(yml).toContain("backends/gateway/**");
+    expect(yml).toContain("pnpm --filter @nebutra/gateway build");
+    expect(yml).toContain("https://api.nebutra.com/api/misc/health");
   });
 
   it("legacy ECS workflow no longer claims to be the default-active backend substrate", () => {

@@ -33,7 +33,7 @@ User ──────────────►│  │ WAF │──│Cache
 | `api.nebutra.com` | ✅ Proxied after origin health | No cache | Aliyun ECS (api-gateway) |
 | `status.nebutra.com` | ✅ Proxied | No cache | Vercel (landing-page status route) |
 | `docs.nebutra.com` | Start DNS-only | Docs/static cache | Aliyun ECS (sailor-docs) |
-| `studio.nebutra.com` | ✅ Proxied | No cache | Vercel (studio) |
+| `studio.nebutra.com` | ✅ Proxied when active | No cache | Optional branded Studio alias |
 | `cdn.nebutra.com` | ✅ Proxied | Long cache | R2 bucket |
 
 ## Setup Steps
@@ -49,7 +49,7 @@ A       app       106.15.4.31              ✅      Auto
 A       api       106.15.4.31              ✅      Auto
 A       status    76.76.21.21              ✅      Auto
 A       docs      106.15.4.31              DNS     Auto
-CNAME   studio    cname.vercel-dns.com     ✅      Auto
+CNAME   studio    <active studio host>     ✅      Auto
 CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto
 ```
 
@@ -61,6 +61,13 @@ stay reachable when the ECS-hosted app/API/docs stack is degraded, and exposes a
 machine-readable snapshot at `https://status.nebutra.com/status.json`.
 Vercel currently verifies this subdomain with `A status 76.76.21.21`; do not
 reuse the old `198.18.x.x` placeholder record.
+
+The checked-in Sanity Studio deploy command targets Sanity-hosted
+`https://nebutra.sanity.studio`. Only point `studio.nebutra.com` at Vercel,
+Cloudflare Pages, or another SPA host if the Studio is self-hosted there and
+the domain has been added to Sanity CORS with credentials. Do not leave `studio`
+on an old `198.18.x.x` placeholder or a host that has no TLS certificate for the
+branded domain.
 
 ### 2. SSL/TLS Settings
 

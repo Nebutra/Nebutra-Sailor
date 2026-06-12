@@ -76,10 +76,10 @@ If NS is not `*.ns.cloudflare.com`:
 | `www.nebutra.com` | CNAME | `cname.vercel-dns.com` | 🟠 Orange |
 | `app.nebutra.com` | CNAME | `cname.vercel-dns.com` | 🟠 Orange |
 | `api.nebutra.com` | CNAME | `cname.vercel-dns.com` | 🟠 Orange |
-| `studio.nebutra.com` | CNAME | `cname.vercel-dns.com` | 🟠 Orange |
+| `studio.nebutra.com` | CNAME | active Studio host when branded alias is enabled | 🟠 Orange |
 | `_vercel` TXT (verification) | TXT | `vc-domain-verify=...` | ⚪️ DNS only |
 
-> **Vercel domain verification**: when CF proxies the apex, Vercel can't always autorenew TLS. Use Vercel's **Cloudflare integration** (Project → Domains → Add → choose CF) so CF terminates TLS at the edge and Vercel uses an internal cert. Or set CF SSL to Full (strict) and let Vercel cert validate via `_acme-challenge` TXT records (DNS-only, not proxied).
+> **Vercel domain verification**: when CF proxies the apex, Vercel can't always autorenew TLS. Use Vercel's **Cloudflare integration** (Project → Domains → Add → choose CF) so CF terminates TLS at the edge and Vercel uses an internal cert. Or set CF SSL to Full (strict) and let Vercel cert validate via `_acme-challenge` TXT records (DNS-only, not proxied). `studio.nebutra.com` should only point at Vercel if the Studio is self-hosted there; the checked-in Sanity CLI currently deploys the canonical Studio to `https://nebutra.sanity.studio`.
 
 ### 1.4 Security settings
 

@@ -37,6 +37,7 @@
     "setup": "tsx scripts/setup.ts",
     "check-env": "npx tsx infra/ops/scripts/check-env.ts",
     "check:e2e-env": "node scripts/check-e2e-prereqs.mjs",
+    "check:public-urls": "node scripts/check-public-urls.mjs",
     "check:tsup-configs": "node scripts/check-tsup-configs.mjs",
     "verify:web-release": "node scripts/verify-web-release.mjs",
     "db:generate": "turbo run db:generate",
