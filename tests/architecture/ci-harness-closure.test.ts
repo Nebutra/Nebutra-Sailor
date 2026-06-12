@@ -22,7 +22,7 @@ describe("ci harness dependency closure", () => {
       "apps/design-docs apps/sailor-docs apps/storybook apps/studio apps/tsekaluk-dev",
     );
     expect(workflow).toContain('filters+=(--filter="!./$app")');
-    expect(workflow).toContain('pnpm turbo build "${filters[@]}"');
+    expect(workflow).toContain(`pnpm turbo build "\${filters[@]}"`);
   });
 
   it("runs bundle analysis through the webpack analyzer path", async () => {
@@ -245,9 +245,10 @@ describe("ci harness dependency closure", () => {
     expect(playwrightConfig).toContain('globalSetup: "./global-setup.ts"');
     expect(globalSetup).toContain('"/changelog"');
     expect(globalSetup).toContain("ROUTE_PREWARM_TIMEOUT_MS");
+    expect(globalSetup).toContain("fetchWithTimeout");
     expect(helper).toContain('waitUntil: "domcontentloaded"');
     expect(helper).toContain("NAVIGATION_RETRIES");
-    expect(helper).toContain("page.request.get");
+    expect(helper).not.toContain("page.request.get");
     expect(helper).toContain("page.goto: Timeout");
     expect(helper).toContain("net::ERR_ABORTED");
     expect(changelogSpec).toContain("gotoMarketingPage");

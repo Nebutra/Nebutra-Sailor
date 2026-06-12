@@ -330,6 +330,12 @@ describe("POST /api/startup-os/projects/[projectId]/chat", () => {
     expect(saveStartupProjectRecordMock).toHaveBeenCalledWith(dbMock, "org_1", project, {
       events: resultEvents,
       files: patchedFiles,
+      snapshot: expect.objectContaining({
+        turnId: expect.any(String),
+        prompt: "Make the landing page sharper.",
+        files,
+        createdAt: expect.stringMatching(/^\d{4}-\d{2}-\d{2}T/),
+      }),
     });
     expect(recordStartupOSRunRolloutMock).toHaveBeenCalledWith(
       expect.objectContaining({

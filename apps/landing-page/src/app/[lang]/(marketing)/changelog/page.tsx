@@ -192,8 +192,10 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
   const { lang } = await params;
   setRequestLocale(lang as Locale);
 
-  // Try CMS first, fall back to static data
-  const cmsEntries: CmsEntry[] = await getChangelogEntries().catch(() => []);
+  // Try CMS first, fall back to static data. E2E smoke runs should not depend on
+  // live Sanity latency; they verify the rendered marketing surface contract.
+  const cmsEntries: CmsEntry[] =
+    process.env.E2E_SKIP_CMS === "1" ? [] : await getChangelogEntries().catch(() => []);
   const useCms = cmsEntries.length > 0;
 
   const mappedReleases: Release[] = useCms

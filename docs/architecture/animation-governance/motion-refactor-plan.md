@@ -35,7 +35,7 @@ packages/design/ui/src/shared/animation/motion/index.ts
 Package export:
 
 ```text
-@nebutra/ui/shared/animation/motion
+@nebutra/ui/components
 ```
 
 ## Migration Order

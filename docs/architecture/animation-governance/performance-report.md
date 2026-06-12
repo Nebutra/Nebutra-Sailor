@@ -54,7 +54,7 @@ High:
 Mitigation:
 
 - GSAP lives only in landing app.
-- Product Motion lives in `@nebutra/ui/shared/animation/motion`.
+- Product Motion lives behind the public `@nebutra/ui/components` entrypoint.
 - Product app code imports from `@/shared/motion`.
 
 ## CSS Risk

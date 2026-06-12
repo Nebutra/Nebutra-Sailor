@@ -1,21 +1,23 @@
 import { expect, test } from "@playwright/test";
 
+import { gotoMarketingPage } from "../helpers/navigation";
+
 test.describe("Landing Page", () => {
   test("loads and shows hero section", async ({ page }) => {
-    await page.goto("/");
+    await gotoMarketingPage(page, "/");
     await expect(page).toHaveTitle(/Nebutra/i);
     const heading = page.getByRole("heading", { level: 1 });
     await expect(heading).toBeVisible();
   });
 
   test("navigation links are present", async ({ page }) => {
-    await page.goto("/");
+    await gotoMarketingPage(page, "/");
     const nav = page.getByRole("navigation").first();
     await expect(nav).toBeVisible();
   });
 
   test("CTA button navigates to sign-up", async ({ page }) => {
-    await page.goto("/");
+    await gotoMarketingPage(page, "/");
     const cta = page.getByRole("link", { name: /get started|sign up|start/i }).first();
     if (await cta.isVisible()) {
       const href = await cta.getAttribute("href");
@@ -24,7 +26,7 @@ test.describe("Landing Page", () => {
   });
 
   test("dark mode toggle works", async ({ page }) => {
-    await page.goto("/");
+    await gotoMarketingPage(page, "/");
     const html = page.locator("html");
     const initialClass = await html.getAttribute("class");
     const toggle = page.getByRole("button", { name: /toggle theme|dark mode|light mode/i }).first();
@@ -47,8 +49,8 @@ test.describe("Landing Page", () => {
         failedImages.push(url);
       }
     });
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
+    await gotoMarketingPage(page, "/");
+    await page.waitForLoadState("load");
     expect(failedImages, `Broken images: ${failedImages.join(", ")}`).toHaveLength(0);
   });
 });

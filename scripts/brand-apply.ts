@@ -18,6 +18,46 @@ import { type BrandColorPalette, type BrandConfig, DEFAULT_BRAND } from "./brand
 // Compute it from `import.meta.url` for cross-runtime compatibility.
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
+const BRAND_APPLY_LOCK_DIR = path.join(ROOT, "node_modules", ".cache", "nebutra-brand-apply.lock");
+const BRAND_APPLY_LOCK_TIMEOUT_MS = 120_000;
+const BRAND_APPLY_STALE_LOCK_MS = 10 * 60_000;
+
+function sleepSync(ms: number): void {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+
+function acquireBrandApplyLock(): () => void {
+  const startedAt = Date.now();
+
+  fs.mkdirSync(path.dirname(BRAND_APPLY_LOCK_DIR), { recursive: true });
+
+  while (true) {
+    try {
+      fs.mkdirSync(BRAND_APPLY_LOCK_DIR);
+      fs.writeFileSync(path.join(BRAND_APPLY_LOCK_DIR, "pid"), `${process.pid}\n`, "utf-8");
+
+      return () => {
+        fs.rmSync(BRAND_APPLY_LOCK_DIR, { force: true, recursive: true });
+      };
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
+        throw error;
+      }
+
+      const lockAgeMs = Date.now() - fs.statSync(BRAND_APPLY_LOCK_DIR).mtimeMs;
+      if (lockAgeMs > BRAND_APPLY_STALE_LOCK_MS) {
+        fs.rmSync(BRAND_APPLY_LOCK_DIR, { force: true, recursive: true });
+        continue;
+      }
+
+      if (Date.now() - startedAt > BRAND_APPLY_LOCK_TIMEOUT_MS) {
+        throw new Error(`Timed out waiting for brand:apply lock at ${BRAND_APPLY_LOCK_DIR}`);
+      }
+
+      sleepSync(250);
+    }
+  }
+}
 
 // ANSI colors
 const _c = {
@@ -499,17 +539,12 @@ export type LogoAssets = typeof logoAssets;
   // Auto-fix the just-emitted file so brand:apply always lands a
   // lint-clean tree (otherwise `pnpm lint` in CI flags the generator's
   // own output, which kept CI red across runs 26079161015 → 26081453758).
-  //
-  // Use the direct binary path (node_modules/.bin/biome) instead of
-  // `pnpm exec biome` so this works in test contexts where tsx runs
-  // brand-apply.ts directly (pnpm's verify-deps check would block pnpm exec
-  // and the try-catch would swallow the error, leaving unformatted output).
-  const biomeBin = path.join(ROOT, "node_modules", ".bin", "biome");
   try {
-    execFileSync(biomeBin, ["check", "--write", "--no-errors-on-unmatched", metadataPath], {
-      cwd: ROOT,
-      stdio: "pipe",
-    });
+    execFileSync(
+      "pnpm",
+      ["exec", "biome", "check", "--write", "--no-errors-on-unmatched", metadataPath],
+      { cwd: ROOT, stdio: "pipe" },
+    );
   } catch {
     // Biome exits non-zero when it can't auto-fix every diagnostic; the
     // file is still written with whatever fixes did apply, and the CI
@@ -657,23 +692,29 @@ function updateEnvTemplate(config: BrandConfig): void {
  * Main
  */
 async function main() {
-  const config = await loadConfig();
+  const releaseBrandApplyLock = acquireBrandApplyLock();
 
-  // Apply changes
-  copyCustomAssets(config);
-  // Phase 5: generate favicon set from logo-inverse.svg after copyCustomAssets
-  // has had a chance to copy operator-supplied SVGs into brand/assets/.
-  const brandAssetsDir = path.join(ROOT, "packages", "design", "brand", "assets");
-  logStep("Generating favicon set from logo-inverse.svg");
-  await generateFavicons(brandAssetsDir);
-  updateBrandMetadata(config);
-  // Phase 1: derive + write core.json from DEFAULT_BRAND.colors, then
-  // trigger the Style Dictionary build so styles.css regenerates.
-  updateCoreJson(config);
-  runDesignTokensBuild();
-  updatePackageScopes(config);
-  updateREADMEs(config);
-  updateEnvTemplate(config);
+  try {
+    const config = await loadConfig();
+
+    // Apply changes
+    copyCustomAssets(config);
+    // Phase 5: generate favicon set from logo-inverse.svg after copyCustomAssets
+    // has had a chance to copy operator-supplied SVGs into brand/assets/.
+    const brandAssetsDir = path.join(ROOT, "packages", "design", "brand", "assets");
+    logStep("Generating favicon set from logo-inverse.svg");
+    await generateFavicons(brandAssetsDir);
+    updateBrandMetadata(config);
+    // Phase 1: derive + write core.json from DEFAULT_BRAND.colors, then
+    // trigger the Style Dictionary build so styles.css regenerates.
+    updateCoreJson(config);
+    runDesignTokensBuild();
+    updatePackageScopes(config);
+    updateREADMEs(config);
+    updateEnvTemplate(config);
+  } finally {
+    releaseBrandApplyLock();
+  }
 }
 
 main().catch((e) => {

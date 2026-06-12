@@ -33,7 +33,9 @@ const LOCALES = [
 const BRAND_APPLY_SIDE_EFFECTS = [".env.example", "packages/design/brand/src/metadata.ts"];
 
 describe("README template drift", () => {
-  it("every rendered README matches what `brand:apply` would emit from its template", () => {
+  it("every rendered README matches what `brand:apply` would emit from its template", {
+    timeout: 120_000,
+  }, () => {
     // Snapshot current rendered files so we can restore them after the
     // brand:apply run modifies them in place.
     const snapshots = [...LOCALES.map(({ rendered }) => rendered), ...BRAND_APPLY_SIDE_EFFECTS].map(

@@ -2,8 +2,8 @@
 
 ## Phase 0 - Completed In This Pass
 
-- Added `@nebutra/ui/shared/animation/motion`.
-- Added `@nebutra/ui/shared/animation/css`.
+- Added the shared motion facade through `@nebutra/ui/components`.
+- Kept animation CSS internal to `@nebutra/ui`.
 - Added app facades for `@/shared/motion`.
 - Moved landing GSAP infrastructure to `apps/landing-page/src/shared/animation/gsap`.
 - Added `pnpm animation:governance`.

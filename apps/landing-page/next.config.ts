@@ -41,6 +41,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1"],
+
   // `output: "standalone"` is gated by env so Vercel builds (which ignore it)
   // skip the standalone trace cost, while Docker / ECS deploys can opt in by
   // setting NEXT_OUTPUT=standalone. The ECS workflow at .github/workflows/
