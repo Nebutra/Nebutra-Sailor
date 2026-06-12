@@ -23,6 +23,8 @@ const shouldPrintDetails = args.includes("--details");
 const shouldPrintJson = args.includes("--json");
 const detailLimitArg = args.find((arg) => arg.startsWith("--limit="));
 const detailLimit = detailLimitArg ? Number.parseInt(detailLimitArg.split("=")[1] ?? "", 10) : 25;
+const writeOut = (message = "") => process.stdout.write(`${message}\n`);
+const writeErr = (message = "") => process.stderr.write(`${message}\n`);
 
 const patterns = {
   directMotionImport: /from ["'](?:framer-motion|motion\/react)["']/u,
@@ -191,7 +193,7 @@ for (const file of files) {
 const sortedSummary = [...summary.entries()].sort(([a], [b]) => a.localeCompare(b));
 
 if (shouldPrintJson) {
-  console.log(
+  writeOut(
     JSON.stringify(
       {
         summary: Object.fromEntries(sortedSummary),
@@ -203,38 +205,38 @@ if (shouldPrintJson) {
     ),
   );
 } else {
-  console.log("Animation governance summary");
+  writeOut("Animation governance summary");
   for (const [zone, bucket] of sortedSummary) {
-    console.log(
+    writeOut(
       `${zone}: files=${bucket.files}, directMotion=${bucket.directMotionImports}, motionApi=${bucket.motionApi}, gsap=${bucket.gsap}, cssAnimation=${bucket.cssAnimation}, transitionAll=${bucket.transitionAll}, missingReduced=${bucket.motionWithoutReduced}, layoutAnimation=${bucket.layoutAnimation}`,
     );
     if (bucket.allowedDirectMotionImports > 0) {
-      console.log(`${zone}: sharedMotionLayer=${bucket.allowedDirectMotionImports}`);
+      writeOut(`${zone}: sharedMotionLayer=${bucket.allowedDirectMotionImports}`);
     }
   }
 
   if (shouldPrintDetails) {
-    console.log("\nAnimation governance details");
+    writeOut("\nAnimation governance details");
     for (const zone of [...new Set(findings.map((finding) => finding.zone))].sort()) {
       const zoneFindings = findings
         .filter((finding) => finding.zone === zone)
         .slice(0, detailLimit);
-      console.log(
+      writeOut(
         `${zone}: showing ${zoneFindings.length}/${findings.filter((finding) => finding.zone === zone).length}`,
       );
       for (const finding of zoneFindings) {
-        console.log(`- ${finding.file}: ${finding.risks.join(", ")}`);
+        writeOut(`- ${finding.file}: ${finding.risks.join(", ")}`);
       }
     }
   }
 }
 
 if (violations.length > 0) {
-  console.error("\nAnimation governance violations:");
+  writeErr("\nAnimation governance violations:");
   for (const violation of violations) {
-    console.error(`- ${violation.file}: ${violation.rule}`);
+    writeErr(`- ${violation.file}: ${violation.rule}`);
   }
   process.exit(1);
 }
 
-console.log(`\nAnimation governance passed (${findings.length} animated files audited).`);
+writeOut(`\nAnimation governance passed (${findings.length} animated files audited).`);

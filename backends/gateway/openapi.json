@@ -2219,6 +2219,366 @@
         }
       }
     },
+    "/api/v1/workflows": {
+      "get": {
+        "tags": ["Workflows"],
+        "operationId": "listWorkflows",
+        "summary": "List workflow definitions",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cursor page of workflows"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Workflows"],
+        "operationId": "createWorkflow",
+        "summary": "Create a workflow definition",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "scriptSource": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "defaultModel": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "maxConcurrency": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64
+                  },
+                  "maxAgentsPerRun": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10000
+                  },
+                  "maxRetries": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10
+                  },
+                  "timeoutMs": {
+                    "type": "integer",
+                    "minimum": 1000,
+                    "maximum": 600000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["ACTIVE", "DISABLED"]
+                  }
+                },
+                "required": ["name", "scriptSource"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Workflow created"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "409": {
+            "description": "A workflow with this name already exists"
+          }
+        }
+      }
+    },
+    "/api/v1/workflows/{id}": {
+      "get": {
+        "tags": ["Workflows"],
+        "operationId": "getWorkflow",
+        "summary": "Get a workflow definition",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow definition"
+          },
+          "404": {
+            "description": "Workflow not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Workflows"],
+        "operationId": "updateWorkflow",
+        "summary": "Update a workflow definition",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "scriptSource": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100000
+                  },
+                  "description": {
+                    "type": "string",
+                    "maxLength": 500
+                  },
+                  "defaultModel": {
+                    "type": "string",
+                    "maxLength": 128
+                  },
+                  "maxConcurrency": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64
+                  },
+                  "maxAgentsPerRun": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10000
+                  },
+                  "maxRetries": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10
+                  },
+                  "timeoutMs": {
+                    "type": "integer",
+                    "minimum": 1000,
+                    "maximum": 600000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["ACTIVE", "DISABLED"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Workflow updated"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Workflow not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Workflows"],
+        "operationId": "deleteWorkflow",
+        "summary": "Delete a workflow definition",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Workflow deleted"
+          },
+          "404": {
+            "description": "Workflow not found"
+          }
+        }
+      }
+    },
+    "/api/v1/workflows/{id}/runs": {
+      "get": {
+        "tags": ["Workflows"],
+        "operationId": "listWorkflowRuns",
+        "summary": "List a workflow's runs",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "required": false,
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cursor page of runs"
+          },
+          "404": {
+            "description": "Workflow not found"
+          }
+        }
+      }
+    },
+    "/api/v1/workflows/{id}/run": {
+      "post": {
+        "tags": ["Workflows"],
+        "operationId": "runWorkflow",
+        "summary": "Enqueue a durable workflow run",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Run enqueued"
+          },
+          "404": {
+            "description": "Workflow not found"
+          }
+        }
+      }
+    },
+    "/api/v1/workflows/{id}/run-stream": {
+      "post": {
+        "tags": ["Workflows"],
+        "operationId": "runWorkflowStream",
+        "summary": "Run a workflow inline and stream its events (SSE)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "args": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SSE stream of workflow events"
+          },
+          "404": {
+            "description": "Workflow not found"
+          }
+        }
+      }
+    },
     "/api/v1/ai/chat": {
       "post": {
         "tags": ["AI"],
@@ -3755,6 +4115,87 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/provider-keys": {
+      "get": {
+        "tags": ["Provider Keys"],
+        "summary": "List BYOK provider keys for the current organization (key masked)",
+        "responses": {
+          "200": {
+            "description": "List of provider keys"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Provider Keys"],
+        "summary": "Add or replace the BYOK key for a provider",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string",
+                    "enum": ["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]
+                  },
+                  "apiKey": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 400
+                  },
+                  "baseUrl": {
+                    "type": "string",
+                    "maxLength": 300,
+                    "format": "uri"
+                  },
+                  "label": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "alwaysUse": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["provider", "apiKey"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Provider key saved"
+          },
+          "400": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/provider-keys/:provider": {
+      "delete": {
+        "tags": ["Provider Keys"],
+        "summary": "Delete the BYOK key for a provider",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": ["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]
+            },
+            "required": true,
+            "name": "provider",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Provider key deleted"
           },
           "404": {
             "description": "Not found"

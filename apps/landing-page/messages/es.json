@@ -73,7 +73,7 @@
       "about": "Acerca de",
       "showcase": "Escaparate",
       "blog": "Blog",
-      "playbook": "Playbook",
+      "playbook": "Manual",
       "changelog": "Registro de cambios",
       "roadmap": "Hoja de ruta",
       "docs": "Documentación",
@@ -1526,7 +1526,7 @@
     }
   },
   "changelogMeta": {
-    "title": "Changelog — {brandName}",
+    "title": "Registro de cambios — {brandName}",
     "description": "Cada versión, lanzada con una atención obsesiva al detalle.",
     "versionTitleSuffix": "Changelog de {brandName}"
   },
