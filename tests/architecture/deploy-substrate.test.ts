@@ -62,21 +62,33 @@ describe("Deploy substrate governance", () => {
     expect(yml).not.toContain("vars.DEPLOY_TARGET == 'ecs");
   });
 
-  it("legacy ECS workflow packages apps/web as a Vite SPA behind the existing PM2 web process", () => {
+  it("legacy ECS workflow packages apps/web as Next standalone so desktop OAuth route handlers survive fallback deploys", () => {
     const yml = read("deploy-ecs.yml");
+    const webPackage = readFileSync(resolve(process.cwd(), "apps/web/package.json"), "utf-8");
+    const pm2Config = readFileSync(
+      resolve(process.cwd(), "infra/iac/ecs/ecosystem.config.cjs"),
+      "utf-8",
+    );
     const remote = readFileSync(
       resolve(process.cwd(), "infra/ops/scripts/ecs-deploy-remote.sh"),
       "utf-8",
     );
 
-    expect(yml).toContain('kind: "vite-spa"');
-    expect(yml).toContain("VITE_API_GATEWAY_URL:");
-    expect(yml).toContain("VITE_AUTH_PROVIDER:");
-    expect(yml).toContain("ECS Vite SPA static server");
-    expect(yml).toContain('cp -r "$WS/dist" "$STAGE/$WS/dist"');
-    expect(yml).toContain("apps/web/server.js");
+    expect(yml).toContain('package: "@nebutra/web"');
+    expect(yml).toContain('kind: "next-standalone"');
+    expect(yml).toContain('build_command: "build:next"');
+    expect(yml).toContain("pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}");
+    expect(yml).toContain('cp -r "$WS/.next/standalone/." "$STAGE/"');
+    expect(yml).not.toContain("ECS Vite SPA static server");
+    expect(yml).toContain("web-desktop-auth-foundryoss");
+    expect(yml).toContain("https://app.nebutra.com/signup/remote?scheme=foundryoss");
 
-    expect(remote).toContain("VITE_API_GATEWAY_URL");
-    expect(remote).toContain("VITE_AUTH_PROVIDER");
+    expect(webPackage).toContain('"build:next"');
+    expect(pm2Config).toContain('script: "apps/web/server.js"');
+    expect(pm2Config).toContain(
+      "$DEPLOY_ROOT/web/current/apps/web/server.js                  (Next standalone)",
+    );
+    expect(remote).toContain("NEXT_PUBLIC_APP_URL");
+    expect(remote).toContain("BETTER_AUTH_URL");
   });
 });

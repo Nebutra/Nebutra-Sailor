@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 3001",
     "build": "pnpm --filter @nebutra/brand sync && vite build",
+    "build:next": "pnpm --filter @nebutra/brand sync && next build",
     "start": "vite preview --host 0.0.0.0 --port 3001",
     "lint": "biome check .",
     "typecheck": "tsc --noEmit --pretty false",

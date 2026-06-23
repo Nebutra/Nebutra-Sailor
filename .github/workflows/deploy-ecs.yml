@@ -157,8 +157,10 @@ jobs:
 
   # ──────────────────────────────────────────────────────────────────────
   # build-next — build frontend docs/app artifacts and package as tarballs.
-  # Next apps still ship standalone bundles; apps/web now ships a Vite SPA
-  # behind the existing PM2 `web` process contract.
+  # All PM2 frontend fallbacks ship Next standalone bundles. apps/web keeps
+  # Vite as the product-app development/runtime migration target, but ECS must
+  # run the Next server so route handlers such as /signup/remote and
+  # /desktop-auth/complete remain available during fallback deploys.
   # ──────────────────────────────────────────────────────────────────────
   build-next:
     name: Build ${{ matrix.app }} ECS artifact
@@ -173,24 +175,28 @@ jobs:
             package: "@nebutra/landing-page"
             workspace: apps/landing-page
             kind: "next-standalone"
+            build_command: "build"
             condition: ${{ needs.detect-changes.outputs.landing }}
             site_url: "https://nebutra.com"
           - app: web
             package: "@nebutra/web"
             workspace: apps/web
-            kind: "vite-spa"
+            kind: "next-standalone"
+            build_command: "build:next"
             condition: ${{ needs.detect-changes.outputs.web }}
             site_url: "https://app.nebutra.com"
           - app: design-docs
             package: "@nebutra/design-docs"
             workspace: apps/design-docs
             kind: "next-standalone"
+            build_command: "build"
             condition: ${{ needs.detect-changes.outputs['design-docs'] }}
             site_url: "https://design.nebutra.com"
           - app: sailor-docs
             package: "@nebutra/sailor-docs"
             workspace: apps/sailor-docs
             kind: "next-standalone"
+            build_command: "build"
             condition: ${{ needs.detect-changes.outputs['sailor-docs'] }}
             site_url: "https://docs.nebutra.com"
     steps:
@@ -263,11 +269,11 @@ jobs:
           # `output: "standalone"` on this env so Vercel builds skip the trace
           # cost. ECS workflow needs the standalone bundle for assembly below.
           NEXT_OUTPUT: standalone
-        run: pnpm --filter ${{ matrix.package }} build
+        run: pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}
 
-      # Next standalone output is at <workspace>/.next/standalone/. Vite output
-      # is static dist/, so the ECS fallback wraps it in a tiny Node server that
-      # preserves the existing PM2/nginx contract: web/current/apps/web/server.js.
+      # Next standalone output is at <workspace>/.next/standalone/. Route
+      # handlers are part of this server artifact, which is why apps/web cannot
+      # be assembled from a static Vite dist/ bundle for ECS fallback.
       - name: Assemble ECS bundle
         if: matrix.condition == 'true'
         run: |
@@ -277,122 +283,16 @@ jobs:
           rm -rf "$STAGE"
           mkdir -p "$STAGE"
 
-          if [ "${{ matrix.kind }}" = "vite-spa" ]; then
-            [ -d "$WS/dist" ] || { echo "::error::$WS/dist missing after Vite build"; exit 1; }
-            mkdir -p "$STAGE/$WS"
-            cp -r "$WS/dist" "$STAGE/$WS/dist"
-            cat > "$STAGE/$WS/server.js" <<'NODE'
-          const { createServer } = require("node:http");
-          const { createReadStream } = require("node:fs");
-          const { stat } = require("node:fs/promises");
-          const { extname, join, resolve, sep } = require("node:path");
+          if [ "${{ matrix.kind }}" != "next-standalone" ]; then
+            echo "::error::Unsupported ECS frontend artifact kind: ${{ matrix.kind }}"
+            exit 1
+          fi
 
-          const distDir = resolve(__dirname, "dist");
-          const indexFile = join(distDir, "index.html");
-          const hostname = process.env.HOSTNAME || "127.0.0.1";
-          const port = Number(process.env.PORT || 3000);
-
-          const mime = {
-            ".css": "text/css; charset=utf-8",
-            ".gif": "image/gif",
-            ".html": "text/html; charset=utf-8",
-            ".ico": "image/x-icon",
-            ".jpg": "image/jpeg",
-            ".jpeg": "image/jpeg",
-            ".js": "text/javascript; charset=utf-8",
-            ".json": "application/json; charset=utf-8",
-            ".map": "application/json; charset=utf-8",
-            ".png": "image/png",
-            ".svg": "image/svg+xml",
-            ".txt": "text/plain; charset=utf-8",
-            ".webp": "image/webp",
-            ".woff": "font/woff",
-            ".woff2": "font/woff2",
-          };
-
-          function sendStatus(res, status, body) {
-            res.writeHead(status, {
-              "content-type": "text/plain; charset=utf-8",
-              "cache-control": "no-store",
-            });
-            res.end(body);
-          }
-
-          async function resolveStaticFile(pathname) {
-            const decoded = decodeURIComponent(pathname);
-            const target = resolve(distDir, `.${decoded}`);
-            if (target !== distDir && !target.startsWith(`${distDir}${sep}`)) {
-              return { forbidden: true };
-            }
-            const info = await stat(target).catch(() => null);
-            if (info?.isFile()) return { file: target };
-            return {};
-          }
-
-          function streamFile(file, req, res, immutable = false) {
-            const type = mime[extname(file)] || "application/octet-stream";
-            res.writeHead(200, {
-              "content-type": type,
-              "cache-control": immutable ? "public, max-age=31536000, immutable" : "no-store",
-            });
-            if (req.method === "HEAD") {
-              res.end();
-              return;
-            }
-            createReadStream(file).pipe(res);
-          }
-
-          const server = createServer(async (req, res) => {
-            try {
-              if (req.method !== "GET" && req.method !== "HEAD") {
-                sendStatus(res, 405, "Method Not Allowed");
-                return;
-              }
-
-              const url = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
-              if (url.pathname === "/healthz") {
-                sendStatus(res, 200, "ok");
-                return;
-              }
-              if (url.pathname.startsWith("/api/")) {
-                sendStatus(res, 404, "Product App API routes are served by the gateway");
-                return;
-              }
-
-              const resolved = await resolveStaticFile(url.pathname);
-              if (resolved.forbidden) {
-                sendStatus(res, 403, "Forbidden");
-                return;
-              }
-              if (resolved.file) {
-                streamFile(resolved.file, req, res, url.pathname.startsWith("/assets/"));
-                return;
-              }
-
-              if (extname(url.pathname)) {
-                sendStatus(res, 404, "Not Found");
-                return;
-              }
-              streamFile(indexFile, req, res, false);
-            } catch (error) {
-              process.stderr.write(`ECS Vite SPA static server failed: ${error?.stack || error}\n`);
-              sendStatus(res, 500, "Internal Server Error");
-            }
-          });
-
-          server.listen(port, hostname, () => {
-            process.stdout.write(
-              `ECS Vite SPA static server listening on http://${hostname}:${port}\n`,
-            );
-          });
-          NODE
-          else
-            cp -r "$WS/.next/standalone/." "$STAGE/"
-            mkdir -p "$STAGE/$WS/.next"
-            cp -r "$WS/.next/static" "$STAGE/$WS/.next/static"
-            if [ -d "$WS/public" ]; then
-              cp -r "$WS/public" "$STAGE/$WS/public"
-            fi
+          cp -r "$WS/.next/standalone/." "$STAGE/"
+          mkdir -p "$STAGE/$WS/.next"
+          cp -r "$WS/.next/static" "$STAGE/$WS/.next/static"
+          if [ -d "$WS/public" ]; then
+            cp -r "$WS/public" "$STAGE/$WS/public"
           fi
           ls -la "$STAGE/$WS"
           tar -czf "$RUNNER_TEMP/nebutra-${{ matrix.app }}-${{ github.sha }}.tar.gz" -C "$STAGE" .
@@ -870,10 +770,12 @@ jobs:
           if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then
             declare -A web_targets=(
               [web-sign-in]="https://app.nebutra.com/sign-in"
+              [web-desktop-auth-foundryoss]="https://app.nebutra.com/signup/remote?scheme=foundryoss&state=f80fe991-f260-468a-b9fc-9a9b98bf9352&public_beta=true"
               [web-gateway-auth-session]="https://api.nebutra.com/api/auth/session"
             )
             declare -A expected_codes=(
               [web-sign-in]="200"
+              [web-desktop-auth-foundryoss]="307"
               [web-gateway-auth-session]="200"
             )
             for name in "${!web_targets[@]}"; do

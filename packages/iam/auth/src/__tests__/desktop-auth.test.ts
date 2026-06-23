@@ -32,6 +32,26 @@ describe("desktop auth protocol", () => {
     );
   });
 
+  it("accepts Foundry OSS desktop auth requests and preserves the custom URL scheme", () => {
+    const request = new Request(
+      "https://app.nebutra.com/signup/remote?scheme=foundryoss&state=f80fe991-f260-468a-b9fc-9a9b98bf9352&public_beta=true",
+    );
+
+    const parsed = parseDesktopAuthRequest(request);
+    const target = buildDesktopAuthStartUrl(request, "sign-up");
+
+    expect(parsed).toEqual({
+      ok: true,
+      scheme: "foundryoss",
+      state: "f80fe991-f260-468a-b9fc-9a9b98bf9352",
+      publicBeta: true,
+    });
+    expect(target.pathname).toBe("/en/sign-up");
+    expect(target.searchParams.get("returnUrl")).toBe(
+      "/en/desktop-auth/complete?scheme=foundryoss&state=f80fe991-f260-468a-b9fc-9a9b98bf9352&mode=sign-up&public_beta=true",
+    );
+  });
+
   it("rejects unsupported desktop schemes before constructing a returnUrl", () => {
     const request = new Request(
       "https://app.nebutra.com/signup/remote?scheme=javascript&state=f80fe991-f260-468a-b9fc-9a9b98bf9352",

@@ -2,6 +2,7 @@ import { useAuthContext } from "@nebutra/auth/react/context";
 import { brand } from "@nebutra/brand/metadata";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
+import { SidebarProvider } from "@/components/navigation/sidebar-context";
 
 const appNav = [
   { to: "/startup-os", label: "Startup OS" },
@@ -45,52 +46,54 @@ function ProductShell() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-1 text-neutral-12">
-      <header className="sticky top-0 z-30 border-neutral-7 border-b bg-neutral-1/90 backdrop-blur">
-        <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-4">
-          <Link
-            to="/startup-os"
-            className="inline-flex h-8 items-center"
-            aria-label="Open product home"
-          >
-            <img
-              src="/brand/logo-horizontal-en.svg"
-              alt={brand.name}
-              className="h-5 w-auto"
-              draggable={false}
-            />
-          </Link>
-          <nav className="flex items-center gap-1" aria-label="Product">
-            {appNav.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                activeProps={{ "aria-current": "page" }}
-                className="rounded-[var(--radius-sm)] px-3 py-2 text-sm text-neutral-11 transition hover:bg-neutral-3 hover:text-neutral-12 [&[aria-current=page]]:bg-neutral-3 [&[aria-current=page]]:text-neutral-12"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="flex items-center gap-3 text-sm text-neutral-11">
-            <span className="hidden max-w-[12rem] truncate sm:inline">
-              {user?.name ?? user?.email ?? "Account"}
-            </span>
-            <button
-              type="button"
-              className="rounded-[var(--radius-sm)] border border-neutral-7 px-3 py-1.5 text-neutral-12"
-              onClick={() => void signOut()}
+    <SidebarProvider>
+      <div className="min-h-screen bg-neutral-1 text-neutral-12">
+        <header className="sticky top-0 z-30 border-neutral-7 border-b bg-neutral-1/90 backdrop-blur">
+          <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-4">
+            <Link
+              to="/startup-os"
+              className="inline-flex h-8 items-center"
+              aria-label="Open product home"
             >
-              Sign out
-            </button>
+              <img
+                src="/brand/logo-horizontal-en.svg"
+                alt={brand.name}
+                className="h-5 w-auto"
+                draggable={false}
+              />
+            </Link>
+            <nav className="flex items-center gap-1" aria-label="Product">
+              {appNav.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  activeProps={{ "aria-current": "page" }}
+                  className="rounded-[var(--radius-sm)] px-3 py-2 text-sm text-neutral-11 transition hover:bg-neutral-3 hover:text-neutral-12 [&[aria-current=page]]:bg-neutral-3 [&[aria-current=page]]:text-neutral-12"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="flex items-center gap-3 text-sm text-neutral-11">
+              <span className="hidden max-w-[12rem] truncate sm:inline">
+                {user?.name ?? user?.email ?? "Account"}
+              </span>
+              <button
+                type="button"
+                className="rounded-[var(--radius-sm)] border border-neutral-7 px-3 py-1.5 text-neutral-12"
+                onClick={() => void signOut()}
+              >
+                Sign out
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
-      <main className="mx-auto w-full max-w-7xl px-4 py-6">
-        <Outlet />
-      </main>
-      {import.meta.env.DEV ? <ReactQueryDevtools initialIsOpen={false} /> : null}
-    </div>
+        </header>
+        <main className="mx-auto w-full max-w-7xl px-4 py-6">
+          <Outlet />
+        </main>
+        {import.meta.env.DEV ? <ReactQueryDevtools initialIsOpen={false} /> : null}
+      </div>
+    </SidebarProvider>
   );
 }
 

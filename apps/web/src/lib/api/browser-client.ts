@@ -2,7 +2,34 @@ import createClient, { type Middleware } from "openapi-fetch";
 
 import type { paths } from "./types.generated";
 
-export const API_BASE_URL = import.meta.env.VITE_API_GATEWAY_URL ?? "";
+type PublicRuntimeEnv = Partial<
+  Record<"VITE_API_GATEWAY_URL" | "NEXT_PUBLIC_API_GATEWAY_URL" | "NEXT_PUBLIC_API_URL", string>
+>;
+
+interface ResolveApiBaseUrlOptions {
+  viteEnv: PublicRuntimeEnv | undefined;
+  nodeEnv: PublicRuntimeEnv | undefined;
+}
+
+export function resolveApiBaseUrlFromEnv({ viteEnv, nodeEnv }: ResolveApiBaseUrlOptions): string {
+  return (
+    viteEnv?.VITE_API_GATEWAY_URL ??
+    nodeEnv?.NEXT_PUBLIC_API_GATEWAY_URL ??
+    nodeEnv?.NEXT_PUBLIC_API_URL ??
+    ""
+  );
+}
+
+const viteEnv = (import.meta as ImportMeta & { env?: PublicRuntimeEnv }).env;
+const nodeEnv =
+  typeof process === "undefined"
+    ? undefined
+    : {
+        NEXT_PUBLIC_API_GATEWAY_URL: process.env.NEXT_PUBLIC_API_GATEWAY_URL,
+        NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+      };
+
+export const API_BASE_URL = resolveApiBaseUrlFromEnv({ viteEnv, nodeEnv });
 
 export function resolveApiUrl(path: string) {
   if (/^https?:\/\//.test(path)) return path;

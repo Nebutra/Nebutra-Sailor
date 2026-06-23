@@ -30,8 +30,20 @@
       "@nebutra/theme/*": ["../../packages/design/theme/src/*"],
       "@nebutra/ui": ["../../packages/design/ui/src/index.ts"],
       "@nebutra/ui/*": ["../../packages/design/ui/src/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src/main.tsx", "src/vite-env.d.ts", "src/vite-app/**/*.ts", "src/vite-app/**/*.tsx"],
+  "include": [
+    "src/main.tsx",
+    "src/vite-env.d.ts",
+    "src/vite-app/**/*.ts",
+    "src/vite-app/**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
   "exclude": ["node_modules", "src/app", "src/proxy.ts", "src/instrumentation.ts"]
 }

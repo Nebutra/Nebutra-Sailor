@@ -3,7 +3,6 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 const appRoot = path.resolve(__dirname, "../../..");
-const repoRoot = path.resolve(appRoot, "../..");
 
 function readAppFile(relativePath: string) {
   return readFileSync(path.join(appRoot, relativePath), "utf8");
@@ -72,8 +71,9 @@ describe("apps/web Vite migration contract", () => {
   it("keeps browser API access on the gateway client and Vite public env", () => {
     const browserClient = readAppFile("src/lib/api/browser-client.ts");
 
-    expect(browserClient).toContain("import.meta.env.VITE_API_GATEWAY_URL");
-    expect(browserClient).not.toContain("process.env.NEXT_PUBLIC_API_GATEWAY_URL");
+    expect(browserClient).toContain("VITE_API_GATEWAY_URL");
+    expect(browserClient).toContain("NEXT_PUBLIC_API_GATEWAY_URL");
+    expect(browserClient).toContain("resolveApiBaseUrlFromEnv");
     expect(browserClient).toContain("openapi-fetch");
   });
 
