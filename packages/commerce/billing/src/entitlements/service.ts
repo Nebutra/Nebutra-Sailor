@@ -140,10 +140,9 @@ export const PLAN_FEATURES: Record<Plan, FeatureKey[]> = {
 //     checkEntitlementUsage(organizationId, meterId, plan)
 //     requireEntitlementUsage(organizationId, meterId, plan)
 //
-// `requireEntitlement(feature)` is retained as a no-op pass-through so that
-// existing middleware does not break at runtime; feature gating should be
-// expressed through `PLAN_FEATURES` + `isPlanFeature` until a full entitlement
-// store is reintroduced.
+// Legacy feature checks fail closed. Feature gating should be expressed through
+// `PLAN_FEATURES` + `isPlanFeature`, with usage quotas enforced by
+// `checkEntitlementUsage` / `requireEntitlementUsage`.
 
 const DEPRECATION_MESSAGE =
   "Entitlement DB CRUD is deprecated (Entitlement model removed). " +
@@ -162,8 +161,8 @@ export async function getEntitlements(_organizationId: string): Promise<Entitlem
  * @deprecated See {@link DEPRECATION_MESSAGE}. Prefer plan-level feature gating
  * via {@link isPlanFeature} or metered checks via {@link checkEntitlementUsage}.
  *
- * Returns `{ allowed: true }` unconditionally so that callers that have not yet
- * migrated continue to function. Quantity-based quota checks will silently pass.
+ * Returns `{ allowed: false }` so callers that still depend on the deleted
+ * DB-backed entitlement store cannot silently bypass plan or quota checks.
  */
 export async function checkEntitlement(
   _organizationId: string,
@@ -171,22 +170,22 @@ export async function checkEntitlement(
   _quantity?: number,
 ): Promise<EntitlementCheckResult> {
   return {
-    allowed: true,
+    allowed: false,
     feature,
+    reason: DEPRECATION_MESSAGE,
   };
 }
 
 /**
- * @deprecated See {@link DEPRECATION_MESSAGE}. Retained as a no-op for backward
- * compatibility with existing Hono middleware. Does not enforce any quota or
- * feature gate — migrate call sites to {@link requireEntitlementUsage}.
+ * @deprecated See {@link DEPRECATION_MESSAGE}. Throws so legacy callers fail
+ * closed instead of silently bypassing quota or feature enforcement.
  */
 export async function requireEntitlement(
   _organizationId: string,
   _feature: string,
   _quantity?: number,
 ): Promise<void> {
-  // No-op: cannot enforce without an entitlement store.
+  throw new EntitlementError(DEPRECATION_MESSAGE, "ENTITLEMENT_DEPRECATED");
 }
 
 export async function grantEntitlement(_input: GrantEntitlementInput): Promise<Entitlement> {

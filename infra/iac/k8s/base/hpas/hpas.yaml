@@ -146,46 +146,13 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: content-service-hpa
-  namespace: nebutra
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: content-service
-  minReplicas: 1
-  maxReplicas: 6
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 70
-  behavior:
-    scaleUp:
-      stabilizationWindowSeconds: 60
-      policies:
-        - type: Percent
-          value: 100
-          periodSeconds: 30
-    scaleDown:
-      stabilizationWindowSeconds: 300
-      policies:
-        - type: Percent
-          value: 50
-          periodSeconds: 60
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
   name: event-ingest-hpa
   namespace: nebutra
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: event-ingest
+    name: event-ingest-service
   minReplicas: 2
   maxReplicas: 12
   metrics:
@@ -224,39 +191,6 @@ spec:
     kind: Deployment
     name: recsys-service
   minReplicas: 1
-  maxReplicas: 4
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 70
-  behavior:
-    scaleUp:
-      stabilizationWindowSeconds: 60
-      policies:
-        - type: Pods
-          value: 1
-          periodSeconds: 60
-    scaleDown:
-      stabilizationWindowSeconds: 600
-      policies:
-        - type: Pods
-          value: 1
-          periodSeconds: 120
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: billing-service-hpa
-  namespace: nebutra
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: billing-service
-  minReplicas: 2
   maxReplicas: 4
   metrics:
     - type: Resource

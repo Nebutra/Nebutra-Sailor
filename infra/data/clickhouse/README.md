@@ -12,13 +12,15 @@ Warehouse-first analytics stack for Nebutra superstarter.
 1. Start services:
 
 ```bash
-docker compose up -d clickhouse event-ingest-service
+docker compose up -d clickhouse
+cd backends/go/event-ingest
+PORT=8008 CLICKHOUSE_URL=http://localhost:8123 go run .
 ```
 
 2. Ingest sample events:
 
 ```bash
-curl -X POST http://localhost:8008/api/v1/events/ingest \
+curl -X POST http://localhost:8008/api/v1/events \
   -H 'Content-Type: application/json' \
   -H 'x-organization-id: org_demo' \
   -d '{

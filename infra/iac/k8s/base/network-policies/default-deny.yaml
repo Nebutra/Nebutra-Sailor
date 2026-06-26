@@ -34,14 +34,21 @@ spec:
         - protocol: TCP
           port: 53
 ---
-# Allow the ingress controller to reach every app pod on port 8080.
+# Allow the ingress controller to reach public HTTP app pods.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: allow-ingress-controller
   namespace: nebutra
 spec:
-  podSelector: {}
+  podSelector:
+    matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: In
+        values:
+          - frontend
+          - gateway
+          - cms
   policyTypes:
     - Ingress
   ingress:
@@ -51,25 +58,8 @@ spec:
               kubernetes.io/metadata.name: ingress-nginx
       ports:
         - protocol: TCP
-          port: 8080
----
-# Allow api-gateway to call any Python microservice on port 8000.
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-api-gateway-to-services
-  namespace: nebutra
-spec:
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/component: service
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app.kubernetes.io/name: api-gateway
-      ports:
+          port: 3000
         - protocol: TCP
-          port: 8000
+          port: 3002
+        - protocol: TCP
+          port: 3003

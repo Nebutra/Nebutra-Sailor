@@ -26,10 +26,10 @@ resources:
   - services/web.yaml
   - services/landing-page.yaml
   - services/api-gateway.yaml
-  - backends/python/ai-service.yaml
-  - backends/python/ecommerce-service.yaml
-  - backends/python/recsys-service.yaml
-  - backends/python/event-ingest-service.yaml
+  - services/ai-service.yaml
+  - services/ecommerce-service.yaml
+  - services/recsys-service.yaml
+  - services/event-ingest-service.yaml
   - services/studio.yaml
 
   # Ingress — nginx, with TLS via cert-manager

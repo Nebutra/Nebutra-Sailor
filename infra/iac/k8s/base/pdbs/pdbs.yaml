@@ -51,32 +51,10 @@ spec:
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: content-service-pdb
-  namespace: nebutra
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: content-service
----
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
-  name: billing-service-pdb
-  namespace: nebutra
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: billing-service
----
-apiVersion: policy/v1
-kind: PodDisruptionBudget
-metadata:
   name: event-ingest-pdb
   namespace: nebutra
 spec:
   minAvailable: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: event-ingest
+      app.kubernetes.io/name: event-ingest-service

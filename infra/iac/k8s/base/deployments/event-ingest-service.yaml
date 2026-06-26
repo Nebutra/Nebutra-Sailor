@@ -37,6 +37,8 @@ spec:
             - configMapRef:
                 name: nebutra-config
           env:
+            - name: PORT
+              value: "8008"
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:

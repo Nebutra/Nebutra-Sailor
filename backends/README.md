@@ -32,7 +32,7 @@ backends/
 │
 ├── go/
 │   ├── _shared/auth/      # service_token.go — mirrors packages/iam/auth/src/s2s.ts
-│   └── event-ingest/      # chi — receives UsageEvent batches → ClickHouse (phase 2)
+│   └── event-ingest/      # chi — receives UsageEvent batches → ClickHouse
 │
 └── rust/
     └── sandbox/           # axum — Wasmtime/Firecracker code isolation (phase 2)
@@ -54,7 +54,7 @@ User request
 |---------|----------|-------------|--------|
 | `gateway` | TypeScript | 3002 | Active |
 | `python/ai` | Python | 8001 | Active |
-| `go/event-ingest` | Go | 8010 | Stub (ClickHouse phase 2) |
+| `go/event-ingest` | Go | 8010 | Active (ClickHouse HTTP JSONEachRow) |
 | `rust/sandbox` | Rust | 8020 | Stub (Wasmtime phase 2) |
 
 ## Running locally
@@ -129,6 +129,6 @@ stub       — HTTP harness only; no real logic; 501 on business routes
 incubator  — excluded from workspaces and CI
 ```
 
-`go/event-ingest` and `rust/sandbox` are both **stubs**.
-Promote to active by landing a real ClickHouse/Wasmtime implementation
-in the same PR as the first real caller.
+`rust/sandbox` is still a stub until the Wasmtime/Firecracker implementation
+lands. `go/event-ingest` is active and persists normalized event batches to
+ClickHouse `events_bronze`.

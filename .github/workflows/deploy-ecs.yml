@@ -791,6 +791,45 @@ jobs:
             done
           fi
 
+      - name: Rollback ECS on deploy or smoke failure
+        if: failure()
+        env:
+          ECS_HOST:          ${{ vars.ECS_HOST }}
+          ECS_USER:          ${{ vars.ECS_USER }}
+          ECS_SSH_PORT:      ${{ vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT:   ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+          ECS_KEEP_RELEASES: ${{ vars.ECS_KEEP_RELEASES || '1' }}
+        run: |
+          set -euo pipefail
+          APPS=""
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && APPS="$APPS landing"
+          [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
+          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
+          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
+          APPS="$(echo "$APPS" | xargs)"
+          [ -n "$APPS" ] || { echo "No deployed apps to roll back."; exit 0; }
+
+          shell_quote() { printf "%q" "$1"; }
+          REMOTE_CMD="test -f /tmp/ecs-deploy-remote.sh && env"
+          REMOTE_CMD="${REMOTE_CMD} MODE=rollback"
+          REMOTE_CMD="${REMOTE_CMD} DEPLOY_ROOT=$(shell_quote "$ECS_DEPLOY_ROOT")"
+          REMOTE_CMD="${REMOTE_CMD} APPS=$(shell_quote "$APPS")"
+          REMOTE_CMD="${REMOTE_CMD} KEEP_RELEASES=$(shell_quote "$ECS_KEEP_RELEASES")"
+          REMOTE_CMD="${REMOTE_CMD} PM2_CONFIG=$(shell_quote "$ECS_DEPLOY_ROOT/ecosystem.config.cjs")"
+          REMOTE_CMD="${REMOTE_CMD} SHA=${{ github.sha }}"
+          REMOTE_CMD="${REMOTE_CMD} bash /tmp/ecs-deploy-remote.sh"
+
+          echo "::warning::Deploy/smoke failed — attempting ECS rollback for: $APPS"
+          ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
+              -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+              -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
+              "${ECS_USER}@${ECS_HOST}" \
+              "$REMOTE_CMD" || {
+                echo "::warning::Rollback command did not complete; inspect ECS PM2 state manually."
+                exit 0
+              }
+
       - name: Cleanup SSH
         if: always()
         run: rm -rf ~/.ssh

@@ -103,12 +103,6 @@ subjects:
     name: ai-service
     namespace: nebutra
   - kind: ServiceAccount
-    name: billing-service
-    namespace: nebutra
-  - kind: ServiceAccount
-    name: content-service
-    namespace: nebutra
-  - kind: ServiceAccount
     name: ecommerce-service
     namespace: nebutra
   - kind: ServiceAccount
@@ -116,9 +110,6 @@ subjects:
     namespace: nebutra
   - kind: ServiceAccount
     name: event-ingest-service
-    namespace: nebutra
-  - kind: ServiceAccount
-    name: web3-service
     namespace: nebutra
   - kind: ServiceAccount
     name: studio

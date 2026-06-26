@@ -63,28 +63,6 @@ patches:
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: billing-service
-      spec:
-        replicas: 1
-    target:
-      kind: Deployment
-      name: billing-service
-
-  - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: content-service
-      spec:
-        replicas: 1
-    target:
-      kind: Deployment
-      name: content-service
-
-  - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
         name: ecommerce-service
       spec:
         replicas: 1
@@ -115,25 +93,16 @@ patches:
       name: event-ingest-service
 
   - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
+      apiVersion: v1
+      kind: ConfigMap
       metadata:
-        name: web3-service
-      spec:
-        replicas: 1
+        name: nebutra-config
+      data:
+        NODE_ENV: development
+        PYTHON_ENV: development
+        NEXT_PUBLIC_API_URL: https://api.dev.nebutra.com
+        NEXT_PUBLIC_APP_URL: https://app.dev.nebutra.com
+        LOG_LEVEL: debug
     target:
-      kind: Deployment
-      name: web3-service
-
-# ---------------------------------------------------------------------------
-# ConfigMap patch — override public URLs to point at dev/local endpoints
-# ---------------------------------------------------------------------------
-configMapGenerator:
-  - name: nebutra-config
-    behavior: merge
-    literals:
-      - NODE_ENV=development
-      - PYTHON_ENV=development
-      - NEXT_PUBLIC_API_URL=https://api.dev.nebutra.com
-      - NEXT_PUBLIC_APP_URL=https://app.dev.nebutra.com
-      - LOG_LEVEL=debug
+      kind: ConfigMap
+      name: nebutra-config

@@ -6,7 +6,11 @@ import {
   setMetering,
 } from "@nebutra/metering";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { checkEntitlementUsage } from "../entitlements/service";
+import {
+  checkEntitlement,
+  checkEntitlementUsage,
+  requireEntitlement,
+} from "../entitlements/service";
 import { getUsage } from "../usage/service";
 
 // =============================================================================
@@ -35,6 +39,26 @@ describe("billing <-> metering integration", () => {
 
   afterEach(async () => {
     await closeMetering();
+  });
+
+  // ── deprecated entitlement API ───────────────────────────────────────────
+
+  describe("deprecated entitlement API", () => {
+    it("denies checks instead of silently allowing deprecated DB-backed entitlements", async () => {
+      const result = await checkEntitlement("org_1", "ai.images", 1);
+
+      expect(result).toMatchObject({
+        allowed: false,
+        feature: "ai.images",
+      });
+      expect(result.reason).toContain("deprecated");
+    });
+
+    it("throws for requireEntitlement so legacy callers fail closed", async () => {
+      await expect(requireEntitlement("org_1", "ai.images", 1)).rejects.toMatchObject({
+        code: "ENTITLEMENT_DEPRECATED",
+      });
+    });
   });
 
   // ── getUsage ─────────────────────────────────────────────────────────────

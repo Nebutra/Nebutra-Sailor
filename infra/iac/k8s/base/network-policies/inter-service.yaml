@@ -6,10 +6,13 @@
 #
 # Legend for ports:
 #   3000 — web (Next.js)
-#   3001 — landing-page (Next.js)
+#   3000 — landing-page (Next.js)
 #   3002 — api-gateway (Hono)
 #   3003 — studio (Sanity)
-#   8000 — Python microservices (FastAPI)
+#   8001 — ai-service (FastAPI)
+#   8003 — recsys-service (FastAPI)
+#   8004 — ecommerce-service (FastAPI)
+#   8008 — event-ingest-service (Go)
 ---
 # Web app → api-gateway (SSR server-side fetches)
 apiVersion: networking.k8s.io/v1
@@ -28,6 +31,27 @@ spec:
         - podSelector:
             matchLabels:
               app.kubernetes.io/name: web
+      ports:
+        - protocol: TCP
+          port: 3002
+---
+# web egress → api-gateway
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-web-egress-to-api-gateway
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: web
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: api-gateway
       ports:
         - protocol: TCP
           port: 3002
@@ -51,18 +75,18 @@ spec:
               app.kubernetes.io/name: api-gateway
       ports:
         - protocol: TCP
-          port: 8000
+          port: 8001
 ---
-# api-gateway → billing-service
+# api-gateway → ecommerce-service
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-api-gateway-to-billing
+  name: allow-api-gateway-to-ecommerce
   namespace: nebutra
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: billing-service
+      app.kubernetes.io/name: ecommerce-service
   policyTypes:
     - Ingress
   ingress:
@@ -72,28 +96,7 @@ spec:
               app.kubernetes.io/name: api-gateway
       ports:
         - protocol: TCP
-          port: 8000
----
-# api-gateway → content-service
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-api-gateway-to-content
-  namespace: nebutra
-spec:
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/name: content-service
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app.kubernetes.io/name: api-gateway
-      ports:
-        - protocol: TCP
-          port: 8000
+          port: 8004
 ---
 # api-gateway → recsys-service
 apiVersion: networking.k8s.io/v1
@@ -114,7 +117,7 @@ spec:
               app.kubernetes.io/name: api-gateway
       ports:
         - protocol: TCP
-          port: 8000
+          port: 8003
 ---
 # event-ingest-service — accepts from api-gateway only
 apiVersion: networking.k8s.io/v1
@@ -135,7 +138,68 @@ spec:
               app.kubernetes.io/name: api-gateway
       ports:
         - protocol: TCP
-          port: 8000
+          port: 8008
+---
+# api-gateway egress → internal backend services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway-egress-to-backend-services
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: api-gateway
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ai-service
+      ports:
+        - protocol: TCP
+          port: 8001
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ecommerce-service
+      ports:
+        - protocol: TCP
+          port: 8004
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: recsys-service
+      ports:
+        - protocol: TCP
+          port: 8003
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: event-ingest-service
+      ports:
+        - protocol: TCP
+          port: 8008
+---
+# event-ingest egress → ClickHouse HTTP endpoints
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-event-ingest-egress-to-clickhouse
+  namespace: nebutra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: event-ingest-service
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - protocol: TCP
+          port: 8123
+        - protocol: TCP
+          port: 8443
 ---
 # Prometheus scraper → all services (metrics collection)
 # The monitoring namespace hosts kube-prometheus-stack.
@@ -160,11 +224,17 @@ spec:
         - protocol: TCP
           port: 3000
         - protocol: TCP
-          port: 3001
-        - protocol: TCP
           port: 3002
         - protocol: TCP
-          port: 8000
+          port: 3003
+        - protocol: TCP
+          port: 8001
+        - protocol: TCP
+          port: 8003
+        - protocol: TCP
+          port: 8004
+        - protocol: TCP
+          port: 8008
 ---
 # OpenTelemetry collector → all services can push traces (egress from services)
 apiVersion: networking.k8s.io/v1

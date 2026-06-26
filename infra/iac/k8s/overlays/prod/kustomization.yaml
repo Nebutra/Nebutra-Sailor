@@ -18,12 +18,8 @@ commonLabels:
 patches:
   # Scale up api-gateway and web to 3 replicas; ai-service stays at 2
   - path: patches/replicas.yaml
-    target:
-      kind: Deployment
   # Increase CPU/memory ceilings for production workloads
   - path: patches/resources.yaml
-    target:
-      kind: Deployment
 
 # ---------------------------------------------------------------------------
 # Image tag override — CI replaces :latest with the immutable SHA tag
@@ -39,15 +35,9 @@ patches:
 #     newTag: "$(IMAGE_TAG)"
 #   - name: nebutra/ai-service
 #     newTag: "$(IMAGE_TAG)"
-#   - name: nebutra/billing-service
-#     newTag: "$(IMAGE_TAG)"
-#   - name: nebutra/content-service
-#     newTag: "$(IMAGE_TAG)"
 #   - name: nebutra/ecommerce-service
 #     newTag: "$(IMAGE_TAG)"
 #   - name: nebutra/recsys-service
 #     newTag: "$(IMAGE_TAG)"
 #   - name: nebutra/event-ingest-service
-#     newTag: "$(IMAGE_TAG)"
-#   - name: nebutra/web3-service
 #     newTag: "$(IMAGE_TAG)"

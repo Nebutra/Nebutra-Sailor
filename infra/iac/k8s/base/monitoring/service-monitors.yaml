@@ -6,7 +6,7 @@
 #     --namespace monitoring --create-namespace
 #
 # All services expose /metrics on the same HTTP port as the app.
-# Node.js apps use prom-client; Python services use prometheus-fastapi-instrumentator.
+# Node.js apps use prom-client; backend services expose /metrics on their HTTP port.
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -34,23 +34,20 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: nebutra-python-services
+  name: nebutra-backend-services
   namespace: nebutra
   labels:
     release: kube-prometheus-stack
 spec:
   selector:
     matchExpressions:
-      - key: app.kubernetes.io/component
+      - key: app.kubernetes.io/name
         operator: In
         values:
           - ai-service
-          - billing-service
-          - content-service
           - ecommerce-service
           - recsys-service
           - event-ingest-service
-          - web3-service
   namespaceSelector:
     matchNames: [nebutra]
   endpoints:

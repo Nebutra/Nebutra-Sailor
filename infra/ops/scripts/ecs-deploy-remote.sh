@@ -32,6 +32,7 @@ KEEP_RELEASES="${KEEP_RELEASES:-1}"
 PM2_CONFIG="${PM2_CONFIG:-$DEPLOY_ROOT/ecosystem.config.cjs}"
 SHA="${SHA:?SHA env var required}"
 BUNDLE_DIR="${BUNDLE_DIR:-/tmp}"
+MODE="${MODE:-deploy}"
 
 capture_deploy_runtime_env() {
   local key value
@@ -795,6 +796,7 @@ deploy_one() {
   local stamp
   stamp="$(date -u +%Y%m%d-%H%M%S)-${SHA:0:7}"
   local release="$releases/$stamp"
+  local previous_marker="$app_root/.previous"
 
   if [ -f "$app_root/current/.env" ] && [ ! -f "$app_root/.env" ]; then
     cp -p "$app_root/current/.env" "$app_root/.env" || true
@@ -811,8 +813,20 @@ deploy_one() {
   if [ "$KEEP_RELEASES" -gt 0 ] && [ -d "$releases" ]; then
     local pre_keep=$((KEEP_RELEASES - 1))
     [ "$pre_keep" -lt 0 ] && pre_keep=0
-    local pre_extra
+    local protected_current="" protected_previous="" pre_extra
+    if [ -L "$app_root/current" ]; then
+      protected_current="$(readlink -f "$app_root/current" 2>/dev/null || true)"
+    fi
+    if [ -f "$previous_marker" ]; then
+      protected_previous="$(cat "$previous_marker" 2>/dev/null || true)"
+    fi
     pre_extra=$(find "$releases" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
+                  | while read -r mtime path; do
+                      resolved="$(readlink -f "$path" 2>/dev/null || true)"
+                      [ -n "$protected_current" ] && [ "$resolved" = "$protected_current" ] && continue
+                      [ -n "$protected_previous" ] && [ "$resolved" = "$protected_previous" ] && continue
+                      printf '%s %s\n' "$mtime" "$path"
+                    done \
                   | sort -nr | tail -n +"$((pre_keep + 1))" | cut -d' ' -f2- || true)
     if [ -n "$pre_extra" ]; then
       log "pre-extract prune (keeping $pre_keep older releases):"
@@ -829,6 +843,14 @@ deploy_one() {
   tar -xzf "$tarball" -C "$release"
 
   preserve_runtime_env "$app_root" "$release"
+  local previous_current=""
+  if [ -L "$app_root/current" ]; then
+    previous_current="$(readlink -f "$app_root/current" 2>/dev/null || true)"
+  fi
+  if [ -n "$previous_current" ] && [ -d "$previous_current" ]; then
+    printf '%s\n' "$previous_current" > "$previous_marker"
+    log "$app rollback target -> $previous_current"
+  fi
   ln -snf "$release" "$app_root/current"
   log "$app current -> $release"
 
@@ -946,8 +968,17 @@ for p in procs:
   # to avoid SC2012 issues with `ls`. Release names are timestamped so this is
   # equivalent to lexical sort.
   if [ "$KEEP_RELEASES" -gt 0 ]; then
-    local extra
+    local previous_target="" extra
+    if [ -f "$previous_marker" ]; then
+      previous_target="$(cat "$previous_marker" 2>/dev/null || true)"
+    fi
     extra=$(find "$releases" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\n' 2>/dev/null \
+              | while read -r mtime path; do
+                  resolved="$(readlink -f "$path" 2>/dev/null || true)"
+                  [ -n "$current_target" ] && [ "$resolved" = "$current_target" ] && continue
+                  [ -n "$previous_target" ] && [ "$resolved" = "$previous_target" ] && continue
+                  printf '%s %s\n' "$mtime" "$path"
+                done \
               | sort -nr | tail -n +"$((KEEP_RELEASES + 1))" | cut -d' ' -f2- || true)
     if [ -n "$extra" ]; then
       log "pruning old releases:"
@@ -956,6 +987,77 @@ for p in procs:
   fi
 }
 
+pm2_name_for_app() {
+  case "$1" in
+    landing)      printf '%s\n' "landing-page" ;;
+    web)          printf '%s\n' "web" ;;
+    api)          printf '%s\n' "api-gateway" ;;
+    design-docs)  printf '%s\n' "design-docs" ;;
+    sailor-docs)  printf '%s\n' "sailor-docs" ;;
+    *)            fail "unknown app: $1" ;;
+  esac
+}
+
+rollback_one() {
+  local app="$1" pm2_name="$2"
+  local app_root="$DEPLOY_ROOT/$app"
+  local previous_marker="$app_root/.previous"
+
+  if [ ! -f "$previous_marker" ]; then
+    log "rollback skip $app — no previous release marker at $previous_marker"
+    return 0
+  fi
+
+  local previous current_target
+  previous="$(cat "$previous_marker" 2>/dev/null || true)"
+  if [ -z "$previous" ] || [ ! -d "$previous" ]; then
+    log "rollback skip $app — previous release missing: ${previous:-<empty>}"
+    return 0
+  fi
+
+  current_target="$(readlink -f "$app_root/current" 2>/dev/null || true)"
+  if [ "$current_target" = "$previous" ]; then
+    log "rollback skip $app — already on previous release $previous"
+    return 0
+  fi
+
+  ln -snf "$previous" "$app_root/current"
+  log "rollback $app current -> $previous"
+  pm2 delete "$pm2_name" >/dev/null 2>&1 || true
+  pm2 start "$PM2_CONFIG" --only "$pm2_name"
+
+  if [ "$pm2_name" = "api-gateway" ]; then
+    local code="000"
+    for attempt in 1 2 3 4 5; do
+      code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 \
+        "http://127.0.0.1:3002/api/misc/health" 2>/dev/null || echo "000")
+      [ "$code" = "200" ] && break
+      sleep 6
+    done
+    [ "$code" = "200" ] || fail "rollback api-gateway failed local health check (last code: $code)"
+  fi
+}
+
+run_selected_apps() {
+  local action="$1" app pm2_name
+  for app in api landing web design-docs sailor-docs; do
+    case " $APPS " in
+      *" $app "*) : ;;
+      *) continue ;;
+    esac
+    pm2_name="$(pm2_name_for_app "$app")"
+    "$action" "$app" "$pm2_name"
+  done
+}
+
+if [ "$MODE" = "rollback" ]; then
+  log "rollback requested: $APPS @ $SHA"
+  run_selected_apps rollback_one
+  pm2 save
+  log "rollback complete: $APPS"
+  exit 0
+fi
+
 for app in api landing web design-docs sailor-docs; do
   case " $APPS " in
     *" $app "*) : ;;
@@ -963,12 +1065,12 @@ for app in api landing web design-docs sailor-docs; do
   esac
 
   case "$app" in
-    landing)     deploy_one landing     landing-page ;;
-    web)         deploy_one web         web          ;;
-    api)         deploy_one api         api-gateway  ;;
-    design-docs) deploy_one design-docs design-docs  ;;
-    sailor-docs) deploy_one sailor-docs sailor-docs  ;;
-    *)           fail "unknown app: $app"            ;;
+    landing)      deploy_one landing     landing-page ;;
+    web)          deploy_one web         web          ;;
+    api)          deploy_one api         api-gateway  ;;
+    design-docs)  deploy_one design-docs design-docs  ;;
+    sailor-docs)  deploy_one sailor-docs sailor-docs  ;;
+    *)            fail "unknown app: $app"            ;;
   esac
 done
 
