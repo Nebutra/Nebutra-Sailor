@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     env:
-      INCLUDE_ALIASES: ${{ github.event_name == 'workflow_dispatch' && inputs.include_aliases == 'true' }}
+      INCLUDE_ALIASES: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.include_aliases == 'true') }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 

@@ -739,6 +739,7 @@ jobs:
           set -euo pipefail
           declare -A targets=()
           [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing]="https://nebutra.com"
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing-refer]="https://nebutra.com/refer?code=smoke"
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/api/misc/health"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"

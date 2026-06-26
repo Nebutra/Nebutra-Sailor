@@ -10,6 +10,11 @@ const endpoints = [
     okStatuses: [200],
   },
   {
+    id: "landing-refer",
+    url: "https://nebutra.com/refer?code=smoke",
+    okStatuses: [200],
+  },
+  {
     id: "app",
     url: "https://app.nebutra.com",
     okStatuses: [200],
@@ -50,6 +55,12 @@ const endpoints = [
   {
     id: "landing-www-alias",
     url: "https://www.nebutra.com",
+    okStatuses: [200, 301, 302, 307, 308],
+    alias: true,
+  },
+  {
+    id: "landing-www-refer-alias",
+    url: "https://www.nebutra.com/refer?code=smoke",
     okStatuses: [200, 301, 302, 307, 308],
     alias: true,
   },
