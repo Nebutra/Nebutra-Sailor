@@ -51,9 +51,10 @@ update the source of truth here rather than patching consumers.
   a flag is enabled, not replicate kill-switch, cache, or env-key resolution.
 - Keep `src/react.tsx` as a thin client adapter over the package contract. It
   should not become a separate source of truth for flag names or rollout rules.
-- Respect the package's current `wip` status in `package.json`. Managed
-  providers, gradual rollout infrastructure, and production integrations are
-  not complete; do not write scoped guidance that assumes LaunchDarkly-style
+- Respect the package's current `foundation` status in `package.json`. The
+  Redis/env runtime is production-usable, but managed Vercel Flags,
+  GrowthBook, and ConfigCat SDK adapters plus rollout authoring UI are not
+  complete; do not write scoped guidance that assumes LaunchDarkly-style
   maturity already exists.
 - Treat `FLAGS` and flag-name strings as public compatibility boundaries.
   Renames or removals can silently disable product paths even if typechecking
@@ -72,5 +73,5 @@ update the source of truth here rather than patching consumers.
 
 - Feature flag contract changes:
   `pnpm exec tsc -p packages/platform/feature-flags/tsconfig.json --noEmit`
-- Because the package currently has no package-local test script, verify the
-  narrowest downstream consumer that exercises the changed flag path.
+- Contract changes:
+  `pnpm --filter @nebutra/feature-flags test`

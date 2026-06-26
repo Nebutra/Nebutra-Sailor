@@ -9,7 +9,7 @@ infra/
 ├── iac/                    # Infrastructure-as-code (cloud resource declarations)
 │   ├── terraform/          # Cloud infrastructure (modules + per-env vars)
 │   ├── k8s/                # Kubernetes manifests (Kustomize: base + overlays)
-│   ├── ecs/                # Aliyun ECS / pm2 ecosystem config
+│   ├── ecs/                # Cloud VM / PM2 ecosystem config (EC2/ECS/CVM/GCE)
 │   ├── cloudflare/         # CDN, WAF, R2 storage, Edge rules
 │   └── railway/            # Railway deploy config
 ├── runtime/                # Runtime/build configuration (containers, web servers)

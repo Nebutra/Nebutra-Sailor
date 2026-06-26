@@ -115,6 +115,10 @@ export async function createNotificationProvider(
         ...(directConfig?.preferenceStore !== undefined
           ? { preferenceStore: directConfig.preferenceStore }
           : {}),
+        ...(directConfig?.maxRetries !== undefined ? { maxRetries: directConfig.maxRetries } : {}),
+        ...(directConfig?.deliveryObserver !== undefined
+          ? { deliveryObserver: directConfig.deliveryObserver }
+          : {}),
       });
     }
 

@@ -1,8 +1,8 @@
-> **Status: Foundation** — Notification contracts, provider selection, runtime status, direct-provider stores, and direct delivery retry telemetry exist. `productionReady` remains `false` because production use still requires Novu credentials or injected durable direct-provider adapters plus external provider-health monitoring.
+> **Status: Stable** — Managed Novu/Knock providers and direct self-hosted dispatchers are production-capable when credentials or durable stores are configured. Memory-backed direct stores fail closed in production unless explicitly overridden.
 
 # @nebutra/notifications
 
-Provider-agnostic notification center for the Nebutra platform. Supports multiple channels (in-app, email, push, SMS, chat) and multiple backends (Novu or self-hosted).
+Provider-agnostic notification center for the Nebutra platform. Supports multiple channels (in-app, email, push, SMS, chat) and multiple backends (Novu, Knock, or self-hosted direct dispatchers).
 
 ## Features
 
@@ -46,6 +46,7 @@ await notifier.send(
 
 The provider is auto-detected based on environment:
 - If `NOVU_API_KEY` is set → Novu
+- Else if `KNOCK_API_KEY` is set → Knock
 - Otherwise → Direct preview mode with in-memory stores
 
 In production, the factory fails closed instead of silently using memory-backed

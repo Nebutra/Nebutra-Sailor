@@ -8,7 +8,7 @@
  * never leaks to the client.
  */
 
-import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
+import { FLAGS, isFeatureEnabled, resolveFeatureFlagRuntimeStatus } from "@nebutra/feature-flags";
 import { type NextRequest, NextResponse } from "next/server";
 import { getAuth, getTenantContext } from "@/lib/auth";
 
@@ -28,7 +28,7 @@ export async function GET(_req: NextRequest) {
   );
 
   return NextResponse.json(
-    { flags: Object.fromEntries(flagEntries) },
+    { flags: Object.fromEntries(flagEntries), runtime: resolveFeatureFlagRuntimeStatus() },
     {
       headers: {
         // Cache for 60s in browser, 30s shared cache — flags change rarely

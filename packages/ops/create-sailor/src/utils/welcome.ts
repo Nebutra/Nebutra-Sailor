@@ -192,7 +192,7 @@ function renderReadinessHolds(previewSelections: PreviewSelection[] = []): strin
   return `
 ## Production readiness holds
 
-Do not enable these in production until you replace stubs, add provider credentials, and verify the integration contract:
+Do not enable these in production until provider credentials, adapter wiring, and the integration contract are verified:
 
 ${rows}
 

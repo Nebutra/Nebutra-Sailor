@@ -1,4 +1,5 @@
-// PM2 ecosystem for ECS Lite deployments shipped via .github/workflows/deploy-ecs.yml.
+// PM2 ecosystem for SSH-managed Cloud VM deployments shipped via
+// .github/workflows/deploy-ecs.yml.
 //
 // Layout assumption (set by infra/scripts/ecs-deploy-remote.sh):
 //   $DEPLOY_ROOT/landing/current/apps/landing-page/server.js     (Next standalone)
@@ -7,7 +8,7 @@
 //   $DEPLOY_ROOT/design-docs/current/apps/design-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)
 //
-// The workflow renders this file on the ECS box with DEPLOY_ROOT substituted in
+// The workflow renders this file on the VM with DEPLOY_ROOT substituted in
 // via envsubst at apply time (see ecs-deploy-remote.sh).
 module.exports = {
   apps: [
@@ -95,7 +96,7 @@ module.exports = {
         HOSTNAME: "127.0.0.1",
       },
       // Gateway imports Prisma, provider SDKs, workers, and Hono route graphs
-      // at startup. The real ECS process settles near the old 300M limit,
+      // at startup. The real VM process settles near the old 300M limit,
       // causing PM2 memory restarts before nginx/Cloudflare smoke tests can
       // hit a stable listener.
       max_memory_restart: "700M",

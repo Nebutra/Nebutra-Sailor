@@ -19,7 +19,7 @@ apps/web + apps/landing-page
   -> Vercel frontend
   -> api.nebutra.com
   -> Cloudflare Workers gateway
-  -> ECS Origin
+  -> Cloud VM Origin
      -> backends/python/ai FastAPI
      -> Celery worker / beat
   -> Supabase Postgres
@@ -36,8 +36,8 @@ provider-switchable through per-service selector keys:
 | `landing-page` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `design-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `sailor-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
-| `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `ecs-docker`, `k8s`, `aws`, `railway` |
-| `python-ai` | `ecs-docker` | `ecs-docker`, `k8s`, `aws`, `railway` |
+| `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `railway` |
+| `python-ai` | `vm-docker` | `vm-docker`, `ecs-docker`, `k8s`, `aws`, `railway` |
 
 Selector env keys are service-specific:
 
@@ -45,7 +45,7 @@ Selector env keys are service-specific:
 DEPLOY_TARGET_WEB=vercel
 DEPLOY_TARGET_LANDING_PAGE=vercel
 DEPLOY_TARGET_GATEWAY=cloudflare-workers
-DEPLOY_TARGET_PYTHON_AI=ecs-docker
+DEPLOY_TARGET_PYTHON_AI=vm-docker
 ```
 
 The governance rule is:
@@ -63,7 +63,7 @@ does not fork application code or make two substrates deploy the same service.
 ### Frontends
 
 `apps/web` and `apps/landing-page` default to Vercel. They call
-`NEXT_PUBLIC_API_BASE_URL=https://api.nebutra.com` and must not call the ECS
+`NEXT_PUBLIC_API_BASE_URL=https://api.nebutra.com` and must not call the VM
 origin directly.
 
 `standalone` remains a dormant target for self-hosting or China-reachable
@@ -73,8 +73,9 @@ existing provider DX while the default stays Vercel.
 ### Gateway
 
 `backends/gateway` is the edge/API entry point. Its default deployment target is
-Cloudflare Workers, but provider-switchable DX keeps Vercel Functions, ECS
-Docker, k8s, AWS, and Railway as valid adapters while the repo migrates.
+Cloudflare Workers, but provider-switchable DX keeps Vercel Functions, generic
+VM Docker/PM2, legacy ECS naming, k8s, AWS, and Railway as valid adapters while
+the repo migrates.
 
 Gateway responsibilities:
 
@@ -95,16 +96,21 @@ x-nebutra-tenant-id
 x-nebutra-gateway-secret
 ```
 
-### ECS Origin
+### Cloud VM Origin
 
-ECS Origin is the default heavy backend runtime. It runs:
+Cloud VM Origin is the default heavy backend runtime. "ECS" in older scripts is
+a legacy alias for an SSH-managed cloud server; supported targets include AWS
+EC2, Alibaba Cloud ECS, Tencent Cloud CVM, GCP Compute Engine, and equivalent
+Linux VMs.
+
+Cloud VM Origin runs:
 
 - FastAPI origin API in `backends/python/ai`
 - Celery worker
 - Celery beat when needed
 - Caddy or Nginx in front of the origin service
 
-ECS Origin verifies `x-nebutra-gateway-secret` and rejects direct public calls
+Cloud VM Origin verifies `x-nebutra-gateway-secret` and rejects direct public calls
 without it.
 
 ### Managed Data Layer
@@ -112,7 +118,7 @@ without it.
 Supabase Postgres is the primary database. Upstash Redis/QStash is the default
 cache, rate-limit, lock, queue, and task-event substrate. R2/OSS stores files.
 
-Files go to object storage. ECS handles metadata and async processing, not raw
+Files go to object storage. The VM handles metadata and async processing, not raw
 frontend file ingress.
 
 ### Task Envelope
@@ -122,7 +128,7 @@ specific Celery, QStash, or arq API. The standard envelope persists task state
 in Postgres and returns `queued`, `running`, `succeeded`, `failed`, or
 `cancelled` progress. Dispatch is provider-switchable through
 `TASK_DISPATCHER_PROVIDER=celery|queue|memory`; production defaults to Celery
-on ECS origin and requires `TASK_STORE_PROVIDER=postgres`.
+on Cloud VM origin and requires `TASK_STORE_PROVIDER=postgres`.
 
 ---
 
@@ -157,7 +163,7 @@ Migration sequence:
 1. Use `@nebutra/preset/deploy-target` as the source of truth for target names,
    defaults, and env keys.
 2. Gate each adapter job by the relevant per-service selector.
-3. Remove frontends from automatic ECS/k8s deployment once Vercel projects and
+3. Remove frontends from automatic VM/k8s deployment once Vercel projects and
    env vars are verified.
 4. Add the Cloudflare Workers gateway adapter before flipping
    `DEPLOY_TARGET_GATEWAY=cloudflare-workers` in production.

@@ -5,17 +5,13 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
-    "status": "foundation",
-    "productionReady": false,
+    "status": "stable",
+    "productionReady": true,
     "requires": [
       "SVIX_API_TOKEN (managed)",
       "or WEBHOOK_SIGNING_SECRET for custom self-hosted delivery"
     ],
-    "gaps": [
-      "Custom delivery adapter exposes an injectable dead-letter store seam; bundled default remains in-memory",
-      "Endpoint management UI not scaffolded",
-      "Replay protection helpers are available; production use should inject a durable replay store"
-    ]
+    "gaps": []
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

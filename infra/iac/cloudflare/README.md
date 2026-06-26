@@ -15,7 +15,7 @@ User ──────────────►│  │ WAF │──│Cache
               ┌───────────┘       │       │       └───────────┐
               ▼                   ▼                           ▼
     ┌─────────────────┐  ┌─────────────────┐          ┌──────────────┐
-    │     Vercel      │  │   Aliyun ECS    │          │  R2 Storage  │
+    │     Vercel      │  │    Cloud VM     │          │  R2 Storage  │
     │  ┌───────────┐  │  │  ┌───────────┐  │          │   (Files)    │
     │  │ landing   │  │  │  │ web       │  │          └──────────────┘
     │  │ studio    │  │  │  │ api-gw    │  │
@@ -29,10 +29,10 @@ User ──────────────►│  │ WAF │──│Cache
 | Subdomain | Proxy | Cache | Origin |
 |-----------|-------|-------|--------|
 | `nebutra.com` | ✅ Proxied | Edge cache | Vercel (landing-page) |
-| `app.nebutra.com` | ✅ Proxied after origin health | No cache | Aliyun ECS (web) |
-| `api.nebutra.com` | ✅ Proxied after origin health | No cache | Aliyun ECS (api-gateway) |
+| `app.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (web; EC2/ECS/CVM/GCE compatible) |
+| `api.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (api-gateway; EC2/ECS/CVM/GCE compatible) |
 | `status.nebutra.com` | ✅ Proxied | No cache | Vercel (landing-page status route) |
-| `docs.nebutra.com` | Start DNS-only | Docs/static cache | Aliyun ECS (sailor-docs) |
+| `docs.nebutra.com` | Start DNS-only | Docs/static cache | Cloud VM (sailor-docs; EC2/ECS/CVM/GCE compatible) |
 | `studio.nebutra.com` | ✅ Proxied when active | No cache | Optional branded Studio alias |
 | `cdn.nebutra.com` | ✅ Proxied | Long cache | R2 bucket |
 
@@ -54,10 +54,10 @@ CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto
 ```
 
 Keep `docs` as DNS-only until `curl -I http://docs.nebutra.com/` returns `200`
-from the ECS origin. Do not bind `docs.nebutra.com` to Vercel.
+from the Cloud VM origin. Do not bind `docs.nebutra.com` to Vercel.
 
-Keep `status` on Vercel/landing-page, not ECS. The status surface is designed to
-stay reachable when the ECS-hosted app/API/docs stack is degraded, and exposes a
+Keep `status` on Vercel/landing-page, not the VM. The status surface is designed to
+stay reachable when the VM-hosted app/API/docs stack is degraded, and exposes a
 machine-readable snapshot at `https://status.nebutra.com/status.json`.
 Vercel currently verifies this subdomain with `A status 76.76.21.21`; do not
 reuse the old `198.18.x.x` placeholder record.

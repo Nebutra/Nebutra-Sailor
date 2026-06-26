@@ -5,17 +5,13 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
-    "status": "foundation",
-    "productionReady": false,
+    "status": "stable",
+    "productionReady": true,
     "requires": [
       "NOVU_API_KEY (managed)",
       "or Prisma-backed direct notification stores"
     ],
-    "gaps": [
-      "Novu provider adapter stubs — no batching, retries limited",
-      "Direct production mode requires a database migration and generated Prisma client",
-      "Provider health telemetry still requires an external monitor; direct delivery attempts now expose retry telemetry"
-    ]
+    "gaps": []
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

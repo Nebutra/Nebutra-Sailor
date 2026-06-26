@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Remote-side helper for the ECS deploy workflow.
+# Remote-side helper for the Cloud VM deploy workflow.
 #
 # Invoked over SSH by .github/workflows/deploy-ecs.yml after bundles have been
-# uploaded to BUNDLE_DIR on the ECS box. Unpacks each bundle into a timestamped
+# uploaded to BUNDLE_DIR on the VM. Unpacks each bundle into a timestamped
 # release directory, atomically swaps the `current` symlink, and reloads PM2.
 #
 # Inputs (env vars):
@@ -24,10 +24,10 @@ set -euo pipefail
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
 APPS="${APPS:-landing web api design-docs sailor-docs}"
 # Default 1 (was 2 since the May 12 disk-full incident reduced it from 5).
-# Cut to 1 on 2026-05-15 when design-docs joined as the 4th ECS app — at 4
-# apps × ~1 GB/release × 2 releases the 2C4G Aliyun Lite disk fills again.
-# Override per-deploy with the ECS_KEEP_RELEASES repository variable if you
-# need rollback depth on a specific deploy.
+# Cut to 1 on 2026-05-15 when design-docs joined as the 4th VM app — at 4
+# apps × ~1 GB/release × 2 releases small cloud disks can fill quickly.
+# Override per-deploy with VM_KEEP_RELEASES or legacy ECS_KEEP_RELEASES if you
+# need deeper rollback history on a larger VM.
 KEEP_RELEASES="${KEEP_RELEASES:-1}"
 PM2_CONFIG="${PM2_CONFIG:-$DEPLOY_ROOT/ecosystem.config.cjs}"
 SHA="${SHA:?SHA env var required}"

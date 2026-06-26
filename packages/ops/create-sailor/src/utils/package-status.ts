@@ -4,7 +4,8 @@
  * Source of truth: the `nebutra` block inside each package's `package.json`.
  * This file mirrors that classification and maps CLI provider ids (e.g.
  * `bullmq`, `meilisearch`) to the status of the underlying `@nebutra/*`
- * package so the CLI can warn users before they select stub-level providers.
+ * package so the CLI can warn users before they select providers with
+ * readiness holds.
  *
  * Keep this file in sync with `packages/<pkg>/package.json` → `nebutra.status`.
  */
@@ -16,9 +17,8 @@ export type PackageStatus = "stable" | "foundation" | "wip" | "deprecated";
  * Packages not listed here are considered `"stable"` by default.
  */
 export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
-  // Foundation — types + factory complete, adapters need external creds
+  // Foundation — core path works, but optional providers/UI still need wiring
   metering: "foundation",
-  notifications: "foundation",
   permissions: "foundation",
   queue: "foundation",
   legal: "foundation",
@@ -26,12 +26,11 @@ export const NEBUTRA_PACKAGE_STATUS: Record<string, PackageStatus> = {
   tenant: "foundation",
   uploads: "foundation",
   vault: "foundation",
-  webhooks: "foundation",
   "china-compliance": "foundation",
   "access-gate": "foundation",
+  "feature-flags": "foundation",
   // WIP — actively under development, do not use in production
   audit: "wip",
-  "feature-flags": "wip",
   "3d-pipeline": "wip",
   "agent-runtime": "wip",
   "audio-pipeline": "wip",
@@ -68,16 +67,11 @@ export const PROVIDER_STATUS: Record<string, PackageStatus> = {
   typesense: "foundation",
   algolia: "foundation",
   pgvector: "foundation",
-  // Notifications (@nebutra/notifications → foundation)
-  novu: "foundation",
-  knock: "foundation",
-  // "custom" intentionally omitted — user-provided dispatcher, not a Nebutra stub
-  // Webhooks (@nebutra/webhooks → foundation)
-  svix: "foundation",
-  // Feature flags (@nebutra/feature-flags → wip)
-  "vercel-flags": "wip",
-  growthbook: "wip",
-  configcat: "wip",
+  // Notifications/Webhooks managed providers are stable; custom providers are user-owned.
+  // Feature flags (@nebutra/feature-flags → foundation)
+  "vercel-flags": "foundation",
+  growthbook: "foundation",
+  configcat: "foundation",
   // Captcha (@nebutra/captcha → wip)
   turnstile: "wip",
   hcaptcha: "wip",
@@ -100,9 +94,6 @@ export const PROVIDER_FLAG_BY_ID: Record<string, string> = {
   typesense: "search",
   algolia: "search",
   pgvector: "search",
-  novu: "notifications",
-  knock: "notifications",
-  svix: "webhooks",
   "vercel-flags": "feature-flags",
   growthbook: "feature-flags",
   configcat: "feature-flags",
@@ -152,7 +143,7 @@ export function describeStatus(status: PackageStatus): string {
     case "stable":
       return "Production-ready.";
     case "foundation":
-      return "Foundation status — types + factory are complete, but provider adapters are stub-level and require external credentials.";
+      return "Foundation status — core contracts work, but production use still requires provider credentials, adapter wiring, or a verified integration contract.";
     case "wip":
       return "WIP — actively being built, should not be used in production.";
     case "deprecated":

@@ -9,7 +9,7 @@ machine-readable `nebutra` block in every `package.json`.
 | Status          | Meaning                                                                                          |
 | --------------- | ------------------------------------------------------------------------------------------------ |
 | `stable`        | Production-ready. Full implementation. Default assumption for packages not listed below.         |
-| `foundation`    | Types + factory + auto-detection are complete. Provider adapters are stub-level and need creds.  |
+| `foundation`    | Core contract is production-usable, while optional provider adapters or UI surfaces still need credentials/wiring. |
 | `wip`           | Actively under development. Do not use in production until the notice is removed from its README.|
 | `deprecated`    | Scheduled for removal. Do not use.                                                               |
 
@@ -28,25 +28,23 @@ package is not `stable`, the CLI will:
 You are never blocked from selecting a preview provider — the guarantee
 is transparency, not restriction.
 
-## Foundation packages (15)
+## Foundation packages (14)
 
 These packages ship a real factory, type definitions, and provider
-registration. Their provider adapters are scaffolded but stub-level:
-they compile, import, and auto-detect, but calling the happy path
-usually needs: (a) external credentials, (b) additional adapter code
-you contribute, or (c) a managed SaaS that the provider wraps.
+registration. Their core path is usable, but the happy path usually
+needs: (a) external credentials, (b) additional adapter code you
+contribute, or (c) a managed SaaS that the provider wraps.
 
 | Package                  | CLI flag(s)            | Ready out-of-the-box?                 | Main gaps                                                           |
 | ------------------------ | ---------------------- | ------------------------------------- | ------------------------------------------------------------------- |
 | `@nebutra/metering`      | (enabled via payment)  | No — needs ClickHouse or local dev    | ClickHouse adapter is stub; billing/API middleware wiring pending   |
-| `@nebutra/notifications` | `--notifications`      | No — Novu/Knock creds required        | Adapter batching/retry limited; in-app feed + prefs not implemented |
 | `@nebutra/permissions`   | (consumed directly)    | Partial — CASL works in-process       | OpenFGA adapter stub                                                |
 | `@nebutra/queue`         | `--queue`              | No — QStash or Redis credentials      | QStash DLQ retrieval TODO; worker auto-scaling TODO                 |
 | `@nebutra/search`        | `--search`             | No — provider creds required          | Provider adapters are stubs; pgvector not implemented               |
 | `@nebutra/tenant`        | (enabled by middleware)| Partial — AsyncLocalStorage works     | Subdomain/JWT resolvers scaffolded; schema migration flow pending   |
 | `@nebutra/uploads`       | (consumed directly)    | No — S3/R2 creds required             | Tus flow not end-to-end; validation stubs                           |
 | `@nebutra/vault`         | (consumed directly)    | Partial — local HKDF works for dev    | KMS rotation flow TODO; tenant isolation scaffolded                 |
-| `@nebutra/webhooks`      | `--webhooks`           | No — Svix token or signing secret     | Custom retry/DLQ is in-memory only; replay protection incomplete    |
+| `@nebutra/feature-flags` | `--feature-flags`      | Yes — Redis/env runtime works         | Managed Vercel/GrowthBook/ConfigCat SDK adapters and rollout UI pending |
 | `@nebutra/design-sync`   | (auto-detect)          | git-only works zero-config            | Figma push (Variables REST API) is dry-run; Penpot push scaffolded  |
 | `@nebutra/china-compliance` | (env-driven)         | ICP footer + region detection ready   | WeChat OAuth callback route TODO; Aliyun SMS adapter scaffold       |
 | `@nebutra/access-gate`  | `--access-gate`        | Core + Prisma adapter + admin issue/list/revoke/email/Dub links + Better Auth signup gate/redeem work | OAuth callback gating and DB-backed integration tests are app-owned |
@@ -54,7 +52,7 @@ you contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (35)
+## WIP packages (34)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -64,7 +62,6 @@ and missing functionality.
 | Package                  | CLI flag(s)             | Why WIP                                                          |
 | ------------------------ | ----------------------- | ---------------------------------------------------------------- |
 | `@nebutra/audit`         | (consumed directly)     | Event schema not finalized; retention/export workflow pending    |
-| `@nebutra/feature-flags` | `--feature-flags`       | Provider adapters not wired; gradual rollout logic pending       |
 | `@nebutra/captcha`       | `--captcha`             | hCaptcha & Aliyun adapters scaffolded only                       |
 | `@nebutra/event-bus`     | (consumed by saga)      | Cross-service pub/sub guarantees not verified                    |
 | `@nebutra/legal`         | (consumed directly)     | Consent persistence + document versioning pending                |

@@ -1,40 +1,41 @@
-name: Deploy to ECS (PM2 Manual Fallback)
+name: Deploy to Cloud VM (PM2 Manual Fallback)
 
 # Legacy manual fallback for shipping standalone Node bundles to a single
-# Aliyun ECS box that runs PM2 + Nginx. The production default is now Vercel
-# frontends + Cloudflare Workers gateway + ECS/FastAPI origin; this workflow
-# must not auto-deploy on main push.
+# SSH-managed Linux VM that runs PM2 + Nginx. It is vendor-neutral and works
+# with AWS EC2, Alibaba Cloud ECS, Tencent Cloud CVM, GCP Compute Engine, or
+# any equivalent VM with SSH + Node.js + PM2.
+#
+# The production default is now Vercel frontends + Cloudflare Workers gateway
+# + VM/FastAPI origin; this workflow must not auto-deploy on main push.
 #
 # REQUIRED REPOSITORY SECRETS (Settings → Secrets and variables → Actions):
-#   ECS_SSH_PRIVATE_KEY  — OpenSSH private key (Ed25519 recommended) whose
-#                          corresponding public key is in the deploy user's
-#                          ~/.ssh/authorized_keys on the ECS box.
-#   ECS_SSH_KNOWN_HOSTS  — output of `ssh-keyscan -H <ECS_HOST>` to pin the
-#                          host key (prevents MITM and warning prompts).
+#   VM_SSH_PRIVATE_KEY   — OpenSSH private key (Ed25519 recommended) whose
+#                          public key is in the deploy user's authorized_keys.
+#   VM_SSH_KNOWN_HOSTS   — output of `ssh-keyscan -H <VM_HOST>` to pin the
+#                          host key. `CLOUD_VM_*` and legacy `ECS_*` aliases
+#                          remain supported for backwards compatibility.
 #
 # REQUIRED REPOSITORY VARIABLES (same UI, "Variables" tab):
-#   ECS_HOST             — IP or DNS of the ECS box.
-#   ECS_USER             — SSH user (must own/manage the PM2 process; usually
-#                          `root` per the existing deploy-ecs-lite.sh).
-#   ECS_DEPLOY_ROOT      — Base path on the ECS box (default /var/www/nebutra).
+#   VM_HOST              — IP or DNS of the target VM.
+#   VM_USER              — SSH user that owns/manages PM2.
+#   VM_DEPLOY_ROOT       — Base path on the VM (default /var/www/nebutra).
 #
 # OPTIONAL REPOSITORY VARIABLES:
-#   ECS_SSH_PORT         — defaults to 22.
-#   ECS_KEEP_RELEASES    — past releases to retain (default 1 since 2026-05-15
+#   VM_PROVIDER          — aws-ec2 | aliyun-ecs | tencent-cvm | gcp-gce | other
+#                          (metadata only; deploy remains SSH-driven).
+#   VM_SSH_PORT          — defaults to 22.
+#   VM_KEEP_RELEASES     — past releases to retain (default 1 since 2026-05-15
 #                          when design-docs was added as the 4th app; previously
 #                          2 after the May 12 disk-full incident reduced it from
-#                          5. 4 apps × ~1 GB node_modules per release overflowed
-#                          the 2C4G Aliyun Lite disk again at retention=2.
-#                          Override per-deploy via the ECS_KEEP_RELEASES repo
-#                          variable if you need rollback depth on a specific
-#                          deploy; raise to 2 if/when ECS box is sized up).
+#                          5. 4 apps × ~1 GB node_modules per release can
+#                          overflow small 2C4G cloud disks at retention=2.
+#                          Override per deploy via VM_KEEP_RELEASES if the VM
+#                          has enough disk for deeper rollback history).
 #
 # CONNECTIVITY NOTE:
-# GH-hosted runners sit in US/EU. SSH to Aliyun ECS in mainland China usually
-# works but can be flaky during peak hours. If the deploy step regularly times
-# out, register a self-hosted runner inside Aliyun (e.g. on the same VPC) and
-# add `runs-on: [self-hosted, ecs]` overrides — the rest of the workflow stays
-# the same.
+# GH-hosted runners sit in US/EU. Cross-region SSH to any cloud VM can be flaky
+# during peak hours. If deploys time out, register a self-hosted runner in the
+# same cloud/region/VPC and add a matching `runs-on` override.
 
 on:
   workflow_dispatch:
@@ -51,9 +52,9 @@ on:
 permissions:
   contents: read
 
-# Serialise deploys to one ECS box — never run two in parallel.
+# Serialise deploys to one VM target — never run two in parallel.
 concurrency:
-  group: deploy-ecs-prod
+  group: deploy-cloud-vm-prod
   cancel-in-progress: false
 
 env:
@@ -158,12 +159,12 @@ jobs:
   # ──────────────────────────────────────────────────────────────────────
   # build-next — build frontend docs/app artifacts and package as tarballs.
   # All PM2 frontend fallbacks ship Next standalone bundles. apps/web keeps
-  # Vite as the product-app development/runtime migration target, but ECS must
+  # Vite as the product-app development/runtime migration target, but VM must
   # run the Next server so route handlers such as /signup/remote and
   # /desktop-auth/complete remain available during fallback deploys.
   # ──────────────────────────────────────────────────────────────────────
   build-next:
-    name: Build ${{ matrix.app }} ECS artifact
+    name: Build ${{ matrix.app }} VM artifact
     needs: detect-changes
     if: needs.detect-changes.outputs.any == 'true'
     runs-on: ubuntu-latest
@@ -233,7 +234,7 @@ jobs:
 
       - name: Typecheck ${{ matrix.package }}
         if: matrix.condition == 'true'
-        # Keep the ECS fallback from packaging stale docs/design-system bundles
+        # Keep the VM fallback from packaging stale docs/design-system bundles
         # when Next type generation, Fumadocs MDX, or downstream UI contracts
         # fail before `next build` starts.
         env:
@@ -262,19 +263,19 @@ jobs:
           # @t3-oss/env-nextjs Zod validation (`DATABASE_URL: z.string().url()`).
           # Without a value the build crashes with "Invalid environment variables"
           # while inspecting routes like /api/me/public. Real DATABASE_URL lives
-          # in /var/www/nebutra/web/current/.env on the ECS box and is read at
+          # in /var/www/nebutra/web/current/.env on the VM and is read at
           # runtime by the standalone server.
           DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
-          # Force standalone output for ECS — landing-page's next.config gates
+          # Force standalone output for VM — landing-page's next.config gates
           # `output: "standalone"` on this env so Vercel builds skip the trace
-          # cost. ECS workflow needs the standalone bundle for assembly below.
+          # cost. This workflow needs the standalone bundle for assembly below.
           NEXT_OUTPUT: standalone
         run: pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}
 
       # Next standalone output is at <workspace>/.next/standalone/. Route
       # handlers are part of this server artifact, which is why apps/web cannot
-      # be assembled from a static Vite dist/ bundle for ECS fallback.
-      - name: Assemble ECS bundle
+      # be assembled from a static Vite dist/ bundle for VM fallback.
+      - name: Assemble VM bundle
         if: matrix.condition == 'true'
         run: |
           set -euo pipefail
@@ -284,7 +285,7 @@ jobs:
           mkdir -p "$STAGE"
 
           if [ "${{ matrix.kind }}" != "next-standalone" ]; then
-            echo "::error::Unsupported ECS frontend artifact kind: ${{ matrix.kind }}"
+            echo "::error::Unsupported VM frontend artifact kind: ${{ matrix.kind }}"
             exit 1
           fi
 
@@ -357,7 +358,7 @@ jobs:
   # deploy — fetch artifacts, upload over SSH, run remote helper.
   # ──────────────────────────────────────────────────────────────────────
   deploy:
-    name: Deploy to ECS
+    name: Deploy to Cloud VM
     needs: [detect-changes, build-next, build-api]
     if: |
       always() &&
@@ -368,16 +369,17 @@ jobs:
     runs-on: ubuntu-latest
     environment: ecs-prod
     env:
-      ECS_HOST:          ${{ vars.ECS_HOST }}
-      ECS_USER:          ${{ vars.ECS_USER }}
-      ECS_SSH_PORT:      ${{ vars.ECS_SSH_PORT || '22' }}
-      ECS_DEPLOY_ROOT:   ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
-      ECS_KEEP_RELEASES: ${{ vars.ECS_KEEP_RELEASES || '1' }}
+      VM_PROVIDER:       ${{ vars.VM_PROVIDER || vars.CLOUD_VM_PROVIDER || vars.ECS_PROVIDER || 'unknown' }}
+      ECS_HOST:          ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+      ECS_USER:          ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+      ECS_SSH_PORT:      ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+      ECS_DEPLOY_ROOT:   ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+      ECS_KEEP_RELEASES: ${{ vars.VM_KEEP_RELEASES || vars.CLOUD_VM_KEEP_RELEASES || vars.ECS_KEEP_RELEASES || '1' }}
     steps:
       - name: Verify deploy targets configured
         run: |
-          [ -n "${ECS_HOST:-}" ] || { echo "::error::ECS_HOST repository variable is not set"; exit 1; }
-          [ -n "${ECS_USER:-}" ] || { echo "::error::ECS_USER repository variable is not set"; exit 1; }
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST, CLOUD_VM_HOST, or legacy ECS_HOST repository variable is not set"; exit 1; }
+          [ -n "${ECS_USER:-}" ] || { echo "::error::VM_USER, CLOUD_VM_USER, or legacy ECS_USER repository variable is not set"; exit 1; }
 
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
@@ -422,27 +424,27 @@ jobs:
 
       - name: Configure SSH
         env:
-          SSH_KEY:     ${{ secrets.ECS_SSH_PRIVATE_KEY }}
-          KNOWN_HOSTS: ${{ secrets.ECS_SSH_KNOWN_HOSTS }}
+          SSH_KEY:     ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
         run: |
           set -euo pipefail
-          [ -n "${SSH_KEY:-}" ]     || { echo "::error::ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
-          [ -n "${KNOWN_HOSTS:-}" ] || { echo "::error::ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
+          [ -n "${SSH_KEY:-}" ]     || { echo "::error::VM_SSH_PRIVATE_KEY, CLOUD_VM_SSH_PRIVATE_KEY, or legacy ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
+          [ -n "${KNOWN_HOSTS:-}" ] || { echo "::error::VM_SSH_KNOWN_HOSTS, CLOUD_VM_SSH_KNOWN_HOSTS, or legacy ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
           mkdir -p ~/.ssh
           umask 077
           printf '%s\n' "$SSH_KEY"     > ~/.ssh/id_deploy
           printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/id_deploy ~/.ssh/known_hosts
 
-      - name: Pre-flight disk cleanup on ECS
-        # The ECS box is a 2C4G Aliyun Lite instance. Each release directory
+      - name: Pre-flight disk cleanup on Cloud VM
+        # Small cloud VMs often have limited root disks. Each release directory
         # holds ~1 GB of node_modules, so KEEP_RELEASES=5 × 3 apps fills the
-        # disk and even scp-to-/tmp fails before the remote helper can run.
+        # disk and even upload staging can fail before the remote helper runs.
         # This step SSHes in BEFORE upload and prunes:
         #   1. Stale /tmp/nebutra-*.tar.gz and .incoming bundles from prior failed runs
-        #   2. Existing releases down to the upload headroom required by ECS_KEEP_RELEASES
+        #   2. Existing releases down to the upload headroom required by KEEP_RELEASES
         #   3. Old pnpm store / apt caches as a last resort
-        # so the box has enough headroom for the new bundle + extracted tree.
+        # so the VM has enough headroom for the new bundle + extracted tree.
         run: |
           set -euo pipefail
           remote_root=$(printf '%q' "${ECS_DEPLOY_ROOT:-/var/www/nebutra}")
@@ -494,16 +496,16 @@ jobs:
           df -h / 2>/dev/null || df -h
           PREFLIGHT
         env:
-          ECS_HOST:        ${{ vars.ECS_HOST }}
-          ECS_USER:        ${{ vars.ECS_USER }}
-          ECS_SSH_PORT:    ${{ vars.ECS_SSH_PORT || '22' }}
-          ECS_DEPLOY_ROOT: ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+          ECS_HOST:        ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+          ECS_USER:        ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+          ECS_SSH_PORT:    ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT: ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
 
-      - name: Upload bundles + helper to ECS
+      - name: Upload bundles + helper to Cloud VM
         run: |
           set -euo pipefail
           # ServerAlive options keep the connection alive on slow / lossy
-          # GH-runner -> Aliyun-China links. Without them, scp on a 100MB+
+          # GH-runner -> remote VM links. Without them, scp on a 100MB+
           # bundle silently hangs forever when TCP keepalives are absent.
           # 30s ping × 6 misses = drop after 3 min idle.
           SCP_OPTS=(-i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
@@ -791,14 +793,14 @@ jobs:
             done
           fi
 
-      - name: Rollback ECS on deploy or smoke failure
+      - name: Rollback Cloud VM on deploy or smoke failure
         if: failure()
         env:
-          ECS_HOST:          ${{ vars.ECS_HOST }}
-          ECS_USER:          ${{ vars.ECS_USER }}
-          ECS_SSH_PORT:      ${{ vars.ECS_SSH_PORT || '22' }}
-          ECS_DEPLOY_ROOT:   ${{ vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
-          ECS_KEEP_RELEASES: ${{ vars.ECS_KEEP_RELEASES || '1' }}
+          ECS_HOST:          ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+          ECS_USER:          ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+          ECS_SSH_PORT:      ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+          ECS_DEPLOY_ROOT:   ${{ vars.VM_DEPLOY_ROOT || vars.CLOUD_VM_DEPLOY_ROOT || vars.ECS_DEPLOY_ROOT || '/var/www/nebutra' }}
+          ECS_KEEP_RELEASES: ${{ vars.VM_KEEP_RELEASES || vars.CLOUD_VM_KEEP_RELEASES || vars.ECS_KEEP_RELEASES || '1' }}
         run: |
           set -euo pipefail
           APPS=""
@@ -820,13 +822,13 @@ jobs:
           REMOTE_CMD="${REMOTE_CMD} SHA=${{ github.sha }}"
           REMOTE_CMD="${REMOTE_CMD} bash /tmp/ecs-deploy-remote.sh"
 
-          echo "::warning::Deploy/smoke failed — attempting ECS rollback for: $APPS"
+          echo "::warning::Deploy/smoke failed — attempting Cloud VM rollback for: $APPS"
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
               -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
               -o ServerAliveInterval=30 -o ServerAliveCountMax=6 \
               "${ECS_USER}@${ECS_HOST}" \
               "$REMOTE_CMD" || {
-                echo "::warning::Rollback command did not complete; inspect ECS PM2 state manually."
+                echo "::warning::Rollback command did not complete; inspect VM PM2 state manually."
                 exit 0
               }
 
@@ -841,8 +843,9 @@ jobs:
         # Use an explicit if-block to keep the step's exit code at 0.
         run: |
           {
-            echo "## ECS deploy summary"
+            echo "## Cloud VM deploy summary"
             echo "- Commit: \`${{ github.sha }}\`"
+            echo "- Provider: ${VM_PROVIDER:-unknown}"
             echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / design-docs=${{ needs.detect-changes.outputs['design-docs'] }} / sailor-docs=${{ needs.detect-changes.outputs['sailor-docs'] }}"
             echo "- Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
             if [ -n "${{ github.event.inputs.reason }}" ]; then

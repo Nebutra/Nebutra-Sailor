@@ -5,16 +5,15 @@
   "type": "module",
   "description": "Feature flags abstraction - swap providers later",
   "nebutra": {
-    "status": "wip",
-    "productionReady": false,
+    "status": "foundation",
+    "productionReady": true,
     "requires": [
       "@nebutra/cache",
-      "@nebutra/db"
+      "or FEATURE_FLAG_* environment variables"
     ],
     "gaps": [
-      "No production app integrations",
-      "Managed providers not wired to real Vercel Flags/GrowthBook/ConfigCat clients",
-      "No rollout dashboard or persisted rule store"
+      "Managed providers not wired to real Vercel Flags/GrowthBook/ConfigCat SDK clients",
+      "No rollout dashboard or persisted rule authoring UI"
     ]
   },
   "main": "./src/index.ts",

@@ -2,7 +2,7 @@
 
 Provider-agnostic webhook outbound management system for Nebutra. Supports **Svix** (managed) and **custom** (self-hosted) webhook delivery.
 
-> **Status: Foundation** — Type definitions, factory pattern, provider adapters, and injectable dead-letter storage are complete. Production custom deployments still need durable store adapters and queue infrastructure.
+> **Status: Stable** — Svix-managed outbound webhooks are production-capable. The custom self-hosted provider exposes retry/dead-letter seams and refuses memory-backed production delivery unless explicitly overridden.
 
 ## Installation
 
@@ -123,7 +123,6 @@ Auto-detects if `SVIX_API_KEY` is not set. Otherwise:
 ```typescript
 const webhooks = await createWebhooks({
   provider: "custom",
-  redisUrl: "redis://localhost:6379", // optional, for persistence
   maxRetries: 6,
   initialBackoffSec: 5,
 });
@@ -138,7 +137,12 @@ const webhooks = await createWebhooks({
 - ✅ HMAC-SHA256 signing (industry standard)
 - ❌ You handle infra, scaling, monitoring
 
-**Note:** The bundled dead-letter store is intentionally an adapter seam, not a database coupling. For production use, inject a Redis/PostgreSQL-backed implementation and integrate with `@nebutra/queue` for distributed delivery.
+**Note:** The custom provider is a self-hosted adapter seam. Its bundled
+endpoint/message state is in-memory, so the factory refuses this mode in
+production unless `ALLOW_MEMORY_WEBHOOKS_IN_PRODUCTION=true` is set as an
+explicit temporary override. Prefer Svix for production until a durable
+endpoint/message store is injected alongside a Redis/PostgreSQL-backed
+dead-letter implementation and distributed queue.
 
 ```typescript
 import { createWebhooks, type WebhookDeadLetterStore } from "@nebutra/webhooks";

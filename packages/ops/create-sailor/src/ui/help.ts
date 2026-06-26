@@ -33,17 +33,17 @@ Feature flags (region-based smart defaults):
       --queue <id>          qstash | bullmq | upstash | sqs | none                 [Foundation]
       --search <id>         meilisearch | typesense | algolia | pgvector | none    [Foundation]
       --cache <id>          upstash-redis | vercel-kv | redis | dragonfly | none
-      --notifications <id>  novu | knock | custom | none                           [Foundation]
-      --webhooks <id>       svix | custom | none                                   [Foundation]
+      --notifications <id>  novu | knock | custom | none
+      --webhooks <id>       svix | custom | none
       --cms <id>            sanity | contentful | strapi | none
-      --feature-flags <id>  vercel-flags | growthbook | configcat | none           [WIP]
+      --feature-flags <id>  vercel-flags | growthbook | configcat | none           [Foundation]
       --captcha <id>        turnstile | hcaptcha | aliyun-slide | none             [WIP]
       --billing-mode <mode> usage | seat | credits (default: usage)
       --idp <id>            clerk | oauth-server (default: clerk)
       --access-gate <mode>  none | invite (default: none)
 
 Preview statuses:
-  [Foundation] — types + factory complete; adapters need external credentials & may not work out-of-the-box
+  [Foundation] — core path works; provider credentials, adapter wiring, or integration verification still required
   [WIP]        — actively being built; do not use in production
   See: https://github.com/Nebutra/Nebutra-Sailor/blob/main/docs/package-status.md
 

@@ -35,9 +35,10 @@ files above instead of preserving stale docs.
   `src/providers/custom.ts` owns the self-hosted path and its retry behavior.
 - Keep shared signature format and verification in `src/signing.ts`. Do not
   scatter signing rules across providers or apps.
-- Respect the package's current foundation status. Custom delivery currently
-  lacks durable retry and dead-letter guarantees; do not document or code
-  against stronger reliability than the package actually provides.
+- Respect the package's current stable status for the Svix-managed path.
+  Custom delivery still uses in-memory endpoint/message state and is blocked in
+  production unless explicitly overridden; do not document or code against
+  stronger custom reliability than the package actually provides.
 
 ## Generated And Derived Files
 

@@ -1,4 +1,4 @@
-name: Deploy ECS Origin
+name: Deploy Cloud VM Origin
 
 on:
   workflow_dispatch:
@@ -6,9 +6,10 @@ on:
       deploy_target:
         description: "python-ai deploy target to activate"
         required: true
-        default: "ecs-docker"
+        default: "vm-docker"
         type: choice
         options:
+          - vm-docker
           - ecs-docker
           - k8s
           - aws
@@ -26,24 +27,25 @@ permissions:
   contents: read
 
 concurrency:
-  group: deploy-origin-ecs
+  group: deploy-origin-cloud-vm
   cancel-in-progress: false
 
 jobs:
   python-ai:
-    name: Deploy python-ai ECS origin
+    name: Deploy python-ai Cloud VM origin
     runs-on: ubuntu-latest
     environment: ecs-origin
     if: >-
-      (github.event_name == 'workflow_dispatch' && inputs.deploy_target == 'ecs-docker') ||
+      (github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'vm-docker' || inputs.deploy_target == 'ecs-docker')) ||
       (github.event_name == 'workflow_run' &&
         github.event.workflow_run.conclusion == 'success' &&
-        vars.DEPLOY_TARGET_PYTHON_AI == 'ecs-docker')
+        (vars.DEPLOY_TARGET_PYTHON_AI == 'vm-docker' || vars.DEPLOY_TARGET_PYTHON_AI == 'ecs-docker'))
     env:
-      ECS_HOST: ${{ vars.ECS_HOST }}
-      ECS_USER: ${{ vars.ECS_USER }}
-      ECS_SSH_PORT: ${{ vars.ECS_SSH_PORT || '22' }}
-      ECS_ORIGIN_ROOT: ${{ vars.ECS_ORIGIN_ROOT || '/opt/nebutra/origin' }}
+      VM_PROVIDER: ${{ vars.VM_PROVIDER || vars.CLOUD_VM_PROVIDER || vars.ECS_PROVIDER || 'unknown' }}
+      ECS_HOST: ${{ vars.VM_HOST || vars.CLOUD_VM_HOST || vars.ECS_HOST }}
+      ECS_USER: ${{ vars.VM_USER || vars.CLOUD_VM_USER || vars.ECS_USER }}
+      ECS_SSH_PORT: ${{ vars.VM_SSH_PORT || vars.CLOUD_VM_SSH_PORT || vars.ECS_SSH_PORT || '22' }}
+      ECS_ORIGIN_ROOT: ${{ vars.VM_ORIGIN_ROOT || vars.CLOUD_VM_ORIGIN_ROOT || vars.ECS_ORIGIN_ROOT || '/opt/nebutra/origin' }}
       CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL || secrets.UPSTASH_REDIS_URL || secrets.REDIS_URL }}
       DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL || secrets.DATABASE_URL }}
       UPLOAD_STORAGE_PROVIDER: ${{ vars.UPLOAD_STORAGE_PROVIDER || 'r2' }}
@@ -83,15 +85,15 @@ jobs:
           fi
           echo "image=ghcr.io/${owner}/nebutra-ai:${tag}" >> "$GITHUB_OUTPUT"
 
-      - name: Validate ECS secrets
+      - name: Validate Cloud VM secrets
         run: |
-          [ -n "${ECS_HOST:-}" ] || { echo "::error::ECS_HOST repository variable is not set"; exit 1; }
-          [ -n "${ECS_USER:-}" ] || { echo "::error::ECS_USER repository variable is not set"; exit 1; }
-          [ -n "${{ secrets.ECS_SSH_PRIVATE_KEY }}" ] || { echo "::error::ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
-          [ -n "${{ secrets.ECS_SSH_KNOWN_HOSTS }}" ] || { echo "::error::ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
+          [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST, CLOUD_VM_HOST, or legacy ECS_HOST repository variable is not set"; exit 1; }
+          [ -n "${ECS_USER:-}" ] || { echo "::error::VM_USER, CLOUD_VM_USER, or legacy ECS_USER repository variable is not set"; exit 1; }
+          [ -n "${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}" ] || { echo "::error::VM_SSH_PRIVATE_KEY, CLOUD_VM_SSH_PRIVATE_KEY, or legacy ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
+          [ -n "${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}" ] || { echo "::error::VM_SSH_KNOWN_HOSTS, CLOUD_VM_SSH_KNOWN_HOSTS, or legacy ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
           [ -n "${{ secrets.GATEWAY_SHARED_SECRET }}" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
           [ -n "${DATABASE_URL:-}" ] || { echo "::error::SUPABASE_DATABASE_URL or DATABASE_URL secret is required for persistent origin tasks"; exit 1; }
-          [ -n "${CELERY_BROKER_URL:-}" ] || { echo "::error::CELERY_BROKER_URL, UPSTASH_REDIS_URL, or REDIS_URL secret is required for ECS Celery"; exit 1; }
+          [ -n "${CELERY_BROKER_URL:-}" ] || { echo "::error::CELERY_BROKER_URL, UPSTASH_REDIS_URL, or REDIS_URL secret is required for VM Celery"; exit 1; }
           case "${UPLOAD_STORAGE_PROVIDER:-}" in
             r2)
               [ -n "${UPLOAD_BUCKET:-}" ] || { echo "::error::UPLOAD_BUCKET or R2_BUCKET_UPLOADS is required for R2 uploads"; exit 1; }
@@ -111,14 +113,14 @@ jobs:
               [ -n "${OSS_ACCESS_KEY_SECRET:-}" ] || { echo "::error::OSS_ACCESS_KEY_SECRET secret is required for OSS uploads"; exit 1; }
               ;;
             *)
-              echo "::error::UPLOAD_STORAGE_PROVIDER must be r2, s3, or oss for ECS origin"; exit 1
+              echo "::error::UPLOAD_STORAGE_PROVIDER must be r2, s3, or oss for VM origin"; exit 1
               ;;
           esac
 
       - name: Configure SSH
         env:
-          SSH_KEY: ${{ secrets.ECS_SSH_PRIVATE_KEY }}
-          KNOWN_HOSTS: ${{ secrets.ECS_SSH_KNOWN_HOSTS }}
+          SSH_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
         run: |
           set -euo pipefail
           mkdir -p ~/.ssh

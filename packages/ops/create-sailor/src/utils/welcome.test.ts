@@ -48,7 +48,7 @@ describe("generateWelcomePage", () => {
       projectName: "Acme",
       region: "global",
       previewSelections: [
-        { flag: "feature-flags", provider: "growthbook", status: "wip" },
+        { flag: "feature-flags", provider: "growthbook", status: "foundation" },
         { flag: "queue", provider: "bullmq", status: "foundation" },
       ],
     });
@@ -56,9 +56,9 @@ describe("generateWelcomePage", () => {
     const nextSteps = fs.readFileSync(path.join(targetDir, ".sailor", "next-steps.md"), "utf8");
 
     expect(nextSteps).toContain("## Production readiness holds");
-    expect(nextSteps).toContain("feature-flags=growthbook [WIP]");
+    expect(nextSteps).toContain("feature-flags=growthbook [Foundation]");
     expect(nextSteps).toContain("queue=bullmq [Foundation]");
     expect(nextSteps).toContain("docs/package-status.md");
-    expect(nextSteps).toContain("Do not enable these in production until you replace stubs");
+    expect(nextSteps).toContain("Do not enable these in production until provider credentials");
   });
 });

@@ -23,6 +23,20 @@ export interface FeatureFlagProviderAdapter {
   getVariant?: <T>(flag: string, defaultValue: T, context?: FeatureFlagContext) => T | Promise<T>;
 }
 
+export type FeatureFlagRuntimeProvider = "cache" | "env" | "memory" | "custom";
+
+export type FeatureFlagRuntimeMode = "self_hosted" | "operator_managed" | "preview" | "custom";
+
+export interface FeatureFlagRuntimeStatus {
+  provider: FeatureFlagRuntimeProvider;
+  mode: FeatureFlagRuntimeMode;
+  canEvaluate: boolean;
+  productionSafe: boolean;
+  summary: string;
+  reason?: string;
+  missing: string[];
+}
+
 export interface MemoryFlagRule {
   enabled: boolean;
   rolloutPercentage?: number;
@@ -30,6 +44,24 @@ export interface MemoryFlagRule {
 }
 
 type MemoryFlagValue = boolean | MemoryFlagRule;
+
+const MEMORY_PROVIDER_MARK = Symbol.for("@nebutra/feature-flags/memory-provider");
+
+type MarkedMemoryProvider = FeatureFlagProvider & {
+  [MEMORY_PROVIDER_MARK]?: true;
+};
+
+function markMemoryProvider(provider: FeatureFlagProvider): FeatureFlagProvider {
+  Object.defineProperty(provider, MEMORY_PROVIDER_MARK, {
+    value: true,
+    enumerable: false,
+  });
+  return provider;
+}
+
+function isMemoryProvider(providerToCheck: FeatureFlagProvider): boolean {
+  return (providerToCheck as MarkedMemoryProvider)[MEMORY_PROVIDER_MARK] === true;
+}
 
 export function createFeatureFlagProviderAdapter(
   adapter: FeatureFlagProviderAdapter,
@@ -161,7 +193,7 @@ export function createMemoryProvider(
   const flags = new Map<string, MemoryFlagValue>(Object.entries(initialFlags));
   const variants = new Map<string, unknown>();
 
-  return {
+  return markMemoryProvider({
     isEnabled: async (flag: string, context?: FeatureFlagContext) => {
       const value = flags.get(flag);
       if (typeof value === "boolean") return value;
@@ -194,43 +226,45 @@ export function createMemoryProvider(
 
       return defaultValue;
     },
-  };
+  });
 }
 
-export const memoryProvider: FeatureFlagProvider = createFeatureFlagProviderAdapter({
-  isEnabled: async (flag: string, context?: FeatureFlagContext) => {
-    const value = memoryFlags.get(flag) as MemoryFlagValue | undefined;
-    if (typeof value === "boolean") return value;
-    if (!value?.enabled) return false;
-    if (value.rolloutPercentage === undefined) return true;
+export const memoryProvider: FeatureFlagProvider = markMemoryProvider(
+  createFeatureFlagProviderAdapter({
+    isEnabled: async (flag: string, context?: FeatureFlagContext) => {
+      const value = memoryFlags.get(flag) as MemoryFlagValue | undefined;
+      if (typeof value === "boolean") return value;
+      if (!value?.enabled) return false;
+      if (value.rolloutPercentage === undefined) return true;
 
-    const rolloutKey = getRolloutKey(flag, context);
-    if (!rolloutKey) return false;
-    return isEnabledForPercentage(flag, rolloutKey, value.rolloutPercentage);
-  },
-  getVariant: async <T>(
-    flag: string,
-    defaultValue: T,
-    context?: FeatureFlagContext,
-  ): Promise<T> => {
-    const value = memoryFlags.get(`${flag}:variant`);
-    if (value !== undefined) return value as T;
-
-    const rule = memoryFlags.get(flag) as MemoryFlagValue | undefined;
-    if (typeof rule === "object" && rule?.variants) {
       const rolloutKey = getRolloutKey(flag, context);
-      if (rolloutKey) {
-        const variantNames = Object.keys(rule.variants).sort();
-        if (variantNames.length > 0) {
-          const selected = variantNames[getRolloutBucket(flag, rolloutKey) % variantNames.length];
-          if (selected !== undefined) return rule.variants[selected] as T;
+      if (!rolloutKey) return false;
+      return isEnabledForPercentage(flag, rolloutKey, value.rolloutPercentage);
+    },
+    getVariant: async <T>(
+      flag: string,
+      defaultValue: T,
+      context?: FeatureFlagContext,
+    ): Promise<T> => {
+      const value = memoryFlags.get(`${flag}:variant`);
+      if (value !== undefined) return value as T;
+
+      const rule = memoryFlags.get(flag) as MemoryFlagValue | undefined;
+      if (typeof rule === "object" && rule?.variants) {
+        const rolloutKey = getRolloutKey(flag, context);
+        if (rolloutKey) {
+          const variantNames = Object.keys(rule.variants).sort();
+          if (variantNames.length > 0) {
+            const selected = variantNames[getRolloutBucket(flag, rolloutKey) % variantNames.length];
+            if (selected !== undefined) return rule.variants[selected] as T;
+          }
         }
       }
-    }
 
-    return defaultValue;
-  },
-});
+      return defaultValue;
+    },
+  }),
+);
 
 export function setMemoryFlag(flag: string, enabled: boolean): void {
   memoryFlags.set(flag, enabled);
@@ -253,21 +287,100 @@ export function clearMemoryFlags(): void {
 // ============================================
 
 let provider: FeatureFlagProvider = dbProvider;
+let providerKind: FeatureFlagRuntimeProvider = "cache";
+
+function isProductionMemoryProviderAllowed(env: NodeJS.ProcessEnv = process.env): boolean {
+  return env.NODE_ENV !== "production" || env.ALLOW_MEMORY_FEATURE_FLAGS_IN_PRODUCTION === "true";
+}
+
+function assertMemoryProviderAllowed(env: NodeJS.ProcessEnv = process.env): void {
+  if (isProductionMemoryProviderAllowed(env)) return;
+
+  throw new Error(
+    "Refusing to use in-memory feature flags in production. Configure the cached/env provider or set ALLOW_MEMORY_FEATURE_FLAGS_IN_PRODUCTION=true for an explicit temporary override.",
+  );
+}
 
 export function setFeatureFlagProvider(newProvider: FeatureFlagProvider): void {
+  if (isMemoryProvider(newProvider)) {
+    assertMemoryProviderAllowed();
+    providerKind = "memory";
+  } else {
+    providerKind = "custom";
+  }
   provider = newProvider;
 }
 
 export function useDbProvider(): void {
   provider = dbProvider;
+  providerKind = "cache";
 }
 
 export function useEnvProvider(): void {
   provider = envProvider;
+  providerKind = "env";
 }
 
 export function useMemoryProvider(): void {
+  assertMemoryProviderAllowed();
   provider = memoryProvider;
+  providerKind = "memory";
+}
+
+export function resolveFeatureFlagRuntimeStatus(
+  input: { env?: NodeJS.ProcessEnv } = {},
+): FeatureFlagRuntimeStatus {
+  const env = input.env ?? process.env;
+
+  if (providerKind === "cache") {
+    return {
+      provider: "cache",
+      mode: "self_hosted",
+      canEvaluate: true,
+      productionSafe: true,
+      summary: "Redis-backed feature flag cache with env kill-switch fallback is active.",
+      missing: [],
+    };
+  }
+
+  if (providerKind === "env") {
+    return {
+      provider: "env",
+      mode: "operator_managed",
+      canEvaluate: true,
+      productionSafe: true,
+      summary: "Environment-managed feature flags are active.",
+      missing: [],
+    };
+  }
+
+  if (providerKind === "memory") {
+    const productionSafe = isProductionMemoryProviderAllowed(env) && env.NODE_ENV !== "production";
+    return {
+      provider: "memory",
+      mode: "preview",
+      canEvaluate: true,
+      productionSafe,
+      summary: "In-memory feature flags are active.",
+      reason: productionSafe
+        ? "Suitable for local development and tests."
+        : "In-memory state is not durable across production instances.",
+      missing: productionSafe ? [] : ["Durable feature flag provider"],
+    };
+  }
+
+  return {
+    provider: "custom",
+    mode: "custom",
+    canEvaluate: true,
+    productionSafe: env.NODE_ENV !== "production",
+    summary: "A custom feature flag provider is active.",
+    reason:
+      env.NODE_ENV === "production"
+        ? "Custom providers must supply their own durability, audit, and rollout guarantees."
+        : "Custom provider safety depends on the injected adapter.",
+    missing: env.NODE_ENV === "production" ? ["Custom provider production-readiness evidence"] : [],
+  };
 }
 
 /**

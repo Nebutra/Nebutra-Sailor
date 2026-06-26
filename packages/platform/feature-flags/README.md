@@ -1,10 +1,11 @@
 # @nebutra/feature-flags
 
-Status: **WIP**
+Status: **Foundation**
 
-> **Status: WIP** — Not yet integrated into any production app. Do not import until this notice is removed.
+> **Status: Foundation** — The Redis-cached/env-backed runtime is production-usable and fails closed for in-memory providers in production. Managed Vercel Flags, GrowthBook, and ConfigCat SDK adapters are still provider-wiring work.
 
-Feature flag management.
+Feature flag management for server routes, React clients, and gradual rollout
+checks.
 
 ## Installation
 
@@ -24,11 +25,12 @@ pnpm add @nebutra/feature-flags
 ### Check Flags
 
 ```typescript
-import { featureFlags } from "@nebutra/feature-flags";
+import { isFeatureEnabled } from "@nebutra/feature-flags";
 
-const isEnabled = await featureFlags.isEnabled("new_dashboard", {
+const isEnabled = await isFeatureEnabled("new-dashboard", {
   userId: "user_123",
   tenantId: "org_456",
+  plan: "pro",
 });
 
 if (isEnabled) {
@@ -39,19 +41,20 @@ if (isEnabled) {
 ### With Default Value
 
 ```typescript
-const isEnabled = await featureFlags.isEnabled("experimental", {
+import { getFeatureVariant } from "@nebutra/feature-flags";
+
+const variant = await getFeatureVariant("checkout-flow", "control", {
   userId: "user_123",
-  default: false,
 });
 ```
 
-### Get Flag Value
+### Runtime Status
 
 ```typescript
-const variant = await featureFlags.getValue("checkout_flow", {
-  userId: "user_123",
-});
-// Returns: "v1" | "v2" | "v3"
+import { resolveFeatureFlagRuntimeStatus } from "@nebutra/feature-flags";
+
+const status = resolveFeatureFlagRuntimeStatus();
+// { provider: "cache", mode: "self_hosted", productionSafe: true, ... }
 ```
 
 ### React Hook
@@ -60,9 +63,8 @@ const variant = await featureFlags.getValue("checkout_flow", {
 import { useFeatureFlag } from "@nebutra/feature-flags/react";
 
 function Dashboard() {
-  const { isEnabled, isLoading } = useFeatureFlag("new_dashboard");
+  const isEnabled = useFeatureFlag("new-dashboard");
 
-  if (isLoading) return <Spinner />;
   return isEnabled ? <NewDashboard /> : <OldDashboard />;
 }
 ```
@@ -70,23 +72,27 @@ function Dashboard() {
 ## Flag Configuration
 
 ```typescript
-// Define flags
-const flags = {
-  new_dashboard: {
-    description: "New dashboard UI",
-    default: false,
-    rules: [
-      { tenants: ["org_beta"], enabled: true },
-      { percentage: 10 }, // 10% rollout
-    ],
+import { createMemoryProvider, setFeatureFlagProvider } from "@nebutra/feature-flags";
+
+const previewProvider = createMemoryProvider({
+  "new-dashboard": {
+    enabled: true,
+    rolloutPercentage: 10,
+    variants: {
+      control: "classic",
+      treatment: "compact",
+    },
   },
-  checkout_flow: {
-    description: "Checkout flow variant",
-    variants: ["v1", "v2", "v3"],
-    default: "v1",
-  },
-};
+});
+
+setFeatureFlagProvider(previewProvider);
 ```
+
+The default provider checks `KILL_SWITCH_*`, then Redis via `@nebutra/cache`,
+then `FEATURE_FLAG_*` environment variables. `useMemoryProvider()` is for local
+development/tests and throws in production unless
+`ALLOW_MEMORY_FEATURE_FLAGS_IN_PRODUCTION=true` is set as an explicit temporary
+override.
 
 ## Rollout Strategies
 

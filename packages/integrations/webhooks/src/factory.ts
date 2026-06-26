@@ -22,6 +22,11 @@ function detectProvider(): WebhookProviderType {
   return "custom";
 }
 
+function shouldAllowMemoryCustomProvider(): boolean {
+  if (process.env.NODE_ENV !== "production") return true;
+  return process.env.ALLOW_MEMORY_WEBHOOKS_IN_PRODUCTION === "true";
+}
+
 /**
  * Create a webhooks provider instance.
  *
@@ -65,6 +70,11 @@ export async function createWebhooks(config?: WebhookConfig): Promise<WebhookPro
     case "custom": {
       const { CustomProvider } = await import("./providers/custom");
       const customConfig = config?.provider === "custom" ? config : undefined;
+      if (!shouldAllowMemoryCustomProvider()) {
+        throw new Error(
+          "Refusing to use in-memory webhook delivery in production. Configure Svix or set ALLOW_MEMORY_WEBHOOKS_IN_PRODUCTION=true for an explicit temporary override.",
+        );
+      }
       return new CustomProvider({
         ...(customConfig?.redisUrl !== undefined ? { redisUrl: customConfig.redisUrl } : {}),
         ...(customConfig?.queueProvider !== undefined
