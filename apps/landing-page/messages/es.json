@@ -26,6 +26,74 @@
       "signOut": "Cerrar sesión"
     }
   },
+  "refer": {
+    "metadataTitle": "Únete al loop de referidos de fundadores de {brandName}",
+    "metadataDescription": "Únete a la lista de espera de {brandName}, conserva la atribución de referidos y recibe tu propio enlace para compartir.",
+    "eyebrow": "Loop de referidos de fundadores",
+    "title": "Únete al próximo cohorte de fundadores y recibe tu enlace para compartir.",
+    "description": "Entra con cualquier código de invitación o únete directamente. Si el código existe, preservamos la atribución, te añadimos a la lista de espera y emitimos una URL privada para compartir al instante.",
+    "signal": {
+      "waitlist": "Lista de espera durable",
+      "codeDetected": "Código {code} detectado",
+      "direct": "Registro directo"
+    },
+    "form": {
+      "emailLabel": "Email de trabajo",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Código de referido",
+      "codePlaceholder": "Código opcional",
+      "submit": "Unirme a la lista",
+      "submitting": "Uniendo",
+      "invalidEmail": "Introduce un email válido.",
+      "error": "No pudimos unirte ahora. Inténtalo de nuevo.",
+      "successTitle": "Ya estás en la lista",
+      "successDescription": "Tu enlace privado para compartir está listo.",
+      "positionLabel": "Posición en cola",
+      "referralCodeLabel": "Tu código",
+      "referralUrlLabel": "Tu enlace",
+      "copyLink": "Copiar enlace",
+      "copied": "Copiado",
+      "share": "Compartir",
+      "shareTitle": "Únete al loop fundador de {brandName}",
+      "shareText": "Usa mi enlace de invitación para unirte a la lista de fundadores de {brandName}.",
+      "directMode": "No necesitas código de referido",
+      "codeMode": "Atribución de referido activada"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Loop fundador a fundador",
+        "description": "Cada registro aceptado recibe código y URL, así el siguiente referido empieza sin intervención manual."
+      },
+      "attribution": {
+        "title": "Atribución honesta",
+        "description": "Los códigos desconocidos se guardan como intento; los válidos incrementan al referente y mantienen limpio el registro."
+      },
+      "shareLink": {
+        "title": "Éxito listo para compartir",
+        "description": "La confirmación muestra posición, código, copiar y compartir nativo para cerrar el loop en la página."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Infraestructura product-led",
+      "title": "Diseñada como infraestructura SaaS durable, no como un formulario descartable.",
+      "description": "La superficie de referidos se apoya en un paquete de dominio, un modelo Prisma persistente, una route tipada de Next.js y public smoke checks para después de desplegar en ECS.",
+      "data": {
+        "eyebrow": "Datos",
+        "title": "Una tabla durable de lista de espera",
+        "description": "Unicidad de email, posición autoincremental, índices de código, metadata de atribución intentada y estados viven en la base de datos de plataforma."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Endpoint tipado para unirse",
+        "description": "La página publica en `/api/waitlist`, normaliza códigos arbitrarios, devuelve registros existentes de forma idempotente y no depende de un código de ejemplo."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Public smoke en despliegue",
+        "description": "Las URL canonical y alias quedan listas para checks automáticos, de modo que ECS detecte regresiones de ruta, DNS y salud."
+      }
+    }
+  },
   "hero": {
     "headline1": "Lanza tu Startup,",
     "headline2": "impulsada por {brandName} Agent OS.",

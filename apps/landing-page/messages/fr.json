@@ -26,6 +26,74 @@
       "signOut": "Se déconnecter"
     }
   },
+  "refer": {
+    "metadataTitle": "Rejoindre la boucle de parrainage fondateur de {brandName}",
+    "metadataDescription": "Rejoignez la liste d’attente {brandName}, conservez l’attribution de parrainage et obtenez votre propre lien de partage.",
+    "eyebrow": "Boucle de parrainage fondateur",
+    "title": "Rejoignez la prochaine cohorte de fondateurs et recevez votre lien de partage.",
+    "description": "Entrez avec n’importe quel code d’invitation ou rejoignez directement. Si le code existe, nous conservons l’attribution, vous plaçons sur la liste d’attente et émettons une URL privée à partager immédiatement.",
+    "signal": {
+      "waitlist": "Liste d’attente durable",
+      "codeDetected": "Code {code} détecté",
+      "direct": "Inscription directe"
+    },
+    "form": {
+      "emailLabel": "Email professionnel",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Code de parrainage",
+      "codePlaceholder": "Code optionnel",
+      "submit": "Rejoindre la liste",
+      "submitting": "Inscription",
+      "invalidEmail": "Saisissez un email valide.",
+      "error": "Impossible de vous inscrire maintenant. Réessayez.",
+      "successTitle": "Vous êtes sur la liste",
+      "successDescription": "Votre lien privé de partage est prêt.",
+      "positionLabel": "Position en file",
+      "referralCodeLabel": "Votre code",
+      "referralUrlLabel": "Votre lien",
+      "copyLink": "Copier le lien",
+      "copied": "Copié",
+      "share": "Partager",
+      "shareTitle": "Rejoindre la boucle fondatrice de {brandName}",
+      "shareText": "Utilisez mon lien d’invitation pour rejoindre la liste d’attente fondateur de {brandName}.",
+      "directMode": "Aucun code de parrainage requis",
+      "codeMode": "Attribution de parrainage activée"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Boucle fondateur à fondateur",
+        "description": "Chaque inscription acceptée reçoit un code et une URL, afin que le prochain parrainage démarre sans relais manuel."
+      },
+      "attribution": {
+        "title": "Attribution honnête",
+        "description": "Les codes inconnus sont conservés comme tentative; les codes valides incrémentent le parrain et gardent l’inscription propre."
+      },
+      "shareLink": {
+        "title": "Succès prêt à partager",
+        "description": "La confirmation affiche position, code, copie et partage natif pour compléter la boucle sur la page."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Infrastructure product-led",
+      "title": "Conçue comme une infrastructure SaaS durable, pas comme un formulaire jetable.",
+      "description": "La surface de parrainage repose sur un package domaine, un modèle Prisma persistant, une route Next.js typée et des public smoke checks après déploiement ECS.",
+      "data": {
+        "eyebrow": "Données",
+        "title": "Une table durable de liste d’attente",
+        "description": "Unicité email, position auto-incrémentée, index de code, metadata d’attribution tentée et transitions d’état vivent dans la base plateforme."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Endpoint d’inscription typé",
+        "description": "La page poste vers `/api/waitlist`, normalise les codes arbitraires, retourne les entrées existantes de façon idempotente et ne dépend d’aucun code exemple."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Public smoke au déploiement",
+        "description": "Les URL canonical et alias sont prêtes pour des checks automatiques afin qu’ECS détecte les régressions de route, DNS et santé."
+      }
+    }
+  },
   "hero": {
     "headline1": "Lancez votre Startup,",
     "headline2": "propulsée par {brandName} Agent OS.",

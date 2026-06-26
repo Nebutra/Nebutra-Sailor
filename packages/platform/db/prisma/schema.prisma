@@ -1549,6 +1549,28 @@ model ContactSubmission {
   @@schema("public")
 }
 
+// Public PLG waitlist + referral loop. Global by design: this is a pre-auth
+// acquisition surface, not tenant-owned application data. `position` is backed
+// by a database sequence so concurrent signups cannot claim the same rank.
+model WaitlistEntry {
+  id            String    @id @default(cuid())
+  email         String    @unique @db.VarChar(254)
+  position      Int       @unique @default(autoincrement())
+  referralCode  String    @unique @map("referral_code") @db.VarChar(40)
+  referredBy    String?   @map("referred_by") @db.VarChar(40)
+  referralCount Int       @default(0) @map("referral_count")
+  status        String    @default("waiting") @db.VarChar(20)
+  metadata      Json      @default("{}")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  admittedAt    DateTime? @map("admitted_at")
+
+  @@index([status, createdAt(sort: Desc)])
+  @@index([referredBy])
+  @@index([referralCount, createdAt(sort: Desc)])
+  @@map("waitlist_entries")
+  @@schema("public")
+}
+
 // Standard task envelope for origin-owned long-running work. The API surface is
 // stable across Celery, QStash/arq, and test memory dispatchers.
 model Task {

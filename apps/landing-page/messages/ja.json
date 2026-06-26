@@ -26,6 +26,74 @@
       "signOut": "ログアウト"
     }
   },
+  "refer": {
+    "metadataTitle": "{brandName} の創業者紹介ループに参加",
+    "metadataDescription": "{brandName} のウェイトリストに参加し、紹介アトリビューションを保持しながら、自分専用の共有リンクを受け取れます。",
+    "eyebrow": "創業者紹介ループ",
+    "title": "次の創業者コホートに参加し、自分専用の共有リンクを受け取る。",
+    "description": "任意の招待コードで入ることも、直接参加することもできます。コードが存在する場合はアトリビューションを保持し、ウェイトリスト登録後すぐに共有用 URL を発行します。",
+    "signal": {
+      "waitlist": "永続ウェイトリスト",
+      "codeDetected": "コード {code} を検出",
+      "direct": "直接登録"
+    },
+    "form": {
+      "emailLabel": "仕事用メール",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "紹介コード",
+      "codePlaceholder": "任意のコード",
+      "submit": "ウェイトリストに参加",
+      "submitting": "参加中",
+      "invalidEmail": "有効なメールアドレスを入力してください。",
+      "error": "現在参加できません。もう一度お試しください。",
+      "successTitle": "リストに入りました",
+      "successDescription": "あなた専用の共有リンクを用意しました。",
+      "positionLabel": "キュー位置",
+      "referralCodeLabel": "あなたのコード",
+      "referralUrlLabel": "共有リンク",
+      "copyLink": "リンクをコピー",
+      "copied": "コピー済み",
+      "share": "共有",
+      "shareTitle": "{brandName} の創業者ループに参加",
+      "shareText": "私の招待リンクで {brandName} の創業者ウェイトリストに参加してください。",
+      "directMode": "紹介コードなしで参加できます",
+      "codeMode": "紹介アトリビューションが有効です"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "創業者同士のループ",
+        "description": "登録が承認されるたびにコードと URL が発行され、次の紹介が手作業なしで始まります。"
+      },
+      "attribution": {
+        "title": "誠実なアトリビューション",
+        "description": "未知のコードは試行として保存し、有効なコードは紹介者を加算して登録データをきれいに保ちます。"
+      },
+      "shareLink": {
+        "title": "成功画面からすぐ共有",
+        "description": "確認画面で位置、コード、コピー、ネイティブ共有を出し、ページ内でループを完結させます。"
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "プロダクト主導インフラ",
+      "title": "使い捨てフォームではなく、耐久性のある SaaS インフラとして設計。",
+      "description": "紹介面はドメインパッケージ、永続 Prisma モデル、型付き Next.js route、ECS デプロイ後に走らせられる public smoke checks に支えられています。",
+      "data": {
+        "eyebrow": "データ",
+        "title": "単一の永続ウェイトリスト表",
+        "description": "メール一意性、自動採番位置、紹介コード索引、試行アトリビューション metadata、状態遷移を平台データベースで管理します。"
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "型付き参加エンドポイント",
+        "description": "ページは `/api/waitlist` に投稿し、任意コードを正規化し、重複メールは既存レコードを返し、サンプルコードに依存しません。"
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "デプロイ時 public smoke",
+        "description": "canonical と alias URL を自動確認できるため、ECS 配信で route、DNS、health の回帰を検知できます。"
+      }
+    }
+  },
   "hero": {
     "headline1": "あなたのスタートアップを、",
     "headline2": "{brandName} Agent OS で出航させよう。",

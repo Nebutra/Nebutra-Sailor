@@ -26,6 +26,74 @@
       "signOut": "Abmelden"
     }
   },
+  "refer": {
+    "metadataTitle": "Dem {brandName} Founder-Referral-Loop beitreten",
+    "metadataDescription": "Tritt der {brandName} Warteliste bei, behalte Referral-Attribution und erhalte deinen eigenen Share-Link.",
+    "eyebrow": "Founder-Referral-Loop",
+    "title": "Tritt der nächsten Founder-Kohorte bei und erhalte deinen eigenen Share-Link.",
+    "description": "Komm mit einem beliebigen Invite-Code herein oder tritt direkt bei. Wenn der Code existiert, behalten wir die Attribution, setzen dich auf die Warteliste und stellen sofort eine private Referral-URL aus.",
+    "signal": {
+      "waitlist": "Dauerhafte Warteliste",
+      "codeDetected": "Code {code} erkannt",
+      "direct": "Direkte Anmeldung"
+    },
+    "form": {
+      "emailLabel": "Arbeits-E-Mail",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Referral-Code",
+      "codePlaceholder": "Optionaler Code",
+      "submit": "Warteliste beitreten",
+      "submitting": "Wird gesendet",
+      "invalidEmail": "Gib eine gültige E-Mail ein.",
+      "error": "Beitritt gerade nicht möglich. Bitte erneut versuchen.",
+      "successTitle": "Du bist auf der Liste",
+      "successDescription": "Dein privater Share-Link ist bereit.",
+      "positionLabel": "Warteschlangenposition",
+      "referralCodeLabel": "Dein Code",
+      "referralUrlLabel": "Dein Share-Link",
+      "copyLink": "Link kopieren",
+      "copied": "Kopiert",
+      "share": "Teilen",
+      "shareTitle": "Dem {brandName} Founder-Loop beitreten",
+      "shareText": "Nutze meinen Invite-Link, um der {brandName} Founder-Warteliste beizutreten.",
+      "directMode": "Kein Referral-Code erforderlich",
+      "codeMode": "Referral-Attribution aktiv"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Founder-zu-Founder Loop",
+        "description": "Jeder akzeptierte Signup erhält Code und URL, damit die nächste Empfehlung ohne manuelle Übergabe startet."
+      },
+      "attribution": {
+        "title": "Ehrliche Attribution",
+        "description": "Unbekannte Codes werden als Versuch gespeichert; gültige Codes erhöhen den Referrer und halten den Signup sauber."
+      },
+      "shareLink": {
+        "title": "Erfolg direkt teilbar",
+        "description": "Die Bestätigung zeigt Position, Code, Kopieren und natives Teilen, damit der Loop auf der Seite abschließt."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Product-led Infrastruktur",
+      "title": "Als dauerhafte SaaS-Infrastruktur entworfen, nicht als Wegwerf-Formular.",
+      "description": "Die Referral-Oberfläche basiert auf einem Domain-Package, einem persistenten Prisma-Modell, einer typisierten Next.js route und public smoke checks nach ECS-Deploys.",
+      "data": {
+        "eyebrow": "Daten",
+        "title": "Eine dauerhafte Wartelistentabelle",
+        "description": "E-Mail-Eindeutigkeit, automatisch erhöhte Position, Referral-Code-Indizes, Metadata für versuchte Attribution und Statuswechsel liegen in der Plattformdatenbank."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Typisierter Join-Endpunkt",
+        "description": "Die Seite postet an `/api/waitlist`, normalisiert beliebige Codes, gibt bestehende Einträge idempotent zurück und hängt an keinem Beispielcode."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Public smoke beim Deploy",
+        "description": "Canonical- und Alias-URLs sind für automatische Checks vorbereitet, damit ECS Route-, DNS- und Health-Regressionen erkennt."
+      }
+    }
+  },
   "hero": {
     "headline1": "Bring dein Startup an den Start —",
     "headline2": "angetrieben vom {brandName} Agent OS.",

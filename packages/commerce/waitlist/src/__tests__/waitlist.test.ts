@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { createWaitlist } from "../index";
+import { createReferralUrl, createWaitlist, normalizeReferralCode } from "../index";
 
 describe("Waitlist", () => {
   let waitlist: ReturnType<typeof createWaitlist>;
@@ -32,6 +32,16 @@ describe("Waitlist", () => {
       );
     });
 
+    it("can return the existing entry for idempotent public form retries", async () => {
+      const first = await waitlist.join({ email: "user@test.com" });
+      const second = await waitlist.join({
+        email: " USER@test.com ",
+        onDuplicate: "return-existing",
+      });
+
+      expect(second).toEqual(first);
+    });
+
     it("validates email format", async () => {
       await expect(waitlist.join({ email: "not-an-email" })).rejects.toThrow();
     });
@@ -40,9 +50,10 @@ describe("Waitlist", () => {
       const first = await waitlist.join({ email: "first@test.com" });
       const second = await waitlist.join({
         email: "second@test.com",
-        referredBy: first.referralCode,
+        referredBy: first.referralCode.toLowerCase(),
       });
       expect(second.referredBy).toBe(first.referralCode);
+      expect(second.metadata).toMatchObject({ attemptedReferralCode: first.referralCode });
     });
 
     it("increments referral count for referrer", async () => {
@@ -54,6 +65,19 @@ describe("Waitlist", () => {
 
       const updated = await waitlist.getByEmail("first@test.com");
       expect(updated?.referralCount).toBe(1);
+    });
+
+    it("preserves unknown referral attempts without counting them as referred", async () => {
+      const entry = await waitlist.join({
+        email: "second@test.com",
+        referredBy: " abcd2345 ",
+      });
+
+      expect(entry.referredBy).toBeUndefined();
+      expect(entry.metadata).toMatchObject({ attemptedReferralCode: "ABCD2345" });
+
+      const analytics = await waitlist.getReferralAnalytics();
+      expect(analytics.totalReferred).toBe(0);
     });
 
     it("stores optional metadata", async () => {
@@ -138,5 +162,22 @@ describe("Waitlist", () => {
       const page = await waitlist.list({ limit: 3, offset: 3 });
       expect(page.entries).toHaveLength(2);
     });
+  });
+});
+
+describe("referral helpers", () => {
+  it("normalizes referral codes from arbitrary URL input", () => {
+    expect(normalizeReferralCode(" abcd-2345 ")).toBe("ABCD2345");
+    expect(normalizeReferralCode("")).toBeNull();
+    expect(normalizeReferralCode("%%%")).toBeNull();
+  });
+
+  it("creates a canonical referral URL without hardcoding example codes", () => {
+    expect(
+      createReferralUrl({
+        baseUrl: "https://nebutra.com/",
+        code: " abc123 ",
+      }),
+    ).toBe("https://nebutra.com/refer?code=ABC123");
   });
 });

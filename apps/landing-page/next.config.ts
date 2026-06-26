@@ -5,9 +5,47 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const withBundleAnalyzer = createBundleAnalyzer({ enabled: true });
 const isDevelopment = process.env.NODE_ENV !== "production";
-const scriptSrc = ["'self'", "'unsafe-inline'", ...(isDevelopment ? ["'unsafe-eval'"] : [])].join(
-  " ",
-);
+const googleIdentityServices = {
+  connect: "https://accounts.google.com/gsi/",
+  frame: "https://accounts.google.com/gsi/",
+  script: "https://accounts.google.com/gsi/client",
+  style: "https://accounts.google.com/gsi/style",
+} as const;
+
+function cspDirective(name: string, sources: readonly string[]): string {
+  return `${name} ${sources.join(" ")}`;
+}
+
+function buildContentSecurityPolicy(): string {
+  const scriptSrc = [
+    "'self'",
+    "'unsafe-inline'",
+    ...(isDevelopment ? ["'unsafe-eval'"] : []),
+    googleIdentityServices.script,
+  ];
+
+  return [
+    cspDirective("default-src", ["'self'"]),
+    cspDirective("script-src", scriptSrc),
+    cspDirective("style-src", ["'self'", "'unsafe-inline'", googleIdentityServices.style]),
+    cspDirective("img-src", [
+      "'self'",
+      "data:",
+      "blob:",
+      "https://svgl.app",
+      "https://cdn.simpleicons.org",
+      "https://github.com",
+      "https://images.unsplash.com",
+      "https://avatars.githubusercontent.com",
+      "https://api.dicebear.com",
+    ]),
+    cspDirective("font-src", ["'self'", "data:"]),
+    cspDirective("media-src", ["'self'", "https://d8j0ntlcm91z4.cloudfront.net"]),
+    cspDirective("connect-src", ["'self'", googleIdentityServices.connect]),
+    cspDirective("frame-src", [googleIdentityServices.frame]),
+    cspDirective("frame-ancestors", ["'none'"]),
+  ].join("; ");
+}
 
 const securityHeaders = [
   {
@@ -36,7 +74,7 @@ const securityHeaders = [
   },
   {
     key: "Content-Security-Policy",
-    value: `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://svgl.app https://cdn.simpleicons.org https://github.com https://images.unsplash.com https://avatars.githubusercontent.com https://api.dicebear.com; font-src 'self' data:; media-src 'self' https://d8j0ntlcm91z4.cloudfront.net; connect-src 'self'; frame-ancestors 'none';`,
+    value: buildContentSecurityPolicy(),
   },
 ];
 
@@ -104,6 +142,7 @@ const nextConfig: NextConfig = {
     "@nebutra/rls",
     "@nebutra/tokens",
     "@nebutra/vault",
+    "@nebutra/waitlist",
   ],
   reactCompiler: true,
 

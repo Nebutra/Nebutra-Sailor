@@ -258,6 +258,11 @@ export type CookieConsent = Prisma.CookieConsentModel
  */
 export type ContactSubmission = Prisma.ContactSubmissionModel
 /**
+ * Model WaitlistEntry
+ * 
+ */
+export type WaitlistEntry = Prisma.WaitlistEntryModel
+/**
  * Model Task
  * 
  */

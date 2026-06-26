@@ -26,6 +26,74 @@
       "signOut": "Sign out"
     }
   },
+  "refer": {
+    "metadataTitle": "Join the {brandName} founder referral loop",
+    "metadataDescription": "Join the {brandName} waitlist, keep referral attribution, and unlock your own share link in one closed product-led loop.",
+    "eyebrow": "Founder referral loop",
+    "title": "Join the next founder cohort and get your own share link.",
+    "description": "Enter with any invite code or join directly. We will preserve attribution when the code exists, place you on the waitlist, and issue a private referral URL you can share immediately.",
+    "signal": {
+      "waitlist": "Durable waitlist",
+      "codeDetected": "Code {code} detected",
+      "direct": "Direct signup"
+    },
+    "form": {
+      "emailLabel": "Work email",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "Referral code",
+      "codePlaceholder": "Optional code",
+      "submit": "Join waitlist",
+      "submitting": "Joining",
+      "invalidEmail": "Enter a valid email.",
+      "error": "Could not join right now. Please try again.",
+      "successTitle": "You are on the list",
+      "successDescription": "Your private share link is ready.",
+      "positionLabel": "Queue position",
+      "referralCodeLabel": "Your code",
+      "referralUrlLabel": "Your share link",
+      "copyLink": "Copy link",
+      "copied": "Copied",
+      "share": "Share",
+      "shareTitle": "Join the {brandName} founding loop",
+      "shareText": "Use my invite link to join the {brandName} founder waitlist.",
+      "directMode": "No referral code needed",
+      "codeMode": "Referral attribution enabled"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "Founder-to-founder loop",
+        "description": "Every accepted signup receives a code and URL, so the next referral starts without a manual handoff."
+      },
+      "attribution": {
+        "title": "Honest attribution",
+        "description": "Unknown codes are stored as attempted attribution, while valid codes increment the referrer and keep the signup clean."
+      },
+      "shareLink": {
+        "title": "Share-ready success state",
+        "description": "The confirmation state exposes position, code, copy, and native share actions so the loop completes on the page."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "Product-led infrastructure",
+      "title": "Designed as durable SaaS infrastructure, not a throwaway form.",
+      "description": "The referral surface is backed by a domain package, a persistent Prisma model, a typed Next.js route, and public smoke checks that can run after ECS deploys.",
+      "data": {
+        "eyebrow": "Data",
+        "title": "One durable waitlist table",
+        "description": "Email uniqueness, auto-incremented position, referral code indexes, attempted attribution metadata, and status transitions live in the platform database."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "Typed join endpoint",
+        "description": "The page posts to `/api/waitlist`, normalizes arbitrary codes, returns existing entries idempotently, and never depends on a sample code."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "Deploy-time public smoke",
+        "description": "Canonical and alias URLs are ready for automated checks so ECS delivery catches route, DNS, and health regressions."
+      }
+    }
+  },
   "hero": {
     "headline1": "Ship your Startup,",
     "headline2": "powered by {brandName} Agent OS.",

@@ -26,6 +26,74 @@
       "signOut": "退出登录"
     }
   },
+  "refer": {
+    "metadataTitle": "加入 {brandName} 创始人推荐闭环",
+    "metadataDescription": "加入 {brandName} 等候名单，保留推荐归因，并在同一个 PLG 闭环里生成你的专属分享链接。",
+    "eyebrow": "创始人推荐闭环",
+    "title": "加入下一批创始人队列，并领取你的专属分享链接。",
+    "description": "可以带任意邀请码进入，也可以直接加入。若邀请码真实存在，系统会保留归因；同时把你写入等候名单，并立即生成可分享的私有 referral URL。",
+    "signal": {
+      "waitlist": "持久化等候名单",
+      "codeDetected": "已识别邀请码 {code}",
+      "direct": "直接加入"
+    },
+    "form": {
+      "emailLabel": "工作邮箱",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "推荐码",
+      "codePlaceholder": "可选推荐码",
+      "submit": "加入等候名单",
+      "submitting": "加入中",
+      "invalidEmail": "请输入有效邮箱。",
+      "error": "暂时无法加入，请稍后重试。",
+      "successTitle": "你已进入队列",
+      "successDescription": "你的专属分享链接已经生成。",
+      "positionLabel": "队列位置",
+      "referralCodeLabel": "你的推荐码",
+      "referralUrlLabel": "你的分享链接",
+      "copyLink": "复制链接",
+      "copied": "已复制",
+      "share": "分享",
+      "shareTitle": "加入 {brandName} 创始人闭环",
+      "shareText": "使用我的邀请链接加入 {brandName} 创始人等候名单。",
+      "directMode": "无需推荐码也可加入",
+      "codeMode": "推荐归因已启用"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "创始人到创始人的增长闭环",
+        "description": "每个成功加入的用户都会获得推荐码和链接，下一次传播无需人工转交。"
+      },
+      "attribution": {
+        "title": "可信归因",
+        "description": "未知码会作为尝试归因被记录；有效码会增加推荐人计数，并保持 signup 数据干净。"
+      },
+      "shareLink": {
+        "title": "成功态即可分享",
+        "description": "确认页直接展示队列位置、推荐码、复制与系统分享动作，让闭环在页面内完成。"
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "产品驱动基础设施",
+      "title": "它是耐久 SaaS 基础设施，不是一次性表单。",
+      "description": "推荐页背后由领域包、持久化 Prisma 模型、类型化 Next.js route 和可接入 ECS 部署后的 public smoke checks 支撑。",
+      "data": {
+        "eyebrow": "数据",
+        "title": "单一持久等候名单表",
+        "description": "邮箱唯一性、自动递增位置、推荐码索引、尝试归因 metadata 与状态流转都落在平台数据库里。"
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "类型化加入端点",
+        "description": "页面提交到 `/api/waitlist`，归一化任意推荐码，重复邮箱幂等返回既有记录，并且不依赖任何样例码。"
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "部署时 public smoke",
+        "description": "canonical 和 alias URL 都可自动检查，让 ECS 交付能捕获路由、DNS 与健康检查回归。"
+      }
+    }
+  },
   "hero": {
     "headline1": "睡前的一个念头，",
     "headline2": "也可能是下一个独角兽。",

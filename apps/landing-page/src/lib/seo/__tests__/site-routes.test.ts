@@ -34,6 +34,7 @@ describe("site SEO route registry", () => {
     expect(candidates).toEqual(
       expect.arrayContaining([
         "/features",
+        "/refer",
         "/solutions",
         "/pricing",
         "/get-license",

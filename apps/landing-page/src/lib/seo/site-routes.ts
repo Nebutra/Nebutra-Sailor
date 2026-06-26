@@ -47,6 +47,12 @@ export const PUBLIC_SEO_ROUTES: ReadonlyArray<PublicSeoRoute> = [
     sitelinkCandidate: { label: "Features" },
   },
   {
+    path: "/refer",
+    changeFrequency: "weekly",
+    priority: 0.8,
+    sitelinkCandidate: { label: "Founder Referral" },
+  },
+  {
     path: "/solutions",
     changeFrequency: "weekly",
     priority: 0.9,

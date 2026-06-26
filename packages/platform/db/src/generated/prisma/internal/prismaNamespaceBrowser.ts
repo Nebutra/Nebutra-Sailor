@@ -97,6 +97,7 @@ export const ModelName = {
   UserConsent: 'UserConsent',
   CookieConsent: 'CookieConsent',
   ContactSubmission: 'ContactSubmission',
+  WaitlistEntry: 'WaitlistEntry',
   Task: 'Task',
   UploadRecord: 'UploadRecord',
   OAuthClient: 'OAuthClient',
@@ -953,6 +954,22 @@ export const ContactSubmissionScalarFieldEnum = {
 } as const
 
 export type ContactSubmissionScalarFieldEnum = (typeof ContactSubmissionScalarFieldEnum)[keyof typeof ContactSubmissionScalarFieldEnum]
+
+
+export const WaitlistEntryScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  position: 'position',
+  referralCode: 'referralCode',
+  referredBy: 'referredBy',
+  referralCount: 'referralCount',
+  status: 'status',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  admittedAt: 'admittedAt'
+} as const
+
+export type WaitlistEntryScalarFieldEnum = (typeof WaitlistEntryScalarFieldEnum)[keyof typeof WaitlistEntryScalarFieldEnum]
 
 
 export const TaskScalarFieldEnum = {

@@ -26,6 +26,74 @@
       "signOut": "로그아웃"
     }
   },
+  "refer": {
+    "metadataTitle": "{brandName} 창업자 추천 루프 참여",
+    "metadataDescription": "{brandName} 대기자 명단에 참여하고 추천 어트리뷰션을 유지하며 나만의 공유 링크를 받으세요.",
+    "eyebrow": "창업자 추천 루프",
+    "title": "다음 창업자 코호트에 참여하고 나만의 공유 링크를 받으세요.",
+    "description": "어떤 초대 코드로 들어와도 되고 바로 참여해도 됩니다. 코드가 존재하면 어트리뷰션을 보존하고, 대기자 명단에 등록한 뒤 즉시 공유 URL을 발급합니다.",
+    "signal": {
+      "waitlist": "영구 대기자 명단",
+      "codeDetected": "코드 {code} 감지됨",
+      "direct": "직접 가입"
+    },
+    "form": {
+      "emailLabel": "업무 이메일",
+      "emailPlaceholder": "you@example.com",
+      "codeLabel": "추천 코드",
+      "codePlaceholder": "선택 코드",
+      "submit": "대기자 명단 참여",
+      "submitting": "참여 중",
+      "invalidEmail": "유효한 이메일을 입력하세요.",
+      "error": "지금은 참여할 수 없습니다. 다시 시도해 주세요.",
+      "successTitle": "명단에 등록되었습니다",
+      "successDescription": "전용 공유 링크가 준비되었습니다.",
+      "positionLabel": "대기 순번",
+      "referralCodeLabel": "내 코드",
+      "referralUrlLabel": "공유 링크",
+      "copyLink": "링크 복사",
+      "copied": "복사됨",
+      "share": "공유",
+      "shareTitle": "{brandName} 창업자 루프 참여",
+      "shareText": "내 초대 링크로 {brandName} 창업자 대기자 명단에 참여하세요.",
+      "directMode": "추천 코드 없이 참여 가능",
+      "codeMode": "추천 어트리뷰션 활성화"
+    },
+    "proof": {
+      "peerLoop": {
+        "title": "창업자 간 성장 루프",
+        "description": "승인된 가입자는 코드와 URL을 받아 다음 추천이 수동 전달 없이 시작됩니다."
+      },
+      "attribution": {
+        "title": "정직한 어트리뷰션",
+        "description": "알 수 없는 코드는 시도 기록으로 저장하고, 유효한 코드는 추천자 수를 늘리며 가입 데이터를 깨끗하게 유지합니다."
+      },
+      "shareLink": {
+        "title": "성공 상태에서 바로 공유",
+        "description": "확인 화면에서 순번, 코드, 복사, 네이티브 공유 액션을 제공해 페이지 안에서 루프를 완성합니다."
+      }
+    },
+    "infrastructure": {
+      "eyebrow": "제품 주도 인프라",
+      "title": "일회용 폼이 아니라 지속 가능한 SaaS 인프라로 설계했습니다.",
+      "description": "추천 화면은 도메인 패키지, 영구 Prisma 모델, 타입 지정 Next.js route, ECS 배포 후 실행 가능한 public smoke checks로 뒷받침됩니다.",
+      "data": {
+        "eyebrow": "데이터",
+        "title": "하나의 영구 대기자 테이블",
+        "description": "이메일 유일성, 자동 증가 순번, 추천 코드 인덱스, 시도 어트리뷰션 metadata, 상태 전환을 플랫폼 데이터베이스에 둡니다."
+      },
+      "api": {
+        "eyebrow": "API",
+        "title": "타입 지정 참여 엔드포인트",
+        "description": "페이지는 `/api/waitlist`로 전송하고 임의 코드를 정규화하며, 중복 이메일은 기존 레코드를 반환하고 샘플 코드에 의존하지 않습니다."
+      },
+      "cicd": {
+        "eyebrow": "CI/CD",
+        "title": "배포 시 public smoke",
+        "description": "canonical 및 alias URL 자동 확인으로 ECS 전달 중 route, DNS, health 회귀를 감지할 수 있습니다."
+      }
+    }
+  },
   "hero": {
     "headline1": "당신의 스타트업을 출항시키세요,",
     "headline2": "{brandName} Agent OS와 함께.",

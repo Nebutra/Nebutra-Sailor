@@ -35,6 +35,7 @@ export interface JoinOptions {
   email: string;
   referredBy?: string;
   metadata?: Record<string, unknown>;
+  onDuplicate?: "error" | "return-existing";
 }
 
 export interface ListOptions {
@@ -100,15 +101,36 @@ export interface WaitlistNotificationSink {
 
 const emailSchema = z.string().email("Invalid email format");
 
-// ── Referral code generation ─────────────────────────────────────────────────
+// ── Referral code helpers ────────────────────────────────────────────────────
+
+const REFERRAL_CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
 function generateReferralCode(): string {
-  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
   let code = "";
   for (let i = 0; i < 8; i++) {
-    code += chars[Math.floor(Math.random() * chars.length)];
+    const index = Math.floor(Math.random() * REFERRAL_CODE_CHARS.length);
+    code += REFERRAL_CODE_CHARS[index];
   }
   return code;
+}
+
+export function normalizeReferralCode(input: string | null | undefined): string | null {
+  const normalized = (input ?? "").replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+  if (!normalized) return null;
+  return normalized.slice(0, 40);
+}
+
+export function createReferralUrl(input: { baseUrl: string; code: string }): string {
+  const code = normalizeReferralCode(input.code);
+  if (!code) {
+    throw new Error("Referral code is required");
+  }
+
+  const url = new URL(input.baseUrl);
+  url.pathname = "/refer";
+  url.search = "";
+  url.searchParams.set("code", code);
+  return url.toString();
 }
 
 function generateId(): string {
@@ -136,7 +158,9 @@ class InMemoryWaitlistStore implements WaitlistStore {
   }
 
   async getByReferralCode(referralCode: string): Promise<WaitlistEntry | null> {
-    return this.entries.find((entry) => entry.referralCode === referralCode) ?? null;
+    const normalized = normalizeReferralCode(referralCode);
+    if (!normalized) return null;
+    return this.entries.find((entry) => entry.referralCode === normalized) ?? null;
   }
 
   async update(id: string, input: WaitlistUpdateInput): Promise<WaitlistEntry> {
@@ -220,10 +244,19 @@ function mapPrismaRow(row: PrismaWaitlistRow): WaitlistEntry {
 export function createPrismaWaitlistStore(delegate: PrismaWaitlistDelegate): WaitlistStore {
   return {
     async create(input) {
+      const referralCode = normalizeReferralCode(input.referralCode);
+      if (!referralCode) {
+        throw new Error("Referral code is required");
+      }
+
       const row = await delegate.create({
         data: {
-          ...input,
           id: input.id ?? generateId(),
+          email: input.email,
+          referralCode,
+          referralCount: input.referralCount,
+          status: input.status,
+          createdAt: input.createdAt,
           referredBy: input.referredBy ?? null,
           metadata: input.metadata ?? null,
           admittedAt: input.admittedAt ?? null,
@@ -236,7 +269,9 @@ export function createPrismaWaitlistStore(delegate: PrismaWaitlistDelegate): Wai
       return row ? mapPrismaRow(row) : null;
     },
     async getByReferralCode(referralCode) {
-      const row = await delegate.findUnique({ where: { referralCode } });
+      const normalized = normalizeReferralCode(referralCode);
+      if (!normalized) return null;
+      const row = await delegate.findUnique({ where: { referralCode: normalized } });
       return row ? mapPrismaRow(row) : null;
     },
     async update(id, input) {
@@ -292,30 +327,48 @@ class WaitlistService implements Waitlist {
   async join(opts: JoinOptions): Promise<WaitlistEntry> {
     const email = emailSchema.parse(opts.email.toLowerCase().trim());
 
-    if (await this.store.getByEmail(email)) {
+    const existingEntry = await this.store.getByEmail(email);
+    if (existingEntry) {
+      if (opts.onDuplicate === "return-existing") {
+        return existingEntry;
+      }
       throw new Error("This email is already on the waitlist");
     }
 
-    if (opts.referredBy) {
-      const referrer = await this.store.getByReferralCode(opts.referredBy);
-      if (referrer) {
-        await this.store.update(referrer.id, {
-          referralCount: referrer.referralCount + 1,
-        });
-      }
+    const attemptedReferralCode = normalizeReferralCode(opts.referredBy);
+    const referrer = attemptedReferralCode
+      ? await this.store.getByReferralCode(attemptedReferralCode)
+      : null;
+
+    if (referrer) {
+      await this.store.update(referrer.id, {
+        referralCount: referrer.referralCount + 1,
+      });
     }
 
     const existing = await this.store.list({ limit: 0 });
-    const entry = await this.store.create({
+    const metadata = { ...(opts.metadata ?? {}) };
+    if (attemptedReferralCode) {
+      metadata.attemptedReferralCode = attemptedReferralCode;
+    }
+
+    const createInput: WaitlistCreateInput = {
       email,
       position: existing.total + 1,
       referralCode: generateReferralCode(),
-      referredBy: opts.referredBy,
       referralCount: 0,
       status: "waiting",
-      metadata: opts.metadata,
       createdAt: new Date(),
-    });
+    };
+
+    if (referrer) {
+      createInput.referredBy = referrer.referralCode;
+    }
+    if (Object.keys(metadata).length > 0) {
+      createInput.metadata = metadata;
+    }
+
+    const entry = await this.store.create(createInput);
 
     await this.notifications?.sendConfirmation?.(entry);
     await this.notifications?.sendPositionUpdate?.(entry);

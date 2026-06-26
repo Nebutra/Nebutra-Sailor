@@ -1,7 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   createMemoryWaitlistStore,
+  createPrismaWaitlistStore,
   createWaitlist,
+  type PrismaWaitlistDelegate,
   type WaitlistNotificationSink,
   type WaitlistStore,
 } from "../index";
@@ -92,5 +94,44 @@ describe("Waitlist adapters", () => {
         referralCount: 1,
       },
     ]);
+  });
+
+  it("lets durable Prisma storage assign the public waitlist position", async () => {
+    let createData: Record<string, unknown> | null = null;
+    const delegate: PrismaWaitlistDelegate = {
+      async create(args) {
+        createData = args.data;
+        return {
+          id: String(args.data.id),
+          email: String(args.data.email),
+          position: 42,
+          referralCode: String(args.data.referralCode),
+          referredBy: null,
+          referralCount: Number(args.data.referralCount),
+          status: "waiting",
+          metadata: null,
+          createdAt: args.data.createdAt as Date,
+          admittedAt: null,
+        };
+      },
+      async findUnique() {
+        return null;
+      },
+      async findMany() {
+        return [];
+      },
+      async count() {
+        return 0;
+      },
+      async update() {
+        throw new Error("not needed");
+      },
+    };
+
+    const waitlist = createWaitlist({ store: createPrismaWaitlistStore(delegate) });
+    const entry = await waitlist.join({ email: "durable@example.com" });
+
+    expect(entry.position).toBe(42);
+    expect(createData).not.toHaveProperty("position");
   });
 });

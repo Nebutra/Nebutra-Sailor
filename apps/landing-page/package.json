@@ -36,6 +36,7 @@
     "@nebutra/sanity": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
+    "@nebutra/waitlist": "workspace:*",
     "@phosphor-icons/react": "^2.1.10",
     "@portabletext/react": "^6.0.3",
     "@t3-oss/env-nextjs": "^0.13.10",

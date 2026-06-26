@@ -228,8 +228,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 18,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 164,
-      testFiles: 35,
+      sourceFiles: 165,
+      testFiles: 36,
       readmes: 13,
     },
     title: copy("Platform Control Plane", "平台控制平面"),
@@ -245,8 +245,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       value: "18",
       label: copy("foundation packages", "基础包"),
       detail: copy(
-        "164 runtime source files spanning db, gateway-core, provider-factory, tenant-store, trace-store, config, errors, and observability.",
-        "164 个运行时源码文件覆盖 db、gateway-core、provider-factory、tenant-store、trace-store、config、errors 与可观测性。",
+        "165 runtime source files spanning db, gateway-core, provider-factory, tenant-store, trace-store, config, errors, and observability.",
+        "165 个运行时源码文件覆盖 db、gateway-core、provider-factory、tenant-store、trace-store、config、errors 与可观测性。",
       ),
     },
     topology: {
@@ -908,8 +908,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 1,
       unitLabel: copy("backend", "后端"),
-      sourceFiles: 82,
-      testFiles: 27,
+      sourceFiles: 83,
+      testFiles: 28,
       readmes: 0,
     },
     title: copy("Typed API Gateway Boundary", "类型化 API 网关边界"),
@@ -922,7 +922,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       "这张卡按请求路径设计，因为 gateway 的价值只有把 middleware 顺序、route 契约与异步 jobs 放在一起才看得清。",
     ),
     signature: {
-      value: "27",
+      value: "28",
       label: copy("gateway tests", "gateway 测试"),
       detail: copy(
         "Billing idempotency, RBAC, middleware, queue delivery, events, health, notifications, and AI gateway routes are covered.",

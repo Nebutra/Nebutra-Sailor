@@ -3,6 +3,8 @@
 import type { ReactNode } from "react";
 import { GoogleOneTap } from "@/components/auth/google-one-tap";
 import { MarketingMotionProvider } from "@/components/landing/AnimateIn";
+import { usePathname } from "@/i18n/navigation";
+import { shouldMountMarketingGoogleOneTap } from "./marketing-google-one-tap-policy";
 
 interface MarketingClientProvidersProps {
   appUrl: string;
@@ -21,6 +23,9 @@ export function MarketingClientProviders({
   googleClientId,
   googleOneTapEnabled,
 }: MarketingClientProvidersProps) {
+  const pathname = usePathname();
+  const shouldMountOneTap = shouldMountMarketingGoogleOneTap(pathname, googleOneTapEnabled);
+
   return (
     <MarketingMotionProvider>
       {children}
@@ -29,7 +34,7 @@ export function MarketingClientProviders({
         authProvider={authProvider}
         clerkPublishableKey={clerkPublishableKey}
         clientId={googleClientId}
-        enabled={googleOneTapEnabled}
+        enabled={shouldMountOneTap}
       />
     </MarketingMotionProvider>
   );
