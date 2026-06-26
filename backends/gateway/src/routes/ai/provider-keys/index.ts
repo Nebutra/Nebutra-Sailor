@@ -37,6 +37,12 @@ providerKeyRoutes.use("*", async (c, next) => {
 
 const ProviderEnum = z.enum(["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]);
 const IsoDateTimeSchema = z.string().datetime();
+const JsonErrorSchema = z.object({ error: z.string() });
+
+const jsonErrorResponse = (description: string) => ({
+  description,
+  content: { "application/json": { schema: JsonErrorSchema } },
+});
 
 const UpsertProviderKeySchema = z
   .object({
@@ -81,6 +87,17 @@ const ProviderKeyDeletedSchema = z.object({
   provider: ProviderEnum,
 });
 
+type ProviderKeyResponse = z.infer<typeof ProviderKeySchema>;
+
+function toIsoString(value: Date | string): string {
+  return value instanceof Date ? value.toISOString() : value;
+}
+
+function toNullableIsoString(value: Date | string | null | undefined): string | null {
+  if (!value) return null;
+  return toIsoString(value);
+}
+
 /** Mask a secret for display — keep the last 4 chars only. */
 function maskKey(apiKey: string): string {
   if (apiKey.length <= 4) return "••••";
@@ -89,6 +106,25 @@ function maskKey(apiKey: string): string {
 
 function toRepo(orgId: string): TenantProviderKeyRepository {
   return getTenantProviderKeyRepository(orgId);
+}
+
+function serializeProviderKey(
+  row: Awaited<ReturnType<TenantProviderKeyRepository["list"]>>[number],
+  apiKey?: string,
+): ProviderKeyResponse {
+  const creds = row.credentials as unknown as ProviderKeyCredentials | null;
+  return {
+    id: row.id,
+    provider: row.provider,
+    label: row.label,
+    isActive: row.isActive,
+    alwaysUse: row.alwaysUse,
+    baseUrl: creds?.baseUrl ?? null,
+    maskedKey: apiKey ? maskKey(apiKey) : creds?.apiKey ? maskKey(creds.apiKey) : null,
+    lastTestedAt: toNullableIsoString(row.lastTestedAt),
+    createdAt: toIsoString(row.createdAt),
+    updatedAt: toIsoString(row.updatedAt),
+  };
 }
 
 // ── List provider keys (masked) ─────────────────────────────────────────────
@@ -103,6 +139,7 @@ const listRoute = createRoute({
       description: "List of provider keys",
       content: { "application/json": { schema: ProviderKeyListSchema } },
     },
+    500: jsonErrorResponse("Failed to list provider keys"),
   },
 });
 
@@ -110,22 +147,8 @@ providerKeyRoutes.openapi(listRoute, async (c) => {
   const orgId = c.get("tenant").organizationId as string;
   try {
     const rows = await toRepo(orgId).list();
-    const keys = rows.map((row) => {
-      const creds = row.credentials as unknown as ProviderKeyCredentials | null;
-      return {
-        id: row.id,
-        provider: row.provider,
-        label: row.label,
-        isActive: row.isActive,
-        alwaysUse: row.alwaysUse,
-        baseUrl: creds?.baseUrl ?? null,
-        maskedKey: creds?.apiKey ? maskKey(creds.apiKey) : null,
-        lastTestedAt: row.lastTestedAt,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-      };
-    });
-    return c.json({ keys, total: keys.length });
+    const keys = rows.map((row) => serializeProviderKey(row));
+    return c.json({ keys, total: keys.length }, 200);
   } catch (err) {
     const apiError = toApiError(err);
     return c.json({ error: apiError.error.message }, 500);
@@ -147,7 +170,8 @@ const upsertRoute = createRoute({
       description: "Provider key saved",
       content: { "application/json": { schema: ProviderKeySchema } },
     },
-    400: { description: "Invalid request" },
+    400: jsonErrorResponse("Invalid request"),
+    500: jsonErrorResponse("Failed to save provider key"),
   },
 });
 
@@ -162,21 +186,13 @@ providerKeyRoutes.openapi(upsertRoute, async (c) => {
       ...(body.label !== undefined ? { label: body.label } : {}),
       ...(body.alwaysUse !== undefined ? { alwaysUse: body.alwaysUse } : {}),
     });
-    return c.json(
-      {
-        id: row.id,
-        provider: row.provider,
-        label: row.label,
-        isActive: row.isActive,
-        alwaysUse: row.alwaysUse,
-        maskedKey: maskKey(body.apiKey),
-        createdAt: row.createdAt,
-      },
-      201,
-    );
+    return c.json(serializeProviderKey(row, body.apiKey), 201);
   } catch (err) {
     const apiError = toApiError(err);
-    return c.json({ error: apiError.error.message }, getStatusCode(err) as 400 | 500);
+    if (getStatusCode(err) === 400) {
+      return c.json({ error: apiError.error.message }, 400);
+    }
+    return c.json({ error: apiError.error.message }, 500);
   }
 });
 
@@ -184,7 +200,7 @@ providerKeyRoutes.openapi(upsertRoute, async (c) => {
 
 const deleteRoute = createRoute({
   method: "delete",
-  path: "/:provider",
+  path: "/{provider}",
   tags: ["Provider Keys"],
   summary: "Delete the BYOK key for a provider",
   request: { params: z.object({ provider: ProviderEnum }) },
@@ -193,7 +209,8 @@ const deleteRoute = createRoute({
       description: "Provider key deleted",
       content: { "application/json": { schema: ProviderKeyDeletedSchema } },
     },
-    404: { description: "Not found" },
+    404: jsonErrorResponse("Not found"),
+    500: jsonErrorResponse("Failed to delete provider key"),
   },
 });
 
@@ -204,7 +221,7 @@ providerKeyRoutes.openapi(deleteRoute, async (c) => {
     // Delete directly and map Prisma's "record not found" (P2025) to 404. This
     // avoids a check-then-delete race between two repository calls.
     await toRepo(orgId).delete(provider);
-    return c.json({ deleted: true, provider });
+    return c.json({ deleted: true, provider }, 200);
   } catch (err) {
     if (
       err &&

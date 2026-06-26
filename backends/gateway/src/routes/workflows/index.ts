@@ -23,6 +23,7 @@
 
 import { randomUUID } from "node:crypto";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import type { WorkflowDefinition, WorkflowRun } from "@nebutra/db";
 import { getStatusCode, toApiError } from "@nebutra/errors";
 import {
   type CreateWorkflowData,
@@ -57,10 +58,9 @@ workflowRoutes.use("*", (c, next) =>
 const orgId = (c: { get: (k: "tenant") => { organizationId?: string } }): string =>
   c.get("tenant").organizationId as string;
 
-const apiError = (
-  c: { json: (body: unknown, status: number) => Response },
-  err: unknown,
-): Response => c.json({ error: toApiError(err).error.message }, getStatusCode(err));
+function errorBody(err: unknown): { error: string } {
+  return { error: toApiError(err).error.message };
+}
 
 /** Drop undefined-valued keys (and their `| undefined` types) for exactOptional targets. */
 function compact<T extends Record<string, unknown>>(
@@ -91,8 +91,14 @@ const CreateWorkflowSchema = z.object({
 const UpdateWorkflowSchema = CreateWorkflowSchema.partial();
 
 const IsoDateTimeSchema = z.string().datetime();
+const JsonErrorSchema = z.object({ error: z.string() });
 const WorkflowStatusSchema = z.enum(["ACTIVE", "DISABLED"]);
 const WorkflowRunStatusSchema = z.enum(["QUEUED", "RUNNING", "SUCCEEDED", "FAILED"]);
+
+const jsonErrorResponse = (description: string) => ({
+  description,
+  content: { "application/json": { schema: JsonErrorSchema } },
+});
 
 const WorkflowDefinitionSchema = z.object({
   id: z.string(),
@@ -148,14 +154,58 @@ const WorkflowDeletedSchema = z.object({
   id: z.string(),
 });
 
-const WorkflowRunStreamStartedSchema = z.object({
-  runId: z.string(),
-  ok: z.boolean().optional(),
-  returnValue: z.unknown().optional(),
-  error: z.string().optional(),
-  usage: z.unknown().optional(),
-  agentCalls: z.number().optional(),
-});
+type WorkflowDefinitionResponse = z.infer<typeof WorkflowDefinitionSchema>;
+type WorkflowRunResponse = z.infer<typeof WorkflowRunSchema>;
+
+function toIsoString(value: Date | string): string {
+  return value instanceof Date ? value.toISOString() : value;
+}
+
+function toNullableIsoString(value: Date | string | null): string | null {
+  if (!value) return null;
+  return toIsoString(value);
+}
+
+function serializeWorkflowDefinition(row: WorkflowDefinition): WorkflowDefinitionResponse {
+  return {
+    id: row.id,
+    tenantId: row.tenantId,
+    name: row.name,
+    description: row.description,
+    scriptSource: row.scriptSource,
+    status: row.status,
+    defaultModel: row.defaultModel,
+    maxConcurrency: row.maxConcurrency,
+    maxAgentsPerRun: row.maxAgentsPerRun,
+    maxRetries: row.maxRetries,
+    timeoutMs: row.timeoutMs,
+    metadata: row.metadata,
+    createdAt: toIsoString(row.createdAt),
+    updatedAt: toIsoString(row.updatedAt),
+  };
+}
+
+function serializeWorkflowRun(row: WorkflowRun): WorkflowRunResponse {
+  return {
+    id: row.id,
+    tenantId: row.tenantId,
+    workflowId: row.workflowId,
+    status: row.status,
+    idempotencyKey: row.idempotencyKey,
+    threadId: row.threadId,
+    triggeredBy: row.triggeredBy,
+    args: row.args,
+    result: row.result,
+    events: row.events,
+    error: row.error,
+    stats: row.stats,
+    tokenUsage: row.tokenUsage,
+    startedAt: toNullableIsoString(row.startedAt),
+    finishedAt: toNullableIsoString(row.finishedAt),
+    createdAt: toIsoString(row.createdAt),
+    updatedAt: toIsoString(row.updatedAt),
+  };
+}
 
 // ── List ─────────────────────────────────────────────────────────────────────
 
@@ -171,6 +221,7 @@ const listRoute = createRoute({
       description: "Cursor page of workflows",
       content: { "application/json": { schema: WorkflowPageSchema } },
     },
+    500: jsonErrorResponse("Failed to list workflows"),
   },
 });
 
@@ -178,9 +229,15 @@ workflowRoutes.openapi(listRoute, async (c) => {
   const { cursor, limit } = c.req.valid("query");
   try {
     const page = await getWorkflowRepository(orgId(c)).findPaginated(compact({ cursor, limit }));
-    return c.json(page);
+    return c.json(
+      {
+        ...page,
+        items: page.items.map(serializeWorkflowDefinition),
+      },
+      200,
+    );
   } catch (err) {
-    return apiError(c, err);
+    return c.json(errorBody(err), 500);
   }
 });
 
@@ -200,8 +257,9 @@ const createWorkflowRoute = createRoute({
       description: "Workflow created",
       content: { "application/json": { schema: WorkflowDefinitionSchema } },
     },
-    400: { description: "Invalid request" },
-    409: { description: "A workflow with this name already exists" },
+    400: jsonErrorResponse("Invalid request"),
+    409: jsonErrorResponse("A workflow with this name already exists"),
+    500: jsonErrorResponse("Failed to create workflow"),
   },
 });
 
@@ -211,9 +269,12 @@ workflowRoutes.openapi(createWorkflowRoute, async (c) => {
     const created = await getWorkflowRepository(orgId(c)).create(
       compact(body) as CreateWorkflowData,
     );
-    return c.json(created, 201);
+    return c.json(serializeWorkflowDefinition(created), 201);
   } catch (err) {
-    return apiError(c, err);
+    const status = getStatusCode(err);
+    if (status === 400) return c.json(errorBody(err), 400);
+    if (status === 409) return c.json(errorBody(err), 409);
+    return c.json(errorBody(err), 500);
   }
 });
 
@@ -231,7 +292,7 @@ const getWorkflowRoute = createRoute({
       description: "Workflow definition",
       content: { "application/json": { schema: WorkflowDefinitionSchema } },
     },
-    404: { description: "Workflow not found" },
+    404: jsonErrorResponse("Workflow not found"),
   },
 });
 
@@ -239,7 +300,7 @@ workflowRoutes.openapi(getWorkflowRoute, async (c) => {
   const { id } = c.req.valid("param");
   const def = await getWorkflowRepository(orgId(c)).findById(id);
   if (!def) return c.json({ error: "workflow not found" }, 404);
-  return c.json(def);
+  return c.json(serializeWorkflowDefinition(def), 200);
 });
 
 // ── Update ───────────────────────────────────────────────────────────────────
@@ -259,8 +320,9 @@ const updateWorkflowRoute = createRoute({
       description: "Workflow updated",
       content: { "application/json": { schema: WorkflowDefinitionSchema } },
     },
-    400: { description: "Invalid request" },
-    404: { description: "Workflow not found" },
+    400: jsonErrorResponse("Invalid request"),
+    404: jsonErrorResponse("Workflow not found"),
+    500: jsonErrorResponse("Failed to update workflow"),
   },
 });
 
@@ -273,9 +335,12 @@ workflowRoutes.openapi(updateWorkflowRoute, async (c) => {
   if (!existing) return c.json({ error: "workflow not found" }, 404);
   try {
     const updated = await repo.update(id, compact(body) as UpdateWorkflowData);
-    return c.json(updated);
+    return c.json(serializeWorkflowDefinition(updated), 200);
   } catch (err) {
-    return apiError(c, err);
+    const status = getStatusCode(err);
+    if (status === 400) return c.json(errorBody(err), 400);
+    if (status === 404) return c.json(errorBody(err), 404);
+    return c.json(errorBody(err), 500);
   }
 });
 
@@ -293,7 +358,8 @@ const deleteWorkflowRoute = createRoute({
       description: "Workflow deleted",
       content: { "application/json": { schema: WorkflowDeletedSchema } },
     },
-    404: { description: "Workflow not found" },
+    404: jsonErrorResponse("Workflow not found"),
+    500: jsonErrorResponse("Failed to delete workflow"),
   },
 });
 
@@ -304,9 +370,10 @@ workflowRoutes.openapi(deleteWorkflowRoute, async (c) => {
   if (!existing) return c.json({ error: "workflow not found" }, 404);
   try {
     await repo.delete(id);
-    return c.json({ deleted: true, id });
+    return c.json({ deleted: true, id }, 200);
   } catch (err) {
-    return apiError(c, err);
+    if (getStatusCode(err) === 404) return c.json(errorBody(err), 404);
+    return c.json(errorBody(err), 500);
   }
 });
 
@@ -327,7 +394,7 @@ const listRunsRoute = createRoute({
       description: "Cursor page of runs",
       content: { "application/json": { schema: WorkflowRunPageSchema } },
     },
-    404: { description: "Workflow not found" },
+    404: jsonErrorResponse("Workflow not found"),
   },
 });
 
@@ -340,7 +407,13 @@ workflowRoutes.openapi(listRunsRoute, async (c) => {
     id,
     compact({ cursor, limit }),
   );
-  return c.json(page);
+  return c.json(
+    {
+      ...page,
+      items: page.items.map(serializeWorkflowRun),
+    },
+    200,
+  );
 });
 
 // ── Run (durable, Inngest) ───────────────────────────────────────────────────
@@ -363,8 +436,19 @@ const runRoute = createRoute({
     },
   },
   responses: {
-    202: { description: "Run enqueued" },
-    404: { description: "Workflow not found" },
+    202: {
+      description: "Run enqueued",
+      content: {
+        "application/json": {
+          schema: z.object({
+            enqueued: z.boolean(),
+            workflowId: z.string(),
+            requestedAt: IsoDateTimeSchema,
+          }),
+        },
+      },
+    },
+    404: jsonErrorResponse("Workflow not found"),
   },
 });
 
@@ -407,9 +491,8 @@ const runStreamRoute = createRoute({
   responses: {
     200: {
       description: "SSE stream of workflow events",
-      content: { "application/json": { schema: WorkflowRunStreamStartedSchema } },
     },
-    404: { description: "Workflow not found" },
+    404: jsonErrorResponse("Workflow not found"),
   },
 });
 

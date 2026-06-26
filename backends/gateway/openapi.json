@@ -2246,7 +2246,107 @@
         ],
         "responses": {
           "200": {
-            "description": "Cursor page of workflows"
+            "description": "Cursor page of workflows",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "tenantId": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "scriptSource": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["ACTIVE", "DISABLED"]
+                          },
+                          "defaultModel": {
+                            "type": "string"
+                          },
+                          "maxConcurrency": {
+                            "type": "integer"
+                          },
+                          "maxAgentsPerRun": {
+                            "type": "integer"
+                          },
+                          "maxRetries": {
+                            "type": "integer"
+                          },
+                          "timeoutMs": {
+                            "type": "integer"
+                          },
+                          "metadata": {},
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "tenantId",
+                          "name",
+                          "description",
+                          "scriptSource",
+                          "status",
+                          "defaultModel",
+                          "maxConcurrency",
+                          "maxAgentsPerRun",
+                          "maxRetries",
+                          "timeoutMs",
+                          "createdAt",
+                          "updatedAt"
+                        ]
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "hasNextPage": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["items", "nextCursor", "hasNextPage"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to list workflows",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       },
@@ -2310,13 +2410,123 @@
         },
         "responses": {
           "201": {
-            "description": "Workflow created"
+            "description": "Workflow created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "tenantId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "scriptSource": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["ACTIVE", "DISABLED"]
+                    },
+                    "defaultModel": {
+                      "type": "string"
+                    },
+                    "maxConcurrency": {
+                      "type": "integer"
+                    },
+                    "maxAgentsPerRun": {
+                      "type": "integer"
+                    },
+                    "maxRetries": {
+                      "type": "integer"
+                    },
+                    "timeoutMs": {
+                      "type": "integer"
+                    },
+                    "metadata": {},
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "tenantId",
+                    "name",
+                    "description",
+                    "scriptSource",
+                    "status",
+                    "defaultModel",
+                    "maxConcurrency",
+                    "maxAgentsPerRun",
+                    "maxRetries",
+                    "timeoutMs",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           },
           "409": {
-            "description": "A workflow with this name already exists"
+            "description": "A workflow with this name already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to create workflow",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
@@ -2339,10 +2549,91 @@
         ],
         "responses": {
           "200": {
-            "description": "Workflow definition"
+            "description": "Workflow definition",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "tenantId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "scriptSource": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["ACTIVE", "DISABLED"]
+                    },
+                    "defaultModel": {
+                      "type": "string"
+                    },
+                    "maxConcurrency": {
+                      "type": "integer"
+                    },
+                    "maxAgentsPerRun": {
+                      "type": "integer"
+                    },
+                    "maxRetries": {
+                      "type": "integer"
+                    },
+                    "timeoutMs": {
+                      "type": "integer"
+                    },
+                    "metadata": {},
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "tenantId",
+                    "name",
+                    "description",
+                    "scriptSource",
+                    "status",
+                    "defaultModel",
+                    "maxConcurrency",
+                    "maxAgentsPerRun",
+                    "maxRetries",
+                    "timeoutMs",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              }
+            }
           },
           "404": {
-            "description": "Workflow not found"
+            "description": "Workflow not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       },
@@ -2416,13 +2707,123 @@
         },
         "responses": {
           "200": {
-            "description": "Workflow updated"
+            "description": "Workflow updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "tenantId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "scriptSource": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["ACTIVE", "DISABLED"]
+                    },
+                    "defaultModel": {
+                      "type": "string"
+                    },
+                    "maxConcurrency": {
+                      "type": "integer"
+                    },
+                    "maxAgentsPerRun": {
+                      "type": "integer"
+                    },
+                    "maxRetries": {
+                      "type": "integer"
+                    },
+                    "timeoutMs": {
+                      "type": "integer"
+                    },
+                    "metadata": {},
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "tenantId",
+                    "name",
+                    "description",
+                    "scriptSource",
+                    "status",
+                    "defaultModel",
+                    "maxConcurrency",
+                    "maxAgentsPerRun",
+                    "maxRetries",
+                    "timeoutMs",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           },
           "404": {
-            "description": "Workflow not found"
+            "description": "Workflow not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to update workflow",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       },
@@ -2443,10 +2844,55 @@
         ],
         "responses": {
           "200": {
-            "description": "Workflow deleted"
+            "description": "Workflow deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["deleted", "id"]
+                }
+              }
+            }
           },
           "404": {
-            "description": "Workflow not found"
+            "description": "Workflow not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to delete workflow",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
@@ -2487,10 +2933,111 @@
         ],
         "responses": {
           "200": {
-            "description": "Cursor page of runs"
+            "description": "Cursor page of runs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "tenantId": {
+                            "type": "string"
+                          },
+                          "workflowId": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["QUEUED", "RUNNING", "SUCCEEDED", "FAILED"]
+                          },
+                          "idempotencyKey": {
+                            "type": "string"
+                          },
+                          "threadId": {
+                            "type": "string"
+                          },
+                          "triggeredBy": {
+                            "type": "string"
+                          },
+                          "args": {},
+                          "result": {},
+                          "events": {},
+                          "error": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "stats": {},
+                          "tokenUsage": {},
+                          "startedAt": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "date-time"
+                          },
+                          "finishedAt": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "date-time"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "tenantId",
+                          "workflowId",
+                          "status",
+                          "idempotencyKey",
+                          "threadId",
+                          "triggeredBy",
+                          "error",
+                          "startedAt",
+                          "finishedAt",
+                          "createdAt",
+                          "updatedAt"
+                        ]
+                      }
+                    },
+                    "nextCursor": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "hasNextPage": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": ["items", "nextCursor", "hasNextPage"]
+                }
+              }
+            }
           },
           "404": {
-            "description": "Workflow not found"
+            "description": "Workflow not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
@@ -2529,10 +3076,43 @@
         },
         "responses": {
           "202": {
-            "description": "Run enqueued"
+            "description": "Run enqueued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enqueued": {
+                      "type": "boolean"
+                    },
+                    "workflowId": {
+                      "type": "string"
+                    },
+                    "requestedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": ["enqueued", "workflowId", "requestedAt"]
+                }
+              }
+            }
           },
           "404": {
-            "description": "Workflow not found"
+            "description": "Workflow not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
@@ -2574,7 +3154,20 @@
             "description": "SSE stream of workflow events"
           },
           "404": {
-            "description": "Workflow not found"
+            "description": "Workflow not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
@@ -4128,7 +4721,91 @@
         "summary": "List BYOK provider keys for the current organization (key masked)",
         "responses": {
           "200": {
-            "description": "List of provider keys"
+            "description": "List of provider keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "keys": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "provider": {
+                            "type": "string",
+                            "enum": ["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]
+                          },
+                          "label": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "isActive": {
+                            "type": "boolean"
+                          },
+                          "alwaysUse": {
+                            "type": "boolean"
+                          },
+                          "baseUrl": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "maskedKey": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "lastTestedAt": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "date-time"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "provider",
+                          "label",
+                          "isActive",
+                          "alwaysUse",
+                          "maskedKey",
+                          "createdAt"
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["keys", "total"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to list provider keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       },
@@ -4170,15 +4847,100 @@
         },
         "responses": {
           "201": {
-            "description": "Provider key saved"
+            "description": "Provider key saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "enum": ["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]
+                    },
+                    "label": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "isActive": {
+                      "type": "boolean"
+                    },
+                    "alwaysUse": {
+                      "type": "boolean"
+                    },
+                    "baseUrl": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "maskedKey": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "lastTestedAt": {
+                      "type": "string",
+                      "nullable": true,
+                      "format": "date-time"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "provider",
+                    "label",
+                    "isActive",
+                    "alwaysUse",
+                    "maskedKey",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
           },
           "400": {
-            "description": "Invalid request"
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to save provider key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/v1/ai/provider-keys/:provider": {
+    "/api/v1/ai/provider-keys/{provider}": {
       "delete": {
         "tags": ["Provider Keys"],
         "summary": "Delete the BYOK key for a provider",
@@ -4195,10 +4957,56 @@
         ],
         "responses": {
           "200": {
-            "description": "Provider key deleted"
+            "description": "Provider key deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleted": {
+                      "type": "boolean"
+                    },
+                    "provider": {
+                      "type": "string",
+                      "enum": ["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]
+                    }
+                  },
+                  "required": ["deleted", "provider"]
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not found"
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to delete provider key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
           }
         }
       }
