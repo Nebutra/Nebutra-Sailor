@@ -90,6 +90,73 @@ const CreateWorkflowSchema = z.object({
 
 const UpdateWorkflowSchema = CreateWorkflowSchema.partial();
 
+const IsoDateTimeSchema = z.string().datetime();
+const WorkflowStatusSchema = z.enum(["ACTIVE", "DISABLED"]);
+const WorkflowRunStatusSchema = z.enum(["QUEUED", "RUNNING", "SUCCEEDED", "FAILED"]);
+
+const WorkflowDefinitionSchema = z.object({
+  id: z.string(),
+  tenantId: z.string(),
+  name: z.string(),
+  description: z.string().nullable(),
+  scriptSource: z.string(),
+  status: WorkflowStatusSchema,
+  defaultModel: z.string(),
+  maxConcurrency: z.number().int(),
+  maxAgentsPerRun: z.number().int(),
+  maxRetries: z.number().int(),
+  timeoutMs: z.number().int(),
+  metadata: z.unknown(),
+  createdAt: IsoDateTimeSchema,
+  updatedAt: IsoDateTimeSchema,
+});
+
+const WorkflowRunSchema = z.object({
+  id: z.string(),
+  tenantId: z.string(),
+  workflowId: z.string(),
+  status: WorkflowRunStatusSchema,
+  idempotencyKey: z.string(),
+  threadId: z.string(),
+  triggeredBy: z.string(),
+  args: z.unknown(),
+  result: z.unknown().nullable(),
+  events: z.unknown(),
+  error: z.string().nullable(),
+  stats: z.unknown(),
+  tokenUsage: z.unknown(),
+  startedAt: IsoDateTimeSchema.nullable(),
+  finishedAt: IsoDateTimeSchema.nullable(),
+  createdAt: IsoDateTimeSchema,
+  updatedAt: IsoDateTimeSchema,
+});
+
+const WorkflowPageSchema = z.object({
+  items: z.array(WorkflowDefinitionSchema),
+  nextCursor: z.string().nullable(),
+  hasNextPage: z.boolean(),
+});
+
+const WorkflowRunPageSchema = z.object({
+  items: z.array(WorkflowRunSchema),
+  nextCursor: z.string().nullable(),
+  hasNextPage: z.boolean(),
+});
+
+const WorkflowDeletedSchema = z.object({
+  deleted: z.boolean(),
+  id: z.string(),
+});
+
+const WorkflowRunStreamStartedSchema = z.object({
+  runId: z.string(),
+  ok: z.boolean().optional(),
+  returnValue: z.unknown().optional(),
+  error: z.string().optional(),
+  usage: z.unknown().optional(),
+  agentCalls: z.number().optional(),
+});
+
 // ── List ─────────────────────────────────────────────────────────────────────
 
 const listRoute = createRoute({
@@ -99,7 +166,12 @@ const listRoute = createRoute({
   operationId: "listWorkflows",
   summary: "List workflow definitions",
   request: { query: PaginationQuery },
-  responses: { 200: { description: "Cursor page of workflows" } },
+  responses: {
+    200: {
+      description: "Cursor page of workflows",
+      content: { "application/json": { schema: WorkflowPageSchema } },
+    },
+  },
 });
 
 workflowRoutes.openapi(listRoute, async (c) => {
@@ -124,7 +196,10 @@ const createWorkflowRoute = createRoute({
     body: { content: { "application/json": { schema: CreateWorkflowSchema } } },
   },
   responses: {
-    201: { description: "Workflow created" },
+    201: {
+      description: "Workflow created",
+      content: { "application/json": { schema: WorkflowDefinitionSchema } },
+    },
     400: { description: "Invalid request" },
     409: { description: "A workflow with this name already exists" },
   },
@@ -152,7 +227,10 @@ const getWorkflowRoute = createRoute({
   summary: "Get a workflow definition",
   request: { params: z.object({ id: z.string().min(1) }) },
   responses: {
-    200: { description: "Workflow definition" },
+    200: {
+      description: "Workflow definition",
+      content: { "application/json": { schema: WorkflowDefinitionSchema } },
+    },
     404: { description: "Workflow not found" },
   },
 });
@@ -177,7 +255,10 @@ const updateWorkflowRoute = createRoute({
     body: { content: { "application/json": { schema: UpdateWorkflowSchema } } },
   },
   responses: {
-    200: { description: "Workflow updated" },
+    200: {
+      description: "Workflow updated",
+      content: { "application/json": { schema: WorkflowDefinitionSchema } },
+    },
     400: { description: "Invalid request" },
     404: { description: "Workflow not found" },
   },
@@ -208,7 +289,10 @@ const deleteWorkflowRoute = createRoute({
   summary: "Delete a workflow definition",
   request: { params: z.object({ id: z.string().min(1) }) },
   responses: {
-    200: { description: "Workflow deleted" },
+    200: {
+      description: "Workflow deleted",
+      content: { "application/json": { schema: WorkflowDeletedSchema } },
+    },
     404: { description: "Workflow not found" },
   },
 });
@@ -239,7 +323,10 @@ const listRunsRoute = createRoute({
     query: PaginationQuery,
   },
   responses: {
-    200: { description: "Cursor page of runs" },
+    200: {
+      description: "Cursor page of runs",
+      content: { "application/json": { schema: WorkflowRunPageSchema } },
+    },
     404: { description: "Workflow not found" },
   },
 });
@@ -318,7 +405,10 @@ const runStreamRoute = createRoute({
     },
   },
   responses: {
-    200: { description: "SSE stream of workflow events" },
+    200: {
+      description: "SSE stream of workflow events",
+      content: { "application/json": { schema: WorkflowRunStreamStartedSchema } },
+    },
     404: { description: "Workflow not found" },
   },
 });

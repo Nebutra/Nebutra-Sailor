@@ -218,7 +218,7 @@ app.route("/api/v1/legal", consentRoutes);
 app.route("/api/v1/events", eventRoutes);
 app.route("/api/v1/agents", agentRoutes);
 app.route("/api/v1/agent-runtime", agentRuntimeRoutes);
-app.route("/api/startup-os", startupOsRoutes);
+app.route("/api/v1/startup-os", startupOsRoutes);
 app.route("/api/v1/workflows", workflowRoutes);
 app.route("/api/v1/ai", aiRoutes);
 app.route("/api/v1/tasks", taskRoutes);

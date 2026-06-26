@@ -36,6 +36,7 @@ providerKeyRoutes.use("*", async (c, next) => {
 });
 
 const ProviderEnum = z.enum(["OPENAI", "ANTHROPIC", "GOOGLE", "SILICONFLOW", "CUSTOM"]);
+const IsoDateTimeSchema = z.string().datetime();
 
 const UpsertProviderKeySchema = z
   .object({
@@ -57,6 +58,29 @@ const UpsertProviderKeySchema = z
     path: ["baseUrl"],
   });
 
+const ProviderKeySchema = z.object({
+  id: z.string(),
+  provider: ProviderEnum,
+  label: z.string().nullable(),
+  isActive: z.boolean(),
+  alwaysUse: z.boolean(),
+  baseUrl: z.string().nullable().optional(),
+  maskedKey: z.string().nullable(),
+  lastTestedAt: IsoDateTimeSchema.nullable().optional(),
+  createdAt: IsoDateTimeSchema,
+  updatedAt: IsoDateTimeSchema.optional(),
+});
+
+const ProviderKeyListSchema = z.object({
+  keys: z.array(ProviderKeySchema),
+  total: z.number().int(),
+});
+
+const ProviderKeyDeletedSchema = z.object({
+  deleted: z.boolean(),
+  provider: ProviderEnum,
+});
+
 /** Mask a secret for display — keep the last 4 chars only. */
 function maskKey(apiKey: string): string {
   if (apiKey.length <= 4) return "••••";
@@ -74,7 +98,12 @@ const listRoute = createRoute({
   path: "/",
   tags: ["Provider Keys"],
   summary: "List BYOK provider keys for the current organization (key masked)",
-  responses: { 200: { description: "List of provider keys" } },
+  responses: {
+    200: {
+      description: "List of provider keys",
+      content: { "application/json": { schema: ProviderKeyListSchema } },
+    },
+  },
 });
 
 providerKeyRoutes.openapi(listRoute, async (c) => {
@@ -114,7 +143,10 @@ const upsertRoute = createRoute({
     body: { content: { "application/json": { schema: UpsertProviderKeySchema } } },
   },
   responses: {
-    201: { description: "Provider key saved" },
+    201: {
+      description: "Provider key saved",
+      content: { "application/json": { schema: ProviderKeySchema } },
+    },
     400: { description: "Invalid request" },
   },
 });
@@ -157,7 +189,10 @@ const deleteRoute = createRoute({
   summary: "Delete the BYOK key for a provider",
   request: { params: z.object({ provider: ProviderEnum }) },
   responses: {
-    200: { description: "Provider key deleted" },
+    200: {
+      description: "Provider key deleted",
+      content: { "application/json": { schema: ProviderKeyDeletedSchema } },
+    },
     404: { description: "Not found" },
   },
 });

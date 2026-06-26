@@ -71,7 +71,7 @@ function createApp(tenant?: { readonly userId?: string; readonly organizationId?
       await next();
     });
   }
-  app.route("/api/startup-os", startupOsRoutes);
+  app.route("/api/v1/startup-os", startupOsRoutes);
   return app;
 }
 
@@ -90,7 +90,7 @@ describe("startupOsRoutes", () => {
   });
 
   it("keeps Startup OS APIs behind gateway auth", async () => {
-    const response = await createApp().request("/api/startup-os/projects");
+    const response = await createApp().request("/api/v1/startup-os/projects");
 
     expect(response.status).toBe(401);
     await expect(response.json()).resolves.toMatchObject({
@@ -100,7 +100,7 @@ describe("startupOsRoutes", () => {
 
   it("keeps context AI-fill honest when no private provider key is configured", async () => {
     const response = await createApp({ userId: "user_1", organizationId: "org_1" }).request(
-      "/api/startup-os/projects/project_1/context",
+      "/api/v1/startup-os/projects/project_1/context",
       {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -114,7 +114,7 @@ describe("startupOsRoutes", () => {
 
   it("keeps run execution on gateway and blocks execution without a private provider key", async () => {
     const response = await createApp({ userId: "user_1", organizationId: "org_1" }).request(
-      "/api/startup-os/projects/project_1/runs/run_1/execute",
+      "/api/v1/startup-os/projects/project_1/runs/run_1/execute",
       { method: "POST" },
     );
 
@@ -142,7 +142,7 @@ describe("startupOsRoutes", () => {
     });
 
     const response = await createApp({ userId: "user_1", organizationId: "org_1" }).request(
-      "/api/startup-os/projects/project_1/chat",
+      "/api/v1/startup-os/projects/project_1/chat",
       {
         method: "POST",
         headers: { "content-type": "application/json" },

@@ -27,6 +27,7 @@ const UNVERSIONED_ROUTE_PREFIXES = new Set([
   "/api/webhooks", // Webhook receivers (Stripe, Clerk)
   "/api/queue", // Queue delivery receiver (QStash)
   "/api/inngest", // Background job handler
+  "/api", // Auth provider boundary (/api/auth/*), not a versioned business API
   "/api/rpc", // oRPC protocol mount (versioning handled by oRPC internally)
   "/api/trpc", // tRPC protocol mount (versioning handled by tRPC internally)
   "/health", // Root-level container/load-balancer health check
