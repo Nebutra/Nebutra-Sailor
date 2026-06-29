@@ -11,8 +11,6 @@ import {
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-export const runtime = "nodejs";
-
 const WaitlistJoinSchema = z.object({
   email: z.string().email(),
   code: z.string().max(120).nullish(),

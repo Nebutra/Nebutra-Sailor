@@ -60,6 +60,9 @@ interface LicenseApiResponse {
   community?: {
     memberNumber?: number | string;
   };
+  requireCheckout?: boolean;
+  sessionId?: string;
+  url?: string;
   license?: {
     licenseKey?: string;
   };
@@ -94,6 +97,14 @@ const WIZARD_STEP_MARKERS = [
   { id: "step-3", value: 3 },
   { id: "step-4", value: 4 },
 ] as const;
+
+interface LicenseWizardProps {
+  redirectToCheckout?: (url: string) => void;
+}
+
+function defaultRedirectToCheckout(url: string): void {
+  window.location.href = url;
+}
 
 // Role card component
 const RoleCard = ({
@@ -214,7 +225,9 @@ const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSt
   </div>
 );
 
-export function LicenseWizard() {
+export function LicenseWizard({
+  redirectToCheckout = defaultRedirectToCheckout,
+}: LicenseWizardProps = {}) {
   const t = useTranslations("licenseWizard");
   const [currentStep, setCurrentStep] = useState(1);
   const [step1, setStep1] = useState<WizardStep1>({ role: null, teamSize: null });
@@ -236,7 +249,7 @@ export function LicenseWizard() {
 
   // Phase 0 analytics — wizard started (mount only).
   useEffect(() => {
-    emitBrowserEvent("license.wizard", { action: "started" });
+    emitBrowserEvent("license.wizard", { step: "started" });
   }, []);
 
   // Determine license tier based on team size
@@ -262,8 +275,9 @@ export function LicenseWizard() {
   const handleNext = async () => {
     if (currentStep === 1 && isStep1Valid) {
       emitBrowserEvent("license.wizard", {
-        action: "step_completed",
-        step: 1,
+        step: "step_completed",
+        step_number: 1,
+        step_name: "team_profile",
         role: step1.role,
         team_size: step1.teamSize,
       });
@@ -273,15 +287,17 @@ export function LicenseWizard() {
       setCurrentStep(2);
     } else if (currentStep === 2 && isStep2Valid) {
       emitBrowserEvent("license.wizard", {
-        action: "step_completed",
-        step: 2,
+        step: "step_completed",
+        step_number: 2,
+        step_name: "use_case",
         use_case: step2.useCase,
       });
       setCurrentStep(3);
     } else if (currentStep === 3 && isStep3Valid) {
       emitBrowserEvent("license.wizard", {
-        action: "step_completed",
-        step: 3,
+        step: "step_completed",
+        step_number: 3,
+        step_name: "license_selection",
         tier: step3.tier,
       });
       // Submit form
@@ -298,8 +314,9 @@ export function LicenseWizard() {
     setSubmitError(errorMessage);
     setIsSubmitting(false);
     emitBrowserEvent("license.wizard", {
-      action: "failed",
+      step: "failed",
       tier: step3.tier,
+      error_code: "submission_failed",
       error_message: errorMessage.slice(0, 200),
     });
   };
@@ -346,6 +363,31 @@ export function LicenseWizard() {
       return;
     }
 
+    if (data.requireCheckout) {
+      if (!data.url) {
+        failSubmission("Checkout session URL is missing.");
+        return;
+      }
+
+      emitBrowserEvent("license.wizard", {
+        step: "submitted",
+        tier: step3.tier,
+        referral_source: step3.referralSource,
+        team_size: step1.teamSize,
+      });
+      emitBrowserEvent("checkout", {
+        action: "started",
+        checkout_session_id: data.sessionId,
+        payment_method: "stripe",
+        referral_source: step3.referralSource,
+        team_size: step1.teamSize,
+        tier: step3.tier,
+      });
+      redirectToCheckout(data.url);
+      setIsSubmitting(false);
+      return;
+    }
+
     const licenseKey = data.license?.licenseKey;
     if (!licenseKey) {
       failSubmission("License API returned an invalid response.");
@@ -361,9 +403,10 @@ export function LicenseWizard() {
     setCurrentStep(4);
 
     emitBrowserEvent("license.wizard", {
-      action: "submitted",
+      step: "submitted",
       tier: step3.tier,
       referral_source: step3.referralSource,
+      team_size: step1.teamSize,
     });
 
     // Redirect to the community hub after a short delay

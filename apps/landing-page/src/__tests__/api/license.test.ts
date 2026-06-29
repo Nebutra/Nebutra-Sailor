@@ -1,5 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+const mockCreateCheckoutSession = vi.hoisted(() => vi.fn());
+const mockGetOrCreateCustomer = vi.hoisted(() => vi.fn());
+
 // Mock @nebutra/auth via the landing-page helper
 vi.mock("@/lib/auth", () => ({
   getSessionFromRequest: vi.fn().mockResolvedValue({
@@ -42,13 +45,21 @@ vi.mock("@nebutra/license", () => ({
 
 // Mock @nebutra/billing — not exercised by free-tier tests, but imported at load
 vi.mock("@nebutra/billing", () => ({
-  createCheckoutSession: vi.fn(),
-  getOrCreateCustomer: vi.fn(),
+  createCheckoutSession: (...args: unknown[]) => mockCreateCheckoutSession(...args),
+  getOrCreateCustomer: (...args: unknown[]) => mockGetOrCreateCustomer(...args),
 }));
 
 describe("POST /api/license", () => {
   beforeEach((): void => {
+    vi.unstubAllEnvs();
     vi.clearAllMocks();
+    mockCreateCheckoutSession.mockResolvedValue({
+      id: "cs_startup_123",
+      url: "https://checkout.stripe.test/cs_startup_123",
+    });
+    mockGetOrCreateCustomer.mockResolvedValue({
+      id: "cus_startup_123",
+    });
     mockIssueLicense.mockResolvedValue({
       id: "lic_1",
       licenseKey: "NEBUTRA-TEST-KEY",
@@ -114,5 +125,58 @@ describe("POST /api/license", () => {
     expect(data.license.licenseKey).toBe("NEBUTRA-TEST-KEY");
     expect(data.license.tier).toBe("OPC");
     expect(data.license.type).toBe("FREE");
+  });
+
+  it("returns a Stripe checkout redirect for STARTUP without issuing the license early", async () => {
+    vi.stubEnv("STRIPE_PRICE_ID_STARTUP_LICENSE", "price_startup_yearly");
+    const { POST } = await import("../../app/api/license/route");
+
+    const req = new Request("https://nebutra.com/api/license", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        origin: "https://nebutra.com",
+      },
+      body: JSON.stringify({
+        role: "developer",
+        teamSize: "2-5",
+        useCase: "saas",
+        tier: "STARTUP",
+        referralSource: "github",
+        lookingFor: ["early-users"],
+        githubHandle: "nebutra-builder",
+        acceptedTerms: true,
+      }),
+    });
+
+    // biome-ignore lint/suspicious/noExplicitAny: NextRequest mirrors Request at runtime
+    const res = await POST(req as any);
+    const data = await res.json();
+
+    expect(data).toEqual({
+      success: true,
+      requireCheckout: true,
+      url: "https://checkout.stripe.test/cs_startup_123",
+      sessionId: "cs_startup_123",
+    });
+    expect(mockIssueLicense).not.toHaveBeenCalled();
+    expect(mockGetOrCreateCustomer).toHaveBeenCalledWith(
+      "user_test_123",
+      "test@example.com",
+      "Test Founder",
+    );
+    expect(mockCreateCheckoutSession).toHaveBeenCalledWith(
+      expect.objectContaining({
+        customerId: "cus_startup_123",
+        priceId: "price_startup_yearly",
+        successUrl: "https://nebutra.com/en/get-license?success=true",
+        cancelUrl: "https://nebutra.com/en/get-license?cancel=true",
+        metadata: expect.objectContaining({
+          githubHandle: "nebutra-builder",
+          license_tier: "STARTUP",
+          userId: "user_test_123",
+        }),
+      }),
+    );
   });
 });

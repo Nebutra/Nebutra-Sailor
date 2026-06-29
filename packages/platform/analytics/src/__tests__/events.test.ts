@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   CheckoutEvent,
+  DeploymentVerifiedEvent,
   DocsSearchEvent,
   EVENT_SCHEMAS,
   LicenseCliEvent,
@@ -91,14 +92,54 @@ describe("Event contracts", () => {
     expect(() => CheckoutEvent.parse({ action: "started", tier: "STARTUP" })).not.toThrow();
   });
 
-  it("EVENT_SCHEMAS has all 6 event contracts defined", () => {
-    expect(Object.keys(EVENT_SCHEMAS)).toHaveLength(6);
+  it("CheckoutEvent accepts paid-wall evidence from browser and Stripe webhook paths", () => {
+    expect(() =>
+      CheckoutEvent.parse({
+        action: "started",
+        tier: "STARTUP",
+        checkout_session_id: "cs_startup_123",
+        payment_method: "stripe",
+        referral_source: "github",
+        team_size: "2-5",
+      }),
+    ).not.toThrow();
+    expect(() =>
+      CheckoutEvent.parse({
+        action: "completed",
+        tier: "STARTUP",
+        amount_cents: 103_400,
+        currency: "sgd",
+        checkout_session_id: "cs_startup_123",
+        payment_method: "stripe",
+        userId: "user_test_123",
+      }),
+    ).not.toThrow();
+  });
+
+  it("DeploymentVerifiedEvent records a real deployed app after smoke tests pass", () => {
+    expect(() =>
+      DeploymentVerifiedEvent.parse({
+        app: "landing",
+        deploy_target: "ecs-pm2",
+        deployment_env: "ecs-prod",
+        provider: "aliyun-ecs",
+        sha: "abc123",
+        run_id: "123456789",
+        public_url: "https://nebutra.com",
+        smoke_status: "passed",
+      }),
+    ).not.toThrow();
+  });
+
+  it("EVENT_SCHEMAS has all 7 event contracts defined", () => {
+    expect(Object.keys(EVENT_SCHEMAS)).toHaveLength(7);
     expect(EVENT_SCHEMAS["scaffold.completed"]).toBeDefined();
     expect(EVENT_SCHEMAS["license.wizard"]).toBeDefined();
     expect(EVENT_SCHEMAS["license.cli"]).toBeDefined();
     expect(EVENT_SCHEMAS.sleptons).toBeDefined();
     expect(EVENT_SCHEMAS["docs.search_query"]).toBeDefined();
     expect(EVENT_SCHEMAS.checkout).toBeDefined();
+    expect(EVENT_SCHEMAS["deployment.verified"]).toBeDefined();
   });
 
   it("BaseEventProps fields are optional across all schemas", () => {
@@ -122,5 +163,14 @@ describe("Event contracts", () => {
     expect(() => SleptonsEvent.parse({ action: "showcase_posted" })).not.toThrow();
     expect(() => DocsSearchEvent.parse({ query: "q", result_count: 0 })).not.toThrow();
     expect(() => CheckoutEvent.parse({ action: "abandoned", tier: "OPC" })).not.toThrow();
+    expect(() =>
+      DeploymentVerifiedEvent.parse({
+        app: "api",
+        deploy_target: "ecs-pm2",
+        deployment_env: "ecs-prod",
+        sha: "abc123",
+        smoke_status: "passed",
+      }),
+    ).not.toThrow();
   });
 });

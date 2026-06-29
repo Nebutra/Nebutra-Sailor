@@ -741,7 +741,7 @@ jobs:
           set -euo pipefail
           declare -A targets=()
           [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing]="https://nebutra.com"
-          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing-refer]="https://nebutra.com/refer?code=smoke"
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing-license]="https://nebutra.com/get-license"
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/api/misc/health"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"
@@ -792,6 +792,61 @@ jobs:
               echo "✅ $name $url -> $code"
             done
           fi
+
+      - name: Emit deployment verification analytics
+        if: success()
+        env:
+          POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+          POSTHOG_HOST: ${{ vars.POSTHOG_HOST || vars.NEXT_PUBLIC_POSTHOG_HOST || 'https://analytics.nebutra.com' }}
+          VM_PROVIDER: ${{ vars.VM_PROVIDER || vars.CLOUD_VM_PROVIDER || vars.ECS_PROVIDER || 'unknown' }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${POSTHOG_KEY:-}" ]; then
+            echo "::notice::POSTHOG_KEY is not configured; skipping deployment.verified analytics."
+            exit 0
+          fi
+
+          posthog_host="${POSTHOG_HOST:-https://analytics.nebutra.com}"
+          posthog_host="${posthog_host%/}"
+          payload_file="${RUNNER_TEMP}/deployment-verified.json"
+
+          emit_deployment_verified() {
+            local app="$1" public_url="$2"
+            APP="$app" PUBLIC_URL="$public_url" node <<'NODE' > "$payload_file"
+          const payload = {
+            api_key: process.env.POSTHOG_KEY,
+            event: "deployment.verified",
+            distinct_id: `deploy:${process.env.GITHUB_REPOSITORY}:${process.env.GITHUB_SHA}:${process.env.APP}`,
+            properties: {
+              app: process.env.APP,
+              deploy_target: "ecs-pm2",
+              deployment_env: "ecs-prod",
+              provider: process.env.VM_PROVIDER || "unknown",
+              public_url: process.env.PUBLIC_URL,
+              ref: process.env.GITHUB_REF_NAME,
+              run_attempt: process.env.GITHUB_RUN_ATTEMPT,
+              run_id: process.env.GITHUB_RUN_ID,
+              sha: process.env.GITHUB_SHA,
+              smoke_status: "passed",
+            },
+            timestamp: new Date().toISOString(),
+          };
+
+          process.stdout.write(JSON.stringify(payload));
+          NODE
+            curl -fsS -X POST \
+              -H "Content-Type: application/json" \
+              --data-binary @"$payload_file" \
+              "${posthog_host}/capture/" >/dev/null
+            echo "✅ deployment.verified $app -> $public_url"
+          }
+
+          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && emit_deployment_verified landing "https://nebutra.com"
+          [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && emit_deployment_verified web "https://app.nebutra.com"
+          [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && emit_deployment_verified api "https://api.nebutra.com/api/misc/health"
+          [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && emit_deployment_verified design-docs "https://design.nebutra.com"
+          [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && emit_deployment_verified sailor-docs "https://docs.nebutra.com"
 
       - name: Rollback Cloud VM on deploy or smoke failure
         if: failure()
