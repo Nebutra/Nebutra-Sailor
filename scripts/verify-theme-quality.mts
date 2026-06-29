@@ -18,9 +18,15 @@ function parseColor(v: string): chroma.Color {
 }
 
 const REQUIRED = [
-  ["color", "primary"], ["color", "primary-foreground"], ["color", "background"],
-  ["color", "foreground"], ["color", "card"], ["color", "border"], ["color", "ring"],
-  ["radius", "md"], ["fontFamily", "sans"],
+  ["color", "primary"],
+  ["color", "primary-foreground"],
+  ["color", "background"],
+  ["color", "foreground"],
+  ["color", "card"],
+  ["color", "border"],
+  ["color", "ring"],
+  ["radius", "md"],
+  ["fontFamily", "sans"],
 ] as const;
 
 // light.json / dark.json are MODE bases (not themes) — not in the registry; skip them.
@@ -35,7 +41,9 @@ function check(file: string) {
 
   for (const [g, k] of REQUIRED) if (!val(g, k)) flags.push(`missing:${g}.${k}`);
 
-  let aaPrimary = 0, aaBody = 0, bgChroma = 0;
+  let aaPrimary = 0,
+    aaBody = 0,
+    bgChroma = 0;
   try {
     const primary = parseColor(val("color", "primary")!);
     const primaryFg = parseColor(val("color", "primary-foreground")!);
@@ -53,10 +61,19 @@ function check(file: string) {
   } catch (e) {
     flags.push(`parse-error:${(e as Error).message}`);
   }
-  return { id, aaPrimary: +aaPrimary.toFixed(2), aaBody: +aaBody.toFixed(2), bgChroma: +bgChroma.toFixed(3), flags };
+  return {
+    id,
+    aaPrimary: +aaPrimary.toFixed(2),
+    aaBody: +aaBody.toFixed(2),
+    bgChroma: +bgChroma.toFixed(3),
+    flags,
+  };
 }
 
-const results = process.argv.slice(2).map(check).filter((r): r is NonNullable<typeof r> => r !== null);
+const results = process.argv
+  .slice(2)
+  .map(check)
+  .filter((r): r is NonNullable<typeof r> => r !== null);
 const bad = results.filter((r) => r.flags.length > 0);
 process.stdout.write(`total=${results.length} failing=${bad.length}\n`);
 for (const r of bad) process.stdout.write(`  ${r.id}: ${r.flags.join(", ")}\n`);

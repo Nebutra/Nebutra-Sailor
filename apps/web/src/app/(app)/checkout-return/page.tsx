@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { redirect } from "next/navigation";
 import { getAuth } from "@/lib/auth";
 import { CheckoutReturnContent } from "./checkout-return-content";
@@ -6,7 +7,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Confirming your subscription — Nebutra",
+  title: `Confirming your subscription — ${brand.name}`,
 };
 
 interface CheckoutReturnPageProps {

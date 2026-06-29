@@ -1,5 +1,6 @@
+import { brand } from "@nebutra/brand/metadata";
 import { toContentLocale, toOpenGraphLocale } from "@nebutra/i18n/locales";
-import type { Icon as NebutraIcon } from "@nebutra/icons";
+import type { Icon as AppIcon } from "@nebutra/icons";
 import { ArrowRight, CheckCircle, CreditCard, Message, Users } from "@nebutra/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -16,7 +17,7 @@ interface PublicDashboardCopy {
   secondaryAction: string;
   workspaceAction: string;
   nav: Array<{ href: string; label: string }>;
-  metrics: Array<{ label: string; value: string; detail: string; icon: NebutraIcon }>;
+  metrics: Array<{ label: string; value: string; detail: string; icon: AppIcon }>;
   serviceTitle: string;
   serviceBody: string;
   gated: Array<string>;
@@ -27,7 +28,7 @@ interface PublicDashboardCopy {
 const COPY: Record<Locale, PublicDashboardCopy> = {
   en: {
     badge: "Live demo",
-    title: "See Nebutra in action — no sign-in required.",
+    title: `See ${brand.name} in action — no sign-in required.`,
     subtitle:
       "Walk through a working console with sample data. Sign in when you're ready to bring your own team and connect real services.",
     primaryAction: "Open workspace",
@@ -68,13 +69,12 @@ const COPY: Record<Locale, PublicDashboardCopy> = {
       "API keys",
       "Audit log",
     ],
-    seoTitle: "Nebutra — live demo",
-    seoDescription:
-      "Explore Nebutra's AI-native SaaS console with sample data. Sign in to bring your own team, connect real services, and unlock chat, billing, and analytics.",
+    seoTitle: `${brand.name} — live demo`,
+    seoDescription: `Explore ${brand.name}'s AI-native SaaS console with sample data. Sign in to bring your own team, connect real services, and unlock chat, billing, and analytics.`,
   },
   zh: {
     badge: "实时演示",
-    title: "登录前先逛逛 Nebutra 控制台。",
+    title: `登录前先逛逛 ${brand.name} 控制台。`,
     subtitle: "用示例数据走通整套流程；准备好接入自己的团队和数据时，再登录创建工作区。",
     primaryAction: "进入工作区",
     secondaryAction: "观看演示",
@@ -107,9 +107,8 @@ const COPY: Record<Locale, PublicDashboardCopy> = {
     serviceTitle: "登录后才解锁",
     serviceBody: "公开页面用来浏览；登录之后，下面这些就都归你用了。",
     gated: ["实时 AI 聊天", "工作区分析", "订阅与席位", "API Key", "审计日志"],
-    seoTitle: "Nebutra · 在线演示",
-    seoDescription:
-      "用示例数据浏览 Nebutra 的 AI 原生 SaaS 控制台；登录后可接入自己的团队和数据，使用聊天、计费、分析等完整服务。",
+    seoTitle: `${brand.name} · 在线演示`,
+    seoDescription: `用示例数据浏览 ${brand.name} 的 AI 原生 SaaS 控制台；登录后可接入自己的团队和数据，使用聊天、计费、分析等完整服务。`,
   },
 };
 

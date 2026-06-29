@@ -3,6 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "play-product",
+    "requires": [
+      "@nebutra/agent-runtime for orchestration grammar",
+      "@nebutra/agents for injected model execution",
+      "@nebutra/db for persisted startup context",
+      "@nebutra/preset for generated app scaffolds",
+      "@nebutra/ui and @nebutra/icons for product-facing tool payloads"
+    ],
+    "gaps": [
+      "Product flows still depend on the host app for auth, billing, and tenant lifecycle",
+      "Model execution is injected by consumers instead of owned in this package",
+      "Durable multi-run orchestration is still delegated to adjacent runtime packages"
+    ],
+    "featureId": "startup-os",
+    "category": "ai",
+    "summary": "Startup operating play surface for company context, execution, files, rollout, and model-tier decisions"
+  },
   "main": "./src/compiler.ts",
   "types": "./src/compiler.ts",
   "exports": {
@@ -26,7 +46,9 @@
     "@nebutra/agent-runtime": "workspace:*",
     "@nebutra/agents": "workspace:*",
     "@nebutra/db": "workspace:*",
+    "@nebutra/icons": "workspace:*",
     "@nebutra/preset": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "ai": "catalog:",
     "zod": "catalog:"
   },

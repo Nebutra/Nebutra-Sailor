@@ -23,7 +23,7 @@ the machine-readable source of truth; this file is the human map.
 | `media-graph` | `@nebutra/reel` | Typed media graph, storyboard shot/scene/plan primitives, IO envelope, and graph persistence. |
 | `creative-surface` | `@nebutra/atelier-canvas` | Canvas/scene editing surface over lower graph/storage primitives. |
 | `product-orchestration` | `@nebutra/cinema`, `@nebutra/play-loader`, `@nebutra/workflow-runtime` | Declarative product workflows over lower runtime/tool/media surfaces. |
-| `play-product` | `@nebutra/brand-genesis`, `@nebutra/landing-builder`, `@nebutra/outreach-engine`, `@nebutra/support-deflector` | Complete user-story Plays that compose lower capabilities. Owns orchestration and SKILL.md assets, not primitive generation. |
+| `play-product` | `@nebutra/brand-genesis`, `@nebutra/landing-builder`, `@nebutra/outreach-engine`, `@nebutra/startup-os`, `@nebutra/support-deflector` | Complete user-story Plays that compose lower capabilities. Owns orchestration and SKILL.md assets, not primitive generation. |
 | `ecosystem-product` | `@nebutra/time-machine`, `@nebutra/idea-plaza`, `@nebutra/founder-cemetery`, `@nebutra/cofounder-match`, `@nebutra/play-marketplace` | Network-effect product surfaces over lower persistence, knowledge, and Play primitives. Owns explicit opt-in workflows, lineage, annotations, marketplace records, and consent gates. |
 
 ## Consolidation Rules

@@ -2,20 +2,43 @@
 
 import { brandSpring, emerge, flow } from "@nebutra/brand";
 import type * as React from "react";
-import { domAnimation, LazyMotion, m, useReducedMotion } from "../shared/animation/motion";
+import {
+  domAnimation,
+  LazyMotion,
+  m,
+  type Transition,
+  useReducedMotion,
+} from "../shared/animation/motion";
+
+const emergeTransition = {
+  duration: emerge.transition.duration,
+  ease: [0.16, 1, 0.3, 1],
+} satisfies Transition;
+
+const flowTransition = {
+  duration: flow.transition.duration,
+  ease: [0, 0, 0.2, 1],
+} satisfies Transition;
+
+const defaultSpringTransition = {
+  type: "spring",
+  stiffness: brandSpring.default.stiffness,
+  damping: brandSpring.default.damping,
+  mass: brandSpring.default.mass,
+} satisfies Transition;
 
 const PRESETS = {
   emerge: {
     initial: emerge.initial,
     animate: emerge.animate,
     exit: emerge.exit,
-    transition: emerge.transition,
+    transition: emergeTransition,
   },
   flow: {
     initial: flow.initial,
     animate: flow.animate,
     exit: flow.exit,
-    transition: flow.transition,
+    transition: flowTransition,
   },
   fade: {
     initial: { opacity: 0 },
@@ -27,13 +50,13 @@ const PRESETS = {
     initial: { opacity: 0, y: 16 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: 16 },
-    transition: brandSpring,
+    transition: defaultSpringTransition,
   },
   scale: {
     initial: { opacity: 0, scale: 0.95 },
     animate: { opacity: 1, scale: 1 },
     exit: { opacity: 0, scale: 0.95 },
-    transition: brandSpring,
+    transition: defaultSpringTransition,
   },
 } as const;
 
@@ -66,7 +89,7 @@ export function AnimateIn(props: AnimateInProps) {
   const { children, preset = "emerge", delay = 0, duration, inView = false, className } = props;
   const shouldReduce = useReducedMotion();
   const { initial, animate, exit, transition } = PRESETS[preset];
-  const t = {
+  const t: Transition = {
     ...transition,
     ...(delay ? { delay } : {}),
     ...(duration ? { duration } : {}),

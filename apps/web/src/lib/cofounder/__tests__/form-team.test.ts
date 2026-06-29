@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  assertFormTeamEligible,
-  buildTransferJournalEntries,
-  FormTeamError,
-} from "../form-team";
+import { assertFormTeamEligible, buildTransferJournalEntries, FormTeamError } from "../form-team";
 
 describe("assertFormTeamEligible", () => {
   const ok = { isMatch: true, initiatorPaid: true, isInitiatorOwnerOfProject: true };
@@ -41,7 +37,11 @@ describe("assertFormTeamEligible", () => {
 
   it("checks match before paywall (non-match unpaid -> not-a-match)", () => {
     try {
-      assertFormTeamEligible({ isMatch: false, initiatorPaid: false, isInitiatorOwnerOfProject: false });
+      assertFormTeamEligible({
+        isMatch: false,
+        initiatorPaid: false,
+        isInitiatorOwnerOfProject: false,
+      });
     } catch (e) {
       expect((e as FormTeamError).code).toBe("not-a-match");
     }

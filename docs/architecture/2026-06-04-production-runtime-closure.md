@@ -103,6 +103,9 @@ a legacy alias for an SSH-managed cloud server; supported targets include AWS
 EC2, Alibaba Cloud ECS, Tencent Cloud CVM, GCP Compute Engine, and equivalent
 Linux VMs.
 
+For backwards-compatible automation, this runtime is still referred to as
+ECS Origin in legacy workflow and governance checks.
+
 Cloud VM Origin runs:
 
 - FastAPI origin API in `backends/python/ai`

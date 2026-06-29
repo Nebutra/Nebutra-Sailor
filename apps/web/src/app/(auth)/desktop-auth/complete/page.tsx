@@ -1,20 +1,21 @@
 import { issueDesktopAuthHandoff, parseDesktopAuthRequest } from "@nebutra/auth/desktop";
+import { brand } from "@nebutra/brand/metadata";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
-import { getLocale } from "next-intl/server";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { DesktopAuthCompleteHandoff } from "@/components/auth/desktop-auth-complete-handoff";
 import { createServerRequestFromHeaders, getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 
-type Params = Record<string, never>;
 type SearchParams = {
   scheme?: string;
   state?: string;
   mode?: "sign-in" | "sign-up";
   public_beta?: string;
 };
+
+const DESKTOP_APP_NAME = `${brand.name} Foundry`;
 
 // Cookie-based i18n: no locale prefix in URLs.
 function buildCompletionPath(query: SearchParams): string {
@@ -44,7 +45,7 @@ function DesktopAuthError() {
           This desktop sign-in link is invalid
         </h1>
         <p className="mt-3 text-sm leading-6 text-[var(--neutral-10)]">
-          Restart sign-in from Nebutra Foundry to create a fresh, short-lived handoff.
+          Restart sign-in from {DESKTOP_APP_NAME} to create a fresh, short-lived handoff.
         </p>
       </section>
     </AuthSplitLayout>

@@ -52,7 +52,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (34)
+## WIP packages (35)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -87,6 +87,7 @@ and missing functionality.
 | `@nebutra/landing-builder` | (consumed directly) | Layer-6 play product; landing-page generator + capability map pending |
 | `@nebutra/outreach-engine` | (consumed directly) | Layer-6 play product; outreach campaign primitives + sidecars pending |
 | `@nebutra/play-marketplace` | (consumed directly) | Layer-7 ecosystem product; play discovery + install flow pending |
+| `@nebutra/startup-os` | (consumed directly) | Layer-6 play product; host app still owns auth, billing, tenant lifecycle, and durable orchestration |
 | `@nebutra/support-deflector` | (consumed directly) | Layer-6 play product; deflection ranking + KB integration pending |
 | `@nebutra/time-machine` | (consumed directly)   | Layer-7 ecosystem product; snapshot/restore semantics + storage pending |
 | `@nebutra/knowledge-graph` | (consumed directly) | Graph-shaped knowledge primitives; production graph-store adapter sidecar-gated |

@@ -81,11 +81,7 @@ export interface StartupOsCodeViewProps {
  * renders the source. The path lives in the workspace tab bar, so the header is
  * hidden here to avoid duplication.
  */
-export function StartupOsCodeView({
-  file,
-  maxHeight = "100%",
-  className,
-}: StartupOsCodeViewProps) {
+export function StartupOsCodeView({ file, maxHeight = "100%", className }: StartupOsCodeViewProps) {
   const language = toHighlighterLanguage(file.language, file.path);
 
   return (

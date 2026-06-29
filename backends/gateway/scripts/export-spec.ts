@@ -8,6 +8,7 @@
  * Imports only the Hono app (not the HTTP server) so no live DB is required.
  */
 
+import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -54,6 +55,10 @@ const spec = normalizeAnonymousAnySchema(await response.json());
 const outPath = resolve(import.meta.dirname, "../openapi.json");
 
 writeFileSync(outPath, JSON.stringify(spec, null, 2), "utf-8");
+execFileSync("pnpm", ["exec", "biome", "format", "--write", outPath], {
+  cwd: resolve(import.meta.dirname, "../.."),
+  stdio: "inherit",
+});
 
 // Force exit: importing src/index.js starts the HTTP server as a side effect,
 // which keeps the Node process alive. We must explicitly exit after the spec

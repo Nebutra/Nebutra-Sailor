@@ -19,11 +19,34 @@ import { type BrandColorPalette, type BrandConfig, DEFAULT_BRAND } from "./brand
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const BRAND_APPLY_LOCK_DIR = path.join(ROOT, "node_modules", ".cache", "nebutra-brand-apply.lock");
-const BRAND_APPLY_LOCK_TIMEOUT_MS = 120_000;
+const BRAND_APPLY_LOCK_TIMEOUT_MS = 300_000;
 const BRAND_APPLY_STALE_LOCK_MS = 10 * 60_000;
 
 function sleepSync(ms: number): void {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+
+function isProcessRunning(pid: number): boolean {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    return (error as NodeJS.ErrnoException).code === "EPERM";
+  }
+}
+
+function isBrandApplyLockStale(lockAgeMs: number): boolean {
+  if (lockAgeMs > BRAND_APPLY_STALE_LOCK_MS) {
+    return true;
+  }
+
+  try {
+    const pidRaw = fs.readFileSync(path.join(BRAND_APPLY_LOCK_DIR, "pid"), "utf-8").trim();
+    const pid = Number(pidRaw);
+    return !Number.isInteger(pid) || pid <= 0 || !isProcessRunning(pid);
+  } catch {
+    return true;
+  }
 }
 
 function acquireBrandApplyLock(): () => void {
@@ -45,7 +68,7 @@ function acquireBrandApplyLock(): () => void {
       }
 
       const lockAgeMs = Date.now() - fs.statSync(BRAND_APPLY_LOCK_DIR).mtimeMs;
-      if (lockAgeMs > BRAND_APPLY_STALE_LOCK_MS) {
+      if (isBrandApplyLockStale(lockAgeMs)) {
         fs.rmSync(BRAND_APPLY_LOCK_DIR, { force: true, recursive: true });
         continue;
       }
@@ -343,6 +366,29 @@ export function runDesignTokensBuild(): void {
     cwd: designTokensDir,
     stdio: "inherit",
   });
+  execFileSync("node", ["packages/design/tokens/scripts/sync-styles.mjs"], {
+    cwd: ROOT,
+    stdio: "inherit",
+  });
+  execFileSync("node", ["packages/design/theme/scripts/sync-themes.mjs"], {
+    cwd: ROOT,
+    stdio: "inherit",
+  });
+  execFileSync(
+    "pnpm",
+    [
+      "exec",
+      "biome",
+      "format",
+      "--write",
+      "packages/design/tokens/styles.css",
+      "packages/design/theme/themes.css",
+    ],
+    {
+      cwd: ROOT,
+      stdio: "inherit",
+    },
+  );
   logSuccess("Regenerated packages/design/tokens/styles.css");
 }
 

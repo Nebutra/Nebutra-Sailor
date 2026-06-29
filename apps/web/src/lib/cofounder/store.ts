@@ -32,9 +32,7 @@ export interface CofounderInterestRow {
 
 export interface CofounderDb {
   readonly cofounderProfile: {
-    findUnique(args: {
-      where: { tenantId: string };
-    }): Promise<CofounderProfileRow | null>;
+    findUnique(args: { where: { tenantId: string } }): Promise<CofounderProfileRow | null>;
     findMany(args: {
       where: { isActive?: boolean; id?: { notIn?: string[]; in?: string[] } };
       orderBy?: { updatedAt: "asc" | "desc" };

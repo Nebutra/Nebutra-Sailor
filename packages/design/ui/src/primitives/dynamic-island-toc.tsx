@@ -45,6 +45,13 @@ const islandTween: MotionTransition = {
   duration: motionDurationSec.cinematic, // 500ms — shape morph reads as cinematic
 };
 
+const pillEntranceTransition: MotionTransition = {
+  type: "spring",
+  stiffness: brandSpring.default.stiffness,
+  damping: brandSpring.default.damping,
+  mass: brandSpring.default.mass,
+};
+
 const PILL_W_CLOSED = 280; // minimum closed width; grows to fit the active title
 const PILL_W_OPEN = 340;
 const PILL_W_MAX = 560; // hard cap — a longer title ellipsizes instead of spanning the screen
@@ -612,7 +619,7 @@ export function DynamicIslandTOC({
           className="pointer-events-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={reduceMotion ? { duration: 0 } : brandSpring.default}
+          transition={reduceMotion ? { duration: 0 } : pillEntranceTransition}
         >
           <m.div
             initial={false}

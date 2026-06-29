@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { PermissionGate } from "@/components/PermissionGate";
 import { requireOrg } from "@/lib/auth";
 import { ApiKeysPageClient } from "./api-keys-client";
@@ -12,7 +13,7 @@ export default async function ApiKeysPage() {
       <header>
         <h1 className="text-xl font-semibold text-[var(--neutral-12)]">API Keys</h1>
         <p className="mt-1 text-sm text-[var(--neutral-11)]">
-          Generate and manage API keys for programmatic access to Nebutra.
+          Generate and manage API keys for programmatic access to {brand.name}.
         </p>
       </header>
 
