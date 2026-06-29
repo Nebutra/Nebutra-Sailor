@@ -92,6 +92,10 @@ const UpdateWorkflowSchema = CreateWorkflowSchema.partial();
 
 const IsoDateTimeSchema = z.string().datetime();
 const JsonErrorSchema = z.object({ error: z.string() });
+const SseStreamSchema = z.string().openapi({
+  description: "Server-sent events stream; each event data field carries workflow event JSON.",
+  example: 'event: run_started\ndata: {"runId":"run_1"}\n\n',
+});
 const WorkflowStatusSchema = z.enum(["ACTIVE", "DISABLED"]);
 const WorkflowRunStatusSchema = z.enum(["QUEUED", "RUNNING", "SUCCEEDED", "FAILED"]);
 
@@ -491,6 +495,7 @@ const runStreamRoute = createRoute({
   responses: {
     200: {
       description: "SSE stream of workflow events",
+      content: { "text/event-stream": { schema: SseStreamSchema } },
     },
     404: jsonErrorResponse("Workflow not found"),
   },

@@ -44,7 +44,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/tenant`        | (enabled by middleware)| Partial — AsyncLocalStorage works     | Subdomain/JWT resolvers scaffolded; schema migration flow pending   |
 | `@nebutra/uploads`       | (consumed directly)    | No — S3/R2 creds required             | Tus flow not end-to-end; validation stubs                           |
 | `@nebutra/vault`         | (consumed directly)    | Partial — local HKDF works for dev    | KMS rotation flow TODO; tenant isolation scaffolded                 |
-| `@nebutra/feature-flags` | `--feature-flags`      | Yes — Redis/env runtime works         | Managed Vercel/GrowthBook/ConfigCat SDK adapters and rollout UI pending |
+| `@nebutra/feature-flags` | `--feature-flags`      | Partial — Redis/env runtime works     | Managed Vercel/GrowthBook/ConfigCat SDK adapters and rollout UI pending |
 | `@nebutra/design-sync`   | (auto-detect)          | git-only works zero-config            | Figma push (Variables REST API) is dry-run; Penpot push scaffolded  |
 | `@nebutra/china-compliance` | (env-driven)         | ICP footer + region detection ready   | WeChat OAuth callback route TODO; Aliyun SMS adapter scaffold       |
 | `@nebutra/access-gate`  | `--access-gate`        | Core + Prisma adapter + admin issue/list/revoke/email/Dub links + Better Auth signup gate/redeem work | OAuth callback gating and DB-backed integration tests are app-owned |
@@ -52,7 +52,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (34)
+## WIP packages (35)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -77,6 +77,7 @@ and missing functionality.
 | `@nebutra/generation-context` | (consumed directly) | Shared BrandContext contract; app editor, reference validation, and media license policy are not production-backed |
 | `@nebutra/image-pipeline` | (consumed directly)  | Generation capability only; model-backed workflows and remote image providers are adapter-gated |
 | `@nebutra/play-loader`   | (consumed directly)     | Declarative play loader; runner delegates, remote install, and migration APIs are interface-only |
+| `@nebutra/startup-os`    | (consumed directly)     | Startup OS orchestration contracts; hosted execution, persistence wiring, and UI delivery are app-owned |
 | `@nebutra/workflow-runtime` | (consumed directly) | Tenant-authored workflow JS runtime; gateway runner, SSE streaming, and agent-callable tool wiring are deferred |
 | `@nebutra/video-pipeline` | (consumed directly)  | Generation capability only; model-backed clips, ffmpeg composition, and remote quotas are adapter-gated |
 | `@nebutra/voice-realtime` | (consumed directly) | Generation capability only; realtime transport, enrollment storage, and provider sidecars are adapter-gated |

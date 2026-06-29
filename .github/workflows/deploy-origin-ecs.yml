@@ -113,7 +113,7 @@ jobs:
               [ -n "${OSS_ACCESS_KEY_SECRET:-}" ] || { echo "::error::OSS_ACCESS_KEY_SECRET secret is required for OSS uploads"; exit 1; }
               ;;
             *)
-              echo "::error::UPLOAD_STORAGE_PROVIDER must be r2, s3, or oss for VM origin"; exit 1
+              echo "::error::UPLOAD_STORAGE_PROVIDER must be r2, s3, or oss for ECS origin"; exit 1
               ;;
           esac
 
