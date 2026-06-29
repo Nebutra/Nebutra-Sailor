@@ -3,6 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "requires": [
+      "@nebutra/agents for model execution and fallback routing",
+      "@nebutra/agent-runtime for runtime policy grammar",
+      "@nebutra/ui and @nebutra/icons for shared Startup OS presentation metadata"
+    ],
+    "gaps": [
+      "Dashboard-facing adapters are still wired through app routes",
+      "Long-running execution is represented by deterministic package seams until hosted orchestration is complete",
+      "File and canvas operations are runtime contracts, not a standalone production surface"
+    ],
+    "featureId": "startup-os",
+    "category": "ai",
+    "surface": "product-orchestration",
+    "summary": "Startup OS product orchestration contracts for company context, founder conversation, execution, files, and canvas state"
+  },
   "main": "./src/compiler.ts",
   "types": "./src/compiler.ts",
   "exports": {
@@ -26,7 +44,9 @@
     "@nebutra/agent-runtime": "workspace:*",
     "@nebutra/agents": "workspace:*",
     "@nebutra/db": "workspace:*",
+    "@nebutra/icons": "workspace:*",
     "@nebutra/preset": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "ai": "catalog:",
     "zod": "catalog:"
   },

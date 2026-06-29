@@ -6,7 +6,7 @@
   "description": "Feature flags abstraction - swap providers later",
   "nebutra": {
     "status": "foundation",
-    "productionReady": true,
+    "productionReady": false,
     "requires": [
       "@nebutra/cache",
       "or FEATURE_FLAG_* environment variables"

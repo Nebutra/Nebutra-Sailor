@@ -26,6 +26,17 @@ function sleepSync(ms: number): void {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 }
 
+function isLockOwnerAlive(lockDir: string): boolean {
+  try {
+    const pid = Number.parseInt(fs.readFileSync(path.join(lockDir, "pid"), "utf-8"), 10);
+    if (!Number.isInteger(pid) || pid <= 0) return false;
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    return (error as NodeJS.ErrnoException).code === "EPERM";
+  }
+}
+
 function acquireBrandApplyLock(): () => void {
   const startedAt = Date.now();
 
@@ -42,6 +53,11 @@ function acquireBrandApplyLock(): () => void {
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
         throw error;
+      }
+
+      if (!isLockOwnerAlive(BRAND_APPLY_LOCK_DIR)) {
+        fs.rmSync(BRAND_APPLY_LOCK_DIR, { force: true, recursive: true });
+        continue;
       }
 
       const lockAgeMs = Date.now() - fs.statSync(BRAND_APPLY_LOCK_DIR).mtimeMs;
