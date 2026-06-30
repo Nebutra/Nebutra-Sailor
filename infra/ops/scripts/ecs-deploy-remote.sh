@@ -1059,6 +1059,142 @@ rollback_one() {
   fi
 }
 
+nginx_worker_user() {
+  local current_user=""
+  if [ -f /etc/nginx/nginx.conf ]; then
+    current_user="$(awk '/^user[[:space:]]+/ { gsub(";", "", $2); print $2; exit }' /etc/nginx/nginx.conf 2>/dev/null || true)"
+  fi
+
+  if [ -n "$current_user" ] && id "$current_user" >/dev/null 2>&1; then
+    printf '%s\n' "$current_user"
+    return 0
+  fi
+  if id nginx >/dev/null 2>&1; then
+    printf '%s\n' "nginx"
+    return 0
+  fi
+  if id www-data >/dev/null 2>&1; then
+    printf '%s\n' "www-data"
+    return 0
+  fi
+
+  printf '%s\n' ""
+}
+
+restore_nginx_config() {
+  local backup_dir="$1"
+
+  if [ -f "$backup_dir/nginx.conf" ]; then
+    cp -p "$backup_dir/nginx.conf" /etc/nginx/nginx.conf
+  fi
+  if [ -f "$backup_dir/proxy_params.conf" ]; then
+    cp -p "$backup_dir/proxy_params.conf" /etc/nginx/conf.d/proxy_params.conf
+  fi
+  if [ -f "$backup_dir/security.conf" ]; then
+    cp -p "$backup_dir/security.conf" /etc/nginx/conf.d/security.conf
+  fi
+}
+
+dump_nginx_web_diagnostics() {
+  log "nginx app.nebutra.com diagnostics:"
+  nginx -T 2>/dev/null \
+    | awk '
+      /upstream nebutra_web/ { show=1; depth=0 }
+      /server_name app\.nebutra\.com/ { show=1; depth=0 }
+      show {
+        print
+        depth += gsub(/\{/, "{")
+        depth -= gsub(/\}/, "}")
+        if (depth <= 0 && /}/) {
+          print ""
+          show=0
+        }
+      }
+    ' \
+    | tail -120 || true
+  log "nginx error log tail:"
+  tail -80 /var/log/nginx/error.log 2>/dev/null || true
+}
+
+sync_nginx_runtime_config() {
+  local nginx_main="/tmp/nebutra-nginx.conf"
+  local nginx_proxy="/tmp/nebutra-nginx-proxy_params.conf"
+  local nginx_security="/tmp/nebutra-nginx-security.conf"
+
+  if ! command -v nginx >/dev/null 2>&1; then
+    log "nginx not installed; skipping nginx config sync"
+    return 0
+  fi
+  if [ ! -f "$nginx_main" ]; then
+    log "nginx config artifact not uploaded; skipping nginx config sync"
+    return 0
+  fi
+
+  local backup_dir="/etc/nginx/nebutra-backups/$(date -u +%Y%m%d-%H%M%S)-${SHA:0:7}"
+  mkdir -p "$backup_dir" /etc/nginx/conf.d
+  [ -f /etc/nginx/nginx.conf ] && cp -p /etc/nginx/nginx.conf "$backup_dir/nginx.conf" || true
+  [ -f /etc/nginx/conf.d/proxy_params.conf ] && cp -p /etc/nginx/conf.d/proxy_params.conf "$backup_dir/proxy_params.conf" || true
+  [ -f /etc/nginx/conf.d/security.conf ] && cp -p /etc/nginx/conf.d/security.conf "$backup_dir/security.conf" || true
+
+  local rendered_main worker_user
+  rendered_main="$(mktemp)"
+  worker_user="$(nginx_worker_user)"
+  if [ -n "$worker_user" ]; then
+    sed -E "s/^user[[:space:]]+[^;]+;/user ${worker_user};/" "$nginx_main" > "$rendered_main"
+  else
+    cp "$nginx_main" "$rendered_main"
+  fi
+
+  install -m 0644 "$rendered_main" /etc/nginx/nginx.conf
+  rm -f "$rendered_main"
+  [ -f "$nginx_proxy" ] && install -m 0644 "$nginx_proxy" /etc/nginx/conf.d/proxy_params.conf
+  [ -f "$nginx_security" ] && install -m 0644 "$nginx_security" /etc/nginx/conf.d/security.conf
+
+  if ! nginx -t; then
+    log "nginx config test failed; restoring previous config from $backup_dir"
+    restore_nginx_config "$backup_dir"
+    nginx -t || true
+    fail "nginx config sync failed"
+  fi
+
+  if command -v systemctl >/dev/null 2>&1 && systemctl is-active --quiet nginx; then
+    systemctl reload nginx
+  else
+    nginx -s reload
+  fi
+  log "nginx config synced from deploy artifacts"
+}
+
+verify_nginx_web_origin() {
+  case " $APPS " in
+    *" web "*) : ;;
+    *) return 0 ;;
+  esac
+
+  command -v nginx >/dev/null 2>&1 || return 0
+
+  local code="000"
+  for attempt in 1 2 3 4 5; do
+    code=$(curl -ksS -o /dev/null -w "%{http_code}" --max-time 10 \
+      --resolve app.nebutra.com:443:127.0.0.1 \
+      https://app.nebutra.com/ 2>/dev/null || echo "000")
+    case "$code" in
+      200|301|302|307) break ;;
+      *) sleep 4 ;;
+    esac
+  done
+
+  case "$code" in
+    200|301|302|307)
+      log "nginx local web origin -> $code"
+      ;;
+    *)
+      dump_nginx_web_diagnostics
+      fail "nginx local web origin failed for app.nebutra.com (last code: $code)"
+      ;;
+  esac
+}
+
 run_selected_apps() {
   local action="$1" app pm2_name
   for app in api landing web design-docs sailor-docs; do
@@ -1095,5 +1231,7 @@ for app in api landing web design-docs sailor-docs; do
   esac
 done
 
+sync_nginx_runtime_config
+verify_nginx_web_origin
 pm2 save
 log "deploy complete: $APPS @ $SHA"

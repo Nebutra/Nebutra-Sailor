@@ -386,6 +386,9 @@ jobs:
           sparse-checkout: |
             infra/iac/ecs/ecosystem.config.cjs
             infra/ops/scripts/ecs-deploy-remote.sh
+            infra/runtime/nginx/nginx.conf
+            infra/runtime/nginx/conf.d/proxy_params.conf
+            infra/runtime/nginx/conf.d/security.conf
 
       - name: Download landing bundle
         if: needs.detect-changes.outputs.landing == 'true'
@@ -533,11 +536,17 @@ jobs:
             scp "${SCP_OPTS[@]}" "$bundle" "${ECS_USER}@${ECS_HOST}:${REMOTE_BUNDLE_DIR}/"
           done
 
-          # Always re-upload the helper + ecosystem config so the box stays in sync.
+          # Always re-upload the helper + runtime configs so the box stays in sync.
           scp "${SCP_OPTS[@]}" infra/ops/scripts/ecs-deploy-remote.sh \
             "${ECS_USER}@${ECS_HOST}:/tmp/ecs-deploy-remote.sh"
           scp "${SCP_OPTS[@]}" infra/iac/ecs/ecosystem.config.cjs \
             "${ECS_USER}@${ECS_HOST}:${ECS_DEPLOY_ROOT}/ecosystem.config.cjs"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/nginx.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx.conf"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/proxy_params.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-proxy_params.conf"
+          scp "${SCP_OPTS[@]}" infra/runtime/nginx/conf.d/security.conf \
+            "${ECS_USER}@${ECS_HOST}:/tmp/nebutra-nginx-security.conf"
 
       - name: Run remote deploy
         env:
