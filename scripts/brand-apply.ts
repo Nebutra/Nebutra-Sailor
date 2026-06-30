@@ -553,19 +553,18 @@ export type LogoAssets = typeof logoAssets;
   // JSON.stringify produces quoted object keys ("primary": instead of
   // primary:) and no trailing commas — Biome's strict mode rejects both.
   // Auto-fix the just-emitted file so brand:apply always lands a
-  // lint-clean tree (otherwise `pnpm lint` in CI flags the generator's
-  // own output, which kept CI red across runs 26079161015 → 26081453758).
-  try {
-    execFileSync(
-      "pnpm",
-      ["exec", "biome", "check", "--write", "--no-errors-on-unmatched", metadataPath],
-      { cwd: ROOT, stdio: "pipe" },
-    );
-  } catch {
-    // Biome exits non-zero when it can't auto-fix every diagnostic; the
-    // file is still written with whatever fixes did apply, and the CI
-    // lint job will surface anything that survived.
-  }
+  // lint-clean tree. Use the local binary directly so this path keeps
+  // working even when pnpm's verify-deps-before-run guard blocks scripts.
+  const biomeBin = path.join(
+    ROOT,
+    "node_modules",
+    ".bin",
+    process.platform === "win32" ? "biome.cmd" : "biome",
+  );
+  execFileSync(biomeBin, ["check", "--write", "--no-errors-on-unmatched", metadataPath], {
+    cwd: ROOT,
+    stdio: "pipe",
+  });
 
   logSuccess("Updated packages/design/brand/src/metadata.ts");
 }

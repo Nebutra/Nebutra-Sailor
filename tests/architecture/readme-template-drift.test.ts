@@ -30,7 +30,26 @@ const LOCALES = [
   { rendered: "README.zh-CN.md", template: "README.zh-CN.template.md" },
   { rendered: "README.ja.md", template: "README.ja.template.md" },
 ];
-const BRAND_APPLY_SIDE_EFFECTS = [".env.example", "packages/design/brand/src/metadata.ts"];
+const BRAND_APPLY_SIDE_EFFECTS = [
+  ".env.example",
+  "packages/design/brand/src/metadata.ts",
+  "packages/design/design-tokens/tokens/core.json",
+  "packages/design/tokens/styles.css",
+  "packages/design/theme/themes.css",
+];
+
+function runBrandApply() {
+  const tsxBin = join(
+    ROOT,
+    "node_modules",
+    ".bin",
+    process.platform === "win32" ? "tsx.cmd" : "tsx",
+  );
+  execFileSync(tsxBin, [join(ROOT, "scripts/brand-apply.ts")], {
+    cwd: ROOT,
+    stdio: "pipe",
+  });
+}
 
 describe("README template drift", () => {
   it("every rendered README matches what `brand:apply` would emit from its template", {
@@ -54,10 +73,7 @@ describe("README template drift", () => {
     try {
       // Run the script. It exits non-zero on internal failure; vitest
       // surfaces that as a clear failure of *this* assertion.
-      execFileSync("pnpm", ["brand:apply"], {
-        cwd: ROOT,
-        stdio: "pipe",
-      });
+      runBrandApply();
 
       // Compare post-run bytes against the README snapshot.
       for (const { src, originalBytes } of readmeSnapshots) {

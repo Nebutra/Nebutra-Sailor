@@ -19,14 +19,31 @@
  * Reference: https://styledictionary.com/reference/config/
  */
 
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { readFile, rm, writeFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import StyleDictionary from "style-dictionary";
 
 const themeRegistry = JSON.parse(
   await readFile(new URL("../theme/src/registry.json", import.meta.url), "utf8"),
 );
 const MULTI_THEMES = themeRegistry.themes.map((theme) => theme.id);
+const repoRootUrl = new URL("../../..", import.meta.url);
+const repoRoot = fileURLToPath(repoRootUrl);
+const biomeBin = fileURLToPath(
+  new URL(`node_modules/.bin/${process.platform === "win32" ? "biome.cmd" : "biome"}`, repoRootUrl),
+);
+
+function formatCssWithBiome(content, stdinFilePath) {
+  if (!existsSync(biomeBin)) return content;
+  return execFileSync(biomeBin, ["format", "--stdin-file-path", stdinFilePath], {
+    cwd: repoRoot,
+    input: content,
+    encoding: "utf8",
+    stdio: "pipe",
+  });
+}
 
 const FONT_REGISTRY = {
   geist: "--font-geist-sans",
@@ -865,7 +882,11 @@ const generatedHeader = `/* biome-ignore-all lint/suspicious/noDuplicateCustomPr
 // styles.generated.css — used by `pnpm verify:parity` and as the replacement for
 // packages/design/tokens/styles.css. Contains :root + .dark + extras + @theme inline + base.
 const stylesCombined = `${generatedHeader}${lightFinal}\n${darkFinal}\n${tailwindBlock}\n${baseCss}`;
-await writeFile("build/css/styles.generated.css", stylesCombined, "utf8");
+await writeFile(
+  "build/css/styles.generated.css",
+  formatCssWithBiome(stylesCombined, "packages/design/tokens/styles.css"),
+  "utf8",
+);
 
 // themes.generated.css — replacement for packages/design/theme/themes.css.
 // Concatenates all multi-theme files with their data-theme selectors.
@@ -897,7 +918,11 @@ const themesBaseCss = await readFile("static/themes-base.css", "utf8");
 const themesCombined = replaceHexWithOklch(
   `${themesHeader}${themeFiles.join("\n")}\n${themesBaseCss}`,
 );
-await writeFile("build/css/themes.generated.css", themesCombined, "utf8");
+await writeFile(
+  "build/css/themes.generated.css",
+  formatCssWithBiome(themesCombined, "packages/design/theme/themes.css"),
+  "utf8",
+);
 
 process.stdout.write(
   "\n[design-tokens] build complete\n" +

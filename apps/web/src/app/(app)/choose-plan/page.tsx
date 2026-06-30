@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { redirect } from "next/navigation";
 import { type PricingPlan, PricingPlanGrid } from "@/components/billing/pricing-plan-grid";
 import { getAuth } from "@/lib/auth";
@@ -8,7 +9,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Choose your plan — Nebutra",
+  title: `Choose your plan — ${brand.name}`,
 };
 
 /**
@@ -25,7 +26,7 @@ const STATIC_PLANS: PricingPlan[] = [
     id: "plan_pro",
     name: "Pro",
     tier: "PRO",
-    description: "For active SaaS teams running Nebutra as their operating surface.",
+    description: `For active SaaS teams running ${brand.name} as their operating surface.`,
     features: ["10 projects", "10 team members", "Advanced analytics", "Priority support"],
     recommended: true,
     prices: [
