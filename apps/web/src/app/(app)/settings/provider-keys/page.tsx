@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { PermissionGate } from "@/components/PermissionGate";
 import { requireOrg } from "@/lib/auth";
 import { ProviderKeysClient } from "./provider-keys-client";
@@ -12,8 +13,8 @@ export default async function ProviderKeysPage() {
       <header>
         <h1 className="text-xl font-semibold text-[var(--neutral-12)]">Provider Keys</h1>
         <p className="mt-1 text-sm text-[var(--neutral-11)]">
-          Bring your own AI provider keys. Nebutra prefers your key for matching models and falls
-          back to the platform key unless you pin it.
+          Bring your own AI provider keys. {brand.name} prefers your key for matching models and
+          falls back to the platform key unless you pin it.
         </p>
       </header>
 

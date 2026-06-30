@@ -173,8 +173,6 @@
       "apps/web/src/components/theme-playground/theme-playground-workbench.tsx",
       "apps/web/src/components/theme-playground/theme-token-data.ts",
       "apps/web/src/lib/api.ts",
-      "apps/web/src/lib/api/client.ts",
-      "apps/web/src/lib/env.ts",
       "apps/web/src/lib/integrations/catalog.tsx",
       "apps/web/src/lib/permissions.ts",
       "apps/web/src/lib/public-url-defaults.ts",

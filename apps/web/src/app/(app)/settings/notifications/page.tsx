@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { Bell, Envelope as Mail, DevicePhone as Smartphone } from "@nebutra/icons";
 import { loadNotificationSettingsSnapshot } from "@nebutra/notifications";
 import { NotificationInboxPreview } from "@/components/notifications/notification-inbox-preview";
@@ -33,9 +34,9 @@ export default async function NotificationSettingsPage({ params, searchParams }:
       <div>
         <h2 className="text-lg font-semibold text-[var(--neutral-12)]">Notifications</h2>
         <p className="mt-1 max-w-2xl text-sm text-[var(--neutral-11)]">
-          Tune how Nebutra reaches you for workspace activity, billing risk, security events, and
-          product operations. Managed providers can save these preferences immediately; preview mode
-          shows the product defaults without pretending they are persisted.
+          Tune how {brand.name} reaches you for workspace activity, billing risk, security events,
+          and product operations. Managed providers can save these preferences immediately; preview
+          mode shows the product defaults without pretending they are persisted.
         </p>
       </div>
 
@@ -63,7 +64,7 @@ export default async function NotificationSettingsPage({ params, searchParams }:
             icon: Bell,
             label: "Inbox signals",
             value: `${snapshot.channels.find((channel) => channel.id === "in_app")?.label ?? "Inbox"}`,
-            description: "Highest-signal updates inside the Nebutra workspace.",
+            description: `Highest-signal updates inside the ${brand.name} workspace.`,
           },
           {
             icon: Mail,
