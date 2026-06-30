@@ -1,7 +1,15 @@
-const ROUTE_PREWARM_ATTEMPTS = 3;
-const ROUTE_PREWARM_RETRY_DELAY_MS = 2_000;
-const ROUTE_PREWARM_TIMEOUT_MS = 60_000;
 const PREWARM_ROUTES = ["/", "/changelog"];
+const SHOULD_FAIL_ON_PREWARM =
+  process.env.E2E_FAIL_ON_PREWARM === "1" || process.env.E2E_FAIL_ON_PREWARM === "true";
+
+function numberFromEnv(name: string, fallback: number) {
+  const value = Number.parseInt(process.env[name] ?? "", 10);
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
+const ROUTE_PREWARM_ATTEMPTS = numberFromEnv("E2E_PREWARM_ATTEMPTS", 3);
+const ROUTE_PREWARM_RETRY_DELAY_MS = numberFromEnv("E2E_PREWARM_RETRY_DELAY_MS", 2_000);
+const ROUTE_PREWARM_TIMEOUT_MS = numberFromEnv("E2E_PREWARM_TIMEOUT_MS", 60_000);
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -56,6 +64,17 @@ export default async function globalSetup() {
   for (const route of PREWARM_ROUTES) {
     const url = new URL(route, baseUrl);
     process.stdout.write(`[e2e-global-setup] prewarm ${url.toString()}\n`);
-    await prewarmRoute(url);
+    try {
+      await prewarmRoute(url);
+    } catch (error) {
+      const detail = describeError(error);
+      if (SHOULD_FAIL_ON_PREWARM) {
+        throw error;
+      }
+
+      process.stdout.write(
+        `[e2e-global-setup] prewarm skipped after retries ${url.toString()}: ${detail}\n`,
+      );
+    }
   }
 }
