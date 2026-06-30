@@ -2238,7 +2238,38 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              keys: {
+                id: string;
+                /** @enum {string} */
+                provider: "OPENAI" | "ANTHROPIC" | "GOOGLE" | "SILICONFLOW" | "CUSTOM";
+                label: string | null;
+                isActive: boolean;
+                alwaysUse: boolean;
+                baseUrl?: string | null;
+                maskedKey: string | null;
+                /** Format: date-time */
+                lastTestedAt?: string | null;
+                /** Format: date-time */
+                createdAt: string;
+                /** Format: date-time */
+                updatedAt?: string;
+              }[];
+              total: number;
+            };
+          };
+        };
+        /** @description Failed to list provider keys */
+        500: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
         };
       };
     };
@@ -2270,14 +2301,46 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              id: string;
+              /** @enum {string} */
+              provider: "OPENAI" | "ANTHROPIC" | "GOOGLE" | "SILICONFLOW" | "CUSTOM";
+              label: string | null;
+              isActive: boolean;
+              alwaysUse: boolean;
+              baseUrl?: string | null;
+              maskedKey: string | null;
+              /** Format: date-time */
+              lastTestedAt?: string | null;
+              /** Format: date-time */
+              createdAt: string;
+              /** Format: date-time */
+              updatedAt?: string;
+            };
+          };
         };
         /** @description Invalid request */
         400: {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Failed to save provider key */
+        500: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
         };
       };
     };
@@ -2287,7 +2350,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/v1/ai/provider-keys/:provider": {
+  "/api/v1/ai/provider-keys/{provider}": {
     parameters: {
       query?: never;
       header?: never;
@@ -2314,14 +2377,35 @@ export interface paths {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              deleted: boolean;
+              /** @enum {string} */
+              provider: "OPENAI" | "ANTHROPIC" | "GOOGLE" | "SILICONFLOW" | "CUSTOM";
+            };
+          };
         };
         /** @description Not found */
         404: {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
+        };
+        /** @description Failed to delete provider key */
+        500: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+            };
+          };
         };
       };
     };
@@ -4743,7 +4827,42 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            items: {
+              id: string;
+              tenantId: string;
+              name: string;
+              description: string | null;
+              scriptSource: string;
+              /** @enum {string} */
+              status: "ACTIVE" | "DISABLED";
+              defaultModel: string;
+              maxConcurrency: number;
+              maxAgentsPerRun: number;
+              maxRetries: number;
+              timeoutMs: number;
+              metadata?: unknown;
+              /** Format: date-time */
+              createdAt: string;
+              /** Format: date-time */
+              updatedAt: string;
+            }[];
+            nextCursor: string | null;
+            hasNextPage: boolean;
+          };
+        };
+      };
+      /** @description Failed to list workflows */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };
@@ -4776,21 +4895,60 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            id: string;
+            tenantId: string;
+            name: string;
+            description: string | null;
+            scriptSource: string;
+            /** @enum {string} */
+            status: "ACTIVE" | "DISABLED";
+            defaultModel: string;
+            maxConcurrency: number;
+            maxAgentsPerRun: number;
+            maxRetries: number;
+            timeoutMs: number;
+            metadata?: unknown;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+          };
+        };
       };
       /** @description Invalid request */
       400: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
       /** @description A workflow with this name already exists */
       409: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+      /** @description Failed to create workflow */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };
@@ -4810,14 +4968,38 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            id: string;
+            tenantId: string;
+            name: string;
+            description: string | null;
+            scriptSource: string;
+            /** @enum {string} */
+            status: "ACTIVE" | "DISABLED";
+            defaultModel: string;
+            maxConcurrency: number;
+            maxAgentsPerRun: number;
+            maxRetries: number;
+            timeoutMs: number;
+            metadata?: unknown;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+          };
+        };
       };
       /** @description Workflow not found */
       404: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };
@@ -4837,14 +5019,34 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            deleted: boolean;
+            id: string;
+          };
+        };
       };
       /** @description Workflow not found */
       404: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+      /** @description Failed to delete workflow */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };
@@ -4879,21 +5081,60 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            id: string;
+            tenantId: string;
+            name: string;
+            description: string | null;
+            scriptSource: string;
+            /** @enum {string} */
+            status: "ACTIVE" | "DISABLED";
+            defaultModel: string;
+            maxConcurrency: number;
+            maxAgentsPerRun: number;
+            maxRetries: number;
+            timeoutMs: number;
+            metadata?: unknown;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+          };
+        };
       };
       /** @description Invalid request */
       400: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
       /** @description Workflow not found */
       404: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
+      };
+      /** @description Failed to update workflow */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };
@@ -4916,14 +5157,47 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            items: {
+              id: string;
+              tenantId: string;
+              workflowId: string;
+              /** @enum {string} */
+              status: "QUEUED" | "RUNNING" | "SUCCEEDED" | "FAILED";
+              idempotencyKey: string;
+              threadId: string;
+              triggeredBy: string;
+              args?: unknown;
+              result?: unknown;
+              events?: unknown;
+              error: string | null;
+              stats?: unknown;
+              tokenUsage?: unknown;
+              /** Format: date-time */
+              startedAt: string | null;
+              /** Format: date-time */
+              finishedAt: string | null;
+              /** Format: date-time */
+              createdAt: string;
+              /** Format: date-time */
+              updatedAt: string;
+            }[];
+            nextCursor: string | null;
+            hasNextPage: boolean;
+          };
+        };
       };
       /** @description Workflow not found */
       404: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };
@@ -4951,14 +5225,25 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            enqueued: boolean;
+            workflowId: string;
+            /** Format: date-time */
+            requestedAt: string;
+          };
+        };
       };
       /** @description Workflow not found */
       404: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };
@@ -4986,14 +5271,20 @@ export interface operations {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "text/event-stream": string;
+        };
       };
       /** @description Workflow not found */
       404: {
         headers: {
           [name: string]: unknown;
         };
-        content?: never;
+        content: {
+          "application/json": {
+            error: string;
+          };
+        };
       };
     };
   };
