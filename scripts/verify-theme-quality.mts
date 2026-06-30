@@ -38,6 +38,11 @@ function check(file: string) {
   const j = JSON.parse(readFileSync(file, "utf8"));
   const flags: string[] = [];
   const val = (g: string, k: string): string | undefined => j[g]?.[k]?.$value;
+  const requiredVal = (g: string, k: string): string => {
+    const value = val(g, k);
+    if (!value) throw new Error(`missing token ${g}.${k}`);
+    return value;
+  };
 
   for (const [g, k] of REQUIRED) if (!val(g, k)) flags.push(`missing:${g}.${k}`);
 
@@ -45,10 +50,10 @@ function check(file: string) {
     aaBody = 0,
     bgChroma = 0;
   try {
-    const primary = parseColor(val("color", "primary")!);
-    const primaryFg = parseColor(val("color", "primary-foreground")!);
-    const bg = parseColor(val("color", "background")!);
-    const fg = parseColor(val("color", "foreground")!);
+    const primary = parseColor(requiredVal("color", "primary"));
+    const primaryFg = parseColor(requiredVal("color", "primary-foreground"));
+    const bg = parseColor(requiredVal("color", "background"));
+    const fg = parseColor(requiredVal("color", "foreground"));
     aaPrimary = chroma.contrast(primary, primaryFg);
     aaBody = chroma.contrast(bg, fg);
     bgChroma = bg.get("oklch.c");

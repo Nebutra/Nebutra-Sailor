@@ -57,7 +57,7 @@ describe("importDesignMdToThemeTokens", () => {
       const { tokenSet } = importDesignMdToThemeTokens(VALID_FIXTURE);
       const color = tokenSet.color as Record<string, { $value: string; $type: string }>;
       expect(color).toBeDefined();
-      const primary = color["primary"];
+      const primary = color.primary;
       expect(primary).toBeDefined();
       expect(primary.$type).toBe("color");
       // Hex value should contain the core digits (case-insensitive)
@@ -67,7 +67,7 @@ describe("importDesignMdToThemeTokens", () => {
     it("tokenSet.color.accent.$type is 'color'", () => {
       const { tokenSet } = importDesignMdToThemeTokens(VALID_FIXTURE);
       const color = tokenSet.color as Record<string, { $value: string; $type: string }>;
-      const accent = color["accent"];
+      const accent = color.accent;
       expect(accent).toBeDefined();
       expect(accent.$type).toBe("color");
       expect(accent.$value.toLowerCase()).toContain("0bf1c3");

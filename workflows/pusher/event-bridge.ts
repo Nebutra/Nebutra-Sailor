@@ -177,7 +177,9 @@ export function initEventBridge(): () => void {
 
   // Return cleanup function
   return () => {
-    unsubscribers.forEach((unsub) => unsub());
+    unsubscribers.forEach((unsub) => {
+      unsub();
+    });
   };
 }
 

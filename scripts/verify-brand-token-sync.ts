@@ -70,6 +70,10 @@ function cssVariableDefinitions(css: string, variable: string): string[] {
   );
 }
 
+function compactCssValue(value: string): string {
+  return value.toLowerCase().replace(/\s+/g, "");
+}
+
 function normalizeFontFamily(name: string): string {
   return name.replace(/['"]/g, "").trim().toLowerCase();
 }
@@ -583,7 +587,7 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
     ok(`semantic.brand.gradient.end lightness is usable (${endTone.lightness.toFixed(1)}%)`);
   }
 
-  if (!tokensCss.toLowerCase().includes(actionGradient)) {
+  if (!compactCssValue(tokensCss).includes(compactCssValue(actionGradient))) {
     fail("tokens/styles.css --brand-gradient", "runtime CSS must contain the DTCG action gradient");
   } else {
     ok("tokens/styles.css: --brand-gradient mirrors DTCG action gradient");
