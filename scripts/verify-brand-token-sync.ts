@@ -321,17 +321,15 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
 }
 
 // ─── 4. Guidelines re-exports collapse drift ────────────────────────────────
-{
-  if (nebutraBlueScale[500] !== colors.primary[500]) {
-    fail("guidelines.blue re-export", "nebutraBlueScale must redirect to colors.primary");
-  } else {
-    ok("guidelines/color.ts: nebutraBlueScale → colors.primary");
-  }
-  if (nebutraCyanScale[500] !== colors.accent[500]) {
-    fail("guidelines.cyan re-export", "nebutraCyanScale must redirect to colors.accent");
-  } else {
-    ok("guidelines/color.ts: nebutraCyanScale → colors.accent");
-  }
+if (nebutraBlueScale[500] !== colors.primary[500]) {
+  fail("guidelines.blue re-export", "nebutraBlueScale must redirect to colors.primary");
+} else {
+  ok("guidelines/color.ts: nebutraBlueScale → colors.primary");
+}
+if (nebutraCyanScale[500] !== colors.accent[500]) {
+  fail("guidelines.cyan re-export", "nebutraCyanScale must redirect to colors.accent");
+} else {
+  ok("guidelines/color.ts: nebutraCyanScale → colors.accent");
 }
 
 // ─── 5. Font stack — Geist + CJK fallbacks ──────────────────────────────────
@@ -517,17 +515,15 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
 }
 
 // ─── 7. Brand gradient names — both --brand-gradient and --gradient-brand exist ───
-{
-  if (!tokensCss.includes("--brand-gradient:")) {
-    fail("tokens/styles.css --brand-gradient", "Canonical --brand-gradient must exist");
-  } else {
-    ok("tokens/styles.css: --brand-gradient exists (canonical)");
-  }
-  if (!tokensCss.includes("--gradient-brand:")) {
-    fail("tokens/styles.css --gradient-brand", "Backward-compat --gradient-brand alias must exist");
-  } else {
-    ok("tokens/styles.css: --gradient-brand alias exists (backward compat)");
-  }
+if (!tokensCss.includes("--brand-gradient:")) {
+  fail("tokens/styles.css --brand-gradient", "Canonical --brand-gradient must exist");
+} else {
+  ok("tokens/styles.css: --brand-gradient exists (canonical)");
+}
+if (!tokensCss.includes("--gradient-brand:")) {
+  fail("tokens/styles.css --gradient-brand", "Backward-compat --gradient-brand alias must exist");
+} else {
+  ok("tokens/styles.css: --gradient-brand alias exists (backward compat)");
 }
 
 // ─── 8. Brand action gradient — contrast-safe and visually clean ────────────
@@ -602,17 +598,15 @@ process.stdout.write("Verifying brand token sync against @nebutra/design-tokens 
 }
 
 // ─── 9. P3 wide-gamut overrides + oklch overrides present ───────────────────
-{
-  if (!tokensCss.includes("@supports (color: color(display-p3")) {
-    fail("tokens/styles.css P3 support", "Display-P3 @supports block missing");
-  } else {
-    ok("tokens/styles.css: @supports (display-p3) wrapper present");
-  }
-  if (!tokensCss.includes("@supports (color: oklch(0 0 0))")) {
-    fail("tokens/styles.css oklch support", "oklch fallback @supports block missing");
-  } else {
-    ok("tokens/styles.css: @supports (oklch) wrapper present");
-  }
+if (!tokensCss.includes("@supports (color: color(display-p3")) {
+  fail("tokens/styles.css P3 support", "Display-P3 @supports block missing");
+} else {
+  ok("tokens/styles.css: @supports (display-p3) wrapper present");
+}
+if (!tokensCss.includes("@supports (color: oklch(0 0 0))")) {
+  fail("tokens/styles.css oklch support", "oklch fallback @supports block missing");
+} else {
+  ok("tokens/styles.css: @supports (oklch) wrapper present");
 }
 
 // ─── 10. Theme CSS structural checks ────────────────────────────────────────

@@ -783,6 +783,29 @@ for proc in procs:
   fi
 }
 
+wait_for_local_http() {
+  local label="$1" pm2_name="$2" url="$3" ok_regex="${4:-^(200|301|302|307)$}"
+  local code="000"
+
+  log "wait for $label local health: $url"
+  for attempt in 1 2 3 4 5 6 7 8 9 10; do
+    code="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 "$url" 2>/dev/null || true)"
+    [ -n "$code" ] || code="000"
+    if [[ "$code" =~ $ok_regex ]]; then
+      log "$label local health -> $code"
+      return 0
+    fi
+    if [ "$attempt" -eq 10 ]; then
+      log "$label local health failed after $attempt attempts (last code: $code)"
+      pm2 describe "$pm2_name" --no-color 2>&1 || true
+      pm2 logs "$pm2_name" --nostream --lines 160 --raw --no-color 2>&1 | tail -180 || true
+      command -v ss >/dev/null 2>&1 && ss -ltnp 2>/dev/null | grep -E ':(3000|3001|3002|3004|3005)\b' || true
+      fail "$label failed local health check"
+    fi
+    sleep 6
+  done
+}
+
 deploy_one() {
   local app="$1" pm2_name="$2"
   local tarball="$BUNDLE_DIR/nebutra-${app}-${SHA}.tar.gz"
@@ -944,25 +967,23 @@ for p in procs:
   log "pm2 logs for $pm2_name (last 40 lines, no stream):"
   pm2 logs "$pm2_name" --nostream --lines 40 --raw --no-color 2>&1 | tail -50 || true
 
-  if [ "$pm2_name" = "api-gateway" ]; then
-    log "wait for api-gateway local health"
-    local code="000"
-    for attempt in 1 2 3 4 5 6 7 8 9 10; do
-      code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 \
-        "http://127.0.0.1:3002/api/misc/health" 2>/dev/null || echo "000")
-      if [ "$code" = "200" ]; then
-        log "api-gateway local health -> $code"
-        break
-      fi
-      if [ "$attempt" -eq 10 ]; then
-        log "api-gateway local health failed after $attempt attempts (last code: $code)"
-        pm2 describe "$pm2_name" --no-color 2>&1 || true
-        pm2 logs "$pm2_name" --nostream --lines 160 --raw --no-color 2>&1 | tail -180 || true
-        fail "api-gateway failed local health check"
-      fi
-      sleep 6
-    done
-  fi
+  case "$pm2_name" in
+    api-gateway)
+      wait_for_local_http "api-gateway" "$pm2_name" "http://127.0.0.1:3002/api/misc/health" "^200$"
+      ;;
+    landing-page)
+      wait_for_local_http "landing-page" "$pm2_name" "http://127.0.0.1:3001/get-license"
+      ;;
+    web)
+      wait_for_local_http "web" "$pm2_name" "http://127.0.0.1:3000/"
+      ;;
+    design-docs)
+      wait_for_local_http "design-docs" "$pm2_name" "http://127.0.0.1:3004/"
+      ;;
+    sailor-docs)
+      wait_for_local_http "sailor-docs" "$pm2_name" "http://127.0.0.1:3005/"
+      ;;
+  esac
 
   # Retention — keep latest N, drop the rest. find sorts by mtime via -printf
   # to avoid SC2012 issues with `ls`. Release names are timestamped so this is

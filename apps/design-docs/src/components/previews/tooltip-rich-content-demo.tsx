@@ -9,9 +9,7 @@ export function TooltipRichContentDemo() {
           <Button variant="outline">Rich content</Button>
         </TooltipTrigger>
         <TooltipContent>
-          <>
-            <b>Pro plan</b> includes <i>90-day audit retention</i>.
-          </>
+          <b>Pro plan</b> includes <i>90-day audit retention</i>.
         </TooltipContent>
       </Tooltip>
     </div>
