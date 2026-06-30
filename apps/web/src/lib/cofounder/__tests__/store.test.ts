@@ -74,7 +74,11 @@ function makeFakeDb() {
             r.toProfileId === where.fromProfileId_toProfileId.toProfileId,
         );
         if (idx >= 0) {
-          const row = { ...interests[idx], ...update, pitch: update.pitch ?? null } as CofounderInterestRow;
+          const row = {
+            ...interests[idx],
+            ...update,
+            pitch: update.pitch ?? null,
+          } as CofounderInterestRow;
           interests[idx] = row;
           return row;
         }
@@ -137,7 +141,11 @@ describe("cofounder store", () => {
     const stranger = await seedProfile(db, "org_stranger");
 
     await recordInterest(db, { fromProfileId: me.id, toProfileId: them.id, kind: "INTERESTED" });
-    await recordInterest(db, { fromProfileId: me.id, toProfileId: stranger.id, kind: "INTERESTED" });
+    await recordInterest(db, {
+      fromProfileId: me.id,
+      toProfileId: stranger.id,
+      kind: "INTERESTED",
+    });
     // them likes me back → match; stranger never does → no match
     await recordInterest(db, { fromProfileId: them.id, toProfileId: me.id, kind: "PITCH" });
 

@@ -91,7 +91,9 @@ export class WorkflowRunRepository {
           ? { result: capJson(data.result, RESULT_MAX_BYTES) as object }
           : {}),
         ...(data.error !== undefined ? { error: data.error } : {}),
-        ...(data.events ? { events: capJson(data.events.slice(-EVENTS_MAX), RESULT_MAX_BYTES) as object } : {}),
+        ...(data.events
+          ? { events: capJson(data.events.slice(-EVENTS_MAX), RESULT_MAX_BYTES) as object }
+          : {}),
         ...(data.stats ? { stats: data.stats as object } : {}),
         ...(data.tokenUsage ? { tokenUsage: data.tokenUsage as object } : {}),
       },

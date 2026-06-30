@@ -15,10 +15,11 @@ describe("shouldSkipGlobalRateLimit", () => {
     expect(shouldSkipGlobalRateLimit(path)).toBe(true);
   });
 
-  it.each(["/api/v1/projects", "/api/v1/ai/gateway", "/api/startup-os/projects"])(
-    "keeps product API route %s rate-limited",
-    (path) => {
-      expect(shouldSkipGlobalRateLimit(path)).toBe(false);
-    },
-  );
+  it.each([
+    "/api/v1/projects",
+    "/api/v1/ai/gateway",
+    "/api/startup-os/projects",
+  ])("keeps product API route %s rate-limited", (path) => {
+    expect(shouldSkipGlobalRateLimit(path)).toBe(false);
+  });
 });
