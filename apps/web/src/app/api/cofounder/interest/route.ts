@@ -41,7 +41,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Join the cofounder pool first." }, { status: 409 });
     }
     if (toProfileId === me.id) {
-      return NextResponse.json({ error: "You cannot signal interest in yourself." }, { status: 400 });
+      return NextResponse.json(
+        { error: "You cannot signal interest in yourself." },
+        { status: 400 },
+      );
     }
 
     await recordInterest(ctx.db, { fromProfileId: me.id, toProfileId, kind, pitch });

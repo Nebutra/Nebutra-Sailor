@@ -69,7 +69,9 @@ export function RoomView({ profileId }: { profileId: string }) {
   }, [profileId]);
 
   if (state === "loading") {
-    return <div className="mx-auto h-80 w-full max-w-sm animate-pulse rounded-[28px] border border-neutral-6 bg-neutral-2" />;
+    return (
+      <div className="mx-auto h-80 w-full max-w-sm animate-pulse rounded-[28px] border border-neutral-6 bg-neutral-2" />
+    );
   }
 
   if (state === "not-match") {

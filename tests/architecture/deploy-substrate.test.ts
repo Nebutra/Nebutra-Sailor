@@ -77,7 +77,9 @@ describe("Deploy substrate governance", () => {
     expect(yml).toContain('package: "@nebutra/web"');
     expect(yml).toContain('kind: "next-standalone"');
     expect(yml).toContain('build_command: "build:next"');
-    expect(yml).toContain("pnpm --filter ${{ matrix.package }} ${{ matrix.build_command }}");
+    expect(yml).toContain(
+      "pnpm --filter ${" + "{ matrix.package }} ${" + "{ matrix.build_command }}",
+    );
     expect(yml).toContain('cp -r "$WS/.next/standalone/." "$STAGE/"');
     expect(yml).not.toContain("ECS Vite SPA static server");
     expect(yml).toContain("web-desktop-auth-foundryoss");

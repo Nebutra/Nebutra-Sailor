@@ -1,14 +1,13 @@
+import fs from "node:fs/promises";
 import path from "node:path";
-import { readFiles, scanURLs, validateFiles } from "next-validate-link";
+import { scanURLs, validateFiles } from "next-validate-link";
 
 const cwd = path.resolve(import.meta.dirname, "..");
 const supportedLanguages = ["en", "zh"];
 
 process.chdir(cwd);
 
-const files = await readFiles("content/docs/**/*.{md,mdx}", {
-  pathToUrl,
-});
+const files = await readDocsFiles(path.join(cwd, "content/docs"));
 
 if (files.length === 0) {
   console.error("design-docs link lint found no docs files; check the docs root.");
@@ -173,4 +172,66 @@ function getLineColumn(source, index) {
     line: lines.length,
     column: lines.at(-1).length + 1,
   };
+}
+
+async function readDocsFiles(rootDir) {
+  const paths = await collectMarkdownFiles(rootDir);
+
+  return Promise.all(
+    paths.map(async (filePath) => {
+      const content = await fs.readFile(filePath, "utf8");
+      const stripped = stripFrontmatter(content);
+      const relativePath = path.relative(cwd, filePath).split(path.sep).join("/");
+
+      return {
+        path: relativePath,
+        data: {},
+        content: stripped,
+        url: pathToUrl(relativePath),
+      };
+    }),
+  );
+}
+
+async function collectMarkdownFiles(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const files = await Promise.all(
+    entries.map(async (entry) => {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        return collectMarkdownFiles(fullPath);
+      }
+
+      return /\.(?:md|mdx)$/.test(entry.name) ? [fullPath] : [];
+    }),
+  );
+
+  return files.flat().sort();
+}
+
+function stripFrontmatter(source) {
+  if (!source.startsWith("---\n") && !source.startsWith("---\r\n")) {
+    return source;
+  }
+
+  const newline = source.startsWith("---\r\n") ? "\r\n" : "\n";
+  const marker = `${newline}---${newline}`;
+  const endIndex = source.indexOf(marker, 3);
+  if (endIndex === -1) {
+    return source;
+  }
+
+  const frontmatter = source.slice(0, endIndex + marker.length);
+  return "\n".repeat(countLines(frontmatter)) + source.slice(endIndex + marker.length);
+}
+
+function countLines(source) {
+  let lines = 0;
+  for (const char of source) {
+    if (char === "\n") {
+      lines += 1;
+    }
+  }
+
+  return lines;
 }

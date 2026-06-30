@@ -1,9 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type {
-  CofounderDb,
-  CofounderInterestRow,
-  CofounderProfileRow,
-} from "@/lib/cofounder/store";
+import type { CofounderDb, CofounderInterestRow, CofounderProfileRow } from "@/lib/cofounder/store";
 
 const getCofounderContextMock = vi.fn();
 
@@ -182,7 +178,9 @@ describe("/api/cofounder/interest", () => {
     seedProfile("t_other");
     // The target already signalled interest in me (other -> me).
     await db.cofounderInterest.upsert({
-      where: { fromProfileId_toProfileId: { fromProfileId: "prof_t_other", toProfileId: "prof_t_me" } },
+      where: {
+        fromProfileId_toProfileId: { fromProfileId: "prof_t_other", toProfileId: "prof_t_me" },
+      },
       create: { fromProfileId: "prof_t_other", toProfileId: "prof_t_me", kind: "INTERESTED" },
       update: { kind: "INTERESTED" },
     });

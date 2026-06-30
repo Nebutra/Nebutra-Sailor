@@ -1,8 +1,8 @@
 import {
   ChartActivity as Activity,
   Cart as ShoppingBag,
-  Lightning as Zap,
   Store,
+  Lightning as Zap,
 } from "@nebutra/icons";
 import type { ComponentType, SVGProps } from "react";
 

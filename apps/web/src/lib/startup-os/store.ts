@@ -195,9 +195,7 @@ export function serializeStartupProjectScene(
     events: options?.events ?? [],
     ...(options?.files ? { files: normalizeStartupProjectFiles(options.files) } : {}),
     ...(options?.canvasLayout ? { canvasLayout: options.canvasLayout } : {}),
-    ...(options?.snapshots && options.snapshots.length > 0
-      ? { snapshots: options.snapshots }
-      : {}),
+    ...(options?.snapshots && options.snapshots.length > 0 ? { snapshots: options.snapshots } : {}),
   };
 }
 
