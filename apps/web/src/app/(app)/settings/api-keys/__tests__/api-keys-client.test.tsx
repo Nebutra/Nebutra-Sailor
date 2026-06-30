@@ -14,6 +14,11 @@ vi.mock("next-intl", () => ({
       d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
     relativeTime: (_d: Date) => "just now",
   }),
+  useTranslations: () => (key: string) =>
+    ({
+      "emptyState.apiKeys": "No keys yet.",
+      "emptyState.apiKeysCta": "Create your first key",
+    })[key] ?? key,
 }));
 
 import { ApiKeysPageClient } from "@/app/(app)/settings/api-keys/api-keys-client";
@@ -126,7 +131,7 @@ describe("ApiKeysPageClient (react-query integration)", () => {
     renderWithClient(<ApiKeysPageClient />);
 
     await waitFor(() => {
-      expect(screen.getByText(/create your first api key/i)).toBeInTheDocument();
+      expect(screen.getByText(/No keys yet/i)).toBeInTheDocument();
     });
 
     await user.click(screen.getByRole("button", { name: /^create api key$/i }));

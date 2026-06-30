@@ -81,7 +81,9 @@ describe("WebhookDeliveriesPanel (react-query integration)", () => {
   it("renders an alert when loading fails", async () => {
     const loader = vi.fn().mockRejectedValue(new Error("boom"));
     renderWithClient(<WebhookDeliveriesPanel endpointId="ep_1" loadDeliveries={loader} />);
-    await waitFor(() => expect(screen.getByRole("alert").textContent).toContain("Failed"));
+    await waitFor(() =>
+      expect(screen.getByRole("alert").textContent).toContain("Deliveries could not be loaded"),
+    );
   });
 
   it("expands and collapses the payload preview", async () => {
@@ -163,7 +165,7 @@ describe("WebhookDeliveriesPanel (react-query integration)", () => {
     fireEvent.click(replayButtons[0] as HTMLElement);
 
     await waitFor(() =>
-      expect(screen.getByRole("alert").textContent).toContain("Failed to replay delivery"),
+      expect(screen.getByRole("alert").textContent).toContain("Replay did not go through"),
     );
   });
 });

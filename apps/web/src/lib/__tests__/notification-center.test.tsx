@@ -9,6 +9,10 @@ vi.mock("next-intl", () => ({
   useFormatter: () => ({
     relativeTime: () => "localized relative time",
   }),
+  useTranslations: () => (key: string) =>
+    ({
+      "inbox.emptyCaughtUp": "Inbox is clear.",
+    })[key] ?? key,
 }));
 
 vi.mock("@/app/(app)/settings/notifications/actions", () => ({
@@ -104,11 +108,7 @@ describe("NotificationCenter", () => {
 
     expect(screen.getByText("99+")).toBeTruthy();
     expect(screen.getByText("Persistent inbox storage is not connected.")).toBeTruthy();
-    expect(
-      screen.getByText(
-        "Inbox messages will appear here once a persistent notification backend is connected.",
-      ),
-    ).toBeTruthy();
+    expect(screen.getByText("Inbox is clear.")).toBeTruthy();
     const markAll = screen.getByText("Mark all read");
     expect(markAll.hasAttribute("disabled")).toBe(true);
   });

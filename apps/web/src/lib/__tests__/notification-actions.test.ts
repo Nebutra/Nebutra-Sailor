@@ -94,7 +94,7 @@ describe("notification settings actions", () => {
             enabled: "true",
           }),
         ),
-        "/en/settings/notifications?error=Invalid+notification+preference+request.",
+        "/settings/notifications?error=Invalid+notification+preference+request.",
       );
 
       expect(getNotificationProviderMock).not.toHaveBeenCalled();
@@ -114,7 +114,7 @@ describe("notification settings actions", () => {
             enabled: "true",
           }),
         ),
-        "/en/settings/notifications?error=Unknown+notification+category.",
+        "/settings/notifications?error=Unknown+notification+category.",
       );
 
       expect(getNotificationProviderMock).not.toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe("notification settings actions", () => {
             enabled: "true",
           }),
         ),
-        "/en/settings/notifications?error=Notifications+are+not+configured+in+this+environment+yet.",
+        "/settings/notifications?error=Notifications+are+not+configured+in+this+environment+yet.",
       );
     });
 
@@ -162,7 +162,7 @@ describe("notification settings actions", () => {
             enabled: "false",
           }),
         ),
-        "/en/settings/notifications?error=Connect+durable+adapters+first.",
+        "/settings/notifications?error=Connect+durable+adapters+first.",
       );
     });
 
@@ -191,7 +191,7 @@ describe("notification settings actions", () => {
             enabled: "true",
           }),
         ),
-        "/en/settings/notifications?notice=Workspace+invitations+email+delivery+enabled.",
+        "/settings/notifications?notice=Workspace+invitations+email+delivery+enabled.",
       );
 
       expect(provider.getPreferences).toHaveBeenCalledWith("user_123", "org_456");
@@ -208,7 +208,7 @@ describe("notification settings actions", () => {
         [{ channel: "email", enabled: true, frequency: "immediate" }],
         "org_456",
       );
-      expect(revalidatePathMock).toHaveBeenCalledWith("/en/settings/notifications");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/settings/notifications");
     });
 
     it("redirects with a stable error when provider updates fail", async () => {
@@ -236,7 +236,7 @@ describe("notification settings actions", () => {
             enabled: "false",
           }),
         ),
-        "/en/settings/notifications?error=Failed+to+update+the+notification+preference.+Try+again+after+the+provider+is+wired.",
+        "/settings/notifications?error=Failed+to+update+the+notification+preference.+Try+again+after+the+provider+is+wired.",
       );
 
       expect(revalidatePathMock).not.toHaveBeenCalled();
@@ -253,7 +253,7 @@ describe("notification settings actions", () => {
             locale: "en",
           }),
         ),
-        "/en/settings/notifications?error=Invalid+notification+inbox+request.",
+        "/settings/notifications?error=Invalid+notification+inbox+request.",
       );
 
       expect(getNotificationProviderMock).not.toHaveBeenCalled();
@@ -282,7 +282,7 @@ describe("notification settings actions", () => {
             notificationId: "notif_1",
           }),
         ),
-        "/en/settings/notifications?error=Inbox+storage+is+not+durable+yet.",
+        "/settings/notifications?error=Inbox+storage+is+not+durable+yet.",
       );
     });
 
@@ -303,14 +303,14 @@ describe("notification settings actions", () => {
             notificationId: "notif_1",
           }),
         ),
-        "/en/settings/notifications?notice=Notification+marked+as+read.",
+        "/settings/notifications?notice=Notification+marked+as+read.",
       );
 
       expect(provider.markAsRead).toHaveBeenCalledWith("notif_1", "user_123", "org_456");
-      expect(revalidatePathMock).toHaveBeenCalledWith("/en/settings/notifications");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/settings/notifications");
     });
 
-    it("returns to the shell page when a same-locale return path is provided", async () => {
+    it("returns to the shell page when an internal return path is provided", async () => {
       const provider = {
         name: "novu",
         markAsRead: vi.fn().mockResolvedValue(undefined),
@@ -332,7 +332,7 @@ describe("notification settings actions", () => {
       );
 
       expect(provider.markAsRead).toHaveBeenCalledWith("notif_1", "user_123", "org_456");
-      expect(revalidatePathMock).toHaveBeenCalledWith("/en/settings/notifications");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/settings/notifications");
       expect(revalidatePathMock).toHaveBeenCalledWith("/en/dashboard");
     });
 
@@ -353,7 +353,7 @@ describe("notification settings actions", () => {
             notificationId: "notif_1",
           }),
         ),
-        "/en/settings/notifications?error=Failed+to+update+inbox+state.+Try+again+after+the+provider+is+wired.",
+        "/settings/notifications?error=Failed+to+update+inbox+state.+Try+again+after+the+provider+is+wired.",
       );
 
       expect(revalidatePathMock).not.toHaveBeenCalled();
@@ -382,7 +382,7 @@ describe("notification settings actions", () => {
       );
 
       expect(provider.markAllAsRead).toHaveBeenCalledWith("user_123", "org_456");
-      expect(revalidatePathMock).toHaveBeenCalledWith("/en/settings/notifications");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/settings/notifications");
       expect(revalidatePathMock).toHaveBeenCalledWith("/en/dashboard");
     });
 
@@ -408,7 +408,7 @@ describe("notification settings actions", () => {
             locale: "en",
           }),
         ),
-        "/en/settings/notifications?error=Inbox+storage+is+not+durable+yet.",
+        "/settings/notifications?error=Inbox+storage+is+not+durable+yet.",
       );
     });
   });

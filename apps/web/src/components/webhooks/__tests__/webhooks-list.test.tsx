@@ -62,7 +62,7 @@ describe("WebhooksList (react-query integration)", () => {
     renderWithClient(<WebhooksList />);
 
     await waitFor(() => {
-      expect(screen.getByText(/No webhook endpoints yet/)).toBeInTheDocument();
+      expect(screen.getByText(/Add an endpoint above/)).toBeInTheDocument();
     });
   });
 
@@ -107,7 +107,7 @@ describe("WebhooksList (react-query integration)", () => {
     renderWithClient(<WebhooksList />);
 
     await waitFor(() => {
-      expect(screen.getByRole("alert")).toHaveTextContent(/Failed to load webhooks/i);
+      expect(screen.getByRole("alert")).toHaveTextContent(/Endpoints could not be loaded/i);
     });
   });
 
@@ -217,7 +217,7 @@ describe("WebhooksList (react-query integration)", () => {
 
     await waitFor(() => expect(onDelete).toHaveBeenCalledWith("ep_1"));
     await waitFor(() => {
-      expect(screen.getByText(/No webhook endpoints yet/)).toBeInTheDocument();
+      expect(screen.getByText(/Add an endpoint above/)).toBeInTheDocument();
     });
   });
 });

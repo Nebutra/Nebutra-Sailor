@@ -23,12 +23,10 @@ describe("@nebutra/web dashboard UI governance", () => {
   it("redirects the converged workspace route to the Startup OS entry surface", () => {
     const source = readFileSync(WORKSPACE_PAGE, "utf8");
 
-    // Home converged into Startup OS (merge): /workspace is a locale-aware
+    // Home converged into Startup OS (merge): /workspace is a cookie-i18n
     // server redirect to /startup-os, not a duplicate dashboard overview.
-    const localeTemplateSegment = "$" + "{locale}";
     expect(source).toContain('from "next/navigation"');
-    expect(source).toContain(`redirect(\`/${localeTemplateSegment}/startup-os\`)`);
-    expect(source).toContain("await params");
+    expect(source).toContain('redirect("/startup-os")');
     expect(source).not.toContain("DashboardCommandSurface");
     expect(source).not.toContain('data-dashboard-section="workspace-overview"');
     expect(source).not.toContain(EXTERNAL_TASTE_PREFIX);

@@ -38,7 +38,8 @@ describe("UI/UX audit remediation invariants", () => {
 
   it("aligns PWA theme color with Nebutra brand blue", () => {
     const manifest = readFromRepo("apps/landing-page/src/app/manifest.ts");
-    expect(manifest).toContain('theme_color: "#0033FE"');
+    expect(manifest).toContain('from "@nebutra/brand/metadata"');
+    expect(manifest).toContain('theme_color: colors.primary["500"]');
   });
 
   it("provides display-p3 brand colors with sRGB fallback", () => {

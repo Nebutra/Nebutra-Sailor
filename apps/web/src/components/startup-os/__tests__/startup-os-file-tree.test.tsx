@@ -235,7 +235,7 @@ describe("StartupOsFileTree", () => {
   it("renders an empty-state message when there are no nodes", () => {
     const empty: StartupExplorerNode[] = [];
     render(<StartupOsFileTree nodes={empty} onSelect={vi.fn()} />);
-    expect(screen.getByText(/No files to display yet/i)).toBeInTheDocument();
+    expect(screen.getByText(/This project has no files yet/i)).toBeInTheDocument();
     expect(screen.queryByTestId("tree-provider")).toBeNull();
   });
 });
