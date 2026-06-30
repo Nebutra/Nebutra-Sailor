@@ -22,6 +22,15 @@ function hasIcoMagic(buf: Buffer): boolean {
   return buf.length >= 4 && buf.subarray(0, 4).equals(ICO_MAGIC);
 }
 
+async function expectPngDimensions(path: string, width: number, height: number): Promise<void> {
+  const { default: sharpFn } = (await import("sharp")) as unknown as {
+    default: (input: string) => import("sharp").Sharp;
+  };
+  const metadata = await sharpFn(path).metadata();
+  expect(metadata.width, `${path} must be ${width}px wide`).toBe(width);
+  expect(metadata.height, `${path} must be ${height}px tall`).toBe(height);
+}
+
 describe("generateFavicons", { timeout: 30_000 }, () => {
   let tmpAssetsDir: string;
 
@@ -54,6 +63,7 @@ describe("generateFavicons", { timeout: 30_000 }, () => {
       hasPngMagic(buf),
       "android-chrome-192x192.png must start with PNG magic bytes 89 50 4E 47",
     ).toBe(true);
+    await expectPngDimensions(pngPath, 192, 192);
   });
 
   it("generates android-chrome-512x512.png with PNG magic bytes", async () => {
@@ -68,6 +78,7 @@ describe("generateFavicons", { timeout: 30_000 }, () => {
       hasPngMagic(buf),
       "android-chrome-512x512.png must start with PNG magic bytes 89 50 4E 47",
     ).toBe(true);
+    await expectPngDimensions(pngPath, 512, 512);
   });
 
   it("generates apple-touch-icon.png at 180×180", async () => {
@@ -83,17 +94,7 @@ describe("generateFavicons", { timeout: 30_000 }, () => {
       "apple-touch-icon.png must be a valid PNG (magic bytes 89 50 4E 47)",
     ).toBe(true);
 
-    // Verify dimensions via sharp
-    try {
-      const { default: sharpFn } = (await import("sharp")) as unknown as {
-        default: (input: string) => import("sharp").Sharp;
-      };
-      const metadata = await sharpFn(applePath).metadata();
-      expect(metadata.width, "apple-touch-icon.png must be 180px wide").toBe(180);
-      expect(metadata.height, "apple-touch-icon.png must be 180px tall").toBe(180);
-    } catch {
-      // sharp not available in this env — skip dimension check
-    }
+    await expectPngDimensions(applePath, 180, 180);
   });
 
   it("generates favicon.ico with ICO magic bytes and size < 285478 bytes", async () => {
