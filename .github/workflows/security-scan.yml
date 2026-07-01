@@ -47,7 +47,7 @@ jobs:
         run: |
           pnpm audit --audit-level=moderate --json > audit-report.json || true
           VULN_COUNT=$(jq '.metadata.vulnerabilities | .moderate + .high + .critical' audit-report.json 2>/dev/null || echo 0)
-          echo "vuln_count=$VULN_COUNT" >> $GITHUB_OUTPUT
+          echo "vuln_count=$VULN_COUNT" >> "$GITHUB_OUTPUT"
           echo "Vulnerability count: $VULN_COUNT"
 
       - name: Create issue if vulnerabilities found
@@ -138,12 +138,12 @@ jobs:
               uv pip compile pyproject.toml -o /tmp/requirements-audit.txt --quiet 2>/dev/null || true
               if [ -f /tmp/requirements-audit.txt ]; then
                 pip-audit -r /tmp/requirements-audit.txt --format=json \
-                  --output="/tmp/audit-$(basename $service).json" || FAILED=1
+                  --output="/tmp/audit-$(basename "$service").json" || FAILED=1
               fi
-              cd -
+              cd - >/dev/null
             fi
           done
-          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> "$GITHUB_OUTPUT"
 
       - name: Create issue on failure
         if: steps.pip-audit.outputs.failed == '1'

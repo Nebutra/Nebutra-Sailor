@@ -117,9 +117,11 @@ jobs:
 
       - name: Summary
         run: |
-          echo "### Template sync summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- Source SHA: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- File count: $(find /tmp/sailor-template -type f | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- Immutable tag: \`source-${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "### Template sync summary"
+            echo ""
+            echo "- Source SHA: \`${{ github.sha }}\`"
+            echo "- File count: $(find /tmp/sailor-template -type f | wc -l)"
+            echo "- Immutable tag: \`source-${{ github.sha }}\`"
+            echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}"
+          } >> "$GITHUB_STEP_SUMMARY"

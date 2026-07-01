@@ -41,10 +41,10 @@ on:
       provider:
         description: "Override provider for this run"
         required: false
-        default: ""
+        default: "auto"
         type: choice
         options:
-          - ""
+          - "auto"
           - "figma"
           - "penpot"
           - "git-only"
@@ -88,7 +88,7 @@ jobs:
       - name: Detect tokens presence
         id: detect
         env:
-          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider }}
+          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider == 'auto' && '' || github.event.inputs.provider }}
           FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
           FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
           PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
@@ -130,7 +130,7 @@ jobs:
 
       - name: design-sync healthcheck
         env:
-          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider }}
+          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider == 'auto' && '' || github.event.inputs.provider }}
           FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
           FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
           PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
@@ -143,7 +143,7 @@ jobs:
 
       - name: design-sync pull (read DTCG)
         env:
-          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider }}
+          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider == 'auto' && '' || github.event.inputs.provider }}
           FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
           FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
           PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}
@@ -287,7 +287,7 @@ jobs:
 
       - name: design-sync push
         env:
-          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider }}
+          DESIGN_SYNC_PROVIDER: ${{ github.event.inputs.provider == 'auto' && '' || github.event.inputs.provider }}
           FIGMA_PERSONAL_ACCESS_TOKEN: ${{ secrets.FIGMA_PERSONAL_ACCESS_TOKEN }}
           FIGMA_FILE_ID: ${{ secrets.FIGMA_FILE_ID }}
           PENPOT_API_URL: ${{ secrets.PENPOT_API_URL }}

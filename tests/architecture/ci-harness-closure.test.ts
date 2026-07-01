@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -111,19 +111,15 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("pnpm verify:web-release");
   });
 
-  it("keeps public URL reachability checks as a repeatable CI harness", async () => {
+  it("keeps public URL reachability checks as a manual diagnostic tool", async () => {
     const rootPackage = JSON.parse(await readFile(join(process.cwd(), "package.json"), "utf8")) as {
       scripts?: Record<string, string>;
     };
-    const workflow = await readFile(
-      join(process.cwd(), ".github/workflows/public-url-smoke.yml"),
-      "utf8",
-    );
     const urlHarness = await readFile(join(process.cwd(), "scripts/check-public-urls.mjs"), "utf8");
+    const workflowDir = await readdir(join(process.cwd(), ".github/workflows"));
 
     expect(rootPackage.scripts?.["check:public-urls"]).toBe("node scripts/check-public-urls.mjs");
-    expect(workflow).toContain("node scripts/check-public-urls.mjs");
-    expect(workflow).toContain("include_aliases");
+    expect(workflowDir).not.toContain("public-url-smoke.yml");
     expect(urlHarness).toContain("https://nebutra.com");
     expect(urlHarness).toContain("https://app.nebutra.com");
     expect(urlHarness).toContain("https://api.nebutra.com/api/misc/health");

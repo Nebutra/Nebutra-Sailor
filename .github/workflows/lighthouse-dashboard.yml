@@ -58,10 +58,12 @@ jobs:
             TARGET_PATH="${{ inputs.target_path }}"
           fi
 
-          echo "before_ref=${BEFORE_REF}" >> "$GITHUB_OUTPUT"
-          echo "after_ref=${AFTER_REF}" >> "$GITHUB_OUTPUT"
-          echo "runs=${RUNS}" >> "$GITHUB_OUTPUT"
-          echo "target_path=${TARGET_PATH}" >> "$GITHUB_OUTPUT"
+          {
+            echo "before_ref=${BEFORE_REF}"
+            echo "after_ref=${AFTER_REF}"
+            echo "runs=${RUNS}"
+            echo "target_path=${TARGET_PATH}"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Run Lighthouse Compare
         id: run_compare
