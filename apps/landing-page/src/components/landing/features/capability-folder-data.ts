@@ -81,8 +81,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 40,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 219,
-      testFiles: 116,
+      sourceFiles: 220,
+      testFiles: 117,
       readmes: 35,
     },
     title: copy("AI Runtime & Agent Substrate", "AI 运行时与智能体底座"),
