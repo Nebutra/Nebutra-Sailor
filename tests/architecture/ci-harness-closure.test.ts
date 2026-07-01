@@ -244,6 +244,9 @@ describe("ci harness dependency closure", () => {
 
     expect(playwrightConfig).toContain('globalSetup: "./global-setup.ts"');
     expect(globalSetup).toContain('"/changelog"');
+    expect(globalSetup).toContain('path: "/api/e2e/health", required: true');
+    expect(globalSetup).toContain('path: "/changelog", required: false');
+    expect(globalSetup).toContain("optional prewarm skipped");
     expect(globalSetup).toContain("ROUTE_PREWARM_TIMEOUT_MS");
     expect(globalSetup).toContain("fetchWithTimeout");
     expect(helper).toContain('waitUntil: "domcontentloaded"');
