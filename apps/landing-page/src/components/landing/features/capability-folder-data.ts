@@ -83,7 +83,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       unitLabel: copy("packages", "包"),
       sourceFiles: 219,
       testFiles: 116,
-      readmes: 34,
+      readmes: 35,
     },
     title: copy("AI Runtime & Agent Substrate", "AI 运行时与智能体底座"),
     summary: copy(

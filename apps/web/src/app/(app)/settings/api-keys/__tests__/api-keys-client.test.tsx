@@ -6,14 +6,21 @@ import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-// ApiKeysList (rendered inside ApiKeysPageClient) uses useFormatter() after
-// the W1 governance change. Provide a minimal stub.
+// ApiKeysList (rendered inside ApiKeysPageClient) uses next-intl for dates and
+// empty-state copy. Provide minimal stubs.
 vi.mock("next-intl", () => ({
   useFormatter: () => ({
     dateTime: (d: Date, _opts?: unknown) =>
       d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
     relativeTime: (_d: Date) => "just now",
   }),
+  useTranslations: () => (key: string) => {
+    const messages: Record<string, string> = {
+      "emptyState.apiKeys": "Create your first API key",
+      "emptyState.apiKeysCta": "Issue scoped keys for integrations when you are ready.",
+    };
+    return messages[key] ?? key;
+  },
 }));
 
 import { ApiKeysPageClient } from "@/app/(app)/settings/api-keys/api-keys-client";

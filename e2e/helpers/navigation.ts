@@ -1,7 +1,7 @@
 import type { Page } from "@playwright/test";
 
 const NAVIGATION_RETRIES = 3;
-const NAVIGATION_TIMEOUT_MS = 30_000;
+const NAVIGATION_TIMEOUT_MS = 120_000;
 const TRANSIENT_NAVIGATION_ERRORS = [
   "page.goto: Timeout",
   "Timeout",

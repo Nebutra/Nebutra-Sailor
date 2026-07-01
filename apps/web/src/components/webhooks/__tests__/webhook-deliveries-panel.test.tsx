@@ -6,6 +6,16 @@ import type { ReactElement } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { WebhookDeliveriesPanel, type WebhookDeliveryView } from "../webhook-deliveries-panel";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => {
+    const messages: Record<string, string> = {
+      "errors.loadWebhookDeliveries": "Deliveries could not be loaded.",
+      "errors.replayWebhookDelivery": "Replay did not go through.",
+    };
+    return messages[key] ?? key;
+  },
+}));
+
 const deliveries: WebhookDeliveryView[] = [
   {
     id: "evt_ok",
@@ -81,7 +91,9 @@ describe("WebhookDeliveriesPanel (react-query integration)", () => {
   it("renders an alert when loading fails", async () => {
     const loader = vi.fn().mockRejectedValue(new Error("boom"));
     renderWithClient(<WebhookDeliveriesPanel endpointId="ep_1" loadDeliveries={loader} />);
-    await waitFor(() => expect(screen.getByRole("alert").textContent).toContain("Failed"));
+    await waitFor(() =>
+      expect(screen.getByRole("alert").textContent).toContain("Deliveries could not be loaded"),
+    );
   });
 
   it("expands and collapses the payload preview", async () => {
@@ -163,7 +175,7 @@ describe("WebhookDeliveriesPanel (react-query integration)", () => {
     fireEvent.click(replayButtons[0] as HTMLElement);
 
     await waitFor(() =>
-      expect(screen.getByRole("alert").textContent).toContain("Failed to replay delivery"),
+      expect(screen.getByRole("alert").textContent).toContain("Replay did not go through"),
     );
   });
 });

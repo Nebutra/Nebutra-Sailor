@@ -56,7 +56,6 @@ describe("resolveSelectOrgJourneyCopy", () => {
       title: "Invitation accepted",
       description:
         "Select the workspace you were invited to, or create a new one if it is not listed yet.",
-      emptyTitle: "No invited workspace yet",
       emptyActionLabel: "Create a workspace instead",
     });
   });
@@ -64,8 +63,8 @@ describe("resolveSelectOrgJourneyCopy", () => {
   it("nudges users back into workspace selection after billing redirects without an active org", () => {
     expect(resolveSelectOrgJourneyCopy({ from: "billing" })).toMatchObject({
       title: "Choose a workspace for billing",
-      emptyDescription:
-        "Billing actions need an active workspace. Create one first, then return to billing.",
+      description:
+        "Billing changes are scoped to a workspace. Select one to continue managing the subscription.",
       emptyActionHref: "/onboarding?next=/billing",
     });
   });

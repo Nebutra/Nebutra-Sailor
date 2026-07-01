@@ -26,6 +26,7 @@ import {
   NebutraAIConfigSchema,
   type ResolvedNebutraAIConfig,
 } from "./config";
+import { assertSafeOpenAIJsonPayload } from "./payload-guard";
 import { createModel } from "./provider";
 
 // ---------------------------------------------------------------------------
@@ -112,6 +113,7 @@ export async function generateText(
   messages: ModelMessage[],
   options: GenerateOptions = {},
 ): Promise<GenerateTextResult<Record<string, never>, never>> {
+  assertSafeOpenAIJsonPayload("OpenAI request messages", messages);
   const model = createModel(options.model ?? _resolved.defaultModel, _resolved);
 
   return await _generateText({
@@ -133,6 +135,7 @@ export async function streamText(
   messages: ModelMessage[],
   options: StreamOptions = {},
 ): Promise<StreamTextResult<Record<string, never>, never>> {
+  assertSafeOpenAIJsonPayload("OpenAI request messages", messages);
   const model = createModel(options.model ?? _resolved.defaultModel, _resolved);
   const userOnFinish = options.onFinish;
 
@@ -211,6 +214,11 @@ export {
 } from "./config";
 export type { ModelPreset } from "./models";
 export { models, resolveModel } from "./models";
+export {
+  assertSafeOpenAIJsonPayload,
+  findOversizedPropertyName,
+  OPENAI_MAX_PROPERTY_NAME_LENGTH,
+} from "./payload-guard";
 export { createEmbeddingModel, createModel } from "./provider";
 export {
   type GenerateStructuredResult,

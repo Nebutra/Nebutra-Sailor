@@ -57,12 +57,14 @@ export { AgentRouter } from "./router";
 // Top-level generation, streaming and embedding helpers that wrap the Vercel
 // AI SDK (`ai` package) with a single configure()-driven provider resolver.
 export {
+  assertSafeOpenAIJsonPayload,
   configure,
   createEmbeddingModel,
   createModel,
   type EmbedOptions,
   embed,
   embedMany,
+  findOversizedPropertyName,
   type GenerateOptions,
   type GenerateStructuredResult,
   type GenerateTextResult,
@@ -74,6 +76,7 @@ export {
   models,
   type NebutraAIConfig,
   NebutraAIConfigSchema,
+  OPENAI_MAX_PROPERTY_NAME_LENGTH,
   type ProviderType,
   type ResolvedNebutraAIConfig,
   resolveModel,

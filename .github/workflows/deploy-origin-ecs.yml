@@ -34,6 +34,7 @@ jobs:
   python-ai:
     name: Deploy python-ai Cloud VM origin
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     environment: ecs-origin
     if: >-
       (github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'vm-docker' || inputs.deploy_target == 'ecs-docker')) ||
@@ -132,12 +133,13 @@ jobs:
       - name: Upload compose manifest
         run: |
           set -euo pipefail
+          ssh_opts=(-o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6)
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
-            -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+            "${ssh_opts[@]}" \
             "${ECS_USER}@${ECS_HOST}" \
             "mkdir -p $(printf '%q' "$ECS_ORIGIN_ROOT")"
           scp -i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
-            -o StrictHostKeyChecking=yes \
+            "${ssh_opts[@]}" -C \
             infra/runtime/docker/docker-compose.origin.yml \
             "${ECS_USER}@${ECS_HOST}:${ECS_ORIGIN_ROOT}/docker-compose.origin.yml"
 
@@ -178,6 +180,7 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
           set -euo pipefail
+          ssh_opts=(-o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6)
           tmp_env="$(mktemp)"
           write_env() {
             key="$1"
@@ -223,22 +226,28 @@ jobs:
             write_env AI_ORIGIN_BIND "${AI_ORIGIN_BIND:-127.0.0.1}"
           } > "$tmp_env"
           scp -i ~/.ssh/id_deploy -P "${ECS_SSH_PORT}" \
-            -o StrictHostKeyChecking=yes \
+            "${ssh_opts[@]}" -C \
             "$tmp_env" "${ECS_USER}@${ECS_HOST}:${ECS_ORIGIN_ROOT}/.env.origin"
           rm -f "$tmp_env"
 
       - name: Deploy origin
         run: |
           set -euo pipefail
+          ssh_opts=(-o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6)
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
-            -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+            "${ssh_opts[@]}" \
             "${ECS_USER}@${ECS_HOST}" \
             "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml pull ai-origin ai-worker && docker compose -f docker-compose.origin.yml up -d ai-origin ai-worker"
 
       - name: Health check origin
         run: |
           set -euo pipefail
+          ssh_opts=(-o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=30 -o ServerAliveCountMax=6)
           ssh -i ~/.ssh/id_deploy -p "${ECS_SSH_PORT}" \
-            -o StrictHostKeyChecking=yes -o ConnectTimeout=20 \
+            "${ssh_opts[@]}" \
             "${ECS_USER}@${ECS_HOST}" \
             "cd $(printf '%q' "$ECS_ORIGIN_ROOT") && docker compose -f docker-compose.origin.yml ps ai-origin ai-worker && curl -fsS http://127.0.0.1:8000/health"
+
+      - name: Cleanup SSH
+        if: always()
+        run: rm -rf ~/.ssh

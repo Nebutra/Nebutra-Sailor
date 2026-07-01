@@ -59,6 +59,12 @@ describe("@nebutra/agents public API contract", () => {
     expect(typeof agents.streamText).toBe("function");
   });
 
+  it("exports OpenAI payload safety helpers", () => {
+    expect(typeof agents.assertSafeOpenAIJsonPayload).toBe("function");
+    expect(typeof agents.findOversizedPropertyName).toBe("function");
+    expect(agents.OPENAI_MAX_PROPERTY_NAME_LENGTH).toBe(256);
+  });
+
   it("exports embed() and embedMany()", () => {
     expect(typeof agents.embed).toBe("function");
     expect(typeof agents.embedMany).toBe("function");
