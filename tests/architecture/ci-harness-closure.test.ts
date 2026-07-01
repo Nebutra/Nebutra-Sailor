@@ -189,6 +189,27 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain('API_BASE_URL: "http://127.0.0.1:3102"');
   });
 
+  it("keeps the green-path Playwright artifact payload lean", async () => {
+    const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
+    const playwrightConfig = await readFile(
+      join(process.cwd(), "e2e/playwright.config.ts"),
+      "utf8",
+    );
+    const matrixShard = "$" + "{{ matrix.shard }}";
+    const githubRunId = "$" + "{{ github.run_id }}";
+
+    expect(playwrightConfig).toContain('process.env.CI ? [["github"], ["blob"]] : [["html"]]');
+    expect(workflow).toContain("Upload Playwright blob report");
+    expect(workflow).toContain(`name: playwright-blob-report-shard-${matrixShard}`);
+    expect(workflow).toContain("path: blob-report/");
+    expect(workflow).toContain("compression-level: 0");
+    expect(workflow).toContain("Upload Playwright failure diagnostics");
+    expect(workflow).toContain("if: failure()");
+    expect(workflow).toContain(`pattern: playwright-blob-report-shard-*-${githubRunId}`);
+    expect(workflow).not.toContain(`pattern: playwright-report-shard-*-${githubRunId}`);
+    expect(workflow).not.toContain('["html", { open: "never" }]');
+  });
+
   it("uses bounded E2E health endpoints for Next.js webServer readiness", async () => {
     const playwrightConfig = await readFile(
       join(process.cwd(), "e2e/playwright.config.ts"),
