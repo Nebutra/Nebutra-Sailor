@@ -243,13 +243,13 @@ jobs:
 
       - name: Lint changed files (Biome)
         run: |
-          BIOME_FILES="$(
+          mapfile -t BIOME_FILES < <(
             git diff --name-only --diff-filter=ACMRT "$TURBO_BASE_REF"...HEAD \
               | grep -E '\.(js|jsx|ts|tsx|json|jsonc|css|md|mdx|yml|yaml)$' \
               || true
-          )"
+          )
 
-          if [ -z "$BIOME_FILES" ]; then
+          if [ "${#BIOME_FILES[@]}" -eq 0 ]; then
             echo "No Biome-supported changed files."
             exit 0
           fi
@@ -257,7 +257,7 @@ jobs:
           # --no-errors-on-unmatched: when the changed-file set contains only
           # paths Biome ignores (e.g. README*.md after a docs-only commit),
           # Biome would otherwise exit 1 with "No files were processed".
-          pnpm biome ci --no-errors-on-unmatched $BIOME_FILES
+          pnpm biome ci --no-errors-on-unmatched "${BIOME_FILES[@]}"
 
       - name: Lint whole repo (advisory)
         run: pnpm biome ci .
@@ -326,13 +326,13 @@ jobs:
       - name: Security check (bandit)
         run: |
           # Collect Python source directories (avoid scanning .venv installed packages)
-          SCAN_DIRS=""
+          SCAN_DIRS=()
           for d in app providers services utils adapters sync features rank recall indexer listener producers subscribers; do
-            [ -d "$d" ] && SCAN_DIRS="$SCAN_DIRS $d"
+            [ -d "$d" ] && SCAN_DIRS+=("$d")
           done
-          .venv/bin/bandit -r $SCAN_DIRS -f json -o bandit-report.json --severity-level medium || true
+          .venv/bin/bandit -r "${SCAN_DIRS[@]}" -f json -o bandit-report.json --severity-level medium || true
           # Fail only on high-severity findings
-          .venv/bin/bandit -r $SCAN_DIRS --severity-level high -q
+          .venv/bin/bandit -r "${SCAN_DIRS[@]}" --severity-level high -q
 
       - name: Run tests
         run: |
@@ -770,7 +770,7 @@ jobs:
   e2e:
     name: E2E Tests (shard ${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     needs: [detect-changes, build]
     if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.e2e == 'true'
     strategy:
@@ -848,6 +848,7 @@ jobs:
           path: |
             blob-report/
             **/test-results/
+          compression-level: 3
           retention-days: 14
 
   # ── OpenAPI spec validation + client type generation ─────────────────────
