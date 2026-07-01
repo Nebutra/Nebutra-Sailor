@@ -1,7 +1,7 @@
 const ROUTE_PREWARM_ATTEMPTS = 3;
 const ROUTE_PREWARM_RETRY_DELAY_MS = 2_000;
 const ROUTE_PREWARM_TIMEOUT_MS = 60_000;
-const PREWARM_ROUTES = ["/api/e2e/health"];
+const PREWARM_ROUTES = ["/api/e2e/health", "/changelog"];
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
