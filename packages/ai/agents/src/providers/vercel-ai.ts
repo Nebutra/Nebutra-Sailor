@@ -9,6 +9,7 @@
 import { BaseAgent } from "../agent";
 import { runWithFallback, withAnthropicCacheControl } from "../fallback";
 import { buildTelemetryConfig } from "../observability";
+import { assertSafeOpenAIJsonPayload } from "../sdk/payload-guard";
 import type { AgentContext, AgentMessage, AgentResponse } from "../types";
 
 export class VercelAIAgent extends BaseAgent {
@@ -30,7 +31,9 @@ export class VercelAIAgent extends BaseAgent {
             t.name,
             dynamicTool({
               description: t.description,
-              inputSchema: t.inputSchema as Parameters<typeof dynamicTool>[0]["inputSchema"],
+              inputSchema: assertSafeToolSchema(t.name, t.inputSchema) as Parameters<
+                typeof dynamicTool
+              >[0]["inputSchema"],
               execute: async (args) => t.execute(args, context),
             }),
           ]),
@@ -111,4 +114,9 @@ export class VercelAIAgent extends BaseAgent {
       agentId: this.config.id,
     };
   }
+}
+
+function assertSafeToolSchema(name: string, inputSchema: Record<string, unknown>) {
+  assertSafeOpenAIJsonPayload(`OpenAI tool schema "${name}"`, inputSchema);
+  return inputSchema;
 }

@@ -11,6 +11,7 @@
 import { generateText as _generateText, jsonSchema, type ModelMessage, tool } from "ai";
 import Ajv from "ajv";
 import { runWithFallback } from "../fallback";
+import { assertSafeOpenAIJsonPayload } from "./payload-guard";
 
 export interface GenerateStructuredResult {
   /** The object the model produced — already validated against the schema. */
@@ -41,6 +42,9 @@ export async function generateStructured(
   schema: Record<string, unknown>,
   options: { model?: string } = {},
 ): Promise<GenerateStructuredResult> {
+  assertSafeOpenAIJsonPayload("OpenAI structured request messages", messages);
+  assertSafeOpenAIJsonPayload("OpenAI structured output schema", schema);
+
   const { result } = await runWithFallback(
     (model) =>
       _generateText({

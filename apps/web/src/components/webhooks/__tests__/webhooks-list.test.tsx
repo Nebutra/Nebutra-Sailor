@@ -7,6 +7,16 @@ import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { type WebhookEndpointView, WebhooksList } from "../webhooks-list";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => {
+    const messages: Record<string, string> = {
+      "emptyState.webhookEndpoints": "Add an endpoint above to start receiving events.",
+      "errors.loadWebhookEndpoints": "Endpoints could not be loaded.",
+    };
+    return messages[key] ?? key;
+  },
+}));
+
 const sample: WebhookEndpointView = {
   id: "ep_1",
   url: "https://example.com/hook",
@@ -62,7 +72,7 @@ describe("WebhooksList (react-query integration)", () => {
     renderWithClient(<WebhooksList />);
 
     await waitFor(() => {
-      expect(screen.getByText(/No webhook endpoints yet/)).toBeInTheDocument();
+      expect(screen.getByText(/Add an endpoint above/)).toBeInTheDocument();
     });
   });
 
@@ -107,7 +117,7 @@ describe("WebhooksList (react-query integration)", () => {
     renderWithClient(<WebhooksList />);
 
     await waitFor(() => {
-      expect(screen.getByRole("alert")).toHaveTextContent(/Failed to load webhooks/i);
+      expect(screen.getByRole("alert")).toHaveTextContent(/Endpoints could not be loaded/i);
     });
   });
 
@@ -217,7 +227,7 @@ describe("WebhooksList (react-query integration)", () => {
 
     await waitFor(() => expect(onDelete).toHaveBeenCalledWith("ep_1"));
     await waitFor(() => {
-      expect(screen.getByText(/No webhook endpoints yet/)).toBeInTheDocument();
+      expect(screen.getByText(/Add an endpoint above/)).toBeInTheDocument();
     });
   });
 });

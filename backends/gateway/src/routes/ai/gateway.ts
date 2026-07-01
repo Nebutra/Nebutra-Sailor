@@ -10,6 +10,7 @@
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { findOversizedPropertyName, OPENAI_MAX_PROPERTY_NAME_LENGTH } from "@nebutra/agents";
 import {
   createGatewayPipelineMiddleware,
   createStreamingUsageExtractor,
@@ -39,7 +40,16 @@ const ChatCompletionRequestSchema = z
     temperature: z.number().optional(),
     max_tokens: z.number().optional(),
   })
-  .catchall(z.any());
+  .catchall(z.any())
+  .superRefine((value, ctx) => {
+    const issue = findOversizedPropertyName(value);
+    if (!issue) return;
+
+    ctx.addIssue({
+      code: "custom",
+      message: `JSON object property name at ${issue.path} is ${issue.length} characters long; maximum is ${OPENAI_MAX_PROPERTY_NAME_LENGTH}. Put generated text in a string value instead of using it as a JSON key.`,
+    });
+  });
 
 const ErrorResponseSchema = z.object({
   error: z.string(),

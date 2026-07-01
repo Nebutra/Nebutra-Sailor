@@ -6,6 +6,7 @@
 #   bash ../../scripts/vercel-ignore-build.sh backends/gateway
 #   bash ../../scripts/vercel-ignore-build.sh apps/landing-page
 #   bash ../../scripts/vercel-ignore-build.sh apps/studio
+#   bash ../../scripts/vercel-ignore-build.sh apps/design-docs
 #   bash ../../scripts/vercel-ignore-build.sh apps/tsekaluk-dev
 #
 # Vercel exit code contract:
@@ -26,6 +27,12 @@ AUTHOR_LOGIN="${VERCEL_GIT_COMMIT_AUTHOR_LOGIN:-}"
 
 echo "Repo root: $REPO_ROOT"
 echo "Checking for changes in: $APP_DIR, packages/, and shared workspace config"
+
+if [ ! -d "$REPO_ROOT/$APP_DIR" ]; then
+  echo "Unknown Vercel app directory: $APP_DIR"
+  echo "→ Building to avoid a false skip."
+  exit 1
+fi
 
 # Dependabot preview deployments are low-signal and expensive in this repo.
 # Skip immediately before any diff logic so first-time branches are skipped too.
@@ -50,8 +57,11 @@ if [ -z "${VERCEL_GIT_PREVIOUS_SHA:-}" ]; then
   exit 1
 fi
 
-# Fetch enough history to compare with the previous deployed commit.
-git -C "$REPO_ROOT" fetch origin --depth=50 2>/dev/null || true
+# Fetch the previous deployed commit explicitly when possible. Vercel checkouts
+# are shallow, and a fixed depth can miss older production SHAs on quiet apps.
+git -C "$REPO_ROOT" fetch --no-tags --depth=1 origin "$VERCEL_GIT_PREVIOUS_SHA" 2>/dev/null ||
+  git -C "$REPO_ROOT" fetch --no-tags --depth=50 origin 2>/dev/null ||
+  true
 
 # Check if anything in this app, shared packages, or root workspace config changed.
 # If Vercel's shallow clone cannot resolve the previous deployment SHA, default

@@ -59,6 +59,10 @@ concurrency:
 
 env:
   NODE_VERSION: "24"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  TURBO_TELEMETRY_DISABLED: "1"
+  NEXT_TELEMETRY_DISABLED: "1"
 
 jobs:
   # ──────────────────────────────────────────────────────────────────────
@@ -68,6 +72,7 @@ jobs:
   detect-changes:
     name: Detect changed apps
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       landing:     ${{ steps.resolve.outputs.landing }}
       web:         ${{ steps.resolve.outputs.web }}
@@ -136,24 +141,50 @@ jobs:
           F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
           F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
         run: |
-          # `design-docs` / `sailor-docs` tokens contain a hyphen — match them
-          # explicitly to avoid bash glob pitfalls where *docs* could also match
-          # other strings we add in the future.
+          normalize_apps() {
+            printf '%s' "$1" | tr ',\n\t' '    ' | xargs
+          }
+
+          contains_app() {
+            case " $1 " in
+              *" $2 "*) echo true ;;
+              *) echo false ;;
+            esac
+          }
+
+          normalized_apps=""
+          if [ -n "${INPUT_APPS:-}" ]; then
+            normalized_apps="$(normalize_apps "$INPUT_APPS")"
+            unknown_apps=""
+            for app in $normalized_apps; do
+              case "$app" in
+                landing|web|api|design-docs|sailor-docs) ;;
+                *) unknown_apps="$unknown_apps $app" ;;
+              esac
+            done
+
+            if [ -n "$unknown_apps" ]; then
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api design-docs sailor-docs"
+              exit 1
+            fi
+          fi
+
           {
-            if [ -n "${INPUT_APPS:-}" ]; then
-              echo "landing=$([[ "$INPUT_APPS" == *landing* ]] && echo true || echo false)"
-              echo "web=$([[ "$INPUT_APPS" == *web* ]] && echo true || echo false)"
-              echo "api=$([[ "$INPUT_APPS" == *api* ]] && echo true || echo false)"
-              echo "design-docs=$([[ "$INPUT_APPS" == *design-docs* ]] && echo true || echo false)"
-              echo "sailor-docs=$([[ "$INPUT_APPS" == *sailor-docs* ]] && echo true || echo false)"
+            if [ -n "$normalized_apps" ]; then
+              echo "landing=$(contains_app "$normalized_apps" landing)"
+              echo "web=$(contains_app "$normalized_apps" web)"
+              echo "api=$(contains_app "$normalized_apps" api)"
+              echo "design-docs=$(contains_app "$normalized_apps" design-docs)"
+              echo "sailor-docs=$(contains_app "$normalized_apps" sailor-docs)"
+              echo "any=true"
             else
               echo "landing=$F_LANDING"
               echo "web=$F_WEB"
               echo "api=$F_API"
               echo "design-docs=$F_DESIGN_DOCS"
               echo "sailor-docs=$F_SAILOR_DOCS"
+              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" ]] && echo true || echo false)"
             fi
-            echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" || -n "${INPUT_APPS:-}" ]] && echo true || echo false)"
           } >> "$GITHUB_OUTPUT"
 
   # ──────────────────────────────────────────────────────────────────────
@@ -168,6 +199,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.any == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -216,6 +248,27 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
+
+      - name: Cache Turborepo local artifacts
+        if: matrix.condition == 'true'
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .turbo/cache
+          key: turbo-ecs-next-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            turbo-ecs-next-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            turbo-ecs-next-${{ runner.os }}-${{ matrix.app }}-
+            turbo-ecs-next-${{ runner.os }}-
+
+      - name: Cache Next.js build artifacts
+        if: matrix.condition == 'true'
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ${{ matrix.workspace }}/.next/cache
+          key: next-ecs-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            next-ecs-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            next-ecs-${{ runner.os }}-${{ matrix.app }}-
 
       - name: Install dependencies
         if: matrix.condition == 'true'
@@ -315,6 +368,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.api == 'true'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
@@ -322,6 +376,15 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
+
+      - name: Cache Turborepo local artifacts
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .turbo/cache
+          key: turbo-ecs-api-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ github.sha }}
+          restore-keys: |
+            turbo-ecs-api-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            turbo-ecs-api-${{ runner.os }}-
 
       - run: pnpm install --frozen-lockfile
 
@@ -367,6 +430,7 @@ jobs:
       (needs.build-api.result  == 'success' || needs.build-api.result  == 'skipped') &&
       !(needs.build-next.result == 'skipped' && needs.build-api.result == 'skipped')
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     environment: ecs-prod
     env:
       VM_PROVIDER:       ${{ vars.VM_PROVIDER || vars.CLOUD_VM_PROVIDER || vars.ECS_PROVIDER || 'unknown' }}

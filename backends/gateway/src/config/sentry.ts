@@ -4,7 +4,19 @@
  */
 
 import type { ErrorEvent, Scope } from "@sentry/node";
-import * as Sentry from "@sentry/node";
+
+type SentryModule = typeof import("@sentry/node");
+
+let sentryModulePromise: Promise<SentryModule | null> | null = null;
+
+function loadSentry(): Promise<SentryModule | null> {
+  if (!process.env.SENTRY_DSN) {
+    return Promise.resolve(null);
+  }
+
+  sentryModulePromise ??= import("@sentry/node").catch(() => null);
+  return sentryModulePromise;
+}
 
 export function initSentry(): void {
   if (!process.env.SENTRY_DSN) {
@@ -33,14 +45,22 @@ export function initSentry(): void {
     ignoreErrors: ["ECONNRESET", "ETIMEDOUT"],
   };
 
-  Sentry.init(options);
+  void loadSentry().then((sentry) => {
+    sentry?.init(options);
+  });
 }
 
 /** Hono error handler that captures unhandled exceptions to Sentry. */
 export function captureRequestError(err: Error, requestId?: string, tenantId?: string): void {
-  Sentry.withScope((scope: Scope) => {
-    if (requestId) scope.setTag("request_id", requestId);
-    if (tenantId) scope.setTag("tenant_id", tenantId);
-    Sentry.captureException(err);
+  void loadSentry().then((sentry) => {
+    if (!sentry) {
+      return;
+    }
+
+    sentry.withScope((scope: Scope) => {
+      if (requestId) scope.setTag("request_id", requestId);
+      if (tenantId) scope.setTag("tenant_id", tenantId);
+      sentry.captureException(err);
+    });
   });
 }

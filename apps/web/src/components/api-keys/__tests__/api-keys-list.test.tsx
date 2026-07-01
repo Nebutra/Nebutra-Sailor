@@ -4,13 +4,20 @@ import { cleanup, render, screen, waitFor, within } from "@testing-library/react
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-// ApiKeysList uses useFormatter() for date formatting (W1 governance change).
+// ApiKeysList uses next-intl for dates and empty-state copy.
 vi.mock("next-intl", () => ({
   useFormatter: () => ({
     dateTime: (d: Date, _opts?: unknown) =>
       d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
     relativeTime: (_d: Date) => "just now",
   }),
+  useTranslations: () => (key: string) => {
+    const messages: Record<string, string> = {
+      "emptyState.apiKeys": "Create your first API key",
+      "emptyState.apiKeysCta": "Issue scoped keys for integrations when you are ready.",
+    };
+    return messages[key] ?? key;
+  },
 }));
 
 import { type ApiKey, ApiKeysList } from "@/components/api-keys/api-keys-list";

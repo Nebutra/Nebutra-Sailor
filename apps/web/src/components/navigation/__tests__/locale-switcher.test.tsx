@@ -7,9 +7,45 @@ const refreshMock = vi.fn();
 const useLocaleMock = vi.fn(() => "en-US");
 const usePathnameMock = vi.fn(() => "/settings");
 
+vi.mock("@nebutra/i18n/locale-switcher", () => ({
+  createLocaleSwitcher:
+    (routing: { useRouter: () => { refresh: () => void } }, config: { locales: string[] }) =>
+    ({ ariaLabel, labels }: { ariaLabel?: string; labels?: Record<string, string> }) => {
+      const locale = useLocaleMock();
+      const router = routing.useRouter();
+      return (
+        <div>
+          <button type="button" aria-label={ariaLabel}>
+            {locale.slice(0, 2).toUpperCase()}
+          </button>
+          <div role="menu">
+            {config.locales.map((nextLocale) => (
+              <button
+                key={nextLocale}
+                type="button"
+                role="menuitem"
+                aria-current={nextLocale === locale ? "true" : undefined}
+                onClick={() => {
+                  document.cookie = `NEXT_LOCALE=${nextLocale}; Path=/; SameSite=Lax`;
+                  router.refresh();
+                }}
+              >
+                {labels?.[nextLocale] ?? nextLocale}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    },
+}));
+
 vi.mock("next-intl", () => ({
   useLocale: () => useLocaleMock(),
   useTranslations: (ns?: string) => (key: string) => (ns ? `${ns}.${key}` : key),
+}));
+
+vi.mock("use-intl", () => ({
+  useLocale: () => useLocaleMock(),
 }));
 
 // apps/web runs cookie-based i18n: the switcher imports next/navigation hooks
