@@ -32,6 +32,24 @@ describe("ci harness dependency closure", () => {
     }
   });
 
+  it("keeps visual acceptance scoped and parallelizable", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/visual-acceptance.yml"),
+      "utf8",
+    );
+
+    expect(workflow).not.toContain(".github/actions/setup-node-pnpm/action.yml");
+    expect(workflow).toContain("uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590");
+    expect(workflow).toContain("visual-design-docs:");
+    expect(workflow).toContain("if: needs.detect-changes.outputs.design-docs == 'true'");
+    expect(workflow).toContain("pnpm visual:design-docs:ci");
+    expect(workflow).toContain("visual-landing:");
+    expect(workflow).toContain("if: needs.detect-changes.outputs.landing == 'true'");
+    expect(workflow).toContain("pnpm visual:landing:ci");
+    expect(workflow).toContain('e2e/visual/helpers/**"');
+    expect(workflow).toContain("name: Docs and Feature Showcase");
+  });
+
   it("builds app dependency closures before standalone app builds", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
 
