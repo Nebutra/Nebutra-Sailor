@@ -231,10 +231,6 @@ jobs:
           # Biome would otherwise exit 1 with "No files were processed".
           pnpm biome ci --no-errors-on-unmatched "${BIOME_FILES[@]}"
 
-      - name: Lint whole repo (advisory)
-        run: pnpm biome ci .
-        continue-on-error: true
-
       - name: Typecheck (affected)
         run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."
 
@@ -528,6 +524,20 @@ jobs:
     timeout-minutes: 10
     needs: detect-changes
     if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.db == 'true'
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: shadow_nebutra
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d shadow_nebutra"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6

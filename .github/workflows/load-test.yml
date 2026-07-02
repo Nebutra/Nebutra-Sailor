@@ -1,7 +1,7 @@
 name: Load Test
 
 on:
-  # Run weekly on Monday 02:00 UTC (off-peak hours)
+  # Run a weekly smoke check on Monday 02:00 UTC (off-peak hours).
   schedule:
     - cron: "0 2 * * 1"
   # Allow manual trigger with scenario selection
@@ -10,7 +10,7 @@ on:
       scenario:
         description: "k6 scenario to run"
         required: true
-        default: "ramp-up"
+        default: "smoke"
         type: choice
         options: [smoke, ramp-up, stress, soak]
       base_url:
@@ -23,9 +23,9 @@ permissions:
 
 jobs:
   load-test:
-    name: k6 Load Test (${{ inputs.scenario || 'ramp-up' }})
+    name: k6 Load Test (${{ inputs.scenario || 'smoke' }})
     runs-on: ubuntu-latest
-    timeout-minutes: 90 # accommodate 1h soak test
+    timeout-minutes: 90 # accommodate manually triggered soak tests
 
     steps:
       - name: Checkout
@@ -56,13 +56,13 @@ jobs:
           K6_CLOUD_TOKEN: ${{ secrets.K6_CLOUD_TOKEN }}
           LOAD_TEST_API_TOKEN: ${{ secrets.LOAD_TEST_API_TOKEN }}
           LOAD_TEST_BASE_URL: ${{ inputs.base_url || 'https://api.nebutra.ai' }}
-          LOAD_TEST_SCENARIO: ${{ inputs.scenario || 'ramp-up' }}
+          LOAD_TEST_SCENARIO: ${{ inputs.scenario || 'smoke' }}
 
       - name: Upload k6 results
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: k6-results-${{ inputs.scenario || 'ramp-up' }}-${{ github.run_id }}
+          name: k6-results-${{ inputs.scenario || 'smoke' }}-${{ github.run_id }}
           path: tests/load/results/
           retention-days: 90
 
@@ -70,7 +70,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         env:
           LOAD_TEST_BASE_URL: ${{ inputs.base_url || 'https://api.nebutra.ai' }}
-          LOAD_TEST_SCENARIO: ${{ inputs.scenario || 'ramp-up' }}
+          LOAD_TEST_SCENARIO: ${{ inputs.scenario || 'smoke' }}
         run: |
           {
             echo "### k6 Load Test Results"
