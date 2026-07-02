@@ -15,6 +15,7 @@ describe("ci harness dependency closure", () => {
       ".github/workflows/codeql.yml",
       ".github/workflows/dead-code.yml",
       ".github/workflows/deploy-gateway.yml",
+      ".github/workflows/design-sync.yml",
       ".github/workflows/security-scan.yml",
       ".github/workflows/ui-governance.yml",
       ".github/workflows/visual-acceptance.yml",
