@@ -107,7 +107,7 @@ jobs:
           path: |
             visual-acceptance-report/
             test-results/
-          if-no-files-found: warn
+          if-no-files-found: error
 
   visual-landing:
     name: Landing Visual Acceptance
@@ -150,7 +150,7 @@ jobs:
           path: |
             visual-acceptance-report/
             test-results/
-          if-no-files-found: warn
+          if-no-files-found: error
 
   visual:
     name: Docs and Feature Showcase
