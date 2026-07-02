@@ -4,6 +4,34 @@ import { pathToFileURL } from "node:url";
 import { describe, expect, it } from "vitest";
 
 describe("ci harness dependency closure", () => {
+  it("keeps low-risk tooling workflows on the shared Node/pnpm setup action", async () => {
+    const setupAction = await readFile(
+      join(process.cwd(), ".github/actions/setup-node-pnpm/action.yml"),
+      "utf8",
+    );
+    const migratedWorkflows = [
+      ".github/workflows/chromatic.yml",
+      ".github/workflows/codeql.yml",
+      ".github/workflows/dead-code.yml",
+      ".github/workflows/deploy-gateway.yml",
+      ".github/workflows/security-scan.yml",
+      ".github/workflows/ui-governance.yml",
+      ".github/workflows/visual-acceptance.yml",
+    ];
+
+    expect(setupAction).toContain("pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1");
+    expect(setupAction).toContain("actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e");
+    expect(setupAction).toContain("pnpm install --frozen-lockfile");
+
+    for (const workflowPath of migratedWorkflows) {
+      const workflow = await readFile(join(process.cwd(), workflowPath), "utf8");
+      expect(workflow).toContain("uses: ./.github/actions/setup-node-pnpm");
+      expect(workflow).not.toContain("pnpm/action-setup@");
+      expect(workflow).not.toContain("actions/setup-node@");
+      expect(workflow).not.toContain("run: pnpm install --frozen-lockfile");
+    }
+  });
+
   it("builds app dependency closures before standalone app builds", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
 
