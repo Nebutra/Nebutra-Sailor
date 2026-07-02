@@ -17,13 +17,22 @@ describe("lighthouse dashboard ci harness", () => {
     expect(script).not.toContain("--experimental-build-mode=compile");
   });
 
-  it("uses a public route for pull-request Lighthouse checks", async () => {
+  it("keeps dashboard Lighthouse as a manual comparative diagnostic", async () => {
     const workflow = await readFile(
       join(process.cwd(), ".github/workflows/lighthouse-dashboard.yml"),
       "utf8",
     );
+    const beforeRefInput = "$" + "{{ inputs.before_ref }}";
+    const afterRefInput = "$" + "{{ inputs.after_ref }}";
+    const targetPathInput = "$" + "{{ inputs.target_path }}";
 
-    expect(workflow).toContain('TARGET_PATH="/demo/embed"');
+    expect(workflow).toContain("  workflow_dispatch:");
+    expect(workflow).not.toContain("  pull_request:");
+    expect(workflow).toContain('default: "/tenants"');
+    expect(workflow).toContain(`BEFORE_REF="${beforeRefInput}"`);
+    expect(workflow).toContain(`AFTER_REF="${afterRefInput}"`);
+    expect(workflow).toContain(`TARGET_PATH="${targetPathInput}"`);
+    expect(workflow).not.toContain("github.event.pull_request");
   });
 
   it("keeps landing page Lighthouse assertions explicit and category-scoped", async () => {

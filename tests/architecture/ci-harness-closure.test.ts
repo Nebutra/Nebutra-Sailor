@@ -193,6 +193,22 @@ describe("ci harness dependency closure", () => {
     expect(workflow).not.toMatch(/\|\|\s*'ramp-up'/);
   });
 
+  it("keeps dashboard Lighthouse as an explicit manual diagnostic", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/lighthouse-dashboard.yml"),
+      "utf8",
+    );
+    const beforeRefInput = "$" + "{{ inputs.before_ref }}";
+    const afterRefInput = "$" + "{{ inputs.after_ref }}";
+
+    expect(workflow).toContain("  workflow_dispatch:");
+    expect(workflow).not.toContain("  pull_request:");
+    expect(workflow).toContain("    timeout-minutes: 60");
+    expect(workflow).toContain(`BEFORE_REF="${beforeRefInput}"`);
+    expect(workflow).toContain(`AFTER_REF="${afterRefInput}"`);
+    expect(workflow).not.toContain("github.event.pull_request.head.sha");
+  });
+
   it("runs bundle analysis through the webpack analyzer path", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
     const webPackage = JSON.parse(
