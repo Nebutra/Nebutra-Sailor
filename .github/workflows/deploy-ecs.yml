@@ -240,14 +240,10 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         if: matrix.condition == 'true'
 
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-        if: matrix.condition == 'true'
-
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: ./.github/actions/setup-node-pnpm
         if: matrix.condition == 'true'
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
 
       - name: Cache Turborepo local artifacts
         if: matrix.condition == 'true'
@@ -269,10 +265,6 @@ jobs:
           restore-keys: |
             next-ecs-${{ runner.os }}-${{ matrix.app }}-${{ hashFiles('pnpm-lock.yaml') }}-
             next-ecs-${{ runner.os }}-${{ matrix.app }}-
-
-      - name: Install dependencies
-        if: matrix.condition == 'true'
-        run: pnpm install --frozen-lockfile
 
       - name: Build workspace dependencies of ${{ matrix.package }}
         if: matrix.condition == 'true'
@@ -371,11 +363,9 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - uses: ./.github/actions/setup-node-pnpm
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
 
       - name: Cache Turborepo local artifacts
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
@@ -385,8 +375,6 @@ jobs:
           restore-keys: |
             turbo-ecs-api-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
             turbo-ecs-api-${{ runner.os }}-
-
-      - run: pnpm install --frozen-lockfile
 
       - name: Build workspace dependencies of api-gateway
         run: pnpm turbo build --filter="@nebutra/gateway^..."
@@ -805,7 +793,6 @@ jobs:
           set -euo pipefail
           declare -A targets=()
           [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing]="https://nebutra.com"
-          [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing-refer]="https://nebutra.com/refer?code=smoke"
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/api/misc/health"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"

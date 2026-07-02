@@ -52,6 +52,21 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("name: Docs and Feature Showcase");
   });
 
+  it("keeps the Cloud VM fallback on the shared setup action without redundant smoke URLs", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/deploy-ecs.yml"),
+      "utf8",
+    );
+    const nodeVersionInput = "node-version: $" + "{{ env.NODE_VERSION }}";
+
+    expect(workflow).toContain("uses: ./.github/actions/setup-node-pnpm");
+    expect(workflow).toContain(nodeVersionInput);
+    expect(workflow).not.toContain("pnpm/action-setup@");
+    expect(workflow).not.toContain("actions/setup-node@");
+    expect(workflow).not.toContain("run: pnpm install --frozen-lockfile");
+    expect(workflow).not.toContain("https://nebutra.com/refer?code=smoke");
+  });
+
   it("builds app dependency closures before standalone app builds", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
 
