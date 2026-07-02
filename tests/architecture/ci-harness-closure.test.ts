@@ -11,6 +11,7 @@ describe("ci harness dependency closure", () => {
     );
     const migratedWorkflows = [
       ".github/workflows/chromatic.yml",
+      ".github/workflows/ci.yml",
       ".github/workflows/codeql.yml",
       ".github/workflows/dead-code.yml",
       ".github/workflows/deploy-gateway.yml",
