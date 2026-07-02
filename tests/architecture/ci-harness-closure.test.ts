@@ -16,14 +16,20 @@ describe("ci harness dependency closure", () => {
       ".github/workflows/dead-code.yml",
       ".github/workflows/deploy-gateway.yml",
       ".github/workflows/design-sync.yml",
+      ".github/workflows/release.yml",
       ".github/workflows/security-scan.yml",
+      ".github/workflows/sync-template.yml",
       ".github/workflows/ui-governance.yml",
       ".github/workflows/visual-acceptance.yml",
     ];
+    const registryUrlInput = "registry-url: $" + "{{ inputs.registry-url }}";
+    const scopeInput = "scope: $" + "{{ inputs.scope }}";
 
     expect(setupAction).toContain("pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1");
     expect(setupAction).toContain("actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e");
     expect(setupAction).toContain("pnpm install --frozen-lockfile");
+    expect(setupAction).toContain(registryUrlInput);
+    expect(setupAction).toContain(scopeInput);
 
     for (const workflowPath of migratedWorkflows) {
       const workflow = await readFile(join(process.cwd(), workflowPath), "utf8");

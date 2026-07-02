@@ -18,6 +18,14 @@ inputs:
     description: Verify repository supply-chain policy before setup.
     required: false
     default: "false"
+  registry-url:
+    description: Optional package registry URL for npm publishing.
+    required: false
+    default: ""
+  scope:
+    description: Optional package scope for scoped registry publishing.
+    required: false
+    default: ""
 
 runs:
   using: composite
@@ -35,6 +43,8 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         cache: pnpm
+        registry-url: ${{ inputs.registry-url }}
+        scope: ${{ inputs.scope }}
 
     - name: Install dependencies
       if: inputs.install == 'true'
