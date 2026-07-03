@@ -54,6 +54,16 @@
       "cache": false,
       "outputs": ["build/**"]
     },
+    "@nebutra/blog#build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig.json"],
+      "outputs": []
+    },
+    "@nebutra/tokens#build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "../design-tokens/build/css/styles.generated.css"],
+      "outputs": ["styles.css"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
