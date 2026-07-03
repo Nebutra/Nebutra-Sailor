@@ -70,6 +70,10 @@ function cssVariableDefinitions(css: string, variable: string): string[] {
   );
 }
 
+function compactCssValue(value: string): string {
+  return value.toLowerCase().replace(/\s+/g, "");
+}
+
 function normalizeFontFamily(name: string): string {
   return name.replace(/['"]/g, "").trim().toLowerCase();
 }

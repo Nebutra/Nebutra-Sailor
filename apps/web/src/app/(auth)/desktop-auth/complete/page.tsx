@@ -15,6 +15,8 @@ type SearchParams = {
   public_beta?: string;
 };
 
+const DESKTOP_APP_NAME = `${brand.name} Foundry`;
+
 // Cookie-based i18n: no locale prefix in URLs.
 function buildCompletionPath(query: SearchParams): string {
   const params = new URLSearchParams();
@@ -43,7 +45,7 @@ function DesktopAuthError() {
           This desktop sign-in link is invalid
         </h1>
         <p className="mt-3 text-sm leading-6 text-[var(--neutral-10)]">
-          Restart sign-in from {brand.name} Foundry to create a fresh, short-lived handoff.
+          Restart sign-in from {DESKTOP_APP_NAME} to create a fresh, short-lived handoff.
         </p>
       </section>
     </AuthSplitLayout>

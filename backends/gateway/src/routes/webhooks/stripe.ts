@@ -299,14 +299,19 @@ async function handleCheckoutCompleted(
   db: PrismaClient,
 ): Promise<void> {
   const metadata = session.metadata ?? {};
+  const licenseTier =
+    typeof metadata.license_tier === "string" && metadata.license_tier.length > 0
+      ? metadata.license_tier
+      : "UNKNOWN";
 
   // Phase 0 analytics — fire-and-forget checkout.completed emission.
   emitCheckoutCompleted({
-    session_id: session.id,
-    amount_total: session.amount_total ?? null,
-    currency: session.currency ?? null,
-    license_tier: typeof metadata.license_tier === "string" ? metadata.license_tier : null,
-    user_id: typeof metadata.userId === "string" ? metadata.userId : null,
+    ...(typeof metadata.userId === "string" ? { userId: metadata.userId } : {}),
+    ...(session.amount_total !== null ? { amount_cents: session.amount_total } : {}),
+    ...(session.currency ? { currency: session.currency } : {}),
+    checkout_session_id: session.id,
+    payment_method: "stripe",
+    tier: licenseTier,
   });
 
   // Credit purchase — unified handler across providers

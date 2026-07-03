@@ -57,7 +57,7 @@ describe("importDesignMdToThemeTokens", () => {
       const { tokenSet } = importDesignMdToThemeTokens(VALID_FIXTURE);
       const color = tokenSet.color as Record<string, { $value: string; $type: string }>;
       expect(color).toBeDefined();
-      const primary = color["primary"];
+      const primary = color.primary;
       expect(primary).toBeDefined();
       expect(primary.$type).toBe("color");
       // Hex value should contain the core digits (case-insensitive)
@@ -67,7 +67,7 @@ describe("importDesignMdToThemeTokens", () => {
     it("tokenSet.color.accent.$type is 'color'", () => {
       const { tokenSet } = importDesignMdToThemeTokens(VALID_FIXTURE);
       const color = tokenSet.color as Record<string, { $value: string; $type: string }>;
-      const accent = color["accent"];
+      const accent = color.accent;
       expect(accent).toBeDefined();
       expect(accent.$type).toBe("color");
       expect(accent.$value.toLowerCase()).toContain("0bf1c3");
@@ -76,13 +76,13 @@ describe("importDesignMdToThemeTokens", () => {
     it("tokenSet.color.background is present", () => {
       const { tokenSet } = importDesignMdToThemeTokens(VALID_FIXTURE);
       const color = tokenSet.color as Record<string, { $value: string; $type: string }>;
-      expect(color["background"]).toBeDefined();
+      expect(color.background).toBeDefined();
     });
 
     it("tokenSet.color.foreground is present", () => {
       const { tokenSet } = importDesignMdToThemeTokens(VALID_FIXTURE);
       const color = tokenSet.color as Record<string, { $value: string; $type: string }>;
-      expect(color["foreground"]).toBeDefined();
+      expect(color.foreground).toBeDefined();
     });
   });
 
@@ -91,7 +91,7 @@ describe("importDesignMdToThemeTokens", () => {
       const { tokenSet } = importDesignMdToThemeTokens(VALID_FIXTURE);
       const radius = tokenSet.radius as Record<string, { $value: string; $type: string }>;
       expect(radius).toBeDefined();
-      const md = radius["md"];
+      const md = radius.md;
       expect(md).toBeDefined();
       expect(md.$type).toBe("dimension");
       expect(md.$value).toMatch(/\d/);
@@ -112,7 +112,7 @@ describe("importDesignMdToThemeTokens", () => {
     it("report.missingRequired does NOT list tokens that are present", () => {
       const { tokenSet, report } = importDesignMdToThemeTokens(VALID_FIXTURE);
       const color = tokenSet.color as Record<string, unknown>;
-      if (color?.["primary"]) {
+      if (color.primary) {
         expect(report.missingRequired).not.toContain("color.primary");
       }
     });

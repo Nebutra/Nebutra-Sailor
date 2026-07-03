@@ -36,8 +36,14 @@ export const ScaffoldCompletedEvent = BaseEventProps.extend({
 export const LicenseWizardEvent = BaseEventProps.extend({
   step: z.enum(["started", "step_completed", "submitted", "failed"]),
   step_name: z.string().optional(),
+  step_number: z.number().optional(),
   tier: z.enum(["INDIVIDUAL", "OPC", "STARTUP", "ENTERPRISE"]).optional(),
+  role: z.string().optional(),
+  team_size: z.enum(["1", "2-5", "6-20", "21-50", "50+"]).optional(),
+  use_case: z.string().optional(),
+  referral_source: z.string().optional(),
   error_code: z.string().optional(),
+  error_message: z.string().optional(),
 });
 
 export const LicenseCliEvent = BaseEventProps.extend({
@@ -65,8 +71,24 @@ export const CheckoutEvent = BaseEventProps.extend({
   action: z.enum(["started", "completed", "abandoned"]),
   tier: z.string(),
   amount_cents: z.number().optional(),
+  checkout_session_id: z.string().optional(),
   currency: z.string().optional(),
   payment_method: z.string().optional(),
+  referral_source: z.string().optional(),
+  team_size: z.enum(["1", "2-5", "6-20", "21-50", "50+"]).optional(),
+});
+
+export const DeploymentVerifiedEvent = BaseEventProps.extend({
+  app: z.enum(["landing", "web", "api", "design-docs", "sailor-docs"]),
+  deploy_target: z.string(),
+  deployment_env: z.string(),
+  provider: z.string().optional(),
+  public_url: z.string().url().optional(),
+  ref: z.string().optional(),
+  run_attempt: z.string().optional(),
+  run_id: z.string().optional(),
+  sha: z.string(),
+  smoke_status: z.literal("passed"),
 });
 
 export type EventName =
@@ -75,7 +97,8 @@ export type EventName =
   | "license.cli"
   | "sleptons"
   | "docs.search_query"
-  | "checkout";
+  | "checkout"
+  | "deployment.verified";
 
 export const EVENT_SCHEMAS = {
   "scaffold.completed": ScaffoldCompletedEvent,
@@ -84,6 +107,7 @@ export const EVENT_SCHEMAS = {
   sleptons: SleptonsEvent,
   "docs.search_query": DocsSearchEvent,
   checkout: CheckoutEvent,
+  "deployment.verified": DeploymentVerifiedEvent,
 } as const satisfies Record<EventName, z.ZodTypeAny>;
 
 // Inferred types — exported for downstream type-safe handlers.
@@ -93,5 +117,6 @@ export type LicenseCliPayload = z.infer<typeof LicenseCliEvent>;
 export type SleptonsPayload = z.infer<typeof SleptonsEvent>;
 export type DocsSearchPayload = z.infer<typeof DocsSearchEvent>;
 export type CheckoutPayload = z.infer<typeof CheckoutEvent>;
+export type DeploymentVerifiedPayload = z.infer<typeof DeploymentVerifiedEvent>;
 
 export type EventPayload<E extends EventName> = z.infer<(typeof EVENT_SCHEMAS)[E]>;

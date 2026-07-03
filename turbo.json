@@ -39,6 +39,7 @@
     },
     "@nebutra/design-tokens#build": {
       "inputs": ["tokens/**", "style-dictionary.config.mjs", "tsconfig.json", "package.json"],
+      "cache": false,
       "outputs": ["build/**"]
     },
     "dev": {

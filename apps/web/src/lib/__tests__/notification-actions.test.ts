@@ -310,7 +310,7 @@ describe("notification settings actions", () => {
       expect(revalidatePathMock).toHaveBeenCalledWith("/settings/notifications");
     });
 
-    it("returns to the shell page when a same-locale return path is provided", async () => {
+    it("returns to the shell page when an internal return path is provided", async () => {
       const provider = {
         name: "novu",
         markAsRead: vi.fn().mockResolvedValue(undefined),

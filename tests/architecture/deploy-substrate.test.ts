@@ -53,6 +53,26 @@ describe("Deploy substrate governance", () => {
     expect(yml).toContain("https://api.nebutra.com/api/misc/health");
   });
 
+  it("legacy ECS PM2 workflow emits deployment.verified only after public smoke tests pass", () => {
+    const yml = read("deploy-ecs.yml");
+    const smokeIndex = yml.indexOf("Smoke test public endpoints");
+    const emitIndex = yml.indexOf("Emit deployment verification analytics");
+
+    expect(smokeIndex).toBeGreaterThan(0);
+    expect(emitIndex).toBeGreaterThan(smokeIndex);
+    expect(yml).toContain('event: "deployment.verified"');
+    expect(yml).toContain("POSTHOG_KEY");
+    expect(yml).toContain("smoke_status");
+  });
+
+  it("legacy ECS landing smoke covers the paid-wall path and avoids stale referral URLs", () => {
+    const yml = read("deploy-ecs.yml");
+
+    expect(yml).toContain("landing-license");
+    expect(yml).toContain("https://nebutra.com/get-license");
+    expect(yml).not.toContain("https://nebutra.com/refer?code=smoke");
+  });
+
   it("legacy ECS workflow no longer claims to be the default-active backend substrate", () => {
     const yml = read("deploy-ecs.yml");
     const k8s = read("deploy.yml");

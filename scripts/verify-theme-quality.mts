@@ -38,6 +38,11 @@ function check(file: string) {
   const j = JSON.parse(readFileSync(file, "utf8"));
   const flags: string[] = [];
   const val = (g: string, k: string): string | undefined => j[g]?.[k]?.$value;
+  const requiredVal = (g: string, k: string): string => {
+    const value = val(g, k);
+    if (!value) throw new Error(`missing token ${g}.${k}`);
+    return value;
+  };
 
   for (const [g, k] of REQUIRED) if (!val(g, k)) flags.push(`missing:${g}.${k}`);
 
@@ -45,18 +50,10 @@ function check(file: string) {
     aaBody = 0,
     bgChroma = 0;
   try {
-    const primaryValue = val("color", "primary");
-    const primaryForegroundValue = val("color", "primary-foreground");
-    const backgroundValue = val("color", "background");
-    const foregroundValue = val("color", "foreground");
-    if (!primaryValue || !primaryForegroundValue || !backgroundValue || !foregroundValue) {
-      throw new Error("missing required color role");
-    }
-
-    const primary = parseColor(primaryValue);
-    const primaryFg = parseColor(primaryForegroundValue);
-    const bg = parseColor(backgroundValue);
-    const fg = parseColor(foregroundValue);
+    const primary = parseColor(requiredVal("color", "primary"));
+    const primaryFg = parseColor(requiredVal("color", "primary-foreground"));
+    const bg = parseColor(requiredVal("color", "background"));
+    const fg = parseColor(requiredVal("color", "foreground"));
     aaPrimary = chroma.contrast(primary, primaryFg);
     aaBody = chroma.contrast(bg, fg);
     bgChroma = bg.get("oklch.c");

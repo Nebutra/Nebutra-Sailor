@@ -17,6 +17,7 @@ repo keeps analytics changes in the same PR flow as product changes.
 | `04-payment-funnel-drop-off.sql` | By payment method (WeChat / Alipay / Stripe / Lemon Squeezy), what is the started → completed rate? Which abandons most? | PostHog events |
 | `05-docs-pain-map.sql` | Top 20 documentation searches returning zero results — i.e. gaps that the content team must fill next. | PostHog events |
 | `06-sleptons-engagement.sql` | Who are the most engaged Sleptons community members (profiles viewed / showcases posted / votes / connections)? | PostHog events |
+| `07-positioning-paid-wall-validation.sql` | For STARTUP-eligible 2–50 teams, what share reaches Stripe checkout and paid completion within 30 days, with ECS smoke-proven deploy evidence beside the cohort? | PostHog events |
 
 > `metabase-setup.md` contains the step-by-step bootstrap guide for a fresh
 > Metabase instance (database connections + importing each query).

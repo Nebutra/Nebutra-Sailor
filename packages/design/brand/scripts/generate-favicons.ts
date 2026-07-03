@@ -35,6 +35,25 @@ function warn(msg: string): void {
   process.stderr.write(`  ⚠ ${msg}\n`);
 }
 
+async function toSquarePngCanvas(png: Buffer, size: number): Promise<Buffer> {
+  try {
+    const { default: sharpFn } = (await import("sharp")) as unknown as {
+      default: (input: Buffer) => import("sharp").Sharp;
+    };
+
+    return await sharpFn(png)
+      .resize(size, size, {
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+        fit: "contain",
+      })
+      .png()
+      .toBuffer();
+  } catch (err) {
+    warn(`square PNG canvas failed (size=${size}): ${String(err)} — keeping rendered dimensions`);
+    return png;
+  }
+}
+
 /**
  * Render an SVG string to a PNG Buffer at the given width using @resvg/resvg-wasm.
  * Returns null on failure (caller falls back gracefully).
@@ -71,19 +90,7 @@ async function svgToPng(svgStr: string, width: number): Promise<Buffer | null> {
     });
     const rendered = resvg.render();
     const pngBytes = rendered.asPng();
-    const png = Buffer.from(pngBytes);
-
-    const { default: sharpFn } = (await import("sharp")) as unknown as {
-      default: (input: Buffer) => import("sharp").Sharp;
-    };
-
-    return await sharpFn(png)
-      .resize(width, width, {
-        background: { alpha: 0, b: 0, g: 0, r: 0 },
-        fit: "contain",
-      })
-      .png()
-      .toBuffer();
+    return await toSquarePngCanvas(Buffer.from(pngBytes), width);
   } catch (err) {
     warn(`SVG→PNG failed (width=${width}): ${String(err)}`);
     return null;

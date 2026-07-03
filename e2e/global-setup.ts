@@ -1,7 +1,15 @@
-const ROUTE_PREWARM_ATTEMPTS = 3;
-const ROUTE_PREWARM_RETRY_DELAY_MS = 2_000;
-const ROUTE_PREWARM_TIMEOUT_MS = 60_000;
-const OPTIONAL_ROUTE_PREWARM_TIMEOUT_MS = 20_000;
+const SHOULD_FAIL_ON_PREWARM =
+  process.env.E2E_FAIL_ON_PREWARM === "1" || process.env.E2E_FAIL_ON_PREWARM === "true";
+
+function numberFromEnv(name: string, fallback: number) {
+  const value = Number.parseInt(process.env[name] ?? "", 10);
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
+const ROUTE_PREWARM_ATTEMPTS = numberFromEnv("E2E_PREWARM_ATTEMPTS", 3);
+const ROUTE_PREWARM_RETRY_DELAY_MS = numberFromEnv("E2E_PREWARM_RETRY_DELAY_MS", 2_000);
+const ROUTE_PREWARM_TIMEOUT_MS = numberFromEnv("E2E_PREWARM_TIMEOUT_MS", 60_000);
+const OPTIONAL_ROUTE_PREWARM_TIMEOUT_MS = numberFromEnv("E2E_OPTIONAL_PREWARM_TIMEOUT_MS", 20_000);
 const PREWARM_ROUTES = [
   { path: "/api/e2e/health", required: true, timeoutMs: ROUTE_PREWARM_TIMEOUT_MS },
   { path: "/changelog", required: false, timeoutMs: OPTIONAL_ROUTE_PREWARM_TIMEOUT_MS },
@@ -43,7 +51,7 @@ async function prewarmRoute(url: URL, route: (typeof PREWARM_ROUTES)[number]) {
     } catch (error) {
       const detail = describeError(error);
       if (attempt === ROUTE_PREWARM_ATTEMPTS) {
-        if (!route.required) {
+        if (!route.required && !SHOULD_FAIL_ON_PREWARM) {
           process.stdout.write(
             `[e2e-global-setup] optional prewarm skipped ${url.toString()}: ${detail}\n`,
           );

@@ -143,6 +143,8 @@ const TAG_COLORS: Record<string, string> = {
   foundation: "var(--status-success)",
 };
 
+const CHANGELOG_CMS_TIMEOUT_MS = 1500;
+
 interface PortableTextChild {
   _key?: string;
   text?: string;
@@ -181,6 +183,26 @@ interface CmsEntry {
   type?: string;
   summary?: string;
   body?: PortableTextBlock[];
+}
+
+async function getChangelogEntriesWithTimeout(): Promise<CmsEntry[]> {
+  if (process.env.E2E_SKIP_CMS === "1") {
+    return [];
+  }
+
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const timeout = new Promise<[]>((resolve) => {
+      timeoutId = setTimeout(() => resolve([]), CHANGELOG_CMS_TIMEOUT_MS);
+    });
+    return await Promise.race([getChangelogEntries(), timeout]);
+  } catch {
+    return [];
+  } finally {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  }
 }
 
 /**
@@ -263,7 +285,7 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
 async function fetchChangelogEntries(): Promise<CmsEntry[]> {
   "use cache";
   cacheLife("hours");
-  return getChangelogEntries().catch(() => []);
+  return getChangelogEntriesWithTimeout();
 }
 
 /**
@@ -274,7 +296,7 @@ async function buildChangelogMetadata(version: string, lang: string): Promise<Me
   "use cache";
   cacheLife("hours");
 
-  const cmsEntries: CmsEntry[] = await getChangelogEntries().catch(() => []);
+  const cmsEntries = await fetchChangelogEntries();
   const cmsEntry = cmsEntries.find((e) => e.version === version);
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nebutra.com";
   const canonicalUrl = lang === "en" ? `/changelog/${version}` : `/${lang}/changelog/${version}`;

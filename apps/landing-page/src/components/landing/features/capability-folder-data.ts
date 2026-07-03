@@ -98,8 +98,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       value: "40",
       label: copy("AI packages", "AI 包"),
       detail: copy(
-        "219 runtime source files and 116 tests, with the heaviest coverage in agent-runtime, knowledge-rag, reel, graph, and execution policies.",
-        "219 个运行时源码文件与 116 个测试，重心落在 agent-runtime、knowledge-rag、reel、graph 与 execution policy。",
+        "220 runtime source files and 117 tests, with the heaviest coverage in agent-runtime, knowledge-rag, reel, graph, and execution policies.",
+        "220 个运行时源码文件与 117 个测试，重心落在 agent-runtime、knowledge-rag、reel、graph 与 execution policy。",
       ),
     },
     topology: {
@@ -172,7 +172,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
         detail: copy("retrieval contracts and ingestion behavior", "检索契约与 ingestion 行为"),
       },
       {
-        value: "34",
+        value: "35",
         label: copy("README surfaces", "README 面"),
         detail: copy("package-level docs for most AI capabilities", "多数 AI 能力有包级文档"),
       },
@@ -922,7 +922,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       "这张卡按请求路径设计，因为 gateway 的价值只有把 middleware 顺序、route 契约与异步 jobs 放在一起才看得清。",
     ),
     signature: {
-      value: "28",
+      value: "29",
       label: copy("gateway tests", "gateway 测试"),
       detail: copy(
         "Billing idempotency, RBAC, middleware, queue delivery, events, health, notifications, and AI gateway routes are covered.",
@@ -975,7 +975,7 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     ],
     evidence: [
       {
-        value: "82",
+        value: "83",
         label: copy("source files", "源码文件"),
         detail: copy(
           "routes, middleware, services, clients, adapters",

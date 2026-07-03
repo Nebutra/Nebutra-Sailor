@@ -97,6 +97,30 @@ describe("ProductAnalyticsClient", () => {
     expect(body.timestamp).toBeDefined();
   });
 
+  it("track sends deployment.verified after deploy smoke checks pass", async () => {
+    await client.track("deployment.verified", {
+      app: "landing",
+      deploy_target: "ecs-pm2",
+      deployment_env: "ecs-prod",
+      provider: "aliyun-ecs",
+      public_url: "https://nebutra.com",
+      sha: "abc123",
+      smoke_status: "passed",
+    });
+
+    const [, options] = mockFetch.mock.calls[0];
+    const body = JSON.parse(options.body);
+    expect(body).toMatchObject({
+      api_key: "phc_test",
+      event: "deployment.verified",
+    });
+    expect(body.properties).toMatchObject({
+      app: "landing",
+      deploy_target: "ecs-pm2",
+      smoke_status: "passed",
+    });
+  });
+
   it("track falls back to 'anonymous' distinct_id when userId missing", async () => {
     await client.track("docs.search_query", {
       query: "tokens",

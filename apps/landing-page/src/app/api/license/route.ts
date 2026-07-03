@@ -119,10 +119,19 @@ export async function POST(req: NextRequest) {
         },
       });
 
+      if (!session.url) {
+        logger.error("Stripe checkout session URL is missing", { sessionId: session.id });
+        return NextResponse.json(
+          { error: "Stripe checkout session URL is missing" },
+          { status: 503 },
+        );
+      }
+
       return NextResponse.json({
         success: true,
         requireCheckout: true,
         url: session.url,
+        sessionId: session.id,
       });
     }
 

@@ -11,13 +11,11 @@ vi.mock("next-intl", () => ({
       d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
     relativeTime: (_d: Date) => "just now",
   }),
-  useTranslations: () => (key: string) => {
-    const messages: Record<string, string> = {
-      "emptyState.apiKeys": "Create your first API key",
-      "emptyState.apiKeysCta": "Issue scoped keys for integrations when you are ready.",
-    };
-    return messages[key] ?? key;
-  },
+  useTranslations: () => (key: string) =>
+    ({
+      "emptyState.apiKeys": "No keys yet.",
+      "emptyState.apiKeysCta": "Create your first key",
+    })[key] ?? key,
 }));
 
 import { type ApiKey, ApiKeysList } from "@/components/api-keys/api-keys-list";
@@ -55,7 +53,8 @@ describe("ApiKeysList", () => {
     const onCreate = vi.fn();
     render(<ApiKeysList keys={[]} onCreate={onCreate} onRevoke={vi.fn()} />);
 
-    expect(screen.getByText(/create your first api key/i)).toBeInTheDocument();
+    expect(screen.getByText(/No keys yet/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Create your first key/i })).toBeInTheDocument();
   });
 
   it("renders one row per key with Name / Prefix / Last Used columns", () => {

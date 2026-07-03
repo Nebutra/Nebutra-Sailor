@@ -7,6 +7,9 @@ import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next-intl", () => ({
+  useFormatter: () => ({
+    relativeTime: () => "localized relative time",
+  }),
   useLocale: () => "en",
   useTranslations: () => (key: string) => key,
 }));

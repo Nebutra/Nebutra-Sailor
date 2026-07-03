@@ -62,6 +62,7 @@ export function emitBrowserEvent(
     const payload = {
       api_key: apiKey,
       event: eventName,
+      distinct_id: distinctId,
       properties: {
         ...properties,
         distinct_id: distinctId,

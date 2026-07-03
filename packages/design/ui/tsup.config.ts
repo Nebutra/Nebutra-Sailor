@@ -94,10 +94,10 @@ const ENTRIES: Record<string, string> = {
   "patterns/index": "src/patterns/index.ts",
   "typography/index": "src/typography/index.ts",
   "hooks/index": "src/hooks/index.ts",
-  "utils/index": "src/utils/index.ts",
   "shared/animation/index": "src/shared/animation/index.ts",
   "shared/animation/css/index": "src/shared/animation/css/index.ts",
   "shared/animation/motion/index": "src/shared/animation/motion/index.ts",
+  "utils/index": "src/utils/index.ts",
   "tailwind.preset": "src/tailwind.preset.ts",
 };
 

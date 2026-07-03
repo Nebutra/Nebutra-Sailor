@@ -783,6 +783,29 @@ for proc in procs:
   fi
 }
 
+wait_for_local_http() {
+  local label="$1" pm2_name="$2" url="$3" ok_regex="${4:-^(200|301|302|307)$}"
+  local code="000"
+
+  log "wait for $label local health: $url"
+  for attempt in 1 2 3 4 5 6 7 8 9 10; do
+    code="$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 "$url" 2>/dev/null || true)"
+    [ -n "$code" ] || code="000"
+    if [[ "$code" =~ $ok_regex ]]; then
+      log "$label local health -> $code"
+      return 0
+    fi
+    if [ "$attempt" -eq 10 ]; then
+      log "$label local health failed after $attempt attempts (last code: $code)"
+      pm2 describe "$pm2_name" --no-color 2>&1 || true
+      pm2 logs "$pm2_name" --nostream --lines 160 --raw --no-color 2>&1 | tail -180 || true
+      command -v ss >/dev/null 2>&1 && ss -ltnp 2>/dev/null | grep -E ':(3000|3001|3002|3004|3005)\b' || true
+      fail "$label failed local health check"
+    fi
+    sleep 6
+  done
+}
+
 deploy_one() {
   local app="$1" pm2_name="$2"
   local tarball="$BUNDLE_DIR/nebutra-${app}-${SHA}.tar.gz"
@@ -944,25 +967,23 @@ for p in procs:
   log "pm2 logs for $pm2_name (last 40 lines, no stream):"
   pm2 logs "$pm2_name" --nostream --lines 40 --raw --no-color 2>&1 | tail -50 || true
 
-  if [ "$pm2_name" = "api-gateway" ]; then
-    log "wait for api-gateway local health"
-    local code="000"
-    for attempt in 1 2 3 4 5 6 7 8 9 10; do
-      code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 8 \
-        "http://127.0.0.1:3002/api/misc/health" 2>/dev/null || echo "000")
-      if [ "$code" = "200" ]; then
-        log "api-gateway local health -> $code"
-        break
-      fi
-      if [ "$attempt" -eq 10 ]; then
-        log "api-gateway local health failed after $attempt attempts (last code: $code)"
-        pm2 describe "$pm2_name" --no-color 2>&1 || true
-        pm2 logs "$pm2_name" --nostream --lines 160 --raw --no-color 2>&1 | tail -180 || true
-        fail "api-gateway failed local health check"
-      fi
-      sleep 6
-    done
-  fi
+  case "$pm2_name" in
+    api-gateway)
+      wait_for_local_http "api-gateway" "$pm2_name" "http://127.0.0.1:3002/api/misc/health" "^200$"
+      ;;
+    landing-page)
+      wait_for_local_http "landing-page" "$pm2_name" "http://127.0.0.1:3001/get-license"
+      ;;
+    web)
+      wait_for_local_http "web" "$pm2_name" "http://127.0.0.1:3000/"
+      ;;
+    design-docs)
+      wait_for_local_http "design-docs" "$pm2_name" "http://127.0.0.1:3004/"
+      ;;
+    sailor-docs)
+      wait_for_local_http "sailor-docs" "$pm2_name" "http://127.0.0.1:3005/"
+      ;;
+  esac
 
   # Retention — keep latest N, drop the rest. find sorts by mtime via -printf
   # to avoid SC2012 issues with `ls`. Release names are timestamped so this is
@@ -1038,6 +1059,142 @@ rollback_one() {
   fi
 }
 
+nginx_worker_user() {
+  local current_user=""
+  if [ -f /etc/nginx/nginx.conf ]; then
+    current_user="$(awk '/^user[[:space:]]+/ { gsub(";", "", $2); print $2; exit }' /etc/nginx/nginx.conf 2>/dev/null || true)"
+  fi
+
+  if [ -n "$current_user" ] && id "$current_user" >/dev/null 2>&1; then
+    printf '%s\n' "$current_user"
+    return 0
+  fi
+  if id nginx >/dev/null 2>&1; then
+    printf '%s\n' "nginx"
+    return 0
+  fi
+  if id www-data >/dev/null 2>&1; then
+    printf '%s\n' "www-data"
+    return 0
+  fi
+
+  printf '%s\n' ""
+}
+
+restore_nginx_config() {
+  local backup_dir="$1"
+
+  if [ -f "$backup_dir/nginx.conf" ]; then
+    cp -p "$backup_dir/nginx.conf" /etc/nginx/nginx.conf
+  fi
+  if [ -f "$backup_dir/proxy_params.conf" ]; then
+    cp -p "$backup_dir/proxy_params.conf" /etc/nginx/conf.d/proxy_params.conf
+  fi
+  if [ -f "$backup_dir/security.conf" ]; then
+    cp -p "$backup_dir/security.conf" /etc/nginx/conf.d/security.conf
+  fi
+}
+
+dump_nginx_web_diagnostics() {
+  log "nginx app.nebutra.com diagnostics:"
+  nginx -T 2>/dev/null \
+    | awk '
+      /upstream nebutra_web/ { show=1; depth=0 }
+      /server_name app\.nebutra\.com/ { show=1; depth=0 }
+      show {
+        print
+        depth += gsub(/\{/, "{")
+        depth -= gsub(/\}/, "}")
+        if (depth <= 0 && /}/) {
+          print ""
+          show=0
+        }
+      }
+    ' \
+    | tail -120 || true
+  log "nginx error log tail:"
+  tail -80 /var/log/nginx/error.log 2>/dev/null || true
+}
+
+sync_nginx_runtime_config() {
+  local nginx_main="/tmp/nebutra-nginx.conf"
+  local nginx_proxy="/tmp/nebutra-nginx-proxy_params.conf"
+  local nginx_security="/tmp/nebutra-nginx-security.conf"
+
+  if ! command -v nginx >/dev/null 2>&1; then
+    log "nginx not installed; skipping nginx config sync"
+    return 0
+  fi
+  if [ ! -f "$nginx_main" ]; then
+    log "nginx config artifact not uploaded; skipping nginx config sync"
+    return 0
+  fi
+
+  local backup_dir="/etc/nginx/nebutra-backups/$(date -u +%Y%m%d-%H%M%S)-${SHA:0:7}"
+  mkdir -p "$backup_dir" /etc/nginx/conf.d
+  [ -f /etc/nginx/nginx.conf ] && cp -p /etc/nginx/nginx.conf "$backup_dir/nginx.conf" || true
+  [ -f /etc/nginx/conf.d/proxy_params.conf ] && cp -p /etc/nginx/conf.d/proxy_params.conf "$backup_dir/proxy_params.conf" || true
+  [ -f /etc/nginx/conf.d/security.conf ] && cp -p /etc/nginx/conf.d/security.conf "$backup_dir/security.conf" || true
+
+  local rendered_main worker_user
+  rendered_main="$(mktemp)"
+  worker_user="$(nginx_worker_user)"
+  if [ -n "$worker_user" ]; then
+    sed -E "s/^user[[:space:]]+[^;]+;/user ${worker_user};/" "$nginx_main" > "$rendered_main"
+  else
+    cp "$nginx_main" "$rendered_main"
+  fi
+
+  install -m 0644 "$rendered_main" /etc/nginx/nginx.conf
+  rm -f "$rendered_main"
+  [ -f "$nginx_proxy" ] && install -m 0644 "$nginx_proxy" /etc/nginx/conf.d/proxy_params.conf
+  [ -f "$nginx_security" ] && install -m 0644 "$nginx_security" /etc/nginx/conf.d/security.conf
+
+  if ! nginx -t; then
+    log "nginx config test failed; restoring previous config from $backup_dir"
+    restore_nginx_config "$backup_dir"
+    nginx -t || true
+    fail "nginx config sync failed"
+  fi
+
+  if command -v systemctl >/dev/null 2>&1 && systemctl is-active --quiet nginx; then
+    systemctl reload nginx
+  else
+    nginx -s reload
+  fi
+  log "nginx config synced from deploy artifacts"
+}
+
+verify_nginx_web_origin() {
+  case " $APPS " in
+    *" web "*) : ;;
+    *) return 0 ;;
+  esac
+
+  command -v nginx >/dev/null 2>&1 || return 0
+
+  local code="000"
+  for attempt in 1 2 3 4 5; do
+    code=$(curl -ksS -o /dev/null -w "%{http_code}" --max-time 10 \
+      --resolve app.nebutra.com:443:127.0.0.1 \
+      https://app.nebutra.com/ 2>/dev/null || echo "000")
+    case "$code" in
+      200|301|302|307) break ;;
+      *) sleep 4 ;;
+    esac
+  done
+
+  case "$code" in
+    200|301|302|307)
+      log "nginx local web origin -> $code"
+      ;;
+    *)
+      dump_nginx_web_diagnostics
+      fail "nginx local web origin failed for app.nebutra.com (last code: $code)"
+      ;;
+  esac
+}
+
 run_selected_apps() {
   local action="$1" app pm2_name
   for app in api landing web design-docs sailor-docs; do
@@ -1074,5 +1231,7 @@ for app in api landing web design-docs sailor-docs; do
   esac
 done
 
+sync_nginx_runtime_config
+verify_nginx_web_origin
 pm2 save
 log "deploy complete: $APPS @ $SHA"
