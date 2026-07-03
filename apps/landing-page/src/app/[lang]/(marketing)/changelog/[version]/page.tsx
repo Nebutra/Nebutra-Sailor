@@ -348,10 +348,11 @@ async function buildChangelogMetadata(version: string, lang: string): Promise<Me
  */
 export async function generateStaticParams() {
   const cmsEntries = await fetchChangelogEntries();
-  const versions =
+  const versionsSource =
     cmsEntries.length > 0
       ? cmsEntries.map((e) => e.version)
       : STATIC_RELEASES.map((r) => r.version);
+  const versions = versionsSource.slice(0, 12);
 
   return prerenderDefaultLocale(versions, (version) => ({ version }));
 }

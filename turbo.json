@@ -2,15 +2,32 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "globalDependencies": [".env", ".env.local", ".env.production", ".env.staging"],
-  "globalEnv": ["NEXT_PUBLIC_DOCS_URL", "DOCS_ORIGIN_URL"],
-  "globalPassThroughEnv": ["npm_config_verify_deps_before_run"],
+  "globalPassThroughEnv": [
+    "npm_config_verify_deps_before_run",
+    "CI",
+    "CLERK_SECRET_KEY",
+    "DATABASE_URL",
+    "SKIP_ENV_VALIDATION",
+    "AUTH_SECRET",
+    "NEXTAUTH_SECRET",
+    "BETTER_AUTH_SECRET",
+    "BETTER_AUTH_URL",
+    "ADMIN_EMAIL",
+    "OPENROUTER_API_KEY",
+    "OPENAI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "NEXT_TELEMETRY_DISABLED"
+  ],
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "build:registry"],
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
       "env": [
-        "CLERK_SECRET_KEY",
         "NEXT_PUBLIC_SITE_URL",
         "NEXT_PUBLIC_APP_URL",
         "NEXT_PUBLIC_API_URL",
@@ -18,88 +35,11 @@
         "DOCS_ORIGIN_URL",
         "NEBUTRA_LANDING_ORIGIN",
         "NEBUTRA_SESSION_HINT_DOMAIN",
-        "DATABASE_URL",
-        "SKIP_ENV_VALIDATION",
         "AUTH_PROVIDER",
         "NEXT_PUBLIC_AUTH_PROVIDER",
-        "AUTH_SECRET",
-        "BETTER_AUTH_URL",
-        "ADMIN_EMAIL",
-        "OPENROUTER_API_KEY",
-        "NEXT_TELEMETRY_DISABLED"
-      ]
-    },
-    "build:registry": {
-      "dependsOn": ["@nebutra/design-tokens#build"],
-      "inputs": ["src/primitives/**", "src/components/**", "scripts/build-registry.ts"],
-      "cache": false,
-      "outputs": [
-        "../../../apps/design-docs/public/r/**",
-        "../../../apps/design-docs/public/registry.json",
-        "../../../apps/design-docs/public/previews-index.json"
-      ]
-    },
-    "@nebutra/ui#build:registry": {
-      "dependsOn": ["@nebutra/design-tokens#build"],
-      "inputs": ["src/primitives/**", "src/components/**", "scripts/build-registry.ts"],
-      "cache": false,
-      "outputs": [
-        "../../../apps/design-docs/public/r/**",
-        "../../../apps/design-docs/public/registry.json",
-        "../../../apps/design-docs/public/previews-index.json"
-      ]
-    },
-    "@nebutra/design-tokens#build": {
-      "inputs": ["tokens/**", "style-dictionary.config.mjs", "tsconfig.json", "package.json"],
-      "cache": false,
-      "outputs": ["build/**"]
-    },
-    "@nebutra/blog#build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "tsconfig.json"],
-      "outputs": [],
-      "env": [
-        "CLERK_SECRET_KEY",
-        "NEXT_PUBLIC_SITE_URL",
-        "NEXT_PUBLIC_APP_URL",
-        "NEXT_PUBLIC_API_URL",
-        "NEXT_PUBLIC_DOCS_URL",
-        "DOCS_ORIGIN_URL",
-        "NEBUTRA_LANDING_ORIGIN",
-        "NEBUTRA_SESSION_HINT_DOMAIN",
-        "DATABASE_URL",
-        "SKIP_ENV_VALIDATION",
-        "AUTH_PROVIDER",
-        "NEXT_PUBLIC_AUTH_PROVIDER",
-        "AUTH_SECRET",
-        "BETTER_AUTH_URL",
-        "ADMIN_EMAIL",
-        "OPENROUTER_API_KEY",
-        "NEXT_TELEMETRY_DISABLED"
-      ]
-    },
-    "@nebutra/tokens#build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", "../design-tokens/build/css/styles.generated.css"],
-      "outputs": ["styles.css"],
-      "env": [
-        "CLERK_SECRET_KEY",
-        "NEXT_PUBLIC_SITE_URL",
-        "NEXT_PUBLIC_APP_URL",
-        "NEXT_PUBLIC_API_URL",
-        "NEXT_PUBLIC_DOCS_URL",
-        "DOCS_ORIGIN_URL",
-        "NEBUTRA_LANDING_ORIGIN",
-        "NEBUTRA_SESSION_HINT_DOMAIN",
-        "DATABASE_URL",
-        "SKIP_ENV_VALIDATION",
-        "AUTH_PROVIDER",
-        "NEXT_PUBLIC_AUTH_PROVIDER",
-        "AUTH_SECRET",
-        "BETTER_AUTH_URL",
-        "ADMIN_EMAIL",
-        "OPENROUTER_API_KEY",
-        "NEXT_TELEMETRY_DISABLED"
+        "NEXT_OUTPUT",
+        "ANALYZE",
+        "VERCEL"
       ]
     },
     "dev": {
@@ -146,8 +86,8 @@
     },
     "db:generate": {
       "cache": true,
-      "inputs": ["packages/platform/db/prisma/schema.prisma"],
-      "outputs": ["node_modules/.pnpm/@prisma+client*/**"]
+      "inputs": ["prisma/schema.prisma", "prisma.config.ts", "package.json"],
+      "outputs": ["src/generated/prisma/**"]
     },
     "db:migrate": {
       "cache": false,

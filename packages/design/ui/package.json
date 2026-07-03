@@ -83,7 +83,7 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "build:registry": "tsx scripts/build-registry.ts",
-    "build": "NODE_OPTIONS='--max-old-space-size=6144' tsup && tsx scripts/build-registry.ts",
+    "build": "NODE_OPTIONS='--max-old-space-size=6144' tsup",
     "dev": "tsup --watch"
   },
   "dependencies": {

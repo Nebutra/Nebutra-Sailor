@@ -74,7 +74,8 @@ function scopeLabel(group: string, locale: "en" | "zh") {
 }
 
 export function generateStaticParams() {
-  return prerenderDefaultLocale(PACKAGE_FEATURE_ENTRIES, (entry) => ({ name: entry.slug }));
+  const highSignalEntries = PACKAGE_FEATURE_ENTRIES.filter((entry) => entry.kind !== "package");
+  return prerenderDefaultLocale(highSignalEntries, (entry) => ({ name: entry.slug }));
 }
 
 export async function generateMetadata({ params }: FeatureDetailPageProps): Promise<Metadata> {

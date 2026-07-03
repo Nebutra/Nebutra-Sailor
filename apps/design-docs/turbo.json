@@ -1,0 +1,21 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["$TURBO_EXTENDS$", "build:registry"]
+    },
+    "build:registry": {
+      "dependsOn": ["@nebutra/design-tokens#build"],
+      "inputs": [
+        "scripts/build-registry.mjs",
+        "scripts/repair-registry-manifests.mjs",
+        "../../packages/design/ui/scripts/build-registry.ts",
+        "../../packages/design/ui/src/primitives/**",
+        "../../packages/design/ui/src/components/**",
+        "../../packages/design/ui/src/shared/**"
+      ],
+      "cache": false,
+      "outputs": ["public/r/**", "public/registry.json", "public/previews-index.json"]
+    }
+  }
+}

@@ -17,6 +17,8 @@ pre-commit:
 
 pre-push:
   commands:
+    turbo-contract:
+      run: npm_config_verify_deps_before_run=false node scripts/verify-turbo-build-contract.mjs
     typecheck:
       # `--affected` resolves to empty when pushing main→main (no diff base).
       # Use the explicit since-ref so turbo compares against the upstream HEAD

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "rm -rf .next/cache && pnpm --filter @nebutra/brand sync && next build --webpack",
+    "build": "pnpm --filter @nebutra/brand sync && next build --webpack",
     "start": "next start",
     "lint": "biome check .",
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit",

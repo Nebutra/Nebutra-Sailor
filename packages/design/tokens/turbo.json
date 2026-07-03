@@ -1,0 +1,9 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "inputs": ["$TURBO_EXTENDS$", "../design-tokens/build/css/styles.generated.css"],
+      "outputs": ["styles.css"]
+    }
+  }
+}

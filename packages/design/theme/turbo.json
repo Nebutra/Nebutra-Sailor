@@ -1,0 +1,10 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["@nebutra/design-tokens#build"],
+      "inputs": ["$TURBO_EXTENDS$", "../design-tokens/build/css/themes.generated.css"],
+      "outputs": ["themes.css"]
+    }
+  }
+}

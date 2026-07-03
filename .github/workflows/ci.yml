@@ -189,6 +189,9 @@ jobs:
         with:
           verify-supply-chain: "true"
 
+      - name: Verify Turbo build contract
+        run: pnpm --config.verify-deps-before-run=false ci:verify-turbo-contract
+
       - name: Architecture smoke checks
         run: |
           pnpm test:arch

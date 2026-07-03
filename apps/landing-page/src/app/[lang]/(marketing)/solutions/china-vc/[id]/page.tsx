@@ -12,8 +12,10 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 
 type Props = { params: Promise<{ lang: string; id: string }> };
 
+const PRERENDERED_CHINA_VC_ORGS = CHINA_VC_ORGS.slice(0, 24);
+
 export function generateStaticParams() {
-  return prerenderDefaultLocale(CHINA_VC_ORGS, (o) => ({ id: String(o.id) }));
+  return prerenderDefaultLocale(PRERENDERED_CHINA_VC_ORGS, (o) => ({ id: String(o.id) }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

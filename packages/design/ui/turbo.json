@@ -1,0 +1,20 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build:registry": {
+      "dependsOn": ["@nebutra/design-tokens#build"],
+      "inputs": [
+        "src/primitives/**",
+        "src/components/**",
+        "src/shared/**",
+        "scripts/build-registry.ts"
+      ],
+      "cache": false,
+      "outputs": [
+        "../../../apps/design-docs/public/r/**",
+        "../../../apps/design-docs/public/registry.json",
+        "../../../apps/design-docs/public/previews-index.json"
+      ]
+    }
+  }
+}
