@@ -82,9 +82,7 @@ async def test_presign_complete_and_get_upload_record(client, monkeypatch):
         f"tenants/tenant_uploads/uploads/{created['id']}/raw/"
     )
     assert created["presigned_upload"]["method"] == "PUT"
-    assert created["presigned_upload"]["headers"] == {
-        "Content-Type": "application/pdf"
-    }
+    assert created["presigned_upload"]["headers"] == {"Content-Type": "application/pdf"}
     assert "Quarterly_Plan.pdf" in created["presigned_upload"]["url"]
 
     duplicate = await client.post(
