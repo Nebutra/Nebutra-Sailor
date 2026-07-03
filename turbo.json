@@ -57,12 +57,50 @@
     "@nebutra/blog#build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "tsconfig.json"],
-      "outputs": []
+      "outputs": [],
+      "env": [
+        "CLERK_SECRET_KEY",
+        "NEXT_PUBLIC_SITE_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_API_URL",
+        "NEXT_PUBLIC_DOCS_URL",
+        "DOCS_ORIGIN_URL",
+        "NEBUTRA_LANDING_ORIGIN",
+        "NEBUTRA_SESSION_HINT_DOMAIN",
+        "DATABASE_URL",
+        "SKIP_ENV_VALIDATION",
+        "AUTH_PROVIDER",
+        "NEXT_PUBLIC_AUTH_PROVIDER",
+        "AUTH_SECRET",
+        "BETTER_AUTH_URL",
+        "ADMIN_EMAIL",
+        "OPENROUTER_API_KEY",
+        "NEXT_TELEMETRY_DISABLED"
+      ]
     },
     "@nebutra/tokens#build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "../design-tokens/build/css/styles.generated.css"],
-      "outputs": ["styles.css"]
+      "outputs": ["styles.css"],
+      "env": [
+        "CLERK_SECRET_KEY",
+        "NEXT_PUBLIC_SITE_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_API_URL",
+        "NEXT_PUBLIC_DOCS_URL",
+        "DOCS_ORIGIN_URL",
+        "NEBUTRA_LANDING_ORIGIN",
+        "NEBUTRA_SESSION_HINT_DOMAIN",
+        "DATABASE_URL",
+        "SKIP_ENV_VALIDATION",
+        "AUTH_PROVIDER",
+        "NEXT_PUBLIC_AUTH_PROVIDER",
+        "AUTH_SECRET",
+        "BETTER_AUTH_URL",
+        "ADMIN_EMAIL",
+        "OPENROUTER_API_KEY",
+        "NEXT_TELEMETRY_DISABLED"
+      ]
     },
     "dev": {
       "cache": false,
