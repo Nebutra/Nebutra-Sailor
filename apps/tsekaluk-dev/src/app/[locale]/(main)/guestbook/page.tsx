@@ -4,6 +4,8 @@ import { getTranslations } from "next-intl/server";
 import { GuestbookClient } from "@/components/guestbook/guestbook-client";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type GuestbookEntry = {
   id: string;
   authorName: string;

@@ -5,6 +5,8 @@ import { getArticles } from "@/lib/articles";
 import { prisma } from "@/lib/prisma";
 import { projects } from "@/lib/projects";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboardPage() {
   const articles = getArticles();
   const projectCount = projects.length;
