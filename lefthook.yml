@@ -21,7 +21,7 @@ pre-push:
       # `--affected` resolves to empty when pushing main→main (no diff base).
       # Use the explicit since-ref so turbo compares against the upstream HEAD
       # and actually typechecks packages touched in the unpushed commits.
-      run: ./node_modules/.bin/turbo typecheck --filter="...[origin/main]"
+      run: npm_config_verify_deps_before_run=false ./node_modules/.bin/turbo typecheck --filter="...[origin/main]"
     i18n-check:
       # Only runs when landing-page locale files are part of the push.
       glob: "apps/landing-page/messages/*.json"
