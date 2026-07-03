@@ -81,8 +81,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     sourceStats: {
       unitCount: 40,
       unitLabel: copy("packages", "包"),
-      sourceFiles: 219,
-      testFiles: 116,
+      sourceFiles: 220,
+      testFiles: 117,
       readmes: 35,
     },
     title: copy("AI Runtime & Agent Substrate", "AI 运行时与智能体底座"),
@@ -98,8 +98,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
       value: "40",
       label: copy("AI packages", "AI 包"),
       detail: copy(
-        "219 runtime source files and 116 tests, with the heaviest coverage in agent-runtime, knowledge-rag, reel, graph, and execution policies.",
-        "219 个运行时源码文件与 116 个测试，重心落在 agent-runtime、knowledge-rag、reel、graph 与 execution policy。",
+        "220 runtime source files and 117 tests, with the heaviest coverage in agent-runtime, knowledge-rag, reel, graph, and execution policies.",
+        "220 个运行时源码文件与 117 个测试，重心落在 agent-runtime、knowledge-rag、reel、graph 与 execution policy。",
       ),
     },
     topology: {
