@@ -119,20 +119,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Verify supply-chain policy
-        run: node scripts/verify-supply-chain-policy.mjs
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile --ignore-scripts
+          verify-supply-chain: "true"
+          install-command: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Assert template mirror shape
         run: |
@@ -173,17 +164,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Check production dependency licenses
         run: npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0' --excludePackages '@nebutra/*' --summary
@@ -201,20 +183,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify supply-chain policy
-        run: node scripts/verify-supply-chain-policy.mjs
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          verify-supply-chain: "true"
 
       - name: Architecture smoke checks
         run: |
@@ -243,13 +215,13 @@ jobs:
 
       - name: Lint changed files (Biome)
         run: |
-          BIOME_FILES="$(
+          mapfile -t BIOME_FILES < <(
             git diff --name-only --diff-filter=ACMRT "$TURBO_BASE_REF"...HEAD \
               | grep -E '\.(js|jsx|ts|tsx|json|jsonc|css|md|mdx|yml|yaml)$' \
               || true
-          )"
+          )
 
-          if [ -z "$BIOME_FILES" ]; then
+          if [ "${#BIOME_FILES[@]}" -eq 0 ]; then
             echo "No Biome-supported changed files."
             exit 0
           fi
@@ -257,11 +229,7 @@ jobs:
           # --no-errors-on-unmatched: when the changed-file set contains only
           # paths Biome ignores (e.g. README*.md after a docs-only commit),
           # Biome would otherwise exit 1 with "No files were processed".
-          pnpm biome ci --no-errors-on-unmatched $BIOME_FILES
-
-      - name: Lint whole repo (advisory)
-        run: pnpm biome ci .
-        continue-on-error: true
+          pnpm biome ci --no-errors-on-unmatched "${BIOME_FILES[@]}"
 
       - name: Typecheck (affected)
         run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."
@@ -326,13 +294,13 @@ jobs:
       - name: Security check (bandit)
         run: |
           # Collect Python source directories (avoid scanning .venv installed packages)
-          SCAN_DIRS=""
+          SCAN_DIRS=()
           for d in app providers services utils adapters sync features rank recall indexer listener producers subscribers; do
-            [ -d "$d" ] && SCAN_DIRS="$SCAN_DIRS $d"
+            [ -d "$d" ] && SCAN_DIRS+=("$d")
           done
-          .venv/bin/bandit -r $SCAN_DIRS -f json -o bandit-report.json --severity-level medium || true
+          .venv/bin/bandit -r "${SCAN_DIRS[@]}" -f json -o bandit-report.json --severity-level medium || true
           # Fail only on high-severity findings
-          .venv/bin/bandit -r $SCAN_DIRS --severity-level high -q
+          .venv/bin/bandit -r "${SCAN_DIRS[@]}" --severity-level high -q
 
       - name: Run tests
         run: |
@@ -355,20 +323,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify supply-chain policy
-        run: node scripts/verify-supply-chain-policy.mjs
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          verify-supply-chain: "true"
 
       - name: Generate Prisma Client
         run: pnpm db:generate
@@ -424,17 +382,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Generate Prisma Client
         run: pnpm db:generate
@@ -477,17 +426,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Resolve Turbo base ref
         run: |
@@ -521,17 +461,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Run coverage for core utility packages
         run: |
@@ -575,17 +506,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Build shared packages
         run: pnpm turbo build --filter="./packages/*/*"
@@ -602,21 +524,26 @@ jobs:
     timeout-minutes: 10
     needs: detect-changes
     if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.db == 'true'
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: shadow_nebutra
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d shadow_nebutra"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Validate Prisma schema
         run: pnpm --filter @nebutra/db db:generate
@@ -647,20 +574,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify supply-chain policy
-        run: node scripts/verify-supply-chain-policy.mjs
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          verify-supply-chain: "true"
 
       - name: Audit production dependencies
         run: pnpm audit --prod --audit-level=high
@@ -739,17 +656,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Build landing page dependency closure
         run: pnpm turbo build --filter="@nebutra/landing-page^..."
@@ -770,7 +678,7 @@ jobs:
   e2e:
     name: E2E Tests (shard ${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     needs: [detect-changes, build]
     if: needs.detect-changes.outputs.template != 'true' && needs.detect-changes.outputs.e2e == 'true'
     strategy:
@@ -779,13 +687,8 @@ jobs:
         shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
       - name: Build workspace packages (required by landing-page webServer)
         run: pnpm turbo build --filter="./packages/*/*"
         env:
@@ -840,15 +743,24 @@ jobs:
           DATABASE_URL: ${{ secrets.CI_DATABASE_URL || 'postgresql://stub:stub@localhost:5432/stub' }}
           CLERK_SECRET_KEY: ${{ secrets.CI_CLERK_SECRET_KEY || 'sk_test_placeholder' }}
 
-      - name: Upload Playwright report
+      - name: Upload Playwright blob report
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
-          name: playwright-report-shard-${{ matrix.shard }}-${{ github.run_id }}
-          path: |
-            blob-report/
-            **/test-results/
-          retention-days: 14
+          name: playwright-blob-report-shard-${{ matrix.shard }}-${{ github.run_id }}
+          path: blob-report/
+          compression-level: 0
+          retention-days: 7
+
+      - name: Upload Playwright failure diagnostics
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: playwright-failure-diagnostics-shard-${{ matrix.shard }}-${{ github.run_id }}
+          path: test-results/
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
 
   # ── OpenAPI spec validation + client type generation ─────────────────────
   # Exports the live spec from the Hono app, validates it with Redocly,
@@ -864,17 +776,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Build api-gateway dependency closure
         run: pnpm turbo build --filter="@nebutra/gateway^..."
@@ -951,17 +854,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Build web app dependency closure
         run: pnpm turbo build --filter="@nebutra/web^..."
@@ -1004,28 +898,26 @@ jobs:
     if: always() && needs.e2e.result != 'skipped'
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
       - name: Download all shard reports
         id: download
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
-          pattern: playwright-report-shard-*-${{ github.run_id }}
+          pattern: playwright-blob-report-shard-*-${{ github.run_id }}
           path: all-blob-reports
           merge-multiple: true
         continue-on-error: true
       - name: Merge into single HTML report
         if: steps.download.outcome == 'success'
-        # Multi-path upload preserves directory structure, so blob files land in
-        # all-blob-reports/blob-report/ (not directly in all-blob-reports/).
         run: |
-          if [ -d ./all-blob-reports/blob-report ] && [ -n "$(ls -A ./all-blob-reports/blob-report 2>/dev/null)" ]; then
-            pnpm exec playwright merge-reports --reporter html ./all-blob-reports/blob-report
+          REPORT_DIR="./all-blob-reports/blob-report"
+          if [ ! -d "$REPORT_DIR" ]; then
+            REPORT_DIR="./all-blob-reports"
+          fi
+
+          if [ -d "$REPORT_DIR" ] && find "$REPORT_DIR" -maxdepth 1 -type f -name "*.zip" -print -quit | grep -q .; then
+            pnpm exec playwright merge-reports --reporter html "$REPORT_DIR"
           else
             echo "No shard blob reports found — skipping merge"
           fi

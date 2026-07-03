@@ -148,9 +148,7 @@ class OssUploadStorageProvider:
 def resolve_upload_storage_provider() -> UploadStorageProvider:
     provider = (os.environ.get("UPLOAD_STORAGE_PROVIDER") or "local").lower()
     app_env = (
-        os.environ.get("APP_ENV")
-        or os.environ.get("ENV")
-        or os.environ.get("NODE_ENV")
+        os.environ.get("APP_ENV") or os.environ.get("ENV") or os.environ.get("NODE_ENV")
     )
     is_production = (app_env or "").lower() in {"prod", "production"}
     bucket = os.environ.get("UPLOAD_BUCKET") or os.environ.get("R2_BUCKET_UPLOADS")

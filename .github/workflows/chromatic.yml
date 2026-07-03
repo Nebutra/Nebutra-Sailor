@@ -11,6 +11,7 @@ on:
       - "apps/landing-page/src/components/**"
       - "apps/landing-page/src/app/**/page.tsx"
       - ".github/workflows/chromatic.yml"
+      - ".github/actions/setup-node-pnpm/action.yml"
   pull_request:
     paths:
       - "packages/design/ui/src/**"
@@ -19,6 +20,7 @@ on:
       - "apps/landing-page/src/components/**"
       - "apps/landing-page/src/app/**/page.tsx"
       - ".github/workflows/chromatic.yml"
+      - ".github/actions/setup-node-pnpm/action.yml"
 
 permissions:
   contents: read
@@ -33,17 +35,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@90f659ecb4e9337ce0ccede6ef8e59e5bb6d4724 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Build workspace dependencies
         run: pnpm --filter @nebutra/brand build

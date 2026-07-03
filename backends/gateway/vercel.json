@@ -1,7 +1,7 @@
 {
   "buildCommand": "pnpm turbo build --filter=@nebutra/gateway",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh backends/gateway",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "installCommand": "pnpm install --frozen-lockfile",
   "outputDirectory": "dist",
   "regions": ["iad1"],
   "functions": {

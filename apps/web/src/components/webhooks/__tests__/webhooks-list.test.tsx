@@ -7,6 +7,16 @@ import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { type WebhookEndpointView, WebhooksList } from "../webhooks-list";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => {
+    const messages: Record<string, string> = {
+      "emptyState.webhookEndpoints": "Add an endpoint above to start receiving events.",
+      "errors.loadWebhookEndpoints": "Endpoints could not be loaded.",
+    };
+    return messages[key] ?? key;
+  },
+}));
+
 const sample: WebhookEndpointView = {
   id: "ep_1",
   url: "https://example.com/hook",

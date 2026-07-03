@@ -12,7 +12,7 @@
   "framework": "nextjs",
   "buildCommand": "pnpm turbo build --filter=@nebutra/web",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/web",
-  "installCommand": "pnpm install --no-frozen-lockfile",
+  "installCommand": "pnpm install --frozen-lockfile",
   "outputDirectory": ".next",
   "regions": ["iad1"],
   "env": {

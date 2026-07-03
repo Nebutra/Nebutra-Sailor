@@ -1,9 +1,123 @@
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { describe, expect, it } from "vitest";
 
+const rawNodeSetupActionPattern = /^\s*uses:\s*actions\/setup-node@/m;
+const rawPnpmSetupActionPattern = /^\s*uses:\s*pnpm\/action-setup@/m;
+const rawFrozenInstallPattern = /^\s*run:\s*pnpm install --frozen-lockfile\b/m;
+
 describe("ci harness dependency closure", () => {
+  it("keeps low-risk tooling workflows on the shared Node/pnpm setup action", async () => {
+    const setupAction = await readFile(
+      join(process.cwd(), ".github/actions/setup-node-pnpm/action.yml"),
+      "utf8",
+    );
+    const migratedWorkflows = [
+      ".github/workflows/chromatic.yml",
+      ".github/workflows/ci.yml",
+      ".github/workflows/codeql.yml",
+      ".github/workflows/dead-code.yml",
+      ".github/workflows/deploy-gateway.yml",
+      ".github/workflows/design-sync.yml",
+      ".github/workflows/release.yml",
+      ".github/workflows/security-scan.yml",
+      ".github/workflows/sync-template.yml",
+      ".github/workflows/ui-governance.yml",
+      ".github/workflows/visual-acceptance.yml",
+    ];
+    const registryUrlInput = "registry-url: $" + "{{ inputs.registry-url }}";
+    const scopeInput = "scope: $" + "{{ inputs.scope }}";
+
+    expect(setupAction).toContain("pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1");
+    expect(setupAction).toContain("actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e");
+    expect(setupAction).toContain("pnpm install --frozen-lockfile");
+    expect(setupAction).toContain(registryUrlInput);
+    expect(setupAction).toContain(scopeInput);
+
+    for (const workflowPath of migratedWorkflows) {
+      const workflow = await readFile(join(process.cwd(), workflowPath), "utf8");
+      expect(workflow).toContain("uses: ./.github/actions/setup-node-pnpm");
+      expect(workflow).not.toMatch(rawPnpmSetupActionPattern);
+      expect(workflow).not.toMatch(rawNodeSetupActionPattern);
+      expect(workflow).not.toMatch(rawFrozenInstallPattern);
+    }
+  });
+
+  it("keeps pure Node workflows on the shared Node setup action", async () => {
+    const setupAction = await readFile(
+      join(process.cwd(), ".github/actions/setup-node/action.yml"),
+      "utf8",
+    );
+    const migratedWorkflows = [
+      ".github/workflows/package-registry-governance.yml",
+      ".github/workflows/sync-subrepo-mirrors.yml",
+    ];
+    const nodeVersionInput = "node-version: $" + "{{ inputs.node-version }}";
+
+    expect(setupAction).toContain("actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e");
+    expect(setupAction).toContain(nodeVersionInput);
+    expect(setupAction).not.toMatch(rawPnpmSetupActionPattern);
+    expect(setupAction).not.toMatch(rawFrozenInstallPattern);
+
+    for (const workflowPath of migratedWorkflows) {
+      const workflow = await readFile(join(process.cwd(), workflowPath), "utf8");
+      expect(workflow).toMatch(/^\s+uses: \.\/\.github\/actions\/setup-node$/m);
+      expect(workflow).not.toMatch(rawNodeSetupActionPattern);
+      expect(workflow).not.toMatch(rawPnpmSetupActionPattern);
+      expect(workflow).not.toMatch(rawFrozenInstallPattern);
+    }
+  });
+
+  it("keeps workflow setup calls routed through shared actions", async () => {
+    const workflowDir = join(process.cwd(), ".github/workflows");
+    const workflowFiles = (await readdir(workflowDir))
+      .filter((file) => file.endsWith(".yml") || file.endsWith(".yaml"))
+      .sort();
+
+    expect(workflowFiles.length).toBeGreaterThan(0);
+
+    for (const workflowFile of workflowFiles) {
+      const workflow = await readFile(join(workflowDir, workflowFile), "utf8");
+      expect(workflow).not.toMatch(rawNodeSetupActionPattern);
+      expect(workflow).not.toMatch(rawPnpmSetupActionPattern);
+      expect(workflow).not.toMatch(rawFrozenInstallPattern);
+    }
+  });
+
+  it("keeps visual acceptance scoped and parallelizable", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/visual-acceptance.yml"),
+      "utf8",
+    );
+
+    expect(workflow).not.toContain(".github/actions/setup-node-pnpm/action.yml");
+    expect(workflow).toContain("uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590");
+    expect(workflow).toContain("visual-design-docs:");
+    expect(workflow).toContain("if: needs.detect-changes.outputs.design-docs == 'true'");
+    expect(workflow).toContain("pnpm visual:design-docs:ci");
+    expect(workflow).toContain("visual-landing:");
+    expect(workflow).toContain("if: needs.detect-changes.outputs.landing == 'true'");
+    expect(workflow).toContain("pnpm visual:landing:ci");
+    expect(workflow).toContain('e2e/visual/helpers/**"');
+    expect(workflow).toContain("name: Docs and Feature Showcase");
+  });
+
+  it("keeps the Cloud VM fallback on the shared setup action without redundant smoke URLs", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/deploy-ecs.yml"),
+      "utf8",
+    );
+    const nodeVersionInput = "node-version: $" + "{{ env.NODE_VERSION }}";
+
+    expect(workflow).toContain("uses: ./.github/actions/setup-node-pnpm");
+    expect(workflow).toContain(nodeVersionInput);
+    expect(workflow).not.toMatch(rawPnpmSetupActionPattern);
+    expect(workflow).not.toMatch(rawNodeSetupActionPattern);
+    expect(workflow).not.toMatch(rawFrozenInstallPattern);
+    expect(workflow).not.toContain("https://nebutra.com/refer?code=smoke");
+  });
+
   it("builds app dependency closures before standalone app builds", async () => {
     const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
 
@@ -23,6 +137,76 @@ describe("ci harness dependency closure", () => {
     );
     expect(workflow).toContain('filters+=(--filter="!./$app")');
     expect(workflow).toContain(`pnpm turbo build "\${filters[@]}"`);
+  });
+
+  it("backs database migration checks with a local Postgres shadow service", async () => {
+    const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
+    const shadowDatabaseUrl =
+      "$" +
+      "{{ secrets.SHADOW_DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/shadow_nebutra' }}";
+
+    expect(workflow).toContain("  db-check:");
+    expect(workflow).toContain("    services:");
+    expect(workflow).toContain("      postgres:");
+    expect(workflow).toContain("        image: postgres:16");
+    expect(workflow).toContain("          POSTGRES_DB: shadow_nebutra");
+    expect(workflow).toContain('          --health-cmd "pg_isready -U postgres -d shadow_nebutra"');
+    expect(workflow).toContain(`--shadow-database-url "${shadowDatabaseUrl}"`);
+  });
+
+  it("keeps UI governance scoped to design and policy paths", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/ui-governance.yml"),
+      "utf8",
+    );
+    const governedPaths = [
+      ".github/actions/setup-node-pnpm/action.yml",
+      ".github/workflows/ui-governance.yml",
+      "apps/design-docs/**",
+      "apps/landing-page/src/**",
+      "apps/web/src/**",
+      "packages/design/**",
+      "scripts/lib/ui-governance-policy.ts",
+      "scripts/verify-brand-token-sync.ts",
+      "scripts/verify-ui-governance.ts",
+      "tests/architecture/governance/**",
+    ];
+
+    expect(workflow).toContain("  pull_request:\n    branches: [main]\n    paths:");
+    expect(workflow).toContain("  push:\n    branches: [main]\n    paths:");
+    for (const governedPath of governedPaths) {
+      expect(workflow).toContain(`      - "${governedPath}"`);
+    }
+    expect(workflow).not.toContain('      - "**"');
+  });
+
+  it("keeps scheduled load testing on smoke by default", async () => {
+    const workflow = await readFile(join(process.cwd(), ".github/workflows/load-test.yml"), "utf8");
+    const scenarioInput = "$" + "{{ inputs.scenario || 'smoke' }}";
+
+    expect(workflow).toContain("Run a weekly smoke check");
+    expect(workflow).toContain('default: "smoke"');
+    expect(workflow).toContain(`name: k6 Load Test (${scenarioInput})`);
+    expect(workflow).toContain(`LOAD_TEST_SCENARIO: ${scenarioInput}`);
+    expect(workflow).toContain(`name: k6-results-${scenarioInput}`);
+    expect(workflow).not.toMatch(/default:\s*"ramp-up"/);
+    expect(workflow).not.toMatch(/\|\|\s*'ramp-up'/);
+  });
+
+  it("keeps dashboard Lighthouse as an explicit manual diagnostic", async () => {
+    const workflow = await readFile(
+      join(process.cwd(), ".github/workflows/lighthouse-dashboard.yml"),
+      "utf8",
+    );
+    const beforeRefInput = "$" + "{{ inputs.before_ref }}";
+    const afterRefInput = "$" + "{{ inputs.after_ref }}";
+
+    expect(workflow).toContain("  workflow_dispatch:");
+    expect(workflow).not.toContain("  pull_request:");
+    expect(workflow).toContain("    timeout-minutes: 60");
+    expect(workflow).toContain(`BEFORE_REF="${beforeRefInput}"`);
+    expect(workflow).toContain(`AFTER_REF="${afterRefInput}"`);
+    expect(workflow).not.toContain("github.event.pull_request.head.sha");
   });
 
   it("runs bundle analysis through the webpack analyzer path", async () => {
@@ -111,19 +295,15 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain("pnpm verify:web-release");
   });
 
-  it("keeps public URL reachability checks as a repeatable CI harness", async () => {
+  it("keeps public URL reachability checks as a manual diagnostic tool", async () => {
     const rootPackage = JSON.parse(await readFile(join(process.cwd(), "package.json"), "utf8")) as {
       scripts?: Record<string, string>;
     };
-    const workflow = await readFile(
-      join(process.cwd(), ".github/workflows/public-url-smoke.yml"),
-      "utf8",
-    );
     const urlHarness = await readFile(join(process.cwd(), "scripts/check-public-urls.mjs"), "utf8");
+    const workflowDir = await readdir(join(process.cwd(), ".github/workflows"));
 
     expect(rootPackage.scripts?.["check:public-urls"]).toBe("node scripts/check-public-urls.mjs");
-    expect(workflow).toContain("node scripts/check-public-urls.mjs");
-    expect(workflow).toContain("include_aliases");
+    expect(workflowDir).not.toContain("public-url-smoke.yml");
     expect(urlHarness).toContain("https://nebutra.com");
     expect(urlHarness).toContain("https://app.nebutra.com");
     expect(urlHarness).toContain("https://api.nebutra.com/api/misc/health");
@@ -193,6 +373,27 @@ describe("ci harness dependency closure", () => {
     expect(workflow).toContain('API_BASE_URL: "http://127.0.0.1:3102"');
   });
 
+  it("keeps the green-path Playwright artifact payload lean", async () => {
+    const workflow = await readFile(join(process.cwd(), ".github/workflows/ci.yml"), "utf8");
+    const playwrightConfig = await readFile(
+      join(process.cwd(), "e2e/playwright.config.ts"),
+      "utf8",
+    );
+    const matrixShard = "$" + "{{ matrix.shard }}";
+    const githubRunId = "$" + "{{ github.run_id }}";
+
+    expect(playwrightConfig).toContain('process.env.CI ? [["github"], ["blob"]] : [["html"]]');
+    expect(workflow).toContain("Upload Playwright blob report");
+    expect(workflow).toContain(`name: playwright-blob-report-shard-${matrixShard}`);
+    expect(workflow).toContain("path: blob-report/");
+    expect(workflow).toContain("compression-level: 0");
+    expect(workflow).toContain("Upload Playwright failure diagnostics");
+    expect(workflow).toContain("if: failure()");
+    expect(workflow).toContain(`pattern: playwright-blob-report-shard-*-${githubRunId}`);
+    expect(workflow).not.toContain(`pattern: playwright-report-shard-*-${githubRunId}`);
+    expect(workflow).not.toContain('["html", { open: "never" }]');
+  });
+
   it("uses bounded E2E health endpoints for Next.js webServer readiness", async () => {
     const playwrightConfig = await readFile(
       join(process.cwd(), "e2e/playwright.config.ts"),
@@ -244,6 +445,9 @@ describe("ci harness dependency closure", () => {
 
     expect(playwrightConfig).toContain('globalSetup: "./global-setup.ts"');
     expect(globalSetup).toContain('"/changelog"');
+    expect(globalSetup).toContain('path: "/api/e2e/health", required: true');
+    expect(globalSetup).toContain('path: "/changelog", required: false');
+    expect(globalSetup).toContain("optional prewarm skipped");
     expect(globalSetup).toContain("ROUTE_PREWARM_TIMEOUT_MS");
     expect(globalSetup).toContain("fetchWithTimeout");
     expect(helper).toContain('waitUntil: "domcontentloaded"');

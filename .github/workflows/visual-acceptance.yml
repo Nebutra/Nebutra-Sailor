@@ -32,25 +32,52 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  visual:
-    name: Docs and Feature Showcase
+  detect-changes:
+    name: Detect visual surfaces
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    outputs:
+      design-docs: ${{ steps.filter.outputs.design-docs }}
+      landing: ${{ steps.filter.outputs.landing }}
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
-
-      - name: Setup Node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - name: Detect changed visual surfaces
+        id: filter
+        uses: dorny/paths-filter@d1c1ffe0248fe513906c8e24db8ea791d46f8590 # v3
         with:
-          node-version: 22
-          cache: pnpm
+          filters: |
+            design-docs:
+              - "apps/design-docs/**"
+              - "e2e/visual/design-docs-*.visual.spec.ts"
+              - "e2e/visual/helpers/**"
+              - "e2e/playwright.visual.config.ts"
+              - "packages/design/**"
+              - "package.json"
+              - "pnpm-lock.yaml"
+              - ".github/workflows/visual-acceptance.yml"
+            landing:
+              - "apps/landing-page/**"
+              - "e2e/visual/landing-feature-showcase.visual.spec.ts"
+              - "e2e/visual/helpers/**"
+              - "e2e/playwright.visual.config.ts"
+              - "packages/design/**"
+              - "package.json"
+              - "pnpm-lock.yaml"
+              - ".github/workflows/visual-acceptance.yml"
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+  visual-design-docs:
+    name: Design Docs Visual Acceptance
+    needs: detect-changes
+    if: needs.detect-changes.outputs.design-docs == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium webkit
@@ -70,7 +97,41 @@ jobs:
             cp -R playwright-report/. visual-acceptance-report/design-docs/
           fi
 
-          rm -rf playwright-report
+          exit "$design_docs_status"
+
+      - name: Upload visual report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: visual-acceptance-design-docs-${{ github.run_id }}
+          path: |
+            visual-acceptance-report/
+            test-results/
+          if-no-files-found: error
+
+  visual-landing:
+    name: Landing Visual Acceptance
+    needs: detect-changes
+    if: needs.detect-changes.outputs.landing == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium webkit
+
+      - name: Run production visual acceptance
+        env:
+          VISUAL_SERVER_MODE: production
+        run: |
+          set +e
+
+          rm -rf playwright-report visual-acceptance-report
 
           pnpm visual:landing:ci
           landing_status=$?
@@ -79,16 +140,48 @@ jobs:
             cp -R playwright-report/. visual-acceptance-report/landing/
           fi
 
-          if [ "$design_docs_status" -ne 0 ] || [ "$landing_status" -ne 0 ]; then
-            exit 1
-          fi
+          exit "$landing_status"
 
       - name: Upload visual report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: visual-acceptance-report-${{ github.run_id }}
+          name: visual-acceptance-landing-${{ github.run_id }}
           path: |
             visual-acceptance-report/
             test-results/
           if-no-files-found: error
+
+  visual:
+    name: Docs and Feature Showcase
+    needs:
+      - detect-changes
+      - visual-design-docs
+      - visual-landing
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Summarize visual acceptance
+        run: |
+          detect_result="${{ needs.detect-changes.result }}"
+          design_docs_result="${{ needs.visual-design-docs.result }}"
+          landing_result="${{ needs.visual-landing.result }}"
+
+          {
+            echo "## Visual Acceptance"
+            echo
+            echo "| Surface | Result |"
+            echo "| --- | --- |"
+            echo "| detect-changes | $detect_result |"
+            echo "| design-docs | $design_docs_result |"
+            echo "| landing | $landing_result |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$detect_result" = "failure" ] || [ "$design_docs_result" = "failure" ] || [ "$landing_result" = "failure" ]; then
+            exit 1
+          fi
+
+          if [ "$detect_result" = "cancelled" ] || [ "$design_docs_result" = "cancelled" ] || [ "$landing_result" = "cancelled" ]; then
+            exit 1
+          fi

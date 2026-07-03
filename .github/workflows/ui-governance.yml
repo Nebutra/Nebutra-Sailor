@@ -3,8 +3,36 @@ name: UI Governance
 on:
   pull_request:
     branches: [main]
+    paths:
+      - ".github/actions/setup-node-pnpm/action.yml"
+      - ".github/workflows/ui-governance.yml"
+      - "apps/design-docs/**"
+      - "apps/landing-page/src/**"
+      - "apps/web/src/**"
+      - "package.json"
+      - "packages/design/**"
+      - "pnpm-lock.yaml"
+      - "scripts/lib/ui-governance-policy.ts"
+      - "scripts/validate-ui-governance-policy.ts"
+      - "scripts/verify-brand-token-sync.ts"
+      - "scripts/verify-ui-governance.ts"
+      - "tests/architecture/governance/**"
   push:
     branches: [main]
+    paths:
+      - ".github/actions/setup-node-pnpm/action.yml"
+      - ".github/workflows/ui-governance.yml"
+      - "apps/design-docs/**"
+      - "apps/landing-page/src/**"
+      - "apps/web/src/**"
+      - "package.json"
+      - "packages/design/**"
+      - "pnpm-lock.yaml"
+      - "scripts/lib/ui-governance-policy.ts"
+      - "scripts/validate-ui-governance-policy.ts"
+      - "scripts/verify-brand-token-sync.ts"
+      - "scripts/verify-ui-governance.ts"
+      - "tests/architecture/governance/**"
 
 permissions:
   contents: read
@@ -17,17 +45,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
 
       - name: Validate UI Governance Policy Schema
         run: pnpm exec tsx scripts/validate-ui-governance-policy.ts

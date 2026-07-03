@@ -5,6 +5,7 @@ export default defineConfig({
     globals: true,
     environment: "node",
     include: ["tests/architecture/**/*.test.ts"],
+    fileParallelism: false,
     testTimeout: 30_000,
     projects: [
       {
@@ -13,6 +14,7 @@ export default defineConfig({
           globals: true,
           environment: "node",
           include: ["tests/architecture/**/*.test.ts"],
+          fileParallelism: false,
           testTimeout: 30_000,
         },
       },

@@ -161,7 +161,7 @@ const processFile = (file) => {
         .join("\n");
       src = src.replace(
         /^(.*?\n)((?:import [\s\S]*?from [^\n]+;\n)+)/m,
-        (full, prefix, importBlock) => `${prefix}${importBlock}${siblingImports}\n`,
+        (_full, prefix, importBlock) => `${prefix}${importBlock}${siblingImports}\n`,
       );
     } else {
       // Try to merge into existing @nebutra/ui/primitives import

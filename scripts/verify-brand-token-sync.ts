@@ -244,6 +244,12 @@ function extractHexStops(gradient: string): string[] {
   return [...gradient.matchAll(/#[0-9a-f]{6}\b/giu)].map((match) => match[0].toLowerCase());
 }
 
+function extractCssCustomPropertyValues(css: string, propertyName: string): string[] {
+  return [...css.matchAll(new RegExp(`${propertyName}:\\s*([^;]+);`, "giu"))].map(
+    (match) => match[1]?.trim() ?? "",
+  );
+}
+
 process.stdout.write("Verifying brand token sync against @nebutra/design-tokens SSOT...\n\n");
 
 // ─── 1. Brand primary/accent base colors ────────────────────────────────────
@@ -583,8 +589,22 @@ if (!tokensCss.includes("--gradient-brand:")) {
     ok(`semantic.brand.gradient.end lightness is usable (${endTone.lightness.toFixed(1)}%)`);
   }
 
-  if (!compactCssValue(tokensCss).includes(compactCssValue(actionGradient))) {
-    fail("tokens/styles.css --brand-gradient", "runtime CSS must contain the DTCG action gradient");
+  const runtimeActionGradientValues = extractCssCustomPropertyValues(
+    tokensCss,
+    "--brand-gradient",
+  ).filter((value) => value.toLowerCase().includes("linear-gradient"));
+  const runtimeActionGradientStops = runtimeActionGradientValues.map((value) =>
+    extractHexStops(value),
+  );
+  const mirrorsDtcgActionGradient = runtimeActionGradientStops.some(
+    (runtimeStops) => runtimeStops[0] === start && runtimeStops.at(-1) === end,
+  );
+
+  if (!mirrorsDtcgActionGradient) {
+    fail(
+      "tokens/styles.css --brand-gradient",
+      `runtime CSS must contain DTCG action gradient stops ${start} → ${end}`,
+    );
   } else {
     ok("tokens/styles.css: --brand-gradient mirrors DTCG action gradient");
   }

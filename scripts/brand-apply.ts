@@ -26,8 +26,10 @@ function sleepSync(ms: number): void {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 }
 
-function isProcessRunning(pid: number): boolean {
+function isLockOwnerAlive(lockDir: string): boolean {
   try {
+    const pid = Number.parseInt(fs.readFileSync(path.join(lockDir, "pid"), "utf-8"), 10);
+    if (!Number.isInteger(pid) || pid <= 0) return false;
     process.kill(pid, 0);
     return true;
   } catch (error) {
@@ -35,18 +37,12 @@ function isProcessRunning(pid: number): boolean {
   }
 }
 
-function isBrandApplyLockStale(lockAgeMs: number): boolean {
+function isBrandApplyLockStale(lockDir: string, lockAgeMs: number): boolean {
   if (lockAgeMs > BRAND_APPLY_STALE_LOCK_MS) {
     return true;
   }
 
-  try {
-    const pidRaw = fs.readFileSync(path.join(BRAND_APPLY_LOCK_DIR, "pid"), "utf-8").trim();
-    const pid = Number(pidRaw);
-    return !Number.isInteger(pid) || pid <= 0 || !isProcessRunning(pid);
-  } catch {
-    return true;
-  }
+  return !isLockOwnerAlive(lockDir);
 }
 
 function acquireBrandApplyLock(): () => void {
@@ -67,8 +63,13 @@ function acquireBrandApplyLock(): () => void {
         throw error;
       }
 
+      if (!isLockOwnerAlive(BRAND_APPLY_LOCK_DIR)) {
+        fs.rmSync(BRAND_APPLY_LOCK_DIR, { force: true, recursive: true });
+        continue;
+      }
+
       const lockAgeMs = Date.now() - fs.statSync(BRAND_APPLY_LOCK_DIR).mtimeMs;
-      if (isBrandApplyLockStale(lockAgeMs)) {
+      if (isBrandApplyLockStale(BRAND_APPLY_LOCK_DIR, lockAgeMs)) {
         fs.rmSync(BRAND_APPLY_LOCK_DIR, { force: true, recursive: true });
         continue;
       }
@@ -583,19 +584,18 @@ export type LogoAssets = typeof logoAssets;
   // JSON.stringify produces quoted object keys ("primary": instead of
   // primary:) and no trailing commas — Biome's strict mode rejects both.
   // Auto-fix the just-emitted file so brand:apply always lands a
-  // lint-clean tree (otherwise `pnpm lint` in CI flags the generator's
-  // own output, which kept CI red across runs 26079161015 → 26081453758).
-  try {
-    execFileSync(
-      "pnpm",
-      ["exec", "biome", "check", "--write", "--no-errors-on-unmatched", metadataPath],
-      { cwd: ROOT, stdio: "pipe" },
-    );
-  } catch {
-    // Biome exits non-zero when it can't auto-fix every diagnostic; the
-    // file is still written with whatever fixes did apply, and the CI
-    // lint job will surface anything that survived.
-  }
+  // lint-clean tree. Use the local binary directly so this path keeps
+  // working even when pnpm's verify-deps-before-run guard blocks scripts.
+  const biomeBin = path.join(
+    ROOT,
+    "node_modules",
+    ".bin",
+    process.platform === "win32" ? "biome.cmd" : "biome",
+  );
+  execFileSync(biomeBin, ["check", "--write", "--no-errors-on-unmatched", metadataPath], {
+    cwd: ROOT,
+    stdio: "pipe",
+  });
 
   logSuccess("Updated packages/design/brand/src/metadata.ts");
 }

@@ -1,10 +1,38 @@
 // @vitest-environment jsdom
 
 import { cleanup, render, screen, within } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { CookieBanner } from "./CookieBanner";
 
 describe("CookieBanner", () => {
+  beforeAll(() => {
+    if (typeof window.localStorage?.clear === "function") {
+      return;
+    }
+
+    const store = new Map<string, string>();
+    const storage: Storage = {
+      get length() {
+        return store.size;
+      },
+      clear: () => store.clear(),
+      getItem: (key) => store.get(key) ?? null,
+      key: (index) => Array.from(store.keys())[index] ?? null,
+      removeItem: (key) => {
+        store.delete(key);
+      },
+      setItem: (key, value) => {
+        store.set(key, String(value));
+      },
+    };
+
+    Object.defineProperty(window, "localStorage", {
+      value: storage,
+      configurable: true,
+      writable: true,
+    });
+  });
+
   beforeEach(() => {
     window.localStorage.clear();
   });

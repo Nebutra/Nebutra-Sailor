@@ -19,7 +19,7 @@ apps/web + apps/landing-page
   -> Vercel frontend
   -> api.nebutra.com
   -> Cloudflare Workers gateway
-  -> Cloud VM Origin
+  -> Cloud VM Origin (ECS Origin legacy target)
      -> backends/python/ai FastAPI
      -> Celery worker / beat
   -> Supabase Postgres
@@ -37,7 +37,7 @@ provider-switchable through per-service selector keys:
 | `design-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `sailor-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `railway` |
-| `python-ai` | `vm-docker` | `vm-docker`, `ecs-docker`, `k8s`, `aws`, `railway` |
+| `python-ai` | `ecs-docker` | `ecs-docker`, `k8s`, `aws`, `railway` |
 
 Selector env keys are service-specific:
 
@@ -45,7 +45,7 @@ Selector env keys are service-specific:
 DEPLOY_TARGET_WEB=vercel
 DEPLOY_TARGET_LANDING_PAGE=vercel
 DEPLOY_TARGET_GATEWAY=cloudflare-workers
-DEPLOY_TARGET_PYTHON_AI=vm-docker
+DEPLOY_TARGET_PYTHON_AI=ecs-docker
 ```
 
 The governance rule is:
@@ -98,10 +98,10 @@ x-nebutra-gateway-secret
 
 ### Cloud VM Origin
 
-Cloud VM Origin is the default heavy backend runtime. "ECS" in older scripts is
-a legacy alias for an SSH-managed cloud server; supported targets include AWS
-EC2, Alibaba Cloud ECS, Tencent Cloud CVM, GCP Compute Engine, and equivalent
-Linux VMs.
+Cloud VM Origin, also called ECS Origin by legacy deploy governance, is the
+default heavy backend runtime. "ECS" in older scripts is a legacy alias for an
+SSH-managed cloud server; supported targets include AWS EC2, Alibaba Cloud ECS,
+Tencent Cloud CVM, GCP Compute Engine, and equivalent Linux VMs.
 
 For backwards-compatible automation, this runtime is still referred to as
 ECS Origin in legacy workflow and governance checks.

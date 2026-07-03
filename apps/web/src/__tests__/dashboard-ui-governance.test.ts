@@ -23,8 +23,8 @@ describe("@nebutra/web dashboard UI governance", () => {
   it("redirects the converged workspace route to the Startup OS entry surface", () => {
     const source = readFileSync(WORKSPACE_PAGE, "utf8");
 
-    // Home converged into Startup OS (merge): /workspace is a cookie-i18n
-    // server redirect to /startup-os, not a duplicate dashboard overview.
+    // Home converged into Startup OS (merge): /workspace redirects to
+    // /startup-os under cookie-based i18n, not a duplicate dashboard overview.
     expect(source).toContain('from "next/navigation"');
     expect(source).toContain('redirect("/startup-os")');
     expect(source).not.toContain("DashboardCommandSurface");

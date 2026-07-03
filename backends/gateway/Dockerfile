@@ -1,26 +1,23 @@
 # ── Stage 1: Install dependencies ──────────────────────────────────────────
-FROM node:22-alpine@sha256:968df39aedcea65eeb078fb336ed7191baf48f972b4479711397108be0966920 AS deps
+FROM node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2 AS deps
 WORKDIR /app
 
 RUN corepack enable pnpm
 
-# Copy manifests for workspace packages api-gateway depends on
+# Copy manifests for the gateway workspace and its package dependencies
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
 COPY patches/ ./patches/
 COPY backends/gateway/package.json ./backends/gateway/
-COPY packages/platform/alerting/package.json ./packages/platform/alerting/
-COPY packages/integrations/cache/package.json ./packages/integrations/cache/
-COPY packages/platform/db/package.json ./packages/platform/db/
-COPY packages/platform/health/package.json ./packages/platform/health/
-COPY packages/platform/logger/package.json ./packages/platform/logger/
-COPY packages/platform/rate-limit/package.json ./packages/platform/rate-limit/
+# Gateway imports a broad workspace graph. Copy package sources in the deps
+# stage so pnpm can resolve every workspace:* edge without a stale hand list.
+COPY packages/ ./packages/
 
 # @nebutra/db is added as an explicit filter target so its devDependencies
 # (prisma CLI) are installed — transitive workspace deps only get prod deps.
-RUN pnpm install --frozen-lockfile --filter @nebutra/api-gateway... --filter @nebutra/db...
+RUN pnpm install --frozen-lockfile --filter @nebutra/gateway... --filter @nebutra/db...
 
 # ── Stage 2: Build ──────────────────────────────────────────────────────────
-FROM node:22-alpine@sha256:968df39aedcea65eeb078fb336ed7191baf48f972b4479711397108be0966920 AS builder
+FROM node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2 AS builder
 WORKDIR /app
 
 RUN corepack enable pnpm
@@ -31,10 +28,10 @@ COPY --from=deps /app/backends/gateway/node_modules ./backends/gateway/node_modu
 COPY . .
 
 RUN pnpm --filter @nebutra/db db:generate
-RUN pnpm --filter @nebutra/api-gateway build
+RUN pnpm --filter @nebutra/gateway build
 
 # ── Stage 3: Runtime ────────────────────────────────────────────────────────
-FROM node:22-alpine@sha256:968df39aedcea65eeb078fb336ed7191baf48f972b4479711397108be0966920 AS runner
+FROM node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2 AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -52,4 +49,4 @@ USER appuser
 
 EXPOSE 3002
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/node.js"]

@@ -278,9 +278,7 @@ def resolve_upload_store() -> UploadStore:
     provider = os.environ.get("UPLOAD_STORE_PROVIDER", "").lower()
     database_url = os.environ.get("DATABASE_URL")
     app_env = (
-        os.environ.get("APP_ENV")
-        or os.environ.get("ENV")
-        or os.environ.get("NODE_ENV")
+        os.environ.get("APP_ENV") or os.environ.get("ENV") or os.environ.get("NODE_ENV")
     )
     is_production = (app_env or "").lower() in {"prod", "production"}
 

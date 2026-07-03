@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { Root } from "mdast";
 import { visit } from "unist-util-visit";
 
 /**
@@ -12,6 +13,39 @@ import { visit } from "unist-util-visit";
  */
 
 let _fileMap: Record<string, string> | null = null;
+
+type MdxJsxAttribute = {
+  type: "mdxJsxAttribute";
+  name: string;
+  value?: unknown;
+};
+
+type ComponentPreviewNode = {
+  name: "ComponentPreview";
+  attributes: unknown[];
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object";
+}
+
+function isMdxJsxAttribute(value: unknown): value is MdxJsxAttribute {
+  if (!isRecord(value)) return false;
+  return value.type === "mdxJsxAttribute" && typeof value.name === "string";
+}
+
+function isComponentPreviewNode(value: unknown): value is ComponentPreviewNode {
+  if (!isRecord(value)) return false;
+  return value.name === "ComponentPreview" && Array.isArray(value.attributes);
+}
+
+function getStringAttribute(attributes: unknown[], name: string): string | null {
+  const attribute = attributes.find(
+    (candidate): candidate is MdxJsxAttribute =>
+      isMdxJsxAttribute(candidate) && candidate.name === name,
+  );
+  return typeof attribute?.value === "string" ? attribute.value : null;
+}
 
 function getFileMap(root: string): Record<string, string> {
   if (_fileMap) return _fileMap;
@@ -120,24 +154,24 @@ function extractComponentCode(source: string, componentName: string): string {
 }
 
 export function remarkComponent() {
-  return (tree: any) => {
+  return (tree: Root) => {
     const root = process.cwd().endsWith("apps/design-docs")
       ? process.cwd()
       : path.join(process.cwd(), "apps/design-docs");
     const previewsDir = path.join(root, "src", "components", "previews");
     const fileMap = getFileMap(root);
 
-    visit(tree, (node: any) => {
-      if (node.name !== "ComponentPreview") return;
+    visit(tree, (node) => {
+      if (!isComponentPreviewNode(node)) return;
 
-      const nameAttr = node.attributes?.find((a: any) => a.name === "name");
-      const name = nameAttr?.value;
+      const name = getStringAttribute(node.attributes, "name");
       if (!name) return;
 
       // Try exact file first, then fall back to registry file-map
-      const candidates = [`${name}.tsx`, fileMap[name] ? `${fileMap[name]}.tsx` : null].filter(
-        Boolean,
-      ) as string[];
+      const mappedFile = fileMap[name];
+      const candidates = [`${name}.tsx`, mappedFile ? `${mappedFile}.tsx` : null].filter(
+        (candidate): candidate is string => typeof candidate === "string",
+      );
 
       let rawSource: string | null = null;
       for (const candidate of candidates) {
@@ -155,7 +189,6 @@ export function remarkComponent() {
           name: "code",
           value: rawSource,
         });
-      } else {
       }
     });
   };

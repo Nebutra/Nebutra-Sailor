@@ -5,6 +5,11 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) =>
+    key === "fileTree.empty" ? "No files to display yet" : key,
+}));
+
 // ─── Module stubs ─────────────────────────────────────────────────────────────
 // The real @nebutra/ui Tree primitives pull framer-motion + the heavy barrel.
 // We replace them with light stand-ins that preserve exactly the contract this

@@ -6,8 +6,8 @@ import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-// ApiKeysList (rendered inside ApiKeysPageClient) uses useFormatter() after
-// the W1 governance change. Provide a minimal stub.
+// ApiKeysList (rendered inside ApiKeysPageClient) uses next-intl for dates and
+// empty-state copy. Provide minimal stubs.
 vi.mock("next-intl", () => ({
   useFormatter: () => ({
     dateTime: (d: Date, _opts?: unknown) =>

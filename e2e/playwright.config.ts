@@ -41,7 +41,7 @@ export default defineConfig({
   timeout: 60_000,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
-  reporter: process.env.CI ? [["github"], ["blob"], ["html", { open: "never" }]] : [["html"]],
+  reporter: process.env.CI ? [["github"], ["blob"]] : [["html"]],
   use: {
     baseURL: landingBaseUrl,
     trace: "on-first-retry",

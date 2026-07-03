@@ -36,22 +36,15 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
+      - name: Setup Node.js and pnpm
         # Using --no-frozen-lockfile: this workflow only mirrors source to
         # Sailor-Template; it doesn't run production builds. Lockfile drift
         # here isn't a security concern (the mirror's consumers have their
         # own pnpm install). Frozen-lockfile was previously blocking syncs
         # on catalog resolution edge cases.
-        run: pnpm install --no-frozen-lockfile --ignore-scripts
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          install-command: pnpm install --no-frozen-lockfile --ignore-scripts
 
       - name: Build template
         run: pnpm tsx scripts/template-build.ts --out=/tmp/sailor-template
@@ -117,9 +110,11 @@ jobs:
 
       - name: Summary
         run: |
-          echo "### Template sync summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- Source SHA: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- File count: $(find /tmp/sailor-template -type f | wc -l)" >> $GITHUB_STEP_SUMMARY
-          echo "- Immutable tag: \`source-${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "### Template sync summary"
+            echo ""
+            echo "- Source SHA: \`${{ github.sha }}\`"
+            echo "- File count: $(find /tmp/sailor-template -type f | wc -l)"
+            echo "- Immutable tag: \`source-${{ github.sha }}\`"
+            echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}"
+          } >> "$GITHUB_STEP_SUMMARY"

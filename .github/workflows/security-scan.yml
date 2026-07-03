@@ -27,27 +27,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
-      - name: Verify supply-chain policy
-        run: node scripts/verify-supply-chain-policy.mjs
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
         with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          verify-supply-chain: "true"
 
       - name: Run pnpm audit
         id: audit
         run: |
           pnpm audit --audit-level=moderate --json > audit-report.json || true
           VULN_COUNT=$(jq '.metadata.vulnerabilities | .moderate + .high + .critical' audit-report.json 2>/dev/null || echo 0)
-          echo "vuln_count=$VULN_COUNT" >> $GITHUB_OUTPUT
+          echo "vuln_count=$VULN_COUNT" >> "$GITHUB_OUTPUT"
           echo "Vulnerability count: $VULN_COUNT"
 
       - name: Create issue if vulnerabilities found
@@ -138,12 +128,12 @@ jobs:
               uv pip compile pyproject.toml -o /tmp/requirements-audit.txt --quiet 2>/dev/null || true
               if [ -f /tmp/requirements-audit.txt ]; then
                 pip-audit -r /tmp/requirements-audit.txt --format=json \
-                  --output="/tmp/audit-$(basename $service).json" || FAILED=1
+                  --output="/tmp/audit-$(basename "$service").json" || FAILED=1
               fi
-              cd -
+              cd - >/dev/null
             fi
           done
-          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> "$GITHUB_OUTPUT"
 
       - name: Create issue on failure
         if: steps.pip-audit.outputs.failed == '1'

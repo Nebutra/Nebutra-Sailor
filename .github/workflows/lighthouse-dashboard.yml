@@ -1,12 +1,6 @@
 name: Lighthouse Dashboard Compare
 
 on:
-  pull_request:
-    paths:
-      - "apps/web/**"
-      - "packages/**"
-      - "scripts/lighthouse/**"
-      - ".github/workflows/lighthouse-dashboard.yml"
   workflow_dispatch:
     inputs:
       before_ref:
@@ -32,7 +26,7 @@ jobs:
   lighthouse-dashboard:
     name: Lighthouse Dashboard (Mobile)
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 60
 
     steps:
       - name: Checkout
@@ -46,22 +40,17 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            BEFORE_REF="${{ github.event.pull_request.head.sha }}"
-            AFTER_REF="${{ github.event.pull_request.head.sha }}"
-            RUNS="3"
-            TARGET_PATH="/demo/embed"
-          else
-            BEFORE_REF="${{ inputs.before_ref }}"
-            AFTER_REF="${{ inputs.after_ref }}"
-            RUNS="${{ inputs.runs }}"
-            TARGET_PATH="${{ inputs.target_path }}"
-          fi
+          BEFORE_REF="${{ inputs.before_ref }}"
+          AFTER_REF="${{ inputs.after_ref }}"
+          RUNS="${{ inputs.runs }}"
+          TARGET_PATH="${{ inputs.target_path }}"
 
-          echo "before_ref=${BEFORE_REF}" >> "$GITHUB_OUTPUT"
-          echo "after_ref=${AFTER_REF}" >> "$GITHUB_OUTPUT"
-          echo "runs=${RUNS}" >> "$GITHUB_OUTPUT"
-          echo "target_path=${TARGET_PATH}" >> "$GITHUB_OUTPUT"
+          {
+            echo "before_ref=${BEFORE_REF}"
+            echo "after_ref=${AFTER_REF}"
+            echo "runs=${RUNS}"
+            echo "target_path=${TARGET_PATH}"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Run Lighthouse Compare
         id: run_compare

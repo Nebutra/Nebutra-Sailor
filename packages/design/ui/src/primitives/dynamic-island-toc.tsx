@@ -44,7 +44,7 @@ const islandTween: MotionTransition = {
   ease: ISLAND_EASE,
   duration: motionDurationSec.cinematic, // 500ms — shape morph reads as cinematic
 };
-
+const reducedMotionTransition: MotionTransition = { duration: 0 };
 const pillEntranceTransition: MotionTransition = {
   type: "spring",
   stiffness: brandSpring.default.stiffness,
@@ -624,7 +624,7 @@ export function DynamicIslandTOC({
           <m.div
             initial={false}
             animate={pillAnimate}
-            transition={reduceMotion ? { duration: 0 } : islandTween}
+            transition={reduceMotion ? reducedMotionTransition : islandTween}
             className="relative overflow-hidden border border-foreground/10 bg-background text-foreground shadow-2xl"
           >
             <TocClosedPill

@@ -86,6 +86,17 @@ async function postChat(app: OpenAPIHono) {
   });
 }
 
+async function postChatBody(app: OpenAPIHono, body: unknown) {
+  return app.request("/chat/completions", {
+    method: "POST",
+    headers: {
+      authorization: "Bearer sk-sailor-test",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+}
+
 describe("AI gateway upstream governance", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
@@ -183,6 +194,34 @@ describe("AI gateway upstream governance", () => {
     expect(JSON.parse(String(init?.body))).toMatchObject({
       user: "user_1",
     });
+  });
+
+  it("rejects oversized JSON property names before proxying to OpenAI-compatible upstreams", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(JSON.stringify({ id: "should_not_proxy" }), {
+        headers: { "content-type": "application/json" },
+        status: 200,
+      }),
+    );
+    const longKey = "gmailLW".repeat(40);
+    const app = createApp([
+      {
+        id: "openai-primary",
+        apiKey: "primary-key",
+        baseUrl: "https://primary.example/v1",
+        provider: "openai",
+      },
+    ]);
+
+    const response = await postChatBody(app, {
+      model: "gpt-5.4",
+      messages: [{ role: "user", content: "hi" }],
+      input: [{ type: "function_call", name: "finder_srv", arguments: { [longKey]: true } }],
+    });
+
+    expect(response.status).toBe(400);
+    expect(fetchMock).not.toHaveBeenCalled();
+    await expect(response.text()).resolves.toContain("maximum is 256");
   });
 
   it("uses env-configured upstream pools without embedding plaintext keys in JSON", async () => {

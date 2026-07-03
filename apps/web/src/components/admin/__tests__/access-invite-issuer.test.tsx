@@ -5,6 +5,15 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { AccessInviteIssuer } from "../access-invite-issuer";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => {
+    const messages: Record<string, string> = {
+      "emptyState.accessInvites": "No invites yet",
+    };
+    return messages[key] ?? key;
+  },
+}));
+
 describe("AccessInviteIssuer", () => {
   afterEach(() => {
     cleanup();

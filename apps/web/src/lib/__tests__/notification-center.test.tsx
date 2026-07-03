@@ -9,10 +9,14 @@ vi.mock("next-intl", () => ({
   useFormatter: () => ({
     relativeTime: () => "localized relative time",
   }),
-  useTranslations: () => (key: string) =>
-    ({
+  useTranslations: () => (key: string) => {
+    const messages: Record<string, string> = {
       "inbox.emptyCaughtUp": "Inbox is clear.",
-    })[key] ?? key,
+      "inbox.noBackend":
+        "Inbox requires a persistent notification backend. Check your provider configuration.",
+    };
+    return messages[key] ?? key;
+  },
 }));
 
 vi.mock("@/app/(app)/settings/notifications/actions", () => ({

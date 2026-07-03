@@ -44,7 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@03e4368ac7daa2bd82b3e85262f3bf87ee112f57 # v3
+        uses: github/codeql-action/init@dd903d2e4f5405488e5ef1422510ee31c8b32357 # v3
         with:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
@@ -53,20 +53,9 @@ jobs:
           config-file: .github/codeql/codeql-config.yml
 
       # ── TypeScript: build for analysis ────────────────────────────────────
-      - name: Setup pnpm
+      - name: Setup Node.js and pnpm
         if: matrix.language == 'javascript-typescript'
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
-
-      - name: Setup Node.js
-        if: matrix.language == 'javascript-typescript'
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies (Node)
-        if: matrix.language == 'javascript-typescript'
-        run: pnpm install --frozen-lockfile
+        uses: ./.github/actions/setup-node-pnpm
 
       # ── Python: setup for analysis ────────────────────────────────────────
       - name: Setup Python
@@ -81,7 +70,7 @@ jobs:
 
       # ── Run CodeQL analysis ───────────────────────────────────────────────
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@03e4368ac7daa2bd82b3e85262f3bf87ee112f57 # v3
+        uses: github/codeql-action/analyze@dd903d2e4f5405488e5ef1422510ee31c8b32357 # v3
         with:
           category: "/language:${{ matrix.language }}"
           # Upload results as SARIF to GitHub Security tab

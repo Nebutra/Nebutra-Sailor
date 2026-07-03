@@ -1,6 +1,6 @@
 import { brand } from "@nebutra/brand/metadata";
 import { toContentLocale, toOpenGraphLocale } from "@nebutra/i18n/locales";
-import type { Icon as AppIcon } from "@nebutra/icons";
+import type { Icon as DashboardIcon } from "@nebutra/icons";
 import { ArrowRight, CheckCircle, CreditCard, Message, Users } from "@nebutra/icons";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -17,7 +17,7 @@ interface PublicDashboardCopy {
   secondaryAction: string;
   workspaceAction: string;
   nav: Array<{ href: string; label: string }>;
-  metrics: Array<{ label: string; value: string; detail: string; icon: AppIcon }>;
+  metrics: Array<{ label: string; value: string; detail: string; icon: DashboardIcon }>;
   serviceTitle: string;
   serviceBody: string;
   gated: Array<string>;

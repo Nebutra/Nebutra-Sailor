@@ -6,22 +6,23 @@
   "nebutra": {
     "status": "wip",
     "productionReady": false,
-    "surface": "play-product",
+    "surface": "product-orchestration",
     "requires": [
-      "@nebutra/agent-runtime for orchestration grammar",
-      "@nebutra/agents for injected model execution",
+      "@nebutra/agent-runtime for orchestration grammar and runtime policy",
+      "@nebutra/agents for injected model execution and fallback routing",
       "@nebutra/db for persisted startup context",
       "@nebutra/preset for generated app scaffolds",
-      "@nebutra/ui and @nebutra/icons for product-facing tool payloads"
+      "@nebutra/ui and @nebutra/icons for shared Startup OS presentation metadata"
     ],
     "gaps": [
+      "Dashboard-facing adapters are still wired through app routes",
       "Product flows still depend on the host app for auth, billing, and tenant lifecycle",
-      "Model execution is injected by consumers instead of owned in this package",
-      "Durable multi-run orchestration is still delegated to adjacent runtime packages"
+      "Durable multi-run orchestration is still delegated to adjacent runtime packages",
+      "File and canvas operations are runtime contracts, not a standalone production surface"
     ],
     "featureId": "startup-os",
     "category": "ai",
-    "summary": "Startup operating play surface for company context, execution, files, rollout, and model-tier decisions"
+    "summary": "Startup OS product orchestration contracts for company context, founder conversation, execution, files, rollout, canvas state, and model-tier decisions"
   },
   "main": "./src/compiler.ts",
   "types": "./src/compiler.ts",

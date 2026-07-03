@@ -9,7 +9,7 @@
  *
  * Usage:
  *   # Smoke test
- *   k6 run --env SCENARIO=smoke --env BASE_URL=https://api.nebutra.ai tests/load/k6.js
+ *   k6 run --env SCENARIO=smoke --env BASE_URL=https://api.nebutra.com tests/load/k6.js
  *
  *   # CI ramp-up test
  *   k6 run --env SCENARIO=ramp-up --env BASE_URL=$API_URL tests/load/k6.js
@@ -101,6 +101,18 @@ function getHeaders(tenantId) {
   };
 }
 
+function jsonValue(res, selector) {
+  if (!res || res.status === 0 || !res.body) {
+    return undefined;
+  }
+
+  try {
+    return res.json(selector);
+  } catch (_error) {
+    return undefined;
+  }
+}
+
 // ── Test scenarios ───────────────────────────────────────────────────────────
 export default function () {
   const tenantId = randomItem(TEST_TENANT_IDS);
@@ -114,7 +126,7 @@ export default function () {
     requestCount.add(1);
     const ok = check(res, {
       "health: status 200": (r) => r.status === 200,
-      "health: body has status": (r) => r.json("status") !== undefined,
+      "health: body has status": (r) => jsonValue(r, "status") !== undefined,
       "health: fast (<200ms)": (r) => r.timings.duration < 200,
     });
     errorRate.add(!ok);
@@ -149,7 +161,7 @@ export default function () {
     requestCount.add(1);
     const ok = check(res, {
       "ai/models: status 200": (r) => r.status === 200,
-      "ai/models: has models array": (r) => Array.isArray(r.json("models")),
+      "ai/models: has models array": (r) => Array.isArray(jsonValue(r, "models")),
       "ai/models: <300ms": (r) => r.timings.duration < 300,
     });
     errorRate.add(!ok);

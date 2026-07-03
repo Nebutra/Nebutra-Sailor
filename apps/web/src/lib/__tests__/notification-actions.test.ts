@@ -325,15 +325,15 @@ describe("notification settings actions", () => {
           createFormData({
             locale: "en",
             notificationId: "notif_1",
-            returnTo: "/en/dashboard",
+            returnTo: "/dashboard",
           }),
         ),
-        "/en/dashboard",
+        "/dashboard",
       );
 
       expect(provider.markAsRead).toHaveBeenCalledWith("notif_1", "user_123", "org_456");
       expect(revalidatePathMock).toHaveBeenCalledWith("/settings/notifications");
-      expect(revalidatePathMock).toHaveBeenCalledWith("/en/dashboard");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/dashboard");
     });
 
     it("redirects with a stable error when inbox updates fail", async () => {
@@ -375,15 +375,15 @@ describe("notification settings actions", () => {
         markAllNotificationsRead(
           createFormData({
             locale: "en",
-            returnTo: "/en/dashboard",
+            returnTo: "/dashboard",
           }),
         ),
-        "/en/dashboard",
+        "/dashboard",
       );
 
       expect(provider.markAllAsRead).toHaveBeenCalledWith("user_123", "org_456");
       expect(revalidatePathMock).toHaveBeenCalledWith("/settings/notifications");
-      expect(revalidatePathMock).toHaveBeenCalledWith("/en/dashboard");
+      expect(revalidatePathMock).toHaveBeenCalledWith("/dashboard");
     });
 
     it("redirects with the runtime reason when mark-all is read-only", async () => {

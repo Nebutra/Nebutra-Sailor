@@ -22,6 +22,10 @@ vi.mock("@nebutra/tokens", () => ({
 const routerPushMock = vi.fn();
 vi.mock("next/navigation", () => ({
   useRouter: () => ({ refresh: vi.fn(), replace: vi.fn(), push: routerPushMock }),
+}));
+
+vi.mock("@nebutra/i18n/routing", () => ({
+  useRouter: () => ({ replace: vi.fn(), push: routerPushMock }),
   usePathname: () => "/workspace",
   useSearchParams: () => new URLSearchParams(),
 }));
