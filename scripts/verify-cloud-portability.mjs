@@ -30,6 +30,12 @@ function providerIds(manifest) {
 }
 
 const failures = [];
+const writeLine = (message = "") => {
+  process.stdout.write(`${message}\n`);
+};
+const writeErrorLine = (message = "") => {
+  process.stderr.write(`${message}\n`);
+};
 const manifestPath = "infra/platforms/cloud-portability.json";
 
 assert(existsSync(resolve(root, manifestPath)), `${manifestPath} does not exist`, failures);
@@ -147,28 +153,25 @@ assert(
 
 if (doctorMode) {
   const active = manifest.defaultTopology ?? {};
-  console.log("[cloud-portability] providers:", providerIds(manifest).join(", "));
-  console.log(
-    "[cloud-portability] defaults:",
-    `frontend=${active.frontend}, gateway=${active.gateway}, originBackend=${active.originBackend}`,
+  writeLine(`[cloud-portability] providers: ${providerIds(manifest).join(", ")}`);
+  writeLine(
+    `[cloud-portability] defaults: frontend=${active.frontend}, gateway=${active.gateway}, originBackend=${active.originBackend}`,
   );
-  console.log(
-    "[cloud-portability] AWS registry:",
-    manifest.providers?.aws?.registry?.kind ?? "missing",
+  writeLine(
+    `[cloud-portability] AWS registry: ${manifest.providers?.aws?.registry?.kind ?? "missing"}`,
   );
-  console.log(
-    "[cloud-portability] GCP registry:",
-    manifest.providers?.gcp?.registry?.kind ?? "missing",
+  writeLine(
+    `[cloud-portability] GCP registry: ${manifest.providers?.gcp?.registry?.kind ?? "missing"}`,
   );
-  console.log("[cloud-portability] CI workflow:", ".github/workflows/docker-build-push.yml");
-  console.log("[cloud-portability] Terraform modules:", "aws, gcp");
+  writeLine("[cloud-portability] CI workflow: .github/workflows/docker-build-push.yml");
+  writeLine("[cloud-portability] Terraform modules: aws, gcp");
 }
 
 if (failures.length > 0) {
   for (const failure of failures) {
-    console.error(`cloud-portability: ${failure}`);
+    writeErrorLine(`cloud-portability: ${failure}`);
   }
   process.exit(1);
 }
 
-console.log("cloud portability contract: ok");
+writeLine("cloud portability contract: ok");

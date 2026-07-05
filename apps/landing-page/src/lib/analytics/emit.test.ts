@@ -43,4 +43,19 @@ describe("emitBrowserEvent", () => {
     expect(payload.distinct_id).toMatch(/^anon_/);
     expect(payload.properties.distinct_id).toBe(payload.distinct_id);
   });
+
+  it("reports fallback fetch failures without throwing", async () => {
+    const error = new Error("network down");
+    const onError = vi.fn();
+    Object.defineProperty(window.navigator, "sendBeacon", {
+      configurable: true,
+      value: undefined,
+    });
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(error));
+
+    expect(() => emitBrowserEvent("checkout", {}, { onError })).not.toThrow();
+    await Promise.resolve();
+
+    expect(onError).toHaveBeenCalledWith(error);
+  });
 });

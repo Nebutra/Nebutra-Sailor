@@ -247,4 +247,4 @@ docker push "$REGISTRY/$PROJECT_ID/$REPOSITORY/nebutra-web:latest"
 ## Related
 
 - [Cloudflare config](../cloudflare/) — CDN and DNS
-- [Database config](../database/) — RLS policies
+- Database config — RLS policies live outside this Terraform tree.
