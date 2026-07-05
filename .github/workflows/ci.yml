@@ -192,6 +192,9 @@ jobs:
       - name: Verify Turbo build contract
         run: pnpm --config.verify-deps-before-run=false ci:verify-turbo-contract
 
+      - name: Verify cloud portability contract
+        run: pnpm --config.verify-deps-before-run=false cloud:verify
+
       - name: Architecture smoke checks
         run: |
           pnpm test:arch

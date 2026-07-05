@@ -6,6 +6,7 @@ name: Docker Build & Push
 # secret is present):
 #   - GitHub Container Registry (ghcr.io) — always attempted if GITHUB_TOKEN is available
 #   - AWS Elastic Container Registry (ECR)        — requires AWS_ACCOUNT_ID + AWS_REGION
+#   - GCP Artifact Registry                      — requires GCP_PROJECT_ID + GCP_REGION + WIF vars
 #   - Alibaba Cloud Container Registry (Aliyun)   — requires ALIYUN_ACR_USERNAME + ALIYUN_ACR_PASSWORD
 #   - Tencent Cloud Container Registry (TCR)      — requires TENCENT_TCR_HOST + TENCENT_TCR_USERNAME + TENCENT_TCR_PASSWORD
 #
@@ -48,6 +49,11 @@ env:
   # AWS_REGION is a non-sensitive var — store in GitHub Actions Variables, not Secrets
   AWS_REGION: ${{ vars.AWS_REGION }}
   AWS_ECR_ROLE_ARN: ${{ secrets.AWS_ECR_ROLE_ARN }}
+  GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+  GCP_REGION: ${{ vars.GCP_REGION }}
+  GCP_ARTIFACT_REPOSITORY: ${{ vars.GCP_ARTIFACT_REPOSITORY || 'nebutra' }}
+  GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+  GCP_SERVICE_ACCOUNT: ${{ vars.GCP_SERVICE_ACCOUNT }}
   ALIYUN_ACR_USERNAME: ${{ secrets.ALIYUN_ACR_USERNAME }}
   TENCENT_TCR_HOST: ${{ secrets.TENCENT_TCR_HOST }}
 
@@ -119,6 +125,29 @@ jobs:
       - name: Log in to AWS ECR
         if: env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != ''
         uses: aws-actions/amazon-ecr-login@d539f0932e70871a027e9d5a9d8fc38589180a64 # v2
+
+      # GCP Artifact Registry — Workload Identity Federation, no JSON key file.
+      # Prerequisites:
+      #   1. Create a Workload Identity Pool/Provider scoped to this repository
+      #   2. Grant the service account Artifact Registry writer permissions
+      #   3. Set GCP_PROJECT_ID, GCP_REGION, GCP_ARTIFACT_REPOSITORY,
+      #      GCP_WORKLOAD_IDENTITY_PROVIDER, and GCP_SERVICE_ACCOUNT as repo variables
+      - name: Authenticate to Google Cloud (OIDC)
+        id: google-auth
+        if: env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - name: Log in to Google Artifact Registry
+        if: env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.GCP_REGION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.google-auth.outputs.access_token }}
       - name: Log in to Aliyun Container Registry
         if: env.ALIYUN_ACR_USERNAME != ''
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
@@ -147,6 +176,7 @@ jobs:
           images: |
             ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.app }}
             ${{ env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != '' && format('{0}.dkr.ecr.{1}.amazonaws.com/nebutra-{2}', env.AWS_ACCOUNT_ID, env.AWS_REGION, matrix.app) || '' }}
+            ${{ env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != '' && format('{0}-docker.pkg.dev/{1}/{2}/nebutra-{3}', env.GCP_REGION, env.GCP_PROJECT_ID, env.GCP_ARTIFACT_REPOSITORY, matrix.app) || '' }}
             ${{ secrets.ALIYUN_ACR_USERNAME != '' && format('registry.cn-hangzhou.aliyuncs.com/nebutra/{0}', matrix.app) || '' }}
             ${{ secrets.TENCENT_TCR_HOST != '' && format('{0}/nebutra/{1}', secrets.TENCENT_TCR_HOST, matrix.app) || '' }}
           tags: |
@@ -278,6 +308,23 @@ jobs:
         if: env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != ''
         uses: aws-actions/amazon-ecr-login@d539f0932e70871a027e9d5a9d8fc38589180a64 # v2
 
+      - name: Authenticate to Google Cloud (OIDC)
+        id: google-auth
+        if: env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT }}
+
+      - name: Log in to Google Artifact Registry
+        if: env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != ''
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.GCP_REGION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.google-auth.outputs.access_token }}
+
       - name: Log in to Aliyun Container Registry
         if: env.ALIYUN_ACR_USERNAME != ''
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
@@ -302,6 +349,7 @@ jobs:
           images: |
             ghcr.io/${{ steps.lowercase.outputs.owner }}/nebutra-${{ matrix.service }}
             ${{ env.AWS_ACCOUNT_ID != '' && env.AWS_REGION != '' && env.AWS_ECR_ROLE_ARN != '' && format('{0}.dkr.ecr.{1}.amazonaws.com/nebutra-{2}', env.AWS_ACCOUNT_ID, env.AWS_REGION, matrix.service) || '' }}
+            ${{ env.GCP_PROJECT_ID != '' && env.GCP_REGION != '' && env.GCP_ARTIFACT_REPOSITORY != '' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' && env.GCP_SERVICE_ACCOUNT != '' && format('{0}-docker.pkg.dev/{1}/{2}/nebutra-{3}', env.GCP_REGION, env.GCP_PROJECT_ID, env.GCP_ARTIFACT_REPOSITORY, matrix.service) || '' }}
             ${{ secrets.ALIYUN_ACR_USERNAME != '' && format('registry.cn-hangzhou.aliyuncs.com/nebutra/{0}', matrix.service) || '' }}
             ${{ secrets.TENCENT_TCR_HOST != '' && format('{0}/nebutra/{1}', secrets.TENCENT_TCR_HOST, matrix.service) || '' }}
           tags: |

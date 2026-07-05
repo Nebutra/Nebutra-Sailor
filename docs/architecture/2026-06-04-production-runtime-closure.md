@@ -36,8 +36,8 @@ provider-switchable through per-service selector keys:
 | `landing-page` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `design-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `sailor-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
-| `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `railway` |
-| `python-ai` | `ecs-docker` | `ecs-docker`, `k8s`, `aws`, `railway` |
+| `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `gcp`, `railway` |
+| `python-ai` | `ecs-docker` | `ecs-docker`, `k8s`, `aws`, `gcp`, `railway` |
 
 Selector env keys are service-specific:
 
@@ -164,7 +164,8 @@ must not become the long-term DX contract.
 Migration sequence:
 
 1. Use `@nebutra/preset/deploy-target` as the source of truth for target names,
-   defaults, and env keys.
+   defaults, and env keys. Cloud portability is also governed by
+   `infra/platforms/cloud-portability.json`.
 2. Gate each adapter job by the relevant per-service selector.
 3. Remove frontends from automatic VM/k8s deployment once Vercel projects and
    env vars are verified.

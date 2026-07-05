@@ -2,7 +2,7 @@
 # Nebutra-Sailor – Production Environment
 # ============================================================
 # Select the cloud provider by setting var.cloud_provider to one of:
-#   vercel | aws | aliyun | tencent
+#   vercel | aws | gcp | aliyun | tencent
 #
 # Usage:
 #   terraform init -backend-config=backend.hcl
@@ -18,6 +18,11 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.0"
+    }
+    # ── Google Cloud ────────────────────────────────────────
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 6.0"
     }
     # ── Alibaba Cloud ───────────────────────────────────────
     alicloud = {
@@ -49,6 +54,12 @@ terraform {
   #   dynamodb_table = "nebutra-terraform-locks"
   # }
 
+  # GCP Cloud Storage backend
+  # backend "gcs" {
+  #   bucket = "nebutra-terraform-state-prod"
+  #   prefix = "sailor/prod"
+  # }
+
   # Alibaba Cloud OSS backend
   # backend "oss" {
   #   bucket              = "nebutra-terraform-state-prod"
@@ -71,13 +82,13 @@ terraform {
 # ============================================================
 
 variable "cloud_provider" {
-  description = "Target cloud provider: vercel | aws | aliyun | tencent"
+  description = "Target cloud provider: vercel | aws | gcp | aliyun | tencent"
   type        = string
   default     = "aws"
 
   validation {
-    condition     = contains(["vercel", "aws", "aliyun", "tencent"], var.cloud_provider)
-    error_message = "cloud_provider must be one of: vercel, aws, aliyun, tencent."
+    condition     = contains(["vercel", "aws", "gcp", "aliyun", "tencent"], var.cloud_provider)
+    error_message = "cloud_provider must be one of: vercel, aws, gcp, aliyun, tencent."
   }
 }
 
@@ -115,6 +126,30 @@ variable "aws_redis_node_type" {
   description = "ElastiCache node type"
   type        = string
   default     = "cache.t3.micro"
+}
+
+# ── Google Cloud ─────────────────────────────────────────────
+variable "gcp_project_id" {
+  description = "Google Cloud project ID (required when cloud_provider = gcp)"
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.cloud_provider != "gcp" || var.gcp_project_id != ""
+    error_message = "gcp_project_id is required when cloud_provider = gcp."
+  }
+}
+
+variable "gcp_region" {
+  description = "Google Cloud region for the prod deployment"
+  type        = string
+  default     = "us-central1"
+}
+
+variable "gcp_artifact_repository" {
+  description = "Artifact Registry Docker repository ID for Nebutra service images"
+  type        = string
+  default     = "nebutra"
 }
 
 # ── Alibaba Cloud ─────────────────────────────────────────────
@@ -155,6 +190,12 @@ provider "aws" {
   #   AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY env vars, or ~/.aws/credentials
 }
 
+provider "google" {
+  project = var.gcp_project_id != "" ? var.gcp_project_id : null
+  region  = var.gcp_region
+  # Credentials: ADC, GOOGLE_APPLICATION_CREDENTIALS, or Workload Identity Federation in CI.
+}
+
 provider "alicloud" {
   region = var.aliyun_region
   # Credentials: ALICLOUD_ACCESS_KEY / ALICLOUD_SECRET_KEY env vars
@@ -178,11 +219,21 @@ module "aws" {
   source = "../../modules/aws"
   count  = var.cloud_provider == "aws" ? 1 : 0
 
-  environment        = var.environment
-  region             = var.aws_region
-  cluster_name       = var.aws_cluster_name
-  db_instance_class  = var.aws_db_instance_class
-  redis_node_type    = var.aws_redis_node_type
+  environment       = var.environment
+  region            = var.aws_region
+  cluster_name      = var.aws_cluster_name
+  db_instance_class = var.aws_db_instance_class
+  redis_node_type   = var.aws_redis_node_type
+}
+
+module "gcp" {
+  source = "../../modules/gcp"
+  count  = var.cloud_provider == "gcp" ? 1 : 0
+
+  environment         = var.environment
+  project_id          = var.gcp_project_id
+  region              = var.gcp_region
+  artifact_repository = var.gcp_artifact_repository
 }
 
 module "aliyun" {
@@ -213,6 +264,11 @@ output "active_provider" {
 output "aws_outputs" {
   description = "AWS module outputs (empty when provider != aws)"
   value       = length(module.aws) > 0 ? module.aws[0] : null
+}
+
+output "gcp_outputs" {
+  description = "GCP module outputs (empty when provider != gcp)"
+  value       = length(module.gcp) > 0 ? module.gcp[0] : null
 }
 
 output "aliyun_outputs" {

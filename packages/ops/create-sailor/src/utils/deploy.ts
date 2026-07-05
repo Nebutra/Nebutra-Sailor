@@ -12,8 +12,15 @@ export type ScaffoldDeployTargetMap = {
   "landing-page": "vercel" | "standalone" | "cloudflare-pages" | "railway";
   "design-docs": "vercel" | "standalone" | "cloudflare-pages" | "railway";
   "sailor-docs": "vercel" | "standalone" | "cloudflare-pages" | "railway";
-  gateway: "cloudflare-workers" | "vercel-functions" | "ecs-docker" | "k8s" | "aws" | "railway";
-  "python-ai": "ecs-docker" | "k8s" | "aws" | "railway";
+  gateway:
+    | "cloudflare-workers"
+    | "vercel-functions"
+    | "ecs-docker"
+    | "k8s"
+    | "aws"
+    | "gcp"
+    | "railway";
+  "python-ai": "ecs-docker" | "k8s" | "aws" | "gcp" | "railway";
 };
 
 const DEFAULT_DEPLOY_TARGETS = {

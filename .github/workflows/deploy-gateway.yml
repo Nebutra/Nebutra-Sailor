@@ -14,6 +14,7 @@ on:
           - ecs-docker
           - k8s
           - aws
+          - gcp
           - railway
   workflow_run:
     workflows: ["CI"]

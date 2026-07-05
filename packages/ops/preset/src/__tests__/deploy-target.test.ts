@@ -32,7 +32,9 @@ describe("deploy-target selector", () => {
     );
     expect(resolveDeployTarget("gateway", { DEPLOY_TARGET_GATEWAY: "railway" })).toBe("railway");
     expect(resolveDeployTarget("gateway", { DEPLOY_TARGET_GATEWAY: "k8s" })).toBe("k8s");
+    expect(resolveDeployTarget("gateway", { DEPLOY_TARGET_GATEWAY: "gcp" })).toBe("gcp");
     expect(resolveDeployTarget("python-ai", { DEPLOY_TARGET_PYTHON_AI: "k8s" })).toBe("k8s");
+    expect(resolveDeployTarget("python-ai", { DEPLOY_TARGET_PYTHON_AI: "gcp" })).toBe("gcp");
     expect(resolveDeployTarget("python-ai", { DEPLOY_TARGET_PYTHON_AI: "railway" })).toBe(
       "railway",
     );
@@ -64,9 +66,16 @@ describe("deploy-target selector", () => {
       "ecs-docker",
       "k8s",
       "aws",
+      "gcp",
       "railway",
     ]);
-    expect(TARGETS_BY_SURFACE.originBackend).toEqual(["ecs-docker", "k8s", "aws", "railway"]);
+    expect(TARGETS_BY_SURFACE.originBackend).toEqual([
+      "ecs-docker",
+      "k8s",
+      "aws",
+      "gcp",
+      "railway",
+    ]);
     expect(deployTargetEnvKey("landing-page")).toBe("DEPLOY_TARGET_LANDING_PAGE");
     expect(deployTargetEnvKey("python-ai")).toBe("DEPLOY_TARGET_PYTHON_AI");
   });

@@ -58,13 +58,20 @@ describe("production runtime closure", () => {
         "ecs-docker",
         "k8s",
         "aws",
+        "gcp",
         "railway",
       ]),
     );
     expect(TARGETS_BY_SURFACE.frontend).toEqual(
       expect.arrayContaining(["vercel", "standalone", "cloudflare-pages", "railway"]),
     );
-    expect(TARGETS_BY_SURFACE.originBackend).toEqual(["ecs-docker", "k8s", "aws", "railway"]);
+    expect(TARGETS_BY_SURFACE.originBackend).toEqual([
+      "ecs-docker",
+      "k8s",
+      "aws",
+      "gcp",
+      "railway",
+    ]);
   });
 
   it("keeps deploy targets scoped to apps and deployable backends, not domain packages", () => {
@@ -77,7 +84,9 @@ describe("production runtime closure", () => {
     expect(deployTargetEnvKey("gateway")).toBe("DEPLOY_TARGET_GATEWAY");
     expect(deployTargetEnvKey("python-ai")).toBe("DEPLOY_TARGET_PYTHON_AI");
     expect(resolveDeployTarget("gateway", { DEPLOY_TARGET_GATEWAY: "k8s" })).toBe("k8s");
+    expect(resolveDeployTarget("gateway", { DEPLOY_TARGET_GATEWAY: "gcp" })).toBe("gcp");
     expect(resolveDeployTarget("python-ai", { DEPLOY_TARGET_PYTHON_AI: "aws" })).toBe("aws");
+    expect(resolveDeployTarget("python-ai", { DEPLOY_TARGET_PYTHON_AI: "gcp" })).toBe("gcp");
   });
 
   it("records the deployment closure ADR with defaults, switchability, and non-deploying packages", () => {

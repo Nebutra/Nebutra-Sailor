@@ -1,8 +1,8 @@
 # Nebutra-Sailor Terraform Infrastructure
 
 Multi-cloud infrastructure-as-code for Nebutra-Sailor.
-Supports **AWS**, **Alibaba Cloud (Aliyun)**, and **Tencent Cloud** as deployment targets,
-with Vercel still available for preview / lightweight deployments.
+Supports **AWS**, **Google Cloud**, **Alibaba Cloud (Aliyun)**, and **Tencent Cloud**
+as deployment targets, with Vercel still available for preview / lightweight deployments.
 
 ---
 
@@ -18,6 +18,7 @@ infra/iac/terraform/
 │       └── main.tf                  # Production entrypoint (multi-cloud)
 └── modules/
     ├── aws/main.tf                  # AWS module
+    ├── gcp/main.tf                  # Google Cloud module
     ├── aliyun/main.tf               # Alibaba Cloud module
     └── tencent/main.tf              # Tencent Cloud module
 ```
@@ -26,7 +27,7 @@ infra/iac/terraform/
 
 ## 1. Selecting a cloud provider
 
-Set `cloud_provider` to one of: `aws` | `aliyun` | `tencent` | `vercel`
+Set `cloud_provider` to one of: `aws` | `gcp` | `aliyun` | `tencent` | `vercel`
 
 ```bash
 # via CLI flag
@@ -53,6 +54,19 @@ export AWS_DEFAULT_REGION="us-east-1"
 # Optional: assume a specific role
 export AWS_ROLE_ARN="arn:aws:iam::123456789012:role/TerraformRole"
 ```
+
+### Google Cloud
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="service-account.json"
+export TF_VAR_gcp_project_id="nebutra-prod"
+export TF_VAR_gcp_region="us-central1"
+export TF_VAR_gcp_artifact_repository="nebutra"
+```
+
+For CI, prefer Workload Identity Federation over JSON key files. The Docker
+publish workflow uses `GCP_WORKLOAD_IDENTITY_PROVIDER` and `GCP_SERVICE_ACCOUNT`
+repository variables when pushing images to Artifact Registry.
 
 ### Alibaba Cloud
 
@@ -95,6 +109,7 @@ matching backend block before running `terraform init`.
 | Provider | Backend type | Pre-requisite |
 | -------- | ------------ | ------------- |
 | AWS | S3 + DynamoDB lock table | Create bucket `nebutra-terraform-state-prod` and DynamoDB table `nebutra-terraform-locks` |
+| Google Cloud | GCS | Create bucket `nebutra-terraform-state-prod` |
 | Alibaba Cloud | OSS + TableStore lock | Create OSS bucket and TableStore instance |
 | Tencent Cloud | COS | Create COS bucket `nebutra-terraform-state-prod-<AppID>` |
 
@@ -111,6 +126,11 @@ terraform init \
   -backend-config="bucket=nebutra-terraform-state-prod" \
   -backend-config="key=sailor/prod/terraform.tfstate" \
   -backend-config="region=us-east-1"
+
+# Google Cloud
+terraform init \
+  -backend-config="bucket=nebutra-terraform-state-prod" \
+  -backend-config="prefix=sailor/prod"
 
 # Alibaba Cloud
 terraform init \
@@ -199,6 +219,20 @@ docker build -f apps/web/Dockerfile -t $REGISTRY/nebutra-prod/web:latest .
 docker push $REGISTRY/nebutra-prod/web:latest
 ```
 
+### Docker image push (Google Cloud example)
+
+```bash
+PROJECT_ID=nebutra-prod
+REGION=us-central1
+REPOSITORY=nebutra
+REGISTRY="${REGION}-docker.pkg.dev"
+
+gcloud auth configure-docker "$REGISTRY"
+
+docker build -f apps/web/Dockerfile -t "$REGISTRY/$PROJECT_ID/$REPOSITORY/nebutra-web:latest" .
+docker push "$REGISTRY/$PROJECT_ID/$REPOSITORY/nebutra-web:latest"
+```
+
 ---
 
 ## 7. Notes
@@ -207,8 +241,8 @@ docker push $REGISTRY/nebutra-prod/web:latest
 - Use `sensitive = true` on all password/token variables (already done in modules).
 - The `environments/prod/main.tf` uses `count = ... ? 1 : 0` to activate only
   the module matching the selected provider, keeping plan output clean.
-- Module outputs are conditionally surfaced as `aws_outputs`, `aliyun_outputs`,
-  and `tencent_outputs` at the environment level.
+- Module outputs are conditionally surfaced as `aws_outputs`, `gcp_outputs`,
+  `aliyun_outputs`, and `tencent_outputs` at the environment level.
 
 ## Related
 

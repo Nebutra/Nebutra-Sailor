@@ -38,6 +38,8 @@
     "check-env": "npx tsx infra/ops/scripts/check-env.ts",
     "check:e2e-env": "node scripts/check-e2e-prereqs.mjs",
     "check:public-urls": "node scripts/check-public-urls.mjs",
+    "cloud:doctor": "node scripts/verify-cloud-portability.mjs --doctor",
+    "cloud:verify": "node scripts/verify-cloud-portability.mjs",
     "check:tsup-configs": "node scripts/check-tsup-configs.mjs",
     "ci:verify-turbo-contract": "node scripts/verify-turbo-build-contract.mjs",
     "verify:web-release": "node scripts/verify-web-release.mjs",

@@ -8,7 +8,7 @@
 > 2026-06-04 refinement: the production default is now recorded as Vercel
 > frontends → Cloudflare Workers gateway → ECS Origin FastAPI/Celery. Gateway
 > remains provider-switchable (`cloudflare-workers`, `vercel-functions`,
-> `ecs-docker`, `k8s`, `aws`, `railway`), but Cloudflare Workers is the recommended
+> `ecs-docker`, `k8s`, `aws`, `gcp`, `railway`), but Cloudflare Workers is the recommended
 > default edge target. Treat older gateway-on-ECS wording in this design as a
 > dormant adapter path, not the long-term default.
 
@@ -61,8 +61,8 @@
 |---|---|---|---|
 | **Frontend** (landing, web, design-docs, sailor-docs) | **Vercel** | `standalone` self-host (Aliyun/Docker/Nginx) | edge / preview / ISR |
 | **`web` server logic** | **Layered**: thin BFF → Vercel Functions; heavy → gateway | — | see §5 |
-| **Gateway** (`backends/gateway`) | **`cloudflare-workers`** | `vercel-functions`, `ecs-docker`, `k8s`, `aws`, `railway` | edge/API entry by default; one active target |
-| **Origin backend** (`backends/python/ai`) | **`ecs-docker`** (Aliyun ECS) | `k8s`, `aws`, `railway` | FastAPI/Celery heavy runtime; one active target |
+| **Gateway** (`backends/gateway`) | **`cloudflare-workers`** | `vercel-functions`, `ecs-docker`, `k8s`, `aws`, `gcp`, `railway` | edge/API entry by default; one active target |
+| **Origin backend** (`backends/python/ai`) | **`ecs-docker`** (Aliyun ECS) | `k8s`, `aws`, `gcp`, `railway` | FastAPI/Celery heavy runtime; one active target |
 | **Database** | **Supabase** | Prisma adapter swap (Neon/RDS) | unchanged |
 | **Cache + Queue** | **Upstash** (REST + QStash) | self-host Redis / BullMQ | converge `idp` into `@nebutra/cache` |
 | **Market** | **single** | **dual** (region overlay) | Vercel CN-reachability handled via `standalone` CN edge when dual |
@@ -76,8 +76,8 @@ A new **switchable deployment dimension**, modeled exactly like the existing pro
 ### 4.1 Selector
 - One env/preset key per service: `DEPLOY_TARGET_<SERVICE>`.
   - Frontends accept `{ vercel, standalone, cloudflare-pages, railway }`.
-  - `gateway` accepts `{ cloudflare-workers, vercel-functions, ecs-docker, k8s, aws, railway }`.
-  - `python-ai` accepts `{ ecs-docker, k8s, aws, railway }`.
+  - `gateway` accepts `{ cloudflare-workers, vercel-functions, ecs-docker, k8s, aws, gcp, railway }`.
+  - `python-ai` accepts `{ ecs-docker, k8s, aws, gcp, railway }`.
   - Defaults (when unset): frontends → `vercel`; `gateway` → `cloudflare-workers`; `python-ai` → `ecs-docker`.
 - Surfaced through the existing **preset system** (`packages/ops/preset`) so a scaffold picks a coherent set; documented in one place.
 
@@ -86,7 +86,8 @@ Each adapter is a **gated CI/job target + its manifest**, none of which fire unl
 - `cloudflare-workers` → Wrangler/Workers gateway adapter (gateway default)
 - `ecs-docker` → ECS Origin Docker/PM2/SSH adapter (python-ai default; gateway dormant fallback)
 - `k8s` → `deploy.yml` + `infra/iac/k8s/**` + `docker-build-push.yml`
-- `aws` → ECS/Fargate via the image already pushable to ECR + IaC stub
+- `aws` → ECS/Fargate via the image already pushable to ECR + IaC module
+- `gcp` → Cloud Run/GKE/Compute Engine via the image already pushable to Artifact Registry + IaC module
 - `railway` → create-sailor provider target for bootstrap DX
 
 Each adapter job begins with a guard:
@@ -138,8 +139,8 @@ Cloudflare Workers (cheap edge gateway) ↔ ECS Docker (cheap origin) ↔ k8s/AW
 
 Target end-state of CI:
 - **Frontend:** Vercel git-integration (default) — remove frontends from `deploy-ecs.yml` and `deploy.yml` matrices; their `standalone` path stays as the dormant self-host adapter.
-- **Gateway:** `cloudflare-workers` active by default; `vercel-functions`, `ecs-docker`, `k8s`, `aws`, and `railway` dormant unless selected.
-- **Origin backend:** `python/ai` defaults to `ecs-docker`; `k8s`, `aws`, and `railway` are dormant unless selected.
+- **Gateway:** `cloudflare-workers` active by default; `vercel-functions`, `ecs-docker`, `k8s`, `aws`, `gcp`, and `railway` dormant unless selected.
+- **Origin backend:** `python/ai` defaults to `ecs-docker`; `k8s`, `aws`, `gcp`, and `railway` are dormant unless selected.
 - `docker-build-push.yml` retained — it feeds k8s/aws adapters and is harmless when those are dormant (image build only).
 - Add the **one-active-substrate** architecture test (§4.3).
 
