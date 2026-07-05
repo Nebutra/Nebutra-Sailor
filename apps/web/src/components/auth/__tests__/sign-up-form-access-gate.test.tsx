@@ -94,8 +94,18 @@ vi.mock("@nebutra/ui/primitives", () => ({
 }));
 
 vi.mock("../oauth-buttons", () => ({
-  OAuthButtons: ({ returnUrl }: { returnUrl?: string }) => (
-    <div data-return-url={returnUrl} data-testid="oauth-buttons" />
+  OAuthButtons: ({
+    providers,
+    returnUrl,
+  }: {
+    providers?: readonly string[];
+    returnUrl?: string;
+  }) => (
+    <div
+      data-provider-count={providers?.length ?? 0}
+      data-return-url={returnUrl}
+      data-testid="oauth-buttons"
+    />
   ),
 }));
 
@@ -157,12 +167,18 @@ describe("SignUpForm access gate", () => {
     vi.stubGlobal("fetch", fetchMock);
     const { SignUpForm } = await import("../sign-up-form");
 
-    render(<SignUpForm returnUrl="/en/desktop-auth/complete?scheme=foundry" />);
+    render(
+      <SignUpForm
+        enabledOAuthProviders={["google"]}
+        returnUrl="/en/desktop-auth/complete?scheme=foundry"
+      />,
+    );
 
     expect(screen.getByTestId("oauth-buttons")).toHaveAttribute(
       "data-return-url",
       "/en/desktop-auth/complete?scheme=foundry",
     );
+    expect(screen.getByTestId("oauth-buttons")).toHaveAttribute("data-provider-count", "1");
     expect(screen.getByRole("link", { name: "Sign in" })).toHaveAttribute(
       "href",
       "/sign-in?returnUrl=%2Fen%2Fdesktop-auth%2Fcomplete%3Fscheme%3Dfoundry",
@@ -177,5 +193,32 @@ describe("SignUpForm access gate", () => {
     await waitFor(() =>
       expect(pushMock).toHaveBeenCalledWith("/en/desktop-auth/complete?scheme=foundry"),
     );
+  });
+
+  it("shows a specific account-exists error returned by the auth backend", async () => {
+    vi.stubEnv("NEXT_PUBLIC_ACCESS_GATE_MODE", "open");
+    const user = userEvent.setup();
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          new Response(JSON.stringify({ code: "USER_ALREADY_EXISTS" }), { status: 409 }),
+        ),
+    );
+    const { SignUpForm } = await import("../sign-up-form");
+
+    render(<SignUpForm enabledOAuthProviders={["google"]} />);
+
+    await user.type(screen.getByLabelText("First name"), "Ada");
+    await user.type(screen.getByLabelText("Last name"), "Lovelace");
+    await user.type(screen.getByLabelText("Email"), "ada@example.com");
+    await user.type(screen.getByLabelText("Password"), "correct horse battery staple");
+    await user.click(screen.getByRole("button", { name: "Create account" }));
+
+    expect(
+      await screen.findByText("An account already exists for this email. Sign in instead."),
+    ).toBeInTheDocument();
+    expect(pushMock).not.toHaveBeenCalled();
   });
 });

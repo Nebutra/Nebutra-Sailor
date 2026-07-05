@@ -19,12 +19,13 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import type { OAuthProvider } from "@/lib/auth/oauth-providers";
 import {
   enablePasskeyConditionalUI,
   isPasskeySupported,
   signInWithPasskey,
 } from "@/lib/auth/passkey-client";
-import { OAuthButtons, type OAuthProvider } from "./oauth-buttons";
+import { OAuthButtons } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
 
 interface SsoDiscoveryProvider {

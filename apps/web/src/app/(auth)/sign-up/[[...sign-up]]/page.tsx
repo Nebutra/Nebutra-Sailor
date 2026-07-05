@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { SignUpForm } from "@/components/auth/sign-up-form";
+import { detectEnabledOAuthProviders } from "@/lib/auth/oauth-providers";
 
 type SearchParams = { returnUrl?: string; returnTo?: string; redirect?: string };
 
@@ -14,7 +15,7 @@ async function SignUpPageContent({ searchParams }: { searchParams: Promise<Searc
 
   return (
     <AuthSplitLayout>
-      <SignUpForm returnUrl={returnUrl} />
+      <SignUpForm enabledOAuthProviders={detectEnabledOAuthProviders()} returnUrl={returnUrl} />
     </AuthSplitLayout>
   );
 }

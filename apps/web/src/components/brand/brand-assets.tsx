@@ -30,6 +30,7 @@ export const webBrandLabels = {
 
 interface BrandLogoProps {
   className?: string;
+  colorScheme?: "auto" | "light";
   imgClassName?: string;
   variant?: "horizontal" | "mark";
   /**
@@ -43,6 +44,7 @@ interface BrandLogoProps {
 
 export function BrandLogo({
   className,
+  colorScheme = "auto",
   imgClassName,
   variant = "horizontal",
   tenantLogoUrl,
@@ -76,6 +78,7 @@ export function BrandLogo({
   const darkMonoSrc = "srcDarkMono" in asset ? asset.srcDarkMono : null;
   const darkVariantSrc = darkSrc ?? darkMonoSrc;
   const needsInvert = !darkSrc && Boolean(darkMonoSrc);
+  const renderDarkVariant = colorScheme === "auto" && Boolean(darkVariantSrc);
 
   return (
     <span
@@ -93,11 +96,11 @@ export function BrandLogo({
         draggable={false}
         className={cn(
           "block h-full w-full object-contain",
-          darkVariantSrc && "dark:hidden",
+          renderDarkVariant && "dark:hidden",
           imgClassName,
         )}
       />
-      {darkVariantSrc ? (
+      {renderDarkVariant && darkVariantSrc ? (
         <Image
           src={darkVariantSrc}
           alt=""

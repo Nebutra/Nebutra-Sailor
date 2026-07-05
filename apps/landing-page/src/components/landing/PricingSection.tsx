@@ -2,6 +2,7 @@ import { CheckCircle } from "@nebutra/icons";
 import { AuroraBackground, Badge, Button, Card } from "@nebutra/ui/primitives";
 import { headers } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
+import { createAppSignUpUrl } from "@/lib/app-url";
 import { getExchangeRate } from "@/lib/pricing/exchange-rates";
 
 export async function PricingSection({
@@ -39,7 +40,7 @@ export async function PricingSection({
     },
     {
       key: "startup",
-      ctaHref: "/sign-up",
+      ctaHref: createAppSignUpUrl("/choose-plan"),
       highlighted: true,
       featureKeys: ["f1", "f2", "f3", "f4", "f5"] as const,
       dynamicPrice: formatter.format(799 * exchangeRate),

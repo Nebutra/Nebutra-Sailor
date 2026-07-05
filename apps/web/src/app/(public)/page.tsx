@@ -154,16 +154,16 @@ export default async function PublicDashboardPage() {
 
   return (
     <main id="main-content" className="min-h-screen bg-neutral-1 text-neutral-12">
-      <header className="border-neutral-5 border-b bg-neutral-1/90 dark:bg-neutral-12/90">
+      <header className="border-neutral-5 border-b bg-neutral-1/95 text-neutral-12 shadow-[0_1px_0_rgba(24,24,27,0.04)] supports-[backdrop-filter]:bg-neutral-1/88 supports-[backdrop-filter]:backdrop-blur">
         <div className="mx-auto flex h-14 w-full max-w-[1280px] items-center justify-between gap-4 px-4 sm:px-6">
           <Link
             href={localizedHref("/")}
             aria-label={webBrandLabels.homeLink}
             className="inline-flex min-w-0 items-center rounded-[var(--radius-md)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
-            <BrandLogo variant="horizontal" className="h-6 w-[8.5rem]" />
+            <BrandLogo variant="horizontal" colorScheme="light" className="h-6 w-[8.5rem]" />
           </Link>
-          <nav className="hidden items-center gap-1 text-sm text-neutral-10 md:flex">
+          <nav className="hidden items-center gap-1 text-sm text-neutral-11 md:flex">
             {copy.nav.map((item) => (
               <Link
                 key={item.href}
@@ -176,7 +176,7 @@ export default async function PublicDashboardPage() {
           </nav>
           <Link
             href={localizedHref("/workspace")}
-            className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-1.5 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11 dark:text-neutral-12"
+            className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-neutral-12 px-3 py-1.5 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-11"
           >
             {copy.workspaceAction}
             <ArrowRight className="size-3.5" aria-hidden="true" />

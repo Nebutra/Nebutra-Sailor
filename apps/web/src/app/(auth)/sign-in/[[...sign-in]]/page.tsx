@@ -3,25 +3,15 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { MagicLinkPanel } from "@/components/auth/magic-link-panel";
-import type { OAuthProvider } from "@/components/auth/oauth-buttons";
 import { PasskeyPanel } from "@/components/auth/passkey-panel";
 import { SignInForm } from "@/components/auth/sign-in-form";
+import { detectEnabledOAuthProviders } from "@/lib/auth/oauth-providers";
 
 /**
  * Catchall route — `/sign-in`, `/sign-in/magic-link`, etc. all hit this page.
  * We dispatch on the first slug segment to render the right panel inside the
  * shared split layout.
  */
-
-function detectEnabledOAuthProviders(): readonly OAuthProvider[] {
-  const enabled: OAuthProvider[] = [];
-  if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) enabled.push("google");
-  if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) enabled.push("github");
-  if (process.env.APPLE_CLIENT_ID && process.env.APPLE_CLIENT_SECRET) enabled.push("apple");
-  if (process.env.MICROSOFT_CLIENT_ID && process.env.MICROSOFT_CLIENT_SECRET)
-    enabled.push("microsoft");
-  return enabled;
-}
 
 type SearchParams = { returnUrl?: string; returnTo?: string; redirect?: string };
 

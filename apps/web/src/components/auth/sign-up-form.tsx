@@ -16,6 +16,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import type { OAuthProvider } from "@/lib/auth/oauth-providers";
 import { OAuthButtons } from "./oauth-buttons";
 
 type Phase = "details" | "verify";
@@ -32,15 +33,45 @@ type DetailsValues = z.infer<typeof detailsSchema>;
 interface SignUpFormProps {
   /** Server-sanitized returnUrl to land on after successful sign-up. */
   returnUrl?: string;
+  /** OAuth providers actually configured server-side. */
+  enabledOAuthProviders?: readonly OAuthProvider[];
 }
 
-export function SignUpForm({ returnUrl }: SignUpFormProps) {
+const SIGN_UP_ERROR_COPY: Record<string, string> = {
+  ACCESS_INVITE_REQUIRED: "A valid invite code is required to sign up.",
+  INVALID_ACCESS_INVITE: "Invite code is invalid, expired, or not available.",
+  ACCESS_INVITE_REDEMPTION_FAILED: "Invite redemption failed. Contact support before retrying.",
+  USER_ALREADY_EXISTS: "An account already exists for this email. Sign in instead.",
+  EMAIL_ALREADY_EXISTS: "An account already exists for this email. Sign in instead.",
+  INVALID_EMAIL: "Enter a valid email address.",
+  PASSWORD_TOO_SHORT: "Use a longer password.",
+};
+
+function extractSignUpError(payload: unknown): string {
+  if (!payload || typeof payload !== "object") return "Sign up failed. Please try again.";
+  const data = payload as Record<string, unknown>;
+  const code =
+    typeof data.code === "string"
+      ? data.code
+      : typeof data.error === "string"
+        ? data.error
+        : typeof data.message === "string"
+          ? data.message
+          : "";
+  if (code && SIGN_UP_ERROR_COPY[code]) return SIGN_UP_ERROR_COPY[code];
+  if (typeof data.error === "string" && data.error.trim()) return data.error;
+  if (typeof data.message === "string" && data.message.trim()) return data.message;
+  return "Sign up failed. Please try again.";
+}
+
+export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
   const initialInviteCode = searchParams.get("invite") ?? "";
   const tenantId = searchParams.get("tenantId") ?? undefined;
   const fallbackTarget = returnUrl ?? "/onboarding";
+  const shouldRenderOAuth = !accessGateEnabled && (enabledOAuthProviders?.length ?? 0) > 0;
 
   const form = useForm<DetailsValues>({
     resolver: zodResolver(detailsSchema),
@@ -87,11 +118,7 @@ export function SignUpForm({ returnUrl }: SignUpFormProps) {
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        setError(
-          (data as Record<string, string>).error ??
-            (data as Record<string, Record<string, string>>).message ??
-            "Sign up failed",
-        );
+        setError(extractSignUpError(data));
         return;
       }
 
@@ -220,9 +247,9 @@ export function SignUpForm({ returnUrl }: SignUpFormProps) {
           Social sign-up is disabled while invite-only access is enabled. Use email sign-up with
           your invite code.
         </p>
-      ) : (
+      ) : shouldRenderOAuth ? (
         <>
-          <OAuthButtons mode="signUp" returnUrl={returnUrl} />
+          <OAuthButtons mode="signUp" providers={enabledOAuthProviders} returnUrl={returnUrl} />
 
           <div className="relative">
             <Separator />
@@ -231,7 +258,7 @@ export function SignUpForm({ returnUrl }: SignUpFormProps) {
             </span>
           </div>
         </>
-      )}
+      ) : null}
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleDetailsSubmit)} className="flex flex-col gap-4">

@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { FooterMinimal, Navbar } from "@/components/landing";
 import { type Locale, routing } from "@/i18n/routing";
+import { createAppSignInUrl } from "@/lib/app-url";
 import { getAuth } from "@/lib/auth";
 import { LicenseWizard } from "./LicenseWizard";
 
@@ -30,10 +31,10 @@ export async function generateMetadata({
   };
 }
 
-async function RequireAuth({ lang, children }: { lang: string; children: React.ReactNode }) {
+async function RequireAuth({ children }: { children: React.ReactNode }) {
   const { userId } = await getAuth();
   if (!userId) {
-    redirect(`/${lang}/sign-in?redirect_url=/${lang}/get-license`);
+    redirect(createAppSignInUrl("/choose-plan"));
   }
   return <>{children}</>;
 }
@@ -47,7 +48,7 @@ export default async function GetLicensePage({ params }: { params: Promise<{ lan
     <main className="min-h-screen bg-[var(--neutral-1)]">
       <Navbar />
       <Suspense fallback={null}>
-        <RequireAuth lang={lang}>
+        <RequireAuth>
           <LicenseWizard />
         </RequireAuth>
       </Suspense>

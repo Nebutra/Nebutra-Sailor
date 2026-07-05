@@ -18,9 +18,10 @@
 import { createAccessGate, createPrismaAccessInviteStore } from "@nebutra/access-gate";
 import { auditLogger } from "@nebutra/audit";
 import type { AuthProvider, AuthProviderId } from "@nebutra/auth";
-import { getAuditableContext, getConfiguredAuthProvider } from "@nebutra/auth";
+import { getAuditableContext, getConfiguredAuthProvider, sanitizeReturnUrl } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
+import { isOAuthProvider, type OAuthProvider } from "@/lib/auth/oauth-providers";
 import { db } from "@/lib/db";
 import { applySessionHint } from "@/lib/session-hint";
 
@@ -42,6 +43,12 @@ interface AccessGateSignupContext {
   tenantId?: string;
 }
 
+interface OAuthStartRequest {
+  provider: OAuthProvider | null;
+  invalidProvider?: string;
+  callbackURL: string;
+}
+
 async function getAuth(): Promise<AuthProvider> {
   if (!authInstance) {
     authInstance = await createAuth({ provider });
@@ -61,6 +68,76 @@ function isEmailSignUpRequest(request: Request): boolean {
 function isOAuthRequest(request: Request): boolean {
   const url = new URL(request.url);
   return url.pathname.includes("/oauth/") || url.pathname.includes("/one-tap/");
+}
+
+function readOAuthStartRequest(request: Request): OAuthStartRequest | null {
+  const url = new URL(request.url);
+  const match = url.pathname.match(/\/api\/auth\/oauth\/([^/]+)\/?$/);
+  if (!match) return null;
+
+  const rawProvider = decodeURIComponent(match[1] ?? "");
+  const rawCallback =
+    url.searchParams.get("callbackURL") ??
+    url.searchParams.get("callback") ??
+    url.searchParams.get("returnUrl") ??
+    url.searchParams.get("returnTo") ??
+    url.searchParams.get("redirect");
+
+  return {
+    provider: isOAuthProvider(rawProvider) ? rawProvider : null,
+    ...(isOAuthProvider(rawProvider) ? {} : { invalidProvider: rawProvider }),
+    callbackURL: sanitizeReturnUrl(rawCallback, { fallback: "/" }),
+  };
+}
+
+async function handleOAuthStartRequest(request: Request): Promise<Response | null> {
+  const oauthStart = readOAuthStartRequest(request);
+  if (!oauthStart) return null;
+
+  if (request.method.toUpperCase() !== "GET") {
+    return Response.json(
+      { code: "METHOD_NOT_ALLOWED", error: "OAuth start requests must use GET." },
+      { status: 405 },
+    );
+  }
+
+  if (!oauthStart.provider) {
+    return Response.json(
+      {
+        code: "OAUTH_PROVIDER_NOT_SUPPORTED",
+        error: "This OAuth provider is not supported.",
+        provider: oauthStart.invalidProvider,
+      },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const auth = await getAuth();
+    const result = await auth.signIn({
+      type: "oauth",
+      provider: oauthStart.provider,
+      redirectUrl: oauthStart.callbackURL,
+    });
+
+    if (result.ok && result.redirectTo) {
+      return Response.redirect(new URL(result.redirectTo, request.url).toString(), 302);
+    }
+
+    const signInUrl = new URL("/sign-in", request.url);
+    signInUrl.searchParams.set("error", result.error?.code ?? "oauth_unavailable");
+    signInUrl.searchParams.set("provider", oauthStart.provider);
+    return Response.redirect(signInUrl, 302);
+  } catch (error) {
+    logger.error("[auth] OAuth start failed", {
+      provider: oauthStart.provider,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return Response.json(
+      { code: "OAUTH_START_FAILED", error: "Unable to start OAuth sign-in." },
+      { status: 500 },
+    );
+  }
 }
 
 function createAccessGateService() {
@@ -302,6 +379,9 @@ async function handler(request: Request): Promise<Response> {
       { status: 403 },
     );
   }
+
+  const oauthStartResponse = await handleOAuthStartRequest(request);
+  if (oauthStartResponse) return oauthStartResponse;
 
   const accessGateContextOrResponse = await readAccessGateSignupContext(request);
   if (accessGateContextOrResponse instanceof Response) return accessGateContextOrResponse;

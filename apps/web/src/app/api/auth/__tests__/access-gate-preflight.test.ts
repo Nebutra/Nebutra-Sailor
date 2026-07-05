@@ -9,6 +9,10 @@ const middlewareMock = vi.fn(
 );
 const validateMock = vi.fn(async () => ({ id: "aic_1", status: "active" }));
 const redeemMock = vi.fn(async () => ({ status: "redeemed" }));
+const signInMock = vi.fn(async () => ({
+  ok: true,
+  redirectTo: "https://accounts.example/oauth/google",
+}));
 
 vi.mock("@nebutra/auth", () => ({
   getAuditableContext: vi.fn(async () => ({
@@ -16,11 +20,17 @@ vi.mock("@nebutra/auth", () => ({
     tenantId: "tenant_1",
   })),
   getConfiguredAuthProvider: vi.fn(() => "better-auth"),
+  sanitizeReturnUrl: vi.fn((input: string | null | undefined, options?: { fallback?: string }) => {
+    const fallback = options?.fallback ?? "/";
+    if (!input || !input.startsWith("/") || input.startsWith("//")) return fallback;
+    return input;
+  }),
 }));
 
 vi.mock("@nebutra/auth/server", () => ({
   createAuth: vi.fn(async () => ({
     middleware: () => middlewareMock,
+    signIn: signInMock,
   })),
 }));
 
@@ -64,6 +74,7 @@ describe("/api/auth sign-up access gate preflight", () => {
     middlewareMock.mockClear();
     validateMock.mockClear();
     redeemMock.mockClear();
+    signInMock.mockClear();
   });
 
   afterEach(() => {
@@ -163,5 +174,54 @@ describe("/api/auth sign-up access gate preflight", () => {
       redeemedByUserId: "user_new",
       email: "ada@example.com",
     });
+  });
+});
+
+describe("/api/auth OAuth start compatibility", () => {
+  beforeEach(() => {
+    vi.stubEnv("ACCESS_GATE_MODE", "open");
+    middlewareMock.mockClear();
+    signInMock.mockClear();
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("starts OAuth through the configured auth provider instead of falling through to 404", async () => {
+    const { GET } = await loadRoute();
+    const response = await GET(
+      new Request("https://app.example/api/auth/oauth/google?callback=/dashboard"),
+    );
+
+    expect(response.status).toBe(302);
+    expect(response.headers.get("location")).toBe("https://accounts.example/oauth/google");
+    expect(signInMock).toHaveBeenCalledWith({
+      type: "oauth",
+      provider: "google",
+      redirectUrl: "/dashboard",
+    });
+    expect(middlewareMock).not.toHaveBeenCalled();
+  });
+
+  it("sanitizes unsafe OAuth callback targets before starting the provider flow", async () => {
+    const { GET } = await loadRoute();
+    await GET(new Request("https://app.example/api/auth/oauth/github?callback=//evil.example/x"));
+
+    expect(signInMock).toHaveBeenCalledWith({
+      type: "oauth",
+      provider: "github",
+      redirectUrl: "/",
+    });
+  });
+
+  it("rejects unsupported OAuth providers with an explicit client error", async () => {
+    const { GET } = await loadRoute();
+    const response = await GET(new Request("https://app.example/api/auth/oauth/dropbox"));
+
+    expect(response.status).toBe(400);
+    expect(await response.json()).toMatchObject({ code: "OAUTH_PROVIDER_NOT_SUPPORTED" });
+    expect(signInMock).not.toHaveBeenCalled();
+    expect(middlewareMock).not.toHaveBeenCalled();
   });
 });

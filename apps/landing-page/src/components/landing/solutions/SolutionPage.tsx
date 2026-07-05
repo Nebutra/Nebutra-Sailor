@@ -8,11 +8,9 @@ import {
 } from "@/components/landing/features/feature-group-tokens";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { createAppSignUpUrl } from "@/lib/app-url";
 import { getSolutionGroup, pick, type Solution } from "@/lib/constants/solutions-data";
-import { env } from "@/lib/env";
 import { getSolutionContentSource } from "@/lib/solutions/content-source";
-
-const APP_URL = env.NEXT_PUBLIC_APP_URL;
 
 const COPY = {
   back: { en: "All solutions", zh: "全部解决方案" },
@@ -56,7 +54,7 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
     ? await getSolutionContentSource().getRelatedPosts(solution.contentCategory, locale, 3)
     : [];
 
-  const ctaHref = isOffering ? "/contact" : `${APP_URL}/sign-up`;
+  const ctaHref = isOffering ? "/contact" : createAppSignUpUrl();
   const ctaLabel = isOffering ? copy("ctaOffering", locale) : copy("ctaContent", locale);
 
   return (

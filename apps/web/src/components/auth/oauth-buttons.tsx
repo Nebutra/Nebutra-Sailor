@@ -3,8 +3,11 @@
 import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-
-export type OAuthProvider = "google" | "github" | "apple" | "microsoft";
+import {
+  buildOAuthStartPath,
+  OAUTH_PROVIDERS,
+  type OAuthProvider,
+} from "@/lib/auth/oauth-providers";
 
 interface OAuthButtonsProps {
   mode: "signIn" | "signUp";
@@ -83,17 +86,14 @@ const PROVIDER_ICON: Record<OAuthProvider, () => React.ReactElement> = {
   microsoft: MicrosoftIcon,
 };
 
-const ALL_PROVIDERS: readonly OAuthProvider[] = ["google", "github", "apple", "microsoft"];
-
-export function OAuthButtons({ mode, providers = ALL_PROVIDERS, returnUrl }: OAuthButtonsProps) {
+export function OAuthButtons({ mode, providers = OAUTH_PROVIDERS, returnUrl }: OAuthButtonsProps) {
   const t = useTranslations("auth.signIn");
   const [loadingProvider, setLoadingProvider] = useState<OAuthProvider | null>(null);
 
   function handleOAuth(provider: OAuthProvider) {
     setLoadingProvider(provider);
-    const callback = returnUrl ?? (mode === "signIn" ? "/" : "/onboarding");
-    const params = new URLSearchParams({ callback });
-    window.location.href = `/api/auth/oauth/${provider}?${params.toString()}`;
+    const callbackURL = returnUrl ?? (mode === "signIn" ? "/" : "/onboarding");
+    window.location.assign(buildOAuthStartPath(provider, callbackURL));
   }
 
   if (providers.length === 0) return null;
