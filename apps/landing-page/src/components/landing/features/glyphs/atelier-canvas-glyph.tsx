@@ -30,7 +30,7 @@ export function AtelierCanvasGlyph(_props: SubpackageGlyphProps) {
       <div className="mt-5 flex items-start gap-3">
         <div className="relative h-[80px] w-[120px] shrink-0 rounded-[var(--radius-sm)] border border-neutral-7 bg-neutral-1">
           <div className="absolute left-1.5 top-1.5 flex items-center gap-1 font-mono text-[8.5px] text-neutral-9">
-            <Image size={9} />
+            <Image size={9} aria-hidden />
             <span>canvas</span>
           </div>
           {TILE_TINTS.map((tint, i) => (
