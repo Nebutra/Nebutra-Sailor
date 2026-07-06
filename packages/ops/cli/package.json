@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@nebutra/theme": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "@types/node": "catalog:",
     "@types/node-fetch": "^2.6.13",
     "tsup": "catalog:",

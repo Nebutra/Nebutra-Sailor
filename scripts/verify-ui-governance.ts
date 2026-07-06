@@ -109,6 +109,8 @@ const CI_WORKFLOW_CONTRACTS = [
       "git diff --exit-code -- \\",
       "apps/design-docs/public/r \\",
       "apps/design-docs/public/registry.json \\",
+      "apps/design-docs/public/agent \\",
+      "apps/design-docs/public/agent-manifest.json \\",
       "apps/design-docs/public/previews-index.json \\",
       "apps/design-docs/src/__registry__/index.tsx \\",
       "apps/design-docs/src/__registry__/file-map.json",

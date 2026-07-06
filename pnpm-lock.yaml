@@ -2397,6 +2397,9 @@ importers:
       '@nebutra/trace-store':
         specifier: workspace:*
         version: link:../../platform/trace-store
+      '@nebutra/ui':
+        specifier: workspace:*
+        version: link:../../design/ui
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -4015,6 +4018,9 @@ importers:
       '@nebutra/theme':
         specifier: workspace:*
         version: link:../../design/theme
+      '@nebutra/ui':
+        specifier: workspace:*
+        version: link:../../design/ui
       '@types/node':
         specifier: 'catalog:'
         version: 25.9.1

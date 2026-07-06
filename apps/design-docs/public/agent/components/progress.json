@@ -1,0 +1,76 @@
+{
+  "name": "progress",
+  "title": "Progress",
+  "description": "Determinate progress bar with max ceiling, threshold-color map, multi-stage stops with tooltips, and ~1Hz aria-valuenow throttling.",
+  "status": "stable",
+  "maturity": "canonical",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/progress.tsx",
+  "href": "https://ui.nebutra.com/agent/components/progress.json",
+  "tags": [
+    "canonical",
+    "dashboard",
+    "mixed",
+    "npm-dependencies",
+    "primitive",
+    "registry-dependencies",
+    "stable"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "mixed",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/progress.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@base-ui/react",
+      "class-variance-authority",
+      "usehooks-ts"
+    ],
+    "registry": [
+      "tooltip"
+    ]
+  },
+  "files": [
+    {
+      "path": "components/ui/progress.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/progress.tsx"
+    }
+  ],
+  "tokens": [],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": false
+  },
+  "docs": {
+    "source": "/en/docs/components/progress",
+    "routes": [
+      "/en/docs/components/progress",
+      "/zh/docs/components/progress"
+    ],
+    "storybook": "packages/design/ui/src/primitives/progress.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/progress.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

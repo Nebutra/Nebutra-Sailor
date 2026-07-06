@@ -45,6 +45,7 @@
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-log": "workspace:*",
     "@nebutra/trace-store": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {

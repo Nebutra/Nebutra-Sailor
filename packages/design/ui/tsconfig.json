@@ -17,6 +17,8 @@
     "src/icons/**/*.tsx",
     "src/theme/**/*.ts",
     "src/theme/**/*.tsx",
+    "src/agent/**/*.ts",
+    "src/agent/**/*.tsx",
     "src/primitives/index.ts",
     "src/typography/**/*.ts",
     "src/typography/**/*.tsx",

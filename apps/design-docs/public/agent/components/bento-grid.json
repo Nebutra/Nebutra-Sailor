@@ -1,0 +1,76 @@
+{
+  "name": "bento-grid",
+  "title": "Bento Grid",
+  "description": "Responsive bento-style feature grid with hover-reveal CTAs.",
+  "status": "experimental",
+  "maturity": "experimental",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/bento-grid.tsx",
+  "href": "https://ui.nebutra.com/agent/components/bento-grid.json",
+  "tags": [
+    "custom",
+    "experimental",
+    "marketing",
+    "npm-dependencies",
+    "primitive",
+    "registry-dependencies",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "custom",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/bento-grid.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@nebutra/icons"
+    ],
+    "registry": [
+      "button"
+    ]
+  },
+  "files": [
+    {
+      "path": "components/ui/bento-grid.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/bento-grid.tsx"
+    }
+  ],
+  "tokens": [
+    "--radius-xl"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/bento-grid",
+    "routes": [
+      "/en/docs/components/bento-grid",
+      "/zh/docs/components/bento-grid"
+    ],
+    "storybook": "packages/design/ui/src/primitives/bento-grid.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/bento-grid.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

@@ -85,6 +85,7 @@ function copyAsset(srcAbs: string, destAbs: string): void {
 const ENTRIES: Record<string, string> = {
   index: "src/index.ts",
   "components/index": "src/components/index.ts",
+  "agent/index": "src/agent/index.ts",
   "layout/index": "src/layout/index.ts",
   "layouts/index": "src/layouts/index.ts",
   "icons/index": "src/icons/index.ts",
@@ -101,7 +102,7 @@ const ENTRIES: Record<string, string> = {
   "tailwind.preset": "src/tailwind.preset.ts",
 };
 
-const SERVER_ONLY_ENTRIES = new Set<string>(["tailwind.preset"]);
+const SERVER_ONLY_ENTRIES = new Set<string>(["agent/index", "tailwind.preset"]);
 
 export default defineConfig({
   entry: ENTRIES,

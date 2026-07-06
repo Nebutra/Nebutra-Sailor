@@ -277,6 +277,85 @@ const nebultraCommand: CommandMeta = {
         },
       ],
     },
+    {
+      name: "ui",
+      description: "Inspect Nebutra UI agent contracts, production evidence, and migration hints",
+      usage: "nebutra ui <command> [options]",
+      subcommands: [
+        {
+          name: "search",
+          description: "Search the agent-readable @nebutra/ui component contract",
+          usage: "nebutra ui search [query] [options]",
+          options: [
+            { flags: "--limit <number>", description: "Maximum number of results" },
+            { flags: "--offset <number>", description: "Pagination offset" },
+            { flags: "--tag <tag>", description: "Filter by generated tag" },
+            { flags: "--status <status>", description: "Filter by status" },
+            { flags: "--maturity <maturity>", description: "Filter by maturity" },
+            { flags: "--manifest <path>", description: "Read a specific agent-manifest.json" },
+            { flags: "--format <type>", description: "Output format: json, table, plain" },
+          ],
+          examples: [
+            {
+              command: "nebutra ui search button --format json",
+              description: "Find governed Button contracts for agents",
+            },
+          ],
+        },
+        {
+          name: "component",
+          description: "Print one component contract with imports, evidence, and migration policy",
+          usage: "nebutra ui component <name> [options]",
+          arguments: [{ name: "name", description: "Component registry id", required: true }],
+          options: [
+            { flags: "--manifest <path>", description: "Read a specific agent-manifest.json" },
+            { flags: "--format <type>", description: "Output format: json, table, plain" },
+          ],
+          examples: [
+            {
+              command: "nebutra ui component button --format json",
+              description: "Inspect the Button agent contract",
+            },
+          ],
+        },
+        {
+          name: "validate",
+          description: "Validate production evidence for one component or the full UI contract",
+          usage: "nebutra ui validate [name] [options]",
+          arguments: [
+            { name: "name", description: "Optional component registry id", required: false },
+          ],
+          options: [
+            { flags: "--manifest <path>", description: "Read a specific agent-manifest.json" },
+            { flags: "--warn-only", description: "Report failures without a non-zero exit" },
+            { flags: "--format <type>", description: "Output format: json, table, plain" },
+          ],
+          examples: [
+            {
+              command: "nebutra ui validate button --format json",
+              description: "Validate Button production evidence",
+            },
+          ],
+        },
+        {
+          name: "migrate",
+          description: "Print dry-run codemod and migration hints for a component",
+          usage: "nebutra ui migrate <name> [options]",
+          arguments: [{ name: "name", description: "Component registry id", required: true }],
+          options: [
+            { flags: "--manifest <path>", description: "Read a specific agent-manifest.json" },
+            { flags: "--apply", description: "Reserved for future codemod execution" },
+            { flags: "--format <type>", description: "Output format: json, table, plain" },
+          ],
+          examples: [
+            {
+              command: "nebutra ui migrate button --format json",
+              description: "Read Button migration hints as a dry-run plan",
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
 

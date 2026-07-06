@@ -1,0 +1,73 @@
+{
+  "name": "text-shimmer",
+  "title": "Text Shimmer",
+  "description": "Animated text shimmer used as the streaming-header substrate for the chat tool-family.",
+  "status": "experimental",
+  "maturity": "experimental",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/text-shimmer.tsx",
+  "href": "https://ui.nebutra.com/agent/components/text-shimmer.json",
+  "tags": [
+    "animation",
+    "custom",
+    "experimental",
+    "primitive",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "custom",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/text-shimmer.json"
+  },
+  "dependencies": {
+    "npm": [],
+    "registry": []
+  },
+  "files": [
+    {
+      "path": "components/ui/text-shimmer.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/text-shimmer.tsx"
+    }
+  ],
+  "tokens": [
+    "--base-color",
+    "--base-gradient-color",
+    "--bg",
+    "--spread"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/text-shimmer",
+    "routes": [
+      "/en/docs/components/text-shimmer",
+      "/zh/docs/components/text-shimmer"
+    ],
+    "storybook": "packages/design/ui/src/primitives/text-shimmer.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/text-shimmer.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

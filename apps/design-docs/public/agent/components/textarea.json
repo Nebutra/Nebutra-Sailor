@@ -1,0 +1,99 @@
+{
+  "name": "textarea",
+  "title": "Textarea",
+  "description": "Multi-line text input with tokenized density, helper/error association, and focus-visible-only chrome.",
+  "status": "stable",
+  "maturity": "canonical",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/textarea.tsx",
+  "href": "https://ui.nebutra.com/agent/components/textarea.json",
+  "tags": [
+    "business",
+    "canonical",
+    "native",
+    "npm-dependencies",
+    "primitive",
+    "stable",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "native",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/textarea.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@nebutra/brand"
+    ],
+    "registry": []
+  },
+  "files": [
+    {
+      "path": "components/ui/textarea.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/textarea.tsx"
+    },
+    {
+      "path": "components/tokens/primitive.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/primitive.ts"
+    },
+    {
+      "path": "components/tokens/components/textarea.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/components/textarea.ts"
+    },
+    {
+      "path": "components/ui/form-control.ts",
+      "type": "registry:lib",
+      "target": "components/ui/form-control.ts"
+    }
+  ],
+  "tokens": [
+    "--input-focus-ring-width",
+    "--select-focus-ring-width",
+    "--shadow-xs",
+    "--textarea-field-gap",
+    "--textarea-focus-ring-width",
+    "--textarea-font-size",
+    "--textarea-label-size",
+    "--textarea-min-height",
+    "--textarea-padding-x",
+    "--textarea-padding-y",
+    "--textarea-radius"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/textarea",
+    "routes": [
+      "/en/docs/components/textarea",
+      "/zh/docs/components/textarea"
+    ],
+    "storybook": "packages/design/ui/src/primitives/textarea.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/textarea.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

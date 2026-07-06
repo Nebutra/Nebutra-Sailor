@@ -1,0 +1,67 @@
+{
+  "name": "status-dot",
+  "title": "Status Dot",
+  "description": "Deployment-lifecycle dot (QUEUED/BUILDING/READY/ERROR/CANCELED/DELETED). QUEUED+BUILDING pulse; terminal states static. Semantic-token colored, decorative-mode aria-hidden when paired with text.",
+  "status": "experimental",
+  "maturity": "experimental",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/status-dot.tsx",
+  "href": "https://ui.nebutra.com/agent/components/status-dot.json",
+  "tags": [
+    "dashboard",
+    "experimental",
+    "native",
+    "primitive"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "native",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/status-dot.json"
+  },
+  "dependencies": {
+    "npm": [],
+    "registry": []
+  },
+  "files": [
+    {
+      "path": "components/ui/status-dot.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/status-dot.tsx"
+    }
+  ],
+  "tokens": [],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": false
+  },
+  "docs": {
+    "source": "/en/docs/components/status-dot",
+    "routes": [
+      "/en/docs/components/status-dot",
+      "/zh/docs/components/status-dot"
+    ],
+    "storybook": "packages/design/ui/src/primitives/status-dot.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/status-dot.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

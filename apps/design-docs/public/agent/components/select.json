@@ -1,0 +1,130 @@
+{
+  "name": "select",
+  "title": "Select",
+  "description": "Short-list select primitive with native and compound listbox paths sharing one trigger contract.",
+  "status": "stable",
+  "maturity": "canonical",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/select.tsx",
+  "href": "https://ui.nebutra.com/agent/components/select.json",
+  "tags": [
+    "business",
+    "canonical",
+    "mixed",
+    "npm-dependencies",
+    "primitive",
+    "registry-dependencies",
+    "stable",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "mixed",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/select.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@base-ui/react",
+      "@nebutra/brand",
+      "@nebutra/icons",
+      "class-variance-authority"
+    ],
+    "registry": [
+      "button"
+    ]
+  },
+  "files": [
+    {
+      "path": "components/ui/select.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/select.tsx"
+    },
+    {
+      "path": "components/tokens/primitive.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/primitive.ts"
+    },
+    {
+      "path": "components/tokens/components/select.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/components/select.ts"
+    },
+    {
+      "path": "components/ui/error-message.tsx",
+      "type": "registry:lib",
+      "target": "components/ui/error-message.tsx"
+    },
+    {
+      "path": "components/ui/form-control.ts",
+      "type": "registry:lib",
+      "target": "components/ui/form-control.ts"
+    },
+    {
+      "path": "components/ui/label.tsx",
+      "type": "registry:lib",
+      "target": "components/ui/label.tsx"
+    }
+  ],
+  "tokens": [
+    "--input-focus-ring-width",
+    "--radius-lg",
+    "--radius-md",
+    "--radius-sm",
+    "--select-content-padding",
+    "--select-duration",
+    "--select-easing",
+    "--select-field-gap",
+    "--select-focus-ring-width",
+    "--select-font-size",
+    "--select-height",
+    "--select-icon-box-size",
+    "--select-icon-inset",
+    "--select-icon-size",
+    "--select-item-indicator-icon-size",
+    "--select-item-indicator-inset",
+    "--select-item-indicator-size",
+    "--select-item-padding-x",
+    "--select-item-padding-y",
+    "--select-item-radius",
+    "--select-label-size",
+    "--select-message-gap",
+    "--select-padding-x",
+    "--select-radius",
+    "--shadow-xs",
+    "--textarea-focus-ring-width"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/select",
+    "routes": [
+      "/en/docs/components/select",
+      "/zh/docs/components/select"
+    ],
+    "storybook": "packages/design/ui/src/primitives/select.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/select.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

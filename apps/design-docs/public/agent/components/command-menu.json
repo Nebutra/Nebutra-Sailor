@@ -1,0 +1,127 @@
+{
+  "name": "command-menu",
+  "title": "Command Menu",
+  "description": "AI command palette built on cmdk + base-ui dialog.",
+  "status": "experimental",
+  "maturity": "experimental",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/command-menu.tsx",
+  "href": "https://ui.nebutra.com/agent/components/command-menu.json",
+  "tags": [
+    "business",
+    "custom",
+    "experimental",
+    "npm-dependencies",
+    "primitive",
+    "registry-dependencies",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "custom",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/command-menu.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@base-ui/react",
+      "@nebutra/brand"
+    ],
+    "registry": [
+      "command",
+      "dialog"
+    ]
+  },
+  "files": [
+    {
+      "path": "components/ui/command-menu.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/command-menu.tsx"
+    },
+    {
+      "path": "components/ui/command-menu-parts.tsx",
+      "type": "registry:lib",
+      "target": "components/ui/command-menu-parts.tsx"
+    },
+    {
+      "path": "components/ui/command-styles.ts",
+      "type": "registry:lib",
+      "target": "components/ui/command-styles.ts"
+    },
+    {
+      "path": "components/tokens/primitive.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/primitive.ts"
+    },
+    {
+      "path": "components/tokens/shadows.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/shadows.ts"
+    },
+    {
+      "path": "components/tokens/components/overlay.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/components/overlay.ts"
+    }
+  ],
+  "tokens": [
+    "--ease-out",
+    "--elevation-2xl",
+    "--elevation-brand",
+    "--elevation-brand-lg",
+    "--elevation-lg",
+    "--elevation-md",
+    "--elevation-sm",
+    "--elevation-xl",
+    "--elevation-xs",
+    "--motion-duration-flow",
+    "--motion-duration-micro",
+    "--radius-lg",
+    "--radius-md",
+    "--radius-sm",
+    "--radius-xl",
+    "--select-content-max-height",
+    "--select-content-min-width",
+    "--select-content-radius",
+    "--select-content-shadow",
+    "--select-duration",
+    "--select-easing",
+    "--sheet-background",
+    "--sheet-overlay-background",
+    "--sheet-overlay-blur",
+    "--sheet-shadow"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/command-menu",
+    "routes": [
+      "/en/docs/components/command-menu",
+      "/zh/docs/components/command-menu"
+    ],
+    "storybook": "packages/design/ui/src/primitives/command-menu.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/command-menu.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

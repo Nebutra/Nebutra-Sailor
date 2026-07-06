@@ -1,0 +1,90 @@
+{
+  "name": "show-more",
+  "title": "Show More",
+  "description": "Count-aware progressive disclosure trigger for long lists and content blocks.",
+  "status": "experimental",
+  "maturity": "experimental",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/show-more.tsx",
+  "href": "https://ui.nebutra.com/agent/components/show-more.json",
+  "tags": [
+    "business",
+    "custom",
+    "experimental",
+    "npm-dependencies",
+    "primitive",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "custom",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/show-more.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@nebutra/icons"
+    ],
+    "registry": []
+  },
+  "files": [
+    {
+      "path": "components/ui/show-more.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/show-more.tsx"
+    },
+    {
+      "path": "components/tokens/components/show-more.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/components/show-more.ts"
+    }
+  ],
+  "tokens": [
+    "--neutral-1",
+    "--neutral-12",
+    "--neutral-2",
+    "--neutral-7",
+    "--neutral-8",
+    "--show-more-divider-inset",
+    "--show-more-duration",
+    "--show-more-easing",
+    "--show-more-gap",
+    "--show-more-icon-size",
+    "--show-more-radius",
+    "--show-more-trigger-height",
+    "--show-more-trigger-padding-x"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/show-more",
+    "routes": [
+      "/en/docs/components/show-more",
+      "/zh/docs/components/show-more"
+    ],
+    "storybook": "packages/design/ui/src/primitives/show-more.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/show-more.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

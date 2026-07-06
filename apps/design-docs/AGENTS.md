@@ -75,6 +75,8 @@ This app double-serves as the public shadcn-style Registry for `@nebutra/ui`.
     `https://ui.nebutra.com/r/<name>.json`)
   - `public/registry.json` — TIER B index (served at the apex)
   - `public/previews-index.json` — internal preview-demo index
+  - `public/agent-manifest.json` — agent-readable UI discovery contract
+  - `public/agent/components/<name>.json` — per-component agent contract
 
 ### Public routes
 
@@ -82,6 +84,8 @@ This app double-serves as the public shadcn-style Registry for `@nebutra/ui`.
 - `/registry/<name>` — single-component detail page with copy-paste install command
 - `/registry.json` and `/r/<name>.json` — static JSON served by Next.js out
   of `public/`
+- `/agent-manifest.json` and `/agent/components/<name>.json` — static JSON
+  contracts for coding agents and future CLI/MCP adapters
 
 CORS, caching, and `Content-Type` headers for the JSON endpoints are pinned in
 `vercel.json`.

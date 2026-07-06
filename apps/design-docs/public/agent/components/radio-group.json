@@ -1,0 +1,105 @@
+{
+  "name": "radio-group",
+  "title": "Radio Group",
+  "description": "Native radio-group fieldset with labelled options, descriptions, disabled reasons, and controlled/uncontrolled value.",
+  "status": "stable",
+  "maturity": "canonical",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/radio-group.tsx",
+  "href": "https://ui.nebutra.com/agent/components/radio-group.json",
+  "tags": [
+    "business",
+    "canonical",
+    "native",
+    "npm-dependencies",
+    "primitive",
+    "stable",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "native",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/radio-group.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@nebutra/brand"
+    ],
+    "registry": []
+  },
+  "files": [
+    {
+      "path": "components/ui/radio-group.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/radio-group.tsx"
+    },
+    {
+      "path": "components/tokens/primitive.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/primitive.ts"
+    },
+    {
+      "path": "components/tokens/components/radio.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/components/radio.ts"
+    }
+  ],
+  "tokens": [
+    "--neutral-10",
+    "--neutral-12",
+    "--neutral-2",
+    "--neutral-5",
+    "--neutral-7",
+    "--neutral-8",
+    "--radio-border-width",
+    "--radio-control-size",
+    "--radio-description-gap",
+    "--radio-description-size",
+    "--radio-dot-size",
+    "--radio-group-gap",
+    "--radio-item-gap",
+    "--radio-item-min-height",
+    "--radio-item-size",
+    "--radio-item-weight",
+    "--radio-label-gap",
+    "--radio-label-size",
+    "--radio-label-weight",
+    "--radio-motion-duration",
+    "--radio-motion-easing",
+    "--radius-full"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/radio-group",
+    "routes": [
+      "/en/docs/components/radio-group",
+      "/zh/docs/components/radio-group"
+    ],
+    "storybook": "packages/design/ui/src/primitives/radio-group.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/radio-group.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

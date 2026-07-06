@@ -1,0 +1,67 @@
+{
+  "name": "project-banner",
+  "title": "Project Banner",
+  "description": "Full-width, non-dismissible banner for project-wide states needing resolution. Four severity variants + ARIA live region.",
+  "status": "experimental",
+  "maturity": "experimental",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/project-banner.tsx",
+  "href": "https://ui.nebutra.com/agent/components/project-banner.json",
+  "tags": [
+    "dashboard",
+    "experimental",
+    "native",
+    "primitive"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "native",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/project-banner.json"
+  },
+  "dependencies": {
+    "npm": [],
+    "registry": []
+  },
+  "files": [
+    {
+      "path": "components/ui/project-banner.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/project-banner.tsx"
+    }
+  ],
+  "tokens": [],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": false
+  },
+  "docs": {
+    "source": "/en/docs/components/project-banner",
+    "routes": [
+      "/en/docs/components/project-banner",
+      "/zh/docs/components/project-banner"
+    ],
+    "storybook": "packages/design/ui/src/primitives/project-banner.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/project-banner.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

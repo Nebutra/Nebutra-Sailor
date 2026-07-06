@@ -1,0 +1,113 @@
+{
+  "name": "input",
+  "title": "Input",
+  "description": "Single-line form control with labels, helper/error text, clear button, affixes, shortcuts, and password reveal.",
+  "status": "stable",
+  "maturity": "canonical",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/input.tsx",
+  "href": "https://ui.nebutra.com/agent/components/input.json",
+  "tags": [
+    "business",
+    "canonical",
+    "mixed",
+    "npm-dependencies",
+    "primitive",
+    "stable",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "mixed",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/input.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@base-ui/react",
+      "@nebutra/brand",
+      "@nebutra/icons",
+      "class-variance-authority"
+    ],
+    "registry": []
+  },
+  "files": [
+    {
+      "path": "components/ui/input.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/input.tsx"
+    },
+    {
+      "path": "components/tokens/primitive.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/primitive.ts"
+    },
+    {
+      "path": "components/tokens/components/input.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/components/input.ts"
+    },
+    {
+      "path": "components/ui/form-control.ts",
+      "type": "registry:lib",
+      "target": "components/ui/form-control.ts"
+    },
+    {
+      "path": "components/ui/kbd.tsx",
+      "type": "registry:lib",
+      "target": "components/ui/kbd.tsx"
+    }
+  ],
+  "tokens": [
+    "--input-affix-inset",
+    "--input-control-icon-size",
+    "--input-control-inset",
+    "--input-control-size",
+    "--input-field-gap",
+    "--input-focus-ring-width",
+    "--input-font-size",
+    "--input-height",
+    "--input-icon-size",
+    "--input-padding-left",
+    "--input-padding-right",
+    "--input-padding-x",
+    "--input-radius",
+    "--radius-sm",
+    "--select-focus-ring-width",
+    "--shadow-xs",
+    "--textarea-focus-ring-width"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/input",
+    "routes": [
+      "/en/docs/components/input",
+      "/zh/docs/components/input"
+    ],
+    "storybook": "packages/design/ui/src/primitives/input.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/input.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}

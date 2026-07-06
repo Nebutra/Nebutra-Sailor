@@ -1,5 +1,6 @@
 import { serverRegistry } from "../registry/serverRegistry";
 import type { MCPServerConfig } from "../types";
+import { createUiAgentMcpServer } from "./uiAgentServer";
 
 /**
  * Register internal Nebutra services as MCP servers
@@ -7,6 +8,7 @@ import type { MCPServerConfig } from "../types";
  */
 
 export const INTERNAL_SERVERS: MCPServerConfig[] = [
+  createUiAgentMcpServer(),
   // AI Service
   {
     id: "nebutra-ai",

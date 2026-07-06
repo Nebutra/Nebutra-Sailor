@@ -88,6 +88,7 @@
     "forbiddenImportRegexes": ["^@nebutra\\/[^\\/]+\\/[^\\/]+\\/.+"],
     "customUiAllowedExports": [
       ".",
+      "./agent",
       "./components",
       "./hooks",
       "./icons",

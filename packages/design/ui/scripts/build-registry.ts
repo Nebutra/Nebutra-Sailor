@@ -28,7 +28,7 @@
  * Outputs are deterministic JSON with two-space indent.
  */
 
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -64,6 +64,9 @@ const TOKENS_DARK = join(
 );
 const OUT_DIR = join(REPO_ROOT, "apps", "design-docs", "public", "r");
 const OUT_INDEX = join(REPO_ROOT, "apps", "design-docs", "public", "registry.json");
+const OUT_AGENT_DIR = join(REPO_ROOT, "apps", "design-docs", "public", "agent");
+const OUT_AGENT_COMPONENT_DIR = join(OUT_AGENT_DIR, "components");
+const OUT_AGENT_INDEX = join(REPO_ROOT, "apps", "design-docs", "public", "agent-manifest.json");
 
 const CONTEXT_CARD_REGISTRY_TOKENS = `/**
  * Context Card Component Tokens — standalone registry copy.
@@ -387,6 +390,7 @@ export type ThemeToggleSize = keyof typeof themeToggleTokens.sizes;
 `;
 
 const DOCS_LAST_VERIFIED = "2026-05-21";
+const AGENT_CONTRACT_GENERATED_AT = "2026-07-06";
 
 const DOCS_STATUS_BY_NAME: Readonly<Record<string, DocsStatus>> = {
   accordion: "stable",
@@ -566,6 +570,79 @@ interface ShadcnRegistryItem {
     nebutraTokens: string[];
     nebutraLayer: RegistryLayer;
     docs: DocsMetadata;
+  };
+}
+
+interface AgentManifestCommand {
+  name: "search" | "component" | "validate" | "template" | "migrate";
+  status: "available" | "planned";
+  description: string;
+  json: boolean;
+}
+
+interface AgentComponentSummary {
+  name: string;
+  title: string;
+  description: string;
+  status: DocsStatus;
+  maturity: DocsMaturity;
+  layer: DocsLayer;
+  source: string;
+  href: string;
+  tags: string[];
+}
+
+interface AgentManifest {
+  $schema: string;
+  name: "nebutra-ui-agent";
+  version: 1;
+  generatedAt: string;
+  homepage: string;
+  registry: string;
+  commands: AgentManifestCommand[];
+  rules: {
+    sourceOfTruth: string[];
+    importPolicy: string;
+    registryPolicy: string;
+    tokenPolicy: string;
+  };
+  components: AgentComponentSummary[];
+}
+
+interface AgentComponentContract extends AgentComponentSummary {
+  package: "@nebutra/ui" | "@nebutra/tokens";
+  substrate: DocsSubstrate;
+  imports: {
+    package: string;
+    registry: string;
+  };
+  dependencies: {
+    npm: string[];
+    registry: string[];
+  };
+  files: Array<Pick<ShadcnFile, "path" | "type" | "target">>;
+  tokens: string[];
+  evidence: {
+    source: true;
+    docs: boolean;
+    storybook: boolean;
+    registry: true;
+    tokens: boolean;
+  };
+  docs: {
+    source?: string;
+    routes: string[];
+    storybook?: string;
+    lastVerified: string;
+  };
+  usage: {
+    recommended: string;
+    antiPatterns: string[];
+  };
+  migration: {
+    requiredForBreakingChanges: true;
+    codemods: string[];
+    hints: string[];
   };
 }
 
@@ -1525,6 +1602,211 @@ function statusToMaturity(status: DocsStatus): DocsMaturity {
   return "experimental";
 }
 
+function docsRoutesFor(name: string, layer: DocsLayer): string[] {
+  const sectionCandidates =
+    layer === "foundation"
+      ? ["foundations"]
+      : ["components", "fragment-components", "patterns", "registry"];
+  const routes: string[] = [];
+
+  for (const lang of ["en", "zh"]) {
+    for (const section of sectionCandidates) {
+      const candidate = join(
+        REPO_ROOT,
+        "apps",
+        "design-docs",
+        "content",
+        "docs",
+        lang,
+        section,
+        `${name}.mdx`,
+      );
+      if (existsSync(candidate)) {
+        routes.push(`/${lang}/docs/${section}/${name}`);
+      }
+    }
+  }
+
+  return routes;
+}
+
+function storybookPathFor(source: string): string | undefined {
+  const adjacentStory = source.replace(/\.(?:tsx|ts)$/, ".stories.tsx");
+  if (existsSync(join(REPO_ROOT, adjacentStory))) {
+    return adjacentStory;
+  }
+
+  return undefined;
+}
+
+function packageImportFor(item: ShadcnRegistryItem): string {
+  if (item.meta.docs.package === "@nebutra/tokens") {
+    return '@import "@nebutra/tokens/styles.css";';
+  }
+
+  if (item.meta.docs.layer === "foundation") {
+    return "@nebutra/ui";
+  }
+
+  return "@nebutra/ui/primitives";
+}
+
+function tagsFor(item: ShadcnRegistryItem): string[] {
+  const tags = new Set<string>([
+    item.meta.docs.status,
+    item.meta.docs.maturity,
+    item.meta.docs.layer,
+    item.meta.docs.substrate,
+    item.meta.nebutraLayer,
+  ]);
+
+  if (item.meta.nebutraTokens.length > 0) tags.add("tokens");
+  if ((item.dependencies?.length ?? 0) > 0) tags.add("npm-dependencies");
+  if ((item.registryDependencies?.length ?? 0) > 0) tags.add("registry-dependencies");
+
+  return [...tags].sort();
+}
+
+function buildAgentComponentContract(item: ShadcnRegistryItem): AgentComponentContract {
+  const docs = item.meta.docs;
+  const docsRoutes = docsRoutesFor(item.name, docs.layer);
+  const storybook = storybookPathFor(docs.source);
+  const registryUrl = `https://ui.nebutra.com/r/${item.name}.json`;
+  const href = `https://ui.nebutra.com/agent/components/${item.name}.json`;
+  const hasTokens = item.meta.nebutraTokens.length > 0;
+
+  return {
+    name: item.name,
+    title: item.title,
+    description: item.description,
+    status: docs.status,
+    maturity: docs.maturity,
+    layer: docs.layer,
+    source: docs.source,
+    href,
+    tags: tagsFor(item),
+    package: docs.package,
+    substrate: docs.substrate,
+    imports: {
+      package: packageImportFor(item),
+      registry: registryUrl,
+    },
+    dependencies: {
+      npm: item.dependencies ?? [],
+      registry: item.registryDependencies ?? [],
+    },
+    files: item.files.map((file) => ({
+      path: file.path,
+      type: file.type,
+      ...(file.target && { target: file.target }),
+    })),
+    tokens: item.meta.nebutraTokens,
+    evidence: {
+      source: true,
+      docs: docsRoutes.length > 0,
+      storybook: Boolean(storybook),
+      registry: true,
+      tokens: hasTokens,
+    },
+    docs: {
+      source: docsRoutes[0],
+      routes: docsRoutes,
+      ...(storybook && { storybook }),
+      lastVerified: docs.lastVerified,
+    },
+    usage: {
+      recommended:
+        docs.package === "@nebutra/tokens"
+          ? "Use the package CSS import inside Nebutra apps; use the registry theme only for standalone registry consumers."
+          : "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+      antiPatterns: [
+        "Do not import registry JSON as the internal source of truth.",
+        "Do not import component source through package-internal paths.",
+        "Do not override Nebutra semantic tokens with raw palette values.",
+      ],
+    },
+    migration: {
+      requiredForBreakingChanges: true,
+      codemods: [],
+      hints: [
+        "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+        "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+        `Use ${registryUrl} only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports.`,
+      ],
+    },
+  };
+}
+
+function buildAgentManifest(contracts: AgentComponentContract[]): AgentManifest {
+  return {
+    $schema: "https://ui.nebutra.com/schemas/nebutra-ui-agent.v1.json",
+    name: "nebutra-ui-agent",
+    version: 1,
+    generatedAt: AGENT_CONTRACT_GENERATED_AT,
+    homepage: "https://ui.nebutra.com",
+    registry: "https://ui.nebutra.com/registry.json",
+    commands: [
+      {
+        name: "search",
+        status: "available",
+        description: "Find components, foundations, and production UI patterns by name or tag.",
+        json: true,
+      },
+      {
+        name: "component",
+        status: "available",
+        description:
+          "Return one component contract with source, evidence, imports, and governance metadata.",
+        json: true,
+      },
+      {
+        name: "validate",
+        status: "available",
+        description: "Check whether a component has enough evidence for production recommendation.",
+        json: true,
+      },
+      {
+        name: "template",
+        status: "planned",
+        description: "Return governed page or workflow templates once template contracts exist.",
+        json: true,
+      },
+      {
+        name: "migrate",
+        status: "available",
+        description: "Run dry-run codemods for breaking component API migrations.",
+        json: true,
+      },
+    ],
+    rules: {
+      sourceOfTruth: [
+        "packages/design/tokens",
+        "packages/design/ui/src",
+        "apps/design-docs/content",
+        "packages/design/ui/src/**/*.stories.tsx",
+        "apps/design-docs/public/registry.json",
+      ],
+      importPolicy:
+        "Use @nebutra/ui package imports inside Nebutra apps; use registry URLs only for standalone consumers.",
+      registryPolicy:
+        "Registry manifests are distribution adapters and must not become internal design authority.",
+      tokenPolicy:
+        "@nebutra/tokens owns runtime CSS variables; components consume tokens and do not redefine them.",
+    },
+    components: contracts.map((contract) => ({
+      name: contract.name,
+      title: contract.title,
+      description: contract.description,
+      status: contract.status,
+      maturity: contract.maturity,
+      layer: contract.layer,
+      source: contract.source,
+      href: contract.href,
+      tags: contract.tags,
+    })),
+  };
+}
+
 function buildOne(
   spec: ComponentSpec,
   knownRegistry: Set<string>,
@@ -1664,17 +1946,20 @@ function main(): void {
   const darkMap = buildTokenMap(TOKENS_DARK);
 
   mkdirSync(OUT_DIR, { recursive: true });
+  mkdirSync(OUT_AGENT_COMPONENT_DIR, { recursive: true });
 
   const knownRegistry = new Set(COMPONENT_REGISTRY.map((c) => c.name));
 
   const allWarnings: string[] = [];
   const sizeReport: Array<{ name: string; sizeKb: string }> = [];
+  const registryItems: ShadcnRegistryItem[] = [];
 
   // 1) Component registry items
   for (const spec of COMPONENT_REGISTRY) {
     const { item, warnings, sizeBytes } = buildOne(spec, knownRegistry, lightMap, darkMap);
     const outPath = join(OUT_DIR, `${spec.name}.json`);
     writeFileSync(outPath, `${JSON.stringify(item, null, 2)}\n`, "utf-8");
+    registryItems.push(item);
     sizeReport.push({ name: spec.name, sizeKb: (sizeBytes / 1024).toFixed(2) });
     for (const w of warnings) allWarnings.push(`[${spec.name}] ${w}`);
   }
@@ -1684,6 +1969,7 @@ function main(): void {
   const themeJson = `${JSON.stringify(themeItem, null, 2)}\n`;
   const themeOut = join(OUT_DIR, "nebutra-tokens.json");
   writeFileSync(themeOut, themeJson, "utf-8");
+  registryItems.push(themeItem);
   sizeReport.push({
     name: "nebutra-tokens",
     sizeKb: (Buffer.byteLength(themeJson, "utf-8") / 1024).toFixed(2),
@@ -1719,12 +2005,22 @@ function main(): void {
   };
   writeFileSync(OUT_INDEX, `${JSON.stringify(index, null, 2)}\n`, "utf-8");
 
+  // 4) Agent-readable UI contract
+  const agentContracts = registryItems.map(buildAgentComponentContract);
+  for (const contract of agentContracts) {
+    const outPath = join(OUT_AGENT_COMPONENT_DIR, `${contract.name}.json`);
+    writeFileSync(outPath, `${JSON.stringify(contract, null, 2)}\n`, "utf-8");
+  }
+  const agentManifest = buildAgentManifest(agentContracts);
+  writeFileSync(OUT_AGENT_INDEX, `${JSON.stringify(agentManifest, null, 2)}\n`, "utf-8");
+
   // ---- Report ----
   process.stdout.write(`[registry] wrote ${sizeReport.length} manifests:\n`);
   for (const row of sizeReport) {
     process.stdout.write(`  - ${row.name}: ${row.sizeKb} KB\n`);
   }
   process.stdout.write(`[registry] index → ${OUT_INDEX}\n`);
+  process.stdout.write(`[registry] agent contract → ${OUT_AGENT_INDEX}\n`);
   if (allWarnings.length > 0) {
     process.stderr.write(`[registry] warnings:\n`);
     for (const w of allWarnings) process.stderr.write(`  ! ${w}\n`);

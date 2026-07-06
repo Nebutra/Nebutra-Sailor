@@ -35,6 +35,7 @@ import { registerServicesCommand } from "./commands/services";
 import { registerStatsCommand } from "./commands/stats";
 import { registerTestCommand } from "./commands/test";
 import { registerThemeCommand } from "./commands/theme";
+import { registerUiCommand } from "./commands/ui";
 import { registerUnlinkCommand } from "./commands/unlink";
 import { registerUpgradeCommand } from "./commands/upgrade";
 import { registerWorkflowCommand } from "./commands/workflow";
@@ -147,6 +148,7 @@ export function buildProgram(options: BuildProgramOptions): Command {
   registerBackendCommand(program);
   registerE2eCommand(program);
   registerThemeCommand(program);
+  registerUiCommand(program);
 
   // ─── Platform & ecosystem commands ──────────────────────
   registerAdminCommand(program);

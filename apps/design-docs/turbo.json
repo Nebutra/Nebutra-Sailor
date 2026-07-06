@@ -9,13 +9,20 @@
       "inputs": [
         "scripts/build-registry.mjs",
         "scripts/repair-registry-manifests.mjs",
+        "content/docs/**",
         "../../packages/design/ui/scripts/build-registry.ts",
         "../../packages/design/ui/src/primitives/**",
         "../../packages/design/ui/src/components/**",
         "../../packages/design/ui/src/shared/**"
       ],
       "cache": false,
-      "outputs": ["public/r/**", "public/registry.json", "public/previews-index.json"]
+      "outputs": [
+        "public/r/**",
+        "public/registry.json",
+        "public/previews-index.json",
+        "public/agent/**",
+        "public/agent-manifest.json"
+      ]
     }
   }
 }

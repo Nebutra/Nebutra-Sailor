@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { MCPClient } from "../client/mcpClient";
 import { InMemoryToolConsentStore } from "../consent";
@@ -8,6 +9,9 @@ import { readToolDebug } from "../debug";
 import { McpHost } from "../host";
 import { MCPServerRegistry } from "../registry/serverRegistry";
 import { createContextServerHandlers } from "../server/contextServer";
+import { createUiAgentMcpServer } from "../server/uiAgentServer";
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../..");
 
 describe("tool protocol host", () => {
   it("requires manifest and per-tool consent before executing a connected server", async () => {
@@ -183,6 +187,63 @@ describe("MCP tool registry access control", () => {
     ).resolves.toMatchObject({
       success: false,
       error: "Access denied to tool: summarize_context",
+    });
+  });
+});
+
+describe("Nebutra UI agent MCP tools", () => {
+  it("searches, validates, and returns migration hints from the generated UI contract", async () => {
+    const registry = new MCPServerRegistry();
+    registry.register(createUiAgentMcpServer());
+    const client = new MCPClient(registry);
+    const context = { requestId: "ui_1" };
+
+    expect(client.listTools(context).map((tool) => tool.name)).toEqual(
+      expect.arrayContaining([
+        "nebutra_ui_search_components",
+        "nebutra_ui_get_component",
+        "nebutra_ui_validate_component",
+        "nebutra_ui_get_migration_hints",
+      ]),
+    );
+
+    await expect(
+      client.executeTool(
+        "nebutra_ui_search_components",
+        { query: "button", limit: 1, root: repoRoot },
+        context,
+      ),
+    ).resolves.toMatchObject({
+      success: true,
+      result: {
+        items: [expect.objectContaining({ name: "button" })],
+      },
+    });
+
+    await expect(
+      client.executeTool(
+        "nebutra_ui_validate_component",
+        { name: "button", root: repoRoot },
+        context,
+      ),
+    ).resolves.toMatchObject({
+      success: true,
+      result: { name: "button", valid: true },
+    });
+
+    await expect(
+      client.executeTool(
+        "nebutra_ui_get_migration_hints",
+        { name: "button", root: repoRoot },
+        context,
+      ),
+    ).resolves.toMatchObject({
+      success: true,
+      result: {
+        component: "button",
+        dryRun: true,
+        hints: expect.arrayContaining([expect.stringContaining("breaking")]),
+      },
     });
   });
 });

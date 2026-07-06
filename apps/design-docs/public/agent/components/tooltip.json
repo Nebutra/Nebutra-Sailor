@@ -1,0 +1,114 @@
+{
+  "name": "tooltip",
+  "title": "Tooltip",
+  "description": "Base UI Tooltip wrapper for concise, non-interactive explanatory text.",
+  "status": "stable",
+  "maturity": "canonical",
+  "layer": "primitive",
+  "source": "packages/design/ui/src/primitives/tooltip.tsx",
+  "href": "https://ui.nebutra.com/agent/components/tooltip.json",
+  "tags": [
+    "business",
+    "canonical",
+    "mixed",
+    "npm-dependencies",
+    "primitive",
+    "stable",
+    "tokens"
+  ],
+  "package": "@nebutra/ui",
+  "substrate": "mixed",
+  "imports": {
+    "package": "@nebutra/ui/primitives",
+    "registry": "https://ui.nebutra.com/r/tooltip.json"
+  },
+  "dependencies": {
+    "npm": [
+      "@base-ui/react",
+      "@nebutra/brand"
+    ],
+    "registry": []
+  },
+  "files": [
+    {
+      "path": "components/ui/tooltip.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/tooltip.tsx"
+    },
+    {
+      "path": "components/tokens/primitive.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/primitive.ts"
+    },
+    {
+      "path": "components/tokens/shadows.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/shadows.ts"
+    },
+    {
+      "path": "components/tokens/components/overlay.ts",
+      "type": "registry:lib",
+      "target": "components/tokens/components/overlay.ts"
+    }
+  ],
+  "tokens": [
+    "--ease-out",
+    "--elevation-2xl",
+    "--elevation-brand",
+    "--elevation-brand-lg",
+    "--elevation-lg",
+    "--elevation-md",
+    "--elevation-sm",
+    "--elevation-xl",
+    "--elevation-xs",
+    "--motion-duration-flow",
+    "--motion-duration-micro",
+    "--radius-lg",
+    "--radius-md",
+    "--radius-sm",
+    "--radius-xl",
+    "--select-content-max-height",
+    "--select-content-min-width",
+    "--select-content-radius",
+    "--select-content-shadow",
+    "--select-duration",
+    "--select-easing",
+    "--sheet-background",
+    "--sheet-overlay-background",
+    "--sheet-overlay-blur",
+    "--sheet-shadow"
+  ],
+  "evidence": {
+    "source": true,
+    "docs": true,
+    "storybook": true,
+    "registry": true,
+    "tokens": true
+  },
+  "docs": {
+    "source": "/en/docs/components/tooltip",
+    "routes": [
+      "/en/docs/components/tooltip",
+      "/zh/docs/components/tooltip"
+    ],
+    "storybook": "packages/design/ui/src/primitives/tooltip.stories.tsx",
+    "lastVerified": "2026-05-21"
+  },
+  "usage": {
+    "recommended": "Use package imports inside Nebutra apps; use the registry URL only for standalone consumers outside the monorepo package graph.",
+    "antiPatterns": [
+      "Do not import registry JSON as the internal source of truth.",
+      "Do not import component source through package-internal paths.",
+      "Do not override Nebutra semantic tokens with raw palette values."
+    ]
+  },
+  "migration": {
+    "requiredForBreakingChanges": true,
+    "codemods": [],
+    "hints": [
+      "Keep public API changes behind a migration hint before templates or agents recommend the new shape.",
+      "Prefer additive props first; breaking renames require a dry-run codemod entry and docs update in the same change.",
+      "Use https://ui.nebutra.com/r/tooltip.json only for standalone consumers; Nebutra apps should migrate package imports through @nebutra/ui exports."
+    ]
+  }
+}
