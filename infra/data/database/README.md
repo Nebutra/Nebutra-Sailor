@@ -56,10 +56,15 @@ Never point a platform app at Neon — `apps/sleptons` drifted that way once (it
 
 ## Provider Compatibility
 
-This setup works with:
+This setup works with PostgreSQL providers:
+
 - Supabase
 - Neon
-- PlanetScale (with adapter)
-- AWS RDS
-- Google Cloud SQL
+- PlanetScale Postgres
+- AWS RDS for PostgreSQL
+- Google Cloud SQL for PostgreSQL
 - Self-hosted Postgres
+
+PlanetScale Vitess/MySQL is a separate future template path. It would need a
+MySQL/Vitess schema, adapter, relation/index strategy, and migration workflow;
+it is not a drop-in replacement for this Postgres runtime.

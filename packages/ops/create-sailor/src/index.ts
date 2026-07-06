@@ -100,6 +100,7 @@ function printDryRunPlan(
         ]
       : []),
     `db → ${database === "none" ? "skip (remove packages/db)" : `configure Prisma for ${database}`}`,
+    ...(database !== "none" ? [`db-host → configure ${resolved.databaseHost}`] : []),
     `payment → ${paymentChoice === "none" ? "skip (remove packages/billing)" : `configure ${paymentChoice}`}`,
     ...(docs !== "none"
       ? [
@@ -273,6 +274,7 @@ async function run(): Promise<void> {
     ],
     ["ORM", resolved.orm],
     ["Database", resolved.database],
+    ["Database Host", resolved.databaseHost],
     ["Payment", resolved.paymentChoice],
     [
       "AI topology",

@@ -1,16 +1,16 @@
 ---
 title: 数据库提供商
-description: 将 Nebutra 连接到 Neon 或 Supabase — 每个提供商的环境变量、连接池和迁移设置。
+description: 将 Nebutra 连接到 Neon、Supabase 或 PlanetScale Postgres — 每个提供商的环境变量、连接池和迁移设置。
 ---
 
-Nebutra 开箱即用支持两个托管 PostgreSQL 提供商。两者都与 Prisma v7、pgvector 和 RLS 完全兼容。无论选择哪个提供商，应用程序代码完全相同 — 只有连接字符串不同。
+Nebutra 开箱即用支持三个托管 PostgreSQL 提供商：Neon、Supabase 和 PlanetScale Postgres。应用程序代码在这些提供商之间保持一致；差异主要是连接字符串、连接池行为，以及如何启用提供商托管的 PostgreSQL 扩展。
 
 <Note>
-Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一提供商上均可不加修改地使用。
+此页面列出的受支持提供商都是 PostgreSQL。Prisma 中继续保留 `provider = "postgresql"`，提交生成的迁移文件，并通过 `DIRECT_URL` 运行迁移。
 </Note>
 
 <Warning>
-**不支持**基于 MySQL 的提供商（PlanetScale、Railway MySQL）。Nebutra 依赖 pgvector 和原生 PostgreSQL RLS — 两者都需要 PostgreSQL。
+PlanetScale Vitess/MySQL 与 PlanetScale Postgres 不是同一条支持路径。它需要单独的 schema、adapter、relation、index 和 migration 策略，因此目前只作为 future/template path，而不是受支持的核心 runtime。
 </Warning>
 
 <Tabs>
@@ -46,14 +46,17 @@ Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一
     DIRECT_URL="postgresql://USER:PASSWORD@ep-XXXXXX.us-east-2.aws.neon.tech/neondb?sslmode=require"
     ```
 
-    ### schema.prisma 数据源
+    ### Prisma 数据源与迁移配置
 
     ```prisma packages/platform/db/prisma/schema.prisma
     datasource db {
-      provider  = "postgresql"
-      url       = env("DATABASE_URL")
-      directUrl = env("DIRECT_URL")
+      provider = "postgresql"
     }
+    ```
+
+    ```ts packages/platform/db/prisma.config.ts
+    const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+    const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
     ```
 
     ### 通过 PgBouncer 的连接池
@@ -119,14 +122,17 @@ Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一
     DIRECT_URL="postgresql://postgres:PASSWORD@db.PROJECTREF.supabase.co:5432/postgres"
     ```
 
-    ### schema.prisma 数据源
+    ### Prisma 数据源与迁移配置
 
     ```prisma packages/platform/db/prisma/schema.prisma
     datasource db {
-      provider  = "postgresql"
-      url       = env("DATABASE_URL")
-      directUrl = env("DIRECT_URL")
+      provider = "postgresql"
     }
+    ```
+
+    ```ts packages/platform/db/prisma.config.ts
+    const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+    const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
     ```
 
     ### 通过 Supavisor 的连接池
@@ -147,33 +153,123 @@ Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一
 
     Prisma 使用 `DIRECT_URL` 执行 DDL 语句，使用 `DATABASE_URL` 执行所有其他查询。
   </Tab>
+  <Tab title="PlanetScale Postgres">
+    PlanetScale Postgres 是 Nebutra 支持的 PlanetScale 路径。它保留同一个 Prisma PostgreSQL 数据源，并使用 PlanetScale 的 Postgres PgBouncer 端点承载运行时流量。
+
+    ### 为什么选择 PlanetScale Postgres
+
+    - **兼容 PostgreSQL 的 runtime** — 保持 Sailor 对 Prisma、RLS 和 pgvector 的假设
+    - **PgBouncer 端点** — 使用端口 `6432` 承载应用程序的连接池流量
+    - **直连端点** — 使用端口 `5432` 运行 Prisma 迁移、introspection、备份和其他 DDL 密集型工作
+    - **分支和运维能力** — 使用 PlanetScale 的托管分支、备份、指标和运维工具，不需要更改应用程序代码
+
+    ### 启用 pgvector
+
+    Nebutra 的 AI 功能需要 `pgvector` 扩展。在第一次迁移之前，使用具备管理权限的 PlanetScale Postgres 角色启用它：
+
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS vector;
+    ```
+
+    ### 连接字符串格式
+
+    PlanetScale Postgres 对两种连接模式使用相同的 host、credentials 和 database name。端口决定连接模式，且必须启用 SSL。
+
+    ```
+    # 通过 PgBouncer 连接池 — 用于应用程序查询
+    postgresql://ROLE.BRANCH_ID:PASSWORD@HOSTNAME:6432/DATABASE?sslmode=require
+
+    # 直接 PostgreSQL — 用于迁移和 DDL
+    postgresql://ROLE.BRANCH_ID:PASSWORD@HOSTNAME:5432/DATABASE?sslmode=require
+    ```
+
+    ### 环境变量
+
+    ```bash .env
+    # 运行时查询（通过 PgBouncer 连接池）
+    DATABASE_URL="postgresql://ROLE.BRANCH_ID:PASSWORD@HOSTNAME:6432/DATABASE?sslmode=require"
+
+    # 仅迁移（直接连接 — 绕过 PgBouncer）
+    DIRECT_URL="postgresql://ROLE.BRANCH_ID:PASSWORD@HOSTNAME:5432/DATABASE?sslmode=require"
+    ```
+
+    ### Prisma 数据源与迁移配置
+
+    ```prisma packages/platform/db/prisma/schema.prisma
+    datasource db {
+      provider = "postgresql"
+    }
+    ```
+
+    ```ts packages/platform/db/prisma.config.ts
+    const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+    const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+    ```
+
+    ### 通过 PgBouncer 的连接池
+
+    PlanetScale Postgres 的 PgBouncer 使用事务模式。将它用于常规 OLTP 应用查询；不要将连接池 URL 用于 schema 变更、长时间运行的分析、备份，或需要持久连接的 session-specific 功能。
+
+    <Note>
+    RLS 租户上下文必须保持事务内作用域。Nebutra 的 `withRls` helper 在事务内部设置租户变量；新增代码不应依赖能跨连接池事务存活的 session 变量。
+    </Note>
+
+    <Warning>
+    Prisma 迁移继续使用 direct URL。不要为了 PlanetScale Postgres 将 Nebutra 的 Postgres 迁移工作流改成默认 `db push`；checked-in migrations 仍然是事实来源。
+    </Warning>
+
+    ### 使用 PlanetScale Postgres 运行迁移
+
+    迁移与其他 PostgreSQL 提供商相同：
+
+    ```bash
+    pnpm db:migrate
+    ```
+
+    Prisma 使用 `DIRECT_URL` 执行 DDL 语句，使用 `DATABASE_URL` 执行运行时查询。
+  </Tab>
 </Tabs>
 
 ## 选择提供商
 
-| 标准 | Neon | Supabase |
-|------|------|----------|
-| 免费套餐 | 慷慨（0.5 GB 存储，1 计算单元） | 慷慨（500 MB 数据库，2 GB 带宽） |
-| 分支 | 是 — 每个分支独立数据库 | 否 |
-| 托管控制台 | 基础版 | 功能完整的 Studio UI |
-| 连接池 | PgBouncer（事务模式） | Supavisor（会话 + 事务模式） |
-| 内置认证 | 否（使用 Clerk / Better Auth） | 是（如需要） |
-| 内置存储 | 否（使用 `@nebutra/uploads`） | 是（S3 兼容） |
-| pgvector | 默认启用 | 作为扩展提供 |
-| 自动暂停 | 是（免费套餐） | 是（暂停的项目） |
+| 标准 | Neon | Supabase | PlanetScale Postgres |
+|------|------|----------|----------------------|
+| 分支 | 是 — 每个分支独立数据库 | 否 | 是 — 托管数据库分支 |
+| 托管控制台 | 基础版 | 功能完整的 Studio UI | 带指标和分支的运维控制台 |
+| 连接池 | PgBouncer（事务模式） | Supavisor（会话 + 事务模式） | PgBouncer（事务模式，端口 `6432`） |
+| 直连迁移 URL | 直接 PostgreSQL URL | 直接 PostgreSQL URL | 端口 `5432` 的直接 PostgreSQL URL |
+| 内置认证 | 否（使用 Clerk / Better Auth） | 是（如需要） | 否（使用 Clerk / Better Auth） |
+| 内置存储 | 否（使用 `@nebutra/uploads`） | 是（S3 兼容） | 否（使用 `@nebutra/uploads`） |
+| pgvector | 默认启用 | 作为扩展提供 | 作为扩展提供 |
+| Prisma 迁移工作流 | checked-in Postgres migrations | checked-in Postgres migrations | checked-in Postgres migrations |
 
 <Tip>
-如果团队严重依赖每个 PR 的数据库环境，选择 Neon 的分支功能。如果希望有一个单一的可视化控制台来检查表和运行 SQL，Supabase Studio 非常出色。
+如果团队严重依赖每个 PR 的数据库环境，选择带数据库分支能力的提供商。如果希望有一个单一的可视化控制台来检查表和运行 SQL，Supabase Studio 很合适。如果团队已经在 PlanetScale 上运维，或希望采用它的 Postgres 运维模型，请为 Sailor 核心 runtime 使用 PlanetScale Postgres，而不是 PlanetScale Vitess/MySQL。
 </Tip>
+
+## PlanetScale Vitess/MySQL future path
+
+PlanetScale Vitess/MySQL 是不同的数据库目标，不是受支持 Postgres runtime 的连接字符串变体。未来如果为 Sailor 提供 Vitess/MySQL template，需要单独定义这些契约：
+
+- MySQL/Vitess Prisma schema，或生成出来的 schema variant
+- 兼容 MySQL 的 Prisma adapter 策略
+- `relationMode` 决策；如果使用 Prisma relation mode，还要为 relation scalar fields 显式补齐 `@@index`
+- 与 checked-in Postgres migrations 不冲突的 branch/deploy-request migration workflow
+- 替换 PostgreSQL-only 能力，例如 RLS 和 pgvector
+
+在这个 template 存在之前，PlanetScale 部署请使用 PlanetScale Postgres。
 
 ## 常见问题
 
 <AccordionGroup>
   <Accordion title="上线后可以切换提供商吗？">
-    可以。由于两个提供商都是标准 PostgreSQL，切换只需对数据进行 `pg_dump` / `pg_restore` 并更新 `DATABASE_URL` 和 `DIRECT_URL` 环境变量。不需要任何应用程序代码更改。
+    可以，但仅限此页面列出的 PostgreSQL 提供商之间。因为它们都暴露 PostgreSQL，切换需要规划 `pg_dump` / `pg_restore` 或提供商专用迁移流程，并更新 `DATABASE_URL` 和 `DIRECT_URL`。应用程序代码不需要 provider fork。
   </Accordion>
   <Accordion title="为什么需要两个连接字符串？">
-    连接池（PgBouncer、Supavisor）将许多应用程序连接多路复用到少量真实的 PostgreSQL 连接上。它们不支持迁移期间使用的 DDL 语句（如 `CREATE TABLE` 或 `ALTER TABLE`）。`DIRECT_URL` 绕过连接池，使 Prisma 能够安全地运行迁移。
+    连接池（PgBouncer、Supavisor）将许多应用程序连接多路复用到少量真实的 PostgreSQL 连接上。它们不是运行 `CREATE TABLE` 或 `ALTER TABLE` 这类 DDL 的合适路径。`DIRECT_URL` 绕过连接池，使 Prisma 能够安全地运行迁移。
+  </Accordion>
+  <Accordion title="可以改用 PlanetScale Vitess/MySQL 吗？">
+    目前不能作为 Nebutra 核心 runtime 使用。Vitess/MySQL 需要单独的 Prisma schema 或生成 schema variant、MySQL adapter、relation/index 策略，以及与 PlanetScale deploy requests 对齐的 migration workflow。它是 future/template path，不是替换 `DATABASE_URL` 就能切换的目标。
   </Accordion>
   <Accordion title="支持自托管 PostgreSQL 吗？">
     是的，但需要额外配置。你需要确保已安装 pgvector，配置连接池（推荐 PgBouncer），并为迁移提供直连 URL。
@@ -218,18 +314,21 @@ Neon 和 Supabase 都是 PostgreSQL。`pnpm db:migrate` 生成的迁移在任一
     DIRECT_URL="postgresql://user:pass@localhost:5432/nebutra"
     ```
 
-    **4. 更新 `prisma/schema.prisma`**
+    **4. 保持 Prisma 的 runtime/direct 连接配置**
 
     ```prisma
     datasource db {
-      provider  = "postgresql"
-      url       = env("DATABASE_URL")
-      directUrl = env("DIRECT_URL")
+      provider = "postgresql"
     }
+    ```
+
+    ```ts
+    const runtimeDatabaseUrl = process.env.DATABASE_URL ?? "";
+    const migrationDatabaseUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
     ```
   </Accordion>
   <Accordion title="免费套餐的连接数限制如何？">
-    Neon 和 Supabase 的免费套餐都有连接数限制（通常为 100-200 个总连接）。在免费套餐上连接池是必不可少的 — 在无服务器部署中永远不要将 `DATABASE_URL` 设置为直接连接字符串，因为每次函数调用都会消耗一个连接。
+    托管数据库套餐通常都有连接数限制。在受限套餐和无服务器部署中，连接池是必不可少的 — 生产无服务器环境中不要将 `DATABASE_URL` 设置为直接连接字符串，因为每次函数调用都可能消耗一个连接。
   </Accordion>
 </AccordionGroup>
 

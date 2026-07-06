@@ -61,6 +61,12 @@ Everything else (ORM, database, payment, email, storage, etc.) is flag-only.
 | `--dry-run` | (flag) — print plan, write nothing | off |
 | `--json` | (flag) — machine-readable event stream | off |
 
+<Note>
+  `--db-host=planetscale` targets PlanetScale Postgres. The Vitess/MySQL product
+  needs a separate Prisma schema and migration strategy before it can be treated
+  as a production Sailor runtime.
+</Note>
+
 For the full per-feature flag set (`--email`, `--storage`, `--monitoring`, `--analytics`, `--sms`, `--queue`, `--search`, `--cache`, `--notifications`, `--webhooks`, `--cms`, `--feature-flags`, `--captcha`, `--mcp`, `--metering`, `--billing-mode`, `--idp`, etc.) run `npx create-sailor --help`.
 
 ## Advanced flags

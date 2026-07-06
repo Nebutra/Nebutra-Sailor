@@ -1,5 +1,15 @@
+import { createRequire } from "node:module";
 import path from "node:path";
-import { readFiles, scanURLs, validateFiles } from "next-validate-link";
+
+const require = createRequire(import.meta.url);
+const yaml = require("js-yaml");
+
+// next-validate-link currently reaches gray-matter's js-yaml v3 API surface.
+// Patch the removed aliases before dynamically importing it under js-yaml v4.
+Object.defineProperty(yaml, "safeLoad", { value: yaml.load, configurable: true, writable: true });
+Object.defineProperty(yaml, "safeDump", { value: yaml.dump, configurable: true, writable: true });
+
+const { readFiles, scanURLs, validateFiles } = await import("next-validate-link");
 
 const cwd = process.cwd();
 const supportedLanguages = ["en", "zh"];

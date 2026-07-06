@@ -15,12 +15,12 @@ import { type DatabaseHostMeta, getDatabaseHost } from "./database-host-meta";
  * provider-specific schema cleanup like dropping `extensions`/`directUrl`).
  *
  * `applyDatabaseHostSelection` handles the host (multi-env-var blocks,
- * datasource extras like PlanetScale's relationMode, keeping directUrl when
- * the host uses pooler+direct split like Neon/Supabase).
+ * datasource extras for provider-specific edge cases, keeping directUrl when
+ * the host uses a pooler+direct split like Neon/Supabase/PlanetScale Postgres).
  *
  * The two are applied in sequence: engine first, then host. A host with a
- * `forcedEngine` (e.g. PlanetScale = mysql) is the source of truth — the CLI
- * normalises `--db` to that engine before calling applyDatabaseSelection.
+ * `forcedEngine` is the source of truth — the CLI normalises `--db` to that
+ * engine before calling applyDatabaseSelection.
  */
 
 export type DatabaseChoice = "postgresql" | "mysql" | "sqlite" | "none";

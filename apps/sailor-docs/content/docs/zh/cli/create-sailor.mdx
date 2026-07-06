@@ -61,6 +61,11 @@ npx create-sailor [目录]
 | `--dry-run` | （开关）打印计划但不写入文件 | 关 |
 | `--json` | （开关）机器可读的事件流输出 | 关 |
 
+<Note>
+  `--db-host=planetscale` 指 PlanetScale Postgres。Vitess/MySQL 产品需要单独的
+  Prisma schema 和迁移策略，才能作为生产级 Sailor runtime 支持。
+</Note>
+
 完整的按功能标志（`--email`、`--storage`、`--monitoring`、`--analytics`、`--sms`、`--queue`、`--search`、`--cache`、`--notifications`、`--webhooks`、`--cms`、`--feature-flags`、`--captcha`、`--mcp`、`--metering`、`--billing-mode`、`--idp` 等）请执行 `npx create-sailor --help`。
 
 ## 进阶标志

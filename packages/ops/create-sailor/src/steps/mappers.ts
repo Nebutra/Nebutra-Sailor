@@ -52,8 +52,8 @@ export function mapDb(d: string | undefined): NebutraConfig["database"] {
 
 /**
  * Resolve --db-host from CLI input + region fallback. If the host pins an
- * engine (PlanetScale = mysql), this returns BOTH host id and the engine
- * override the caller should apply to mapDb's result.
+ * engine, this returns BOTH host id and the engine override the caller should
+ * apply to mapDb's result.
  */
 export function resolveDatabaseHost(
   hostArg: string | undefined,

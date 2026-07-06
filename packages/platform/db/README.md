@@ -1,6 +1,10 @@
 # @nebutra/db
 
-Prisma 7 database client and schema for Supabase PostgreSQL.
+Prisma 7 database client and schema for Nebutra's PostgreSQL runtime.
+
+Supported managed Postgres targets include Supabase, Neon, and PlanetScale
+Postgres. Vitess/MySQL providers need a separate schema and migration contract;
+do not treat them as a `DATABASE_URL`-only swap for this package.
 
 > ⚠️ **Important for AI Assistants**: This package uses **Prisma 7.x** with the new `prisma-client` generator. Do NOT use outdated Prisma patterns. Read the [Prisma 7 Migration Guide](#prisma-7-critical-changes) below.
 
@@ -86,8 +90,13 @@ pnpm add @nebutra/db
 ### 1. Configure environment
 
 ```bash
-DATABASE_URL="postgresql://user:pass@host:5432/db"
+DATABASE_URL="postgresql://user:pass@host:6432/db?sslmode=require"
+DIRECT_URL="postgresql://user:pass@host:5432/db?sslmode=require"
 ```
+
+Use `DATABASE_URL` for pooled application traffic and `DIRECT_URL` for Prisma
+migrations. For PlanetScale Postgres, port `6432` is PgBouncer and port `5432`
+is direct Postgres.
 
 ### 2. Generate client
 

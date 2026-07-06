@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import type { DatabaseHostId } from "./database-host-meta";
 import type { ScaffoldDeployTargetMap } from "./deploy";
 
 export interface CustomEndpoint {
@@ -30,6 +31,7 @@ export interface NebutraConfig {
   region: Region;
   orm: "prisma" | "drizzle" | "none";
   database: "postgresql" | "mysql" | "sqlite" | "none";
+  databaseHost: DatabaseHostId;
   payment: "stripe" | "lemon" | "lemonsqueezy" | "wechat" | "alipay" | "none";
   aiMode?: AiMode;
   aiRouting?: AiRoutingConfig;

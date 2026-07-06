@@ -13,4 +13,13 @@ describe("resolveConfig deploy target closure", () => {
       "python-ai": "ecs-docker",
     });
   });
+
+  it("records PlanetScale as a Postgres database host selection", async () => {
+    const resolved = await resolveConfig({ yes: true, db: "mysql", dbHost: "planetscale" }, true);
+
+    expect(resolved.database).toBe("postgresql");
+    expect(resolved.databaseHost).toBe("planetscale");
+    expect(resolved.config.database).toBe("postgresql");
+    expect(resolved.config.databaseHost).toBe("planetscale");
+  });
 });

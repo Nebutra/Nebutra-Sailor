@@ -11,9 +11,9 @@
  *   --db=postgres --db-host=neon
  *     → Neon pooled + direct URL pair, prismaSchema.directUrl wired up.
  *
- *   --db-host=planetscale
- *     → forces engine to mysql, adds relationMode = "prisma" (PlanetScale
- *       doesn't support foreign keys).
+ *   --db=postgres --db-host=planetscale
+ *     → PlanetScale Postgres pooled + direct URL pair, prismaSchema.directUrl
+ *       wired up for migrations.
  *
  * Setting `--db-host` overrides `--db` engine for hosts that hard-pin one.
  */
@@ -23,7 +23,7 @@ export type DatabaseHostId =
   | "supabase" // Managed Postgres + auth/storage/realtime ecosystem
   | "neon" // Serverless Postgres with branching + scale-to-zero
   | "vercel-postgres" // Vercel-managed Neon, with marketplace auto-injection
-  | "planetscale" // Managed MySQL with branching; no FK support
+  | "planetscale" // Managed Postgres; use Vitess/MySQL only with a separate schema
   | "railway" // Generalist managed infra (TCP Postgres)
   | "aliyun-rds" // Aliyun RDS for CN region
   | "tencent-cdb" // Tencent CloudDB for CN region
@@ -40,7 +40,7 @@ export interface DatabaseHostMeta {
 
   /**
    * The Prisma engine this host serves. If set, the host forces that engine
-   * regardless of the `--db` flag (e.g. PlanetScale = mysql).
+   * regardless of the `--db` flag (e.g. PlanetScale Postgres = postgresql).
    */
   forcedEngine?: DatabaseHostEngine;
 
@@ -51,8 +51,8 @@ export interface DatabaseHostMeta {
   envVars: Array<{ name: string; placeholder: string; comment?: string }>;
 
   /**
-   * Prisma schema mutations beyond engine swap. e.g. PlanetScale needs
-   * relationMode = "prisma" inside `datasource db { ... }`.
+   * Prisma schema mutations beyond engine swap. e.g. Vitess/MySQL providers
+   * may need relationMode = "prisma" inside `datasource db { ... }`.
    */
   prismaDatasourceExtras?: string[];
 
@@ -169,20 +169,27 @@ export const DATABASE_HOSTS: DatabaseHostMeta[] = [
   },
   {
     id: "planetscale",
-    name: "PlanetScale",
+    name: "PlanetScale Postgres",
     region: "global",
-    supportedEngines: ["mysql"],
-    forcedEngine: "mysql",
-    prismaDatasourceExtras: ['relationMode = "prisma"'],
+    supportedEngines: ["postgresql"],
+    forcedEngine: "postgresql",
+    keepDirectUrl: true,
     envVars: [
       {
         name: "DATABASE_URL",
-        placeholder: "mysql://<user>:<pass>@<host>.psdb.cloud/<db>?sslaccept=strict",
-        comment: 'PlanetScale: relationMode = "prisma" (no FK support server-side)',
+        placeholder:
+          "postgresql://postgres.<branch-id>:<password>@<host>.horizon.psdb.cloud:6432/postgres?sslmode=require",
+        comment: "PlanetScale Postgres pooled/PgBouncer URL — runtime queries",
+      },
+      {
+        name: "DIRECT_URL",
+        placeholder:
+          "postgresql://postgres.<branch-id>:<password>@<host>.horizon.psdb.cloud:5432/postgres?sslmode=require",
+        comment: "PlanetScale Postgres direct URL — Prisma migrations",
       },
     ],
-    docs: "https://planetscale.com/docs",
-    description: "Managed MySQL with branching. No foreign keys.",
+    docs: "https://planetscale.com/docs/postgres",
+    description: "Managed Postgres with branching; compatible with Sailor migrations.",
     tier: "managed",
   },
   {

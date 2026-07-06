@@ -390,6 +390,7 @@ export async function resolveConfig(opts: CliOptions, useJson: boolean): Promise
     region,
     orm,
     database,
+    databaseHost,
     payment,
     aiMode,
     aiRouting,
