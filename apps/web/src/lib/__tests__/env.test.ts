@@ -25,6 +25,15 @@ const envSchema = z.object({
   NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
   NEXT_PUBLIC_POSTHOG_HOST: z.string().url().default("https://us.i.posthog.com"),
   AUTH_SSO_DISCOVERY_PROVIDERS: z.string().optional(),
+  FEISHU_APP_ID: z.string().min(1).optional(),
+  FEISHU_APP_SECRET: z.string().min(1).optional(),
+  FEISHU_OAUTH_SCOPES: z.string().optional(),
+  FEISHU_ALLOWED_TENANT_KEYS: z.string().optional(),
+  FEISHU_OAUTH_BASE_URL: z.string().url().optional(),
+  FEISHU_AUTHORIZATION_URL: z.string().url().optional(),
+  FEISHU_TOKEN_URL: z.string().url().optional(),
+  FEISHU_USER_INFO_URL: z.string().url().optional(),
+  FEISHU_REDIRECT_URI: z.string().url().optional(),
 });
 
 describe("web env schema", () => {
@@ -101,6 +110,18 @@ describe("web env schema", () => {
           provider: "clerk",
         },
       ]),
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it("accepts Feishu/Lark OAuth SSO server-only configuration", () => {
+    const result = envSchema.safeParse({
+      FEISHU_APP_ID: "cli_a",
+      FEISHU_APP_SECRET: "secret",
+      FEISHU_OAUTH_SCOPES: "contact:user.email contact:user.base:readonly",
+      FEISHU_ALLOWED_TENANT_KEYS: "tenant_a,tenant_b",
+      FEISHU_REDIRECT_URI: "https://app.nebutra.com/api/auth/oauth2/callback/feishu",
     });
 
     expect(result.success).toBe(true);

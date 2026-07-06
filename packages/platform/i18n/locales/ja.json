@@ -346,7 +346,8 @@
         "google": "Google",
         "github": "GitHub",
         "apple": "Apple",
-        "microsoft": "Microsoft"
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
       },
       "providerLoading": "リダイレクト中…",
       "dividerOr": "またはメールで続行",

@@ -48,6 +48,19 @@ export const env = createEnv({
       .optional()
       .refine(isValidSsoProviderConfig, "Invalid AUTH_SSO_DISCOVERY_PROVIDERS JSON."),
 
+    // Feishu/Lark OAuth SSO via Better Auth generic OAuth. Required only when
+    // a discovery provider uses `provider: "feishu"` or the Feishu button is
+    // enabled.
+    FEISHU_APP_ID: z.string().min(1).optional(),
+    FEISHU_APP_SECRET: z.string().min(1).optional(),
+    FEISHU_OAUTH_SCOPES: z.string().optional(),
+    FEISHU_ALLOWED_TENANT_KEYS: z.string().optional(),
+    FEISHU_OAUTH_BASE_URL: z.string().url().optional(),
+    FEISHU_AUTHORIZATION_URL: z.string().url().optional(),
+    FEISHU_TOKEN_URL: z.string().url().optional(),
+    FEISHU_USER_INFO_URL: z.string().url().optional(),
+    FEISHU_REDIRECT_URI: z.string().url().optional(),
+
     // Sanity write token for first-party blog comments. Missing token keeps
     // public reads working but returns 503 for comment creation.
     SANITY_API_TOKEN: z.string().optional(),

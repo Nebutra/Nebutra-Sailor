@@ -42,7 +42,12 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | `AUTH_PROVIDER=clerk` 时 | — | Clerk 可发布密钥。以 `pk_live_` 或 `pk_test_` 开头。 |
 | `CLERK_SECRET_KEY` | `AUTH_PROVIDER=clerk` 时 | — | Clerk 密钥。以 `sk_live_` 或 `sk_test_` 开头。 |
 | `CLERK_WEBHOOK_SECRET` | 启用 Clerk Webhook 时 | — | Clerk Webhook 载荷的签名密钥。以 `whsec_` 开头。 |
-| `AUTH_SSO_DISCOVERY_PROVIDERS` | 启用企业 SSO 发现时 | — | 将邮箱域名映射到 SSO provider 的 JSON 数组。Clerk 条目使用 `/sign-in/sso`; generic 条目必须定义内部 `loginUrl`。 |
+| `AUTH_SSO_DISCOVERY_PROVIDERS` | 启用企业 SSO 发现时 | — | 将邮箱域名映射到 SSO provider 的 JSON 数组。Clerk 条目使用 `/sign-in/sso`；Feishu 条目使用 `/api/auth/oauth/feishu`；generic 条目必须定义内部 `loginUrl`。 |
+| `FEISHU_APP_ID` | 启用飞书/Lark SSO 时 | — | Better Auth generic OAuth 使用的飞书/Lark App ID。 |
+| `FEISHU_APP_SECRET` | 启用飞书/Lark SSO 时 | — | 飞书/Lark App Secret。切勿暴露为 `NEXT_PUBLIC_`。 |
+| `FEISHU_OAUTH_SCOPES` | 否 | `contact:user.email contact:user.base:readonly` | 向飞书/Lark 请求的 OAuth scope，支持空格或逗号分隔。 |
+| `FEISHU_ALLOWED_TENANT_KEYS` | 否 | — | 可选的飞书 tenant key 白名单，用于限制本部署接受的租户。 |
+| `FEISHU_REDIRECT_URI` | 否 | — | 可选覆盖。Better Auth 默认回调为 `/api/auth/oauth2/callback/feishu`。 |
 | `GOOGLE_CLIENT_ID` | 启用 Google OAuth 时 | — | Better Auth 或 NextAuth 使用的 Google OAuth Web Client ID。 |
 | `GOOGLE_CLIENT_SECRET` | 启用 Google OAuth 时 | — | Better Auth 或 NextAuth 使用的 Google OAuth Web Client Secret。 |
 | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | Better Auth 或 NextAuth 启用 Google One Tap 时 | — | Landing 页 One Tap 提示使用的公开 Google OAuth Web Client ID。 |
@@ -67,6 +72,16 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
 CLERK_SECRET_KEY=sk_live_xxx
 CLERK_WEBHOOK_SECRET=whsec_xxx
 AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"nebutra.com","id":"nebutra-entra","name":"Nebutra Entra ID","type":"oidc","provider":"clerk"}]'
+```
+```bash .env（飞书/Lark SSO）
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://app.nebutra.com
+FEISHU_APP_ID=cli_xxx
+FEISHU_APP_SECRET=xxx
+FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
+AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","name":"Example Feishu","type":"oidc","provider":"feishu"}]'
 ```
 </CodeGroup>
 

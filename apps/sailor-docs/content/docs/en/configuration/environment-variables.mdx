@@ -42,7 +42,12 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/nebutra
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | If `AUTH_PROVIDER=clerk` | — | Clerk publishable key. Starts with `pk_live_` or `pk_test_`. |
 | `CLERK_SECRET_KEY` | If `AUTH_PROVIDER=clerk` | — | Clerk secret key. Starts with `sk_live_` or `sk_test_`. |
 | `CLERK_WEBHOOK_SECRET` | If Clerk webhooks are enabled | — | Signing secret for Clerk webhook payloads. Starts with `whsec_`. |
-| `AUTH_SSO_DISCOVERY_PROVIDERS` | If Enterprise SSO discovery is enabled | — | JSON array mapping email domains to SSO providers. Clerk entries use `/sign-in/sso`; generic entries must define an internal `loginUrl`. |
+| `AUTH_SSO_DISCOVERY_PROVIDERS` | If Enterprise SSO discovery is enabled | — | JSON array mapping email domains to SSO providers. Clerk entries use `/sign-in/sso`; Feishu entries use `/api/auth/oauth/feishu`; generic entries must define an internal `loginUrl`. |
+| `FEISHU_APP_ID` | If Feishu/Lark SSO is enabled | — | Feishu/Lark app id for Better Auth generic OAuth. |
+| `FEISHU_APP_SECRET` | If Feishu/Lark SSO is enabled | — | Feishu/Lark app secret. Never expose this as `NEXT_PUBLIC_`. |
+| `FEISHU_OAUTH_SCOPES` | No | `contact:user.email contact:user.base:readonly` | Space- or comma-separated OAuth scopes requested from Feishu/Lark. |
+| `FEISHU_ALLOWED_TENANT_KEYS` | No | — | Optional allowlist of Feishu tenant keys accepted by this deployment. |
+| `FEISHU_REDIRECT_URI` | No | — | Optional override. Default Better Auth callback is `/api/auth/oauth2/callback/feishu`. |
 | `GOOGLE_CLIENT_ID` | If Google OAuth is enabled | — | Google OAuth web client id for Better Auth or NextAuth. |
 | `GOOGLE_CLIENT_SECRET` | If Google OAuth is enabled | — | Google OAuth web client secret for Better Auth or NextAuth. |
 | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` | If Google One Tap is enabled for Better Auth or NextAuth | — | Public Google OAuth web client id used by the landing page One Tap prompt. |
@@ -67,6 +72,16 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_xxx
 CLERK_SECRET_KEY=sk_live_xxx
 CLERK_WEBHOOK_SECRET=whsec_xxx
 AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"nebutra.com","id":"nebutra-entra","name":"Nebutra Entra ID","type":"oidc","provider":"clerk"}]'
+```
+```bash .env (Feishu/Lark SSO)
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://app.nebutra.com
+FEISHU_APP_ID=cli_xxx
+FEISHU_APP_SECRET=xxx
+FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
+AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","name":"Example Feishu","type":"oidc","provider":"feishu"}]'
 ```
 </CodeGroup>
 

@@ -5,11 +5,16 @@ This runbook governs Enterprise SSO for `nebutra.com` and
 
 ## Current State
 
-The web app supports Enterprise SSO discovery and Clerk Enterprise SSO handoff.
+The web app supports Enterprise SSO discovery with two production paths:
+
+- Clerk Enterprise SSO for managed SAML/OIDC connections.
+- Better Auth generic OAuth for non-Clerk providers, starting with Feishu/Lark.
+
 The user types an email on `/sign-in`; `/api/auth/sso/discovery` checks only the
-email domain against `AUTH_SSO_DISCOVERY_PROVIDERS`; matching Clerk providers
+email domain against `AUTH_SSO_DISCOVERY_PROVIDERS`. Matching Clerk providers
 handoff to `/sign-in/sso`, which calls Clerk's `signIn.sso` flow with
-`strategy: "enterprise_sso"`.
+`strategy: "enterprise_sso"`. Matching Feishu providers handoff to
+`/api/auth/oauth/feishu`, which starts Better Auth's generic OAuth flow.
 
 The route intentionally does not look up users. A non-matching or invalid email
 gets the same `{ "provider": null }` response, preserving anti-enumeration
@@ -18,7 +23,7 @@ behavior.
 ## Provider Configuration
 
 Use Clerk for first-party and customer-managed Enterprise SSO unless a customer
-requires an external broker.
+requires an external broker or a China collaboration suite such as Feishu/Lark.
 
 ```json
 [
@@ -29,6 +34,13 @@ requires an external broker.
     "type": "oidc",
     "provider": "clerk",
     "allowSubdomains": false
+  },
+  {
+    "domain": "example.cn",
+    "id": "example-feishu",
+    "name": "Example Feishu",
+    "type": "oidc",
+    "provider": "feishu"
   }
 ]
 ```
@@ -41,7 +53,7 @@ Fields:
 | `id` | Yes | Stable internal identifier for support and audit notes. |
 | `name` | Yes | Human-readable provider name shown during handoff. |
 | `type` | Yes | `saml` or `oidc`. |
-| `provider` | No | `clerk` or `generic`; defaults to `generic` for legacy explicit `loginUrl` entries. |
+| `provider` | No | `clerk`, `feishu`, or `generic`; defaults to `generic` for legacy explicit `loginUrl` entries. |
 | `loginUrl` | Generic only | Internal path for an external broker handoff. Absolute URLs are rejected. |
 | `allowSubdomains` | No | Defaults to `false`. Set to `true` only when the Clerk/IdP connection also allows subdomains. |
 
@@ -57,6 +69,34 @@ Fields:
    the IdP supports the same policy.
 8. Add `https://app.nebutra.com/sign-in` to Clerk redirect/continuation allowlists
    for custom Enterprise SSO flows.
+
+## Feishu/Lark Checklist
+
+Use this path when `AUTH_PROVIDER=better-auth` and the customer wants Feishu or
+Lark login without Clerk.
+
+1. Create or open the Feishu/Lark app in the developer console.
+2. Add the web redirect URI:
+   `https://app.nebutra.com/api/auth/oauth2/callback/feishu`.
+3. Grant the scopes needed to read a stable user id, name, avatar, and email.
+   Recommended default: `contact:user.email contact:user.base:readonly`.
+4. Set these runtime variables on Vercel and every ECS/cloud-VM runtime:
+
+```env
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
+BETTER_AUTH_SECRET=...
+BETTER_AUTH_URL=https://app.nebutra.com
+FEISHU_APP_ID=cli_xxx
+FEISHU_APP_SECRET=...
+FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
+FEISHU_ALLOWED_TENANT_KEYS=
+AUTH_SSO_DISCOVERY_PROVIDERS='[{"domain":"example.cn","id":"example-feishu","name":"Example Feishu","type":"oidc","provider":"feishu"}]'
+```
+
+`FEISHU_ALLOWED_TENANT_KEYS` is optional. Set it when one Feishu app is reused
+across multiple tenants and the deployment must accept only specific tenant
+keys.
 
 ## Deploy Targets
 
@@ -75,12 +115,22 @@ CLERK_SECRET_KEY=sk_live_xxx
 CLERK_WEBHOOK_SECRET=whsec_xxx
 ```
 
+When `AUTH_PROVIDER=better-auth` and any discovery provider uses
+`provider: "feishu"`, also set:
+
+```env
+FEISHU_APP_ID=cli_xxx
+FEISHU_APP_SECRET=...
+FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
+```
+
 ## Verification
 
 Run the focused checks before enabling a production domain:
 
 ```bash
-pnpm --filter @nebutra/web exec vitest run src/app/api/auth/sso/discovery/__tests__/route.test.ts src/components/auth/__tests__/clerk-enterprise-sso-handoff.test.tsx
+pnpm --filter @nebutra/web exec vitest run src/lib/auth/__tests__/oauth-providers.test.ts src/app/api/auth/sso/discovery/__tests__/route.test.ts src/components/auth/__tests__/clerk-enterprise-sso-handoff.test.tsx
+pnpm --filter @nebutra/auth test -- src/providers/better-auth.test.ts
 pnpm --filter @nebutra/web exec tsc --noEmit --pretty false
 pnpm test:arch -- tests/architecture/sso-infrastructure.test.ts
 ```
@@ -91,7 +141,7 @@ Manual smoke:
 2. Type an email whose domain is configured for SSO.
 3. Blur the email field.
 4. Confirm the Enterprise SSO button appears.
-5. Click it and confirm Clerk redirects to the configured IdP.
+5. Click it and confirm Clerk or Feishu redirects to the configured IdP.
 
 ## Rollback
 

@@ -100,9 +100,32 @@ Example `AUTH_SSO_DISCOVERY_PROVIDERS` for Clerk Enterprise SSO:
 ```
 
 `provider: "clerk"` uses the built-in `/sign-in/sso` handoff. Use
-`provider: "generic"` only when an external SAML/OIDC broker owns the handoff,
-and then set an internal `loginUrl`. Set `allowSubdomains: true` only if the
-IdP and Clerk connection also allow subdomains.
+`provider: "feishu"` for Feishu/Lark SSO through Better Auth generic OAuth.
+Configure this redirect URI in the Feishu/Lark developer console:
+
+```text
+https://app.nebutra.com/api/auth/oauth2/callback/feishu
+```
+
+Example discovery entry:
+
+```json
+[
+  {
+    "domain": "example.cn",
+    "id": "example-feishu",
+    "name": "Example Feishu",
+    "type": "oidc",
+    "provider": "feishu"
+  }
+]
+```
+
+Set `FEISHU_APP_ID` and `FEISHU_APP_SECRET` on Vercel and the ECS/cloud-VM
+runtime whenever a Feishu discovery entry is enabled. Use `provider: "generic"`
+only when an external SAML/OIDC broker owns the handoff, and then set an
+internal `loginUrl`. Set `allowSubdomains: true` only if the IdP and SSO
+connection also allow subdomains.
 
 ## Sanity CORS
 

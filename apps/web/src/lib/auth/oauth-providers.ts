@@ -1,4 +1,4 @@
-export const OAUTH_PROVIDERS = ["google", "github", "apple", "microsoft"] as const;
+export const OAUTH_PROVIDERS = ["google", "github", "apple", "microsoft", "feishu"] as const;
 
 export type OAuthProvider = (typeof OAUTH_PROVIDERS)[number];
 
@@ -16,6 +16,7 @@ export function detectEnabledOAuthProviders(
   if (env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET) enabled.push("github");
   if (env.APPLE_CLIENT_ID && env.APPLE_CLIENT_SECRET) enabled.push("apple");
   if (env.MICROSOFT_CLIENT_ID && env.MICROSOFT_CLIENT_SECRET) enabled.push("microsoft");
+  if (env.FEISHU_APP_ID && env.FEISHU_APP_SECRET) enabled.push("feishu");
   return enabled;
 }
 

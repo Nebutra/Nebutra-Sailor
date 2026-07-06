@@ -11,10 +11,11 @@ deployment path. The deploy workflow forwards these values from the GitHub
 | Database runtime | `DATABASE_URL` or `SUPABASE_DATABASE_URL` | Use the pooled Supabase Postgres URL after cutover. |
 | Database migrations | `DIRECT_URL` or `SUPABASE_DIRECT_URL` | Use the direct Supabase Postgres URL for restore and migrations. |
 | Auth core | `BETTER_AUTH_SECRET`, `AUTH_PROVIDER`, `NEXT_PUBLIC_AUTH_PROVIDER`, `BETTER_AUTH_URL` | `AUTH_PROVIDER` defaults to `better-auth`; keep `BETTER_AUTH_SECRET` stable across deploys. |
-| Clerk auth and Enterprise SSO | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `CLERK_WEBHOOK_SECRET`, `AUTH_SSO_DISCOVERY_PROVIDERS` | Required when `AUTH_PROVIDER=clerk`. Discovery JSON maps email domains to Clerk Enterprise SSO or explicit generic handoff URLs. |
+| Enterprise SSO discovery | `AUTH_SSO_DISCOVERY_PROVIDERS` | Maps email domains to Clerk Enterprise SSO, Feishu/Lark OAuth, or explicit generic handoff URLs. |
+| Clerk auth | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, `CLERK_WEBHOOK_SECRET` | Required when `AUTH_PROVIDER=clerk`. |
 | Public app URLs | `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_APP_URL`, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_API_GATEWAY_URL`, `NEBUTRA_LANDING_ORIGIN`, `NEBUTRA_SESSION_HINT_DOMAIN` | Defaults target the production `nebutra.com` domains. |
 | Redis/cache | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Upstash network allowlist must include the ECS egress IP. |
-| Social login | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | The workflow also accepts legacy `GH_OAUTH_CLIENT_ID` and `GH_OAUTH_CLIENT_SECRET`. |
+| Social login | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `FEISHU_APP_ID`, `FEISHU_APP_SECRET` | The workflow also accepts legacy `GH_OAUTH_CLIENT_ID` and `GH_OAUTH_CLIENT_SECRET`. Feishu/Lark uses Better Auth generic OAuth and the callback `/api/auth/oauth2/callback/feishu`. |
 | Transactional email | `RESEND_API_KEY`, `EMAIL_FROM` | Required for invitations, account email changes, and product notifications. |
 | Billing | `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_ID_PRO_MONTHLY`, `STRIPE_PRICE_ID_PRO_YEARLY` | Checkout returns 503 without `STRIPE_SECRET_KEY`. |
 | AI assistant | one of `OPENAI_API_KEY`, `OPENROUTER_API_KEY`, `SILICONFLOW_API_KEY` | Chat returns 503 without a provider key. |

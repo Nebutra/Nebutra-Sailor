@@ -2,6 +2,7 @@ import { sanitizeReturnUrl } from "@nebutra/auth";
 import { z } from "zod";
 
 export const CLERK_ENTERPRISE_SSO_PATH = "/sign-in/sso";
+export const FEISHU_OAUTH_START_PATH = "/api/auth/oauth/feishu";
 
 const EMAIL_DOMAIN_PATTERN =
   /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/;
@@ -18,7 +19,7 @@ export const ssoProviderSchema = z
     id: z.string().trim().min(1).max(120),
     name: z.string().trim().min(1).max(120),
     type: z.enum(["saml", "oidc"]),
-    provider: z.enum(["clerk", "generic"]).default("generic"),
+    provider: z.enum(["clerk", "generic", "feishu"]).default("generic"),
     loginUrl: internalPathSchema.optional(),
     allowSubdomains: z.boolean().default(false),
   })
@@ -39,7 +40,7 @@ export interface SsoDiscoveryProvider {
   id: string;
   name: string;
   type: "saml" | "oidc";
-  provider: "clerk" | "generic";
+  provider: "clerk" | "generic" | "feishu";
   loginUrl: string;
 }
 
@@ -94,8 +95,12 @@ export function buildSsoLoginUrl(
   provider: SsoProvider,
   options: { identifier: string; returnUrl: string | null },
 ): string {
-  const loginUrl = provider.loginUrl ?? CLERK_ENTERPRISE_SSO_PATH;
+  const loginUrl =
+    provider.provider === "feishu"
+      ? (provider.loginUrl ?? FEISHU_OAUTH_START_PATH)
+      : (provider.loginUrl ?? CLERK_ENTERPRISE_SSO_PATH);
   const url = new URL(loginUrl, "https://placeholder.invalid");
+  const safeReturnUrl = sanitizeReturnUrl(options.returnUrl, { fallback: "" });
 
   if (provider.provider === "clerk") {
     url.searchParams.set("provider", provider.id);
@@ -103,9 +108,11 @@ export function buildSsoLoginUrl(
     url.searchParams.set("identifier", options.identifier);
   }
 
-  const safeReturnUrl = sanitizeReturnUrl(options.returnUrl, { fallback: "" });
   if (safeReturnUrl) {
-    url.searchParams.set("returnUrl", safeReturnUrl);
+    url.searchParams.set(
+      provider.provider === "feishu" ? "callbackURL" : "returnUrl",
+      safeReturnUrl,
+    );
   }
 
   return `${url.pathname}${url.search}${url.hash}`;

@@ -346,7 +346,8 @@
         "google": "Google",
         "github": "GitHub",
         "apple": "Apple",
-        "microsoft": "Microsoft"
+        "microsoft": "Microsoft",
+        "feishu": "Feishu"
       },
       "providerLoading": "리디렉션 중…",
       "dividerOr": "또는 이메일로 계속",

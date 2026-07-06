@@ -19,8 +19,12 @@
 import { getSystemDb } from "@nebutra/db";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
+  buildFeishuGenericOAuthConfig,
   createBetterAuthProvider,
+  loadBetterAuthFeishuOAuthPlugin,
   loadBetterAuthOneTapPlugin,
+  normalizeFeishuOAuthTokens,
+  normalizeFeishuUserInfo,
   resolveBetterAuthPrismaClient,
   resolveBetterAuthTrustedOrigins,
 } from "./better-auth";
@@ -159,6 +163,93 @@ describe("Better Auth Google One Tap plugin loading", () => {
     await expect(loadBetterAuthOneTapPlugin()).resolves.toMatchObject({
       id: "one-tap",
       options: { clientId: "google-client" },
+    });
+  });
+});
+
+describe("Better Auth Feishu generic OAuth provider", () => {
+  it("does not mount Feishu OAuth without the app id/secret pair", () => {
+    delete process.env.FEISHU_APP_ID;
+    delete process.env.FEISHU_APP_SECRET;
+
+    expect(buildFeishuGenericOAuthConfig()).toBeNull();
+  });
+
+  it("builds a Better Auth generic OAuth config for Feishu/Lark", () => {
+    process.env.FEISHU_APP_ID = "cli_a";
+    process.env.FEISHU_APP_SECRET = "secret";
+    process.env.FEISHU_OAUTH_SCOPES = "contact:user.email,contact:user.base:readonly";
+
+    expect(buildFeishuGenericOAuthConfig()).toMatchObject({
+      providerId: "feishu",
+      authorizationUrl: "https://open.feishu.cn/open-apis/authen/v1/index?app_id=cli_a",
+      tokenUrl: "https://open.feishu.cn/open-apis/authen/v2/oauth/token",
+      userInfoUrl: "https://open.feishu.cn/open-apis/authen/v1/user_info",
+      clientId: "cli_a",
+      clientSecret: "secret",
+      scopes: ["contact:user.email", "contact:user.base:readonly"],
+    });
+  });
+
+  it("normalizes Feishu token responses into Better Auth's token shape", () => {
+    expect(
+      normalizeFeishuOAuthTokens(
+        {
+          code: 0,
+          data: {
+            access_token: "uat",
+            refresh_token: "urt",
+            expires_in: 7200,
+            refresh_expires_in: 30 * 24 * 60 * 60,
+            scope: "contact:user.email contact:user.base:readonly",
+            token_type: "Bearer",
+          },
+        },
+        1_700_000_000_000,
+      ),
+    ).toMatchObject({
+      accessToken: "uat",
+      refreshToken: "urt",
+      tokenType: "Bearer",
+      accessTokenExpiresAt: new Date(1_700_007_200_000),
+      refreshTokenExpiresAt: new Date(1_702_592_000_000),
+      scopes: ["contact:user.email", "contact:user.base:readonly"],
+    });
+  });
+
+  it("normalizes Feishu user_info responses and preserves tenant identity", () => {
+    expect(
+      normalizeFeishuUserInfo({
+        code: 0,
+        data: {
+          union_id: "on_union",
+          open_id: "ou_open",
+          user_id: "u_user",
+          tenant_key: "tenant_a",
+          name: "Ada Lovelace",
+          email: "ada@example.com",
+          avatar_url: "https://example.com/avatar.png",
+        },
+      }),
+    ).toMatchObject({
+      id: "on_union",
+      openId: "ou_open",
+      unionId: "on_union",
+      userId: "u_user",
+      tenantKey: "tenant_a",
+      name: "Ada Lovelace",
+      email: "ada@example.com",
+      image: "https://example.com/avatar.png",
+      emailVerified: true,
+    });
+  });
+
+  it("loads Better Auth's generic OAuth plugin when Feishu is configured", async () => {
+    process.env.FEISHU_APP_ID = "cli_a";
+    process.env.FEISHU_APP_SECRET = "secret";
+
+    await expect(loadBetterAuthFeishuOAuthPlugin()).resolves.toMatchObject({
+      id: "generic-oauth",
     });
   });
 });

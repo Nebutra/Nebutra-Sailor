@@ -13,12 +13,15 @@ describe("oauth provider helpers", () => {
         GOOGLE_CLIENT_SECRET: "gsecret",
         GITHUB_CLIENT_ID: "ghid",
         APPLE_CLIENT_SECRET: "missing-id",
+        FEISHU_APP_ID: "cli_a",
+        FEISHU_APP_SECRET: "feishu-secret",
       }),
-    ).toEqual(["google"]);
+    ).toEqual(["google", "feishu"]);
   });
 
   it("guards the supported provider list", () => {
     expect(isOAuthProvider("google")).toBe(true);
+    expect(isOAuthProvider("feishu")).toBe(true);
     expect(isOAuthProvider("dropbox")).toBe(false);
   });
 

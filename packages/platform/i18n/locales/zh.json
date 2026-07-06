@@ -363,7 +363,8 @@
         "google": "Google",
         "github": "GitHub",
         "apple": "Apple",
-        "microsoft": "Microsoft"
+        "microsoft": "Microsoft",
+        "feishu": "飞书"
       },
       "providerLoading": "正在跳转…",
       "dividerOr": "或使用邮箱继续",

@@ -22,6 +22,16 @@ const clerkConfiguredProviders = JSON.stringify([
   },
 ]);
 
+const feishuConfiguredProviders = JSON.stringify([
+  {
+    domain: "example.cn",
+    id: "example-feishu",
+    name: "Example Feishu",
+    type: "oidc",
+    provider: "feishu",
+  },
+]);
+
 async function loadRoute() {
   vi.resetModules();
   return import("../route");
@@ -76,6 +86,29 @@ describe("GET /api/auth/sso/discovery", () => {
         provider: "clerk",
         loginUrl:
           "/sign-in/sso?provider=nebutra-entra&providerName=Nebutra+Entra+ID&identifier=owner%40nebutra.com&returnUrl=%2Fatelier",
+      },
+    });
+  });
+
+  it("builds the default Feishu OAuth SSO handoff URL without requiring Clerk", async () => {
+    vi.stubEnv("AUTH_SSO_DISCOVERY_PROVIDERS", feishuConfiguredProviders);
+    const { GET } = await loadRoute();
+
+    const res = await GET(
+      new Request(
+        "https://app.example/api/auth/sso/discovery?email=Owner@Example.cn&returnUrl=/dashboard",
+      ),
+    );
+
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({
+      provider: {
+        domain: "example.cn",
+        id: "example-feishu",
+        name: "Example Feishu",
+        type: "oidc",
+        provider: "feishu",
+        loginUrl: "/api/auth/oauth/feishu?callbackURL=%2Fdashboard",
       },
     });
   });

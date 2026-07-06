@@ -14,7 +14,7 @@ interface OAuthButtonsProps {
   /**
    * Providers that are actually configured server-side. Pass from the page
    * server component so we don't render buttons that would 404 on the
-   * `/api/auth/oauth/:provider` route. Falls back to all four when omitted —
+   * `/api/auth/oauth/:provider` route. Falls back to all providers when omitted —
    * useful in Storybook / tests.
    */
   providers?: readonly OAuthProvider[];
@@ -79,11 +79,36 @@ function MicrosoftIcon() {
   );
 }
 
+function FeishuIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
+      <title>Feishu</title>
+      <path
+        d="M11.9 2.2a3.4 3.4 0 0 1 3.4 3.4v3.1h-3.4a3.25 3.25 0 0 1-3.2-3.25A3.25 3.25 0 0 1 11.9 2.2z"
+        fill="#3370FF"
+      />
+      <path
+        d="M18.4 8.7a3.4 3.4 0 0 1 3.4 3.4 3.25 3.25 0 0 1-3.25 3.2h-3.2v-3.2a3.4 3.4 0 0 1 3.05-3.4z"
+        fill="#00D6B9"
+      />
+      <path
+        d="M12.1 15.3h3.2v3.1a3.4 3.4 0 0 1-3.4 3.4 3.25 3.25 0 0 1-3.2-3.25 3.25 3.25 0 0 1 3.4-3.25z"
+        fill="#FF6B00"
+      />
+      <path
+        d="M5.6 8.7h3.1v3.4a3.25 3.25 0 0 1-3.25 3.2A3.25 3.25 0 0 1 2.2 12a3.4 3.4 0 0 1 3.4-3.3z"
+        fill="#00A4FF"
+      />
+    </svg>
+  );
+}
+
 const PROVIDER_ICON: Record<OAuthProvider, () => React.ReactElement> = {
   google: GoogleIcon,
   github: GitHubIcon,
   apple: AppleIcon,
   microsoft: MicrosoftIcon,
+  feishu: FeishuIcon,
 };
 
 export function OAuthButtons({ mode, providers = OAUTH_PROVIDERS, returnUrl }: OAuthButtonsProps) {

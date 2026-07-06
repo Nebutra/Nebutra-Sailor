@@ -21,6 +21,7 @@
  * - GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET (optional, enables GitHub OAuth)
  * - APPLE_CLIENT_ID / APPLE_CLIENT_SECRET (optional, enables Sign in with Apple — App Store compliance for SaaS apps that ship Google/Facebook login)
  * - MICROSOFT_CLIENT_ID / MICROSOFT_CLIENT_SECRET (optional, enables Microsoft OAuth — required for enterprise / EDU customers)
+ * - FEISHU_APP_ID / FEISHU_APP_SECRET (optional, enables Feishu/Lark SSO via Better Auth generic OAuth)
  */
 
 import { logger } from "@nebutra/logger";
@@ -58,6 +59,14 @@ export {
   BETTER_AUTH_CAPABILITY_PROBES,
   probeBetterAuthCapabilities,
 } from "./better-auth/capabilities";
+export {
+  buildFeishuGenericOAuthConfig,
+  isFeishuOAuthConfigured,
+  loadBetterAuthFeishuOAuthPlugin,
+  normalizeFeishuOAuthTokens,
+  normalizeFeishuUserInfo,
+  resolveFeishuOAuthEndpoints,
+} from "./better-auth/feishu-oauth";
 export { buildMagicLinkCapability } from "./better-auth/magic-link";
 export { buildOrganizationsCapability } from "./better-auth/organization";
 export { buildPasskeysCapability } from "./better-auth/passkey";
@@ -113,10 +122,14 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     };
   }
 
-  if (Object.keys(socialProviders).length === 0) {
+  const hasFeishuOAuthProvider = Boolean(
+    process.env.FEISHU_APP_ID && process.env.FEISHU_APP_SECRET,
+  );
+
+  if (Object.keys(socialProviders).length === 0 && !hasFeishuOAuthProvider) {
     logger.info(
       "Better Auth: no OAuth providers configured — only email/password login is available. " +
-        "Set GOOGLE_CLIENT_ID/SECRET, GITHUB_CLIENT_ID/SECRET, APPLE_CLIENT_ID/SECRET, or MICROSOFT_CLIENT_ID/SECRET to enable social login.",
+        "Set GOOGLE_CLIENT_ID/SECRET, GITHUB_CLIENT_ID/SECRET, APPLE_CLIENT_ID/SECRET, MICROSOFT_CLIENT_ID/SECRET, or FEISHU_APP_ID/SECRET to enable social login.",
     );
   }
 
@@ -243,6 +256,8 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     }
 
     const oneTapPlugin = await loadBetterAuthOneTapPlugin();
+    const { loadBetterAuthFeishuOAuthPlugin } = await import("./better-auth/feishu-oauth");
+    const feishuOAuthPlugin = await loadBetterAuthFeishuOAuthPlugin();
 
     const plugins: BetterAuthPlugin[] = [];
     if (orgPlugin) plugins.push(orgPlugin);
@@ -251,6 +266,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     if (magicLinkPlugin) plugins.push(magicLinkPlugin);
     if (captchaPlugin) plugins.push(captchaPlugin);
     if (oneTapPlugin) plugins.push(oneTapPlugin);
+    if (feishuOAuthPlugin) plugins.push(feishuOAuthPlugin);
 
     const prismaClient = await resolveBetterAuthPrismaClient(config);
 
