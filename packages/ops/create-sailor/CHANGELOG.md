@@ -1,5 +1,17 @@
 # create-sailor
 
+## 1.8.1
+
+### Patch Changes
+
+- Add first-class PlanetScale Postgres scaffolding via `--db-host=planetscale`.
+  The host now keeps Prisma on the PostgreSQL engine, emits a pooled
+  `DATABASE_URL` on port `6432`, emits a direct `DIRECT_URL` on port `5432`
+  for migrations, and records `databaseHost` in `nebutra.config.json`.
+
+- Preserve provider-specific database URLs during `.env.local` injection so a
+  PlanetScale scaffold is not overwritten by the local Postgres fallback.
+
 ## 1.8.0
 
 ### Minor Changes
