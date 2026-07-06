@@ -1,11 +1,14 @@
-import { isAuthFeatureEnabled, sanitizeReturnUrl } from "@nebutra/auth";
+import { getConfiguredAuthProvider, isAuthFeatureEnabled, sanitizeReturnUrl } from "@nebutra/auth";
+import { redirect } from "next/navigation";
 import { connection } from "next/server";
 import { Suspense } from "react";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
+import { ClerkEnterpriseSsoHandoff } from "@/components/auth/clerk-enterprise-sso-handoff";
 import { MagicLinkPanel } from "@/components/auth/magic-link-panel";
 import { PasskeyPanel } from "@/components/auth/passkey-panel";
 import { SignInForm } from "@/components/auth/sign-in-form";
 import { detectEnabledOAuthProviders } from "@/lib/auth/oauth-providers";
+import { extractEmailDomain } from "@/lib/auth/sso-discovery";
 
 /**
  * Catchall route — `/sign-in`, `/sign-in/magic-link`, etc. all hit this page.
@@ -13,7 +16,13 @@ import { detectEnabledOAuthProviders } from "@/lib/auth/oauth-providers";
  * shared split layout.
  */
 
-type SearchParams = { returnUrl?: string; returnTo?: string; redirect?: string };
+type SearchParams = {
+  returnUrl?: string;
+  returnTo?: string;
+  redirect?: string;
+  identifier?: string;
+  providerName?: string;
+};
 
 async function SignInPageContent({
   params,
@@ -42,6 +51,23 @@ async function SignInPageContent({
     return (
       <AuthSplitLayout>
         <PasskeyPanel returnUrl={returnUrl} />
+      </AuthSplitLayout>
+    );
+  }
+
+  if (subroute === "sso") {
+    const identifier = query.identifier?.trim().toLowerCase() ?? "";
+    if (getConfiguredAuthProvider() !== "clerk" || !extractEmailDomain(identifier)) {
+      redirect(returnUrl ? `/sign-in?returnUrl=${encodeURIComponent(returnUrl)}` : "/sign-in");
+    }
+
+    return (
+      <AuthSplitLayout>
+        <ClerkEnterpriseSsoHandoff
+          identifier={identifier}
+          providerName={query.providerName?.trim() || "Enterprise SSO"}
+          returnUrl={returnUrl}
+        />
       </AuthSplitLayout>
     );
   }

@@ -136,7 +136,7 @@ function ClerkProviderLazy({
   if (!ClerkProvider) {
     return (
       <AuthContextProvider value={createUnauthenticatedAuthContext("clerk", false)}>
-        {children}
+        {null}
       </AuthContextProvider>
     );
   }

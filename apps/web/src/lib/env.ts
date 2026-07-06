@@ -1,5 +1,6 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
+import { isValidSsoProviderConfig } from "./auth/sso-discovery";
 
 export const env = createEnv({
   server: {
@@ -39,6 +40,13 @@ export const env = createEnv({
     // parent domain.
     NEBUTRA_LANDING_ORIGIN: z.string().url().optional(),
     NEBUTRA_SESSION_HINT_DOMAIN: z.string().optional(),
+
+    // Enterprise SSO discovery mapping. Validates the provider JSON at startup
+    // so deploys fail before users hit a dead SSO handoff.
+    AUTH_SSO_DISCOVERY_PROVIDERS: z
+      .string()
+      .optional()
+      .refine(isValidSsoProviderConfig, "Invalid AUTH_SSO_DISCOVERY_PROVIDERS JSON."),
 
     // Sanity write token for first-party blog comments. Missing token keeps
     // public reads working but returns 503 for comment creation.

@@ -24,6 +24,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
   NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
   NEXT_PUBLIC_POSTHOG_HOST: z.string().url().default("https://us.i.posthog.com"),
+  AUTH_SSO_DISCOVERY_PROVIDERS: z.string().optional(),
 });
 
 describe("web env schema", () => {
@@ -87,6 +88,22 @@ describe("web env schema", () => {
     expect(result.data?.NEXT_PUBLIC_SENTRY_DSN).toBeUndefined();
     expect(result.data?.NEXT_PUBLIC_POSTHOG_KEY).toBeUndefined();
     expect(result.data?.NEXT_PUBLIC_POSTHOG_HOST).toBe("https://us.i.posthog.com");
+  });
+
+  it("accepts an SSO discovery provider JSON string", () => {
+    const result = envSchema.safeParse({
+      AUTH_SSO_DISCOVERY_PROVIDERS: JSON.stringify([
+        {
+          domain: "nebutra.com",
+          id: "nebutra-entra",
+          name: "Nebutra Entra ID",
+          type: "oidc",
+          provider: "clerk",
+        },
+      ]),
+    });
+
+    expect(result.success).toBe(true);
   });
 
   it("uses correct default Sanity config", () => {

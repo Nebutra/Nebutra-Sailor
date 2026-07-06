@@ -79,6 +79,30 @@ Update Clerk dashboard:
    - Sign-in: `https://app.nebutra.com/sign-in`
    - Sign-up: `https://app.nebutra.com/sign-up`
    - After sign-in: `https://app.nebutra.com/dashboard`
+4. For Enterprise SSO, add each customer or first-party domain to a Clerk SAML
+   or OIDC connection. Add `https://app.nebutra.com/sign-in` as the SSO
+   callback/continuation URL and keep the provider's domain matching rules in
+   sync with `AUTH_SSO_DISCOVERY_PROVIDERS`.
+
+Example `AUTH_SSO_DISCOVERY_PROVIDERS` for Clerk Enterprise SSO:
+
+```json
+[
+  {
+    "domain": "nebutra.com",
+    "id": "nebutra-entra",
+    "name": "Nebutra Entra ID",
+    "type": "oidc",
+    "provider": "clerk",
+    "allowSubdomains": false
+  }
+]
+```
+
+`provider: "clerk"` uses the built-in `/sign-in/sso` handoff. Use
+`provider: "generic"` only when an external SAML/OIDC broker owns the handoff,
+and then set an internal `loginUrl`. Set `allowSubdomains: true` only if the
+IdP and Clerk connection also allow subdomains.
 
 ## Sanity CORS
 

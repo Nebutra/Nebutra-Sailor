@@ -209,7 +209,7 @@ export function ClerkProvider({
   }, []);
 
   if (!runtime) {
-    return <AuthContextProvider value={fallbackContextValue}>{children}</AuthContextProvider>;
+    return <AuthContextProvider value={fallbackContextValue}>{null}</AuthContextProvider>;
   }
 
   const clerkProps: ClerkProviderRuntimeProps = {
