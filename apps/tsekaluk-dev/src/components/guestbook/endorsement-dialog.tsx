@@ -195,7 +195,7 @@ export function EndorsementDialog({ onSubmitted }: EndorsementDialogProps) {
               className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors"
               aria-label="Change avatar"
             >
-              <Image size={14} />
+              <Image size={14} aria-hidden />
             </button>
             <input
               data-allow-native

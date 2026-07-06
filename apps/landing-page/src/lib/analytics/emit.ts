@@ -15,6 +15,8 @@ const DEFAULT_POSTHOG_HOST = "https://analytics.nebutra.com";
 export interface EmitOptions {
   /** Pass `true` from a caller that has already opted the user out. */
   noTelemetry?: boolean;
+  /** Optional diagnostics hook. Analytics failures must not interrupt UX. */
+  onError?: (error: unknown) => void;
 }
 
 function isTelemetryDisabled(opts: EmitOptions = {}): boolean {
@@ -79,17 +81,17 @@ export function emitBrowserEvent(
       return;
     }
 
-    // Fallback — fire-and-forget fetch. Errors silently swallowed.
+    // Fallback — fire-and-forget fetch. Report diagnostics without interrupting UX.
     void fetch(`${host}/capture/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
       keepalive: true,
-    }).catch(() => {
-      // Silent
+    }).catch((error: unknown) => {
+      opts.onError?.(error);
     });
-  } catch {
-    // Silent — analytics outages must never break UX.
+  } catch (error) {
+    opts.onError?.(error);
   }
 }
 
