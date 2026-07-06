@@ -73,52 +73,32 @@ describe("/api/admin/impersonate", () => {
       expect(dbMock.user.findUnique).not.toHaveBeenCalled();
     });
 
-    it("returns 400 for invalid body", async () => {
+    it("rejects signed-in users with missing role claims with 403", async () => {
       getAuthMock.mockResolvedValue({
-        userId: "user_admin",
+        userId: "user_123",
         isSignedIn: true,
-        sessionClaims: { org_role: "org:admin" },
+        sessionClaims: {},
       });
 
       const { POST } = await loadRoute();
       const response = await POST(
         buildRequest("http://localhost/api/admin/impersonate", {
           method: "POST",
-          body: JSON.stringify({}),
+          body: JSON.stringify({ userId: "u_1" }),
           headers: { "content-type": "application/json" },
         }),
       );
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(403);
+      expect(dbMock.user.findUnique).not.toHaveBeenCalled();
     });
 
-    it("returns 404 if target user does not exist", async () => {
+    it("returns 501 while auth-layer impersonation consumption is disabled", async () => {
       getAuthMock.mockResolvedValue({
         userId: "user_admin",
         isSignedIn: true,
         sessionClaims: { org_role: "org:admin" },
       });
-      dbMock.user.findUnique.mockResolvedValue(null);
-
-      const { POST } = await loadRoute();
-      const response = await POST(
-        buildRequest("http://localhost/api/admin/impersonate", {
-          method: "POST",
-          body: JSON.stringify({ userId: "u_does_not_exist" }),
-          headers: { "content-type": "application/json" },
-        }),
-      );
-
-      expect(response.status).toBe(404);
-    });
-
-    it("sets a signed HTTP-only cookie when admin impersonates valid user", async () => {
-      getAuthMock.mockResolvedValue({
-        userId: "user_admin",
-        isSignedIn: true,
-        sessionClaims: { org_role: "org:admin" },
-      });
-      dbMock.user.findUnique.mockResolvedValue({ id: "u_target" });
 
       const { POST } = await loadRoute();
       const response = await POST(
@@ -129,15 +109,12 @@ describe("/api/admin/impersonate", () => {
         }),
       );
 
-      expect(response.status).toBe(200);
-      await expect(response.json()).resolves.toEqual({ ok: true });
-
-      const cookie = response.headers.get("set-cookie");
-      expect(cookie).toBeTruthy();
-      expect(cookie).toContain("nebutra-impersonate=");
-      expect(cookie).toContain("HttpOnly");
-      // Signed payload format: <userId>.<signature>
-      expect(cookie).toMatch(/nebutra-impersonate=u_target\.[a-f0-9]+/);
+      expect(response.status).toBe(501);
+      await expect(response.json()).resolves.toEqual({
+        error: "Admin impersonation is disabled until auth-layer integration is complete.",
+      });
+      expect(response.headers.get("set-cookie")).toBeNull();
+      expect(dbMock.user.findUnique).not.toHaveBeenCalled();
     });
   });
 

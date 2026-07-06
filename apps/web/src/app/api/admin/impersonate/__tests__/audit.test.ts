@@ -59,9 +59,8 @@ describe("POST /api/admin/impersonate — audit", () => {
     vi.restoreAllMocks();
   });
 
-  it("emits admin.impersonate.started with severity critical on success", async () => {
+  it("does not emit start audit events while auth-layer integration is disabled", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth());
-    mockedFindUnique.mockResolvedValue({ id: "target_user" } as never);
     const { POST } = await loadRoute();
     const response = await POST(
       new Request("https://app.example/api/admin/impersonate", {
@@ -70,14 +69,9 @@ describe("POST /api/admin/impersonate — audit", () => {
         body: JSON.stringify({ userId: "target_user" }),
       }),
     );
-    expect(response.status).toBe(200);
-    expect(auditLogMock).toHaveBeenCalledTimes(1);
-    expect(auditLogMock.mock.calls[0]?.[0]).toMatchObject({
-      action: "admin.impersonate.started",
-      outcome: "success",
-      severity: "critical",
-      resource: { type: "user", id: "target_user" },
-    });
+    expect(response.status).toBe(501);
+    expect(mockedFindUnique).not.toHaveBeenCalled();
+    expect(auditLogMock).not.toHaveBeenCalled();
   });
 
   it("does not emit on unauthenticated request", async () => {

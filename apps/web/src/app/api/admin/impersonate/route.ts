@@ -1,16 +1,13 @@
-import { createHmac, timingSafeEqual } from "node:crypto";
 import { auditLogger } from "@nebutra/audit";
 import { logger } from "@nebutra/logger";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { getAuth } from "@/lib/auth";
-import { db } from "@/lib/db";
 import { hasPermission, resolveRole } from "@/lib/permissions";
 
 /**
  * Admin impersonation endpoint.
  *
- * POST { userId } → sets a signed HTTP-only cookie `nebutra-impersonate=<userId>.<signature>`
+ * POST { userId } → returns 501 until the auth layer consumes impersonation state
  * DELETE         → clears the cookie
  *
  * TODO(#126 auth-layer-integration): The cookie set here is NOT yet consumed by the
@@ -30,40 +27,8 @@ import { hasPermission, resolveRole } from "@/lib/permissions";
  */
 
 const IMPERSONATE_COOKIE = "nebutra-impersonate";
-const IMPERSONATE_MAX_AGE_SECONDS = 60 * 30; // 30 minutes
-
-const PostBodySchema = z.object({
-  userId: z.string().min(1).max(64),
-});
-
-function getSecret(): string {
-  const secret = process.env.BETTER_AUTH_SECRET;
-  if (!secret || secret.length < 16) {
-    throw new Error("BETTER_AUTH_SECRET is not configured for impersonation cookies.");
-  }
-  return secret;
-}
-
-function signPayload(value: string, secret: string): string {
-  return createHmac("sha256", secret).update(value).digest("hex");
-}
-
-/**
- * Verify a signed cookie value of the form `<userId>.<signature>`.
- * Will be moved to a shared lib when auth-layer integration lands.
- */
-function _verifyImpersonationCookie(raw: string | null | undefined, secret: string): string | null {
-  if (!raw) return null;
-  const dot = raw.lastIndexOf(".");
-  if (dot <= 0 || dot === raw.length - 1) return null;
-  const payload = raw.slice(0, dot);
-  const signature = raw.slice(dot + 1);
-  const expected = signPayload(payload, secret);
-  const sigBuf = Buffer.from(signature, "hex");
-  const expBuf = Buffer.from(expected, "hex");
-  if (sigBuf.length !== expBuf.length) return null;
-  return timingSafeEqual(sigBuf, expBuf) ? payload : null;
-}
+const IMPERSONATION_DISABLED_ERROR =
+  "Admin impersonation is disabled until auth-layer integration is complete.";
 
 function isProduction() {
   return process.env.NODE_ENV === "production";
@@ -83,7 +48,7 @@ function buildSetCookie(value: string, maxAgeSeconds: number) {
   return attrs.join("; ");
 }
 
-export async function POST(request: Request) {
+export async function POST(_request: Request) {
   const auth = await getAuth();
 
   if (!auth.isSignedIn || !auth.userId) {
@@ -95,74 +60,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  let payload: unknown;
-  try {
-    payload = await request.json();
-  } catch {
-    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
-  }
-
-  const parsed = PostBodySchema.safeParse(payload);
-  if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
-  }
-
-  const { userId } = parsed.data;
-
-  if (userId === auth.userId) {
-    return NextResponse.json({ error: "Cannot impersonate yourself." }, { status: 400 });
-  }
-
-  let target: { id: string } | null = null;
-  try {
-    target = await db.user.findUnique({ where: { id: userId }, select: { id: true } });
-  } catch (error) {
-    logger.error("[admin.impersonate] Failed to look up target user", {
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
-    return NextResponse.json({ error: "Failed to look up user." }, { status: 500 });
-  }
-
-  if (!target) {
-    return NextResponse.json({ error: "User not found." }, { status: 404 });
-  }
-
-  let secret: string;
-  try {
-    secret = getSecret();
-  } catch (error) {
-    logger.error("[admin.impersonate] Missing or invalid BETTER_AUTH_SECRET", {
-      error: error instanceof Error ? error.message : "Unknown error",
-    });
-    return NextResponse.json(
-      { error: "Impersonation is not configured on this server." },
-      { status: 500 },
-    );
-  }
-
-  const signature = signPayload(target.id, secret);
-  const cookieValue = `${target.id}.${signature}`;
-
-  logger.info("[admin.impersonate] Admin started impersonation", {
-    actorId: auth.userId,
-    targetId: target.id,
-  });
-
-  // SOC 2: impersonation events are CRITICAL — every start/stop is audited.
-  await auditLogger(request, {
-    actor: { id: auth.userId, type: "user" },
-    tenantId: auth.orgId ?? auth.userId,
-  }).log({
-    action: "admin.impersonate.started",
-    outcome: "success",
-    resource: { type: "user", id: target.id },
-    severity: "critical",
-    metadata: { adminUserId: auth.userId },
-  });
-
-  const response = NextResponse.json({ ok: true });
-  response.headers.append("set-cookie", buildSetCookie(cookieValue, IMPERSONATE_MAX_AGE_SECONDS));
-  return response;
+  return NextResponse.json({ error: IMPERSONATION_DISABLED_ERROR }, { status: 501 });
 }
 
 export async function DELETE(request: Request) {

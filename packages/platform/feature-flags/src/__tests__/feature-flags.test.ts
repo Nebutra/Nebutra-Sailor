@@ -20,6 +20,7 @@ const ambientFeatureFlagEnvKeys = [
   "FEATURE_FLAG_AI_STREAMING",
   "FEATURE_FLAG_BETA_DASHBOARD",
   "FEATURE_FLAG_CHECKOUT_COPY_VARIANT",
+  "FEATURE_FLAG_PRIORITY_SUPPORT_PRO",
 ] as const;
 
 const originalEnv = Object.fromEntries(
@@ -61,6 +62,23 @@ describe("cached feature flags with env fallback", () => {
     await expect(isFeatureEnabled("ai-streaming")).resolves.toBe(true);
 
     expect(mocks.redisSet).toHaveBeenCalledWith("sailor:ff:ai-streaming", true, { ex: 10 });
+  });
+
+  it("does not cache plan-specific env fallback as a global flag decision", async () => {
+    process.env.FEATURE_FLAG_PRIORITY_SUPPORT_PRO = "true";
+
+    await expect(isFeatureEnabled("priority-support", { plan: "pro" })).resolves.toBe(true);
+    await expect(isFeatureEnabled("priority-support", { plan: "free" })).resolves.toBe(false);
+
+    expect(mocks.redisSet).toHaveBeenNthCalledWith(1, "sailor:ff:priority-support:plan:pro", true, {
+      ex: 10,
+    });
+    expect(mocks.redisSet).toHaveBeenNthCalledWith(
+      2,
+      "sailor:ff:priority-support:plan:free",
+      false,
+      { ex: 10 },
+    );
   });
 
   it("uses cached boolean values before env fallback", async () => {

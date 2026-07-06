@@ -23,6 +23,7 @@ interface ServerAuthState {
 // Singleton auth instance — lazily initialized
 let authInstance: Awaited<ReturnType<typeof createAuth>> | null = null;
 const defaultPublicUrls = getDefaultPublicUrls(process.env.NODE_ENV);
+const DEFAULT_ORG_ROLE = "org:viewer";
 
 /**
  * Get or create the singleton auth instance.
@@ -142,7 +143,7 @@ async function getClerkAuth(): Promise<ServerAuthState> {
       ? session.orgRole
       : typeof rawClaims.org_role === "string"
         ? rawClaims.org_role
-        : "org:admin";
+        : DEFAULT_ORG_ROLE;
 
   return {
     userId,
@@ -172,7 +173,7 @@ export async function getAuth(request?: Request) {
   return {
     userId: session?.userId ?? null,
     orgId,
-    sessionClaims: { org_plan: "FREE", org_role: "org:admin" }, // Placeholder for backward compatibility
+    sessionClaims: { org_plan: "FREE", org_role: DEFAULT_ORG_ROLE },
     isSignedIn: !!session?.userId,
   } satisfies ServerAuthState;
 }

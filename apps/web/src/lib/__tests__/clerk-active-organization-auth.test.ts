@@ -76,4 +76,22 @@ describe("Clerk active organization auth", () => {
     });
     expect(createAuthMock).not.toHaveBeenCalled();
   });
+
+  it("does not synthesize admin privileges when Clerk omits org role claims", async () => {
+    clerkAuthMock.mockResolvedValue({
+      userId: "user_viewer",
+      orgId: "org_alpha",
+      orgRole: undefined,
+      sessionClaims: { org_plan: "FREE" },
+    });
+
+    const { getAuth } = await loadAuth();
+
+    await expect(getAuth()).resolves.toMatchObject({
+      userId: "user_viewer",
+      orgId: "org_alpha",
+      isSignedIn: true,
+      sessionClaims: { org_plan: "FREE", org_role: "org:viewer" },
+    });
+  });
 });

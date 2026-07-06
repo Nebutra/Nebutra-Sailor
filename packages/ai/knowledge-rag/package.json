@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
-    "status": "active",
+    "status": "foundation",
     "productionReady": false,
     "requires": [
       "(none) — zero-config: in-memory vector store + deterministic local embedder",

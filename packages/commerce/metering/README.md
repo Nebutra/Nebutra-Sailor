@@ -1,4 +1,4 @@
-> **Status: Production** — Real `ClickHouseProvider` backed by `@clickhouse/client`, with batched ingest, daily aggregate materialised view, and persisted quotas. The `MemoryProvider` is for dev/test only.
+> **Status: Foundation** — Real `ClickHouseProvider` backed by `@clickhouse/client`, with batched ingest, daily aggregate materialised view, and persisted quotas. Gateway/billing enforcement wiring is still being closed; the `MemoryProvider` is for dev/test only.
 
 # @nebutra/metering
 

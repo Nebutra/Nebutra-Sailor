@@ -5,12 +5,13 @@
   "license": "MIT",
   "type": "module",
   "nebutra": {
-    "status": "production",
-    "productionReady": true,
+    "status": "foundation",
+    "productionReady": false,
     "requires": [
       "CLICKHOUSE_URL or in-memory provider for dev"
     ],
     "gaps": [
+      "Gateway and billing completion-worker ingestion are not globally wired into this package yet",
       "Retention/TTL policy is operator-driven (apply per environment)",
       "Sharded/replicated topology uses ReplicatedMergeTree — see README"
     ],

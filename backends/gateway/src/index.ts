@@ -26,6 +26,7 @@ import { DOMAINS, env } from "./config/env.js";
 import { isOrpcEnabled, isTrpcEnabled } from "./config/protocols.js";
 import { captureRequestError, initSentry } from "./config/sentry.js";
 import { inngestHandler } from "./inngest/index.js";
+import { createAiGatewayIngestUsage } from "./lib/ai-gateway-metering.js";
 import { buildGatewayDeps } from "./lib/gateway-deps.js";
 import { requestContext, runWithContext } from "./lib/requestContext.js";
 import { apiVersionMiddleware } from "./middlewares/apiVersion.js";
@@ -259,7 +260,7 @@ try {
       invalidateBalanceCache: async (orgId: string) => {
         await invalidateBalanceCache(orgId, gatewayDeps.redis);
       },
-      // TODO(#126): wire @nebutra/metering.ingest here once ClickHouse pipeline is live.
+      ingestUsage: createAiGatewayIngestUsage(),
       logger: {
         info: (...args: unknown[]) => logger.info(String(args[0] ?? ""), args[1] as never),
         warn: (...args: unknown[]) => logger.warn(String(args[0] ?? ""), args[1] as never),

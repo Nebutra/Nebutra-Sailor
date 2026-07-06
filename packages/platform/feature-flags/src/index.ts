@@ -83,6 +83,18 @@ import { getRedis } from "@nebutra/cache";
 
 const CACHE_TTL = 10; // 10 seconds
 
+function getContextualCacheSuffix(context?: FeatureFlagContext): string {
+  return context?.plan ? `:plan:${context.plan}` : "";
+}
+
+function getFlagCacheKey(flag: string, context?: FeatureFlagContext): string {
+  return `sailor:ff:${flag}${getContextualCacheSuffix(context)}`;
+}
+
+function getVariantCacheKey(flag: string, context?: FeatureFlagContext): string {
+  return `sailor:ff:${flag}:variant${getContextualCacheSuffix(context)}`;
+}
+
 const dbProvider: FeatureFlagProvider = {
   isEnabled: async (flag: string, _context?: FeatureFlagContext) => {
     // 1. HARD KILL SWITCH: Check env var first (Process context)
@@ -94,7 +106,7 @@ const dbProvider: FeatureFlagProvider = {
     try {
       // 2. CHECK CACHE
       const redis = await getRedis();
-      const cacheKey = `sailor:ff:${flag}`;
+      const cacheKey = getFlagCacheKey(flag, _context);
       const cached = await redis.get<boolean>(cacheKey);
       if (cached !== null) {
         return cached;
@@ -128,7 +140,7 @@ const dbProvider: FeatureFlagProvider = {
 
     try {
       const redis = await getRedis();
-      const cacheKey = `sailor:ff:${flag}:variant`;
+      const cacheKey = getVariantCacheKey(flag, _context);
       const cached = await redis.get<T>(cacheKey);
       if (cached !== null) return cached;
 

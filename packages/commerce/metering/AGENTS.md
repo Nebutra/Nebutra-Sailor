@@ -34,9 +34,9 @@ the source of truth here rather than patching consuming packages.
   as `api_calls`, `ai_tokens`, and `storage_bytes` are compatibility-sensitive
   and should not drift casually.
 - Respect the current foundation status in `package.json`. The ClickHouse
-  provider exists, but repo metadata still marks it as a stub/incomplete path;
-  quota enforcement and aggregation rollups are not fully wired. Do not write
-  scoped guidance that pretends those gaps are closed.
+  provider exists, but repo metadata still marks gateway/billing ingestion and
+  quota-enforcement closure incomplete. Do not write scoped guidance that
+  pretends those gaps are closed.
 - Preserve the split between instrumentation helpers and provider logic.
   `src/middleware.ts` should record usage through the provider interface, not
   reimplement provider-side aggregation or quota semantics.

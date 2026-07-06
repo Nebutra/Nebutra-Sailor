@@ -28,7 +28,7 @@ package is not `stable`, the CLI will:
 You are never blocked from selecting a preview provider — the guarantee
 is transparency, not restriction.
 
-## Foundation packages (14)
+## Foundation packages (16)
 
 These packages ship a real factory, type definitions, and provider
 registration. Their core path is usable, but the happy path usually
@@ -37,7 +37,8 @@ contribute, or (c) a managed SaaS that the provider wraps.
 
 | Package                  | CLI flag(s)            | Ready out-of-the-box?                 | Main gaps                                                           |
 | ------------------------ | ---------------------- | ------------------------------------- | ------------------------------------------------------------------- |
-| `@nebutra/metering`      | (enabled via payment)  | No — needs ClickHouse or local dev    | ClickHouse adapter is stub; billing/API middleware wiring pending   |
+| `@nebutra/metering`      | (enabled via payment)  | No — needs ClickHouse or local dev    | Gateway/billing ingestion and enforcement wiring pending             |
+| `@nebutra/legal`         | (consumed directly)    | Partial — package seams exist         | Consent persistence API, DB-backed store, and publishing workflow pending |
 | `@nebutra/permissions`   | (consumed directly)    | Partial — CASL works in-process       | OpenFGA adapter stub                                                |
 | `@nebutra/queue`         | `--queue`              | No — QStash or Redis credentials      | QStash DLQ retrieval TODO; worker auto-scaling TODO                 |
 | `@nebutra/search`        | `--search`             | No — provider creds required          | Provider adapters are stubs; pgvector not implemented               |
@@ -45,6 +46,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/uploads`       | (consumed directly)    | No — S3/R2 creds required             | Tus flow not end-to-end; validation stubs                           |
 | `@nebutra/vault`         | (consumed directly)    | Partial — local HKDF works for dev    | KMS rotation flow TODO; tenant isolation scaffolded                 |
 | `@nebutra/feature-flags` | `--feature-flags`      | Partial — Redis/env runtime works     | Managed Vercel/GrowthBook/ConfigCat SDK adapters and rollout UI pending |
+| `@nebutra/knowledge-rag` | (consumed directly)    | Partial — zero-config RAG path works  | pgvector store interface-only; provider-grade reranker adapter pending |
 | `@nebutra/design-sync`   | (auto-detect)          | git-only works zero-config            | Figma push (Variables REST API) is dry-run; Penpot push scaffolded  |
 | `@nebutra/china-compliance` | (env-driven)         | ICP footer + region detection ready   | WeChat OAuth callback route TODO; Aliyun SMS adapter scaffold       |
 | `@nebutra/access-gate`  | `--access-gate`        | Core + Prisma adapter + admin issue/list/revoke/email/Dub links + Better Auth signup gate/redeem work | OAuth callback gating and DB-backed integration tests are app-owned |
@@ -52,7 +54,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (35)
+## WIP packages (34)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -64,7 +66,6 @@ and missing functionality.
 | `@nebutra/audit`         | (consumed directly)     | Event schema not finalized; retention/export workflow pending    |
 | `@nebutra/captcha`       | `--captcha`             | hCaptcha & Aliyun adapters scaffolded only                       |
 | `@nebutra/event-bus`     | (consumed by saga)      | Cross-service pub/sub guarantees not verified                    |
-| `@nebutra/legal`         | (consumed directly)     | Consent persistence + document versioning pending                |
 | `@nebutra/code-index`    | (consumed directly)     | Provider-agnostic contracts and indexing core only; concrete embedder/vector-store adapters are injected |
 | `@nebutra/mcp`           | `--mcp`                 | Context server binary is a placeholder stub                      |
 | `@nebutra/saga`          | (consumed directly)     | No durable journal; compensation logic scaffolded only           |
@@ -77,7 +78,7 @@ and missing functionality.
 | `@nebutra/generation-context` | (consumed directly) | Shared BrandContext contract; app editor, reference validation, and media license policy are not production-backed |
 | `@nebutra/image-pipeline` | (consumed directly)  | Generation capability only; model-backed workflows and remote image providers are adapter-gated |
 | `@nebutra/play-loader`   | (consumed directly)     | Declarative play loader; runner delegates, remote install, and migration APIs are interface-only |
-| `@nebutra/startup-os`    | (consumed directly)     | Startup OS orchestration contracts; hosted execution, persistence wiring, and UI delivery are app-owned |
+| `@nebutra/startup-os`    | (consumed directly)     | Startup OS orchestration contracts; hosted execution, persistence wiring, auth/billing/tenant lifecycle, and UI delivery are app-owned |
 | `@nebutra/workflow-runtime` | (consumed directly) | Tenant-authored workflow JS runtime; gateway runner, SSE streaming, and agent-callable tool wiring are deferred |
 | `@nebutra/video-pipeline` | (consumed directly)  | Generation capability only; model-backed clips, ffmpeg composition, and remote quotas are adapter-gated |
 | `@nebutra/voice-realtime` | (consumed directly) | Generation capability only; realtime transport, enrollment storage, and provider sidecars are adapter-gated |
@@ -88,7 +89,6 @@ and missing functionality.
 | `@nebutra/landing-builder` | (consumed directly) | Layer-6 play product; landing-page generator + capability map pending |
 | `@nebutra/outreach-engine` | (consumed directly) | Layer-6 play product; outreach campaign primitives + sidecars pending |
 | `@nebutra/play-marketplace` | (consumed directly) | Layer-7 ecosystem product; play discovery + install flow pending |
-| `@nebutra/startup-os` | (consumed directly) | Layer-6 play product; host app still owns auth, billing, tenant lifecycle, and durable orchestration |
 | `@nebutra/support-deflector` | (consumed directly) | Layer-6 play product; deflection ranking + KB integration pending |
 | `@nebutra/time-machine` | (consumed directly)   | Layer-7 ecosystem product; snapshot/restore semantics + storage pending |
 | `@nebutra/knowledge-graph` | (consumed directly) | Graph-shaped knowledge primitives; production graph-store adapter sidecar-gated |

@@ -1,5 +1,7 @@
 # @nebutra/knowledge-rag
 
+> **Status: Foundation** — The zero-config in-memory RAG path and tool factory are real; persistent pgvector storage and provider-grade reranking remain adapter-owned gaps.
+
 Multi-tenant **hybrid RAG** pipeline for Nebutra-Sailor.
 
 ```
@@ -13,8 +15,9 @@ A can never return tenant B's chunks.
 
 ## Status
 
-`active` — exported tool factory (`createKnowledgeRagTool`) is the real caller
-(used by `@nebutra/agent-runtime` / `@nebutra/agents`). Zero-config by default.
+`foundation` — exported tool factory (`createKnowledgeRagTool`) is the real
+caller (used by `@nebutra/agent-runtime` / `@nebutra/agents`). Zero-config by
+default.
 
 ## Zero-config quick start
 
