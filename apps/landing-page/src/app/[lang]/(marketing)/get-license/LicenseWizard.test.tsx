@@ -99,11 +99,23 @@ describe("LicenseWizard", () => {
       expect(redirectToCheckout).toHaveBeenCalledWith("https://checkout.stripe.test/cs_startup");
     });
 
+    expect(
+      screen.getByRole("progressbar", { name: /license wizard progress/i }).getAttribute("value"),
+    ).toBe("3");
     expect(fetchMock).toHaveBeenCalledWith(
       "/api/license",
       expect.objectContaining({
         method: "POST",
         body: expect.stringContaining('"tier":"STARTUP"'),
+      }),
+    );
+    expect(emitBrowserEvent).toHaveBeenCalledWith(
+      "license.wizard",
+      expect.objectContaining({
+        referral_source: "github",
+        step: "submitted",
+        team_size: "2-5",
+        tier: "STARTUP",
       }),
     );
     expect(emitBrowserEvent).toHaveBeenCalledWith(

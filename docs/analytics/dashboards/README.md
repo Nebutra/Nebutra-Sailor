@@ -18,6 +18,7 @@ repo keeps analytics changes in the same PR flow as product changes.
 | `05-docs-pain-map.sql` | Top 20 documentation searches returning zero results — i.e. gaps that the content team must fill next. | PostHog events |
 | `06-sleptons-engagement.sql` | Who are the most engaged Sleptons community members (profiles viewed / showcases posted / votes / connections)? | PostHog events |
 | `07-positioning-paid-wall-validation.sql` | For STARTUP-eligible 2–50 teams, what share reaches Stripe checkout and paid completion within 30 days, with ECS smoke-proven deploy evidence beside the cohort? | PostHog events |
+| `08-paid-wall-data-quality.sql` | Are the paid-wall events complete and joinable enough to trust the positioning validation query? | PostHog events |
 
 > `metabase-setup.md` contains the step-by-step bootstrap guide for a fresh
 > Metabase instance (database connections + importing each query).
@@ -51,8 +52,9 @@ For every `*.sql` file in this folder:
   without manual runs.
 - **Acceptable**: daily refresh for the retention and attribution boards
   (they look at 30–90 day windows, so the hourly signal is noise).
-- **Live**: the funnel board (`01`) and the payment drop-off board (`04`)
-  should be live-refresh (5 minutes) during launch windows.
+- **Live**: the funnel board (`01`), the payment drop-off board (`04`), and
+  the paid-wall data quality board (`08`) should be live-refresh (5 minutes)
+  during launch windows.
 
 ---
 

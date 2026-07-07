@@ -98,12 +98,24 @@ const WIZARD_STEP_MARKERS = [
   { id: "step-4", value: 4 },
 ] as const;
 
+const focusVisibleClass =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--blue-8)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--neutral-1)]";
+
 interface LicenseWizardProps {
   redirectToCheckout?: (url: string) => void;
 }
 
 function defaultRedirectToCheckout(url: string): void {
   window.location.href = url;
+}
+
+function determineLicenseTier(
+  teamSize: TeamSize | null,
+): "INDIVIDUAL" | "OPC" | "STARTUP" | "ENTERPRISE" | null {
+  if (teamSize === "1") return "INDIVIDUAL";
+  if (teamSize === "2-5" || teamSize === "6-20" || teamSize === "21-50") return "STARTUP";
+  if (teamSize === "50+") return "ENTERPRISE";
+  return null;
 }
 
 // Role card component
@@ -122,7 +134,7 @@ const RoleCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col items-center gap-3 rounded-[var(--radius-lg)] border-2 p-4 transition-colors duration-200 ${
+    className={`flex flex-col items-center gap-3 rounded-[var(--radius-lg)] border-2 p-4 transition-colors duration-200 ${focusVisibleClass} ${
       selected
         ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
         : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
@@ -149,7 +161,7 @@ const UseCaseCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col gap-2 rounded-[var(--radius-xl)] border-2 p-5 text-left transition-colors duration-200 ${
+    className={`flex flex-col gap-2 rounded-[var(--radius-xl)] border-2 p-5 text-left transition-colors duration-200 ${focusVisibleClass} ${
       selected
         ? "border-[var(--blue-9)] bg-[var(--blue-3)]"
         : "border-[var(--neutral-7)] hover:border-[var(--neutral-11)]"
@@ -184,7 +196,7 @@ const LicenseTierCard = ({
     type="button"
     aria-pressed={selected}
     onClick={onClick}
-    className={`flex flex-col gap-4 rounded-[var(--radius-xl)] border-2 p-6 text-left transition-colors duration-200 ${
+    className={`flex flex-col gap-4 rounded-[var(--radius-xl)] border-2 p-6 text-left transition-colors duration-200 ${focusVisibleClass} ${
       highlighted ? "ring-2 ring-[var(--brand-primary)] ring-offset-2" : ""
     } ${
       selected
@@ -213,15 +225,23 @@ const LicenseTierCard = ({
 
 // Progress bar component
 const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
-  <div className="flex gap-2">
-    {WIZARD_STEP_MARKERS.slice(0, totalSteps).map((step) => (
-      <div
-        key={step.id}
-        className={`h-2 flex-1 rounded-[var(--radius-full)] transition-colors duration-300 ${
-          step.value <= currentStep ? "bg-[var(--blue-9)]" : "bg-[var(--neutral-7)]"
-        }`}
-      />
-    ))}
+  <div>
+    <progress
+      aria-label="License wizard progress"
+      className="sr-only"
+      max={totalSteps}
+      value={currentStep}
+    />
+    <div aria-hidden="true" className="flex gap-2">
+      {WIZARD_STEP_MARKERS.slice(0, totalSteps).map((step) => (
+        <div
+          key={step.id}
+          className={`h-2 flex-1 rounded-[var(--radius-full)] transition-colors duration-300 ${
+            step.value <= currentStep ? "bg-[var(--blue-9)]" : "bg-[var(--neutral-7)]"
+          }`}
+        />
+      ))}
+    </div>
   </div>
 );
 
@@ -251,16 +271,6 @@ export function LicenseWizard({
   useEffect(() => {
     emitBrowserEvent("license.wizard", { step: "started" });
   }, []);
-
-  // Determine license tier based on team size
-  const determineLicenseTier = (
-    teamSize: string | null,
-  ): "INDIVIDUAL" | "OPC" | "STARTUP" | "ENTERPRISE" | null => {
-    if (teamSize === "1") return "INDIVIDUAL";
-    if (teamSize === "2-5" || teamSize === "6-20" || teamSize === "21-50") return "STARTUP";
-    if (teamSize === "50+") return "ENTERPRISE";
-    return null;
-  };
 
   // Validate step 1
   const isStep1Valid = step1.role !== null && step1.teamSize !== null;
@@ -512,7 +522,7 @@ export function LicenseWizard({
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep1Valid}
-                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${focusVisibleClass} ${
                     isStep1Valid ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   }`}
                   style={{ background: isStep1Valid ? "var(--brand-gradient)" : undefined }}
@@ -632,7 +642,7 @@ export function LicenseWizard({
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="flex items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] ${focusVisibleClass}`}
                 >
                   <ChevronLeft className="h-4 w-4" />
                   Back
@@ -641,7 +651,7 @@ export function LicenseWizard({
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep2Valid}
-                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${focusVisibleClass} ${
                     isStep2Valid ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   }`}
                   style={{ background: isStep2Valid ? "var(--brand-gradient)" : undefined }}
@@ -712,7 +722,7 @@ export function LicenseWizard({
                   step1.teamSize === "6-20" ||
                   step1.teamSize === "21-50") && (
                   <div className="space-y-4">
-                    <div className="rounded-[var(--radius-lg)] border border-[var(--status-warning)] bg-yellow-50 p-4">
+                    <div className="rounded-[var(--radius-lg)] border border-[var(--status-warning)] bg-[color-mix(in_srgb,var(--status-warning)_12%,transparent)] p-4">
                       <p className="text-sm text-[var(--neutral-12)] font-medium">
                         Your team is too large for a free license. Let's find the right commercial
                         plan.
@@ -737,7 +747,7 @@ export function LicenseWizard({
 
                 {step1.teamSize === "50+" && (
                   <div className="space-y-4">
-                    <div className="rounded-[var(--radius-lg)] border border-[var(--status-info)] bg-blue-50 p-4">
+                    <div className="rounded-[var(--radius-lg)] border border-[var(--status-info)] bg-[color-mix(in_srgb,var(--status-info)_10%,transparent)] p-4">
                       <p className="text-sm text-[var(--neutral-12)] font-medium">
                         For enterprises with 50+ people, let's connect with our sales team to find
                         the perfect fit.
@@ -886,7 +896,7 @@ export function LicenseWizard({
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="flex items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)]"
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] border border-[var(--neutral-7)] px-6 py-3 font-semibold text-[var(--neutral-12)] transition-colors hover:bg-[var(--neutral-2)] ${focusVisibleClass}`}
                 >
                   <ChevronLeft className="h-4 w-4" />
                   Back
@@ -895,7 +905,7 @@ export function LicenseWizard({
                   type="button"
                   onClick={handleNext}
                   disabled={!isStep3Valid || isSubmitting}
-                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${
+                  className={`flex items-center gap-2 rounded-[var(--radius-lg)] px-6 py-3 font-semibold text-white transition-opacity ${focusVisibleClass} ${
                     isStep3Valid && !isSubmitting
                       ? "cursor-pointer"
                       : "cursor-not-allowed opacity-50"

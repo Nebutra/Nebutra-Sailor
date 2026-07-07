@@ -2,6 +2,7 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import Ajv2020 from "ajv/dist/2020.js";
 
 const root = resolve(import.meta.dirname, "..");
 const doctorMode = process.argv.includes("--doctor");
@@ -37,10 +38,28 @@ const writeErrorLine = (message = "") => {
   process.stderr.write(`${message}\n`);
 };
 const manifestPath = "infra/platforms/cloud-portability.json";
+const manifestSchemaPath = "infra/platforms/cloud-portability.schema.json";
 
 assert(existsSync(resolve(root, manifestPath)), `${manifestPath} does not exist`, failures);
+assert(
+  existsSync(resolve(root, manifestSchemaPath)),
+  `${manifestSchemaPath} does not exist`,
+  failures,
+);
 
 const manifest = existsSync(resolve(root, manifestPath)) ? readJson(manifestPath) : {};
+const manifestSchema = existsSync(resolve(root, manifestSchemaPath))
+  ? readJson(manifestSchemaPath)
+  : {};
+const ajv = new Ajv2020({ allErrors: true, strict: false });
+const validateManifest = ajv.compile(manifestSchema);
+
+assert(
+  validateManifest(manifest),
+  `${manifestPath} failed schema validation: ${ajv.errorsText(validateManifest.errors)}`,
+  failures,
+);
+
 const expectedProviders = ["aws", "cloud-vm", "gcp", "k8s", "vercel"];
 
 assert(
@@ -65,6 +84,23 @@ assert(
   "GCP CI auth must use Workload Identity Federation",
   failures,
 );
+assert(
+  manifest.ci?.doctor === "pnpm cloud:doctor",
+  "cloud doctor command must match package script",
+  failures,
+);
+assert(
+  manifest.ci?.verify === "pnpm cloud:verify",
+  "cloud verify command must match package script",
+  failures,
+);
+for (const workflow of manifest.ci?.workflows ?? []) {
+  assert(
+    existsSync(resolve(root, workflow)),
+    `cloud portability workflow does not exist: ${workflow}`,
+    failures,
+  );
+}
 
 const dockerWorkflow = readText(".github/workflows/docker-build-push.yml");
 includesAll(
@@ -132,11 +168,26 @@ includesAll(
 const gcpModulePath = "infra/iac/terraform/modules/gcp/main.tf";
 assert(existsSync(resolve(root, gcpModulePath)), `${gcpModulePath} does not exist`, failures);
 if (existsSync(resolve(root, gcpModulePath))) {
+  const gcpModule = readText(gcpModulePath);
   assert(
-    readText(gcpModulePath).includes("google_artifact_registry_repository"),
+    gcpModule.includes("google_artifact_registry_repository"),
     `${gcpModulePath} must provision Artifact Registry`,
     failures,
   );
+  const dormantComputeResources = [
+    "google_cloud_run_service",
+    "google_cloud_run_v2_service",
+    "google_container_cluster",
+    "google_compute_instance",
+    "google_compute_region_instance_group_manager",
+  ];
+  for (const resource of dormantComputeResources) {
+    assert(
+      !gcpModule.includes(`resource "${resource}"`),
+      `${gcpModulePath} must stay registry-only while GCP is a dormant adapter; found ${resource}`,
+      failures,
+    );
+  }
 }
 
 const pkg = readJson("package.json");
@@ -163,7 +214,7 @@ if (doctorMode) {
   writeLine(
     `[cloud-portability] GCP registry: ${manifest.providers?.gcp?.registry?.kind ?? "missing"}`,
   );
-  writeLine("[cloud-portability] CI workflow: .github/workflows/docker-build-push.yml");
+  writeLine(`[cloud-portability] CI workflows: ${(manifest.ci?.workflows ?? []).join(", ")}`);
   writeLine("[cloud-portability] Terraform modules: aws, gcp");
 }
 

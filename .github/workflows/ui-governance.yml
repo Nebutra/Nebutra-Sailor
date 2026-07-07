@@ -15,6 +15,7 @@ on:
       - "scripts/lib/ui-governance-policy.ts"
       - "scripts/validate-ui-governance-policy.ts"
       - "scripts/verify-brand-token-sync.ts"
+      - "scripts/verify-theme-quality.mts"
       - "scripts/verify-ui-governance.ts"
       - "tests/architecture/governance/**"
   push:
@@ -31,6 +32,7 @@ on:
       - "scripts/lib/ui-governance-policy.ts"
       - "scripts/validate-ui-governance-policy.ts"
       - "scripts/verify-brand-token-sync.ts"
+      - "scripts/verify-theme-quality.mts"
       - "scripts/verify-ui-governance.ts"
       - "tests/architecture/governance/**"
 
@@ -53,6 +55,9 @@ jobs:
 
       - name: Verify Brand Token Sync
         run: pnpm exec tsx scripts/verify-brand-token-sync.ts
+
+      - name: Verify Theme Quality
+        run: pnpm exec tsx scripts/verify-theme-quality.mts packages/design/design-tokens/tokens/themes/*.json
 
       - name: Verify UI Governance Rules
         run: pnpm exec tsx scripts/verify-ui-governance.ts

@@ -79,6 +79,7 @@ describe("cloud platform portability contract", () => {
   it("adds a GCP Terraform scaffold while preserving AWS as an active provider option", () => {
     const prodTerraform = readText("infra/iac/terraform/environments/prod/main.tf");
     const gcpModulePath = "infra/iac/terraform/modules/gcp/main.tf";
+    const gcpModule = readText(gcpModulePath);
 
     expect(existsSync(join(root, gcpModulePath))).toBe(true);
     expect(prodTerraform).toContain('source  = "hashicorp/google"');
@@ -86,18 +87,36 @@ describe("cloud platform portability contract", () => {
     expect(prodTerraform).toContain('module "aws"');
     expect(prodTerraform).toContain('module "gcp"');
     expect(prodTerraform).toContain('output "gcp_outputs"');
-    expect(readText(gcpModulePath)).toContain("google_artifact_registry_repository");
+    expect(gcpModule).toContain("google_artifact_registry_repository");
+    expect(gcpModule).not.toContain('resource "google_cloud_run_service"');
+    expect(gcpModule).not.toContain('resource "google_cloud_run_v2_service"');
+    expect(gcpModule).not.toContain('resource "google_container_cluster"');
+    expect(gcpModule).not.toContain('resource "google_compute_instance"');
+    expect(gcpModule).not.toContain('resource "google_compute_region_instance_group_manager"');
   });
 
   it("exposes a local doctor command for cloud portability drift", () => {
     const pkg = JSON.parse(readText("package.json")) as { scripts?: Record<string, string> };
     const ciWorkflow = readText(".github/workflows/ci.yml");
+    const manifest = JSON.parse(readText("infra/platforms/cloud-portability.json")) as {
+      ci?: { doctor?: string; verify?: string; workflows?: string[] };
+    };
 
     expect(existsSync(join(root, "scripts/verify-cloud-portability.mjs"))).toBe(true);
     expect(pkg.scripts?.["cloud:verify"]).toBe("node scripts/verify-cloud-portability.mjs");
     expect(pkg.scripts?.["cloud:doctor"]).toBe(
       "node scripts/verify-cloud-portability.mjs --doctor",
     );
+    expect(manifest.ci?.doctor).toBe("pnpm cloud:doctor");
+    expect(manifest.ci?.verify).toBe("pnpm cloud:verify");
+    expect(manifest.ci?.workflows ?? []).toEqual([
+      ".github/workflows/docker-build-push.yml",
+      ".github/workflows/deploy-gateway.yml",
+      ".github/workflows/deploy-origin-ecs.yml",
+    ]);
+    for (const workflow of manifest.ci?.workflows ?? []) {
+      expect(existsSync(join(root, workflow))).toBe(true);
+    }
     expect(ciWorkflow).toContain("Verify cloud portability contract");
     expect(ciWorkflow).toContain("cloud:verify");
   });

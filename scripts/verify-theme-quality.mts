@@ -82,3 +82,4 @@ const results = process.argv
 const bad = results.filter((r) => r.flags.length > 0);
 process.stdout.write(`total=${results.length} failing=${bad.length}\n`);
 for (const r of bad) process.stdout.write(`  ${r.id}: ${r.flags.join(", ")}\n`);
+if (bad.length > 0) process.exit(1);

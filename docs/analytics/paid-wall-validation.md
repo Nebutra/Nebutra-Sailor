@@ -21,21 +21,24 @@ conversion signal is known.
 
 1. Before looking at data, write the success threshold in the issue or PR body.
    Default recommendation: `>=15%` STARTUP paid conversion within 30 days.
-2. Run `docs/analytics/dashboards/07-positioning-paid-wall-validation.sql` in
+2. Run `docs/analytics/dashboards/08-paid-wall-data-quality.sql` in Metabase.
+   If required-field or joinability percentages are weak, fix instrumentation
+   before interpreting conversion.
+3. Run `docs/analytics/dashboards/07-positioning-paid-wall-validation.sql` in
    Metabase against the PostHog replay table.
-3. Export the raw result table. Do not decide from aggregate screenshots.
-4. Confirm `startup_team_sample_n >= 20`. If not, keep collecting and do not
+4. Export the raw result table. Do not decide from aggregate screenshots.
+5. Confirm `startup_team_sample_n >= 20`. If not, keep collecting and do not
    call the experiment.
-5. Trigger the ECS fallback deploy when changing the checkout or analytics
+6. Trigger the ECS fallback deploy when changing the checkout or analytics
    loop:
 
    ```bash
    gh workflow run deploy-ecs.yml --ref <branch-or-main> -f apps="landing api" -f reason="P0 paid-wall validation"
    ```
 
-6. Wait for the workflow to pass. The workflow emits `deployment.verified`
+7. Wait for the workflow to pass. The workflow emits `deployment.verified`
    after public smoke tests pass.
-7. Attach the exported raw table to the issue/PR and record one verdict:
+8. Attach the exported raw table to the issue/PR and record one verdict:
    `value`, `consensus`, or `model`.
 
 ## Decision Rule
