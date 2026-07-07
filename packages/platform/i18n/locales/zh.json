@@ -11,7 +11,7 @@
       "title": "用户",
       "description": "浏览、搜索并以任何用户身份登录。",
       "searchPlaceholder": "搜索用户…",
-      "totalCount": "共 {count} 个用户",
+      "totalCount": "{count, plural, one {# 个用户} other {# 个用户}}",
       "empty": "未找到用户。",
       "loadError": "加载用户失败。",
       "columns": {
@@ -27,7 +27,7 @@
       "title": "组织",
       "description": "系统中的所有工作区，按时间倒序排列。",
       "searchPlaceholder": "搜索组织…",
-      "totalCount": "共 {count} 个组织",
+      "totalCount": "{count, plural, one {# 个组织} other {# 个组织}}",
       "empty": "未找到组织。",
       "loadError": "加载组织失败。",
       "columns": {
@@ -252,7 +252,7 @@
     },
     "pricing": {
       "trial": "免费试用 {days} 天",
-      "seat": "{count} 个席位",
+      "seat": "{count, plural, one {# 个席位} other {# 个席位}}",
       "perSeat": "/ 席位"
     }
   },
