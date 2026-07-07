@@ -1,15 +1,22 @@
 import { expect, test } from "@playwright/test";
 
+import { getAuthCapabilityStatus } from "../fixtures/auth";
 import { gotoMarketingPage } from "../helpers/navigation";
 
 // /sign-in and /sign-up live on the web app (port 3001), not the landing page.
 // In CI the web app is not started unless APP_BASE_URL is explicitly provided.
 const APP_BASE = process.env.APP_BASE_URL ?? "http://localhost:3001";
 const skipWebApp = process.env.CI === "true" && !process.env.APP_BASE_URL;
-const authSmokeEnabled = process.env.E2E_AUTH_SMOKE === "1";
-const authSmokeDescribe = authSmokeEnabled && !skipWebApp ? test.describe : test.describe.skip;
+const authSmoke = getAuthCapabilityStatus("auth-smoke");
+const authSmokeSkipReason = skipWebApp
+  ? "Web app not running in CI (set APP_BASE_URL to enable)"
+  : authSmoke.ready
+    ? null
+    : authSmoke.reason;
 
-authSmokeDescribe("Authentication Flow", () => {
+test.describe("Authentication Flow", () => {
+  test.skip(Boolean(authSmokeSkipReason), authSmokeSkipReason ?? "Auth smoke configured");
+
   test("sign-in page is accessible", async ({ page }) => {
     await page.goto(APP_BASE + "/sign-in");
     await expect(page).not.toHaveTitle(/404|Not Found/i);

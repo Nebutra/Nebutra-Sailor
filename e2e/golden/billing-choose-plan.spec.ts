@@ -8,14 +8,16 @@
  */
 
 import { expect, test } from "@playwright/test";
-import { APP_BASE_URL, injectMockSession, isLiveEnv, SAMPLE_USER } from "../fixtures/auth";
+import { APP_BASE_URL, getAuthCapabilityStatus, injectConfiguredSession } from "../fixtures/auth";
 
 const MOCK_CHECKOUT_URL = "https://checkout.stripe.test/session/cs_test_e2e_golden";
+const sessionAuth = getAuthCapabilityStatus("session-cookie");
 
 test.describe("Billing choose-plan golden path", () => {
+  test.skip(!sessionAuth.ready, sessionAuth.reason);
+
   test.beforeEach(async ({ context, page }) => {
-    test.fixme(!isLiveEnv(), "Requires running web app to render /choose-plan");
-    await injectMockSession(context, SAMPLE_USER);
+    await injectConfiguredSession(context);
 
     await page.route("**/api/billing/checkout", async (route) => {
       await route.fulfill({

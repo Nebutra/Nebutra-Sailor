@@ -361,6 +361,19 @@ async function enqueueErrorCompletion(
   );
 }
 
+function recordErrorCompletion(
+  deps: GatewayDeps,
+  input: Parameters<typeof enqueueErrorCompletion>[1],
+): Promise<void> {
+  return enqueueErrorCompletion(deps, input).catch((error) => {
+    log.warn("Failed to enqueue AI gateway error completion", {
+      requestId: input.requestId,
+      completionErrorMessage: input.errorMessage,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  });
+}
+
 // ── Factory ──────────────────────────────────────────────────────────────────
 
 export function createAiGatewayRoutes(deps: GatewayDeps, options: AiGatewayRouteOptions = {}) {
@@ -520,7 +533,17 @@ export function createAiGatewayRoutes(deps: GatewayDeps, options: AiGatewayRoute
     const upstreamBodyStream = upstreamResponse.body;
 
     if (!upstreamBodyStream) {
-      log.error("Upstream returned empty body for stream", { requestId });
+      log.error("Upstream returned empty body for stream", {
+        requestId,
+        provider: selectedUpstream.id,
+      });
+      void recordErrorCompletion(deps, {
+        requestId,
+        apiKey,
+        body,
+        startTime,
+        errorMessage: "upstream_stream_unavailable",
+      });
       return c.json({ error: "Upstream stream unavailable" }, 502);
     }
 
@@ -528,11 +551,13 @@ export function createAiGatewayRoutes(deps: GatewayDeps, options: AiGatewayRoute
       async start(controller) {
         const reader = upstreamBodyStream.getReader();
         const decoder = new TextDecoder();
+        let sawChunk = false;
         try {
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-            if (value) {
+            if (value?.byteLength) {
+              sawChunk = true;
               // Mirror the chunk upstream → downstream byte-for-byte,
               // while extracting usage / content from a decoded copy.
               controller.enqueue(value);
@@ -543,7 +568,15 @@ export function createAiGatewayRoutes(deps: GatewayDeps, options: AiGatewayRoute
         } catch (err) {
           log.error("Stream relay failed", {
             requestId,
+            provider: selectedUpstream.id,
             error: err instanceof Error ? err.message : String(err),
+          });
+          await recordErrorCompletion(deps, {
+            requestId,
+            apiKey,
+            body,
+            startTime,
+            errorMessage: "stream_relay_failed",
           });
           controller.error(err);
           return;
@@ -554,6 +587,23 @@ export function createAiGatewayRoutes(deps: GatewayDeps, options: AiGatewayRoute
             /* ignore */
           }
         }
+
+        if (!sawChunk) {
+          log.error("Upstream stream closed without chunks", {
+            requestId,
+            provider: selectedUpstream.id,
+          });
+          await recordErrorCompletion(deps, {
+            requestId,
+            apiKey,
+            body,
+            startTime,
+            errorMessage: "upstream_stream_empty",
+          });
+          controller.close();
+          return;
+        }
+
         controller.close();
 
         // On completion: build CompletionEvent and enqueue.

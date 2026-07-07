@@ -543,6 +543,11 @@ export const nebultraCommand: CommandMeta = {
       usage: "nebutra theme [subcommand]",
     },
     {
+      name: "ui",
+      description: "Search, inspect, validate, and plan migrations for @nebutra/ui components",
+      usage: "nebutra ui [subcommand]",
+    },
+    {
       name: "admin",
       description: "Operate tenant, platform health, and administrative workflows",
       usage: "nebutra admin [subcommand]",

@@ -270,4 +270,112 @@ describe("AI gateway upstream governance", () => {
       }),
     });
   });
+
+  it("records an error completion when a streaming upstream has no response body", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(new Response(null, { status: 200 }));
+    const app = createApp([
+      {
+        id: "openai-primary",
+        apiKey: "primary-key",
+        baseUrl: "https://primary.example/v1",
+        provider: "openai",
+      },
+    ]);
+
+    const response = await postChatBody(app, {
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: "hi" }],
+      stream: true,
+    });
+
+    expect(response.status).toBe(502);
+    await expect(response.json()).resolves.toEqual({ error: "Upstream stream unavailable" });
+    expect(enqueueCompletionMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        errorMessage: "upstream_stream_unavailable",
+        requestId: "req_1",
+        status: "error",
+        totalTokens: 0,
+      }),
+      expect.any(Object),
+    );
+  });
+
+  it("records an error completion when a streaming upstream closes without chunks", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(
+        new ReadableStream<Uint8Array>({
+          start(controller) {
+            controller.close();
+          },
+        }),
+        { headers: { "content-type": "text/event-stream" }, status: 200 },
+      ),
+    );
+    const app = createApp([
+      {
+        id: "openai-primary",
+        apiKey: "primary-key",
+        baseUrl: "https://primary.example/v1",
+        provider: "openai",
+      },
+    ]);
+
+    const response = await postChatBody(app, {
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: "hi" }],
+      stream: true,
+    });
+
+    expect(response.status).toBe(200);
+    await expect(response.text()).resolves.toBe("");
+    expect(enqueueCompletionMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        errorMessage: "upstream_stream_empty",
+        requestId: "req_1",
+        status: "error",
+        totalTokens: 0,
+      }),
+      expect.any(Object),
+    );
+  });
+
+  it("records an error completion when streaming relay fails", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(
+        new ReadableStream<Uint8Array>({
+          pull() {
+            throw new Error("relay exploded");
+          },
+        }),
+        { headers: { "content-type": "text/event-stream" }, status: 200 },
+      ),
+    );
+    const app = createApp([
+      {
+        id: "openai-primary",
+        apiKey: "primary-key",
+        baseUrl: "https://primary.example/v1",
+        provider: "openai",
+      },
+    ]);
+
+    const response = await postChatBody(app, {
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: "hi" }],
+      stream: true,
+    });
+
+    expect(response.status).toBe(200);
+    await expect(response.text()).rejects.toThrow("relay exploded");
+    expect(enqueueCompletionMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        errorMessage: "stream_relay_failed",
+        requestId: "req_1",
+        status: "error",
+        totalTokens: 0,
+      }),
+      expect.any(Object),
+    );
+  });
 });

@@ -8,12 +8,13 @@
  *   - API key management page structure
  *   - Settings navigation
  *
- * Tests that require a full Clerk session use `storageState` from `auth.setup.ts`.
- * Auth UI tests require a real provider and are opt-in via E2E_AUTH_SMOKE=1.
+ * Auth UI tests require a real provider config and are opt-in via E2E_AUTH_SMOKE=1.
  * API health checks stay runnable with local placeholder infrastructure.
  */
 
 import { expect, test } from "@playwright/test";
+
+import { getAuthCapabilityStatus } from "../fixtures/auth";
 
 const APP_BASE = process.env.APP_BASE_URL ?? "http://localhost:3001";
 
@@ -21,13 +22,19 @@ const APP_BASE = process.env.APP_BASE_URL ?? "http://localhost:3001";
 // Skip gracefully rather than failing with a connection-refused error.
 const skipWebApp = process.env.CI === "true" && !process.env.APP_BASE_URL;
 const skipApi = process.env.CI === "true" && !process.env.API_BASE_URL;
-const authSmokeEnabled = process.env.E2E_AUTH_SMOKE === "1";
-const authSmokeDescribe = authSmokeEnabled && !skipWebApp ? test.describe : test.describe.skip;
+const authSmoke = getAuthCapabilityStatus("auth-smoke");
+const authSmokeSkipReason = skipWebApp
+  ? "Web app not running in CI (set APP_BASE_URL to enable)"
+  : authSmoke.ready
+    ? null
+    : authSmoke.reason;
 
-authSmokeDescribe("Authentication redirect", () => {
+test.describe("Authentication redirect", () => {
+  test.skip(Boolean(authSmokeSkipReason), authSmokeSkipReason ?? "Auth smoke configured");
+
   test("unauthenticated / redirects to sign-in", async ({ page }) => {
     const response = await page.goto(APP_BASE + "/");
-    // Clerk middleware redirects unauthenticated requests to /sign-in
+    // Auth middleware redirects unauthenticated requests to /sign-in.
     expect(page.url()).toMatch(/sign-in/);
     expect(response?.status()).not.toBe(500);
   });
@@ -43,14 +50,16 @@ authSmokeDescribe("Authentication redirect", () => {
   });
 });
 
-authSmokeDescribe("Sign-in page", () => {
+test.describe("Sign-in page", () => {
+  test.skip(Boolean(authSmokeSkipReason), authSmokeSkipReason ?? "Auth smoke configured");
+
   test.beforeEach(async ({ page }) => {
     await page.goto(APP_BASE + "/sign-in");
   });
 
   test("renders sign-in form", async ({ page }) => {
     await expect(page).toHaveTitle(/sign.?in|Nebutra/i);
-    // Clerk-rendered form has at minimum an email input
+    // Provider-rendered forms have at minimum an email input.
     const emailInput = page
       .getByRole("textbox", { name: /email/i })
       .or(page.locator("input[type='email']"))
@@ -75,7 +84,7 @@ authSmokeDescribe("Sign-in page", () => {
     });
     await page.goto(APP_BASE + "/sign-in");
     await page.waitForLoadState("networkidle");
-    // Filter out known third-party noise (Clerk, fonts)
+    // Filter out known third-party auth/font noise.
     const appErrors = errors.filter(
       (e) =>
         !e.includes("clerk") &&
@@ -86,7 +95,9 @@ authSmokeDescribe("Sign-in page", () => {
   });
 });
 
-authSmokeDescribe("Sign-up page", () => {
+test.describe("Sign-up page", () => {
+  test.skip(Boolean(authSmokeSkipReason), authSmokeSkipReason ?? "Auth smoke configured");
+
   test("renders sign-up form", async ({ page }) => {
     await page.goto(APP_BASE + "/sign-up");
     await expect(page).toHaveTitle(/sign.?up|Nebutra/i);

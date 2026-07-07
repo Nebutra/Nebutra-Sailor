@@ -11,8 +11,16 @@
  *   pnpm exec playwright test --config=e2e/playwright.golden.config.ts --list
  *   APP_BASE_URL=http://localhost:3000 pnpm exec playwright test --config=e2e/playwright.golden.config.ts
  *
- * To activate non-fixme'd assertions (i.e. run the tests for real):
- *   E2E_LIVE=1 APP_BASE_URL=... LANDING_BASE_URL=... pnpm exec playwright test --config=e2e/playwright.golden.config.ts
+ * Auth-gated specs skip unless the target is explicitly configured. Typical
+ * env for a real test tenant:
+ *   E2E_LIVE=1
+ *   NEXT_PUBLIC_AUTH_PROVIDER=better-auth|clerk
+ *   E2E_TEST_USER_EMAIL=...
+ *   E2E_TEST_USER_PASSWORD=...
+ *   E2E_SESSION_COOKIE_VALUE=... # optional, only for pre-authenticated specs
+ *
+ * Do not commit those values; inject them from your local shell or secret
+ * manager when running the golden suite for real.
  */
 
 import { defineConfig, devices } from "@playwright/test";

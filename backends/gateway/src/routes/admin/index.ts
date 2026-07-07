@@ -13,8 +13,8 @@
  *   GET  /usage/report     — cross-tenant usage aggregation
  *   GET  /dlq              — dead letter queue entries
  *   POST /dlq/:id/replay   — retry a DLQ entry
- *   GET  /feature-flags    — list all feature flag overrides
- *   POST /feature-flags    — set per-tenant feature flag override
+ *   GET  /feature-flags    — list runtime-only feature flag override records
+ *   POST /feature-flags    — record a runtime-only feature flag override
  */
 
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
@@ -53,9 +53,53 @@ const FeatureFlagSchema = z.object({
   enabled: z.boolean(),
 });
 
-// ── In-memory feature flag overrides (replace with Redis/DB in prod) ───────
+// ── Runtime-only feature flag override records ─────────────────────────────
 
-const flagOverrides = new Map<string, Record<string, boolean>>();
+type RuntimeOnlyFeatureFlagOverride = {
+  enabled: boolean;
+  updatedAt: string;
+  updatedBy: "admin-api";
+};
+
+const runtimeOnlyFeatureFlagOverrideMetadata = {
+  storage: "process-memory",
+  scope: "single-process",
+  persistence: "runtime-only",
+  persistent: false,
+  productionSafe: false,
+  appliesToFeatureEvaluation: false,
+  warning:
+    "Admin feature flag overrides are recorded in this gateway process only. They are lost on restart, do not propagate across instances, and are not wired into the durable feature flag provider.",
+} as const;
+
+// This store intentionally remains process-local until a durable provider is
+// chosen. Keep responses explicit so callers cannot mistake it for production
+// persistence or cross-instance rollout state.
+const runtimeOnlyFlagOverrideRecords = new Map<
+  string,
+  Record<string, RuntimeOnlyFeatureFlagOverride>
+>();
+
+function snapshotRuntimeOnlyFlagOverrides() {
+  const overrides: Record<string, Record<string, boolean>> = {};
+  const runtimeOnlyOverrides: Record<string, Record<string, RuntimeOnlyFeatureFlagOverride>> = {};
+
+  for (const [orgId, flags] of runtimeOnlyFlagOverrideRecords.entries()) {
+    overrides[orgId] = {};
+    runtimeOnlyOverrides[orgId] = {};
+
+    for (const [flag, record] of Object.entries(flags)) {
+      overrides[orgId][flag] = record.enabled;
+      runtimeOnlyOverrides[orgId][flag] = { ...record };
+    }
+  }
+
+  return {
+    overrides,
+    runtimeOnlyOverrides,
+    metadata: runtimeOnlyFeatureFlagOverrideMetadata,
+  };
+}
 
 // ── Routes ─────────────────────────────────────────────────────────────────
 
@@ -78,12 +122,12 @@ adminRoutes.openapi(
   async (c) => {
     const { limit, offset, plan } = c.req.valid("query");
 
-    const findParams: any = {
+    const findParams: NonNullable<Parameters<typeof adminDb.organization.findMany>[0]> = {
       take: limit,
       skip: offset,
       orderBy: { createdAt: "desc" },
       include: {
-        _count: { select: { members: true, apiKeys: true } },
+        _count: { select: { members: true } },
       },
     };
     if (plan) {
@@ -279,15 +323,11 @@ adminRoutes.openapi(
     method: "get",
     path: "/feature-flags",
     tags: ["Admin"],
-    summary: "List per-tenant feature flag overrides",
-    responses: { 200: { description: "Feature flag overrides" } },
+    summary: "List runtime-only per-tenant feature flag override records",
+    responses: { 200: { description: "Runtime-only feature flag override records" } },
   }),
   async (c) => {
-    const overrides: Record<string, Record<string, boolean>> = {};
-    for (const [orgId, flags] of flagOverrides.entries()) {
-      overrides[orgId] = flags;
-    }
-    return c.json({ overrides });
+    return c.json(snapshotRuntimeOnlyFlagOverrides());
   },
 );
 
@@ -297,18 +337,45 @@ adminRoutes.openapi(
     method: "post",
     path: "/feature-flags",
     tags: ["Admin"],
-    summary: "Set a per-tenant feature flag override",
+    summary: "Record a runtime-only per-tenant feature flag override",
     request: { body: { content: { "application/json": { schema: FeatureFlagSchema } } } },
-    responses: { 200: { description: "Updated" } },
+    responses: { 200: { description: "Runtime-only override record updated" } },
   }),
   async (c) => {
     const { organizationId, flag, enabled } = c.req.valid("json");
+    const updatedAt = new Date().toISOString();
+    const runtimeOnlyOverride: RuntimeOnlyFeatureFlagOverride = {
+      enabled,
+      updatedAt,
+      updatedBy: "admin-api",
+    };
 
-    const existing = flagOverrides.get(organizationId) ?? {};
-    flagOverrides.set(organizationId, { ...existing, [flag]: enabled });
+    const existing = runtimeOnlyFlagOverrideRecords.get(organizationId) ?? {};
+    runtimeOnlyFlagOverrideRecords.set(organizationId, {
+      ...existing,
+      [flag]: runtimeOnlyOverride,
+    });
 
-    logger.info("Feature flag override set", { organizationId, flag, enabled });
+    logger.info("Runtime-only feature flag override recorded", {
+      auditEvent: "admin.feature_flag_override.runtime_only.recorded",
+      organizationId,
+      flag,
+      enabled,
+      requestId: c.get("requestId"),
+      updatedAt,
+      storage: runtimeOnlyFeatureFlagOverrideMetadata.storage,
+      persistence: runtimeOnlyFeatureFlagOverrideMetadata.persistence,
+      persistent: runtimeOnlyFeatureFlagOverrideMetadata.persistent,
+      productionSafe: runtimeOnlyFeatureFlagOverrideMetadata.productionSafe,
+      appliesToFeatureEvaluation: runtimeOnlyFeatureFlagOverrideMetadata.appliesToFeatureEvaluation,
+    });
 
-    return c.json({ organizationId, flag, enabled });
+    return c.json({
+      organizationId,
+      flag,
+      enabled,
+      runtimeOnlyOverride,
+      metadata: runtimeOnlyFeatureFlagOverrideMetadata,
+    });
   },
 );

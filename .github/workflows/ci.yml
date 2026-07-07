@@ -471,34 +471,37 @@ jobs:
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/setup-node-pnpm
 
+      - name: Resolve coverage base ref
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            BASE_SHA="$(git rev-parse HEAD~1)"
+          fi
+
+          echo "COVERAGE_BASE_REF=$BASE_SHA" >> "$GITHUB_ENV"
+          echo "Using COVERAGE_BASE_REF=$BASE_SHA"
+
       - name: Run coverage for core utility packages
         run: |
-          packages=(
-            "@nebutra/preset"
-            "@nebutra/alerting"
-            "@nebutra/rate-limit"
-            "@nebutra/billing"
-            "@nebutra/audit"
-            "@nebutra/identity"
-          )
-          coverage_failed=0
-
-          for package in "${packages[@]}"; do
-            if pnpm --filter "$package" exec node -e 'const pkg = require(process.cwd() + "/package.json"); process.exit(pkg.scripts?.["test:coverage"] ? 0 : 1)' >/dev/null 2>&1; then
-              if ! pnpm --filter "$package" run test:coverage; then
-                echo "::warning::$package coverage did not meet the current threshold. Keeping this advisory so existing coverage debt does not fail unrelated CI runs."
-                coverage_failed=1
-              fi
-            else
-              echo "::notice::$package has no test:coverage script; skipping coverage gate for this package."
-            fi
-          done
-
-          if [ "$coverage_failed" -ne 0 ]; then
-            echo "::warning::Coverage reports completed with advisory failures; build, typecheck, tests, security, and contract checks remain blocking."
-          fi
+          node scripts/ci/advisory-gate.mjs coverage \
+            --base "$COVERAGE_BASE_REF" \
+            --out artifacts/advisory/coverage-gate.json
         env:
           CI: true
+
+      - name: Upload coverage advisory evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: coverage-advisory-${{ github.run_id }}
+          path: artifacts/advisory/coverage-gate.json
+          if-no-files-found: warn
+          retention-days: 30
 
   # ── Bundle size budget ───────────────────────────────────────────────────
   # Measures built package sizes against .size-limit.json thresholds.
@@ -589,24 +592,18 @@ jobs:
       - name: Audit production dependencies
         run: pnpm audit --prod --audit-level=high
 
-      - name: Generate SBOM (advisory)
-        run: |
-          set +e
-          pnpm dlx @cyclonedx/cyclonedx-npm --output-file sbom.cdx.json --omit dev 2>&1 | tee sbom-generation.log
-          SBOM_EXIT=${PIPESTATUS[0]}
-          set -e
+      - name: Generate SBOM
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
+        with:
+          path: .
+          format: cyclonedx-json
+          output-file: sbom.cdx.json
 
-          if [ "$SBOM_EXIT" -ne 0 ]; then
-            echo "::warning::CycloneDX SBOM generation could not resolve this pnpm workspace via npm ls. Uploading an empty advisory SBOM so the security job does not fail on package-manager metadata noise."
-            cat > sbom.cdx.json <<'JSON'
-          {
-            "bomFormat": "CycloneDX",
-            "specVersion": "1.6",
-            "version": 1,
-            "components": []
-          }
-          JSON
-          fi
+      - name: Validate SBOM evidence
+        run: |
+          node scripts/ci/advisory-gate.mjs sbom \
+            --file sbom.cdx.json \
+            --out artifacts/advisory/sbom-gate.json
 
       - name: Upload SBOM
         if: always()
@@ -615,7 +612,8 @@ jobs:
           name: sbom-ci
           path: |
             sbom.cdx.json
-            sbom-generation.log
+            artifacts/advisory/sbom-gate.json
+          if-no-files-found: error
           retention-days: 30
 
   # ── Deploy jobs ──────────────────────────────────────────────────────────
@@ -809,14 +807,17 @@ jobs:
       - name: Check API backward compatibility
         if: github.event_name == 'pull_request'
         run: |
-          # Fetch the base branch spec
+          mkdir -p artifacts/advisory
+
           git fetch origin ${{ github.base_ref }} --depth=1
-          git show origin/${{ github.base_ref }}:backends/gateway/openapi.json > openapi-base.json 2>/dev/null || echo '{}' > openapi-base.json
-          # Compare specs for breaking changes using oasdiff
-          npx oasdiff breaking openapi-base.json backends/gateway/openapi.json --format text || {
-            echo "::warning::Breaking API changes detected. Ensure backward compatibility or document migration path."
-          }
-        continue-on-error: true
+          if git show origin/${{ github.base_ref }}:backends/gateway/openapi.json > openapi-base.json 2>/dev/null; then
+            set -o pipefail
+            npx oasdiff breaking openapi-base.json backends/gateway/openapi.json --format text 2>&1 \
+              | tee artifacts/advisory/openapi-breaking-diff.txt
+          else
+            echo "Base branch has no checked-in OpenAPI spec; skipping breaking diff." \
+              | tee artifacts/advisory/openapi-breaking-diff.txt
+          fi
 
       - name: Generate typed API client
         run: pnpm --filter @nebutra/web generate:api-types
@@ -838,7 +839,11 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: openapi-spec-${{ github.run_id }}
-          path: backends/gateway/openapi.json
+          path: |
+            backends/gateway/openapi.json
+            openapi-base.json
+            artifacts/advisory/openapi-breaking-diff.txt
+          if-no-files-found: warn
           retention-days: 7
 
   # ── Web app bundle analysis (PRs only) ───────────────────────────────────
@@ -914,10 +919,10 @@ jobs:
           pattern: playwright-blob-report-shard-*-${{ github.run_id }}
           path: all-blob-reports
           merge-multiple: true
-        continue-on-error: true
       - name: Merge into single HTML report
-        if: steps.download.outcome == 'success'
         run: |
+          set -euo pipefail
+
           REPORT_DIR="./all-blob-reports/blob-report"
           if [ ! -d "$REPORT_DIR" ]; then
             REPORT_DIR="./all-blob-reports"
@@ -926,12 +931,15 @@ jobs:
           if [ -d "$REPORT_DIR" ] && find "$REPORT_DIR" -maxdepth 1 -type f -name "*.zip" -print -quit | grep -q .; then
             pnpm exec playwright merge-reports --reporter html "$REPORT_DIR"
           else
-            echo "No shard blob reports found — skipping merge"
+            echo "::error::No shard blob reports found; the E2E report evidence is incomplete."
+            find ./all-blob-reports -maxdepth 3 -type f -print || true
+            exit 1
           fi
       - name: Upload merged report
-        if: steps.download.outcome == 'success'
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: playwright-report-merged-${{ github.run_id }}
           path: playwright-report/
+          if-no-files-found: error
           retention-days: 30

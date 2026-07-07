@@ -7,12 +7,15 @@
  */
 
 import { expect, test } from "@playwright/test";
-import { APP_BASE_URL, injectMockSession, isLiveEnv, SAMPLE_USER } from "../fixtures/auth";
+import { APP_BASE_URL, getAuthCapabilityStatus, injectConfiguredSession } from "../fixtures/auth";
+
+const sessionAuth = getAuthCapabilityStatus("session-cookie");
 
 test.describe("API keys golden path", () => {
+  test.skip(!sessionAuth.ready, sessionAuth.reason);
+
   test.beforeEach(async ({ context }) => {
-    test.fixme(!isLiveEnv(), "Requires authenticated session + DB-backed key store");
-    await injectMockSession(context, SAMPLE_USER);
+    await injectConfiguredSession(context);
   });
 
   test("creates a key, displays plaintext once, then revokes it", async ({ page }) => {

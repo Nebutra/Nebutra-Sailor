@@ -6,14 +6,16 @@
  */
 
 import { expect, test } from "@playwright/test";
-import { APP_BASE_URL, isLiveEnv } from "../fixtures/auth";
+import { APP_BASE_URL, getAuthCapabilityStatus } from "../fixtures/auth";
 
 test.describe.configure({ mode: "serial" });
 
-test.describe("Onboarding wizard golden path", () => {
-  test("signup → workspace step → invite step → choose-plan → dashboard", async ({ page }) => {
-    test.fixme(!isLiveEnv(), "Requires running web app + auth DB + billing test mode");
+const onboardingAuth = getAuthCapabilityStatus("onboarding-sign-up");
 
+test.describe("Onboarding wizard golden path", () => {
+  test.skip(!onboardingAuth.ready, onboardingAuth.reason);
+
+  test("signup → workspace step → invite step → choose-plan → dashboard", async ({ page }) => {
     const uniqueEmail = `e2e+onboarding-${Date.now()}@example.test`;
     const password = "Onboarding-Test-789!";
 

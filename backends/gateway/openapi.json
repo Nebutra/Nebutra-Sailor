@@ -7547,16 +7547,16 @@
     "/api/v1/admin/feature-flags": {
       "get": {
         "tags": ["Admin"],
-        "summary": "List per-tenant feature flag overrides",
+        "summary": "List runtime-only per-tenant feature flag override records",
         "responses": {
           "200": {
-            "description": "Feature flag overrides"
+            "description": "Runtime-only feature flag override records"
           }
         }
       },
       "post": {
         "tags": ["Admin"],
-        "summary": "Set a per-tenant feature flag override",
+        "summary": "Record a runtime-only per-tenant feature flag override",
         "requestBody": {
           "content": {
             "application/json": {
@@ -7581,7 +7581,7 @@
         },
         "responses": {
           "200": {
-            "description": "Updated"
+            "description": "Runtime-only override record updated"
           }
         }
       }
