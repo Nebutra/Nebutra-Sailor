@@ -9,7 +9,7 @@
  * import { createNebutraOIDCProvider, SCOPE_DESCRIPTIONS } from "@nebutra/oauth-server";
  *
  * const provider = createNebutraOIDCProvider({
- *   issuer: "https://id.nebutra.com",
+ *   issuer: "https://sso.nebutra.com",
  *   prisma,
  *   redis,
  * });

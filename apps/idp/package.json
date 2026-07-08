@@ -6,6 +6,7 @@
     "dev": "next dev --port 3100",
     "build": "next build",
     "start": "next start",
+    "test": "vitest run",
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit"
   },
   "dependencies": {
@@ -28,7 +29,8 @@
     "@types/react-dom": "^19.2.3",
     "@types/oidc-provider": "^9.1.0",
     "tailwindcss": "^4.2.1",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   },
   "license": "AGPL-3.0-only"
 }

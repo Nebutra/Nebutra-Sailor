@@ -81,6 +81,8 @@ jobs:
             dockerfile: apps/landing-page/Dockerfile
           - app: api-gateway
             dockerfile: backends/gateway/Dockerfile
+          - app: idp
+            dockerfile: apps/idp/Dockerfile
 
     steps:
       # ── Checkout ─────────────────────────────────────────────────────────────

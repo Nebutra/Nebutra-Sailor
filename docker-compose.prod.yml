@@ -65,6 +65,7 @@ services:
       - web
       - landing-page
       - api-gateway
+      - idp
     healthcheck:
       test: ["CMD-SHELL", "nginx -t && wget -qO- http://localhost/health 2>/dev/null || exit 0"]
       <<: *healthcheck-defaults
@@ -87,6 +88,7 @@ services:
   #     certonly --webroot -w /var/www/certbot \
   #     -d nebutra.com -d www.nebutra.com \
   #     -d app.nebutra.com -d api.nebutra.com \
+  #     -d sso.nebutra.com \
   #     --email ops@nebutra.com --agree-tos --no-eff-email
   #
   # Renewal (run via cron every 12h):
@@ -157,6 +159,33 @@ services:
           memory: 512M
         reservations:
           cpus: "0.5"
+          memory: 128M
+
+  # ===========================================================================
+  # Nebutra-owned Identity Provider (OAuth 2.0 / OIDC)
+  # ===========================================================================
+  idp:
+    <<: *restart-policy
+    ports: []   # No direct host port; Nginx proxies :3100 internally
+    environment:
+      - NODE_ENV=production
+      - PORT=3100
+      - HOSTNAME=0.0.0.0
+      - DATABASE_URL=${DATABASE_URL:?DATABASE_URL is required for the IdP}
+      - REDIS_URL=${REDIS_URL:?REDIS_URL is required for the IdP}
+      - OIDC_ISSUER=${OIDC_ISSUER:-https://sso.nebutra.com}
+      - OIDC_COOKIE_KEYS=${OIDC_COOKIE_KEYS:?OIDC_COOKIE_KEYS is required for the IdP}
+      - OIDC_ENABLE_CLIENT_CREDENTIALS=${OIDC_ENABLE_CLIENT_CREDENTIALS:-false}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3100/ready || exit 1"]
+      <<: *healthcheck-defaults
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
           memory: 128M
 
   # ===========================================================================

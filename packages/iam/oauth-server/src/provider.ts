@@ -31,7 +31,11 @@ const KNOWN_WEAK_COOKIE_KEYS = new Set<string>([
   "nebutra-oidc-cookie-key-2",
   "dev-key-1",
   "dev-key-2",
+  "dev-cookie-key-1",
+  "dev-cookie-key-2",
 ]);
+
+const MIN_PRODUCTION_COOKIE_KEY_LENGTH = 32;
 
 /**
  * Validates the cookie signing keys, refusing weak/missing values in
@@ -40,18 +44,24 @@ const KNOWN_WEAK_COOKIE_KEYS = new Set<string>([
  *
  * @throws Error in production when keys are missing, empty, or known-weak.
  */
-function resolveCookieKeys(cookieKeys: string[] | undefined): string[] {
+export function resolveCookieKeys(cookieKeys: string[] | undefined): string[] {
   const isProduction = process.env.NODE_ENV === "production";
 
   const provided = (cookieKeys ?? []).map((k) => k.trim()).filter((k) => k.length > 0);
 
   const hasWeakKey = provided.some((k) => KNOWN_WEAK_COOKIE_KEYS.has(k));
   const missing = provided.length === 0;
+  const notEnoughKeys = provided.length === 1;
+  const hasShortKey = provided.some((k) => k.length < MIN_PRODUCTION_COOKIE_KEY_LENGTH);
 
-  if (isProduction && (missing || hasWeakKey)) {
+  if (isProduction && (missing || notEnoughKeys || hasWeakKey || hasShortKey)) {
     const reason = missing
       ? "no cookie signing keys were provided"
-      : "known-weak/default cookie signing keys were provided";
+      : notEnoughKeys
+        ? "fewer than two cookie signing keys were provided"
+        : hasWeakKey
+          ? "known-weak/default cookie signing keys were provided"
+          : `cookie signing keys shorter than ${MIN_PRODUCTION_COOKIE_KEY_LENGTH} characters were provided`;
     throw new Error(
       `[@nebutra/oauth-server] Refusing to start the OIDC provider: ${reason}. ` +
         "Set strong, secret cookie signing keys via the `cookieKeys` option " +
@@ -60,7 +70,7 @@ function resolveCookieKeys(cookieKeys: string[] | undefined): string[] {
     );
   }
 
-  if (missing || hasWeakKey) {
+  if (missing || hasWeakKey || notEnoughKeys || hasShortKey) {
     // Non-production: warn loudly and substitute ephemeral, clearly-labelled
     // random keys so local/test runs keep working without shipping weak
     // secrets. These rotate on every process start (sessions won't persist
@@ -117,6 +127,13 @@ export interface NebutraOIDCConfig {
 
   /** Enable debug mode (verbose logging) */
   debug?: boolean;
+
+  /**
+   * Enables the OAuth client_credentials grant for service-to-service clients.
+   * Defaults to false because the Nebutra IdP app currently supports only
+   * first-party authorization_code + refresh_token browser flows.
+   */
+  enableClientCredentials?: boolean;
 }
 
 /**
@@ -141,6 +158,7 @@ export function createNebutraOIDCProvider(config: NebutraOIDCConfig): Provider {
     loginUrl = "/oauth/login",
     consentUrl = "/oauth/authorize",
     debug = false,
+    enableClientCredentials = false,
   } = config;
 
   // Validate cookie signing keys: throw in production on missing/weak values,
@@ -166,8 +184,9 @@ export function createNebutraOIDCProvider(config: NebutraOIDCConfig): Provider {
 
     // Supported features
     features: {
-      // Client Credentials (machine-to-machine)
-      clientCredentials: { enabled: true },
+      // Client Credentials (machine-to-machine). Disabled by default to keep
+      // the current IdP surface aligned with the app-level AGENTS contract.
+      clientCredentials: { enabled: enableClientCredentials },
 
       // Token introspection (for resource servers)
       introspection: { enabled: true },

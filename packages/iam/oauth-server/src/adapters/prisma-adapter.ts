@@ -28,6 +28,16 @@ const EPHEMERAL_MODELS = new Set([
   "BackchannelAuthenticationRequest",
 ]);
 
+const SHARED_SECRET_AUTH_METHODS = new Set([
+  "client_secret_basic",
+  "client_secret_post",
+  "client_secret_jwt",
+]);
+
+function requiresSharedSecretAuth(method: string): boolean {
+  return SHARED_SECRET_AUTH_METHODS.has(method);
+}
+
 /**
  * Creates a storage adapter factory for oidc-provider.
  *
@@ -51,15 +61,22 @@ class PrismaClientAdapter implements Adapter {
   constructor(private readonly prisma: PrismaClient) {}
 
   async find(id: string): Promise<AdapterPayload | undefined> {
-    const client = await this.prisma.oAuthClient.findUnique({
+    const client = await this.prisma.oAuthClient.findFirst({
       where: { clientId: id, status: "ACTIVE" },
     });
 
     if (!client) return undefined;
 
+    if (requiresSharedSecretAuth(client.tokenEndpointAuthMethod)) {
+      console.warn(
+        `[@nebutra/oauth-server] OAuth client ${client.clientId} uses ${client.tokenEndpointAuthMethod}, ` +
+          "but no retrievable client secret is available. Refusing to expose or infer client_secret.",
+      );
+      return undefined;
+    }
+
     return {
       client_id: client.clientId,
-      client_secret: client.clientSecretHash ?? undefined,
       grant_types: client.grantTypes,
       redirect_uris: client.redirectUris,
       response_types: client.responseTypes as ResponseType[],

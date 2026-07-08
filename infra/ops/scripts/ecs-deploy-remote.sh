@@ -7,7 +7,7 @@
 #
 # Inputs (env vars):
 #   DEPLOY_ROOT   — base directory (default /var/www/nebutra)
-#   APPS          — space-separated list of apps to deploy (landing web api)
+#   APPS          — space-separated list of apps to deploy (landing web api idp)
 #   KEEP_RELEASES — number of past releases to retain (default 5)
 #   PM2_CONFIG    — absolute path to ecosystem.config.cjs that should be loaded
 #                   on first run; subsequent runs use `pm2 reload` for zero downtime.
@@ -22,7 +22,7 @@
 set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
-APPS="${APPS:-landing web api design-docs sailor-docs}"
+APPS="${APPS:-landing web api idp design-docs sailor-docs}"
 # Default 1 (was 2 since the May 12 disk-full incident reduced it from 5).
 # Cut to 1 on 2026-05-15 when design-docs joined as the 4th VM app — at 4
 # apps × ~1 GB/release × 2 releases small cloud disks can fill quickly.
@@ -51,6 +51,7 @@ DEPLOY_RUNTIME_KEYS=(
   NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO
   LANDING_URL WEB_URL STUDIO_URL CORS_ORIGINS
   UPSTASH_REDIS_REST_URL UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_URL UPSTASH_REDIS_TOKEN
+  REDIS_URL OIDC_ISSUER OIDC_COOKIE_KEYS OIDC_ENABLE_CLIENT_CREDENTIALS
   GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET NEXT_PUBLIC_GOOGLE_CLIENT_ID
   GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET
   SUPABASE_URL SUPABASE_PUBLISHABLE_KEY SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY
@@ -85,8 +86,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*|*design-docs*|*sailor-docs*) : ;;
-  *) fail "APPS must contain at least one of: landing web api design-docs sailor-docs (got: $APPS)" ;;
+  *landing*|*web*|*api*|*idp*|*design-docs*|*sailor-docs*) : ;;
+  *) fail "APPS must contain at least one of: landing web api idp design-docs sailor-docs (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"
@@ -372,6 +373,16 @@ persist_api_mvp_runtime_env() {
     INNGEST_EVENT_KEY INNGEST_SIGNING_KEY SANITY_WEBHOOK_SECRET
 }
 
+persist_idp_runtime_env() {
+  local app_root="$1"
+
+  persist_database_runtime_env "$app_root"
+  persist_runtime_keys "$app_root" "idp SSO" \
+    DATABASE_URL DIRECT_URL SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
+    REDIS_URL OIDC_ISSUER OIDC_COOKIE_KEYS OIDC_ENABLE_CLIENT_CREDENTIALS \
+    SENTRY_DSN SENTRY_RELEASE LOGGER_SENTRY_ENABLED
+}
+
 persist_landing_mvp_runtime_env() {
   local app_root="$1"
 
@@ -517,8 +528,31 @@ load_runtime_env() {
     log "no runtime env files found for $app"
   fi
 
-  if [ "$app" = "web" ] || [ "$app" = "api" ]; then
+  if [ "$app" = "web" ] || [ "$app" = "api" ] || [ "$app" = "idp" ]; then
     persist_database_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
+  if [ "$app" = "idp" ]; then
+    persist_idp_runtime_env "$app_root"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+
+    OIDC_ISSUER="${OIDC_ISSUER:-https://sso.nebutra.com}"
+    OIDC_ENABLE_CLIENT_CREDENTIALS="${OIDC_ENABLE_CLIENT_CREDENTIALS:-false}"
+
+    local missing=()
+    [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+    [ -n "${REDIS_URL:-}" ] || missing+=("REDIS_URL")
+    [ -n "${OIDC_COOKIE_KEYS:-}" ] || missing+=("OIDC_COOKIE_KEYS")
+    if [ "${#missing[@]}" -gt 0 ]; then
+      fail "idp runtime env missing required keys after env load: ${missing[*]}"
+    fi
+
+    replace_env_assignment "$app_root/.env" NODE_ENV "production"
+    replace_env_assignment "$app_root/.env" PORT "3100"
+    replace_env_assignment "$app_root/.env" HOSTNAME "127.0.0.1"
+    replace_env_assignment "$app_root/.env" OIDC_ISSUER "$OIDC_ISSUER"
+    replace_env_assignment "$app_root/.env" OIDC_ENABLE_CLIENT_CREDENTIALS "$OIDC_ENABLE_CLIENT_CREDENTIALS"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 
@@ -728,7 +762,7 @@ load_existing_pm2_env() {
           | .pm2_env
           | to_entries[]
           | select(.value | type == "string" or type == "number" or type == "boolean")
-          | select(.key | test("^(DATABASE_URL|DIRECT_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|VITE_|UPSTASH_|REDIS_|RESEND_|EMAIL_|SMTP_|SENTRY_|POSTHOG_|SANITY_|JWT_|COOKIE_|APP_|API_|DOMAIN_|LANDING_URL|WEB_URL|STUDIO_URL|CORS_ORIGINS|R2_|AWS_|S3_|BLOB_|UPLOAD_|TURNSTILE_|CRON_|ADMIN_|SERVICE_SECRET|INTERNAL_API_KEY|CLICKHOUSE_|AUDIT_USE_CLICKHOUSE|METERING_PROVIDER|QSTASH_|INNGEST_)"))
+          | select(.key | test("^(DATABASE_URL|DIRECT_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|VITE_|UPSTASH_|REDIS_|OIDC_|RESEND_|EMAIL_|SMTP_|SENTRY_|POSTHOG_|SANITY_|JWT_|COOKIE_|APP_|API_|DOMAIN_|LANDING_URL|WEB_URL|STUDIO_URL|CORS_ORIGINS|R2_|AWS_|S3_|BLOB_|UPLOAD_|TURNSTILE_|CRON_|ADMIN_|SERVICE_SECRET|INTERNAL_API_KEY|CLICKHOUSE_|AUDIT_USE_CLICKHOUSE|METERING_PROVIDER|QSTASH_|INNGEST_)"))
           | "\(.key)=\(.value | tostring)"
         ' || true)
   elif command -v python3 >/dev/null 2>&1; then
@@ -740,7 +774,7 @@ import sys
 name = sys.argv[1]
 allow = re.compile(
     r"^(DATABASE_URL|DIRECT_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|"
-    r"STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|VITE_|UPSTASH_|REDIS_|RESEND_|EMAIL_|"
+    r"STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|VITE_|UPSTASH_|REDIS_|OIDC_|RESEND_|EMAIL_|"
     r"SMTP_|SENTRY_|POSTHOG_|SANITY_|JWT_|COOKIE_|APP_|API_|DOMAIN_|LANDING_URL|WEB_URL|"
     r"STUDIO_URL|CORS_ORIGINS|R2_|AWS_|S3_|BLOB_|UPLOAD_|TURNSTILE_|CRON_|ADMIN_|"
     r"SERVICE_SECRET|INTERNAL_API_KEY|CLICKHOUSE_|AUDIT_USE_CLICKHOUSE|METERING_PROVIDER|"
@@ -977,6 +1011,9 @@ for p in procs:
     web)
       wait_for_local_http "web" "$pm2_name" "http://127.0.0.1:3000/"
       ;;
+    idp)
+      wait_for_local_http "idp" "$pm2_name" "http://127.0.0.1:3100/health" "^200$"
+      ;;
     design-docs)
       wait_for_local_http "design-docs" "$pm2_name" "http://127.0.0.1:3004/"
       ;;
@@ -1013,6 +1050,7 @@ pm2_name_for_app() {
     landing)      printf '%s\n' "landing-page" ;;
     web)          printf '%s\n' "web" ;;
     api)          printf '%s\n' "api-gateway" ;;
+    idp)          printf '%s\n' "idp" ;;
     design-docs)  printf '%s\n' "design-docs" ;;
     sailor-docs)  printf '%s\n' "sailor-docs" ;;
     *)            fail "unknown app: $1" ;;
@@ -1197,7 +1235,7 @@ verify_nginx_web_origin() {
 
 run_selected_apps() {
   local action="$1" app pm2_name
-  for app in api landing web design-docs sailor-docs; do
+  for app in api landing web idp design-docs sailor-docs; do
     case " $APPS " in
       *" $app "*) : ;;
       *) continue ;;
@@ -1215,7 +1253,7 @@ if [ "$MODE" = "rollback" ]; then
   exit 0
 fi
 
-for app in api landing web design-docs sailor-docs; do
+for app in api landing web idp design-docs sailor-docs; do
   case " $APPS " in
     *" $app "*) : ;;
     *) continue ;;
@@ -1225,6 +1263,7 @@ for app in api landing web design-docs sailor-docs; do
     landing)      deploy_one landing     landing-page ;;
     web)          deploy_one web         web          ;;
     api)          deploy_one api         api-gateway  ;;
+    idp)          deploy_one idp         idp          ;;
     design-docs)  deploy_one design-docs design-docs  ;;
     sailor-docs)  deploy_one sailor-docs sailor-docs  ;;
     *)            fail "unknown app: $app"            ;;

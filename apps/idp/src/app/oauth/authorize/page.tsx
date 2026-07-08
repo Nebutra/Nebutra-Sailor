@@ -35,12 +35,24 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
     );
   }
 
-  // In production, this will dynamically import the OIDC provider
-  // and resolve the interaction details via:
+  if (process.env.NODE_ENV === "production") {
+    return (
+      <div className="p-4 flex min-h-screen items-center justify-center">
+        <div className="border-amber-500/20 bg-amber-950/30 max-w-md px-8 py-6 backdrop-blur-xl rounded-2xl border text-center">
+          <h1 className="text-xl font-semibold text-amber-300">Authorization UI unavailable</h1>
+          <p className="mt-2 text-sm text-amber-100/70">
+            Nebutra-owned SSO is deployed only after the login and consent interaction handlers are
+            connected to the canonical user session.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Development shell only. Production must resolve real interaction details via:
   //   const { getOIDCProvider } = await import("@/lib/oidc");
   //   const provider = getOIDCProvider();
   //   const interactionDetails = await provider.interactionDetails(req, res);
-  // For now, we display a consent screen shell
   const interactionDetails = {
     uid,
     prompt: { name: "consent", details: {} },

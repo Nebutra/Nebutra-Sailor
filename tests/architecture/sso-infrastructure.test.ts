@@ -61,4 +61,60 @@ describe("Enterprise SSO infrastructure contract", () => {
     expect(ecsWorkflow).toContain("FEISHU_APP_SECRET");
     expect(ecsWorkflow).toContain("FEISHU_REDIRECT_URI");
   });
+
+  it("keeps Nebutra-owned sso.nebutra.com deployable and standard OIDC-routed", () => {
+    const rootEnv = readText(".env.example");
+    const idpEnv = readText("apps/idp/.env.example");
+    const domains = readText("docs/DOMAINS.md");
+    const runbook = readText("docs/ops/nebutra-owned-sso.md");
+    const ecsEnv = readText("docs/ops/ecs-mvp-env.md");
+    const composeProd = readText("docker-compose.prod.yml");
+    const nginx = readText("infra/runtime/nginx/nginx.conf");
+    const nginxReadme = readText("infra/runtime/nginx/README.md");
+    const dockerWorkflow = readText(".github/workflows/docker-build-push.yml");
+    const deployWorkflow = readText(".github/workflows/deploy-ecs.yml");
+    const pm2 = readText("infra/iac/ecs/ecosystem.config.cjs");
+    const remoteDeploy = readText("infra/ops/scripts/ecs-deploy-remote.sh");
+
+    for (const text of [rootEnv, idpEnv, domains, runbook, ecsEnv]) {
+      expect(text).toContain("sso.nebutra.com");
+      expect(text).toContain("OIDC_ISSUER");
+      expect(text).toContain("OIDC_COOKIE_KEYS");
+    }
+
+    expect(composeProd).toContain("idp:");
+    expect(composeProd).toContain(
+      ["OIDC_ISSUER=", "{OIDC_ISSUER:-https://sso.nebutra.com}"].join("$"),
+    );
+    expect(composeProd).toContain("OIDC_COOKIE_KEYS=${OIDC_COOKIE_KEYS:?");
+    expect(composeProd).toContain("http://localhost:3100/ready");
+
+    expect(nginx).toContain("upstream nebutra_idp");
+    expect(nginx).toContain("server_name sso.nebutra.com");
+    expect(nginx).toContain("proxy_pass http://nebutra_idp");
+    expect(nginxReadme).toContain("-d sso.nebutra.com");
+
+    expect(dockerWorkflow).toContain("dockerfile: apps/idp/Dockerfile");
+    expect(deployWorkflow).toContain('package: "@nebutra/idp"');
+    expect(deployWorkflow).toContain("https://sso.nebutra.com/.well-known/openid-configuration");
+    expect(deployWorkflow).toContain(
+      ["OIDC_COOKIE_KEYS: ", "{{ secrets.OIDC_COOKIE_KEYS }}"].join("$"),
+    );
+    expect(pm2).toContain('name: "idp"');
+    expect(pm2).toContain("PORT: 3100");
+    expect(remoteDeploy).toContain("persist_idp_runtime_env");
+    expect(remoteDeploy).toContain("idp runtime env missing required keys");
+
+    for (const route of [
+      "apps/idp/src/app/.well-known/openid-configuration/route.ts",
+      "apps/idp/src/app/auth/route.ts",
+      "apps/idp/src/app/token/route.ts",
+      "apps/idp/src/app/userinfo/route.ts",
+      "apps/idp/src/app/jwks/route.ts",
+      "apps/idp/src/app/health/route.ts",
+      "apps/idp/src/app/ready/route.ts",
+    ]) {
+      expect(existsSync(join(root, route)), route).toBe(true);
+    }
+  });
 });

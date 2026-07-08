@@ -3,6 +3,10 @@
 This runbook governs Enterprise SSO for `nebutra.com` and
 `app.nebutra.com`.
 
+It does not govern Nebutra acting as an OIDC issuer. The self-hosted issuer
+served from `sso.nebutra.com` is documented separately in
+[`docs/ops/nebutra-owned-sso.md`](./nebutra-owned-sso.md).
+
 ## Current State
 
 The web app supports Enterprise SSO discovery with two production paths:

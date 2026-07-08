@@ -5,6 +5,7 @@
 //   $DEPLOY_ROOT/landing/current/apps/landing-page/server.js     (Next standalone)
 //   $DEPLOY_ROOT/web/current/apps/web/server.js                  (Next standalone)
 //   $DEPLOY_ROOT/api/current/dist/node.js                        (pnpm-deploy + tsc)
+//   $DEPLOY_ROOT/idp/current/apps/idp/server.js                  (Next standalone)
 //   $DEPLOY_ROOT/design-docs/current/apps/design-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)
 //
@@ -73,6 +74,23 @@ module.exports = {
         HOSTNAME: "127.0.0.1",
       },
       max_memory_restart: "400M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 10,
+      kill_timeout: 8000,
+      listen_timeout: 10000,
+    },
+    {
+      name: "idp",
+      cwd: "/var/www/nebutra/idp/current",
+      script: "apps/idp/server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3100,
+        HOSTNAME: "127.0.0.1",
+      },
+      max_memory_restart: "450M",
       instances: 1,
       exec_mode: "fork",
       autorestart: true,

@@ -106,7 +106,7 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml \
   --profile ssl-renew run --rm certbot \
   certonly --webroot -w /var/www/certbot \
   -d nebutra.com -d www.nebutra.com \
-  -d app.nebutra.com -d api.nebutra.com \
+  -d app.nebutra.com -d api.nebutra.com -d sso.nebutra.com \
   --email ops@nebutra.com --agree-tos --no-eff-email
 
 # Certificates will be at /etc/letsencrypt/live/nebutra.com/
@@ -288,6 +288,7 @@ grep "limiting requests" /var/log/nginx/error.log
 
 # Test SSL configuration
 curl -I https://app.nebutra.com
+curl -fsS https://sso.nebutra.com/.well-known/openid-configuration
 openssl s_client -connect app.nebutra.com:443 -servername app.nebutra.com
 
 # Check SSL Labs score

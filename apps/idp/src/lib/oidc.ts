@@ -9,11 +9,12 @@
 import { getSystemDb } from "@nebutra/db";
 import { createNebutraOIDCProvider } from "@nebutra/oauth-server";
 import Redis from "ioredis";
+import { getIdpRuntimeConfig } from "./oidc-config";
 
 let _provider: ReturnType<typeof createNebutraOIDCProvider> | null = null;
 let _redis: Redis | null = null;
 
-function getRedis(): Redis {
+export function getOIDCRedis(): Redis {
   if (!_redis) {
     _redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379", {
       maxRetriesPerRequest: 3,
@@ -25,16 +26,16 @@ function getRedis(): Redis {
 
 export function getOIDCProvider() {
   if (!_provider) {
-    const issuer = process.env.OIDC_ISSUER || "http://localhost:3100";
-    const cookieKeys = (process.env.OIDC_COOKIE_KEYS || "dev-key-1,dev-key-2").split(",");
+    const config = getIdpRuntimeConfig();
 
     _provider = createNebutraOIDCProvider({
-      issuer,
+      issuer: config.issuer,
       // AUDIT(no-tenant): OIDC authorization-server tables (OAuthClient,
       // OAuthSession, etc.) are global, not scoped to an Organization.
       prisma: getSystemDb(),
-      redis: getRedis(),
-      cookieKeys,
+      redis: getOIDCRedis(),
+      cookieKeys: config.cookieKeys,
+      enableClientCredentials: config.enableClientCredentials,
       loginUrl: "/oauth/login",
       consentUrl: "/oauth/authorize",
       debug: process.env.NODE_ENV === "development",

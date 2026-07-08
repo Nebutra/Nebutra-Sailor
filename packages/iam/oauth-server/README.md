@@ -15,7 +15,7 @@ pnpm add @nebutra/oauth-server@workspace:*
 import { createNebutraOIDCProvider, SCOPE_DESCRIPTIONS } from "@nebutra/oauth-server";
 
 const provider = createNebutraOIDCProvider({
-  issuer: "https://id.nebutra.com",
+  issuer: "https://sso.nebutra.com",
   prisma, // PrismaClient instance
   redis,  // ioredis instance
 });
@@ -31,6 +31,14 @@ const provider = createNebutraOIDCProvider({
 | `SUPPORTED_SCOPES` | Array of supported OAuth scopes |
 | `SCOPE_DESCRIPTIONS` | Human-readable scope descriptions |
 | `NEBUTRA_CLAIMS` | Custom claims added to ID tokens |
+
+## Production Notes
+
+- `client_credentials` is disabled by default. Enable it only with an approved
+  service-to-service requirement.
+- Confidential clients that store only `clientSecretHash` are fail-closed until
+  the package has a dedicated secret verification or vault-backed retrieval
+  contract.
 
 ### Types
 

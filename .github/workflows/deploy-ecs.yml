@@ -41,7 +41,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api design-docs sailor-docs). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api idp design-docs sailor-docs). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -77,6 +77,7 @@ jobs:
       landing:     ${{ steps.resolve.outputs.landing }}
       web:         ${{ steps.resolve.outputs.web }}
       api:         ${{ steps.resolve.outputs.api }}
+      idp:         ${{ steps.resolve.outputs.idp }}
       design-docs: ${{ steps.resolve.outputs['design-docs'] }}
       sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
       any:         ${{ steps.resolve.outputs.any }}
@@ -116,6 +117,16 @@ jobs:
               - 'infra/iac/ecs/**'
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - '.github/workflows/deploy-ecs.yml'
+            idp:
+              - 'apps/idp/**'
+              - 'packages/iam/oauth-server/**'
+              - 'packages/platform/db/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
             design-docs:
               - 'apps/design-docs/**'
               - 'packages/**'
@@ -138,6 +149,7 @@ jobs:
           F_LANDING:      ${{ steps.filter.outputs.landing }}
           F_WEB:          ${{ steps.filter.outputs.web }}
           F_API:          ${{ steps.filter.outputs.api }}
+          F_IDP:          ${{ steps.filter.outputs.idp }}
           F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
           F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
         run: |
@@ -158,13 +170,13 @@ jobs:
             unknown_apps=""
             for app in $normalized_apps; do
               case "$app" in
-                landing|web|api|design-docs|sailor-docs) ;;
+                landing|web|api|idp|design-docs|sailor-docs) ;;
                 *) unknown_apps="$unknown_apps $app" ;;
               esac
             done
 
             if [ -n "$unknown_apps" ]; then
-              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api design-docs sailor-docs"
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp design-docs sailor-docs"
               exit 1
             fi
           fi
@@ -174,6 +186,7 @@ jobs:
               echo "landing=$(contains_app "$normalized_apps" landing)"
               echo "web=$(contains_app "$normalized_apps" web)"
               echo "api=$(contains_app "$normalized_apps" api)"
+              echo "idp=$(contains_app "$normalized_apps" idp)"
               echo "design-docs=$(contains_app "$normalized_apps" design-docs)"
               echo "sailor-docs=$(contains_app "$normalized_apps" sailor-docs)"
               echo "any=true"
@@ -181,9 +194,10 @@ jobs:
               echo "landing=$F_LANDING"
               echo "web=$F_WEB"
               echo "api=$F_API"
+              echo "idp=$F_IDP"
               echo "design-docs=$F_DESIGN_DOCS"
               echo "sailor-docs=$F_SAILOR_DOCS"
-              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" ]] && echo true || echo false)"
+              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" ]] && echo true || echo false)"
             fi
           } >> "$GITHUB_OUTPUT"
 
@@ -218,6 +232,13 @@ jobs:
             build_command: "build:next"
             condition: ${{ needs.detect-changes.outputs.web }}
             site_url: "https://app.nebutra.com"
+          - app: idp
+            package: "@nebutra/idp"
+            workspace: apps/idp
+            kind: "next-standalone"
+            build_command: "build"
+            condition: ${{ needs.detect-changes.outputs.idp }}
+            site_url: "https://sso.nebutra.com"
           - app: design-docs
             package: "@nebutra/design-docs"
             workspace: apps/design-docs
@@ -311,6 +332,10 @@ jobs:
           # in /var/www/nebutra/web/current/.env on the VM and is read at
           # runtime by the standalone server.
           DATABASE_URL: "postgresql://build-placeholder:placeholder@localhost:5432/build"
+          REDIS_URL: "redis://localhost:6379"
+          OIDC_ISSUER: "https://sso.nebutra.com"
+          OIDC_COOKIE_KEYS: "build-placeholder-cookie-key-one-000000,build-placeholder-cookie-key-two-000000"
+          OIDC_ENABLE_CLIENT_CREDENTIALS: "false"
           # Force standalone output for VM — landing-page's next.config gates
           # `output: "standalone"` on this env so Vercel builds skip the trace
           # cost. This workflow needs the standalone bundle for assembly below.
@@ -477,6 +502,13 @@ jobs:
           name: bundle-api
           path: ${{ runner.temp }}/bundles
 
+      - name: Download idp bundle
+        if: needs.detect-changes.outputs.idp == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-idp
+          path: ${{ runner.temp }}/bundles
+
       - name: Configure SSH
         env:
           SSH_KEY:     ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
@@ -526,7 +558,7 @@ jobs:
           mkdir -p "$incoming"
           find "$incoming" -mindepth 1 -maxdepth 1 -print -exec rm -rf {} + 2>/dev/null || true
           echo "--- pruning releases for upload headroom (keep latest $upload_keep per app) ---"
-          for app in landing web api design-docs sailor-docs; do
+          for app in landing web api idp design-docs sailor-docs; do
             app_root="${ECS_DEPLOY_ROOT:-/var/www/nebutra}/$app"
             dir="$app_root/releases"
             [ -d "$dir" ] || continue
@@ -637,6 +669,10 @@ jobs:
           UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
           UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL || secrets.UPSTASH_REDIS_REST_URL }}
           UPSTASH_REDIS_TOKEN: ${{ secrets.UPSTASH_REDIS_TOKEN || secrets.UPSTASH_REDIS_REST_TOKEN }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          OIDC_ISSUER: ${{ vars.OIDC_ISSUER || 'https://sso.nebutra.com' }}
+          OIDC_COOKIE_KEYS: ${{ secrets.OIDC_COOKIE_KEYS }}
+          OIDC_ENABLE_CLIENT_CREDENTIALS: ${{ vars.OIDC_ENABLE_CLIENT_CREDENTIALS || 'false' }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID || secrets.GOOGLE_CLIENT_ID }}
@@ -741,6 +777,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && APPS="$APPS landing"
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
+          [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           APPS="$(echo "$APPS" | xargs)"
@@ -778,7 +815,8 @@ jobs:
             NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN \
             NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO \
             LANDING_URL WEB_URL STUDIO_URL CORS_ORIGINS \
-            UPSTASH_REDIS_REST_URL UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_URL UPSTASH_REDIS_TOKEN \
+            UPSTASH_REDIS_REST_URL UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_URL UPSTASH_REDIS_TOKEN REDIS_URL \
+            OIDC_ISSUER OIDC_COOKIE_KEYS OIDC_ENABLE_CLIENT_CREDENTIALS \
             GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET NEXT_PUBLIC_GOOGLE_CLIENT_ID \
             GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET \
             FEISHU_APP_ID FEISHU_APP_SECRET FEISHU_OAUTH_SCOPES FEISHU_ALLOWED_TENANT_KEYS \
@@ -821,6 +859,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && targets[landing-license]="https://nebutra.com/get-license"
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/api/misc/health"
+          [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && targets[idp]="https://sso.nebutra.com/.well-known/openid-configuration"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
           ok_codes='^(200|301|302|307)$'
@@ -922,6 +961,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && emit_deployment_verified landing "https://nebutra.com"
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && emit_deployment_verified web "https://app.nebutra.com"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && emit_deployment_verified api "https://api.nebutra.com/api/misc/health"
+          [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && emit_deployment_verified idp "https://sso.nebutra.com/.well-known/openid-configuration"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && emit_deployment_verified design-docs "https://design.nebutra.com"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && emit_deployment_verified sailor-docs "https://docs.nebutra.com"
 
@@ -939,6 +979,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.landing }}"        = "true" ] && APPS="$APPS landing"
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
+          [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           APPS="$(echo "$APPS" | xargs)"

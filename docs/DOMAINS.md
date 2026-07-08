@@ -8,6 +8,7 @@
 | `www.nebutra.com` | landing-page | Redirect to apex |
 | `app.nebutra.com` | web | Main SaaS dashboard |
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
+| `sso.nebutra.com` | idp | Nebutra-owned OIDC issuer for first-party/internal apps |
 | `design.nebutra.com` | design-docs | Design system docs |
 | `docs.nebutra.com` | sailor-docs | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
@@ -24,6 +25,7 @@ A       @         76.76.21.21              Auto
 CNAME   www       cname.vercel-dns.com     Auto
 CNAME   app       cname.vercel-dns.com     Auto
 CNAME   api       cname.vercel-dns.com     Auto
+CNAME   sso       <idp host>               Auto
 CNAME   studio    <studio host>            Auto
 ```
 
@@ -46,7 +48,12 @@ CNAME   studio    <studio host>            Auto
 ### 3. api-gateway
 - Domain: `api.nebutra.com`
 
-### 4. studio
+### 4. idp
+- Domain: `sso.nebutra.com`
+- Serves `https://sso.nebutra.com/.well-known/openid-configuration`
+- Keep `OIDC_ISSUER=https://sso.nebutra.com` and do not path-prefix the issuer.
+
+### 5. studio
 - Canonical hosted Studio: `nebutra.sanity.studio`
 - Optional branded domain: `studio.nebutra.com` after the hosting/DNS binding is
   active
@@ -61,6 +68,13 @@ NEXT_PUBLIC_SITE_URL=https://nebutra.com
 NEXT_PUBLIC_APP_URL=https://app.nebutra.com
 NEXT_PUBLIC_API_URL=https://api.nebutra.com
 NEXT_PUBLIC_STUDIO_URL=https://studio.nebutra.com
+```
+
+### idp
+```
+OIDC_ISSUER=https://sso.nebutra.com
+OIDC_COOKIE_KEYS=<base64-48+>,<rotated-base64-48+>
+REDIS_URL=redis://...
 ```
 
 ### api-gateway
@@ -150,3 +164,4 @@ Vercel automatically provisions SSL certificates. No action needed.
 - [ ] API calls from app → api working
 - [ ] Canonical URLs pass `pnpm check:public-urls`
 - [ ] Branded aliases pass `pnpm run check:public-urls -- --include-aliases`
+- [ ] OIDC discovery returns `issuer: "https://sso.nebutra.com"`
