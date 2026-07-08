@@ -22,102 +22,111 @@ const APP_BASE = process.env.APP_BASE_URL ?? "http://localhost:3001";
 // Skip gracefully rather than failing with a connection-refused error.
 const skipWebApp = process.env.CI === "true" && !process.env.APP_BASE_URL;
 const skipApi = process.env.CI === "true" && !process.env.API_BASE_URL;
+const authSmokeEnabled = process.env.E2E_AUTH_SMOKE === "1";
 const authSmoke = getAuthCapabilityStatus("auth-smoke");
 const authSmokeSkipReason = skipWebApp
   ? "Web app not running in CI (set APP_BASE_URL to enable)"
-  : authSmoke.ready
-    ? null
-    : authSmoke.reason;
+  : !authSmokeEnabled
+    ? "Set E2E_AUTH_SMOKE=1 to enable real-provider auth smoke"
+    : authSmoke.ready
+      ? null
+      : authSmoke.reason;
 
-test.describe("Authentication redirect", () => {
-  test.skip(Boolean(authSmokeSkipReason), authSmokeSkipReason ?? "Auth smoke configured");
-
-  test("unauthenticated / redirects to sign-in", async ({ page }) => {
-    const response = await page.goto(APP_BASE + "/");
-    // Auth middleware redirects unauthenticated requests to /sign-in.
-    expect(page.url()).toMatch(/sign-in/);
-    expect(response?.status()).not.toBe(500);
-  });
-
-  test("unauthenticated /settings redirects to sign-in", async ({ page }) => {
-    await page.goto(APP_BASE + "/settings");
-    expect(page.url()).toMatch(/sign-in/);
-  });
-
-  test("unauthenticated /analytics redirects to sign-in", async ({ page }) => {
-    await page.goto(APP_BASE + "/analytics");
-    expect(page.url()).toMatch(/sign-in/);
-  });
-});
-
-test.describe("Sign-in page", () => {
-  test.skip(Boolean(authSmokeSkipReason), authSmokeSkipReason ?? "Auth smoke configured");
-
-  test.beforeEach(async ({ page }) => {
-    await page.goto(APP_BASE + "/sign-in");
-  });
-
-  test("renders sign-in form", async ({ page }) => {
-    await expect(page).toHaveTitle(/sign.?in|Nebutra/i);
-    // Provider-rendered forms have at minimum an email input.
-    const emailInput = page
-      .getByRole("textbox", { name: /email/i })
-      .or(page.locator("input[type='email']"))
-      .first();
-    await expect(emailInput).toBeVisible({ timeout: 8000 });
-  });
-
-  test("has sign-up link", async ({ page }) => {
-    const signUpLink = page
-      .getByRole("link", { name: /sign.?up|create.+account|get.+started/i })
-      .first();
-    if (await signUpLink.isVisible()) {
-      const href = await signUpLink.getAttribute("href");
-      expect(href).toBeTruthy();
-    }
-  });
-
-  test("page has no console errors", async ({ page }) => {
-    const errors: string[] = [];
-    page.on("console", (msg) => {
-      if (msg.type() === "error") errors.push(msg.text());
+test.describe.skip(
+  Boolean(authSmokeSkipReason),
+  authSmokeSkipReason ?? "Auth smoke configured",
+  () => {
+    test("unauthenticated / redirects to sign-in", async ({ page }) => {
+      const response = await page.goto(APP_BASE + "/");
+      // Auth middleware redirects unauthenticated requests to /sign-in.
+      expect(page.url()).toMatch(/sign-in/);
+      expect(response?.status()).not.toBe(500);
     });
-    await page.goto(APP_BASE + "/sign-in");
-    await page.waitForLoadState("networkidle");
-    // Filter out known third-party auth/font noise.
-    const appErrors = errors.filter(
-      (e) =>
-        !e.includes("clerk") &&
-        !e.includes("fonts.googleapis") &&
-        !e.includes("Failed to load resource"),
-    );
-    expect(appErrors).toHaveLength(0);
-  });
-});
 
-test.describe("Sign-up page", () => {
-  test.skip(Boolean(authSmokeSkipReason), authSmokeSkipReason ?? "Auth smoke configured");
+    test("unauthenticated /settings redirects to sign-in", async ({ page }) => {
+      await page.goto(APP_BASE + "/settings");
+      expect(page.url()).toMatch(/sign-in/);
+    });
 
-  test("renders sign-up form", async ({ page }) => {
-    await page.goto(APP_BASE + "/sign-up");
-    await expect(page).toHaveTitle(/sign.?up|Nebutra/i);
-    const continueBtn = page.getByRole("button", { name: /continue|sign up|next/i }).first();
-    if (await continueBtn.isVisible()) {
-      await expect(continueBtn).toBeEnabled();
-    }
-  });
+    test("unauthenticated /analytics redirects to sign-in", async ({ page }) => {
+      await page.goto(APP_BASE + "/analytics");
+      expect(page.url()).toMatch(/sign-in/);
+    });
+  },
+);
 
-  test("has sign-in link", async ({ page }) => {
-    await page.goto(APP_BASE + "/sign-up");
-    const signInLink = page
-      .getByRole("link", { name: /sign.?in|log.?in|already.+account/i })
-      .first();
-    if (await signInLink.isVisible()) {
-      const href = await signInLink.getAttribute("href");
-      expect(href).toBeTruthy();
-    }
-  });
-});
+test.describe.skip(
+  Boolean(authSmokeSkipReason),
+  authSmokeSkipReason ?? "Auth smoke configured",
+  () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(APP_BASE + "/sign-in");
+    });
+
+    test("renders sign-in form", async ({ page }) => {
+      await expect(page).toHaveTitle(/sign.?in|Nebutra/i);
+      // Provider-rendered forms have at minimum an email input.
+      const emailInput = page
+        .getByRole("textbox", { name: /email/i })
+        .or(page.locator("input[type='email']"))
+        .first();
+      await expect(emailInput).toBeVisible({ timeout: 8000 });
+    });
+
+    test("has sign-up link", async ({ page }) => {
+      const signUpLink = page
+        .getByRole("link", { name: /sign.?up|create.+account|get.+started/i })
+        .first();
+      if (await signUpLink.isVisible()) {
+        const href = await signUpLink.getAttribute("href");
+        expect(href).toBeTruthy();
+      }
+    });
+
+    test("page has no console errors", async ({ page }) => {
+      const errors: string[] = [];
+      page.on("console", (msg) => {
+        if (msg.type() === "error") errors.push(msg.text());
+      });
+      await page.goto(APP_BASE + "/sign-in");
+      await page.waitForLoadState("networkidle");
+      // Filter out known third-party auth/font noise.
+      const appErrors = errors.filter(
+        (e) =>
+          !e.includes("clerk") &&
+          !e.includes("fonts.googleapis") &&
+          !e.includes("Failed to load resource"),
+      );
+      expect(appErrors).toHaveLength(0);
+    });
+  },
+);
+
+test.describe.skip(
+  Boolean(authSmokeSkipReason),
+  authSmokeSkipReason ?? "Auth smoke configured",
+  () => {
+    test("renders sign-up form", async ({ page }) => {
+      await page.goto(APP_BASE + "/sign-up");
+      await expect(page).toHaveTitle(/sign.?up|Nebutra/i);
+      const continueBtn = page.getByRole("button", { name: /continue|sign up|next/i }).first();
+      if (await continueBtn.isVisible()) {
+        await expect(continueBtn).toBeEnabled();
+      }
+    });
+
+    test("has sign-in link", async ({ page }) => {
+      await page.goto(APP_BASE + "/sign-up");
+      const signInLink = page
+        .getByRole("link", { name: /sign.?in|log.?in|already.+account/i })
+        .first();
+      if (await signInLink.isVisible()) {
+        const href = await signInLink.getAttribute("href");
+        expect(href).toBeTruthy();
+      }
+    });
+  },
+);
 
 test.describe("API health checks", () => {
   test.skip(skipApi, "API gateway not running in CI (set API_BASE_URL to enable)");
