@@ -4556,7 +4556,7 @@ export interface paths {
       path?: never;
       cookie?: never;
     };
-    /** List per-tenant feature flag overrides */
+    /** List runtime-only per-tenant feature flag override records */
     get: {
       parameters: {
         query?: never;
@@ -4566,7 +4566,7 @@ export interface paths {
       };
       requestBody?: never;
       responses: {
-        /** @description Feature flag overrides */
+        /** @description Runtime-only feature flag override records */
         200: {
           headers: {
             [name: string]: unknown;
@@ -4576,7 +4576,7 @@ export interface paths {
       };
     };
     put?: never;
-    /** Set a per-tenant feature flag override */
+    /** Record a runtime-only per-tenant feature flag override */
     post: {
       parameters: {
         query?: never;
@@ -4594,7 +4594,7 @@ export interface paths {
         };
       };
       responses: {
-        /** @description Updated */
+        /** @description Runtime-only override record updated */
         200: {
           headers: {
             [name: string]: unknown;
