@@ -7,16 +7,18 @@ import { gotoMarketingPage } from "../helpers/navigation";
 // In CI the web app is not started unless APP_BASE_URL is explicitly provided.
 const APP_BASE = process.env.APP_BASE_URL ?? "http://localhost:3001";
 const skipWebApp = process.env.CI === "true" && !process.env.APP_BASE_URL;
+const authSmokeEnabled = process.env.E2E_AUTH_SMOKE === "1";
 const authSmoke = getAuthCapabilityStatus("auth-smoke");
-const authSmokeSkipReason = skipWebApp
-  ? "Web app not running in CI (set APP_BASE_URL to enable)"
-  : authSmoke.ready
-    ? null
-    : authSmoke.reason;
+const authSmokeSkipReason = !authSmokeEnabled
+  ? "Set E2E_AUTH_SMOKE=1 to run auth smoke against a real provider"
+  : skipWebApp
+    ? "Web app not running in CI (set APP_BASE_URL to enable)"
+    : authSmoke.ready
+      ? null
+      : authSmoke.reason;
+const describeAuthSmoke = authSmokeSkipReason ? test.describe.skip : test.describe;
 
-test.describe("Authentication Flow", () => {
-  test.skip(Boolean(authSmokeSkipReason), authSmokeSkipReason ?? "Auth smoke configured");
-
+describeAuthSmoke("Authentication Flow", () => {
   test("sign-in page is accessible", async ({ page }) => {
     await page.goto(APP_BASE + "/sign-in");
     await expect(page).not.toHaveTitle(/404|Not Found/i);
