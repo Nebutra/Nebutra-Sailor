@@ -1,4 +1,7 @@
+import { brand } from "@nebutra/brand/metadata";
+
 const DEFAULT_DEV_OIDC_ISSUER = "http://localhost:3100";
+const DEFAULT_PRODUCTION_OIDC_ISSUER = `https://sso.${brand.domains.landing}`;
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);
 const FALSE_VALUES = new Set(["0", "false", "no", "off", ""]);
@@ -34,7 +37,9 @@ function normalizeIssuer(value: string | undefined, isProduction: boolean): stri
 
   if (!rawIssuer) {
     if (isProduction) {
-      throw new Error("[idp] OIDC_ISSUER is required in production, e.g. https://sso.nebutra.com.");
+      throw new Error(
+        `[idp] OIDC_ISSUER is required in production, e.g. ${DEFAULT_PRODUCTION_OIDC_ISSUER}.`,
+      );
     }
     return DEFAULT_DEV_OIDC_ISSUER;
   }
@@ -62,7 +67,7 @@ function normalizeIssuer(value: string | undefined, isProduction: boolean): stri
 
     if (issuerUrl.pathname !== "/") {
       throw new Error(
-        "[idp] Production OIDC_ISSUER must be the origin only. Use https://sso.nebutra.com, not a path-prefixed issuer.",
+        `[idp] Production OIDC_ISSUER must be the origin only. Use ${DEFAULT_PRODUCTION_OIDC_ISSUER}, not a path-prefixed issuer.`,
       );
     }
   }

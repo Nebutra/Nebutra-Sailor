@@ -10,6 +10,7 @@
     "typecheck": "node ../../scripts/next-typegen-guard.mjs && tsc --noEmit"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
     "@nebutra/oauth-server": "workspace:*",
     "@nebutra/contracts": "workspace:*",
     "@nebutra/db": "workspace:*",
