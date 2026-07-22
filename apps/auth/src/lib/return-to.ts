@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import "server-only";
 
+=======
+>>>>>>> origin/main
 import { getAuthReturnAllowedHosts, sanitizeReturnUrl } from "@nebutra/auth";
 
 export function resolveAppOrigin(): string {
