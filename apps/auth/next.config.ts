@@ -11,15 +11,9 @@ const nextConfig: NextConfig = {
     "@nebutra/auth",
     "@nebutra/brand",
     "@nebutra/db",
-    "@nebutra/icons",
     "@nebutra/logger",
     "@nebutra/tokens",
-    "@nebutra/ui",
   ],
-  images: {
-    // Local brand SVG under public/brand
-    dangerouslyAllowSVG: true,
-  },
 };
 
 export default nextConfig;

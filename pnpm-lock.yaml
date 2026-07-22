@@ -256,18 +256,12 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
-      '@nebutra/icons':
-        specifier: workspace:*
-        version: link:../../packages/design/icons
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../packages/platform/logger
       '@nebutra/tokens':
         specifier: workspace:*
         version: link:../../packages/design/tokens
-      '@nebutra/ui':
-        specifier: workspace:*
-        version: link:../../packages/design/ui
       next:
         specifier: ^16.2.6
         version: 16.2.6(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)

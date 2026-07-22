@@ -1,7 +1,5 @@
 "use client";
 
-import { Eye, EyeOff } from "@nebutra/icons";
-import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -11,10 +9,13 @@ interface CredentialsFormProps {
   returnTo: string;
 }
 
+const fieldClass =
+  "h-12 w-full rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-[var(--neutral-12)] shadow-none outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]";
+
 /**
  * Better Auth email/password form styled like apps/web SignInForm
- * (neutral token surfaces, h-12 inputs, Agent OS type scale).
- * Logic stays auth-center only — no server imports in this client module.
+ * (neutral token surfaces). Native controls only — no @nebutra/ui runtime
+ * in the standalone ECS bundle (avoids missing workspace module 500s).
  */
 export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
   const [email, setEmail] = useState("");
@@ -88,45 +89,51 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
         aria-describedby={error ? "auth-form-error" : undefined}
       >
         {mode === "sign-up" ? (
-          <label className="flex flex-col gap-1.5">
-            <span className="text-sm font-medium text-[var(--neutral-12)]">Name</span>
-            <Input
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="auth-name" className="text-sm font-medium text-[var(--neutral-12)]">
+              Name
+            </label>
+            <input
+              id="auth-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               autoComplete="name"
-              size="lg"
-              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+              className={fieldClass}
               placeholder="Your name"
             />
-          </label>
+          </div>
         ) : null}
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-[var(--neutral-12)]">Email</span>
-          <Input
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="auth-email" className="text-sm font-medium text-[var(--neutral-12)]">
+            Email
+          </label>
+          <input
+            id="auth-email"
             required
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
-            size="lg"
-            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+            className={fieldClass}
             placeholder="you@example.com"
           />
-        </label>
+        </div>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-[var(--neutral-12)]">Password</span>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="auth-password" className="text-sm font-medium text-[var(--neutral-12)]">
+            Password
+          </label>
           <div className="relative">
-            <Input
+            <input
+              id="auth-password"
               required
               type={showPassword ? "text" : "password"}
               minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
-              size="lg"
-              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
+              className={`${fieldClass} pr-12`}
               placeholder="Enter your password"
             />
             <button
@@ -136,15 +143,15 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
               aria-pressed={showPassword}
               className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
             >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
-        </label>
+        </div>
 
         {error ? (
           <p
             id="auth-form-error"
-            className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            className="rounded-[var(--radius-md)] border border-[color:var(--status-danger,#ef4444)]/30 bg-[color:var(--status-danger,#ef4444)]/10 px-3 py-2 text-sm text-[color:var(--status-danger,#ef4444)]"
             role="alert"
             aria-live="polite"
           >
@@ -152,10 +159,10 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
           </p>
         ) : null}
 
-        <Button
+        <button
           type="submit"
-          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
           disabled={loading}
+          className="h-11 w-full rounded-[var(--radius-md)] bg-[var(--neutral-12)] text-sm font-medium text-[var(--neutral-1)] transition-colors hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
         >
           {loading
             ? mode === "sign-in"
@@ -164,7 +171,7 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
             : mode === "sign-in"
               ? "Log in"
               : "Create account"}
-        </Button>
+        </button>
       </form>
 
       <p className="mt-8 text-sm text-[var(--neutral-10)]">

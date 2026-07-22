@@ -1,10 +1,8 @@
-import { cn } from "@nebutra/ui/utils";
-import Image from "next/image";
+import { cn } from "@/lib/cn";
 
 /**
- * Sign-in left panel — same Pattern A as apps/web AuthBanner
- * (editorial silence: brand + Agent OS slogan + tagline + footer).
- * Copy matches packages/platform/i18n locales en.json auth.banner.
+ * Sign-in left panel — Pattern A (editorial silence), same as apps/web AuthBanner.
+ * Copy from packages/platform/i18n locales en.json → auth.banner (Agent OS).
  */
 export function AuthBanner({ className }: { className?: string }) {
   return (
@@ -46,13 +44,14 @@ export function AuthBanner({ className }: { className?: string }) {
 
       <div className="relative z-10 flex w-full flex-col items-start justify-between px-14 py-20 xl:px-20 xl:py-24">
         <div className="flex max-w-[28rem] flex-col items-start">
-          <Image
+          {/* Plain img: next/image SVG optimizer is unreliable on standalone ECS */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/brand/logo-color.svg"
             alt="Nebutra"
             width={72}
             height={72}
             className="mb-10 h-12 w-auto drop-shadow-[0_18px_44px_color-mix(in_srgb,var(--blue-9)_22%,transparent)]"
-            priority
           />
           <h2 className="text-balance text-[clamp(28px,3.2vw,40px)] font-semibold leading-[1.15] tracking-[-0.02em] text-[var(--neutral-12)]">
             Ship your Startup, governed from day one.

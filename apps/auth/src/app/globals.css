@@ -5,10 +5,6 @@
 
 @import "tailwindcss";
 @import "@nebutra/tokens/styles.css";
-@import "../../../../packages/design/ui/src/typography/fonts.css";
-
-/* Scan shared UI primitives for utility classes used by the OS login shell */
-@source "../../../../packages/design/ui/src";
 
 @custom-variant dark (&:is(.dark *));
 

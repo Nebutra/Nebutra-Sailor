@@ -1,10 +1,9 @@
-import { ArrowLeft } from "@nebutra/icons";
-import { cn } from "@nebutra/ui/utils";
+import { cn } from "@/lib/cn";
 import { AuthBanner } from "./auth-banner";
 
 /**
  * Same split shell as apps/web AuthSplitLayout (Agent OS login).
- * Home → marketing site; form column uses design tokens, not ad-hoc zinc.
+ * No @nebutra/icons / next-intl — keeps standalone ECS bundle self-contained.
  */
 export function AuthSplitLayout({
   children,
@@ -31,7 +30,9 @@ export function AuthSplitLayout({
           href={homeHref}
           className="absolute left-5 top-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--blue-9)] sm:left-8 lg:left-12 lg:top-10"
         >
-          <ArrowLeft className="h-4 w-4" aria-hidden />
+          <span aria-hidden className="inline-block text-base leading-none">
+            ←
+          </span>
           Home
         </a>
         <div

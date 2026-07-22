@@ -15,12 +15,10 @@
     "@nebutra/db": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/tokens": "workspace:*",
-    "@nebutra/ui": "workspace:*",
     "next": "^16.2.6",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "zod": "catalog:",
-    "@nebutra/icons": "workspace:*"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",
