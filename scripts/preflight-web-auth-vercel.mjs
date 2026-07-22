@@ -75,6 +75,14 @@ await probe("app sign-in", "https://app.nebutra.com/sign-in", (r) => {
   const loc = r.headers.get("location") || "";
   return loc.includes("auth.nebutra.com");
 });
+// Production origin must be Next (ECS standalone / next start), not a Vite SPA.
+// Vite SPA typically lacks x-powered-by: Next.js and RSC vary headers.
+await probe("app is Next.js", "https://app.nebutra.com/", (r) => {
+  if (r.status !== 200 && r.status !== 307 && r.status !== 302) return false;
+  const powered = (r.headers.get("x-powered-by") || "").toLowerCase();
+  const vary = (r.headers.get("vary") || "").toLowerCase();
+  return powered.includes("next") || vary.includes("rsc") || vary.includes("next-router");
+});
 await probe("docs", "https://docs.nebutra.com/", (r) => r.status === 200 || r.status === 307);
 
 // ── report ────────────────────────────────────────────────────────────────

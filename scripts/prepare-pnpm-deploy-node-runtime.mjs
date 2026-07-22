@@ -448,6 +448,11 @@ async function main() {
         outRel = distRelForSource(v);
       } else if (isJsTarget(v)) {
         outRel = v;
+        // Dist already present → skip esbuild (gateway deps now ship prebuilt
+        // dist; rebundling was pure overhead after the dist-graph paydown).
+        if (fs.existsSync(path.join(pkgDir, v))) {
+          continue;
+        }
         const withoutExt = v.replace(/\.m?jsx?$/, "");
         if (withoutExt.startsWith("dist/")) {
           const rest = withoutExt.slice("dist/".length);

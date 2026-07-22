@@ -10,6 +10,10 @@ still point at ECS on purpose.
 *how often you can create Vercel deployments*, not whether users can use
 the product. Product path = ECS + Cloudflare DNS/CDN (already free).
 
+**Live check (2026-07-22):** `https://app.nebutra.com/` returns
+`x-powered-by: Next.js` and Next RSC/`_next/static` headers — production
+web origin is **Next (ECS standalone path)**, not a Vite SPA.
+
 **Do not change DNS until every box below is green** (and only if you
 still want the optional cutover).
 
