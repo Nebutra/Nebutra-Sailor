@@ -1,0 +1,21 @@
+name: Point docs DNS to Vercel
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Upsert docs.nebutra.com → cname.vercel-dns.com
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: bash infra/ops/scripts/point-docs-dns-vercel.sh
+      - name: Smoke
+        run: |
+          sleep 3
+          curl -sSIL --max-redirs 2 --max-time 30 https://docs.nebutra.com/en | head -30
