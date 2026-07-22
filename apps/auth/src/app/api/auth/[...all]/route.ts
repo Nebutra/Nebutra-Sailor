@@ -29,11 +29,8 @@ async function handle(request: Request): Promise<Response> {
   }
 
   const auth = await getAuth();
-  if (!auth.middleware) {
-    return new Response("Auth middleware not configured", { status: 500 });
-  }
-
-  const response = await auth.middleware(request);
+  const authHandler = auth.middleware();
+  const response = (await authHandler(request)) ?? new Response(null, { status: 404 });
   const url = new URL(request.url);
   return applySessionHint(response, url.pathname, response.status);
 }
