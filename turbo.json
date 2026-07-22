@@ -42,6 +42,29 @@
         "VERCEL"
       ]
     },
+    "build:next": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXT_PUBLIC_SITE_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_API_URL",
+        "NEXT_PUBLIC_DOCS_URL",
+        "DOCS_ORIGIN_URL",
+        "NEBUTRA_LANDING_ORIGIN",
+        "NEBUTRA_SESSION_HINT_DOMAIN",
+        "AUTH_PROVIDER",
+        "NEXT_PUBLIC_AUTH_PROVIDER",
+        "NEXT_OUTPUT",
+        "ANALYZE",
+        "VERCEL",
+        "BETTER_AUTH_URL",
+        "BETTER_AUTH_SECRET",
+        "DATABASE_URL",
+        "AUTH_COOKIE_DOMAIN"
+      ]
+    },
     "dev": {
       "cache": false,
       "persistent": true

@@ -2,7 +2,8 @@
 
 **Status:** not cut over. Production traffic for `app.nebutra.com` and
 `auth.nebutra.com` still terminates on ECS (PM2). Vercel projects
-`nebutra-web` / `nebutra-auth` are reserved for this cutover.
+`nebutra-web` / `nebutra-auth` are reserved for this cutover. Domains are
+already **verified** on those projects; DNS A records still point at ECS.
 
 **Do not change DNS until every box below is green.**
 
@@ -12,10 +13,21 @@ Automated preflight (no DNS mutation):
 node scripts/preflight-web-auth-vercel.mjs
 ```
 
+## Build note (`@nebutra/web`)
+
+`pnpm build` / turbo `build` for web runs **Vite** (`dist/`). Vercel is
+Next.js and must use turbo `build:next` so `.next` is produced:
+
+```bash
+cd ../.. && pnpm turbo run build:next --filter=@nebutra/web
+```
+
+(Project dashboard build command must match `apps/web/vercel.json`.)
+
 ## Preconditions
 
-- [ ] Vercel project `nebutra-web` builds `apps/web` from monorepo root (or
-      documented root directory) and deploys successfully on `main`.
+- [ ] Vercel project `nebutra-web` builds `apps/web` via `build:next` and
+      deploys successfully on `main`.
 - [ ] Vercel project `nebutra-auth` builds `apps/auth` successfully on `main`.
 - [ ] Production env on both projects matches ECS (see matrix below).
 - [ ] `BETTER_AUTH_SECRET` **identical** on auth + web (+ any other RPs).

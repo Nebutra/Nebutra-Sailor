@@ -10,9 +10,9 @@
     }
   ],
   "framework": "nextjs",
-  "buildCommand": "pnpm turbo build --filter=@nebutra/web",
+  "buildCommand": "cd ../.. && pnpm turbo run build:next --filter=@nebutra/web",
   "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/web",
-  "installCommand": "pnpm install --frozen-lockfile",
+  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
   "outputDirectory": ".next",
   "regions": ["iad1"],
   "env": {
