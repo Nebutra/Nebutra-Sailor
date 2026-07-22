@@ -51,6 +51,7 @@ DEPLOY_RUNTIME_KEYS=(
   NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO
   LANDING_URL WEB_URL STUDIO_URL CORS_ORIGINS
   UPSTASH_REDIS_REST_URL UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_URL UPSTASH_REDIS_TOKEN
+  CACHE_BACKEND CF_KV_NAMESPACE_ID CLOUDFLARE_KV_NAMESPACE_ID CLOUDFLARE_ACCOUNT_ID CLOUDFLARE_API_TOKEN CLOUDFLARE_KV_API_TOKEN
   REDIS_URL OIDC_ISSUER OIDC_COOKIE_KEYS OIDC_ENABLE_CLIENT_CREDENTIALS
   GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET NEXT_PUBLIC_GOOGLE_CLIENT_ID
   GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET
@@ -242,12 +243,46 @@ persist_redis_runtime_env() {
   local env_file="$app_root/.env"
   local redis_url="${DEPLOY_UPSTASH_REDIS_REST_URL:-${DEPLOY_UPSTASH_REDIS_URL:-${UPSTASH_REDIS_REST_URL:-${UPSTASH_REDIS_URL:-}}}}"
   local redis_token="${DEPLOY_UPSTASH_REDIS_REST_TOKEN:-${DEPLOY_UPSTASH_REDIS_TOKEN:-${UPSTASH_REDIS_REST_TOKEN:-${UPSTASH_REDIS_TOKEN:-}}}}"
+  local cache_backend="${DEPLOY_CACHE_BACKEND:-${CACHE_BACKEND:-}}"
+  local cf_account="${DEPLOY_CLOUDFLARE_ACCOUNT_ID:-${CLOUDFLARE_ACCOUNT_ID:-}}"
+  local cf_token="${DEPLOY_CLOUDFLARE_KV_API_TOKEN:-${DEPLOY_CLOUDFLARE_API_TOKEN:-${CLOUDFLARE_KV_API_TOKEN:-${CLOUDFLARE_API_TOKEN:-}}}}"
+  local cf_ns="${DEPLOY_CF_KV_NAMESPACE_ID:-${DEPLOY_CLOUDFLARE_KV_NAMESPACE_ID:-${CF_KV_NAMESPACE_ID:-${CLOUDFLARE_KV_NAMESPACE_ID:-}}}}"
+
+  mkdir -p "$app_root"
+  touch "$env_file"
+  chmod 600 "$env_file"
+
+  # Prefer explicit CACHE_BACKEND; otherwise auto-select Cloudflare KV when fully configured.
+  if [ -z "$cache_backend" ] && [ -n "$cf_account" ] && [ -n "$cf_token" ] && [ -n "$cf_ns" ]; then
+    cache_backend="cloudflare-kv"
+  fi
+
+  if [ "$cache_backend" = "cloudflare-kv" ]; then
+    if [ -z "$cf_account" ] || [ -z "$cf_token" ] || [ -z "$cf_ns" ]; then
+      fail "CACHE_BACKEND=cloudflare-kv requires CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN (or CLOUDFLARE_KV_API_TOKEN), and CF_KV_NAMESPACE_ID"
+    fi
+    export CACHE_BACKEND="cloudflare-kv"
+    export CLOUDFLARE_ACCOUNT_ID="$cf_account"
+    export CLOUDFLARE_API_TOKEN="$cf_token"
+    export CF_KV_NAMESPACE_ID="$cf_ns"
+    replace_env_assignment "$env_file" CACHE_BACKEND "cloudflare-kv"
+    replace_env_assignment "$env_file" CLOUDFLARE_ACCOUNT_ID "$cf_account"
+    replace_env_assignment "$env_file" CLOUDFLARE_API_TOKEN "$cf_token"
+    replace_env_assignment "$env_file" CF_KV_NAMESPACE_ID "$cf_ns"
+    log "ensured Cloudflare KV cache runtime env: $env_file"
+    # Keep Upstash vars if present so operators can flip CACHE_BACKEND=upstash-redis without redeploy secrets.
+  fi
 
   if [ -z "$redis_url$redis_token" ]; then
     return 0
   fi
 
   if [ -z "$redis_url" ] || [ -z "$redis_token" ]; then
+    # Incomplete Upstash pair is non-fatal when Cloudflare KV is the active cache backend.
+    if [ "$cache_backend" = "cloudflare-kv" ]; then
+      log "skipping incomplete Upstash env (CACHE_BACKEND=cloudflare-kv)"
+      return 0
+    fi
     fail "Redis runtime env incomplete: configure both Upstash Redis URL and token"
   fi
 
@@ -260,6 +295,12 @@ persist_redis_runtime_env() {
   replace_env_assignment "$env_file" UPSTASH_REDIS_REST_TOKEN "$redis_token"
   replace_env_assignment "$env_file" UPSTASH_REDIS_URL "$redis_url"
   replace_env_assignment "$env_file" UPSTASH_REDIS_TOKEN "$redis_token"
+
+  if [ -z "$cache_backend" ] || [ "$cache_backend" = "upstash-redis" ]; then
+    replace_env_assignment "$env_file" CACHE_BACKEND "upstash-redis"
+    export CACHE_BACKEND="upstash-redis"
+  fi
+
   log "ensured Upstash Redis runtime env: $env_file"
 }
 
@@ -375,8 +416,22 @@ persist_api_mvp_runtime_env() {
 
 persist_idp_runtime_env() {
   local app_root="$1"
+  local env_file="$app_root/.env"
 
   persist_database_runtime_env "$app_root"
+
+  # oidc-provider needs a real Redis/TCP store (ioredis). Cloudflare KV is not a drop-in.
+  # Prefer explicit REDIS_URL; otherwise use the VM-local Redis lite sidecar.
+  if [ -z "${REDIS_URL:-}${DEPLOY_REDIS_URL:-}" ]; then
+    if docker ps --format '{{.Names}}' 2>/dev/null | grep -qx 'nebutra-redis-lite' \
+      || ss -lnt 2>/dev/null | grep -q '127.0.0.1:6379' \
+      || netstat -lnt 2>/dev/null | grep -q '127.0.0.1:6379'; then
+      REDIS_URL="redis://127.0.0.1:6379"
+      export REDIS_URL
+      log "idp REDIS_URL defaulted to local redis lite (127.0.0.1:6379)"
+    fi
+  fi
+
   persist_runtime_keys "$app_root" "idp SSO" \
     DATABASE_URL DIRECT_URL SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL \
     REDIS_URL OIDC_ISSUER OIDC_COOKIE_KEYS OIDC_ENABLE_CLIENT_CREDENTIALS \
@@ -762,7 +817,7 @@ load_existing_pm2_env() {
           | .pm2_env
           | to_entries[]
           | select(.value | type == "string" or type == "number" or type == "boolean")
-          | select(.key | test("^(DATABASE_URL|DIRECT_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|VITE_|UPSTASH_|REDIS_|OIDC_|RESEND_|EMAIL_|SMTP_|SENTRY_|POSTHOG_|SANITY_|JWT_|COOKIE_|APP_|API_|DOMAIN_|LANDING_URL|WEB_URL|STUDIO_URL|CORS_ORIGINS|R2_|AWS_|S3_|BLOB_|UPLOAD_|TURNSTILE_|CRON_|ADMIN_|SERVICE_SECRET|INTERNAL_API_KEY|CLICKHOUSE_|AUDIT_USE_CLICKHOUSE|METERING_PROVIDER|QSTASH_|INNGEST_)"))
+          | select(.key | test("^(DATABASE_URL|DIRECT_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|VITE_|UPSTASH_|CACHE_BACKEND|CF_KV_|CLOUDFLARE_|REDIS_|OIDC_|RESEND_|EMAIL_|SMTP_|SENTRY_|POSTHOG_|SANITY_|JWT_|COOKIE_|APP_|API_|DOMAIN_|LANDING_URL|WEB_URL|STUDIO_URL|CORS_ORIGINS|R2_|AWS_|S3_|BLOB_|UPLOAD_|TURNSTILE_|CRON_|ADMIN_|SERVICE_SECRET|INTERNAL_API_KEY|CLICKHOUSE_|AUDIT_USE_CLICKHOUSE|METERING_PROVIDER|QSTASH_|INNGEST_)"))
           | "\(.key)=\(.value | tostring)"
         ' || true)
   elif command -v python3 >/dev/null 2>&1; then
@@ -774,7 +829,8 @@ import sys
 name = sys.argv[1]
 allow = re.compile(
     r"^(DATABASE_URL|DIRECT_URL|AUTH_PROVIDER|CLERK_|BETTER_AUTH_|GOOGLE_|GITHUB_|SUPABASE_|"
-    r"STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|VITE_|UPSTASH_|REDIS_|OIDC_|RESEND_|EMAIL_|"
+    r"STRIPE_|OPENAI_|OPENROUTER_|SILICONFLOW_|NEXT_PUBLIC_|VITE_|UPSTASH_|CACHE_BACKEND|CF_KV_|CLOUDFLARE_|"
+    r"REDIS_|OIDC_|RESEND_|EMAIL_|"
     r"SMTP_|SENTRY_|POSTHOG_|SANITY_|JWT_|COOKIE_|APP_|API_|DOMAIN_|LANDING_URL|WEB_URL|"
     r"STUDIO_URL|CORS_ORIGINS|R2_|AWS_|S3_|BLOB_|UPLOAD_|TURNSTILE_|CRON_|ADMIN_|"
     r"SERVICE_SECRET|INTERNAL_API_KEY|CLICKHOUSE_|AUDIT_USE_CLICKHOUSE|METERING_PROVIDER|"

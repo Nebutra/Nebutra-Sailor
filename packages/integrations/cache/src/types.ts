@@ -91,7 +91,7 @@ export interface CacheClient {
   eval(script: string, keys: string[], args: Array<string | number>): Promise<unknown>;
 }
 
-export type CacheBackend = "upstash-redis" | "ioredis";
+export type CacheBackend = "upstash-redis" | "ioredis" | "cloudflare-kv";
 
 /**
  * @deprecated Use `CacheClient` directly. Kept as an alias so existing

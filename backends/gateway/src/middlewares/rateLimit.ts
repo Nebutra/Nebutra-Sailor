@@ -11,9 +11,30 @@ type PlanKey = keyof typeof PLAN_LIMITS;
 type RateLimiter = ReturnType<typeof getRateLimiter> | ReturnType<typeof createRedisRateLimiter>;
 
 function hasRedisRateLimitStore() {
-  const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.UPSTASH_REDIS_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.UPSTASH_REDIS_TOKEN;
-  return Boolean(url && token);
+  const backend = process.env.CACHE_BACKEND?.trim();
+  if (backend === "cloudflare-kv") {
+    return Boolean(
+      (process.env.CF_KV_NAMESPACE_ID || process.env.CLOUDFLARE_KV_NAMESPACE_ID) &&
+        process.env.CLOUDFLARE_ACCOUNT_ID &&
+        (process.env.CLOUDFLARE_API_TOKEN || process.env.CLOUDFLARE_KV_API_TOKEN),
+    );
+  }
+  if (backend === "ioredis") {
+    return Boolean(process.env.REDIS_URL);
+  }
+  // default / upstash-redis
+  if (backend === "upstash-redis" || !backend) {
+    const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.UPSTASH_REDIS_URL;
+    const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.UPSTASH_REDIS_TOKEN;
+    // Also allow auto-detect CF KV when fully configured
+    if (url && token) return true;
+    return Boolean(
+      (process.env.CF_KV_NAMESPACE_ID || process.env.CLOUDFLARE_KV_NAMESPACE_ID) &&
+        process.env.CLOUDFLARE_ACCOUNT_ID &&
+        (process.env.CLOUDFLARE_API_TOKEN || process.env.CLOUDFLARE_KV_API_TOKEN),
+    );
+  }
+  return false;
 }
 
 function resolvePlanKey(plan: unknown): PlanKey {

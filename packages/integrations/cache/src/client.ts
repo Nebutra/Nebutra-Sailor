@@ -7,25 +7,34 @@ let backendDetected: CacheBackend | null = null;
 /**
  * Detect cache backend from environment.
  *
- *   UPSTASH_REDIS_REST_URL (or UPSTASH_REDIS_URL alias) → "upstash-redis"
- *   REDIS_URL                                           → "ioredis"
+ *   CACHE_BACKEND=cloudflare-kv | upstash-redis | ioredis   (explicit)
+ *   CF_KV_NAMESPACE_ID (+ CF account token)               → "cloudflare-kv"
+ *   UPSTASH_REDIS_REST_URL (or UPSTASH_REDIS_URL alias)   → "upstash-redis"
+ *   REDIS_URL                                             → "ioredis"
  *
- * Upstash takes precedence when both are set — its REST API works in edge
- * runtimes that can't open TCP sockets, so it's the safer default.
- *
- * Explicit override: CACHE_BACKEND=upstash-redis | ioredis
+ * Explicit CACHE_BACKEND always wins. Otherwise Cloudflare KV is preferred when
+ * fully configured so production can flip off Upstash without code changes.
+ * Upstash remains first-class when CACHE_BACKEND=upstash-redis or only Upstash
+ * env is present.
  */
 function detectBackend(): CacheBackend {
   const explicit = process.env.CACHE_BACKEND?.trim() as CacheBackend | undefined;
-  if (explicit === "upstash-redis" || explicit === "ioredis") return explicit;
+  if (explicit === "upstash-redis" || explicit === "ioredis" || explicit === "cloudflare-kv") {
+    return explicit;
+  }
+
+  const hasCfKv =
+    Boolean(process.env.CF_KV_NAMESPACE_ID || process.env.CLOUDFLARE_KV_NAMESPACE_ID) &&
+    Boolean(process.env.CLOUDFLARE_ACCOUNT_ID) &&
+    Boolean(process.env.CLOUDFLARE_API_TOKEN || process.env.CLOUDFLARE_KV_API_TOKEN);
+  if (hasCfKv) return "cloudflare-kv";
 
   if (process.env.UPSTASH_REDIS_REST_URL || process.env.UPSTASH_REDIS_URL) {
     return "upstash-redis";
   }
   if (process.env.REDIS_URL) return "ioredis";
 
-  // Fall back to upstash — callers will get a clear "not configured" error
-  // from getRedisConfig() if neither env is set.
+  // Fall back to upstash — callers get a clear "not configured" error from getRedisConfig().
   return "upstash-redis";
 }
 
@@ -65,6 +74,11 @@ export async function getCacheClient(): Promise<CacheClient> {
         /* webpackIgnore: true */ "@nebutra/cache/ioredis"
       )) as typeof import("./ioredis");
       cacheInstance = new mod.IoredisCacheClient();
+    } else if (backend === "cloudflare-kv") {
+      const mod = (await import(
+        /* webpackIgnore: true */ "@nebutra/cache/cloudflare-kv"
+      )) as typeof import("./cloudflare-kv");
+      cacheInstance = new mod.CloudflareKvCacheClient();
     } else {
       const mod = (await import(
         /* webpackIgnore: true */ "@nebutra/cache/upstash"

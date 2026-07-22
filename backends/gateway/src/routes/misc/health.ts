@@ -83,12 +83,14 @@ function checkDatabase() {
 }
 
 function checkCache() {
-  // Upstash Redis REST ping — getRedis() throws if credentials are missing,
-  // which correctly marks cache as "down" → pod shows "degraded", not "unhealthy".
+  // Multi-backend ping (Upstash / ioredis / Cloudflare KV) via getRedis().
+  // Throws if credentials missing → cache "down" → overall "degraded", not "unhealthy".
   return withTimeout(async () => {
-    const { getRedis } = await import("@nebutra/cache");
+    const { getRedis, getCacheBackend } = await import("@nebutra/cache");
     const r = await getRedis();
     await r.ping();
+    // Touch backend label so operators can see which store is live in logs later.
+    void getCacheBackend();
   });
 }
 

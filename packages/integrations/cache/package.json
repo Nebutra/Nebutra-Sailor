@@ -22,6 +22,11 @@
       "import": "./dist/upstash.js",
       "default": "./dist/upstash.js"
     },
+    "./cloudflare-kv": {
+      "types": "./dist/cloudflare-kv.d.ts",
+      "import": "./dist/cloudflare-kv.js",
+      "default": "./dist/cloudflare-kv.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
