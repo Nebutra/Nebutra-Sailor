@@ -10,7 +10,7 @@
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
 | `sso.nebutra.com` | idp | Nebutra-owned OIDC issuer for first-party/internal apps |
 | `design.nebutra.com` | design-docs | Design system docs |
-| `docs.nebutra.com` | sailor-docs (Cloudflare Workers / OpenNext) | Product/docs site |
+| `docs.nebutra.com` | sailor-docs (Vercel project `docs`) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
 | `studio.nebutra.com` | studio | Optional branded Studio alias; requires external DNS/hosting binding |
 

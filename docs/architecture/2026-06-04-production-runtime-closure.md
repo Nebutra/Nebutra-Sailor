@@ -35,7 +35,7 @@ provider-switchable through per-service selector keys:
 | `web` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `landing-page` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `design-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
-| `sailor-docs` | `cloudflare-pages` | `cloudflare-pages`, `vercel`, `standalone`, `railway` |
+| `sailor-docs` | `vercel` | `vercel`, `standalone`, `cloudflare-pages`, `railway` |
 | `gateway` | `cloudflare-workers` | `cloudflare-workers`, `vercel-functions`, `vm-docker`, `ecs-docker`, `k8s`, `aws`, `gcp`, `railway` |
 | `python-ai` | `ecs-docker` | `ecs-docker`, `k8s`, `aws`, `gcp`, `railway` |
 
@@ -44,10 +44,12 @@ Selector env keys are service-specific:
 ```env
 DEPLOY_TARGET_WEB=vercel
 DEPLOY_TARGET_LANDING_PAGE=vercel
-DEPLOY_TARGET_SAILOR_DOCS=cloudflare-pages
+DEPLOY_TARGET_SAILOR_DOCS=vercel
 DEPLOY_TARGET_GATEWAY=cloudflare-workers
 DEPLOY_TARGET_PYTHON_AI=ecs-docker
 ```
+# Note: cloudflare-pages remains allowed for create-sailor DX, but production
+# sailor-docs exceeds the Cloudflare Workers script size limit (~87MiB); use Vercel.
 
 The governance rule is:
 

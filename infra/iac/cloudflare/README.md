@@ -32,7 +32,7 @@ User ──────────────►│  │ WAF │──│Cache
 | `app.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (web; EC2/ECS/CVM/GCE compatible) |
 | `api.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (api-gateway; EC2/ECS/CVM/GCE compatible) |
 | `status.nebutra.com` | ✅ Proxied | No cache | Vercel (landing-page status route) |
-| `docs.nebutra.com` | ✅ Proxied | Docs/static cache | Cloudflare Workers (OpenNext `nebutra-sailor-docs`) |
+| `docs.nebutra.com` | ✅ Proxied (CNAME → Vercel) | Docs/static cache | Vercel project `docs` (`apps/sailor-docs`) |
 | `studio.nebutra.com` | ✅ Proxied when active | No cache | Optional branded Studio alias |
 | `cdn.nebutra.com` | ✅ Proxied | Long cache | R2 bucket |
 
@@ -48,23 +48,18 @@ CNAME   www       cname.vercel-dns.com     ✅      Auto
 A       app       106.15.4.31              ✅      Auto
 A       api       106.15.4.31              ✅      Auto
 A       status    76.76.21.21              ✅      Auto
-CNAME   docs      nebutra-sailor-docs.<account-subdomain>.workers.dev  ✅      Auto
+CNAME   docs      cname.vercel-dns.com     ✅      Auto
 CNAME   studio    <active studio host>     ✅      Auto
 CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto
 ```
 
-`docs.nebutra.com` is served by the OpenNext Cloudflare Worker
-`nebutra-sailor-docs` (`apps/sailor-docs`). Deploy via
-`.github/workflows/deploy-sailor-docs.yml` or:
+`docs.nebutra.com` is the Vercel project `docs` (`apps/sailor-docs`). Deploy is
+Git → Vercel (same pattern as landing). Do **not** attach this hostname to the
+landing-page project, and do **not** point it at ECS (unknown hosts 301 to apex).
 
-```bash
-pnpm --filter @nebutra/sailor-docs build:worker
-pnpm --filter @nebutra/sailor-docs deploy:worker
-```
-
-Do **not** bind `docs.nebutra.com` to the landing-page Vercel project, and do
-**not** point it at the ECS origin (that box no longer runs sailor-docs; unknown
-hosts 301 to the marketing apex).
+> OpenNext → Cloudflare Workers was evaluated and rejected: the docs server
+> bundle is ~87 MiB uncompressed and exceeds the Workers 64 MiB script limit.
+> CF remains the DNS/CDN edge in front of Vercel.
 
 Keep `status` on Vercel/landing-page, not the VM. The status surface is designed to
 stay reachable when the VM-hosted app/API/docs stack is degraded, and exposes a
