@@ -142,7 +142,7 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
     c.req.header("x-tenant-id") || c.req.header("x_tenant_id") || undefined;
   if (legacyTenantHeader && !serviceToken) {
     logger.warn(
-      "Ignoring legacy x-tenant-id header without x-service-token — update client to use x-organization-id with a valid HMAC service token",
+      "Ignoring legacy x-tenant-id header without x-service-token — update client to use x-organization-id with a valid JWT service token",
       { ip },
     );
   }

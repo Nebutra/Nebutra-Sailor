@@ -7,7 +7,7 @@ import { SignJWT } from "jose";
  *
  * Implemented with jose directly so tests that `vi.mock("@nebutra/auth")` still work.
  */
-export const TEST_SERVICE_SECRET = "test-secret-for-s2s-hmac";
+export const TEST_SERVICE_SECRET = "test-secret-for-s2s-jwt";
 
 export async function generateServiceToken(
   userId?: string,

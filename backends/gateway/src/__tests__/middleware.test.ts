@@ -139,7 +139,6 @@ beforeEach(() => {
 
   // Ensure SERVICE_SECRET matches tokens from helpers/s2s-token.ts
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
-  delete process.env.S2S_ALLOW_LEGACY;
   delete process.env.UPSTASH_REDIS_REST_URL;
   delete process.env.UPSTASH_REDIS_REST_TOKEN;
   delete process.env.UPSTASH_REDIS_URL;

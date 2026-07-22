@@ -1,8 +1,9 @@
 """Service-to-service authentication for Nebutra Python microservices.
 
 Mirrors the TypeScript implementation in packages/iam/auth/src/s2s.ts:
-  primary token = short-lived HS256 JWT carrying tenant claims + iat/exp/jti
-  legacy token  = HMAC-SHA256 canonical digest, accepted only when opted in
+  token = short-lived HS256 JWT carrying tenant claims + iat/exp/jti
+
+Legacy hex-HMAC tokens were retired; only jose/PyJWT HS256 JWTs are accepted.
 
 All Python services that receive internal traffic from the gateway must
 declare `tenant: TenantContext = Depends(get_tenant)` on their route handlers.
@@ -12,8 +13,6 @@ Unauthenticated requests receive an anonymous context — route-level guards
 
 from __future__ import annotations
 
-import hashlib
-import hmac
 import os
 from dataclasses import dataclass
 from typing import Annotated
@@ -33,30 +32,6 @@ class TenantContext:
     # True when the request carried a valid service token.
     # False = anonymous / public (health probes, unauthenticated dev calls).
     authenticated: bool = False
-
-
-def _canonical(
-    user_id: str | None,
-    org_id: str | None,
-    role: str | None,
-    plan: str | None,
-) -> str:
-    # Must match canonicalizeServiceTokenContext in s2s.ts
-    return ":".join([user_id or "", org_id or "", role or "", plan or ""])
-
-
-def _verify_legacy_hmac(token: str, canonical: str, secret: str) -> bool:
-    if not token or any(char not in "0123456789abcdef" for char in token):
-        return False
-    expected = hmac.new(secret.encode(), canonical.encode(), hashlib.sha256).hexdigest()
-    try:
-        return hmac.compare_digest(token, expected)
-    except Exception:
-        return False
-
-
-def _legacy_fallback_allowed() -> bool:
-    return os.environ.get("S2S_ALLOW_LEGACY") == "1"
 
 
 def _claim(payload: dict[str, object], name: str) -> object | None:
@@ -134,12 +109,7 @@ async def get_tenant(
         role=x_role,
         plan=x_plan,
     )
-    legacy_valid = _legacy_fallback_allowed() and _verify_legacy_hmac(
-        x_service_token,
-        _canonical(x_user_id, x_organization_id, x_role, x_plan),
-        secret,
-    )
-    if not (jwt_valid or legacy_valid):
+    if not jwt_valid:
         raise HTTPException(status_code=401, detail="invalid_service_token")
 
     return TenantContext(
