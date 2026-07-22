@@ -34,7 +34,7 @@ User ──────────────►│  │ WAF │──│Cache
 | `sso.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (OIDC IdP; permanent issuer) |
 | `api.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (api-gateway; EC2/ECS/CVM/GCE compatible) |
 | `status.nebutra.com` | ✅ Proxied | No cache | Vercel (landing-page status route) |
-| `docs.nebutra.com` | ✅ Proxied (CNAME → Vercel) | Docs/static cache | Vercel project `docs` (`apps/sailor-docs`) |
+| `docs.nebutra.com` | DNS only (CNAME → Vercel) | Docs/static | Vercel project `docs` (`apps/sailor-docs`); grey-cloud avoids CF↔Vercel 525 |
 | `studio.nebutra.com` | ✅ Proxied when active | No cache | Optional branded Studio alias |
 | `cdn.nebutra.com` | ✅ Proxied | Long cache | R2 bucket |
 
@@ -47,10 +47,12 @@ Type    Name      Content                  Proxy   TTL
 ────    ────      ───────                  ─────   ───
 A       @         76.76.21.21              ✅      Auto
 CNAME   www       cname.vercel-dns.com     ✅      Auto
-A       app       106.15.4.31              ✅      Auto
+A       app       106.15.4.31              ✅      Auto   # ECS (target: Vercel nebutra-web)
+A       auth      106.15.4.31              ✅      Auto   # ECS login center (target: Vercel nebutra-auth)
 A       api       106.15.4.31              ✅      Auto
+A       sso       106.15.4.31              ✅      Auto   # permanent OIDC issuer
 A       status    76.76.21.21              ✅      Auto
-CNAME   docs      cname.vercel-dns.com     ✅      Auto
+CNAME   docs      cname.vercel-dns.com     DNS only Auto  # grey cloud
 CNAME   studio    <active studio host>     ✅      Auto
 CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto
 ```
@@ -58,6 +60,7 @@ CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto
 `docs.nebutra.com` is the Vercel project `docs` (`apps/sailor-docs`). Deploy is
 Git → Vercel (same pattern as landing). Do **not** attach this hostname to the
 landing-page project, and do **not** point it at ECS (unknown hosts 301 to apex).
+Prefer **DNS only** (not orange-cloud) for the Vercel CNAME to avoid origin SSL 525s.
 
 > OpenNext → Cloudflare Workers was evaluated and rejected: the docs server
 > bundle is ~87 MiB uncompressed and exceeds the Workers 64 MiB script limit.

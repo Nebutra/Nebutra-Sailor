@@ -40,4 +40,23 @@ describe("auth center multi-app governance", () => {
     const trusted = read("packages/iam/auth/src/providers/better-auth/trusted-origins.ts");
     expect(trusted).toContain("NEXT_PUBLIC_AUTH_URL");
   });
+
+  it("ECS web bootstrap defaults BETTER_AUTH_URL to the login center", () => {
+    const remote = read("infra/ops/scripts/ecs-deploy-remote.sh");
+    expect(remote).toContain('BETTER_AUTH_URL="${BETTER_AUTH_URL:-https://auth.nebutra.com}"');
+    expect(remote).toContain(
+      'NEXT_PUBLIC_AUTH_URL="${NEXT_PUBLIC_AUTH_URL:-https://auth.nebutra.com}"',
+    );
+    // Legacy product-app-as-auth-origin must not reappear as the default.
+    expect(remote).not.toMatch(
+      /BETTER_AUTH_URL="\$\{BETTER_AUTH_URL:-https:\/\/app\.nebutra\.com\}"/,
+    );
+  });
+
+  it("DOMAINS.md records production truth for auth + permanent sso", () => {
+    const domains = read("docs/DOMAINS.md");
+    expect(domains).toContain("Production truth");
+    expect(domains).toContain("auth-center");
+    expect(domains).toContain("permanent");
+  });
 });

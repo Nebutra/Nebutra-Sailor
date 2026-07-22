@@ -10,196 +10,111 @@
 | `app.nebutra.com` | web | Main SaaS dashboard (RP — redirects unauthenticated users to auth) |
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
 | `sso.nebutra.com` | idp | **OIDC IdP** — issuer URL permanent; used for SSO / internal tools |
-| `design.nebutra.com` | design-docs | Design system docs |
+| `design.nebutra.com` | design-docs | Design system docs (optional) |
 | `docs.nebutra.com` | sailor-docs (Vercel project `docs`) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
-| `studio.nebutra.com` | studio | Optional branded Studio alias; requires external DNS/hosting binding |
+| `studio.nebutra.com` | studio | Optional branded Studio alias |
 
-## DNS Configuration
+## Production truth (as of 2026-07-22)
 
-Add these records in your DNS provider (Cloudflare, Namecheap, etc.):
+Single source of truth for *where traffic lands today*. Do not invent a second story in other docs without updating this table.
 
-```
-Type    Name      Value                    Proxy   TTL
-----    ----      -----                    -----   ---
-A       @         76.76.21.21              ✅      Auto
-CNAME   www       cname.vercel-dns.com     ✅      Auto
-CNAME   app       cname.vercel-dns.com     ✅      Auto   # Vercel project nebutra-web
-CNAME   auth      cname.vercel-dns.com     ✅      Auto   # Vercel project nebutra-auth
-A       api       106.15.4.31              ✅      Auto   # ECS origin (api-gateway)
-A       sso       106.15.4.31              ✅      Auto   # ECS origin (OIDC IdP — permanent issuer)
-CNAME   docs      cname.vercel-dns.com     ✅      Auto
-CNAME   studio    <studio host>            ✅      Auto
-```
+| Host | DNS (Cloudflare) | Runtime | Notes |
+|------|------------------|---------|-------|
+| `nebutra.com` / `www` | Vercel anycast / CNAME | **Vercel** landing | Marketing |
+| `docs.nebutra.com` | CNAME `cname.vercel-dns.com` **DNS only** | **Vercel** `docs` | Prefer grey-cloud (not orange) in front of Vercel |
+| `app.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `web` | Target: Vercel (`nebutra-web`) when builds are green |
+| `auth.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `auth-center` | Target: Vercel (`nebutra-auth`) |
+| `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |
+| `sso.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `idp` | **Permanent OIDC issuer** — do not move lightly |
 
-## Production topology (SOTA split)
+### Topology layers
 
-| Layer | Host | Apps |
+| Layer | Role | Apps |
 |-------|------|------|
-| **Vercel** | frontends | landing, **web**, **auth**, docs, studio (optional) |
-| **Cloudflare** | DNS / CDN / WAF / edge gateway | all public hostnames; Workers for edge API |
-| **ECS (slim)** | origin only | **api-gateway**, **sso/idp** (issuer permanent) |
+| **Cloudflare** | DNS, CDN, WAF, edge Workers | All public hostnames; gateway Workers for edge API |
+| **Vercel** | Git-native frontends | landing, docs (+ web/auth when cut over) |
+| **ECS (slim)** | Origin processes | web*, auth*, api, sso/idp |
 
-Do **not** run web/auth on the small ECS box as primary — deploy target is Vercel.
-ECS PM2 remains a manual fallback for api/sso only.
+\* web/auth currently origin on ECS while Vercel projects exist for future cutover.
 
-> Note: The A record IP (76.76.21.21) is Vercel's anycast. Subdomains that
-> terminate on Vercel use `CNAME … cname.vercel-dns.com` (orange-cloud OK).
-> `studio.nebutra.com` must point at the platform that actually serves the
-> Studio. The checked-in Studio CLI currently deploys to Sanity-hosted
-> `nebutra.sanity.studio`; if you want the branded `studio.nebutra.com` URL,
-> self-host the Studio on Vercel/Cloudflare Pages or configure a supported
-> custom-domain binding, then add that domain to Sanity CORS.
+### Repo variables (no drift)
 
-## Vercel Project Configuration
+| Variable | Production value | Meaning |
+|----------|------------------|---------|
+| `HA_TOPOLOGY` | `cf-edge + vercel-marketing/docs + ecs-origin(app,auth,api,sso)` | Describe *actual* routing |
+| `DEPLOY_TARGET_LANDING_PAGE` | `vercel` | Primary deploy path |
+| `DEPLOY_TARGET_SAILOR_DOCS` | `vercel` | Primary deploy path |
+| `DEPLOY_TARGET_WEB` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
+| `DEPLOY_TARGET_AUTH` | `vercel` | *Target* platform; production traffic still ECS until DNS cutover |
+| `DEPLOY_TARGET_GATEWAY` | `cloudflare-workers` | Edge API |
+| `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` | Login center origin |
+| `ECS_HOST` | `106.15.4.31` | Cloud VM origin |
 
-### 1. landing-page
-- Domain: `nebutra.com`, `www.nebutra.com`
-- Redirect: `www` → apex (301)
+`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`). Prefer Vercel Git deploys for marketing/docs.
 
-### 2. auth-center (`apps/auth`)
-- Domain: `auth.nebutra.com`
-- `BETTER_AUTH_URL=https://auth.nebutra.com`
-- `NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com`
-- `AUTH_COOKIE_DOMAIN=.nebutra.com` (multi-app session cookies)
-- `NEXT_PUBLIC_APP_URL=https://app.nebutra.com` (default returnTo)
-- Do **not** change OIDC issuer to this host — issuer stays on `sso`.
+## DNS records (reference)
 
-### 3. web
-- Domain: `app.nebutra.com`
-- Unauthenticated product routes redirect to `auth.nebutra.com/sign-in?returnTo=…`
-- `NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com`
-
-### 4. api-gateway
-- Domain: `api.nebutra.com`
-
-### 5. idp
-- Domain: `sso.nebutra.com`
-- Serves `https://sso.nebutra.com/.well-known/openid-configuration`
-- Keep `OIDC_ISSUER=https://sso.nebutra.com` and do not path-prefix the issuer.
-
-### 6. studio
-- Canonical hosted Studio: `nebutra.sanity.studio`
-- Optional branded domain: `studio.nebutra.com` after the hosting/DNS binding is
-  active
-
-## Environment Variables (Vercel)
-
-Set these in each project's Vercel dashboard:
-
-### All Projects
 ```
-NEXT_PUBLIC_SITE_URL=https://nebutra.com
-NEXT_PUBLIC_APP_URL=https://app.nebutra.com
-NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
-NEXT_PUBLIC_API_URL=https://api.nebutra.com
-NEXT_PUBLIC_STUDIO_URL=https://studio.nebutra.com
+Type    Name      Value                    Proxy        Notes
+----    ----      -----                    -----        -----
+A       @         76.76.21.21              ✅           Vercel apex
+CNAME   www       cname.vercel-dns.com     ✅
+A       app       106.15.4.31              ✅           ECS (interim)
+A       auth      106.15.4.31              ✅           ECS (interim)
+A       api       106.15.4.31              ✅           ECS
+A       sso       106.15.4.31              ✅           ECS permanent issuer
+CNAME   docs      cname.vercel-dns.com     DNS only     Vercel (grey cloud)
 ```
 
-### auth-center
+When cutting `app` / `auth` to Vercel: switch to `CNAME … cname.vercel-dns.com` (grey or orange per SSL plan) and remove the ECS A records.
+
+## Auth multi-app model
+
+| Role | Host | App |
+|------|------|-----|
+| Login center (session authority) | `auth.nebutra.com` | `apps/auth` + Better Auth |
+| Product RP | `app.nebutra.com` | `apps/web` — redirects unauthenticated users to auth |
+| OIDC issuer (permanent) | `sso.nebutra.com` | `apps/idp` — never path-prefix issuer |
+
+Required env:
+
 ```
+# auth-center + web (shared session)
 BETTER_AUTH_URL=https://auth.nebutra.com
 NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
 AUTH_COOKIE_DOMAIN=.nebutra.com
+BETTER_AUTH_SECRET=<same secret on auth and web>
 NEXT_PUBLIC_APP_URL=https://app.nebutra.com
-NEXT_PUBLIC_SITE_URL=https://nebutra.com
-BETTER_AUTH_SECRET=<base64-32+>
-AUTH_PROVIDER=better-auth
-```
 
-### idp
-```
+# idp
 OIDC_ISSUER=https://sso.nebutra.com
-OIDC_COOKIE_KEYS=<base64-48+>,<rotated-base64-48+>
-REDIS_URL=redis://...
 ```
 
-### api-gateway
-```
-LANDING_URL=https://nebutra.com
-WEB_URL=https://app.nebutra.com
-AUTH_URL=https://auth.nebutra.com
-STUDIO_URL=https://studio.nebutra.com
-```
+Unauthenticated product routes: `auth.nebutra.com/sign-in?returnTo=https://app.nebutra.com/…`
 
-## Clerk Configuration
+## Vercel projects
 
-Update Clerk dashboard:
-1. Go to **Domains** → Add production domain
-2. Add: `nebutra.com`, `app.nebutra.com`
-3. Update redirect URLs in **Paths**:
-   - Sign-in: `https://app.nebutra.com/sign-in`
-   - Sign-up: `https://app.nebutra.com/sign-up`
-   - After sign-in: `https://app.nebutra.com/dashboard`
-4. For Enterprise SSO, add each customer or first-party domain to a Clerk SAML
-   or OIDC connection. Add `https://app.nebutra.com/sign-in` as the SSO
-   callback/continuation URL and keep the provider's domain matching rules in
-   sync with `AUTH_SSO_DISCOVERY_PROVIDERS`.
+| Project | Root | Domain(s) |
+|---------|------|-----------|
+| landing-page | `apps/landing-page` | `nebutra.com`, `www` |
+| docs | `apps/sailor-docs` | `docs.nebutra.com` |
+| nebutra-auth | `apps/auth` | `auth.nebutra.com` (ready; DNS may still be ECS) |
+| nebutra-web | `apps/web` | `app.nebutra.com` (ready; DNS may still be ECS) |
 
-Example `AUTH_SSO_DISCOVERY_PROVIDERS` for Clerk Enterprise SSO:
+## Origin TLS
 
-```json
-[
-  {
-    "domain": "nebutra.com",
-    "id": "nebutra-entra",
-    "name": "Nebutra Entra ID",
-    "type": "oidc",
-    "provider": "clerk",
-    "allowSubdomains": false
-  }
-]
-```
+Cloudflare Origin Certificate on ECS must include at least:
 
-`provider: "clerk"` uses the built-in `/sign-in/sso` handoff. Use
-`provider: "feishu"` for Feishu/Lark SSO through Better Auth generic OAuth.
-Configure this redirect URI in the Feishu/Lark developer console:
+`*.nebutra.com`, `nebutra.com`, `app`, `auth`, `api`, `sso`, `docs`, `status`, `design`, `www`
 
-```text
-https://app.nebutra.com/api/auth/oauth2/callback/feishu
-```
+Path on VM: `/etc/ssl/nebutra/fullchain.pem` + `privkey.pem`.
 
-Example discovery entry:
+## OAuth / IdP consoles
 
-```json
-[
-  {
-    "domain": "example.cn",
-    "id": "example-feishu",
-    "name": "Example Feishu",
-    "type": "oidc",
-    "provider": "feishu"
-  }
-]
-```
+Prefer auth-center callbacks:
 
-Set `FEISHU_APP_ID` and `FEISHU_APP_SECRET` on Vercel and the ECS/cloud-VM
-runtime whenever a Feishu discovery entry is enabled. Use `provider: "generic"`
-only when an external SAML/OIDC broker owns the handoff, and then set an
-internal `loginUrl`. Set `allowSubdomains: true` only if the IdP and SSO
-connection also allow subdomains.
+- Google: `https://auth.nebutra.com/api/auth/callback/google`
+- GitHub: `https://auth.nebutra.com/api/auth/callback/github`
 
-## Sanity CORS
-
-In Sanity dashboard (manage.sanity.io):
-1. Go to **API** → **CORS origins**
-2. Add:
-   - `https://nebutra.com`
-   - `https://app.nebutra.com`
-   - `https://nebutra.sanity.studio` (with credentials)
-   - `https://studio.nebutra.com` (with credentials) if the branded alias is active
-
-## SSL/TLS
-
-Vercel automatically provisions SSL certificates. No action needed.
-
-## Verification Checklist
-
-- [ ] DNS propagated (check with `dig app.nebutra.com`)
-- [ ] SSL certificates active (green lock)
-- [ ] CORS working (no console errors)
-- [ ] Clerk auth redirects correctly
-- [ ] API calls from app → api working
-- [ ] Canonical URLs pass `pnpm check:public-urls`
-- [ ] Branded aliases pass `pnpm run check:public-urls -- --include-aliases`
-- [ ] OIDC discovery returns `issuer: "https://sso.nebutra.com"`
+Do **not** keep product-app-only sign-in URLs as the only production login entry once the login center is live.

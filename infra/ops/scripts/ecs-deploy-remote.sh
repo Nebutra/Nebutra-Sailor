@@ -413,7 +413,10 @@ bootstrap_web_runtime_env() {
   NEXT_PUBLIC_AUTH_PROVIDER="${NEXT_PUBLIC_AUTH_PROVIDER:-$AUTH_PROVIDER}"
   VITE_AUTH_PROVIDER="${VITE_AUTH_PROVIDER:-$AUTH_PROVIDER}"
   BETTER_AUTH_SECRET="${BETTER_AUTH_SECRET:-$(generate_runtime_secret)}"
-  BETTER_AUTH_URL="${BETTER_AUTH_URL:-https://app.nebutra.com}"
+  # Login center owns the Better Auth origin (multi-app RP model).
+  BETTER_AUTH_URL="${BETTER_AUTH_URL:-https://auth.nebutra.com}"
+  NEXT_PUBLIC_AUTH_URL="${NEXT_PUBLIC_AUTH_URL:-https://auth.nebutra.com}"
+  AUTH_COOKIE_DOMAIN="${AUTH_COOKIE_DOMAIN:-.nebutra.com}"
   NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://app.nebutra.com}"
   NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL:-https://app.nebutra.com}"
   NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-https://api.nebutra.com}"
@@ -425,7 +428,7 @@ bootstrap_web_runtime_env() {
   NEXT_PUBLIC_GOOGLE_CLIENT_ID="${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-${GOOGLE_CLIENT_ID:-}}"
 
   export AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL
-  export BETTER_AUTH_SECRET BETTER_AUTH_URL
+  export BETTER_AUTH_SECRET BETTER_AUTH_URL NEXT_PUBLIC_AUTH_URL AUTH_COOKIE_DOMAIN
   export NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL
   export NEBUTRA_LANDING_ORIGIN NEBUTRA_SESSION_HINT_DOMAIN
 
@@ -453,6 +456,8 @@ bootstrap_web_runtime_env() {
   ensure_env_assignment "$env_file" VITE_AUTH_API_URL "$VITE_AUTH_API_URL"
   ensure_env_assignment "$env_file" BETTER_AUTH_SECRET "$BETTER_AUTH_SECRET"
   ensure_env_assignment "$env_file" BETTER_AUTH_URL "$BETTER_AUTH_URL"
+  ensure_env_assignment "$env_file" NEXT_PUBLIC_AUTH_URL "$NEXT_PUBLIC_AUTH_URL"
+  ensure_env_assignment "$env_file" AUTH_COOKIE_DOMAIN "$AUTH_COOKIE_DOMAIN"
   ensure_env_assignment "$env_file" NEXT_PUBLIC_SITE_URL "$NEXT_PUBLIC_SITE_URL"
   ensure_env_assignment "$env_file" NEXT_PUBLIC_APP_URL "$NEXT_PUBLIC_APP_URL"
   ensure_env_assignment "$env_file" NEXT_PUBLIC_API_URL "$NEXT_PUBLIC_API_URL"

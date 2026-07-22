@@ -29,5 +29,16 @@ SSO is the **pattern** of multiple RPs trusting the auth center session and/or t
 NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
 BETTER_AUTH_URL=https://auth.nebutra.com
 AUTH_COOKIE_DOMAIN=.nebutra.com
+NEXT_PUBLIC_APP_URL=https://app.nebutra.com
 OIDC_ISSUER=https://sso.nebutra.com
 ```
+
+## Runtime placement (no drift)
+
+| Host | Production runtime (2026-07-22) | Deploy target |
+|------|--------------------------------|---------------|
+| `auth.nebutra.com` | ECS PM2 `auth-center` | Vercel project `nebutra-auth` (cutover pending) |
+| `app.nebutra.com` | ECS PM2 `web` | Vercel project `nebutra-web` (cutover pending) |
+| `sso.nebutra.com` | ECS PM2 `idp` | Stay on ECS — issuer permanence |
+
+Source of truth for hosts: `docs/DOMAINS.md`.

@@ -63,15 +63,16 @@ Fields:
 
 ## Clerk Dashboard Checklist
 
-1. Add production domains for `nebutra.com` and `app.nebutra.com`.
-2. Set sign-in to `https://app.nebutra.com/sign-in`.
-3. Set sign-up to `https://app.nebutra.com/sign-up`.
-4. Set post-sign-in to `https://app.nebutra.com/dashboard`.
+1. Add production domains for `nebutra.com`, `app.nebutra.com`, and
+   `auth.nebutra.com` (login center).
+2. Set sign-in to `https://auth.nebutra.com/sign-in` (login center).
+3. Set sign-up to `https://auth.nebutra.com/sign-up`.
+4. Set post-sign-in to `https://app.nebutra.com/dashboard` (product RP).
 5. Create the SAML or OIDC Enterprise connection.
 6. Ensure the connection domain matches the JSON `domain`.
 7. Keep subdomain support disabled unless the customer explicitly needs it and
    the IdP supports the same policy.
-8. Add `https://app.nebutra.com/sign-in` to Clerk redirect/continuation allowlists
+8. Add `https://auth.nebutra.com/sign-in` to Clerk redirect/continuation allowlists
    for custom Enterprise SSO flows.
 
 ## Feishu/Lark Checklist
@@ -80,17 +81,20 @@ Use this path when `AUTH_PROVIDER=better-auth` and the customer wants Feishu or
 Lark login without Clerk.
 
 1. Create or open the Feishu/Lark app in the developer console.
-2. Add the web redirect URI:
-   `https://app.nebutra.com/api/auth/oauth2/callback/feishu`.
+2. Add the login-center redirect URI:
+   `https://auth.nebutra.com/api/auth/oauth2/callback/feishu`.
 3. Grant the scopes needed to read a stable user id, name, avatar, and email.
    Recommended default: `contact:user.email contact:user.base:readonly`.
-4. Set these runtime variables on Vercel and every ECS/cloud-VM runtime:
+4. Set these runtime variables on auth-center and web (shared session secret):
 
 ```env
 AUTH_PROVIDER=better-auth
 NEXT_PUBLIC_AUTH_PROVIDER=better-auth
 BETTER_AUTH_SECRET=...
-BETTER_AUTH_URL=https://app.nebutra.com
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+NEXT_PUBLIC_APP_URL=https://app.nebutra.com
 FEISHU_APP_ID=cli_xxx
 FEISHU_APP_SECRET=...
 FEISHU_OAUTH_SCOPES="contact:user.email contact:user.base:readonly"
