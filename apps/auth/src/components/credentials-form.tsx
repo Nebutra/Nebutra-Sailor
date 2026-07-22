@@ -1,6 +1,5 @@
 "use client";
 
-<<<<<<< HEAD
 import { useState } from "react";
 
 interface CredentialsFormProps {
@@ -10,37 +9,12 @@ interface CredentialsFormProps {
 }
 
 export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
-=======
-import { getAuthReturnAllowedHosts, sanitizeReturnUrl } from "@nebutra/auth";
-import { useMemo, useState } from "react";
-
-interface CredentialsFormProps {
-  mode: "sign-in" | "sign-up";
-  returnTo?: string;
-  appOrigin: string;
-}
-
-export function CredentialsForm({ mode, returnTo, appOrigin }: CredentialsFormProps) {
->>>>>>> origin/main
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-<<<<<<< HEAD
-=======
-  const safeReturn = useMemo(() => {
-    const allowed = getAuthReturnAllowedHosts();
-    const fallback = `${appOrigin.replace(/\/$/, "")}/dashboard`;
-    if (!returnTo) return fallback;
-    if (returnTo.startsWith("/")) {
-      return `${appOrigin.replace(/\/$/, "")}${returnTo}`;
-    }
-    return sanitizeReturnUrl(returnTo, { allowedHosts: allowed, fallback });
-  }, [returnTo, appOrigin]);
-
->>>>>>> origin/main
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -49,13 +23,8 @@ export function CredentialsForm({ mode, returnTo, appOrigin }: CredentialsFormPr
       const endpoint = mode === "sign-in" ? "/api/auth/sign-in/email" : "/api/auth/sign-up/email";
       const body =
         mode === "sign-in"
-<<<<<<< HEAD
           ? { email, password, callbackURL: returnTo }
           : { email, password, name: name || email.split("@")[0], callbackURL: returnTo };
-=======
-          ? { email, password, callbackURL: safeReturn }
-          : { email, password, name: name || email.split("@")[0], callbackURL: safeReturn };
->>>>>>> origin/main
 
       const res = await fetch(endpoint, {
         method: "POST",
@@ -70,11 +39,7 @@ export function CredentialsForm({ mode, returnTo, appOrigin }: CredentialsFormPr
         return;
       }
 
-<<<<<<< HEAD
       window.location.assign(returnTo);
-=======
-      window.location.assign(safeReturn);
->>>>>>> origin/main
     } catch {
       setError("Network error. Please try again.");
     } finally {

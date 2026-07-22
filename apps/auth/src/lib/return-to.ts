@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import "server-only";
 
-=======
->>>>>>> origin/main
 import { getAuthReturnAllowedHosts, sanitizeReturnUrl } from "@nebutra/auth";
 
 export function resolveAppOrigin(): string {
@@ -25,9 +22,8 @@ export function resolvePostLoginReturnTo(raw: string | null | undefined): string
 
   const trimmed = raw.trim();
   if (trimmed.startsWith("/")) {
-    return sanitizeReturnUrl(trimmed, { fallback: "/dashboard" }) === "/dashboard"
-      ? fallback
-      : `${appOrigin}${sanitizeReturnUrl(trimmed, { fallback: "/dashboard" })}`;
+    const path = sanitizeReturnUrl(trimmed, { fallback: "/dashboard" });
+    return `${appOrigin}${path}`;
   }
 
   return sanitizeReturnUrl(trimmed, { allowedHosts, fallback });
