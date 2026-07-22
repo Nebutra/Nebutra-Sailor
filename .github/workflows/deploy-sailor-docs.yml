@@ -56,9 +56,11 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Validate Cloudflare credentials
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
-          [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
+          [ -n "${CF_ACCOUNT_ID:-}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret or variable is not set"; exit 1; }
 
       - name: Build workspace packages required by sailor-docs
         run: |
@@ -83,13 +85,14 @@ jobs:
         uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: apps/sailor-docs
           command: deploy --config wrangler.jsonc
 
       - name: Point docs.nebutra.com DNS at Workers (proxied)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
           # Workers custom-domain style: CNAME docs → nebutra-sailor-docs.<workers-subdomain>.workers.dev
@@ -101,7 +104,7 @@ jobs:
           [ -n "$ZONE_ID" ] || { echo "::error::zone nebutra.com not found"; exit 1; }
 
           # Discover workers.dev subdomain for this account
-          ACC="${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
+          ACC="${CF_ACCOUNT_ID}"
           SUB=$(curl -sS -H "Authorization: Bearer $TOKEN" \
             "https://api.cloudflare.com/client/v4/accounts/$ACC/workers/subdomain" \
             | python3 -c 'import json,sys; d=json.load(sys.stdin); print((d.get("result") or {}).get("subdomain") or "")')
