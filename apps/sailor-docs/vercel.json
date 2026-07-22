@@ -1,0 +1,12 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "pnpm turbo build --filter=@nebutra/sailor-docs",
+  "ignoreCommand": "bash ../../scripts/vercel-ignore-build.sh apps/sailor-docs",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "outputDirectory": ".next",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_DOCS_ORIGIN_URL": "https://docs.nebutra.com",
+    "NEXT_PUBLIC_DOCS_URL": "https://docs.nebutra.com"
+  }
+}
