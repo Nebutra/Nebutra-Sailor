@@ -115,14 +115,14 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   };
 
   // Header-based fallback for service-to-service calls.
-  // Canonical headers (ONLY trusted when accompanied by a valid HMAC service token):
+  // Canonical headers (ONLY trusted when accompanied by a valid JWT service token):
   //   - x-user-id
   //   - x-organization-id
   //   - x-role
   //   - x-plan
   //
   // SECURITY: The legacy `x-tenant-id` alias was removed (2026-04).
-  // Any external client could spoof it without HMAC verification; all
+  // Any external client could spoof it without JWT verification; all
   // callers must now use `x-organization-id` together with a valid
   // `x-service-token`, or a Bearer JWT from a trusted auth provider.
   const headerUserId = c.req.header("x-user-id") || c.req.header("x_user_id") || undefined;
@@ -131,7 +131,7 @@ export async function tenantContextMiddleware(c: Context, next: Next) {
   const headerRole = c.req.header("x-role") || c.req.header("x_role") || undefined;
   const headerPlan = c.req.header("x-plan") || c.req.header("x_plan") || undefined;
 
-  // Only trust S2S headers when accompanied by a valid HMAC service token.
+  // Only trust S2S headers when accompanied by a valid JWT service token.
   // When no service token is present, S2S headers are NOT trusted — the
   // Bearer JWT flow below (or defaults) is the only source of tenant context.
   const serviceToken = c.req.header("x-service-token");

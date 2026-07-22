@@ -83,7 +83,7 @@ cargo run                            # listens :8020
 
 | Module | Purpose |
 |--------|---------|
-| `auth.py` | `get_tenant()` — HMAC service-token validation, `TenantContext` FastAPI dep |
+| `auth.py` | `get_tenant()` — HS256 JWT service-token validation, `TenantContext` FastAPI dep |
 | `contracts.py` | `UsageEvent` — cross-language event contract (Python ↔ Go ↔ TS) |
 | `usage.py` | `dispatch_usage()` — fire-and-forget asyncio queue → go/event-ingest |
 | `middleware.py` | Request logging, request-id propagation |
@@ -102,12 +102,15 @@ cargo run                            # listens :8020
 
 ## Service authentication
 
-All inter-service traffic uses HMAC-signed `x-service-token` (see `packages/iam/auth/src/s2s.ts`).
-Secret: `SERVICE_SECRET` env var — must be identical across all services.
+All inter-service traffic uses short-lived HS256 JWT `x-service-token`
+(see `packages/iam/auth/src/s2s.ts`). Secret: `SERVICE_SECRET` env var —
+must be identical across all services. Legacy hex-HMAC digests are rejected.
 
 ```
-canonical = "{userId}:{orgId}:{role}:{plan}"
-token     = HMAC-SHA256(canonical, SERVICE_SECRET).hexdigest()
+token = SignJWT({ userId, organizationId, role, plan })
+         .setProtectedHeader({ alg: "HS256" })
+         .setIssuedAt().setJti(...).setExpirationTime("5m")
+         .sign(SERVICE_SECRET)
 ```
 
 Python services validate this via `Depends(get_tenant)` on route handlers.
