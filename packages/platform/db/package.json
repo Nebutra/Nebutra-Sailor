@@ -3,13 +3,29 @@
   "version": "0.1.1",
   "private": true,
   "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./client": "./src/client.ts",
-    "./pool": "./src/pool.ts",
-    "./rls": "./src/rls.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js",
+      "default": "./dist/client.js"
+    },
+    "./pool": {
+      "types": "./dist/pool.d.ts",
+      "import": "./dist/pool.js",
+      "default": "./dist/pool.js"
+    },
+    "./rls": {
+      "types": "./dist/rls.d.ts",
+      "import": "./dist/rls.js",
+      "default": "./dist/rls.js"
+    }
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -24,7 +40,8 @@
     "seed:models": "tsx scripts/seed-model-configs.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
@@ -44,5 +61,10 @@
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "license": "AGPL-3.0-only"
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist",
+    "prisma",
+    "prisma.config.ts"
+  ]
 }

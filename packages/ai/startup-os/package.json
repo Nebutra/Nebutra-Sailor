@@ -24,24 +24,65 @@
     "category": "ai",
     "summary": "Startup OS product orchestration contracts for company context, founder conversation, execution, files, rollout, canvas state, and model-tier decisions"
   },
-  "main": "./src/compiler.ts",
-  "types": "./src/compiler.ts",
+  "main": "./dist/compiler.js",
+  "types": "./dist/compiler.d.ts",
   "exports": {
-    "./canvas": "./src/canvas.ts",
-    "./compiler": "./src/compiler.ts",
-    "./conversation": "./src/conversation.ts",
-    "./dev-tenant": "./src/dev-tenant.ts",
-    "./execution": "./src/execution.ts",
-    "./feature-flag": "./src/feature-flag.ts",
-    "./files": "./src/files.ts",
-    "./model-tier": "./src/model-tier.ts",
-    "./rollout": "./src/rollout.ts",
-    "./store": "./src/store.ts",
-    "./company-context/*": "./src/company-context/*.ts"
+    "./canvas": {
+      "types": "./dist/canvas.d.ts",
+      "import": "./dist/canvas.js",
+      "default": "./dist/canvas.js"
+    },
+    "./compiler": {
+      "types": "./dist/compiler.d.ts",
+      "import": "./dist/compiler.js",
+      "default": "./dist/compiler.js"
+    },
+    "./conversation": {
+      "types": "./dist/conversation.d.ts",
+      "import": "./dist/conversation.js",
+      "default": "./dist/conversation.js"
+    },
+    "./dev-tenant": {
+      "types": "./dist/dev-tenant.d.ts",
+      "import": "./dist/dev-tenant.js",
+      "default": "./dist/dev-tenant.js"
+    },
+    "./execution": {
+      "types": "./dist/execution.d.ts",
+      "import": "./dist/execution.js",
+      "default": "./dist/execution.js"
+    },
+    "./feature-flag": {
+      "types": "./dist/feature-flag.d.ts",
+      "import": "./dist/feature-flag.js",
+      "default": "./dist/feature-flag.js"
+    },
+    "./files": {
+      "types": "./dist/files.d.ts",
+      "import": "./dist/files.js",
+      "default": "./dist/files.js"
+    },
+    "./model-tier": {
+      "types": "./dist/model-tier.d.ts",
+      "import": "./dist/model-tier.js",
+      "default": "./dist/model-tier.js"
+    },
+    "./rollout": {
+      "types": "./dist/rollout.d.ts",
+      "import": "./dist/rollout.js",
+      "default": "./dist/rollout.js"
+    },
+    "./store": {
+      "types": "./dist/store.d.ts",
+      "import": "./dist/store.js",
+      "default": "./dist/store.js"
+    },
+    "./company-context/*": "./dist/company-context/*.js"
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@nebutra/agent-runtime": "workspace:*",
@@ -57,5 +98,8 @@
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "license": "AGPL-3.0-only"
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist"
+  ]
 }

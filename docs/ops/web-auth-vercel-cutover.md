@@ -6,6 +6,12 @@
 
 **Do not change DNS until every box below is green.**
 
+Automated preflight (no DNS mutation):
+
+```bash
+node scripts/preflight-web-auth-vercel.mjs
+```
+
 ## Preconditions
 
 - [ ] Vercel project `nebutra-web` builds `apps/web` from monorepo root (or

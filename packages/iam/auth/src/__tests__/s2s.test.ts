@@ -1,6 +1,6 @@
 import { createHmac } from "node:crypto";
 import { decodeJwt } from "jose";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { signServiceToken, verifyServiceToken } from "../s2s";
 
 describe("service-to-service tokens", () => {
@@ -138,68 +138,10 @@ describe("service-to-service tokens", () => {
     );
   });
 
-  // ── Migration double-read: legacy hand-rolled HMAC tokens still verify ──
-  // This guarantees a rolling deploy where a signer is still on the old HMAC
-  // code can interoperate with a verifier on the new JWT code. Remove once all
-  // signers are on the JWT scheme.
-  describe("legacy HMAC double-read (migration window)", () => {
-    function legacyHmacToken(
-      ctx: { userId?: string; organizationId?: string; role?: string; plan?: string },
-      secret: string,
-    ): string {
-      const canonical = [
-        ctx.userId ?? "",
-        ctx.organizationId ?? "",
-        ctx.role ?? "",
-        ctx.plan ?? "",
-      ].join(":");
-      return createHmac("sha256", secret).update(canonical).digest("hex");
-    }
-
-    // The legacy fallback is opt-in (default OFF). These cases exercise it with
-    // the migration flag enabled; the prior value is restored afterwards.
-    let priorFlag: string | undefined;
-    beforeAll(() => {
-      priorFlag = process.env.S2S_ALLOW_LEGACY;
-      process.env.S2S_ALLOW_LEGACY = "1";
-    });
-    afterAll(() => {
-      if (priorFlag === undefined) delete process.env.S2S_ALLOW_LEGACY;
-      else process.env.S2S_ALLOW_LEGACY = priorFlag;
-    });
-
-    it("rejects legacy tokens by default when the flag is off", async () => {
-      const prev = process.env.S2S_ALLOW_LEGACY;
-      delete process.env.S2S_ALLOW_LEGACY;
-      try {
-        const legacy = legacyHmacToken({ organizationId: "org_legacy" }, SECRET);
-        expect(
-          await verifyServiceToken(legacy, undefined, "org_legacy", undefined, undefined, SECRET),
-        ).toBe(false);
-      } finally {
-        process.env.S2S_ALLOW_LEGACY = prev;
-      }
-    });
-
-    it("accepts a valid legacy HMAC token", async () => {
-      const legacy = legacyHmacToken({ organizationId: "org_legacy" }, SECRET);
-      expect(
-        await verifyServiceToken(legacy, undefined, "org_legacy", undefined, undefined, SECRET),
-      ).toBe(true);
-    });
-
-    it("rejects a legacy HMAC token with mismatched context", async () => {
-      const legacy = legacyHmacToken({ organizationId: "org_legacy" }, SECRET);
-      expect(
-        await verifyServiceToken(legacy, undefined, "org_other", undefined, undefined, SECRET),
-      ).toBe(false);
-    });
-
-    it("rejects a legacy HMAC token signed with a different secret", async () => {
-      const legacy = legacyHmacToken({ organizationId: "org_legacy" }, "wrong-secret");
-      expect(
-        await verifyServiceToken(legacy, undefined, "org_legacy", undefined, undefined, SECRET),
-      ).toBe(false);
-    });
+  it("rejects retired hex-HMAC tokens (JWT-only verify)", async () => {
+    const legacy = createHmac("sha256", SECRET).update(":org_legacy::").digest("hex");
+    expect(
+      await verifyServiceToken(legacy, undefined, "org_legacy", undefined, undefined, SECRET),
+    ).toBe(false);
   });
 });
