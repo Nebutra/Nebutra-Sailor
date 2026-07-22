@@ -75,11 +75,7 @@ function adminRequest(headers?: Record<string, string>) {
 beforeEach(() => {
   vi.clearAllMocks();
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
-  // These tests mint legacy HMAC S2S tokens (see helpers/s2s-token.ts) to exercise
-  // requireRole. The jose migration made the legacy verify path opt-in, so enable it
-  // here. TODO: migrate the helper to jose signServiceToken when S2S_ALLOW_LEGACY is
-  // retired post-deploy (see project_wheel_governance_2026_05 memory).
-  process.env.S2S_ALLOW_LEGACY = "1";
+  // S2S tokens are jose HS256 (see helpers/s2s-token.ts).
 });
 
 // ===========================================================================
@@ -96,7 +92,7 @@ describe("requireRole — unauthenticated", () => {
   });
 
   it("returns 401 error body when x-organization-id is present but x-user-id is absent", async () => {
-    const res = await adminRequest(s2sHeaders({ orgId: "org-456" }));
+    const res = await adminRequest(await s2sHeaders({ orgId: "org-456" }));
 
     expect(res.status).toBe(401);
     const body = await res.json();
@@ -110,7 +106,7 @@ describe("requireRole — unauthenticated", () => {
 
 describe("requireRole — missing organization", () => {
   it("returns 403 when user is authenticated but has no organizationId", async () => {
-    const res = await adminRequest(s2sHeaders({ userId: "user-123" }));
+    const res = await adminRequest(await s2sHeaders({ userId: "user-123" }));
 
     expect(res.status).toBe(403);
     const body = await res.json();
@@ -125,7 +121,7 @@ describe("requireRole — missing organization", () => {
 describe("requireRole — insufficient role", () => {
   it("returns 403 when user has org:member role and route requires ADMIN_ROLES", async () => {
     const res = await adminRequest(
-      s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.MEMBER }),
+      await s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.MEMBER }),
     );
 
     expect(res.status).toBe(403);
@@ -133,21 +129,21 @@ describe("requireRole — insufficient role", () => {
 
   it("returns 403 when user has org:viewer role and route requires ADMIN_ROLES", async () => {
     const res = await adminRequest(
-      s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.VIEWER }),
+      await s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.VIEWER }),
     );
 
     expect(res.status).toBe(403);
   });
 
   it("returns 403 when user has no role header and route requires ADMIN_ROLES", async () => {
-    const res = await adminRequest(s2sHeaders({ userId: "user-123", orgId: "org-456" }));
+    const res = await adminRequest(await s2sHeaders({ userId: "user-123", orgId: "org-456" }));
 
     expect(res.status).toBe(403);
   });
 
   it("403 response body includes 'required' field listing the allowed roles", async () => {
     const res = await adminRequest(
-      s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.MEMBER }),
+      await s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.MEMBER }),
     );
 
     expect(res.status).toBe(403);
@@ -160,7 +156,7 @@ describe("requireRole — insufficient role", () => {
 
   it("403 response body includes 'current' field with the user's actual role", async () => {
     const res = await adminRequest(
-      s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.MEMBER }),
+      await s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.MEMBER }),
     );
 
     expect(res.status).toBe(403);
@@ -169,7 +165,7 @@ describe("requireRole — insufficient role", () => {
   });
 
   it("403 response body has current: null when user has no role", async () => {
-    const res = await adminRequest(s2sHeaders({ userId: "user-123", orgId: "org-456" }));
+    const res = await adminRequest(await s2sHeaders({ userId: "user-123", orgId: "org-456" }));
 
     expect(res.status).toBe(403);
     const body = await res.json();
@@ -184,7 +180,7 @@ describe("requireRole — insufficient role", () => {
 describe("requireRole — authorized access", () => {
   it("returns 200 when user has org:admin role and route requires ADMIN_ROLES", async () => {
     const res = await adminRequest(
-      s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.ADMIN }),
+      await s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.ADMIN }),
     );
 
     expect(res.status).toBe(200);
@@ -194,7 +190,7 @@ describe("requireRole — authorized access", () => {
 
   it("returns 200 when user has org:owner role and route requires ADMIN_ROLES", async () => {
     const res = await adminRequest(
-      s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.OWNER }),
+      await s2sHeaders({ userId: "user-123", orgId: "org-456", role: ROLES.OWNER }),
     );
 
     expect(res.status).toBe(200);
@@ -208,7 +204,7 @@ describe("requireRole — authorized access", () => {
     const res = await get(
       ownerOnlyApp,
       "/protected",
-      s2sHeaders({ userId: "user-999", orgId: "org-456", role: ROLES.OWNER }),
+      await s2sHeaders({ userId: "user-999", orgId: "org-456", role: ROLES.OWNER }),
     );
 
     expect(res.status).toBe(200);
@@ -220,7 +216,7 @@ describe("requireRole — authorized access", () => {
     const res = await get(
       ownerOnlyApp,
       "/protected",
-      s2sHeaders({ userId: "user-999", orgId: "org-456", role: ROLES.ADMIN }),
+      await s2sHeaders({ userId: "user-999", orgId: "org-456", role: ROLES.ADMIN }),
     );
 
     expect(res.status).toBe(403);
@@ -240,7 +236,7 @@ describe("requireRole — legacy x-tenant-id header rejected", () => {
     // canonical string when only `x-tenant-id` is sent. The middleware must
     // ignore `x-tenant-id` entirely, so the role check should fail (403)
     // because no organizationId is resolved.
-    const token = generateServiceToken("user-123", "", ROLES.ADMIN);
+    const token = await generateServiceToken("user-123", "", ROLES.ADMIN);
     const res = await adminRequest({
       "x-user-id": "user-123",
       "x-tenant-id": "org-456",
@@ -253,7 +249,7 @@ describe("requireRole — legacy x-tenant-id header rejected", () => {
   });
 
   it("still accepts x-organization-id as the canonical header", async () => {
-    const token = generateServiceToken("user-123", "org-456", ROLES.ADMIN);
+    const token = await generateServiceToken("user-123", "org-456", ROLES.ADMIN);
     const res = await adminRequest({
       "x-user-id": "user-123",
       "x-organization-id": "org-456",

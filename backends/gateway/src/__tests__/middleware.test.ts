@@ -6,7 +6,6 @@
  * order from index.ts.
  */
 
-import { createHmac } from "node:crypto";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -100,21 +99,21 @@ import { idempotencyMiddleware } from "@/middlewares/idempotency.js";
 import { rateLimitMiddleware } from "@/middlewares/rateLimit.js";
 import { tenantContextMiddleware } from "@/middlewares/tenantContext.js";
 import { healthRoutes } from "../routes/misc/health.js";
+import { generateServiceToken, TEST_SERVICE_SECRET } from "./helpers/s2s-token.js";
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** Compute a valid HMAC service token for the given header values */
-function computeServiceToken(
-  secret: string,
+/** Mint a jose HS256 service token matching production verifyServiceToken. */
+async function computeServiceToken(
+  _secret: string,
   userId?: string,
   orgId?: string,
   role?: string,
   plan?: string,
-): string {
-  const canonical = `${userId ?? ""}:${orgId ?? ""}:${role ?? ""}:${plan ?? ""}`;
-  return createHmac("sha256", secret).update(canonical).digest("hex");
+): Promise<string> {
+  return generateServiceToken(userId, orgId, role, plan);
 }
 
 // ---------------------------------------------------------------------------
@@ -138,9 +137,9 @@ beforeEach(() => {
   mockRedisPing.mockResolvedValue("PONG");
   mockQueryRaw.mockResolvedValue([{ "?column?": 1 }]);
 
-  // Ensure SERVICE_SECRET is set for most tests
-  process.env.SERVICE_SECRET = "test-secret-key-for-hmac-verification";
-  process.env.S2S_ALLOW_LEGACY = "1";
+  // Ensure SERVICE_SECRET matches tokens from helpers/s2s-token.ts
+  process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
+  delete process.env.S2S_ALLOW_LEGACY;
   delete process.env.UPSTASH_REDIS_REST_URL;
   delete process.env.UPSTASH_REDIS_REST_TOKEN;
   delete process.env.UPSTASH_REDIS_URL;
@@ -166,14 +165,14 @@ describe("tenantContextMiddleware", () => {
     return app;
   }
 
-  describe("S2S HMAC (x-service-token)", () => {
-    it("populates tenant context when x-service-token HMAC is valid", async () => {
+  describe("S2S JWT (x-service-token)", () => {
+    it("populates tenant context when x-service-token JWT is valid", async () => {
       const secret = process.env.SERVICE_SECRET ?? "";
       const userId = "user-s2s-123";
       const orgId = "org-s2s-456";
       const role = "org:admin";
       const plan = "PRO";
-      const token = computeServiceToken(secret, userId, orgId, role, plan);
+      const token = await computeServiceToken(secret, userId, orgId, role, plan);
 
       const app = createTenantApp();
       const res = await app.request("/test", {
@@ -196,7 +195,7 @@ describe("tenantContextMiddleware", () => {
       expect(body.plan).toBe(plan);
     });
 
-    it("rejects tenant headers when x-service-token HMAC is invalid", async () => {
+    it("rejects tenant headers when x-service-token token is invalid", async () => {
       const app = createTenantApp();
       const res = await app.request("/test", {
         method: "GET",
@@ -259,7 +258,7 @@ describe("tenantContextMiddleware", () => {
       // Compute token over empty orgId — matching the canonical string
       // when only `x-tenant-id` is sent. The middleware must ignore
       // `x-tenant-id` completely regardless of whether the token validates.
-      const token = computeServiceToken(secret, "user-1", "", "org:member", "FREE");
+      const token = await computeServiceToken(secret, "user-1", "", "org:member", "FREE");
 
       const app = createTenantApp();
       const res = await app.request("/test", {
@@ -440,7 +439,7 @@ describe("rateLimitMiddleware", () => {
   it("different plans have different rate limits", async () => {
     // PRO plan gets 1000 max tokens (vs FREE's 100)
     const secret = process.env.SERVICE_SECRET ?? "";
-    const token = computeServiceToken(secret, "user-pro", "org-pro", "org:member", "PRO");
+    const token = await computeServiceToken(secret, "user-pro", "org-pro", "org:member", "PRO");
 
     const app = createRateLimitApp();
 

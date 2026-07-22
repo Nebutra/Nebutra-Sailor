@@ -65,7 +65,7 @@ function buildApp(): OpenAPIHono {
   return app;
 }
 
-function authHeaders(orgId = "org_alpha") {
+async function authHeaders(orgId = "org_alpha") {
   return s2sHeaders({
     userId: "user_alpha",
     orgId,
@@ -137,7 +137,7 @@ describe("notification routes", () => {
     createNotificationProviderMock.mockResolvedValue(provider);
 
     const response = await app.request("/?limit=10", {
-      headers: authHeaders(),
+      headers: await authHeaders(),
     });
 
     expect(response.status).toBe(200);
@@ -181,7 +181,7 @@ describe("notification routes", () => {
     getNotificationProviderMock.mockResolvedValue(provider);
 
     const response = await app.request("/?limit=10&offset=2&unreadOnly=true", {
-      headers: authHeaders(),
+      headers: await authHeaders(),
     });
 
     expect(response.status).toBe(200);
@@ -223,7 +223,7 @@ describe("notification routes", () => {
     });
 
     const response = await app.request("/settings", {
-      headers: authHeaders(),
+      headers: await authHeaders(),
     });
 
     expect(response.status).toBe(200);
@@ -250,7 +250,7 @@ describe("notification routes", () => {
     getNotificationProviderMock.mockResolvedValue(provider);
 
     const response = await app.request("/unread-count", {
-      headers: authHeaders(),
+      headers: await authHeaders(),
     });
 
     expect(response.status).toBe(200);
@@ -273,7 +273,7 @@ describe("notification routes", () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        ...authHeaders(),
+        ...(await authHeaders()),
       },
       body: JSON.stringify({ ids: ["notif_1", "notif_2"] }),
     });
@@ -296,7 +296,7 @@ describe("notification routes", () => {
 
     const response = await app.request("/mark-all-read", {
       method: "POST",
-      headers: authHeaders(),
+      headers: await authHeaders(),
     });
 
     expect(response.status).toBe(200);
@@ -335,7 +335,7 @@ describe("notification routes", () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        ...authHeaders(),
+        ...(await authHeaders()),
       },
       body: JSON.stringify({
         type: "workspace.invitation",

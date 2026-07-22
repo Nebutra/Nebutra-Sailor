@@ -1,37 +1,53 @@
-import { createHmac } from "node:crypto";
+import { randomUUID } from "node:crypto";
+import { SignJWT } from "jose";
 
 /**
- * Test helper: generates a legacy HMAC S2S service token for the given tenant headers.
- * Verifying these requires S2S_ALLOW_LEGACY=1 — the jose migration made the legacy HMAC
- * path opt-in (callers set that flag in beforeEach). Migrate to jose `signServiceToken`
- * when the legacy path is retired post-deploy.
+ * Test helper: mints jose HS256 service tokens matching production
+ * `@nebutra/auth` `signServiceToken` (claims: userId, organizationId, role, plan).
+ *
+ * Implemented with jose directly so tests that `vi.mock("@nebutra/auth")` still work.
  */
 export const TEST_SERVICE_SECRET = "test-secret-for-s2s-hmac";
 
-export function generateServiceToken(
+export async function generateServiceToken(
   userId?: string,
   orgId?: string,
   role?: string,
   plan?: string,
-): string {
-  const canonical = `${userId ?? ""}:${orgId ?? ""}:${role ?? ""}:${plan ?? ""}`;
-  return createHmac("sha256", TEST_SERVICE_SECRET).update(canonical).digest("hex");
+): Promise<string> {
+  const claims: Record<string, string> = {};
+  if (userId) claims.userId = userId;
+  if (orgId) claims.organizationId = orgId;
+  if (role) claims.role = role;
+  if (plan) claims.plan = plan;
+
+  return new SignJWT(claims)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setJti(randomUUID())
+    .setExpirationTime("5m")
+    .sign(new TextEncoder().encode(TEST_SERVICE_SECRET));
 }
 
 /**
- * Build headers object with S2S HMAC for testing tenant context.
+ * Build headers with a valid S2S JWT for testing tenant context.
  */
-export function s2sHeaders(opts: {
+export async function s2sHeaders(opts: {
   userId?: string;
   orgId?: string;
   role?: string;
   plan?: string;
-}): Record<string, string> {
+}): Promise<Record<string, string>> {
   const headers: Record<string, string> = {};
   if (opts.userId) headers["x-user-id"] = opts.userId;
   if (opts.orgId) headers["x-organization-id"] = opts.orgId;
   if (opts.role) headers["x-role"] = opts.role;
   if (opts.plan) headers["x-plan"] = opts.plan;
-  headers["x-service-token"] = generateServiceToken(opts.userId, opts.orgId, opts.role, opts.plan);
+  headers["x-service-token"] = await generateServiceToken(
+    opts.userId,
+    opts.orgId,
+    opts.role,
+    opts.plan,
+  );
   return headers;
 }

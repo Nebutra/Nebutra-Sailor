@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Deploy @nebutra/sailor-docs to ECS without building on the 2C4G origin.
+# EMERGENCY FALLBACK ONLY — production docs.nebutra.com is Vercel (project `docs`).
+# Prefer Git → Vercel. Use this script only if Vercel is down and you temporarily
+# point DNS at ECS. Steady-state DNS must stay project-specific Vercel CNAME
+# (grey-cloud); see docs/DOMAINS.md.
 #
 # Local machine:
 #   REMOTE_HOST=root@106.15.4.31 bash infra/ops/scripts/deploy-sailor-docs-ecs.sh
@@ -8,7 +11,7 @@
 # Remote prerequisites:
 #   - Node.js >= 22
 #   - pm2
-#   - nginx reverse proxying docs.nebutra.com -> 127.0.0.1:3004
+#   - nginx reverse proxying docs.nebutra.com -> 127.0.0.1:3004 (or :3005)
 # =============================================================================
 
 set -euo pipefail

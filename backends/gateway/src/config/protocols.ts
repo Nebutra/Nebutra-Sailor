@@ -41,8 +41,17 @@ export function resolveEnabledProtocols(
   }
 
   // 2. Legacy boolean flags (back-compat with the pre-`API_PROTOCOLS` gateway).
-  if (envSource.ENABLE_TRPC === "true") enabled.add("trpc");
-  if (envSource.ENABLE_ORPC === "true") enabled.add("orpc");
+  // Prefer `API_PROTOCOLS=rest,trpc` (etc.) for new deploys. These booleans remain
+  // only so rolling deploys with older env files do not silently drop tRPC/oRPC.
+  const legacyTrpc = envSource.ENABLE_TRPC === "true";
+  const legacyOrpc = envSource.ENABLE_ORPC === "true";
+  if (legacyTrpc) enabled.add("trpc");
+  if (legacyOrpc) enabled.add("orpc");
+  if ((legacyTrpc || legacyOrpc) && typeof console !== "undefined") {
+    console.warn(
+      "[gateway] ENABLE_TRPC/ENABLE_ORPC are deprecated; set API_PROTOCOLS instead (e.g. API_PROTOCOLS=rest,trpc).",
+    );
+  }
 
   return enabled;
 }

@@ -53,7 +53,7 @@ app.route("/", eventRoutes);
 // Helpers
 // ---------------------------------------------------------------------------
 
-const AUTH_HEADERS = s2sHeaders({ userId: "user-123" });
+let AUTH_HEADERS: Record<string, string> = {};
 
 function jsonRequest(path: string, body?: unknown, extraHeaders?: Record<string, string>) {
   const opts: RequestInit = {
@@ -90,11 +90,11 @@ const validEvent = {
 // Reset mocks before each test
 // ---------------------------------------------------------------------------
 
-beforeEach(() => {
+beforeEach(async () => {
   mockIngest.mockReset();
   mockIngest.mockResolvedValue({ accepted: 0, duplicated: 0 });
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
-  process.env.S2S_ALLOW_LEGACY = "1";
+  AUTH_HEADERS = await s2sHeaders({ userId: "user-123" });
 });
 
 // ===========================================================================
@@ -114,7 +114,7 @@ describe("POST /ingest — authentication", () => {
     const res = await jsonRequest(
       "/ingest",
       { events: [validEvent] },
-      s2sHeaders({ orgId: "org-456" }),
+      await s2sHeaders({ orgId: "org-456" }),
     );
 
     expect(res.status).toBe(401);
@@ -219,7 +219,7 @@ describe("POST /ingest — ingestion", () => {
     await jsonRequest(
       "/ingest",
       { events: [validEvent] },
-      s2sHeaders({ userId: "user-123", orgId: "org-789" }),
+      await s2sHeaders({ userId: "user-123", orgId: "org-789" }),
     );
 
     expect(mockIngest).toHaveBeenCalledOnce();

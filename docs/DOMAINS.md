@@ -51,7 +51,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` | Login center origin |
 | `ECS_HOST` | `106.15.4.31` | Cloud VM origin |
 
-`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`). Prefer Vercel Git deploys for marketing/docs.
+`deploy-ecs.yml` remains the **manual fallback** for ECS apps (`web` `auth` `api` `idp`, and optionally `landing` / `sailor-docs` / `design-docs`). Prefer **Vercel Git deploys** for marketing (`nebutra.com`) and docs (`docs.nebutra.com`). Do **not** point `docs.nebutra.com` DNS at ECS in steady state — ECS sailor-docs is emergency-only.
 
 ## DNS records (reference)
 

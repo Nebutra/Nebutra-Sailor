@@ -76,7 +76,7 @@ app.route("/", consentRoutes);
 // Helpers
 // ---------------------------------------------------------------------------
 
-const AUTH_HEADERS = s2sHeaders({ userId: "user-123", orgId: "org-456" });
+let AUTH_HEADERS: Record<string, string> = {};
 
 function jsonRequest(
   method: string,
@@ -165,10 +165,10 @@ const mockCookieConsent = {
 // Reset mocks before each test
 // ---------------------------------------------------------------------------
 
-beforeEach(() => {
+beforeEach(async () => {
   vi.clearAllMocks();
   process.env.SERVICE_SECRET = TEST_SERVICE_SECRET;
-  process.env.S2S_ALLOW_LEGACY = "1";
+  AUTH_HEADERS = await s2sHeaders({ userId: "user-123", orgId: "org-456" });
 });
 
 // ===========================================================================

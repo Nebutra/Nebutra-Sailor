@@ -110,7 +110,7 @@ async function postUsage(body: {
   amount: number;
   idempotencyKey?: string;
 }): Promise<{ status: number; body: Record<string, unknown> }> {
-  const authHeaders = s2sHeaders({
+  const authHeaders = await s2sHeaders({
     userId: "user-test",
     orgId: body.organizationId,
     role: "admin",

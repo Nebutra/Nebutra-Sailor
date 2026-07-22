@@ -74,7 +74,7 @@ function buildApp(): OpenAPIHono {
   return app;
 }
 
-function authHeaders(orgId = "org_alpha") {
+async function authHeaders(orgId = "org_alpha") {
   return s2sHeaders({
     userId: "user_alpha",
     orgId,
@@ -127,7 +127,7 @@ describe("billing self-service routes", () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        ...authHeaders(),
+        ...(await authHeaders()),
       },
       body: JSON.stringify({
         priceId: "price_pro_monthly",
@@ -164,7 +164,7 @@ describe("billing self-service routes", () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        ...authHeaders(),
+        ...(await authHeaders()),
       },
       body: JSON.stringify({
         priceId: "price_pro_monthly",
@@ -191,7 +191,7 @@ describe("billing self-service routes", () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        ...authHeaders(),
+        ...(await authHeaders()),
       },
       body: JSON.stringify({
         priceId: "price_pro_monthly",
@@ -217,7 +217,7 @@ describe("billing self-service routes", () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        ...authHeaders(),
+        ...(await authHeaders()),
       },
       body: JSON.stringify({
         returnUrl: "https://app.example/en/billing",
@@ -241,7 +241,7 @@ describe("billing self-service routes", () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        ...authHeaders(),
+        ...(await authHeaders()),
       },
       body: JSON.stringify({
         returnUrl: "https://app.example/en/billing",
@@ -270,7 +270,7 @@ describe("billing self-service routes", () => {
 
     const response = await app.request("/provider-status", {
       method: "GET",
-      headers: authHeaders(),
+      headers: await authHeaders(),
     });
 
     expect(response.status).toBe(200);
