@@ -5,138 +5,113 @@ description: How Nebutra is built — monorepo structure, request flow, and the 
 
 ## Overview
 
-Nebutra is a **Turborepo monorepo** with 7 apps and 33 packages, all sharing a common design system, type-safe API contract, and runtime token system. Every component is independently deployable and replaceable.
+Nebutra is a **Turborepo monorepo** with multiple apps and shared packages: design system, type-safe API contract, and runtime tokens. Components are independently deployable.
 
 ```
 Browser / Mobile Client
         │
         ▼
 ┌─────────────────────────────┐
-│       Vercel Edge Network   │  (CDN, WAF, DDoS protection)
+│  Cloudflare DNS + CDN/WAF   │
 └─────────────┬───────────────┘
               │
-    ┌─────────┴─────────┐
-    │                   │
-    ▼                   ▼
-┌────────────┐   ┌──────────────┐
-│ landing-   │   │    web app   │  Next.js 16 (App Router)
-│ page       │   │ app.nebutra  │  Authenticated dashboard
-└────────────┘   └──────┬───────┘
-                        │ fetch / Server Actions
-                        ▼
-              ┌──────────────────┐
-              │   API Gateway    │  Hono + OpenAPI
-              │ api.nebutra.com  │  auth middleware, RBAC, rate limiting
-              └────────┬─────────┘
-                       │
-          ┌────────────┼────────────┐
-          │            │            │
-          ▼            ▼            ▼
-   ┌────────────┐ ┌─────────┐ ┌──────────┐
-   │  Supabase  │ │  Redis  │ │  AI      │
-   │ PostgreSQL │ │ (cache) │ │  Service │
-   │ + pgvector │ │         │ │  Proxy   │
-   └────────────┘ └─────────┘ └──────────┘
+   ┌──────────┼──────────┬──────────────┐
+   ▼          ▼          ▼              ▼
+landing    docs      web + auth      API gateway
+(Vercel)  (Vercel)   (ECS Next)      (ECS Hono)
+nebutra.com docs.     app. + auth.   api.nebutra.com
+                     nebutra.com
+                          │
+                          │ REST / cookies (.nebutra.com)
+                          ▼
+                 ┌──────────────────┐
+                 │ backends/gateway │  @nebutra/gateway
+                 │ auth, RBAC, S2S  │
+                 └────────┬─────────┘
+                          │
+             ┌────────────┼────────────┐
+             ▼            ▼            ▼
+        PostgreSQL      Redis/KV    AI / workers
 ```
 
 ## Apps
 
-| App | URL | Framework | Purpose |
-|-----|-----|-----------|---------|
-| `landing-page` | `nebutra.com` | Next.js 16 | Public marketing site, changelog, roadmap |
-| `web` | `app.nebutra.com` | Next.js 16 | Authenticated SaaS dashboard |
-| `api-gateway` | `api.nebutra.com` | Hono + Node | REST API, auth, RBAC, rate limiting |
-| `studio` | `studio.nebutra.com` | Sanity v4 | Content management |
-| `storybook` | `ui.nebutra.com` | Storybook 8 | Component library documentation |
-| `design-docs` | internal | Fumadocs | Internal design system docs |
-| `sailor-docs` | `docs.nebutra.com` | Next.js 16 + Fumadocs | Public product documentation |
+| App | URL | Framework | Steady-state host |
+|-----|-----|-----------|-------------------|
+| `landing-page` | `nebutra.com` | Next.js 16 | Vercel |
+| `sailor-docs` | `docs.nebutra.com` | Next.js + Fumadocs | Vercel |
+| `web` | `app.nebutra.com` | Next.js 16 | ECS (Next standalone) |
+| `auth` | `auth.nebutra.com` | Next.js 16 | ECS login center |
+| `backends/gateway` | `api.nebutra.com` | Hono + Node | ECS (`@nebutra/gateway`) |
+| `idp` | `sso.nebutra.com` | Next.js | ECS OIDC issuer |
+| `studio` | `studio.nebutra.com` | Sanity | Vercel / optional |
+| `design-docs` | internal | Fumadocs | optional |
+| `storybook` | internal | Storybook | optional |
 
 ## Core packages
 
 | Package | Description |
 |---------|-------------|
-| `@nebutra/ui` | Component library — Radix + Nebutra primitives + layout primitives |
-| `@nebutra/tokens` | Runtime CSS design tokens — single source of truth for theming |
-| `@nebutra/permissions` | RBAC/ABAC engine — CASL (in-process) or OpenFGA (Zanzibar) |
-| `@nebutra/queue` | Message queue — QStash (serverless) or BullMQ (Redis) |
-| `@nebutra/search` | Full-text search — Meilisearch, Typesense, or Algolia |
-| `@nebutra/notifications` | Multi-channel notifications — Novu or direct dispatchers |
-| `@nebutra/webhooks` | Outbound webhook delivery — Svix or custom |
-| `@nebutra/metering` | Usage metering pipeline — ClickHouse aggregation |
-| `@nebutra/uploads` | File uploads — S3/R2 multipart + Tus resumable |
-| `@nebutra/vault` | Application-layer secrets — envelope encryption (KMS) |
-| `@nebutra/tenant` | Multi-tenancy context — AsyncLocalStorage + RLS |
+| `@nebutra/ui` | Component library — Radix + Nebutra primitives |
+| `@nebutra/tokens` | Runtime CSS design tokens |
+| `@nebutra/auth` | Provider adapters + **JWT S2S** (`signServiceToken`) |
+| `@nebutra/permissions` | RBAC — CASL or OpenFGA |
+| `@nebutra/db` | Prisma client + multi-tenant helpers |
+| `@nebutra/queue` | QStash or BullMQ |
+| `@nebutra/metering` | Usage metering → ClickHouse |
+| `@nebutra/webhooks` | Outbound webhooks (HMAC signing for delivery, not S2S) |
+| `@nebutra/tenant` | Tenant context + RLS helpers |
 
 ## Request flow
-
-Every API request passes through this chain:
 
 ```
 Request
   │
-  ├─ 1. Vercel WAF        (IP allowlist, rate limit rules)
+  ├─ 1. Cloudflare        (DNS, CDN, WAF)
   │
-  ├─ 2. Hono middleware
-  │     ├─ CORS           (origin validation)
-  │     ├─ Auth           (JWT verification via Clerk / Better Auth)
-  │     ├─ Tenant         (resolve orgId → tenant context)
-  │     ├─ RBAC           (scope check for the route)
-  │     └─ Rate limit     (per-tenant quota via Redis)
+  ├─ 2. App origin
+  │     ├─ Marketing/docs → Vercel
+  │     └─ app / auth / api → ECS PM2
   │
-  ├─ 3. Route handler     (business logic)
+  ├─ 3. Gateway middleware (api.*)
+  │     ├─ CORS
+  │     ├─ Auth           (session / Better Auth JWT, or S2S service JWT)
+  │     ├─ Tenant         (org context)
+  │     ├─ RBAC
+  │     └─ Rate limit
   │
-  └─ 4. Response          (JSON envelope: { success, data, error })
+  └─ 4. Route handler → JSON envelope { success, data, error }
 ```
+
+Service-to-service calls use short-lived **HS256 JWTs** in `x-service-token`
+(not legacy hex-HMAC).
 
 ## Database isolation
 
-Nebutra supports three multi-tenant data isolation strategies — choose based on your scale and compliance requirements:
-
 | Strategy | Isolation | Recommended for |
 |----------|-----------|-----------------|
-| **Shared schema** | Row-level security (RLS) via `tenant_id` column | Most SaaS (default) |
-| **Separate schema** | PostgreSQL schema per tenant | Mid-market with data residency needs |
-| **Separate database** | Full DB per tenant | Enterprise with strict compliance (SOC2, HIPAA) |
-
-The default configuration uses shared schema with automatic RLS via `@nebutra/tenant`.
+| **Shared schema** | RLS via `tenant_id` | Most SaaS (default) |
+| **Separate schema** | Schema per tenant | Mid-market residency |
+| **Separate database** | DB per tenant | Strict compliance |
 
 ## AI layer
 
-The API gateway exposes three AI routes, authenticated and tenant-scoped:
+Gateway AI surfaces (authenticated, tenant-scoped), for example:
 
-- `POST /api/v1/ai/chat` — proxied chat completions (any provider)
-- `POST /api/v1/ai/embeddings` — vector embedding generation
-- `GET /api/v1/ai/models` — available model list
+- `POST /api/v1/ai/chat`
+- `POST /api/v1/ai/embeddings`
+- `GET /api/v1/ai/models`
 
-All AI routes enforce per-tenant rate limits and log usage to the metering pipeline for billing.
+Usage feeds the metering pipeline for quotas and billing.
 
 ## Provider swap pattern
 
-Every infrastructure dependency in Nebutra is swappable at the environment variable level:
-
 ```bash
-# Swap auth provider
-AUTH_PROVIDER=better-auth  # or "clerk"
+# Auth (production default)
+AUTH_PROVIDER=better-auth
+NEXT_PUBLIC_AUTH_PROVIDER=better-auth
 
-# Swap queue backend
-QUEUE_PROVIDER=bullmq      # or "qstash" | "memory"
-
-# Swap search backend
-SEARCH_PROVIDER=typesense  # or "meilisearch" | "algolia"
-
-# Swap permissions backend
-PERMISSIONS_PROVIDER=openfga  # or "casl"
+# Alternatives: clerk | next-auth | supabase | dev
 ```
 
-Your application code doesn't change — only the environment variable.
-
-## Related
-
-<CardGroup cols={2}>
-  <Card title="Multi-Tenancy" icon="building" href="/concepts/tenants">
-    How tenant isolation works in practice.
-  </Card>
-  <Card title="Permissions" icon="lock" href="/concepts/permissions">
-    The RBAC model and 17 built-in scopes.
-  </Card>
-</CardGroup>
+Align `AUTH_PROVIDER` and `NEXT_PUBLIC_AUTH_PROVIDER` across auth center, web, and landing.

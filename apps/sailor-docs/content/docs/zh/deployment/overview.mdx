@@ -1,106 +1,82 @@
 ---
 title: 部署概览
-description: Nebutra-Sailor 的部署选项 — Vercel（推荐）、Docker 自托管和独立 API — 包含生产架构和迁移策略。
+description: Nebutra 生产部署方式 — Cloudflare 边缘、营销/文档走 Vercel、应用/认证/API 走 ECS，以及 Docker 自托管选项。
 ---
 
 ## 部署选项
 
 | 选项 | 适合场景 | 复杂度 | 成本 |
 |------|---------|--------|------|
-| **Vercel** | 大多数团队 | 低 | 按用量计费 |
-| **Docker（自托管）** | 数据本地化、合规要求 | 中 | 基础设施成本 |
-| **独立 API** | 自定义基础设施、仅 Hono | 中 | 基础设施成本 |
+| **拆分部署（nebutra.com 推荐）** | 营销站 Vercel + 应用/API 云主机 | 中 | 基础设施 + 可选 Vercel |
+| **仅 Vercel（前端）** | 文档、落地页；web/auth 可选迁入 | 低 | Hobby/Pro 额度 |
+| **Docker / PM2 自托管** | 数据本地化、完全可控 | 中 | 自有机器 |
+| **Cloudflare Workers（网关）** | 边缘 API 入口 | 中 | Workers 免费额度 |
 
-## 生产环境架构
+## 生产架构（nebutra.com 现状）
+
+公网 DNS 在 **Cloudflare**（CDN / WAF）。源站拆分如下：
 
 ```
 用户
   │
   ▼
-Vercel Edge Network（CDN、WAF、DDoS 防护）
+Cloudflare DNS + 代理
   │
-  ├─── apps/landing-page   nebutra.com          (Next.js on Vercel)
+  ├─── apps/landing-page     nebutra.com           → Vercel
+  ├─── apps/sailor-docs      docs.nebutra.com      → Vercel
   │
-  ├─── apps/web            app.nebutra.com      (Next.js on Vercel)
-  │         │
-  │         │ REST / Server Actions
-  │         ▼
-  └─── backends/gateway    api.nebutra.com      (Hono on Vercel Functions)
+  ├─── apps/web              app.nebutra.com       → ECS（PM2 Next standalone）
+  ├─── apps/auth             auth.nebutra.com      → ECS（PM2 登录中心）
+  ├─── backends/gateway      api.nebutra.com       → ECS（PM2 Hono / Node）
+  └─── apps/idp              sso.nebutra.com       → ECS（OIDC 签发方，慎迁）
               │
-              ├─── PostgreSQL (Supabase / Neon / RDS)
-              ├─── Redis     (Upstash / ElastiCache)
-              └─── ClickHouse (ClickHouse Cloud / 自托管)
+              ├─── PostgreSQL
+              ├─── Redis / KV
+              └─── ClickHouse
 ```
 
-## 部署前准备
+| 主机名 | 应用 | 稳态源站 |
+|--------|------|----------|
+| `nebutra.com` | `apps/landing-page` | Vercel |
+| `docs.nebutra.com` | `apps/sailor-docs` | Vercel |
+| `app.nebutra.com` | `apps/web` | **ECS**（Vercel `nebutra-web` 为可选 cutover） |
+| `auth.nebutra.com` | `apps/auth` | **ECS** |
+| `api.nebutra.com` | `backends/gateway` | **ECS**（生产不跑 Vercel Functions） |
+| `sso.nebutra.com` | `apps/idp` | **ECS** |
 
-### 执行数据库迁移
+详见 monorepo `docs/DOMAINS.md`、`docs/ops/web-auth-vercel-cutover.md`。
 
-部署新版本的应用**之前**务必先执行迁移。如果 Schema 落后于迁移状态，应用将无法启动。
+### Web 构建注意
+
+`apps/web` 默认 `pnpm build` 是 **Vite**。ECS / 可选 Vercel 生产必须用
+`pnpm --filter @nebutra/web run build:next` 产出 `.next` / standalone。
+官方工作流：`.github/workflows/deploy-ecs.yml`。
+
+### 服务间认证（S2S）
+
+内部 `x-service-token` 为短时 **HS256 JWT**（`@nebutra/auth`）。遗留 hex-HMAC
+**已拒绝**。Python / Go 辅助实现保持同一契约。
+
+## 部署前
 
 ```bash
 pnpm db:migrate
 ```
 
-在 CI/CD 中，`deploy.yml` GitHub Actions 工作流会自动处理此步骤，在每次 Vercel 部署前以预部署步骤执行迁移。
+生产最小认证相关变量：`AUTH_PROVIDER=better-auth`、`BETTER_AUTH_SECRET`（auth 与 web 一致）、`BETTER_AUTH_URL=https://auth.nebutra.com`、`AUTH_COOKIE_DOMAIN=.nebutra.com`、`DATABASE_URL`、`SERVICE_SECRET`。
 
-### 验证环境变量
+## CI/CD
 
-所有必填环境变量在启动时由 `@nebutra/config` 验证。缺少必填变量会导致硬崩溃并显示描述性错误 — 不会有静默失败。推送前在本地运行验证：
+| 工作流 | 作用 |
+|--------|------|
+| `ci.yml` | PR/推送：lint、类型检查、测试 |
+| `deploy-ecs.yml` | **手动** ECS：Next standalone + gateway 包 → PM2 |
+| Vercel Git | 自动部署 landing / docs（及可选 web/auth） |
 
-```bash
-pnpm typecheck
-```
+Hobby 有**每日部署次数**上限；monorepo 请收敛无关项目的自动部署。
 
-## 环境变量管理
+## 相关
 
-<Tabs>
-  <Tab title="Vercel">
-    在 Vercel 控制台的**设置 → 环境变量**中设置环境变量。Vercel 支持为生产、预览和开发环境分别设置不同的值。
-
-    对于跨多个 Vercel 项目共享的密钥，请使用 [Vercel 共享环境变量](https://vercel.com/docs/environment-variables/shared)。
-  </Tab>
-  <Tab title="Docker">
-    通过 `.env` 文件或 Docker Compose 的 `environment:` 块传递环境变量。切勿将包含真实密钥的 `.env` 文件提交到源代码控制。
-
-    生产环境请使用 Docker Secrets 或密钥管理器（AWS Secrets Manager、HashiCorp Vault）。
-  </Tab>
-</Tabs>
-
-## GitHub Actions CI/CD
-
-仓库在 `.github/workflows/` 中内置了 14 个工作流：
-
-| 工作流 | 触发条件 | 作用 |
-|--------|---------|------|
-| `ci.yml` | 每次推送 + PR | 代码检查 → 类型检查 → 构建 → 测试 → E2E → 覆盖率 |
-| `deploy.yml` | 推送到 `main` | 执行迁移 → 部署到 Vercel |
-| `docker-build-push.yml` | 推送到 `main` | 构建并推送 Docker 镜像到镜像仓库 |
-| `security-scan.yml` | 推送 + 定时 | CodeQL 静态分析 + 依赖漏洞扫描 |
-
-<Note>
-  `deploy.yml` 工作流需要在 GitHub 仓库设置中配置 `VERCEL_TOKEN`、`VERCEL_ORG_ID` 以及每个应用的 `VERCEL_PROJECT_ID_*` 密钥。
-</Note>
-
-## 零停机部署
-
-Vercel 自动处理零停机部署。新部署只有在通过健康检查后才会提升为生产版本。回滚是即时的 — 在 Vercel 控制台中点击任何之前部署的"提升"按钮即可。
-
-对于 Docker 自托管部署，请配置反向代理（nginx、Caddy）进行滚动重启，或使用 Docker Swarm / Kubernetes 进行零停机滚动更新。
-
-## 相关内容
-
-<CardGroup cols={2}>
-  <Card title="Vercel 部署" icon="triangle" href="/zh/deployment/vercel">
-    在 Vercel 上部署的分步指南。
-  </Card>
-  <Card title="Docker 部署" icon="docker" href="/zh/deployment/docker">
-    使用 Docker Compose 的自托管部署。
-  </Card>
-  <Card title="生产检查清单" icon="circle-check" href="/zh/deployment/production-checklist">
-    上线前需要验证的所有内容。
-  </Card>
-  <Card title="开发环境概览" icon="laptop" href="/zh/development/overview">
-    配置本地开发环境。
-  </Card>
-</CardGroup>
+- [Vercel 部署](/zh/deployment/vercel)
+- [Docker 部署](/zh/deployment/docker)
+- [生产检查清单](/zh/deployment/production-checklist)

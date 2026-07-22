@@ -41,7 +41,7 @@ Nebutra 是专为 AI 原生产品打造的生产就绪 SaaS 脚手架。它将�
 
 <AccordionGroup>
   <Accordion title="多租户认证" icon="shield-check">
-    基于 Clerk（或 Better Auth）的多租户认证，含组织成员角色管理。通过单个环境变量切换认证提供商。包含组织创建流程、成员邀请和会话管理。
+    **默认 Better Auth**（可切换 Clerk / Auth.js / Supabase Auth），含组织成员角色。生产使用独立登录中心 `auth.nebutra.com`，并在 `.nebutra.com` 上共享会话 Cookie。包含组织创建、成员邀请与会话管理。
   </Accordion>
   <Accordion title="基于角色的访问控制（RBAC）" icon="lock">
     4 个内置角色（`OWNER`、`ADMIN`、`MEMBER`、`VIEWER`）覆盖 17 个类型化权限范围。无需修改业务逻辑即可扩展权限矩阵。CASL 在进程内实现毫秒级检查，OpenFGA 支持 Zanzibar 级策略评估。
@@ -69,13 +69,14 @@ Nebutra 是一个包含 33 个 packages 和 7 个应用的 [Turborepo](https://t
 
 | 应用 | 描述 |
 |-----|------|
-| `landing-page` | `nebutra.com` 公开营销网站 |
-| `web` | `app.nebutra.com` 认证后的 SaaS 仪表板 |
-| `api-gateway` | `api.nebutra.com` Hono REST API |
+| `landing-page` | `nebutra.com` 营销站（Vercel） |
+| `web` | `app.nebutra.com` 仪表板（ECS Next；Vercel 可选） |
+| `auth` | `auth.nebutra.com` 登录中心（Better Auth；ECS） |
+| `backends/gateway` | `api.nebutra.com` Hono API（包名 `@nebutra/gateway`，ECS） |
 | `studio` | `studio.nebutra.com` Sanity CMS |
-| `storybook` | `ui.nebutra.com` 组件库文档 |
+| `sailor-docs` | `docs.nebutra.com` 公开产品文档（Vercel） |
 | `design-docs` | 内部设计系统文档 |
-| `sailor-docs` | `docs.nebutra.com` 公开产品文档 |
+| `storybook` | 组件库 playground |
 
 ## 版本
 

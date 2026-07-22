@@ -7,19 +7,20 @@ description: Nebutra-Sailor 单体仓库简介 — 每个应用的功能介绍�
 
 Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形式提供完整的 AI 原生 SaaS 产品。它包含 7 个可独立部署的应用和 20+ 个共享包，从头到尾均有完整类型定义，共享同一套设计系统、API 契约和运行时 Token 系统。
 
-该仓库是 `nebutra.com`、`app.nebutra.com` 和 `api.nebutra.com` 上运行的所有内容的唯一真实来源。
+该仓库是 `nebutra.com`、`app.nebutra.com`、`auth.nebutra.com`、`api.nebutra.com` 与 `docs.nebutra.com` 的源码真相来源。
 
 ## 应用一览
 
 | 应用 | 端口 | 用途 | 框架 |
 |-----|------|------|------|
-| `apps/web` | 3000 | 已认证的 SaaS 控制台 | Next.js 16 + Clerk |
-| `backends/gateway` | 3001 | REST API — 认证、RBAC、计费、AI 代理 | Hono + OpenAPI |
-| `apps/landing-page` | 3002 | 公开营销网站（7 种语言） | Next.js 16 + next-intl |
-| `apps/design-docs` | 3003 | 内部设计系统文档 | Next.js 16 + Fumadocs |
-| `apps/storybook` | 6006 | 组件库演示平台 | Storybook 8.x |
-| `apps/studio` | 3333 | 内容管理 | Sanity Studio v5 |
-| `apps/sailor-docs` | 3004 | 公开产品文档（本站） | Next.js 16 + Fumadocs |
+| `apps/web` | 3000 / 3001 | 已认证 SaaS 控制台 | Next.js 16（生产）+ 可选 Vite |
+| `apps/auth` | 3101 | 登录中心 `auth.nebutra.com` | Next.js 16 + Better Auth |
+| `backends/gateway` | 3002 | REST API — 认证、RBAC、计费、AI 代理 | Hono（`@nebutra/gateway`） |
+| `apps/landing-page` | — | 公开营销网站 | Next.js 16 + next-intl |
+| `apps/sailor-docs` | — | 公开产品文档（本站） | Next.js 16 + Fumadocs |
+| `apps/design-docs` | — | 内部设计系统文档 | Next.js 16 + Fumadocs |
+| `apps/storybook` | 6006 | 组件库演示平台 | Storybook |
+| `apps/studio` | 3333 | 内容管理 | Sanity Studio |
 
 ## 前置条件
 
@@ -60,8 +61,10 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
     复制示例环境变量文件并填写您的密钥：
     ```bash
     cp apps/web/.env.example apps/web/.env.local
+    cp apps/auth/.env.example apps/auth/.env.local   # 若存在
     cp backends/gateway/.env.example backends/gateway/.env.local
     cp apps/landing-page/.env.example apps/landing-page/.env.local
+    # 本地建议 AUTH_PROVIDER=better-auth，与生产一致
     ```
   </Step>
   <Step title="初始化数据库">
@@ -77,8 +80,8 @@ Nebutra-Sailor 是一个 **Turborepo 单体仓库**，以可运行代码的形�
     ```
     或者仅启动您需要的部分：
     ```bash
-    pnpm dev:dashboard   # web (3000) + api-gateway (3001)
-    pnpm dev:marketing   # landing-page (3002) + studio (3333)
+    pnpm dev:dashboard   # web + gateway（见根 package.json scripts）
+    pnpm dev:marketing   # landing-page + studio
     ```
   </Step>
 </Steps>

@@ -53,9 +53,20 @@ Ensure the following events are selected on the webhook endpoint:
 
 ## Authentication
 
-**Clerk webhook endpoints configured**
+**Better Auth (default) wired across auth center + app**
 
-In the Clerk dashboard, create a webhook pointing to `https://api.yourdomain.com/api/v1/webhooks/clerk`. Add the signing secret as `CLERK_WEBHOOK_SECRET`. Required events: `user.created`, `user.deleted`, `organization.created`, `organizationMembership.created`.
+- `AUTH_PROVIDER` / `NEXT_PUBLIC_AUTH_PROVIDER` = `better-auth`
+- `BETTER_AUTH_URL` / `NEXT_PUBLIC_AUTH_URL` point at the login center host
+- `BETTER_AUTH_SECRET` identical on auth + web
+- `AUTH_COOKIE_DOMAIN` is the shared parent domain (e.g. `.nebutra.com`)
+- OAuth redirect URIs include the auth-center callback paths
+
+**If using Clerk instead**
+
+In the Clerk dashboard, create a webhook pointing to
+`https://api.yourdomain.com/api/v1/webhooks/clerk`. Add the signing secret as
+`CLERK_WEBHOOK_SECRET`. Required events: `user.created`, `user.deleted`,
+`organization.created`, `organizationMembership.created`.
 
 ---
 
@@ -63,7 +74,9 @@ In the Clerk dashboard, create a webhook pointing to `https://api.yourdomain.com
 
 **Custom domain configured**
 
-Each app (`web`, `landing-page`, `api-gateway`) must have its custom domain added to the Vercel project (or reverse proxy) and a DNS record pointing to the correct origin.
+Map each public host to the correct origin (see [Deployment Overview](/deployment/overview)):
+marketing/docs → Vercel; `app` / `auth` / `api` → ECS (or your self-host) unless
+you have completed an explicit Vercel cutover.
 
 **SSL/TLS active**
 

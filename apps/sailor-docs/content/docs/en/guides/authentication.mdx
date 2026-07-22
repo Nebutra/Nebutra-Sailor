@@ -38,7 +38,22 @@ Set `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP=false` to disable the landing prompt.
 When `ACCESS_GATE_MODE=invite`, OAuth and One Tap entrypoints are blocked until
 the invite gate is opened.
 
-## Clerk setup
+## Better Auth (production default)
+
+Production Nebutra uses a dedicated **auth center** (`apps/auth` →
+`https://auth.nebutra.com`) with:
+
+| Variable | Example |
+|----------|---------|
+| `AUTH_PROVIDER` | `better-auth` |
+| `BETTER_AUTH_URL` / `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` |
+| `AUTH_COOKIE_DOMAIN` | `.nebutra.com` |
+| `BETTER_AUTH_SECRET` | shared across auth + web |
+
+App dashboard (`app.nebutra.com`) redirects unauthenticated users to the auth
+center with a `returnTo` URL. Keep secrets identical across RP apps.
+
+## Clerk setup (optional provider)
 
 ### 1. Install Clerk
 

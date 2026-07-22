@@ -1,106 +1,111 @@
 ---
 title: Deployment Overview
-description: Deployment options for Nebutra-Sailor — Vercel (recommended), Docker self-hosted, and standalone API — with production architecture and migration strategy.
+description: How Nebutra ships in production — Cloudflare edge, Vercel for marketing/docs, ECS for app/auth/API — plus Docker self-host options.
 ---
 
 ## Deployment options
 
 | Option | Best for | Complexity | Cost |
 |--------|---------|-----------|------|
-| **Vercel** | Most teams | Low | Usage-based |
-| **Docker (self-hosted)** | Data residency, compliance | Medium | Infrastructure cost |
-| **Standalone API** | Custom infra, Hono-only | Medium | Infrastructure cost |
+| **Split (recommended for Nebutra.com)** | Marketing on Vercel + app/API on a Cloud VM | Medium | Infrastructure + optional Vercel |
+| **Vercel (frontends only)** | Docs, landing, optional web/auth cutover | Low | Hobby/Pro usage limits |
+| **Docker / PM2 self-hosted** | Data residency, full control | Medium | Your VMs |
+| **Cloudflare Workers (gateway)** | Edge API entry (see monorepo target config) | Medium | Workers free tier + paid overages |
 
-## Production architecture
+## Production architecture (nebutra.com today)
+
+Public DNS sits on **Cloudflare** (CDN / WAF). Origins are split:
 
 ```
 User
   │
   ▼
-Vercel Edge Network (CDN, WAF, DDoS protection)
+Cloudflare DNS + proxy
   │
-  ├─── apps/landing-page   nebutra.com          (Next.js on Vercel)
+  ├─── apps/landing-page     nebutra.com           → Vercel
+  ├─── apps/sailor-docs      docs.nebutra.com      → Vercel
   │
-  ├─── apps/web            app.nebutra.com      (Next.js on Vercel)
-  │         │
-  │         │ REST / Server Actions
-  │         ▼
-  └─── backends/gateway    api.nebutra.com      (Hono on Vercel Functions)
+  ├─── apps/web              app.nebutra.com       → ECS (PM2 Next standalone)
+  ├─── apps/auth             auth.nebutra.com      → ECS (PM2 auth-center)
+  ├─── backends/gateway      api.nebutra.com       → ECS (PM2 Hono / Node)
+  └─── apps/idp              sso.nebutra.com       → ECS (OIDC issuer; keep stable)
               │
               ├─── PostgreSQL (Supabase / Neon / RDS)
-              ├─── Redis     (Upstash / ElastiCache)
-              └─── ClickHouse (ClickHouse Cloud / self-hosted)
+              ├─── Redis / KV (Upstash or Cloudflare KV)
+              └─── ClickHouse (metering / analytics)
 ```
+
+| Hostname | App | Steady-state host |
+|----------|-----|-------------------|
+| `nebutra.com` | `apps/landing-page` | Vercel |
+| `docs.nebutra.com` | `apps/sailor-docs` | Vercel |
+| `app.nebutra.com` | `apps/web` | **ECS** (Next standalone). Vercel project `nebutra-web` is optional cutover |
+| `auth.nebutra.com` | `apps/auth` | **ECS**. Vercel project `nebutra-auth` is optional cutover |
+| `api.nebutra.com` | `backends/gateway` | **ECS** (not Vercel Functions in production) |
+| `sso.nebutra.com` | `apps/idp` | **ECS** (permanent issuer — move carefully) |
+
+See also monorepo ops: `docs/DOMAINS.md` and `docs/ops/web-auth-vercel-cutover.md`.
+
+### Web build note
+
+`apps/web` default `pnpm build` is **Vite**. Production ECS (and Vercel if you cut over) must use **`pnpm --filter @nebutra/web run build:next`** so `.next` / standalone is produced. Official workflow: `.github/workflows/deploy-ecs.yml`.
+
+### Service-to-service auth
+
+Internal `x-service-token` is a short-lived **HS256 JWT** (`@nebutra/auth` `signServiceToken` / `verifyServiceToken`). Legacy hex-HMAC tokens are **rejected**. Same contract on Python and Go helpers.
 
 ## Before you deploy
 
 ### Run database migrations
 
-Always run migrations **before** deploying a new app version. The app will fail to start if the schema is behind the migration state.
+Always run migrations **before** shipping a schema-dependent app version:
 
 ```bash
 pnpm db:migrate
 ```
 
-In CI/CD this is handled automatically by the `deploy.yml` GitHub Actions workflow, which runs migrations as a pre-deploy step.
-
 ### Validate environment variables
 
-All required environment variables are validated by `@nebutra/config` at startup. A missing required variable causes a hard crash with a descriptive error — no silent failures. Run a local validation pass before pushing:
+Required env vars are validated at startup. Missing secrets should fail fast. At minimum for auth + app:
 
-```bash
-pnpm typecheck
-```
-
-## Environment variable management
-
-<Tabs>
-  <Tab title="Vercel">
-    Set environment variables in the Vercel dashboard under **Settings → Environment Variables**. Vercel supports separate values for Production, Preview, and Development environments.
-
-    For secrets shared across multiple Vercel projects, use [Vercel Shared Environment Variables](https://vercel.com/docs/environment-variables/shared).
-  </Tab>
-  <Tab title="Docker">
-    Pass environment variables via a `.env` file or Docker Compose `environment:` block. Never commit `.env` files with real secrets to source control.
-
-    For production, use Docker Secrets or a secrets manager (AWS Secrets Manager, HashiCorp Vault).
-  </Tab>
-</Tabs>
+| Variable | Notes |
+|----------|--------|
+| `AUTH_PROVIDER` / `NEXT_PUBLIC_AUTH_PROVIDER` | Production: `better-auth` |
+| `BETTER_AUTH_SECRET` | Same value on auth + web |
+| `BETTER_AUTH_URL` / `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` |
+| `AUTH_COOKIE_DOMAIN` | `.nebutra.com` |
+| `DATABASE_URL` | Shared Postgres |
+| `SERVICE_SECRET` | S2S JWT signing |
 
 ## CI/CD with GitHub Actions
 
-The repository ships 14 workflows in `.github/workflows/`:
+| Workflow | Role |
+|----------|------|
+| `ci.yml` | lint → typecheck → build → test on PR/push |
+| `deploy-ecs.yml` | **Manual** fallback: Next standalone + gateway tarball → VM PM2 |
+| Vercel Git integration | Auto-deploy **landing** + **docs** (and optional web/auth projects) |
+| `deploy.yml` | Substrate-gated (e.g. k8s); not the default ECS path |
 
-| Workflow | Trigger | What it does |
-|----------|---------|-------------|
-| `ci.yml` | Every push + PR | lint → typecheck → build → test → e2e → coverage |
-| `deploy.yml` | Push to `main` | Run migrations → deploy to Vercel |
-| `docker-build-push.yml` | Push to `main` | Build and push Docker images to registry |
-| `security-scan.yml` | Push + schedule | CodeQL static analysis + dependency audit |
+Hobby Vercel has a **daily deployment quota**. Non-critical projects should not all auto-deploy on every monorepo push.
 
-<Note>
-  The `deploy.yml` workflow requires `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and per-app `VERCEL_PROJECT_ID_*` secrets to be configured in the GitHub repository settings.
-</Note>
+## Zero-downtime
 
-## Zero-downtime deploys
-
-Vercel handles zero-downtime deployments automatically. New deployments are only promoted to production after a successful health check. Rollback is instant — click "Promote" on any previous deployment in the Vercel dashboard.
-
-For Docker self-hosted deployments, configure a reverse proxy (nginx, Caddy) with rolling restarts or use Docker Swarm / Kubernetes for zero-downtime rolling updates.
+- **Vercel** frontends: promote after green build; rollback via previous deployment.
+- **ECS PM2**: release directories + `current` symlink (`ecs-deploy-remote.sh`); keep previous release for one-step rollback.
 
 ## Related
 
 <CardGroup cols={2}>
   <Card title="Vercel Deployment" icon="triangle" href="/deployment/vercel">
-    Step-by-step guide to deploying on Vercel.
+    Frontends and optional web/auth projects on Vercel.
   </Card>
   <Card title="Docker Deployment" icon="docker" href="/deployment/docker">
-    Self-hosted deployment with Docker Compose.
+    Self-hosted Compose-style layout.
   </Card>
   <Card title="Production Checklist" icon="circle-check" href="/deployment/production-checklist">
-    Everything to verify before going live.
+    Pre-go-live checks.
   </Card>
   <Card title="Development Overview" icon="laptop" href="/development/overview">
-    Setting up a local development environment.
+    Local monorepo setup.
   </Card>
 </CardGroup>

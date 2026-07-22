@@ -35,7 +35,20 @@ Landing 页会根据 `NEXT_PUBLIC_AUTH_PROVIDER` 选择正确的 One Tap 实现�
 设置 `NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP=false` 可关闭 Landing 页提示。
 当 `ACCESS_GATE_MODE=invite` 时，OAuth 与 One Tap 入口会被封住，直到邀请码门禁放开。
 
-## Clerk 配置
+## Better Auth（生产默认）
+
+生产 Nebutra 使用独立**登录中心**（`apps/auth` → `https://auth.nebutra.com`）：
+
+| 变量 | 示例 |
+|------|------|
+| `AUTH_PROVIDER` | `better-auth` |
+| `BETTER_AUTH_URL` / `NEXT_PUBLIC_AUTH_URL` | `https://auth.nebutra.com` |
+| `AUTH_COOKIE_DOMAIN` | `.nebutra.com` |
+| `BETTER_AUTH_SECRET` | auth 与 web 相同 |
+
+仪表板未登录时会 307 到登录中心并带上 `returnTo`。各 RP 的 secret 必须一致。
+
+## Clerk 配置（可选提供商）
 
 ### 1. 安装 Clerk
 
