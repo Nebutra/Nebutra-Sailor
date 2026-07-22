@@ -30,6 +30,8 @@ User ──────────────►│  │ WAF │──│Cache
 |-----------|-------|-------|--------|
 | `nebutra.com` | ✅ Proxied | Edge cache | Vercel (landing-page) |
 | `app.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (web; EC2/ECS/CVM/GCE compatible) |
+| `auth.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (auth-center / login UX; multi-app RPs) |
+| `sso.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (OIDC IdP; permanent issuer) |
 | `api.nebutra.com` | ✅ Proxied after origin health | No cache | Cloud VM (api-gateway; EC2/ECS/CVM/GCE compatible) |
 | `status.nebutra.com` | ✅ Proxied | No cache | Vercel (landing-page status route) |
 | `docs.nebutra.com` | ✅ Proxied (CNAME → Vercel) | Docs/static cache | Vercel project `docs` (`apps/sailor-docs`) |

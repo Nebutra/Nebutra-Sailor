@@ -23,12 +23,10 @@ set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
 APPS="${APPS:-landing web api idp auth design-docs sailor-docs}"
-# Default 1 (was 2 since the May 12 disk-full incident reduced it from 5).
-# Cut to 1 on 2026-05-15 when design-docs joined as the 4th VM app — at 4
-# apps × ~1 GB/release × 2 releases small cloud disks can fill quickly.
-# Override per-deploy with VM_KEEP_RELEASES or legacy ECS_KEEP_RELEASES if you
-# need deeper rollback history on a larger VM.
-KEEP_RELEASES="${KEEP_RELEASES:-1}"
+# Keep 2 releases per app for one-step rollback. Pre/post prune only touch
+# THAT app's releases/ dir (never other apps). Override with VM_KEEP_RELEASES
+# / ECS_KEEP_RELEASES on small disks if needed.
+KEEP_RELEASES="${KEEP_RELEASES:-2}"
 PM2_CONFIG="${PM2_CONFIG:-$DEPLOY_ROOT/ecosystem.config.cjs}"
 SHA="${SHA:?SHA env var required}"
 BUNDLE_DIR="${BUNDLE_DIR:-/tmp}"

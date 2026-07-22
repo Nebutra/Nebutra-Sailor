@@ -1,0 +1,66 @@
+name: Deploy Web (Vercel)
+
+# Product app on Vercel. ECS is origin fallback only for api/sso.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "apps/web/**"
+      - "packages/**"
+      - "pnpm-lock.yaml"
+      - "apps/web/vercel.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-web-vercel-production
+  cancel-in-progress: false
+
+jobs:
+  vercel:
+    name: Trigger Vercel production
+    runs-on: ubuntu-latest
+    if: >-
+      vars.DEPLOY_TARGET_WEB == 'vercel' ||
+      vars.DEPLOY_TARGET_WEB == '' ||
+      github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Deploy to Vercel (production)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_WEB_PROJECT_ID || vars.VERCEL_WEB_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::notice::VERCEL_TOKEN not set — relying on Vercel Git integration only."
+            exit 0
+          fi
+          if [ -z "${VERCEL_PROJECT_ID:-}" ]; then
+            echo "::error::Set VERCEL_WEB_PROJECT_ID (prj_…) for the web Vercel project"
+            exit 1
+          fi
+          npm i -g vercel@latest
+          mkdir -p apps/web/.vercel
+          cat > apps/web/.vercel/project.json <<EOF
+          {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}
+          EOF
+          vercel deploy --prod --yes --token="$VERCEL_TOKEN" \
+            --cwd apps/web \
+            --scope "${VERCEL_ORG_ID:-}"
+
+      - name: Smoke app.nebutra.com
+        run: |
+          set -euo pipefail
+          code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 \
+            -L https://app.nebutra.com/ || echo 000)
+          echo "GET https://app.nebutra.com/ -> $code"
+          if [ "$code" != "200" ] && [ "$code" != "307" ] && [ "$code" != "302" ]; then
+            echo "::warning::app.nebutra.com not healthy yet (DNS may still point at ECS)."
+          fi

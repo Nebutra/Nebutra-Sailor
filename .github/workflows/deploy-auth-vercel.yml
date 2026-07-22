@@ -1,0 +1,74 @@
+name: Deploy Auth Center (Vercel)
+
+# Login center on Vercel — same pattern as docs/landing.
+# ECS keeps api + sso only; auth is multi-app RP session authority on the edge.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "apps/auth/**"
+      - "packages/iam/auth/**"
+      - "packages/platform/db/**"
+      - "packages/design/brand/**"
+      - "packages/design/ui/**"
+      - "packages/design/tokens/**"
+      - "pnpm-lock.yaml"
+      - "apps/auth/vercel.json"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-auth-vercel-production
+  cancel-in-progress: false
+
+jobs:
+  vercel:
+    name: Trigger Vercel production
+    runs-on: ubuntu-latest
+    if: >-
+      vars.DEPLOY_TARGET_AUTH == 'vercel' ||
+      vars.DEPLOY_TARGET_AUTH == '' ||
+      github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+
+      - name: Deploy to Vercel (production)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID || vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_AUTH_PROJECT_ID || vars.VERCEL_AUTH_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          if [ -z "${VERCEL_TOKEN:-}" ]; then
+            echo "::notice::VERCEL_TOKEN not set — relying on Vercel Git integration only."
+            exit 0
+          fi
+          if [ -z "${VERCEL_PROJECT_ID:-}" ]; then
+            echo "::error::Set VERCEL_AUTH_PROJECT_ID (prj_…) for the auth Vercel project"
+            exit 1
+          fi
+          npm i -g vercel@latest
+          mkdir -p apps/auth/.vercel
+          cat > apps/auth/.vercel/project.json <<EOF
+          {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}
+          EOF
+          vercel deploy --prod --yes --token="$VERCEL_TOKEN" \
+            --cwd apps/auth \
+            --scope "${VERCEL_ORG_ID:-}"
+
+      - name: Smoke auth.nebutra.com
+        run: |
+          set -euo pipefail
+          code=$(curl -sS -o /tmp/auth-health.json -w '%{http_code}' --max-time 30 \
+            https://auth.nebutra.com/health || echo 000)
+          echo "GET https://auth.nebutra.com/health -> $code"
+          if [ "$code" != "200" ]; then
+            echo "::warning::auth.nebutra.com not healthy yet (DNS/domain cutover may be pending)."
+            exit 0
+          fi
+          head -c 400 /tmp/auth-health.json || true
+          echo

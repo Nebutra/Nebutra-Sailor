@@ -136,12 +136,41 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
   // Login center owns /sign-in and /sign-up (multi-app RP model).
   // Preserve returnTo so auth redirects back into this app.
   const authCenter = getAuthCenterOrigin();
-  const thisOrigin = req.nextUrl.origin;
+  // Prefer public app URL / forwarded host — Next standalone often reports
+  // localhost/0.0.0.0 as nextUrl.origin when HOSTNAME binds the listen socket.
+  const thisOrigin = (() => {
+    const configured = process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/$/, "");
+    if (configured?.startsWith("http")) return configured;
+    const xfHost = req.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+    const xfProto = req.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() || "https";
+    if (
+      xfHost &&
+      !xfHost.startsWith("0.0.0.0") &&
+      xfHost !== "127.0.0.1" &&
+      xfHost !== "localhost"
+    ) {
+      return `${xfProto}://${xfHost}`;
+    }
+    const host = req.headers.get("host")?.split(",")[0]?.trim();
+    if (
+      host &&
+      !host.startsWith("0.0.0.0") &&
+      !host.startsWith("127.0.0.1") &&
+      !host.startsWith("localhost")
+    ) {
+      return `${xfProto}://${host}`;
+    }
+    return req.nextUrl.origin;
+  })();
   const isAuthCenterHost = (() => {
     try {
-      return new URL(authCenter).host === req.nextUrl.host;
+      return new URL(authCenter).host === new URL(thisOrigin).host;
     } catch {
-      return false;
+      try {
+        return new URL(authCenter).host === req.nextUrl.host;
+      } catch {
+        return false;
+      }
     }
   })();
 

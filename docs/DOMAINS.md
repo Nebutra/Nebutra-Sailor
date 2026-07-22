@@ -20,18 +20,31 @@
 Add these records in your DNS provider (Cloudflare, Namecheap, etc.):
 
 ```
-Type    Name      Value                    TTL
-----    ----      -----                    ---
-A       @         76.76.21.21              Auto
-CNAME   www       cname.vercel-dns.com     Auto
-CNAME   app       cname.vercel-dns.com     Auto
-CNAME   auth      <auth-center host>       Auto
-CNAME   api       cname.vercel-dns.com     Auto
-CNAME   sso       <idp host>               Auto
-CNAME   studio    <studio host>            Auto
+Type    Name      Value                    Proxy   TTL
+----    ----      -----                    -----   ---
+A       @         76.76.21.21              ✅      Auto
+CNAME   www       cname.vercel-dns.com     ✅      Auto
+CNAME   app       cname.vercel-dns.com     ✅      Auto   # Vercel project nebutra-web
+CNAME   auth      cname.vercel-dns.com     ✅      Auto   # Vercel project nebutra-auth
+A       api       106.15.4.31              ✅      Auto   # ECS origin (api-gateway)
+A       sso       106.15.4.31              ✅      Auto   # ECS origin (OIDC IdP — permanent issuer)
+CNAME   docs      cname.vercel-dns.com     ✅      Auto
+CNAME   studio    <studio host>            ✅      Auto
 ```
 
-> Note: The A record IP (76.76.21.21) is Vercel's. Use CNAME for subdomains.
+## Production topology (SOTA split)
+
+| Layer | Host | Apps |
+|-------|------|------|
+| **Vercel** | frontends | landing, **web**, **auth**, docs, studio (optional) |
+| **Cloudflare** | DNS / CDN / WAF / edge gateway | all public hostnames; Workers for edge API |
+| **ECS (slim)** | origin only | **api-gateway**, **sso/idp** (issuer permanent) |
+
+Do **not** run web/auth on the small ECS box as primary — deploy target is Vercel.
+ECS PM2 remains a manual fallback for api/sso only.
+
+> Note: The A record IP (76.76.21.21) is Vercel's anycast. Subdomains that
+> terminate on Vercel use `CNAME … cname.vercel-dns.com` (orange-cloud OK).
 > `studio.nebutra.com` must point at the platform that actually serves the
 > Studio. The checked-in Studio CLI currently deploys to Sanity-hosted
 > `nebutra.sanity.studio`; if you want the branded `studio.nebutra.com` URL,
