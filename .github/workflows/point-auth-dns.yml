@@ -18,12 +18,17 @@ jobs:
           ECS_HOST: ${{ vars.ECS_HOST || '106.15.4.31' }}
         run: |
           set -euo pipefail
-          chmod +x infra/ops/scripts/point-auth-dns-ecs.sh
+          test -n "${CLOUDFLARE_API_TOKEN:-}" || { echo "::error::CLOUDFLARE_API_TOKEN secret missing"; exit 1; }
           bash infra/ops/scripts/point-auth-dns-ecs.sh
-      - name: Smoke (best-effort)
+      - name: Smoke auth health
         run: |
-          sleep 5
-          curl -sS --max-time 20 "https://cloudflare-dns.com/dns-query?name=auth.nebutra.com&type=A" \
-            -H "accept: application/dns-json" | python3 -m json.tool | head -30
-          curl -sSI --max-time 20 https://auth.nebutra.com/health | head -20 || true
-          curl -sS --max-time 20 https://auth.nebutra.com/health || true
+          set -euo pipefail
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /tmp/ah.json -w '%{http_code}' --max-time 20 https://auth.nebutra.com/health || echo 000)
+            echo "try $i -> $code"
+            if [ "$code" = "200" ]; then head -c 300 /tmp/ah.json; echo; exit 0; fi
+            sleep 10
+          done
+          echo "::warning::DNS may be set but TLS/origin not ready yet"
+          curl -sSI --max-time 15 https://auth.nebutra.com/health || true
+          exit 0
