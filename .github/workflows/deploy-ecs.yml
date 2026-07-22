@@ -225,7 +225,15 @@ jobs:
   build-next:
     name: Build ${{ matrix.app }} VM artifact
     needs: detect-changes
-    if: needs.detect-changes.outputs.any == 'true'
+    # Skip the entire matrix when only api (or nothing Next-related) is selected.
+    # Previously `any=true` spun 6 runners that each no-op'd — wasted minutes.
+    if: |
+      needs.detect-changes.outputs.landing == 'true' ||
+      needs.detect-changes.outputs.web == 'true' ||
+      needs.detect-changes.outputs.idp == 'true' ||
+      needs.detect-changes.outputs.auth == 'true' ||
+      needs.detect-changes.outputs['design-docs'] == 'true' ||
+      needs.detect-changes.outputs['sailor-docs'] == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
@@ -277,7 +285,7 @@ jobs:
     steps:
       - name: Skip if not needed
         if: matrix.condition != 'true'
-        run: echo "Skipping ${{ matrix.app }} — no relevant changes."
+        run: echo "Skipping ${{ matrix.app }} — not selected / no relevant changes."
 
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         if: matrix.condition == 'true'

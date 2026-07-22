@@ -144,7 +144,10 @@ export default async function RootLayout({
                   },
                 },
                 banner: (
-                  <Banner variant="rainbow">
+                  // changeLayout=false: Banner default injects --fd-banner-height
+                  // for a full-page top bar; we only want the rainbow notice in
+                  // the sidebar, otherwise the whole docs shell gets a blank gap.
+                  <Banner variant="rainbow" changeLayout={false}>
                     {lang === "zh"
                       ? "欢迎使用 Nebutra Sailor Docs 🎉"
                       : "Welcome to Nebutra Sailor Docs 🎉"}

@@ -8,6 +8,11 @@ const failures = [];
 const approvedBuildScripts = new Set([
   "@bundled-es-modules/glob",
   "@clerk/shared",
+  // workerd native installers (Cloudflare Workers / OpenNext / Wrangler)
+  "@cloudflare/workerd-darwin-arm64",
+  "@cloudflare/workerd-darwin-x64",
+  "@cloudflare/workerd-linux-arm64",
+  "@cloudflare/workerd-linux-x64",
   "@dao-xyz/sqlite3-vec",
   "@parcel/watcher",
   "@prisma/engines",
@@ -23,6 +28,7 @@ const approvedBuildScripts = new Set([
   "protobufjs",
   "sharp",
   "style-dictionary",
+  "workerd",
 ]);
 const pullRequestTargetAllowlist = new Set(["cla.yml", "labeler.yml"]);
 const oidcWriteAllowlist = new Set(["docker-build-push.yml", "release.yml", "scorecard.yml"]);

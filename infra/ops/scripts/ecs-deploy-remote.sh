@@ -129,12 +129,35 @@ PY
   fi
 }
 
+# Encode a value for a dotenv file (KEY=VALUE).
+# Never use printf %q here: bash-shell escaping turns URL query `?` into `\?`,
+# which Prisma/Node then treat as part of the database name
+# (error: database "nebutra\" does not exist). Dotenv is not bash.
+encode_dotenv_value() {
+  local value="$1"
+  # Collapse prior printf-%q over-escapes before URL specials (? & = #)
+  value="$(printf '%s' "$value" | sed -E 's/\\+([?&=#])/\1/g')"
+
+  if [[ "$value" == *$'\n'* ]]; then
+    value="$(printf '%s' "$value" | tr '\n' ' ')"
+  fi
+
+  # Quote only when dotenv needs it (spaces, #, quotes)
+  if [[ "$value" =~ [[:space:]#\'\"] ]]; then
+    value="${value//\\/\\\\}"
+    value="${value//\"/\\\"}"
+    printf '"%s"' "$value"
+  else
+    printf '%s' "$value"
+  fi
+}
+
 append_env_assignment() {
   local env_file="$1" key="$2" value="$3"
   [ -n "$value" ] || return 0
   {
     printf '%s=' "$key"
-    printf '%q' "$value"
+    encode_dotenv_value "$value"
     printf '\n'
   } >> "$env_file"
 }
@@ -368,7 +391,23 @@ persist_api_mvp_runtime_env() {
     CLICKHOUSE_URL CLICKHOUSE_HTTP_URL CLICKHOUSE_USERNAME CLICKHOUSE_USER CLICKHOUSE_PASSWORD CLICKHOUSE_DATABASE \
     AUDIT_USE_CLICKHOUSE METERING_PROVIDER \
     QSTASH_TOKEN QSTASH_CURRENT_SIGNING_KEY QSTASH_NEXT_SIGNING_KEY QSTASH_CALLBACK_BASE_URL \
-    INNGEST_EVENT_KEY INNGEST_SIGNING_KEY SANITY_WEBHOOK_SECRET
+    INNGEST_EVENT_KEY INNGEST_SIGNING_KEY SANITY_WEBHOOK_SECRET \
+    REDIS_URL CACHE_BACKEND
+
+  # ECS hosts a local Redis container (nebutra-redis-lite on 127.0.0.1:6379).
+  # @nebutra/cache only accepts CACHE_BACKEND=ioredis|upstash-redis — values
+  # like "cloudflare-kv" fall through to Upstash and mark health degraded/down.
+  local env_file="$app_root/.env"
+  if [ -z "${REDIS_URL:-}" ]; then
+    REDIS_URL="redis://127.0.0.1:6379"
+    export REDIS_URL
+  fi
+  if [ -z "${CACHE_BACKEND:-}" ] || [ "${CACHE_BACKEND}" = "cloudflare-kv" ]; then
+    CACHE_BACKEND="ioredis"
+    export CACHE_BACKEND
+  fi
+  replace_env_assignment "$env_file" REDIS_URL "$REDIS_URL"
+  replace_env_assignment "$env_file" CACHE_BACKEND "$CACHE_BACKEND"
 }
 
 persist_idp_runtime_env() {
