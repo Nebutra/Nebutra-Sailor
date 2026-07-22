@@ -53,6 +53,14 @@ describe("auth center multi-app governance", () => {
     );
   });
 
+  it("deploy-ecs workflow defaults BETTER_AUTH_URL to auth-center (not app)", () => {
+    const yml = read(".github/workflows/deploy-ecs.yml");
+    expect(yml).toMatch(/BETTER_AUTH_URL:.*auth\.nebutra\.com/);
+    expect(yml).toMatch(/NEXT_PUBLIC_AUTH_URL:.*auth\.nebutra\.com/);
+    // Workflow env overrides remote defaults — must not reintroduce app-as-issuer.
+    expect(yml).not.toMatch(/BETTER_AUTH_URL:.*\|\|\s*'https:\/\/app\.nebutra\.com'/);
+  });
+
   it("DOMAINS.md records production truth for auth + permanent sso", () => {
     const domains = read("docs/DOMAINS.md");
     expect(domains).toContain("Production truth");

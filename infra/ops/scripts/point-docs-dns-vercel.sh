@@ -71,7 +71,8 @@ for r in routes:
 PY
 
 # Upsert DNS (best effort)
-BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'docs','content':'$TARGET','proxied':True,'ttl':1}))")
+# Grey-cloud (proxied=false): Vercel owns TLS; orange-cloud often causes 525.
+BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'docs','content':'$TARGET','proxied':False,'ttl':1}))")
 EXIST=$(auth_get "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?name=docs.${ZONE_NAME}")
 RID=$(python3 -c 'import json,sys; r=json.load(sys.stdin).get("result") or []; print(r[0]["id"] if r else "")' <<<"$EXIST")
 if [ -n "$RID" ]; then

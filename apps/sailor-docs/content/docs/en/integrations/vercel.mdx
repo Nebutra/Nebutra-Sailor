@@ -6,9 +6,9 @@ description: Deploy the Nebutra marketing surface to Vercel and keep app/API/doc
 ## Overview
 
 Nebutra uses Vercel where it is the best runtime boundary: the public marketing
-site, preview deployments, and content surfaces. Stateful app/API/docs origins
-can run separately on ECS or another self-hosted target when regional control,
-network policy, or origin ownership matters.
+site, product docs, preview deployments, and content surfaces. Stateful app/API
+origins can run separately on ECS when regional control, network policy, or
+origin ownership matters.
 
 ## Deploy from the monorepo
 
@@ -17,11 +17,12 @@ Vercel-hosted apps are deployed as separate projects:
 | App | Project name |
 |-----|-------------|
 | `apps/landing-page` | `nebutra-landing` |
+| `apps/sailor-docs` | `docs` |
 | `apps/studio` | `nebutra-studio` |
 
-`apps/sailor-docs` powers `docs.nebutra.com` and is deployed as a standalone
-Next.js app behind the ECS/Nginx origin. Use `https://nebutra.com/docs` as the
-public product entrypoint; it redirects to the docs app boundary.
+`apps/sailor-docs` powers **`https://docs.nebutra.com`** via Git → Vercel
+(project-specific CNAME, DNS-only). `https://nebutra.com/docs` still 308s to
+the docs host for back-compat.
 
 ### Link each app
 

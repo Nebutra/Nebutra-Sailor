@@ -56,7 +56,8 @@ export default async function Layout({
           },
         },
         banner: (
-          <Banner variant="rainbow">
+          // Sidebar-only notice — do not reserve a full-page top offset.
+          <Banner variant="rainbow" changeLayout={false}>
             {lang === "zh"
               ? "欢迎使用 Nebutra Design System 2.0 (Next-Gen)! 🎉"
               : "Welcome to Nebutra Design System 2.0 (Next-Gen)! 🎉"}
