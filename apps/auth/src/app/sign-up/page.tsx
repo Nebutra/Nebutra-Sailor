@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CredentialsForm } from "@/components/credentials-form";
-import { resolveAppOrigin, resolvePostLoginReturnTo } from "@/lib/return-to";
+import { resolvePostLoginReturnTo } from "@/lib/return-to";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +15,6 @@ export default async function SignUpPage({
     (typeof query.returnUrl === "string" && query.returnUrl) ||
     null;
 
-  const appOrigin = resolveAppOrigin();
   const returnTo = resolvePostLoginReturnTo(raw);
 
   return (
@@ -26,7 +25,7 @@ export default async function SignUpPage({
         <p className="mt-2 text-sm text-zinc-400">One account for every Nebutra app.</p>
       </div>
 
-      <CredentialsForm mode="sign-up" returnTo={returnTo} appOrigin={appOrigin} />
+      <CredentialsForm mode="sign-up" returnTo={returnTo} />
 
       <p className="text-sm text-zinc-500">
         Already have an account?{" "}
