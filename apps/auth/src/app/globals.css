@@ -1,6 +1,13 @@
 @import "@nebutra/tokens/styles.css";
 @import "tailwindcss";
 
+/*
+ * Tokens define --background / --foreground as HSL *components*
+ * (e.g. `0 0% 100%`), consumed as `hsl(var(--background))`.
+ * Never assign them with bare `var(--background)` — that is invalid CSS
+ * and wipes the page background/text color (looks like "styles lost").
+ */
+
 html,
 body {
   min-height: 100%;
@@ -9,6 +16,22 @@ body {
 body {
   margin: 0;
   font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
-  background: var(--background, #0a0a0b);
-  color: var(--foreground, #fafafa);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Auth center UI is dark-zinc; force dark semantic tokens so zinc utilities
+ * and surfaces match (tokens default to light HSL components). */
+:root {
+  --background: 240 6% 4%;
+  --foreground: 0 0% 98%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  --border: 240 4% 16%;
+  --input: 240 4% 16%;
+  --ring: 240 5% 65%;
+  --card: 240 6% 6%;
+  --card-foreground: 0 0% 98%;
+  --primary: 228 100% 50%;
+  --primary-foreground: 0 0% 100%;
 }
