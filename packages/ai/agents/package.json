@@ -11,21 +11,69 @@
     "surface": "model-runtime",
     "summary": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./tools": "./src/tools.ts",
-    "./providers/vercel-ai": "./src/providers/vercel-ai.ts",
-    "./providers/langchain": "./src/providers/langchain.ts",
-    "./generation": "./src/generation/index.ts",
-    "./sdk": "./src/sdk/index.ts",
-    "./sdk/config": "./src/sdk/config.ts",
-    "./sdk/models": "./src/sdk/models.ts",
-    "./sdk/provider": "./src/sdk/provider.ts",
-    "./env": "./src/env.ts",
-    "./observability": "./src/observability.ts",
-    "./fallback": "./src/fallback.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./tools": {
+      "types": "./dist/tools.d.ts",
+      "import": "./dist/tools.js",
+      "default": "./dist/tools.js"
+    },
+    "./providers/vercel-ai": {
+      "types": "./dist/providers/vercel-ai.d.ts",
+      "import": "./dist/providers/vercel-ai.js",
+      "default": "./dist/providers/vercel-ai.js"
+    },
+    "./providers/langchain": {
+      "types": "./dist/providers/langchain.d.ts",
+      "import": "./dist/providers/langchain.js",
+      "default": "./dist/providers/langchain.js"
+    },
+    "./generation": {
+      "types": "./dist/generation/index.d.ts",
+      "import": "./dist/generation/index.js",
+      "default": "./dist/generation/index.js"
+    },
+    "./sdk": {
+      "types": "./dist/sdk/index.d.ts",
+      "import": "./dist/sdk/index.js",
+      "default": "./dist/sdk/index.js"
+    },
+    "./sdk/config": {
+      "types": "./dist/sdk/config.d.ts",
+      "import": "./dist/sdk/config.js",
+      "default": "./dist/sdk/config.js"
+    },
+    "./sdk/models": {
+      "types": "./dist/sdk/models.d.ts",
+      "import": "./dist/sdk/models.js",
+      "default": "./dist/sdk/models.js"
+    },
+    "./sdk/provider": {
+      "types": "./dist/sdk/provider.d.ts",
+      "import": "./dist/sdk/provider.js",
+      "default": "./dist/sdk/provider.js"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "import": "./dist/env.js",
+      "default": "./dist/env.js"
+    },
+    "./observability": {
+      "types": "./dist/observability.d.ts",
+      "import": "./dist/observability.js",
+      "default": "./dist/observability.js"
+    },
+    "./fallback": {
+      "types": "./dist/fallback.d.ts",
+      "import": "./dist/fallback.js",
+      "default": "./dist/fallback.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -63,5 +111,8 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

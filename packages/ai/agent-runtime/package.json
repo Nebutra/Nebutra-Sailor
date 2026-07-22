@@ -22,22 +22,74 @@
     "surface": "agent-runtime",
     "summary": "Multi-tenant agent-runtime grammar: thread/turn/item model, approval+capability policy, tool/MCP abstraction, event-sourced rollout, external-sandbox delegation seam"
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./model": "./src/model.ts",
-    "./protocol": "./src/protocol.ts",
-    "./pulsar": "./src/pulsar.ts",
-    "./orchestration": "./src/orchestration.ts",
-    "./policy": "./src/policy.ts",
-    "./tools": "./src/tools.ts",
-    "./rollout": "./src/rollout.ts",
-    "./sandbox": "./src/sandbox.ts",
-    "./adapters": "./src/adapters/index.ts",
-    "./adapters/mcp-catalog": "./src/adapters/mcp-catalog.ts",
-    "./adapters/dispatcher-sse": "./src/adapters/dispatcher-sse.ts",
-    "./adapters/prisma-rollout": "./src/adapters/prisma-rollout.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./model": {
+      "types": "./dist/model.d.ts",
+      "import": "./dist/model.js",
+      "default": "./dist/model.js"
+    },
+    "./protocol": {
+      "types": "./dist/protocol.d.ts",
+      "import": "./dist/protocol.js",
+      "default": "./dist/protocol.js"
+    },
+    "./pulsar": {
+      "types": "./dist/pulsar.d.ts",
+      "import": "./dist/pulsar.js",
+      "default": "./dist/pulsar.js"
+    },
+    "./orchestration": {
+      "types": "./dist/orchestration.d.ts",
+      "import": "./dist/orchestration.js",
+      "default": "./dist/orchestration.js"
+    },
+    "./policy": {
+      "types": "./dist/policy.d.ts",
+      "import": "./dist/policy.js",
+      "default": "./dist/policy.js"
+    },
+    "./tools": {
+      "types": "./dist/tools.d.ts",
+      "import": "./dist/tools.js",
+      "default": "./dist/tools.js"
+    },
+    "./rollout": {
+      "types": "./dist/rollout.d.ts",
+      "import": "./dist/rollout.js",
+      "default": "./dist/rollout.js"
+    },
+    "./sandbox": {
+      "types": "./dist/sandbox.d.ts",
+      "import": "./dist/sandbox.js",
+      "default": "./dist/sandbox.js"
+    },
+    "./adapters": {
+      "types": "./dist/adapters/index.d.ts",
+      "import": "./dist/adapters/index.js",
+      "default": "./dist/adapters/index.js"
+    },
+    "./adapters/mcp-catalog": {
+      "types": "./dist/adapters/mcp-catalog.d.ts",
+      "import": "./dist/adapters/mcp-catalog.js",
+      "default": "./dist/adapters/mcp-catalog.js"
+    },
+    "./adapters/dispatcher-sse": {
+      "types": "./dist/adapters/dispatcher-sse.d.ts",
+      "import": "./dist/adapters/dispatcher-sse.js",
+      "default": "./dist/adapters/dispatcher-sse.js"
+    },
+    "./adapters/prisma-rollout": {
+      "types": "./dist/adapters/prisma-rollout.d.ts",
+      "import": "./dist/adapters/prisma-rollout.js",
+      "default": "./dist/adapters/prisma-rollout.js"
+    }
   },
   "scripts": {
     "build": "tsup",
@@ -72,5 +124,8 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

@@ -15,15 +15,24 @@
       "Cross-service pub/sub guarantees not verified"
     ]
   },
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./src/index.ts",
-    "./schemas": "./src/schemas/inngest.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas/inngest.d.ts",
+      "import": "./dist/schemas/inngest.js",
+      "default": "./dist/schemas/inngest.js"
+    }
   },
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@nebutra/logger": "workspace:*",
@@ -36,5 +45,8 @@
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "license": "AGPL-3.0-only"
+  "license": "AGPL-3.0-only",
+  "files": [
+    "dist"
+  ]
 }
