@@ -52,7 +52,7 @@ A       auth      106.15.4.31              ✅      Auto   # ECS login center (t
 A       api       106.15.4.31              ✅      Auto
 A       sso       106.15.4.31              ✅      Auto   # permanent OIDC issuer
 A       status    76.76.21.21              ✅      Auto
-CNAME   docs      cname.vercel-dns.com     DNS only Auto  # grey cloud
+CNAME   docs      331816c5997d8344.vercel-dns-017.com  DNS only  # project-specific Auto  # grey cloud
 CNAME   studio    <active studio host>     ✅      Auto
 CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto
 ```

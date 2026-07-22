@@ -64,7 +64,7 @@ A       app       106.15.4.31              ✅           ECS (interim)
 A       auth      106.15.4.31              ✅           ECS (interim)
 A       api       106.15.4.31              ✅           ECS
 A       sso       106.15.4.31              ✅           ECS permanent issuer
-CNAME   docs      cname.vercel-dns.com     DNS only     Vercel (grey cloud)
+CNAME   docs      331816c5997d8344.vercel-dns-017.com  DNS only  # project-specific     Vercel (grey cloud)
 ```
 
 When cutting `app` / `auth` to Vercel: switch to `CNAME … cname.vercel-dns.com` (grey or orange per SSL plan) and remove the ECS A records.
