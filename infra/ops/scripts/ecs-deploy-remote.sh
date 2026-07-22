@@ -509,6 +509,8 @@ load_runtime_env() {
   local candidates=(
     "$DEPLOY_ROOT/.env"
     "$DEPLOY_ROOT/.env.production"
+    # web keeps the shared session secret at web/.env (not web/current/.env)
+    "$DEPLOY_ROOT/web/.env"
     "$DEPLOY_ROOT/web/current/.env"
     "$app_root/.env"
     "$app_root/current/.env"
@@ -558,6 +560,7 @@ load_runtime_env() {
 
   if [ "$app" = "auth" ]; then
     # Login center: Better Auth authority for multi-app RPs.
+    # Session secret MUST match web (shared cookie domain .nebutra.com).
     BETTER_AUTH_URL="${BETTER_AUTH_URL:-https://auth.nebutra.com}"
     NEXT_PUBLIC_AUTH_URL="${NEXT_PUBLIC_AUTH_URL:-https://auth.nebutra.com}"
     AUTH_COOKIE_DOMAIN="${AUTH_COOKIE_DOMAIN:-.nebutra.com}"
@@ -579,6 +582,7 @@ load_runtime_env() {
     fi
 
     ensure_env_assignment "$app_root/.env" NODE_ENV "production"
+    ensure_env_assignment "$app_root/.env" BETTER_AUTH_SECRET "$BETTER_AUTH_SECRET"
     replace_env_assignment "$app_root/.env" PORT "3101"
     replace_env_assignment "$app_root/.env" HOSTNAME "127.0.0.1"
     replace_env_assignment "$app_root/.env" AUTH_PROVIDER "$AUTH_PROVIDER"

@@ -1,0 +1,29 @@
+name: Point auth DNS to ECS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Upsert auth.nebutra.com → ECS
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          ECS_HOST: ${{ vars.ECS_HOST || '106.15.4.31' }}
+        run: |
+          set -euo pipefail
+          chmod +x infra/ops/scripts/point-auth-dns-ecs.sh
+          bash infra/ops/scripts/point-auth-dns-ecs.sh
+      - name: Smoke (best-effort)
+        run: |
+          sleep 5
+          curl -sS --max-time 20 "https://cloudflare-dns.com/dns-query?name=auth.nebutra.com&type=A" \
+            -H "accept: application/dns-json" | python3 -m json.tool | head -30
+          curl -sSI --max-time 20 https://auth.nebutra.com/health | head -20 || true
+          curl -sS --max-time 20 https://auth.nebutra.com/health || true
