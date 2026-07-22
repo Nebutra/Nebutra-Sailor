@@ -214,8 +214,10 @@ pnpm install --frozen-lockfile 2>&1 | tail -3
 log "构建 Landing Page..."
 pnpm turbo build --filter=@nebutra/landing-page 2>&1 | tail -5
 
-log "构建 Web App..."
-pnpm turbo build --filter=@nebutra/web 2>&1 | tail -5
+# @nebutra/web default `build` is Vite (dist/). ECS PM2 runs Next standalone —
+# same contract as .github/workflows/deploy-ecs.yml (build_command: build:next).
+log "构建 Web App (Next standalone via build:next)..."
+pnpm --filter @nebutra/web run build:next 2>&1 | tail -5
 
 log "构建 API Gateway..."
 pnpm turbo build --filter=@nebutra/gateway 2>&1 | tail -5
@@ -266,9 +268,9 @@ module.exports = {
     },
     {
       name: "api-gateway",
+      // Hono Node server — not Next.js (see backends/gateway package.json start).
       cwd: "./backends/gateway",
-      script: "node_modules/.bin/next",
-      args: "start -p 3002",
+      script: "dist/node.js",
       env: {
         NODE_ENV: "production",
         PORT: 3002,

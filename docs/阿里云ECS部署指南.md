@@ -245,11 +245,14 @@ cp /etc/letsencrypt/live/你的域名.com/privkey.pem /etc/ssl/nebutra/
 ```bash
 cd /opt/nebutra
 
-# 构建 Next.js 应用
-pnpm turbo build --filter=@nebutra/web --filter=@nebutra/landing-page
+# Landing 默认 build = next build
+pnpm turbo build --filter=@nebutra/landing-page
 
-# 构建 API Gateway
-pnpm turbo build --filter=@nebutra/api-gateway
+# Web 默认 turbo build 是 Vite；ECS 需要 Next standalone
+pnpm --filter @nebutra/web run build:next
+
+# Gateway（包名 @nebutra/gateway）
+pnpm turbo build --filter=@nebutra/gateway
 ```
 
 ### 6.2 启动全部服务
@@ -316,7 +319,8 @@ git pull origin main
 
 # 重新安装依赖 & 构建
 pnpm install
-pnpm turbo build --filter=@nebutra/web --filter=@nebutra/landing-page --filter=@nebutra/api-gateway
+pnpm turbo build --filter=@nebutra/landing-page --filter=@nebutra/gateway
+pnpm --filter @nebutra/web run build:next
 
 # 重建并重启变更的服务
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build

@@ -113,4 +113,23 @@ describe("Deploy substrate governance", () => {
     expect(remote).toContain("NEXT_PUBLIC_APP_URL");
     expect(remote).toContain("BETTER_AUTH_URL");
   });
+
+  it("manual ECS shell helpers build web with build:next (not Vite turbo build)", () => {
+    const lite = readFileSync(
+      resolve(process.cwd(), "infra/ops/scripts/deploy-ecs-lite.sh"),
+      "utf-8",
+    );
+    const remaining = readFileSync(
+      resolve(process.cwd(), "infra/ops/scripts/deploy-remaining.sh"),
+      "utf-8",
+    );
+
+    for (const script of [lite, remaining]) {
+      expect(script).toContain("pnpm --filter @nebutra/web run build:next");
+      expect(script).not.toMatch(/turbo build --filter=@nebutra\/web\b/);
+      // Gateway is Hono/Node, not next start
+      expect(script).toContain('script: "dist/node.js"');
+      expect(script).not.toMatch(/name:\s*"api-gateway"[\s\S]{0,200}?node_modules\/\.bin\/next/);
+    }
+  });
 });

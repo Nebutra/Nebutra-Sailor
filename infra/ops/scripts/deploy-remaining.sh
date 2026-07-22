@@ -74,11 +74,12 @@ else
   cd apps/landing-page && npx next build 2>&1 | tail -10 && cd "$PROJECT_DIR"
 fi
 
-echo ">>> 构建 Web App..."
-if pnpm turbo build --filter=@nebutra/web 2>&1 | tail -10; then
+echo ">>> 构建 Web App (Next standalone — build:next, not Vite)..."
+# Default turbo `build` for @nebutra/web is Vite; ECS needs Next .next/standalone.
+if pnpm --filter @nebutra/web run build:next 2>&1 | tail -10; then
   log "Web App 构建成功"
 else
-  warn "Web App 构建失败，尝试跳过类型检查..."
+  warn "Web App build:next 失败，回退 next build..."
   cd apps/web && npx next build 2>&1 | tail -10 && cd "$PROJECT_DIR"
 fi
 
@@ -135,9 +136,9 @@ module.exports = {
     },
     {
       name: "api-gateway",
+      // Hono Node server — not Next.js (see backends/gateway package.json start).
       cwd: "./backends/gateway",
-      script: "node_modules/.bin/next",
-      args: "start -p 3002",
+      script: "dist/node.js",
       env: {
         NODE_ENV: "production",
         PORT: 3002,
