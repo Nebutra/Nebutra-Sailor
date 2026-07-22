@@ -73,7 +73,6 @@
       "apps/landing-page/src/app/apple-icon.tsx",
       "apps/landing-page/src/app/not-found.tsx",
       "apps/landing-page/src/components/auth/google-one-tap.tsx",
-      "apps/landing-page/src/components/cookie-consent-banner.tsx",
       "apps/landing-page/src/components/landing/FooterMinimal.tsx",
       "apps/landing-page/src/components/landing/HeroMockupWindow.tsx",
       "apps/landing-page/src/components/landing/InteractiveChangelog.tsx",

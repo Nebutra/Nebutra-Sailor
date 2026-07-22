@@ -9,7 +9,7 @@
     "NEXT_PUBLIC_SITE_URL": "https://nebutra.com",
     "NEXT_PUBLIC_APP_URL": "https://app.nebutra.com",
     "NEXT_PUBLIC_API_URL": "https://api.nebutra.com",
-    "NEXT_PUBLIC_DOCS_URL": "https://nebutra.com/docs",
+    "NEXT_PUBLIC_DOCS_URL": "https://docs.nebutra.com",
     "DOCS_ORIGIN_URL": "https://docs.nebutra.com",
     "NEXT_PUBLIC_AUTH_PROVIDER": "better-auth",
     "NEXT_PUBLIC_ENABLE_GOOGLE_ONE_TAP": "true",

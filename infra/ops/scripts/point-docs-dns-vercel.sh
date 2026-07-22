@@ -3,7 +3,9 @@ set -euo pipefail
 TOKEN="${CLOUDFLARE_API_TOKEN:?}"
 ZONE_NAME="${CF_ZONE_NAME:-nebutra.com}"
 ACC="${CLOUDFLARE_ACCOUNT_ID:-}"
-TARGET="${DOCS_DNS_TARGET:-cname.vercel-dns.com}"
+# Project-specific Vercel DNS for the `docs` project (apps/sailor-docs).
+# Generic cname.vercel-dns.com can attach the hostname to the wrong project.
+TARGET="${DOCS_DNS_TARGET:-331816c5997d8344.vercel-dns-017.com}"
 
 ZONE_ID=$(curl -sS -H "Authorization: Bearer $TOKEN" \
   "https://api.cloudflare.com/client/v4/zones?name=${ZONE_NAME}" \

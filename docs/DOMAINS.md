@@ -22,7 +22,7 @@ Single source of truth for *where traffic lands today*. Do not invent a second s
 | Host | DNS (Cloudflare) | Runtime | Notes |
 |------|------------------|---------|-------|
 | `nebutra.com` / `www` | Vercel anycast / CNAME | **Vercel** landing | Marketing |
-| `docs.nebutra.com` | CNAME `cname.vercel-dns.com` **DNS only** | **Vercel** `docs` | Prefer grey-cloud (not orange) in front of Vercel |
+| `docs.nebutra.com` | CNAME `331816c5997d8344.vercel-dns-017.com` **DNS only** | **Vercel** `docs` | Project-specific target; grey-cloud (not orange) |
 | `app.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `web` | Target: Vercel (`nebutra-web`) when builds are green |
 | `auth.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `auth-center` | Target: Vercel (`nebutra-auth`) |
 | `api.nebutra.com` | A `106.15.4.31` proxied | **ECS PM2** `api-gateway` | Stay on ECS origin |

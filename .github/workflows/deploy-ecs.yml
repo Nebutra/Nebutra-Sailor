@@ -690,7 +690,10 @@ jobs:
           VITE_API_GATEWAY_URL: ${{ vars.VITE_API_GATEWAY_URL || vars.NEXT_PUBLIC_API_GATEWAY_URL || 'https://api.nebutra.com' }}
           VITE_AUTH_API_URL: ${{ vars.VITE_AUTH_API_URL || 'https://api.nebutra.com/api/auth' }}
           BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-          BETTER_AUTH_URL: ${{ vars.BETTER_AUTH_URL || 'https://app.nebutra.com' }}
+          # Login center owns Better Auth origin (multi-app RP model).
+          BETTER_AUTH_URL: ${{ vars.BETTER_AUTH_URL || 'https://auth.nebutra.com' }}
+          NEXT_PUBLIC_AUTH_URL: ${{ vars.NEXT_PUBLIC_AUTH_URL || 'https://auth.nebutra.com' }}
+          AUTH_COOKIE_DOMAIN: ${{ vars.AUTH_COOKIE_DOMAIN || '.nebutra.com' }}
           NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://app.nebutra.com' }}
           NEXT_PUBLIC_APP_URL: ${{ vars.NEXT_PUBLIC_APP_URL || 'https://app.nebutra.com' }}
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL || 'https://api.nebutra.com' }}
