@@ -1,5 +1,8 @@
 "use client";
 
+import { Eye, EyeOff } from "@nebutra/icons";
+import { Button, Input } from "@nebutra/ui/primitives";
+import Link from "next/link";
 import { useState } from "react";
 
 interface CredentialsFormProps {
@@ -8,12 +11,18 @@ interface CredentialsFormProps {
   returnTo: string;
 }
 
+/**
+ * Better Auth email/password form styled like apps/web SignInForm
+ * (neutral token surfaces, h-12 inputs, Agent OS type scale).
+ * Logic stays auth-center only — no server imports in this client module.
+ */
 export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -34,63 +43,153 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
       });
 
       if (!res.ok) {
-        const data = (await res.json().catch(() => null)) as { message?: string } | null;
-        setError(data?.message || (mode === "sign-in" ? "Sign in failed" : "Sign up failed"));
+        const data = (await res.json().catch(() => null)) as {
+          message?: string;
+          error?: string;
+        } | null;
+        setError(
+          data?.message ||
+            data?.error ||
+            (mode === "sign-in" ? "Sign in failed" : "Sign up failed"),
+        );
         return;
       }
 
       window.location.assign(returnTo);
     } catch {
-      setError("Network error. Please try again.");
+      setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
   }
 
+  const altHref =
+    mode === "sign-in"
+      ? `/sign-up?returnTo=${encodeURIComponent(returnTo)}`
+      : `/sign-in?returnTo=${encodeURIComponent(returnTo)}`;
+
   return (
-    <form onSubmit={onSubmit} className="flex w-full max-w-sm flex-col gap-3">
-      {mode === "sign-up" ? (
-        <label className="flex flex-col gap-1 text-sm">
-          <span className="text-zinc-400">Name</span>
-          <input
-            className="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoComplete="name"
+    <div className="w-full">
+      <div className="mb-8">
+        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+          {mode === "sign-in" ? "Log in to Nebutra" : "Create your Nebutra account"}
+        </h1>
+        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
+          {mode === "sign-in"
+            ? "Choose how you want to sign in."
+            : "One account for every Nebutra app."}
+        </p>
+      </div>
+
+      <form
+        onSubmit={onSubmit}
+        className="flex flex-col gap-5"
+        aria-busy={loading}
+        aria-describedby={error ? "auth-form-error" : undefined}
+      >
+        {mode === "sign-up" ? (
+          <label className="flex flex-col gap-1.5">
+            <span className="text-sm font-medium text-[var(--neutral-12)]">Name</span>
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              autoComplete="name"
+              size="lg"
+              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+              placeholder="Your name"
+            />
+          </label>
+        ) : null}
+
+        <label className="flex flex-col gap-1.5">
+          <span className="text-sm font-medium text-[var(--neutral-12)]">Email</span>
+          <Input
+            required
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
+            size="lg"
+            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+            placeholder="you@example.com"
           />
         </label>
-      ) : null}
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="text-zinc-400">Email</span>
-        <input
-          required
-          type="email"
-          className="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          autoComplete="email"
-        />
-      </label>
-      <label className="flex flex-col gap-1 text-sm">
-        <span className="text-zinc-400">Password</span>
-        <input
-          required
-          type="password"
-          minLength={8}
-          className="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
-        />
-      </label>
-      {error ? <p className="text-sm text-red-400">{error}</p> : null}
-      <button
-        type="submit"
-        disabled={loading}
-        className="rounded-md bg-white px-3 py-2 text-sm font-medium text-black disabled:opacity-60"
-      >
-        {loading ? "Please wait…" : mode === "sign-in" ? "Sign in" : "Create account"}
-      </button>
-    </form>
+
+        <label className="flex flex-col gap-1.5">
+          <span className="text-sm font-medium text-[var(--neutral-12)]">Password</span>
+          <div className="relative">
+            <Input
+              required
+              type={showPassword ? "text" : "password"}
+              minLength={8}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
+              size="lg"
+              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
+          </div>
+        </label>
+
+        {error ? (
+          <p
+            id="auth-form-error"
+            className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            role="alert"
+            aria-live="polite"
+          >
+            {error}
+          </p>
+        ) : null}
+
+        <Button
+          type="submit"
+          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={loading}
+        >
+          {loading
+            ? mode === "sign-in"
+              ? "Signing in…"
+              : "Creating account…"
+            : mode === "sign-in"
+              ? "Log in"
+              : "Create account"}
+        </Button>
+      </form>
+
+      <p className="mt-8 text-sm text-[var(--neutral-10)]">
+        {mode === "sign-in" ? (
+          <>
+            New to Nebutra?{" "}
+            <Link
+              href={altHref}
+              className="font-medium text-[var(--neutral-12)] underline-offset-4 hover:underline"
+            >
+              Sign up
+            </Link>
+          </>
+        ) : (
+          <>
+            Already have an account?{" "}
+            <Link
+              href={altHref}
+              className="font-medium text-[var(--neutral-12)] underline-offset-4 hover:underline"
+            >
+              Log in
+            </Link>
+          </>
+        )}
+      </p>
+    </div>
   );
 }
