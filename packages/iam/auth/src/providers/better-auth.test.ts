@@ -106,6 +106,7 @@ describe("Better Auth trusted origins (cross-origin One Tap / OAuth)", () => {
   beforeEach(() => {
     for (const key of [
       "BETTER_AUTH_URL",
+      "NEXT_PUBLIC_AUTH_URL",
       "NEXT_PUBLIC_SITE_URL",
       "NEXT_PUBLIC_APP_URL",
       "NEBUTRA_LANDING_ORIGIN",
@@ -120,14 +121,16 @@ describe("Better Auth trusted origins (cross-origin One Tap / OAuth)", () => {
   });
 
   it("collects, trims, and dedupes first-party origins so the landing One Tap is trusted", () => {
-    process.env.BETTER_AUTH_URL = "https://app.nebutra.com";
+    process.env.BETTER_AUTH_URL = "https://auth.nebutra.com";
+    process.env.NEXT_PUBLIC_AUTH_URL = "https://auth.nebutra.com";
     process.env.NEXT_PUBLIC_SITE_URL = "https://nebutra.com";
-    process.env.NEXT_PUBLIC_APP_URL = "https://app.nebutra.com"; // duplicate of BETTER_AUTH_URL
+    process.env.NEXT_PUBLIC_APP_URL = "https://app.nebutra.com";
     process.env.BETTER_AUTH_TRUSTED_ORIGINS = " https://staging.nebutra.com , ";
 
     expect(resolveBetterAuthTrustedOrigins()).toEqual([
-      "https://app.nebutra.com",
+      "https://auth.nebutra.com",
       "https://nebutra.com",
+      "https://app.nebutra.com",
       "https://staging.nebutra.com",
     ]);
   });

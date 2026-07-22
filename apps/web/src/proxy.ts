@@ -1,4 +1,9 @@
-import { getConfiguredAuthProvider } from "@nebutra/auth";
+import {
+  buildAuthCenterSignInUrl,
+  buildAuthCenterSignUpUrl,
+  getAuthCenterOrigin,
+  getConfiguredAuthProvider,
+} from "@nebutra/auth";
 import { logger } from "@nebutra/logger";
 import type { NextFetchEvent, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
@@ -126,6 +131,37 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
 
   if (isDesktopAuthRemotePath(pathname)) {
     return withNonce(req, NextResponse.next());
+  }
+
+  // Login center owns /sign-in and /sign-up (multi-app RP model).
+  // Preserve returnTo so auth redirects back into this app.
+  const authCenter = getAuthCenterOrigin();
+  const thisOrigin = req.nextUrl.origin;
+  const isAuthCenterHost = (() => {
+    try {
+      return new URL(authCenter).host === req.nextUrl.host;
+    } catch {
+      return false;
+    }
+  })();
+
+  if (
+    !isAuthCenterHost &&
+    authProvider !== "clerk" &&
+    (pathname === "/sign-in" ||
+      pathname.startsWith("/sign-in/") ||
+      pathname === "/sign-up" ||
+      pathname.startsWith("/sign-up/"))
+  ) {
+    const existing =
+      req.nextUrl.searchParams.get("returnTo") ||
+      req.nextUrl.searchParams.get("returnUrl") ||
+      req.nextUrl.searchParams.get("redirect");
+    const returnTo = existing || `${thisOrigin}/dashboard`;
+    const target = pathname.startsWith("/sign-up")
+      ? buildAuthCenterSignUpUrl(returnTo)
+      : buildAuthCenterSignInUrl(returnTo);
+    return NextResponse.redirect(target, 307);
   }
 
   if (authProvider === "clerk" && hasClerkKey) {

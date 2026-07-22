@@ -9,7 +9,8 @@
  * cross-origin One Tap / OAuth flow silently 403s.
  *
  * Sourced from env (trimmed, empties dropped, deduped, insertion order kept):
- *   - BETTER_AUTH_URL              the app's own base (also always trusted by BA)
+ *   - BETTER_AUTH_URL              auth center / BA base (always trusted by BA)
+ *   - NEXT_PUBLIC_AUTH_URL         public auth-center origin (login UX host)
  *   - NEXT_PUBLIC_SITE_URL         marketing / landing origin
  *   - NEXT_PUBLIC_APP_URL          dashboard origin
  *   - NEBUTRA_LANDING_ORIGIN       explicit landing origin override
@@ -23,6 +24,7 @@ export function resolveBetterAuthTrustedOrigins(): string[] {
     new Set(
       [
         process.env.BETTER_AUTH_URL,
+        process.env.NEXT_PUBLIC_AUTH_URL,
         process.env.NEXT_PUBLIC_SITE_URL,
         process.env.NEXT_PUBLIC_APP_URL,
         process.env.NEBUTRA_LANDING_ORIGIN,

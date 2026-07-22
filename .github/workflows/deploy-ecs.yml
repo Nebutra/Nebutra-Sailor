@@ -41,7 +41,7 @@ on:
   workflow_dispatch:
     inputs:
       apps:
-        description: "Apps to deploy (space-separated subset of: landing web api idp design-docs sailor-docs). Empty = auto-detect."
+        description: "Apps to deploy (space-separated subset of: landing web api idp auth design-docs sailor-docs). Empty = auto-detect."
         required: false
         default: ""
       reason:
@@ -78,6 +78,7 @@ jobs:
       web:         ${{ steps.resolve.outputs.web }}
       api:         ${{ steps.resolve.outputs.api }}
       idp:         ${{ steps.resolve.outputs.idp }}
+      auth:        ${{ steps.resolve.outputs.auth }}
       design-docs: ${{ steps.resolve.outputs['design-docs'] }}
       sailor-docs: ${{ steps.resolve.outputs['sailor-docs'] }}
       any:         ${{ steps.resolve.outputs.any }}
@@ -127,6 +128,16 @@ jobs:
               - 'infra/ops/scripts/ecs-deploy-remote.sh'
               - 'infra/runtime/nginx/**'
               - '.github/workflows/deploy-ecs.yml'
+            auth:
+              - 'apps/auth/**'
+              - 'packages/iam/auth/**'
+              - 'packages/platform/db/**'
+              - 'packages/design/**'
+              - 'pnpm-lock.yaml'
+              - 'infra/iac/ecs/**'
+              - 'infra/ops/scripts/ecs-deploy-remote.sh'
+              - 'infra/runtime/nginx/**'
+              - '.github/workflows/deploy-ecs.yml'
             design-docs:
               - 'apps/design-docs/**'
               - 'packages/**'
@@ -150,6 +161,7 @@ jobs:
           F_WEB:          ${{ steps.filter.outputs.web }}
           F_API:          ${{ steps.filter.outputs.api }}
           F_IDP:          ${{ steps.filter.outputs.idp }}
+          F_AUTH:         ${{ steps.filter.outputs.auth }}
           F_DESIGN_DOCS:  ${{ steps.filter.outputs['design-docs'] }}
           F_SAILOR_DOCS:  ${{ steps.filter.outputs['sailor-docs'] }}
         run: |
@@ -170,13 +182,13 @@ jobs:
             unknown_apps=""
             for app in $normalized_apps; do
               case "$app" in
-                landing|web|api|idp|design-docs|sailor-docs) ;;
+                landing|web|api|idp|auth|design-docs|sailor-docs) ;;
                 *) unknown_apps="$unknown_apps $app" ;;
               esac
             done
 
             if [ -n "$unknown_apps" ]; then
-              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp design-docs sailor-docs"
+              echo "::error::Unsupported apps: $(echo "$unknown_apps" | xargs). Allowed: landing web api idp auth design-docs sailor-docs"
               exit 1
             fi
           fi
@@ -187,6 +199,7 @@ jobs:
               echo "web=$(contains_app "$normalized_apps" web)"
               echo "api=$(contains_app "$normalized_apps" api)"
               echo "idp=$(contains_app "$normalized_apps" idp)"
+              echo "auth=$(contains_app "$normalized_apps" auth)"
               echo "design-docs=$(contains_app "$normalized_apps" design-docs)"
               echo "sailor-docs=$(contains_app "$normalized_apps" sailor-docs)"
               echo "any=true"
@@ -195,9 +208,10 @@ jobs:
               echo "web=$F_WEB"
               echo "api=$F_API"
               echo "idp=$F_IDP"
+              echo "auth=$F_AUTH"
               echo "design-docs=$F_DESIGN_DOCS"
               echo "sailor-docs=$F_SAILOR_DOCS"
-              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" ]] && echo true || echo false)"
+              echo "any=$([[ "$F_LANDING" == "true" || "$F_WEB" == "true" || "$F_API" == "true" || "$F_IDP" == "true" || "$F_AUTH" == "true" || "$F_DESIGN_DOCS" == "true" || "$F_SAILOR_DOCS" == "true" ]] && echo true || echo false)"
             fi
           } >> "$GITHUB_OUTPUT"
 
@@ -239,6 +253,13 @@ jobs:
             build_command: "build"
             condition: ${{ needs.detect-changes.outputs.idp }}
             site_url: "https://sso.nebutra.com"
+          - app: auth
+            package: "@nebutra/auth-center"
+            workspace: apps/auth
+            kind: "next-standalone"
+            build_command: "build"
+            condition: ${{ needs.detect-changes.outputs.auth }}
+            site_url: "https://auth.nebutra.com"
           - app: design-docs
             package: "@nebutra/design-docs"
             workspace: apps/design-docs
@@ -778,6 +799,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
+          [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           APPS="$(echo "$APPS" | xargs)"
@@ -860,6 +882,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && targets[web]="https://app.nebutra.com"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && targets[api]="https://api.nebutra.com/api/misc/health"
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && targets[idp]="https://sso.nebutra.com/.well-known/openid-configuration"
+          [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && targets[auth]="https://auth.nebutra.com/health"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && targets[design-docs]="https://design.nebutra.com"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && targets[sailor-docs]="https://docs.nebutra.com"
           ok_codes='^(200|301|302|307)$'
@@ -980,6 +1003,7 @@ jobs:
           [ "${{ needs.detect-changes.outputs.web }}"            = "true" ] && APPS="$APPS web"
           [ "${{ needs.detect-changes.outputs.api }}"            = "true" ] && APPS="$APPS api"
           [ "${{ needs.detect-changes.outputs.idp }}"            = "true" ] && APPS="$APPS idp"
+          [ "${{ needs.detect-changes.outputs.auth }}"           = "true" ] && APPS="$APPS auth"
           [ "${{ needs.detect-changes.outputs['design-docs'] }}" = "true" ] && APPS="$APPS design-docs"
           [ "${{ needs.detect-changes.outputs['sailor-docs'] }}" = "true" ] && APPS="$APPS sailor-docs"
           APPS="$(echo "$APPS" | xargs)"

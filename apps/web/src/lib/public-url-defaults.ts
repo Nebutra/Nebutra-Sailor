@@ -2,12 +2,14 @@ const DEVELOPMENT_PUBLIC_URLS = {
   siteUrl: "http://localhost:3001",
   appUrl: "http://localhost:3001",
   apiUrl: "http://localhost:3002",
+  authUrl: "http://localhost:3101",
 } as const;
 
 const PRODUCTION_PUBLIC_URLS = {
-  siteUrl: "https://app.nebutra.com",
+  siteUrl: "https://nebutra.com",
   appUrl: "https://app.nebutra.com",
   apiUrl: "https://api.nebutra.com",
+  authUrl: "https://auth.nebutra.com",
 } as const;
 
 export function getDefaultPublicUrls(nodeEnv: string | undefined) {

@@ -6,6 +6,7 @@
 //   $DEPLOY_ROOT/web/current/apps/web/server.js                  (Next standalone)
 //   $DEPLOY_ROOT/api/current/dist/node.js                        (pnpm-deploy + tsc)
 //   $DEPLOY_ROOT/idp/current/apps/idp/server.js                  (Next standalone)
+//   $DEPLOY_ROOT/auth/current/apps/auth/server.js                (Next standalone login center)
 //   $DEPLOY_ROOT/design-docs/current/apps/design-docs/server.js  (Next standalone)
 //   $DEPLOY_ROOT/sailor-docs/current/apps/sailor-docs/server.js  (Next standalone)
 //
@@ -88,6 +89,23 @@ module.exports = {
       env: {
         NODE_ENV: "production",
         PORT: 3100,
+        HOSTNAME: "127.0.0.1",
+      },
+      max_memory_restart: "450M",
+      instances: 1,
+      exec_mode: "fork",
+      autorestart: true,
+      max_restarts: 10,
+      kill_timeout: 8000,
+      listen_timeout: 10000,
+    },
+    {
+      name: "auth-center",
+      cwd: "/var/www/nebutra/auth/current",
+      script: "apps/auth/server.js",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3101,
         HOSTNAME: "127.0.0.1",
       },
       max_memory_restart: "450M",

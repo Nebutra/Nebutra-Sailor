@@ -54,13 +54,17 @@ export type {
   SignInMethod,
   User,
 } from "./types";
-// Utilities (returnUrl sanitization, Turnstile verification)
+// Utilities: login-center URLs, returnUrl sanitization, Turnstile
 export type {
   SanitizeReturnUrlOptions,
   VerifyTurnstileOptions,
   VerifyTurnstileResult,
 } from "./utils";
 export {
+  buildAuthCenterSignInUrl,
+  buildAuthCenterSignUpUrl,
+  getAuthCenterOrigin,
+  getAuthReturnAllowedHosts,
   getSanitizedReturnUrl,
   isTurnstileConfigured,
   sanitizeReturnUrl,
