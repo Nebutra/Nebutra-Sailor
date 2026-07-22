@@ -530,6 +530,13 @@ jobs:
           name: bundle-idp
           path: ${{ runner.temp }}/bundles
 
+      - name: Download auth bundle
+        if: needs.detect-changes.outputs.auth == 'true'
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: bundle-auth
+          path: ${{ runner.temp }}/bundles
+
       - name: Configure SSH
         env:
           SSH_KEY:     ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
