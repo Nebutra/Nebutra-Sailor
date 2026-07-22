@@ -64,6 +64,9 @@ jobs:
 
       - name: Build workspace packages required by sailor-docs
         run: |
+          # Same brand/token pipeline as CI (tokens depend on design-tokens CSS).
+          pnpm brand:sync
+          pnpm --filter @nebutra/design-tokens build
           pnpm --filter @nebutra/tokens build
           pnpm --filter @nebutra/brand build
           pnpm --filter @nebutra/icons build
