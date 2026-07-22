@@ -84,7 +84,11 @@ if (failures.length) {
   for (const f of failures) console.error("  -", f);
   process.exit(1);
 }
-console.log("\npreflight OK — ECS origins healthy; vercel.json topology correct.");
+console.log("\npreflight OK — production on ECS is healthy; vercel.json topology correct.");
 console.log(
-  "Next human step: green Vercel deploys for web/auth, then DNS flip per docs/ops/web-auth-vercel-cutover.md",
+  "Optional: after Hobby deploy quota resets, run `node scripts/redeploy-web-auth-vercel.mjs`",
 );
+console.log(
+  "DNS flip only after green Vercel production — see docs/ops/web-auth-vercel-cutover.md",
+);
+console.log("Not blocked: keep shipping on ECS; Vercel cutover is optional.");

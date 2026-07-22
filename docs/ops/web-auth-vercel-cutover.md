@@ -1,11 +1,17 @@
 # web / auth → Vercel cutover checklist
 
-**Status:** not cut over. Production traffic for `app.nebutra.com` and
-`auth.nebutra.com` still terminates on ECS (PM2). Vercel projects
-`nebutra-web` / `nebutra-auth` are reserved for this cutover. Domains are
-already **verified** on those projects; DNS A records still point at ECS.
+**Status:** **production is fine on ECS** — not blocked by Vercel billing.
+`app.nebutra.com` / `auth.nebutra.com` still terminate on ECS (PM2).
+Vercel projects `nebutra-web` / `nebutra-auth` are an *optional* edge
+hosting target. Domains are **verified** on those projects; DNS A records
+still point at ECS on purpose.
 
-**Do not change DNS until every box below is green.**
+**You are not stuck because you are “poor”.** Hobby free tier only limits
+*how often you can create Vercel deployments*, not whether users can use
+the product. Product path = ECS + Cloudflare DNS/CDN (already free).
+
+**Do not change DNS until every box below is green** (and only if you
+still want the optional cutover).
 
 Automated preflight (no DNS mutation):
 
@@ -40,6 +46,24 @@ Local proof (2026-07-22): `pnpm --filter @nebutra/web run build:next` emits
   can use the next day's quota.
 - Re-enable auto-deploy on marketing apps after cutover, or upgrade the
   team off Hobby if monorepo velocity needs more than ~100 deploys/day.
+
+## Free unblocking playbook (recommended order)
+
+1. **Ship product on ECS** — always works; no Vercel quota involved.
+   ```bash
+   # already production today
+   node scripts/preflight-web-auth-vercel.mjs   # ECS health + topology
+   ```
+2. **After Hobby quota resets (~24h)** — one green web deploy (code already fixed):
+   ```bash
+   node scripts/redeploy-web-auth-vercel.mjs
+   ```
+3. **Only then** consider DNS flip (still optional). Rollback = point A
+   records back at ECS `106.15.4.31`.
+4. **Do not** start a Cloudflare Pages Next rewrite just to avoid Hobby
+   limits — CF already fronts DNS/CDN for free; origin stays ECS.
+5. **If you later want unlimited Vercel deploys** — Pro is convenience,
+   not a production requirement.
 
 ## Preconditions
 
