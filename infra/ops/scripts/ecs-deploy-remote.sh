@@ -955,6 +955,24 @@ deploy_one() {
   ln -snf "$release" "$app_root/current"
   log "$app current -> $release"
 
+  # API: keep a plain-node start.sh for manual restarts. Production packages
+  # are prepared so Node can boot without the tsx emergency loader.
+  if [ "$app" = "api" ]; then
+    cat > "$app_root/start.sh" <<'STARTSH'
+#!/bin/bash
+set -a
+[ -f /var/www/nebutra/api/.env ] && . /var/www/nebutra/api/.env
+set +a
+export NODE_ENV=production
+export PORT="${PORT:-3002}"
+export HOSTNAME="${HOSTNAME:-127.0.0.1}"
+cd /var/www/nebutra/api/current || exit 1
+exec node dist/node.js
+STARTSH
+    chmod +x "$app_root/start.sh"
+    log "api start.sh -> exec node dist/node.js"
+  fi
+
   rm -f "$tarball"
   load_runtime_env "$app" "$release" "$pm2_name"
 
@@ -1014,6 +1032,24 @@ for p in procs:
   if [ -n "$pm_cwd" ] && [[ "$pm_cwd" == "$app_root/"* ]] && [ -d "$pm_cwd" ]; then
     if [ -n "$current_target" ] && [ "$pm_cwd" = "$current_target" ]; then
       can_reload="yes"
+    fi
+  fi
+
+  # Leave the tsx emergency launcher: if api-gateway is still bound to
+  # start.sh/tsx or --import tsx, force-recreate from ecosystem (plain node).
+  if [ "$pm2_name" = "api-gateway" ] && [ "$can_reload" = "yes" ]; then
+    local pm_script="" pm_args=""
+    if command -v jq >/dev/null 2>&1; then
+      pm_script=$(pm2 jlist 2>/dev/null \
+        | jq -r ".[] | select(.name==\"$pm2_name\") | .pm2_env.pm_exec_path // empty" \
+        || echo "")
+      pm_args=$(pm2 jlist 2>/dev/null \
+        | jq -r ".[] | select(.name==\"$pm2_name\") | (.pm2_env.node_args // .pm2_env.interpreter_args // []) | if type==\"array\" then join(\" \") else . end" \
+        || echo "")
+    fi
+    if [[ "$pm_script" == *start.sh* ]] || [[ "$pm_script" == *tsx* ]] || [[ "$pm_args" == *tsx* ]]; then
+      log "api-gateway still on legacy tsx launcher ($pm_script $pm_args) — force-recreating with plain node"
+      can_reload="no"
     fi
   fi
 

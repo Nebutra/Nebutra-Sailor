@@ -440,6 +440,12 @@ jobs:
           # contract that ships in pnpm 10 for one-shot config overrides.
           pnpm --config.trust-policy=permissive deploy \
             --filter @nebutra/gateway --prod --legacy "$STAGE"
+          # Compile/rewrite workspace package exports so Node can boot without tsx
+          # (many monorepo packages still advertise ./src/*.ts for DX).
+          node scripts/prepare-pnpm-deploy-node-runtime.mjs "$STAGE"
+          # Smoke: syntax-check entry; prepare script already fails if any
+          # @nebutra package still advertises .ts runtime exports.
+          node --check "$STAGE/dist/node.js"
           ls -la "$STAGE"
           tar -czf "$RUNNER_TEMP/nebutra-api-${{ github.sha }}.tar.gz" -C "$STAGE" .
 
