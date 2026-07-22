@@ -48,6 +48,7 @@
     "@nebutra/preset": "workspace:*",
     "@nebutra/queue": "workspace:*",
     "@nebutra/reel": "workspace:*",
+    "@nebutra/repositories": "workspace:*",
     "@nebutra/sanity": "workspace:*",
     "@nebutra/startup-os": "workspace:*",
     "@nebutra/theme": "workspace:*",
