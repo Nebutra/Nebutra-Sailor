@@ -1,16 +1,24 @@
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import { createMDX } from "fumadocs-mdx/next";
 import type { NextConfig } from "next";
+
+// Enables Cloudflare bindings when running `next dev` against the OpenNext
+// Workers runtime. No-op for plain local Next and production builds.
+initOpenNextCloudflareForDev();
 
 const withMDX = createMDX({
   configPath: "source.config.ts",
   outDir: ".source",
 });
 
+// ECS self-host still uses Next standalone. OpenNext Cloudflare also consumes
+// the standalone output during `opennextjs-cloudflare build`, so keep it on
+// for both targets. Pure static export is not supported (search/chat/OG).
+const useStandalone =
+  process.env.NEXT_OUTPUT !== "export" && process.env.SAILOR_DOCS_OUTPUT !== "export";
+
 const nextConfig: NextConfig = {
-  // Required for self-hosted ECS deployments.
-  // Builds a minimal server bundle under .next/standalone so the 2C4G origin
-  // only runs the app instead of compiling Next.js in production.
-  output: "standalone",
+  ...(useStandalone ? { output: "standalone" as const } : {}),
   // Skip in-build tsc on production deploys — the strict typecheck runs as
   // its own pre-push lefthook job (`pnpm --filter @nebutra/sailor-docs
   // typecheck`), so the build pipeline doesn't need to redo it. Without
@@ -18,7 +26,10 @@ const nextConfig: NextConfig = {
   // get republished as shadcn-registry source and are exercised by tsc but
   // never actually rendered into a layout — keeps blocking ECS deploys.
   typescript: {
-    ignoreBuildErrors: process.env.NEXT_OUTPUT === "standalone",
+    ignoreBuildErrors:
+      process.env.NEXT_OUTPUT === "standalone" ||
+      process.env.OPEN_NEXT_BUILD === "true" ||
+      process.env.CI === "true",
   },
   serverExternalPackages: ["@takumi-rs/image-response"],
   transpilePackages: [

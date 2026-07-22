@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "nebutra-sailor-docs",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-06-04",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "vars": {
+    "DEPLOY_TARGET_SAILOR_DOCS": "cloudflare-pages",
+    "NEXT_PUBLIC_DOCS_ORIGIN_URL": "https://docs.nebutra.com"
+  },
+  // Custom domain: docs.nebutra.com (zone nebutra.com).
+  // After first deploy, also attach the domain in CF dashboard if routes alone
+  // are insufficient for SSL edge cert issuance.
+  "routes": [
+    {
+      "pattern": "docs.nebutra.com/*",
+      "zone_name": "nebutra.com"
+    }
+  ],
+  "workers_dev": true
+}

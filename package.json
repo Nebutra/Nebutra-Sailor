@@ -10,6 +10,8 @@
     "dev:api": "pnpm --filter @nebutra/gateway dev",
     "dev:storybook": "pnpm --filter @nebutra/storybook dev",
     "dev:docs": "pnpm --filter @nebutra/sailor-docs dev",
+    "build:docs:worker": "pnpm --filter @nebutra/sailor-docs build:worker",
+    "deploy:docs": "pnpm --filter @nebutra/sailor-docs deploy:worker",
     "dev:theme-playground": "pnpm --filter @nebutra/web dev",
     "build": "pnpm brand:sync && turbo run build",
     "build:strict": "pnpm ui:verify-governance && pnpm brand:verify-tokens && pnpm run build",
@@ -410,6 +412,10 @@
     "onlyBuiltDependencies": [
       "@bundled-es-modules/glob",
       "@clerk/shared",
+      "@cloudflare/workerd-darwin-arm64",
+      "@cloudflare/workerd-darwin-x64",
+      "@cloudflare/workerd-linux-arm64",
+      "@cloudflare/workerd-linux-x64",
       "@dao-xyz/sqlite3-vec",
       "@parcel/watcher",
       "@prisma/engines",
@@ -424,7 +430,8 @@
       "prisma",
       "protobufjs",
       "sharp",
-      "style-dictionary"
+      "style-dictionary",
+      "workerd"
     ],
     "allowedDeprecatedVersions": {
       "@novu/node": "*",
