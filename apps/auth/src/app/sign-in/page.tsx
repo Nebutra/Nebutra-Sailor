@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { CredentialsForm } from "@/components/credentials-form";
-import { resolveAppOrigin, resolvePostLoginReturnTo } from "@/lib/return-to";
+import { resolvePostLoginReturnTo } from "@/lib/return-to";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,6 @@ export default async function SignInPage({
     (typeof query.redirect === "string" && query.redirect) ||
     null;
 
-  const appOrigin = resolveAppOrigin();
   const returnTo = resolvePostLoginReturnTo(raw);
 
   return (
@@ -30,7 +29,7 @@ export default async function SignInPage({
         </p>
       </div>
 
-      <CredentialsForm mode="sign-in" returnTo={returnTo} appOrigin={appOrigin} />
+      <CredentialsForm mode="sign-in" returnTo={returnTo} />
 
       <p className="text-sm text-zinc-500">
         No account?{" "}
