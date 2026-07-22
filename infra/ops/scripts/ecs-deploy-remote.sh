@@ -1035,8 +1035,9 @@ for p in procs:
     fi
   fi
 
-  # Leave the tsx emergency launcher: if api-gateway is still bound to
-  # start.sh/tsx or --import tsx, force-recreate from ecosystem (plain node).
+  # Leave the tsx emergency launcher: if api-gateway still runs via tsx
+  # (script path or node --import tsx), force-recreate from ecosystem.
+  # start.sh itself is the supported launcher (sources .env then exec node).
   if [ "$pm2_name" = "api-gateway" ] && [ "$can_reload" = "yes" ]; then
     local pm_script="" pm_args=""
     if command -v jq >/dev/null 2>&1; then
@@ -1047,7 +1048,7 @@ for p in procs:
         | jq -r ".[] | select(.name==\"$pm2_name\") | (.pm2_env.node_args // .pm2_env.interpreter_args // []) | if type==\"array\" then join(\" \") else . end" \
         || echo "")
     fi
-    if [[ "$pm_script" == *start.sh* ]] || [[ "$pm_script" == *tsx* ]] || [[ "$pm_args" == *tsx* ]]; then
+    if [[ "$pm_script" == *tsx* ]] || [[ "$pm_args" == *tsx* ]]; then
       log "api-gateway still on legacy tsx launcher ($pm_script $pm_args) — force-recreating with plain node"
       can_reload="no"
     fi

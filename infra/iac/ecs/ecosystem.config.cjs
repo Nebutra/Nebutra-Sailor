@@ -118,12 +118,13 @@ module.exports = {
     },
     {
       name: "api-gateway",
-      cwd: "/var/www/nebutra/api/current",
-      // Production entry is plain Node. Workspace packages that still advertise
-      // ./src/*.ts for monorepo DX are compiled + rewritten by
-      // scripts/prepare-pnpm-deploy-node-runtime.mjs during the api build job.
-      script: "dist/node.js",
-      interpreter: "node",
+      // start.sh sources /var/www/nebutra/api/.env then `exec node dist/node.js`.
+      // Plain `node dist/node.js` from PM2 does not load that env file, so DB/cache
+      // probes fail (DATABASE_URL missing or mis-parsed). Packaging still strips
+      // the tsx emergency loader — start.sh must stay on node, never tsx.
+      cwd: "/var/www/nebutra/api",
+      script: "start.sh",
+      interpreter: "bash",
       env: {
         NODE_ENV: "production",
         PORT: 3002,
