@@ -1,3 +1,9 @@
+export {
+  buildAuthCenterSignInUrl,
+  buildAuthCenterSignUpUrl,
+  getAuthCenterOrigin,
+  getAuthReturnAllowedHosts,
+} from "./auth-center";
 export type { SanitizeReturnUrlOptions } from "./return-url";
 export { getSanitizedReturnUrl, sanitizeReturnUrl } from "./return-url";
 export type { VerifyTurnstileOptions, VerifyTurnstileResult } from "./turnstile";

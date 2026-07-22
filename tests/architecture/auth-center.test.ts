@@ -1,0 +1,43 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { describe, expect, it } from "vitest";
+
+const root = process.cwd();
+
+function read(path: string): string {
+  return readFileSync(join(root, path), "utf8");
+}
+
+describe("auth center multi-app governance", () => {
+  it("ships apps/auth as the login center package", () => {
+    expect(existsSync(join(root, "apps/auth/package.json"))).toBe(true);
+    const pkg = JSON.parse(read("apps/auth/package.json")) as { name: string };
+    expect(pkg.name).toBe("@nebutra/auth-center");
+  });
+
+  it("documents auth.nebutra.com + permanent sso issuer", () => {
+    const domains = read("docs/DOMAINS.md");
+    expect(domains).toContain("auth.nebutra.com");
+    expect(domains).toContain("sso.nebutra.com");
+    expect(domains).toContain("OIDC_ISSUER=https://sso.nebutra.com");
+    expect(domains).toMatch(/Login center/i);
+  });
+
+  it("web proxy redirects product sign-in to the auth center", () => {
+    const proxy = read("apps/web/src/proxy.ts");
+    expect(proxy).toContain("buildAuthCenterSignInUrl");
+    expect(proxy).toContain("getAuthCenterOrigin");
+  });
+
+  it("nginx routes auth.nebutra.com to the auth-center upstream", () => {
+    const nginx = read("infra/runtime/nginx/nginx.conf");
+    expect(nginx).toContain("server_name auth.nebutra.com");
+    expect(nginx).toContain("nebutra_auth");
+    expect(nginx).toContain("127.0.0.1:3101");
+  });
+
+  it("Better Auth trusts NEXT_PUBLIC_AUTH_URL for cross-origin", () => {
+    const trusted = read("packages/iam/auth/src/providers/better-auth/trusted-origins.ts");
+    expect(trusted).toContain("NEXT_PUBLIC_AUTH_URL");
+  });
+});

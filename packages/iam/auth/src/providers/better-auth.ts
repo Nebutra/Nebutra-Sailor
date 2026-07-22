@@ -12,11 +12,12 @@
  *
  * Environment variables:
  * - BETTER_AUTH_SECRET (required)
- * - BETTER_AUTH_URL (optional, base URL for auth endpoints)
+ * - BETTER_AUTH_URL (optional, base URL for auth endpoints — prefer auth center)
+ * - AUTH_COOKIE_DOMAIN (optional, e.g. `.nebutra.com` for multi-app SSO cookies)
  * - BETTER_AUTH_TRUSTED_ORIGINS (optional, comma-separated extra origins trusted
- *   for cross-origin auth; NEXT_PUBLIC_SITE_URL / NEXT_PUBLIC_APP_URL /
- *   NEBUTRA_LANDING_ORIGIN are also trusted — needed for the landing-page Google
- *   One Tap that posts cross-origin to the app's /api/auth)
+ *   for cross-origin auth; NEXT_PUBLIC_AUTH_URL / SITE / APP /
+ *   NEBUTRA_LANDING_ORIGIN are also trusted — needed for landing One Tap and
+ *   multi-app return_to flows against the auth center)
  * - GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET (optional, enables Google OAuth)
  * - GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET (optional, enables GitHub OAuth)
  * - APPLE_CLIENT_ID / APPLE_CLIENT_SECRET (optional, enables Sign in with Apple — App Store compliance for SaaS apps that ship Google/Facebook login)
@@ -287,10 +288,26 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       buildInvitationDatabaseHooks(),
     ) as Record<string, unknown>;
 
+    // Multi-app login center: share session cookies across first-party
+    // subdomains (auth. / app. / console.) when AUTH_COOKIE_DOMAIN is set.
+    // Leave unset for single-host / localhost so BA keeps host-only cookies.
+    const cookieDomain = process.env.AUTH_COOKIE_DOMAIN?.trim();
+    const crossSubDomainCookies = cookieDomain
+      ? {
+          advanced: {
+            crossSubDomainCookies: {
+              enabled: true as const,
+              domain: cookieDomain,
+            },
+          },
+        }
+      : {};
+
     const auth = betterAuth({
       secret,
       baseURL: process.env.BETTER_AUTH_URL,
       ...(trustedOrigins.length > 0 ? { trustedOrigins } : {}),
+      ...crossSubDomainCookies,
       emailAndPassword: { enabled: true },
       socialProviders,
       database: prismaAdapter(

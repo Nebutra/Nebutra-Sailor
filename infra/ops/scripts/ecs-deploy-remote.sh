@@ -22,7 +22,7 @@
 set -euo pipefail
 
 DEPLOY_ROOT="${DEPLOY_ROOT:-/var/www/nebutra}"
-APPS="${APPS:-landing web api idp design-docs sailor-docs}"
+APPS="${APPS:-landing web api idp auth design-docs sailor-docs}"
 # Default 1 (was 2 since the May 12 disk-full incident reduced it from 5).
 # Cut to 1 on 2026-05-15 when design-docs joined as the 4th VM app — at 4
 # apps × ~1 GB/release × 2 releases small cloud disks can fill quickly.
@@ -45,11 +45,11 @@ capture_deploy_runtime_env() {
 DEPLOY_RUNTIME_KEYS=(
   DATABASE_URL DIRECT_URL SUPABASE_DATABASE_URL SUPABASE_DIRECT_URL
   AUTH_PROVIDER NEXT_PUBLIC_AUTH_PROVIDER VITE_AUTH_PROVIDER VITE_API_GATEWAY_URL VITE_AUTH_API_URL
-  BETTER_AUTH_SECRET BETTER_AUTH_URL
+  BETTER_AUTH_SECRET BETTER_AUTH_URL NEXT_PUBLIC_AUTH_URL AUTH_COOKIE_DOMAIN AUTH_RETURN_ALLOWED_HOSTS
   NEXT_PUBLIC_SITE_URL NEXT_PUBLIC_APP_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_API_GATEWAY_URL
   NEXT_PUBLIC_STUDIO_URL NEXT_PUBLIC_DOCS_URL NEBUTRA_LANDING_ORIGIN
-  NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_STUDIO
-  LANDING_URL WEB_URL STUDIO_URL CORS_ORIGINS
+  NEBUTRA_SESSION_HINT_DOMAIN DOMAIN_LANDING DOMAIN_APP DOMAIN_API DOMAIN_AUTH DOMAIN_STUDIO
+  LANDING_URL WEB_URL AUTH_URL STUDIO_URL CORS_ORIGINS
   UPSTASH_REDIS_REST_URL UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_URL UPSTASH_REDIS_TOKEN
   REDIS_URL OIDC_ISSUER OIDC_COOKIE_KEYS OIDC_ENABLE_CLIENT_CREDENTIALS
   GOOGLE_CLIENT_ID GOOGLE_CLIENT_SECRET NEXT_PUBLIC_GOOGLE_CLIENT_ID
@@ -86,8 +86,8 @@ log()  { echo "[$(date -u +%H:%M:%S)] $*"; }
 fail() { echo "::error:: $*" >&2; exit 1; }
 
 case "$APPS" in
-  *landing*|*web*|*api*|*idp*|*design-docs*|*sailor-docs*) : ;;
-  *) fail "APPS must contain at least one of: landing web api idp design-docs sailor-docs (got: $APPS)" ;;
+  *landing*|*web*|*api*|*idp*|*auth*|*design-docs*|*sailor-docs*) : ;;
+  *) fail "APPS must contain at least one of: landing web api idp auth design-docs sailor-docs (got: $APPS)" ;;
 esac
 
 mkdir -p "$DEPLOY_ROOT"
@@ -528,7 +528,7 @@ load_runtime_env() {
     log "no runtime env files found for $app"
   fi
 
-  if [ "$app" = "web" ] || [ "$app" = "api" ] || [ "$app" = "idp" ]; then
+  if [ "$app" = "web" ] || [ "$app" = "api" ] || [ "$app" = "idp" ] || [ "$app" = "auth" ]; then
     persist_database_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
@@ -553,6 +553,43 @@ load_runtime_env() {
     replace_env_assignment "$app_root/.env" HOSTNAME "127.0.0.1"
     replace_env_assignment "$app_root/.env" OIDC_ISSUER "$OIDC_ISSUER"
     replace_env_assignment "$app_root/.env" OIDC_ENABLE_CLIENT_CREDENTIALS "$OIDC_ENABLE_CLIENT_CREDENTIALS"
+    [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
+  fi
+
+  if [ "$app" = "auth" ]; then
+    # Login center: Better Auth authority for multi-app RPs.
+    BETTER_AUTH_URL="${BETTER_AUTH_URL:-https://auth.nebutra.com}"
+    NEXT_PUBLIC_AUTH_URL="${NEXT_PUBLIC_AUTH_URL:-https://auth.nebutra.com}"
+    AUTH_COOKIE_DOMAIN="${AUTH_COOKIE_DOMAIN:-.nebutra.com}"
+    NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL:-https://app.nebutra.com}"
+    NEXT_PUBLIC_SITE_URL="${NEXT_PUBLIC_SITE_URL:-https://nebutra.com}"
+    AUTH_PROVIDER="${AUTH_PROVIDER:-better-auth}"
+
+    local missing=()
+    [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+    [ -n "${BETTER_AUTH_SECRET:-}" ] || missing+=("BETTER_AUTH_SECRET")
+    if [ "${#missing[@]}" -gt 0 ]; then
+      load_existing_pm2_env "$pm2_name"
+      missing=()
+      [ -n "${DATABASE_URL:-}" ] || missing+=("DATABASE_URL")
+      [ -n "${BETTER_AUTH_SECRET:-}" ] || missing+=("BETTER_AUTH_SECRET")
+      if [ "${#missing[@]}" -gt 0 ]; then
+        fail "auth-center runtime env missing required keys: ${missing[*]}"
+      fi
+    fi
+
+    ensure_env_assignment "$app_root/.env" NODE_ENV "production"
+    replace_env_assignment "$app_root/.env" PORT "3101"
+    replace_env_assignment "$app_root/.env" HOSTNAME "127.0.0.1"
+    replace_env_assignment "$app_root/.env" AUTH_PROVIDER "$AUTH_PROVIDER"
+    replace_env_assignment "$app_root/.env" NEXT_PUBLIC_AUTH_PROVIDER "$AUTH_PROVIDER"
+    replace_env_assignment "$app_root/.env" BETTER_AUTH_URL "$BETTER_AUTH_URL"
+    replace_env_assignment "$app_root/.env" NEXT_PUBLIC_AUTH_URL "$NEXT_PUBLIC_AUTH_URL"
+    replace_env_assignment "$app_root/.env" AUTH_COOKIE_DOMAIN "$AUTH_COOKIE_DOMAIN"
+    replace_env_assignment "$app_root/.env" NEXT_PUBLIC_APP_URL "$NEXT_PUBLIC_APP_URL"
+    replace_env_assignment "$app_root/.env" NEXT_PUBLIC_SITE_URL "$NEXT_PUBLIC_SITE_URL"
+    persist_google_auth_runtime_env "$app_root"
+    persist_github_auth_runtime_env "$app_root"
     [ -f "$app_root/.env" ] && source_runtime_env_file "$app_root/.env"
   fi
 
@@ -1014,6 +1051,9 @@ for p in procs:
     idp)
       wait_for_local_http "idp" "$pm2_name" "http://127.0.0.1:3100/health" "^200$"
       ;;
+    auth-center|auth)
+      wait_for_local_http "auth-center" "$pm2_name" "http://127.0.0.1:3101/health" "^200$"
+      ;;
     design-docs)
       wait_for_local_http "design-docs" "$pm2_name" "http://127.0.0.1:3004/"
       ;;
@@ -1051,6 +1091,7 @@ pm2_name_for_app() {
     web)          printf '%s\n' "web" ;;
     api)          printf '%s\n' "api-gateway" ;;
     idp)          printf '%s\n' "idp" ;;
+    auth)         printf '%s\n' "auth-center" ;;
     design-docs)  printf '%s\n' "design-docs" ;;
     sailor-docs)  printf '%s\n' "sailor-docs" ;;
     *)            fail "unknown app: $1" ;;
@@ -1235,7 +1276,7 @@ verify_nginx_web_origin() {
 
 run_selected_apps() {
   local action="$1" app pm2_name
-  for app in api landing web idp design-docs sailor-docs; do
+  for app in api landing web idp auth design-docs sailor-docs; do
     case " $APPS " in
       *" $app "*) : ;;
       *) continue ;;
@@ -1253,7 +1294,7 @@ if [ "$MODE" = "rollback" ]; then
   exit 0
 fi
 
-for app in api landing web idp design-docs sailor-docs; do
+for app in api landing web idp auth design-docs sailor-docs; do
   case " $APPS " in
     *" $app "*) : ;;
     *) continue ;;
@@ -1264,6 +1305,7 @@ for app in api landing web idp design-docs sailor-docs; do
     web)          deploy_one web         web          ;;
     api)          deploy_one api         api-gateway  ;;
     idp)          deploy_one idp         idp          ;;
+    auth)         deploy_one auth        auth-center  ;;
     design-docs)  deploy_one design-docs design-docs  ;;
     sailor-docs)  deploy_one sailor-docs sailor-docs  ;;
     *)            fail "unknown app: $app"            ;;

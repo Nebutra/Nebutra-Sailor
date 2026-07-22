@@ -6,9 +6,10 @@
 |-----------|-----|---------|
 | `nebutra.com` | landing-page | Marketing site |
 | `www.nebutra.com` | landing-page | Redirect to apex |
-| `app.nebutra.com` | web | Main SaaS dashboard |
+| `auth.nebutra.com` | auth-center | **Login center** (Better Auth UX + session authority for multi-app RPs) |
+| `app.nebutra.com` | web | Main SaaS dashboard (RP — redirects unauthenticated users to auth) |
 | `api.nebutra.com` | api-gateway | BFF API endpoints |
-| `sso.nebutra.com` | idp | Nebutra-owned OIDC issuer for first-party/internal apps |
+| `sso.nebutra.com` | idp | **OIDC IdP** — issuer URL permanent; used for SSO / internal tools |
 | `design.nebutra.com` | design-docs | Design system docs |
 | `docs.nebutra.com` | sailor-docs (Vercel project `docs`) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
@@ -24,6 +25,7 @@ Type    Name      Value                    TTL
 A       @         76.76.21.21              Auto
 CNAME   www       cname.vercel-dns.com     Auto
 CNAME   app       cname.vercel-dns.com     Auto
+CNAME   auth      <auth-center host>       Auto
 CNAME   api       cname.vercel-dns.com     Auto
 CNAME   sso       <idp host>               Auto
 CNAME   studio    <studio host>            Auto
@@ -42,18 +44,28 @@ CNAME   studio    <studio host>            Auto
 - Domain: `nebutra.com`, `www.nebutra.com`
 - Redirect: `www` → apex (301)
 
-### 2. web
-- Domain: `app.nebutra.com`
+### 2. auth-center (`apps/auth`)
+- Domain: `auth.nebutra.com`
+- `BETTER_AUTH_URL=https://auth.nebutra.com`
+- `NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com`
+- `AUTH_COOKIE_DOMAIN=.nebutra.com` (multi-app session cookies)
+- `NEXT_PUBLIC_APP_URL=https://app.nebutra.com` (default returnTo)
+- Do **not** change OIDC issuer to this host — issuer stays on `sso`.
 
-### 3. api-gateway
+### 3. web
+- Domain: `app.nebutra.com`
+- Unauthenticated product routes redirect to `auth.nebutra.com/sign-in?returnTo=…`
+- `NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com`
+
+### 4. api-gateway
 - Domain: `api.nebutra.com`
 
-### 4. idp
+### 5. idp
 - Domain: `sso.nebutra.com`
 - Serves `https://sso.nebutra.com/.well-known/openid-configuration`
 - Keep `OIDC_ISSUER=https://sso.nebutra.com` and do not path-prefix the issuer.
 
-### 5. studio
+### 6. studio
 - Canonical hosted Studio: `nebutra.sanity.studio`
 - Optional branded domain: `studio.nebutra.com` after the hosting/DNS binding is
   active
@@ -66,8 +78,20 @@ Set these in each project's Vercel dashboard:
 ```
 NEXT_PUBLIC_SITE_URL=https://nebutra.com
 NEXT_PUBLIC_APP_URL=https://app.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
 NEXT_PUBLIC_API_URL=https://api.nebutra.com
 NEXT_PUBLIC_STUDIO_URL=https://studio.nebutra.com
+```
+
+### auth-center
+```
+BETTER_AUTH_URL=https://auth.nebutra.com
+NEXT_PUBLIC_AUTH_URL=https://auth.nebutra.com
+AUTH_COOKIE_DOMAIN=.nebutra.com
+NEXT_PUBLIC_APP_URL=https://app.nebutra.com
+NEXT_PUBLIC_SITE_URL=https://nebutra.com
+BETTER_AUTH_SECRET=<base64-32+>
+AUTH_PROVIDER=better-auth
 ```
 
 ### idp
@@ -81,6 +105,7 @@ REDIS_URL=redis://...
 ```
 LANDING_URL=https://nebutra.com
 WEB_URL=https://app.nebutra.com
+AUTH_URL=https://auth.nebutra.com
 STUDIO_URL=https://studio.nebutra.com
 ```
 

@@ -1,7 +1,7 @@
 import "server-only";
 
 import type { Session, User } from "@nebutra/auth";
-import { getConfiguredAuthProvider } from "@nebutra/auth";
+import { buildAuthCenterSignInUrl, getConfiguredAuthProvider } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -194,14 +194,15 @@ export async function getUser(): Promise<User | null> {
 }
 
 /**
- * Require authentication, redirect to sign-in if not authenticated
- * Use at the top of protected Server Components
+ * Require authentication, redirect to login center if not authenticated.
+ * Multi-app RP model: product apps never own the primary login UI.
  */
 export async function requireAuth() {
   const { userId } = await getAuth();
 
   if (!userId) {
-    redirect("/sign-in");
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || defaultPublicUrls.appUrl;
+    redirect(buildAuthCenterSignInUrl(`${appUrl.replace(/\/$/, "")}/dashboard`));
   }
 
   return { userId };
@@ -215,7 +216,8 @@ export async function requireOrg() {
   const { userId, orgId } = await getAuth();
 
   if (!userId) {
-    redirect("/sign-in");
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || defaultPublicUrls.appUrl;
+    redirect(buildAuthCenterSignInUrl(`${appUrl.replace(/\/$/, "")}/select-org`));
   }
 
   if (!orgId) {

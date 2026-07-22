@@ -1,0 +1,14 @@
+@import "@nebutra/tokens/styles.css";
+@import "tailwindcss";
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+  background: var(--background, #0a0a0b);
+  color: var(--foreground, #fafafa);
+}
