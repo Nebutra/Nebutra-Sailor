@@ -8,6 +8,8 @@ node_modules
 # Build outputs
 dist
 .next
+.open-next
+.wrangler
 .turbo
 out
 storybook-static

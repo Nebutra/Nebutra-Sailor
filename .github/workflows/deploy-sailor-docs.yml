@@ -1,0 +1,158 @@
+name: Deploy Sailor Docs
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: "Sailor docs deploy target to activate"
+        required: true
+        default: "cloudflare-pages"
+        type: choice
+        options:
+          - cloudflare-pages
+          - standalone
+          - vercel
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - "apps/sailor-docs/**"
+      - "packages/ui/**"
+      - "packages/brand/**"
+      - "packages/tokens/**"
+      - "packages/icons/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/deploy-sailor-docs.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-sailor-docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cloudflare-pages:
+    name: Cloudflare Workers (OpenNext) docs
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'workflow_dispatch' && inputs.deploy_target == 'cloudflare-pages') ||
+      (github.event_name == 'push' &&
+        (vars.DEPLOY_TARGET_SAILOR_DOCS == 'cloudflare-pages' || vars.DEPLOY_TARGET_SAILOR_DOCS == '')) ||
+      (github.event_name == 'workflow_run' &&
+        github.event.workflow_run.conclusion == 'success' &&
+        (vars.DEPLOY_TARGET_SAILOR_DOCS == 'cloudflare-pages' || vars.DEPLOY_TARGET_SAILOR_DOCS == ''))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Validate Cloudflare credentials
+        run: |
+          [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ] || { echo "::error::CLOUDFLARE_API_TOKEN secret is not set"; exit 1; }
+          [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] || { echo "::error::CLOUDFLARE_ACCOUNT_ID secret is not set"; exit 1; }
+
+      - name: Build workspace packages required by sailor-docs
+        run: |
+          pnpm --filter @nebutra/tokens build
+          pnpm --filter @nebutra/brand build
+          pnpm --filter @nebutra/icons build
+          pnpm --filter @nebutra/ui build
+
+      - name: Build OpenNext Worker
+        working-directory: apps/sailor-docs
+        env:
+          OPEN_NEXT_BUILD: "true"
+          NEXT_PUBLIC_DOCS_ORIGIN_URL: https://docs.nebutra.com
+          # Optional features stay soft-fail when unset (chat/feedback).
+          INKEEP_API_KEY: ${{ secrets.INKEEP_API_KEY }}
+          GITHUB_APP_ID: ${{ secrets.GITHUB_APP_ID }}
+          GITHUB_APP_PRIVATE_KEY: ${{ secrets.GITHUB_APP_PRIVATE_KEY }}
+        run: pnpm build:worker
+
+      - name: Deploy Worker
+        id: deploy
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/sailor-docs
+          command: deploy --config wrangler.jsonc
+
+      - name: Point docs.nebutra.com DNS at Workers (proxied)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          # Workers custom-domain style: CNAME docs → nebutra-sailor-docs.<workers-subdomain>.workers.dev
+          # with CF proxy on. Routes in wrangler.jsonc already bind the hostname to the script.
+          TOKEN="$CLOUDFLARE_API_TOKEN"
+          ZONE_JSON=$(curl -sS -H "Authorization: Bearer $TOKEN" \
+            "https://api.cloudflare.com/client/v4/zones?name=nebutra.com")
+          ZONE_ID=$(python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["result"][0]["id"] if d.get("result") else "")' <<<"$ZONE_JSON")
+          [ -n "$ZONE_ID" ] || { echo "::error::zone nebutra.com not found"; exit 1; }
+
+          # Discover workers.dev subdomain for this account
+          ACC="${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
+          SUB=$(curl -sS -H "Authorization: Bearer $TOKEN" \
+            "https://api.cloudflare.com/client/v4/accounts/$ACC/workers/subdomain" \
+            | python3 -c 'import json,sys; d=json.load(sys.stdin); print((d.get("result") or {}).get("subdomain") or "")')
+          if [ -z "$SUB" ]; then
+            echo "::warning::Could not resolve workers subdomain; skip DNS upsert"
+            exit 0
+          fi
+          TARGET="nebutra-sailor-docs.${SUB}.workers.dev"
+          echo "DNS target: $TARGET"
+
+          EXISTING=$(curl -sS -H "Authorization: Bearer $TOKEN" \
+            "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records?name=docs.nebutra.com")
+          RID=$(python3 -c 'import json,sys; d=json.load(sys.stdin); r=d.get("result") or []; print(r[0]["id"] if r else "")' <<<"$EXISTING")
+          BODY=$(python3 -c "import json; print(json.dumps({'type':'CNAME','name':'docs','content':'$TARGET','proxied':True,'ttl':1}))")
+
+          if [ -n "$RID" ]; then
+            curl -sS -X PUT -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+              --data "$BODY" \
+              "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RID" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("update ok" if d.get("success") else d)'
+          else
+            curl -sS -X POST -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+              --data "$BODY" \
+              "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" | python3 -c 'import json,sys; d=json.load(sys.stdin); print("create ok" if d.get("success") else d)'
+          fi
+
+      - name: Smoke docs origin
+        run: |
+          set -euo pipefail
+          sleep 5
+          ok=0
+          for url in \
+            "https://docs.nebutra.com/en" \
+            "https://docs.nebutra.com/"
+          do
+            code=$(curl -sS -o /tmp/docs-smoke.html -w '%{http_code}' --max-time 30 -L "$url" || echo "000")
+            echo "GET $url -> $code"
+            if [ "$code" = "200" ]; then
+              # Reject accidental landing redirect bodies if status somehow 200
+              if grep -qi 'fumadocs\|sailor\|Documentation' /tmp/docs-smoke.html 2>/dev/null; then
+                ok=1
+                break
+              fi
+              # Still accept 200 if not the marketing One Tap page
+              if ! grep -qi 'Google One Tap\|nebutra_session_hint' /tmp/docs-smoke.html 2>/dev/null; then
+                ok=1
+                break
+              fi
+            fi
+          done
+          if [ "$ok" != "1" ]; then
+            echo "::warning::Custom domain smoke did not look healthy yet; deploy may still succeed. Check DNS/routes."
+            # Do not fail the job solely on DNS lag after a successful wrangler deploy.
+            exit 0
+          fi
+          echo "docs smoke OK"

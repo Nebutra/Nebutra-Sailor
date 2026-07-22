@@ -3,11 +3,19 @@ import { isMarkdownPreferred, rewritePath } from "fumadocs-core/negotiation";
 import { NextResponse } from "next/server";
 import { i18n } from "./lib/i18n";
 
+/**
+ * Edge Middleware (not Next 16 `proxy.ts`).
+ *
+ * Next.js 16 renamed middleware → proxy and defaults proxy to the Node.js
+ * runtime. OpenNext Cloudflare only supports Edge Middleware, so we keep the
+ * deprecated `middleware.ts` convention until OpenNext gains Node proxy
+ * support. Logic is pure Request/Response rewrites and is edge-safe.
+ */
 const i18nProxy = createI18nMiddleware(i18n);
 const markdownDocsPath = rewritePath("/:lang/:slug{/*rest}", "/llms.mdx/docs/:lang/:slug{/*rest}");
 const localizedDocsPath = new RegExp(`^/(${i18n.languages.join("|")})/[^/]+`);
 
-export function proxy(...args: Parameters<typeof i18nProxy>) {
+export function middleware(...args: Parameters<typeof i18nProxy>) {
   const [request] = args;
   const markdownResponse = rewriteMarkdownRequest(request);
   if (markdownResponse) {
