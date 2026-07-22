@@ -27,7 +27,8 @@ pre-push:
     i18n-check:
       # Only runs when landing-page locale files are part of the push.
       glob: "apps/landing-page/messages/*.json"
-      run: pnpm i18n:check
+      # Bypass pnpm verify-deps noise in agent shells that flip injected-deps config.
+      run: npm_config_verify_deps_before_run=false pnpm i18n:check
 
 commit-msg:
   commands:

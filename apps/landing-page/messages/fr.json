@@ -1610,34 +1610,6 @@
     "title": "Obtenez votre licence — {brandName}",
     "description": "Obtenez votre licence {brandName} et accès à la plateforme en 2 minutes."
   },
-  "cookieConsent": {
-    "banner": {
-      "title": "Vos choix en matière de confidentialité",
-      "description": "Nous utilisons des cookies pour améliorer votre expérience, analyser le trafic du site et personnaliser le contenu. Choisissez les catégories que vous souhaitez autoriser."
-    },
-    "button": {
-      "acceptAll": "Tout accepter",
-      "savePreferences": "Enregistrer les préférences"
-    },
-    "toggle": {
-      "necessary": {
-        "label": "Nécessaires",
-        "description": "Requis pour le bon fonctionnement du site. Ne peut pas être désactivé."
-      },
-      "functional": {
-        "label": "Fonctionnels",
-        "description": "Mémorisent vos préférences (langue, thème, mise en page)."
-      },
-      "analytics": {
-        "label": "Analytique",
-        "description": "Données d'utilisation anonymes pour améliorer le produit."
-      },
-      "marketing": {
-        "label": "Marketing",
-        "description": "Publicité personnalisée et reciblage sur des plateformes tierces."
-      }
-    }
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",

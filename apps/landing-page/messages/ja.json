@@ -1610,34 +1610,6 @@
     "title": "ライセンスを取得 — {brandName}",
     "description": "2 分で {brandName} ライセンスとプラットフォームアクセスを取得してください。"
   },
-  "cookieConsent": {
-    "banner": {
-      "title": "プライバシー設定",
-      "description": "当サイトでは、ご利用体験の向上、サイトトラフィックの分析、コンテンツのパーソナライズのために Cookie を使用しています。許可するカテゴリーを選択してください。"
-    },
-    "button": {
-      "acceptAll": "すべて許可",
-      "savePreferences": "設定を保存"
-    },
-    "toggle": {
-      "necessary": {
-        "label": "必須",
-        "description": "サイトの正常動作に必要です。無効にすることはできません。"
-      },
-      "functional": {
-        "label": "機能",
-        "description": "言語・テーマ・レイアウトなどの設定を保存します。"
-      },
-      "analytics": {
-        "label": "分析",
-        "description": "匿名の利用データを収集し、プロダクト改善に活用します。"
-      },
-      "marketing": {
-        "label": "マーケティング",
-        "description": "サードパーティプラットフォームでのパーソナライズ広告とリターゲティングに使用します。"
-      }
-    }
-  },
   "compliance": {
     "icp": {
       "recordNumber": "ICP登録",

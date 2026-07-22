@@ -1616,34 +1616,6 @@
       "recordNumber": "ICP 등록"
     }
   },
-  "cookieConsent": {
-    "banner": {
-      "title": "개인정보 설정",
-      "description": "사용자 경험 개선, 사이트 트래픽 분석, 콘텐츠 맞춤화를 위해 쿠키를 사용합니다. 허용할 카테고리를 선택해 주십시오."
-    },
-    "button": {
-      "acceptAll": "모두 수락",
-      "savePreferences": "설정 저장"
-    },
-    "toggle": {
-      "necessary": {
-        "label": "필수",
-        "description": "사이트 기능에 필수적이며 비활성화할 수 없습니다."
-      },
-      "functional": {
-        "label": "기능",
-        "description": "언어, 테마, 레이아웃 등 사용자 설정을 기억합니다."
-      },
-      "analytics": {
-        "label": "분석",
-        "description": "익명 사용 데이터로 제품을 개선합니다."
-      },
-      "marketing": {
-        "label": "마케팅",
-        "description": "타사 플랫폼에서의 맞춤형 광고 및 리타겟팅에 사용됩니다."
-      }
-    }
-  },
   "icpFooter": {
     "publicSecurity": "공안비안 번호",
     "recordNumber": "ICP 등록"

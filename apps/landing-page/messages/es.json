@@ -1610,34 +1610,6 @@
     "title": "Obtenga su Licencia — {brandName}",
     "description": "Obtenga su licencia de {brandName} y acceso a la plataforma en 2 minutos."
   },
-  "cookieConsent": {
-    "banner": {
-      "title": "Sus opciones de privacidad",
-      "description": "Usamos cookies para mejorar su experiencia, analizar el tráfico del sitio y personalizar el contenido. Elija qué categorías desea permitir."
-    },
-    "button": {
-      "acceptAll": "Aceptar todas",
-      "savePreferences": "Guardar preferencias"
-    },
-    "toggle": {
-      "necessary": {
-        "label": "Necesarias",
-        "description": "Requeridas para el funcionamiento del sitio. No se pueden deshabilitar."
-      },
-      "functional": {
-        "label": "Funcionales",
-        "description": "Recuerdan sus preferencias (idioma, tema, diseño)."
-      },
-      "analytics": {
-        "label": "Análisis",
-        "description": "Datos de uso anónimos para que podamos mejorar el producto."
-      },
-      "marketing": {
-        "label": "Marketing",
-        "description": "Publicidad personalizada y retargeting en plataformas de terceros."
-      }
-    }
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",

@@ -1610,34 +1610,6 @@
     "title": "Get Your License — {brandName}",
     "description": "Get your {brandName} license and platform access in 2 minutes."
   },
-  "cookieConsent": {
-    "banner": {
-      "title": "Your privacy choices",
-      "description": "We use cookies to improve your experience, analyze site traffic, and personalize content. Choose which categories you want to allow."
-    },
-    "button": {
-      "acceptAll": "Accept all",
-      "savePreferences": "Save preferences"
-    },
-    "toggle": {
-      "necessary": {
-        "label": "Necessary",
-        "description": "Required for the site to function. Cannot be disabled."
-      },
-      "functional": {
-        "label": "Functional",
-        "description": "Remember your preferences (language, theme, layout)."
-      },
-      "analytics": {
-        "label": "Analytics",
-        "description": "Anonymous usage data so we can improve the product."
-      },
-      "marketing": {
-        "label": "Marketing",
-        "description": "Personalized advertising and retargeting on third-party platforms."
-      }
-    }
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",

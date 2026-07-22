@@ -14,7 +14,6 @@ import Script from "next/script";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
-import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { IcpFooter } from "@/components/icp-footer";
 import RouteSkeleton from "@/components/ui/route-skeleton";
@@ -161,7 +160,6 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
   // to keep the JS bundle lean (~979 keys → client-relevant subset).
   const CLIENT_NAMESPACES = [
     "nav",
-    "cookieConsent",
     "licenseWizard",
     "legalPages",
     "monorepoTree",
@@ -207,13 +205,12 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
           <ErrorBoundary>
             <NextIntlClientProvider locale={locale} messages={clientMessages}>
               {/*
-               * Suspense boundary: the shell (CookieConsentBanner, IcpFooter,
-               * Toaster) is outside so it renders immediately from the cached
-               * layout. Children stream in via RouteSkeleton → reduces the
-               * visible stall on locale switches to near-zero.
+               * Suspense boundary: the shell (IcpFooter, Toaster) is outside so
+               * it renders immediately from the cached layout. Children stream
+               * in via RouteSkeleton → reduces the visible stall on locale
+               * switches to near-zero.
                */}
               <Suspense fallback={<RouteSkeleton />}>{children}</Suspense>
-              <CookieConsentBanner apiEndpoint={process.env.NEXT_PUBLIC_COOKIE_CONSENT_ENDPOINT} />
               {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
                 <IcpFooter
                   locale={locale}

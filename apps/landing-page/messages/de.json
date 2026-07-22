@@ -1610,34 +1610,6 @@
     "title": "Hol dir deine Lizenz — {brandName}",
     "description": "Holen Sie sich Ihre {brandName}-Lizenz und Plattformzugang in 2 Minuten."
   },
-  "cookieConsent": {
-    "banner": {
-      "title": "Ihre Datenschutzeinstellungen",
-      "description": "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern, den Website-Traffic zu analysieren und Inhalte zu personalisieren. Wählen Sie aus, welche Kategorien Sie zulassen möchten."
-    },
-    "button": {
-      "acceptAll": "Alle akzeptieren",
-      "savePreferences": "Einstellungen speichern"
-    },
-    "toggle": {
-      "necessary": {
-        "label": "Notwendig",
-        "description": "Erforderlich für die Funktion der Website. Kann nicht deaktiviert werden."
-      },
-      "functional": {
-        "label": "Funktional",
-        "description": "Speichert Ihre Einstellungen (Sprache, Theme, Layout)."
-      },
-      "analytics": {
-        "label": "Analyse",
-        "description": "Anonyme Nutzungsdaten zur Verbesserung des Produkts."
-      },
-      "marketing": {
-        "label": "Marketing",
-        "description": "Personalisierte Werbung und Retargeting auf Drittanbieter-Plattformen."
-      }
-    }
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",
