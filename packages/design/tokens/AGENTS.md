@@ -12,7 +12,7 @@ base semantic CSS variables and the light/dark theme-provider surface.
 ## Source Of Truth
 
 - Public package surface and exports: `package.json`, `src/index.ts`
-- Canonical runtime token definitions and semantic CSS variables: `styles.css`
+- Canonical runtime token definitions: `styles.css` (generated from `@nebutra/design-tokens` via `sync-styles.mjs`; keep `verify:parity` at 100%)
 
 ## Contract Boundaries
 
@@ -25,7 +25,7 @@ base semantic CSS variables and the light/dark theme-provider surface.
   product-mood presets here. **Design-language catalog & global swap** belong in
   `@nebutra/theme` (`languages.json`, `applyLanguage`, `skins.css`). Brand Package
   *engine* (compile / emit / normalize) stays in this package (`brand-package/`).
-  Legacy oklch moods are `[data-theme]`-only — never a second root `@theme` primary.
+  Multi-mood oklch catalogs were deleted — never reintroduce a second root `@theme` primary.
 - Preserve the package boundary between CSS tokens and component usage.
   `@nebutra/ui` and apps should consume the exported CSS surface rather than
   importing token internals.

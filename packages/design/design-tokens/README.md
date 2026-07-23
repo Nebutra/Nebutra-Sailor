@@ -2,7 +2,7 @@
 
 W3C DTCG (`$value`/`$type`) tokens as the new SSOT, fed through Style Dictionary 4 to generate CSS / TypeScript / Tailwind preset artifacts.
 
-> **Coexistence, not replacement.** This package runs *alongside* `packages/design/tokens/styles.css`, `packages/design/theme/themes.css`, `packages/design/ui/src/tokens/`, and `packages/design/brand/src/`. Apps continue to consume the legacy SSOT until parity is at 100% and migrations land.
+> **Generated runtime contract.** DTCG JSON → Style Dictionary → `build/css/styles.generated.css` → copied to `@nebutra/tokens/styles.css` via `pnpm --filter @nebutra/tokens sync`. `verify:parity` must stay **100%**. Keyframes: `@nebutra/theme/keyframes.css`. Design-language swap: Brand Packages on `@nebutra/theme`.
 
 ---
 
@@ -14,13 +14,8 @@ packages/design/design-tokens/
 │   ├── core.json               primitive scales (nebutra-blue/cyan/neutral, status, sizes)
 │   ├── semantic.json           semantic aliases (brand.primary, status.danger, brand.gradient)
 │   └── themes/
-│       ├── light.json          12-step scales + shadcn HSL + Geist DS + elevation (light)
-│       ├── dark.json           same shape, dark-mode values
-│       ├── nebutra.json        multi-theme: Nebutra default (blue/cyan brand)
-│       ├── dark-dense.json     multi-theme: DevOps Dashboard
-│       ├── minimal.json        multi-theme: Blog/Portfolio
-│       ├── vibrant.json        multi-theme: Creative UI/UX
-│       └── ocean.json          multi-theme: Community
+│       ├── light.json          12-step scales + shadcn HSL + elevation (light)
+│       └── dark.json           same shape, dark-mode values
 ├── style-dictionary.config.mjs three platforms: CSS, TS, Tailwind preset
 ├── scripts/
 │   └── verify-parity.ts        diffs build/css/styles.generated.css vs legacy SSOT
@@ -36,7 +31,7 @@ packages/design/design-tokens/
 # Generate all artifacts
 pnpm --filter @nebutra/design-tokens build
 
-# Diff generated CSS against the legacy SSOT
+# Diff generated CSS against tokens/styles.css (must stay 100%)
 pnpm --filter @nebutra/design-tokens verify:parity
 
 # Clean and rebuild
@@ -95,29 +90,33 @@ A custom Style Dictionary transform (`name/nebutra/css`) maps DTCG paths to the 
 | `easing.out`                | `--ease-out`            |
 | `fontFamily.sans`           | `--font-sans`           |
 
-This keeps the generated CSS interchangeable with the manually-maintained `packages/design/tokens/styles.css` for ongoing parity verification.
+This keeps the generated CSS interchangeable with runtime `packages/design/tokens/styles.css` (sync copies generated → runtime).
 
 ## Build modes
 
 The build emits one file per mode:
 
-| Mode         | Selector                    | Source files                                               |
-|--------------|-----------------------------|------------------------------------------------------------|
-| `light`      | `:root`                     | core.json + semantic.json + themes/light.json              |
-| `dark`       | `.dark`                     | core.json + semantic.json + themes/dark.json               |
-| `nebutra`    | `[data-theme="nebutra"]`    | core.json + semantic.json + themes/nebutra.json            |
-| `dark-dense` | `[data-theme="dark-dense"]` | core.json + semantic.json + themes/dark-dense.json         |
-| `minimal`    | `[data-theme="minimal"]`    | core.json + semantic.json + themes/minimal.json            |
-| `vibrant`    | `[data-theme="vibrant"]`    | core.json + semantic.json + themes/vibrant.json            |
-| `ocean`      | `[data-theme="ocean"]`      | core.json + semantic.json + themes/ocean.json              |
+| Mode    | Selector | Source files                                  |
+|---------|----------|-----------------------------------------------|
+| `light` | `:root`  | core.json + semantic.json + themes/light.json |
+| `dark`  | `.dark`  | core.json + semantic.json + themes/dark.json  |
 
 `build/css/styles.generated.css` is the concatenation of `light.css` + `dark.css` and is the file that `verify-parity.ts` diffs against `packages/design/tokens/styles.css`.
 
 ## Parity status
 
-Run `pnpm verify:parity` for the live report. Current baseline (Phase 1):
+Run `pnpm verify:parity` for the live report. **Contract: 100% overall** (exit non-zero below floor).
 
-- `:root`: ~86%
+Runtime product chrome is `packages/design/tokens/styles.css`, refreshed by:
+
+```bash
+pnpm --filter @nebutra/design-tokens build
+pnpm --filter @nebutra/tokens sync
+```
+
+Baseline when last verified:
+
+- `:root` / `.dark`: 100% matched
 - `.dark`: ~87%
 - **Overall: ~87% tokens at parity**
 
@@ -148,4 +147,12 @@ pnpm add -D @terrazzo/cli @terrazzo/plugin-css @terrazzo/plugin-js --filter @neb
 
 ## Why not edit `packages/design/tokens/styles.css` directly?
 
-The legacy file is hand-tuned with cascade-aware overrides (`@supports`, `@theme inline`, `@utility`), which Style Dictionary's CSS formatter does not yet emit ergonomically. Until parity reaches 100% and we adopt a tool capable of emitting those constructs (likely SD + a custom format), the manual file remains the runtime SSOT and this package is the *machine-readable* SSOT used by Figma sync, design-doc generators, and Storybook visualizations.
+**Do not hand-edit runtime `styles.css`.** Edit DTCG under `tokens/*`, then:
+
+```bash
+pnpm --filter @nebutra/design-tokens build
+pnpm --filter @nebutra/design-tokens verify:parity
+pnpm --filter @nebutra/tokens sync
+```
+
+`styles.css` is the published runtime file; this package is the machine-readable authoring SSOT (Figma, design-doc, Storybook).

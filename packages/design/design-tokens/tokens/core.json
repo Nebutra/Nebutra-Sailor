@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Nebutra primitive (core) tokens — W3C DTCG draft. SSOT for the design system. Edits here propagate to packages/design/tokens/styles.css, packages/design/theme/themes.css, and TS bridges via Style Dictionary.",
+  "$description": "Nebutra primitive (core) tokens — W3C DTCG draft. Style Dictionary generates build/css/* for parity checks against runtime @nebutra/tokens/styles.css and @nebutra/theme/keyframes.css.",
   "color": {
     "nebutra-blue": {
       "50": {

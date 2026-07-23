@@ -3,7 +3,13 @@
 import { withRegistryFont } from "@nebutra/fonts";
 import { useEffect, useRef, useState } from "react";
 
-import { CODE_FONT_STACKS, UI_FONT_STACKS, useAppearance, useAppearanceStore } from "./store";
+import {
+  CODE_FONT_STACKS,
+  isFactoryLanguageId,
+  UI_FONT_STACKS,
+  useAppearance,
+  useAppearanceStore,
+} from "./store";
 
 // ─── Browser-probe CSS-color → HSL triple ────────────────────────────────────
 //
@@ -145,7 +151,7 @@ export default function AppearanceVarsProvider(): null {
   // position (we read the DOM class directly).
   const [isDark, setIsDark] = useState(false);
   // CSS custom-property names we last wrote for the active preset, so we can
-  // remove exactly those when the preset changes or resets to "default".
+  // remove exactly those when the import path changes or resets to factory.
   const appliedThemeVars = useRef<string[]>([]);
 
   // The store persists with skipHydration:true so SSR and the first client
@@ -230,23 +236,20 @@ export default function AppearanceVarsProvider(): null {
     return () => observer.disconnect();
   }, []);
 
-  // Apply the selected Theme Playground preset (or imported DESIGN.md theme)
-  // across the whole app. The heavy theme token-sets (~78 themes) and the
-  // DESIGN.md token resolver are lazy-imported only when actually needed, so
-  // neither path adds anything to the global bundle.
-  // Precedence: importedTheme > theme preset > default (no-op).
+  // Apply design language (Brand Package carrier) or imported DESIGN.md.
+  // Precedence: importedTheme > design language > factory (tokens SSOT).
   //
-  // KEY FIX: instead of (only) writing --color-* vars (which Tailwind v4
-  // @theme inline inlines at build time and therefore ignores at runtime),
-  // we convert each theme color to an HSL triple and write the shadcn BASE
-  // vars (--background, --primary, …). The app consumes these as
-  // hsl(var(--background)) etc. — those are runtime var() calls that DO
-  // reflect property changes on <html>.
+  // Design languages use applyLanguage() → inject full Brand Package CSS
+  // (roles + recipe + elev + zones) and set html[data-brand]. That is the
+  // product chrome contract — not a partial --color-* preview map.
+  //
+  // DESIGN.md imports still rasterize token colors to HSL channel triples for
+  // shadcn base vars (oklch/hex → canvas probe), since they are not Brand Packages.
   useEffect(() => {
     if (typeof document === "undefined") return;
     const root = document.documentElement;
 
-    // Always clear the previously-applied preset vars first.
+    // Clear previously-applied inline vars (import path only).
     for (const name of appliedThemeVars.current) root.style.removeProperty(name);
     appliedThemeVars.current = [];
 
@@ -260,18 +263,6 @@ export default function AppearanceVarsProvider(): null {
       applied.push(name);
     };
 
-    /**
-     * Core helper: given the resolved --color-* style record from a theme
-     * resolver, write the shadcn base HSL triple vars on <html>.
-     *
-     * For every shadcn role (e.g. "background"), we:
-     *   1. Look up the resolved --color-background oklch/hex value.
-     *   2. Convert it to an HSL triple via the DOM probe.
-     *   3. Set --background (the base var) to that triple.
-     *
-     * This makes hsl(var(--background)) resolve to the theme color, which is
-     * what every Tailwind utility class and direct CSS reference reads.
-     */
     function applyBaseHslVars(style: Record<string, string>) {
       for (const role of SHADCN_ROLES) {
         const colorValue = style[`--color-${role}`];
@@ -281,12 +272,6 @@ export default function AppearanceVarsProvider(): null {
       }
     }
 
-    /**
-     * Sidebar vars — the playground canvas has no sidebar, so neither resolver
-     * emits these. We derive them from the resolved brand/surface colors.
-     * Written as HSL triples (--sidebar, not --color-sidebar) to match the
-     * same pattern as the rest of the shadcn base vars.
-     */
     function applySidebarHslVars(style: Record<string, string>) {
       const pairs: Array<[string, string | undefined]> = [
         ["--sidebar", style["--color-card"] ?? style["--color-background"]],
@@ -309,12 +294,6 @@ export default function AppearanceVarsProvider(): null {
       }
     }
 
-    /**
-     * Radius — the app reads the full scale directly (e.g.
-     * rounded-[var(--radius-lg)]), so we copy every emitted step, not just one.
-     * Also mirror --radius-md → --radius (shadcn primitives' calc() base).
-     * Values are already lengths (e.g. "0.5rem"); no conversion needed.
-     */
     function applyRadiusVars(style: Record<string, string>) {
       for (const key of ["sm", "md", "lg", "xl", "full"]) {
         set(`--radius-${key}`, style[`--radius-${key}`]);
@@ -323,65 +302,35 @@ export default function AppearanceVarsProvider(): null {
       if (radiusMd) set("--radius", radiusMd);
     }
 
-    /**
-     * Font family — set the theme's sans / heading / mono base vars. These layer
-     * UNDER the user's explicit font override (--user-ui-font / --user-code-font)
-     * and any locale CJK font rules, so a theme font shows wherever those don't
-     * shadow it (headings, code surfaces, font-sans utilities).
-     *
-     * withRegistryFont prepends the self-hosted `var(--font-*)` when the theme /
-     * DESIGN.md font's primary family is in the @nebutra/fonts registry, so a
-     * common OSS font (Inter, Space Grotesk, JetBrains Mono, …) actually renders
-     * — with zero runtime external requests. Unregistered (e.g. proprietary)
-     * families pass through unchanged and fall back gracefully.
-     */
     function applyFontVars(style: Record<string, string>) {
       set("--font-sans", withRegistryFont(style["--font-sans"]));
       set("--font-heading", withRegistryFont(style["--font-heading"]));
       set("--font-mono", withRegistryFont(style["--font-mono"]));
     }
 
-    /**
-     * Shadow / elevation — copy the emitted shadow scale so cards, popovers and
-     * any `box-shadow: var(--shadow-*)` consumer reflects the theme's elevation.
-     */
     function applyShadowVars(style: Record<string, string>) {
       for (const key of ["sm", "md", "lg", "xl"]) {
         set(`--shadow-${key}`, style[`--shadow-${key}`]);
       }
     }
 
-    /**
-     * Type-scale — base/heading size + heading weight. body font-size consumes
-     * --text-base when the user defers (see globals.css); h1-h6 weight consumes
-     * --font-weight-heading. Built-in presets carry none of these (no-op); they
-     * arrive via DESIGN.md imports.
-     */
     function applyTypeScaleVars(style: Record<string, string>) {
       set("--text-base", style["--text-base"]);
       set("--text-heading", style["--text-heading"]);
       set("--font-weight-heading", style["--font-weight-heading"]);
     }
 
-    /**
-     * Spacing density — expose the raw scale, then remap Tailwind's --spacing
-     * base from the theme's medium step so all p-/m-/gap- utilities scale with
-     * the theme's rhythm. Reference: a comfortable DESIGN.md spacing.md ≈ 1rem,
-     * matching Tailwind's default (--spacing 0.25rem → p-4 = 1rem). The factor
-     * is clamped to [0.75, 1.5] so an extreme import can't break the layout.
-     */
     function applySpacingVars(style: Record<string, string>) {
       for (const key of ["sm", "md", "lg", "xl"]) {
         set(`--spacing-${key}`, style[`--spacing-${key}`]);
       }
       const mdRem = parseLengthRem(style["--spacing-md"]);
       if (mdRem != null) {
-        const factor = Math.min(1.5, Math.max(0.75, mdRem)); // md(rem) vs 1rem ref
+        const factor = Math.min(1.5, Math.max(0.75, mdRem));
         set("--spacing", `${(0.25 * factor).toFixed(4)}rem`);
       }
     }
 
-    /** Apply every consumed non-color dimension a theme can carry. */
     function applyNonColorVars(style: Record<string, string>) {
       applyRadiusVars(style);
       applyFontVars(style);
@@ -390,53 +339,53 @@ export default function AppearanceVarsProvider(): null {
       applySpacingVars(style);
     }
 
-    // ── Branch 1: DESIGN.md imported theme ──────────────────────────────────
+    // ── Branch 1: DESIGN.md import → Brand Package carrier (preferred) ───────
     if (state.importedTheme) {
       const snapshot = state.importedTheme;
       let cancelled = false;
-      void import("@/components/theme-playground/theme-token-data").then(
-        ({ getPreviewStyleFromTokenSet }) => {
+      void import("./apply-imported-brand").then(({ applyImportedBrandPackage }) => {
+        if (cancelled) return;
+        const carrier = applyImportedBrandPackage(snapshot.name, snapshot.tokenSet);
+        if (carrier.ok) {
+          // Full recipe/elev/zones via injected skin + data-brand="imported"
+          appliedThemeVars.current = [];
+          return;
+        }
+        // Fallback: partial HSL preview path when compile cannot produce a package
+        void import("@/components/theme-playground/theme-token-data").then((tokenData) => {
           if (cancelled) return;
-          const style = getPreviewStyleFromTokenSet(
-            // The snapshot tokenSet matches ThemeTokenSet shape at runtime.
-            // Cast through unknown to bridge the optional-value index signature gap.
-            snapshot.tokenSet as unknown as Parameters<typeof getPreviewStyleFromTokenSet>[0],
+          void import("@nebutra/theme/client").then((m) => m.clearLanguage());
+          const style = tokenData.getPreviewStyleFromTokenSet(
+            snapshot.tokenSet as unknown as Parameters<
+              typeof tokenData.getPreviewStyleFromTokenSet
+            >[0],
             mode,
           ) as Record<string, string>;
-
           applyBaseHslVars(style);
           applySidebarHslVars(style);
           applyNonColorVars(style);
-
           appliedThemeVars.current = applied;
-          root.setAttribute("data-theme-preset", "imported");
-        },
-      );
+        });
+      });
       return () => {
         cancelled = true;
       };
     }
 
-    // ── Branch 2: registry preset ────────────────────────────────────────────
-    if (!state.theme || state.theme === "default") {
-      root.removeAttribute("data-theme-preset");
-      return;
-    }
-
+    // ── Branch 2: catalog design language ────────────────────────────────────
     let cancelled = false;
-    void import("@/components/theme-playground/theme-token-data").then(
-      ({ getThemePreviewStyle }) => {
-        if (cancelled || state.theme === "default") return;
-        const style = getThemePreviewStyle(state.theme, mode) as Record<string, string>;
-
-        applyBaseHslVars(style);
-        applySidebarHslVars(style);
-        applyNonColorVars(style);
-
-        appliedThemeVars.current = applied;
-        root.setAttribute("data-theme-preset", state.theme);
-      },
-    );
+    void import("@nebutra/theme/client").then(({ applyLanguage, clearLanguage }) => {
+      if (cancelled) return;
+      if (isFactoryLanguageId(state.theme)) {
+        clearLanguage();
+        return;
+      }
+      try {
+        applyLanguage(state.theme);
+      } catch {
+        clearLanguage();
+      }
+    });
 
     return () => {
       cancelled = true;

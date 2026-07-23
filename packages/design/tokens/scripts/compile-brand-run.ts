@@ -52,8 +52,8 @@ const result = compileReferoTokens({
 const packageRoot = resolve(import.meta.dirname, "..");
 const outDir = args.out ? resolve(args.out) : join(packageRoot, "brands", result.brand.id);
 mkdirSync(outDir, { recursive: true });
+// brand.json is SSOT — skin CSS only under skins/<id>.css (via emit-skins)
 writeFileSync(join(outDir, "brand.json"), `${JSON.stringify(result.brand, null, 2)}\n`);
-writeFileSync(join(outDir, "skin.css"), result.css);
 mkdirSync(join(packageRoot, "skins"), { recursive: true });
 writeFileSync(join(packageRoot, "skins", `${result.brand.id}.css`), result.css);
 
@@ -64,6 +64,7 @@ process.stdout.write(
       id: result.brand.id,
       recipe: result.brand.recipe.buttonDefault,
       warnings: result.warnings,
+      note: "brand.json is SSOT; re-run emit-skins after hand-edits to brand.json",
     },
     null,
     2,

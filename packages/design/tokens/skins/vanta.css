@@ -1,7 +1,7 @@
 /**
  * Brand carrier skin: Vanta (vanta) v1.0.0
- * darkDefault=false action≠brand-mark button=solid
- * fonts=3 zones=yes
+ * darkDefault=false dualMode=false button=solid
+ * fonts=3 zones=yes mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
 
@@ -28,7 +28,6 @@
 }
 
 :root,
-.dark,
 html[data-brand="vanta"] {
   /* ── Color roles (carrier) ── */
   --role-canvas: 220 23% 97%;

@@ -21,7 +21,10 @@ export function ThemeImportButton() {
   const [open, setOpen] = useState(false);
 
   function handleImported(theme: ImportedTheme) {
-    update({ importedTheme: { name: theme.name, tokenSet: theme.tokenSet }, theme: "default" });
+    update({
+      importedTheme: { name: theme.name, tokenSet: theme.tokenSet },
+      theme: "factory",
+    });
     setOpen(false);
   }
 

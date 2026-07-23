@@ -9,7 +9,7 @@
 | Status | **★ Source of truth for runtime apps** |
 | Source file | `packages/design/tokens/styles.css` |
 | Tailwind integration | Tailwind v4 `@theme inline` block in same file |
-| Re-exports | `ThemeProvider`, `useTheme` from `next-themes` |
+| Re-exports | Custom `ThemeProvider` / `useTheme` (cookie + class; not next-themes) |
 
 ---
 
@@ -314,9 +314,9 @@ import { colors } from "@nebutra/ui/theme";  // deprecated
 
 ## 5. Theming
 
-Light/dark switching: handled by `next-themes` via the `class` attribute. The `.dark` selector inside `styles.css` overrides every semantic token plus inverts the 12-step scales (step 1 = darkest, step 12 = lightest in dark mode).
+Light/dark switching: handled by `@nebutra/tokens` `ThemeProvider` via the `class` attribute (`class="dark"`). The `.dark` selector inside `styles.css` (generated from design-tokens) overrides every semantic token plus inverts the 12-step scales (step 1 = darkest, step 12 = lightest in dark mode).
 
-For the **multi-theme product feature** (6 oklch presets), see [`packages/design/theme/DESIGN.md`](../theme/DESIGN.md).
+For **design-language swap** (Brand Packages / `applyLanguage`), see [`packages/design/theme/DESIGN.md`](../theme/DESIGN.md).
 
 ---
 

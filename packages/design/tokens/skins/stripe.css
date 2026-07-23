@@ -1,6 +1,6 @@
 /**
  * Brand carrier skin: Stripe (stripe) v1.0.0
- * darkDefault=false action≠brand-mark button=solid
+ * darkDefault=false dualMode=false button=solid
  * fonts=1 zones=yes mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
@@ -14,7 +14,6 @@
 }
 
 :root,
-.dark,
 html[data-brand="stripe"] {
   /* ── Color roles (carrier) ── */
   --role-canvas: 0 0% 100%;

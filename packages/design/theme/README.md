@@ -23,16 +23,37 @@ A **design language** is a full Brand Package (roles + recipe + free elevation +
 ```
 
 ```ts
+// Client-safe root (or `@nebutra/theme/client`)
 import { applyLanguage, clearLanguage, LANGUAGE_REGISTRY } from "@nebutra/theme";
-import vanta from "@nebutra/tokens/brands/vanta/brand.json";
 
-applyLanguage("vanta", { package: vanta, persist: true });
+applyLanguage("vanta", { persist: true }); // built-in Brand Package
 clearLanguage(); // factory
+
+// Compile / Create Center tooling — not on package root:
+// import { compileReferoTokens } from "@nebutra/tokens/brand-package";
+// import { compileReferoTokens } from "@nebutra/theme/brand-package";
 ```
 
 ```bash
 nebutra theme list
 nebutra theme inspect vanta
+```
+
+## Catalog generation
+
+| File | Role |
+|------|------|
+| `tokens/brands/<id>/brand.json` | Package SSOT (roles, recipe, zones) |
+| `src/languages.meta.json` | Catalog copy: description + proves |
+| `src/languages.json` | **Generated** by `pnpm sync:languages` |
+| `src/built-in-packages.generated.ts` | **Generated** runtime map for `applyLanguage(id)` |
+| `skins.css` | **Generated** by `pnpm sync:skins` |
+| `keyframes.css` | Shared animations (prefer over deprecated `themes.css`) |
+
+```bash
+pnpm --filter @nebutra/theme sync:languages
+pnpm --filter @nebutra/tokens emit-skins
+pnpm --filter @nebutra/theme sync:skins
 ```
 
 ## Catalog
@@ -43,11 +64,17 @@ nebutra theme inspect vanta
 | linear | Chromatic solid CTA (dark) |
 | gsap | gradient-stroke / outline + zones |
 | raycast | action ≠ brand-mark + elev=key |
-| vercel | Light mono + elev=hairline |
+| vercel | Light mono + elev=hairline + dual-mode palettes |
 | vanta | Chromatic action≠brand + elev=none + pills |
 | stripe | Indigo action ≠ midnight brand + elev=none + 4px |
 | notion | Blue action ≠ ink brand + paper canvas + 8/12 radii |
 
-## `themes.css`
+## `keyframes.css`
 
-Keyframes only. No color moods. Product colors never live here.
+Shared keyframe animations only. Prefer:
+
+```css
+@import "@nebutra/theme/keyframes.css";
+```
+
+`themes.css` remains a **deprecated alias** that re-exports keyframes (no color moods).

@@ -1,0 +1,62 @@
+{
+  "$comment": "Human catalog metadata for design languages. Merged with brands/*/brand.json by scripts/sync-languages.mjs → languages.json (AUTO-GENERATED).",
+  "version": "2026.07",
+  "defaultLanguage": "factory",
+  "description": "Design-language catalog for global product chrome swap (Create Center / SaaS theme). Not color moods — full Brand Packages (roles + recipe + elev + zones).",
+  "factory": {
+    "name": "Nebutra Factory",
+    "description": "Default product chrome from @nebutra/tokens (no skin). Clear data-brand to restore.",
+    "proves": ["factory HSL SSOT", "recipe defaults", "action≡brand-mark until skin"],
+    "darkDefault": true
+  },
+  "languages": {
+    "linear": {
+      "description": "Dark void canvas, solid acid-lime filled CTA, compact density.",
+      "proves": ["chromatic solid action", "dark product chrome"]
+    },
+    "gsap": {
+      "description": "Dark cream-on-void; shockingly-green is accent — CTA is gradient-stroke/outline, not solid green fill.",
+      "proves": [
+        "outline / gradient-stroke recipe",
+        "category extensions",
+        "marketing display zone"
+      ]
+    },
+    "raycast": {
+      "description": "Neutral Mist/Iron filled CTA; Coral is brand-mark only. Key elevation stack.",
+      "proves": ["action ≠ brand-mark", "elevation=key free CSS"]
+    },
+    "vercel": {
+      "description": "Monochrome dual-mode: light paper + Obsidian CTA; dark carbon + white CTA; hairline elevation (no chromatic CTA).",
+      "proves": ["light monochrome action", "elevation=hairline", "dual-mode light/dark palettes"]
+    },
+    "vanta": {
+      "description": "Editorial violet on parchment; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
+      "proves": [
+        "action ≠ brand-mark (chromatic)",
+        "elevation=none border-only",
+        "999px pill controls",
+        "serif display + sans UI zones"
+      ]
+    },
+    "stripe": {
+      "description": "Indigo-ink ledger on frost glass; Indigo action ≠ Midnight brand-mark; 4px controls; elevation=none (tint + frost rules).",
+      "proves": [
+        "action ≠ brand-mark (chromatic indigo vs midnight)",
+        "elevation=none tint-ladder depth",
+        "4px squared controls (not pill)",
+        "whisper heading weight 300"
+      ]
+    },
+    "notion": {
+      "description": "Warm paper notebook; Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
+      "proves": [
+        "action ≠ brand-mark (blue vs ink)",
+        "canvas≠card (paper-warmth vs pure-white)",
+        "elevation=none content cards + raised nav shadow slot",
+        "table radius priority (8/12 over tertiary 4px)",
+        "decorative accents never product CTA"
+      ]
+    }
+  }
+}

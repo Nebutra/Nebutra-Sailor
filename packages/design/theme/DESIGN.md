@@ -9,7 +9,7 @@
 | Status | Design languages only — oklch multi-mood catalog **deleted** |
 | Primary catalog | `src/languages.json` + generated `skins.css` |
 | Brand Package fixtures | `packages/design/tokens/brands/*` |
-| themes.css | Keyframes only (no color moods) |
+| keyframes.css | Keyframes only (no color moods); themes.css is a deprecated alias |
 | Product SSOT | Always `@nebutra/tokens` |
 
 ---
@@ -54,14 +54,15 @@ typography.faces → @font-face
 | linear | Chromatic solid CTA, dark |
 | gsap | Non-solid CTA recipe + zones |
 | raycast | action ≠ brand-mark + elev=key |
-| vercel | Light mono + elev=hairline |
+| vercel | Light mono + elev=hairline + **dual-mode** light/dark palettes |
 | vanta | Chromatic action≠brand + elev=none + pills + dual fonts |
 
 ### 2.2 CSS modes
 
 | Emit mode | Selector | Use |
 |-----------|----------|-----|
-| `global` | `:root, .dark, html[data-brand]` | Single `@import skins/vanta.css` demos |
+| `global` (darkDefault) | `:root, .dark, html[data-brand]` | Dark-first single-skin demos |
+| `global` (light) | `:root, html[data-brand]` | Light packs — never bind `.dark` |
 | `scoped` | `html[data-brand]` only | `skins.css` multi-language catalog |
 
 ---
@@ -78,9 +79,8 @@ typography.faces → @font-face
 
 ```ts
 import { applyLanguage, clearLanguage } from "@nebutra/theme";
-import vanta from "@nebutra/tokens/brands/vanta/brand.json";
 
-applyLanguage("vanta", { package: vanta, persist: true });
+applyLanguage("vanta", { persist: true }); // built-in Brand Package
 clearLanguage(); // factory
 ```
 
@@ -94,7 +94,14 @@ pnpm --filter @nebutra/theme sync:skins
 
 ### 3.3 Light/dark
 
-Independent of design language. Use `@nebutra/tokens` ThemeProvider (`class="dark"`).
+Independent of design-language **id**. Use `@nebutra/tokens` ThemeProvider (`class="dark"`).
+
+| Pack shape | Emit behavior |
+|------------|----------------|
+| Single-mode (most fixtures) | One palette; `darkDefault` may bind `.dark` so dark shells keep the skin |
+| Dual-mode (`modes.light` + `modes.dark`) | Light under `:root` / `html[data-brand]`; dark under `.dark` / `html.dark[data-brand]` (e.g. **vercel**) |
+
+Recipe, typography, and zones are shared across modes; only color roles/semantic flip.
 
 ---
 

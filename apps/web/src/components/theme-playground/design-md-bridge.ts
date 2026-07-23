@@ -19,7 +19,7 @@ import "server-only";
 import { serializeToDesignMd, serializeToPreviewHtml } from "@nebutra/design-sync";
 import { importFromDesignMd } from "@nebutra/design-sync/design-md";
 import { BASE_TOKEN_SETS, MODE_TOKEN_SETS } from "@nebutra/design-tokens/themes";
-import { getThemeById } from "@nebutra/theme/registry";
+import { getLanguageById } from "@nebutra/theme/languages";
 
 import type { ExportedTheme, ImportedTheme } from "./design-md-types";
 import type { ThemeTokenSet } from "./theme-token-data";
@@ -87,8 +87,8 @@ export function exportThemeToDesignMd(themeId: string): ExportedTheme {
     );
   }
 
-  const registryEntry = getThemeById(themeId);
-  const name = registryEntry?.name ?? themeId;
+  const language = getLanguageById(themeId);
+  const name = language?.name ?? themeId;
 
   const sets = [
     { name: "core", relativePath: "core.json", tokens: toDesignTokenTree(BASE_TOKEN_SETS.core) },

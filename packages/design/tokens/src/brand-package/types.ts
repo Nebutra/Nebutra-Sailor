@@ -127,38 +127,45 @@ export interface BrandSemanticColors {
   infoForeground?: HslChannels;
 }
 
+/**
+ * Canonical product-chrome recipe (post-normalize).
+ * Free radii + free elevation tokens only — no buttonRadius/elevation aliases.
+ */
 export interface BrandRecipe {
   buttonDefault: ButtonDefaultStyle;
   density: Density;
-  /**
-   * Preferred: free radii slots.
-   * Legacy: buttonRadius / cardRadius still accepted and normalized into radii.
-   */
+  radii: BrandRadii;
+  elevationTokens: BrandElevationTokens;
+  primaryStrokeGradient?: string;
+  outlineBorder?: CssColor;
+  badgeDefault?: BadgeDefaultStyle;
+}
+
+/**
+ * Loose recipe accepted by normalize/compile before canonicalization.
+ * Legacy keys (buttonRadius, elevation preset, cardShadow) are input-only.
+ */
+export type BrandRecipeInput = {
+  buttonDefault: ButtonDefaultStyle;
+  density?: Density;
   radii?: BrandRadii;
-  /** Preferred: free CSS shadow stacks */
   elevationTokens?: BrandElevationTokens;
-  /**
-   * Legacy shortcut — expanded to elevationTokens by normalize().
-   * @deprecated prefer elevationTokens
-   */
+  /** @deprecated input-only — expanded to elevationTokens */
   elevation?: ElevationStyle;
   primaryStrokeGradient?: string;
   outlineBorder?: CssColor;
   badgeDefault?: BadgeDefaultStyle;
-  /** @deprecated use radii.button */
+  /** @deprecated input-only — use radii.button */
   buttonRadius?: string;
-  /** @deprecated use radii.card */
+  /** @deprecated input-only — use radii.card */
   cardRadius?: string;
-  /** @deprecated use radii.badge */
+  /** @deprecated input-only — use radii.badge */
   badgeRadius?: string;
-  /** @deprecated use radii.input */
+  /** @deprecated input-only — use radii.input */
   inputRadius?: string;
-  /**
-   * @deprecated use elevationTokens.card
-   * Custom card shadow when elevation preset is key/hairline
-   */
+  /** @deprecated input-only — use elevationTokens.card */
   cardShadow?: string;
-}
+};
 
 export interface BrandFontSource {
   url: string;
@@ -219,25 +226,57 @@ export interface BrandExtensions {
   notes?: string[];
 }
 
+/**
+ * One appearance mode’s colors (light or dark).
+ * Prefer roles; semantic is the shadcn bridge (derived when omitted).
+ */
+export interface BrandModePalette {
+  roles?: BrandColorRoles;
+  semantic?: BrandSemanticColors;
+}
+
+/**
+ * Optional dual-mode colors. When both light and dark are set, emit binds:
+ *   light → :root / html[data-brand]
+ *   dark  → .dark / html.dark[data-brand]
+ * Single-mode packs omit this and use top-level semantic + darkDefault selector rules.
+ */
+export interface BrandModes {
+  light?: BrandModePalette;
+  dark?: BrandModePalette;
+}
+
 export interface BrandPackage {
   id: string;
   name: string;
   darkDefault: boolean;
   version: string;
   /**
-   * Canonical color roles (Create Center source of truth).
+   * Canonical color roles for the **default** mode (see darkDefault).
    * If omitted, derived from semantic on normalize().
    */
   roles?: BrandColorRoles;
   /**
-   * shadcn bridge — always present after normalize(); derived from roles when possible.
+   * shadcn bridge for the default mode — always present after normalize().
    */
   semantic: BrandSemanticColors;
+  /**
+   * Dual light/dark palettes (optional). When present after normalize, both modes
+   * are fully specified and emitBrandCss writes separate light/dark color blocks.
+   */
+  modes?: BrandModes;
+  /** Always canonical after normalizeBrandPackage(). */
   recipe: BrandRecipe;
   typography: BrandTypography;
   zones?: BrandZones;
   extensions?: BrandExtensions;
 }
+
+/** Pre-normalize package (recipe may still use legacy keys). */
+export type BrandPackageInput = Omit<BrandPackage, "recipe"> & {
+  recipe: BrandRecipeInput;
+  modes?: BrandModes;
+};
 
 export interface CompileResult {
   brand: BrandPackage;

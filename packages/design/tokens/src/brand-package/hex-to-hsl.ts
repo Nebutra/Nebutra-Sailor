@@ -13,6 +13,10 @@ export function hexToHslChannels(hex: string): string {
   const r = Number.parseInt(h.slice(0, 2), 16) / 255;
   const g = Number.parseInt(h.slice(2, 4), 16) / 255;
   const b = Number.parseInt(h.slice(4, 6), 16) / 255;
+  return srgbToHslChannels(r, g, b);
+}
+
+function srgbToHslChannels(r: number, g: number, b: number): string {
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
   const l = (max + min) / 2;
@@ -39,10 +43,52 @@ export function hexToHslChannels(hex: string): string {
   return `${H} ${S}% ${L}%`;
 }
 
+/** Already a shadcn-style channel triple? e.g. "228 85% 56%" */
+const HSL_CHANNELS_RE = /^(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)%\s+(\d+(?:\.\d+)?)%$/;
+
+/**
+ * Normalize any common color input to HSL channel triple "H S% L%".
+ * Accepts: #hex, "H S% L%", hsl()/hsla(), rgb()/rgba().
+ */
+export function colorToHslChannels(color: string): string {
+  const t = color.trim();
+  if (!t) throw new Error("Empty color");
+
+  const channels = t.match(HSL_CHANNELS_RE);
+  if (channels) {
+    return `${Math.round(Number(channels[1]))} ${Math.round(Number(channels[2]))}% ${Math.round(Number(channels[3]))}%`;
+  }
+
+  const hslFn = t.match(/^hsla?\(\s*([\d.]+)\s*(?:deg)?\s*[, ]\s*([\d.]+)%\s*[, ]\s*([\d.]+)%/i);
+  if (hslFn) {
+    return `${Math.round(Number(hslFn[1]))} ${Math.round(Number(hslFn[2]))}% ${Math.round(Number(hslFn[3]))}%`;
+  }
+
+  const rgbFn = t.match(/^rgba?\(\s*([\d.]+)\s*[, ]\s*([\d.]+)\s*[, ]\s*([\d.]+)/i);
+  if (rgbFn) {
+    return srgbToHslChannels(
+      Number(rgbFn[1]) / 255,
+      Number(rgbFn[2]) / 255,
+      Number(rgbFn[3]) / 255,
+    );
+  }
+
+  if (t.startsWith("#") || /^[0-9a-fA-F]{3,8}$/.test(t)) {
+    return hexToHslChannels(t.startsWith("#") ? t : `#${t}`);
+  }
+
+  throw new Error(`Unsupported color: ${color}`);
+}
+
+/** Prefer {@link colorToHslChannels}; hex-only name kept for call sites. */
 export function tryHexToHsl(hex: string | undefined, fallback: string): string {
-  if (!hex) return fallback;
+  return tryColorToHsl(hex, fallback);
+}
+
+export function tryColorToHsl(color: string | undefined, fallback: string): string {
+  if (!color) return fallback;
   try {
-    return hexToHslChannels(hex);
+    return colorToHslChannels(color);
   } catch {
     return fallback;
   }

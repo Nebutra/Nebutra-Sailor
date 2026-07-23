@@ -13,7 +13,7 @@
  *
  * DOWNSTREAM MIRRORS (verified by this script):
  *   - `@nebutra/tokens/styles.css`        (Style Dictionary output)
- *   - `@nebutra/theme/themes.css`
+ *   - `@nebutra/theme/keyframes.css` (themes.css = deprecated alias)
  *   - `@nebutra/ui` (`primitive.ts`, `tailwind.preset.ts`)
  *   - `@nebutra/brand` (`guidelines/color.ts`)
  *
@@ -133,7 +133,7 @@ const semantic = readJson<DtcgSemantic>("packages/design/design-tokens/tokens/se
 const themeRegistry = readJson<ThemeRegistry>("packages/design/theme/src/registry.json");
 
 const tokensCss = read("packages/design/tokens/styles.css");
-const themesCss = read("packages/design/theme/themes.css");
+const themesCss = read("packages/design/theme/keyframes.css");
 const primitiveTs = read("packages/design/ui/src/tokens/primitive.ts");
 const semanticTs = read("packages/design/ui/src/tokens/semantic.ts");
 const typographyTs = read("packages/design/ui/src/typography/tokens.ts");
@@ -629,25 +629,25 @@ if (!tokensCss.includes("@supports (color: oklch(0 0 0))")) {
   ok("tokens/styles.css: @supports (oklch) wrapper present");
 }
 
-// ─── 10. themes.css: moods removed — keyframes only; no dual-truth colors ───
+// ─── 10. keyframes.css: moods removed — animations only; no dual-truth colors ───
 {
   if (/@theme\s*\{[\s\S]*?--color-primary\s*:/u.test(themesCss)) {
     fail(
-      "themes.css dual-truth",
+      "keyframes.css dual-truth",
       "Global @theme block still sets --color-primary; multi-mood catalog must stay deleted",
     );
   } else {
-    ok("themes.css: no global @theme --color-primary");
+    ok("keyframes.css: no global @theme --color-primary");
   }
 
   const moodSelectors = [...themesCss.matchAll(/\[data-theme="([^"]+)"\]/g)].map((m) => m[1]);
   if (moodSelectors.length > 0) {
     fail(
-      "themes.css multi-mood",
+      "keyframes.css multi-mood",
       `Unexpected [data-theme] mood selectors remain: ${moodSelectors.slice(0, 8).join(", ")}`,
     );
   } else {
-    ok("themes.css: multi-mood [data-theme] catalog removed");
+    ok("keyframes.css: multi-mood [data-theme] catalog removed");
   }
 
   if (themeRegistry.themes.length > 0) {
@@ -660,9 +660,9 @@ if (!tokensCss.includes("@supports (color: oklch(0 0 0))")) {
   }
 
   if (!themesCss.includes("@theme inline")) {
-    fail("themes.css @theme inline", "Missing keyframe @theme inline block");
+    fail("keyframes.css @theme inline", "Missing keyframe @theme inline block");
   } else {
-    ok("themes.css: @theme inline (keyframes) present");
+    ok("keyframes.css: @theme inline (keyframes) present");
   }
 
   // Design-language catalog must exist instead

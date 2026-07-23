@@ -18,7 +18,7 @@
 | Design language catalog | `src/languages.json` |
 | Brand Package fixtures | `packages/design/tokens/brands/*` |
 | Multi-language CSS | `skins.css` (`html[data-brand]`) |
-| Keyframes only | `themes.css` |
+| Keyframes only | `keyframes.css` (`themes.css` = deprecated alias) |
 
 ## Validation
 

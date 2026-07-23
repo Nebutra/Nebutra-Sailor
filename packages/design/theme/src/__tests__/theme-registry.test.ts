@@ -1,16 +1,12 @@
+/**
+ * Frozen empty mood registry — internal module only (package export removed).
+ */
 import { describe, expect, it } from "vitest";
 import { LANGUAGE_IDS } from "../languages";
-import {
-  DEFAULT_THEME,
-  getThemeById,
-  isThemeId,
-  listThemesAsLegacyEntries,
-  THEME_IDS,
-  THEME_REGISTRY,
-} from "../registry";
+import { DEFAULT_THEME, isThemeId, THEME_IDS, THEME_REGISTRY } from "../registry";
 
-describe("@nebutra/theme registry (mood catalog removed)", () => {
-  it("ships an empty oklch mood list", () => {
+describe("@nebutra/theme registry (frozen empty mood list)", () => {
+  it("ships an empty oklch mood list and must stay empty", () => {
     expect(THEME_REGISTRY.themes).toEqual([]);
     expect(THEME_IDS).toEqual([]);
   });
@@ -19,24 +15,12 @@ describe("@nebutra/theme registry (mood catalog removed)", () => {
     expect(DEFAULT_THEME).toBe("factory");
   });
 
-  it("accepts design language ids via isThemeId bridge", () => {
+  it("bridges isThemeId to design language ids only", () => {
     for (const id of LANGUAGE_IDS) {
       expect(isThemeId(id)).toBe(true);
     }
     expect(isThemeId("custom")).toBe(true);
     expect(isThemeId("crimson-light-vivid")).toBe(false);
     expect(isThemeId("vibrant")).toBe(false);
-  });
-
-  it("projects languages for legacy getThemeById callers", () => {
-    const vanta = getThemeById("vanta");
-    expect(vanta?.category).toBe("design-language");
-    expect(vanta?.mood).toMatch(/violet|parchment|Vivid/i);
-    expect(getThemeById("missing")).toBeUndefined();
-  });
-
-  it("lists all design languages as legacy entries", () => {
-    const entries = listThemesAsLegacyEntries();
-    expect(entries.map((e) => e.id)).toEqual(LANGUAGE_IDS);
   });
 });

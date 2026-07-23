@@ -48,8 +48,10 @@ describe("UI/UX audit remediation invariants", () => {
     expect(skins).toContain('html[data-brand="vanta"]');
     expect(skins).toContain('html[data-brand="linear"]');
     expect(skins).not.toContain('[data-theme="crimson-light-vivid"]');
-    const themesCss = readFromRepo("packages/design/theme/themes.css");
-    expect(themesCss).not.toMatch(/\[data-theme="/);
+    const keyframesCss = readFromRepo("packages/design/theme/keyframes.css");
+    expect(keyframesCss).not.toMatch(/\[data-theme="/);
+    const themesAlias = readFromRepo("packages/design/theme/themes.css");
+    expect(themesAlias).toMatch(/keyframes\.css/);
   });
 
   it("uses @nebutra/brand as the primitive token source of truth", () => {

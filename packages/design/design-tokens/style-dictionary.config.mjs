@@ -2,13 +2,13 @@
  * Style Dictionary v4 build configuration
  *
  * Three platforms (CSS / TS / Tailwind preset) consume the same DTCG tokens.
- * Output goes to ./build/* and to packages/design/tokens/styles.css and packages/design/theme/themes.css
- * via concat-and-replace once parity is at 99%+.
+ * Output goes to ./build/* for verify:parity against runtime @nebutra/tokens/styles.css
+ * and keyframes sync to @nebutra/theme/keyframes.css.
  *
  * Build modes:
  *   light   → :root (core + semantic + light theme)
  *   dark    → .dark (core + semantic + dark theme)
- *   <multi> → [data-theme="<name>"] (one of: neon, gradient, dark-dense, minimal, vibrant, ocean)
+ * Multi-mood [data-theme] catalogs removed — design languages live on @nebutra/theme.
  *
  * Modeling extensions handled by post-processing:
  *   - $extensions["com.nebutra.display-p3"]  → emit @supports (color: color(display-p3 ...)) override
@@ -149,12 +149,8 @@ StyleDictionary.registerTransform({
 });
 
 /**
- * Multi-theme CSS variable namer.
- *
- * Multi-theme files (neon, gradient, dark-dense, minimal, vibrant, ocean) emit
- * Tailwind v4 \`@theme\`-compatible names: color.primary → --color-primary,
- * radius.md → --radius-md, fontFamily.sans → --font-sans, shadow.sm → --shadow-sm,
- * transition.fast → --transition-fast.
+ * CSS variable namer for theme token trees (light/dark).
+ * Emits Tailwind v4 `@theme`-compatible names: color.primary → --color-primary.
  */
 function multiThemeName(token) {
   const path = token.path;
@@ -420,7 +416,7 @@ const configs = [
   }),
   // Multi-theme builds: include ONLY the theme file (not core/semantic primitives).
   // Product chrome SSOT is @nebutra/tokens (styles.css HSL + recipe). Every mood —
-  // including the registry default — is scoped to [data-theme="…"] so themes.css
+  // historical multi-mood path was scoped to [data-theme="…"]; catalog removed.
   // never ships a global @theme that overrides --color-primary / fonts at root.
   // Use the multi-theme namer so color.primary → --color-primary under that selector.
   ...MULTI_THEMES.map((name) =>
@@ -891,10 +887,10 @@ await writeFile(
   "utf8",
 );
 
-// themes.generated.css is keyframes-only (no multi-mood color blocks).
+// themes.generated.css is keyframes-only (synced to @nebutra/theme/keyframes.css).
 const themesBaseCss = await readFile("static/themes-base.css", "utf8");
 const themesHeader = `/**
- * @nebutra/theme — themes.generated.css
+ * @nebutra/theme — keyframes.css (via themes.generated.css)
  * AUTO-GENERATED — multi-mood oklch catalog removed.
  * Product chrome SSOT: @nebutra/tokens. Design languages: @nebutra/theme/skins.css.
  * This file: shared keyframes only.
@@ -904,12 +900,12 @@ const themesHeader = `/**
 const themesCombined = `${themesHeader}${themesBaseCss}`;
 await writeFile(
   "build/css/themes.generated.css",
-  formatCssWithBiome(themesCombined, "packages/design/theme/themes.css"),
+  formatCssWithBiome(themesCombined, "packages/design/theme/keyframes.css"),
   "utf8",
 );
 
 process.stdout.write(
   "\n[design-tokens] build complete\n" +
-    "  → build/css/styles.generated.css   (replaces packages/design/tokens/styles.css)\n" +
-    "  → build/css/themes.generated.css   (keyframes only; no multi-mood catalog)\n",
+    "  → build/css/styles.generated.css   (parity target for packages/design/tokens/styles.css)\n" +
+    "  → build/css/themes.generated.css   (keyframes → @nebutra/theme/keyframes.css)\n",
 );

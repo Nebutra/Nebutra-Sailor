@@ -21,10 +21,10 @@ import {
   Sun,
 } from "@nebutra/icons";
 import {
-  DEFAULT_THEME,
-  listThemesAsLegacyEntries,
-  type ThemeRegistryEntry,
-} from "@nebutra/theme/registry";
+  DEFAULT_LANGUAGE,
+  type DesignLanguageEntry,
+  LANGUAGE_REGISTRY,
+} from "@nebutra/theme/languages";
 import {
   Badge,
   Button,
@@ -127,6 +127,28 @@ function ThemeSwatches({
 }
 
 /** Sentinel ID for the transient imported theme. */
+/** Playground list row — design language or imported DESIGN.md shell. */
+type PlaygroundTheme = {
+  id: string;
+  name: string;
+  description: string;
+  kind: string;
+  proves: string[];
+};
+
+function languageToPlaygroundTheme(lang: DesignLanguageEntry): PlaygroundTheme {
+  return {
+    id: lang.id,
+    name: lang.name,
+    description: lang.description,
+    kind: lang.kind,
+    proves: lang.proves,
+  };
+}
+
+const DESIGN_LANGUAGES: PlaygroundTheme[] =
+  LANGUAGE_REGISTRY.languages.map(languageToPlaygroundTheme);
+
 const IMPORTED_THEME_ID = "__imported__";
 
 function ThemeRegistryPanel({
@@ -139,10 +161,10 @@ function ThemeRegistryPanel({
   onImportToggle,
   onImported,
 }: {
-  themes: ThemeRegistryEntry[];
-  selectedTheme: ThemeRegistryEntry;
-  onSelect: (theme: ThemeRegistryEntry) => void;
-  importedEntry: ThemeRegistryEntry | null;
+  themes: PlaygroundTheme[];
+  selectedTheme: PlaygroundTheme;
+  onSelect: (theme: PlaygroundTheme) => void;
+  importedEntry: PlaygroundTheme | null;
   importedSwatches: string[];
   showImport: boolean;
   onImportToggle: () => void;
@@ -153,7 +175,7 @@ function ThemeRegistryPanel({
     const normalized = query.trim().toLowerCase();
     if (!normalized) return themes;
     return themes.filter((theme) =>
-      `${theme.name} ${theme.id} ${theme.category} ${theme.mood}`
+      `${theme.name} ${theme.id} ${theme.kind} ${theme.description} ${theme.proves.join(" ")}`
         .toLowerCase()
         .includes(normalized),
     );
@@ -253,7 +275,7 @@ function ThemeRegistryPanel({
                 <div>
                   <div className="font-semibold text-foreground text-sm">{theme.name}</div>
                   <div className="mt-1 line-clamp-2 text-muted-foreground text-xs">
-                    {theme.mood}
+                    {theme.description}
                   </div>
                 </div>
                 {active && (
@@ -264,15 +286,14 @@ function ThemeRegistryPanel({
               </div>
               <ThemeSwatches themeId={theme.id} />
               <div className="mt-3 flex items-center justify-between gap-2">
-                <Badge
-                  variant={theme.category === "pro-tools" ? "green-subtle" : "blue-subtle"}
-                  size="sm"
-                >
-                  {theme.category}
+                <Badge variant="blue-subtle" size="sm">
+                  {theme.kind}
                 </Badge>
-                <Badge variant="outline" size="sm">
-                  WCAG {theme.governance.wcag}
-                </Badge>
+                {theme.proves[0] ? (
+                  <Badge variant="outline" size="sm" className="max-w-[10rem] truncate">
+                    {theme.proves[0]}
+                  </Badge>
+                ) : null}
               </div>
             </button>
           );
@@ -308,7 +329,7 @@ function TopBar({
   mode: ThemeMode;
   density: Density;
   surface: Surface;
-  selectedTheme: ThemeRegistryEntry;
+  selectedTheme: PlaygroundTheme;
   viewingImported: boolean;
   onModeChange: (mode: ThemeMode) => void;
   onDensityChange: (density: Density) => void;
@@ -476,7 +497,7 @@ function PreviewCanvas({
   onViewportChange,
   styleOverride,
 }: {
-  theme: ThemeRegistryEntry;
+  theme: PlaygroundTheme;
   mode: ThemeMode;
   density: Density;
   surface: Surface;
@@ -879,9 +900,9 @@ function TokenInspector({
   mode,
   onThemeChange,
 }: {
-  theme: ThemeRegistryEntry;
+  theme: PlaygroundTheme;
   mode: ThemeMode;
-  onThemeChange: (theme: ThemeRegistryEntry) => void;
+  onThemeChange: (theme: PlaygroundTheme) => void;
 }) {
   const rows = getTokenRows(theme.id, mode);
   const cliCommand = `nebutra theme inspect ${theme.id} --format json`;
@@ -910,7 +931,7 @@ function TokenInspector({
           <Select
             value={theme.id}
             onValueChange={(value) => {
-              const nextTheme = listThemesAsLegacyEntries().find((item) => item.id === value);
+              const nextTheme = DESIGN_LANGUAGES.find((item) => item.id === value);
               if (nextTheme) onThemeChange(nextTheme);
             }}
           >
@@ -918,7 +939,7 @@ function TokenInspector({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {listThemesAsLegacyEntries().map((item) => (
+              {DESIGN_LANGUAGES.map((item) => (
                 <SelectItem key={item.id} value={item.id}>
                   {item.name}
                 </SelectItem>
@@ -957,9 +978,22 @@ function TokenInspector({
           </div>
         </InspectorBlock>
 
-        <InspectorBlock title="DTCG Token Path" action={<CopyButton value={theme.tokenPath} />}>
+        <InspectorBlock
+          title="Brand path"
+          action={
+            <CopyButton
+              value={
+                theme.id === "factory" || theme.id === IMPORTED_THEME_ID
+                  ? "(factory SSOT)"
+                  : `brands/${theme.id}/brand.json`
+              }
+            />
+          }
+        >
           <code className="block rounded-[var(--radius-md)] border border-border bg-background p-3 font-mono text-[11px] text-muted-foreground">
-            themes.{theme.id}.colors.primary
+            {theme.id === "factory" || theme.id === IMPORTED_THEME_ID
+              ? "@nebutra/tokens product chrome"
+              : `brands/${theme.id}/brand.json`}
           </code>
         </InspectorBlock>
 
@@ -1041,30 +1075,21 @@ function InspectorBlock({
   );
 }
 
-/** Build a ThemeRegistryEntry shell from an ImportedTheme so the panel can render swatches. */
-function makeImportedRegistryEntry(imported: ImportedTheme): ThemeRegistryEntry {
+/** Build a PlaygroundTheme shell from an ImportedTheme so the panel can render swatches. */
+function makeImportedRegistryEntry(imported: ImportedTheme): PlaygroundTheme {
   return {
     id: IMPORTED_THEME_ID,
     name: `Imported · ${imported.name}`,
-    mood: "Imported via DESIGN.md",
-    category: "imported",
-    tokenPath: "",
-    install: { command: "", registryUrl: "" },
-    compatibility: {
-      tailwind: "4",
-      cssVariables: true,
-      figmaVariables: false,
-      shadcnRegistry: false,
-    },
-    governance: { wcag: "AA", requiredTokens: [], visualSuites: [] },
+    description: "Imported via DESIGN.md",
+    kind: "imported",
+    proves: [],
   };
 }
 
 export function ThemePlaygroundWorkbench() {
-  const [selectedTheme, setSelectedTheme] = useState<ThemeRegistryEntry>(() => {
+  const [selectedTheme, setSelectedTheme] = useState<PlaygroundTheme>(() => {
     const defaultTheme =
-      listThemesAsLegacyEntries().find((theme) => theme.id === DEFAULT_THEME) ??
-      listThemesAsLegacyEntries()[0];
+      DESIGN_LANGUAGES.find((theme) => theme.id === DEFAULT_LANGUAGE) ?? DESIGN_LANGUAGES[0];
     if (!defaultTheme) {
       throw new Error("Theme registry is empty.");
     }
@@ -1115,7 +1140,7 @@ export function ThemePlaygroundWorkbench() {
       />
       <main className="theme-playground-layout min-h-0 flex-1 overflow-hidden border-border/70 border-t">
         <ThemeRegistryPanel
-          themes={listThemesAsLegacyEntries()}
+          themes={DESIGN_LANGUAGES}
           selectedTheme={selectedTheme}
           onSelect={setSelectedTheme}
           importedEntry={importedEntry}

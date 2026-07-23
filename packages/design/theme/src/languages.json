@@ -25,26 +25,6 @@
       }
     },
     {
-      "id": "linear",
-      "name": "Linear",
-      "kind": "design-language",
-      "description": "Dark void canvas, solid acid-lime filled CTA, compact density.",
-      "proves": ["chromatic solid action", "dark product chrome"],
-      "darkDefault": true,
-      "brandPath": "brands/linear/brand.json",
-      "skinPath": "skins/linear.css",
-      "install": {
-        "command": "nebutra theme use linear",
-        "cssImport": "@nebutra/tokens/skins/linear.css"
-      },
-      "compatibility": {
-        "tailwind": "4",
-        "cssVariables": true,
-        "brandPackage": true,
-        "dataBrand": true
-      }
-    },
-    {
       "id": "gsap",
       "name": "GSAP",
       "kind": "design-language",
@@ -69,6 +49,52 @@
       }
     },
     {
+      "id": "linear",
+      "name": "Linear",
+      "kind": "design-language",
+      "description": "Dark void canvas, solid acid-lime filled CTA, compact density.",
+      "proves": ["chromatic solid action", "dark product chrome"],
+      "darkDefault": true,
+      "brandPath": "brands/linear/brand.json",
+      "skinPath": "skins/linear.css",
+      "install": {
+        "command": "nebutra theme use linear",
+        "cssImport": "@nebutra/tokens/skins/linear.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "kind": "design-language",
+      "description": "Warm paper notebook; Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
+      "proves": [
+        "action ≠ brand-mark (blue vs ink)",
+        "canvas≠card (paper-warmth vs pure-white)",
+        "elevation=none content cards + raised nav shadow slot",
+        "table radius priority (8/12 over tertiary 4px)",
+        "decorative accents never product CTA"
+      ],
+      "darkDefault": false,
+      "brandPath": "brands/notion/brand.json",
+      "skinPath": "skins/notion.css",
+      "install": {
+        "command": "nebutra theme use notion",
+        "cssImport": "@nebutra/tokens/skins/notion.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
       "id": "raycast",
       "name": "Raycast",
       "kind": "design-language",
@@ -80,51 +106,6 @@
       "install": {
         "command": "nebutra theme use raycast",
         "cssImport": "@nebutra/tokens/skins/raycast.css"
-      },
-      "compatibility": {
-        "tailwind": "4",
-        "cssVariables": true,
-        "brandPackage": true,
-        "dataBrand": true
-      }
-    },
-    {
-      "id": "vercel",
-      "name": "Vercel",
-      "kind": "design-language",
-      "description": "Light monochrome paper; Obsidian solid CTA; hairline ring elevation (no chromatic CTA).",
-      "proves": ["light monochrome action", "elevation=hairline"],
-      "darkDefault": false,
-      "brandPath": "brands/vercel/brand.json",
-      "skinPath": "skins/vercel.css",
-      "install": {
-        "command": "nebutra theme use vercel",
-        "cssImport": "@nebutra/tokens/skins/vercel.css"
-      },
-      "compatibility": {
-        "tailwind": "4",
-        "cssVariables": true,
-        "brandPackage": true,
-        "dataBrand": true
-      }
-    },
-    {
-      "id": "vanta",
-      "name": "Vanta",
-      "kind": "design-language",
-      "description": "Editorial violet on parchment; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
-      "proves": [
-        "action ≠ brand-mark (chromatic)",
-        "elevation=none border-only",
-        "999px pill controls",
-        "serif display + sans UI zones"
-      ],
-      "darkDefault": false,
-      "brandPath": "brands/vanta/brand.json",
-      "skinPath": "skins/vanta.css",
-      "install": {
-        "command": "nebutra theme use vanta",
-        "cssImport": "@nebutra/tokens/skins/vanta.css"
       },
       "compatibility": {
         "tailwind": "4",
@@ -159,23 +140,42 @@
       }
     },
     {
-      "id": "notion",
-      "name": "Notion",
+      "id": "vanta",
+      "name": "Vanta",
       "kind": "design-language",
-      "description": "Warm paper notebook; Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
+      "description": "Editorial violet on parchment; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
       "proves": [
-        "action ≠ brand-mark (blue vs ink)",
-        "canvas≠card (paper-warmth vs pure-white)",
-        "elevation=none content cards + raised nav shadow slot",
-        "table radius priority (8/12 over tertiary 4px)",
-        "decorative accents never product CTA"
+        "action ≠ brand-mark (chromatic)",
+        "elevation=none border-only",
+        "999px pill controls",
+        "serif display + sans UI zones"
       ],
       "darkDefault": false,
-      "brandPath": "brands/notion/brand.json",
-      "skinPath": "skins/notion.css",
+      "brandPath": "brands/vanta/brand.json",
+      "skinPath": "skins/vanta.css",
       "install": {
-        "command": "nebutra theme use notion",
-        "cssImport": "@nebutra/tokens/skins/notion.css"
+        "command": "nebutra theme use vanta",
+        "cssImport": "@nebutra/tokens/skins/vanta.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "kind": "design-language",
+      "description": "Monochrome dual-mode: light paper + Obsidian CTA; dark carbon + white CTA; hairline elevation (no chromatic CTA).",
+      "proves": ["light monochrome action", "elevation=hairline", "dual-mode light/dark palettes"],
+      "darkDefault": false,
+      "brandPath": "brands/vercel/brand.json",
+      "skinPath": "skins/vercel.css",
+      "install": {
+        "command": "nebutra theme use vercel",
+        "cssImport": "@nebutra/tokens/skins/vercel.css"
       },
       "compatibility": {
         "tailwind": "4",

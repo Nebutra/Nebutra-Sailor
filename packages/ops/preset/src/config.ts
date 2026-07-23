@@ -1,4 +1,4 @@
-import { LANGUAGE_IDS as BUILT_IN_THEME_IDS, isThemeId } from "@nebutra/theme/registry";
+import { isLanguageId, LANGUAGE_IDS } from "@nebutra/theme/languages";
 import { z } from "zod";
 import {
   type DeployTargetMap,
@@ -36,14 +36,17 @@ export const FeatureId = z.enum([
   "upload",
 ]);
 
-export { BUILT_IN_THEME_IDS };
+/** Design-language ids accepted by preset ThemeId schema. */
+export { LANGUAGE_IDS };
+/** Alias of LANGUAGE_IDS (preferred name in language-first code). */
+export const BUILT_IN_LANGUAGE_IDS = LANGUAGE_IDS;
 
 /** Design language id (Brand Package swap) or "custom". Oklch moods removed. */
 export const ThemeId = z.string().superRefine((value, ctx) => {
-  if (isThemeId(value)) return;
+  if (value === "custom" || isLanguageId(value)) return;
   ctx.addIssue({
     code: "custom",
-    message: `Unknown design language '${value}'. Use one of: ${[...BUILT_IN_THEME_IDS, "custom"].join(", ")}`,
+    message: `Unknown design language '${value}'. Use one of: ${[...LANGUAGE_IDS, "custom"].join(", ")}`,
   });
 });
 

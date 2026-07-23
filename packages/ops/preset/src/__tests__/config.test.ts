@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   AppId,
-  BUILT_IN_THEME_IDS,
   defineConfig,
   FeatureId,
+  LANGUAGE_IDS,
   NebutraConfigSchema,
   ThemeId,
 } from "../config";
@@ -97,12 +97,10 @@ describe("FeatureId", () => {
 
 describe("ThemeId", () => {
   it("accepts design language IDs and custom", () => {
-    expect(BUILT_IN_THEME_IDS.length).toBeGreaterThan(0);
-    expect(BUILT_IN_THEME_IDS).toEqual(
-      expect.arrayContaining(["factory", "linear", "vanta", "raycast"]),
-    );
-    expect(BUILT_IN_THEME_IDS).not.toContain("vibrant");
-    for (const id of [...BUILT_IN_THEME_IDS, "custom"]) {
+    expect(LANGUAGE_IDS.length).toBeGreaterThan(0);
+    expect(LANGUAGE_IDS).toEqual(expect.arrayContaining(["factory", "linear", "vanta", "raycast"]));
+    expect(LANGUAGE_IDS).not.toContain("vibrant");
+    for (const id of [...LANGUAGE_IDS, "custom"]) {
       expect(ThemeId.parse(id)).toBe(id);
     }
   });

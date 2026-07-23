@@ -17,7 +17,7 @@
     "muted": "210 4% 9%",
     "mutedForeground": "218 5% 41%",
     "accent": "223 9% 15%",
-    "accentForeground": "210 11% 4%",
+    "accentForeground": "218 21% 85%",
     "destructive": "0 79% 63%",
     "destructiveForeground": "0 0% 100%",
     "border": "223 9% 15%",
@@ -30,9 +30,6 @@
   },
   "recipe": {
     "buttonDefault": "solid",
-    "buttonRadius": "6px",
-    "cardRadius": "12px",
-    "elevation": "soft",
     "density": "compact",
     "badgeDefault": "match-action",
     "radii": {
@@ -46,10 +43,7 @@
       "card": "var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))",
       "control": "var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04))",
       "raised": "var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1))"
-    },
-    "badgeRadius": "9999px",
-    "inputRadius": "6px",
-    "cardShadow": "var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))"
+    }
   },
   "typography": {
     "fontSans": "'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif",
@@ -135,7 +129,6 @@
     "surfaceForeground": "0 0% 100%",
     "action": "64 89% 54%",
     "actionForeground": "210 11% 4%",
-    "brandForeground": "210 11% 4%",
     "quiet": "223 9% 15%",
     "quietForeground": "218 21% 85%",
     "muted": "210 4% 9%",

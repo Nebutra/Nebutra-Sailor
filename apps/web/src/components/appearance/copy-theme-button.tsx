@@ -1,20 +1,18 @@
 "use client";
 
 import { Check, Copy } from "@nebutra/icons";
-import { DEFAULT_THEME, listThemesAsLegacyEntries } from "@nebutra/theme/registry";
+import { DEFAULT_LANGUAGE, getLanguageById } from "@nebutra/theme/languages";
 import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { exportTokenSetAction } from "@/components/theme-playground/actions";
 import { getTokenSet } from "@/components/theme-playground/theme-token-data";
-import { useAppearance } from "./store";
-
-const DEFAULT_ID = "default";
+import { isFactoryLanguageId, useAppearance } from "./store";
 
 /**
- * Header action — serializes the currently-active theme to DESIGN.md and copies
- * it to the clipboard. Works for the full registry catalog and custom imports
- * (resolves DTCG token groups client-side, serializes via a server action).
+ * Header action — serializes the currently-active design language to DESIGN.md
+ * and copies it to the clipboard. Works for LANGUAGE_REGISTRY entries and custom
+ * imports (resolves DTCG token groups client-side, serializes via a server action).
  */
 export function CopyThemeButton() {
   const t = useTranslations("settings.appearance.themeEditor");
@@ -31,12 +29,12 @@ export function CopyThemeButton() {
         tokens: state.importedTheme.tokenSet as unknown as Record<string, unknown>,
       };
     }
-    const isDefault = !state.theme || state.theme === DEFAULT_ID;
-    const themeId = isDefault ? DEFAULT_THEME : state.theme;
+    const isFactory = isFactoryLanguageId(state.theme);
+    const themeId = isFactory ? DEFAULT_LANGUAGE : state.theme;
     const tokens = getTokenSet(themeId);
     if (!tokens) return null;
-    const registry = listThemesAsLegacyEntries().find((theme) => theme.id === themeId);
-    const name = isDefault ? tPreset("default") : (registry?.name ?? themeId);
+    const language = getLanguageById(themeId);
+    const name = isFactory ? tPreset("default") : (language?.name ?? themeId);
     return { name, tokens: tokens as unknown as Record<string, unknown> };
   }
 

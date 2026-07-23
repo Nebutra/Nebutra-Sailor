@@ -17,25 +17,35 @@
     "muted": "0 0% 10%",
     "mutedForeground": "60 6% 46%",
     "accent": "70 5% 25%",
-    "accentForeground": "137 92% 47%",
+    "accentForeground": "54 100% 94%",
     "destructive": "309 100% 47%",
     "destructiveForeground": "54 100% 94%",
     "border": "70 5% 25%",
     "input": "70 5% 25%",
     "ring": "137 92% 47%",
-    "info": "191 100% 44%",
-    "infoForeground": "150 7% 6%",
     "success": "137 92% 47%",
-    "successForeground": "150 7% 6%"
+    "successForeground": "150 7% 6%",
+    "info": "191 100% 44%",
+    "infoForeground": "150 7% 6%"
   },
   "recipe": {
     "buttonDefault": "gradient-stroke",
-    "buttonRadius": "100px",
-    "cardRadius": "8px",
-    "elevation": "none",
     "density": "compact",
-    "outlineBorder": "#fffce1",
-    "primaryStrokeGradient": "linear-gradient(114.41deg, #0ae448 20.74%, #abff84 65.5%)"
+    "badgeDefault": "match-action",
+    "radii": {
+      "button": "100px",
+      "card": "8px",
+      "badge": "9999px",
+      "input": "100px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "0 0 #0000",
+      "control": "0 0 #0000",
+      "raised": "0 0 #0000"
+    },
+    "primaryStrokeGradient": "linear-gradient(114.41deg, #0ae448 20.74%, #abff84 65.5%)",
+    "outlineBorder": "#fffce1"
   },
   "typography": {
     "fontSans": "'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif",
@@ -145,5 +155,26 @@
       "Replace typography.faces[].src with Create Center hosted font URLs.",
       "Use data-zone=\"marketing\" for hero/display; product zone for app chrome."
     ]
+  },
+  "roles": {
+    "canvas": "150 7% 6%",
+    "canvasForeground": "54 100% 94%",
+    "surface": "0 0% 10%",
+    "surfaceForeground": "54 100% 94%",
+    "action": "137 92% 47%",
+    "actionForeground": "150 7% 6%",
+    "quiet": "70 5% 25%",
+    "quietForeground": "54 100% 94%",
+    "muted": "0 0% 10%",
+    "mutedForeground": "60 6% 46%",
+    "border": "70 5% 25%",
+    "input": "70 5% 25%",
+    "ring": "137 92% 47%",
+    "destructive": "309 100% 47%",
+    "destructiveForeground": "54 100% 94%",
+    "success": "137 92% 47%",
+    "successForeground": "150 7% 6%",
+    "info": "191 100% 44%",
+    "infoForeground": "150 7% 6%"
   }
 }

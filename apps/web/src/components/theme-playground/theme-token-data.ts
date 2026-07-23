@@ -3,17 +3,11 @@
  *
  * Multi-mood oklch THEME_TOKEN_SETS were removed. Previews use:
  *   - MODE_TOKEN_SETS (light/dark product SSOT)
- *   - Brand Package design languages (@nebutra/tokens/brands/*)
+ *   - Brand Package design languages via getBuiltInBrandPackage (SSOT)
  */
 import { MODE_TOKEN_SETS, type ModeTokenSetId } from "@nebutra/design-tokens/themes";
+import { getBuiltInBrandPackage } from "@nebutra/theme/client";
 import type { BrandPackage } from "@nebutra/tokens/brand-package";
-import gsapBrand from "@nebutra/tokens/brands/gsap/brand.json";
-import linearBrand from "@nebutra/tokens/brands/linear/brand.json";
-import notionBrand from "@nebutra/tokens/brands/notion/brand.json";
-import raycastBrand from "@nebutra/tokens/brands/raycast/brand.json";
-import stripeBrand from "@nebutra/tokens/brands/stripe/brand.json";
-import vantaBrand from "@nebutra/tokens/brands/vanta/brand.json";
-import vercelBrand from "@nebutra/tokens/brands/vercel/brand.json";
 import type { CSSProperties } from "react";
 
 export type ThemeMode = "light" | "dark";
@@ -33,16 +27,6 @@ export type ThemeTokenSet = {
 };
 
 export type TokenRow = { name: string; value: string };
-
-const BRAND_PACKAGES: Record<string, BrandPackage> = {
-  linear: linearBrand as BrandPackage,
-  gsap: gsapBrand as BrandPackage,
-  raycast: raycastBrand as BrandPackage,
-  vercel: vercelBrand as BrandPackage,
-  vanta: vantaBrand as BrandPackage,
-  stripe: stripeBrand as BrandPackage,
-  notion: notionBrand as BrandPackage,
-};
 
 const modeTokenSets = MODE_TOKEN_SETS as Record<ModeTokenSetId, ThemeTokenSet>;
 
@@ -119,8 +103,8 @@ export function getSwatchesFromTokenSet(theme: ThemeTokenSet): string[] {
   ].filter((value): value is string => Boolean(value));
 }
 
-function swatchesFromBrand(brand: BrandPackage): string[] {
-  const s = brand.semantic;
+function swatchesFromBrand(brand: BrandPackage, mode: ThemeMode = "light"): string[] {
+  const s = semanticForMode(brand, mode);
   return [
     channelsToCss(s.primary, "#3b82f6"),
     channelsToCss(s.secondary, "#e5e5e5"),
@@ -140,12 +124,12 @@ const FACTORY_SWATCHES = [
   "hsl(214 32% 91%)",
 ];
 
-export function getThemeSwatches(themeId: string): string[] {
+export function getThemeSwatches(themeId: string, mode: ThemeMode = "light"): string[] {
   if (!themeId || themeId === "factory" || themeId === "default" || themeId === "nebutra") {
     return FACTORY_SWATCHES;
   }
-  const brand = BRAND_PACKAGES[themeId];
-  if (brand) return swatchesFromBrand(brand);
+  const brand = getBuiltInBrandPackage(themeId);
+  if (brand) return swatchesFromBrand(brand, mode);
   // light/dark mode token sets
   if (themeId === "light" || themeId === "dark") {
     return getSwatchesFromTokenSet(modeTokenSets[themeId]);
@@ -153,8 +137,14 @@ export function getThemeSwatches(themeId: string): string[] {
   return FACTORY_SWATCHES;
 }
 
-function previewFromBrand(brand: BrandPackage): CSSProperties {
-  const s = brand.semantic;
+function semanticForMode(brand: BrandPackage, mode: ThemeMode): BrandPackage["semantic"] {
+  const dual = brand.modes?.[mode]?.semantic;
+  if (dual) return dual;
+  return brand.semantic;
+}
+
+function previewFromBrand(brand: BrandPackage, mode: ThemeMode = "light"): CSSProperties {
+  const s = semanticForMode(brand, mode);
   const vars: Record<string, string> = {
     "--color-primary": channelsToCss(s.primary, "#3b82f6"),
     "--color-primary-foreground": channelsToCss(s.primaryForeground, "#fff"),
@@ -178,8 +168,9 @@ function previewFromBrand(brand: BrandPackage): CSSProperties {
 }
 
 export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSProperties {
-  if (themeId && BRAND_PACKAGES[themeId]) {
-    return previewFromBrand(BRAND_PACKAGES[themeId]);
+  const brand = themeId ? getBuiltInBrandPackage(themeId) : undefined;
+  if (brand) {
+    return previewFromBrand(brand, mode);
   }
   // Factory / light-dark: use mode surfaces from MODE_TOKEN_SETS
   const set = modeTokenSets[mode] ?? modeTokenSets.light;
@@ -232,7 +223,7 @@ export function getTokenRows(themeId: string, mode: ThemeMode): TokenRow[] {
 }
 
 export function getBrandPackage(themeId: string): BrandPackage | undefined {
-  return BRAND_PACKAGES[themeId];
+  return getBuiltInBrandPackage(themeId);
 }
 
 // ── Arbitrary ThemeTokenSet → CSS vars (DESIGN.md import / custom export) ──

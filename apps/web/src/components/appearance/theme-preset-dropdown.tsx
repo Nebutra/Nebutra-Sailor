@@ -1,7 +1,11 @@
 "use client";
 
 import { Check, ChevronDown, MagnifyingGlass } from "@nebutra/icons";
-import { DEFAULT_THEME, listThemesAsLegacyEntries } from "@nebutra/theme/registry";
+import {
+  DEFAULT_LANGUAGE,
+  type DesignLanguageEntry,
+  LANGUAGE_REGISTRY,
+} from "@nebutra/theme/languages";
 import { Input, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
@@ -13,9 +17,7 @@ import {
   getThemeSwatches,
   type ThemeTokenSet,
 } from "@/components/theme-playground/theme-token-data";
-import { useAppearance } from "./store";
-
-const DEFAULT_ID = "default";
+import { APPEARANCE_FACTORY_LANGUAGE, isFactoryLanguageId, useAppearance } from "./store";
 
 function MiniSwatches({ colors }: { colors: string[] }) {
   return (
@@ -32,9 +34,8 @@ function MiniSwatches({ colors }: { colors: string[] }) {
 }
 
 /**
- * Compact theme selector — replaces the full-page preset gallery with a single
- * dropdown that opens a searchable list of every registry theme. Selecting a
- * theme clears any imported DESIGN.md (registry preset takes over).
+ * Compact theme selector — searchable design-language list (LANGUAGE_REGISTRY).
+ * Selecting a language clears any imported DESIGN.md.
  */
 export function ThemePresetDropdown() {
   const t = useTranslations("settings.appearance.themePreset");
@@ -43,29 +44,27 @@ export function ThemePresetDropdown() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
+  const languages = LANGUAGE_REGISTRY.languages;
+
   const hasImported = Boolean(state.importedTheme);
-  const isDefault = !hasImported && (!state.theme || state.theme === DEFAULT_ID);
-  const activeRegistry = listThemesAsLegacyEntries().find((theme) => theme.id === state.theme);
+  const isFactory = !hasImported && isFactoryLanguageId(state.theme);
+  const activeLanguage = languages.find((lang) => lang.id === state.theme);
 
   const activeLabel = hasImported
     ? (state.importedTheme?.name ?? tEditor("custom"))
-    : isDefault
+    : isFactory
       ? t("default")
-      : (activeRegistry?.name ?? state.theme);
+      : (activeLanguage?.name ?? state.theme);
 
   const triggerSwatches = hasImported
     ? getSwatchesFromTokenSet(state.importedTheme?.tokenSet as unknown as ThemeTokenSet)
-    : getThemeSwatches(isDefault ? DEFAULT_THEME : state.theme);
+    : getThemeSwatches(isFactory ? DEFAULT_LANGUAGE : state.theme);
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    if (!normalized) return listThemesAsLegacyEntries();
-    return listThemesAsLegacyEntries().filter((theme) =>
-      `${theme.name} ${theme.id} ${theme.category} ${theme.mood}`
-        .toLowerCase()
-        .includes(normalized),
-    );
-  }, [query]);
+    if (!normalized) return languages;
+    return languages.filter((lang) => languageSearchBlob(lang).includes(normalized));
+  }, [languages, query]);
 
   function select(themeId: string) {
     update({ theme: themeId, importedTheme: null });
@@ -98,22 +97,24 @@ export function ThemePresetDropdown() {
         </div>
         <div className="max-h-[18rem] space-y-0.5 overflow-y-auto pr-1">
           <ThemeOption
-            active={isDefault}
+            active={isFactory}
             label={t("default")}
             mood={t("defaultMood")}
-            swatches={getThemeSwatches(DEFAULT_THEME)}
-            onSelect={() => select(DEFAULT_ID)}
+            swatches={getThemeSwatches(DEFAULT_LANGUAGE)}
+            onSelect={() => select(APPEARANCE_FACTORY_LANGUAGE)}
           />
-          {filtered.map((theme) => (
-            <ThemeOption
-              key={theme.id}
-              active={!hasImported && state.theme === theme.id}
-              label={theme.name}
-              mood={theme.mood}
-              swatches={getThemeSwatches(theme.id)}
-              onSelect={() => select(theme.id)}
-            />
-          ))}
+          {filtered
+            .filter((lang) => lang.id !== APPEARANCE_FACTORY_LANGUAGE)
+            .map((lang) => (
+              <ThemeOption
+                key={lang.id}
+                active={!hasImported && state.theme === lang.id}
+                label={lang.name}
+                mood={lang.description}
+                swatches={getThemeSwatches(lang.id)}
+                onSelect={() => select(lang.id)}
+              />
+            ))}
           {filtered.length === 0 && (
             <p className="py-6 text-center text-muted-foreground text-sm">{t("empty")}</p>
           )}
@@ -121,6 +122,10 @@ export function ThemePresetDropdown() {
       </PopoverContent>
     </Popover>
   );
+}
+
+function languageSearchBlob(lang: DesignLanguageEntry): string {
+  return `${lang.name} ${lang.id} ${lang.description} ${lang.proves.join(" ")}`.toLowerCase();
 }
 
 function ThemeOption({

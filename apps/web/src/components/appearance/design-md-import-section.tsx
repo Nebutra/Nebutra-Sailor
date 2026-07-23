@@ -21,7 +21,7 @@ export function DesignMdImportSection() {
   function handleImported(theme: ImportedTheme) {
     update({
       importedTheme: { name: theme.name, tokenSet: theme.tokenSet },
-      theme: "default",
+      theme: "factory",
     });
   }
 

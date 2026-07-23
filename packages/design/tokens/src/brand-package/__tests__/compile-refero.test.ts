@@ -37,8 +37,8 @@ describe("compileReferoTokens — GSAP", () => {
       },
     });
     assert.equal(result.brand.recipe.buttonDefault, "gradient-stroke");
-    assert.equal(result.brand.recipe.buttonRadius, "100px");
-    assert.equal(result.brand.recipe.elevation, "none");
+    assert.equal(result.brand.recipe.radii.button, "100px");
+    assert.match(result.brand.recipe.elevationTokens.card, /0 0 #0000|0 0 #0000/);
     assert.ok(result.brand.extensions?.categories?.scroll);
     assert.match(result.css, /--btn-default-bg: transparent/);
     assert.match(result.css, /--btn-default-stroke-gradient:/);
@@ -68,6 +68,9 @@ describe("compileReferoTokens — Linear", () => {
     assert.equal(result.brand.recipe.buttonDefault, "solid");
     assert.match(result.css, /--btn-default-bg: hsl\(var\(--primary\)\)/);
     assert.match(result.css, /--btn-default-border-width: 0px/);
+    // Canonical free radii/elev
+    assert.equal(result.brand.recipe.radii?.button, "6px");
+    assert.ok(result.brand.recipe.elevationTokens?.card);
   });
 });
 
@@ -143,14 +146,21 @@ describe("compileReferoTokens — Vercel", () => {
     assert.equal(result.brand.id, "vercel");
     assert.equal(result.brand.darkDefault, false);
     assert.equal(result.brand.recipe.buttonDefault, "solid");
-    assert.equal(result.brand.recipe.buttonRadius, "6px");
-    assert.equal(result.brand.recipe.elevation, "hairline");
+    assert.equal(result.brand.recipe.radii.button, "6px");
+    assert.match(result.brand.recipe.elevationTokens.card, /1px|inset/);
     // Light paper background (~98%)
     assert.match(result.brand.semantic.background, /9[0-9]%/);
     // Obsidian primary (~9%)
     assert.match(result.brand.semantic.primary, /^0 0% 9%|0 0% 8%|0 0% 10%/);
     assert.match(result.css, /0px 0px 0px 1px/);
     assert.ok(!result.css.includes("rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset"));
+    // Dual-mode: light + dark palettes, separate CSS blocks
+    assert.ok(result.brand.modes?.light?.semantic);
+    assert.ok(result.brand.modes?.dark?.semantic);
+    assert.match(result.brand.modes!.dark!.semantic!.background, /^0 0% 0%$/);
+    assert.match(result.brand.modes!.dark!.semantic!.primary, /^0 0% 100%$/);
+    assert.match(result.css, /dualMode=true/);
+    assert.match(result.css, /\.dark,\nhtml\.dark\[data-brand="vercel"\]/);
   });
 });
 
@@ -202,9 +212,9 @@ Outlined Text Button border-radius 4px (tertiary only).
     assert.equal(result.brand.id, "notion");
     assert.equal(result.brand.darkDefault, false);
     assert.equal(result.brand.recipe.buttonDefault, "solid");
-    assert.equal(result.brand.recipe.elevation, "none");
-    assert.equal(result.brand.recipe.buttonRadius, "8px");
-    assert.equal(result.brand.recipe.cardRadius, "12px");
+    assert.match(result.brand.recipe.elevationTokens.card, /0 0 #0000|0 0 #0000/);
+    assert.equal(result.brand.recipe.radii.button, "8px");
+    assert.equal(result.brand.recipe.radii.card, "12px");
     // Paper warmth canvas (~96% L), not pure white as page if distinct
     assert.match(result.brand.semantic.background, /9[0-9]%/);
     assert.notEqual(result.brand.semantic.background, result.brand.semantic.card);
@@ -217,6 +227,32 @@ Outlined Text Button border-radius 4px (tertiary only).
     assert.match(result.css, /--radius-card: 12px/);
     assert.match(result.css, /--brand-mark:/);
     assert.ok(result.warnings.some((w) => /notion-blue|decorative/i.test(w)));
+  });
+});
+
+describe("compileReferoTokens — shadcn-named import mapping", () => {
+  it("maps HSL channel triples under shadcn keys without falling back to defaults", () => {
+    const result = compileReferoTokens({
+      id: "imported-shadcn",
+      name: "Imported",
+      tokens: {
+        color: {
+          background: { $value: "0 0% 98%", $type: "color" },
+          foreground: { $value: "0 0% 9%", $type: "color" },
+          primary: { $value: "228 85% 56%", $type: "color" },
+          "primary-foreground": { $value: "0 0% 100%", $type: "color" },
+          card: { $value: "0 0% 100%", $type: "color" },
+          border: { $value: "0 0% 90%", $type: "color" },
+          muted: { $value: "0 0% 94%", $type: "color" },
+          "muted-foreground": { $value: "0 0% 45%", $type: "color" },
+        },
+      },
+    });
+    assert.equal(result.brand.darkDefault, false);
+    assert.equal(result.brand.semantic.background, "0 0% 98%");
+    assert.equal(result.brand.semantic.primary, "228 85% 56%");
+    assert.equal(result.brand.semantic.foreground, "0 0% 9%");
+    assert.equal(result.brand.semantic.card, "0 0% 100%");
   });
 });
 
@@ -260,9 +296,9 @@ Primary Filled Button Background #533afd.
     assert.equal(result.brand.id, "stripe");
     assert.equal(result.brand.darkDefault, false);
     assert.equal(result.brand.recipe.buttonDefault, "solid");
-    assert.equal(result.brand.recipe.elevation, "none");
-    assert.equal(result.brand.recipe.buttonRadius, "4px");
-    assert.equal(result.brand.recipe.cardRadius, "4px");
+    assert.match(result.brand.recipe.elevationTokens.card, /0 0 #0000|0 0 #0000/);
+    assert.equal(result.brand.recipe.radii.button, "4px");
+    assert.equal(result.brand.recipe.radii.card, "4px");
     assert.equal(result.brand.typography.headingWeight, 300);
     // Indigo action (~61% L), not mist/white
     assert.match(result.brand.semantic.primary, /6[0-5]%|5[5-9]%/);
@@ -321,10 +357,10 @@ Primary Filled Button fill #5e05c4. Logo in Reckless #260048.
     assert.equal(result.brand.id, "vanta");
     assert.equal(result.brand.darkDefault, false);
     assert.equal(result.brand.recipe.buttonDefault, "solid");
-    assert.equal(result.brand.recipe.elevation, "none");
+    assert.match(result.brand.recipe.elevationTokens.card, /0 0 #0000|0 0 #0000/);
     assert.equal(result.brand.recipe.density, "comfortable");
-    assert.match(result.brand.recipe.buttonRadius ?? "", /999/);
-    assert.equal(result.brand.recipe.cardRadius, "16px");
+    assert.match(result.brand.recipe.radii.button, /999/);
+    assert.equal(result.brand.recipe.radii.card, "16px");
     assert.equal(result.brand.recipe.badgeDefault, "muted");
 
     // action = vivid violet (~39% L), not indigo (~14% L)
@@ -371,9 +407,9 @@ describe("compileReferoTokens — Raycast", () => {
     });
     assert.equal(result.brand.id, "raycast");
     assert.equal(result.brand.recipe.buttonDefault, "solid");
-    assert.equal(result.brand.recipe.buttonRadius, "8px");
-    assert.equal(result.brand.recipe.cardRadius, "16px");
-    assert.equal(result.brand.recipe.elevation, "key");
+    assert.equal(result.brand.recipe.radii.button, "8px");
+    assert.equal(result.brand.recipe.radii.card, "16px");
+    assert.match(result.brand.recipe.elevationTokens.card, /inset|1px/);
     assert.equal(result.brand.recipe.badgeDefault, "muted");
     // Mist primary (light), not void-black / coral
     assert.match(result.brand.semantic.primary, /90%|89%|91%/);

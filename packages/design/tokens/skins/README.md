@@ -8,8 +8,8 @@ This package is a *carrier* (roles + free elev/radii + zones), not a list of bra
 | Layer | What | Path |
 |-------|------|------|
 | **Recipe defaults** | Button default reads `--btn-default-*` | `@nebutra/tokens/recipe.css` (auto via `preset.css`) |
-| **Brand skin** | Semantic colors + recipe overrides | `@nebutra/tokens/skins/<id>.css` or `brands/<id>/skin.css` |
-| **Brand JSON** | Machine contract for Create Center | `brands/<id>/brand.json` |
+| **Brand JSON (SSOT)** | Machine contract for Create Center | `brands/<id>/brand.json` |
+| **Brand skin (generated)** | Semantic colors + recipe overrides | `@nebutra/tokens/skins/<id>.css` only |
 
 ## Product chrome contract
 
@@ -42,10 +42,11 @@ Default Nebutra shipping brand = **no skin import**.
 # Folder with tokens.json + DESIGN.md (Desktop/GSAP style)
 pnpm --filter @nebutra/tokens exec node scripts/compile-brand.mjs ~/Desktop/GSAP --id gsap
 
-# Writes:
-#   packages/design/tokens/brands/gsap/brand.json
-#   packages/design/tokens/brands/gsap/skin.css
-#   packages/design/tokens/skins/gsap.css
+# Writes brand.json (SSOT) + skins/<id>.css
+# After hand-editing brand.json:
+pnpm --filter @nebutra/tokens emit-skins
+# Then refresh multi-language catalog:
+pnpm --filter @nebutra/theme sync:skins
 ```
 
 Programmatic:
@@ -76,8 +77,7 @@ Cataloged as **design languages** on `@nebutra/theme` (`LANGUAGE_REGISTRY` / `sk
 
 ```ts
 import { applyLanguage, LANGUAGE_REGISTRY } from "@nebutra/theme";
-import vanta from "@nebutra/tokens/brands/vanta/brand.json";
-applyLanguage("vanta", { package: vanta });
+applyLanguage("vanta"); // built-in package resolved automatically
 ```
 
 Multi-language catalog (scoped `html[data-brand]` only):

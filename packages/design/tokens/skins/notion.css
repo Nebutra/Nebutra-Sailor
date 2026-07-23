@@ -1,6 +1,6 @@
 /**
  * Brand carrier skin: Notion (notion) v1.0.0
- * darkDefault=false action≠brand-mark button=solid
+ * darkDefault=false dualMode=false button=solid
  * fonts=2 zones=yes mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
@@ -21,7 +21,6 @@
 }
 
 :root,
-.dark,
 html[data-brand="notion"] {
   /* ── Color roles (carrier) ── */
   --role-canvas: 30 10% 96%;

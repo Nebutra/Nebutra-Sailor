@@ -67,13 +67,7 @@
       "control": "0 0 #0000",
       "raised": "0 0 #0000"
     },
-    "buttonRadius": "999px",
-    "cardRadius": "16px",
-    "badgeRadius": "999px",
-    "inputRadius": "999px",
-    "cardShadow": "0 0 #0000",
-    "outlineBorder": "#181822",
-    "elevation": "none"
+    "outlineBorder": "#181822"
   },
   "typography": {
     "fontSans": "'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif",

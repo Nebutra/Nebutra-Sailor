@@ -1,7 +1,11 @@
 "use client";
 
 import { MagnifyingGlass } from "@nebutra/icons";
-import { DEFAULT_THEME, listThemesAsLegacyEntries } from "@nebutra/theme/registry";
+import {
+  DEFAULT_LANGUAGE,
+  type DesignLanguageEntry,
+  LANGUAGE_REGISTRY,
+} from "@nebutra/theme/languages";
 import { Badge, Input } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
@@ -9,9 +13,7 @@ import { useMemo, useState } from "react";
 // Route-split: pulls the theme token-sets, but only into the appearance page
 // chunk (never the global bundle — AppearanceVarsProvider lazy-imports it).
 import { getThemeSwatches } from "@/components/theme-playground/theme-token-data";
-import { useAppearance } from "./store";
-
-const DEFAULT_ID = "default";
+import { APPEARANCE_FACTORY_LANGUAGE, isFactoryLanguageId, useAppearance } from "./store";
 
 function SwatchRow({ colors }: { colors: string[] }) {
   return (
@@ -87,19 +89,18 @@ export function ThemePresetPicker() {
   const [state, update] = useAppearance();
   const [query, setQuery] = useState("");
 
+  const languages = LANGUAGE_REGISTRY.languages;
+
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    if (!normalized) return listThemesAsLegacyEntries();
-    return listThemesAsLegacyEntries().filter((theme) =>
-      `${theme.name} ${theme.id} ${theme.category} ${theme.mood}`
-        .toLowerCase()
-        .includes(normalized),
-    );
-  }, [query]);
+    if (!normalized) return languages;
+    return languages.filter((lang) => languageSearchBlob(lang).includes(normalized));
+  }, [languages, query]);
 
-  // importedTheme takes precedence — no registry preset is "active" while one is loaded.
+  // importedTheme takes precedence — no language is "active" while one is loaded.
   const hasImported = Boolean(state.importedTheme);
-  const defaultActive = !hasImported && (!state.theme || state.theme === DEFAULT_ID);
+  const factoryActive = !hasImported && isFactoryLanguageId(state.theme);
+  const languageCards = filtered.filter((lang) => lang.id !== APPEARANCE_FACTORY_LANGUAGE);
 
   return (
     <div className="space-y-3">
@@ -114,36 +115,40 @@ export function ThemePresetPicker() {
 
       <div className="grid max-h-[28rem] grid-cols-1 gap-2 overflow-y-auto pr-1 sm:grid-cols-2 xl:grid-cols-3">
         <PresetCard
-          active={defaultActive}
+          active={factoryActive}
           name={t("default")}
           mood={t("defaultMood")}
-          swatches={getThemeSwatches(DEFAULT_THEME)}
+          swatches={getThemeSwatches(DEFAULT_LANGUAGE)}
           tags={[]}
-          onSelect={() => update({ theme: DEFAULT_ID, importedTheme: null })}
+          onSelect={() => update({ theme: APPEARANCE_FACTORY_LANGUAGE, importedTheme: null })}
           activeLabel={t("active")}
         />
 
-        {filtered.map((theme) => (
+        {languageCards.map((lang) => (
           <PresetCard
-            key={theme.id}
-            active={!hasImported && state.theme === theme.id}
-            name={theme.name}
-            mood={theme.mood}
-            swatches={getThemeSwatches(theme.id)}
-            tags={[theme.category, `WCAG ${theme.governance.wcag}`]}
-            onSelect={() => update({ theme: theme.id, importedTheme: null })}
+            key={lang.id}
+            active={!hasImported && state.theme === lang.id}
+            name={lang.name}
+            mood={lang.description}
+            swatches={getThemeSwatches(lang.id)}
+            tags={[lang.kind, ...lang.proves.slice(0, 2)]}
+            onSelect={() => update({ theme: lang.id, importedTheme: null })}
             activeLabel={t("active")}
           />
         ))}
 
-        {filtered.length === 0 && (
+        {languageCards.length === 0 && query.trim() && (
           <p className="col-span-full py-6 text-center text-muted-foreground text-sm">
             {t("empty")}
           </p>
         )}
       </div>
 
-      <p className="text-muted-foreground text-xs">{t("count", { count: filtered.length })}</p>
+      <p className="text-muted-foreground text-xs">{t("count", { count: languageCards.length })}</p>
     </div>
   );
+}
+
+function languageSearchBlob(lang: DesignLanguageEntry): string {
+  return `${lang.name} ${lang.id} ${lang.description} ${lang.proves.join(" ")}`.toLowerCase();
 }

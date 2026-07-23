@@ -3,5 +3,5 @@
   "version": "2026.07",
   "defaultTheme": "factory",
   "themes": [],
-  "notes": "Oklch multi-mood catalog removed. Design languages live in languages.json. This file remains only so older imports of @nebutra/theme/registry resolve to an empty mood list."
+  "notes": "FROZEN empty mood list. Design languages: languages.json. Do not add themes here."
 }

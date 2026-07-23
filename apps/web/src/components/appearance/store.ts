@@ -55,17 +55,18 @@ export type ImportedThemeSnapshot = {
 
 export type AppearanceState = {
   /**
-   * Selected Theme Playground preset id (from @nebutra/theme registry), or
-   * "default" for the base Nebutra palette. Validated loosely (any short
-   * string) so the global appearance bundle never has to import the 74 KB
-   * theme registry — unknown ids degrade gracefully to the base palette when
-   * applied (AppearanceVarsProvider lazy-loads the token resolver).
+   * Selected design-language id (`LANGUAGE_REGISTRY`), or `"factory"` for
+   * base Nebutra product chrome (no Brand Package skin). Validated loosely
+   * (short kebab slug) so this global bundle never imports the language
+   * catalog; unknown ids degrade to factory when applied.
+   *
+   * Back-compat: persisted `"default"` is coerced to `"factory"` on load.
    */
   theme: string;
   /**
    * A DESIGN.md theme imported by the user and applied app-wide (persisted).
-   * When set, takes precedence over the `theme` preset. Cleared whenever the
-   * user picks a registry preset or clicks "Remove".
+   * When set, takes precedence over the design-language id. Cleared whenever
+   * the user picks a language or clicks "Remove".
    */
   importedTheme: ImportedThemeSnapshot | null;
   accent: AppearanceAccent;
@@ -85,8 +86,11 @@ export type AppearanceState = {
 
 export const APPEARANCE_STORAGE_KEY = "nebutra:appearance:v1";
 
+/** Canonical factory language id — product chrome SSOT, no skin. */
+export const APPEARANCE_FACTORY_LANGUAGE = "factory";
+
 export const APPEARANCE_DEFAULTS: AppearanceState = {
-  theme: "default",
+  theme: APPEARANCE_FACTORY_LANGUAGE,
   importedTheme: null,
   accent: "default",
   uiFontSize: "theme",
@@ -160,13 +164,22 @@ function sanitizeHexColor(value: unknown): string | null {
   return HEX_RE.test(value) ? value : null;
 }
 
-// Loose: accept any short id string (registry ids are kebab-case slugs). We do
-// NOT import the theme registry here to keep the global appearance bundle lean;
-// unknown ids resolve to the base palette when applied.
+// Loose: accept any short id string (language ids are kebab-case slugs). We do
+// NOT import LANGUAGE_REGISTRY here to keep the global appearance bundle lean;
+// unknown ids resolve to factory when applied.
 const THEME_ID_RE = /^[a-z0-9-]{1,64}$/;
 function sanitizeTheme(value: unknown): string {
-  if (typeof value !== "string" || !THEME_ID_RE.test(value)) return APPEARANCE_DEFAULTS.theme;
+  if (typeof value !== "string" || !THEME_ID_RE.test(value)) {
+    return APPEARANCE_DEFAULTS.theme;
+  }
+  // v1 storage used "default" for factory product chrome
+  if (value === "default" || value === "nebutra") return APPEARANCE_FACTORY_LANGUAGE;
   return value;
+}
+
+/** True when the stored id means factory product chrome (no design-language skin). */
+export function isFactoryLanguageId(id: string | null | undefined): boolean {
+  return !id || id === APPEARANCE_FACTORY_LANGUAGE || id === "default" || id === "nebutra";
 }
 
 /**

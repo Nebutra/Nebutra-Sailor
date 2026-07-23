@@ -57,19 +57,50 @@ function ThemeToggle() {
 
 | Export | Description |
 |--------|-------------|
-| `ThemeProvider` | React provider for light/dark mode (from next-themes) |
+| `ThemeProvider` | React provider for light/dark mode (custom; class + cookie, not next-themes) |
 | `useTheme()` | Hook to read/set current theme |
 | `ThemeProviderProps` | Props type for ThemeProvider |
-| `THEME_IDS` | `["light", "dark"]` |
+| `THEME_IDS` | `["light", "dark"]` (appearance mode, not design language) |
 | `ThemeId` | `"light" \| "dark"` |
 | `DEFAULT_THEME` | `"dark"` |
 
 ## Token Architecture
 
 ```
-@nebutra/brand   --> Brand primitives (source data, not runtime)
-@nebutra/tokens  --> Runtime CSS variables (THIS PACKAGE)
-@nebutra/ui      --> Components (consume tokens via CSS vars)
+@nebutra/design-tokens  --> DTCG JSON + Style Dictionary → build/css/styles.generated.css
+@nebutra/tokens         --> styles.css (copied from generated; verify:parity must stay 100%)
+@nebutra/theme          --> design languages (Brand Packages, applyLanguage)
+@nebutra/ui             --> components (consume tokens via CSS vars)
+```
+
+### Regenerating `styles.css`
+
+```bash
+pnpm --filter @nebutra/design-tokens build
+pnpm --filter @nebutra/design-tokens verify:parity   # requires 100%
+pnpm --filter @nebutra/tokens sync                   # copies styles.generated.css → styles.css
+```
+
+### Brand Packages (design-language skins)
+
+```ts
+import { emitBrandCss, type BrandPackage } from "@nebutra/tokens/brand-package";
+
+// Optional dual light/dark palettes (orthogonal to catalog language id):
+const brand: BrandPackage = {
+  id: "acme",
+  name: "Acme",
+  darkDefault: false,
+  version: "1.0.0",
+  semantic: { /* default mode */ },
+  modes: {
+    light: { semantic: { /* light */ } },
+    dark: { semantic: { /* dark */ } },
+  },
+  recipe: { buttonDefault: "solid", density: "comfortable", radii: {…}, elevationTokens: {…} },
+  typography: { fontSans: "Inter, sans-serif" },
+};
+// emit: light under :root/html[data-brand]; dark under .dark/html.dark[data-brand]
 ```
 
 ## Peer Dependencies

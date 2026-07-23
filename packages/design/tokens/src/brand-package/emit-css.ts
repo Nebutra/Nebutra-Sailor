@@ -3,26 +3,21 @@
  * Components bind: --primary (= action), --brand-mark, --elevation-*, --radius-*.
  */
 
-import { normalizeBrandPackage } from "./normalize";
+import { isDualModeBrand, normalizeBrandPackage } from "./normalize";
 import type {
+  BrandColorRoles,
   BrandFontFace,
   BrandPackage,
   BrandRecipe,
+  BrandSemanticColors,
   BrandTypeStep,
   BrandZones,
   BrandZoneTypography,
 } from "./types";
 
 function recipeVars(recipe: BrandRecipe): string[] {
-  const radii = recipe.radii ?? {
-    button: recipe.buttonRadius ?? "0.375rem",
-    card: recipe.cardRadius ?? "0.75rem",
-  };
-  const elev = recipe.elevationTokens ?? {
-    card: "var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))",
-    control: "var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04))",
-    raised: "var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1))",
-  };
+  const radii = recipe.radii;
+  const elev = recipe.elevationTokens;
 
   const lines: string[] = [
     `  /* Shape slots */`,
@@ -259,38 +254,35 @@ export type EmitBrandCssMode =
 
 export interface EmitBrandCssOptions {
   /**
-   * `global` (default): `:root, .dark, html[data-brand]` — one import recolors the app.
-   * `scoped`: only `html[data-brand]` — safe to concatenate many skins in a catalog.
+   * `global` (default): `:root` + `html[data-brand]` — one import recolors the app.
+   * Single-mode dark packs also include `.dark`.
+   * Dual-mode packs (`modes.light` + `modes.dark`) emit separate light/dark color blocks.
+   * `scoped`: only `html[data-brand]` (+ `html.dark[data-brand]` when dual).
    */
   mode?: EmitBrandCssMode;
 }
 
-/**
- * Emit a single opt-in skin CSS file from a Brand Package.
- */
-export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions = {}): string {
-  const mode = options.mode ?? "global";
-  const b = normalizeBrandPackage(brand);
-  const s = b.semantic;
-  const r = b.roles;
-  const t = b.typography;
-  const selector =
-    mode === "scoped"
-      ? `html[data-brand="${b.id}"] {`
-      : `:root,\n.dark,\nhtml[data-brand="${b.id}"] {`;
-  const parts: string[] = [
-    `/**`,
-    ` * Brand carrier skin: ${b.name} (${b.id}) v${b.version}`,
-    ` * darkDefault=${b.darkDefault} action≠brand-mark button=${b.recipe.buttonDefault}`,
-    ` * fonts=${t.faces?.length ?? 0} zones=${b.zones ? "yes" : "no"} mode=${mode}`,
-    ` * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)`,
-    ` */`,
-    ``,
-    ...emitFontFaces(t.faces),
-    selector,
-  ];
+/** Global single-skin selector list — single-mode packs only. */
+export function emitGlobalSkinSelector(brandId: string, darkDefault: boolean): string {
+  if (darkDefault) {
+    return `:root,\n.dark,\nhtml[data-brand="${brandId}"] {`;
+  }
+  return `:root,\nhtml[data-brand="${brandId}"] {`;
+}
 
-  // Color roles (canonical)
+/** Light mode selector (dual-mode). */
+export function emitLightModeSelector(brandId: string, mode: EmitBrandCssMode): string {
+  if (mode === "scoped") return `html[data-brand="${brandId}"] {`;
+  return `:root,\nhtml[data-brand="${brandId}"] {`;
+}
+
+/** Dark mode selector (dual-mode) — never paints light colors under .dark. */
+export function emitDarkModeSelector(brandId: string, mode: EmitBrandCssMode): string {
+  if (mode === "scoped") return `html.dark[data-brand="${brandId}"] {`;
+  return `.dark,\nhtml.dark[data-brand="${brandId}"] {`;
+}
+
+function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): string[] {
   const roleLines: string[] = [
     `  /* ── Color roles (carrier) ── */`,
     `  --role-canvas: ${r?.canvas ?? s.background};`,
@@ -318,7 +310,6 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     );
   }
 
-  // shadcn bridge — primary = ACTION only
   const semantic = [
     ``,
     `  /* ── shadcn bridge (primary = action CTA) ── */`,
@@ -359,12 +350,34 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     `  --sidebar-accent-foreground: ${s.accentForeground};`,
     `  --sidebar-border: ${s.border};`,
     `  --sidebar-ring: ${s.ring};`,
-    // Product gradient aliases solid action — not logo multi-hue
     `  --brand-gradient: hsl(var(--primary));`,
     `  --brand-gradient-reverse: hsl(var(--primary));`,
     `  --brand-gradient-vertical: hsl(var(--primary));`,
     `  --brand-gradient-radial: hsl(var(--primary));`,
   );
+
+  return [...roleLines, ...semantic];
+}
+
+/**
+ * Emit a single opt-in skin CSS file from a Brand Package.
+ */
+export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions = {}): string {
+  const mode = options.mode ?? "global";
+  const b = normalizeBrandPackage(brand);
+  const t = b.typography;
+  const dual = isDualModeBrand(b);
+
+  const parts: string[] = [
+    `/**`,
+    ` * Brand carrier skin: ${b.name} (${b.id}) v${b.version}`,
+    ` * darkDefault=${b.darkDefault} dualMode=${dual} button=${b.recipe.buttonDefault}`,
+    ` * fonts=${t.faces?.length ?? 0} zones=${b.zones ? "yes" : "no"} mode=${mode}`,
+    ` * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)`,
+    ` */`,
+    ``,
+    ...emitFontFaces(t.faces),
+  ];
 
   const typeLines = [
     `  --font-sans: ${t.fontSans};`,
@@ -388,14 +401,11 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
   if (decorative) {
     for (const [key, value] of Object.entries(decorative)) {
       const safe = key.replace(/[^a-z0-9_-]/gi, "-").toLowerCase();
-      // Marketing zone only — never alias to --primary
       extLines.push(`  --brand-decorative-${safe}: ${value};`);
     }
   }
 
-  parts.push(
-    ...roleLines,
-    ...semantic,
+  const sharedChrome = [
     ``,
     `  /* Recipe (action language + free elev/radii) */`,
     ...recipeVars(b.recipe),
@@ -406,8 +416,31 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     ...(extLines.length
       ? ["", "  /* Taxonomy / decorative (not product CTA) */", ...extLines]
       : []),
-    `}`,
-    ``,
+  ];
+
+  if (dual && b.modes?.light?.semantic && b.modes?.dark?.semantic) {
+    // Light block: colors + shared chrome
+    parts.push(emitLightModeSelector(b.id, mode));
+    parts.push(
+      ...emitColorVars(b.modes.light.semantic, b.modes.light.roles),
+      ...sharedChrome,
+      `}`,
+      ``,
+    );
+    // Dark block: colors only (chrome inherits)
+    parts.push(emitDarkModeSelector(b.id, mode));
+    parts.push(...emitColorVars(b.modes.dark.semantic, b.modes.dark.roles), `}`, ``);
+  } else {
+    // Single-mode: one selector + full block
+    const selector =
+      mode === "scoped"
+        ? `html[data-brand="${b.id}"] {`
+        : emitGlobalSkinSelector(b.id, b.darkDefault);
+    parts.push(selector);
+    parts.push(...emitColorVars(b.semantic, b.roles), ...sharedChrome, `}`, ``);
+  }
+
+  parts.push(
     ...zoneConsumerBlock("product", b.zones?.product),
     ...zoneConsumerBlock("marketing", b.zones?.marketing),
     ``,

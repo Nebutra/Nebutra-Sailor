@@ -21,16 +21,18 @@
 └───────────────────────────▲─────────────────────────────────┘
                             │ hsl(var(--primary)) etc.
 ┌───────────────────────────┴─────────────────────────────────┐
-│  @nebutra/tokens   ★ product skin surface                   │
+│  @nebutra/tokens   ★ product skin surface (runtime SSOT)    │
 │  · Semantic: --primary, --background, --border, --radius…   │
-│  · Generated from design-tokens JSON (SSOT for values)      │
-│  · skins/README.md = how to re-map for external DS          │
+│  · styles.css is what apps load (generated via tokens sync) │
+│  · Brand Package engine: compile / emit / apply             │
+│  · skins/<id>.css = single-skin publish path                │
 └───────────────────────────▲─────────────────────────────────┘
-                            │ palette refs
+                            │ palette refs / parity source
 ┌───────────────────────────┴─────────────────────────────────┐
-│  @nebutra/brand + design-tokens primitives                  │
+│  @nebutra/brand + @nebutra/design-tokens                    │
 │  · VI lock: 云毓蓝 #0033FE, 云毓青, logo assets               │
-│  · NOT for painting product chrome CTAs                     │
+│  · DTCG JSON → Style Dictionary → verify:parity vs styles   │
+│  · NOT for painting product chrome CTAs at call sites       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -57,18 +59,21 @@ Paths live only in `packages/design/ui/src/styles/sources.css`.
 
 | Concern | Source of truth |
 |---------|-----------------|
-| Semantic HSL values (light/dark) | `packages/design/design-tokens/tokens/themes/{light,dark}.json` |
-| Palette scales | `packages/design/design-tokens/tokens/core.json` |
-| Runtime CSS apps load | `packages/design/tokens/styles.css` (generated) |
-| **Design-language swap (Create Center)** | `@nebutra/theme` languages + Brand Package skins (`data-brand`) |
+| **Runtime CSS apps load** | `packages/design/tokens/styles.css` (**product SSOT**, generated) |
+| DTCG authoring | `packages/design/design-tokens/tokens/*` → Style Dictionary → `styles.generated.css` |
+| Parity contract | `verify:parity` must stay **100%**; then `tokens sync` copies generated → styles.css |
+| **Design-language swap** | `brands/<id>/brand.json` + `@nebutra/theme` (`applyLanguage` / `data-brand`) |
+| Dual light/dark skin | Optional `BrandPackage.modes.{light,dark}` — emit separate color blocks |
+| Catalog copy (proves/description) | `packages/design/theme/src/languages.meta.json` |
 
-> Multi-mood oklch `[data-theme]` catalog **deleted** (2026.07) — dual-truth + weak aesthetics.
+> Multi-mood oklch `[data-theme]` catalog **deleted** (2026.07). Do not reintroduce root color dual-truth.
 
-Rebuild after token JSON edits:
+After DTCG edits:
 
 ```bash
-node packages/design/design-tokens/style-dictionary.config.mjs
-node packages/design/tokens/scripts/sync-styles.mjs
+pnpm --filter @nebutra/design-tokens build
+pnpm --filter @nebutra/design-tokens verify:parity   # 100% required
+pnpm --filter @nebutra/tokens sync                   # styles.css ← generated
 ```
 
 ## 4. Brand Package — carrier contract (Create Center)

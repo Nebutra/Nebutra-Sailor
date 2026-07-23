@@ -9,12 +9,26 @@ export {
   restorePersistedBrand,
 } from "./apply-brand";
 export { compileReferoTokens } from "./compile-refero";
-export { type EmitBrandCssMode, type EmitBrandCssOptions, emitBrandCss } from "./emit-css";
-export { hexToHslChannels, tryHexToHsl } from "./hex-to-hsl";
+export {
+  type EmitBrandCssMode,
+  type EmitBrandCssOptions,
+  emitBrandCss,
+  emitDarkModeSelector,
+  emitGlobalSkinSelector,
+  emitLightModeSelector,
+} from "./emit-css";
+export {
+  colorToHslChannels,
+  hexToHslChannels,
+  tryColorToHsl,
+  tryHexToHsl,
+} from "./hex-to-hsl";
 export { type InferredRecipeHints, inferRecipeFromDesignMd } from "./infer-recipe";
 export {
   elevationPresetToTokens,
+  isDualModeBrand,
   normalizeBrandPackage,
+  normalizeModePalette,
   rolesFromSemantic,
   semanticFromRoles,
 } from "./normalize";
@@ -25,9 +39,13 @@ export type {
   BrandExtensions,
   BrandFontFace,
   BrandFontSource,
+  BrandModePalette,
+  BrandModes,
   BrandPackage,
+  BrandPackageInput,
   BrandRadii,
   BrandRecipe,
+  BrandRecipeInput,
   BrandSemanticColors,
   BrandTypeStep,
   BrandTypography,

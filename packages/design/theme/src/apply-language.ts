@@ -3,6 +3,9 @@
  *
  * Light/dark remains class="dark" on @nebutra/tokens ThemeProvider.
  * Design language is html[data-brand] + Brand Package CSS inject.
+ *
+ * Built-in languages load Brand Packages automatically; pass `package` only for
+ * custom / compile-time packages (Create Center preview).
  */
 
 import {
@@ -14,22 +17,23 @@ import {
   normalizeBrandPackage,
   validateBrandPackage,
 } from "@nebutra/tokens/brand-package";
+import { getBuiltInBrandPackage } from "./built-in-packages";
 import { type DesignLanguageEntry, getLanguageById } from "./languages";
 
 export type { ApplyBrandOptions };
 
 export interface ApplyLanguageOptions extends ApplyBrandOptions {
   /**
-   * Preloaded Brand Package (Create Center compile result).
-   * When omitted, only factory / clear is supported from this package
-   * without a bundler JSON import — pass `package` for fixtures.
+   * Preloaded Brand Package (Create Center compile result or override).
+   * When omitted, built-in languages resolve from brands/<id>/brand.json.
    */
   package?: BrandPackage;
 }
 
 /**
  * Apply a design language by id.
- * - `factory` / unknown with no package → clearBrand (tokens SSOT)
+ * - `factory` / unknown without package → clearBrand (tokens SSOT)
+ * - built-in id without package → load shipped Brand Package
  * - with `package` → applyBrandPackage (full carrier swap)
  */
 export function applyLanguage(
@@ -51,20 +55,22 @@ export function applyLanguage(
     return entry ?? getLanguageById("factory") ?? null;
   }
 
-  if (!options.package) {
+  const pkg = options.package ?? getBuiltInBrandPackage(languageId);
+  if (!pkg) {
     throw new Error(
-      `Language "${languageId}" requires options.package (Brand Package JSON). ` +
-        `Load @nebutra/tokens/${entry.brandPath} or compileReferoTokens(), then applyLanguage("${languageId}", { package }). ` +
+      `Language "${languageId}" has no built-in Brand Package and no options.package. ` +
+        `Load @nebutra/tokens/${entry.brandPath} or compileReferoTokens(), then ` +
+        `applyLanguage("${languageId}", { package }). ` +
         `Or import the single skin CSS: ${entry.install.cssImport ?? "(none)"}.`,
     );
   }
 
-  const v = validateBrandPackage(options.package);
+  const v = validateBrandPackage(pkg);
   if (!v.ok) {
     throw new Error(`Invalid Brand Package for ${languageId}: ${v.errors.join("; ")}`);
   }
   const normalized = normalizeBrandPackage({
-    ...options.package,
+    ...pkg,
     id: languageId,
   });
   applyBrandPackage(normalized, options);

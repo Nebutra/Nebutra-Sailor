@@ -2,8 +2,14 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "inputs": ["$TURBO_EXTENDS$", "../design-tokens/build/css/styles.generated.css"],
-      "outputs": ["styles.css"]
+      "dependsOn": ["@nebutra/design-tokens#build"],
+      "inputs": [
+        "$TURBO_EXTENDS$",
+        "../design-tokens/build/css/styles.generated.css",
+        "brands/**",
+        "scripts/**"
+      ],
+      "outputs": ["styles.css", "skins/**"]
     }
   }
 }

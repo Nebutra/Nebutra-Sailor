@@ -188,8 +188,9 @@ assert(
 const themeBuild = taskById(dryRun("@nebutra/theme"), "@nebutra/theme#build");
 assert(themeBuild, "Theme build graph must include @nebutra/theme#build");
 assert(
-  themeBuild.resolvedTaskDefinition.outputs?.includes("themes.css"),
-  "@nebutra/theme#build must declare themes.css as its runtime output",
+  themeBuild.resolvedTaskDefinition.outputs?.includes("keyframes.css") ||
+    themeBuild.resolvedTaskDefinition.outputs?.includes("themes.css"),
+  "@nebutra/theme#build must declare keyframes.css (or themes.css alias) as runtime output",
 );
 assert(
   themeBuild.dependencies.includes("@nebutra/design-tokens#build"),

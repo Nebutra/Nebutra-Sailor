@@ -2,11 +2,10 @@ import type { ButtonDefaultStyle, Density, ElevationStyle } from "./types";
 
 export interface InferredRecipeHints {
   buttonDefault?: ButtonDefaultStyle;
-  elevation?: ElevationStyle;
+  elevationPreset?: ElevationStyle;
   density?: Density;
-  buttonRadius?: string;
-  /** From DESIGN.md `| cards | Npx |` table row when present */
-  cardRadius?: string;
+  /** Free radii slots from DESIGN.md tables / free-text */
+  radii?: { button?: string; card?: string };
   notes: string[];
 }
 
@@ -121,13 +120,13 @@ export function inferRecipeFromDesignMd(designMd: string): InferredRecipeHints {
           t.includes("not with drop-shadow"))));
 
   if (keyElev) {
-    hints.elevation = "key";
+    hints.elevationPreset = "key";
     notes.push("DESIGN.md: key/inset elevation");
   } else if (forbidsAnyShadow) {
-    hints.elevation = "none";
+    hints.elevationPreset = "none";
     notes.push("DESIGN.md: elevation=none (no box-shadow / tint+border depth)");
   } else if (hairlineRingElev) {
-    hints.elevation = "hairline";
+    hints.elevationPreset = "hairline";
     notes.push("DESIGN.md: hairline ring elevation");
   }
 
@@ -157,15 +156,16 @@ export function inferRecipeFromDesignMd(designMd: string): InferredRecipeHints {
   const tableCards = designMd.match(/\|\s*cards\s*\|\s*(\d+px|9999?px)\s*\|/i);
   const tableButtonRadius = tableButton?.[1];
   const tableCardsRadius = tableCards?.[1];
+  const radii: { button?: string; card?: string } = {};
   if (tableButtonRadius) {
-    hints.buttonRadius = tableButtonRadius;
+    radii.button = tableButtonRadius;
     notes.push(`DESIGN.md: table buttons radius ${tableButtonRadius}`);
   } else if (
     t.includes("4px border-radius on all buttons") ||
     t.includes("use 4px border-radius on all") ||
     (t.includes("never pill") && t.includes("4px") && t.includes("button"))
   ) {
-    hints.buttonRadius = "4px";
+    radii.button = "4px";
     notes.push("DESIGN.md: 4px control radius (not pill)");
   } else if (
     ((t.includes("999px") || t.includes("9999px")) &&
@@ -175,19 +175,23 @@ export function inferRecipeFromDesignMd(designMd: string): InferredRecipeHints {
       !t.includes("pills only")) ||
     (t.includes("pill-shaped") && t.includes("button"))
   ) {
-    hints.buttonRadius = t.includes("9999px") ? "9999px" : "999px";
+    radii.button = t.includes("9999px") ? "9999px" : "999px";
     notes.push("DESIGN.md: full pill control radius");
   } else if (/\bbuttons?\b[^\n.|]{0,48}\b8px\b/.test(t) || t.includes("8px for buttons")) {
-    hints.buttonRadius = "8px";
+    radii.button = "8px";
   } else if (/\bbuttons?\b[^\n.|]{0,48}\b6px\b/.test(t) || t.includes("button radius to 6px")) {
-    hints.buttonRadius = "6px";
+    radii.button = "6px";
   } else if (t.includes("100px") && (t.includes("button") || t.includes("pill button"))) {
-    hints.buttonRadius = "100px";
+    radii.button = "100px";
   }
 
   if (tableCardsRadius) {
-    hints.cardRadius = tableCardsRadius;
+    radii.card = tableCardsRadius;
     notes.push(`DESIGN.md: table cards radius ${tableCardsRadius}`);
+  }
+
+  if (radii.button != null || radii.card != null) {
+    hints.radii = radii;
   }
 
   return hints;

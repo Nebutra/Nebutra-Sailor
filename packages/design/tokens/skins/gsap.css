@@ -1,7 +1,8 @@
 /**
- * Brand skin: GSAP (gsap) v1.0.0
- * darkDefault=true buttonDefault=gradient-stroke
- * fonts=2 zones=product+marketing
+ * Brand carrier skin: GSAP (gsap) v1.0.0
+ * darkDefault=true dualMode=false button=gradient-stroke
+ * fonts=2 zones=yes mode=global
+ * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
 
 /* Brand font faces */
@@ -22,6 +23,22 @@
 :root,
 .dark,
 html[data-brand="gsap"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 150 7% 6%;
+  --role-canvas-fg: 54 100% 94%;
+  --role-surface: 0 0% 10%;
+  --role-surface-fg: 54 100% 94%;
+  --role-action: 137 92% 47%;
+  --role-action-fg: 150 7% 6%;
+  --role-quiet: 70 5% 25%;
+  --role-quiet-fg: 54 100% 94%;
+  --role-muted: 0 0% 10%;
+  --role-muted-fg: 60 6% 46%;
+  --role-border: 70 5% 25%;
+  --role-input: 70 5% 25%;
+  --role-ring: 137 92% 47%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
   --background: 150 7% 6%;
   --foreground: 54 100% 94%;
   --card: 0 0% 10%;
@@ -35,7 +52,7 @@ html[data-brand="gsap"] {
   --muted: 0 0% 10%;
   --muted-foreground: 60 6% 46%;
   --accent: 70 5% 25%;
-  --accent-foreground: 137 92% 47%;
+  --accent-foreground: 54 100% 94%;
   --destructive: 309 100% 47%;
   --destructive-foreground: 54 100% 94%;
   --border: 70 5% 25%;
@@ -50,7 +67,7 @@ html[data-brand="gsap"] {
   --sidebar-primary: 137 92% 47%;
   --sidebar-primary-foreground: 150 7% 6%;
   --sidebar-accent: 70 5% 25%;
-  --sidebar-accent-foreground: 137 92% 47%;
+  --sidebar-accent-foreground: 54 100% 94%;
   --sidebar-border: 70 5% 25%;
   --sidebar-ring: 137 92% 47%;
   --brand-gradient: hsl(var(--primary));
@@ -58,21 +75,29 @@ html[data-brand="gsap"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
-  /* Recipe */
+  /* Recipe (action language + free elev/radii) */
+  /* Shape slots */
   --btn-default-radius: 100px;
   --radius-button: 100px;
   --radius-buttons: 100px;
   --radius-md: 100px;
   --radius-card: 8px;
   --radius-lg: 8px;
-  --btn-default-shadow: 0 0 #0000;
+  --radius-badge: 9999px;
+  --badge-default-radius: 9999px;
+  --radius-inputs: 100px;
+  --input-radius: 100px;
+  --radius-pill: 9999px;
+
+  /* Free elevation (carrier-provided CSS shadows) */
+  --elevation-card: 0 0 #0000;
+  --elevation-control: 0 0 #0000;
+  --elevation-raised: 0 0 #0000;
   --shadow-xs: 0 0 #0000;
   --shadow-sm: 0 0 #0000;
   --shadow-md: 0 0 #0000;
   --shadow-lg: 0 0 #0000;
-  --elevation-card: 0 0 #0000;
-  --elevation-control: 0 0 #0000;
-  --elevation-raised: 0 0 #0000;
+  --btn-default-shadow: 0 0 #0000;
   --btn-default-bg: transparent;
   --btn-default-fg: hsl(var(--foreground));
   --btn-default-border-width: 1.5px;
@@ -82,7 +107,7 @@ html[data-brand="gsap"] {
   --badge-default-bg: transparent;
   --badge-default-fg: hsl(var(--foreground));
   --badge-default-border: #fffce1;
-  --badge-default-hover-bg: hsl(var(--primary) / 0.08);
+  --badge-default-hover-bg: hsl(var(--foreground) / 0.06);
   --btn-default-padding-y: 0.5rem;
   --btn-default-padding-x: 0.875rem;
   --control-height-tiny: 1.25rem;
@@ -91,13 +116,13 @@ html[data-brand="gsap"] {
   --control-height-lg: 2.5rem;
   --control-font-size-md: 0.8125rem;
 
-  /* Typography stacks */
+  /* Typography */
   --font-sans: 'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
   --font-heading: 'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
   --font-weight-heading: 600;
 
-  /* Zone type scales (product shell vs marketing) */
+  /* Zone type scales */
   --zone-product-caption-size: 14px;
   --zone-product-caption-leading: 1.4;
   --zone-product-caption-tracking: -0.14px;
@@ -136,7 +161,7 @@ html[data-brand="gsap"] {
   --zone-marketing-display-tracking: -4.48px;
   --zone-marketing-display-weight: 600;
 
-  /* Extensions */
+  /* Taxonomy / decorative (not product CTA) */
   --brand-category-gsap: #0ae448;
   --brand-category-scroll: #fec5fb;
   --brand-category-svg: #ff8709;
@@ -146,7 +171,7 @@ html[data-brand="gsap"] {
 }
 
 
-/* Zone: product — apply via data-zone="product" or .zone-product */
+/* Zone: product — product never inherits marketing display */
 [data-zone="product"], .zone-product {
   font-size: var(--zone-product-body-size, 19px);
   line-height: var(--zone-product-body-leading, 1.15);
@@ -178,9 +203,10 @@ html[data-brand="gsap"] {
   --text-display: var(--zone-product-display-size, inherit);
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
-/* Zone: marketing — apply via data-zone="marketing" or .zone-marketing */
+/* Zone: marketing — product never inherits marketing display */
 [data-zone="marketing"], .zone-marketing {
   font-size: var(--zone-marketing-body-size, 19px);
   line-height: var(--zone-marketing-body-leading, 1.15);
@@ -212,4 +238,10 @@ html[data-brand="gsap"] {
   --text-display: var(--zone-marketing-display-size, inherit);
   --leading-display: var(--zone-marketing-display-leading, inherit);
   --tracking-display: var(--zone-marketing-display-tracking, inherit);
+}
+
+/* Product chrome must not use decorative gradients as action fills */
+[data-zone="product"] .btn-brand-default,
+.zone-product .btn-brand-default {
+  /* intentional no-op: documents contract; action uses --primary only */
 }

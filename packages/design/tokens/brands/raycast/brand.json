@@ -17,7 +17,7 @@
     "muted": "220 8% 7%",
     "mutedForeground": "210 1% 42%",
     "accent": "0 100% 69%",
-    "accentForeground": "0 0% 100%",
+    "accentForeground": "210 1% 27%",
     "destructive": "0 72% 51%",
     "destructiveForeground": "0 0% 100%",
     "border": "210 2% 19%",
@@ -30,13 +30,20 @@
   },
   "recipe": {
     "buttonDefault": "solid",
-    "buttonRadius": "8px",
-    "cardRadius": "16px",
-    "elevation": "key",
     "density": "compact",
     "badgeDefault": "muted",
-    "badgeRadius": "6px",
-    "inputRadius": "8px"
+    "radii": {
+      "button": "8px",
+      "card": "16px",
+      "badge": "6px",
+      "input": "8px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset",
+      "control": "0 0 #0000",
+      "raised": "rgba(255, 255, 255, 0.05) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.25) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset"
+    }
   },
   "typography": {
     "fontSans": "'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif",
@@ -133,5 +140,28 @@
       "Coral Pulse is brand mark only — do not use for general product chrome CTAs.",
       "Cards use elevation=key (keyboard-key inset shadow stack)."
     ]
+  },
+  "roles": {
+    "canvas": "210 20% 2%",
+    "canvasForeground": "0 0% 100%",
+    "surface": "220 18% 3%",
+    "surfaceForeground": "0 0% 100%",
+    "action": "0 0% 90%",
+    "actionForeground": "210 1% 27%",
+    "quiet": "220 5% 11%",
+    "quietForeground": "0 0% 100%",
+    "muted": "220 8% 7%",
+    "mutedForeground": "210 1% 42%",
+    "border": "210 2% 19%",
+    "input": "220 8% 7%",
+    "ring": "240 1% 61%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "brand": "0 100% 69%",
+    "brandForeground": "210 1% 27%",
+    "success": "151 59% 59%",
+    "successForeground": "210 20% 2%",
+    "info": "202 100% 67%",
+    "infoForeground": "210 20% 2%"
   }
 }

@@ -19,18 +19,16 @@ if (!existsSync(skinsDir)) {
   throw new Error(`Missing skins dir at ${skinsDir}`);
 }
 
-/** Keep only html[data-brand] activation — strip global :root / .dark binding. */
+/** Keep only html[data-brand] activation — strip global :root / optional .dark binding. */
 function toScopedCatalogCss(css, id) {
+  const scoped = `html[data-brand="${id}"] {`;
   const out = css
-    // global emit: ":root,\n.dark,\nhtml[data-brand=\"id\"] {"
-    .replace(
-      /:root\s*,\s*\n\.dark\s*,\s*\nhtml\[data-brand="[^"]+"\]\s*\{/g,
-      `html[data-brand="${id}"] {`,
-    )
-    .replace(
-      /:root\s*,\s*\.dark\s*,\s*html\[data-brand="[^"]+"\]\s*\{/g,
-      `html[data-brand="${id}"] {`,
-    );
+    // darkDefault=true global: ":root,\n.dark,\nhtml[data-brand=\"id\"] {"
+    .replace(/:root\s*,\s*\n\.dark\s*,\s*\nhtml\[data-brand="[^"]+"\]\s*\{/g, scoped)
+    .replace(/:root\s*,\s*\.dark\s*,\s*html\[data-brand="[^"]+"\]\s*\{/g, scoped)
+    // darkDefault=false global: ":root,\nhtml[data-brand=\"id\"] {" (no .dark)
+    .replace(/:root\s*,\s*\nhtml\[data-brand="[^"]+"\]\s*\{/g, scoped)
+    .replace(/:root\s*,\s*html\[data-brand="[^"]+"\]\s*\{/g, scoped);
 
   // Safety: never leave a bare :root { color block from a skin
   if (/^:root\s*\{/m.test(out) || /\n:root\s*,/.test(out)) {

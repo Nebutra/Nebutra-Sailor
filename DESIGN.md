@@ -17,9 +17,9 @@ Layered package map:
 ```
 @nebutra/brand   → Brand primitives (TS source data, not consumed at runtime)
        ↓
-@nebutra/tokens  → Runtime CSS variables (★ SOURCE OF TRUTH for apps)
+@nebutra/tokens  → Runtime CSS variables (★ SOURCE OF TRUTH for apps) + Brand Package engine
        ↓
-@nebutra/theme   → Multi-theme presets (6 oklch variants via [data-theme])
+@nebutra/theme   → Design-language catalog (Brand Packages, applyLanguage, data-brand)
        ↓
 @nebutra/ui      → Component library (Radix + HeroUI + Nebutra primitives)
 @nebutra/icons   → 541 Geist icons as tree-shakable TSX
@@ -31,7 +31,7 @@ Sub-specs (per package):
 - [`packages/design/brand/DESIGN.md`](./packages/design/brand/DESIGN.md) — brand identity layer
 - [`packages/design/tokens/DESIGN.md`](./packages/design/tokens/DESIGN.md) — runtime token layer
 - [`packages/design/tokens/skins/README.md`](./packages/design/tokens/skins/README.md) — external DS / skin remap
-- [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md) — multi-theme engine
+- [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md) — design-language swap (not mood catalogs)
 - [`packages/design/ui/DESIGN.md`](./packages/design/ui/DESIGN.md) — component library
 
 ### App consumption contract (Tailwind v4 — owned by the package)
@@ -406,20 +406,20 @@ import { ThemeProvider } from "@nebutra/tokens";
 </ThemeProvider>
 ```
 
-### 6.2 Multi-theme presets (product feature)
+### 6.2 Design-language swap (product feature)
 
-`packages/theme/themes.css` provides 6 oklch-based presets selected via `[data-theme="…"]` on the document root. Switching is handled by the SaaS preset system in `@nebutra/preset`.
+Global product chrome swap uses **Brand Packages**, not oklch mood catalogs (removed).
 
-| `data-theme` | Mood | Use case |
-|------|------|----------|
-| `neon` (default) | Vibrant dark, electric blue | AI SaaS dashboards |
-| `gradient` | Soft light, blue spectrum | Marketing / growth |
-| `dark-dense` | High-density dark | Pro tools, terminals |
-| `minimal` | Neutral, low chroma | Document-heavy apps |
-| `vibrant` | Saturated multicolor | Creator / consumer apps |
-| `ocean` | Cool teal/blue | B2B finance, infra |
+| Layer | Package / API |
+|-------|----------------|
+| Light/dark | `@nebutra/tokens` ThemeProvider (`class="dark"`) |
+| Design language | `html[data-brand]` + `applyLanguage(id)` from `@nebutra/theme` |
+| Catalog | `LANGUAGE_REGISTRY` / `languages.json` (generated from `brands/*/brand.json`) |
+| Single-skin import | `@nebutra/tokens/skins/<id>.css` |
+| Multi-language catalog | `@nebutra/theme/skins.css` (scoped) |
+| Keyframes only | `@nebutra/theme/keyframes.css` |
 
-See [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md) for full token tables per theme.
+Stress fixtures (Linear, GSAP, Raycast, Vercel, Vanta, Stripe, Notion) prove the carrier contract (action ≠ brand-mark, free elev/radii, zones). See [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md).
 
 ### 6.3 Rebranding
 
@@ -495,6 +495,7 @@ Chromatic runs on every PR to `main`. Diff threshold: 0.2% per snapshot.
 - `CLAUDE.md` — internal AI agent instructions (this DESIGN.md is the public face)
 - `packages/brand/AGENTS.md` — brand layer agent guide
 - `packages/brand/assets/vi/` — VI manual (PDF + extracted markdown)
-- `packages/tokens/styles.css` — runtime token source of truth
-- `packages/theme/themes.css` — multi-theme presets
-- `packages/ui/src/components/index.ts` — component public exports
+- `packages/design/tokens/styles.css` — runtime token source of truth
+- `packages/design/theme/keyframes.css` — shared keyframes (not color moods)
+- `packages/design/theme/skins.css` — design-language catalog
+- `packages/design/ui/src/components/index.ts` — component public exports

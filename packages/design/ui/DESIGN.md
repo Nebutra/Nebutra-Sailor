@@ -294,8 +294,8 @@ Enforced by: `scripts/validate-ui-governance-policy.ts`, ESLint `no-console`, St
 
 Components style themselves entirely from `@nebutra/tokens` CSS variables. They automatically:
 
-- Switch with `class="dark"` (light/dark)
-- Switch with `[data-theme="…"]` (multi-theme presets)
+- Switch with `class="dark"` (light/dark via ThemeProvider)
+- Design-language swap via `html[data-brand]` + Brand Packages (`@nebutra/theme`)
 
 No component-level theming knobs — if you need different visual treatment, define a CVA variant or a new component, not a theme override.
 

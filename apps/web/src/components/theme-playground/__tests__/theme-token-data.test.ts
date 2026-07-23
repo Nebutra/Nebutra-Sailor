@@ -42,7 +42,8 @@ describe("estimateLightness", () => {
   });
 
   it("unknown/unrecognised value returns 0.5 fallback", () => {
-    expect(estimateLightness("hsl(200 50% 60%)")).toBe(0.5);
+    // hsl lightness channel is parsed when present
+    expect(estimateLightness("hsl(200 50% 60%)")).toBeCloseTo(0.6, 5);
     expect(estimateLightness("")).toBe(0.5);
     expect(estimateLightness("transparent")).toBe(0.5);
   });
@@ -220,9 +221,8 @@ describe("getPreviewStyleFromTokenSet", () => {
         },
       };
       const styleDark = asRecord(getPreviewStyleFromTokenSet(tokenSet, "dark"));
-      // In dark mode, fallback wins for surface — so it gets the mode fallback value
-      // which is "oklch(0.16 0.005 285.9)"
-      expect(styleDark["--color-background"]).toBe("oklch(0.16 0.005 285.9)");
+      // In dark mode, fallback wins for surface — mode SSOT dark background
+      expect(styleDark["--color-background"]).toBe("oklch(0.14 0.005 285.9)");
     });
 
     // ── Bug 1 regression: imported hex backgrounds ───────────────────────────
@@ -251,7 +251,7 @@ describe("getPreviewStyleFromTokenSet", () => {
       };
       const style = asRecord(getPreviewStyleFromTokenSet(tokenSet, "dark"));
       // In dark mode the fallback always wins regardless of theme bg
-      expect(style["--color-background"]).toBe("oklch(0.16 0.005 285.9)");
+      expect(style["--color-background"]).toBe("oklch(0.14 0.005 285.9)");
     });
 
     it("light mode + dark hex background (#101014): fallback wins (dark-designed theme)", () => {
@@ -270,36 +270,34 @@ describe("getPreviewStyleFromTokenSet", () => {
 // ─── Suite: getThemePreviewStyle delegation ───────────────────────────────────
 
 describe("getThemePreviewStyle", () => {
-  it("returns a populated style for the nebutra theme", () => {
-    const style = asRecord(getThemePreviewStyle("nebutra", "light"));
+  it("returns a populated style for factory (product SSOT)", () => {
+    const style = asRecord(getThemePreviewStyle("factory", "light"));
     expect(Object.keys(style).length).toBeGreaterThan(5);
     expect(style["--color-primary"]).toBeDefined();
     expect(style["--color-background"]).toBeDefined();
   });
 
-  it("returns a populated style for the nebutra theme in dark mode", () => {
-    const style = asRecord(getThemePreviewStyle("nebutra", "dark"));
-    expect(style["colorScheme"]).toBe("dark");
+  it("returns a populated style for factory in dark mode", () => {
+    const style = asRecord(getThemePreviewStyle("factory", "dark"));
     expect(style["--color-primary"]).toBeDefined();
+    expect(style["--color-background"]).toBeDefined();
   });
 
-  it("returns a populated style for vibrant theme", () => {
-    const style = asRecord(getThemePreviewStyle("vibrant", "light"));
+  it("returns brand package preview for a design language", () => {
+    const style = asRecord(getThemePreviewStyle("linear", "light"));
     expect(style["--color-primary"]).toBeDefined();
+    expect(style["--color-background"]).toBeDefined();
   });
 
-  it("falls back to nebutra for unknown themeId", () => {
-    const nebutraStyle = asRecord(getThemePreviewStyle("nebutra", "light"));
+  it("falls back to factory palette for unknown themeId", () => {
+    const factoryStyle = asRecord(getThemePreviewStyle("factory", "light"));
     const unknownStyle = asRecord(getThemePreviewStyle("does-not-exist", "light"));
-    // Unknown falls back to nebutra — primary should match
-    expect(unknownStyle["--color-primary"]).toBe(nebutraStyle["--color-primary"]);
+    expect(unknownStyle["--color-primary"]).toBe(factoryStyle["--color-primary"]);
   });
 
-  it("output is identical to getPreviewStyleFromTokenSet for same inputs (delegation integrity)", () => {
-    // This verifies that getThemePreviewStyle just wraps getPreviewStyleFromTokenSet
-    // by checking a known token value that the nebutra theme explicitly declares
-    const style = asRecord(getThemePreviewStyle("nebutra", "dark"));
-    expect(typeof style["--color-primary"]).toBe("string");
-    expect(style["--color-primary"]!.length).toBeGreaterThan(0);
+  it("brand language primary is distinct from factory", () => {
+    const factory = asRecord(getThemePreviewStyle("factory", "light"));
+    const linear = asRecord(getThemePreviewStyle("linear", "light"));
+    expect(linear["--color-primary"]).not.toBe(factory["--color-primary"]);
   });
 });

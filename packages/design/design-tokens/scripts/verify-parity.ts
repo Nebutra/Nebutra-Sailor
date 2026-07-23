@@ -2,9 +2,8 @@
 /**
  * verify-parity.ts
  *
- * Compares the Style Dictionary-generated CSS variables against the
- * hand-maintained packages/design/tokens/styles.css to ensure the new DTCG
- * pipeline emits an equivalent token set.
+ * Compares Style Dictionary output (styles.generated.css) against runtime
+ * packages/design/tokens/styles.css. Contract: 100% overall (generation path).
  *
  * Strategy:
  *   1. Parse both files into Map<varName, value> per scope (:root | .dark).
@@ -235,12 +234,18 @@ async function main(): Promise<void> {
     `\n=== OVERALL: ${totalMatched}/${totalCompared} (${overallPct.toFixed(1)}%) tokens at parity ===\n\n`,
   );
 
-  // Parity floor: 70% to start (Phase 1). Goal is 100%. Drift below the floor exits non-zero.
-  const PARITY_FLOOR = 0.7;
-  if (overallPct / 100 < PARITY_FLOOR) {
-    process.stderr.write(`Parity below ${PARITY_FLOOR * 100}% floor.\n`);
+  // Full parity required — styles.css is generated from DTCG via tokens sync-styles.
+  // Any drift fails CI; fix tokens JSON or regenerate styles.
+  const PARITY_FLOOR = 1;
+  if (overallPct / 100 < PARITY_FLOOR - 1e-9) {
+    process.stderr.write(
+      `Parity below ${PARITY_FLOOR * 100}% floor (got ${overallPct.toFixed(1)}%).\n` +
+        `Runtime SSOT is packages/design/tokens/styles.css (copied from styles.generated.css).\n` +
+        `Fix design-tokens JSON and re-run: pnpm --filter @nebutra/design-tokens build && pnpm --filter @nebutra/tokens sync\n`,
+    );
     process.exit(1);
   }
+  process.stdout.write("Parity floor 100% — styles.css generation contract OK.\n");
 }
 
 main().catch((err) => {

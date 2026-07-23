@@ -8,8 +8,7 @@
   "sideEffects": [
     "./styles.css",
     "./recipe.css",
-    "./skins/*.css",
-    "./brands/*/skin.css"
+    "./skins/*.css"
   ],
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -23,15 +22,15 @@
     "./use-brand": "./src/brand-package/use-brand.ts"
   },
   "scripts": {
-    "build": "node scripts/sync-styles.mjs",
+    "build": "node scripts/sync-styles.mjs && node scripts/emit-skins.mjs",
     "sync": "node scripts/sync-styles.mjs",
+    "emit-skins": "node scripts/emit-skins.mjs",
     "compile-brand": "node scripts/compile-brand.mjs",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test src/brand-package/__tests__/*.test.ts"
   },
   "dependencies": {
-    "@nebutra/design-tokens": "workspace:*",
-    "next-themes": "^0.4.6"
+    "@nebutra/design-tokens": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19"

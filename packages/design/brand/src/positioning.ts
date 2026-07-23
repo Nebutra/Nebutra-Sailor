@@ -78,7 +78,7 @@ export const positioning = {
       bullets: [
         "541 Geist icons as tree-shakable TSX components",
         "Radix UI + Lobe UI component library with brand tokens",
-        "Multi-theme engine: 6 oklch themes via CSS data-attributes",
+        "Design-language swap via Brand Packages (html[data-brand] + applyLanguage)",
         "Storybook 8 with auto-generated docs and visual regression via Chromatic",
       ],
       packages: ["packages/ui", "packages/tokens", "packages/icons", "apps/storybook"],
