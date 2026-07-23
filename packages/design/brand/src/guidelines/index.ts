@@ -23,7 +23,6 @@ export {
   nebutraCyanScale,
   nebutraNeutralScale,
   neutralColors,
-  productActionBlue,
   semanticColors,
 } from "./color";
 export type { LogoProhibitedUse, LogoVariant } from "./logo";

@@ -32,30 +32,8 @@ export const nebutraBlue = {
   /** Semantic meaning */
   meaning: "象征科技与信任，体现创新、可靠与无限潜力",
 
-  /**
-   * Usage
-   * - 标志 / wordmark / 身份锁色：必须用 #0033FE
-   * - 大面积产品 CTA：用 product action blue（见 productActionBlue），避免满饱和电光蓝
-   */
-  usage: ["主要品牌色", "标志主色", "标题强调", "链接颜色", "身份锁色（非大按钮实底首选）"],
-} as const;
-
-/**
- * Product Action Blue — UI CTA fill (not VI lock)
- *
- * Same hue family as 云毓蓝 (~228°) with reduced chroma so large buttons
- * do not read as pure-electric / system-error blue. Matches design-tokens
- * `--primary` / `--brand-gradient` product layer.
- */
-export const productActionBlue = {
-  name: "产品行动蓝",
-  nameEn: "Product Action Blue",
-  hex: "#254BFA",
-  hsl: { h: 228, s: 85, l: 56 },
-  hoverHex: "#1D4ED8",
-  whiteTextContrast: "AA+",
-  meaning: "与云毓蓝同色相的产品操作色；降低饱和度以保证 CTA 可读与舒适",
-  usage: ["主要 CTA / 实心按钮", "选中态", "工具栏 primary action"],
+  /** Usage */
+  usage: ["主要品牌色", "标志主色", "重要按钮/CTA", "标题强调", "链接颜色"],
 } as const;
 
 /**

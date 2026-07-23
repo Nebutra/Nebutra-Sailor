@@ -1,0 +1,17 @@
+@import "@nebutra/tokens/styles.css";
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: "ss01" on, "cv11" on;
+  min-height: 100vh;
+  background: var(--neutral-1);
+  color: var(--neutral-12);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--blue-9) 28%, transparent);
+}
