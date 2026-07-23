@@ -37,12 +37,17 @@ const biomeBin = fileURLToPath(
 
 function formatCssWithBiome(content, stdinFilePath) {
   if (!existsSync(biomeBin)) return content;
-  return execFileSync(biomeBin, ["format", "--stdin-file-path", stdinFilePath], {
-    cwd: repoRoot,
-    input: content,
-    encoding: "utf8",
-    stdio: "pipe",
-  });
+  try {
+    return execFileSync(biomeBin, ["format", "--stdin-file-path", stdinFilePath], {
+      cwd: repoRoot,
+      input: content,
+      encoding: "utf8",
+      stdio: "pipe",
+    });
+  } catch {
+    // Vercel CLI uploads can omit root ignore files Biome expects; never fail the token build on format.
+    return content;
+  }
 }
 
 const FONT_REGISTRY = {
