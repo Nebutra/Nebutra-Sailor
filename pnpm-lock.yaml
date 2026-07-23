@@ -57,6 +57,9 @@ catalogs:
     mermaid:
       specifier: ^11.15.0
       version: 11.15.0
+    next-intl:
+      specifier: ^4.12.0
+      version: 4.12.0
     next-themes:
       specifier: ^0.4.6
       version: 0.4.6
@@ -247,6 +250,9 @@ importers:
 
   apps/auth:
     dependencies:
+      '@marsidev/react-turnstile':
+        specifier: ^1.5.2
+        version: 1.5.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
@@ -256,6 +262,9 @@ importers:
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
+      '@nebutra/i18n':
+        specifier: workspace:*
+        version: link:../../packages/platform/i18n
       '@nebutra/icons':
         specifier: workspace:*
         version: link:../../packages/design/icons
@@ -271,6 +280,9 @@ importers:
       next:
         specifier: ^16.2.6
         version: 16.2.6(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      next-intl:
+        specifier: 'catalog:'
+        version: 4.12.0(@swc/helpers@0.5.19)(next@16.2.6(@babel/core@7.29.6)(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       react:
         specifier: 19.2.4
         version: 19.2.4
