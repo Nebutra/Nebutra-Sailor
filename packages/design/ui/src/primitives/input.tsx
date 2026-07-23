@@ -27,7 +27,7 @@ type InputCssVars = React.CSSProperties & {
 const inputVariants = cva(
   [
     "flex h-[var(--input-height)] w-full rounded-[var(--input-radius)] border border-input bg-background",
-    "px-[var(--input-padding-x)] text-[length:var(--input-font-size)] text-foreground shadow-[var(--shadow-xs)]",
+    "px-[var(--input-padding-x)] text-[length:var(--input-font-size)] text-foreground shadow-[var(--elevation-control,var(--shadow-xs))]",
     "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out",
     "placeholder:text-muted-foreground",
     formControlFocusClassNames.input,

@@ -125,7 +125,7 @@ export function NotificationsDialog() {
       >
         <Bell className="size-4" aria-hidden="true" />
         {unreadBadge ? (
-          <span className="-right-1 -top-1 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold leading-none text-white">
+          <span className="-right-1 -top-1 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground">
             {unreadBadge}
           </span>
         ) : null}
@@ -205,7 +205,7 @@ export function NotificationsDialog() {
                           "rounded-[var(--radius-xl)] border bg-card p-4 transition-colors",
                           item.read
                             ? "border-border"
-                            : "border-blue-200 bg-blue-50/40 dark:border-blue-400/30 dark:bg-blue-400/5",
+                            : "border-primary/20 bg-primary/5 dark:border-primary/30 dark:bg-primary/5",
                         )}
                       >
                         <div className="flex items-start gap-3">
@@ -218,7 +218,7 @@ export function NotificationsDialog() {
                                 {item.title}
                               </h3>
                               {!item.read && (
-                                <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-blue-800 dark:bg-blue-400/20 dark:text-blue-100">
+                                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary dark:bg-primary/20 dark:text-primary">
                                   New
                                 </span>
                               )}
@@ -228,7 +228,7 @@ export function NotificationsDialog() {
                               <Link
                                 href={item.href}
                                 onClick={() => setOpen(false)}
-                                className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:text-blue-800 dark:text-blue-300 dark:hover:text-blue-200"
+                                className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary dark:text-primary dark:hover:text-primary"
                               >
                                 打开
                                 <ExternalLink className="size-3" aria-hidden="true" />

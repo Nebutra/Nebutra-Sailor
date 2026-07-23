@@ -320,7 +320,7 @@ export function AvatarUploadForm({
           onDrop={handleDrop}
           className={`flex flex-1 flex-col items-start gap-2 rounded-[var(--radius-md)] border border-dashed px-4 py-3 ${
             state.dragActive
-              ? "border-[hsl(var(--primary))] bg-[var(--blue-2)]"
+              ? "border-[hsl(var(--primary))] bg-primary/10"
               : "border-border bg-muted"
           }`}
         >

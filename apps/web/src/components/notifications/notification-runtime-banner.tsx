@@ -31,7 +31,7 @@ function getModeClasses(runtime: NotificationRuntimeStatus): string {
     case "managed":
       return "border-green-6 bg-green-2 text-green-11";
     case "self_hosted":
-      return "border-blue-6 bg-blue-2 text-blue-11";
+      return "border-primary/25 bg-primary/5 text-primary";
     default:
       return "border-amber-6 bg-amber-2 text-amber-11";
   }

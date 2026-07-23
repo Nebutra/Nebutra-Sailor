@@ -129,7 +129,7 @@ export function TowerFloor({
       {/* A solid blue "live" edge on L9 (the brand gradient is reserved for the
           one overall-completeness ring in the header). */}
       {isCrown ? (
-        <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 bg-blue-9" />
+        <span aria-hidden="true" className="absolute inset-y-0 left-0 w-0.5 bg-primary" />
       ) : null}
 
       <CollapsibleTrigger

@@ -55,7 +55,7 @@ function MagicXPost({ tweet: t, components, className }: MagicXPostProps) {
     <TweetContainer
       className={cn(
         "relative flex size-full max-w-lg flex-col gap-2 overflow-hidden rounded-[var(--radius-lg)] border p-4",
-        "bg-card text-card-foreground shadow-sm",
+        "bg-card text-card-foreground shadow-[var(--elevation-card)]",
         className,
       )}
     >

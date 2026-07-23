@@ -1,11 +1,12 @@
 import { cva } from "class-variance-authority";
 
-// Heights: tiny=24px sm=32px md=40px lg=48px (Geist-matching).
-// Focus ring uses the shared neutral ring token, 2px ring, 2px offset.
+// Heights / weights from recipe.css (--control-height-*, --font-weight-medium).
+// Focus ring uses shared ring token.
 export const buttonVariants = cva(
   [
     "inline-flex items-center justify-center gap-2 whitespace-nowrap",
-    "rounded-[var(--radius-md)] text-sm font-medium",
+    "rounded-[var(--btn-default-radius,var(--radius-md))]",
+    "text-[length:var(--control-font-size-md,0.875rem)] font-[number:var(--font-weight-medium,500)]",
     "transition-colors duration-micro ease-out",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
     "disabled:pointer-events-none disabled:opacity-50",
@@ -14,7 +15,8 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        // Recipe-driven via packages/design/tokens/recipe.css (.btn-brand-default)
+        default: "btn-brand-default",
         ink: "bg-[var(--neutral-12)] text-[var(--neutral-1)] ring-1 ring-inset ring-[color:var(--neutral-1)]/5 hover:bg-[var(--neutral-11)] hover:-translate-y-px active:translate-y-0 transition-[transform,background-color] duration-micro",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
@@ -26,11 +28,12 @@ export const buttonVariants = cva(
         warning: "bg-warning text-warning-foreground hover:bg-warning/90",
       },
       size: {
-        tiny: "h-6 rounded-[var(--radius-sm)] px-2 text-[11px]",
-        sm: "h-8 rounded-[var(--radius-sm)] px-3 text-xs",
-        default: "h-10 px-4 py-2",
-        lg: "h-12 rounded-[var(--radius-lg)] px-5 text-base",
-        icon: "h-10 w-10",
+        tiny: "h-[var(--control-height-tiny,1.5rem)] rounded-[var(--radius-sm)] px-2 text-[length:var(--control-font-size-tiny,0.6875rem)]",
+        sm: "h-[var(--control-height-sm,2rem)] rounded-[var(--radius-sm)] px-3 text-[length:var(--control-font-size-sm,0.75rem)]",
+        default:
+          "h-[var(--control-height-md,2.5rem)] px-[var(--btn-default-padding-x,1rem)] py-[var(--btn-default-padding-y,0.5rem)]",
+        lg: "h-[var(--control-height-lg,3rem)] rounded-[var(--radius-lg)] px-5 text-[length:var(--control-font-size-lg,1rem)]",
+        icon: "h-[var(--control-height-md,2.5rem)] w-[var(--control-height-md,2.5rem)]",
       },
       shape: {
         default: "",
@@ -39,14 +42,30 @@ export const buttonVariants = cva(
       },
     },
     compoundVariants: [
-      { shape: "square", size: "tiny", className: "w-6 px-0" },
-      { shape: "square", size: "sm", className: "w-8 px-0" },
-      { shape: "square", size: "default", className: "w-10 px-0" },
-      { shape: "square", size: "lg", className: "w-12 px-0" },
-      { shape: "circle", size: "tiny", className: "w-6 px-0 rounded-full" },
-      { shape: "circle", size: "sm", className: "w-8 px-0 rounded-full" },
-      { shape: "circle", size: "default", className: "w-10 px-0 rounded-full" },
-      { shape: "circle", size: "lg", className: "w-12 px-0 rounded-full" },
+      { shape: "square", size: "tiny", className: "w-[var(--control-height-tiny,1.5rem)] px-0" },
+      { shape: "square", size: "sm", className: "w-[var(--control-height-sm,2rem)] px-0" },
+      { shape: "square", size: "default", className: "w-[var(--control-height-md,2.5rem)] px-0" },
+      { shape: "square", size: "lg", className: "w-[var(--control-height-lg,3rem)] px-0" },
+      {
+        shape: "circle",
+        size: "tiny",
+        className: "w-[var(--control-height-tiny,1.5rem)] px-0 rounded-full",
+      },
+      {
+        shape: "circle",
+        size: "sm",
+        className: "w-[var(--control-height-sm,2rem)] px-0 rounded-full",
+      },
+      {
+        shape: "circle",
+        size: "default",
+        className: "w-[var(--control-height-md,2.5rem)] px-0 rounded-full",
+      },
+      {
+        shape: "circle",
+        size: "lg",
+        className: "w-[var(--control-height-lg,3rem)] px-0 rounded-full",
+      },
     ],
     defaultVariants: {
       variant: "default",

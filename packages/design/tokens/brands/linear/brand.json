@@ -1,0 +1,115 @@
+{
+  "id": "linear",
+  "name": "Linear",
+  "darkDefault": true,
+  "version": "1.0.0",
+  "semantic": {
+    "background": "210 11% 4%",
+    "foreground": "0 0% 100%",
+    "card": "210 6% 6%",
+    "cardForeground": "0 0% 100%",
+    "popover": "210 4% 9%",
+    "popoverForeground": "0 0% 100%",
+    "primary": "64 89% 54%",
+    "primaryForeground": "210 11% 4%",
+    "secondary": "223 9% 15%",
+    "secondaryForeground": "218 21% 85%",
+    "muted": "210 4% 9%",
+    "mutedForeground": "218 5% 41%",
+    "accent": "223 9% 15%",
+    "accentForeground": "64 89% 54%",
+    "destructive": "0 79% 63%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "223 9% 15%",
+    "input": "223 9% 15%",
+    "ring": "64 89% 54%",
+    "success": "134 62% 40%",
+    "successForeground": "0 0% 100%",
+    "info": "186 98% 40%",
+    "infoForeground": "0 0% 100%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "buttonRadius": "6px",
+    "cardRadius": "12px",
+    "elevation": "soft",
+    "density": "compact"
+  },
+  "typography": {
+    "fontSans": "'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif",
+    "fontMono": "'Berkeley Mono', 'JetBrains Mono', ui-monospace, monospace",
+    "headingWeight": 510,
+    "faces": [
+      {
+        "family": "Inter Variable",
+        "src": [
+          {
+            "url": "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": "100 900",
+        "display": "swap"
+      }
+    ]
+  },
+  "zones": {
+    "product": {
+      "caption": {
+        "fontSize": "13px",
+        "lineHeight": 1.2,
+        "fontWeight": 400
+      },
+      "bodySm": {
+        "fontSize": "14px",
+        "lineHeight": 1.5,
+        "fontWeight": 400
+      },
+      "body": {
+        "fontSize": "14px",
+        "lineHeight": 1.5,
+        "fontWeight": 400
+      },
+      "bodyLg": {
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "fontWeight": 400
+      },
+      "heading": {
+        "fontSize": "24px",
+        "lineHeight": 1.25,
+        "fontWeight": 510,
+        "letterSpacing": "-0.012em"
+      },
+      "display": {
+        "fontSize": "32px",
+        "lineHeight": 1.15,
+        "fontWeight": 510,
+        "letterSpacing": "-0.022em"
+      }
+    },
+    "marketing": {
+      "body": {
+        "fontSize": "15px",
+        "lineHeight": 1.6,
+        "fontWeight": 400
+      },
+      "heading": {
+        "fontSize": "48px",
+        "lineHeight": 1,
+        "fontWeight": 510,
+        "letterSpacing": "-0.022em"
+      },
+      "display": {
+        "fontSize": "72px",
+        "lineHeight": 1,
+        "fontWeight": 510,
+        "letterSpacing": "-0.022em"
+      }
+    }
+  },
+  "extensions": {
+    "sourceUrl": "https://linear.app",
+    "notes": ["Solid acid-lime CTA; product chrome only."]
+  }
+}

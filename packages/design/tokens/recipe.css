@@ -1,0 +1,85 @@
+/**
+ * Product chrome recipe surface.
+ *
+ * Brand skins override these vars. Components must consume vars / classes here
+ * — not hardcode Geist heights, solid fills, or Tailwind shadow-sm.
+ *
+ * VI identity (--brand-primary / logo) is intentionally separate.
+ */
+
+:root {
+  /* ── Button default (solid | outline | gradient-stroke) ───────── */
+  --btn-default-bg: hsl(var(--primary));
+  --btn-default-fg: hsl(var(--primary-foreground));
+  --btn-default-border: transparent;
+  --btn-default-border-width: 0px;
+  --btn-default-stroke-gradient: transparent;
+  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
+  --btn-default-radius: var(--radius-md, 0.375rem);
+  --btn-default-shadow: 0 0 #0000;
+  --btn-default-padding-y: 0.5rem;
+  --btn-default-padding-x: 1rem;
+
+  /* ── Control density (factory = Geist ladder; brands may override) ─ */
+  --control-height-tiny: 1.5rem; /* 24 */
+  --control-height-sm: 2rem; /* 32 */
+  --control-height-md: 2.5rem; /* 40 */
+  --control-height-lg: 3rem; /* 48 */
+  --control-font-size-tiny: 0.6875rem; /* 11 */
+  --control-font-size-sm: 0.75rem; /* 12 */
+  --control-font-size-md: 0.875rem; /* 14 */
+  --control-font-size-lg: 1rem; /* 16 */
+  --font-weight-medium: 500;
+  --font-weight-heading: 600;
+
+  /* ── Elevation (brands set elevation:none → zero these) ───────── */
+  --elevation-card: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  --elevation-control: var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04));
+  --elevation-raised: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+
+  /* ── Badge default (tracks product action language) ───────────── */
+  --badge-default-bg: hsl(var(--primary));
+  --badge-default-fg: hsl(var(--primary-foreground));
+  --badge-default-border: transparent;
+  --badge-default-radius: 9999px;
+  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 80%, transparent);
+}
+
+/* ── Button default ─────────────────────────────────────────────── */
+.btn-brand-default {
+  border-width: var(--btn-default-border-width, 0px);
+  border-style: solid;
+  border-color: transparent;
+  border-radius: var(--btn-default-radius, var(--radius-md, 0.375rem));
+  background-color: transparent;
+  background-image:
+    linear-gradient(var(--btn-default-bg, hsl(var(--primary))), var(--btn-default-bg, hsl(var(--primary)))),
+    var(--btn-default-stroke-gradient, linear-gradient(transparent, transparent));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  color: var(--btn-default-fg, hsl(var(--primary-foreground)));
+  box-shadow: var(--btn-default-shadow, 0 0 #0000);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.btn-brand-default:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-image:
+    linear-gradient(
+      var(--btn-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 90%, transparent)),
+      var(--btn-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 90%, transparent))
+    ),
+    var(--btn-default-stroke-gradient, linear-gradient(transparent, transparent));
+}
+
+/* ── Badge default ──────────────────────────────────────────────── */
+.badge-brand-default {
+  border-color: var(--badge-default-border, transparent);
+  border-radius: var(--badge-default-radius, 9999px);
+  background-color: var(--badge-default-bg, hsl(var(--primary)));
+  color: var(--badge-default-fg, hsl(var(--primary-foreground)));
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.badge-brand-default:hover {
+  background-color: var(--badge-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 80%, transparent));
+}

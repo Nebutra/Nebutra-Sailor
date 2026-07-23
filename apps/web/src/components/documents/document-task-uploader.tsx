@@ -489,7 +489,7 @@ function getTaskPanelTone(status: TaskRecord["status"]) {
       return "border-border bg-muted text-foreground";
     case "queued":
     case "running":
-      return "border-[var(--blue-6)] bg-[var(--blue-2)] text-[var(--blue-12)]";
+      return "border-primary/30 bg-primary/10 text-primary";
   }
 }
 

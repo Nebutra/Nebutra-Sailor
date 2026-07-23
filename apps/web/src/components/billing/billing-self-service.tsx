@@ -324,12 +324,12 @@ export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
             Active plan
           </p>
           <h2 className="mt-3 flex items-center gap-2 text-2xl font-semibold text-neutral-12">
-            <Sparkles className="size-5 text-blue-9" aria-hidden="true" />
+            <Sparkles className="size-5 text-primary" aria-hidden="true" />
             {model.activePlan.name}
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-neutral-11">{model.activePlan.description}</p>
         </div>
-        <div className="rounded-[var(--radius-2xl)] border border-blue-500/20 bg-blue-500/10 px-4 py-3 text-right">
+        <div className="rounded-[var(--radius-2xl)] border border-primary/20 bg-primary/10 px-4 py-3 text-right">
           <p className="text-2xl font-semibold text-neutral-12">{model.activePlan.priceLabel}</p>
           <p className="text-xs uppercase tracking-[0.16em] text-neutral-10">
             {model.activePlan.cadence}
@@ -383,7 +383,7 @@ export function PlanChoiceGrid({ plans }: { plans: BillingPlanOption[] }) {
             key={plan.id}
             className={`flex min-h-full flex-col rounded-[var(--radius-3xl)] border p-5 shadow-sm ${
               plan.active
-                ? "border-blue-500/40 bg-blue-500/10"
+                ? "border-primary/40 bg-primary/10"
                 : "border-border bg-background dark:bg-black/40"
             }`}
           >
@@ -442,7 +442,7 @@ function PlanAction({ action }: { action: BillingPlanAction }) {
         <input data-allow-native type="hidden" name="priceId" value={action.priceId} />
         <button
           type="submit"
-          className="inline-flex w-full items-center justify-center rounded-[var(--radius-xl)] bg-blue-9 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-10"
+          className="inline-flex w-full items-center justify-center rounded-[var(--radius-xl)] bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
         >
           {action.label}
         </button>

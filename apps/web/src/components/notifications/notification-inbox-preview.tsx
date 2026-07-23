@@ -82,7 +82,7 @@ export async function NotificationInboxPreview({
             const body = (
               <div
                 className={`flex gap-3 rounded-[var(--radius-lg)] border px-4 py-4 transition-colors ${
-                  item.read ? "border-border bg-background" : "border-blue-200 bg-blue-50/60"
+                  item.read ? "border-border bg-background" : "border-primary/20 bg-primary/5"
                 }`}
               >
                 <div className="rounded-[var(--radius-md)] bg-muted p-2 text-muted-foreground">
@@ -93,7 +93,7 @@ export async function NotificationInboxPreview({
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="text-sm font-medium text-foreground">{item.title}</p>
                     {!item.read ? (
-                      <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[11px] font-medium text-blue-800">
+                      <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary">
                         New
                       </span>
                     ) : null}

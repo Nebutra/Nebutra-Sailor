@@ -272,7 +272,7 @@ export function SignInForm({
                   <FormLabel>{t("passwordLabel")}</FormLabel>
                   <Link
                     href={buildAltLink("/forgot-password")}
-                    className="text-xs font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+                    className="text-xs font-medium text-primary hover:text-primary"
                   >
                     {t("forgotPassword")}
                   </Link>
@@ -359,7 +359,7 @@ export function SignInForm({
               type="button"
               onClick={handlePasskey}
               disabled={passkeyLoading}
-              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] disabled:opacity-60"
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-primary hover:text-primary disabled:opacity-60"
             >
               <Key aria-hidden className="h-4 w-4" />
               {passkeyLoading ? t("providerLoading") : t("usePasskey")}
@@ -368,7 +368,7 @@ export function SignInForm({
           {magicLinkEnabled && (
             <Link
               href={buildAltLink("/sign-in/magic-link")}
-              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-primary hover:text-primary"
             >
               <Mail aria-hidden className="h-4 w-4" />
               {t("useMagicLink")}
@@ -381,7 +381,7 @@ export function SignInForm({
         {t("newToProduct")}{" "}
         <Link
           href={buildAltLink("/sign-up")}
-          className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+          className="font-medium text-primary hover:text-primary"
         >
           {t("signUpLink")}
         </Link>

@@ -12,7 +12,8 @@ const badgeVariants = cva(
     variants: {
       variant: {
         // ─── Semantic / brand variants ────────────────────────────────────────
-        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+        // Recipe-driven default (solid | outline | … via --badge-default-*)
+        default: "badge-brand-default border",
         secondary:
           "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
         destructive:
@@ -23,33 +24,35 @@ const badgeVariants = cva(
         info: "border-transparent bg-info text-info-foreground hover:bg-info/80",
         error:
           "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        // ─── Geist-style color palette ────────────────────────────────────────
-        gray: "bg-geist-gray-700 text-white fill-white",
-        "gray-subtle":
-          "bg-geist-gray-200 text-geist-gray-1000 fill-geist-gray-1000 border-transparent",
-        blue: "bg-blue-700 text-white fill-white",
-        "blue-subtle": "bg-blue-200 text-blue-900 fill-blue-900 border-transparent",
-        purple: "bg-purple-700 text-white fill-white",
-        "purple-subtle": "bg-purple-200 text-purple-900 fill-purple-900 border-transparent",
-        amber: "bg-amber-700 text-black fill-black",
-        "amber-subtle": "bg-amber-200 text-amber-900 fill-amber-900 border-transparent",
-        red: "bg-red-700 text-white fill-white",
-        "red-subtle": "bg-red-200 text-red-900 fill-red-900 border-transparent",
-        pink: "bg-pink-700 text-white fill-white",
-        "pink-subtle": "bg-pink-300 text-pink-900 fill-pink-900 border-transparent",
-        green: "bg-green-700 text-white fill-white",
-        "green-subtle": "bg-green-200 text-green-900 fill-green-900 border-transparent",
-        teal: "bg-teal-700 text-white fill-white",
-        "teal-subtle": "bg-teal-300 text-teal-900 fill-teal-900 border-transparent",
-        inverted: "bg-geist-gray-1000 text-geist-gray-100 fill-geist-gray-100",
-        trial: "bg-gradient-to-br from-trial-start to-trial-end text-white fill-white",
-        turbo: "bg-gradient-to-br from-turbo-start to-turbo-end text-white fill-white",
-        pill: "bg-background text-foreground fill-foreground !border-gray-alpha-400 hover:bg-muted/50 focus-visible:bg-muted/50 dark:!border-border",
-        // ─── Semantic tone variants (nav badges, ownership, featured) ─────────
+        // ─── Palette accents (decorative scale — not product chrome CTAs) ────
+        gray: "bg-muted text-muted-foreground fill-current",
+        "gray-subtle": "bg-muted/60 text-muted-foreground fill-current border-transparent",
+        blue: "bg-primary text-primary-foreground fill-current",
+        "blue-subtle": "bg-primary/10 text-primary fill-current border-transparent",
+        purple: "bg-secondary text-secondary-foreground fill-current",
+        "purple-subtle":
+          "bg-secondary/40 text-secondary-foreground fill-current border-transparent",
+        amber: "bg-warning text-warning-foreground fill-current",
+        "amber-subtle": "bg-warning/15 text-warning fill-current border-transparent",
+        red: "bg-destructive text-destructive-foreground fill-current",
+        "red-subtle": "bg-destructive/15 text-destructive fill-current border-transparent",
+        pink: "bg-accent text-accent-foreground fill-current",
+        "pink-subtle": "bg-accent/40 text-accent-foreground fill-current border-transparent",
+        green: "bg-success text-success-foreground fill-current",
+        "green-subtle": "bg-success/15 text-success fill-current border-transparent",
+        teal: "bg-info text-info-foreground fill-current",
+        "teal-subtle": "bg-info/15 text-info fill-current border-transparent",
+        inverted: "bg-foreground text-background fill-current",
+        // Special visual treatments (intentional product design, not brand hex)
+        trial:
+          "bg-gradient-to-br from-trial-start to-trial-end text-primary-foreground fill-current",
+        turbo:
+          "bg-gradient-to-br from-turbo-start to-turbo-end text-primary-foreground fill-current",
+        pill: "bg-background text-foreground fill-foreground border-border hover:bg-muted/50 focus-visible:bg-muted/50",
         beta: "border-transparent bg-muted text-muted-foreground",
-        new: "border-transparent bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300",
+        new: "border-transparent bg-primary/10 text-primary",
         owner: "border-border bg-transparent text-foreground",
-        featured: "border-transparent text-white bg-primary [text-shadow:0_0_1px_rgba(0,0,0,0.2)]",
+        featured: "badge-brand-default border [text-shadow:0_0_1px_hsl(var(--background)/0.2)]",
         "coming-soon": "border-transparent bg-muted/60 text-muted-foreground italic",
       },
       size: {
@@ -71,14 +74,14 @@ const dotColorMap: Partial<Record<NonNullable<BadgeProps["variant"]>, string>> =
   info: "bg-info-foreground",
   error: "bg-destructive-foreground",
   destructive: "bg-destructive-foreground",
-  "gray-subtle": "bg-geist-gray-500",
-  "green-subtle": "bg-green-500",
-  "amber-subtle": "bg-amber-500",
-  "red-subtle": "bg-red-500",
-  "blue-subtle": "bg-blue-500",
-  "purple-subtle": "bg-purple-500",
-  "pink-subtle": "bg-pink-500",
-  "teal-subtle": "bg-teal-500",
+  "gray-subtle": "bg-muted-foreground",
+  "green-subtle": "bg-success",
+  "amber-subtle": "bg-warning",
+  "red-subtle": "bg-destructive",
+  "blue-subtle": "bg-primary",
+  "purple-subtle": "bg-secondary-foreground",
+  "pink-subtle": "bg-accent-foreground",
+  "teal-subtle": "bg-info",
   default: "bg-primary-foreground",
   secondary: "bg-secondary-foreground",
   outline: "bg-muted-foreground",

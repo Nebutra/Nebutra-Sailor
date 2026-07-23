@@ -190,7 +190,7 @@ export default function CompanyContextPage() {
       ) : state === "ready" && context ? (
         <>
           {notice ? (
-            <div className="mb-3 rounded-[var(--radius-md)] border border-blue-6 bg-blue-2 px-3 py-2 text-xs text-blue-11">
+            <div className="mb-3 rounded-[var(--radius-md)] border border-primary/25 bg-primary/5 px-3 py-2 text-xs text-primary">
               {notice}
             </div>
           ) : null}

@@ -2,7 +2,7 @@
  * Button Component Tokens — Layer 3
  *
  * Strict sizing scale: sm=32px md=40px lg=48px (Geist-matching).
- * Primary variant uses brand gradient per VI manual.
+ * Primary fill is semantic `bg-primary` (skin surface) — not VI brand gradient.
  */
 
 import {

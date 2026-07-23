@@ -250,7 +250,7 @@ export function CredentialsForm({
             {mode === "sign-in" ? (
               <Link
                 href={withReturnTo("/forgot-password")}
-                className="text-xs font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+                className="text-xs font-medium text-primary hover:text-primary"
               >
                 {tSignIn("forgotPassword")}
               </Link>
@@ -346,7 +346,7 @@ export function CredentialsForm({
               type="button"
               onClick={() => void handlePasskey()}
               disabled={passkeyLoading}
-              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] disabled:opacity-60"
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-primary hover:text-primary disabled:opacity-60"
             >
               <Key aria-hidden className="h-4 w-4" />
               {passkeyLoading ? tSignIn("providerLoading") : tSignIn("usePasskey")}
@@ -355,7 +355,7 @@ export function CredentialsForm({
           {magicLinkEnabled ? (
             <Link
               href={withReturnTo("/sign-in/magic-link")}
-              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-primary hover:text-primary"
             >
               <Mail aria-hidden className="h-4 w-4" />
               {tSignIn("useMagicLink")}
@@ -368,20 +368,14 @@ export function CredentialsForm({
         {mode === "sign-in" ? (
           <>
             {tSignIn("newToProduct")}{" "}
-            <Link
-              href={altHref}
-              className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
-            >
+            <Link href={altHref} className="font-medium text-primary hover:text-primary">
               {tSignIn("signUpLink")}
             </Link>
           </>
         ) : (
           <>
             {tSignUp("alreadyHaveAccount")}{" "}
-            <Link
-              href={altHref}
-              className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
-            >
+            <Link href={altHref} className="font-medium text-primary hover:text-primary">
               {tSignUp("signInLink")}
             </Link>
           </>

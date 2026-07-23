@@ -96,7 +96,7 @@ export function Enable2FACard({
       <CardHeader className="flex flex-col items-center gap-2 p-0">
         {/* Icon */}
         <div className="relative flex size-[68px] shrink-0 items-center justify-center rounded-full backdrop-blur-xl before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-b before:from-muted-foreground before:to-transparent before:opacity-10 md:size-24">
-          <div className="relative z-10 flex size-12 items-center justify-center rounded-full bg-background shadow-xs ring-1 ring-inset ring-border dark:bg-muted/80 md:size-16">
+          <div className="relative z-10 flex size-12 items-center justify-center rounded-full bg-background shadow-[var(--elevation-control)] ring-1 ring-inset ring-border dark:bg-muted/80 md:size-16">
             <Shield className="size-6 text-muted-foreground/80 md:size-8" />
           </div>
         </div>

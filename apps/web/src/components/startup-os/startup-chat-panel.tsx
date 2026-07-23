@@ -371,7 +371,7 @@ function ArtifactEventList({ events }: { events: UseStartupConversationResult["a
           <span
             key={`${event.kind}-${index}`}
             data-testid="startup-chat-artifact"
-            className="inline-flex items-center gap-1.5 rounded-full border border-blue-6 bg-blue-2 px-2.5 py-1 text-[11px] font-medium text-blue-11 dark:border-blue-8/40 dark:bg-blue-9/15 dark:text-blue-4"
+            className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/5 px-2.5 py-1 text-[11px] font-medium text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary"
           >
             <Sparkles className="size-3" aria-hidden="true" />
             {event.kind}

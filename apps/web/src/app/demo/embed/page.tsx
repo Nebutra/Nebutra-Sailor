@@ -47,7 +47,7 @@ export default async function DemoEmbedPage({
       <div className="mx-auto max-w-5xl">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="text-xs font-semibold tracking-[0.12em] text-[color:var(--blue-11)] uppercase">
+            <p className="text-xs font-semibold tracking-[0.12em] text-primary uppercase">
               Interactive demo
             </p>
             <div className="mt-1 flex items-center gap-2">

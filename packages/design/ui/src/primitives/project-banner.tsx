@@ -72,20 +72,20 @@ type VariantTokens = {
 
 const variantMap: Readonly<Record<ProjectBannerVariant, VariantTokens>> = {
   success: {
-    container: "border-blue-400 bg-blue-100 text-blue-900 fill-blue-900",
-    cta: "text-blue-900 decoration-blue-400 hover:text-blue-950 hover:decoration-blue-500",
+    container: "border-success/40 bg-success/10 text-success fill-success",
+    cta: "text-success decoration-success/50 hover:text-success hover:decoration-success",
   },
   warning: {
-    container: "border-amber-400 bg-amber-100 text-amber-900 fill-amber-900",
-    cta: "text-amber-900 decoration-amber-400 hover:text-amber-950 hover:decoration-amber-500",
+    container: "border-warning/40 bg-warning/10 text-warning fill-warning",
+    cta: "text-warning decoration-warning/50 hover:text-warning hover:decoration-warning",
   },
   error: {
-    container: "border-red-400 bg-red-100 text-red-900 fill-red-900",
-    cta: "text-red-900 decoration-red-400 hover:text-red-950 hover:decoration-red-500",
+    container: "border-destructive/40 bg-destructive/10 text-destructive fill-destructive",
+    cta: "text-destructive decoration-destructive/50 hover:text-destructive hover:decoration-destructive",
   },
   info: {
-    container: "border-neutral-400 bg-neutral-100 text-neutral-900 fill-neutral-900",
-    cta: "text-neutral-900 decoration-neutral-400 hover:text-neutral-950 hover:decoration-neutral-500",
+    container: "border-border bg-muted text-foreground fill-foreground",
+    cta: "text-foreground decoration-border hover:text-foreground hover:decoration-foreground",
   },
 };
 

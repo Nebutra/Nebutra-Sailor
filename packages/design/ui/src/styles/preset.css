@@ -22,6 +22,7 @@
 
 @import "tailwindcss";
 @import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/recipe.css";
 @import "./sources.css";
 @import "../typography/fonts.css";
 

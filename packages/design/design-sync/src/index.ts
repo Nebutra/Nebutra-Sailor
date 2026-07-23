@@ -50,6 +50,15 @@ export { FigmaProvider } from "./providers/figma";
 export { GitOnlyProvider } from "./providers/git-only";
 export { MemoryProvider } from "./providers/memory";
 export { PenpotProvider } from "./providers/penpot";
+// ── DTCG → Brand Package (Create Center) ───────────────────────────────────
+export {
+  compileBrandFromTokenSets,
+  mergeTokenTrees,
+  pullAndCompileBrand,
+  serializeToBrandCss,
+  type ToBrandPackageOptions,
+  tokenSetsToReferoShape,
+} from "./serialize/to-brand-package";
 // ── DTCG → DESIGN.md serializer ────────────────────────────────────────────
 export { serializeToDesignMd, type ToDesignMdOptions } from "./serialize/to-design-md";
 // ── DTCG → preview.html serializer ─────────────────────────────────────────

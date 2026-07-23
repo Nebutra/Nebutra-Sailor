@@ -121,7 +121,7 @@ export function ProviderKeysList({
               </td>
               <td className="px-4 py-3 text-xs text-muted-foreground">
                 {k.alwaysUse ? (
-                  <span className="rounded-[var(--radius-sm)] bg-[var(--blue-3)] px-1.5 py-0.5 text-primary">
+                  <span className="rounded-[var(--radius-sm)] bg-[hsl(var(--primary) / 0.12)] px-1.5 py-0.5 text-primary">
                     Always use this key
                   </span>
                 ) : (

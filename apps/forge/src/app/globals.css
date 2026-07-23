@@ -4,6 +4,12 @@
  */
 @import "@nebutra/ui/styles/preset.css";
 
+/*
+ * Opt-in product skin (does not change default Nebutra brand until uncommented):
+ * @import "@nebutra/tokens/skins/linear.css";
+ */
+
+
 html {
   scroll-behavior: smooth;
 }

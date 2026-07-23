@@ -65,10 +65,7 @@ export function MagicLinkForm({ returnTo, turnstileSiteKey }: MagicLinkFormProps
           <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("sentTo", { email })}</p>
         </div>
-        <Link
-          href={signInHref}
-          className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
-        >
+        <Link href={signInHref} className="font-medium text-primary hover:text-primary">
           {tSignIn("submit")}
         </Link>
       </div>
@@ -135,10 +132,7 @@ export function MagicLinkForm({ returnTo, turnstileSiteKey }: MagicLinkFormProps
       </form>
 
       <p className="mt-6 text-sm text-muted-foreground">
-        <Link
-          href={signInHref}
-          className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
-        >
+        <Link href={signInHref} className="font-medium text-primary hover:text-primary">
           {tSignIn("back")}
         </Link>
       </p>

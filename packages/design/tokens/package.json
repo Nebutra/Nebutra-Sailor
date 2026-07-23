@@ -6,18 +6,28 @@
   "license": "MIT",
   "type": "module",
   "sideEffects": [
-    "./styles.css"
+    "./styles.css",
+    "./recipe.css",
+    "./skins/*.css",
+    "./brands/*/skin.css"
   ],
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./styles.css": "./styles.css"
+    "./styles.css": "./styles.css",
+    "./recipe.css": "./recipe.css",
+    "./skins/*": "./skins/*",
+    "./brands/*": "./brands/*",
+    "./brand-package": "./src/brand-package/index.ts",
+    "./use-brand": "./src/brand-package/use-brand.ts"
   },
   "scripts": {
     "build": "node scripts/sync-styles.mjs",
     "sync": "node scripts/sync-styles.mjs",
-    "typecheck": "tsc --noEmit"
+    "compile-brand": "node scripts/compile-brand.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test src/brand-package/__tests__/*.test.ts"
   },
   "dependencies": {
     "@nebutra/design-tokens": "workspace:*",

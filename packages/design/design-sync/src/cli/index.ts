@@ -17,6 +17,7 @@
 
 import { describeEnv } from "../detect";
 import { createDesignSync } from "../factory";
+import { compileBrandFromTokenSets } from "../serialize/to-brand-package";
 import type { DesignSyncProviderType } from "../types";
 
 interface ParsedArgs {
@@ -25,6 +26,8 @@ interface ParsedArgs {
   json: boolean;
   themes: string[];
   provider: DesignSyncProviderType | undefined;
+  brandId: string | undefined;
+  brandName: string | undefined;
 }
 
 function parseArgs(argv: string[]): ParsedArgs {
@@ -33,6 +36,8 @@ function parseArgs(argv: string[]): ParsedArgs {
   let json = false;
   const themes: string[] = [];
   let provider: DesignSyncProviderType | undefined;
+  let brandId: string | undefined;
+  let brandName: string | undefined;
 
   for (let i = 0; i < rest.length; i++) {
     const arg = rest[i];
@@ -53,10 +58,14 @@ function parseArgs(argv: string[]): ParsedArgs {
         provider = next.trim() as DesignSyncProviderType;
         i++;
       }
+    } else if (arg === "--id") {
+      brandId = rest[++i];
+    } else if (arg === "--name") {
+      brandName = rest[++i];
     }
   }
 
-  return { command, dryRun, json, themes, provider };
+  return { command, dryRun, json, themes, provider, brandId, brandName };
 }
 
 function emit(payload: unknown, json: boolean): void {
@@ -89,11 +98,14 @@ Commands:
   healthcheck       Run the provider's healthcheck()
   pull              Pull design-tool → repo (DTCG JSON)
   push              Push repo → design-tool (defaults to dry-run on figma/penpot/design-md)
+  brand             Pull tokens then compile a Brand Package (Create Center)
   help              Show this message
 
 Options:
   --provider <X>    Override provider (figma|penpot|git-only|memory|design-md)
   --themes a,b      Restrict to specific token sets
+  --id <id>         Brand package id (for brand command)
+  --name <name>     Brand package display name
   --dry-run         Force dry-run on push
   --json            Emit machine-readable JSON
 `;
@@ -144,6 +156,27 @@ export async function run(argv: string[] = process.argv): Promise<number> {
         args.json
           ? result
           : `${result.summary} (provider=${result.provider}, dryRun=${result.dryRun})`,
+        args.json,
+      );
+      return 0;
+    }
+
+    if (args.command === "brand") {
+      const themes = args.themes.length > 0 ? { themes: args.themes } : {};
+      const pull = await provider.pull(themes);
+      const compiled = compileBrandFromTokenSets(pull.sets, {
+        ...(args.brandId ? { id: args.brandId } : {}),
+        ...(args.brandName ? { name: args.brandName } : {}),
+      });
+      emit(
+        args.json
+          ? {
+              provider: pull.provider,
+              brand: compiled.brand,
+              css: compiled.css,
+              warnings: compiled.warnings,
+            }
+          : `brand=${compiled.brand.id} recipe=${compiled.brand.recipe.buttonDefault} fonts=${compiled.brand.typography.faces?.length ?? 0} warnings=${compiled.warnings.length}`,
         args.json,
       );
       return 0;

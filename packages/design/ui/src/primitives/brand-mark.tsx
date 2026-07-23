@@ -72,7 +72,8 @@ export function BrandMark({
         className={cn(
           "relative inline-flex items-center justify-center rounded-[var(--radius-2xl)]",
           sizes.box,
-          variant === "gradient" && "bg-primary text-primary-foreground shadow-sm",
+          variant === "gradient" &&
+            "bg-primary text-primary-foreground shadow-[var(--elevation-card)]",
           variant === "soft" && "bg-primary/10 text-primary dark:bg-primary/20",
           variant === "outline" && "border border-border bg-background text-foreground",
         )}

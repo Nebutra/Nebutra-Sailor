@@ -1,46 +1,130 @@
-# Design skins (swap surface)
+# Design skins & Brand Packages
 
-**How to swap a design system / visual skin without hunting call sites**
+**Goal:** Create Center users swap a brand by applying one **Brand Package** — not by hunting call sites.
 
-## Contract
+## Two layers
 
-Product UI may only depend on **semantic tokens** (and Tailwind classes that resolve to them):
+| Layer | What | Path |
+|-------|------|------|
+| **Recipe defaults** | Button default reads `--btn-default-*` | `@nebutra/tokens/recipe.css` (auto via `preset.css`) |
+| **Brand skin** | Semantic colors + recipe overrides | `@nebutra/tokens/skins/<id>.css` or `brands/<id>/skin.css` |
+| **Brand JSON** | Machine contract for Create Center | `brands/<id>/brand.json` |
 
-| Semantic | Typical Tailwind | Role |
-|----------|------------------|------|
-| `--primary` / `--primary-foreground` | `bg-primary` `text-primary-foreground` | Actions, key CTAs |
-| `--background` / `--foreground` | `bg-background` `text-foreground` | App chrome |
-| `--card` / `--muted` / `--border` / `--input` / `--ring` | `bg-card` `border-border` … | Surfaces & controls |
-| `--destructive` / `--success` / `--warning` / `--info` | status utilities | Feedback |
-| `--radius-*` | `rounded-md` … | Shape |
+## Product chrome contract
 
-**Identity (VI)** tokens are separate and must **not** paint product chrome:
+| Semantic | Tailwind / CSS | Role |
+|----------|----------------|------|
+| `--primary` + `--primary-foreground` | `bg-primary` | **Atomic pair** |
+| `--background` / `--foreground` | canvas | App shell |
+| `--card` / `--muted` / `--border` / `--input` / `--ring` | surfaces | Controls |
+| `--btn-default-bg/fg/border/radius` | `Button` default | **Recipe** (solid vs outline) |
 
-| VI | Role |
-|----|------|
-| `--brand-primary` (`#0033FE`) | Logo / wordmark / brand assets |
-| `--brand-accent` | Brand accent on identity surfaces |
-| `--brand-gradient-logo` | Logo gradient only |
+**Do not** paint product chrome with raw hex / `bg-blue-9` / VI `--brand-primary`.
 
-`--brand-gradient` is a **legacy alias of** `hsl(var(--primary))` for old class strings — not a second palette.
+## Apply a brand (opt-in)
 
-## Swap procedure (single surface)
+```css
+@import "@nebutra/ui/styles/preset.css";
+/* or: tokens + recipe + sources */
 
-1. Edit **only** the semantic values in `@nebutra/tokens` generation sources  
-   (`packages/design/design-tokens/tokens/themes/light.json` + `dark.json`, or a future `skins/*.css` override).
-2. Rebuild tokens: `node packages/design/design-tokens/style-dictionary.config.mjs` then `node packages/design/tokens/scripts/sync-styles.mjs`.
-3. Apps already import `@nebutra/ui/styles/preset.css` or `sources.css` — **no per-component color edits**.
+@import "@nebutra/tokens/skins/linear.css"; /* solid acid-lime CTA */
+/* @import "@nebutra/tokens/skins/gsap.css";  outline-first / gradient-stroke */
+```
 
-Optional multi-mood product themes (`@nebutra/theme` + `[data-theme]`) override the same semantic names in oklch form; prefer one system per app.
+Optional: `html data-brand="gsap"` for runtime targeting (skins also bind `:root`).
 
-## Confidence checklist
+Default Nebutra shipping brand = **no skin import**.
 
-- [ ] No product CTA uses `#0033FE` / `--brand-primary` as fill
-- [ ] No product CTA uses multi-hue logo gradient as fill
-- [ ] Apps import package CSS entry (not hand-rolled `@source` paths)
-- [ ] Changing `--primary` in the theme file recolors buttons/inputs/focus globally
+## Compile from Refero export (Create Center pipeline MVP)
 
-## Refero / external DS challenge
+```bash
+# Folder with tokens.json + DESIGN.md (Desktop/GSAP style)
+pnpm --filter @nebutra/tokens exec node scripts/compile-brand.mjs ~/Desktop/GSAP --id gsap
 
-Map the external system’s primary/surface/border tokens → this semantic table in **one** theme file.  
-If a component still looks wrong, it is a **remaining hard-coupling** (file listed in DS audit), not “edit every call site.”
+# Writes:
+#   packages/design/tokens/brands/gsap/brand.json
+#   packages/design/tokens/brands/gsap/skin.css
+#   packages/design/tokens/skins/gsap.css
+```
+
+Programmatic:
+
+```ts
+import { compileReferoTokens } from "@nebutra/tokens/brand-package";
+
+const { brand, css, warnings } = compileReferoTokens({
+  tokens: referoJson,
+  designMd,
+  id: "gsap",
+});
+```
+
+## Fixtures
+
+| Brand | Recipe | Notes |
+|-------|--------|-------|
+| **linear** | `solid`, 6px radius | Acid-lime filled CTA |
+| **gsap** | `gradient-stroke` / outline, 100px pill | Green is **accent**, not solid fill |
+
+## Why recipe exists
+
+Linear and GSAP both dark — but **button language differs**. Color-only skins fail Create Center.  
+`Button` / `Badge` defaults + Card/Input elevation/heights consume recipe vars so packages flip solid ↔ outline ↔ no-shadow without call-site edits.
+
+Governed surface: `--btn-default-*`, `--badge-default-*`, `--control-height-*`, `--elevation-card|control|raised`, `--font-weight-medium`.  
+**Not governed (allowed):** VI logo hex, OAuth marks, decorative demos, trial/turbo special fills.
+
+## Runtime apply (Create Center preview)
+
+```ts
+import {
+  compileReferoTokens,
+  applyBrandPackage,
+  clearBrand,
+  restorePersistedBrand,
+  validateBrandPackage,
+  useBrand,
+  useBrandIframePreview,
+} from "@nebutra/tokens";
+
+const { brand, warnings } = compileReferoTokens({ tokens, designMd, id: "gsap" });
+const v = validateBrandPackage(brand);
+if (!v.ok) throw new Error(v.errors.join(", "));
+
+applyBrandPackage(brand, { persist: true });
+clearBrand({ persist: true });
+```
+
+### React hooks
+
+```tsx
+// Host app
+const { brand, apply, clear } = useBrand({ autoRestore: true });
+
+// Multi-tenant iframe preview
+const { iframeRef, apply: preview, writePreviewDocument } = useBrandIframePreview({
+  baseStylesheetHrefs: ["/tokens-preset.css"],
+});
+// <iframe ref={iframeRef} />
+// preview(brand)  or  writePreviewDocument(brand, "<button class='btn-brand-default'>CTA</button>")
+```
+
+### Fonts + zones
+
+- `typography.faces[]` → emitted as `@font-face` (swap URL for Create Center CDN/upload).
+- `zones.product` / `zones.marketing` → CSS vars + `[data-zone="…"]` / `.zone-…` consumers.
+- Marketing may use 224px display; product stays compact.
+
+### design-sync
+
+```ts
+import { getDesignSync, compileBrandFromTokenSets } from "@nebutra/design-sync";
+
+const sync = await getDesignSync();
+const { sets } = await sync.pull();
+const { brand, css, warnings } = compileBrandFromTokenSets(sets, { id: "tenant-a" });
+```
+
+```bash
+design-sync brand --json --id tenant-a
+```

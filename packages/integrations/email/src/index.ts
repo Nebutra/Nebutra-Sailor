@@ -138,7 +138,7 @@ function baseLayout(content: string, previewText = ""): string {
     <tr><td align="center" style="padding:40px 16px;">
       <table width="600" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;max-width:600px;width:100%;">
         <!-- Header -->
-        <tr><td style="background:linear-gradient(135deg,#0033FE,#0BF1C3);padding:32px 40px;">
+        <tr><td style="background:#0033FE;padding:32px 40px;">
           <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.5px;">Nebutra</h1>
         </td></tr>
         <!-- Body -->
@@ -180,7 +180,7 @@ export async function sendWelcomeEmail(opts: {
       Your workspace <strong>${opts.orgName}</strong> is ready. You can now invite team members,
       create API keys, and start building with the Nebutra platform.
     </p>
-    <a href="${dashboardUrl}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+    <a href="${dashboardUrl}" style="display:inline-block;background:#0033FE;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
       Open Dashboard →
     </a>
     <p style="margin:0;font-size:13px;color:#94a3b8;">
@@ -237,7 +237,7 @@ export async function sendOrderConfirmationEmail(opts: {
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;border-collapse:collapse;">
       ${itemsHtml}
     </table>
-    <a href="https://app.nebutra.ai/orders/${opts.orderId}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+    <a href="https://app.nebutra.ai/orders/${opts.orderId}" style="display:inline-block;background:#0033FE;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
       View Order Details →
     </a>
     `,
@@ -265,7 +265,7 @@ export async function sendMagicLinkEmail(opts: {
     <p style="margin:0 0 16px;font-size:15px;color:#475569;line-height:1.6;">
       Click the button below to sign in securely. No password required.
     </p>
-    <a href="${opts.magicLinkUrl}" style="display:inline-block;background:linear-gradient(135deg,#0033FE,#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;margin:0 0 24px;text-align:center;width:100%;max-width:280px;">
+    <a href="${opts.magicLinkUrl}" style="display:inline-block;background:#0033FE;color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:16px;font-weight:600;margin:0 0 24px;text-align:center;width:100%;max-width:280px;">
       ✨ Sign In Automatically
     </a>
     <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.4;">

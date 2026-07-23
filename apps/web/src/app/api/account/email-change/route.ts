@@ -33,7 +33,7 @@ function buildEmailChangeHtml(opts: { recipientEmail: string; confirmUrl: string
     <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f8fafc;">
       <tr><td align="center" style="padding:40px 16px;">
         <table width="600" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;max-width:600px;width:100%;">
-          <tr><td style="background:linear-gradient(135deg,hsl(var(--primary)),#0BF1C3);padding:32px 40px;">
+          <tr><td style="background:hsl(var(--primary));padding:32px 40px;">
             <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.5px;">Nebutra</h1>
           </td></tr>
           <tr><td style="padding:40px;">
@@ -42,7 +42,7 @@ function buildEmailChangeHtml(opts: { recipientEmail: string; confirmUrl: string
               We received a request to change the email on your Nebutra account to
               <strong>${opts.recipientEmail}</strong>. Click the button below to confirm. This link expires in 1 hour.
             </p>
-            <a href="${opts.confirmUrl}" style="display:inline-block;background:linear-gradient(135deg,hsl(var(--primary)),#0BF1C3);color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
+            <a href="${opts.confirmUrl}" style="display:inline-block;background:hsl(var(--primary));color:#ffffff;text-decoration:none;border-radius:8px;padding:12px 24px;font-size:15px;font-weight:600;margin:0 0 24px;">
               Confirm email change →
             </a>
             <p style="margin:0;font-size:13px;color:#94a3b8;">

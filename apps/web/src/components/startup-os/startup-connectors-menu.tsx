@@ -93,7 +93,7 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
                   Connected
                 </span>
               ) : (
-                <span className="shrink-0 text-xs font-medium text-blue-10">Connect</span>
+                <span className="shrink-0 text-xs font-medium text-primary">Connect</span>
               )}
             </DropdownMenuItem>
           );

@@ -224,7 +224,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
             type="button"
             onClick={handleResendCode}
             disabled={resending}
-            className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] disabled:opacity-50"
+            className="font-medium text-primary hover:text-primary disabled:opacity-50"
           >
             {resending ? "Resending…" : "Resend code"}
           </button>
@@ -357,7 +357,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
           href={
             returnUrl ? `/sign-in?${new URLSearchParams({ returnUrl }).toString()}` : "/sign-in"
           }
-          className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+          className="font-medium text-primary hover:text-primary"
         >
           Sign in
         </Link>

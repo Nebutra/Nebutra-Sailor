@@ -111,7 +111,7 @@ export function RoomView({ profileId }: { profileId: string }) {
       {access.granted ? (
         <AnimateIn preset="fadeUp">
           <div className="w-full max-w-md rounded-2xl border border-neutral-6 bg-neutral-1 p-5 text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-3 px-2.5 py-1 text-[11px] font-semibold text-blue-11 dark:bg-blue-9/20">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-semibold text-primary dark:bg-primary/15">
               <Sparkles className="size-3.5" aria-hidden="true" />
               Room open
             </span>
@@ -148,8 +148,8 @@ export function RoomView({ profileId }: { profileId: string }) {
         </AnimateIn>
       ) : (
         <AnimateIn preset="fadeUp">
-          <div className="w-full max-w-md rounded-2xl border border-blue-7 bg-blue-2 p-5 text-center dark:bg-blue-9/20">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-blue-11 backdrop-blur">
+          <div className="w-full max-w-md rounded-2xl border border-primary/30 bg-primary/5 p-5 text-center dark:bg-primary/15">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-primary backdrop-blur">
               <LockClosed className="size-3.5" aria-hidden="true" />
               Paid plan required
             </span>

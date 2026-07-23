@@ -143,10 +143,7 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
       </form>
 
       <p className="mt-6 text-sm text-muted-foreground">
-        <Link
-          href={signInHref}
-          className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
-        >
+        <Link href={signInHref} className="font-medium text-primary hover:text-primary">
           {tSignIn("back")}
         </Link>
       </p>

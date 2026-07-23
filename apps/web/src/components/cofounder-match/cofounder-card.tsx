@@ -39,7 +39,7 @@ export function CofounderCard({
         style={{ background: "hsl(var(--primary))" }}
       >
         <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-neutral-11 backdrop-blur">
-          <Compass className="size-3.5 text-blue-9" aria-hidden="true" />
+          <Compass className="size-3.5 text-primary" aria-hidden="true" />
           {data.archetype ?? "Founder"}
         </span>
         {data.trustVerified ? (
@@ -64,7 +64,7 @@ export function CofounderCard({
         {/* Complementarity — engine-computed; honest placeholder in preview */}
         <div className="rounded-xl border border-neutral-6 bg-neutral-2 px-3 py-2.5">
           <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-neutral-9">
-            <Sparkles className="size-3.5 text-blue-9" aria-hidden="true" />
+            <Sparkles className="size-3.5 text-primary" aria-hidden="true" />
             Complementarity
           </div>
           <p className="mt-1 text-xs text-neutral-10">

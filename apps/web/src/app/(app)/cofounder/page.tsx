@@ -96,7 +96,7 @@ export default function CofounderPage() {
         <AnimateIn preset="emerge">
           <div className="text-center">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
-              <Users className="size-3.5 text-blue-9" aria-hidden="true" />
+              <Users className="size-3.5 text-primary" aria-hidden="true" />
               OPC → Team
             </span>
             <h1
@@ -163,8 +163,8 @@ export default function CofounderPage() {
               <AnimateIn key={step.title} preset="fadeUp">
                 <div className="flex h-full flex-col gap-2 rounded-2xl border border-neutral-6 bg-neutral-1 p-4">
                   <div className="flex items-center gap-2">
-                    <span className="flex size-7 items-center justify-center rounded-lg bg-blue-3 dark:bg-blue-9/20">
-                      <StepIcon className="size-3.5 text-blue-10" aria-hidden="true" />
+                    <span className="flex size-7 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/15">
+                      <StepIcon className="size-3.5 text-primary" aria-hidden="true" />
                     </span>
                     <span className="text-[11px] font-semibold text-neutral-9">
                       Step {index + 1}

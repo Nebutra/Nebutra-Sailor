@@ -245,7 +245,7 @@ export const MultiSelectTrigger = ({
       className={cn(
         "inline-flex h-[var(--multi-select-trigger-height)] w-[var(--multi-select-width)] items-center justify-between",
         "gap-[var(--multi-select-trigger-gap)] rounded-[var(--multi-select-trigger-radius)] border border-input bg-background",
-        "px-[var(--multi-select-trigger-padding-x)] text-left text-[length:var(--multi-select-trigger-font-size)] text-foreground shadow-[var(--shadow-xs)]",
+        "px-[var(--multi-select-trigger-padding-x)] text-left text-[length:var(--multi-select-trigger-font-size)] text-foreground shadow-[var(--elevation-control,var(--shadow-[var(--elevation-control)]))]",
         "transition-[background-color,border-color,box-shadow,color] duration-[var(--multi-select-duration)] ease-[var(--multi-select-easing)]",
         "hover:bg-accent/60 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "disabled:cursor-not-allowed disabled:opacity-50",

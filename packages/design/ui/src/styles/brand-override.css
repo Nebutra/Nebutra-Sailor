@@ -1,10 +1,15 @@
 /**
- * brand-override.css — Custom Brand Configuration
+ * brand-override.css — Custom Brand Configuration (legacy scale remap)
  *
- * Drop this file into your app's globals.css with:
+ * Prefer the skin surface for product chrome:
+ *   @import "@nebutra/tokens/skins/<name>.css";
+ *   @see packages/design/tokens/skins/README.md
+ *
+ * This file remaps the **blue scale** only (residual `bg-blue-9` call sites).
+ * New code should use semantic tokens (`bg-primary`, `border-border`).
+ *
+ * Drop into globals.css after tokens if you still need scale remapping:
  *   @import "@nebutra/ui/styles/brand-override.css";
- *
- * Then edit the two color scales below to match your brand.
  *
  * ────────────────────────────────────────────────────────────
  * HOW THE CASCADE WORKS
@@ -12,13 +17,8 @@
  *   1. You define: --your-primary-* (11 steps)
  *   2. System maps: --blue-9 → --your-primary-500 (solid fill)
  *                  --blue-3 → --your-primary-200 (component bg)
- *                  ... etc
- *   3. Every component automatically uses your brand color.
- *
- * QUICK START (2 minutes)
- *   Replace the hex values below with your brand colors.
- *   Use a tool like https://uicolors.app to generate 11 steps
- *   from a single hex value.
+ *   3. Residual blue-N utilities follow your brand; semantic CSS still wins
+ *      for Button / Input that already use --primary.
  * ────────────────────────────────────────────────────────────
  */
 

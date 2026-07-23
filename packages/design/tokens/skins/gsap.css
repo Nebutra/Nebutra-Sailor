@@ -1,0 +1,215 @@
+/**
+ * Brand skin: GSAP (gsap) v1.0.0
+ * darkDefault=true buttonDefault=gradient-stroke
+ * fonts=2 zones=product+marketing
+ */
+
+/* Brand font faces */
+@font-face {
+  font-family: "Mori";
+  src: url("/brand-assets/mori-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Mori";
+  src: url("/brand-assets/mori-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+
+:root,
+.dark,
+html[data-brand="gsap"] {
+  --background: 150 7% 6%;
+  --foreground: 54 100% 94%;
+  --card: 0 0% 10%;
+  --card-foreground: 54 100% 94%;
+  --popover: 0 0% 10%;
+  --popover-foreground: 54 100% 94%;
+  --primary: 137 92% 47%;
+  --primary-foreground: 150 7% 6%;
+  --secondary: 70 5% 25%;
+  --secondary-foreground: 54 100% 94%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 60 6% 46%;
+  --accent: 70 5% 25%;
+  --accent-foreground: 137 92% 47%;
+  --destructive: 309 100% 47%;
+  --destructive-foreground: 54 100% 94%;
+  --border: 70 5% 25%;
+  --input: 70 5% 25%;
+  --ring: 137 92% 47%;
+  --success: 137 92% 47%;
+  --success-foreground: 150 7% 6%;
+  --info: 191 100% 44%;
+  --info-foreground: 150 7% 6%;
+  --sidebar: 0 0% 10%;
+  --sidebar-foreground: 54 100% 94%;
+  --sidebar-primary: 137 92% 47%;
+  --sidebar-primary-foreground: 150 7% 6%;
+  --sidebar-accent: 70 5% 25%;
+  --sidebar-accent-foreground: 137 92% 47%;
+  --sidebar-border: 70 5% 25%;
+  --sidebar-ring: 137 92% 47%;
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* Recipe */
+  --btn-default-radius: 100px;
+  --radius-button: 100px;
+  --radius-buttons: 100px;
+  --radius-md: 100px;
+  --radius-card: 8px;
+  --radius-lg: 8px;
+  --btn-default-shadow: 0 0 #0000;
+  --shadow-xs: 0 0 #0000;
+  --shadow-sm: 0 0 #0000;
+  --shadow-md: 0 0 #0000;
+  --shadow-lg: 0 0 #0000;
+  --elevation-card: 0 0 #0000;
+  --elevation-control: 0 0 #0000;
+  --elevation-raised: 0 0 #0000;
+  --btn-default-bg: transparent;
+  --btn-default-fg: hsl(var(--foreground));
+  --btn-default-border-width: 1.5px;
+  --btn-default-border: transparent;
+  --btn-default-stroke-gradient: linear-gradient(114.41deg, #0ae448 20.74%, #abff84 65.5%);
+  --btn-default-hover-bg: hsl(var(--primary) / 0.08);
+  --badge-default-bg: transparent;
+  --badge-default-fg: hsl(var(--foreground));
+  --badge-default-border: #fffce1;
+  --badge-default-hover-bg: hsl(var(--primary) / 0.08);
+  --btn-default-padding-y: 0.5rem;
+  --btn-default-padding-x: 0.875rem;
+  --control-height-tiny: 1.25rem;
+  --control-height-sm: 1.75rem;
+  --control-height-md: 2rem;
+  --control-height-lg: 2.5rem;
+  --control-font-size-md: 0.8125rem;
+
+  /* Typography stacks */
+  --font-sans: 'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  --font-weight-heading: 600;
+
+  /* Zone type scales (product shell vs marketing) */
+  --zone-product-caption-size: 14px;
+  --zone-product-caption-leading: 1.4;
+  --zone-product-caption-tracking: -0.14px;
+  --zone-product-caption-weight: 400;
+  --zone-product-body-sm-size: 16px;
+  --zone-product-body-sm-leading: 1.15;
+  --zone-product-body-sm-weight: 400;
+  --zone-product-body-size: 19px;
+  --zone-product-body-leading: 1.15;
+  --zone-product-body-weight: 400;
+  --zone-product-body-lg-size: 23px;
+  --zone-product-body-lg-leading: 1.38;
+  --zone-product-body-lg-tracking: -0.23px;
+  --zone-product-body-lg-weight: 400;
+  --zone-product-subheading-size: 34px;
+  --zone-product-subheading-leading: 1.2;
+  --zone-product-subheading-tracking: -0.34px;
+  --zone-product-subheading-weight: 400;
+  --zone-product-heading-size: 44px;
+  --zone-product-heading-leading: 1.2;
+  --zone-product-heading-tracking: -0.44px;
+  --zone-product-heading-weight: 600;
+  --zone-marketing-body-size: 19px;
+  --zone-marketing-body-leading: 1.15;
+  --zone-marketing-body-weight: 400;
+  --zone-marketing-heading-size: 66px;
+  --zone-marketing-heading-leading: 1.2;
+  --zone-marketing-heading-tracking: -0.66px;
+  --zone-marketing-heading-weight: 600;
+  --zone-marketing-heading-lg-size: 101px;
+  --zone-marketing-heading-lg-leading: 1;
+  --zone-marketing-heading-lg-tracking: -1.11px;
+  --zone-marketing-heading-lg-weight: 600;
+  --zone-marketing-display-size: 224px;
+  --zone-marketing-display-leading: 0.9;
+  --zone-marketing-display-tracking: -4.48px;
+  --zone-marketing-display-weight: 600;
+
+  /* Extensions */
+  --brand-category-gsap: #0ae448;
+  --brand-category-scroll: #fec5fb;
+  --brand-category-svg: #ff8709;
+  --brand-category-text: #9d95ff;
+  --brand-category-ui: #00bae2;
+  --brand-category-other: #abff84;
+}
+
+
+/* Zone: product — apply via data-zone="product" or .zone-product */
+[data-zone="product"], .zone-product {
+  font-size: var(--zone-product-body-size, 19px);
+  line-height: var(--zone-product-body-leading, 1.15);
+  font-weight: var(--zone-product-body-weight, 400);
+  --text-caption: var(--zone-product-caption-size, inherit);
+  --leading-caption: var(--zone-product-caption-leading, inherit);
+  --tracking-caption: var(--zone-product-caption-tracking, inherit);
+  --text-body-sm: var(--zone-product-body-sm-size, inherit);
+  --leading-body-sm: var(--zone-product-body-sm-leading, inherit);
+  --tracking-body-sm: var(--zone-product-body-sm-tracking, inherit);
+  --text-body: var(--zone-product-body-size, inherit);
+  --leading-body: var(--zone-product-body-leading, inherit);
+  --tracking-body: var(--zone-product-body-tracking, inherit);
+  --text-body-lg: var(--zone-product-body-lg-size, inherit);
+  --leading-body-lg: var(--zone-product-body-lg-leading, inherit);
+  --tracking-body-lg: var(--zone-product-body-lg-tracking, inherit);
+  --text-subheading: var(--zone-product-subheading-size, inherit);
+  --leading-subheading: var(--zone-product-subheading-leading, inherit);
+  --tracking-subheading: var(--zone-product-subheading-tracking, inherit);
+  --text-heading-sm: var(--zone-product-heading-sm-size, inherit);
+  --leading-heading-sm: var(--zone-product-heading-sm-leading, inherit);
+  --tracking-heading-sm: var(--zone-product-heading-sm-tracking, inherit);
+  --text-heading: var(--zone-product-heading-size, inherit);
+  --leading-heading: var(--zone-product-heading-leading, inherit);
+  --tracking-heading: var(--zone-product-heading-tracking, inherit);
+  --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
+  --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
+  --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
+  --text-display: var(--zone-product-display-size, inherit);
+  --leading-display: var(--zone-product-display-leading, inherit);
+  --tracking-display: var(--zone-product-display-tracking, inherit);
+}
+
+/* Zone: marketing — apply via data-zone="marketing" or .zone-marketing */
+[data-zone="marketing"], .zone-marketing {
+  font-size: var(--zone-marketing-body-size, 19px);
+  line-height: var(--zone-marketing-body-leading, 1.15);
+  font-weight: var(--zone-marketing-body-weight, 400);
+  --text-caption: var(--zone-marketing-caption-size, inherit);
+  --leading-caption: var(--zone-marketing-caption-leading, inherit);
+  --tracking-caption: var(--zone-marketing-caption-tracking, inherit);
+  --text-body-sm: var(--zone-marketing-body-sm-size, inherit);
+  --leading-body-sm: var(--zone-marketing-body-sm-leading, inherit);
+  --tracking-body-sm: var(--zone-marketing-body-sm-tracking, inherit);
+  --text-body: var(--zone-marketing-body-size, inherit);
+  --leading-body: var(--zone-marketing-body-leading, inherit);
+  --tracking-body: var(--zone-marketing-body-tracking, inherit);
+  --text-body-lg: var(--zone-marketing-body-lg-size, inherit);
+  --leading-body-lg: var(--zone-marketing-body-lg-leading, inherit);
+  --tracking-body-lg: var(--zone-marketing-body-lg-tracking, inherit);
+  --text-subheading: var(--zone-marketing-subheading-size, inherit);
+  --leading-subheading: var(--zone-marketing-subheading-leading, inherit);
+  --tracking-subheading: var(--zone-marketing-subheading-tracking, inherit);
+  --text-heading-sm: var(--zone-marketing-heading-sm-size, inherit);
+  --leading-heading-sm: var(--zone-marketing-heading-sm-leading, inherit);
+  --tracking-heading-sm: var(--zone-marketing-heading-sm-tracking, inherit);
+  --text-heading: var(--zone-marketing-heading-size, inherit);
+  --leading-heading: var(--zone-marketing-heading-leading, inherit);
+  --tracking-heading: var(--zone-marketing-heading-tracking, inherit);
+  --text-heading-lg: var(--zone-marketing-heading-lg-size, inherit);
+  --leading-heading-lg: var(--zone-marketing-heading-lg-leading, inherit);
+  --tracking-heading-lg: var(--zone-marketing-heading-lg-tracking, inherit);
+  --text-display: var(--zone-marketing-display-size, inherit);
+  --leading-display: var(--zone-marketing-display-leading, inherit);
+  --tracking-display: var(--zone-marketing-display-tracking, inherit);
+}

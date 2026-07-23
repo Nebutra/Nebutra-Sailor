@@ -69,13 +69,72 @@ node packages/design/design-tokens/style-dictionary.config.mjs
 node packages/design/tokens/scripts/sync-styles.mjs
 ```
 
-## 4. External DS / Refero swap (acceptance test)
+## 4. Brand Package / Create Center swap (acceptance test)
 
-1. Create a skin map: external primary/surface/border → our semantic table (`skins/README.md`).
-2. Apply values only in theme JSON (or a single override CSS after tokens).
-3. Restart app — **no** edits to Button/Input call sites.
+Users (Create Center) apply a **Brand Package**, not a one-off hex edit:
 
-If a surface still looks “stuck”, it is a **hard-coupling bug** (file still uses VI hex or raw palette step). Fix the component to semantic; do not fork colors in the app.
+```
+Refero tokens.json + DESIGN.md
+  → compileReferoTokens()  (@nebutra/tokens/brand-package)
+  → brand.json + skin.css
+  → @import skin  (semantic + --btn-default-* recipe)
+  → Button / product chrome recolors & restyles without call-site edits
+```
+
+| Fixture | Recipe | Proves |
+|---------|--------|--------|
+| `skins/linear.css` | solid CTA + product/marketing zones | color + primary pair |
+| `skins/gsap.css` | gradient-stroke, pill, Mori faces, 224px marketing | **recipe + fonts + zones** |
+
+```css
+@import "@nebutra/ui/styles/preset.css"; /* includes recipe.css */
+@import "@nebutra/tokens/skins/gsap.css";
+```
+
+```html
+<main data-zone="product">…app shell…</main>
+<section data-zone="marketing">…hero / display…</section>
+```
+
+Compile / Create Center paths:
+
+```bash
+# Refero folder on disk
+node packages/design/tokens/scripts/compile-brand.mjs ~/Desktop/GSAP --id gsap
+
+# design-sync pull → Brand Package
+design-sync brand --json --id gsap
+```
+
+```ts
+import { useBrand, useBrandIframePreview, applyBrandPackage } from "@nebutra/tokens";
+import { compileBrandFromTokenSets } from "@nebutra/design-sync";
+
+// Host shell
+const { apply } = useBrand({ autoRestore: true });
+
+// Tenant iframe preview
+const { iframeRef, apply: applyPreview, writePreviewDocument } = useBrandIframePreview({
+  baseStylesheetHrefs: ["/preview-base.css"],
+});
+```
+
+Default shipping brand = no skin import.  
+If a surface stays stuck → hard-coupling (`bg-blue-9` / hex); fix call site to semantic.
+
+### Product chrome recipe contract (governed)
+
+| Concern | CSS vars / class | Components |
+|---------|------------------|------------|
+| Default CTA | `.btn-brand-default` + `--btn-default-*` | Button default |
+| Default badge | `.badge-brand-default` + `--badge-default-*` | Badge default |
+| Control height | `--control-height-{tiny,sm,md,lg}` | Button sizes |
+| Type weight | `--font-weight-medium` | Button / badge |
+| Card elevation | `--elevation-card` | Card, Material base |
+| Control elevation | `--elevation-control` | Input, Select, Textarea, tabs |
+
+`recipe.elevation: "none"` zeros elevation vars.  
+**Out of scope (allowed hardcode):** VI logo colors, OAuth vendor marks, decorative/motion demos, trial/turbo gradients.
 
 ## 5. Motion note (GSAP-level craft, not CI theatre)
 
@@ -108,4 +167,16 @@ All product apps under `apps/*` consume:
 - Storybook foundation stories that document VI hexes by name
 - Hidden form inputs / test mocks using native HTML
 
-**Swap confidence:** changing semantic values in design-tokens theme JSON recolors product CTAs, surfaces, and text across web, landing, auth, idp, forge, router, docs shells without per-callsite edits.
+**Swap confidence:** changing semantic values in design-tokens theme JSON **or** importing one file under `@nebutra/tokens/skins/*` recolors product CTAs, surfaces, and text that already use the semantic contract (Button / Input / `bg-primary` / …).
+
+**How to verify residual hard-coupling (local, not CI):**
+
+```bash
+node scripts/check-product-chrome-coupling.mjs
+```
+
+Opt-in Linear diagnostic skin (does **not** replace default Nebutra brand):
+
+```css
+@import "@nebutra/tokens/skins/linear.css";
+```

@@ -15,7 +15,12 @@ export interface RenderedEmail {
   preview: string;
 }
 
-const BRAND_GRADIENT = "linear-gradient(135deg,#0033FE,#0BF1C3)";
+/**
+ * Email clients do not load app CSS variables. These are identity-locked hex
+ * snapshots (VI 云毓蓝 header), not product-chrome skins. Keep in sync with
+ * brand assets — do not invent per-template blues.
+ */
+const BRAND_HEADER = "#0033FE";
 const COLOR_BG = "#f8fafc";
 const COLOR_BORDER = "#e2e8f0";
 const COLOR_HEADING = "#0f172a";
@@ -45,7 +50,7 @@ export function baseLayout({ brandName, preview, body }: BaseLayoutOptions): str
   <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:${COLOR_BG};">
     <tr><td align="center" style="padding:40px 16px;">
       <table width="600" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;border-radius:12px;border:1px solid ${COLOR_BORDER};overflow:hidden;max-width:600px;width:100%;">
-        <tr><td style="background:${BRAND_GRADIENT};padding:32px 40px;">
+        <tr><td style="background:${BRAND_HEADER};padding:32px 40px;">
           <h1 style="margin:0;color:#ffffff;font-size:24px;font-weight:700;letter-spacing:-0.5px;">${escapeHtml(brandName)}</h1>
         </td></tr>
         <tr><td style="padding:40px;">
@@ -66,7 +71,9 @@ export function baseLayout({ brandName, preview, body }: BaseLayoutOptions): str
 }
 
 export const palette = {
-  gradient: BRAND_GRADIENT,
+  /** @deprecated alias of solid identity header — not a product skin */
+  gradient: BRAND_HEADER,
+  header: BRAND_HEADER,
   background: COLOR_BG,
   border: COLOR_BORDER,
   heading: COLOR_HEADING,

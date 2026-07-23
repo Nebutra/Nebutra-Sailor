@@ -120,7 +120,7 @@ const tabsTriggerVariants = cva(
       variant: {
         default: "hover:text-foreground data-[active]:text-foreground",
         button:
-          "border border-border bg-background text-muted-foreground shadow-[var(--shadow-xs)] hover:border-ring/40 hover:text-foreground data-[active]:border-ring/40 data-[active]:text-foreground",
+          "border border-border bg-background text-muted-foreground shadow-[var(--elevation-control,var(--shadow-[var(--elevation-control)]))] hover:border-ring/40 hover:text-foreground data-[active]:border-ring/40 data-[active]:text-foreground",
         line: "min-w-0 rounded-none px-0 hover:text-foreground data-[active]:text-foreground",
         secondary:
           "hover:bg-muted hover:text-foreground data-[active]:bg-muted data-[active]:text-foreground",
@@ -138,7 +138,7 @@ const tabsIndicatorVariants = cva(
     variants: {
       variant: {
         default:
-          "z-[-1] rounded-[var(--tabs-trigger-radius)] bg-background shadow-[var(--shadow-xs)]",
+          "z-[-1] rounded-[var(--tabs-trigger-radius)] bg-background shadow-[var(--elevation-control,var(--shadow-[var(--elevation-control)]))]",
         button: "z-[-1] rounded-[var(--tabs-trigger-radius)] bg-muted",
         line: "bottom-0 h-[var(--tabs-line-thickness)] rounded-[var(--tabs-pill-radius)] bg-foreground",
         secondary: "z-[-1] rounded-[var(--tabs-trigger-radius)] bg-muted",

@@ -81,7 +81,7 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
             key={s.label}
             className={`border-border/80 px-3.5 py-3 ${
               s.primary
-                ? "border-[color-mix(in_srgb,hsl(var(--primary))_28%,hsl(var(--border)))] bg-[color-mix(in_srgb,var(--blue-3)_35%,hsl(var(--background)))]"
+                ? "border-[color-mix(in_srgb,hsl(var(--primary))_28%,hsl(var(--border)))] bg-[color-mix(in_srgb,hsl(var(--primary))_12%,hsl(var(--background)))]"
                 : ""
             }`}
           >

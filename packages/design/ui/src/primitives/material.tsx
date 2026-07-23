@@ -29,16 +29,16 @@ import { cn } from "../utils/cn";
 const materialVariants = cva("overflow-hidden rounded-[var(--radius-lg)]", {
   variants: {
     type: {
-      base: "bg-card shadow-sm",
-      small: "bg-card shadow-sm",
-      medium: "bg-card shadow-md",
-      large: "bg-card shadow-lg",
-      tooltip: "bg-popover shadow-md",
-      menu: "bg-popover shadow-md",
-      modal: "bg-popover shadow-xl",
+      base: "bg-card shadow-[var(--elevation-card)]",
+      small: "bg-card shadow-[var(--elevation-control,var(--elevation-card))]",
+      medium: "bg-card shadow-[var(--elevation-raised,var(--elevation-card))]",
+      large: "bg-card shadow-[var(--elevation-raised,var(--elevation-card))]",
+      tooltip: "bg-popover shadow-[var(--elevation-raised,var(--elevation-card))]",
+      menu: "bg-popover shadow-[var(--elevation-raised,var(--elevation-card))]",
+      modal: "bg-popover shadow-[var(--elevation-raised,var(--elevation-card))]",
       fullscreen: "bg-background shadow-none",
       /** @deprecated Use `base` instead. */
-      card: "bg-card shadow-sm",
+      card: "bg-card shadow-[var(--elevation-card)]",
     },
   },
   defaultVariants: { type: "base" },

@@ -47,10 +47,10 @@ export function CommandSurfaceButton() {
       onClick={handleClick}
       aria-label={ariaLabel}
       data-tour-id="command-surface"
-      className="group flex w-full items-center gap-3 rounded-[var(--radius-2xl)] border border-neutral-6/60 bg-neutral-1 px-5 py-4 text-left transition-[border-color,box-shadow] duration-200 hover:border-neutral-7/80 hover:shadow-[0_0_0_3px_var(--blue-3)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-8 focus-visible:ring-offset-2/[0.04] dark:hover:shadow-[0_0_0_3px_rgba(59,130,246,0.08)]"
+      className="group flex w-full items-center gap-3 rounded-[var(--radius-2xl)] border border-neutral-6/60 bg-neutral-1 px-5 py-4 text-left transition-[border-color,box-shadow] duration-200 hover:border-neutral-7/80 hover:shadow-[0_0_0_3px_hsl(var(--primary) / 0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2/[0.04] dark:hover:shadow-[0_0_0_3px_hsl(var(--primary) / 0.08)]"
     >
       <span className="relative flex h-5 w-5 shrink-0 items-center justify-center">
-        <Sparkles className="h-4 w-4 text-blue-9 transition-opacity duration-200 group-hover:opacity-0" />
+        <Sparkles className="h-4 w-4 text-primary transition-opacity duration-200 group-hover:opacity-0" />
         <ModeIcon
           className={`absolute h-4 w-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${iconColor}`}
         />

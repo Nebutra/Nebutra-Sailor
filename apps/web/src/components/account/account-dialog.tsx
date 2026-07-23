@@ -164,7 +164,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                       aria-current={isActive ? "page" : undefined}
                       className={`flex w-full items-center gap-2 rounded-[var(--radius-lg)] px-3 py-2 text-left text-sm font-medium transition-colors ${
                         isActive
-                          ? "bg-blue-3/60 text-blue-12 dark:bg-blue-3/20 dark:text-blue-9"
+                          ? "bg-primary/10/60 text-primary dark:bg-primary/10/20 dark:text-primary"
                           : "text-neutral-11 hover:bg-neutral-3/60 hover:text-neutral-12"
                       }`}
                     >
@@ -313,7 +313,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
   }) {
     return (
       <div className="flex flex-col gap-5">
-        <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-gradient-to-br from-blue-2/40 to-transparent p-4 dark:from-blue-2/10">
+        <div className="rounded-[var(--radius-2xl)] border border-neutral-6 bg-gradient-to-br from-primary/10 to-transparent p-4 dark:from-primary/10">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-10">
@@ -388,7 +388,7 @@ export function AccountDialog({ planBadge }: { planBadge?: ReactNode } = {}) {
                   aria-pressed={isActive}
                   className={`flex flex-col items-center gap-1.5 rounded-[var(--radius-xl)] border px-3 py-3 text-xs font-medium transition-colors ${
                     isActive
-                      ? "border-blue-7 bg-blue-2/60 text-blue-12 dark:border-blue-7/60 dark:bg-blue-2/20 dark:text-blue-9"
+                      ? "border-primary/30 bg-primary/10 text-primary dark:border-primary/40 dark:bg-primary/5/20 dark:text-primary"
                       : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:border-neutral-7 hover:bg-neutral-2"
                   }`}
                 >

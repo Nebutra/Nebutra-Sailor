@@ -360,7 +360,7 @@ export function DiscoverDeck() {
             small
             onClick={() => setPitchMode(true)}
             disabled={busy || leaving !== 0}
-            className="text-blue-10 hover:border-blue-7 hover:bg-blue-3"
+            className="text-primary hover:border-primary/30 hover:bg-primary/10"
           >
             <PaperAirplane className="size-5" aria-hidden="true" />
           </DeckAction>
@@ -416,8 +416,8 @@ function DeckAction({
 
 function MatchBanner({ card, locale }: { card: DiscoverCard; locale: string }) {
   return (
-    <div className="w-full max-w-sm rounded-2xl border border-blue-7 bg-blue-2 p-4 dark:bg-blue-9/20">
-      <div className="flex items-center gap-2 text-sm font-semibold text-blue-11">
+    <div className="w-full max-w-sm rounded-2xl border border-primary/30 bg-primary/5 p-4 dark:bg-primary/15">
+      <div className="flex items-center gap-2 text-sm font-semibold text-primary">
         <Sparkles className="size-4" aria-hidden="true" />
         It's a match — {card.companyName}
       </div>
@@ -427,7 +427,7 @@ function MatchBanner({ card, locale }: { card: DiscoverCard; locale: string }) {
       </p>
       <Link
         href={`/${locale}/cofounder/matches`}
-        className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-blue-11"
+        className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary"
       >
         View matches
         <ArrowRight className="size-3.5" aria-hidden="true" />

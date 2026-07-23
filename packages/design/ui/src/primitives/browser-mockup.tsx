@@ -139,7 +139,7 @@ export function Browser(props: BrowserProps) {
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-sm",
+        "overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-[var(--elevation-card)]",
         className,
       )}
       {...rest}

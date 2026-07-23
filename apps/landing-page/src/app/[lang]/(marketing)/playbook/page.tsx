@@ -47,20 +47,20 @@ function PlaybookCard({ item, locale }: { item: PlaybookItem; locale: string }) 
   const inner = (
     <>
       <div className="flex items-start justify-between gap-3">
-        <span className="flex size-9 items-center justify-center rounded-[var(--radius-md)] bg-neutral-3 text-neutral-11 transition-colors group-hover:bg-blue-3 group-hover:text-blue-11 dark:group-hover:bg-blue-9/20 dark:group-hover:text-blue-9">
+        <span className="flex size-9 items-center justify-center rounded-[var(--radius-md)] bg-neutral-3 text-neutral-11 transition-colors group-hover:bg-primary/10 group-hover:text-primary dark:group-hover:bg-primary/15 dark:group-hover:text-primary">
           <Icon className="size-[18px]" />
         </span>
         {external ? (
-          <ExternalLink className="size-4 shrink-0 text-neutral-9 transition-colors group-hover:text-blue-10 dark:group-hover:text-cyan-9" />
+          <ExternalLink className="size-4 shrink-0 text-neutral-9 transition-colors group-hover:text-primary dark:group-hover:text-cyan-9" />
         ) : (
-          <ArrowRight className="size-4 shrink-0 text-neutral-9 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-blue-10 motion-reduce:group-hover:translate-x-0 dark:group-hover:text-cyan-9" />
+          <ArrowRight className="size-4 shrink-0 text-neutral-9 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-primary motion-reduce:group-hover:translate-x-0 dark:group-hover:text-cyan-9" />
         )}
       </div>
       <div className="mt-4">
         <div className="flex items-center gap-2">
           <h3 className="text-[15px] font-semibold text-neutral-12">{pick(item.title, locale)}</h3>
           {item.badge && (
-            <span className="rounded-full bg-blue-3 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-blue-11 dark:bg-blue-9/20 dark:text-blue-9">
+            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary dark:bg-primary/15 dark:text-primary">
               {pick(item.badge, locale)}
             </span>
           )}

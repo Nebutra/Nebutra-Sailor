@@ -43,8 +43,8 @@ export const INTEGRATION_CATALOG: readonly IntegrationCatalogEntry[] = [
     name: "Shopline",
     description: "Connect your Shopline storefront for unified commerce analytics.",
     icon: Store,
-    color: "text-blue-10",
-    bgColor: "bg-blue-3 dark:bg-blue-9/20",
+    color: "text-primary",
+    bgColor: "bg-primary/10 dark:bg-primary/15",
     docUrl: "https://docs.nebutra.ai/integrations/shopline",
   },
   {

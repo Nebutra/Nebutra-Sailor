@@ -1,4 +1,4 @@
-import "@nebutra/tokens/styles.css";
+/* tokens loaded once via globals.css → @nebutra/ui/styles/preset.css */
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { GeistMono } from "geist/font/mono";

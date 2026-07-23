@@ -112,7 +112,7 @@ export function InboxList({
         const itemContent = (
           <div
             className={`flex gap-3 px-4 py-3 transition-colors ${
-              item.read ? "bg-background" : "bg-blue-50/40 dark:bg-blue-950/20"
+              item.read ? "bg-background" : "bg-primary/5 dark:bg-primary/10"
             } hover:bg-muted`}
           >
             {selectable ? (

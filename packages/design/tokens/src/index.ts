@@ -35,3 +35,27 @@ export const THEME_IDS = ["light", "dark"] as const;
 export type ThemeId = (typeof THEME_IDS)[number];
 
 export const DEFAULT_THEME: ThemeId = "dark";
+
+/** Create Center brand package: compile, validate, runtime apply, hooks */
+export {
+  applyBrandCss,
+  applyBrandPackage,
+  applyBrandToIframe,
+  BRAND_STORAGE_KEY,
+  type BrandFontFace,
+  type BrandPackage,
+  type BrandRecipe,
+  type BrandZones,
+  type CompileResult,
+  clearBrand,
+  compileReferoTokens,
+  emitBrandCss,
+  getActiveBrandId,
+  hexToHslChannels,
+  inferRecipeFromDesignMd,
+  restorePersistedBrand,
+  useBrand,
+  useBrandIframePreview,
+  type ValidationResult,
+  validateBrandPackage,
+} from "./brand-package";

@@ -183,7 +183,7 @@ export function FieldCard({
       <div className="flex w-36 shrink-0 items-center gap-1.5 pt-px">
         <span
           aria-hidden="true"
-          className={cn("size-1.5 rounded-full", filled ? "bg-blue-9" : "bg-neutral-6")}
+          className={cn("size-1.5 rounded-full", filled ? "bg-primary" : "bg-neutral-6")}
         />
         <span className="truncate font-mono text-xs text-neutral-11" title={definition.label}>
           {fieldKey}

@@ -95,7 +95,7 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
               "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-colors",
               "focus:outline-none focus:ring-2 focus:ring-offset-1",
               isActive
-                ? "bg-blue-2 text-blue-11"
+                ? "bg-primary/5 text-primary"
                 : "text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12",
             ].join(" ")}
           >

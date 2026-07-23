@@ -133,7 +133,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                   <div className="p-4">
                     <div className="flex items-start justify-between gap-2">
                       <h2 className="text-sm font-semibold text-neutral-12">{project.name}</h2>
-                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-neutral-10 transition-colors group-hover:text-blue-10 dark:group-hover:text-cyan-9" />
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-neutral-10 transition-colors group-hover:text-primary dark:group-hover:text-cyan-9" />
                     </div>
                     {project.description && (
                       <p className="mt-1.5 line-clamp-2 text-xs text-neutral-11">
@@ -147,7 +147,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                         </span>
                       )}
                       {project.featured && (
-                        <span className="rounded-full bg-blue-3 px-2 py-0.5 text-xs font-medium text-blue-11 dark:bg-blue-9/20 dark:text-blue-9">
+                        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-primary/15 dark:text-primary">
                           Featured
                         </span>
                       )}

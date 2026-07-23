@@ -32,7 +32,7 @@ export function DashboardHintCard({ cookieName }: Props) {
 
   return isVisible ? (
     <AnimateIn preset="fadeUp">
-      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-blue-6 bg-blue-2/35 p-4 dark:border-blue-7/50 dark:bg-blue-2/10">
+      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] border border-primary/25 bg-primary/10 p-4 dark:border-primary/40 dark:bg-primary/10">
         {/* Decorative gradient glow */}
         <div
           aria-hidden

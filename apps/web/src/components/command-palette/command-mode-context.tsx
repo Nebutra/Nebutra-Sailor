@@ -51,7 +51,7 @@ const DEFAULT_MODE: CommandMode = "search";
  * raw hex, no off-system accents. Pure design-system governance.
  */
 export const ACCENT_ACTIVE_CLASSES: Record<ModeAccent, string> = {
-  blue: "border-blue-7 bg-blue-2 text-blue-11 shadow-[0_0_0_3px_var(--blue-3)] dark:border-blue-7/60 dark:bg-blue-2/25 dark:text-blue-9 dark:shadow-[0_0_0_3px_rgba(59,130,246,0.12)]",
+  blue: "border-primary/30 bg-primary/5 text-primary shadow-[0_0_0_3px_hsl(var(--primary) / 0.12)] dark:border-primary/40 dark:bg-primary/10 dark:text-primary dark:shadow-[0_0_0_3px_hsl(var(--primary) / 0.12)]",
   cyan: "border-cyan-7 bg-cyan-2 text-cyan-11 shadow-[0_0_0_3px_var(--cyan-3)] dark:border-cyan-7/60 dark:bg-cyan-2/25 dark:text-cyan-9 dark:shadow-[0_0_0_3px_rgba(11,241,195,0.12)]",
   green:
     "border-green-7 bg-green-2 text-green-11 shadow-[0_0_0_3px_var(--green-3)] dark:border-green-7/60 dark:bg-green-2/25 dark:text-green-9 dark:shadow-[0_0_0_3px_rgba(16,185,129,0.12)]",
@@ -60,7 +60,7 @@ export const ACCENT_ACTIVE_CLASSES: Record<ModeAccent, string> = {
 };
 
 export const ACCENT_ICON_CLASSES: Record<ModeAccent, string> = {
-  blue: "text-blue-9",
+  blue: "text-primary",
   cyan: "text-cyan-9",
   green: "text-green-9",
   neutral: "text-neutral-11",

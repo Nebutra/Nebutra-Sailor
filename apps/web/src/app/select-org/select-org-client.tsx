@@ -120,7 +120,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
                   // biome-ignore lint/performance/noImgElement: Clerk organization avatars can be arbitrary remote URLs outside next/image remotePatterns.
                   <img src={org.image} alt={org.name} className="h-8 w-8 rounded object-cover" />
                 ) : (
-                  <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-9 text-sm font-semibold text-white">
+                  <div className="flex h-8 w-8 items-center justify-center rounded bg-primary text-sm font-semibold text-primary-foreground">
                     {org.name[0]?.toUpperCase()}
                   </div>
                 )}

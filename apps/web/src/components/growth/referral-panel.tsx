@@ -125,7 +125,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
         />
         <div className="relative">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-blue-9" />
+            <Sparkles className="h-4 w-4 text-primary" />
             <h2 className="text-sm font-semibold text-neutral-12">Share Sailor, earn rewards</h2>
           </div>
           <p className="mt-1 max-w-xl text-xs text-neutral-10">
@@ -190,7 +190,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
               key={level.id}
               className={`flex items-center justify-between gap-4 rounded-[var(--radius-xl)] border p-4 ${
                 isActive
-                  ? "border-blue-7 bg-blue-2 dark:border-blue-7/60 dark:bg-blue-2/15"
+                  ? "border-primary/30 bg-primary/5 dark:border-primary/40 dark:bg-primary/5/15"
                   : "border-neutral-6 bg-neutral-1"
               }`}
             >
@@ -200,7 +200,7 @@ export function ReferralPanel({ stats, levels = REFERRAL_LEVELS }: Props) {
                     Level {level.id} · {level.title}
                   </h3>
                   {isActive && (
-                    <span className="rounded-full bg-blue-3 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-blue-11 dark:bg-blue-9/20 dark:text-blue-9">
+                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary dark:bg-primary/15 dark:text-primary">
                       Active
                     </span>
                   )}

@@ -187,7 +187,7 @@ export default async function PublicDashboardPage() {
       <section className="mx-auto grid w-full max-w-[1280px] gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-10">
         <div className="flex min-w-0 flex-col justify-between gap-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-6">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-neutral-1 px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-blue-11 dark:text-blue-8">
+            <div className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-neutral-1 px-2 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-primary dark:text-primary">
               <span className="size-1.5 rounded-full bg-green-9" aria-hidden="true" />
               {copy.badge}
             </div>
@@ -199,7 +199,7 @@ export default async function PublicDashboardPage() {
           <div className="flex flex-wrap gap-2">
             <Link
               href={localizedHref("/workspace")}
-              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-primary px-3.5 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-1.5 rounded-[var(--radius-md)] bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
             >
               {copy.primaryAction}
               <ArrowRight className="size-3.5" aria-hidden="true" />

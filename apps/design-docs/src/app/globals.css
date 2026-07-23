@@ -5,6 +5,7 @@
 @import "@fumadocs/story/css/preset.css";
 @import "fumadocs-openapi/css/preset.css";
 @import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/recipe.css";
 /* UI CVA source scan — owned by @nebutra/ui */
 @import "@nebutra/ui/styles/sources.css";
 

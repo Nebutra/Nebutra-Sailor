@@ -34,8 +34,8 @@ export function ContactForm() {
 
   if (state.status === "success") {
     return (
-      <div className="rounded-[var(--radius-2xl)] border border-blue-7 bg-blue-3 p-8 text-center">
-        <p className="text-lg font-semibold text-blue-11">{t("contact.form.successMessage")}</p>
+      <div className="rounded-[var(--radius-2xl)] border border-primary/30 bg-primary/10 p-8 text-center">
+        <p className="text-lg font-semibold text-primary">{t("contact.form.successMessage")}</p>
       </div>
     );
   }

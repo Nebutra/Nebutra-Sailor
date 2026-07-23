@@ -57,6 +57,10 @@
     "./cli": {
       "types": "./dist/cli/index.d.ts",
       "import": "./dist/cli/index.js"
+    },
+    "./to-brand-package": {
+      "types": "./dist/serialize/to-brand-package.d.ts",
+      "import": "./dist/serialize/to-brand-package.js"
     }
   },
   "bin": {
@@ -75,6 +79,7 @@
   "dependencies": {
     "@google/design.md": "0.2.0",
     "@nebutra/logger": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {

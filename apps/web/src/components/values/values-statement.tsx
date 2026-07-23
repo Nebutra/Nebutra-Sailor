@@ -136,7 +136,7 @@ export function ValuesStatement({
             {href && linkLabel && (
               <ViewTransitionLink
                 href={href}
-                className="mt-auto inline-flex items-center gap-0.5 pt-1 text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
+                className="mt-auto inline-flex items-center gap-0.5 pt-1 text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary"
               >
                 {linkLabel}
                 <ArrowUpRight className="h-3 w-3" />

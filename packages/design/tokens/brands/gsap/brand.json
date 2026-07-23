@@ -1,0 +1,149 @@
+{
+  "id": "gsap",
+  "name": "GSAP",
+  "darkDefault": true,
+  "version": "1.0.0",
+  "semantic": {
+    "background": "150 7% 6%",
+    "foreground": "54 100% 94%",
+    "card": "0 0% 10%",
+    "cardForeground": "54 100% 94%",
+    "popover": "0 0% 10%",
+    "popoverForeground": "54 100% 94%",
+    "primary": "137 92% 47%",
+    "primaryForeground": "150 7% 6%",
+    "secondary": "70 5% 25%",
+    "secondaryForeground": "54 100% 94%",
+    "muted": "0 0% 10%",
+    "mutedForeground": "60 6% 46%",
+    "accent": "70 5% 25%",
+    "accentForeground": "137 92% 47%",
+    "destructive": "309 100% 47%",
+    "destructiveForeground": "54 100% 94%",
+    "border": "70 5% 25%",
+    "input": "70 5% 25%",
+    "ring": "137 92% 47%",
+    "info": "191 100% 44%",
+    "infoForeground": "150 7% 6%",
+    "success": "137 92% 47%",
+    "successForeground": "150 7% 6%"
+  },
+  "recipe": {
+    "buttonDefault": "gradient-stroke",
+    "buttonRadius": "100px",
+    "cardRadius": "8px",
+    "elevation": "none",
+    "density": "compact",
+    "outlineBorder": "#fffce1",
+    "primaryStrokeGradient": "linear-gradient(114.41deg, #0ae448 20.74%, #abff84 65.5%)"
+  },
+  "typography": {
+    "fontSans": "'Mori', 'Inter Tight', 'DM Sans', ui-sans-serif, system-ui, sans-serif",
+    "fontDisplay": "'Mori', 'Inter Tight', ui-sans-serif, system-ui, sans-serif",
+    "headingWeight": 600,
+    "faces": [
+      {
+        "family": "Mori",
+        "src": [
+          {
+            "url": "/brand-assets/mori-regular.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": 400,
+        "display": "swap"
+      },
+      {
+        "family": "Mori",
+        "src": [
+          {
+            "url": "/brand-assets/mori-semibold.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": 600,
+        "display": "swap"
+      }
+    ]
+  },
+  "zones": {
+    "product": {
+      "caption": {
+        "fontSize": "14px",
+        "lineHeight": 1.4,
+        "fontWeight": 400,
+        "letterSpacing": "-0.14px"
+      },
+      "bodySm": {
+        "fontSize": "16px",
+        "lineHeight": 1.15,
+        "fontWeight": 400
+      },
+      "body": {
+        "fontSize": "19px",
+        "lineHeight": 1.15,
+        "fontWeight": 400
+      },
+      "bodyLg": {
+        "fontSize": "23px",
+        "lineHeight": 1.38,
+        "fontWeight": 400,
+        "letterSpacing": "-0.23px"
+      },
+      "subheading": {
+        "fontSize": "34px",
+        "lineHeight": 1.2,
+        "fontWeight": 400,
+        "letterSpacing": "-0.34px"
+      },
+      "heading": {
+        "fontSize": "44px",
+        "lineHeight": 1.2,
+        "fontWeight": 600,
+        "letterSpacing": "-0.44px"
+      }
+    },
+    "marketing": {
+      "body": {
+        "fontSize": "19px",
+        "lineHeight": 1.15,
+        "fontWeight": 400
+      },
+      "heading": {
+        "fontSize": "66px",
+        "lineHeight": 1.2,
+        "fontWeight": 600,
+        "letterSpacing": "-0.66px"
+      },
+      "headingLg": {
+        "fontSize": "101px",
+        "lineHeight": 1,
+        "fontWeight": 600,
+        "letterSpacing": "-1.11px"
+      },
+      "display": {
+        "fontSize": "224px",
+        "lineHeight": 0.9,
+        "fontWeight": 600,
+        "letterSpacing": "-4.48px"
+      }
+    }
+  },
+  "extensions": {
+    "categories": {
+      "gsap": "#0ae448",
+      "scroll": "#fec5fb",
+      "svg": "#ff8709",
+      "text": "#9d95ff",
+      "ui": "#00bae2",
+      "other": "#abff84"
+    },
+    "displaySizePx": 224,
+    "sourceUrl": "https://gsap.com",
+    "notes": [
+      "Outline-first product controls; category colors are marketing extensions.",
+      "Replace typography.faces[].src with Create Center hosted font URLs.",
+      "Use data-zone=\"marketing\" for hero/display; product zone for app chrome."
+    ]
+  }
+}

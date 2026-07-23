@@ -134,7 +134,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
       <form onSubmit={form.handleSubmit(handleSave)} className="space-y-6">
         <div>
           <div className="mb-2 flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-blue-9" />
+            <Sparkles className="h-4 w-4 text-primary" />
             <h2 className="text-base font-semibold text-neutral-12">Personalization</h2>
           </div>
           <p className="text-sm text-neutral-11">

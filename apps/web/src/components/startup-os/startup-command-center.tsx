@@ -925,7 +925,7 @@ function StartupBuilderHome({
         <div className="relative mx-auto flex w-full max-w-5xl flex-col px-5 py-16 sm:px-8">
           <div className="mx-auto w-full max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
-              <Lightning className="size-3.5 text-blue-9" aria-hidden="true" />
+              <Lightning className="size-3.5 text-primary" aria-hidden="true" />
               Startup Agent OS
             </span>
             <h2
@@ -1026,7 +1026,7 @@ function StartupBuilderHome({
                     type="button"
                     disabled={disabled || isLoading}
                     onClick={() => onThesisChange(example)}
-                    className="rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:border-blue-7 hover:bg-blue-2 hover:text-blue-11 disabled:cursor-not-allowed disabled:opacity-45"
+                    className="rounded-full border border-neutral-6 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary disabled:cursor-not-allowed disabled:opacity-45"
                   >
                     {example}
                   </button>
@@ -1045,12 +1045,12 @@ function StartupBuilderHome({
                     <div
                       className={`flex h-full flex-col gap-2 rounded-2xl border p-3.5 ${
                         output.highlight
-                          ? "border-blue-7 bg-blue-2/60 dark:border-blue-7/60 dark:bg-blue-9/15"
+                          ? "border-primary/30 bg-primary/10 dark:border-primary/40 dark:bg-primary/15"
                           : "border-neutral-6 bg-neutral-1"
                       }`}
                     >
                       <OutputIcon
-                        className={`size-4 ${output.highlight ? "text-blue-9" : "text-neutral-10"}`}
+                        className={`size-4 ${output.highlight ? "text-primary" : "text-neutral-10"}`}
                         aria-hidden="true"
                       />
                       <span className="text-sm font-semibold text-neutral-12">{output.title}</span>
@@ -1071,7 +1071,7 @@ function StartupBuilderHome({
                     onClick={() => onProjectSelect(project)}
                     className={`rounded-2xl border p-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
                       project.id === selectedProjectId
-                        ? "border-blue-8 bg-blue-2 text-blue-12 dark:border-blue-7/70 dark:bg-blue-9/20 dark:text-blue-4"
+                        ? "border-primary/40 bg-primary/5 text-primary dark:border-primary/40 dark:bg-primary/15 dark:text-primary"
                         : "border-neutral-6 bg-neutral-1 text-neutral-11 hover:bg-neutral-2"
                     }`}
                   >
@@ -1634,7 +1634,7 @@ function StartupCanvasPanel({
               <h2 className="text-sm font-semibold tracking-tight text-neutral-12">
                 Company canvas
               </h2>
-              <span className="rounded-full bg-blue-3 px-2 py-0.5 text-[11px] font-semibold text-blue-11 dark:bg-blue-9/20 dark:text-blue-5">
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary dark:bg-primary/15 dark:text-primary">
                 Spatial graph
               </span>
             </div>
@@ -1715,7 +1715,9 @@ function StartupCanvasPanel({
                       d={pathFor(edge)}
                       fill="none"
                       markerEnd="url(#startup-canvas-arrow)"
-                      stroke={edge.kind === "run_artifact" ? "var(--blue-8)" : "hsl(var(--border))"}
+                      stroke={
+                        edge.kind === "run_artifact" ? "hsl(var(--primary))" : "hsl(var(--border))"
+                      }
                       strokeDasharray={edge.kind === "run_artifact" ? "0" : "5 6"}
                       strokeLinecap="round"
                       strokeWidth={edge.kind === "run_artifact" ? 1.8 : 1.2}
@@ -1826,7 +1828,7 @@ function CanvasNodeButton({
             : "planned";
   const toneClass = {
     context:
-      "border-blue-8 bg-blue-3 text-blue-12 shadow-lg dark:border-blue-7 dark:bg-blue-9/20 dark:text-blue-4",
+      "border-primary/40 bg-primary/10 text-primary shadow-lg dark:border-primary/40 dark:bg-primary/15 dark:text-primary",
     failed:
       "border-red-7 bg-red-2 text-red-12 dark:border-red-8/60 dark:bg-red-9/15 dark:text-red-4",
     planned: "border-neutral-6 bg-neutral-1 text-neutral-12",
@@ -1842,7 +1844,7 @@ function CanvasNodeButton({
       onClick={onSelect}
       onPointerDown={onPointerDown}
       className={`absolute cursor-grab rounded-[var(--radius-lg)] border p-3 text-left shadow-sm transition-colors active:cursor-grabbing ${
-        selected ? "ring-2 ring-blue-8 ring-offset-2 ring-offset-neutral-1 dark:ring-blue-5" : ""
+        selected ? "ring-2 ring-ring ring-offset-2 ring-offset-neutral-1 dark:ring-ring" : ""
       } ${toneClass}`}
       style={{
         height: node.height,

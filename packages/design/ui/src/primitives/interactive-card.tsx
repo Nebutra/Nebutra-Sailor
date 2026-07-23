@@ -136,7 +136,7 @@ export const InteractiveCard = ({
       // Double-cast bridges framer-motion's bundled React types vs @types/react.
       ref={ref as any}
       className={cn(
-        "relative w-full max-w-sm overflow-hidden rounded-[var(--radius-2xl)] border bg-card p-8 text-center shadow-sm",
+        "relative w-full max-w-sm overflow-hidden rounded-[var(--radius-2xl)] border bg-card p-8 text-center shadow-[var(--elevation-card)]",
         className,
       )}
       initial="initial"

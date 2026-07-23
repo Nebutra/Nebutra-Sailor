@@ -11,7 +11,6 @@ import {
 } from "@nebutra/icons";
 import type {
   NotificationInboxItem,
-  NotificationInboxSource,
   NotificationRuntimeStatus,
   NotificationSettingsSnapshot,
 } from "@nebutra/notifications";
@@ -78,7 +77,7 @@ function NotificationCenterItem({
       className={`rounded-[var(--radius-xl)] border px-3 py-3 ${
         item.read
           ? "border-neutral-7 bg-neutral-1"
-          : "border-blue-200 bg-blue-50/80 dark:border-blue-400/30 dark:bg-blue-400/10"
+          : "border-primary/20 bg-primary/5 dark:border-primary/30 dark:bg-primary/10"
       }`}
     >
       <div className="flex gap-3">
@@ -90,7 +89,7 @@ function NotificationCenterItem({
           <div className="flex flex-wrap items-center gap-2">
             <p className="truncate text-sm font-semibold text-neutral-12">{item.title}</p>
             {!item.read ? (
-              <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[11px] font-semibold text-blue-800 dark:bg-blue-400/20 dark:text-blue-100">
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary dark:bg-primary/20 dark:text-primary">
                 New
               </span>
             ) : null}
@@ -157,7 +156,7 @@ export function NotificationCenter({
       >
         <Bell className="size-4" aria-hidden />
         {unreadBadge ? (
-          <span className="-right-1 -top-1 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-600 px-1 text-[10px] font-bold leading-none text-white">
+          <span className="-right-1 -top-1 absolute flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold leading-none text-primary-foreground">
             {unreadBadge}
           </span>
         ) : null}
@@ -224,7 +223,7 @@ export function NotificationCenter({
             <div className="border-t border-neutral-7 px-4 py-3">
               <Link
                 href={`/${locale}/settings/notifications`}
-                className="text-xs font-medium text-blue-700 transition-colors hover:text-blue-800 dark:text-blue-200 dark:hover:text-blue-100"
+                className="text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary-foreground"
               >
                 Notification settings
               </Link>

@@ -14,7 +14,7 @@ import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 
 const MODE_META: Record<string, { label: string; icon: LucideIcon; accent: string }> = {
-  chat: { label: "Chat", icon: MessageSquare, accent: "text-blue-11 dark:text-blue-9" },
+  chat: { label: "Chat", icon: MessageSquare, accent: "text-primary dark:text-primary" },
   data: { label: "Data", icon: Database, accent: "text-cyan-11 dark:text-cyan-9" },
   workflow: { label: "Workflow", icon: Workflow, accent: "text-green-11 dark:text-green-9" },
   search: { label: "Search", icon: Search, accent: "text-neutral-11" },
@@ -83,7 +83,7 @@ export async function RecentSessions() {
             </ViewTransitionLink>
             <ViewTransitionLink
               href="/chat"
-              className="inline-flex items-center gap-1 text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
+              className="inline-flex items-center gap-1 text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary"
             >
               <Plus className="size-3" aria-hidden="true" />
               {t("newChat")}

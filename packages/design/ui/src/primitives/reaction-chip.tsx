@@ -71,7 +71,7 @@ export function ReactionChip({
     <div
       className={cn(
         "pointer-events-auto flex items-center gap-1 rounded-full",
-        "bg-card/90 px-2 py-1 shadow-sm ring-1 ring-border backdrop-blur",
+        "bg-card/90 px-2 py-1 shadow-[var(--elevation-card)] ring-1 ring-border backdrop-blur",
         "transition-shadow",
         className,
       )}
@@ -213,7 +213,7 @@ export function MessageWithReactions({
       className={cn(
         "group relative inline-block max-w-sm",
         "rounded-[var(--radius-lg)] border border-border bg-card px-3 py-2",
-        "text-sm text-foreground shadow-sm",
+        "text-sm text-foreground shadow-[var(--elevation-card)]",
         className,
       )}
     >

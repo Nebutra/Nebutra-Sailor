@@ -156,7 +156,7 @@ function DefaultErrorFallback({
             <button
               type="button"
               onClick={resetError}
-              className="ml-2 text-blue-600 dark:text-blue-400 hover:underline"
+              className="ml-2 text-primary hover:underline"
             >
               Retry
             </button>
@@ -170,11 +170,7 @@ function DefaultErrorFallback({
           <AlertCircle className="size-3" />
           <span>Error</span>
           {showRetry && (
-            <button
-              type="button"
-              onClick={resetError}
-              className="text-blue-600 dark:text-blue-400 hover:underline"
-            >
+            <button type="button" onClick={resetError} className="text-primary hover:underline">
               Retry
             </button>
           )}

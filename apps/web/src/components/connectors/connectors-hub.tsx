@@ -45,7 +45,7 @@ const TYPE_LABELS: Record<ConnectorType, string> = {
 };
 
 const TYPE_ACCENT: Record<ConnectorType, string> = {
-  mcp: "text-blue-11 bg-blue-3 dark:text-blue-9 dark:bg-blue-9/20",
+  mcp: "text-primary bg-primary/10 dark:text-primary dark:bg-primary/15",
   api: "text-cyan-11 bg-cyan-3 dark:text-cyan-9 dark:bg-cyan-9/20",
   oauth_app: "text-green-11 bg-green-3 dark:text-green-9 dark:bg-green-9/20",
   webhook: "text-amber-11 bg-amber-3 dark:text-amber-9 dark:bg-amber-9/20",
@@ -123,7 +123,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
           <button
             type="button"
             onClick={onAdd}
-            className="inline-flex items-center gap-1 text-xs font-medium text-blue-11 transition-colors hover:text-blue-12 dark:text-blue-9 dark:hover:text-blue-8"
+            className="inline-flex items-center gap-1 text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary"
           >
             <Plus className="h-3 w-3" />
             Add connector

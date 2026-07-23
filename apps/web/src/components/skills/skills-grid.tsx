@@ -108,7 +108,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
         </div>
         <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11 dark:bg-black/40">
           <BadgeCheck
-            className={`h-3.5 w-3.5 ${officialOnly ? "text-blue-9" : "text-neutral-10"}`}
+            className={`h-3.5 w-3.5 ${officialOnly ? "text-primary" : "text-neutral-10"}`}
           />
           Official only
           <input
@@ -116,7 +116,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
             type="checkbox"
             checked={officialOnly}
             onChange={(e) => setOfficialOnly(e.target.checked)}
-            className="ml-1 h-3 w-3 rounded border-neutral-7 text-blue-9 dark:bg-black/40"
+            className="ml-1 h-3 w-3 rounded border-neutral-7 text-primary dark:bg-black/40"
           />
         </label>
       </div>
@@ -142,7 +142,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
               </p>
             </div>
           </div>
-          <span className="text-xs font-medium text-blue-11 group-hover:text-blue-12 dark:text-blue-9 dark:group-hover:text-blue-8">
+          <span className="text-xs font-medium text-primary group-hover:text-primary dark:text-primary dark:group-hover:text-primary">
             Get started →
           </span>
         </button>
@@ -167,7 +167,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
                 key={skill.id}
                 className={`flex h-full flex-col rounded-[var(--radius-xl)] border p-4 transition-colors ${
                   enabled
-                    ? "border-blue-6 bg-blue-2/30 dark:border-blue-7/50 dark:bg-blue-2/10"
+                    ? "border-primary/25 bg-primary/5/30 dark:border-primary/40 dark:bg-primary/10"
                     : "border-neutral-6 bg-neutral-1"
                 } ${isBusy ? "opacity-60" : ""}`}
               >
@@ -178,7 +178,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
                     </h3>
                     {skill.isOfficial && (
                       <BadgeCheck
-                        className="h-3.5 w-3.5 shrink-0 text-blue-9"
+                        className="h-3.5 w-3.5 shrink-0 text-primary"
                         aria-label="Official"
                       />
                     )}
@@ -237,8 +237,8 @@ function Toggle({ checked, onChange, disabled, label }: ToggleProps) {
       aria-label={label}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-8 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
-        checked ? "bg-blue-9" : "bg-neutral-6"
+      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${
+        checked ? "bg-primary" : "bg-neutral-6"
       }`}
     >
       <span

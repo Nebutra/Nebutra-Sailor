@@ -157,7 +157,7 @@ export function StatItem({ label, value, color = "neutral", className }: StatIte
     success: "bg-emerald-500",
     warning: "bg-amber-500",
     error: "bg-red-500",
-    info: "bg-blue-500",
+    info: "bg-info",
     neutral: "bg-muted-foreground",
   };
 
