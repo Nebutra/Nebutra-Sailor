@@ -69,8 +69,8 @@ function appCssContent() {
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--neutral-2);
-  color: var(--neutral-12);
+  background: hsl(var(--muted));
+  color: hsl(var(--foreground));
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -104,7 +104,7 @@ body {
 
 .promise {
   max-width: 700px;
-  color: var(--neutral-11);
+  color: hsl(var(--muted-foreground));
   font-size: clamp(1.1rem, 2vw, 1.45rem);
   line-height: 1.5;
 }
@@ -500,9 +500,9 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
         max-width: 640px;
         margin: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
         padding: clamp(2rem, 5vw, 3.5rem);
-        border: 1px solid var(--neutral-7);
+        border: 1px solid hsl(var(--border));
         border-radius: 1.75rem;
-        background: var(--neutral-1);
+        background: hsl(var(--background));
         text-align: center;
       }
       .preview-card .eyebrow {
@@ -510,7 +510,7 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
         border-radius: 999px;
         background: hsl(var(--primary));
         padding: 0.5rem 0.85rem;
-        color: var(--neutral-1);
+        color: hsl(var(--background));
         font-size: 0.78rem;
         font-weight: 700;
         letter-spacing: 0.08em;
@@ -529,7 +529,7 @@ export function buildStartupPreviewHtml(files: readonly StartupOSFile[]): string
       .preview-card p {
         margin: 0;
         max-width: 48ch;
-        color: var(--neutral-11);
+        color: hsl(var(--muted-foreground));
         font-size: clamp(1rem, 2vw, 1.2rem);
         line-height: 1.5;
       }
