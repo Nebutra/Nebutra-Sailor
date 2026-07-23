@@ -73,7 +73,11 @@ pnpm db:migrate
 | `deploy-ecs.yml` | **手动** ECS：Next standalone + gateway 包 → PM2 |
 | Vercel Git | 自动部署 landing / docs（及可选 web/auth） |
 
-Hobby 有**每日部署次数**上限；monorepo 请收敛无关项目的自动部署。
+Hobby 有**每日部署次数**上限（约 100 次/天；跳过/取消的部署也可能计入）。每个已关联的 Vercel 项目在 push 时都可能占一个部署槽，因此：
+
+- `scripts/vercel-ignore-build.sh` **仅在该 app 的 scope 有变更时才构建**（应用目录 + 其 workspace 依赖），而不是整个 monorepo。
+- **ECS 主路径**（`web` / `auth` / `gateway`）默认**跳过** Vercel 自动部署；需要时在项目设 `VERCEL_ALLOW_ECS_OPTIONAL=1`，或在 commit message 写 `[vercel:apps/web]` 等。
+- Hobby 上建议只给 **landing + docs** 接 Git 自动部署；可选 cutover 项目断开或保持 optional。
 
 ## 相关
 

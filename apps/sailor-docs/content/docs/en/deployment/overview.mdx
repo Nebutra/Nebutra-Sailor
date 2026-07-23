@@ -86,7 +86,11 @@ Required env vars are validated at startup. Missing secrets should fail fast. At
 | Vercel Git integration | Auto-deploy **landing** + **docs** (and optional web/auth projects) |
 | `deploy.yml` | Substrate-gated (e.g. k8s); not the default ECS path |
 
-Hobby Vercel has a **daily deployment quota**. Non-critical projects should not all auto-deploy on every monorepo push.
+Hobby Vercel has a **daily deployment quota** (~100 deployments/day; canceled/skipped can still count). Each linked project may open a deployment slot per push, so:
+
+- `scripts/vercel-ignore-build.sh` only **builds** when that app’s scope changed (app dir + its workspace deps), not the whole monorepo.
+- **ECS-primary** surfaces (`web` / `auth` / `gateway`) **skip** Vercel auto-deploy unless you set `VERCEL_ALLOW_ECS_OPTIONAL=1` or commit with `[vercel:apps/web]` (etc.).
+- On Hobby, prefer Git-connected only for **landing + docs**; keep optional cutover projects disconnected or optional.
 
 ## Zero-downtime
 
