@@ -933,6 +933,8 @@ jobs:
             echo "✅ api database dependency -> up"
           fi
 
+          # Multi-app RP model: app.nebutra.com/sign-in is a soft redirect into
+          # auth.nebutra.com (login center). Expect 307, not a local 200 page.
           if [ "${{ needs.detect-changes.outputs.web }}" = "true" ]; then
             declare -A web_targets=(
               [web-sign-in]="https://app.nebutra.com/sign-in"
@@ -940,7 +942,7 @@ jobs:
               [web-gateway-auth-session]="https://api.nebutra.com/api/auth/session"
             )
             declare -A expected_codes=(
-              [web-sign-in]="200"
+              [web-sign-in]="307"
               [web-desktop-auth-foundryoss]="307"
               [web-gateway-auth-session]="200"
             )
@@ -954,6 +956,15 @@ jobs:
               fi
               echo "✅ $name $url -> $code"
             done
+          fi
+
+          if [ "${{ needs.detect-changes.outputs.auth }}" = "true" ]; then
+            code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 15 "https://auth.nebutra.com/sign-in" || echo 000)
+            if [ "$code" != "200" ]; then
+              echo "::error::Smoke test failed for auth-sign-in at https://auth.nebutra.com/sign-in (expected 200, got $code)"
+              exit 1
+            fi
+            echo "✅ auth-sign-in https://auth.nebutra.com/sign-in -> $code"
           fi
 
       - name: Emit deployment verification analytics
