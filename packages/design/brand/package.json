@@ -61,7 +61,7 @@
     "@resvg/resvg-wasm": "^2.4.0",
     "@types/react": "^19.2.14",
     "next": "catalog:",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.0",
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "catalog:",
