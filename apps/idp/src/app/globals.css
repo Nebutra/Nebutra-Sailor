@@ -1,1 +1,25 @@
+/**
+ * IdP surfaces — design tokens + Tailwind (same stack as auth-center / web).
+ */
 @import "tailwindcss";
+@import "@nebutra/tokens/styles.css";
+
+@source "../../../../packages/design/ui/src";
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}

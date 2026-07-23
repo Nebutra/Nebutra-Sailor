@@ -1,3 +1,4 @@
+// @brand-exempt: documents canonical auth.nebutra.com host for operators
 /**
  * Auth-center catch-all — Better Auth / NextAuth surface for all first-party apps.
  * Canonical host: auth.nebutra.com (BETTER_AUTH_URL).

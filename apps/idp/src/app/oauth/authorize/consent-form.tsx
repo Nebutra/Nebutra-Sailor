@@ -1,10 +1,7 @@
 "use client";
 
 /**
- * Consent Form — Client Component
- *
- * Handles the authorize/deny user actions and submits them
- * back to the oidc-provider interaction endpoint.
+ * Consent Form — token-aligned actions (deny / authorize).
  */
 
 import { useState } from "react";
@@ -42,12 +39,12 @@ export function ConsentForm({ uid }: ConsentFormProps) {
   }
 
   return (
-    <div className="gap-3 flex">
+    <div className="flex gap-3">
       <button
         type="button"
         onClick={() => handleConsent(false)}
         disabled={isLoading}
-        className="border-white/10 bg-white/5 py-3 text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white flex-1 rounded-xl border transition-[background-color,border-color,color,opacity] duration-150 disabled:opacity-50"
+        className="flex-1 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] py-3 text-sm font-medium text-[var(--neutral-11)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] disabled:opacity-50"
       >
         Deny
       </button>
@@ -55,35 +52,9 @@ export function ConsentForm({ uid }: ConsentFormProps) {
         type="button"
         onClick={() => handleConsent(true)}
         disabled={isLoading}
-        className="from-blue-600 to-cyan-600 py-3 text-sm font-semibold text-white shadow-blue-500/25 hover:shadow-blue-500/40 flex-1 rounded-xl bg-gradient-to-r shadow-lg transition-[box-shadow,opacity] duration-150 disabled:opacity-50"
+        className="flex-1 rounded-[var(--radius-lg)] bg-[var(--neutral-12)] py-3 text-sm font-semibold text-[var(--neutral-1)] transition-opacity hover:opacity-90 disabled:opacity-50"
       >
-        {isLoading ? (
-          <span className="gap-2 inline-flex items-center">
-            <svg
-              aria-hidden="true"
-              className="h-4 w-4 animate-spin motion-reduce:animate-none"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-              />
-            </svg>
-            Authorizing…
-          </span>
-        ) : (
-          "Authorize"
-        )}
+        {isLoading ? "Authorizing…" : "Authorize"}
       </button>
     </div>
   );

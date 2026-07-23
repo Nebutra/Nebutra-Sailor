@@ -1,3 +1,4 @@
+// @brand-exempt: IdP document title until brand metadata wiring
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="from-slate-950 via-slate-900 to-blue-950 text-white min-h-screen bg-gradient-to-br antialiased">
+    <html lang="en">
+      <body className="min-h-screen bg-[var(--neutral-2)] text-[var(--neutral-12)] antialiased">
         {children}
       </body>
     </html>

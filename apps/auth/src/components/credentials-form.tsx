@@ -1,5 +1,8 @@
+// @brand-exempt: login copy mirrors packages/platform/i18n auth.signIn until next-intl is wired on auth-center
 "use client";
 
+import { Eye, EyeOff } from "@nebutra/icons";
+import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -9,13 +12,9 @@ interface CredentialsFormProps {
   returnTo: string;
 }
 
-const fieldClass =
-  "h-12 w-full rounded-[var(--radius-md)] border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 text-[var(--neutral-12)] shadow-none outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]";
-
 /**
  * Better Auth email/password form styled like apps/web SignInForm
- * (neutral token surfaces). Native controls only — no @nebutra/ui runtime
- * in the standalone ECS bundle (avoids missing workspace module 500s).
+ * (neutral token surfaces + design-system Input/Button).
  */
 export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
   const [email, setEmail] = useState("");
@@ -93,12 +92,13 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
             <label htmlFor="auth-name" className="text-sm font-medium text-[var(--neutral-12)]">
               Name
             </label>
-            <input
+            <Input
               id="auth-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               autoComplete="name"
-              className={fieldClass}
+              size="lg"
+              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
               placeholder="Your name"
             />
           </div>
@@ -108,14 +108,15 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
           <label htmlFor="auth-email" className="text-sm font-medium text-[var(--neutral-12)]">
             Email
           </label>
-          <input
+          <Input
             id="auth-email"
             required
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
-            className={fieldClass}
+            size="lg"
+            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
             placeholder="you@example.com"
           />
         </div>
@@ -125,7 +126,7 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
             Password
           </label>
           <div className="relative">
-            <input
+            <Input
               id="auth-password"
               required
               type={showPassword ? "text" : "password"}
@@ -133,7 +134,8 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
-              className={`${fieldClass} pr-12`}
+              size="lg"
+              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
               placeholder="Enter your password"
             />
             <button
@@ -143,7 +145,11 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
               aria-pressed={showPassword}
               className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
             >
-              {showPassword ? "Hide" : "Show"}
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" aria-hidden />
+              ) : (
+                <Eye className="h-4 w-4" aria-hidden />
+              )}
             </button>
           </div>
         </div>
@@ -151,7 +157,7 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
         {error ? (
           <p
             id="auth-form-error"
-            className="rounded-[var(--radius-md)] border border-[color:var(--status-danger,#ef4444)]/30 bg-[color:var(--status-danger,#ef4444)]/10 px-3 py-2 text-sm text-[color:var(--status-danger,#ef4444)]"
+            className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
             role="alert"
             aria-live="polite"
           >
@@ -159,10 +165,10 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
           </p>
         ) : null}
 
-        <button
+        <Button
           type="submit"
           disabled={loading}
-          className="h-11 w-full rounded-[var(--radius-md)] bg-[var(--neutral-12)] text-sm font-medium text-[var(--neutral-1)] transition-colors hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
+          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {loading
             ? mode === "sign-in"
@@ -171,7 +177,7 @@ export function CredentialsForm({ mode, returnTo }: CredentialsFormProps) {
             : mode === "sign-in"
               ? "Log in"
               : "Create account"}
-        </button>
+        </Button>
       </form>
 
       <p className="mt-8 text-sm text-[var(--neutral-10)]">

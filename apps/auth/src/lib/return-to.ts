@@ -1,3 +1,4 @@
+// @brand-exempt: fallback production app origin when env is unset (server helper)
 import "server-only";
 
 import { getAuthReturnAllowedHosts, sanitizeReturnUrl } from "@nebutra/auth";

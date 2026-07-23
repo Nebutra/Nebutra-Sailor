@@ -11,9 +11,15 @@ const nextConfig: NextConfig = {
     "@nebutra/auth",
     "@nebutra/brand",
     "@nebutra/db",
+    "@nebutra/icons",
     "@nebutra/logger",
     "@nebutra/tokens",
+    "@nebutra/ui",
   ],
+  experimental: {
+    // Keep client graph small; mirrors apps/web for design-system packages.
+    optimizePackageImports: ["@nebutra/ui", "@nebutra/ui/primitives", "@nebutra/icons"],
+  },
 };
 
 export default nextConfig;

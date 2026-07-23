@@ -1,33 +1,44 @@
+// @brand-exempt: IdP landing copy for operator-facing discovery page
 export default function IdPHomePage() {
   return (
-    <div className="p-4 flex min-h-screen items-center justify-center">
-      <div className="max-w-lg relative w-full text-center">
-        {/* Ambient glow */}
-        <div className="inset-0 pointer-events-none fixed overflow-hidden">
-          <div className="-left-40 -top-40 h-96 w-96 bg-blue-600/10 blur-3xl absolute rounded-full" />
-          <div className="-bottom-40 -right-40 h-96 w-96 bg-cyan-600/10 blur-3xl absolute rounded-full" />
-        </div>
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <div className="relative w-full max-w-lg text-center">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(90% 70% at 0% 0%, color-mix(in srgb, var(--blue-9) 12%, transparent), transparent 60%), radial-gradient(90% 70% at 100% 100%, color-mix(in srgb, var(--cyan-9) 12%, transparent), transparent 60%)",
+          }}
+        />
 
-        <div className="border-white/10 bg-white/5 p-12 backdrop-blur-2xl relative rounded-3xl border shadow-2xl">
-          {/* Logo */}
-          <div className="mb-6 h-20 w-20 from-blue-500 to-cyan-500 text-3xl font-bold shadow-blue-500/25 mx-auto flex items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg">
+        <div className="relative rounded-[var(--radius-xl)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-12 shadow-[var(--elevation-lg)]">
+          <div
+            className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-[var(--radius-xl)] text-3xl font-bold text-[var(--neutral-1)]"
+            style={{
+              background: "linear-gradient(135deg, var(--blue-9), var(--cyan-9))",
+            }}
+          >
             N
           </div>
 
-          <h1 className="text-3xl font-bold tracking-tight">Nebutra Identity</h1>
-          <p className="mt-3 text-white/50">OAuth 2.0 / OpenID Connect Identity Provider</p>
+          <h1 className="text-3xl font-bold tracking-tight text-[var(--neutral-12)]">
+            Nebutra Identity
+          </h1>
+          <p className="mt-3 text-[var(--neutral-10)]">
+            OAuth 2.0 / OpenID Connect Identity Provider
+          </p>
 
-          {/* OIDC Discovery Endpoint */}
-          <div className="mt-8 border-white/5 bg-white/5 p-4 rounded-xl border">
-            <p className="text-xs font-medium tracking-wider text-white/40 uppercase">
+          <div className="mt-8 rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-4">
+            <p className="text-xs font-medium uppercase tracking-wider text-[var(--neutral-9)]">
               Discovery Endpoint
             </p>
-            <code className="mt-2 text-sm text-cyan-400 block">
+            <code className="mt-2 block text-sm text-[var(--blue-11)]">
               /api/oidc/.well-known/openid-configuration
             </code>
           </div>
 
-          <div className="mt-6 text-xs text-white/30">
+          <div className="mt-6 text-xs text-[var(--neutral-9)]">
             This server provides secure authentication for the Nebutra ecosystem.
           </div>
         </div>

@@ -6,6 +6,10 @@
 @import "tailwindcss";
 @import "@nebutra/tokens/styles.css";
 
+/* Scan design-system primitives for utility classes used by Input/Button */
+@source "../../../../packages/design/ui/src";
+@source "../../../../packages/design/icons/src";
+
 @custom-variant dark (&:is(.dark *));
 
 @layer base {

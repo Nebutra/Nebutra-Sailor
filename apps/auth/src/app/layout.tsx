@@ -1,3 +1,4 @@
+// @brand-exempt: document title for login center (no next-intl metadata yet)
 import type { Metadata } from "next";
 import "./globals.css";
 

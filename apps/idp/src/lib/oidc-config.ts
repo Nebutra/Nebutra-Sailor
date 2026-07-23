@@ -1,3 +1,4 @@
+// @brand-exempt: OIDC issuer defaults for local/prod hostnames
 const DEFAULT_DEV_OIDC_ISSUER = "http://localhost:3100";
 
 const TRUE_VALUES = new Set(["1", "true", "yes", "on"]);

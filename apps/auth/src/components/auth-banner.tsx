@@ -1,8 +1,8 @@
+// @brand-exempt: Agent OS banner copy mirrors packages/platform/i18n auth.banner (EN) until next-intl lands
 import { cn } from "@/lib/cn";
 
 /**
  * Sign-in left panel — Pattern A (editorial silence), same as apps/web AuthBanner.
- * Copy from packages/platform/i18n locales en.json → auth.banner (Agent OS).
  */
 export function AuthBanner({ className }: { className?: string }) {
   return (
@@ -45,7 +45,7 @@ export function AuthBanner({ className }: { className?: string }) {
       <div className="relative z-10 flex w-full flex-col items-start justify-between px-14 py-20 xl:px-20 xl:py-24">
         <div className="flex max-w-[28rem] flex-col items-start">
           {/* Plain img: next/image SVG optimizer is unreliable on standalone ECS */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* biome-ignore lint/performance/noImgElement: SVG brand mark in public/brand */}
           <img
             src="/brand/logo-color.svg"
             alt="Nebutra"

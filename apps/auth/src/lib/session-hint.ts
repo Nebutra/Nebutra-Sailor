@@ -1,3 +1,4 @@
+// @brand-exempt: cookie domain fallback `.nebutra.com` when env unset
 /**
  * Cross-subdomain "session exists" hint for landing / other first-party sites.
  * Mirrors apps/web session-hint: non-sensitive presence cookie only.

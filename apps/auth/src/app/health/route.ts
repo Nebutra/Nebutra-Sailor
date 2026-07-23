@@ -1,3 +1,4 @@
+// @brand-exempt: health payload defaults for production hostnames
 export const dynamic = "force-dynamic";
 
 export function GET() {
