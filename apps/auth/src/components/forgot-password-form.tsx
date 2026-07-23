@@ -52,7 +52,7 @@ export function ForgotPasswordForm({ returnTo, turnstileSiteKey }: ForgotPasswor
         if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
           setError(tSignIn("captchaError"));
         } else {
-          setError(data?.message || data?.error || "Could not send reset email.");
+          setError(data?.message || data?.error || tSignIn("genericError"));
         }
         return;
       }

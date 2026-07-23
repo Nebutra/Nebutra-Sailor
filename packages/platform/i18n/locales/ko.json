@@ -382,6 +382,19 @@
       "genericError": "오류가 발생했습니다. 다시 시도하세요.",
       "captchaError": "봇 확인이 실패했습니다. 페이지를 새로고침하고 다시 시도하세요."
     },
+    "signUp": {
+      "title": "Nebutra 계정 만들기",
+      "subtitle": "모든 Nebutra 앱에 하나의 계정으로 로그인하세요.",
+      "firstNameLabel": "이름",
+      "lastNameLabel": "성",
+      "firstNamePlaceholder": "이름",
+      "lastNamePlaceholder": "성",
+      "submit": "계정 만들기",
+      "submitLoading": "만드는 중…",
+      "alreadyHaveAccount": "이미 계정이 있나요?",
+      "signInLink": "로그인",
+      "signUpFailed": "가입에 실패했습니다"
+    },
     "passkeys": {
       "title": "패스키",
       "description": "비밀번호 대신 Face ID, Touch ID, Windows Hello 또는 보안 키를 사용하세요. 각 기기는 자체 패스키를 가집니다.",

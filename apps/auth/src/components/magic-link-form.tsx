@@ -44,7 +44,7 @@ export function MagicLinkForm({ returnTo, turnstileSiteKey }: MagicLinkFormProps
         if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
           setError(tSignIn("captchaError"));
         } else {
-          setError(data?.message || data?.error || "Could not send magic link.");
+          setError(data?.message || data?.error || tSignIn("genericError"));
         }
         return;
       }

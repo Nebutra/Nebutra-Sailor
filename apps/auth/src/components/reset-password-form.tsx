@@ -14,6 +14,7 @@ interface ResetPasswordFormProps {
 export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const t = useTranslations("auth.resetPassword");
   const tSignIn = useTranslations("auth.signIn");
+  const tErrors = useTranslations("auth.errors");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -27,11 +28,11 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     setError(null);
 
     if (password.length < 8) {
-      setError("Use at least 8 characters.");
+      setError(tErrors("passwordTooShort"));
       return;
     }
     if (password !== confirm) {
-      setError("Passwords do not match.");
+      setError(tErrors("passwordsDontMatch"));
       return;
     }
 
@@ -48,7 +49,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           message?: string;
           error?: string;
         } | null;
-        setError(data?.message || data?.error || "Could not reset password.");
+        setError(data?.message || data?.error || tSignIn("genericError"));
         return;
       }
       setSuccess(true);

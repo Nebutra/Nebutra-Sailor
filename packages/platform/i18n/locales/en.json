@@ -382,6 +382,19 @@
       "genericError": "An error occurred. Please try again.",
       "captchaError": "Bot verification failed. Refresh the page and try again."
     },
+    "signUp": {
+      "title": "Create your Nebutra account",
+      "subtitle": "One account for every Nebutra app.",
+      "firstNameLabel": "First name",
+      "lastNameLabel": "Last name",
+      "firstNamePlaceholder": "First",
+      "lastNamePlaceholder": "Last",
+      "submit": "Create account",
+      "submitLoading": "Creating account…",
+      "alreadyHaveAccount": "Already have an account?",
+      "signInLink": "Log in",
+      "signUpFailed": "Sign up failed"
+    },
     "passkeys": {
       "title": "Passkeys",
       "description": "Use Face ID, Touch ID, Windows Hello, or a security key instead of a password. Each device has its own passkey.",

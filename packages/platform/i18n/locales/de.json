@@ -382,6 +382,19 @@
       "genericError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
       "captchaError": "Bot-Verifizierung fehlgeschlagen. Aktualisieren Sie die Seite und versuchen Sie es erneut."
     },
+    "signUp": {
+      "title": "Nebutra-Konto erstellen",
+      "subtitle": "Ein Konto für alle Nebutra-Apps.",
+      "firstNameLabel": "Vorname",
+      "lastNameLabel": "Nachname",
+      "firstNamePlaceholder": "Vorname",
+      "lastNamePlaceholder": "Nachname",
+      "submit": "Konto erstellen",
+      "submitLoading": "Wird erstellt…",
+      "alreadyHaveAccount": "Bereits ein Konto?",
+      "signInLink": "Anmelden",
+      "signUpFailed": "Registrierung fehlgeschlagen"
+    },
     "passkeys": {
       "title": "Passkeys",
       "description": "Verwenden Sie Face ID, Touch ID, Windows Hello oder einen Sicherheitsschlüssel statt eines Passworts. Jedes Gerät hat seinen eigenen Passkey.",

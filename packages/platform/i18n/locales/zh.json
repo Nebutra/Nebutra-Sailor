@@ -399,6 +399,19 @@
       "genericError": "出现错误,请重试。",
       "captchaError": "机器人校验失败,请刷新页面后重试。"
     },
+    "signUp": {
+      "title": "创建 Nebutra 账号",
+      "subtitle": "一个账号，登录所有 Nebutra 应用。",
+      "firstNameLabel": "名",
+      "lastNameLabel": "姓",
+      "firstNamePlaceholder": "名",
+      "lastNamePlaceholder": "姓",
+      "submit": "创建账号",
+      "submitLoading": "创建中…",
+      "alreadyHaveAccount": "已有账号？",
+      "signInLink": "登录",
+      "signUpFailed": "注册失败"
+    },
     "passkeys": {
       "title": "Passkey",
       "description": "用 Face ID、Touch ID、Windows Hello 或安全密钥代替密码登录。每台设备有独立的 Passkey。",

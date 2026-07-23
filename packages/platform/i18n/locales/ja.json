@@ -382,6 +382,19 @@
       "genericError": "エラーが発生しました。もう一度試してください。",
       "captchaError": "ボット認証に失敗しました。ページを更新して再度お試しください。"
     },
+    "signUp": {
+      "title": "Nebutra アカウントを作成",
+      "subtitle": "すべての Nebutra アプリで使える 1 つのアカウント。",
+      "firstNameLabel": "名",
+      "lastNameLabel": "姓",
+      "firstNamePlaceholder": "名",
+      "lastNamePlaceholder": "姓",
+      "submit": "アカウントを作成",
+      "submitLoading": "作成中…",
+      "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
+      "signInLink": "ログイン",
+      "signUpFailed": "登録に失敗しました"
+    },
     "passkeys": {
       "title": "パスキー",
       "description": "Face ID、Touch ID、Windows Hello、またはセキュリティ キーをパスワードの代わりに使用します。各デバイスは独自のパスキーを持ちます。",

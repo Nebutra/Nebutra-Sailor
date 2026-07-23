@@ -62,9 +62,22 @@ function useDefaultAriaLabel(): string {
   return "Change language";
 }
 
+/**
+ * Write NEXT_LOCALE for cookie-mode i18n.
+ * On production first-party hosts, set a parent Domain so app ↔ auth ↔ landing
+ * share the same language preference after login handoff. Localhost / custom
+ * hosts stay host-only (Domain attribute omitted).
+ */
 function setLocaleCookie(locale: string): void {
   if (typeof document === "undefined") return;
-  document.cookie = `NEXT_LOCALE=${locale}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Lax`;
+  const host = window.location.hostname.toLowerCase();
+  let domain = "";
+  if (host === "nebutra.com" || host.endsWith(".nebutra.com")) {
+    domain = "; Domain=.nebutra.com";
+  } else if (host === "nebutra.org" || host.endsWith(".nebutra.org")) {
+    domain = "; Domain=.nebutra.org";
+  }
+  document.cookie = `NEXT_LOCALE=${locale}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Lax${domain}`;
 }
 
 // ---------------------------------------------------------------------------

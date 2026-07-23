@@ -27,7 +27,7 @@ interface CredentialsFormProps {
 /**
  * Full Agent OS / apps/web SignInForm parity for the login center:
  * OAuth, email/password, eye toggle, caps-lock, forgot-password,
- * Turnstile, secondary methods, next-intl copy.
+ * Turnstile, secondary methods, next-intl copy (sign-in + sign-up).
  */
 export function CredentialsForm({
   mode,
@@ -37,7 +37,8 @@ export function CredentialsForm({
   passkeyEnabled = false,
   turnstileSiteKey,
 }: CredentialsFormProps) {
-  const t = useTranslations("auth.signIn");
+  const tSignIn = useTranslations("auth.signIn");
+  const tSignUp = useTranslations("auth.signUp");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -87,12 +88,12 @@ export function CredentialsForm({
         } | null;
         const code = data?.code ?? data?.error;
         if (code === "VERIFICATION_FAILED" || code === "MISSING_RESPONSE") {
-          setError(t("captchaError"));
+          setError(tSignIn("captchaError"));
         } else {
           setError(
             data?.message ||
               data?.error ||
-              (mode === "sign-in" ? t("signInFailed") : "Sign up failed"),
+              (mode === "sign-in" ? tSignIn("signInFailed") : tSignUp("signUpFailed")),
           );
         }
         return;
@@ -100,7 +101,7 @@ export function CredentialsForm({
 
       window.location.assign(returnTo);
     } catch {
-      setError(t("genericError"));
+      setError(tSignIn("genericError"));
     } finally {
       setLoading(false);
     }
@@ -120,13 +121,13 @@ export function CredentialsForm({
         body: JSON.stringify(email ? { email } : {}),
       });
       if (!res.ok) {
-        setError(t("passkeyError"));
+        setError(tSignIn("passkeyError"));
         setPasskeyLoading(false);
         return;
       }
       window.location.assign(returnTo);
     } catch {
-      setError(t("passkeyError"));
+      setError(tSignIn("passkeyError"));
       setPasskeyLoading(false);
     }
   }
@@ -139,10 +140,10 @@ export function CredentialsForm({
     <div className="w-full">
       <div className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
-          {mode === "sign-in" ? t("title") : "Create your Nebutra account"}
+          {mode === "sign-in" ? tSignIn("title") : tSignUp("title")}
         </h1>
         <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
-          {mode === "sign-in" ? t("subtitle") : "One account for every Nebutra app."}
+          {mode === "sign-in" ? tSignIn("subtitle") : tSignUp("subtitle")}
         </p>
       </div>
 
@@ -152,7 +153,7 @@ export function CredentialsForm({
           <div className="relative my-6">
             <div className="h-px w-full bg-[var(--neutral-6)]" aria-hidden />
             <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--neutral-1)] px-3 text-xs font-medium text-[var(--neutral-9)]">
-              {t("dividerOr")}
+              {tSignIn("dividerOr")}
             </span>
           </div>
         </>
@@ -171,7 +172,7 @@ export function CredentialsForm({
                 htmlFor="auth-first-name"
                 className="text-sm font-medium text-[var(--neutral-12)]"
               >
-                First name
+                {tSignUp("firstNameLabel")}
               </label>
               <Input
                 id="auth-first-name"
@@ -180,7 +181,7 @@ export function CredentialsForm({
                 autoComplete="given-name"
                 size="lg"
                 className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
-                placeholder="First"
+                placeholder={tSignUp("firstNamePlaceholder")}
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -188,7 +189,7 @@ export function CredentialsForm({
                 htmlFor="auth-last-name"
                 className="text-sm font-medium text-[var(--neutral-12)]"
               >
-                Last name
+                {tSignUp("lastNameLabel")}
               </label>
               <Input
                 id="auth-last-name"
@@ -197,7 +198,7 @@ export function CredentialsForm({
                 autoComplete="family-name"
                 size="lg"
                 className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
-                placeholder="Last"
+                placeholder={tSignUp("lastNamePlaceholder")}
               />
             </div>
           </div>
@@ -205,7 +206,7 @@ export function CredentialsForm({
 
         <div className="flex flex-col gap-1.5">
           <label htmlFor="auth-email" className="text-sm font-medium text-[var(--neutral-12)]">
-            {t("emailLabel")}
+            {tSignIn("emailLabel")}
           </label>
           <Input
             id="auth-email"
@@ -216,21 +217,21 @@ export function CredentialsForm({
             autoComplete={passkeyEnabled ? "username webauthn" : "email"}
             size="lg"
             className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
-            placeholder={t("emailPlaceholder")}
+            placeholder={tSignIn("emailPlaceholder")}
           />
         </div>
 
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
             <label htmlFor="auth-password" className="text-sm font-medium text-[var(--neutral-12)]">
-              {t("passwordLabel")}
+              {tSignIn("passwordLabel")}
             </label>
             {mode === "sign-in" ? (
               <Link
                 href={withReturnTo("/forgot-password")}
                 className="text-xs font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
               >
-                {t("forgotPassword")}
+                {tSignIn("forgotPassword")}
               </Link>
             ) : null}
           </div>
@@ -247,13 +248,13 @@ export function CredentialsForm({
               autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
               size="lg"
               className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
-              placeholder={t("passwordPlaceholder")}
+              placeholder={tSignIn("passwordPlaceholder")}
               aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
             />
             <button
               type="button"
               onClick={() => setShowPassword((v) => !v)}
-              aria-label={showPassword ? t("hidePassword") : t("showPassword")}
+              aria-label={showPassword ? tSignIn("hidePassword") : tSignIn("showPassword")}
               aria-pressed={showPassword}
               className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-9)]"
             >
@@ -272,7 +273,7 @@ export function CredentialsForm({
               className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--amber-11,var(--neutral-11))]"
             >
               <AlertTriangle aria-hidden className="h-3.5 w-3.5" />
-              {t("capsLockOn")}
+              {tSignIn("capsLockOn")}
             </p>
           ) : null}
         </div>
@@ -305,11 +306,11 @@ export function CredentialsForm({
         >
           {mode === "sign-in"
             ? loading
-              ? t("submitLoading")
-              : t("submit")
+              ? tSignIn("submitLoading")
+              : tSignIn("submit")
             : loading
-              ? "Creating account…"
-              : "Create account"}
+              ? tSignUp("submitLoading")
+              : tSignUp("submit")}
         </Button>
       </form>
 
@@ -323,7 +324,7 @@ export function CredentialsForm({
               className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] disabled:opacity-60"
             >
               <Key aria-hidden className="h-4 w-4" />
-              {passkeyLoading ? t("providerLoading") : t("usePasskey")}
+              {passkeyLoading ? tSignIn("providerLoading") : tSignIn("usePasskey")}
             </button>
           ) : null}
           {magicLinkEnabled ? (
@@ -332,7 +333,7 @@ export function CredentialsForm({
               className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
             >
               <Mail aria-hidden className="h-4 w-4" />
-              {t("useMagicLink")}
+              {tSignIn("useMagicLink")}
             </Link>
           ) : null}
         </div>
@@ -341,22 +342,22 @@ export function CredentialsForm({
       <p className="mt-6 text-sm text-[var(--neutral-9)]">
         {mode === "sign-in" ? (
           <>
-            {t("newToProduct")}{" "}
+            {tSignIn("newToProduct")}{" "}
             <Link
               href={altHref}
               className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
             >
-              {t("signUpLink")}
+              {tSignIn("signUpLink")}
             </Link>
           </>
         ) : (
           <>
-            Already have an account?{" "}
+            {tSignUp("alreadyHaveAccount")}{" "}
             <Link
               href={altHref}
               className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
             >
-              {t("submit")}
+              {tSignUp("signInLink")}
             </Link>
           </>
         )}

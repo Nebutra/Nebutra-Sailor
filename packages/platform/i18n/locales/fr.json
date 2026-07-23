@@ -382,6 +382,19 @@
       "genericError": "Une erreur s'est produite. Veuillez réessayer.",
       "captchaError": "La vérification de bot a échoué. Actualisez la page et réessayez."
     },
+    "signUp": {
+      "title": "Créez votre compte Nebutra",
+      "subtitle": "Un compte pour toutes les apps Nebutra.",
+      "firstNameLabel": "Prénom",
+      "lastNameLabel": "Nom",
+      "firstNamePlaceholder": "Prénom",
+      "lastNamePlaceholder": "Nom",
+      "submit": "Créer un compte",
+      "submitLoading": "Création…",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "signInLink": "Se connecter",
+      "signUpFailed": "Échec de l'inscription"
+    },
     "passkeys": {
       "title": "Clés d'accès",
       "description": "Utilisez Face ID, Touch ID, Windows Hello ou une clé de sécurité au lieu d'un mot de passe. Chaque appareil a sa propre clé d'accès.",
