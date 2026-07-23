@@ -27,6 +27,8 @@ minimumReleaseAgeExclude:
   - adm-zip
   - "@opentelemetry/*"
   - "@hono/node-server"
+  - dompurify
+  - body-parser
 trustPolicy: no-downgrade
 strictDepBuilds: true
 ignorePnpmfile: true
