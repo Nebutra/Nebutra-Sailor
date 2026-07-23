@@ -15,36 +15,39 @@
     "tertiary": { "$value": "{color.tertiary-purple}", "$type": "color" },
     "gradient": {
       "start": {
-        "$value": "#2f5bff",
+        "$value": "#0033fe",
         "$type": "color",
-        "$description": "Product action gradient start. Brighter than the locked VI blue while keeping white text contrast above WCAG AA."
+        "$description": "Product CTA fill — solid 云毓蓝 (same as brand.primary)."
       },
       "end": {
-        "$value": "#047c9a",
+        "$value": "#0033fe",
         "$type": "color",
-        "$description": "Product action gradient end. Cyan-blue instead of green so compact CTAs stay crisp and luminous."
+        "$description": "Product CTA fill end — matches start. Multi-hue gradients are not used for UI actions."
       },
       "primary": {
-        "$value": "linear-gradient(135deg, #2f5bff 0%, #047c9a 100%)",
-        "$type": "gradient",
-        "$description": "UI brand gradient for product actions — cleaner blue-to-cyan, calibrated for white-text contrast on compact controls."
+        "$value": "#0033fe",
+        "$type": "color",
+        "$description": "Product action fill for CTAs/buttons. Solid 云毓蓝 — no blue→teal multi-hue gradient (that look is reserved for logo VI only)."
       },
       "reverse": {
-        "$value": "linear-gradient(135deg, #047c9a 0%, #2f5bff 100%)",
-        "$type": "gradient"
+        "$value": "#0033fe",
+        "$type": "color",
+        "$description": "Hover/active product fill — same solid brand primary."
       },
       "vertical": {
-        "$value": "linear-gradient(180deg, #2f5bff 0%, #047c9a 100%)",
-        "$type": "gradient"
+        "$value": "#0033fe",
+        "$type": "color",
+        "$description": "Vertical product fill alias — solid brand primary."
       },
       "radial": {
-        "$value": "radial-gradient(circle, #047c9a 0%, #2f5bff 100%)",
-        "$type": "gradient"
+        "$value": "#0033fe",
+        "$type": "color",
+        "$description": "Radial product fill alias — solid brand primary."
       },
       "logo": {
         "$value": "linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%)",
         "$type": "gradient",
-        "$description": "Logo/VI standard gradient. Use for brand assets only; product UI should use --brand-gradient."
+        "$description": "Logo/VI standard gradient only. Never use for product CTAs — use --brand-gradient / brand.primary."
       },
       "logo-reverse": {
         "$value": "linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%)",
