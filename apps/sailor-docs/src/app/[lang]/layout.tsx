@@ -113,12 +113,30 @@ export default async function RootLayout({
               nav={{
                 title: (
                   <div className="flex items-center gap-2">
+                    {/* Light: color + dark wordmark. Dark: white mono (brand inverted). */}
                     <Image
-                      src="/logo/logo-horizontal-en.svg"
-                      alt="Nebutra Sailor Docs Logo"
+                      src={
+                        lang === "zh"
+                          ? "/logo/logo-horizontal-zh.svg"
+                          : "/logo/logo-horizontal-en.svg"
+                      }
+                      alt="Nebutra Sailor Docs"
                       width={140}
                       height={24}
-                      className="h-6 w-auto"
+                      className="h-6 w-auto dark:hidden"
+                      priority
+                    />
+                    <Image
+                      src={
+                        lang === "zh"
+                          ? "/logo/logo-horizontal-zh.svg"
+                          : "/logo/logo-horizontal-en.svg"
+                      }
+                      alt="Nebutra Sailor Docs"
+                      width={140}
+                      height={24}
+                      className="hidden h-6 w-auto dark:block dark:brightness-0 dark:invert"
+                      priority
                     />
                   </div>
                 ),
