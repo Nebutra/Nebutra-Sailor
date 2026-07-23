@@ -5,8 +5,14 @@ import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@n
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { OAuthProvider } from "@/lib/oauth-providers";
+import {
+  enablePasskeyConditionalUI,
+  isPasskeySupported,
+  PasskeyError,
+  signInWithPasskey,
+} from "@/lib/passkey-client";
 import { OAuthButtons } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
 
@@ -47,8 +53,31 @@ export function CredentialsForm({
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [passkeyLoading, setPasskeyLoading] = useState(false);
+  const [passkeyAvailable, setPasskeyAvailable] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const { capsLockOn, onKeyEvent } = useCapsLock();
+  const conditionalUIStartedRef = useRef(false);
+
+  useEffect(() => {
+    setPasskeyAvailable(isPasskeySupported());
+  }, []);
+
+  // WebAuthn Conditional UI — autofill passkeys on the email field when enabled.
+  useEffect(() => {
+    if (!passkeyEnabled || conditionalUIStartedRef.current) return;
+    conditionalUIStartedRef.current = true;
+    const controller = new AbortController();
+    void enablePasskeyConditionalUI({
+      signal: controller.signal,
+      onSuccess: () => {
+        window.location.assign(returnTo);
+      },
+      onError: () => {
+        // Silent — user can still type credentials.
+      },
+    });
+    return () => controller.abort();
+  }, [passkeyEnabled, returnTo]);
 
   function withReturnTo(path: string): string {
     const params = new URLSearchParams({ returnTo });
@@ -111,30 +140,28 @@ export function CredentialsForm({
     setPasskeyLoading(true);
     setError(null);
     try {
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (turnstileToken) headers["x-captcha-response"] = turnstileToken;
-
-      const res = await fetch("/api/auth/sign-in/passkey", {
-        method: "POST",
-        headers,
-        credentials: "include",
-        body: JSON.stringify(email ? { email } : {}),
-      });
-      if (!res.ok) {
-        setError(tSignIn("passkeyError"));
-        setPasskeyLoading(false);
-        return;
-      }
+      await signInWithPasskey(email ? { email } : undefined);
       window.location.assign(returnTo);
-    } catch {
-      setError(tSignIn("passkeyError"));
+    } catch (err) {
+      if (err instanceof PasskeyError) {
+        if (err.code === "cancelled") {
+          // User closed the prompt — no error.
+        } else if (err.code === "unsupported") {
+          setError(tSignIn("passkeyUnsupported"));
+        } else {
+          setError(tSignIn("passkeyError"));
+        }
+      } else {
+        setError(tSignIn("passkeyError"));
+      }
       setPasskeyLoading(false);
     }
   }
 
   const altHref = mode === "sign-in" ? withReturnTo("/sign-up") : withReturnTo("/sign-in");
   const showOAuth = enabledOAuthProviders.length > 0;
-  const showAltMethods = mode === "sign-in" && (magicLinkEnabled || passkeyEnabled);
+  const showAltMethods =
+    mode === "sign-in" && (magicLinkEnabled || (passkeyEnabled && passkeyAvailable));
 
   return (
     <div className="w-full">
@@ -316,7 +343,7 @@ export function CredentialsForm({
 
       {showAltMethods ? (
         <div className="mt-4 flex flex-col gap-2">
-          {passkeyEnabled ? (
+          {passkeyEnabled && passkeyAvailable ? (
             <button
               type="button"
               onClick={() => void handlePasskey()}
