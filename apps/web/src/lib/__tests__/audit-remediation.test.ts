@@ -43,10 +43,13 @@ describe("UI/UX audit remediation invariants", () => {
     expect(helper).toContain('theme_color: colors.primary["500"]');
   });
 
-  it("provides display-p3 brand colors with sRGB fallback", () => {
-    const globals = readFromRepo("packages/design/theme/themes.css");
-    expect(globals).toContain("--color-primary");
-    expect(globals).toContain("--color-secondary");
+  it("ships design-language skins instead of multi-mood oklch catalog", () => {
+    const skins = readFromRepo("packages/design/theme/skins.css");
+    expect(skins).toContain('html[data-brand="vanta"]');
+    expect(skins).toContain('html[data-brand="linear"]');
+    expect(skins).not.toContain('[data-theme="crimson-light-vivid"]');
+    const themesCss = readFromRepo("packages/design/theme/themes.css");
+    expect(themesCss).not.toMatch(/\[data-theme="/);
   });
 
   it("uses @nebutra/brand as the primitive token source of truth", () => {

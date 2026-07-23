@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Copy } from "@nebutra/icons";
-import { THEME_REGISTRY } from "@nebutra/theme/registry";
+import { DEFAULT_THEME, listThemesAsLegacyEntries } from "@nebutra/theme/registry";
 import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
@@ -32,10 +32,10 @@ export function CopyThemeButton() {
       };
     }
     const isDefault = !state.theme || state.theme === DEFAULT_ID;
-    const themeId = isDefault ? THEME_REGISTRY.defaultTheme : state.theme;
+    const themeId = isDefault ? DEFAULT_THEME : state.theme;
     const tokens = getTokenSet(themeId);
     if (!tokens) return null;
-    const registry = THEME_REGISTRY.themes.find((theme) => theme.id === themeId);
+    const registry = listThemesAsLegacyEntries().find((theme) => theme.id === themeId);
     const name = isDefault ? tPreset("default") : (registry?.name ?? themeId);
     return { name, tokens: tokens as unknown as Record<string, unknown> };
   }

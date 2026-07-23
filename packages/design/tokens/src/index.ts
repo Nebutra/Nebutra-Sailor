@@ -20,7 +20,7 @@
  *
  * Related packages:
  *   @nebutra/brand  → brand primitives (color definitions, motion language)
- *   @nebutra/theme  → multi-theme presets (6 oklch variants for SaaS product)
+ *   @nebutra/theme  → design-language catalog (Brand Package global swap; moods secondary)
  *   @nebutra/ui     → component library (consumes tokens via CSS variables)
  */
 
@@ -36,14 +36,17 @@ export type ThemeId = (typeof THEME_IDS)[number];
 
 export const DEFAULT_THEME: ThemeId = "dark";
 
-/** Create Center brand package: compile, validate, runtime apply, hooks */
+/** Create Center brand package: carrier contract + runtime apply */
 export {
   applyBrandCss,
   applyBrandPackage,
   applyBrandToIframe,
   BRAND_STORAGE_KEY,
+  type BrandColorRoles,
+  type BrandElevationTokens,
   type BrandFontFace,
   type BrandPackage,
+  type BrandRadii,
   type BrandRecipe,
   type BrandZones,
   type CompileResult,
@@ -53,7 +56,10 @@ export {
   getActiveBrandId,
   hexToHslChannels,
   inferRecipeFromDesignMd,
+  normalizeBrandPackage,
   restorePersistedBrand,
+  rolesFromSemantic,
+  semanticFromRoles,
   useBrand,
   useBrandIframePreview,
   type ValidationResult,

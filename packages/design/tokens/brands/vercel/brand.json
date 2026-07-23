@@ -1,0 +1,124 @@
+{
+  "id": "vercel",
+  "name": "Vercel",
+  "darkDefault": false,
+  "version": "1.0.0",
+  "semantic": {
+    "background": "0 0% 98%",
+    "foreground": "0 0% 9%",
+    "card": "0 0% 100%",
+    "cardForeground": "0 0% 9%",
+    "popover": "0 0% 100%",
+    "popoverForeground": "0 0% 9%",
+    "primary": "0 0% 9%",
+    "primaryForeground": "0 0% 100%",
+    "secondary": "0 0% 92%",
+    "secondaryForeground": "0 0% 30%",
+    "muted": "0 0% 92%",
+    "mutedForeground": "0 0% 40%",
+    "accent": "0 0% 92%",
+    "accentForeground": "0 0% 9%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "0 0% 92%",
+    "input": "0 0% 100%",
+    "ring": "0 0% 9%",
+    "success": "133 50% 32%",
+    "successForeground": "0 0% 100%",
+    "info": "0 0% 30%",
+    "infoForeground": "0 0% 100%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "buttonRadius": "6px",
+    "cardRadius": "6px",
+    "elevation": "hairline",
+    "density": "compact",
+    "badgeDefault": "muted",
+    "badgeRadius": "6px",
+    "inputRadius": "6px",
+    "cardShadow": "rgba(0, 0, 0, 0.08) 0px 0px 0px 1px, rgb(250, 250, 250) 0px 0px 0px 1px",
+    "outlineBorder": "#ebebeb"
+  },
+  "typography": {
+    "fontSans": "'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif",
+    "fontMono": "'Geist Mono', ui-monospace, Menlo, monospace",
+    "fontDisplay": "'Geist Sans', 'Geist', ui-sans-serif, system-ui, sans-serif",
+    "headingWeight": 450,
+    "faces": [
+      {
+        "family": "Geist Sans",
+        "src": [
+          {
+            "url": "https://cdn.jsdelivr.net/fontsource/fonts/geist-sans:vf@latest/latin-wght-normal.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": "100 900",
+        "display": "swap"
+      }
+    ]
+  },
+  "zones": {
+    "product": {
+      "caption": {
+        "fontSize": "13px",
+        "lineHeight": 1.54,
+        "fontWeight": 400
+      },
+      "bodySm": {
+        "fontSize": "14px",
+        "lineHeight": 1.43,
+        "fontWeight": 400
+      },
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "fontWeight": 400
+      },
+      "heading": {
+        "fontSize": "30px",
+        "lineHeight": 1.1,
+        "fontWeight": 500,
+        "letterSpacing": "-1.5px"
+      }
+    },
+    "marketing": {
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "fontWeight": 400
+      },
+      "heading": {
+        "fontSize": "30px",
+        "lineHeight": 1.1,
+        "fontWeight": 450,
+        "letterSpacing": "-1.5px"
+      },
+      "headingLg": {
+        "fontSize": "56px",
+        "lineHeight": 1,
+        "fontWeight": 450,
+        "letterSpacing": "-3.36px"
+      },
+      "display": {
+        "fontSize": "64px",
+        "lineHeight": 1,
+        "fontWeight": 450,
+        "letterSpacing": "-3.84px"
+      }
+    }
+  },
+  "extensions": {
+    "categories": {
+      "carbon": "#000000",
+      "terminal": "#297a3a"
+    },
+    "sourceUrl": "https://vercel.com",
+    "notes": [
+      "Light monochrome — primary CTA is Obsidian fill + white text.",
+      "Elevation is hairline double-ring, never drop-shadow.",
+      "Spectrum/solar gradients are marketing-only decorative (not product chrome)."
+    ]
+  }
+}

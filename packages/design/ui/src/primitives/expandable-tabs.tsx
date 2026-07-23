@@ -77,7 +77,7 @@ export function ExpandableTabs({
     <div
       ref={outsideClickRef}
       className={cn(
-        "flex flex-wrap items-center gap-2 rounded-[var(--radius-2xl)] border border-border bg-background p-1 shadow-[var(--elevation-card)]",
+        "flex flex-wrap items-center gap-2 rounded-[var(--radius-2xl)] border border-border bg-background p-1 shadow-sm",
         className,
       )}
       role="tablist"

@@ -32,7 +32,10 @@ export function isBreakpointUp(breakpoint: Breakpoint): boolean {
 export {
   BRAND_FALLBACK,
   getBrandAccent,
+  getBrandMark,
+  getBrandMarkForeground,
   getBrandPrimary,
   getBrandTertiary,
+  getProductPrimary,
   readCssVar,
 } from "./brand-colors";

@@ -9,7 +9,7 @@ describe("resolveConfig", () => {
     expect(resolved.apps.blog).toBe(true);
     expect(resolved.features.billing).toBe(true);
     expect(resolved.features.ai).toBe(true);
-    expect(resolved.theme).toBe("nebutra");
+    expect(resolved.theme).toBe("factory");
   });
 
   it("applies user overrides on top of defaults", () => {
@@ -30,12 +30,12 @@ describe("resolveConfig", () => {
 
   it("preserves locales and theme", () => {
     const config = defineConfig({
-      theme: "vibrant",
+      theme: "vanta",
       locales: ["en", "zh", "ja"],
       defaultLocale: "zh",
     });
     const resolved = resolveConfig(config);
-    expect(resolved.theme).toBe("vibrant");
+    expect(resolved.theme).toBe("vanta");
     expect(resolved.locales).toEqual(["en", "zh", "ja"]);
     expect(resolved.defaultLocale).toBe("zh");
   });

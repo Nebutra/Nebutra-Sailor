@@ -1,0 +1,248 @@
+/**
+ * Brand carrier skin: Notion (notion) v1.0.0
+ * darkDefault=false action≠brand-mark button=solid
+ * fonts=2 zones=yes mode=global
+ * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
+ */
+
+/* Brand font faces */
+@font-face {
+  font-family: "NotionInter";
+  src: url("https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lyon Text";
+  src: url("/brand-assets/lyon-text-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root,
+.dark,
+html[data-brand="notion"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 30 10% 96%;
+  --role-canvas-fg: 0 0% 0%;
+  --role-surface: 0 0% 100%;
+  --role-surface-fg: 0 0% 0%;
+  --role-action: 208 100% 44%;
+  --role-action-fg: 0 0% 100%;
+  --role-quiet: 208 92% 95%;
+  --role-quiet-fg: 208 100% 44%;
+  --role-muted: 208 92% 95%;
+  --role-muted-fg: 0 0% 46%;
+  --role-border: 30 5% 88%;
+  --role-input: 0 0% 100%;
+  --role-ring: 208 100% 44%;
+  --role-brand: 0 0% 0%;
+  --role-brand-fg: 0 0% 100%;
+  --brand-mark: 0 0% 0%;
+  --brand-mark-foreground: 0 0% 100%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 30 10% 96%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --primary: 208 100% 44%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 208 92% 95%;
+  --secondary-foreground: 208 100% 44%;
+  --muted: 208 92% 95%;
+  --muted-foreground: 0 0% 46%;
+  --accent: 0 0% 0%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 7 92% 58%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 30 5% 88%;
+  --input: 0 0% 100%;
+  --ring: 208 100% 44%;
+  --warning: 40 100% 53%;
+  --warning-foreground: 0 0% 0%;
+  --info: 208 93% 47%;
+  --info-foreground: 0 0% 100%;
+  --sidebar: 0 0% 100%;
+  --sidebar-foreground: 0 0% 0%;
+  --sidebar-primary: 208 100% 44%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 0 0% 0%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 30 5% 88%;
+  --sidebar-ring: 208 100% 44%;
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* Recipe (action language + free elev/radii) */
+  /* Shape slots */
+  --btn-default-radius: 8px;
+  --radius-button: 8px;
+  --radius-buttons: 8px;
+  --radius-md: 8px;
+  --radius-card: 12px;
+  --radius-lg: 12px;
+  --radius-badge: 9999px;
+  --badge-default-radius: 9999px;
+  --radius-inputs: 8px;
+  --input-radius: 8px;
+  --radius-pill: 9999px;
+
+  /* Free elevation (carrier-provided CSS shadows) */
+  --elevation-card: 0 0 #0000;
+  --elevation-control: 0 0 #0000;
+  --elevation-raised: 0px 0.7px 1.462px 0px rgb(0 0 0 / 0.015), 0px 3px 9px 0px rgb(0 0 0 / 0.03);
+  --shadow-xs: 0 0 #0000;
+  --shadow-sm: 0 0 #0000;
+  --shadow-md: 0px 0.7px 1.462px 0px rgb(0 0 0 / 0.015), 0px 3px 9px 0px rgb(0 0 0 / 0.03);
+  --shadow-lg: 0px 0.7px 1.462px 0px rgb(0 0 0 / 0.015), 0px 3px 9px 0px rgb(0 0 0 / 0.03);
+  --btn-default-shadow: 0 0 #0000;
+  --btn-default-bg: hsl(var(--primary));
+  --btn-default-fg: hsl(var(--primary-foreground));
+  --btn-default-border-width: 0px;
+  --btn-default-border: transparent;
+  --btn-default-stroke-gradient: transparent;
+  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);
+  --badge-default-bg: hsl(var(--secondary));
+  --badge-default-fg: hsl(var(--secondary-foreground));
+  --badge-default-border: transparent;
+  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
+
+  /* Typography */
+  --font-sans: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-weight-heading: 700;
+
+  /* Zone type scales */
+  --zone-product-caption-size: 12px;
+  --zone-product-caption-leading: 1.33;
+  --zone-product-caption-tracking: 0.12px;
+  --zone-product-caption-weight: 500;
+  --zone-product-body-sm-size: 14px;
+  --zone-product-body-sm-leading: 1.43;
+  --zone-product-body-sm-weight: 500;
+  --zone-product-body-size: 16px;
+  --zone-product-body-leading: 1.5;
+  --zone-product-body-weight: 400;
+  --zone-product-subheading-size: 20px;
+  --zone-product-subheading-leading: 1;
+  --zone-product-subheading-weight: 500;
+  --zone-product-heading-sm-size: 22px;
+  --zone-product-heading-sm-leading: 1.27;
+  --zone-product-heading-sm-tracking: -0.242px;
+  --zone-product-heading-sm-weight: 600;
+  --zone-product-heading-size: 40px;
+  --zone-product-heading-leading: 1.5;
+  --zone-product-heading-weight: 600;
+  --zone-marketing-body-size: 16px;
+  --zone-marketing-body-leading: 1.5;
+  --zone-marketing-body-weight: 400;
+  --zone-marketing-heading-size: 48px;
+  --zone-marketing-heading-leading: 1.5;
+  --zone-marketing-heading-weight: 700;
+  --zone-marketing-heading-lg-size: 54px;
+  --zone-marketing-heading-lg-leading: 1.04;
+  --zone-marketing-heading-lg-tracking: -1.89px;
+  --zone-marketing-heading-lg-weight: 700;
+  --zone-marketing-display-size: 72px;
+  --zone-marketing-display-leading: 1.21;
+  --zone-marketing-display-tracking: -2.016px;
+  --zone-marketing-display-weight: 700;
+
+  /* Taxonomy / decorative (not product CTA) */
+  --brand-category-brand: #000000;
+  --brand-category-action: #0075de;
+  --brand-category-ghost: #e6f3fe;
+  --brand-category-marigold: #ffb110;
+  --brand-category-coral: #f64932;
+  --brand-category-midnight: #02093a;
+  --brand-category-charcoal: #111111;
+  --brand-category-graphite: #615d59;
+  --brand-decorative-marigold: #ffb110;
+  --brand-decorative-coral: #f64932;
+  --brand-decorative-saffron: #e89d01;
+  --brand-decorative-sky-wash: #62aef0;
+  --brand-decorative-midnight: #02093a;
+}
+
+
+/* Zone: product — product never inherits marketing display */
+[data-zone="product"], .zone-product {
+  font-size: var(--zone-product-body-size, 16px);
+  line-height: var(--zone-product-body-leading, 1.5);
+  font-weight: var(--zone-product-body-weight, 400);
+  --text-caption: var(--zone-product-caption-size, inherit);
+  --leading-caption: var(--zone-product-caption-leading, inherit);
+  --tracking-caption: var(--zone-product-caption-tracking, inherit);
+  --text-body-sm: var(--zone-product-body-sm-size, inherit);
+  --leading-body-sm: var(--zone-product-body-sm-leading, inherit);
+  --tracking-body-sm: var(--zone-product-body-sm-tracking, inherit);
+  --text-body: var(--zone-product-body-size, inherit);
+  --leading-body: var(--zone-product-body-leading, inherit);
+  --tracking-body: var(--zone-product-body-tracking, inherit);
+  --text-body-lg: var(--zone-product-body-lg-size, inherit);
+  --leading-body-lg: var(--zone-product-body-lg-leading, inherit);
+  --tracking-body-lg: var(--zone-product-body-lg-tracking, inherit);
+  --text-subheading: var(--zone-product-subheading-size, inherit);
+  --leading-subheading: var(--zone-product-subheading-leading, inherit);
+  --tracking-subheading: var(--zone-product-subheading-tracking, inherit);
+  --text-heading-sm: var(--zone-product-heading-sm-size, inherit);
+  --leading-heading-sm: var(--zone-product-heading-sm-leading, inherit);
+  --tracking-heading-sm: var(--zone-product-heading-sm-tracking, inherit);
+  --text-heading: var(--zone-product-heading-size, inherit);
+  --leading-heading: var(--zone-product-heading-leading, inherit);
+  --tracking-heading: var(--zone-product-heading-tracking, inherit);
+  --text-heading-lg: var(--zone-product-heading-lg-size, inherit);
+  --leading-heading-lg: var(--zone-product-heading-lg-leading, inherit);
+  --tracking-heading-lg: var(--zone-product-heading-lg-tracking, inherit);
+  --text-display: var(--zone-product-display-size, inherit);
+  --leading-display: var(--zone-product-display-leading, inherit);
+  --tracking-display: var(--zone-product-display-tracking, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
+}
+
+/* Zone: marketing — product never inherits marketing display */
+[data-zone="marketing"], .zone-marketing {
+  font-size: var(--zone-marketing-body-size, 16px);
+  line-height: var(--zone-marketing-body-leading, 1.5);
+  font-weight: var(--zone-marketing-body-weight, 400);
+  --text-caption: var(--zone-marketing-caption-size, inherit);
+  --leading-caption: var(--zone-marketing-caption-leading, inherit);
+  --tracking-caption: var(--zone-marketing-caption-tracking, inherit);
+  --text-body-sm: var(--zone-marketing-body-sm-size, inherit);
+  --leading-body-sm: var(--zone-marketing-body-sm-leading, inherit);
+  --tracking-body-sm: var(--zone-marketing-body-sm-tracking, inherit);
+  --text-body: var(--zone-marketing-body-size, inherit);
+  --leading-body: var(--zone-marketing-body-leading, inherit);
+  --tracking-body: var(--zone-marketing-body-tracking, inherit);
+  --text-body-lg: var(--zone-marketing-body-lg-size, inherit);
+  --leading-body-lg: var(--zone-marketing-body-lg-leading, inherit);
+  --tracking-body-lg: var(--zone-marketing-body-lg-tracking, inherit);
+  --text-subheading: var(--zone-marketing-subheading-size, inherit);
+  --leading-subheading: var(--zone-marketing-subheading-leading, inherit);
+  --tracking-subheading: var(--zone-marketing-subheading-tracking, inherit);
+  --text-heading-sm: var(--zone-marketing-heading-sm-size, inherit);
+  --leading-heading-sm: var(--zone-marketing-heading-sm-leading, inherit);
+  --tracking-heading-sm: var(--zone-marketing-heading-sm-tracking, inherit);
+  --text-heading: var(--zone-marketing-heading-size, inherit);
+  --leading-heading: var(--zone-marketing-heading-leading, inherit);
+  --tracking-heading: var(--zone-marketing-heading-tracking, inherit);
+  --text-heading-lg: var(--zone-marketing-heading-lg-size, inherit);
+  --leading-heading-lg: var(--zone-marketing-heading-lg-leading, inherit);
+  --tracking-heading-lg: var(--zone-marketing-heading-lg-tracking, inherit);
+  --text-display: var(--zone-marketing-display-size, inherit);
+  --leading-display: var(--zone-marketing-display-leading, inherit);
+  --tracking-display: var(--zone-marketing-display-tracking, inherit);
+}
+
+/* Product chrome must not use decorative gradients as action fills */
+[data-zone="product"] .btn-brand-default,
+.zone-product .btn-brand-default {
+  /* intentional no-op: documents contract; action uses --primary only */
+}

@@ -1,7 +1,8 @@
 /**
- * Brand skin: Linear (linear) v1.0.0
- * darkDefault=true buttonDefault=solid
- * fonts=1 zones=product+marketing
+ * Brand carrier skin: Linear (linear) v1.0.0
+ * darkDefault=true action≠brand-mark button=solid
+ * fonts=1 zones=yes
+ * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
 
 /* Brand font faces */
@@ -15,11 +16,27 @@
 :root,
 .dark,
 html[data-brand="linear"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 210 11% 4%;
+  --role-canvas-fg: 0 0% 100%;
+  --role-surface: 210 6% 6%;
+  --role-surface-fg: 0 0% 100%;
+  --role-action: 64 89% 54%;
+  --role-action-fg: 210 11% 4%;
+  --role-quiet: 223 9% 15%;
+  --role-quiet-fg: 218 21% 85%;
+  --role-muted: 210 4% 9%;
+  --role-muted-fg: 218 5% 41%;
+  --role-border: 223 9% 15%;
+  --role-input: 223 9% 15%;
+  --role-ring: 64 89% 54%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
   --background: 210 11% 4%;
   --foreground: 0 0% 100%;
   --card: 210 6% 6%;
   --card-foreground: 0 0% 100%;
-  --popover: 210 4% 9%;
+  --popover: 210 6% 6%;
   --popover-foreground: 0 0% 100%;
   --primary: 64 89% 54%;
   --primary-foreground: 210 11% 4%;
@@ -28,7 +45,7 @@ html[data-brand="linear"] {
   --muted: 210 4% 9%;
   --muted-foreground: 218 5% 41%;
   --accent: 223 9% 15%;
-  --accent-foreground: 64 89% 54%;
+  --accent-foreground: 210 11% 4%;
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
   --border: 223 9% 15%;
@@ -43,7 +60,7 @@ html[data-brand="linear"] {
   --sidebar-primary: 64 89% 54%;
   --sidebar-primary-foreground: 210 11% 4%;
   --sidebar-accent: 223 9% 15%;
-  --sidebar-accent-foreground: 64 89% 54%;
+  --sidebar-accent-foreground: 210 11% 4%;
   --sidebar-border: 223 9% 15%;
   --sidebar-ring: 64 89% 54%;
   --brand-gradient: hsl(var(--primary));
@@ -51,13 +68,29 @@ html[data-brand="linear"] {
   --brand-gradient-vertical: hsl(var(--primary));
   --brand-gradient-radial: hsl(var(--primary));
 
-  /* Recipe */
+  /* Recipe (action language + free elev/radii) */
+  /* Shape slots */
   --btn-default-radius: 6px;
   --radius-button: 6px;
   --radius-buttons: 6px;
   --radius-md: 6px;
   --radius-card: 12px;
   --radius-lg: 12px;
+  --radius-badge: 9999px;
+  --badge-default-radius: 9999px;
+  --radius-inputs: 6px;
+  --input-radius: 6px;
+  --radius-pill: 9999px;
+
+  /* Free elevation (carrier-provided CSS shadows) */
+  --elevation-card: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  --elevation-control: var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04));
+  --elevation-raised: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+  --shadow-xs: var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04));
+  --shadow-sm: var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  --shadow-md: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+  --shadow-lg: var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1));
+  --btn-default-shadow: 0 0 #0000;
   --btn-default-bg: hsl(var(--primary));
   --btn-default-fg: hsl(var(--primary-foreground));
   --btn-default-border-width: 0px;
@@ -76,14 +109,14 @@ html[data-brand="linear"] {
   --control-height-lg: 2.5rem;
   --control-font-size-md: 0.8125rem;
 
-  /* Typography stacks */
+  /* Typography */
   --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-heading: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Berkeley Mono', 'JetBrains Mono', ui-monospace, monospace;
   --font-weight-heading: 510;
 
-  /* Zone type scales (product shell vs marketing) */
+  /* Zone type scales */
   --zone-product-caption-size: 13px;
   --zone-product-caption-leading: 1.2;
   --zone-product-caption-weight: 400;
@@ -118,7 +151,7 @@ html[data-brand="linear"] {
 }
 
 
-/* Zone: product — apply via data-zone="product" or .zone-product */
+/* Zone: product — product never inherits marketing display */
 [data-zone="product"], .zone-product {
   font-size: var(--zone-product-body-size, 14px);
   line-height: var(--zone-product-body-leading, 1.5);
@@ -150,9 +183,10 @@ html[data-brand="linear"] {
   --text-display: var(--zone-product-display-size, inherit);
   --leading-display: var(--zone-product-display-leading, inherit);
   --tracking-display: var(--zone-product-display-tracking, inherit);
+  --text-display: var(--zone-product-display-size, var(--zone-product-heading-size, inherit));
 }
 
-/* Zone: marketing — apply via data-zone="marketing" or .zone-marketing */
+/* Zone: marketing — product never inherits marketing display */
 [data-zone="marketing"], .zone-marketing {
   font-size: var(--zone-marketing-body-size, 15px);
   line-height: var(--zone-marketing-body-leading, 1.6);
@@ -184,4 +218,10 @@ html[data-brand="linear"] {
   --text-display: var(--zone-marketing-display-size, inherit);
   --leading-display: var(--zone-marketing-display-leading, inherit);
   --tracking-display: var(--zone-marketing-display-tracking, inherit);
+}
+
+/* Product chrome must not use decorative gradients as action fills */
+[data-zone="product"] .btn-brand-default,
+.zone-product .btn-brand-default {
+  /* intentional no-op: documents contract; action uses --primary only */
 }

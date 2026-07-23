@@ -41,7 +41,7 @@ export interface FeatureCardProps {
  */
 export function FeatureCard({ children, className }: FeatureCardProps) {
   return (
-    <Card className={cn("group relative rounded-none shadow-[var(--elevation-card)]", className)}>
+    <Card className={cn("group relative rounded-none shadow-sm", className)}>
       <FeatureCardDecorator />
       {children}
     </Card>

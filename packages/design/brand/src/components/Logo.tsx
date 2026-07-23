@@ -105,8 +105,12 @@ const ASPECT_RATIOS: Record<LogoVariant, number> = {
 /**
  * Nebutra Logo Component
  *
- * Renders the official Nebutra brand logo from SVG assets.
+ * Renders the official Nebutra brand logo from SVG assets (fixed VI fills).
  * Assets are synced to apps via `pnpm brand:sync`.
+ *
+ * For product chrome that must recolor with Brand Package skins (roles.brand),
+ * prefer LogomarkSVG / LogoEnSVG with default `text-brand-mark` instead of
+ * raster VI color SVGs or `text-primary` (CTA / roles.action).
  *
  * @example
  * ```tsx

@@ -82,7 +82,8 @@ const dotColorMap: Partial<Record<NonNullable<BadgeProps["variant"]>, string>> =
   "purple-subtle": "bg-secondary-foreground",
   "pink-subtle": "bg-accent-foreground",
   "teal-subtle": "bg-info",
-  default: "bg-primary-foreground",
+  default: "bg-brand-mark-foreground",
+  featured: "bg-brand-mark-foreground",
   secondary: "bg-secondary-foreground",
   outline: "bg-muted-foreground",
 };

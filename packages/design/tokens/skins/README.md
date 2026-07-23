@@ -1,6 +1,7 @@
 # Design skins & Brand Packages
 
-**Goal:** Create Center users swap a brand by applying one **Brand Package** — not by hunting call sites.
+**Goal:** Create Center users swap a **design language** by applying one **Brand Package**.
+This package is a *carrier* (roles + free elev/radii + zones), not a list of brand hacks.
 
 ## Two layers
 
@@ -61,10 +62,30 @@ const { brand, css, warnings } = compileReferoTokens({
 
 ## Fixtures
 
+Cataloged as **design languages** on `@nebutra/theme` (`LANGUAGE_REGISTRY` / `skins.css`).
+
 | Brand | Recipe | Notes |
 |-------|--------|-------|
 | **linear** | `solid`, 6px radius | Acid-lime filled CTA |
 | **gsap** | `gradient-stroke` / outline, 100px pill | Green is **accent**, not solid fill |
+| **raycast** | `solid` Mist/Iron, 8px, elevation=`key` | Coral is brand-only; CTA is neutral gray |
+| **vercel** | `solid` Obsidian on paper, 6px, elevation=`hairline` | Light monochrome; no chromatic CTA |
+| **vanta** | `solid` Vivid Violet, 999px pill, elevation=`none` | Light parchment; **indigo-ink** brand-mark ≠ CTA; carbon 1px borders |
+| **stripe** | `solid` Indigo Ink, 4px, elevation=`none` | Light frost ledger; **midnight** brand-mark ≠ indigo CTA; tint-ladder depth |
+| **notion** | `solid` Notion Blue, 8px/12px, elevation=`none` | Warm paper canvas ≠ white cards; ink brand-mark; accent hues decorative only |
+
+```ts
+import { applyLanguage, LANGUAGE_REGISTRY } from "@nebutra/theme";
+import vanta from "@nebutra/tokens/brands/vanta/brand.json";
+applyLanguage("vanta", { package: vanta });
+```
+
+Multi-language catalog (scoped `html[data-brand]` only):
+
+```css
+@import "@nebutra/theme/skins.css";
+/* then: document.documentElement.dataset.brand = "raycast" */
+```
 
 ## Why recipe exists
 

@@ -1,52 +1,42 @@
-import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
-import { getThemeById, THEME_IDS, THEME_REGISTRY } from "../index";
+import { LANGUAGE_IDS } from "../languages";
+import {
+  DEFAULT_THEME,
+  getThemeById,
+  isThemeId,
+  listThemesAsLegacyEntries,
+  THEME_IDS,
+  THEME_REGISTRY,
+} from "../registry";
 
-function getTokenAtPath(tokens: Record<string, unknown>, tokenPath: string): unknown {
-  return tokenPath.split(".").reduce<unknown>((node, key) => {
-    if (!node || typeof node !== "object") return undefined;
-    return (node as Record<string, unknown>)[key];
-  }, tokens);
-}
-
-describe("@nebutra/theme registry contract", () => {
-  it("exports deterministic theme ids from the registry", () => {
-    // 5 built-in + 73 community = 78 total
-    expect(THEME_IDS.length).toBe(78);
-    // Built-in themes must remain first, in their canonical order
-    expect(THEME_IDS.slice(0, 5)).toEqual(["nebutra", "dark-dense", "minimal", "vibrant", "ocean"]);
+describe("@nebutra/theme registry (mood catalog removed)", () => {
+  it("ships an empty oklch mood list", () => {
+    expect(THEME_REGISTRY.themes).toEqual([]);
+    expect(THEME_IDS).toEqual([]);
   });
 
-  it("exposes install and governance metadata for each built-in theme", () => {
-    for (const theme of THEME_REGISTRY.themes) {
-      expect(theme.id).toMatch(/^[a-z0-9-]+$/u);
-      expect(theme.tokenPath).toBe(`tokens/themes/${theme.id}.json`);
-      expect(theme.install.command).toContain(`nebutra theme add ${theme.id}`);
-      expect(theme.governance.requiredTokens.length).toBeGreaterThan(0);
-      expect(theme.governance.wcag).toBe("AA");
-      expect(theme.compatibility.tailwind).toBe("4");
-      expect(theme.compatibility.figmaVariables).toBe(true);
+  it("defaults to factory design language", () => {
+    expect(DEFAULT_THEME).toBe("factory");
+  });
+
+  it("accepts design language ids via isThemeId bridge", () => {
+    for (const id of LANGUAGE_IDS) {
+      expect(isThemeId(id)).toBe(true);
     }
+    expect(isThemeId("custom")).toBe(true);
+    expect(isThemeId("crimson-light-vivid")).toBe(false);
+    expect(isThemeId("vibrant")).toBe(false);
   });
 
-  it("keeps registry token paths and required tokens backed by DTCG files", async () => {
-    for (const theme of THEME_REGISTRY.themes) {
-      const tokenFile = new URL(`../../../design-tokens/${theme.tokenPath}`, import.meta.url);
-      const tokens = JSON.parse(await readFile(tokenFile, "utf8")) as Record<string, unknown>;
-
-      expect(tokens.theme).toBe(theme.id);
-
-      for (const requiredToken of theme.governance.requiredTokens) {
-        expect(getTokenAtPath(tokens, requiredToken)).toMatchObject({
-          $type: expect.any(String),
-          $value: expect.any(String),
-        });
-      }
-    }
-  });
-
-  it("supports lookup by id without callers hardcoding theme details", () => {
-    expect(getThemeById("nebutra")?.mood).toContain("AI");
+  it("projects languages for legacy getThemeById callers", () => {
+    const vanta = getThemeById("vanta");
+    expect(vanta?.category).toBe("design-language");
+    expect(vanta?.mood).toMatch(/violet|parchment|Vivid/i);
     expect(getThemeById("missing")).toBeUndefined();
+  });
+
+  it("lists all design languages as legacy entries", () => {
+    const entries = listThemesAsLegacyEntries();
+    expect(entries.map((e) => e.id)).toEqual(LANGUAGE_IDS);
   });
 });

@@ -1,3 +1,9 @@
+/**
+ * Emit carrier CSS from a normalized Brand Package.
+ * Components bind: --primary (= action), --brand-mark, --elevation-*, --radius-*.
+ */
+
+import { normalizeBrandPackage } from "./normalize";
 import type {
   BrandFontFace,
   BrandPackage,
@@ -7,60 +13,64 @@ import type {
   BrandZoneTypography,
 } from "./types";
 
-function recipeButtonVars(recipe: BrandRecipe): string[] {
-  const radius = recipe.buttonRadius;
-  const lines: string[] = [
-    `  --btn-default-radius: ${radius};`,
-    `  --radius-button: ${radius};`,
-    `  --radius-buttons: ${radius};`,
-    `  --radius-md: ${radius};`,
-    `  --radius-card: ${recipe.cardRadius};`,
-    `  --radius-lg: ${recipe.cardRadius};`,
-  ];
+function recipeVars(recipe: BrandRecipe): string[] {
+  const radii = recipe.radii ?? {
+    button: recipe.buttonRadius ?? "0.375rem",
+    card: recipe.cardRadius ?? "0.75rem",
+  };
+  const elev = recipe.elevationTokens ?? {
+    card: "var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))",
+    control: "var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04))",
+    raised: "var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1))",
+  };
 
-  if (recipe.elevation === "none") {
-    const none = "0 0 #0000";
-    lines.push(`  --btn-default-shadow: ${none};`);
-    lines.push(`  --shadow-xs: ${none};`);
-    lines.push(`  --shadow-sm: ${none};`);
-    lines.push(`  --shadow-md: ${none};`);
-    lines.push(`  --shadow-lg: ${none};`);
-    lines.push(`  --elevation-card: ${none};`);
-    lines.push(`  --elevation-control: ${none};`);
-    lines.push(`  --elevation-raised: ${none};`);
-  }
+  const lines: string[] = [
+    `  /* Shape slots */`,
+    `  --btn-default-radius: ${radii.button};`,
+    `  --radius-button: ${radii.button};`,
+    `  --radius-buttons: ${radii.button};`,
+    `  --radius-md: ${radii.button};`,
+    `  --radius-card: ${radii.card};`,
+    `  --radius-lg: ${radii.card};`,
+    `  --radius-badge: ${radii.badge ?? "9999px"};`,
+    `  --badge-default-radius: ${radii.badge ?? "9999px"};`,
+    `  --radius-inputs: ${radii.input ?? radii.button};`,
+    `  --input-radius: ${radii.input ?? radii.button};`,
+    `  --radius-pill: ${radii.pill ?? "9999px"};`,
+    ``,
+    `  /* Free elevation (carrier-provided CSS shadows) */`,
+    `  --elevation-card: ${elev.card};`,
+    `  --elevation-control: ${elev.control ?? "0 0 #0000"};`,
+    `  --elevation-raised: ${elev.raised ?? elev.card};`,
+    // Kill Tailwind drop defaults when brand uses custom elev stacks
+    `  --shadow-xs: ${elev.control ?? "0 0 #0000"};`,
+    `  --shadow-sm: ${elev.card};`,
+    `  --shadow-md: ${elev.raised ?? elev.card};`,
+    `  --shadow-lg: ${elev.raised ?? elev.card};`,
+    `  --btn-default-shadow: 0 0 #0000;`,
+  ];
 
   switch (recipe.buttonDefault) {
     case "outline": {
       const edge = recipe.outlineBorder ?? "hsl(var(--foreground))";
       lines.push("  --btn-default-bg: transparent;");
       lines.push("  --btn-default-fg: hsl(var(--foreground));");
-      lines.push(`  --btn-default-border-width: 1px;`);
-      lines.push(`  --btn-default-border: transparent;`);
+      lines.push("  --btn-default-border-width: 1px;");
+      lines.push("  --btn-default-border: transparent;");
       lines.push(`  --btn-default-stroke-gradient: linear-gradient(${edge}, ${edge});`);
       lines.push("  --btn-default-hover-bg: hsl(var(--foreground) / 0.06);");
-      // Badge tracks outline language
-      lines.push("  --badge-default-bg: transparent;");
-      lines.push("  --badge-default-fg: hsl(var(--foreground));");
-      lines.push(`  --badge-default-border: ${edge};`);
-      lines.push("  --badge-default-hover-bg: hsl(var(--foreground) / 0.06);");
       break;
     }
     case "gradient-stroke": {
       const grad =
         recipe.primaryStrokeGradient ??
         "linear-gradient(135deg, hsl(var(--primary)), color-mix(in srgb, hsl(var(--primary)) 55%, white))";
-      const edge = recipe.outlineBorder ?? "hsl(var(--foreground))";
       lines.push("  --btn-default-bg: transparent;");
       lines.push("  --btn-default-fg: hsl(var(--foreground));");
       lines.push("  --btn-default-border-width: 1.5px;");
       lines.push("  --btn-default-border: transparent;");
       lines.push(`  --btn-default-stroke-gradient: ${grad};`);
       lines.push("  --btn-default-hover-bg: hsl(var(--primary) / 0.08);");
-      lines.push("  --badge-default-bg: transparent;");
-      lines.push("  --badge-default-fg: hsl(var(--foreground));");
-      lines.push(`  --badge-default-border: ${edge};`);
-      lines.push("  --badge-default-hover-bg: hsl(var(--primary) / 0.08);");
       break;
     }
     default:
@@ -72,13 +82,44 @@ function recipeButtonVars(recipe: BrandRecipe): string[] {
       lines.push(
         "  --btn-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 90%, transparent);",
       );
-      lines.push("  --badge-default-bg: hsl(var(--primary));");
-      lines.push("  --badge-default-fg: hsl(var(--primary-foreground));");
-      lines.push("  --badge-default-border: transparent;");
-      lines.push(
-        "  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 80%, transparent);",
-      );
       break;
+  }
+
+  const badgeMode = recipe.badgeDefault ?? "match-action";
+  if (badgeMode === "outline") {
+    const edge = recipe.outlineBorder ?? "hsl(var(--border))";
+    lines.push("  --badge-default-bg: transparent;");
+    lines.push("  --badge-default-fg: hsl(var(--foreground));");
+    lines.push(`  --badge-default-border: ${edge};`);
+    lines.push("  --badge-default-hover-bg: hsl(var(--foreground) / 0.06);");
+  } else if (badgeMode === "muted") {
+    lines.push("  --badge-default-bg: hsl(var(--secondary));");
+    lines.push("  --badge-default-fg: hsl(var(--secondary-foreground));");
+    lines.push("  --badge-default-border: transparent;");
+    lines.push("  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);");
+  } else if (badgeMode === "brand") {
+    lines.push("  --badge-default-bg: hsl(var(--brand-mark, var(--accent)));");
+    lines.push(
+      "  --badge-default-fg: hsl(var(--brand-mark-foreground, var(--accent-foreground)));",
+    );
+    lines.push("  --badge-default-border: transparent;");
+    lines.push(
+      "  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--brand-mark, var(--accent))) 85%, transparent);",
+    );
+  } else if (recipe.buttonDefault === "outline" || recipe.buttonDefault === "gradient-stroke") {
+    const edge = recipe.outlineBorder ?? "hsl(var(--foreground))";
+    lines.push("  --badge-default-bg: transparent;");
+    lines.push("  --badge-default-fg: hsl(var(--foreground));");
+    lines.push(`  --badge-default-border: ${edge};`);
+    lines.push("  --badge-default-hover-bg: hsl(var(--foreground) / 0.06);");
+  } else {
+    // match-action
+    lines.push("  --badge-default-bg: hsl(var(--primary));");
+    lines.push("  --badge-default-fg: hsl(var(--primary-foreground));");
+    lines.push("  --badge-default-border: transparent;");
+    lines.push(
+      "  --badge-default-hover-bg: color-mix(in srgb, hsl(var(--primary)) 80%, transparent);",
+    );
   }
 
   if (recipe.density === "compact") {
@@ -163,7 +204,7 @@ function zoneConsumerBlock(
   const body = scale.body;
   const lines = [
     ``,
-    `/* Zone: ${zone} — apply via data-zone="${zone}" or .zone-${zone} */`,
+    `/* Zone: ${zone} — product never inherits marketing display */`,
     `[data-zone="${zone}"], .zone-${zone} {`,
   ];
   if (body?.fontSize) lines.push(`  font-size: var(--${p}-body-size, ${body.fontSize});`);
@@ -176,7 +217,6 @@ function zoneConsumerBlock(
   if (body?.letterSpacing != null) {
     lines.push(`  letter-spacing: var(--${p}-body-tracking, ${body.letterSpacing});`);
   }
-  // Expose role tokens for descendants
   const roles = [
     "caption",
     "body-sm",
@@ -193,42 +233,95 @@ function zoneConsumerBlock(
     lines.push(`  --leading-${role}: var(--${p}-${role}-leading, inherit);`);
     lines.push(`  --tracking-${role}: var(--${p}-${role}-tracking, inherit);`);
   }
+  // Product zone hard-cap: display falls back to heading if not set for product
+  if (zone === "product") {
+    lines.push(`  --text-display: var(--${p}-display-size, var(--${p}-heading-size, inherit));`);
+  }
   lines.push(`}`);
   return lines;
 }
 
 function emitZones(zones: BrandZones | undefined): string[] {
   if (!zones) return [];
-  const rootVars = [
+  return [
     ``,
-    `  /* Zone type scales (product shell vs marketing) */`,
+    `  /* Zone type scales */`,
     ...zoneScaleVars("product", zones.product),
     ...zoneScaleVars("marketing", zones.marketing),
   ];
-  return rootVars;
+}
+
+export type EmitBrandCssMode =
+  /** Single-skin import / Create Center inject — also binds :root (global swap) */
+  | "global"
+  /** Multi-language catalog — only activates under html[data-brand] */
+  | "scoped";
+
+export interface EmitBrandCssOptions {
+  /**
+   * `global` (default): `:root, .dark, html[data-brand]` — one import recolors the app.
+   * `scoped`: only `html[data-brand]` — safe to concatenate many skins in a catalog.
+   */
+  mode?: EmitBrandCssMode;
 }
 
 /**
  * Emit a single opt-in skin CSS file from a Brand Package.
- * Includes @font-face, semantic/recipe vars, and product/marketing zones.
  */
-export function emitBrandCss(brand: BrandPackage): string {
-  const s = brand.semantic;
-  const t = brand.typography;
+export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions = {}): string {
+  const mode = options.mode ?? "global";
+  const b = normalizeBrandPackage(brand);
+  const s = b.semantic;
+  const r = b.roles;
+  const t = b.typography;
+  const selector =
+    mode === "scoped"
+      ? `html[data-brand="${b.id}"] {`
+      : `:root,\n.dark,\nhtml[data-brand="${b.id}"] {`;
   const parts: string[] = [
     `/**`,
-    ` * Brand skin: ${brand.name} (${brand.id}) v${brand.version}`,
-    ` * darkDefault=${brand.darkDefault} buttonDefault=${brand.recipe.buttonDefault}`,
-    ` * fonts=${t.faces?.length ?? 0} zones=${brand.zones ? "product+marketing" : "none"}`,
+    ` * Brand carrier skin: ${b.name} (${b.id}) v${b.version}`,
+    ` * darkDefault=${b.darkDefault} action≠brand-mark button=${b.recipe.buttonDefault}`,
+    ` * fonts=${t.faces?.length ?? 0} zones=${b.zones ? "yes" : "no"} mode=${mode}`,
+    ` * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)`,
     ` */`,
     ``,
     ...emitFontFaces(t.faces),
-    `:root,`,
-    `.dark,`,
-    `html[data-brand="${brand.id}"] {`,
+    selector,
   ];
 
+  // Color roles (canonical)
+  const roleLines: string[] = [
+    `  /* ── Color roles (carrier) ── */`,
+    `  --role-canvas: ${r?.canvas ?? s.background};`,
+    `  --role-canvas-fg: ${r?.canvasForeground ?? s.foreground};`,
+    `  --role-surface: ${r?.surface ?? s.card};`,
+    `  --role-surface-fg: ${r?.surfaceForeground ?? s.cardForeground};`,
+    `  --role-action: ${r?.action ?? s.primary};`,
+    `  --role-action-fg: ${r?.actionForeground ?? s.primaryForeground};`,
+    `  --role-quiet: ${r?.quiet ?? s.secondary};`,
+    `  --role-quiet-fg: ${r?.quietForeground ?? s.secondaryForeground};`,
+    `  --role-muted: ${r?.muted ?? s.muted};`,
+    `  --role-muted-fg: ${r?.mutedForeground ?? s.mutedForeground};`,
+    `  --role-border: ${r?.border ?? s.border};`,
+    `  --role-input: ${r?.input ?? s.input};`,
+    `  --role-ring: ${r?.ring ?? s.ring};`,
+  ];
+  if (r?.brand) {
+    roleLines.push(`  --role-brand: ${r.brand};`);
+    roleLines.push(
+      `  --role-brand-fg: ${r.brandForeground ?? r.actionForeground ?? s.primaryForeground};`,
+    );
+    roleLines.push(`  --brand-mark: ${r.brand};`);
+    roleLines.push(
+      `  --brand-mark-foreground: ${r.brandForeground ?? r.actionForeground ?? s.primaryForeground};`,
+    );
+  }
+
+  // shadcn bridge — primary = ACTION only
   const semantic = [
+    ``,
+    `  /* ── shadcn bridge (primary = action CTA) ── */`,
     `  --background: ${s.background};`,
     `  --foreground: ${s.foreground};`,
     `  --card: ${s.card};`,
@@ -266,6 +359,7 @@ export function emitBrandCss(brand: BrandPackage): string {
     `  --sidebar-accent-foreground: ${s.accentForeground};`,
     `  --sidebar-border: ${s.border};`,
     `  --sidebar-ring: ${s.ring};`,
+    // Product gradient aliases solid action — not logo multi-hue
     `  --brand-gradient: hsl(var(--primary));`,
     `  --brand-gradient-reverse: hsl(var(--primary));`,
     `  --brand-gradient-vertical: hsl(var(--primary));`,
@@ -282,7 +376,8 @@ export function emitBrandCss(brand: BrandPackage): string {
     typeLines.push(`  --font-weight-heading: ${t.headingWeight};`);
   }
 
-  const cats = brand.extensions?.categories;
+  const cats = b.extensions?.categories;
+  const decorative = b.extensions?.decorative;
   const extLines: string[] = [];
   if (cats) {
     for (const [key, value] of Object.entries(cats)) {
@@ -290,21 +385,37 @@ export function emitBrandCss(brand: BrandPackage): string {
       extLines.push(`  --brand-category-${safe}: ${value};`);
     }
   }
+  if (decorative) {
+    for (const [key, value] of Object.entries(decorative)) {
+      const safe = key.replace(/[^a-z0-9_-]/gi, "-").toLowerCase();
+      // Marketing zone only — never alias to --primary
+      extLines.push(`  --brand-decorative-${safe}: ${value};`);
+    }
+  }
 
   parts.push(
+    ...roleLines,
     ...semantic,
     ``,
-    `  /* Recipe */`,
-    ...recipeButtonVars(brand.recipe),
+    `  /* Recipe (action language + free elev/radii) */`,
+    ...recipeVars(b.recipe),
     ``,
-    `  /* Typography stacks */`,
+    `  /* Typography */`,
     ...typeLines,
-    ...emitZones(brand.zones),
-    ...(extLines.length ? ["", "  /* Extensions */", ...extLines] : []),
+    ...emitZones(b.zones),
+    ...(extLines.length
+      ? ["", "  /* Taxonomy / decorative (not product CTA) */", ...extLines]
+      : []),
     `}`,
     ``,
-    ...zoneConsumerBlock("product", brand.zones?.product),
-    ...zoneConsumerBlock("marketing", brand.zones?.marketing),
+    ...zoneConsumerBlock("product", b.zones?.product),
+    ...zoneConsumerBlock("marketing", b.zones?.marketing),
+    ``,
+    `/* Product chrome must not use decorative gradients as action fills */`,
+    `[data-zone="product"] .btn-brand-default,`,
+    `.zone-product .btn-brand-default {`,
+    `  /* intentional no-op: documents contract; action uses --primary only */`,
+    `}`,
     ``,
   );
 

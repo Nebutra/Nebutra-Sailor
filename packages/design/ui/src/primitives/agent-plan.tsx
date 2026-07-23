@@ -466,7 +466,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                                               {subtask.tools.map((tool, idx) => (
                                                 <motion.span
                                                   key={idx}
-                                                  className="rounded bg-secondary/40 px-1.5 py-0.5 text-xs font-medium text-secondary-foreground shadow-[var(--elevation-card)]"
+                                                  className="rounded bg-secondary/40 px-1.5 py-0.5 text-xs font-medium text-secondary-foreground shadow-sm"
                                                   initial={{
                                                     opacity: 0,
                                                     y: -5,

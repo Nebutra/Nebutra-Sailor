@@ -104,8 +104,8 @@ export const Announcement: React.FC<AnnouncementProps> = ({
     <Badge
       variant={variant}
       className={cn(
-        "max-w-full gap-2 rounded-full bg-background px-3 py-0.5 font-medium shadow-[var(--elevation-card)] transition-[background-color,border-color,box-shadow,color,opacity,transform]",
-        "hover:shadow-[var(--elevation-raised)]",
+        "max-w-full gap-2 rounded-full bg-background px-3 py-0.5 font-medium shadow-sm transition-[background-color,border-color,box-shadow,color,opacity,transform]",
+        "hover:shadow-md",
         themed && "border-foreground/5",
         className,
       )}

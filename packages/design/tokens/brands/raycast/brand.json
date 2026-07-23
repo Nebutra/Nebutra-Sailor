@@ -1,0 +1,137 @@
+{
+  "id": "raycast",
+  "name": "Raycast",
+  "darkDefault": true,
+  "version": "1.0.0",
+  "semantic": {
+    "background": "210 20% 2%",
+    "foreground": "0 0% 100%",
+    "card": "220 18% 3%",
+    "cardForeground": "0 0% 100%",
+    "popover": "220 18% 3%",
+    "popoverForeground": "0 0% 100%",
+    "primary": "0 0% 90%",
+    "primaryForeground": "210 1% 27%",
+    "secondary": "220 5% 11%",
+    "secondaryForeground": "0 0% 100%",
+    "muted": "220 8% 7%",
+    "mutedForeground": "210 1% 42%",
+    "accent": "0 100% 69%",
+    "accentForeground": "0 0% 100%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "210 2% 19%",
+    "input": "220 8% 7%",
+    "ring": "240 1% 61%",
+    "success": "151 59% 59%",
+    "successForeground": "210 20% 2%",
+    "info": "202 100% 67%",
+    "infoForeground": "210 20% 2%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "buttonRadius": "8px",
+    "cardRadius": "16px",
+    "elevation": "key",
+    "density": "compact",
+    "badgeDefault": "muted",
+    "badgeRadius": "6px",
+    "inputRadius": "8px"
+  },
+  "typography": {
+    "fontSans": "'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif",
+    "fontMono": "'Geist Mono', 'GeistMono', ui-monospace, Menlo, monospace",
+    "fontDisplay": "'Inter', ui-sans-serif, system-ui, sans-serif",
+    "headingWeight": 400,
+    "faces": [
+      {
+        "family": "Inter",
+        "src": [
+          {
+            "url": "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": "100 900",
+        "display": "swap"
+      }
+    ]
+  },
+  "zones": {
+    "product": {
+      "caption": {
+        "fontSize": "11px",
+        "lineHeight": 0.91,
+        "fontWeight": 500,
+        "letterSpacing": "0.8px"
+      },
+      "bodySm": {
+        "fontSize": "13px",
+        "lineHeight": 1.2,
+        "fontWeight": 500
+      },
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.15,
+        "fontWeight": 400
+      },
+      "bodyLg": {
+        "fontSize": "18px",
+        "lineHeight": 1.15,
+        "fontWeight": 400
+      },
+      "subheading": {
+        "fontSize": "20px",
+        "lineHeight": 1.2,
+        "fontWeight": 400,
+        "letterSpacing": "0.2px"
+      },
+      "headingSm": {
+        "fontSize": "24px",
+        "lineHeight": 1.15,
+        "fontWeight": 500
+      },
+      "heading": {
+        "fontSize": "32px",
+        "lineHeight": 1.15,
+        "fontWeight": 500
+      }
+    },
+    "marketing": {
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.15,
+        "fontWeight": 400
+      },
+      "heading": {
+        "fontSize": "32px",
+        "lineHeight": 1.15,
+        "fontWeight": 500
+      },
+      "headingLg": {
+        "fontSize": "56px",
+        "lineHeight": 1.17,
+        "fontWeight": 400,
+        "letterSpacing": "0.22px"
+      },
+      "display": {
+        "fontSize": "64px",
+        "lineHeight": 1.1,
+        "fontWeight": 600
+      }
+    }
+  },
+  "extensions": {
+    "categories": {
+      "brand": "#ff6363",
+      "ember": "#452324",
+      "sky": "#63a1ff"
+    },
+    "sourceUrl": "https://raycast.com",
+    "notes": [
+      "Primary CTA = Mist fill + Iron text (neutral solid).",
+      "Coral Pulse is brand mark only — do not use for general product chrome CTAs.",
+      "Cards use elevation=key (keyboard-key inset shadow stack)."
+    ]
+  }
+}

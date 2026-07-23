@@ -1,4 +1,4 @@
-import { getThemeById, THEME_REGISTRY } from "@nebutra/theme/registry";
+import { DEFAULT_LANGUAGE, getLanguageById, LANGUAGE_REGISTRY } from "@nebutra/theme/languages";
 import type { Command } from "commander";
 import { ExitCode } from "../utils/exit-codes";
 import { logger } from "../utils/logger";
@@ -25,30 +25,17 @@ function readFormatArg(): OutputFormat {
   return undefined;
 }
 
-function toThemeSummary(theme: (typeof THEME_REGISTRY.themes)[number]) {
-  return {
-    id: theme.id,
-    name: theme.name,
-    category: theme.category,
-    mood: theme.mood,
-    tokenPath: theme.tokenPath,
-    installCommand: theme.install.command,
-    registryUrl: theme.install.registryUrl,
-    wcag: theme.governance.wcag,
-    visualSuites: theme.governance.visualSuites,
-  };
-}
-
-export function formatThemeList(format: OutputFormat = "table"): string {
-  const themes = THEME_REGISTRY.themes.map(toThemeSummary);
+/** Design languages (Brand Package global swap). */
+export function formatLanguageList(format: OutputFormat = "table"): string {
+  const languages = LANGUAGE_REGISTRY.languages;
 
   if (format === "json") {
     return JSON.stringify(
       {
-        version: THEME_REGISTRY.version,
-        defaultTheme: THEME_REGISTRY.defaultTheme,
-        count: themes.length,
-        themes,
+        version: LANGUAGE_REGISTRY.version,
+        defaultLanguage: LANGUAGE_REGISTRY.defaultLanguage,
+        count: languages.length,
+        languages,
       },
       null,
       2,
@@ -56,60 +43,71 @@ export function formatThemeList(format: OutputFormat = "table"): string {
   }
 
   const lines = [
-    `Nebutra themes (${themes.length})`,
-    `Default: ${THEME_REGISTRY.defaultTheme}`,
+    `Nebutra design languages (${languages.length}) — global product chrome swap`,
+    `Default: ${DEFAULT_LANGUAGE} (factory tokens; no skin)`,
+    `Contract: roles.action → CTA; roles.brand → brand-mark; free elev/radii/zones`,
     "",
-    ...themes.map(
-      (theme) =>
-        `${theme.id.padEnd(12)} ${theme.category.padEnd(14)} ${theme.tokenPath.padEnd(34)} ${theme.mood}`,
+    ...languages.map(
+      (lang) =>
+        `${lang.id.padEnd(10)} ${lang.darkDefault ? "dark " : "light"}  ${(lang.proves[0] ?? "").slice(0, 48)}  ${lang.description.slice(0, 56)}`,
     ),
   ];
-
   return lines.join("\n");
 }
 
-export function formatThemeInspect(id: string, format: OutputFormat = "table"): string | undefined {
-  const theme = getThemeById(id);
-  if (!theme) return undefined;
+/** @deprecated Alias — moods catalog removed */
+export function formatThemeList(format: OutputFormat = "table"): string {
+  return formatLanguageList(format);
+}
+
+export function formatLanguageInspect(
+  id: string,
+  format: OutputFormat = "table",
+): string | undefined {
+  const lang = getLanguageById(id);
+  if (!lang) return undefined;
 
   if (format === "json") {
-    return JSON.stringify(theme, null, 2);
+    return JSON.stringify(lang, null, 2);
   }
 
   return [
-    `${theme.name} (${theme.id})`,
-    `Category: ${theme.category}`,
-    `Mood: ${theme.mood}`,
-    `Token path: ${theme.tokenPath}`,
-    `Install: ${theme.install.command}`,
-    `Registry: ${theme.install.registryUrl}`,
-    `WCAG: ${theme.governance.wcag}`,
-    `Visual suites: ${theme.governance.visualSuites.join(", ")}`,
-    `Required tokens: ${theme.governance.requiredTokens.join(", ")}`,
+    `${lang.name} (${lang.id}) — design language`,
+    `Description: ${lang.description}`,
+    `Dark default: ${lang.darkDefault}`,
+    `Brand JSON: ${lang.brandPath ?? "(factory — none)"}`,
+    `Skin CSS: ${lang.skinPath ?? "(factory — none)"}`,
+    `Install: ${lang.install.command}`,
+    `CSS import: ${lang.install.cssImport ?? "(clear data-brand)"}`,
+    `Proves: ${lang.proves.join("; ")}`,
   ].join("\n");
+}
+
+export function formatThemeInspect(id: string, format: OutputFormat = "table"): string | undefined {
+  return formatLanguageInspect(id, format);
 }
 
 export function registerThemeCommand(program: Command): void {
   const theme = program
     .command("theme")
-    .description("Inspect registry-backed Nebutra themes and governance metadata");
+    .description("Design languages (Brand Package global product chrome swap)");
 
   theme
     .command("list")
-    .description("List built-in themes from the shared theme registry")
+    .description("List design languages")
     .option("--format <type>", "Output format: json or table")
     .action((options) => {
-      console.log(formatThemeList(resolveFormat(options)));
+      console.log(formatLanguageList(resolveFormat(options)));
     });
 
   theme
     .command("inspect <id>")
-    .description("Show governance metadata for one theme")
+    .description("Show a design language by id")
     .option("--format <type>", "Output format: json or table")
     .action((id, options) => {
-      const output = formatThemeInspect(id, resolveFormat(options));
+      const output = formatLanguageInspect(id, resolveFormat(options));
       if (!output) {
-        logger.error(`Theme '${id}' was not found in the Nebutra theme registry.`);
+        logger.error(`Design language '${id}' not found. Run: nebutra theme list`);
         process.exit(ExitCode.NOT_FOUND);
       }
       console.log(output);

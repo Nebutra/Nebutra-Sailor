@@ -25,10 +25,9 @@ import { readFile, rm, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import StyleDictionary from "style-dictionary";
 
-const themeRegistry = JSON.parse(
-  await readFile(new URL("../theme/src/registry.json", import.meta.url), "utf8"),
-);
-const MULTI_THEMES = themeRegistry.themes.map((theme) => theme.id);
+// Multi-mood oklch catalog removed (2026.07). Only light/dark modes remain.
+// Design-language swap lives in @nebutra/theme (Brand Packages / skins.css).
+const MULTI_THEMES = [];
 const repoRootUrl = new URL("../../..", import.meta.url);
 const repoRoot = fileURLToPath(repoRootUrl);
 const biomeBin = fileURLToPath(
@@ -257,7 +256,7 @@ function hexToOklch(hex) {
   return `oklch(${formatNumber(lightness, 3)} ${formatNumber(chroma, 3)} ${formatNumber(normalizedHue, 1)})`;
 }
 
-function replaceHexWithOklch(css) {
+function _replaceHexWithOklch(css) {
   return css.replace(/#[0-9a-f]{6}\b/giu, (hex) => hexToOklch(hex));
 }
 
@@ -420,15 +419,14 @@ const configs = [
     outputFile: "dark.css",
   }),
   // Multi-theme builds: include ONLY the theme file (not core/semantic primitives).
-  // The brand primitives are emitted once via the light/dark builds and shared
-  // across all themes via cascade. Multi-theme files only override theme-scoped
-  // tokens (--color-*, --radius-*, --font-*, etc.).
-  // Multi-theme builds: include ONLY the theme file (not core/semantic primitives).
-  // Use the multi-theme namer so color.primary → --color-primary (Tailwind v4 @theme).
+  // Product chrome SSOT is @nebutra/tokens (styles.css HSL + recipe). Every mood —
+  // including the registry default — is scoped to [data-theme="…"] so themes.css
+  // never ships a global @theme that overrides --color-primary / fonts at root.
+  // Use the multi-theme namer so color.primary → --color-primary under that selector.
   ...MULTI_THEMES.map((name) =>
     buildMode({
       mode: name,
-      selector: name === themeRegistry.defaultTheme ? "@theme" : `[data-theme="${name}"]`,
+      selector: `[data-theme="${name}"]`,
       sources: [`tokens/themes/${name}.json`],
       outputFile: `${name}.css`,
       nameTransform: "name/nebutra/css/multi-theme",
@@ -893,36 +891,17 @@ await writeFile(
   "utf8",
 );
 
-// themes.generated.css — replacement for packages/design/theme/themes.css.
-// Concatenates all multi-theme files with their data-theme selectors.
-const themeFiles = await Promise.all(
-  MULTI_THEMES.map(async (name) => {
-    const css = (await readFile(`build/css/${name}.css`, "utf8")).trimEnd();
-    return `/* ─── ${name} theme ─── */\n${css}`;
-  }),
-);
-const defaultThemeId = themeRegistry.defaultTheme;
+// themes.generated.css is keyframes-only (no multi-mood color blocks).
+const themesBaseCss = await readFile("static/themes-base.css", "utf8");
 const themesHeader = `/**
  * @nebutra/theme — themes.generated.css
- * AUTO-GENERATED from packages/design/design-tokens/tokens/themes/*.json — DO NOT EDIT.
- *
- * Multi-theme engine — CSS-only:
- *   @theme                        ${defaultThemeId} (default theme, :root)
- *   [data-theme="dark-dense"]     DevOps Dashboard
- *   [data-theme="minimal"]        Blog/Portfolio
- *   [data-theme="vibrant"]        Creative UI/UX
- *   [data-theme="ocean"]          Community
- *
- * Integration:
- *   1. Import this file in each app's globals.css AFTER @import "tailwindcss"
- *   2. Configure next-themes with attribute="data-theme" defaultTheme="${defaultThemeId}"
+ * AUTO-GENERATED — multi-mood oklch catalog removed.
+ * Product chrome SSOT: @nebutra/tokens. Design languages: @nebutra/theme/skins.css.
+ * This file: shared keyframes only.
  */
 
 `;
-const themesBaseCss = await readFile("static/themes-base.css", "utf8");
-const themesCombined = replaceHexWithOklch(
-  `${themesHeader}${themeFiles.join("\n")}\n${themesBaseCss}`,
-);
+const themesCombined = `${themesHeader}${themesBaseCss}`;
 await writeFile(
   "build/css/themes.generated.css",
   formatCssWithBiome(themesCombined, "packages/design/theme/themes.css"),
@@ -932,5 +911,5 @@ await writeFile(
 process.stdout.write(
   "\n[design-tokens] build complete\n" +
     "  → build/css/styles.generated.css   (replaces packages/design/tokens/styles.css)\n" +
-    "  → build/css/themes.generated.css   (replaces packages/design/theme/themes.css)\n",
+    "  → build/css/themes.generated.css   (keyframes only; no multi-mood catalog)\n",
 );

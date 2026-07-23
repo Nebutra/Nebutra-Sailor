@@ -339,7 +339,7 @@ function FeedbackDefault({
       </PopoverTrigger>
       <PopoverContent
         align="end"
-        className="w-[var(--feedback-width)] rounded-[var(--feedback-panel-radius)] border-border bg-popover p-[var(--feedback-padding)] text-popover-foreground shadow-[var(--elevation-raised)]"
+        className="w-[var(--feedback-width)] rounded-[var(--feedback-panel-radius)] border-border bg-popover p-[var(--feedback-padding)] text-popover-foreground shadow-md"
         sideOffset={feedbackTokens.sideOffset}
         style={feedbackCssVars as React.CSSProperties}
       >
@@ -408,7 +408,7 @@ function FeedbackInline({
     <fieldset
       ref={rootRef}
       className={cn(
-        "m-0 min-w-0 w-fit overflow-hidden rounded-[var(--feedback-panel-radius)] border border-border bg-card p-0 text-card-foreground shadow-[var(--elevation-card)]",
+        "m-0 min-w-0 w-fit overflow-hidden rounded-[var(--feedback-panel-radius)] border border-border bg-card p-0 text-card-foreground shadow-sm",
         "transition-[max-height,width] duration-[var(--feedback-duration)] ease-[var(--feedback-easing)] motion-reduce:transition-none",
         expanded ? "w-[var(--feedback-width)]" : "max-w-full",
         className,

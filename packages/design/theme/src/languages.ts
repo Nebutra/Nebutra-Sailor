@@ -1,0 +1,69 @@
+/**
+ * Design-language catalog — the real product surface of @nebutra/theme.
+ *
+ * A "language" is a full Brand Package (roles + recipe + elev + zones), proven by
+ * external DS stress tests (Linear / GSAP / Raycast / Vercel / Vanta). Swapping
+ * `html[data-brand]` (or applyBrandPackage) recolors product chrome without
+ * call-site edits.
+ *
+ * Legacy oklch color-moods remain under ./registry (data-theme) — secondary.
+ */
+
+import languagesJson from "./languages.json" with { type: "json" };
+
+export interface DesignLanguageInstall {
+  command: string;
+  /** Single-skin import for demos; null for factory */
+  cssImport: string | null;
+}
+
+export interface DesignLanguageCompatibility {
+  tailwind: "4";
+  cssVariables: boolean;
+  brandPackage: boolean;
+  dataBrand: boolean;
+}
+
+export interface DesignLanguageEntry {
+  id: string;
+  name: string;
+  kind: "design-language";
+  description: string;
+  /** Contract proofs this fixture exercises */
+  proves: string[];
+  darkDefault: boolean;
+  /** Relative to @nebutra/tokens package root; null = factory (no override) */
+  brandPath: string | null;
+  skinPath: string | null;
+  install: DesignLanguageInstall;
+  compatibility: DesignLanguageCompatibility;
+}
+
+export interface DesignLanguageRegistry {
+  $schema: string;
+  version: string;
+  defaultLanguage: string;
+  description: string;
+  languages: DesignLanguageEntry[];
+}
+
+export const LANGUAGE_REGISTRY = languagesJson as DesignLanguageRegistry;
+export const LANGUAGE_IDS = LANGUAGE_REGISTRY.languages.map((l) => l.id);
+export const DEFAULT_LANGUAGE = LANGUAGE_REGISTRY.defaultLanguage;
+/** Alias — “theme” in product speak = design language */
+export const BUILT_IN_LANGUAGE_IDS = LANGUAGE_IDS;
+
+export type LanguageId = string;
+
+export function isLanguageId(id: string): boolean {
+  return LANGUAGE_IDS.includes(id);
+}
+
+export function getLanguageById(id: string): DesignLanguageEntry | undefined {
+  return LANGUAGE_REGISTRY.languages.find((l) => l.id === id);
+}
+
+/** Fixture languages that ship a Brand Package (excludes factory). */
+export function listSkinLanguages(): DesignLanguageEntry[] {
+  return LANGUAGE_REGISTRY.languages.filter((l) => l.brandPath != null);
+}

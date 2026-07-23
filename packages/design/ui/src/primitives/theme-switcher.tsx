@@ -137,8 +137,7 @@ export const ThemeSwitcher = ({
               className={cn(
                 "relative inline-flex h-full min-w-[var(--theme-switcher-option-min-width)] cursor-pointer items-center justify-center gap-[var(--theme-switcher-gap)] rounded-[var(--theme-switcher-option-radius)] px-[var(--theme-switcher-option-padding-x)] text-[length:var(--theme-switcher-font-size)] font-medium transition-[background-color,box-shadow,color,opacity] duration-[var(--theme-switcher-duration)] ease-[var(--theme-switcher-easing)]",
                 "hover:text-foreground has-[:focus-visible]:ring-[length:var(--theme-switcher-focus-ring-width)] has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-[length:var(--theme-switcher-focus-ring-offset)] has-[:focus-visible]:ring-offset-background",
-                checked &&
-                  "bg-background text-foreground shadow-[var(--elevation-control,var(--shadow-[var(--elevation-control)]))]",
+                checked && "bg-background text-foreground shadow-xs",
                 isReadOnly && "cursor-not-allowed opacity-60",
               )}
             >

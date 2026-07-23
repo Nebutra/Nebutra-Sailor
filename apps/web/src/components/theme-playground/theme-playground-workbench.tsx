@@ -20,7 +20,11 @@ import {
   Sparkles,
   Sun,
 } from "@nebutra/icons";
-import { THEME_REGISTRY, type ThemeRegistryEntry } from "@nebutra/theme/registry";
+import {
+  DEFAULT_THEME,
+  listThemesAsLegacyEntries,
+  type ThemeRegistryEntry,
+} from "@nebutra/theme/registry";
 import {
   Badge,
   Button,
@@ -502,7 +506,7 @@ function PreviewCanvas({
         {/* Viewport frame — centered, max-width clamps to selected device width.
             Switching the dropdown actually resizes the inner canvas. */}
         <div
-          data-theme={theme.id}
+          data-brand={theme.id === "factory" ? undefined : theme.id}
           data-mode={mode}
           data-surface={surface}
           style={{
@@ -906,7 +910,7 @@ function TokenInspector({
           <Select
             value={theme.id}
             onValueChange={(value) => {
-              const nextTheme = THEME_REGISTRY.themes.find((item) => item.id === value);
+              const nextTheme = listThemesAsLegacyEntries().find((item) => item.id === value);
               if (nextTheme) onThemeChange(nextTheme);
             }}
           >
@@ -914,7 +918,7 @@ function TokenInspector({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {THEME_REGISTRY.themes.map((item) => (
+              {listThemesAsLegacyEntries().map((item) => (
                 <SelectItem key={item.id} value={item.id}>
                   {item.name}
                 </SelectItem>
@@ -1059,8 +1063,8 @@ function makeImportedRegistryEntry(imported: ImportedTheme): ThemeRegistryEntry 
 export function ThemePlaygroundWorkbench() {
   const [selectedTheme, setSelectedTheme] = useState<ThemeRegistryEntry>(() => {
     const defaultTheme =
-      THEME_REGISTRY.themes.find((theme) => theme.id === THEME_REGISTRY.defaultTheme) ??
-      THEME_REGISTRY.themes[0];
+      listThemesAsLegacyEntries().find((theme) => theme.id === DEFAULT_THEME) ??
+      listThemesAsLegacyEntries()[0];
     if (!defaultTheme) {
       throw new Error("Theme registry is empty.");
     }
@@ -1111,7 +1115,7 @@ export function ThemePlaygroundWorkbench() {
       />
       <main className="theme-playground-layout min-h-0 flex-1 overflow-hidden border-border/70 border-t">
         <ThemeRegistryPanel
-          themes={THEME_REGISTRY.themes}
+          themes={listThemesAsLegacyEntries()}
           selectedTheme={selectedTheme}
           onSelect={setSelectedTheme}
           importedEntry={importedEntry}

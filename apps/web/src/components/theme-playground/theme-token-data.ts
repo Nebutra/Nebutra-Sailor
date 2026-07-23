@@ -1,66 +1,24 @@
-import { THEME_TOKEN_SETS, type ThemeTokenSetId } from "@nebutra/design-tokens/themes";
+/**
+ * Preview helpers for Theme Playground / Appearance.
+ *
+ * Multi-mood oklch THEME_TOKEN_SETS were removed. Previews use:
+ *   - MODE_TOKEN_SETS (light/dark product SSOT)
+ *   - Brand Package design languages (@nebutra/tokens/brands/*)
+ */
+import { MODE_TOKEN_SETS, type ModeTokenSetId } from "@nebutra/design-tokens/themes";
+import type { BrandPackage } from "@nebutra/tokens/brand-package";
+import gsapBrand from "@nebutra/tokens/brands/gsap/brand.json";
+import linearBrand from "@nebutra/tokens/brands/linear/brand.json";
+import notionBrand from "@nebutra/tokens/brands/notion/brand.json";
+import raycastBrand from "@nebutra/tokens/brands/raycast/brand.json";
+import stripeBrand from "@nebutra/tokens/brands/stripe/brand.json";
+import vantaBrand from "@nebutra/tokens/brands/vanta/brand.json";
+import vercelBrand from "@nebutra/tokens/brands/vercel/brand.json";
 import type { CSSProperties } from "react";
 
-/**
- * Estimate the perceptual lightness (0..1) of a CSS color value.
- *
- * Handles:
- *   - `oklch(L ...)` — extracts the L component directly.
- *   - `#rgb` / `#rrggbb` — converts to linear-light sRGB relative luminance.
- *   - `rgb(...)`/`rgba(...)` — same luminance from the channel values.
- *   - Anything else — returns 0.5 (neutral fallback).
- *
- * Exported so it can be unit-tested independently.
- */
-export function estimateLightness(value: string): number {
-  const trimmed = value.trim();
-
-  // ── oklch(L C H) ────────────────────────────────────────────────────────────
-  const oklchMatch = trimmed.match(/^oklch\(\s*([0-9.]+)/i);
-  if (oklchMatch) {
-    return Number.parseFloat(oklchMatch[1] ?? "0.5");
-  }
-
-  // ── hex: #rgb or #rrggbb ────────────────────────────────────────────────────
-  const hex3 = trimmed.match(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i);
-  if (hex3) {
-    const r = parseInt(`${hex3[1]}${hex3[1]}`, 16) / 255;
-    const g = parseInt(`${hex3[2]}${hex3[2]}`, 16) / 255;
-    const b = parseInt(`${hex3[3]}${hex3[3]}`, 16) / 255;
-    return linearLuminance(r, g, b);
-  }
-  const hex6 = trimmed.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
-  if (hex6) {
-    const r = parseInt(hex6[1] ?? "0", 16) / 255;
-    const g = parseInt(hex6[2] ?? "0", 16) / 255;
-    const b = parseInt(hex6[3] ?? "0", 16) / 255;
-    return linearLuminance(r, g, b);
-  }
-
-  // ── rgb(...) / rgba(...) ────────────────────────────────────────────────────
-  const rgbMatch = trimmed.match(/^rgba?\(\s*([0-9.]+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)/i);
-  if (rgbMatch) {
-    const r = Number.parseFloat(rgbMatch[1] ?? "0") / 255;
-    const g = Number.parseFloat(rgbMatch[2] ?? "0") / 255;
-    const b = Number.parseFloat(rgbMatch[3] ?? "0") / 255;
-    return linearLuminance(r, g, b);
-  }
-
-  return 0.5;
-}
-
-/** Linearise a single sRGB channel (0..1) and compute relative luminance. */
-function linearise(c: number): number {
-  return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
-}
-
-/** WCAG relative luminance: 0 = black, 1 = white. */
-function linearLuminance(r: number, g: number, b: number): number {
-  return 0.2126 * linearise(r) + 0.7152 * linearise(g) + 0.0722 * linearise(b);
-}
-
 export type ThemeMode = "light" | "dark";
-export type ThemeId = ThemeTokenSetId;
+/** Design language id or factory */
+export type ThemeId = string;
 
 type DtcgLeaf = { $value?: string; $type?: string };
 
@@ -76,63 +34,208 @@ export type ThemeTokenSet = {
 
 export type TokenRow = { name: string; value: string };
 
-const themeTokenSets = THEME_TOKEN_SETS as Record<ThemeId, ThemeTokenSet>;
-
-// Hard-coded status-color fallbacks for themes that don't declare them.
-const STATUS_COLOR_FALLBACKS: Record<string, string> = {
-  destructive: "hsl(0 84% 45%)",
-  "destructive-foreground": "hsl(0 0% 100%)",
-  success: "hsl(142 71% 36%)",
-  "success-foreground": "hsl(222 47% 4%)",
-  warning: "hsl(38 92% 50%)",
-  "warning-foreground": "hsl(222 47% 4%)",
-  info: "hsl(228 95% 67%)",
-  "info-foreground": "hsl(222 47% 4%)",
+const BRAND_PACKAGES: Record<string, BrandPackage> = {
+  linear: linearBrand as BrandPackage,
+  gsap: gsapBrand as BrandPackage,
+  raycast: raycastBrand as BrandPackage,
+  vercel: vercelBrand as BrandPackage,
+  vanta: vantaBrand as BrandPackage,
+  stripe: stripeBrand as BrandPackage,
+  notion: notionBrand as BrandPackage,
 };
 
-// Mode-default surface colors so a theme that only declares brand colors still
-// renders sensibly in light/dark. All in oklch so they compose with theme tokens.
-const MODE_SURFACE_FALLBACKS: Record<ThemeMode, Record<string, string>> = {
-  light: {
-    background: "oklch(1 0 0)",
-    foreground: "oklch(0.141 0.005 285.9)",
-    // Push card a hair darker than canvas so layering reads without a border.
-    card: "oklch(0.985 0 0)",
-    "card-foreground": "oklch(0.141 0.005 285.9)",
-    popover: "oklch(1 0 0)",
-    "popover-foreground": "oklch(0.141 0.005 285.9)",
-    muted: "oklch(0.965 0.001 286)",
-    "muted-foreground": "oklch(0.552 0.016 286)",
-    border: "oklch(0 0 0 / 0.06)",
-    input: "oklch(0 0 0 / 0.07)",
-    ring: "oklch(0.546 0.245 262.9)",
-  },
-  dark: {
-    // Linear / Vercel pattern (per industry research): 5–8% L step per
-    // elevation tier, hairline borders, OFF-white text (#E5E5E5 not pure
-    // white) to reduce eye strain. Four-tier surface system:
-    //   canvas → card → popover → muted/overlay
-    background: "oklch(0.16 0.005 285.9)", // ≈ #161616 — charcoal not pitch
-    // 2026-05 perf governance: foreground restored to pure white (was 0.93
-    // off-white per "WCAG eye-strain" rationale). The off-white reads "soft"
-    // / "blurry" for dashboard surfaces where you want CRISP numbers/labels.
-    // Pure white on a 0.16 charcoal is plenty contrast without strain.
-    foreground: "oklch(0.985 0 0)",
-    card: "oklch(0.215 0.005 285.9)", // +0.055 L = card lifts clearly
-    "card-foreground": "oklch(0.985 0 0)",
-    popover: "oklch(0.265 0.005 285.9)", // +0.05 L = nested tier
-    "popover-foreground": "oklch(0.985 0 0)",
-    muted: "oklch(0.305 0.005 285.9)",
-    "muted-foreground": "oklch(0.73 0.012 286)", // bumped from 0.7 for sharper secondary text
-    // Dark mode: border INVISIBLE. The 5% L bg-tier step alone defines edges.
-    // Stacking a 6% white hairline ON TOP of an already-visible bg-tier
-    // transition reads as "doubled line" — the literal "硬白线" complaint.
-    // Pick one edge cue, not both.
-    border: "transparent",
-    input: "oklch(1 0 0 / 0.06)",
-    ring: "oklch(0.546 0.245 262.9)",
-  },
-};
+const modeTokenSets = MODE_TOKEN_SETS as Record<ModeTokenSetId, ThemeTokenSet>;
+
+function channelsToCss(channels: string | undefined, fallback: string): string {
+  if (!channels) return fallback;
+  const v = channels.trim();
+  if (v.startsWith("#") || v.startsWith("hsl") || v.startsWith("oklch") || v.startsWith("rgb")) {
+    return v;
+  }
+  return `hsl(${v})`;
+}
+
+/**
+ * Estimate the perceptual lightness (0..1) of a CSS color value.
+ */
+export function estimateLightness(value: string): number {
+  const trimmed = value.trim();
+  const oklchMatch = trimmed.match(/^oklch\(\s*([0-9.]+)/i);
+  if (oklchMatch) {
+    return Number.parseFloat(oklchMatch[1] ?? "0.5");
+  }
+  const hex3 = trimmed.match(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i);
+  if (hex3) {
+    const r = parseInt(`${hex3[1]}${hex3[1]}`, 16) / 255;
+    const g = parseInt(`${hex3[2]}${hex3[2]}`, 16) / 255;
+    const b = parseInt(`${hex3[3]}${hex3[3]}`, 16) / 255;
+    return linearLuminance(r, g, b);
+  }
+  const hex6 = trimmed.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+  if (hex6) {
+    const r = parseInt(hex6[1] ?? "0", 16) / 255;
+    const g = parseInt(hex6[2] ?? "0", 16) / 255;
+    const b = parseInt(hex6[3] ?? "0", 16) / 255;
+    return linearLuminance(r, g, b);
+  }
+  const hslMatch = trimmed.match(/hsl\(\s*[\d.]+\s+[\d.]+%\s+([\d.]+)%/i);
+  if (hslMatch) {
+    return Number.parseFloat(hslMatch[1] ?? "50") / 100;
+  }
+  const rgbMatch = trimmed.match(/^rgba?\(\s*([0-9.]+)\s*,\s*([0-9.]+)\s*,\s*([0-9.]+)/i);
+  if (rgbMatch) {
+    const r = Number.parseFloat(rgbMatch[1] ?? "0") / 255;
+    const g = Number.parseFloat(rgbMatch[2] ?? "0") / 255;
+    const b = Number.parseFloat(rgbMatch[3] ?? "0") / 255;
+    return linearLuminance(r, g, b);
+  }
+  return 0.5;
+}
+
+function linearise(c: number): number {
+  return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+}
+
+function linearLuminance(r: number, g: number, b: number): number {
+  return 0.2126 * linearise(r) + 0.7152 * linearise(g) + 0.0722 * linearise(b);
+}
+
+function tokenValue(
+  group: Record<string, DtcgLeaf | undefined> | undefined,
+  key: string,
+): string | undefined {
+  const leaf = group?.[key];
+  return typeof leaf?.$value === "string" ? leaf.$value : undefined;
+}
+
+export function getSwatchesFromTokenSet(theme: ThemeTokenSet): string[] {
+  return [
+    tokenValue(theme.color, "primary"),
+    tokenValue(theme.color, "secondary"),
+    tokenValue(theme.color, "accent"),
+    tokenValue(theme.color, "background"),
+    tokenValue(theme.color, "card"),
+    tokenValue(theme.color, "border"),
+  ].filter((value): value is string => Boolean(value));
+}
+
+function swatchesFromBrand(brand: BrandPackage): string[] {
+  const s = brand.semantic;
+  return [
+    channelsToCss(s.primary, "#3b82f6"),
+    channelsToCss(s.secondary, "#e5e5e5"),
+    channelsToCss(s.accent, "#a3a3a3"),
+    channelsToCss(s.background, "#0a0a0a"),
+    channelsToCss(s.card, "#171717"),
+    channelsToCss(s.border, "#333333"),
+  ];
+}
+
+const FACTORY_SWATCHES = [
+  "hsl(228 85% 56%)",
+  "hsl(210 40% 96%)",
+  "hsl(210 40% 96%)",
+  "hsl(0 0% 100%)",
+  "hsl(0 0% 100%)",
+  "hsl(214 32% 91%)",
+];
+
+export function getThemeSwatches(themeId: string): string[] {
+  if (!themeId || themeId === "factory" || themeId === "default" || themeId === "nebutra") {
+    return FACTORY_SWATCHES;
+  }
+  const brand = BRAND_PACKAGES[themeId];
+  if (brand) return swatchesFromBrand(brand);
+  // light/dark mode token sets
+  if (themeId === "light" || themeId === "dark") {
+    return getSwatchesFromTokenSet(modeTokenSets[themeId]);
+  }
+  return FACTORY_SWATCHES;
+}
+
+function previewFromBrand(brand: BrandPackage): CSSProperties {
+  const s = brand.semantic;
+  const vars: Record<string, string> = {
+    "--color-primary": channelsToCss(s.primary, "#3b82f6"),
+    "--color-primary-foreground": channelsToCss(s.primaryForeground, "#fff"),
+    "--color-secondary": channelsToCss(s.secondary, "#e5e5e5"),
+    "--color-secondary-foreground": channelsToCss(s.secondaryForeground, "#111"),
+    "--color-accent": channelsToCss(s.accent, "#e5e5e5"),
+    "--color-accent-foreground": channelsToCss(s.accentForeground, "#111"),
+    "--color-background": channelsToCss(s.background, "#fff"),
+    "--color-foreground": channelsToCss(s.foreground, "#111"),
+    "--color-card": channelsToCss(s.card, "#fff"),
+    "--color-card-foreground": channelsToCss(s.cardForeground, "#111"),
+    "--color-muted": channelsToCss(s.muted, "#f5f5f5"),
+    "--color-muted-foreground": channelsToCss(s.mutedForeground, "#737373"),
+    "--color-border": channelsToCss(s.border, "#e5e5e5"),
+    "--color-input": channelsToCss(s.input, "#e5e5e5"),
+    "--color-ring": channelsToCss(s.ring, s.primary),
+    "--color-destructive": channelsToCss(s.destructive, "hsl(0 84% 45%)"),
+    "--color-destructive-foreground": channelsToCss(s.destructiveForeground, "#fff"),
+  };
+  return vars as CSSProperties;
+}
+
+export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSProperties {
+  if (themeId && BRAND_PACKAGES[themeId]) {
+    return previewFromBrand(BRAND_PACKAGES[themeId]);
+  }
+  // Factory / light-dark: use mode surfaces from MODE_TOKEN_SETS
+  const set = modeTokenSets[mode] ?? modeTokenSets.light;
+  const primary = tokenValue(set.color, "primary") ?? "hsl(228 85% 56%)";
+  const bg = tokenValue(set.color, "background") ?? (mode === "dark" ? "#0a0a0a" : "#ffffff");
+  const fg = tokenValue(set.color, "foreground") ?? (mode === "dark" ? "#fafafa" : "#0a0a0a");
+  const card = tokenValue(set.color, "card") ?? bg;
+  const border = tokenValue(set.color, "border") ?? (mode === "dark" ? "#27272a" : "#e4e4e7");
+  return {
+    "--color-primary": primary,
+    "--color-primary-foreground":
+      tokenValue(set.color, "primary-foreground") ?? (mode === "dark" ? "#0a0a0a" : "#ffffff"),
+    "--color-background": bg,
+    "--color-foreground": fg,
+    "--color-card": card,
+    "--color-card-foreground": tokenValue(set.color, "card-foreground") ?? fg,
+    "--color-border": border,
+    "--color-muted": tokenValue(set.color, "muted") ?? border,
+    "--color-muted-foreground": tokenValue(set.color, "muted-foreground") ?? fg,
+    "--color-secondary": tokenValue(set.color, "secondary") ?? border,
+    "--color-secondary-foreground": tokenValue(set.color, "secondary-foreground") ?? fg,
+    "--color-accent": tokenValue(set.color, "accent") ?? border,
+    "--color-accent-foreground": tokenValue(set.color, "accent-foreground") ?? fg,
+    "--color-input": tokenValue(set.color, "input") ?? border,
+    "--color-ring": tokenValue(set.color, "ring") ?? primary,
+  } as CSSProperties;
+}
+
+export function getTokenSet(themeId: string): ThemeTokenSet | undefined {
+  if (themeId === "light" || themeId === "dark") return modeTokenSets[themeId];
+  return undefined;
+}
+
+export function getTokenRows(themeId: string, mode: ThemeMode): TokenRow[] {
+  const style = getThemePreviewStyle(themeId, mode) as Record<string, string>;
+  return [
+    "--color-primary",
+    "--color-primary-foreground",
+    "--color-secondary",
+    "--color-accent",
+    "--color-background",
+    "--color-foreground",
+    "--color-card",
+    "--color-border",
+    "--color-muted",
+    "--color-ring",
+  ]
+    .filter((name) => style[name])
+    .map((name) => ({ name, value: style[name] as string }));
+}
+
+export function getBrandPackage(themeId: string): BrandPackage | undefined {
+  return BRAND_PACKAGES[themeId];
+}
+
+// ── Arbitrary ThemeTokenSet → CSS vars (DESIGN.md import / custom export) ──
 
 const SURFACE_COLOR_KEYS = [
   "background",
@@ -165,31 +268,58 @@ const BRAND_COLOR_KEYS = [
   "info-foreground",
 ] as const;
 
-function tokenValue(group: Record<string, DtcgLeaf | undefined> | undefined, key: string) {
-  return group?.[key]?.$value;
-}
+const STATUS_COLOR_FALLBACKS: Record<string, string> = {
+  destructive: "hsl(0 84% 45%)",
+  "destructive-foreground": "hsl(0 0% 100%)",
+  success: "hsl(142 71% 36%)",
+  "success-foreground": "hsl(222 47% 4%)",
+  warning: "hsl(38 92% 50%)",
+  "warning-foreground": "hsl(222 47% 4%)",
+  info: "hsl(228 95% 67%)",
+  "info-foreground": "hsl(222 47% 4%)",
+};
+
+const MODE_SURFACE_FALLBACKS: Record<ThemeMode, Record<string, string>> = {
+  light: {
+    background: "oklch(1 0 0)",
+    foreground: "oklch(0.141 0.005 285.9)",
+    card: "oklch(0.985 0 0)",
+    "card-foreground": "oklch(0.141 0.005 285.9)",
+    popover: "oklch(1 0 0)",
+    "popover-foreground": "oklch(0.141 0.005 285.9)",
+    muted: "oklch(0.965 0.001 286)",
+    "muted-foreground": "oklch(0.552 0.016 286)",
+    border: "oklch(0 0 0 / 0.06)",
+    input: "oklch(0 0 0 / 0.07)",
+    ring: "oklch(0.546 0.245 262.9)",
+  },
+  dark: {
+    background: "oklch(0.14 0.005 285.9)",
+    foreground: "oklch(0.985 0 0)",
+    card: "oklch(0.18 0.006 285.9)",
+    "card-foreground": "oklch(0.985 0 0)",
+    popover: "oklch(0.18 0.006 285.9)",
+    "popover-foreground": "oklch(0.985 0 0)",
+    muted: "oklch(0.24 0.006 286)",
+    "muted-foreground": "oklch(0.7 0.015 286)",
+    border: "oklch(1 0 0 / 0.1)",
+    input: "oklch(1 0 0 / 0.12)",
+    ring: "oklch(0.55 0.2 264)",
+  },
+};
 
 function setVar(target: Record<string, string>, name: string, value: string | undefined) {
   if (value) target[name] = value;
 }
 
 /**
- * Build a CSS-variables style object from an arbitrary ThemeTokenSet.
- * All surface/brand/radius/font/shadow logic lives here.
- * Called by getThemePreviewStyle (built-in themes) and the DESIGN.md bridge
- * (imported themes from Slice B onwards).
+ * Build a CSS-variables style object from an arbitrary ThemeTokenSet
+ * (DESIGN.md import preview, custom export path).
  */
 export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMode): CSSProperties {
   const surfaceFallback = MODE_SURFACE_FALLBACKS[mode];
   const vars: Record<string, string> = { colorScheme: mode };
 
-  // Surface precedence — three rules, in order:
-  //   1. DARK mode: fallback always wins (Linear-pattern dark uniform across themes).
-  //   2. LIGHT mode + theme is LIGHT-DESIGNED (theme.bg L > 0.5): theme wins
-  //      so its native multi-tier aesthetic (e.g. Vibrant cream/white/grey)
-  //      comes through.
-  //   3. LIGHT mode + theme is DARK-DESIGNED (Neon, Dark Dense): fallback wins
-  //      so user can still preview the theme's brand colors on a light surface.
   const themeBgValue = tokenValue(theme.color, "background");
   const themeIsLightDesigned = estimateLightness(themeBgValue ?? "") > 0.5;
   const themeWinsSurface = mode === "light" && themeIsLightDesigned;
@@ -202,10 +332,6 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
     setVar(vars, `--color-${key}`, value);
   }
 
-  // Brand colors stay theme-driven, but a theme can define a `-dark` variant
-  // (e.g. `primary-dark`) and that wins in dark mode — important for themes
-  // whose default primary was designed for one mode and disappears on the
-  // other (Minimal's near-black primary vanishes on a dark canvas).
   for (const key of BRAND_COLOR_KEYS) {
     const themeValue =
       (mode === "dark" ? tokenValue(theme.color, `${key}-dark`) : undefined) ??
@@ -213,57 +339,30 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
     setVar(vars, `--color-${key}`, themeValue ?? STATUS_COLOR_FALLBACKS[key]);
   }
 
-  // Optional brand gradient — themes that define one get a real Nebutra-style
-  // gradient CTA; themes that don't fall back to flat primary via CSS var().
-  // Dark mode prefers a dimmed variant if defined, because the light-mode
-  // cyan endpoint reads almost white on dark surfaces (looks like a stray line).
   const gradient =
     (mode === "dark" ? tokenValue(theme.color, "brand-gradient-dark") : undefined) ??
     tokenValue(theme.color, "brand-gradient");
-  setVar(vars, `--color-brand-gradient`, gradient);
+  setVar(vars, "--color-brand-gradient", gradient);
 
   for (const key of ["sm", "md", "lg", "xl", "full"]) {
     setVar(vars, `--radius-${key}`, tokenValue(theme.radius, key));
   }
 
-  // Always emit --font-sans and --font-heading so the preview wrapper fully
-  // shadows the app-global definitions — if the theme/import doesn't declare
-  // them, fall back to safe generic stacks so var() resolution stays inside the
-  // preview subtree and never leaks to the app's Geist / Noto globals.
   const resolvedSans =
     tokenValue(theme.fontFamily, "sans") ?? "ui-sans-serif, system-ui, -apple-system, sans-serif";
   vars["--font-sans"] = resolvedSans;
-
-  // --font-heading: use the theme value if present, otherwise mirror --font-sans
-  // so var(--font-heading) inside the preview resolves HERE and not to the
-  // app-global @layer base value.
-  const resolvedHeading = tokenValue(theme.fontFamily, "heading") ?? resolvedSans;
-  vars["--font-heading"] = resolvedHeading;
-
+  vars["--font-heading"] = tokenValue(theme.fontFamily, "heading") ?? resolvedSans;
   setVar(vars, "--font-mono", tokenValue(theme.fontFamily, "mono"));
 
   for (const key of ["sm", "md", "lg", "xl"]) {
     setVar(vars, `--shadow-${key}`, tokenValue(theme.shadow, key));
-  }
-
-  for (const key of ["sm", "md", "lg", "xl"]) {
     setVar(vars, `--spacing-${key}`, tokenValue(theme.spacing, key));
   }
 
-  // Type-scale — emitted so the preview canvas consumes them.
-  // --text-base  → applied to body <p> text in the preview.
-  // --text-heading → NOT applied to card <h3> titles (they are section labels,
-  //   not page-h1s; a 3rem import value would distort the card layout).
-  //   The var is emitted for completeness so downstream uses can opt in.
-  // --font-weight-heading → applied to card <h3> titles so an import with
-  //   fontWeight.heading 300 visibly lightens all section headings.
   setVar(vars, "--text-base", tokenValue(theme.fontSize, "base"));
   setVar(vars, "--text-heading", tokenValue(theme.fontSize, "heading"));
   setVar(vars, "--font-weight-heading", tokenValue(theme.fontWeight, "heading"));
 
-  // Edge tokens — mirror the global :root/.dark definitions (static/base.css)
-  // but injected as inline style so they work inside the playground canvas
-  // (which doesn't toggle the .dark class — it switches via inline colorScheme).
   if (mode === "dark") {
     vars["--edge-faint"] = "rgb(255 255 255 / 0.04)";
     vars["--edge-soft"] = "rgb(255 255 255 / 0.06)";
@@ -277,53 +376,4 @@ export function getPreviewStyleFromTokenSet(theme: ThemeTokenSet, mode: ThemeMod
   }
 
   return vars as CSSProperties;
-}
-
-export function getThemePreviewStyle(themeId: string, mode: ThemeMode): CSSProperties {
-  return getPreviewStyleFromTokenSet(
-    themeTokenSets[themeId as ThemeId] ?? themeTokenSets.nebutra,
-    mode,
-  );
-}
-
-export function getSwatchesFromTokenSet(theme: ThemeTokenSet): string[] {
-  return [
-    tokenValue(theme.color, "primary"),
-    tokenValue(theme.color, "secondary"),
-    tokenValue(theme.color, "accent"),
-    tokenValue(theme.color, "background"),
-    tokenValue(theme.color, "card"),
-    tokenValue(theme.color, "border"),
-  ].filter((value): value is string => Boolean(value));
-}
-
-export function getThemeSwatches(themeId: string): string[] {
-  const theme = themeTokenSets[themeId as ThemeId] ?? themeTokenSets.nebutra;
-  return getSwatchesFromTokenSet(theme);
-}
-
-/** Resolve a registry preset's DTCG token groups by id (undefined if unknown). */
-export function getTokenSet(themeId: string): ThemeTokenSet | undefined {
-  return themeTokenSets[themeId as ThemeId];
-}
-
-export function getTokenRows(themeId: string, mode: ThemeMode): TokenRow[] {
-  const style = getThemePreviewStyle(themeId, mode) as Record<string, string>;
-  return [
-    "--color-primary",
-    "--color-primary-foreground",
-    "--color-secondary",
-    "--color-accent",
-    "--color-background",
-    "--color-foreground",
-    "--color-card",
-    "--color-muted",
-    "--color-border",
-    "--color-ring",
-    "--radius-md",
-    "--font-sans",
-  ].flatMap((name) => {
-    const value = style[name];
-    return value ? [{ name, value }] : [];
-  });
 }

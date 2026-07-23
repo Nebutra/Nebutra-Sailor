@@ -1,46 +1,53 @@
 # @nebutra/theme
 
-CSS-only theme engine for Nebutra — Tailwind v4 `@theme` tokens, `data-theme` selectors, and a `next-themes` re-export.
+**Design-language catalog** for global product chrome swap (Create Center / multi-tenant SaaS).
 
-## Design Intent
+## What this is
 
-All visual theming in Nebutra is expressed as CSS custom properties scoped to `[data-theme="<id>"]` selectors defined in `themes.css`. There is no JavaScript theme object or runtime style computation. The `data-theme` attribute is toggled by `next-themes` (re-exported here as `ThemeProvider` and `useTheme`), making the theme system framework-agnostic at the CSS layer while remaining ergonomic in React apps.
+| Layer | Package | Role |
+|-------|---------|------|
+| Product SSOT | `@nebutra/tokens` | `styles.css` + `recipe.css` |
+| **Language swap** | **`@nebutra/theme`** | Brand Packages + `applyLanguage` + `skins.css` |
+| Components | `@nebutra/ui` | `--primary`, `--brand-mark`, `--elevation-*` |
 
-Apps import a single CSS file and a single provider — no per-component theme wiring required.
+A **design language** is a full Brand Package (roles + recipe + free elevation + zones + fonts).
 
-## Registry Contract
+> **Removed (2026.07):** 78 oklch “mood” presets under `[data-theme]`. They dual-wrote product chrome, looked generic, and fought the carrier model. Do not reintroduce them.
 
-Theme metadata is governed by `src/registry.json` and exported from `@nebutra/theme/registry`.
-Do not add new hard-coded theme arrays in apps, presets, docs, or CLI commands.
+## Quick start
 
-The registry is consumed by:
-
-- `@nebutra/design-tokens` build output (`themes.css`)
-- `@nebutra/preset` config validation
-- `nebutra theme list` and `nebutra theme inspect <id>`
-- future Figma/theme-playground publishing surfaces
-
-Each built-in theme must declare token path, install command, compatibility flags, WCAG target, required token coverage, and visual regression suites.
-
-## Usage
-
-```tsx
-// In your root layout
-import { ThemeProvider } from "@nebutra/theme";
-import "@nebutra/theme/themes.css";
-
-<ThemeProvider attribute="data-theme" defaultTheme="neon">
-  {children}
-</ThemeProvider>
+```css
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/tokens/recipe.css";
+@import "@nebutra/theme/skins.css"; /* multi-language, scoped to html[data-brand] */
 ```
 
-## Available Themes
+```ts
+import { applyLanguage, clearLanguage, LANGUAGE_REGISTRY } from "@nebutra/theme";
+import vanta from "@nebutra/tokens/brands/vanta/brand.json";
 
-`neon` | `gradient` | `dark-dense` | `minimal` | `vibrant` | `ocean`
-
-The `THEME_IDS` constant and `ThemeId` type are exported for use in theme switcher components.
+applyLanguage("vanta", { package: vanta, persist: true });
+clearLanguage(); // factory
+```
 
 ```bash
-nebutra theme list --format json
-nebutra theme inspect neon --format json
+nebutra theme list
+nebutra theme inspect vanta
 ```
+
+## Catalog
+
+| id | Proves |
+|----|--------|
+| factory | Default tokens SSOT |
+| linear | Chromatic solid CTA (dark) |
+| gsap | gradient-stroke / outline + zones |
+| raycast | action ≠ brand-mark + elev=key |
+| vercel | Light mono + elev=hairline |
+| vanta | Chromatic action≠brand + elev=none + pills |
+| stripe | Indigo action ≠ midnight brand + elev=none + 4px |
+| notion | Blue action ≠ ink brand + paper canvas + 8/12 radii |
+
+## `themes.css`
+
+Keyframes only. No color moods. Product colors never live here.

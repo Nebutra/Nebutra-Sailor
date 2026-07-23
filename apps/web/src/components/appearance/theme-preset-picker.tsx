@@ -1,7 +1,7 @@
 "use client";
 
 import { MagnifyingGlass } from "@nebutra/icons";
-import { THEME_REGISTRY } from "@nebutra/theme/registry";
+import { DEFAULT_THEME, listThemesAsLegacyEntries } from "@nebutra/theme/registry";
 import { Badge, Input } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
@@ -89,8 +89,8 @@ export function ThemePresetPicker() {
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    if (!normalized) return THEME_REGISTRY.themes;
-    return THEME_REGISTRY.themes.filter((theme) =>
+    if (!normalized) return listThemesAsLegacyEntries();
+    return listThemesAsLegacyEntries().filter((theme) =>
       `${theme.name} ${theme.id} ${theme.category} ${theme.mood}`
         .toLowerCase()
         .includes(normalized),
@@ -117,7 +117,7 @@ export function ThemePresetPicker() {
           active={defaultActive}
           name={t("default")}
           mood={t("defaultMood")}
-          swatches={getThemeSwatches(THEME_REGISTRY.defaultTheme)}
+          swatches={getThemeSwatches(DEFAULT_THEME)}
           tags={[]}
           onSelect={() => update({ theme: DEFAULT_ID, importedTheme: null })}
           activeLabel={t("active")}

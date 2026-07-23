@@ -29,12 +29,14 @@ const SIZE_MAP: Record<Size, { box: string; halo: string; glyph: string }> = {
 };
 
 /**
- * BrandMark — small branded visual primitive.
+ * BrandMark — small branded visual primitive (AI badge / empty-state anchor).
  *
- * The Nebutra equivalent of a Lovart-style mascot tile. Used as the visual
- * anchor for empty states, hero modules, and auth surfaces. Defaults to a
- * solid primary circle (semantic `--primary` so product skins recolor);
- * pass an icon child to embed a glyph. Identity logos use BrandLogo / VI assets.
+ * Binds **roles.brand** via `--brand-mark` / `--brand-mark-foreground`, never
+ * product CTA (`--primary` / roles.action). Skins and Brand Package override
+ * `--brand-mark` independently of buttons.
+ *
+ * Full VI lockups use `@nebutra/brand` Logo / LogomarkSVG (currentColor →
+ * `text-brand-mark` or VI assets).
  *
  * @example
  * ```tsx
@@ -62,7 +64,7 @@ export function BrandMark({
         <span
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute rounded-full bg-primary opacity-30 blur-2xl",
+            "pointer-events-none absolute rounded-full bg-brand-mark opacity-30 blur-2xl",
             sizes.halo,
           )}
         />
@@ -72,9 +74,8 @@ export function BrandMark({
         className={cn(
           "relative inline-flex items-center justify-center rounded-[var(--radius-2xl)]",
           sizes.box,
-          variant === "gradient" &&
-            "bg-primary text-primary-foreground shadow-[var(--elevation-card)]",
-          variant === "soft" && "bg-primary/10 text-primary dark:bg-primary/20",
+          variant === "gradient" && "bg-brand-mark text-brand-mark-foreground shadow-sm",
+          variant === "soft" && "bg-brand-mark/10 text-brand-mark dark:bg-brand-mark/20",
           variant === "outline" && "border border-border bg-background text-foreground",
         )}
       >

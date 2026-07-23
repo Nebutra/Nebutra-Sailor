@@ -22,7 +22,10 @@ base semantic CSS variables and the light/dark theme-provider surface.
 - Keep `THEME_IDS` and `DEFAULT_THEME` in `src/index.ts` aligned with the
   actual light/dark behavior implemented in `styles.css`.
 - This package owns the base light/dark token system only. Do not move named
-  product-theme presets here; those belong in `@nebutra/theme`.
+  product-mood presets here. **Design-language catalog & global swap** belong in
+  `@nebutra/theme` (`languages.json`, `applyLanguage`, `skins.css`). Brand Package
+  *engine* (compile / emit / normalize) stays in this package (`brand-package/`).
+  Legacy oklch moods are `[data-theme]`-only — never a second root `@theme` primary.
 - Preserve the package boundary between CSS tokens and component usage.
   `@nebutra/ui` and apps should consume the exported CSS surface rather than
   importing token internals.

@@ -1,0 +1,189 @@
+{
+  "id": "stripe",
+  "name": "Stripe",
+  "darkDefault": false,
+  "version": "1.0.0",
+  "roles": {
+    "canvas": "0 0% 100%",
+    "canvasForeground": "211 78% 11%",
+    "surface": "0 0% 100%",
+    "surfaceForeground": "211 78% 11%",
+    "action": "248 98% 61%",
+    "actionForeground": "0 0% 100%",
+    "quiet": "237 100% 95%",
+    "quietForeground": "248 98% 61%",
+    "muted": "216 56% 98%",
+    "mutedForeground": "217 17% 47%",
+    "border": "210 44% 93%",
+    "input": "0 0% 100%",
+    "ring": "248 98% 61%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "brand": "211 78% 11%",
+    "brandForeground": "0 0% 100%",
+    "info": "231 100% 73%",
+    "infoForeground": "211 78% 11%"
+  },
+  "semantic": {
+    "background": "0 0% 100%",
+    "foreground": "211 78% 11%",
+    "card": "0 0% 100%",
+    "cardForeground": "211 78% 11%",
+    "popover": "0 0% 100%",
+    "popoverForeground": "211 78% 11%",
+    "primary": "248 98% 61%",
+    "primaryForeground": "0 0% 100%",
+    "secondary": "237 100% 95%",
+    "secondaryForeground": "248 98% 61%",
+    "muted": "216 56% 98%",
+    "mutedForeground": "217 17% 47%",
+    "accent": "211 78% 11%",
+    "accentForeground": "0 0% 100%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "210 44% 93%",
+    "input": "0 0% 100%",
+    "ring": "248 98% 61%",
+    "info": "231 100% 73%",
+    "infoForeground": "211 78% 11%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "density": "comfortable",
+    "badgeDefault": "muted",
+    "radii": {
+      "button": "4px",
+      "card": "4px",
+      "badge": "9999px",
+      "input": "4px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "0 0 #0000",
+      "control": "0 0 #0000",
+      "raised": "0 0 #0000"
+    },
+    "buttonRadius": "4px",
+    "cardRadius": "4px",
+    "badgeRadius": "9999px",
+    "inputRadius": "4px",
+    "cardShadow": "0 0 #0000",
+    "outlineBorder": "#b9b9f9",
+    "elevation": "none"
+  },
+  "typography": {
+    "fontSans": "'sohne-var', 'Inter Tight', 'Inter', ui-sans-serif, system-ui, sans-serif",
+    "fontDisplay": "'sohne-var', 'Inter Tight', ui-sans-serif, system-ui, sans-serif",
+    "headingWeight": 300,
+    "faces": [
+      {
+        "family": "sohne-var",
+        "src": [
+          {
+            "url": "/brand-assets/sohne-var.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": "300 400",
+        "display": "swap"
+      }
+    ]
+  },
+  "zones": {
+    "product": {
+      "caption": {
+        "fontSize": "12px",
+        "lineHeight": 1.45,
+        "fontWeight": 300,
+        "letterSpacing": "-0.12px"
+      },
+      "bodySm": {
+        "fontSize": "14px",
+        "lineHeight": 1.4,
+        "fontWeight": 400,
+        "letterSpacing": "-0.14px"
+      },
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.2,
+        "fontWeight": 400,
+        "letterSpacing": "-0.16px"
+      },
+      "bodyLg": {
+        "fontSize": "20px",
+        "lineHeight": 1.4,
+        "fontWeight": 300,
+        "letterSpacing": "-0.2px"
+      },
+      "subheading": {
+        "fontSize": "22px",
+        "lineHeight": 1.1,
+        "fontWeight": 300,
+        "letterSpacing": "-0.22px"
+      },
+      "headingSm": {
+        "fontSize": "26px",
+        "lineHeight": 1.12,
+        "fontWeight": 300,
+        "letterSpacing": "-0.26px"
+      },
+      "heading": {
+        "fontSize": "32px",
+        "lineHeight": 1.1,
+        "fontWeight": 300,
+        "letterSpacing": "-0.64px"
+      }
+    },
+    "marketing": {
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.4,
+        "fontWeight": 300,
+        "letterSpacing": "-0.16px"
+      },
+      "heading": {
+        "fontSize": "32px",
+        "lineHeight": 1.1,
+        "fontWeight": 300,
+        "letterSpacing": "-0.64px"
+      },
+      "headingLg": {
+        "fontSize": "48px",
+        "lineHeight": 1.03,
+        "fontWeight": 300,
+        "letterSpacing": "-0.96px"
+      },
+      "display": {
+        "fontSize": "56px",
+        "lineHeight": 1.03,
+        "fontWeight": 300,
+        "letterSpacing": "-1.4px"
+      }
+    }
+  },
+  "extensions": {
+    "categories": {
+      "brand": "#061b31",
+      "action": "#533afd",
+      "link": "#533afd",
+      "hover": "#7389ff",
+      "ghostBorder": "#b9b9f9",
+      "wash": "#e8e9ff",
+      "deep": "#182659",
+      "smoke": "#839bc8",
+      "steel": "#50617a"
+    },
+    "decorative": {
+      "section-band": "#f8fafd",
+      "frost": "#e5edf5"
+    },
+    "sourceUrl": "https://stripe.com",
+    "notes": [
+      "roles.action = Indigo Ink filled CTA; roles.brand = Midnight Ink wordmark.",
+      "Elevation none — tint ladder + 1px frost rules; never box-shadow.",
+      "Control radius 4px (not pill); tags may stay full-pill.",
+      "Typography weight 300 is the product signature (Inter Tight substitute).",
+      "Pair solid CTA with ghost outline (lavender border) as secondary."
+    ]
+  }
+}

@@ -11,7 +11,7 @@ const Card = ({
   <div
     ref={ref}
     className={cn(
-      "rounded-[var(--radius-lg)] border border-border bg-card text-card-foreground shadow-[var(--elevation-card)]",
+      "rounded-[var(--radius-lg)] border border-border bg-card text-card-foreground shadow-sm",
       className,
     )}
     {...props}

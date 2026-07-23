@@ -1,4 +1,4 @@
-import { THEME_IDS as BUILT_IN_THEME_IDS, isThemeId } from "@nebutra/theme/registry";
+import { LANGUAGE_IDS as BUILT_IN_THEME_IDS, isThemeId } from "@nebutra/theme/registry";
 import { z } from "zod";
 import {
   type DeployTargetMap,
@@ -38,11 +38,12 @@ export const FeatureId = z.enum([
 
 export { BUILT_IN_THEME_IDS };
 
+/** Design language id (Brand Package swap) or "custom". Oklch moods removed. */
 export const ThemeId = z.string().superRefine((value, ctx) => {
   if (isThemeId(value)) return;
   ctx.addIssue({
     code: "custom",
-    message: `Unknown Nebutra theme '${value}'. Use one of: ${[...BUILT_IN_THEME_IDS, "custom"].join(", ")}`,
+    message: `Unknown design language '${value}'. Use one of: ${[...BUILT_IN_THEME_IDS, "custom"].join(", ")}`,
   });
 });
 
@@ -100,7 +101,7 @@ const DEFAULT_FEATURES: Record<z.infer<typeof FeatureId>, boolean> = {
 export const NebutraConfigSchema = z.object({
   apps: z.record(z.string(), z.boolean()).default(DEFAULT_APPS),
   features: z.record(z.string(), z.boolean()).default(DEFAULT_FEATURES),
-  theme: ThemeId.default("nebutra"),
+  theme: ThemeId.default("factory"),
   locales: z.array(z.string()).default(["en"]),
   defaultLocale: z.string().default("en"),
   apiProtocols: z.array(ApiProtocolId).default(["rest"]),

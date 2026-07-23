@@ -1,0 +1,188 @@
+{
+  "$schema": "https://nebutra.com/schemas/design-language-registry.json",
+  "version": "2026.07",
+  "defaultLanguage": "factory",
+  "description": "Design-language catalog for global product chrome swap (Create Center / SaaS theme). Not color moods — full Brand Packages (roles + recipe + elev + zones).",
+  "languages": [
+    {
+      "id": "factory",
+      "name": "Nebutra Factory",
+      "kind": "design-language",
+      "description": "Default product chrome from @nebutra/tokens (no skin). Clear data-brand to restore.",
+      "proves": ["factory HSL SSOT", "recipe defaults", "action≡brand-mark until skin"],
+      "darkDefault": true,
+      "brandPath": null,
+      "skinPath": null,
+      "install": {
+        "command": "nebutra theme use factory",
+        "cssImport": null
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "linear",
+      "name": "Linear",
+      "kind": "design-language",
+      "description": "Dark void canvas, solid acid-lime filled CTA, compact density.",
+      "proves": ["chromatic solid action", "dark product chrome"],
+      "darkDefault": true,
+      "brandPath": "brands/linear/brand.json",
+      "skinPath": "skins/linear.css",
+      "install": {
+        "command": "nebutra theme use linear",
+        "cssImport": "@nebutra/tokens/skins/linear.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "gsap",
+      "name": "GSAP",
+      "kind": "design-language",
+      "description": "Dark cream-on-void; shockingly-green is accent — CTA is gradient-stroke/outline, not solid green fill.",
+      "proves": [
+        "outline / gradient-stroke recipe",
+        "category extensions",
+        "marketing display zone"
+      ],
+      "darkDefault": true,
+      "brandPath": "brands/gsap/brand.json",
+      "skinPath": "skins/gsap.css",
+      "install": {
+        "command": "nebutra theme use gsap",
+        "cssImport": "@nebutra/tokens/skins/gsap.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "raycast",
+      "name": "Raycast",
+      "kind": "design-language",
+      "description": "Neutral Mist/Iron filled CTA; Coral is brand-mark only. Key elevation stack.",
+      "proves": ["action ≠ brand-mark", "elevation=key free CSS"],
+      "darkDefault": true,
+      "brandPath": "brands/raycast/brand.json",
+      "skinPath": "skins/raycast.css",
+      "install": {
+        "command": "nebutra theme use raycast",
+        "cssImport": "@nebutra/tokens/skins/raycast.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "kind": "design-language",
+      "description": "Light monochrome paper; Obsidian solid CTA; hairline ring elevation (no chromatic CTA).",
+      "proves": ["light monochrome action", "elevation=hairline"],
+      "darkDefault": false,
+      "brandPath": "brands/vercel/brand.json",
+      "skinPath": "skins/vercel.css",
+      "install": {
+        "command": "nebutra theme use vercel",
+        "cssImport": "@nebutra/tokens/skins/vercel.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "vanta",
+      "name": "Vanta",
+      "kind": "design-language",
+      "description": "Editorial violet on parchment; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
+      "proves": [
+        "action ≠ brand-mark (chromatic)",
+        "elevation=none border-only",
+        "999px pill controls",
+        "serif display + sans UI zones"
+      ],
+      "darkDefault": false,
+      "brandPath": "brands/vanta/brand.json",
+      "skinPath": "skins/vanta.css",
+      "install": {
+        "command": "nebutra theme use vanta",
+        "cssImport": "@nebutra/tokens/skins/vanta.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "kind": "design-language",
+      "description": "Indigo-ink ledger on frost glass; Indigo action ≠ Midnight brand-mark; 4px controls; elevation=none (tint + frost rules).",
+      "proves": [
+        "action ≠ brand-mark (chromatic indigo vs midnight)",
+        "elevation=none tint-ladder depth",
+        "4px squared controls (not pill)",
+        "whisper heading weight 300"
+      ],
+      "darkDefault": false,
+      "brandPath": "brands/stripe/brand.json",
+      "skinPath": "skins/stripe.css",
+      "install": {
+        "command": "nebutra theme use stripe",
+        "cssImport": "@nebutra/tokens/skins/stripe.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "kind": "design-language",
+      "description": "Warm paper notebook; Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
+      "proves": [
+        "action ≠ brand-mark (blue vs ink)",
+        "canvas≠card (paper-warmth vs pure-white)",
+        "elevation=none content cards + raised nav shadow slot",
+        "table radius priority (8/12 over tertiary 4px)",
+        "decorative accents never product CTA"
+      ],
+      "darkDefault": false,
+      "brandPath": "brands/notion/brand.json",
+      "skinPath": "skins/notion.css",
+      "install": {
+        "command": "nebutra theme use notion",
+        "cssImport": "@nebutra/tokens/skins/notion.css"
+      },
+      "compatibility": {
+        "tailwind": "4",
+        "cssVariables": true,
+        "brandPackage": true,
+        "dataBrand": true
+      }
+    }
+  ]
+}

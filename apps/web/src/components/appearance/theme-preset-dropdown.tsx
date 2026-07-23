@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, ChevronDown, MagnifyingGlass } from "@nebutra/icons";
-import { THEME_REGISTRY } from "@nebutra/theme/registry";
+import { DEFAULT_THEME, listThemesAsLegacyEntries } from "@nebutra/theme/registry";
 import { Input, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
@@ -45,7 +45,7 @@ export function ThemePresetDropdown() {
 
   const hasImported = Boolean(state.importedTheme);
   const isDefault = !hasImported && (!state.theme || state.theme === DEFAULT_ID);
-  const activeRegistry = THEME_REGISTRY.themes.find((theme) => theme.id === state.theme);
+  const activeRegistry = listThemesAsLegacyEntries().find((theme) => theme.id === state.theme);
 
   const activeLabel = hasImported
     ? (state.importedTheme?.name ?? tEditor("custom"))
@@ -55,12 +55,12 @@ export function ThemePresetDropdown() {
 
   const triggerSwatches = hasImported
     ? getSwatchesFromTokenSet(state.importedTheme?.tokenSet as unknown as ThemeTokenSet)
-    : getThemeSwatches(isDefault ? THEME_REGISTRY.defaultTheme : state.theme);
+    : getThemeSwatches(isDefault ? DEFAULT_THEME : state.theme);
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    if (!normalized) return THEME_REGISTRY.themes;
-    return THEME_REGISTRY.themes.filter((theme) =>
+    if (!normalized) return listThemesAsLegacyEntries();
+    return listThemesAsLegacyEntries().filter((theme) =>
       `${theme.name} ${theme.id} ${theme.category} ${theme.mood}`
         .toLowerCase()
         .includes(normalized),
@@ -101,7 +101,7 @@ export function ThemePresetDropdown() {
             active={isDefault}
             label={t("default")}
             mood={t("defaultMood")}
-            swatches={getThemeSwatches(THEME_REGISTRY.defaultTheme)}
+            swatches={getThemeSwatches(DEFAULT_THEME)}
             onSelect={() => select(DEFAULT_ID)}
           />
           {filtered.map((theme) => (

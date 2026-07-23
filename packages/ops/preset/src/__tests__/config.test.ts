@@ -11,7 +11,7 @@ import {
 describe("NebutraConfigSchema", () => {
   it("parses minimal config with defaults", () => {
     const result = NebutraConfigSchema.parse({});
-    expect(result.theme).toBe("nebutra");
+    expect(result.theme).toBe("factory");
     expect(result.locales).toEqual(["en"]);
     expect(result.defaultLocale).toBe("en");
     expect(result.deployTargets.web).toBe("vercel");
@@ -27,11 +27,11 @@ describe("NebutraConfigSchema", () => {
       apps: { web: true, blog: false },
       features: { billing: true, web3: false },
       deployTargets: { gateway: "k8s", "python-ai": "aws" },
-      theme: "vibrant",
+      theme: "vanta",
       locales: ["en", "zh"],
       defaultLocale: "zh",
     });
-    expect(result.theme).toBe("vibrant");
+    expect(result.theme).toBe("vanta");
     expect(result.locales).toEqual(["en", "zh"]);
     expect(result.defaultLocale).toBe("zh");
     expect(result.apps).toEqual({ web: true, blog: false });
@@ -96,13 +96,12 @@ describe("FeatureId", () => {
 });
 
 describe("ThemeId", () => {
-  it("accepts built-in theme IDs from the shared registry and custom themes", () => {
-    // Don't hardcode the full registry list — it grows as themes are added
-    // (e.g. the 70+ community themes). Assert the registry is non-empty, still
-    // contains the core brand themes, and that every registered id + "custom"
-    // validates through ThemeId.
+  it("accepts design language IDs and custom", () => {
     expect(BUILT_IN_THEME_IDS.length).toBeGreaterThan(0);
-    expect(BUILT_IN_THEME_IDS).toEqual(expect.arrayContaining(["nebutra", "dark-dense"]));
+    expect(BUILT_IN_THEME_IDS).toEqual(
+      expect.arrayContaining(["factory", "linear", "vanta", "raycast"]),
+    );
+    expect(BUILT_IN_THEME_IDS).not.toContain("vibrant");
     for (const id of [...BUILT_IN_THEME_IDS, "custom"]) {
       expect(ThemeId.parse(id)).toBe(id);
     }
@@ -124,13 +123,13 @@ describe("NebutraConfigSchema — brandConfigPath", () => {
 describe("defineConfig", () => {
   it("returns parsed config with defaults", () => {
     const config = defineConfig({});
-    expect(config.theme).toBe("nebutra");
+    expect(config.theme).toBe("factory");
     expect(Object.values(config.apps).every(Boolean)).toBe(true);
   });
 
   it("accepts partial overrides", () => {
-    const config = defineConfig({ theme: "vibrant", deployTargets: { gateway: "aws" } });
-    expect(config.theme).toBe("vibrant");
+    const config = defineConfig({ theme: "linear", deployTargets: { gateway: "aws" } });
+    expect(config.theme).toBe("linear");
     expect(config.deployTargets.gateway).toBe("aws");
     expect(config.deployTargets.web).toBe("vercel");
   });

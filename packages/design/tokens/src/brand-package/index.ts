@@ -9,14 +9,24 @@ export {
   restorePersistedBrand,
 } from "./apply-brand";
 export { compileReferoTokens } from "./compile-refero";
-export { emitBrandCss } from "./emit-css";
+export { type EmitBrandCssMode, type EmitBrandCssOptions, emitBrandCss } from "./emit-css";
 export { hexToHslChannels, tryHexToHsl } from "./hex-to-hsl";
 export { type InferredRecipeHints, inferRecipeFromDesignMd } from "./infer-recipe";
+export {
+  elevationPresetToTokens,
+  normalizeBrandPackage,
+  rolesFromSemantic,
+  semanticFromRoles,
+} from "./normalize";
 export type {
+  BadgeDefaultStyle,
+  BrandColorRoles,
+  BrandElevationTokens,
   BrandExtensions,
   BrandFontFace,
   BrandFontSource,
   BrandPackage,
+  BrandRadii,
   BrandRecipe,
   BrandSemanticColors,
   BrandTypeStep,

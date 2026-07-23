@@ -1,0 +1,195 @@
+{
+  "id": "notion",
+  "name": "Notion",
+  "darkDefault": false,
+  "version": "1.0.0",
+  "roles": {
+    "canvas": "30 10% 96%",
+    "canvasForeground": "0 0% 0%",
+    "surface": "0 0% 100%",
+    "surfaceForeground": "0 0% 0%",
+    "action": "208 100% 44%",
+    "actionForeground": "0 0% 100%",
+    "quiet": "208 92% 95%",
+    "quietForeground": "208 100% 44%",
+    "muted": "208 92% 95%",
+    "mutedForeground": "0 0% 46%",
+    "border": "30 5% 88%",
+    "input": "0 0% 100%",
+    "ring": "208 100% 44%",
+    "destructive": "7 92% 58%",
+    "destructiveForeground": "0 0% 100%",
+    "brand": "0 0% 0%",
+    "brandForeground": "0 0% 100%",
+    "warning": "40 100% 53%",
+    "warningForeground": "0 0% 0%",
+    "info": "208 93% 47%",
+    "infoForeground": "0 0% 100%"
+  },
+  "semantic": {
+    "background": "30 10% 96%",
+    "foreground": "0 0% 0%",
+    "card": "0 0% 100%",
+    "cardForeground": "0 0% 0%",
+    "popover": "0 0% 100%",
+    "popoverForeground": "0 0% 0%",
+    "primary": "208 100% 44%",
+    "primaryForeground": "0 0% 100%",
+    "secondary": "208 92% 95%",
+    "secondaryForeground": "208 100% 44%",
+    "muted": "208 92% 95%",
+    "mutedForeground": "0 0% 46%",
+    "accent": "0 0% 0%",
+    "accentForeground": "0 0% 100%",
+    "destructive": "7 92% 58%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "30 5% 88%",
+    "input": "0 0% 100%",
+    "ring": "208 100% 44%",
+    "warning": "40 100% 53%",
+    "warningForeground": "0 0% 0%",
+    "info": "208 93% 47%",
+    "infoForeground": "0 0% 100%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "density": "comfortable",
+    "badgeDefault": "muted",
+    "radii": {
+      "button": "8px",
+      "card": "12px",
+      "badge": "9999px",
+      "input": "8px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "0 0 #0000",
+      "control": "0 0 #0000",
+      "raised": "0px 0.7px 1.462px 0px rgb(0 0 0 / 0.015), 0px 3px 9px 0px rgb(0 0 0 / 0.03)"
+    },
+    "buttonRadius": "8px",
+    "cardRadius": "12px",
+    "badgeRadius": "9999px",
+    "inputRadius": "8px",
+    "cardShadow": "0 0 #0000",
+    "outlineBorder": "#000000",
+    "elevation": "none"
+  },
+  "typography": {
+    "fontSans": "'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif",
+    "fontDisplay": "'NotionInter', 'Inter', ui-sans-serif, system-ui, sans-serif",
+    "headingWeight": 700,
+    "faces": [
+      {
+        "family": "NotionInter",
+        "src": [
+          {
+            "url": "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": "100 900",
+        "display": "swap"
+      },
+      {
+        "family": "Lyon Text",
+        "src": [
+          {
+            "url": "/brand-assets/lyon-text-regular.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": 400,
+        "display": "swap"
+      }
+    ]
+  },
+  "zones": {
+    "product": {
+      "caption": {
+        "fontSize": "12px",
+        "lineHeight": 1.33,
+        "fontWeight": 500,
+        "letterSpacing": "0.12px"
+      },
+      "bodySm": {
+        "fontSize": "14px",
+        "lineHeight": 1.43,
+        "fontWeight": 500
+      },
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "fontWeight": 400
+      },
+      "subheading": {
+        "fontSize": "20px",
+        "lineHeight": 1,
+        "fontWeight": 500
+      },
+      "headingSm": {
+        "fontSize": "22px",
+        "lineHeight": 1.27,
+        "fontWeight": 600,
+        "letterSpacing": "-0.242px"
+      },
+      "heading": {
+        "fontSize": "40px",
+        "lineHeight": 1.5,
+        "fontWeight": 600
+      }
+    },
+    "marketing": {
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "fontWeight": 400
+      },
+      "heading": {
+        "fontSize": "48px",
+        "lineHeight": 1.5,
+        "fontWeight": 700
+      },
+      "headingLg": {
+        "fontSize": "54px",
+        "lineHeight": 1.04,
+        "fontWeight": 700,
+        "letterSpacing": "-1.89px"
+      },
+      "display": {
+        "fontSize": "72px",
+        "lineHeight": 1.21,
+        "fontWeight": 700,
+        "letterSpacing": "-2.016px"
+      }
+    }
+  },
+  "extensions": {
+    "categories": {
+      "brand": "#000000",
+      "action": "#0075de",
+      "ghost": "#e6f3fe",
+      "marigold": "#ffb110",
+      "coral": "#f64932",
+      "midnight": "#02093a",
+      "charcoal": "#111111",
+      "graphite": "#615d59"
+    },
+    "decorative": {
+      "marigold": "#ffb110",
+      "coral": "#f64932",
+      "saffron": "#e89d01",
+      "sky-wash": "#62aef0",
+      "midnight": "#02093a"
+    },
+    "sourceUrl": "https://notion.so",
+    "notes": [
+      "roles.action = Notion Blue (only filled CTA). Accent hues are decorative card washes.",
+      "roles.brand = Ink Black (logo / wordmark / text hierarchy via alpha).",
+      "Canvas = Paper Warmth; cards = Pure White — never invert.",
+      "Card elev=none + hairline border; sticky nav soft shadow → elevation raised slot.",
+      "Buttons 8px, cards 12px, pills 9999px.",
+      "Lyon Text is editorial accent only — not product chrome UI."
+    ]
+  }
+}

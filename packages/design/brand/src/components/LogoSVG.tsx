@@ -4,13 +4,21 @@
  * These components render SVG paths directly in JSX (no <img> tag, no public folder).
  * All paths use fill="currentColor" so they respond to CSS `color` / Tailwind text-* classes.
  *
+ * Product chrome default: `text-brand-mark` (roles.brand via recipe.css). Do **not**
+ * paint logos with `text-primary` / CTA action — that is roles.action only.
+ * Override with `text-white` / `text-foreground` for inverse surfaces.
+ *
  * Source assets: packages/design/brand/assets/logo/
  *
  * Usage:
- *   <LogomarkSVG className="text-white w-8 h-8" />
+ *   <LogomarkSVG className="w-8 h-8" />                 // brand-mark
+ *   <LogomarkSVG className="text-white w-8 h-8" />      // inverse
  *   <WordmarkEnSVG className="text-white" width={150} />
- *   <LogoEnSVG className="text-white" width={160} />
+ *   <LogoEnSVG width={160} />
  */
+
+/** Default logo fill = brand-mark (not product CTA primary). */
+const LOGO_MARK_CLASS = "text-brand-mark";
 
 interface SVGProps {
   className?: string;
@@ -48,6 +56,7 @@ export function LogomarkSVG({
   height = 32,
   "aria-label": ariaLabel,
 }: SVGProps) {
+  const mergedClass = className ? `${LOGO_MARK_CLASS} ${className}` : LOGO_MARK_CLASS;
   if (ariaLabel) {
     return (
       <svg
@@ -55,7 +64,7 @@ export function LogomarkSVG({
         viewBox="0 0 535.71 500"
         width={width}
         height={height}
-        className={className}
+        className={mergedClass}
         aria-label={ariaLabel}
         role="img"
         fill="currentColor"
@@ -70,7 +79,7 @@ export function LogomarkSVG({
       viewBox="0 0 535.71 500"
       width={width}
       height={height}
-      className={className}
+      className={mergedClass}
       aria-hidden="true"
       role="img"
       fill="currentColor"
@@ -142,6 +151,7 @@ export function WordmarkEnSVG({
   "aria-label": ariaLabel,
 }: SVGProps) {
   const computedHeight = height ?? Math.round((width * 103.74) / 544.21);
+  const mergedClass = className ? `${LOGO_MARK_CLASS} ${className}` : LOGO_MARK_CLASS;
   if (ariaLabel) {
     return (
       <svg
@@ -149,7 +159,7 @@ export function WordmarkEnSVG({
         viewBox="0 0 544.21 103.74"
         width={width}
         height={computedHeight}
-        className={className}
+        className={mergedClass}
         aria-label={ariaLabel}
         role="img"
         fill="currentColor"
@@ -164,7 +174,7 @@ export function WordmarkEnSVG({
       viewBox="0 0 544.21 103.74"
       width={width}
       height={computedHeight}
-      className={className}
+      className={mergedClass}
       aria-hidden="true"
       role="img"
       fill="currentColor"
@@ -194,6 +204,7 @@ export function LogoEnSVG({
   const logomarkW = Math.round(h * logomarkAspect);
   const wordmarkW = Math.round(h * wordmarkAspect);
   const totalW = logomarkW + gap + wordmarkW;
+  const mergedClass = className ? `${LOGO_MARK_CLASS} ${className}` : LOGO_MARK_CLASS;
 
   const children = (
     <>
@@ -216,7 +227,7 @@ export function LogoEnSVG({
         viewBox={`0 0 ${totalW} ${h}`}
         width={totalW}
         height={h}
-        className={className}
+        className={mergedClass}
         aria-label={ariaLabel}
         role="img"
       >
@@ -230,7 +241,7 @@ export function LogoEnSVG({
       viewBox={`0 0 ${totalW} ${h}`}
       width={totalW}
       height={h}
-      className={className}
+      className={mergedClass}
       aria-hidden="true"
       role="img"
     >

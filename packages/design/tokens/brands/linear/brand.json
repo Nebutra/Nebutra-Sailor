@@ -8,7 +8,7 @@
     "foreground": "0 0% 100%",
     "card": "210 6% 6%",
     "cardForeground": "0 0% 100%",
-    "popover": "210 4% 9%",
+    "popover": "210 6% 6%",
     "popoverForeground": "0 0% 100%",
     "primary": "64 89% 54%",
     "primaryForeground": "210 11% 4%",
@@ -17,7 +17,7 @@
     "muted": "210 4% 9%",
     "mutedForeground": "218 5% 41%",
     "accent": "223 9% 15%",
-    "accentForeground": "64 89% 54%",
+    "accentForeground": "210 11% 4%",
     "destructive": "0 79% 63%",
     "destructiveForeground": "0 0% 100%",
     "border": "223 9% 15%",
@@ -33,7 +33,23 @@
     "buttonRadius": "6px",
     "cardRadius": "12px",
     "elevation": "soft",
-    "density": "compact"
+    "density": "compact",
+    "badgeDefault": "match-action",
+    "radii": {
+      "button": "6px",
+      "card": "12px",
+      "badge": "9999px",
+      "input": "6px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))",
+      "control": "var(--shadow-xs, 0 1px 2px 0 rgb(0 0 0 / 0.04))",
+      "raised": "var(--shadow-md, 0 4px 6px -1px rgb(0 0 0 / 0.1))"
+    },
+    "badgeRadius": "9999px",
+    "inputRadius": "6px",
+    "cardShadow": "var(--shadow-sm, 0 1px 2px 0 rgb(0 0 0 / 0.05))"
   },
   "typography": {
     "fontSans": "'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif",
@@ -111,5 +127,27 @@
   "extensions": {
     "sourceUrl": "https://linear.app",
     "notes": ["Solid acid-lime CTA; product chrome only."]
+  },
+  "roles": {
+    "canvas": "210 11% 4%",
+    "canvasForeground": "0 0% 100%",
+    "surface": "210 6% 6%",
+    "surfaceForeground": "0 0% 100%",
+    "action": "64 89% 54%",
+    "actionForeground": "210 11% 4%",
+    "brandForeground": "210 11% 4%",
+    "quiet": "223 9% 15%",
+    "quietForeground": "218 21% 85%",
+    "muted": "210 4% 9%",
+    "mutedForeground": "218 5% 41%",
+    "border": "223 9% 15%",
+    "input": "223 9% 15%",
+    "ring": "64 89% 54%",
+    "destructive": "0 79% 63%",
+    "destructiveForeground": "0 0% 100%",
+    "success": "134 62% 40%",
+    "successForeground": "0 0% 100%",
+    "info": "186 98% 40%",
+    "infoForeground": "0 0% 100%"
   }
 }

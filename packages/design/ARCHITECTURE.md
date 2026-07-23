@@ -60,7 +60,9 @@ Paths live only in `packages/design/ui/src/styles/sources.css`.
 | Semantic HSL values (light/dark) | `packages/design/design-tokens/tokens/themes/{light,dark}.json` |
 | Palette scales | `packages/design/design-tokens/tokens/core.json` |
 | Runtime CSS apps load | `packages/design/tokens/styles.css` (generated) |
-| Optional multi-mood SaaS themes | `@nebutra/theme` + `[data-theme]` (same *names*, different values) |
+| **Design-language swap (Create Center)** | `@nebutra/theme` languages + Brand Package skins (`data-brand`) |
+
+> Multi-mood oklch `[data-theme]` catalog **deleted** (2026.07) — dual-truth + weak aesthetics.
 
 Rebuild after token JSON edits:
 
@@ -69,22 +71,64 @@ node packages/design/design-tokens/style-dictionary.config.mjs
 node packages/design/tokens/scripts/sync-styles.mjs
 ```
 
-## 4. Brand Package / Create Center swap (acceptance test)
+## 4. Brand Package — carrier contract (Create Center)
 
-Users (Create Center) apply a **Brand Package**, not a one-off hex edit:
+The design system is a **host** for third-party design languages, not a preset zoo.
+Create Center fills a **Brand Package**; components only read CSS variables.
+
+### Color roles (required)
+
+| Role | CSS | Meaning |
+|------|-----|---------|
+| `action` / `actionForeground` | `--primary` | **Product CTA only** (Button default) |
+| `brand` / `brandForeground` | `--brand-mark` | Logo/mark accent — **never** default CTA |
+| `canvas` / `surface` | `--background` / `--card` | Surfaces |
+| `quiet` / `muted` / `border` | secondary/muted/border | Quiet UI |
+
+`semantic` (shadcn bridge) is **derived**: `primary ≡ action`. Do not map brand mark into primary.
+
+### Recipe (required)
+
+| Field | Meaning |
+|-------|---------|
+| `buttonDefault` | `solid` \| `outline` \| `gradient-stroke` |
+| `radii.{button,card,badge,input,pill}` | Shape slots |
+| `elevationTokens.{card,control,raised}` | **Free CSS** `box-shadow` (any key/hairline/none stack) |
+| `badgeDefault` | may diverge from action (`muted` / `brand` / …) |
+| `density` | compact / comfortable / spacious |
+
+Elevation *presets* (`key`, `hairline`, …) are only shortcuts that expand into `elevationTokens`.
+
+### Zones
+
+`data-zone="product"` — app shell (no marketing display).  
+`data-zone="marketing"` — hero / large type / decorative vars only.
+
+### Fixtures (proof of contract, not the product)
+
+| Language (`@nebutra/theme`) | Proves |
+|----------------------------|--------|
+| factory | tokens SSOT, no skin |
+| linear | chromatic solid action |
+| gsap | stroke CTA + taxonomy extensions |
+| raycast | **action ≠ brand** (Mist CTA, Coral mark) + free key elev |
+| vercel | light monochrome + free hairline elev |
+| vanta | chromatic action≠brand + elev=none + full pills + dual fonts |
+| stripe | chromatic indigo action ≠ midnight brand + elev=none + 4px whisper type |
+| notion | single blue CTA ≠ ink brand + paper≠card + elev=none + decorative accents |
 
 ```
-Refero tokens.json + DESIGN.md
-  → compileReferoTokens()  (@nebutra/tokens/brand-package)
-  → brand.json + skin.css
-  → @import skin  (semantic + --btn-default-* recipe)
-  → Button / product chrome recolors & restyles without call-site edits
+Refero / design-sync / Desktop DS export
+  → compileReferoTokens() → BrandPackage
+  → brands/<id>/brand.json + skins/<id>.css
+  → languages.json entry + theme sync:skins → skins.css catalog
+  → applyLanguage(id) | data-brand | @import single skin
+  → components recolor without call-site edits
 ```
 
-| Fixture | Recipe | Proves |
-|---------|--------|--------|
-| `skins/linear.css` | solid CTA + product/marketing zones | color + primary pair |
-| `skins/gsap.css` | gradient-stroke, pill, Mori faces, 224px marketing | **recipe + fonts + zones** |
+**`@nebutra/theme` positioning:** this *is* the global theme-swap product.  
+Stress-testing external DS languages is how we extend the **carrier**, not how we
+accumulate one-off skins forever.
 
 ```css
 @import "@nebutra/ui/styles/preset.css"; /* includes recipe.css */

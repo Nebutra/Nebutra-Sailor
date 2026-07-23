@@ -18,8 +18,8 @@ import "server-only";
 
 import { serializeToDesignMd, serializeToPreviewHtml } from "@nebutra/design-sync";
 import { importFromDesignMd } from "@nebutra/design-sync/design-md";
-import { BASE_TOKEN_SETS, THEME_TOKEN_SETS } from "@nebutra/design-tokens/themes";
-import { THEME_REGISTRY } from "@nebutra/theme/registry";
+import { BASE_TOKEN_SETS, MODE_TOKEN_SETS } from "@nebutra/design-tokens/themes";
+import { getThemeById } from "@nebutra/theme/registry";
 
 import type { ExportedTheme, ImportedTheme } from "./design-md-types";
 import type { ThemeTokenSet } from "./theme-token-data";
@@ -34,12 +34,13 @@ function toDesignTokenTree(tokens: unknown): DesignTokenTree {
   return tokens as DesignTokenTree;
 }
 
+/** Light/dark SSOT only — multi-mood oklch catalog removed. */
 const THEME_JSON_LOOKUP: Record<string, DesignTokenTree> = {
-  nebutra: toDesignTokenTree(THEME_TOKEN_SETS.nebutra),
-  "dark-dense": toDesignTokenTree(THEME_TOKEN_SETS["dark-dense"]),
-  minimal: toDesignTokenTree(THEME_TOKEN_SETS.minimal),
-  vibrant: toDesignTokenTree(THEME_TOKEN_SETS.vibrant),
-  ocean: toDesignTokenTree(THEME_TOKEN_SETS.ocean),
+  factory: toDesignTokenTree(MODE_TOKEN_SETS.light),
+  light: toDesignTokenTree(MODE_TOKEN_SETS.light),
+  dark: toDesignTokenTree(MODE_TOKEN_SETS.dark),
+  // Back-compat aliases for callers still holding old mood ids
+  nebutra: toDesignTokenTree(MODE_TOKEN_SETS.light),
 };
 
 // ── importDesignMdToThemeTokens ───────────────────────────────────────────────
@@ -72,20 +73,21 @@ export function importDesignMdToThemeTokens(content: string): ImportedTheme {
 /**
  * Export a built-in theme to DESIGN.md + preview HTML.
  *
- * @param themeId - One of the 5 registry theme IDs (nebutra, dark-dense,
- *                  minimal, vibrant, ocean).
+ * @param themeId - factory/light/dark (or nebutra alias). Design languages export
+ *                  via exportTokenSetToDesignMd + brand package payload.
  * @throws Error for an unknown themeId (clear message includes the ID).
  */
 export function exportThemeToDesignMd(themeId: string): ExportedTheme {
-  const themeJson = THEME_JSON_LOOKUP[themeId];
+  // Design languages without DTCG mood files fall back to light SSOT for export base.
+  const themeJson = THEME_JSON_LOOKUP[themeId] ?? THEME_JSON_LOOKUP.factory;
   if (themeJson === undefined) {
     throw new Error(
       `[design-md-bridge] Unknown themeId: "${themeId}". ` +
-        `Must be one of: ${Object.keys(THEME_JSON_LOOKUP).join(", ")}.`,
+        `Must be one of: ${Object.keys(THEME_JSON_LOOKUP).join(", ")} (or a design language id).`,
     );
   }
 
-  const registryEntry = THEME_REGISTRY.themes.find((t) => t.id === themeId);
+  const registryEntry = getThemeById(themeId);
   const name = registryEntry?.name ?? themeId;
 
   const sets = [

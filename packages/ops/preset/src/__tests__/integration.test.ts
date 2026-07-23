@@ -3,7 +3,17 @@ import { defineConfig, getActiveApps, getFeatureEnvVars, resolveConfig } from ".
 
 describe("config → theme integration", () => {
   it("default config resolves to a valid theme", () => {
-    const validThemes = ["nebutra", "dark-dense", "minimal", "vibrant", "ocean", "custom"];
+    const validThemes = [
+      "factory",
+      "linear",
+      "gsap",
+      "raycast",
+      "vercel",
+      "vanta",
+      "stripe",
+      "notion",
+      "custom",
+    ];
     const resolved = resolveConfig(defineConfig({}));
     expect(validThemes).toContain(resolved.theme);
   });
@@ -12,7 +22,7 @@ describe("config → theme integration", () => {
     const config = defineConfig({
       apps: { blog: false },
       features: { web3: false },
-      theme: "nebutra",
+      theme: "factory",
       locales: ["en", "zh"],
     });
     const resolved = resolveConfig(config);
@@ -20,7 +30,7 @@ describe("config → theme integration", () => {
     const activeApps = getActiveApps(resolved);
 
     // Theme
-    expect(envVars.NEBUTRA_THEME).toBe("nebutra");
+    expect(envVars.NEBUTRA_THEME).toBe("factory");
 
     // Apps
     expect(activeApps).toContain("web");
@@ -45,7 +55,7 @@ describe("config → theme integration", () => {
     const config = defineConfig({
       apps: { web: false },
       features: { ai: false },
-      theme: "vibrant",
+      theme: "vanta",
     });
     const resolved = resolveConfig(config);
 
@@ -55,8 +65,8 @@ describe("config → theme integration", () => {
     expect(resolved.apps.web).toBe(false);
     // Override: ai=false
     expect(resolved.features.ai).toBe(false);
-    // Override: theme=vibrant
-    expect(resolved.theme).toBe("vibrant");
+    // Override: theme=vanta
+    expect(resolved.theme).toBe("vanta");
   });
 
   it("preserves provider-switchable deploy target overrides through config to env vars", () => {

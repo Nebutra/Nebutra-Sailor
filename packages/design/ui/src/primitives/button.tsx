@@ -52,9 +52,9 @@ function getSpinnerSizeClass(size: string | null | undefined): string {
 // ─── Shadow class mapping ─────────────────────────────────────────────────────
 
 const SHADOW_CLASSES: Record<string, string> = {
-  sm: "shadow-[var(--elevation-card)]",
-  md: "shadow-[var(--elevation-raised)]",
-  lg: "shadow-[var(--elevation-raised)]",
+  sm: "shadow-sm",
+  md: "shadow-md",
+  lg: "shadow-md",
 };
 
 function resolveShadowClass(shadow: boolean | "sm" | "md" | "lg" | undefined): string | undefined {

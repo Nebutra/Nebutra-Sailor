@@ -6,7 +6,7 @@ import { Inter, JetBrains_Mono, Playfair_Display, Space_Grotesk } from "next/fon
 // CJK fallback is provided by @nebutra/tokens --font-cn to avoid build-time font fetches.
 //
 // Theme-preset webfonts — loaded once so that non-default themes (gradient,
-// dark-dense, minimal, vibrant, ocean) defined in @nebutra/theme/themes.css
+// design languages via @nebutra/theme (data-brand)
 // render in their declared typeface instead of falling back to system fonts.
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const jetbrainsMono = JetBrains_Mono({

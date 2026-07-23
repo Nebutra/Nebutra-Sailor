@@ -305,7 +305,7 @@ export function GithubInlineDiff({
                           size="icon"
                           variant="secondary"
                           aria-label="Add inline comment"
-                          className="h-5 w-5 rounded-full shadow-[var(--elevation-card)]"
+                          className="h-5 w-5 rounded-full shadow-sm"
                           onClick={() => setOpenThreadAt(isOpen ? null : idx)}
                         >
                           <MessageSquarePlus className="h-3 w-3" />

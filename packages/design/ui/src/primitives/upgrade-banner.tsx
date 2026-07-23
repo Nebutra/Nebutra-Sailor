@@ -93,7 +93,7 @@ export function UpgradeBanner({
     >
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary opacity-20 blur-3xl"
+        className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-brand-mark opacity-20 blur-3xl"
       />
 
       <div className="relative flex flex-wrap items-center gap-3">

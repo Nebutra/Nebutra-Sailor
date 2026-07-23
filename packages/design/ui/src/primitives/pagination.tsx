@@ -72,7 +72,7 @@ function PaginationRail({
       aria-label={`Go to ${direction} page: ${destination.title}`}
       className={cn(
         "group flex min-h-[var(--pagination-min-height)] min-w-0 items-center gap-[var(--pagination-gap)] rounded-[var(--pagination-radius)] border border-border bg-background",
-        "px-[var(--pagination-padding-x)] py-[var(--pagination-padding-y)] text-foreground shadow-[var(--elevation-control,var(--shadow-[var(--elevation-control)]))]",
+        "px-[var(--pagination-padding-x)] py-[var(--pagination-padding-y)] text-foreground shadow-xs",
         "transition-[background-color,border-color,box-shadow,color,transform] duration-[var(--pagination-duration)] ease-[var(--pagination-easing)]",
         "hover:border-ring hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "motion-reduce:transition-none",

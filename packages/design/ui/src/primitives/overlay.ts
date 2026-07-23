@@ -20,11 +20,9 @@ const menubarFocusClassName =
 
 export const overlayPrimitiveClassNames = {
   modalSurface:
-    "rounded-[var(--radius-md)] border-border/70 bg-popover/95 text-popover-foreground shadow-[var(--elevation-xl)]",
-  popoverSurface:
-    "rounded-[var(--radius-md)] border-border/70 bg-popover/95 shadow-[var(--elevation-md)]",
-  menuSurface:
-    "rounded-[var(--radius-md)] border-border/70 bg-popover/95 shadow-[var(--elevation-md)]",
+    "rounded-[var(--radius-md)] border-border/70 bg-popover/95 text-popover-foreground shadow-xl",
+  popoverSurface: "rounded-[var(--radius-md)] border-border/70 bg-popover/95 shadow-md",
+  menuSurface: "rounded-[var(--radius-md)] border-border/70 bg-popover/95 shadow-md",
   commandFrame: "rounded-[var(--radius-md)] bg-popover text-popover-foreground",
   commandDialogSurface: "overflow-hidden p-0",
   commandItem: [

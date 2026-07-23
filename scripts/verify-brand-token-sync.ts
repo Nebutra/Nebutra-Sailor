@@ -24,7 +24,7 @@
  * Run both: `pnpm brand:apply && pnpm brand:verify-tokens`.
  */
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -629,40 +629,34 @@ if (!tokensCss.includes("@supports (color: oklch(0 0 0))")) {
   ok("tokens/styles.css: @supports (oklch) wrapper present");
 }
 
-// ─── 10. Theme CSS structural checks ────────────────────────────────────────
+// ─── 10. themes.css: moods removed — keyframes only; no dual-truth colors ───
 {
-  if (!themesCss.includes("@theme")) {
-    fail("themes.css", "Missing Tailwind v4 @theme block");
+  if (/@theme\s*\{[\s\S]*?--color-primary\s*:/u.test(themesCss)) {
+    fail(
+      "themes.css dual-truth",
+      "Global @theme block still sets --color-primary; multi-mood catalog must stay deleted",
+    );
   } else {
-    ok("themes.css: @theme block present");
-  }
-  if (!themesCss.includes("--color-primary")) {
-    fail("themes.css", "Missing --color-primary");
-  } else {
-    ok("themes.css: --color-primary present");
+    ok("themes.css: no global @theme --color-primary");
   }
 
-  const expectedThemeSelectors = new Set(
-    themeRegistry.themes.map((theme) => theme.id).filter((themeId) => themeId !== "nebutra"),
-  );
-  const actualThemeSelectors = new Set(
-    [...themesCss.matchAll(/\[data-theme="([^"]+)"\]/g)]
-      .map((match) => match[1])
-      .filter((themeName): themeName is string => typeof themeName === "string"),
-  );
-  for (const themeName of expectedThemeSelectors) {
-    const selector = `[data-theme="${themeName}"]`;
-    if (!themesCss.includes(selector)) {
-      fail("themes.css multi-theme", `Missing ${selector}`);
-    }
+  const moodSelectors = [...themesCss.matchAll(/\[data-theme="([^"]+)"\]/g)].map((m) => m[1]);
+  if (moodSelectors.length > 0) {
+    fail(
+      "themes.css multi-mood",
+      `Unexpected [data-theme] mood selectors remain: ${moodSelectors.slice(0, 8).join(", ")}`,
+    );
+  } else {
+    ok("themes.css: multi-mood [data-theme] catalog removed");
   }
-  for (const themeName of actualThemeSelectors) {
-    if (!expectedThemeSelectors.has(themeName)) {
-      fail("themes.css multi-theme", `Unexpected [data-theme="${themeName}"] not in registry`);
-    }
-  }
-  if (expectedThemeSelectors.size === actualThemeSelectors.size) {
-    ok(`themes.css: ${actualThemeSelectors.size} data-theme selectors align with registry`);
+
+  if (themeRegistry.themes.length > 0) {
+    fail(
+      "theme registry moods",
+      `registry.json still lists ${themeRegistry.themes.length} moods — should be empty`,
+    );
+  } else {
+    ok("theme registry.json: empty mood list");
   }
 
   if (!themesCss.includes("@theme inline")) {
@@ -671,23 +665,16 @@ if (!tokensCss.includes("@supports (color: oklch(0 0 0))")) {
     ok("themes.css: @theme inline (keyframes) present");
   }
 
-  const fontRegistryDrifts = registryFontPrefixFailures(themesCss, [
-    "font-sans",
-    "font-heading",
-    "font-mono",
-  ]);
-  if (fontRegistryDrifts.length > 0) {
-    fail(
-      "themes.css font registry",
-      fontRegistryDrifts
-        .map(
-          ({ variable, expected, value }) =>
-            `--${variable} must prefix var(${expected}) before registered family stack: ${value}`,
-        )
-        .join(" | "),
-    );
+  // Design-language catalog must exist instead
+  const skinsCssPath = path.join(repoRoot, "packages/design/theme/skins.css");
+  const skinsCss = existsSync(skinsCssPath) ? readFileSync(skinsCssPath, "utf8") : "";
+  if (
+    !skinsCss.includes('html[data-brand="vanta"]') ||
+    !skinsCss.includes('html[data-brand="linear"]')
+  ) {
+    fail("skins.css", "Design-language catalog missing expected data-brand skins");
   } else {
-    ok("themes.css: registered theme font stacks keep next/font variable prefixes");
+    ok("skins.css: design-language catalog present (data-brand scoped)");
   }
 }
 

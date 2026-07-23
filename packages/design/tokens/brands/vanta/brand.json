@@ -1,0 +1,204 @@
+{
+  "id": "vanta",
+  "name": "Vanta",
+  "darkDefault": false,
+  "version": "1.0.0",
+  "roles": {
+    "canvas": "220 23% 97%",
+    "canvasForeground": "240 17% 11%",
+    "surface": "0 0% 100%",
+    "surfaceForeground": "240 17% 11%",
+    "action": "268 95% 39%",
+    "actionForeground": "0 0% 100%",
+    "quiet": "250 100% 92%",
+    "quietForeground": "272 100% 14%",
+    "muted": "240 20% 93%",
+    "mutedForeground": "238 11% 48%",
+    "border": "240 17% 11%",
+    "input": "0 0% 100%",
+    "ring": "268 95% 39%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "brand": "272 100% 14%",
+    "brandForeground": "0 0% 100%",
+    "warning": "44 100% 53%",
+    "warningForeground": "240 17% 11%",
+    "info": "270 63% 56%",
+    "infoForeground": "0 0% 100%"
+  },
+  "semantic": {
+    "background": "220 23% 97%",
+    "foreground": "240 17% 11%",
+    "card": "0 0% 100%",
+    "cardForeground": "240 17% 11%",
+    "popover": "0 0% 100%",
+    "popoverForeground": "240 17% 11%",
+    "primary": "268 95% 39%",
+    "primaryForeground": "0 0% 100%",
+    "secondary": "250 100% 92%",
+    "secondaryForeground": "272 100% 14%",
+    "muted": "240 20% 93%",
+    "mutedForeground": "238 11% 48%",
+    "accent": "272 100% 14%",
+    "accentForeground": "0 0% 100%",
+    "destructive": "0 72% 51%",
+    "destructiveForeground": "0 0% 100%",
+    "border": "240 17% 11%",
+    "input": "0 0% 100%",
+    "ring": "268 95% 39%",
+    "warning": "44 100% 53%",
+    "warningForeground": "240 17% 11%",
+    "info": "270 63% 56%",
+    "infoForeground": "0 0% 100%"
+  },
+  "recipe": {
+    "buttonDefault": "solid",
+    "density": "comfortable",
+    "badgeDefault": "muted",
+    "radii": {
+      "button": "999px",
+      "card": "16px",
+      "badge": "999px",
+      "input": "999px",
+      "pill": "9999px"
+    },
+    "elevationTokens": {
+      "card": "0 0 #0000",
+      "control": "0 0 #0000",
+      "raised": "0 0 #0000"
+    },
+    "buttonRadius": "999px",
+    "cardRadius": "16px",
+    "badgeRadius": "999px",
+    "inputRadius": "999px",
+    "cardShadow": "0 0 #0000",
+    "outlineBorder": "#181822",
+    "elevation": "none"
+  },
+  "typography": {
+    "fontSans": "'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif",
+    "fontDisplay": "'Reckless', 'Source Serif 4', 'Lora', ui-serif, Georgia, serif",
+    "headingWeight": 500,
+    "faces": [
+      {
+        "family": "Inter Variable",
+        "src": [
+          {
+            "url": "https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": "100 900",
+        "display": "swap"
+      },
+      {
+        "family": "Reckless",
+        "src": [
+          {
+            "url": "/brand-assets/reckless-regular.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": 400,
+        "display": "swap"
+      },
+      {
+        "family": "Reckless",
+        "src": [
+          {
+            "url": "/brand-assets/reckless-medium.woff2",
+            "format": "woff2"
+          }
+        ],
+        "weight": 500,
+        "display": "swap"
+      }
+    ]
+  },
+  "zones": {
+    "product": {
+      "caption": {
+        "fontSize": "12px",
+        "lineHeight": 1.5,
+        "fontWeight": 500,
+        "letterSpacing": "-0.02px"
+      },
+      "bodySm": {
+        "fontSize": "14px",
+        "lineHeight": 1.43,
+        "fontWeight": 400,
+        "letterSpacing": "-0.02px"
+      },
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "fontWeight": 400,
+        "letterSpacing": "-0.02px"
+      },
+      "subheading": {
+        "fontSize": "20px",
+        "lineHeight": 1.4,
+        "fontWeight": 500
+      },
+      "headingSm": {
+        "fontSize": "24px",
+        "lineHeight": 1.35,
+        "fontWeight": 500
+      },
+      "heading": {
+        "fontSize": "32px",
+        "lineHeight": 1.3,
+        "fontWeight": 500
+      }
+    },
+    "marketing": {
+      "body": {
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "fontWeight": 400,
+        "letterSpacing": "-0.02px"
+      },
+      "heading": {
+        "fontSize": "42px",
+        "lineHeight": 1.2,
+        "fontWeight": 400,
+        "letterSpacing": "-0.84px"
+      },
+      "headingLg": {
+        "fontSize": "56px",
+        "lineHeight": 1.15,
+        "fontWeight": 400,
+        "letterSpacing": "-1.12px"
+      },
+      "display": {
+        "fontSize": "90px",
+        "lineHeight": 1.1,
+        "fontWeight": 400,
+        "letterSpacing": "-1.62px"
+      }
+    }
+  },
+  "extensions": {
+    "categories": {
+      "brand": "#260048",
+      "action": "#5e05c4",
+      "link": "#8f47d5",
+      "heroWash": "#ddd6ff",
+      "warning": "#ffbe0f",
+      "steel": "#9e9fb7",
+      "ash": "#dfdfe9"
+    },
+    "decorative": {
+      "hero-wash": "#ddd6ff"
+    },
+    "sourceUrl": "https://www.vanta.com",
+    "notes": [
+      "roles.action = Vivid Violet (filled CTA only).",
+      "roles.brand = Indigo Ink (logo / wordmark / brand-mark).",
+      "Elevation none — 1px carbon borders frame cards; no drop-shadow.",
+      "Full-pill controls (999px); cards 16px.",
+      "UI = Inter Variable; marketing display = Reckless serif.",
+      "Lavender wash is marketing hero surface (decorative), not product chrome fill."
+    ]
+  }
+}
