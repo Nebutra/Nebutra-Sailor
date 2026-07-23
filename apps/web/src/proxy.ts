@@ -16,6 +16,8 @@ const publicRoutePaths = [
   "/",
   "/sign-in",
   "/sign-up",
+  "/forgot-password",
+  "/reset-password",
   "/login/success",
   "/desktop-auth",
   "/onboarding",
@@ -174,22 +176,40 @@ export async function proxy(req: NextRequest, event: NextFetchEvent) {
     }
   })();
 
+  // Auth-center owns the full login surface (sign-in/up, forgot/reset password).
+  // Keep web APIs + desktop remotes local; UI always funnels to auth.nebutra.com.
   if (
     !isAuthCenterHost &&
     authProvider !== "clerk" &&
     (pathname === "/sign-in" ||
       pathname.startsWith("/sign-in/") ||
       pathname === "/sign-up" ||
-      pathname.startsWith("/sign-up/"))
+      pathname.startsWith("/sign-up/") ||
+      pathname === "/forgot-password" ||
+      pathname.startsWith("/forgot-password/") ||
+      pathname === "/reset-password" ||
+      pathname.startsWith("/reset-password/"))
   ) {
     const existing =
       req.nextUrl.searchParams.get("returnTo") ||
       req.nextUrl.searchParams.get("returnUrl") ||
       req.nextUrl.searchParams.get("redirect");
     const returnTo = existing || `${thisOrigin}/dashboard`;
-    const target = pathname.startsWith("/sign-up")
-      ? buildAuthCenterSignUpUrl(returnTo)
-      : buildAuthCenterSignInUrl(returnTo);
+    const authOrigin = getAuthCenterOrigin();
+    let target: string;
+    if (pathname.startsWith("/sign-up")) {
+      target = buildAuthCenterSignUpUrl(returnTo);
+    } else if (pathname === "/forgot-password" || pathname.startsWith("/forgot-password/")) {
+      const url = new URL("/forgot-password", `${authOrigin}/`);
+      url.searchParams.set("returnTo", returnTo);
+      target = url.toString();
+    } else if (pathname === "/reset-password" || pathname.startsWith("/reset-password/")) {
+      // Preserve token path/query for email deep-links.
+      const url = new URL(pathname + req.nextUrl.search, `${authOrigin}/`);
+      target = url.toString();
+    } else {
+      target = buildAuthCenterSignInUrl(returnTo);
+    }
     return NextResponse.redirect(target, 307);
   }
 

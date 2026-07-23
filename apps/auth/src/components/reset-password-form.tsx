@@ -1,0 +1,169 @@
+// @brand-exempt: mirrors packages/platform/i18n auth.resetPassword until next-intl on auth-center
+"use client";
+
+import { Eye, EyeOff } from "@nebutra/icons";
+import { Button, Input } from "@nebutra/ui/primitives";
+import Link from "next/link";
+import { useState } from "react";
+import { useCapsLock } from "./use-caps-lock";
+
+interface ResetPasswordFormProps {
+  token: string;
+}
+
+export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { capsLockOn, onKeyEvent } = useCapsLock();
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    if (password.length < 8) {
+      setError("Use at least 8 characters.");
+      return;
+    }
+    if (password !== confirm) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ token, newPassword: password }),
+      });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as {
+          message?: string;
+          error?: string;
+        } | null;
+        setError(data?.message || data?.error || "Could not reset password.");
+        return;
+      }
+      setSuccess(true);
+    } catch {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (success) {
+    return (
+      <div className="w-full">
+        <div className="mb-8">
+          <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+            Password updated
+          </h1>
+          <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
+            You can now log in with your new password.
+          </p>
+        </div>
+        <Link
+          href="/sign-in"
+          className="inline-flex h-11 w-full items-center justify-center rounded-[var(--radius-md)] bg-[var(--neutral-12)] text-sm font-medium text-[var(--neutral-1)] hover:bg-[var(--neutral-11)]"
+        >
+          Log in
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full">
+      <div className="mb-8">
+        <h1 className="text-3xl font-semibold tracking-tight text-[var(--neutral-12)]">
+          Set a new password
+        </h1>
+        <p className="mt-4 text-sm leading-6 text-[var(--neutral-10)]">
+          Choose a strong password you haven&apos;t used here before.
+        </p>
+      </div>
+
+      <form onSubmit={onSubmit} className="flex flex-col gap-5" aria-busy={loading}>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="new-password" className="text-sm font-medium text-[var(--neutral-12)]">
+            New password
+          </label>
+          <div className="relative">
+            <Input
+              id="new-password"
+              required
+              type={showPassword ? "text" : "password"}
+              minLength={8}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={onKeyEvent}
+              onKeyUp={onKeyEvent}
+              autoComplete="new-password"
+              size="lg"
+              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
+              placeholder="At least 8 characters"
+              aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[var(--radius-md)] text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" aria-hidden />
+              ) : (
+                <Eye className="h-4 w-4" aria-hidden />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="confirm-password"
+            className="text-sm font-medium text-[var(--neutral-12)]"
+          >
+            Confirm password
+          </label>
+          <Input
+            id="confirm-password"
+            required
+            type={showPassword ? "text" : "password"}
+            minLength={8}
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+            autoComplete="new-password"
+            size="lg"
+            className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+            placeholder="Re-enter password"
+          />
+        </div>
+
+        {error ? (
+          <p
+            className="rounded-[var(--radius-md)] border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+            role="alert"
+          >
+            {error}
+          </p>
+        ) : null}
+
+        <Button
+          type="submit"
+          disabled={loading}
+          className="h-11 w-full bg-[var(--neutral-12)] text-[var(--neutral-1)] hover:bg-[var(--neutral-11)] disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          {loading ? "Updating…" : "Update password"}
+        </Button>
+      </form>
+    </div>
+  );
+}

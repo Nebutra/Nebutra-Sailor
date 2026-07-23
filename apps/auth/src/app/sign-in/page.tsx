@@ -1,3 +1,4 @@
+import { isAuthFeatureEnabled } from "@nebutra/auth";
 import { AuthSplitLayout } from "@/components/auth-split-layout";
 import { CredentialsForm } from "@/components/credentials-form";
 import { detectEnabledOAuthProviders } from "@/lib/oauth-providers";
@@ -19,6 +20,10 @@ export default async function SignInPage({
 
   const returnTo = resolvePostLoginReturnTo(raw);
   const enabledOAuthProviders = detectEnabledOAuthProviders();
+  const [magicLinkEnabled, passkeyEnabled] = await Promise.all([
+    isAuthFeatureEnabled("magicLink"),
+    isAuthFeatureEnabled("passkeys"),
+  ]);
 
   return (
     <AuthSplitLayout>
@@ -26,6 +31,8 @@ export default async function SignInPage({
         mode="sign-in"
         returnTo={returnTo}
         enabledOAuthProviders={enabledOAuthProviders}
+        magicLinkEnabled={magicLinkEnabled}
+        passkeyEnabled={passkeyEnabled}
       />
     </AuthSplitLayout>
   );

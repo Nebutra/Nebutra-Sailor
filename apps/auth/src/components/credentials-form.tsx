@@ -1,12 +1,13 @@
 // @brand-exempt: login copy mirrors packages/platform/i18n auth.signIn until next-intl is wired on auth-center
 "use client";
 
-import { Eye, EyeOff } from "@nebutra/icons";
+import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useState } from "react";
 import type { OAuthProvider } from "@/lib/oauth-providers";
 import { OAuthButtons } from "./oauth-buttons";
+import { useCapsLock } from "./use-caps-lock";
 
 interface CredentialsFormProps {
   mode: "sign-in" | "sign-up";
@@ -14,23 +15,37 @@ interface CredentialsFormProps {
   returnTo: string;
   /** Providers configured server-side (env secrets present). */
   enabledOAuthProviders?: readonly OAuthProvider[];
+  /** When true, show magic-link alternate entry (feature flag). */
+  magicLinkEnabled?: boolean;
+  /** When true, show passkey alternate entry (feature flag). */
+  passkeyEnabled?: boolean;
 }
 
 /**
- * Better Auth email/password form styled like apps/web SignInForm
- * (neutral token surfaces + design-system Input/Button + social OAuth).
+ * Full Agent OS / apps/web SignInForm parity for the login center:
+ * OAuth, email/password, eye toggle, caps-lock, forgot-password, secondary methods.
  */
 export function CredentialsForm({
   mode,
   returnTo,
   enabledOAuthProviders = [],
+  magicLinkEnabled = false,
+  passkeyEnabled = false,
 }: CredentialsFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [passkeyLoading, setPasskeyLoading] = useState(false);
+  const { capsLockOn, onKeyEvent } = useCapsLock();
+
+  function withReturnTo(path: string): string {
+    const params = new URLSearchParams({ returnTo });
+    return `${path}?${params.toString()}`;
+  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -38,10 +53,14 @@ export function CredentialsForm({
     setError(null);
     try {
       const endpoint = mode === "sign-in" ? "/api/auth/sign-in/email" : "/api/auth/sign-up/email";
+      const name =
+        mode === "sign-up"
+          ? `${firstName} ${lastName}`.trim() || email.split("@")[0] || "User"
+          : undefined;
       const body =
         mode === "sign-in"
           ? { email, password, callbackURL: returnTo }
-          : { email, password, name: name || email.split("@")[0], callbackURL: returnTo };
+          : { email, password, name, callbackURL: returnTo };
 
       const res = await fetch(endpoint, {
         method: "POST",
@@ -54,6 +73,7 @@ export function CredentialsForm({
         const data = (await res.json().catch(() => null)) as {
           message?: string;
           error?: string;
+          code?: string;
         } | null;
         setError(
           data?.message ||
@@ -71,10 +91,32 @@ export function CredentialsForm({
     }
   }
 
-  const altHref =
-    mode === "sign-in"
-      ? `/sign-up?returnTo=${encodeURIComponent(returnTo)}`
-      : `/sign-in?returnTo=${encodeURIComponent(returnTo)}`;
+  async function handlePasskey() {
+    setPasskeyLoading(true);
+    setError(null);
+    try {
+      // Better Auth passkey start — browser navigates via conditional UI / client plugin when configured.
+      const res = await fetch("/api/auth/sign-in/passkey", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(email ? { email } : {}),
+      });
+      if (!res.ok) {
+        setError("Passkey sign-in is unavailable. Use email and password.");
+        setPasskeyLoading(false);
+        return;
+      }
+      window.location.assign(returnTo);
+    } catch {
+      setError("Passkey sign-in failed. Use email and password.");
+      setPasskeyLoading(false);
+    }
+  }
+
+  const altHref = mode === "sign-in" ? withReturnTo("/sign-up") : withReturnTo("/sign-in");
+  const showOAuth = enabledOAuthProviders.length > 0;
+  const showAltMethods = mode === "sign-in" && (magicLinkEnabled || passkeyEnabled);
 
   return (
     <div className="w-full">
@@ -89,7 +131,7 @@ export function CredentialsForm({
         </p>
       </div>
 
-      {enabledOAuthProviders.length > 0 ? (
+      {showOAuth ? (
         <>
           <OAuthButtons providers={enabledOAuthProviders} returnTo={returnTo} />
           <div className="relative my-6">
@@ -108,19 +150,41 @@ export function CredentialsForm({
         aria-describedby={error ? "auth-form-error" : undefined}
       >
         {mode === "sign-up" ? (
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="auth-name" className="text-sm font-medium text-[var(--neutral-12)]">
-              Name
-            </label>
-            <Input
-              id="auth-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              autoComplete="name"
-              size="lg"
-              className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
-              placeholder="Your name"
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div className="flex flex-col gap-1.5">
+              <label
+                htmlFor="auth-first-name"
+                className="text-sm font-medium text-[var(--neutral-12)]"
+              >
+                First name
+              </label>
+              <Input
+                id="auth-first-name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                autoComplete="given-name"
+                size="lg"
+                className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+                placeholder="First"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label
+                htmlFor="auth-last-name"
+                className="text-sm font-medium text-[var(--neutral-12)]"
+              >
+                Last name
+              </label>
+              <Input
+                id="auth-last-name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                autoComplete="family-name"
+                size="lg"
+                className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
+                placeholder="Last"
+              />
+            </div>
           </div>
         ) : null}
 
@@ -134,7 +198,7 @@ export function CredentialsForm({
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
+            autoComplete={passkeyEnabled ? "username webauthn" : "email"}
             size="lg"
             className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] text-[var(--neutral-12)] shadow-none"
             placeholder="you@example.com"
@@ -142,9 +206,19 @@ export function CredentialsForm({
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <label htmlFor="auth-password" className="text-sm font-medium text-[var(--neutral-12)]">
-            Password
-          </label>
+          <div className="flex items-center justify-between">
+            <label htmlFor="auth-password" className="text-sm font-medium text-[var(--neutral-12)]">
+              Password
+            </label>
+            {mode === "sign-in" ? (
+              <Link
+                href={withReturnTo("/forgot-password")}
+                className="text-xs font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+              >
+                Forgot password?
+              </Link>
+            ) : null}
+          </div>
           <div className="relative">
             <Input
               id="auth-password"
@@ -153,10 +227,13 @@ export function CredentialsForm({
               minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={onKeyEvent}
+              onKeyUp={onKeyEvent}
               autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
               size="lg"
               className="h-12 border-[var(--neutral-7)] bg-[var(--neutral-1)] pr-12 text-[var(--neutral-12)] shadow-none"
               placeholder="Enter your password"
+              aria-describedby={capsLockOn ? "caps-lock-warning" : undefined}
             />
             <button
               type="button"
@@ -172,6 +249,17 @@ export function CredentialsForm({
               )}
             </button>
           </div>
+          {capsLockOn ? (
+            <p
+              id="caps-lock-warning"
+              role="status"
+              aria-live="polite"
+              className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--amber-11,var(--neutral-11))]"
+            >
+              <AlertTriangle aria-hidden className="h-3.5 w-3.5" />
+              Caps Lock is on
+            </p>
+          ) : null}
         </div>
 
         {error ? (
@@ -200,13 +288,38 @@ export function CredentialsForm({
         </Button>
       </form>
 
-      <p className="mt-8 text-sm text-[var(--neutral-10)]">
+      {showAltMethods ? (
+        <div className="mt-4 flex flex-col gap-2">
+          {passkeyEnabled ? (
+            <button
+              type="button"
+              onClick={() => void handlePasskey()}
+              disabled={passkeyLoading}
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)] disabled:opacity-60"
+            >
+              <Key aria-hidden className="h-4 w-4" />
+              {passkeyLoading ? "Redirecting…" : "Use a passkey"}
+            </button>
+          ) : null}
+          {magicLinkEnabled ? (
+            <Link
+              href={withReturnTo("/sign-in/magic-link")}
+              className="inline-flex items-center justify-center gap-2 text-sm font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
+            >
+              <Mail aria-hidden className="h-4 w-4" />
+              Email me a magic link
+            </Link>
+          ) : null}
+        </div>
+      ) : null}
+
+      <p className="mt-6 text-sm text-[var(--neutral-9)]">
         {mode === "sign-in" ? (
           <>
             New to Nebutra?{" "}
             <Link
               href={altHref}
-              className="font-medium text-[var(--neutral-12)] underline-offset-4 hover:underline"
+              className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
             >
               Sign up
             </Link>
@@ -216,7 +329,7 @@ export function CredentialsForm({
             Already have an account?{" "}
             <Link
               href={altHref}
-              className="font-medium text-[var(--neutral-12)] underline-offset-4 hover:underline"
+              className="font-medium text-[color:var(--blue-11)] hover:text-[color:var(--blue-12)]"
             >
               Log in
             </Link>
