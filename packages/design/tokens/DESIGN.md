@@ -17,29 +17,27 @@
 
 This package emits the **runtime CSS variables** consumed by every Nebutra app.
 
-### App consumption contract (mandatory)
+### App consumption contract (package-owned)
+
+Apps should **not** hand-roll monorepo `@source` paths. Import the UI entry:
 
 ```css
-/* apps/{app}/src/app/globals.css — Tailwind v4 */
+/* Simple apps */
+@import "@nebutra/ui/styles/preset.css";
+
+/* Or: tokens yourself + package-owned source scan */
 @import "tailwindcss";
 @import "@nebutra/tokens/styles.css";
-
-/* REQUIRED: scan @nebutra/ui so CVA utility classes (px-*, border-input, …)
- * are generated into this app’s CSS. Without @source, primitives render as
- * unstyled native HTML (no padding, square borders). Tokens alone are not enough. */
-@source "../../../../packages/design/ui/src";
-@source "../../../../packages/design/icons/src"; /* if using @nebutra/icons in class strings */
-
-@custom-variant dark (&:is(.dark *));
+@import "@nebutra/ui/styles/sources.css";
 ```
 
-| Layer | Package | What it provides | What it does **not** do |
-|-------|---------|------------------|-------------------------|
-| Tokens | `@nebutra/tokens` | CSS variables (`--primary`, `--input`, …) + `@theme` | Does not emit component utility classes |
-| Components | `@nebutra/ui` | Headless/styled primitives via CVA class strings | Classes only appear in CSS if Tailwind **scans** the package |
-| App CSS | `globals.css` | Must `@import` tokens **and** `@source` ui | Omitting `@source` → “native unstyled” UI |
+| Layer | Entry | Role |
+|-------|-------|------|
+| Tokens | `@nebutra/tokens/styles.css` | CSS variables + `@theme` only |
+| UI sources | `@nebutra/ui/styles/sources.css` | Tailwind `@source` for CVA classes (owned by UI package) |
+| UI preset | `@nebutra/ui/styles/preset.css` | tailwind + tokens + sources + fonts |
 
-Reference implementations: `apps/web`, `apps/landing-page`, `apps/auth`.
+Tokens alone never style `Input`/`Button` — utilities come from scanning UI.
 
 Tokens are organized in three concentric rings:
 

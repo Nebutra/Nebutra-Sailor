@@ -32,26 +32,30 @@ Sub-specs (per package):
 - [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md) — multi-theme engine
 - [`packages/design/ui/DESIGN.md`](./packages/design/ui/DESIGN.md) — component library
 
-### App consumption contract (Tailwind v4 — non-negotiable)
+### App consumption contract (Tailwind v4 — owned by the package)
 
-Headless-style libraries (Radix / Base UI) + CVA utility classes **do not ship a
-component stylesheet**. Apps must:
+Headless libraries + CVA **do not ship component CSS**. Source scanning is owned
+by **`@nebutra/ui`**, not each app:
 
 ```css
-/* apps/{app}/src/app/globals.css */
+/* Simple product apps — one line */
+@import "@nebutra/ui/styles/preset.css";
+
+/* Apps that need other CSS first (fumadocs, katex, …) */
 @import "tailwindcss";
-@import "@nebutra/tokens/styles.css";           /* CSS variables + @theme */
-@source "../../../../packages/design/ui/src";  /* REQUIRED: generate CVA utilities */
+@import "…third-party…";
+@import "@nebutra/tokens/styles.css";
+@import "@nebutra/ui/styles/sources.css"; /* package-owned @source paths */
 ```
 
-| If you only… | Result |
-|--------------|--------|
-| Import tokens | Variables exist; `var(--primary)` works |
-| Import UI components without `@source` | **Native-looking UI** — no padding, square borders, missing focus |
-| Import tokens + `@source` ui | Full design-system surface |
+Do **not** hand-roll monorepo-relative `@source "../../../../packages/design/ui/src"`.
+That path is an implementation detail of `packages/design/ui/src/styles/sources.css`.
 
-Canonical templates: `apps/web`, `apps/landing-page`, `apps/auth`.  
-Broken before fix: `apps/forge`, `apps/router`, `apps/sleptons` (missing `@source`).
+| Import | Provides |
+|--------|----------|
+| `@nebutra/ui/styles/preset.css` | tailwind + tokens + sources + fonts + dark variant |
+| `@nebutra/ui/styles/sources.css` | source scan only (CVA utilities for Input/Button/…) |
+| `@nebutra/tokens/styles.css` | CSS variables only — **not** component classes |
 
 ---
 

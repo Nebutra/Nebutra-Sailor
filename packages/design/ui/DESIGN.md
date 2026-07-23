@@ -34,18 +34,18 @@
 
 This package **consumes** tokens from `@nebutra/tokens` exclusively. It does not declare new tokens. Compatibility surfaces that depend on Lobe UI are bridged via `NebutraThemeProvider` (`packages/design/ui/src/theme/`) which maps Nebutra brand tokens into Lobe UI's expected shape.
 
-### 2.1 How apps must wire this package (Tailwind v4)
+### 2.1 How apps wire this package (Tailwind v4) — package owns the scan
 
-Primitives style themselves with **utility class strings** (CVA), not a prebuilt CSS file of component rules. Under Tailwind v4, those classes only ship if the **app** scans this package:
+Primitives style themselves with **utility class strings** (CVA). Tailwind only emits those utilities if this package is **sourced**. That is done **inside the package**:
 
-```css
-/* in the app’s globals.css — NOT optional */
-@source "../../../../packages/design/ui/src";
-```
+| Entry | Use when |
+|-------|----------|
+| `@import "@nebutra/ui/styles/preset.css"` | Simple product apps (forge, router, auth, …) |
+| `@import "@nebutra/ui/styles/sources.css"` | App already imports tailwind/tokens (landing + katex, fumadocs, …) |
 
-Symptoms when missing: `Input` text flush to the border (no `px-*`), `Button` looks native, focus rings absent. Tokens can still be present (`var(--primary)` works) while components look “unstyled” — that means **scan failure**, not missing tokens.
+Implementation: `src/styles/sources.css` (`@source` relative to this package — apps never hardcode monorepo paths).
 
-Canonical app templates: `apps/web/src/app/globals.css`, `apps/landing-page/src/app/globals.css`.
+Symptoms of wrong wiring: `Input` flush to border, native-looking `Button`. Tokens may still work.
 
 ---
 

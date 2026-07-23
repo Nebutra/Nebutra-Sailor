@@ -1,0 +1,26 @@
+/**
+ * Full design-system CSS entry for product apps (Tailwind v4).
+ *
+ * One import wires:
+ *   1. Tailwind
+ *   2. @nebutra/tokens (CSS variables + @theme)
+ *   3. Source scan so UI CVA classes are generated
+ *   4. Typography CSS variables
+ *   5. dark variant
+ *
+ * Simple apps (forge, router, auth shell, etc.):
+ *   @import "@nebutra/ui/styles/preset.css";
+ *
+ * Complex apps that must import other CSS first (fumadocs, katex, …):
+ *   @import "tailwindcss";
+ *   @import "…third-party…";
+ *   @import "@nebutra/tokens/styles.css";
+ *   @import "@nebutra/ui/styles/sources.css";
+ */
+
+@import "tailwindcss";
+@import "@nebutra/tokens/styles.css";
+@import "./sources.css";
+@import "../typography/fonts.css";
+
+@custom-variant dark (&:is(.dark *));

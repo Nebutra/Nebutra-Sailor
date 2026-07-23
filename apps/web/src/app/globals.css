@@ -11,13 +11,11 @@
 @import "tailwindcss";
 /* Single token source */
 @import "@nebutra/tokens/styles.css";
-/* Typography SSOT — source import keeps local workspace dev independent of @nebutra/ui dist. */
-@import "../../../../packages/design/ui/src/typography/fonts.css";
+/* UI CVA source scan + fonts — owned by @nebutra/ui */
+@import "@nebutra/ui/styles/sources.css";
+@import "@nebutra/ui/typography/fonts.css";
 /* Product-tour theme overrides (driver.js → our tokens) */
 @import "@nebutra/onboarding/styles.css";
-
-/* Scan @nebutra/ui source for Tailwind classes */
-@source "../../../../packages/design/ui/src";
 
 @custom-variant dark (&:is(.dark *));
 

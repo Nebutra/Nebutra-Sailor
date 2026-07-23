@@ -5,6 +5,8 @@
 @import "@fumadocs/story/css/preset.css";
 @import "fumadocs-openapi/css/preset.css";
 @import "@nebutra/tokens/styles.css";
+/* UI CVA source scan — owned by @nebutra/ui */
+@import "@nebutra/ui/styles/sources.css";
 
 /* 
  * Inlined `fumadocs-ui/components/image-zoom.css` 
@@ -98,13 +100,6 @@
   --shadow-book: var(--ds-shadow-book);
   --shadow-book-border: var(--ds-shadow-book-border);
 }
-
-/* Scan @nebutra/ui source directly via workspace path (avoids node_modules symlink fragility).
- * Path is `packages/design/ui/src` — historical `packages/ui/src` was incorrect
- * and silently broke utility-class generation for any class authored inside
- * the UI package (e.g. Alert variants, motion primitives). */
-/* stylelint-disable-next-line at-rule-no-unknown */
-@source "../../../../packages/design/ui/src";
 
 /* stylelint-disable-next-line at-rule-no-unknown */
 @custom-variant dark (&:is(.dark *));

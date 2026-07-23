@@ -1,16 +1,8 @@
 /**
- * Auth center global styles — same token stack as apps/web auth shell.
+ * Auth center — design-system consumption via SSOT package entry.
  * Token HSL components must be consumed via hsl(var(--*)), never bare var(--background).
  */
-
-@import "tailwindcss";
-@import "@nebutra/tokens/styles.css";
-
-/* Scan design-system primitives for utility classes used by Input/Button */
-@source "../../../../packages/design/ui/src";
-@source "../../../../packages/design/icons/src";
-
-@custom-variant dark (&:is(.dark *));
+@import "@nebutra/ui/styles/preset.css";
 
 @layer base {
   html,
@@ -20,7 +12,6 @@
 
   body {
     margin: 0;
-    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: hsl(var(--background));

@@ -1,0 +1,27 @@
+/**
+ * Tailwind v4 source registration for @nebutra/ui (+ icons).
+ *
+ * WHY THIS FILE EXISTS
+ * --------------------
+ * UI primitives style themselves with CVA *utility class strings*, not a
+ * prebuilt component CSS sheet. Under Tailwind v4 those utilities only exist
+ * in an app’s bundle if the app’s CSS pipeline *scans* this package.
+ *
+ * Best practice: the design-system package owns the scan paths.
+ * Apps import this file once — they never hardcode monorepo-relative @source.
+ *
+ * Usage (after @import "tailwindcss"):
+ *   @import "@nebutra/ui/styles/sources.css";
+ *
+ * Or use the full preset:
+ *   @import "@nebutra/ui/styles/preset.css";
+ *
+ * Paths are relative to THIS file so resolution is stable in workspace
+ * and when resolved through node_modules/@nebutra/ui.
+ */
+
+/* All CVA / className strings under the UI package */
+@source "../**/*.{ts,tsx,js,jsx}";
+
+/* Icon components often appear in class strings next to UI primitives */
+@source "../../../icons/src/**/*.{ts,tsx,js,jsx}";

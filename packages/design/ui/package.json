@@ -53,7 +53,10 @@
       "types": "./dist/typography/index.d.ts",
       "import": "./dist/typography/index.js"
     },
-    "./typography/fonts.css": "./dist/typography/fonts.css",
+    "./typography/fonts.css": "./src/typography/fonts.css",
+    "./styles/sources.css": "./src/styles/sources.css",
+    "./styles/preset.css": "./src/styles/preset.css",
+    "./styles.css": "./src/styles/preset.css",
     "./hooks": {
       "types": "./dist/hooks/index.d.ts",
       "import": "./dist/hooks/index.js"
@@ -81,6 +84,8 @@
   },
   "files": [
     "dist",
+    "src/styles",
+    "src/typography/fonts.css",
     "README.md"
   ],
   "scripts": {
