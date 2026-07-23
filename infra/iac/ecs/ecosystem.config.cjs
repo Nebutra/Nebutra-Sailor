@@ -100,13 +100,18 @@ module.exports = {
       listen_timeout: 10000,
     },
     {
+      // Source /var/www/nebutra/auth/.env so magic/passkey/turnstile flags and
+      // OAuth secrets stay live across restarts (plain node skips the file).
       name: "auth-center",
       cwd: "/var/www/nebutra/auth/current",
-      script: "apps/auth/server.js",
+      script: "/var/www/nebutra/node-with-env.sh",
+      interpreter: "bash",
+      args: "apps/auth/server.js",
       env: {
         NODE_ENV: "production",
         PORT: 3101,
         HOSTNAME: "127.0.0.1",
+        ENV_FILE: "/var/www/nebutra/auth/.env",
       },
       max_memory_restart: "450M",
       instances: 1,
