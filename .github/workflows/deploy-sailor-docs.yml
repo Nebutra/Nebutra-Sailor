@@ -58,17 +58,18 @@ jobs:
             exit 1
           fi
           npm i -g vercel@latest
-          # Pull project settings into apps/sailor-docs without linking interactively
-          mkdir -p apps/sailor-docs/.vercel
-          cat > apps/sailor-docs/.vercel/project.json <<EOF
+          # Link the Vercel project at the monorepo root. The dashboard Root
+          # Directory is already `apps/sailor-docs` — do NOT pass --cwd into
+          # that folder or Vercel doubles the path
+          # (…/apps/sailor-docs/apps/sailor-docs).
+          mkdir -p .vercel
+          cat > .vercel/project.json <<EOF
           {"projectId":"${VERCEL_PROJECT_ID}","orgId":"${VERCEL_ORG_ID:-}"}
           EOF
           # Deploy from monorepo root so turbo filter + pnpm workspace resolve.
-          vercel deploy --prod --yes --token="$VERCEL_TOKEN" \
-            --cwd apps/sailor-docs \
-            --scope "${VERCEL_ORG_ID:-}"
-
-      - name: Smoke docs.nebutra.com
+          # --archive=tgz avoids the 15k-file CLI upload limit on this monorepo.
+          vercel deploy --prod --yes --archive=tgz --token="$VERCEL_TOKEN" \
+            --scope "${VERCEL_ORG_ID:-}"      - name: Smoke docs.nebutra.com
         run: |
           set -euo pipefail
           # Allow a short CDN lag; failure here is non-blocking if DNS not yet cut over.
