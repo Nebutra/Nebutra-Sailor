@@ -49,7 +49,7 @@ export function UuidRunner({ toolId }: { toolId: string }) {
           max={100}
           value={count}
           onChange={(e) => setCount(Number(e.target.value))}
-          className="w-20 rounded border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-1"
+          className="w-20 rounded border border-border bg-background px-2 py-1"
         />
       </label>
       <div className="flex flex-wrap gap-2">
@@ -64,14 +64,14 @@ export function UuidRunner({ toolId }: { toolId: string }) {
           type="button"
           disabled={loading}
           onClick={() => void server()}
-          className="rounded-lg border border-[var(--neutral-7)] px-4 py-2 text-sm"
+          className="rounded-lg border border-border px-4 py-2 text-sm"
         >
           服务端生成
         </button>
         <button
           type="button"
           onClick={() => void navigator.clipboard.writeText(uuids.join("\n"))}
-          className="rounded-lg border border-[var(--neutral-7)] px-4 py-2 text-sm"
+          className="rounded-lg border border-border px-4 py-2 text-sm"
         >
           复制全部
         </button>
@@ -84,10 +84,7 @@ export function UuidRunner({ toolId }: { toolId: string }) {
       {uuids.length > 0 ? (
         <ul className="space-y-1 font-mono text-sm">
           {uuids.map((id) => (
-            <li
-              key={id}
-              className="rounded border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2"
-            >
+            <li key={id} className="rounded border border-border bg-background px-3 py-2">
               {id}
             </li>
           ))}

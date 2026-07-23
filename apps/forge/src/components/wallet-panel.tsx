@@ -42,12 +42,12 @@ export function WalletPanel() {
   };
 
   return (
-    <div className="space-y-4 rounded-xl border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-5">
+    <div className="space-y-4 rounded-xl border border-border bg-muted p-5">
       <div>
-        <p className="text-sm text-[var(--neutral-11)]">当前余额（tenant: demo）</p>
+        <p className="text-sm text-muted-foreground">当前余额（tenant: demo）</p>
         <p className="text-3xl font-semibold tabular-nums">
           {balance === null ? "…" : balance}{" "}
-          <span className="text-base font-normal text-[var(--neutral-11)]">{currency}</span>
+          <span className="text-base font-normal text-muted-foreground">{currency}</span>
         </p>
       </div>
       <div className="flex flex-wrap items-end gap-3">
@@ -59,7 +59,7 @@ export function WalletPanel() {
             step={1}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="mt-1 block w-32 rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-2"
+            className="mt-1 block w-32 rounded-lg border border-border bg-background px-3 py-2"
           />
         </label>
         <button
@@ -71,7 +71,7 @@ export function WalletPanel() {
           {loading ? "处理中…" : "Mock 充值"}
         </button>
       </div>
-      {message ? <p className="text-sm text-[var(--neutral-11)]">{message}</p> : null}
+      {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
     </div>
   );
 }

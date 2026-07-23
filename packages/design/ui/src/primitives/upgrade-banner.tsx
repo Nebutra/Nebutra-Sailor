@@ -64,22 +64,17 @@ export function UpgradeBanner({
 
   const ctaIsHref = typeof onCta === "string";
   const ctaCommon =
-    "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold text-white transition-opacity hover:opacity-90";
+    "inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90";
 
   const ctaNode = onCta ? (
     ctaIsHref ? (
-      <a href={onCta} className={ctaCommon} style={{ background: "var(--brand-gradient)" }}>
+      <a href={onCta} className={ctaCommon}>
         <Sparkles className="h-3 w-3" aria-hidden="true" />
         {ctaLabel}
         <ArrowRight className="h-3 w-3" aria-hidden="true" />
       </a>
     ) : (
-      <button
-        type="button"
-        onClick={onCta}
-        className={ctaCommon}
-        style={{ background: "var(--brand-gradient)" }}
-      >
+      <button type="button" onClick={onCta} className={ctaCommon}>
         <Sparkles className="h-3 w-3" aria-hidden="true" />
         {ctaLabel}
         <ArrowRight className="h-3 w-3" aria-hidden="true" />
@@ -98,8 +93,7 @@ export function UpgradeBanner({
     >
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full opacity-20 blur-3xl"
-        style={{ background: "var(--brand-gradient)" }}
+        className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary opacity-20 blur-3xl"
       />
 
       <div className="relative flex flex-wrap items-center gap-3">

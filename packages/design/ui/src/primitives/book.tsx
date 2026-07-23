@@ -18,7 +18,7 @@ import { cn } from "../utils/cn";
  *
  *  Color tokens:
  *    Geist Best Practices says pass `color` from design tokens
- *    (`var(--blue-9)`, `var(--cyan-9)`) so the cover follows light/dark
+ *    (`hsl(var(--primary))`, `var(--cyan-9)`) so the cover follows light/dark
  *    theme tokens. Hex literals are accepted (Folder / FileCard precedent —
  *    categorical "red book" / "amber book" colors are NOT brand chrome).
  *

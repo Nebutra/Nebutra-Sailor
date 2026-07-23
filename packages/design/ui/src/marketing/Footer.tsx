@@ -77,7 +77,7 @@ export function Footer({
                 className="inline-flex items-center gap-2 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--neutral-12)] rounded-[var(--radius-md)]"
               >
                 {/* Generic Standard Logo Placeholder */}
-                <div className="flex items-center justify-center w-8 h-8 rounded-[var(--radius-lg)] bg-[var(--brand-gradient-start,var(--blue-9))] text-white font-bold">
+                <div className="flex items-center justify-center w-8 h-8 rounded-[var(--radius-lg)] bg-[hsl(var(--primary))] text-white font-bold">
                   N
                 </div>
                 <span className="text-xl font-bold tracking-tight text-[var(--neutral-12)]">
@@ -98,7 +98,7 @@ export function Footer({
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[var(--neutral-10)] hover:text-[var(--brand-gradient-start,var(--blue-11))] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] rounded-[var(--radius-md)]"
+                      className="text-[var(--neutral-10)] hover:text-[hsl(var(--primary))] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-8)] rounded-[var(--radius-md)]"
                       aria-label={link.platform}
                     >
                       <SocialIcon platform={link.platform} />
@@ -129,7 +129,7 @@ export function Footer({
                           >
                             {link.label}
                             {link.badge && (
-                              <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold bg-[var(--brand-gradient-start,var(--blue-3))] text-[var(--brand-gradient-end,var(--blue-11))] rounded-full">
+                              <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold bg-[hsl(var(--primary) / 0.12)] text-[hsl(var(--primary))] rounded-full">
                                 {link.badge}
                               </span>
                             )}
@@ -141,7 +141,7 @@ export function Footer({
                           >
                             {link.label}
                             {link.badge && (
-                              <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold bg-[var(--brand-gradient-start,var(--blue-3))] text-[var(--brand-gradient-end,var(--blue-11))] rounded-full">
+                              <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold bg-[hsl(var(--primary) / 0.12)] text-[hsl(var(--primary))] rounded-full">
                                 {link.badge}
                               </span>
                             )}

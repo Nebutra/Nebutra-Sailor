@@ -33,8 +33,8 @@ const SIZE_MAP: Record<Size, { box: string; halo: string; glyph: string }> = {
  *
  * The Nebutra equivalent of a Lovart-style mascot tile. Used as the visual
  * anchor for empty states, hero modules, and auth surfaces. Defaults to a
- * gradient circle using `var(--brand-gradient)`; pass an icon child to embed
- * a glyph.
+ * solid primary circle (semantic `--primary` so product skins recolor);
+ * pass an icon child to embed a glyph. Identity logos use BrandLogo / VI assets.
  *
  * @example
  * ```tsx
@@ -62,10 +62,9 @@ export function BrandMark({
         <span
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute rounded-full opacity-30 blur-2xl",
+            "pointer-events-none absolute rounded-full bg-primary opacity-30 blur-2xl",
             sizes.halo,
           )}
-          style={{ background: "var(--brand-gradient)" }}
         />
       )}
 
@@ -73,11 +72,10 @@ export function BrandMark({
         className={cn(
           "relative inline-flex items-center justify-center rounded-[var(--radius-2xl)]",
           sizes.box,
-          variant === "gradient" && "text-white shadow-sm",
-          variant === "soft" && "bg-blue-2 text-blue-11 dark:bg-blue-2/20 dark:text-blue-9",
-          variant === "outline" && "border border-neutral-7 bg-neutral-1 text-neutral-12",
+          variant === "gradient" && "bg-primary text-primary-foreground shadow-sm",
+          variant === "soft" && "bg-primary/10 text-primary dark:bg-primary/20",
+          variant === "outline" && "border border-border bg-background text-foreground",
         )}
-        style={variant === "gradient" ? { background: "var(--brand-gradient)" } : undefined}
       >
         {children ?? <DefaultGlyph className={sizes.glyph} />}
       </span>

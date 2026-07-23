@@ -1,6 +1,6 @@
 import { buildCategoryHub } from "@nebutra/forge-runtime";
 import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
-import { AuroraBackground, Badge } from "@nebutra/ui/primitives";
+import { AuroraBackground } from "@nebutra/ui/primitives";
 import { CategoryNav } from "@/components/category-nav";
 import { HomeSearch } from "@/components/home-search";
 import { ToolCard } from "@/components/tool-card";
@@ -18,19 +18,20 @@ export default function ForgeHomePage() {
         <div className="relative z-10 px-6 py-14 text-center md:px-14 md:py-20">
           <AnimateInGroup stagger="normal" className="mx-auto max-w-2xl space-y-6">
             <AnimateIn preset="fadeUp">
-              <Badge variant="blue-subtle" className="px-3 py-1 text-[11px]">
+              {/* Landing-style eyebrow: tracking + color, not Badge/pill chrome */}
+              <p className="text-xs font-medium tracking-[0.12em] text-muted-foreground uppercase">
                 给人用 · 也给 Agent 用
-              </Badge>
+              </p>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
               <h1
-                className="text-4xl font-semibold tracking-tight text-balance md:text-5xl lg:text-6xl"
+                className="text-4xl font-semibold tracking-tight text-balance text-primary md:text-5xl lg:text-6xl"
                 style={{
                   letterSpacing: "var(--tracking-display, -0.02em)",
                   lineHeight: "var(--leading-display, 1.1)",
                 }}
               >
-                <span className="text-primary">在线工具瑞士军刀</span>
+                在线工具瑞士军刀
               </h1>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
@@ -40,10 +41,15 @@ export default function ForgeHomePage() {
               </p>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
-              <div className="flex flex-wrap items-center justify-center gap-2">
-                <Badge variant="gray-subtle">{hub.tools.length} 个工具</Badge>
-                <Badge variant="gray-subtle">人机同一接口</Badge>
-              </div>
+              {/* Meta as typography, not compact Badge (h-6 / px-2.5 hugs Chinese text) */}
+              <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                <span className="tabular-nums">{hub.tools.length} 个工具</span>
+                <span
+                  className="hidden h-1 w-1 rounded-full bg-[var(--neutral-7)] sm:inline-block"
+                  aria-hidden
+                />
+                <span>人机同一接口</span>
+              </p>
             </AnimateIn>
             <AnimateIn preset="fadeUp">
               <div className="pt-2">

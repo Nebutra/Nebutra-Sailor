@@ -106,7 +106,7 @@ const DEFAULT_PALETTE = [
  *
  * // Custom colors and speed
  * <WaveAnimation
- *   palette={["var(--brand-primary)", "var(--brand-accent)", "var(--brand-tertiary)"]}
+ *   palette={["hsl(var(--primary))", "var(--brand-accent)", "var(--brand-tertiary)"]}
  *   speed={1.5}
  *   barCount={30}
  * />

@@ -46,7 +46,7 @@ export interface AuroraTextProps {
   className?: string;
   /**
    * Array of colors for the gradient
-   * @default ["var(--brand-primary)", "var(--brand-accent)", "var(--brand-tertiary)", "var(--primary)"]
+   * @default ["hsl(var(--primary))", "var(--brand-accent)", "var(--brand-tertiary)", "var(--primary)"]
    */
   colors?: string[];
   /**
@@ -69,7 +69,7 @@ export interface AuroraTextProps {
  * <AuroraText>Aurora Text</AuroraText>
  *
  * // Custom colors
- * <AuroraText colors={["var(--brand-primary)", "var(--brand-accent)", "var(--brand-tertiary)"]}>
+ * <AuroraText colors={["hsl(var(--primary))", "var(--brand-accent)", "var(--brand-tertiary)"]}>
  *   Custom Colors
  * </AuroraText>
  *
@@ -87,7 +87,7 @@ export const AuroraText = memo(
     children,
     className = "",
     colors = [
-      "var(--brand-primary)",
+      "hsl(var(--primary))",
       "var(--brand-accent)",
       "var(--brand-tertiary)",
       "hsl(var(--primary))",

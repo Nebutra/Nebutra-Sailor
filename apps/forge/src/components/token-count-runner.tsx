@@ -54,7 +54,7 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
             className={
               encoding === e.id
                 ? "rounded-lg bg-primary px-3 py-1.5 text-sm text-primary-foreground"
-                : "rounded-lg border border-[var(--neutral-7)] px-3 py-1.5 text-sm"
+                : "rounded-lg border border-border px-3 py-1.5 text-sm"
             }
           >
             {e.label}
@@ -65,7 +65,7 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={8}
-        className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 font-mono text-sm"
+        className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
       />
       <div className="flex flex-wrap items-center gap-3">
         <button
@@ -76,17 +76,17 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
         >
           {loading ? "计数中…" : "精确计数"}
         </button>
-        <span className="text-sm text-[var(--neutral-11)]">字符 {text.length}</span>
+        <span className="text-sm text-muted-foreground">字符 {text.length}</span>
       </div>
-      {error ? <p className="text-sm text-[var(--status-danger)]">{error}</p> : null}
+      {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
       {tokens !== null ? (
-        <div className="rounded-xl border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-5">
+        <div className="rounded-xl border border-border bg-background p-5">
           <p className="text-3xl font-bold tabular-nums">{tokens}</p>
-          <p className="mt-1 text-sm text-[var(--neutral-11)]">tokens</p>
-          {note ? <p className="mt-2 text-xs text-[var(--neutral-10)]">{note}</p> : null}
+          <p className="mt-1 text-sm text-muted-foreground">tokens</p>
+          {note ? <p className="mt-2 text-xs text-muted-foreground">{note}</p> : null}
         </div>
       ) : null}
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-muted-foreground">
         引擎：js-tiktoken（OpenAI 兼容编码）· 服务端精确计数 · 可对接 Router 费用估算
       </p>
     </div>

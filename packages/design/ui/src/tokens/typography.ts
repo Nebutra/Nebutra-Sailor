@@ -95,7 +95,7 @@ export const textColors = {
   muted: "text-muted-foreground",
   subtle: "text-muted-foreground/80",
   accent: "text-[var(--brand-accent)]",
-  gradient: "bg-[image:var(--brand-gradient)] bg-clip-text text-transparent",
+  gradient: "bg-primary bg-clip-text text-transparent",
 } as const;
 
 export type FontSize = keyof typeof fontSizes;

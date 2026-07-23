@@ -106,7 +106,7 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div
-        className="flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--neutral-7)] bg-[var(--neutral-1)] p-6 text-sm text-[var(--neutral-11)]"
+        className="flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-background p-6 text-sm text-muted-foreground"
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
           e.preventDefault();
@@ -134,7 +134,7 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
             data-allow-native
             value={format}
             onChange={(e) => setFormat(e.target.value as typeof format)}
-            className="ml-2 rounded border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-1"
+            className="ml-2 rounded border border-border bg-background px-2 py-1"
           >
             <option value="webp">webp</option>
             <option value="jpeg">jpeg</option>
@@ -161,7 +161,7 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
             placeholder="可选"
             value={width}
             onChange={(e) => setWidth(e.target.value)}
-            className="ml-2 w-24 rounded border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-1"
+            className="ml-2 w-24 rounded border border-border bg-background px-2 py-1"
           />
         </label>
       </div>
@@ -179,7 +179,7 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
           type="button"
           disabled={!previewOut}
           onClick={download}
-          className="rounded-lg border border-[var(--neutral-7)] px-4 py-2 text-sm disabled:opacity-50"
+          className="rounded-lg border border-border px-4 py-2 text-sm disabled:opacity-50"
         >
           下载结果
         </button>
@@ -192,7 +192,7 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
       ) : null}
 
       {resultMeta ? (
-        <p className="text-sm text-[var(--neutral-11)]">
+        <p className="text-sm text-muted-foreground">
           输出 {(resultMeta.bytes / 1024).toFixed(1)} KB
           {resultMeta.width && resultMeta.height
             ? ` · ${resultMeta.width}×${resultMeta.height}`
@@ -206,29 +206,29 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
       <div className="grid gap-3 sm:grid-cols-2">
         {previewIn ? (
           <div>
-            <p className="mb-1 text-xs text-[var(--neutral-10)]">原图</p>
+            <p className="mb-1 text-xs text-muted-foreground">原图</p>
             {/* biome-ignore lint/performance/noImgElement: data-url preview */}
             <img
               src={previewIn}
               alt="input preview"
-              className="max-h-72 w-full rounded-lg border border-[var(--neutral-6)] object-contain"
+              className="max-h-72 w-full rounded-lg border border-border object-contain"
             />
           </div>
         ) : null}
         {previewOut ? (
           <div>
-            <p className="mb-1 text-xs text-[var(--neutral-10)]">结果</p>
+            <p className="mb-1 text-xs text-muted-foreground">结果</p>
             {/* biome-ignore lint/performance/noImgElement: data-url preview */}
             <img
               src={previewOut}
               alt="output preview"
-              className="max-h-72 w-full rounded-lg border border-[var(--neutral-6)] object-contain"
+              className="max-h-72 w-full rounded-lg border border-border object-contain"
             />
           </div>
         ) : null}
       </div>
 
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-muted-foreground">
         引擎：sharp（libvips）· 服务端处理 · Agent 同 invoke 契约（imageBase64）
       </p>
     </div>

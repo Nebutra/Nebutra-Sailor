@@ -1,26 +1,33 @@
 "use client";
 
-import { Badge } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import { categoryMeta } from "@/lib/category-meta";
 
+/**
+ * Category jump chips — not Badge (Badge md = h-6 px-2.5, text hugs border).
+ * Comfortable hit target + horizontal padding for Chinese labels.
+ */
 export function CategoryNav({ categories }: { categories: readonly string[] }) {
   return (
-    <div className="sticky top-[3.75rem] z-30 -mx-1 overflow-x-auto px-1 py-2 backdrop-blur-sm">
-      <div className="flex min-w-max gap-2">
+    <div className="sticky top-16 z-30 -mx-1 overflow-x-auto px-1 py-2 backdrop-blur-sm">
+      <nav className="flex min-w-max gap-2" aria-label="工具分类">
         {categories.map((id) => {
           const meta = categoryMeta(id);
           return (
-            <a key={id} href={`#${id}`} className="inline-flex">
-              <Badge
-                variant="outline"
-                className="cursor-pointer px-3 py-1 text-xs font-medium hover:bg-accent"
-              >
-                {meta.label}
-              </Badge>
+            <a
+              key={id}
+              href={`#${id}`}
+              className={cn(
+                "inline-flex h-9 items-center rounded-full border border-border",
+                "bg-background px-4 text-sm font-medium text-muted-foreground",
+                "transition-colors hover:border-border hover:bg-muted hover:text-foreground",
+              )}
+            >
+              {meta.label}
             </a>
           );
         })}
-      </div>
+      </nav>
     </div>
   );
 }

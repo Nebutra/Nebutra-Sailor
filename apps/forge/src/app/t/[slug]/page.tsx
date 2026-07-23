@@ -1,6 +1,5 @@
 import { buildToolPageModel } from "@nebutra/forge-runtime";
 import { Card, PageHeader } from "@nebutra/ui/layout";
-import { Badge } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -100,28 +99,24 @@ export default async function ToolPage({ params }: Props) {
           </Link>
         </p>
         <PageHeader title={page.title.zh} description={page.description.zh} />
-        <div className="flex flex-wrap gap-2">
-          <Badge variant="gray-subtle" className="font-mono text-[10px]">
-            {page.engine.name}
-          </Badge>
-          <Badge variant="outline" className="font-mono text-[10px]">
-            v{page.engine.version}
-          </Badge>
-          <Badge variant="outline" className="max-w-[min(100%,28rem)] truncate text-[10px]">
-            {page.engine.upstream}
-          </Badge>
-        </div>
+        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-muted-foreground">
+          <span>{page.engine.name}</span>
+          <span aria-hidden>·</span>
+          <span>v{page.engine.version}</span>
+          <span aria-hidden>·</span>
+          <span className="max-w-[min(100%,28rem)] truncate">{page.engine.upstream}</span>
+        </p>
       </div>
 
-      <Card className="border-border/80 p-5 md:p-6">
+      <Card className="border-border p-5 md:p-6">
         <div className="mb-5 flex items-center justify-between gap-3 border-b border-border pb-4">
           <div>
             <p className="text-sm font-semibold">工作台</p>
             <p className="text-xs text-muted-foreground">人机同路径 · 本地或服务端 invoke</p>
           </div>
-          <Badge variant="outline" className="font-mono text-[10px]">
+          <code className="rounded-[var(--radius-md)] bg-muted px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
             {page.id}
-          </Badge>
+          </code>
         </div>
         {page.slug === "word-count" ? (
           <WordCountRunner toolId={page.id} />
@@ -164,12 +159,12 @@ export default async function ToolPage({ params }: Props) {
         )}
       </Card>
 
-      <Card className="border-border/80 bg-muted/30 p-5">
+      <Card className="border-border bg-muted/40 p-5">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-sm font-semibold">Agent / API</h2>
-          <Badge variant="outline" className="font-mono text-[10px]">
+          <code className="rounded-[var(--radius-md)] bg-background px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
             {page.meterId}
-          </Badge>
+          </code>
         </div>
         <p className="mb-3 text-sm text-muted-foreground">
           同一能力可被 Agent 调用。生产环境请走认证 Key。
@@ -185,10 +180,11 @@ export default async function ToolPage({ params }: Props) {
           <ul className="flex flex-wrap gap-2">
             {page.related.map((t) => (
               <li key={t.id}>
-                <Link href={t.path}>
-                  <Badge variant="outline" className="cursor-pointer px-3 py-1 hover:bg-accent">
-                    {t.title.zh}
-                  </Badge>
+                <Link
+                  href={t.path}
+                  className="inline-flex h-9 items-center rounded-full border border-border bg-background px-4 text-sm text-muted-foreground transition-colors hover:border-border hover:bg-muted hover:text-foreground"
+                >
+                  {t.title.zh}
                 </Link>
               </li>
             ))}

@@ -40,7 +40,7 @@ const cardVariants = cva(
   {
     variants: {
       popular: {
-        true: "border-[var(--brand-gradient-start,var(--blue-9))] shadow-xl shadow-[var(--blue-11)]/5 ring-1 ring-[var(--blue-9)] md:scale-105 z-10",
+        true: "border-[hsl(var(--primary))] shadow-xl shadow-[hsl(var(--primary))]/5 ring-1 ring-[hsl(var(--primary))] md:scale-105 z-10",
         false: "border-[var(--neutral-6)] hover:border-[var(--neutral-7)]",
       },
     },
@@ -126,14 +126,14 @@ export function Pricing({
               >
                 {/* Popular Gradient Glow Background (Optional) */}
                 {plan.popular && (
-                  <div className="absolute inset-0 bg-gradient-to-b from-[var(--blue-9)]/5 to-transparent rounded-[var(--radius-3xl)] pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--primary))]/5 to-transparent rounded-[var(--radius-3xl)] pointer-events-none" />
                 )}
 
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-xl font-semibold text-[var(--neutral-12)]">{plan.name}</h3>
                     {plan.badge && (
-                      <span className="px-3 py-1 text-xs font-semibold text-[var(--blue-11)] bg-[var(--blue-3)] rounded-full">
+                      <span className="px-3 py-1 text-xs font-semibold text-[hsl(var(--primary))] bg-[var(--blue-3)] rounded-full">
                         {plan.badge}
                       </span>
                     )}

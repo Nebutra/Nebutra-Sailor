@@ -94,7 +94,7 @@ function hexPath(cx: number, cy: number, r: number): string {
  */
 export function HexGrid({
   size = 24,
-  color = "var(--brand-primary)",
+  color = "hsl(var(--primary))",
   opacity: hexOpacity = 0.12,
   strokeWidth = 1,
   glow = false,

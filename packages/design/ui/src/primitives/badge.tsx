@@ -49,8 +49,7 @@ const badgeVariants = cva(
         beta: "border-transparent bg-muted text-muted-foreground",
         new: "border-transparent bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300",
         owner: "border-border bg-transparent text-foreground",
-        featured:
-          "border-transparent text-white bg-[image:var(--brand-gradient)] [text-shadow:0_0_1px_rgba(0,0,0,0.2)]",
+        featured: "border-transparent text-white bg-primary [text-shadow:0_0_1px_rgba(0,0,0,0.2)]",
         "coming-soon": "border-transparent bg-muted/60 text-muted-foreground italic",
       },
       size: {

@@ -27,8 +27,10 @@ Layered package map:
 
 Sub-specs (per package):
 
+- [`packages/design/ARCHITECTURE.md`](./packages/design/ARCHITECTURE.md) — **ownership & swap contract (start here)**
 - [`packages/design/brand/DESIGN.md`](./packages/design/brand/DESIGN.md) — brand identity layer
 - [`packages/design/tokens/DESIGN.md`](./packages/design/tokens/DESIGN.md) — runtime token layer
+- [`packages/design/tokens/skins/README.md`](./packages/design/tokens/skins/README.md) — external DS / skin remap
 - [`packages/design/theme/DESIGN.md`](./packages/design/theme/DESIGN.md) — multi-theme engine
 - [`packages/design/ui/DESIGN.md`](./packages/design/ui/DESIGN.md) — component library
 

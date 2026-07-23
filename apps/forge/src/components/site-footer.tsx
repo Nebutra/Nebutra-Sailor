@@ -41,21 +41,21 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative w-full border-t border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+    <footer className="relative w-full border-t border-border bg-background">
       <div className="mx-auto max-w-[1400px] px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-4">
             <Link
               href="/"
-              className="inline-flex outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-12)] focus-visible:ring-offset-2 rounded-[var(--radius-md)]"
+              className="inline-flex outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-md)]"
               aria-label={`${brand.name} Forge`}
             >
               <BrandLogo variant="horizontal" className="h-7 w-auto" />
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-[var(--neutral-11)]">
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Forge 是 {brand.name} 的 Agent-native 工具站——同一能力服务人类界面与 API / MCP。
             </p>
-            <p className="mt-3 text-xs font-medium tracking-wide text-[var(--neutral-10)]">
+            <p className="mt-3 text-xs font-medium tracking-wide text-muted-foreground">
               {brand.tagline}
             </p>
           </div>
@@ -63,14 +63,14 @@ export function SiteFooter() {
           <div className="md:col-span-8 grid grid-cols-2 gap-8 sm:grid-cols-3">
             {COLUMNS.map((col) => (
               <div key={col.title} className="flex flex-col gap-3">
-                <h2 className="text-sm font-semibold text-[var(--neutral-12)]">{col.title}</h2>
+                <h2 className="text-sm font-semibold text-foreground">{col.title}</h2>
                 <ul className="flex flex-col gap-2.5">
                   {col.links.map((link) => (
                     <li key={link.href + link.label}>
                       {"external" in link && link.external ? (
                         <a
                           href={link.href}
-                          className="text-[13px] text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+                          className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
                           {...(link.href.startsWith("http")
                             ? { target: "_blank", rel: "noopener noreferrer" }
                             : {})}
@@ -80,7 +80,7 @@ export function SiteFooter() {
                       ) : (
                         <Link
                           href={link.href}
-                          className="text-[13px] text-[var(--neutral-10)] transition-colors hover:text-[var(--neutral-12)]"
+                          className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
                         >
                           {link.label}
                         </Link>
@@ -93,11 +93,11 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-[var(--neutral-6)] pt-8 sm:flex-row sm:items-center">
-          <p className="text-[13px] text-[var(--neutral-10)]">
+        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-border pt-8 sm:flex-row sm:items-center">
+          <p className="text-[13px] text-muted-foreground">
             © {year} {brand.name}. All rights reserved.
           </p>
-          <p className="text-[12px] text-[var(--neutral-10)]">{brand.nameCn} · Forge</p>
+          <p className="text-[12px] text-muted-foreground">{brand.nameCn} · Forge</p>
         </div>
       </div>
     </footer>

@@ -73,7 +73,7 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div
-        className="rounded-xl border-2 border-dashed border-[var(--neutral-7)] bg-[var(--neutral-1)] p-4 text-sm text-[var(--neutral-11)]"
+        className="rounded-xl border-2 border-dashed border-border bg-background p-4 text-sm text-muted-foreground"
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
           e.preventDefault();
@@ -96,7 +96,7 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
             data-allow-native
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="ml-2 rounded border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-1"
+            className="ml-2 rounded border border-border bg-background px-2 py-1"
           />
         </label>
         <label>
@@ -105,7 +105,7 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
             data-allow-native
             value={engine}
             onChange={(e) => setEngine(e.target.value as typeof engine)}
-            className="ml-2 rounded border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-1"
+            className="ml-2 rounded border border-border bg-background px-2 py-1"
           >
             <option value="auto">auto（优先 Playwright）</option>
             <option value="playwright">playwright（Chromium 排版打印）</option>
@@ -118,7 +118,7 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
         value={markdown}
         onChange={(e) => setMarkdown(e.target.value)}
         rows={14}
-        className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 font-mono text-sm"
+        className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
       />
 
       <button
@@ -130,7 +130,7 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
         {loading ? "生成中…" : "生成 PDF"}
       </button>
 
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-muted-foreground">
         渲染路径：marked → HTML/CSS → Chromium print（Playwright）。中文依赖宿主系统字体（PingFang /
         Noto Sans CJK / 微软雅黑）。无浏览器时 auto 会回退 simple。
       </p>
@@ -140,12 +140,12 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
           {error}
         </pre>
       ) : null}
-      {meta ? <p className="text-sm text-[var(--neutral-11)]">{meta}</p> : null}
+      {meta ? <p className="text-sm text-muted-foreground">{meta}</p> : null}
       {downloadUrl ? (
         <a
           href={downloadUrl}
           download={`${title || "document"}.pdf`}
-          className="inline-block rounded-lg border border-[var(--neutral-7)] px-4 py-2 text-sm font-medium underline"
+          className="inline-block rounded-lg border border-border px-4 py-2 text-sm font-medium underline"
         >
           下载 PDF
         </a>

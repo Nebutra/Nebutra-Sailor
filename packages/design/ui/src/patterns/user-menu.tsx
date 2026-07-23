@@ -95,7 +95,7 @@ function DefaultTrigger({ user }: { user: UserMenuUser }) {
     >
       <Avatar size="sm">
         {user.avatarUrl ? <AvatarImage src={user.avatarUrl} alt={user.name} /> : null}
-        <AvatarFallback size="sm" className="bg-[image:var(--brand-gradient)] text-white">
+        <AvatarFallback size="sm" className="bg-primary text-white">
           {initials}
         </AvatarFallback>
       </Avatar>
@@ -150,7 +150,7 @@ export function UserMenu(props: UserMenuProps): React.ReactElement {
         <div className="flex items-center gap-3 p-3">
           <Avatar size="md">
             {user.avatarUrl ? <AvatarImage src={user.avatarUrl} alt={user.name} /> : null}
-            <AvatarFallback size="md" className="bg-[image:var(--brand-gradient)] text-white">
+            <AvatarFallback size="md" className="bg-primary text-white">
               {initials}
             </AvatarFallback>
           </Avatar>

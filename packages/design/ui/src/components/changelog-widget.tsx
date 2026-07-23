@@ -122,7 +122,7 @@ export function ChangelogWidget({
                 >
                   <div className="mb-2 flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-[var(--blue-9)]">
+                      <span className="font-mono text-xs font-bold text-primary">
                         v{entry.version}
                       </span>
                       {entry.tag && (
@@ -150,7 +150,7 @@ export function ChangelogWidget({
           <a
             href={changelogUrl}
             onClick={closeAndMarkSeen}
-            className="flex items-center justify-between border-t border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 py-3 text-sm font-medium text-[var(--blue-9)] transition-colors hover:bg-[var(--neutral-2)]"
+            className="flex items-center justify-between border-t border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 py-3 text-sm font-medium text-primary transition-colors hover:bg-[var(--neutral-2)]"
           >
             <span>View all updates</span>
             <ChevronRight className="h-4 w-4" />

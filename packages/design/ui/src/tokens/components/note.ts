@@ -84,7 +84,7 @@ export const noteTokens = {
       foreground: "var(--neutral-12)",
       label: "var(--neutral-12)",
       icon: "var(--neutral-10)",
-      link: "var(--blue-9)",
+      link: "hsl(var(--primary))",
     },
     secondary: {
       background: "var(--neutral-2)",
@@ -93,7 +93,7 @@ export const noteTokens = {
       foreground: "var(--neutral-11)",
       label: "var(--neutral-12)",
       icon: "var(--neutral-10)",
-      link: "var(--blue-9)",
+      link: "hsl(var(--primary))",
     },
     success: semanticTone("success"),
     warning: semanticTone("warning"),

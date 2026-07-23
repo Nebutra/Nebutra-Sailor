@@ -47,7 +47,7 @@ export interface MagicCardProps {
  * @example Custom gradient colors
  * ```tsx
  * <MagicCard
- *   gradientFrom="var(--brand-primary)"
+ *   gradientFrom="hsl(var(--primary))"
  *   gradientTo="var(--brand-accent)"
  *   gradientColor="color-mix(in oklab, var(--brand-primary) 16%, transparent)"
  * >
@@ -61,7 +61,7 @@ export function MagicCard({
   gradientSize = 200,
   gradientColor = "color-mix(in oklab, var(--brand-primary) 16%, transparent)",
   gradientOpacity = 0.8,
-  gradientFrom = "var(--brand-primary)",
+  gradientFrom = "hsl(var(--primary))",
   gradientTo = "var(--brand-accent)",
 }: MagicCardProps) {
   const shouldReduceMotion = useReducedMotion();

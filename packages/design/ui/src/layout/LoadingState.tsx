@@ -31,13 +31,13 @@ export function LoadingState({ message, size = "large" }: LoadingStateProps) {
     <div className="flex flex-col items-center justify-center py-10">
       <span
         className={cn(
-          "inline-block animate-spin rounded-full border-solid border-[color:var(--blue-9)] border-r-transparent align-[-0.125em]",
+          "inline-block animate-spin rounded-full border-solid border-primary border-r-transparent align-[-0.125em]",
           spinnerSize[size],
         )}
         role="status"
         aria-label={message ?? "Loading"}
       />
-      {message && <p className="mt-3 text-sm text-[color:var(--neutral-11)]">{message}</p>}
+      {message && <p className="mt-3 text-sm text-muted-foreground">{message}</p>}
     </div>
   );
 }

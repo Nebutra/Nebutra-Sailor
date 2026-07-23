@@ -15,9 +15,9 @@ const ctaVariants = cva("relative overflow-hidden w-full rounded-[var(--radius-3
       gradient: "flex flex-col items-center text-center p-12 md:p-24",
     },
     backgroundType: {
-      gradient: "bg-[var(--brand-gradient)] text-white",
-      solid: "bg-[var(--neutral-2)] border border-[var(--neutral-6)] text-[var(--neutral-12)]",
-      image: "bg-[var(--neutral-12)] text-[var(--neutral-1)]", // Default dark background for image
+      gradient: "bg-primary text-primary-foreground",
+      solid: "bg-muted border border-border text-foreground",
+      image: "bg-foreground text-background",
     },
     density: {
       compact: "my-8",

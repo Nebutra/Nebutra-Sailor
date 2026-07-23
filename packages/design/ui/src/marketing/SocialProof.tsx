@@ -93,13 +93,13 @@ function AnimatedStatCounter({ stat }: { stat: Stat }) {
     <div className="flex flex-col items-center text-center p-6 lg:p-8">
       <div className="flex items-baseline gap-1 text-[var(--neutral-12)] font-bold tracking-tight mb-2">
         {stat.prefix && (
-          <span className="text-2xl md:text-3xl lg:text-4xl text-[var(--brand-gradient-start,var(--blue-11))]">
+          <span className="text-2xl md:text-3xl lg:text-4xl text-[hsl(var(--primary))]">
             {stat.prefix}
           </span>
         )}
         <span className="text-4xl md:text-5xl lg:text-6xl">{stat.value}</span>
         {stat.suffix && (
-          <span className="text-2xl md:text-3xl lg:text-4xl text-[var(--brand-gradient-end,var(--blue-9))]">
+          <span className="text-2xl md:text-3xl lg:text-4xl text-[hsl(var(--primary))]">
             {stat.suffix}
           </span>
         )}

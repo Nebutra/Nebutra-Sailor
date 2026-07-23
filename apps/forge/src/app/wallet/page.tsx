@@ -10,7 +10,7 @@ export default function WalletPage() {
     <div className="mx-auto max-w-lg space-y-6">
       <div>
         <h1 className="text-2xl font-bold">预充钱包</h1>
-        <p className="mt-2 text-sm text-[var(--neutral-11)]">
+        <p className="mt-2 text-sm text-muted-foreground">
           302 风格：先充值、后按量。当前为 <strong>mock 充值</strong>
           ，生产接入微信/支付宝/国际卡后写入同一 CreditBalance 账本。
         </p>

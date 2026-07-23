@@ -79,13 +79,13 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center gap-2">
-        <label className="flex items-center gap-2 text-sm text-[var(--neutral-11)]">
+        <label className="flex items-center gap-2 text-sm text-muted-foreground">
           缩进
           <select
             data-allow-native
             value={indent}
             onChange={(e) => setIndent(Number(e.target.value))}
-            className="rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-1.5 text-sm"
+            className="rounded-lg border border-border bg-background px-2 py-1.5 text-sm"
           >
             {[0, 2, 4].map((n) => (
               <option key={n} value={n}>
@@ -146,12 +146,12 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
       />
 
       {error ? (
-        <pre className="overflow-x-auto rounded-xl border border-[color-mix(in_srgb,var(--status-danger)_35%,transparent)] bg-[color-mix(in_srgb,var(--status-danger)_8%,transparent)] p-3 text-sm text-[var(--status-danger)]">
+        <pre className="overflow-x-auto rounded-xl border border-[color-mix(in_srgb,hsl(var(--destructive))_35%,transparent)] bg-[color-mix(in_srgb,hsl(var(--destructive))_8%,transparent)] p-3 text-sm text-[hsl(var(--destructive))]">
           {error}
         </pre>
       ) : null}
-      {status ? <p className="text-sm text-[var(--neutral-11)]">{status}</p> : null}
-      <p className="text-xs text-[var(--neutral-10)]">
+      {status ? <p className="text-sm text-muted-foreground">{status}</p> : null}
+      <p className="text-xs text-muted-foreground">
         引擎：ECMAScript JSON.parse / stringify · 本地即时 · Agent 同路径
       </p>
     </div>

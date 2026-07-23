@@ -37,14 +37,14 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4">
-          <p className="text-xs text-[var(--neutral-11)]">当前秒</p>
+        <div className="rounded-lg border border-border bg-background p-4">
+          <p className="text-xs text-muted-foreground">当前秒</p>
           <p className="font-mono text-xl tabular-nums">{Math.floor(now / 1000)}</p>
         </div>
-        <div className="rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4">
-          <p className="text-xs text-[var(--neutral-11)]">当前毫秒 / ISO</p>
+        <div className="rounded-lg border border-border bg-background p-4">
+          <p className="text-xs text-muted-foreground">当前毫秒 / ISO</p>
           <p className="font-mono text-sm tabular-nums">{now}</p>
-          <p className="mt-1 font-mono text-xs text-[var(--neutral-11)]">
+          <p className="mt-1 font-mono text-xs text-muted-foreground">
             {new Date(now).toISOString()}
           </p>
         </div>
@@ -63,7 +63,7 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
           data-allow-native
           value={mode}
           onChange={(e) => setMode(e.target.value as typeof mode)}
-          className="rounded border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-1"
+          className="rounded border border-border bg-background px-2 py-1"
         >
           <option value="to_date">时间戳 → 日期</option>
           <option value="to_unix">日期 → 时间戳</option>
@@ -72,7 +72,7 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
           data-allow-native
           value={unit}
           onChange={(e) => setUnit(e.target.value as typeof unit)}
-          className="rounded border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-2 py-1"
+          className="rounded border border-border bg-background px-2 py-1"
         >
           <option value="seconds">秒</option>
           <option value="milliseconds">毫秒</option>
@@ -82,12 +82,12 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={mode === "to_date" ? "1710000000" : "2024-01-01T00:00:00Z"}
-          className="min-w-[200px] flex-1 rounded border border-[var(--neutral-7)] bg-[var(--neutral-1)] px-3 py-1.5 font-mono"
+          className="min-w-[200px] flex-1 rounded border border-border bg-background px-3 py-1.5 font-mono"
         />
         <button
           type="button"
           onClick={() => void run({ mode, value, unit })}
-          className="rounded-lg border border-[var(--neutral-7)] px-4 py-1.5"
+          className="rounded-lg border border-border px-4 py-1.5"
         >
           转换
         </button>
@@ -98,7 +98,7 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
         </pre>
       ) : null}
       {output ? (
-        <pre className="overflow-x-auto rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 font-mono text-sm">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 font-mono text-sm">
           {output}
         </pre>
       ) : null}

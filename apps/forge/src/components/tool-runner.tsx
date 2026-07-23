@@ -63,7 +63,7 @@ export function ToolRunner({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           rows={8}
-          className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 font-mono text-sm outline-none focus:border-[hsl(var(--ring))]"
+          className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm outline-none focus:border-[hsl(var(--ring))]"
           spellCheck={false}
         />
       </div>
@@ -83,7 +83,7 @@ export function ToolRunner({
       {output ? (
         <div>
           <p className="mb-1 text-sm font-medium">输出</p>
-          <pre className="overflow-x-auto rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-2)] p-3 font-mono text-sm">
+          <pre className="overflow-x-auto rounded-lg border border-border bg-muted p-3 font-mono text-sm">
             {output}
           </pre>
         </div>

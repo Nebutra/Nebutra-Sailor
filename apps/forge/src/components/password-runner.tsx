@@ -80,25 +80,25 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
         <button
           type="button"
           onClick={() => void navigator.clipboard.writeText(password)}
-          className="rounded-lg border border-[var(--neutral-7)] px-4 py-2 text-sm"
+          className="rounded-lg border border-border px-4 py-2 text-sm"
           disabled={!password}
         >
           复制
         </button>
       </div>
-      {error ? <p className="text-sm text-[var(--status-danger)]">{error}</p> : null}
+      {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
       {password ? (
-        <pre className="overflow-x-auto rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 font-mono text-lg tracking-wide">
+        <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 font-mono text-lg tracking-wide">
           {password}
         </pre>
       ) : null}
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-muted-foreground">
         引擎：node:crypto randomInt · 密码学安全随机 · Agent 同 invoke 契约
       </p>
       {history.length > 1 ? (
         <div className="space-y-1">
-          <p className="text-xs text-[var(--neutral-10)]">最近生成</p>
-          <ul className="space-y-1 font-mono text-xs text-[var(--neutral-11)]">
+          <p className="text-xs text-muted-foreground">最近生成</p>
+          <ul className="space-y-1 font-mono text-xs text-muted-foreground">
             {history.slice(1).map((p) => (
               <li key={p}>{p}</li>
             ))}

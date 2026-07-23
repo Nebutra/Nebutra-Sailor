@@ -23,17 +23,17 @@ export interface GradientAnimatedTextProps extends React.HTMLAttributes<HTMLSpan
 
 const THEME_COLORS: Record<GradientTheme, Record<GradientVariant, { from: string; to: string }>> = {
   neon: {
-    1: { from: "var(--brand-primary)", to: "var(--brand-accent)" },
+    1: { from: "hsl(var(--primary))", to: "var(--brand-accent)" },
     2: { from: "var(--brand-accent)", to: "var(--brand-tertiary)" },
     3: { from: "hsl(var(--primary))", to: "var(--brand-accent)" },
   },
   ai: {
-    1: { from: "var(--brand-primary)", to: "var(--brand-tertiary)" },
+    1: { from: "hsl(var(--primary))", to: "var(--brand-tertiary)" },
     2: { from: "var(--brand-tertiary)", to: "var(--brand-accent)" },
     3: { from: "hsl(var(--primary))", to: "var(--brand-accent)" },
   },
   custom: {
-    1: { from: "var(--brand-primary)", to: "var(--brand-tertiary)" },
+    1: { from: "hsl(var(--primary))", to: "var(--brand-tertiary)" },
     2: { from: "var(--brand-tertiary)", to: "hsl(var(--destructive))" },
     3: { from: "var(--brand-accent)", to: "hsl(var(--primary))" },
   },

@@ -46,7 +46,7 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
             value={left}
             onChange={(e) => setLeft(e.target.value)}
             rows={12}
-            className="mt-1 w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 font-mono text-sm"
+            className="mt-1 w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
           />
         </label>
         <label className="block text-sm">
@@ -55,7 +55,7 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
             value={right}
             onChange={(e) => setRight(e.target.value)}
             rows={12}
-            className="mt-1 w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 font-mono text-sm"
+            className="mt-1 w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
           />
         </label>
       </div>
@@ -67,14 +67,14 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
       >
         {loading ? "对比中…" : "对比（jsdiff）"}
       </button>
-      {meta ? <p className="text-sm text-[var(--neutral-11)]">{meta}</p> : null}
+      {meta ? <p className="text-sm text-muted-foreground">{meta}</p> : null}
       {error ? (
         <pre className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
           {error}
         </pre>
       ) : null}
       {patch ? (
-        <pre className="max-h-96 overflow-auto rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-3 font-mono text-xs">
+        <pre className="max-h-96 overflow-auto rounded-lg border border-border bg-background p-3 font-mono text-xs">
           {patch}
         </pre>
       ) : null}

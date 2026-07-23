@@ -52,7 +52,7 @@ export function NumberBaseRunner({ toolId }: { toolId: string }) {
               setToBase(p.to);
               void convert({ fromBase: p.from, toBase: p.to });
             }}
-            className="rounded-lg border border-[var(--neutral-7)] px-3 py-1.5 text-sm"
+            className="rounded-lg border border-border px-3 py-1.5 text-sm"
           >
             {p.label}
           </button>
@@ -65,7 +65,7 @@ export function NumberBaseRunner({ toolId }: { toolId: string }) {
           setValue(e.target.value);
           void convert({ value: e.target.value });
         }}
-        className="w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-3 font-mono text-sm"
+        className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
         placeholder="数值"
       />
       <div className="grid grid-cols-2 gap-3">
@@ -82,7 +82,7 @@ export function NumberBaseRunner({ toolId }: { toolId: string }) {
               setFromBase(n);
               void convert({ fromBase: n });
             }}
-            className="mt-1 w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-2 font-mono"
+            className="mt-1 w-full rounded-lg border border-border bg-background p-2 font-mono"
           />
         </label>
         <label className="text-sm">
@@ -98,18 +98,18 @@ export function NumberBaseRunner({ toolId }: { toolId: string }) {
               setToBase(n);
               void convert({ toBase: n });
             }}
-            className="mt-1 w-full rounded-lg border border-[var(--neutral-7)] bg-[var(--neutral-1)] p-2 font-mono"
+            className="mt-1 w-full rounded-lg border border-border bg-background p-2 font-mono"
           />
         </label>
       </div>
-      {error ? <p className="text-sm text-[var(--status-danger)]">{error}</p> : null}
+      {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
       {result ? (
-        <div className="space-y-2 rounded-lg border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4">
+        <div className="space-y-2 rounded-lg border border-border bg-background p-4">
           <p className="font-mono text-xl break-all">{result}</p>
-          <p className="text-xs text-[var(--neutral-10)]">十进制：{decimal}</p>
+          <p className="text-xs text-muted-foreground">十进制：{decimal}</p>
         </div>
       ) : null}
-      <p className="text-xs text-[var(--neutral-10)]">
+      <p className="text-xs text-muted-foreground">
         引擎：ECMAScript parseInt / Number.toString · 2–36 进制 · Agent 同契约
       </p>
     </div>

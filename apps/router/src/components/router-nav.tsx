@@ -8,17 +8,19 @@ import { usePathname } from "next/navigation";
 import { BrandLogo } from "@/components/brand-logo";
 
 const NAV = [
-  { href: "/", label: "工具" },
-  { href: "/wallet", label: "钱包" },
-  { href: "/docs", label: "API" },
+  { href: "/", label: "概览" },
+  { href: "/wallet", label: "充值" },
+  { href: "/keys", label: "Keys" },
+  { href: "/models", label: "模型" },
+  { href: "/playground", label: "Playground" },
+  { href: "/docs", label: "接入" },
 ] as const;
 
 /**
  * Product chrome header — structure aligned with landing Navbar:
  * h-16 · max-w-[1400px] · px-6 · official brand logo (mark on mobile, horizontal on md+).
- * Product name is a secondary label, never a hand-drawn wordmark.
  */
-export function SiteHeader() {
+export function RouterNav() {
   const pathname = usePathname();
 
   return (
@@ -27,27 +29,29 @@ export function SiteHeader() {
         <Link
           href="/"
           className="flex min-w-0 items-center gap-3 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-md)]"
-          aria-label={`${brand.name} Forge 首页`}
+          aria-label={`${brand.name} Router 首页`}
         >
-          {/* VI: digital mark ≥ ~32–35px; mobile mark, desktop horizontal lockup */}
           <BrandLogo variant="mark" className="h-8 w-8 md:hidden" />
           <BrandLogo variant="horizontal" className="hidden h-7 w-auto md:block" />
           <span className="hidden h-4 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
-          <span className="text-sm font-medium tracking-tight text-muted-foreground">Forge</span>
+          <span className="text-sm font-medium tracking-tight text-muted-foreground">Router</span>
         </Link>
 
-        <nav aria-label="主导航" className="flex items-center gap-1 sm:gap-2">
+        <nav
+          aria-label="主导航"
+          className="flex flex-wrap items-center justify-end gap-0.5 sm:gap-1"
+        >
           {NAV.map(({ href, label }) => {
             const active =
               href === "/"
-                ? pathname === "/" || pathname.startsWith("/t/")
+                ? pathname === "/"
                 : pathname === href || pathname.startsWith(`${href}/`);
             return (
               <Link
                 key={href}
                 href={href}
                 className={cn(
-                  "rounded-[var(--radius-md)] px-3 py-1.5 text-sm font-medium transition-colors",
+                  "rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors sm:px-3 sm:text-sm",
                   active
                     ? "bg-muted text-foreground"
                     : "text-muted-foreground hover:text-foreground",
@@ -59,11 +63,9 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
-            <a href="http://localhost:3106">Router</a>
-          </Button>
-        </div>
+        <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex">
+          <a href="http://localhost:3105">Forge</a>
+        </Button>
       </div>
     </header>
   );

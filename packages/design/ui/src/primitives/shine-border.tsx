@@ -29,7 +29,7 @@ export function ShineBorder({
   borderWidth = 1,
   duration = 14,
   shineColor,
-  color = ["var(--brand-primary)", "var(--brand-accent)", "var(--brand-tertiary)"],
+  color = ["hsl(var(--primary))", "var(--brand-accent)", "var(--brand-tertiary)"],
   borderRadius = 8,
   className,
   style,
