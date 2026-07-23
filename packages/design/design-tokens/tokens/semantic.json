@@ -15,39 +15,39 @@
     "tertiary": { "$value": "{color.tertiary-purple}", "$type": "color" },
     "gradient": {
       "start": {
-        "$value": "#0033fe",
+        "$value": "#254bfa",
         "$type": "color",
-        "$description": "Product CTA fill — solid 云毓蓝 (same as brand.primary)."
+        "$description": "Product action blue (light). Same hue family as VI 云毓蓝 (~228°) but chroma reduced (HSL 228 85% 56% vs VI 228 100% 50%) so CTAs avoid pure-electric / BSOD association while keeping white text ≥ 4.5:1."
       },
       "end": {
-        "$value": "#0033fe",
+        "$value": "#1d4ed8",
         "$type": "color",
-        "$description": "Product CTA fill end — matches start. Multi-hue gradients are not used for UI actions."
+        "$description": "Product action blue (pressed/hover depth). Same hue, slightly lower lightness for elevation — not a second hue."
       },
       "primary": {
-        "$value": "#0033fe",
+        "$value": "#254bfa",
         "$type": "color",
-        "$description": "Product action fill for CTAs/buttons. Solid 云毓蓝 — no blue→teal multi-hue gradient (that look is reserved for logo VI only)."
+        "$description": "Product CTA solid fill. Matches semantic --primary (soft action blue). VI lock #0033FE stays on logo/wordmark/brand-primary only — do not paint large buttons with max-chroma 云毓蓝."
       },
       "reverse": {
-        "$value": "#0033fe",
+        "$value": "#1d4ed8",
         "$type": "color",
-        "$description": "Hover/active product fill — same solid brand primary."
+        "$description": "Hover/active product fill — same-hue darker step."
       },
       "vertical": {
-        "$value": "#0033fe",
+        "$value": "#254bfa",
         "$type": "color",
-        "$description": "Vertical product fill alias — solid brand primary."
+        "$description": "Vertical product fill alias — product action blue."
       },
       "radial": {
-        "$value": "#0033fe",
+        "$value": "#254bfa",
         "$type": "color",
-        "$description": "Radial product fill alias — solid brand primary."
+        "$description": "Radial product fill alias — product action blue."
       },
       "logo": {
         "$value": "linear-gradient(135deg, #0033fe 0%, #0bf1c3 100%)",
         "$type": "gradient",
-        "$description": "Logo/VI standard gradient only. Never use for product CTAs — use --brand-gradient / brand.primary."
+        "$description": "Logo/VI standard gradient (云毓蓝→云毓青) only. Never for product CTAs."
       },
       "logo-reverse": {
         "$value": "linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%)",

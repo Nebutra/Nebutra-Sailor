@@ -109,10 +109,12 @@ Scales: `--neutral-{1..12}`, `--blue-{1..12}`, `--cyan-{1..12}`. Light values ar
 | `--brand-primary` | `var(--blue-9)` → `#0033FE` | Primary brand |
 | `--brand-accent` | `var(--cyan-9)` → `#0BF1C3` | Accent |
 | `--brand-tertiary` | `#8B5CF6` | Data viz / infra tags only |
-| `--brand-gradient-start` | `#0033FE` | Product CTA fill — solid 云毓蓝 |
-| `--brand-gradient-end` | `#0033FE` | Same as start (no multi-hue product gradient) |
-| `--brand-gradient` | `#0033FE` | Solid product CTA fill (buttons, badges). Not a multi-hue gradient. |
-| `--brand-gradient-logo` | `linear-gradient(135deg, #0033FE → #0BF1C3)` | VI/logo assets only |
+| `--brand-gradient-start` / `--brand-gradient` | `#254BFA` | **Product action blue** for CTAs (same hue as 云毓蓝, lower chroma). Aligns with `--primary` `228 85% 56%`. |
+| `--brand-gradient-end` / reverse | `#1D4ED8` | Same-hue darker step for hover/press — not a second hue. |
+| `--brand-primary` | `#0033FE` | **VI lock** 云毓蓝 — logo, wordmark, identity. Avoid large max-chroma button fills. |
+| `--brand-gradient-logo` | `linear-gradient(135deg, #0033FE → #0BF1C3)` | Logo/VI only (云毓蓝→云毓青) |
+
+**Why product ≠ VI for CTAs:** `#0033FE` is H≈228° S=100% L=50% — perceptually “pure electric blue,” often read as system/error UI. Product action blue keeps the brand hue but reduces chroma and slightly lifts lightness so white labels stay AA+ without the BSOD vibe. Multi-hue blue→teal fills remain logo-only.
 
 ### 2.4 Semantic theme tokens (HSL triplets — Tailwind compatible)
 
@@ -307,7 +309,7 @@ For the **multi-theme product feature** (6 oklch presets), see [`packages/design
 | Surface | Status |
 |--------|--------|
 | Brand color hex anchors (`#0033FE`, `#0BF1C3`, `--nebutra-neutral-{50..950}`) | **Locked** |
-| UI brand gradient (`--brand-gradient`) | Extensible — may tune saturation/contrast while preserving white-text contrast and a cyan-blue action end |
+| UI product action fill (`--brand-gradient`) | Extensible within 云毓蓝 hue — chroma/lightness may soften for CTA comfort; multi-hue fills stay logo-only |
 | 12-step semantic ladder positions (1–12 meaning) | **Locked** |
 | Container widths | **Locked** |
 | Radius scale values | **Locked** |

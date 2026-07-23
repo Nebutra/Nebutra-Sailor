@@ -112,17 +112,17 @@
   --brand-primary: #0033fe; /** Brand primary — 云毓蓝 */
   --brand-accent: #0bf1c3; /** Brand accent — 云毓青 */
   --brand-tertiary: #8b5cf6;
-  --brand-gradient-start: #0033fe; /** Product CTA fill — solid 云毓蓝 (same as brand.primary). */
-  --brand-gradient-end: #0033fe; /** Product CTA fill end — matches start. Multi-hue gradients are not used for UI actions. */
-  --brand-gradient: #0033fe; /** Product action fill for CTAs/buttons. Solid 云毓蓝 — no blue→teal multi-hue gradient (that look is reserved for logo VI only). */
-  --brand-gradient-reverse: #0033fe; /** Hover/active product fill — same solid brand primary. */
-  --brand-gradient-vertical: #0033fe; /** Vertical product fill alias — solid brand primary. */
-  --brand-gradient-radial: #0033fe; /** Radial product fill alias — solid brand primary. */
+  --brand-gradient-start: #254bfa; /** Product action blue (light). Same hue family as VI 云毓蓝 (~228°) but chroma reduced (HSL 228 85% 56% vs VI 228 100% 50%) so CTAs avoid pure-electric / BSOD association while keeping white text ≥ 4.5:1. */
+  --brand-gradient-end: #1d4ed8; /** Product action blue (pressed/hover depth). Same hue, slightly lower lightness for elevation — not a second hue. */
+  --brand-gradient: #254bfa; /** Product CTA solid fill. Matches semantic --primary (soft action blue). VI lock #0033FE stays on logo/wordmark/brand-primary only — do not paint large buttons with max-chroma 云毓蓝. */
+  --brand-gradient-reverse: #1d4ed8; /** Hover/active product fill — same-hue darker step. */
+  --brand-gradient-vertical: #254bfa; /** Vertical product fill alias — product action blue. */
+  --brand-gradient-radial: #254bfa; /** Radial product fill alias — product action blue. */
   --brand-gradient-logo: linear-gradient(
     135deg,
     #0033fe 0%,
     #0bf1c3 100%
-  ); /** Logo/VI standard gradient only. Never use for product CTAs — use --brand-gradient / brand.primary. */
+  ); /** Logo/VI standard gradient (云毓蓝→云毓青) only. Never for product CTAs. */
   --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
   --status-danger: #ef4444;
   --status-warning: #f59e0b;
@@ -397,17 +397,17 @@
   --brand-primary: #5c7cfa; /** Dark-mode brand primary — visible against dark surfaces (uses --blue-9 = nebutra-blue-400). */
   --brand-accent: #1af7c8; /** Dark-mode brand accent — visible against dark surfaces (uses --cyan-9 = nebutra-cyan-400). */
   --brand-tertiary: #8b5cf6;
-  --brand-gradient-start: #0033fe; /** Product CTA fill — solid 云毓蓝 (same as brand.primary). */
-  --brand-gradient-end: #0033fe; /** Product CTA fill end — matches start. Multi-hue gradients are not used for UI actions. */
-  --brand-gradient: #0033fe; /** Product action fill for CTAs/buttons. Solid 云毓蓝 — no blue→teal multi-hue gradient (that look is reserved for logo VI only). */
-  --brand-gradient-reverse: #0033fe; /** Hover/active product fill — same solid brand primary. */
-  --brand-gradient-vertical: #0033fe; /** Vertical product fill alias — solid brand primary. */
-  --brand-gradient-radial: #0033fe; /** Radial product fill alias — solid brand primary. */
+  --brand-gradient-start: #254bfa; /** Product action blue (light). Same hue family as VI 云毓蓝 (~228°) but chroma reduced (HSL 228 85% 56% vs VI 228 100% 50%) so CTAs avoid pure-electric / BSOD association while keeping white text ≥ 4.5:1. */
+  --brand-gradient-end: #1d4ed8; /** Product action blue (pressed/hover depth). Same hue, slightly lower lightness for elevation — not a second hue. */
+  --brand-gradient: #254bfa; /** Product CTA solid fill. Matches semantic --primary (soft action blue). VI lock #0033FE stays on logo/wordmark/brand-primary only — do not paint large buttons with max-chroma 云毓蓝. */
+  --brand-gradient-reverse: #1d4ed8; /** Hover/active product fill — same-hue darker step. */
+  --brand-gradient-vertical: #254bfa; /** Vertical product fill alias — product action blue. */
+  --brand-gradient-radial: #254bfa; /** Radial product fill alias — product action blue. */
   --brand-gradient-logo: linear-gradient(
     135deg,
     #0033fe 0%,
     #0bf1c3 100%
-  ); /** Logo/VI standard gradient only. Never use for product CTAs — use --brand-gradient / brand.primary. */
+  ); /** Logo/VI standard gradient (云毓蓝→云毓青) only. Never for product CTAs. */
   --brand-gradient-logo-reverse: linear-gradient(135deg, #0bf1c3 0%, #0033fe 100%);
   --status-danger: #ef4444;
   --status-warning: #f59e0b;

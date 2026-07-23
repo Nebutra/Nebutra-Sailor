@@ -43,6 +43,7 @@ export {
   nebutraCyanScale,
   nebutraNeutralScale,
   neutralColors,
+  productActionBlue,
   semanticColors,
 } from "./guidelines";
 export type { BrandColors, BrandTypography, LogoAssets } from "./metadata";
