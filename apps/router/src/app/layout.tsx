@@ -15,12 +15,15 @@ export const metadata: Metadata = {
   description: "302 风格旅程：充值 → API Key → base_url 调用。Agent 可依赖的 Model Fabric。",
 };
 
+/** Full-bleed chrome; page sections own max-width. */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-CN" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="flex min-h-screen flex-col font-sans antialiased">
+      <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
         <RouterNav />
-        <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-10 md:py-12">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

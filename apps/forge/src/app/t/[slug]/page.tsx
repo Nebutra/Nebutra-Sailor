@@ -3,53 +3,12 @@ import { Card, PageHeader } from "@nebutra/ui/layout";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Base64Runner } from "@/components/base64-runner";
-import { HashRunner } from "@/components/hash-runner";
-import { ImageToolRunner } from "@/components/image-tool-runner";
-import { JsonFormatRunner } from "@/components/json-format-runner";
-import { JwtRunner } from "@/components/jwt-runner";
-import { MdToPdfRunner } from "@/components/md-to-pdf-runner";
-import { NumberBaseRunner } from "@/components/number-base-runner";
-import { PasswordRunner } from "@/components/password-runner";
-import { TextDiffRunner } from "@/components/text-diff-runner";
-import { TimestampRunner } from "@/components/timestamp-runner";
-import { TokenCountRunner } from "@/components/token-count-runner";
-import { ToolRunner } from "@/components/tool-runner";
-import { UuidRunner } from "@/components/uuid-runner";
-import { WordCountRunner } from "@/components/word-count-runner";
+import { PageFrame } from "@/components/page-frame";
+import { ToolWorkspace } from "@/components/tool-workspace";
 import { categoryMeta } from "@/lib/category-meta";
 import { getForgeRegistry } from "@/lib/registry";
 
 type Props = { params: Promise<{ slug: string }> };
-
-function defaultInputForSlug(slug: string): string {
-  switch (slug) {
-    case "json-format":
-      return '{\n  "hello": "world"\n}';
-    case "uuid":
-      return '{\n  "count": 3\n}';
-    case "unix-timestamp":
-      return '{\n  "mode": "now"\n}';
-    case "base64":
-    case "url-encode":
-    case "html-entities":
-      return '{\n  "text": "Hello Nebutra",\n  "mode": "encode"\n}';
-    case "number-base":
-      return '{\n  "value": "255",\n  "fromBase": 10,\n  "toBase": 16\n}';
-    case "password-generate":
-      return '{\n  "length": 16,\n  "symbols": true\n}';
-    case "md-to-pdf":
-      return '{\n  "title": "Demo",\n  "markdown": "# Hello\\n\\n**Nebutra** Forge md→pdf\\n"\n}';
-    case "text-diff":
-      return '{\n  "left": "a\\nb\\nc",\n  "right": "a\\nx\\nc"\n}';
-    case "jwt-decode":
-      return '{\n  "token": "eyJhbGciOiJub25lIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ."\n}';
-    case "token-count":
-      return '{\n  "text": "Hello Nebutra, count my tokens.",\n  "encoding": "cl100k_base"\n}';
-    default:
-      return "Hello Nebutra 你好世界";
-  }
-}
 
 export async function generateStaticParams() {
   return getForgeRegistry()
@@ -71,6 +30,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/**
+ * Tool page: text-width column (max-w-3xl) for focus —
+ * breadcrumb → header → workspace → API → related.
+ */
 export default async function ToolPage({ params }: Props) {
   const { slug } = await params;
   const registry = getForgeRegistry();
@@ -81,116 +44,89 @@ export default async function ToolPage({ params }: Props) {
   const cat = categoryMeta(page.category);
 
   return (
-    <article className="mx-auto max-w-3xl space-y-8">
-      <div className="space-y-4">
-        <p className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-          <Link
-            href="/"
-            className="rounded-md px-1.5 py-0.5 transition hover:bg-accent hover:text-foreground"
+    <PageFrame width="text" className="py-10 md:py-12" as="article">
+      <div className="space-y-8">
+        <div className="space-y-4">
+          <nav
+            aria-label="面包屑"
+            className="flex flex-wrap items-center gap-2 text-sm text-[var(--neutral-11)]"
           >
-            工具
-          </Link>
-          <span className="text-border">/</span>
-          <Link
-            href={`/#${page.category}`}
-            className="rounded-md px-1.5 py-0.5 transition hover:bg-accent hover:text-foreground"
-          >
-            {cat.label}
-          </Link>
-        </p>
-        <PageHeader title={page.title.zh} description={page.description.zh} />
-        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-muted-foreground">
-          <span>{page.engine.name}</span>
-          <span aria-hidden>·</span>
-          <span>v{page.engine.version}</span>
-          <span aria-hidden>·</span>
-          <span className="max-w-[min(100%,28rem)] truncate">{page.engine.upstream}</span>
-        </p>
-      </div>
+            <Link
+              href="/"
+              className="rounded-[var(--radius-md)] px-1.5 py-0.5 transition hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+            >
+              工具
+            </Link>
+            <span className="text-[var(--neutral-7)]" aria-hidden>
+              /
+            </span>
+            <Link
+              href={`/#${page.category}`}
+              className="rounded-[var(--radius-md)] px-1.5 py-0.5 transition hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+            >
+              {cat.label}
+            </Link>
+          </nav>
 
-      <Card className="border-border p-5 md:p-6">
-        <div className="mb-5 flex items-center justify-between gap-3 border-b border-border pb-4">
-          <div>
-            <p className="text-sm font-semibold">工作台</p>
-            <p className="text-xs text-muted-foreground">人机同路径 · 本地或服务端 invoke</p>
+          <PageHeader title={page.title.zh} description={page.description.zh} />
+
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-[var(--neutral-10)]">
+            <span>{page.engine.name}</span>
+            <span aria-hidden>·</span>
+            <span>v{page.engine.version}</span>
+            <span aria-hidden>·</span>
+            <span className="max-w-[min(100%,28rem)] truncate">{page.engine.upstream}</span>
+          </p>
+        </div>
+
+        <Card className="border-[var(--neutral-6)] p-5 md:p-6">
+          <div className="mb-5 flex items-center justify-between gap-3 border-b border-[var(--neutral-6)] pb-4">
+            <div>
+              <p className="text-sm font-semibold text-[var(--neutral-12)]">工作台</p>
+              <p className="text-xs text-[var(--neutral-10)]">本地或服务端 · 与 API 同一路径</p>
+            </div>
+            <code className="rounded-[var(--radius-md)] bg-[var(--neutral-2)] px-2.5 py-1 font-mono text-[11px] text-[var(--neutral-11)]">
+              {page.id}
+            </code>
           </div>
-          <code className="rounded-[var(--radius-md)] bg-muted px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
-            {page.id}
-          </code>
-        </div>
-        {page.slug === "word-count" ? (
-          <WordCountRunner toolId={page.id} />
-        ) : page.slug === "json-format" ? (
-          <JsonFormatRunner toolId={page.id} />
-        ) : page.slug === "text-diff" ? (
-          <TextDiffRunner toolId={page.id} />
-        ) : page.slug === "base64" ||
-          page.slug === "url-encode" ||
-          page.slug === "html-entities" ? (
-          <Base64Runner toolId={page.id} />
-        ) : page.slug === "unix-timestamp" ? (
-          <TimestampRunner toolId={page.id} />
-        ) : page.slug === "uuid" ? (
-          <UuidRunner toolId={page.id} />
-        ) : page.slug === "md-to-pdf" ? (
-          <MdToPdfRunner toolId={page.id} />
-        ) : page.slug === "md5" ? (
-          <HashRunner toolId={page.id} algorithm="md5" />
-        ) : page.slug === "sha1" ? (
-          <HashRunner toolId={page.id} algorithm="sha1" />
-        ) : page.slug === "sha256" ? (
-          <HashRunner toolId={page.id} algorithm="sha256" />
-        ) : page.slug === "password-generate" ? (
-          <PasswordRunner toolId={page.id} />
-        ) : page.slug === "number-base" ? (
-          <NumberBaseRunner toolId={page.id} />
-        ) : page.slug === "jwt-decode" ? (
-          <JwtRunner toolId={page.id} />
-        ) : page.slug === "token-count" ? (
-          <TokenCountRunner toolId={page.id} />
-        ) : page.category === "image" ? (
-          <ImageToolRunner toolId={page.id} />
-        ) : (
-          <ToolRunner
-            toolId={page.id}
-            slug={page.slug}
-            defaultJson={defaultInputForSlug(page.slug)}
-          />
-        )}
-      </Card>
+          <ToolWorkspace slug={page.slug} toolId={page.id} category={page.category} />
+        </Card>
 
-      <Card className="border-border bg-muted/40 p-5">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <h2 className="text-sm font-semibold">Agent / API</h2>
-          <code className="rounded-[var(--radius-md)] bg-background px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
-            {page.meterId}
-          </code>
-        </div>
-        <p className="mb-3 text-sm text-muted-foreground">
-          同一能力可被 Agent 调用。生产环境请走认证 Key。
-        </p>
-        <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-border bg-background p-4 font-mono text-[11px] leading-relaxed">
-          {page.api.exampleCurl}
-        </pre>
-      </Card>
+        <Card className="border-[var(--neutral-6)] bg-[var(--neutral-2)]/40 p-5">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <h2 className="text-sm font-semibold">API</h2>
+            <code className="rounded-[var(--radius-md)] bg-[var(--neutral-1)] px-2.5 py-1 font-mono text-[11px] text-[var(--neutral-11)]">
+              {page.meterId}
+            </code>
+          </div>
+          <p className="mb-3 text-sm text-[var(--neutral-11)]">
+            与页面同一调用契约。生产环境请走认证 Key。
+          </p>
+          <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 font-mono text-[11px] leading-relaxed">
+            {page.api.exampleCurl}
+          </pre>
+        </Card>
 
-      {page.related.length > 0 ? (
-        <section>
-          <h2 className="mb-3 text-sm font-semibold">相关工具</h2>
-          <ul className="flex flex-wrap gap-2">
-            {page.related.map((t) => (
-              <li key={t.id}>
-                <Link
-                  href={t.path}
-                  className="inline-flex h-9 items-center rounded-full border border-border bg-background px-4 text-sm text-muted-foreground transition-colors hover:border-border hover:bg-muted hover:text-foreground"
-                >
-                  {t.title.zh}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-    </article>
+        {page.related.length > 0 ? (
+          <section aria-labelledby="related-tools">
+            <h2 id="related-tools" className="mb-3 text-sm font-semibold text-[var(--neutral-12)]">
+              相关工具
+            </h2>
+            <ul className="flex flex-wrap gap-2">
+              {page.related.map((t) => (
+                <li key={t.id}>
+                  <Link
+                    href={t.path}
+                    className="inline-flex h-9 items-center rounded-full border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-4 text-sm text-[var(--neutral-11)] transition-colors hover:border-[var(--neutral-8)] hover:bg-[var(--neutral-2)] hover:text-[var(--neutral-12)]"
+                  >
+                    {t.title.zh}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+      </div>
+    </PageFrame>
   );
 }

@@ -335,7 +335,9 @@ const TIER_RULES: Record<ModelTier, TierRule> = {
   },
   "openai-flagship": {
     include: /^openai\/gpt-5/,
-    exclude: /-(pro|mini|nano|codex|image|chat)/,
+    // Prefer full flagship over mini/nano/chat/image/codex variants
+    exclude: /-(pro|mini|nano|codex|image|chat)|gpt-5\.\d+-(mini|nano|pro)/,
+    // models.dev current OpenAI flagship (audited 2026-07); live resolver may pick newer
     fallback: "openai/gpt-5.5",
   },
   "google-flagship": {
@@ -346,6 +348,7 @@ const TIER_RULES: Record<ModelTier, TierRule> = {
   "google-fast": {
     include: /^google\/gemini-.*flash/,
     exclude: /-(image|tts|lite)/,
+    // models.dev: gemini-3.5-flash / 3.6-flash class
     fallback: "google/gemini-3.5-flash",
   },
 };

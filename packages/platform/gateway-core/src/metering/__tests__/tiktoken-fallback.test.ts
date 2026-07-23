@@ -2,27 +2,29 @@ import { describe, expect, it } from "vitest";
 import { countTokens, estimateUsage } from "../tiktoken-fallback";
 
 describe("countTokens", () => {
-  it("returns a reasonable positive integer for plain text on gpt-4o", () => {
-    const count = countTokens("hello world", "gpt-4o");
+  it("returns a reasonable positive integer for plain text on gpt-5.5", () => {
+    const count = countTokens("hello world", "gpt-5.5");
     expect(count).toBeGreaterThan(0);
     expect(Number.isInteger(count)).toBe(true);
   });
 
   it("returns 0 for empty string", () => {
-    expect(countTokens("", "gpt-4o")).toBe(0);
-    expect(countTokens("", "gpt-4")).toBe(0);
+    expect(countTokens("", "gpt-5.5")).toBe(0);
+    expect(countTokens("", "openai/gpt-5.5")).toBe(0);
     expect(countTokens("", "unknown-model")).toBe(0);
   });
 
-  it("handles gpt-4 (cl100k_base encoding) correctly", () => {
+  it("maps GPT-5 / o-series families to o200k_base", () => {
+    expect(countTokens("hello world", "gpt-5.5")).toBeGreaterThan(0);
+    expect(countTokens("hello world", "openai/gpt-5.4-mini")).toBeGreaterThan(0);
+    expect(countTokens("hello world", "o3")).toBeGreaterThan(0);
+  });
+
+  it("still maps historical gpt-4 id to cl100k_base (compat)", () => {
+    // encoding map must keep retired product lines for long-lived usage logs
     const count = countTokens("hello world", "gpt-4");
     expect(count).toBeGreaterThan(0);
     expect(Number.isInteger(count)).toBe(true);
-  });
-
-  it("handles o1 models (o200k_base) correctly", () => {
-    const count = countTokens("hello world", "o1-preview");
-    expect(count).toBeGreaterThan(0);
   });
 
   it("falls back to character heuristic for unknown models", () => {
@@ -48,23 +50,23 @@ describe("estimateUsage", () => {
     ];
     const responseText = "This is the new assistant reply.";
 
-    const usage = estimateUsage(messages, responseText, "gpt-4o");
+    const usage = estimateUsage(messages, responseText, "gpt-5.5");
 
     expect(usage.promptTokens).toBeGreaterThan(0);
     expect(usage.completionTokens).toBeGreaterThan(0);
     expect(usage.totalTokens).toBe(usage.promptTokens + usage.completionTokens);
-    expect(usage.model).toBe("gpt-4o");
+    expect(usage.model).toBe("gpt-5.5");
   });
 
   it("returns zero for empty inputs", () => {
-    const usage = estimateUsage([], "", "gpt-4o");
+    const usage = estimateUsage([], "", "gpt-5.5");
     expect(usage.promptTokens).toBe(0);
     expect(usage.completionTokens).toBe(0);
     expect(usage.totalTokens).toBe(0);
   });
 
   it("preserves the model identifier", () => {
-    const usage = estimateUsage([{ role: "user", content: "hi" }], "reply", "gpt-4o-mini");
-    expect(usage.model).toBe("gpt-4o-mini");
+    const usage = estimateUsage([{ role: "user", content: "hi" }], "reply", "gpt-5.4-mini");
+    expect(usage.model).toBe("gpt-5.4-mini");
   });
 });

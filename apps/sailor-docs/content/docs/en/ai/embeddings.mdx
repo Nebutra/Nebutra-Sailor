@@ -228,7 +228,7 @@ async function ragQuery(userQuestion: string, tenantId: string) {
 
   // 3. Generate answer with context injected
   const { text } = await generateText({
-    model: "gpt-4o-mini",
+    model: "gpt-5.4-mini",
     prompt: `Answer the question using ONLY the context below.
 
 Context:

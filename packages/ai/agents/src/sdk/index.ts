@@ -79,7 +79,7 @@ export interface StreamFinishEvent {
 }
 
 export interface GenerateOptions {
-  /** Model ID or preset alias (e.g. "flagship", "fast", "anthropic/claude-sonnet-4"). */
+  /** Model ID or preset alias (e.g. "flagship", "fast", "anthropic/claude-sonnet-4.6"). */
   model?: string;
   /** System prompt prepended to the conversation. */
   system?: string;

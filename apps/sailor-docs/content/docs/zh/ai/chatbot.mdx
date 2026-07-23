@@ -15,7 +15,7 @@ description: 使用 Nebutra 的聊天补全 API 构建聊天机器人——系�
 
     ```bash
     OPENAI_API_KEY=""
-    AI_DEFAULT_MODEL="gpt-4o-mini"
+    AI_DEFAULT_MODEL="gpt-5.4-mini"
 
     # 可选：启用多模型路由
     OPENROUTER_API_KEY=""
@@ -77,7 +77,7 @@ interface ChatRequest {
     {
       "id": "chatcmpl-abc123",
       "object": "chat.completion",
-      "model": "gpt-4o-mini",
+      "model": "gpt-5.4-mini",
       "choices": [
         {
           "index": 0,
@@ -136,7 +136,7 @@ import { updateTenantAiSettings } from "@nebutra/tenant";
 
 await updateTenantAiSettings("org_123", {
   systemPrompt: "你是 Acme Corp 的智能助手。",
-  defaultModel: "gpt-4o",
+  defaultModel: "gpt-5.5",
 });
 ```
 
@@ -198,14 +198,14 @@ const { tenantId } = getCurrentTenant();
 
 // 非流式——适合后台处理
 const { text } = await generateText({
-  model: "gpt-4o-mini",
+  model: "gpt-5.4-mini",
   prompt: "总结以下文档：" + document.content,
   tenantId,
 });
 
 // 流式——适合实时 UI
 const stream = await streamText({
-  model: "gpt-4o",
+  model: "gpt-5.5",
   messages: conversation.messages,
   tenantId,
 });

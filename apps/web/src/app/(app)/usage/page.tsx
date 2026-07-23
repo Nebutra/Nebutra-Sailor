@@ -370,7 +370,7 @@ async function UsageContent() {
               <Card className="group cursor-pointer p-4 transition-[border-color,box-shadow] duration-150 hover:border-[var(--brand-7)] hover:shadow-md sm:p-6">
                 <h3 className="text-sm font-semibold text-neutral-12">Per-Model Breakdown</h3>
                 <p className="mt-1 text-xs text-neutral-10">
-                  See token usage per AI model (GPT-4, Claude, Gemini).
+                  See token usage per AI model (GPT-5, Claude Sonnet, Gemini).
                 </p>
               </Card>
             </AnimateIn>

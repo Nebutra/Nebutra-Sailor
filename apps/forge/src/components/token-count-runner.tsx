@@ -1,19 +1,41 @@
 "use client";
 
 import { Button, Textarea } from "@nebutra/ui/primitives";
-
 import { useState } from "react";
+import { RunnerError, RunnerNote, RunnerPanel } from "@/components/runner-ui";
 
+/**
+ * Tokenizer presets — labels map encodings to current models.dev families,
+ * not retired product lines (no GPT-3.5 / early GPT-4 as primary association).
+ * Default = o200k (GPT-5 / o-series / 4o-class tokenizer).
+ * @see https://models.dev
+ */
 const ENCODINGS = [
-  { id: "cl100k_base", label: "cl100k (GPT-4 / 3.5)" },
-  { id: "o200k_base", label: "o200k (GPT-4o)" },
-  { id: "p50k_base", label: "p50k" },
-  { id: "r50k_base", label: "r50k" },
+  {
+    id: "o200k_base",
+    label: "o200k · GPT-5 / o-series",
+    hint: "OpenAI current chat & reasoning tokenizers",
+  },
+  {
+    id: "cl100k_base",
+    label: "cl100k · older OpenAI chat",
+    hint: "Pre-o200k OpenAI chat tokenizer (historical)",
+  },
+  {
+    id: "p50k_base",
+    label: "p50k · Codex / edit",
+    hint: "Legacy code / edit models",
+  },
+  {
+    id: "r50k_base",
+    label: "r50k · early GPT-3",
+    hint: "Early completion models",
+  },
 ] as const;
 
 export function TokenCountRunner({ toolId }: { toolId: string }) {
   const [text, setText] = useState("Hello Nebutra, count my tokens. 你好，数一下 token。");
-  const [encoding, setEncoding] = useState<(typeof ENCODINGS)[number]["id"]>("cl100k_base");
+  const [encoding, setEncoding] = useState<(typeof ENCODINGS)[number]["id"]>("o200k_base");
   const [tokens, setTokens] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [note, setNote] = useState("");
@@ -49,43 +71,41 @@ export function TokenCountRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
         {ENCODINGS.map((e) => (
-          <button
+          <Button
             key={e.id}
             type="button"
+            size="sm"
+            variant={encoding === e.id ? "ink" : "outline"}
             onClick={() => setEncoding(e.id)}
-            className={
-              encoding === e.id
-                ? "rounded-lg bg-primary px-3 py-1.5 text-sm text-primary-foreground"
-                : "rounded-lg border border-border px-3 py-1.5 text-sm"
-            }
+            title={e.hint}
           >
             {e.label}
-          </button>
+          </Button>
         ))}
       </div>
       <Textarea
+        label="文本"
+        id="token-count-input"
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={8}
-        className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
+        className="font-mono text-sm"
       />
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="button" onClick={() => void count()} disabled={loading}>
+        <Button type="button" variant="ink" onClick={() => void count()} disabled={loading}>
           {loading ? "计数中…" : "精确计数"}
         </Button>
-        <span className="text-sm text-muted-foreground">字符 {text.length}</span>
+        <span className="text-sm text-[var(--neutral-11)]">字符 {text.length}</span>
       </div>
-      {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
+      <RunnerError>{error}</RunnerError>
       {tokens !== null ? (
-        <div className="rounded-xl border border-border bg-background p-5">
+        <RunnerPanel>
           <p className="text-3xl font-bold tabular-nums">{tokens}</p>
-          <p className="mt-1 text-sm text-muted-foreground">tokens</p>
-          {note ? <p className="mt-2 text-xs text-muted-foreground">{note}</p> : null}
-        </div>
+          <p className="mt-1 text-sm text-[var(--neutral-11)]">tokens</p>
+          <RunnerNote>{note}</RunnerNote>
+        </RunnerPanel>
       ) : null}
-      <p className="text-xs text-muted-foreground">
-        引擎：js-tiktoken（OpenAI 兼容编码）· 服务端精确计数 · 可对接 Router 费用估算
-      </p>
+      <RunnerNote>引擎：js-tiktoken · 服务端精确计数 · 可对接 Router 费用估算</RunnerNote>
     </div>
   );
 }

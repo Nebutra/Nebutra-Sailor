@@ -13,7 +13,7 @@ The following capabilities are available to every tenant:
 |---------|-------------|--------------|
 | **Chat completions** | Streaming and non-streaming LLM responses | `ai.chat` |
 | **Embeddings** | Vector representations for semantic search and RAG | `ai.embeddings` |
-| **Image analysis** | Vision-capable model support (GPT-4o) | `ai.chat` |
+| **Image analysis** | Vision-capable model support (GPT-5) | `ai.chat` |
 | **Model selection** | Per-tenant model overrides (Enterprise) | `ai.model_selection` |
 
 ## Architecture
@@ -53,22 +53,25 @@ pgvector (embeddings only)    (PostgreSQL vector storage)
 
 | Model | Context | Best for |
 |-------|---------|----------|
-| `gpt-4o` | 128 k | Complex reasoning, vision, coding |
-| `gpt-4o-mini` | 128 k | Fast, cost-effective tasks |
+| `gpt-5.5` | ~400 k+ | Flagship reasoning, vision, coding |
+| `gpt-5.4-mini` | ~400 k+ | Fast, cost-effective tasks |
 | `text-embedding-3-small` | — | Embeddings (1536 dims) |
 | `text-embedding-3-large` | — | High-accuracy embeddings (3072 dims) |
+
+Ids follow [models.dev](https://models.dev). Prefer semantic tiers (`flagship` / `fast`) via `@nebutra/ai-providers` when possible so defaults stay current without hand-editing strings.
 
   </Tab>
   <Tab title="OpenRouter (multi-model)">
 
 | Model | Provider | Notes |
 |-------|----------|-------|
-| `anthropic/claude-3.5-sonnet` | Anthropic | Strongest reasoning |
-| `meta-llama/llama-3.1-70b-instruct` | Meta | Open-weight, fast |
-| `mistralai/mistral-large` | Mistral | Strong multilingual |
-| `google/gemini-pro-1.5` | Google | Long context (1M tokens) |
+| `anthropic/claude-sonnet-4.6` | Anthropic | Default flagship reasoning |
+| `anthropic/claude-haiku-4.5` | Anthropic | Fast / cost-efficient |
+| `openai/gpt-5.5` | OpenAI | OpenAI flagship via OpenRouter |
+| `google/gemini-3.1-pro-preview` | Google | Long-context flagship |
+| `google/gemini-3.5-flash` | Google | Fast multimodal |
 
-Pass the full model slug to `streamText` / `generateText`. See the [OpenRouter model list](https://openrouter.ai/models) for the complete reference.
+Pass the full model slug to `streamText` / `generateText`. Live catalog: [models.dev](https://models.dev) / [OpenRouter models](https://openrouter.ai/models).
 
   </Tab>
 </Tabs>
@@ -99,7 +102,7 @@ OPENAI_API_KEY=""
 OPENROUTER_API_KEY=""
 
 # Default model used when none is specified per-request
-AI_DEFAULT_MODEL="gpt-4o-mini"
+AI_DEFAULT_MODEL="gpt-5.4-mini"
 
 # Optional: override for embedding model
 AI_EMBEDDING_MODEL="text-embedding-3-small"
@@ -136,7 +139,7 @@ import { streamText, generateText, embed } from "@nebutra/agents";
 
 // Streaming chat (SSE)
 const result = await streamText({
-  model: "gpt-4o",
+  model: "gpt-5.5",
   messages: [
     { role: "system", content: "You are a helpful assistant." },
     { role: "user", content: userMessage },
@@ -146,7 +149,7 @@ const result = await streamText({
 
 // Non-streaming
 const { text } = await generateText({
-  model: "gpt-4o-mini",
+  model: "gpt-5.4-mini",
   prompt: "Summarize: " + content,
   tenantId,
 });

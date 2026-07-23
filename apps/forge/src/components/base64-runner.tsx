@@ -3,6 +3,7 @@
 import { Check, Copy } from "@nebutra/icons";
 import { Button, Tabs, TabsList, TabsTrigger, Textarea } from "@nebutra/ui/primitives";
 import { useState } from "react";
+import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
 function utf8ToBase64(text: string): string {
   const bytes = new TextEncoder().encode(text);
@@ -52,7 +53,7 @@ export function Base64Runner({ toolId }: { toolId: string }) {
       return;
     }
     setResult(body.output?.result ?? "");
-    setNote("服务端 Buffer 路径（Agent 同契约）");
+    setNote("服务端 Buffer · 与 API 同一路径");
   };
 
   const copy = async () => {
@@ -76,9 +77,7 @@ export function Base64Runner({ toolId }: { toolId: string }) {
             <TabsTrigger value="decode">解码</TabsTrigger>
           </TabsList>
         </Tabs>
-        <p className="text-xs text-muted-foreground">
-          {mode === "encode" ? "文本 → Base64" : "Base64 → 文本"}
-        </p>
+        <RunnerNote>{mode === "encode" ? "文本 → Base64" : "Base64 → 文本"}</RunnerNote>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -92,7 +91,7 @@ export function Base64Runner({ toolId }: { toolId: string }) {
         />
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-muted-foreground">输出</span>
+            <span className="text-xs font-medium text-[var(--neutral-11)]">输出</span>
             <Button
               type="button"
               variant="ghost"
@@ -111,9 +110,9 @@ export function Base64Runner({ toolId }: { toolId: string }) {
               )}
             </Button>
           </div>
-          <pre className="min-h-[220px] overflow-auto rounded-[var(--radius-lg)] border border-input bg-background p-3 font-mono text-sm whitespace-pre-wrap break-all">
-            {result || <span className="text-muted-foreground">结果会显示在这里</span>}
-          </pre>
+          <RunnerOutput className="min-h-[220px] whitespace-pre-wrap break-all">
+            {result || <span className="text-[var(--neutral-9)]">结果会显示在这里</span>}
+          </RunnerOutput>
         </div>
       </div>
 
@@ -125,13 +124,8 @@ export function Base64Runner({ toolId }: { toolId: string }) {
           服务端校验
         </Button>
       </div>
-
-      {error ? (
-        <p className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          {error}
-        </p>
-      ) : null}
-      {note ? <p className="text-xs text-muted-foreground">{note}</p> : null}
+      <RunnerError>{error}</RunnerError>
+      <RunnerNote>{note}</RunnerNote>
     </div>
   );
 }

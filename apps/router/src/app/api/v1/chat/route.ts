@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     prompt?: string;
     apiKey?: string;
   };
-  const model = body.model ?? "gpt-4o-mini";
+  const model = body.model ?? "gpt-5.4-mini";
   const prompt = body.prompt ?? "";
   const gateway = process.env.ROUTER_GATEWAY_URL;
 

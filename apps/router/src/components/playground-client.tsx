@@ -5,8 +5,8 @@ import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useEffect, useMemo, useState } from "react";
 
 export function PlaygroundClient({ models }: { models: readonly string[] }) {
-  const options = useMemo(() => (models.length > 0 ? models : ["gpt-4o-mini"]), [models]);
-  const [model, setModel] = useState(options[0] ?? "gpt-4o-mini");
+  const options = useMemo(() => (models.length > 0 ? models : ["gpt-5.4-mini"]), [models]);
+  const [model, setModel] = useState(options[0] ?? "gpt-5.4-mini");
   const [prompt, setPrompt] = useState("用一句话介绍 Nebutra Router");
   const [apiKey, setApiKey] = useState("");
   const [out, setOut] = useState("");

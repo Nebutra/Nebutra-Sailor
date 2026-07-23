@@ -1,3 +1,5 @@
+import { Card, PageHeader } from "@nebutra/ui/layout";
+import { PageFrame } from "@/components/page-frame";
 import { getBaseUrlHint } from "@/lib/demo-store";
 
 export const metadata = { title: "接入" };
@@ -12,30 +14,29 @@ const client = new OpenAI({
 });
 
 const res = await client.chat.completions.create({
-  model: "gpt-4o-mini",
+  model: "gpt-5.4-mini",
   messages: [{ role: "user", content: "ping" }],
 });`;
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">三分钟接入</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          改 baseURL + API Key 即可。网关路由：/api/v1/ai/gateway/chat/completions（生产挂 router
-          域名）。
-        </p>
+    <PageFrame width="content">
+      <div className="space-y-6">
+        <PageHeader
+          title="三分钟接入"
+          description="改 baseURL + API Key 即可。生产挂 router 域名后走 OpenAI-compatible 网关。"
+        />
+        <Card className="border-[var(--neutral-6)] p-5">
+          <pre className="overflow-x-auto font-mono text-xs leading-relaxed">{snippet}</pre>
+        </Card>
+        <div className="space-y-1 font-mono text-sm text-[var(--neutral-11)]">
+          <p>
+            <code>GET {base}/models</code>
+          </p>
+          <p>
+            <code>POST {base}/chat/completions</code>
+          </p>
+        </div>
       </div>
-      <pre className="overflow-x-auto rounded-xl border border-border bg-muted p-4 text-xs">
-        {snippet}
-      </pre>
-      <div className="text-sm text-muted-foreground">
-        <p>
-          <code>GET {base}/models</code>
-        </p>
-        <p className="mt-1">
-          <code>POST {base}/chat/completions</code>
-        </p>
-      </div>
-    </div>
+    </PageFrame>
   );
 }

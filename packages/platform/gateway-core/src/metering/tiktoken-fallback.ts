@@ -8,24 +8,32 @@ type EncodingName = "o200k_base" | "cl100k_base";
 
 /**
  * Best-effort mapping from a model identifier to the correct tiktoken
- * encoding. If the model is unknown we return `null` so the caller falls
- * back to the character heuristic.
+ * encoding. Accepts bare ids or provider-prefixed ids (openai/gpt-5.5).
+ * Prefer o200k for current OpenAI frontier (GPT-5 / o-series / 4o-class);
+ * cl100k only for older chat / embeddings. Unknown → null (char heuristic).
+ *
+ * @see https://models.dev — model ids; OpenAI tokenizer families
  */
 function resolveEncoding(model: string): EncodingName | null {
-  const lower = model.toLowerCase();
+  const lower = model.toLowerCase().replace(/^[^/]+\//, ""); // strip provider/
 
+  // Current OpenAI chat + reasoning tokenizers (o200k)
   if (
+    lower.startsWith("gpt-5") ||
     lower.startsWith("gpt-4o") ||
+    lower.startsWith("gpt-4.1") ||
+    lower.startsWith("chatgpt") ||
     lower.startsWith("o1") ||
     lower.startsWith("o3") ||
-    lower.startsWith("o4-mini")
+    lower.startsWith("o4")
   ) {
     return "o200k_base";
   }
 
+  // Older OpenAI chat + embeddings (cl100k)
   if (
     lower.startsWith("gpt-4") ||
-    lower.startsWith("gpt-3.5-turbo") ||
+    lower.startsWith("gpt-3.5") ||
     lower.startsWith("text-embedding-3-") ||
     lower.startsWith("text-embedding-ada-002")
   ) {

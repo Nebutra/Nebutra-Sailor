@@ -228,7 +228,7 @@ async function ragQuery(userQuestion: string, tenantId: string) {
 
   // 3. 注入上下文后生成答案
   const { text } = await generateText({
-    model: "gpt-4o-mini",
+    model: "gpt-5.4-mini",
     prompt: `仅使用以下上下文回答问题。
 
 上下文：

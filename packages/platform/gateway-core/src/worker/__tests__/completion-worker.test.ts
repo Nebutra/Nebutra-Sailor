@@ -15,7 +15,7 @@ const baseEvent: CompletionEvent = {
   apiKeyId: "key_001",
   organizationId: "org_123",
   userId: "user_456",
-  model: "gpt-4o-mini",
+  model: "gpt-5.4-mini",
   promptTokens: 1000,
   completionTokens: 500,
   totalTokens: 1500,

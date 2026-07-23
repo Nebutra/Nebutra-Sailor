@@ -88,10 +88,10 @@ export function meterApiCall(meterId: string, provider: MeteringProvider) {
  *   const metering = await getMetering();
  *   const tenantId = c.get("tenantId");
  *
- *   const response = await callAI("gpt-4", prompt);
+ *   const response = await callAI("gpt-5.5", prompt);
  *
  *   await recordTokenUsage(metering, tenantId, response.tokens, {
- *     model: "gpt-4",
+ *     model: "gpt-5.5",
  *     endpoint: "/api/chat",
  *   });
  *

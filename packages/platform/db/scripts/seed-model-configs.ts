@@ -44,6 +44,10 @@ function mapProvider(id: string): AIProvider {
  * Kept MINIMAL: just enough for dev env smoke tests.
  * For production pricing, always use `fetchModels()`.
  */
+/**
+ * Offline fallback — models.dev ids (not retired gpt-4 / gpt-3.5 lines).
+ * Keep minimal; production pricing always comes from fetchModels().
+ */
 const OFFLINE_FALLBACK: Array<{
   modelName: string;
   provider: AIProvider;
@@ -51,28 +55,34 @@ const OFFLINE_FALLBACK: Array<{
   outputPricePerMillion: string;
 }> = [
   {
-    modelName: "gpt-4o-mini",
+    modelName: "gpt-5.4-mini",
     provider: "OPENAI",
-    inputPricePerMillion: "0.15",
-    outputPricePerMillion: "0.60",
+    inputPricePerMillion: "0.25",
+    outputPricePerMillion: "2.00",
   },
   {
-    modelName: "gpt-4o",
+    modelName: "gpt-5.5",
     provider: "OPENAI",
-    inputPricePerMillion: "2.50",
+    inputPricePerMillion: "1.25",
     outputPricePerMillion: "10.00",
   },
   {
-    modelName: "claude-sonnet-4-5",
+    modelName: "claude-sonnet-4-6",
     provider: "ANTHROPIC",
     inputPricePerMillion: "3.00",
     outputPricePerMillion: "15.00",
   },
   {
-    modelName: "gemini-2.5-flash",
+    modelName: "claude-haiku-4-5",
+    provider: "ANTHROPIC",
+    inputPricePerMillion: "1.00",
+    outputPricePerMillion: "5.00",
+  },
+  {
+    modelName: "gemini-3.5-flash",
     provider: "GOOGLE",
-    inputPricePerMillion: "0.075",
-    outputPricePerMillion: "0.30",
+    inputPricePerMillion: "0.15",
+    outputPricePerMillion: "0.60",
   },
   {
     modelName: "deepseek-chat",

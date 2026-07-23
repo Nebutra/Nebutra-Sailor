@@ -81,7 +81,7 @@ export const UsageEventSchema = z.object({
   /** ISO-8601 timestamp (defaults to now) */
   timestamp: z.string().datetime().optional(),
 
-  /** Arbitrary dimensions for breakdown analysis (e.g., { endpoint: "/v1/chat", model: "gpt-4" }) */
+  /** Arbitrary dimensions for breakdown analysis (e.g., { endpoint: "/v1/chat", model: "gpt-5.5" }) */
   properties: z.record(z.string(), z.unknown()).optional(),
 
   /** Idempotency key for deduplication */

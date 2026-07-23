@@ -172,10 +172,10 @@ app.post("/api/chat", async (c) => {
   const metering = await getMetering();
   const tenantId = c.get("tenantId");
 
-  const response = await callAI("gpt-4", prompt);
+  const response = await callAI("gpt-5.5", prompt);
 
   await recordTokenUsage(metering, tenantId, response.tokens, {
-    model: "gpt-4",
+    model: "gpt-5.5",
     endpoint: "/api/chat",
   });
 
@@ -420,7 +420,7 @@ await metering.ingest({
   properties: {
     endpoint: "/v1/chat",
     method: "POST",
-    model: "gpt-4",
+    model: "gpt-5.5",
     region: "us-west-2",
   },
 });

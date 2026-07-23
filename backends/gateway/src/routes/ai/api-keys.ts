@@ -6,11 +6,11 @@
  * at creation time. Cached lookups in Redis are invalidated on revoke/update.
  */
 
-import { randomBytes } from "node:crypto";
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { getRedis } from "@nebutra/cache";
 import { getTenantDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
+import { DEFAULT_PRODUCT_SCOPES, issueApiKey } from "@nebutra/prepaid-wallet";
 import { hashApiKey } from "../../lib/api-key.js";
 import { requireAuth, requireOrganization } from "../../middlewares/tenantContext.js";
 
@@ -24,7 +24,7 @@ apiKeysRoutes.use("*", requireAuth, requireOrganization);
 const KEY_CACHE_PREFIX = "apikey:";
 
 function generateFullKey(): string {
-  return `sk-sailor-${randomBytes(32).toString("hex")}`;
+  return issueApiKey().fullKey;
 }
 
 /**
@@ -125,7 +125,7 @@ apiKeysRoutes.openapi(createRouteDef, async (c) => {
       keyPrefix,
       tenantId: organizationId,
       createdById: tenant.userId ?? null,
-      scopes: body.scopes ?? [],
+      scopes: body.scopes ?? [...DEFAULT_PRODUCT_SCOPES],
       ...(body.rateLimitRps !== undefined ? { rateLimitRps: body.rateLimitRps } : {}),
       expiresAt,
     },
@@ -242,7 +242,7 @@ apiKeysRoutes.openapi(revokeRouteDef, async (c) => {
   return c.json(
     {
       id: updated.id,
-      revokedAt: updated.revokedAt!.toISOString(),
+      revokedAt: updated.revokedAt?.toISOString() ?? new Date().toISOString(),
     },
     200,
   );

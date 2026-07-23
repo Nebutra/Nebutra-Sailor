@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@nebutra/ui/primitives";
-
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useState } from "react";
+import { RunnerError, RunnerNote } from "@/components/runner-ui";
 
 export function UuidRunner({ toolId }: { toolId: string }) {
   const [count, setCount] = useState(5);
@@ -42,52 +42,47 @@ export function UuidRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <label className="flex items-center gap-2 text-sm">
-        数量
-        <input
-          data-allow-native
-          type="number"
-          min={1}
-          max={100}
-          value={count}
-          onChange={(e) => setCount(Number(e.target.value))}
-          className="w-20 rounded border border-border bg-background px-2 py-1"
-        />
-      </label>
+      <Input
+        label="数量"
+        id="uuid-count"
+        type="number"
+        min={1}
+        max={100}
+        value={count}
+        onChange={(e) => setCount(Number(e.target.value))}
+        className="w-28"
+      />
       <div className="flex flex-wrap gap-2">
-        <Button type="button" onClick={local}>
-          本地生成 (crypto.randomUUID)
+        <Button type="button" variant="ink" onClick={local}>
+          本地生成
         </Button>
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => void server()}
-          className="rounded-lg border border-border px-4 py-2 text-sm"
-        >
+        <Button type="button" variant="outline" disabled={loading} onClick={() => void server()}>
           服务端生成
-        </button>
+        </Button>
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           onClick={() => void navigator.clipboard.writeText(uuids.join("\n"))}
+          disabled={uuids.length === 0}
         >
           复制全部
         </Button>
       </div>
-      {error ? (
-        <pre className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
-          {error}
-        </pre>
-      ) : null}
+      <RunnerError>{error}</RunnerError>
       {uuids.length > 0 ? (
         <ul className="space-y-1 font-mono text-sm">
           {uuids.map((id) => (
-            <li key={id} className="rounded border border-border bg-background px-3 py-2">
+            <li
+              key={id}
+              className="rounded-[var(--radius-md)] border border-[var(--neutral-6)] bg-[var(--neutral-1)] px-3 py-2"
+            >
               {id}
             </li>
           ))}
         </ul>
-      ) : null}
+      ) : (
+        <RunnerNote>生成结果会显示在这里</RunnerNote>
+      )}
     </div>
   );
 }

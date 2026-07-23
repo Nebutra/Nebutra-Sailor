@@ -19,7 +19,7 @@ describe("calculateCost", () => {
         promptTokens: 1_000_000,
         completionTokens: 0,
         totalTokens: 1_000_000,
-        model: "gpt-4o",
+        model: "gpt-5.5",
       },
       pricing,
     );
@@ -32,7 +32,7 @@ describe("calculateCost", () => {
         promptTokens: 1_000_000,
         completionTokens: 1_000_000,
         totalTokens: 2_000_000,
-        model: "gpt-4o",
+        model: "gpt-5.5",
       },
       pricing,
     );
@@ -46,7 +46,7 @@ describe("calculateCost", () => {
         promptTokens: 0,
         completionTokens: 0,
         totalTokens: 0,
-        model: "gpt-4o",
+        model: "gpt-5.5",
       },
       pricing,
     );
@@ -59,7 +59,7 @@ describe("calculateCost", () => {
         promptTokens: 500_000,
         completionTokens: 250_000,
         totalTokens: 750_000,
-        model: "gpt-4o",
+        model: "gpt-5.5",
       },
       pricing,
     );
@@ -87,7 +87,7 @@ describe("getModelPricing", () => {
       modelConfig: { findUnique: vi.fn() },
     };
 
-    const result = await getModelPricing("gpt-4o", { redis, prisma } as never);
+    const result = await getModelPricing("gpt-5.5", { redis, prisma } as never);
 
     expect(result).toEqual(cachedPricing);
     expect(prisma.modelConfig.findUnique).not.toHaveBeenCalled();
@@ -95,7 +95,7 @@ describe("getModelPricing", () => {
 
   it("queries Prisma on Redis miss and caches with 3600s TTL", async () => {
     const dbPricing = {
-      modelName: "gpt-4o",
+      modelName: "gpt-5.5",
       inputPricePerMillion: 2.5,
       outputPricePerMillion: 10.0,
       currency: "USD",
@@ -110,7 +110,7 @@ describe("getModelPricing", () => {
       },
     };
 
-    const result = await getModelPricing("gpt-4o", { redis, prisma } as never);
+    const result = await getModelPricing("gpt-5.5", { redis, prisma } as never);
 
     expect(result).toEqual({
       inputPricePerMillion: 2.5,
@@ -118,7 +118,7 @@ describe("getModelPricing", () => {
       currency: "USD",
     });
     expect(prisma.modelConfig.findUnique).toHaveBeenCalledWith({
-      where: { modelName: "gpt-4o" },
+      where: { modelName: "gpt-5.5" },
     });
     expect(redis.set).toHaveBeenCalledOnce();
     expect(redis.set.mock.calls[0]?.[2]).toEqual({ ex: 3600 });
@@ -170,7 +170,7 @@ describe("getModelPricing", () => {
       },
     };
 
-    const result = await getModelPricing("gpt-4o", { redis, prisma } as never);
+    const result = await getModelPricing("gpt-5.5", { redis, prisma } as never);
 
     expect(result).toEqual(DEFAULT_PRICING);
     expect(prisma.modelConfig.findUnique).toHaveBeenCalledOnce();

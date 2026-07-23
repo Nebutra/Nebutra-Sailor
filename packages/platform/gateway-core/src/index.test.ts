@@ -55,7 +55,7 @@ describe("aiGatewayMiddleware", () => {
     const res = await app.request("http://localhost/v1/chat/completions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "gpt-4", messages: [{ role: "user", content: "hi" }] }),
+      body: JSON.stringify({ model: "gpt-5.5", messages: [{ role: "user", content: "hi" }] }),
     });
 
     expect(mockGlobalFetch).toHaveBeenCalledTimes(1);
@@ -90,7 +90,7 @@ describe("aiGatewayMiddleware", () => {
     const res = await app.request("http://localhost/v1/chat/completions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "gpt-4", messages: [], stream: true }),
+      body: JSON.stringify({ model: "gpt-5.5", messages: [], stream: true }),
     });
 
     expect(res.status).toBe(200);

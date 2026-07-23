@@ -1684,7 +1684,7 @@ export interface paths {
               role: "system" | "user" | "assistant";
               content: string;
             }[];
-            /** @default gpt-4o */
+            /** @default gpt-5.5 */
             model?: string;
             /** @default 0.7 */
             temperature?: number;

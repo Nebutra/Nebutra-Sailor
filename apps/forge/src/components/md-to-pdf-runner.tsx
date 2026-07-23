@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, Textarea } from "@nebutra/ui/primitives";
-
+import { Button, Input, Textarea } from "@nebutra/ui/primitives";
 import { useState } from "react";
+import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 const SAMPLE = `# Nebutra Forge
 
@@ -74,8 +74,9 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: drop zone wraps native file input */}
       <div
-        className="rounded-xl border-2 border-dashed border-border bg-background p-4 text-sm text-muted-foreground"
+        className="rounded-[var(--radius-lg)] border-2 border-dashed border-[var(--neutral-6)] bg-[var(--neutral-1)] p-4 text-sm text-[var(--neutral-11)]"
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
           e.preventDefault();
@@ -91,62 +92,52 @@ export function MdToPdfRunner({ toolId }: { toolId: string }) {
         <p className="mt-2">拖拽 .md 文件，或粘贴下方 Markdown</p>
       </div>
 
-      <div className="flex flex-wrap gap-3 text-sm">
-        <label>
-          标题
-          <input
-            data-allow-native
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="ml-2 rounded border border-border bg-background px-2 py-1"
-          />
-        </label>
-        <label>
-          引擎
-          <select
-            data-allow-native
-            value={engine}
-            onChange={(e) => setEngine(e.target.value as typeof engine)}
-            className="ml-2 rounded border border-border bg-background px-2 py-1"
-          >
-            <option value="auto">auto（优先 Playwright）</option>
-            <option value="playwright">playwright（Chromium 排版打印）</option>
-            <option value="simple">simple（无浏览器）</option>
-          </select>
-        </label>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Input
+          label="标题"
+          id="md-pdf-title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <RunnerSelect
+          label="引擎"
+          id="md-pdf-engine"
+          value={engine}
+          onChange={(v) => setEngine(v as typeof engine)}
+        >
+          <option value="auto">auto（优先 Playwright）</option>
+          <option value="playwright">playwright（Chromium 打印）</option>
+          <option value="simple">simple（无浏览器）</option>
+        </RunnerSelect>
       </div>
 
       <Textarea
+        label="Markdown"
+        id="md-pdf-body"
         value={markdown}
         onChange={(e) => setMarkdown(e.target.value)}
         rows={14}
-        className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
+        className="font-mono text-sm"
       />
 
-      <Button type="button" disabled={loading} onClick={() => void run()}>
-        {loading ? "生成中…" : "生成 PDF"}
-      </Button>
+      <div className="flex flex-wrap gap-2">
+        <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
+          {loading ? "生成中…" : "生成 PDF"}
+        </Button>
+        {downloadUrl ? (
+          <Button asChild variant="outline">
+            <a href={downloadUrl} download={`${title || "document"}.pdf`}>
+              下载 PDF
+            </a>
+          </Button>
+        ) : null}
+      </div>
 
-      <p className="text-xs text-muted-foreground">
-        渲染路径：marked → HTML/CSS → Chromium print（Playwright）。中文依赖宿主系统字体（PingFang /
-        Noto Sans CJK / 微软雅黑）。无浏览器时 auto 会回退 simple。
-      </p>
-
-      {error ? (
-        <pre className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
-          {error}
-        </pre>
-      ) : null}
-      {meta ? <p className="text-sm text-muted-foreground">{meta}</p> : null}
-      {downloadUrl ? (
-        <a
-          href={downloadUrl}
-          download={`${title || "document"}.pdf`}
-          className="inline-block rounded-lg border border-border px-4 py-2 text-sm font-medium underline"
-        >
-          下载 PDF
-        </a>
-      ) : null}
+      <RunnerNote>
+        渲染：marked → HTML/CSS → Chromium print。中文依赖系统字体；无浏览器时 auto 回退 simple。
+      </RunnerNote>
+      <RunnerError>{error}</RunnerError>
+      <RunnerNote>{meta}</RunnerNote>
     </div>
   );
 }

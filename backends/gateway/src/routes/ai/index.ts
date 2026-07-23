@@ -28,7 +28,8 @@ const ChatMessageSchema = z.object({
 
 const ChatRequestSchema = z.object({
   messages: z.array(ChatMessageSchema).min(1).max(50),
-  model: z.string().default("gpt-4o"),
+  // models.dev / OpenRouter frontier default (not gpt-4 / gpt-4o era)
+  model: z.string().default("gpt-5.5"),
   temperature: z.number().min(0).max(2).default(0.7),
   maxTokens: z.number().int().min(1).max(16_384).optional(),
   stream: z.boolean().default(false),

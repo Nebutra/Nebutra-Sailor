@@ -21,6 +21,8 @@ import {
   type ResolvedApiKey,
 } from "@nebutra/gateway-core";
 import { logger } from "@nebutra/logger";
+import { API_SCOPES, hasScope } from "@nebutra/prepaid-wallet";
+import { listPublicModels, parseAliasTableJson } from "@nebutra/router-supply";
 import type { GatewayDeps } from "../../lib/gateway-deps.js";
 
 const log = logger.child({ service: "ai-gateway" });
@@ -218,6 +220,33 @@ export function defaultEnvUpstreams(): readonly AiGatewayUpstream[] {
   if (explicit.length > 0) return orderUpstreams(explicit);
 
   const envUpstreams = [
+    // Nebutra Router sidecars (infra/nebutra-router) — preferred when configured
+    normalizeEnvUpstream(
+      {
+        id: "newapi",
+        provider: "newapi",
+        baseUrl: process.env.NEW_API_BASE_URL ?? process.env.NEBUTRA_NEW_API_URL,
+        apiKeyEnv: process.env.NEW_API_ACCESS_TOKEN
+          ? "NEW_API_ACCESS_TOKEN"
+          : process.env.NEBUTRA_NEW_API_TOKEN
+            ? "NEBUTRA_NEW_API_TOKEN"
+            : "NEW_API_ACCESS_TOKEN",
+      },
+      0,
+    ),
+    normalizeEnvUpstream(
+      {
+        id: "sub2api",
+        provider: "sub2api",
+        baseUrl: process.env.SUB2API_BASE_URL ?? process.env.NEBUTRA_SUB2API_URL,
+        apiKeyEnv: process.env.SUB2API_ACCESS_TOKEN
+          ? "SUB2API_ACCESS_TOKEN"
+          : process.env.NEBUTRA_SUB2API_TOKEN
+            ? "NEBUTRA_SUB2API_TOKEN"
+            : "SUB2API_ACCESS_TOKEN",
+      },
+      1,
+    ),
     normalizeEnvUpstream(
       {
         id: "openai-env",
@@ -225,7 +254,7 @@ export function defaultEnvUpstreams(): readonly AiGatewayUpstream[] {
         baseUrl: process.env.OPENAI_BASE_URL ?? "https://api.openai.com/v1",
         apiKeyEnv: "OPENAI_API_KEY",
       },
-      0,
+      2,
     ),
     normalizeEnvUpstream(
       {
@@ -389,11 +418,33 @@ export function createAiGatewayRoutes(deps: GatewayDeps, options: AiGatewayRoute
 
   routes.use("*", authMiddleware);
 
+  // GET /models — OpenAI-compatible catalog from alias table
+  routes.get("/models", (c) => {
+    const apiKey = c.get("resolvedApiKey");
+    if (!hasScope(apiKey.scopes, API_SCOPES.MODELS_ALL)) {
+      return c.json({ error: "API key missing models:* scope" }, 403);
+    }
+    const aliases = parseAliasTableJson(process.env.NEBUTRA_MODEL_ALIASES);
+    const ids = listPublicModels(aliases);
+    return c.json({
+      object: "list",
+      data: ids.map((id) => ({
+        id,
+        object: "model",
+        owned_by: "nebutra-router",
+      })),
+    });
+  });
+
   routes.openapi(chatCompletionsRoute, async (c) => {
     const startTime = Date.now();
     const apiKey = c.get("resolvedApiKey");
     const requestId = c.get("gatewayRequestId");
     const body = c.req.valid("json") as UpstreamRequestBody;
+
+    if (!hasScope(apiKey.scopes, API_SCOPES.MODELS_ALL)) {
+      return c.json({ error: "API key missing models:* scope" }, 403);
+    }
 
     log.info("Gateway chat request", {
       requestId,

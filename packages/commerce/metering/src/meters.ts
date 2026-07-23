@@ -23,7 +23,7 @@ export const API_CALLS: MeterDefinition = {
  * Aggregation: sum of tokens (input + output)
  * Unit: tokens
  *
- * Dimensions: model (gpt-4, claude-3, etc.), endpoint
+ * Dimensions: model (gpt-5.5, claude-sonnet-4.6, etc.), endpoint
  */
 export const AI_TOKENS: MeterDefinition = {
   id: "ai_tokens",

@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@nebutra/ui/primitives";
-
 import { useState } from "react";
+import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
 export function PasswordRunner({ toolId }: { toolId: string }) {
   const [length, setLength] = useState(16);
@@ -39,7 +39,7 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <label className="block text-sm">
+      <label className="block text-sm text-[var(--neutral-11)]">
         长度：{length}
         <input
           data-allow-native
@@ -48,10 +48,10 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
           max={64}
           value={length}
           onChange={(e) => setLength(Number(e.target.value))}
-          className="mt-2 w-full"
+          className="mt-2 w-full accent-[var(--blue-9)]"
         />
       </label>
-      <div className="flex flex-wrap gap-4 text-sm">
+      <div className="flex flex-wrap gap-4 text-sm text-[var(--neutral-11)]">
         {(
           [
             ["大写", uppercase, setUppercase],
@@ -66,13 +66,14 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
               type="checkbox"
               checked={checked}
               onChange={(e) => set(e.target.checked)}
+              className="size-4 accent-[var(--blue-9)]"
             />
             {label}
           </label>
         ))}
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button type="button" onClick={() => void generate()}>
+        <Button type="button" variant="ink" onClick={() => void generate()}>
           生成密码
         </Button>
         <Button
@@ -84,19 +85,13 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
           复制
         </Button>
       </div>
-      {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
-      {password ? (
-        <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 font-mono text-lg tracking-wide">
-          {password}
-        </pre>
-      ) : null}
-      <p className="text-xs text-muted-foreground">
-        引擎：node:crypto randomInt · 密码学安全随机 · Agent 同 invoke 契约
-      </p>
+      <RunnerError>{error}</RunnerError>
+      <RunnerOutput className="text-lg tracking-wide">{password}</RunnerOutput>
+      <RunnerNote>引擎：node:crypto randomInt · 密码学安全随机 · 与 API 同一路径</RunnerNote>
       {history.length > 1 ? (
         <div className="space-y-1">
-          <p className="text-xs text-muted-foreground">最近生成</p>
-          <ul className="space-y-1 font-mono text-xs text-muted-foreground">
+          <p className="text-xs text-[var(--neutral-10)]">最近生成</p>
+          <ul className="space-y-1 font-mono text-xs text-[var(--neutral-11)]">
             {history.slice(1).map((p) => (
               <li key={p}>{p}</li>
             ))}

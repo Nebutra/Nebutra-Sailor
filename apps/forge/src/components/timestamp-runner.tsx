@@ -1,6 +1,14 @@
 "use client";
 
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useEffect, useState } from "react";
+import {
+  RunnerError,
+  RunnerNote,
+  RunnerOutput,
+  RunnerPanel,
+  RunnerSelect,
+} from "@/components/runner-ui";
 
 export function TimestampRunner({ toolId }: { toolId: string }) {
   const [now, setNow] = useState(() => Date.now());
@@ -37,71 +45,55 @@ export function TimestampRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-lg border border-border bg-background p-4">
-          <p className="text-xs text-muted-foreground">当前秒</p>
+        <RunnerPanel title="当前秒">
           <p className="font-mono text-xl tabular-nums">{Math.floor(now / 1000)}</p>
-        </div>
-        <div className="rounded-lg border border-border bg-background p-4">
-          <p className="text-xs text-muted-foreground">当前毫秒 / ISO</p>
+        </RunnerPanel>
+        <RunnerPanel title="当前毫秒 / ISO">
           <p className="font-mono text-sm tabular-nums">{now}</p>
-          <p className="mt-1 font-mono text-xs text-muted-foreground">
+          <p className="mt-1 font-mono text-xs text-[var(--neutral-10)]">
             {new Date(now).toISOString()}
           </p>
-        </div>
+        </RunnerPanel>
       </div>
 
-      <button
-        type="button"
-        onClick={() => void run({ mode: "now" })}
-        className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-      >
+      <Button type="button" variant="ink" onClick={() => void run({ mode: "now" })}>
         服务端 now
-      </button>
+      </Button>
 
-      <div className="flex flex-wrap gap-3 text-sm">
-        <select
-          data-allow-native
+      <div className="grid gap-3 sm:grid-cols-3">
+        <RunnerSelect
+          label="模式"
+          id="ts-mode"
           value={mode}
-          onChange={(e) => setMode(e.target.value as typeof mode)}
-          className="rounded border border-border bg-background px-2 py-1"
+          onChange={(v) => setMode(v as typeof mode)}
         >
           <option value="to_date">时间戳 → 日期</option>
           <option value="to_unix">日期 → 时间戳</option>
-        </select>
-        <select
-          data-allow-native
+        </RunnerSelect>
+        <RunnerSelect
+          label="单位"
+          id="ts-unit"
           value={unit}
-          onChange={(e) => setUnit(e.target.value as typeof unit)}
-          className="rounded border border-border bg-background px-2 py-1"
+          onChange={(v) => setUnit(v as typeof unit)}
         >
           <option value="seconds">秒</option>
           <option value="milliseconds">毫秒</option>
-        </select>
-        <input
-          data-allow-native
+        </RunnerSelect>
+        <Input
+          label="值"
+          id="timestamp-value"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={mode === "to_date" ? "1710000000" : "2024-01-01T00:00:00Z"}
-          className="min-w-[200px] flex-1 rounded border border-border bg-background px-3 py-1.5 font-mono"
+          className="font-mono"
         />
-        <button
-          type="button"
-          onClick={() => void run({ mode, value, unit })}
-          className="rounded-lg border border-border px-4 py-1.5"
-        >
-          转换
-        </button>
       </div>
-      {error ? (
-        <pre className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
-          {error}
-        </pre>
-      ) : null}
-      {output ? (
-        <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 font-mono text-sm">
-          {output}
-        </pre>
-      ) : null}
+      <Button type="button" variant="outline" onClick={() => void run({ mode, value, unit })}>
+        转换
+      </Button>
+      <RunnerError>{error}</RunnerError>
+      <RunnerOutput>{output}</RunnerOutput>
+      <RunnerNote>与 API 同一路径</RunnerNote>
     </div>
   );
 }

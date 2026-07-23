@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@nebutra/ui/primitives";
-
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useCallback, useState } from "react";
+import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 /** Image tools: drag-drop upload, sharp server transform, before/after preview. */
 export function ImageToolRunner({ toolId }: { toolId: string }) {
@@ -107,6 +107,7 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
+      {/* biome-ignore lint/a11y/noStaticElementInteractions: drop zone wraps native file input */}
       <div
         className="flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-background p-6 text-sm text-muted-foreground"
         onDragOver={(e) => e.preventDefault()}
@@ -129,22 +130,19 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-4 text-sm">
-        <label>
-          格式
-          <select
-            data-allow-native
-            value={format}
-            onChange={(e) => setFormat(e.target.value as typeof format)}
-            className="ml-2 rounded border border-border bg-background px-2 py-1"
-          >
-            <option value="webp">webp</option>
-            <option value="jpeg">jpeg</option>
-            <option value="png">png</option>
-          </select>
-        </label>
-        <label>
-          质量 {quality}
+      <div className="grid gap-3 sm:grid-cols-3">
+        <RunnerSelect
+          label="格式"
+          id="image-format"
+          value={format}
+          onChange={(v) => setFormat(v as typeof format)}
+        >
+          <option value="webp">webp</option>
+          <option value="jpeg">jpeg</option>
+          <option value="png">png</option>
+        </RunnerSelect>
+        <label className="flex flex-col gap-1.5 text-sm text-[var(--neutral-11)]">
+          <span className="text-xs font-medium">质量 {quality}</span>
           <input
             data-allow-native
             type="range"
@@ -152,44 +150,32 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
             max={100}
             value={quality}
             onChange={(e) => setQuality(Number(e.target.value))}
-            className="ml-2 align-middle"
+            className="mt-2 w-full accent-[var(--blue-9)]"
           />
         </label>
-        <label>
-          最大宽
-          <input
-            data-allow-native
-            type="number"
-            placeholder="可选"
-            value={width}
-            onChange={(e) => setWidth(e.target.value)}
-            className="ml-2 w-24 rounded border border-border bg-background px-2 py-1"
-          />
-        </label>
+        <Input
+          label="最大宽"
+          id="image-width"
+          type="number"
+          placeholder="可选"
+          value={width}
+          onChange={(e) => setWidth(e.target.value)}
+        />
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button type="button" disabled={loading} onClick={() => void run()}>
+        <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "处理中…" : "运行（sharp）"}
         </Button>
-        <button
-          type="button"
-          disabled={!previewOut}
-          onClick={download}
-          className="rounded-lg border border-border px-4 py-2 text-sm disabled:opacity-50"
-        >
+        <Button type="button" variant="outline" disabled={!previewOut} onClick={download}>
           下载结果
-        </button>
+        </Button>
       </div>
 
-      {error ? (
-        <pre className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
-          {error}
-        </pre>
-      ) : null}
+      <RunnerError>{error}</RunnerError>
 
       {resultMeta ? (
-        <p className="text-sm text-muted-foreground">
+        <RunnerNote>
           输出 {(resultMeta.bytes / 1024).toFixed(1)} KB
           {resultMeta.width && resultMeta.height
             ? ` · ${resultMeta.width}×${resultMeta.height}`
@@ -197,37 +183,33 @@ export function ImageToolRunner({ toolId }: { toolId: string }) {
           {ratio !== null ? ` · 约为原图 ${ratio}%` : null}
           {" · "}
           {resultMeta.contentType}
-        </p>
+        </RunnerNote>
       ) : null}
 
       <div className="grid gap-3 sm:grid-cols-2">
         {previewIn ? (
           <div>
-            <p className="mb-1 text-xs text-muted-foreground">原图</p>
-            {/* biome-ignore lint/performance/noImgElement: data-url preview */}
+            <p className="mb-1 text-xs text-[var(--neutral-10)]">原图</p>
             <img
               src={previewIn}
               alt="input preview"
-              className="max-h-72 w-full rounded-lg border border-border object-contain"
+              className="max-h-72 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
             />
           </div>
         ) : null}
         {previewOut ? (
           <div>
-            <p className="mb-1 text-xs text-muted-foreground">结果</p>
-            {/* biome-ignore lint/performance/noImgElement: data-url preview */}
+            <p className="mb-1 text-xs text-[var(--neutral-10)]">结果</p>
             <img
               src={previewOut}
               alt="output preview"
-              className="max-h-72 w-full rounded-lg border border-border object-contain"
+              className="max-h-72 w-full rounded-[var(--radius-lg)] border border-[var(--neutral-6)] object-contain"
             />
           </div>
         ) : null}
       </div>
 
-      <p className="text-xs text-muted-foreground">
-        引擎：sharp（libvips）· 服务端处理 · Agent 同 invoke 契约（imageBase64）
-      </p>
+      <RunnerNote>引擎：sharp（libvips）· 服务端处理 · 与 API 同一路径（imageBase64）</RunnerNote>
     </div>
   );
 }

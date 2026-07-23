@@ -41,7 +41,7 @@ integration hook lives here in `providers/langchain.ts` as an extension point.
 ```ts
 import { configure, streamText } from "@nebutra/agents";
 
-configure({ provider: "openrouter", defaultModel: "anthropic/claude-sonnet-4" });
+configure({ provider: "openrouter", defaultModel: "anthropic/claude-sonnet-4.6" });
 
 const result = await streamText(
   [{ role: "user", content: "Explain monorepos" }],
@@ -58,13 +58,13 @@ import { VercelAIAgent } from "@nebutra/agents/providers/vercel-ai";
 
 const orchestrator = new AgentOrchestrator({
   agents: [
-    { id: "assistant", name: "Assistant", description: "Helpful", model: "openai/gpt-4", instructions: "..." },
+    { id: "assistant", name: "Assistant", description: "Helpful", model: "openai/gpt-5.5", instructions: "..." },
   ],
 });
 
 // Swap the BaseAgent for a real VercelAIAgent at runtime:
 orchestrator.registerAgent(
-  new VercelAIAgent({ id: "assistant", name: "Assistant", description: "Helpful", model: "openai/gpt-4", instructions: "..." }),
+  new VercelAIAgent({ id: "assistant", name: "Assistant", description: "Helpful", model: "openai/gpt-5.5", instructions: "..." }),
 );
 
 const ctx = createAgentContext("org_123", "user_456");

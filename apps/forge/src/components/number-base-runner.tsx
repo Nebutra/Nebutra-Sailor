@@ -1,6 +1,8 @@
 "use client";
 
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useState } from "react";
+import { RunnerError, RunnerNote, RunnerPanel } from "@/components/runner-ui";
 
 const PRESETS = [
   { label: "10→16", from: 10, to: 16 },
@@ -25,7 +27,9 @@ export function NumberBaseRunner({ toolId }: { toolId: string }) {
     const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ input: { value: v, fromBase: from, toBase: to } }),
+      body: JSON.stringify({
+        input: { value: v, fromBase: from, toBase: to },
+      }),
     });
     const body = (await res.json()) as {
       ok?: boolean;
@@ -44,74 +48,72 @@ export function NumberBaseRunner({ toolId }: { toolId: string }) {
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
         {PRESETS.map((p) => (
-          <button
+          <Button
             key={p.label}
             type="button"
+            size="sm"
+            variant="outline"
             onClick={() => {
               setFromBase(p.from);
               setToBase(p.to);
               void convert({ fromBase: p.from, toBase: p.to });
             }}
-            className="rounded-lg border border-border px-3 py-1.5 text-sm"
           >
             {p.label}
-          </button>
+          </Button>
         ))}
       </div>
-      <input
-        data-allow-native
+      <Input
+        label="数值"
+        id="number-base-value"
         value={value}
         onChange={(e) => {
           setValue(e.target.value);
           void convert({ value: e.target.value });
         }}
-        className="w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
+        className="font-mono"
         placeholder="数值"
       />
       <div className="grid grid-cols-2 gap-3">
-        <label className="text-sm">
-          从进制
-          <input
-            data-allow-native
-            type="number"
-            min={2}
-            max={36}
-            value={fromBase}
-            onChange={(e) => {
-              const n = Number(e.target.value);
-              setFromBase(n);
-              void convert({ fromBase: n });
-            }}
-            className="mt-1 w-full rounded-lg border border-border bg-background p-2 font-mono"
-          />
-        </label>
-        <label className="text-sm">
-          到进制
-          <input
-            data-allow-native
-            type="number"
-            min={2}
-            max={36}
-            value={toBase}
-            onChange={(e) => {
-              const n = Number(e.target.value);
-              setToBase(n);
-              void convert({ toBase: n });
-            }}
-            className="mt-1 w-full rounded-lg border border-border bg-background p-2 font-mono"
-          />
-        </label>
+        <Input
+          label="从进制"
+          id="number-base-from"
+          type="number"
+          min={2}
+          max={36}
+          value={fromBase}
+          onChange={(e) => {
+            const n = Number(e.target.value);
+            setFromBase(n);
+            void convert({ fromBase: n });
+          }}
+          className="font-mono"
+        />
+        <Input
+          label="到进制"
+          id="number-base-to"
+          type="number"
+          min={2}
+          max={36}
+          value={toBase}
+          onChange={(e) => {
+            const n = Number(e.target.value);
+            setToBase(n);
+            void convert({ toBase: n });
+          }}
+          className="font-mono"
+        />
       </div>
-      {error ? <p className="text-sm text-[hsl(var(--destructive))]">{error}</p> : null}
+      <RunnerError>{error}</RunnerError>
       {result ? (
-        <div className="space-y-2 rounded-lg border border-border bg-background p-4">
+        <RunnerPanel>
           <p className="font-mono text-xl break-all">{result}</p>
-          <p className="text-xs text-muted-foreground">十进制：{decimal}</p>
-        </div>
+          <p className="mt-1 text-xs text-[var(--neutral-10)]">十进制：{decimal}</p>
+        </RunnerPanel>
       ) : null}
-      <p className="text-xs text-muted-foreground">
-        引擎：ECMAScript parseInt / Number.toString · 2–36 进制 · Agent 同契约
-      </p>
+      <RunnerNote>
+        引擎：ECMAScript parseInt / Number.toString · 2–36 进制 · 与 API 同一路径
+      </RunnerNote>
     </div>
   );
 }

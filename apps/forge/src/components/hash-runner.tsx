@@ -2,6 +2,7 @@
 
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
+import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
 async function digestHex(algorithm: "SHA-1" | "SHA-256" | "MD5", text: string): Promise<string> {
   if (algorithm === "MD5") {
@@ -61,24 +62,25 @@ export function HashRunner({
       return;
     }
     setHex(body.output?.hex ?? "");
-    setNote("服务端 node:crypto（Agent 同契约）");
+    setNote("服务端 node:crypto · 与 API 同一路径");
   };
 
   return (
     <div className="space-y-4">
-      <p className="text-xs text-muted-foreground">
+      <RunnerNote>
         算法：{algorithm.toUpperCase()}
-        {algorithm === "md5" ? " · 仅校验/兼容，勿用于密码存储" : null}
-      </p>
+        {algorithm === "md5" ? " · 仅校验/兼容，勿作密码存储" : null}
+      </RunnerNote>
       <Textarea
+        label="输入"
+        id={`hash-${algorithm}`}
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={6}
         className="font-mono text-sm"
-        aria-label="哈希输入"
       />
       <div className="flex flex-wrap gap-2">
-        <Button type="button" onClick={() => void runLocal()}>
+        <Button type="button" variant="ink" onClick={() => void runLocal()}>
           本地运行
         </Button>
         <Button type="button" variant="outline" onClick={() => void runServer()}>
@@ -86,20 +88,16 @@ export function HashRunner({
         </Button>
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           onClick={() => void navigator.clipboard.writeText(hex)}
           disabled={!hex}
         >
           复制
         </Button>
       </div>
-      {error ? <p className="text-sm text-destructive">{error}</p> : null}
-      {hex ? (
-        <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 font-mono text-sm break-all">
-          {hex}
-        </pre>
-      ) : null}
-      {note ? <p className="text-xs text-muted-foreground">{note}</p> : null}
+      <RunnerError>{error}</RunnerError>
+      <RunnerOutput className="break-all">{hex}</RunnerOutput>
+      <RunnerNote>{note}</RunnerNote>
     </div>
   );
 }

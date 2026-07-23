@@ -9,19 +9,27 @@ import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   title: {
-    default: `${brand.name} Forge — 在线工具站 · Agent 工具基建`,
+    default: `${brand.name} Forge — 在线工具站`,
     template: `%s | ${brand.name} Forge`,
   },
   description:
-    "互联网瑞士军刀工具站：字数统计、编码、哈希、JSON… 同一能力同时提供 API / MCP，为人类与 Agent 而生。",
+    "编解码、文本、哈希、文档与图片等在线工具。页面上手动完成，或经 API / MCP 接入自动化。",
 };
 
+/**
+ * Shell contract (landing / product best practice):
+ * - Header + footer are full-bleed chrome
+ * - <main> is flex-1 only — width/padding owned by each page section
+ * - Never put max-w on <main> (double-box with hero/cards)
+ */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh-CN" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="flex min-h-screen flex-col font-sans antialiased">
+      <body className="flex min-h-screen flex-col bg-[var(--neutral-1)] font-sans text-[var(--neutral-12)] antialiased">
         <SiteHeader />
-        <main className="mx-auto w-full max-w-[1400px] flex-1 px-6 py-10 md:py-12">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

@@ -618,8 +618,8 @@ Administration of China.
 
 | Model / 模型 | Provider / 提供方 | Use Case / 用途 |
 | --- | --- | --- |
-| _e.g. GPT-4o_ | _OpenAI_ | _Chat, content drafting_ |
-| _e.g. Claude 3.5 Sonnet_ | _Anthropic_ | _Reasoning, code generation_ |
+| _e.g. GPT-5.5_ | _OpenAI_ | _Chat, content drafting_ |
+| _e.g. Claude Sonnet 4.6_ | _Anthropic_ | _Reasoning, code generation_ |
 | _e.g. 通义千问_ | _阿里云_ | _中文内容生成_ |
 
 ---

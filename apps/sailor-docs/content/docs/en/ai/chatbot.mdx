@@ -15,7 +15,7 @@ The chat completions endpoint accepts a list of messages and returns a model res
 
     ```bash
     OPENAI_API_KEY=""
-    AI_DEFAULT_MODEL="gpt-4o-mini"
+    AI_DEFAULT_MODEL="gpt-5.4-mini"
 
     # Optional: enable multi-model routing
     OPENROUTER_API_KEY=""
@@ -77,7 +77,7 @@ interface ChatRequest {
     {
       "id": "chatcmpl-abc123",
       "object": "chat.completion",
-      "model": "gpt-4o-mini",
+      "model": "gpt-5.4-mini",
       "choices": [
         {
           "index": 0,
@@ -136,7 +136,7 @@ import { updateTenantAiSettings } from "@nebutra/tenant";
 
 await updateTenantAiSettings("org_123", {
   systemPrompt: "You are a helpful assistant for Acme Corp.",
-  defaultModel: "gpt-4o",
+  defaultModel: "gpt-5.5",
 });
 ```
 
@@ -198,14 +198,14 @@ const { tenantId } = getCurrentTenant();
 
 // Non-streaming — good for background processing
 const { text } = await generateText({
-  model: "gpt-4o-mini",
+  model: "gpt-5.4-mini",
   prompt: "Summarize this document: " + document.content,
   tenantId,
 });
 
 // Streaming — good for real-time UI
 const stream = await streamText({
-  model: "gpt-4o",
+  model: "gpt-5.5",
   messages: conversation.messages,
   tenantId,
 });

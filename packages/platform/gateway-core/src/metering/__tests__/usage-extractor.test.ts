@@ -5,7 +5,7 @@ describe("extractUsageFromJson", () => {
   it("returns a UsageResult from a valid OpenAI-shape response", () => {
     const response = {
       id: "chatcmpl-123",
-      model: "gpt-4o",
+      model: "gpt-5.5",
       usage: {
         prompt_tokens: 10,
         completion_tokens: 20,
@@ -19,19 +19,19 @@ describe("extractUsageFromJson", () => {
       promptTokens: 10,
       completionTokens: 20,
       totalTokens: 30,
-      model: "gpt-4o",
+      model: "gpt-5.5",
     });
   });
 
   it("returns null when the response is missing the usage field", () => {
-    const response = { id: "chatcmpl-123", model: "gpt-4o" };
+    const response = { id: "chatcmpl-123", model: "gpt-5.5" };
 
     expect(extractUsageFromJson(response, "fallback-model")).toBeNull();
   });
 
   it("returns null when usage is partial (missing completion_tokens)", () => {
     const response = {
-      model: "gpt-4o",
+      model: "gpt-5.5",
       usage: { prompt_tokens: 5, total_tokens: 5 },
     };
 
@@ -47,23 +47,23 @@ describe("extractUsageFromJson", () => {
       },
     };
 
-    const result = extractUsageFromJson(response, "gpt-4o-fallback");
-    expect(result?.model).toBe("gpt-4o-fallback");
+    const result = extractUsageFromJson(response, "gpt-5.5-fallback");
+    expect(result?.model).toBe("gpt-5.5-fallback");
   });
 
   it("returns null for null/undefined input", () => {
-    expect(extractUsageFromJson(null, "gpt-4o")).toBeNull();
-    expect(extractUsageFromJson(undefined, "gpt-4o")).toBeNull();
+    expect(extractUsageFromJson(null, "gpt-5.5")).toBeNull();
+    expect(extractUsageFromJson(undefined, "gpt-5.5")).toBeNull();
   });
 
   it("returns null for non-object input (string)", () => {
-    expect(extractUsageFromJson("not-an-object", "gpt-4o")).toBeNull();
+    expect(extractUsageFromJson("not-an-object", "gpt-5.5")).toBeNull();
   });
 });
 
 describe("createStreamingUsageExtractor", () => {
   it("accumulates content across multiple chunks", () => {
-    const extractor = createStreamingUsageExtractor("gpt-4o");
+    const extractor = createStreamingUsageExtractor("gpt-5.5");
 
     extractor.processChunk(
       `data: ${JSON.stringify({ choices: [{ delta: { content: "Hello" } }] })}`,
@@ -76,12 +76,12 @@ describe("createStreamingUsageExtractor", () => {
   });
 
   it("detects the usage frame emitted before [DONE]", () => {
-    const extractor = createStreamingUsageExtractor("gpt-4o");
+    const extractor = createStreamingUsageExtractor("gpt-5.5");
 
     extractor.processChunk(`data: ${JSON.stringify({ choices: [{ delta: { content: "hi" } }] })}`);
     extractor.processChunk(
       `data: ${JSON.stringify({
-        model: "gpt-4o-2024-08-06",
+        model: "gpt-5.5-2025-08-07",
         usage: {
           prompt_tokens: 3,
           completion_tokens: 1,
@@ -96,12 +96,12 @@ describe("createStreamingUsageExtractor", () => {
       promptTokens: 3,
       completionTokens: 1,
       totalTokens: 4,
-      model: "gpt-4o-2024-08-06",
+      model: "gpt-5.5-2025-08-07",
     });
   });
 
   it("returns null from getUsage() when no usage frame was seen", () => {
-    const extractor = createStreamingUsageExtractor("gpt-4o");
+    const extractor = createStreamingUsageExtractor("gpt-5.5");
 
     extractor.processChunk(`data: ${JSON.stringify({ choices: [{ delta: { content: "hi" } }] })}`);
     extractor.processChunk("data: [DONE]");
@@ -110,7 +110,7 @@ describe("createStreamingUsageExtractor", () => {
   });
 
   it("handles multiple data: entries in one chunk (newline-split)", () => {
-    const extractor = createStreamingUsageExtractor("gpt-4o");
+    const extractor = createStreamingUsageExtractor("gpt-5.5");
 
     const multiLine = [
       `data: ${JSON.stringify({ choices: [{ delta: { content: "a" } }] })}`,
@@ -124,7 +124,7 @@ describe("createStreamingUsageExtractor", () => {
   });
 
   it("ignores malformed JSON in data frames (does not throw)", () => {
-    const extractor = createStreamingUsageExtractor("gpt-4o");
+    const extractor = createStreamingUsageExtractor("gpt-5.5");
 
     expect(() => extractor.processChunk("data: {not-valid-json")).not.toThrow();
     expect(extractor.getAccumulatedContent()).toBe("");
@@ -132,7 +132,7 @@ describe("createStreamingUsageExtractor", () => {
   });
 
   it("[DONE] sentinel does not corrupt state", () => {
-    const extractor = createStreamingUsageExtractor("gpt-4o");
+    const extractor = createStreamingUsageExtractor("gpt-5.5");
 
     extractor.processChunk(
       `data: ${JSON.stringify({ choices: [{ delta: { content: "hello" } }] })}`,
@@ -145,7 +145,7 @@ describe("createStreamingUsageExtractor", () => {
   });
 
   it("ignores empty lines and lines that do not start with 'data: '", () => {
-    const extractor = createStreamingUsageExtractor("gpt-4o");
+    const extractor = createStreamingUsageExtractor("gpt-5.5");
 
     extractor.processChunk("");
     extractor.processChunk("not a data line");
@@ -155,7 +155,7 @@ describe("createStreamingUsageExtractor", () => {
   });
 
   it("uses fallbackModel when usage frame has no model field", () => {
-    const extractor = createStreamingUsageExtractor("gpt-4o-fallback");
+    const extractor = createStreamingUsageExtractor("gpt-5.5-fallback");
 
     extractor.processChunk(
       `data: ${JSON.stringify({
@@ -167,6 +167,6 @@ describe("createStreamingUsageExtractor", () => {
       })}`,
     );
 
-    expect(extractor.getUsage()?.model).toBe("gpt-4o-fallback");
+    expect(extractor.getUsage()?.model).toBe("gpt-5.5-fallback");
   });
 });

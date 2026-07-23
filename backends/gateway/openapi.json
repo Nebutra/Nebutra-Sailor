@@ -3213,7 +3213,7 @@
                   },
                   "model": {
                     "type": "string",
-                    "default": "gpt-4o"
+                    "default": "gpt-5.5"
                   },
                   "temperature": {
                     "type": "number",

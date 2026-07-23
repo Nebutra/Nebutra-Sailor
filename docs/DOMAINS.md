@@ -14,6 +14,10 @@
 | `docs.nebutra.com` | sailor-docs (Vercel project `docs`) | Product/docs site |
 | `nebutra.sanity.studio` | studio | Canonical Sanity-hosted Studio |
 | `studio.nebutra.com` | studio | Optional branded Studio alias |
+| `router.nebutra.com` | router (planned) | **Nebutra Router** — model fabric / OpenAI-compatible product edge |
+| `forge.nebutra.com` | forge (planned) | **Nebutra Forge** — tool station + Agent tool API |
+
+> Router/Forge: product hosts; supply engines (New-API, Sub2API) stay **internal** — see `infra/nebutra-router/`.
 
 ## Production truth (as of 2026-07-22)
 

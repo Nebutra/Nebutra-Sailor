@@ -1,0 +1,16 @@
+# Copy to infra/nebutra-router/.env after docker compose up and New-API root setup.
+
+# New-API (http://127.0.0.1:3001) — create token in admin UI, paste here
+NEW_API_BASE_URL=http://127.0.0.1:3001
+NEW_API_ACCESS_TOKEN=
+
+# Optional Sub2API (profile)
+# SUB2API_BASE_URL=http://127.0.0.1:3002
+# SUB2API_ACCESS_TOKEN=
+
+# Optional direct official (Class A)
+# OPENAI_API_KEY=
+# OPENAI_BASE_URL=https://api.openai.com/v1
+
+# Model aliases (JSON). Empty = package defaults.
+# NEBUTRA_MODEL_ALIASES=[{"publicModel":"gpt-5.4-mini","engineId":"newapi","upstreamModel":"gpt-5.4-mini","priority":10}]

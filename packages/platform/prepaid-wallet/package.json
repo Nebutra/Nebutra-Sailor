@@ -1,0 +1,45 @@
+{
+  "name": "@nebutra/prepaid-wallet",
+  "version": "0.1.0",
+  "description": "Prepaid wallet, API key product helpers, and dual-ledger usage envelopes for Nebutra Router & Forge",
+  "private": false,
+  "license": "AGPL-3.0",
+  "type": "module",
+  "nebutra": {
+    "status": "wip",
+    "productionReady": false,
+    "surface": "support-contract",
+    "featureId": "prepaid-wallet",
+    "category": "platform",
+    "summary": "Product control-plane contracts: prepaid balance, API key scopes, customer vs supply usage envelope"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "homepage": "https://github.com/Nebutra/Nebutra-Sailor/tree/main/packages/platform/prepaid-wallet#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",
+    "directory": "packages/platform/prepaid-wallet"
+  },
+  "bugs": {
+    "url": "https://github.com/Nebutra/Nebutra-Sailor/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

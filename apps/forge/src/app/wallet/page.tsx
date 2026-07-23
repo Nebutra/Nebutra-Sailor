@@ -1,3 +1,5 @@
+import { PageHeader } from "@nebutra/ui/layout";
+import { PageFrame } from "@/components/page-frame";
 import { WalletPanel } from "@/components/wallet-panel";
 
 export const metadata = {
@@ -7,15 +9,14 @@ export const metadata = {
 
 export default function WalletPage() {
   return (
-    <div className="mx-auto max-w-lg space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">预充钱包</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          302 风格：先充值、后按量。当前为 <strong>mock 充值</strong>
-          ，生产接入微信/支付宝/国际卡后写入同一 CreditBalance 账本。
-        </p>
+    <PageFrame width="text" className="py-10 md:py-12">
+      <div className="space-y-6">
+        <PageHeader
+          title="预充钱包"
+          description="302 风格：先充值、后按量。当前为 mock 充值，生产接入支付后写入同一账本。"
+        />
+        <WalletPanel />
       </div>
-      <WalletPanel />
-    </div>
+    </PageFrame>
   );
 }

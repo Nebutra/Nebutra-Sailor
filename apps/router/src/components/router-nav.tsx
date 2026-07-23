@@ -17,29 +17,29 @@ const NAV = [
 ] as const;
 
 /**
- * Product chrome header — structure aligned with landing Navbar:
- * h-16 · max-w-[1400px] · px-6 · official brand logo (mark on mobile, horizontal on md+).
+ * Same chrome contract as Forge SiteHeader:
+ * logo left · text nav · action right · no absolute center · no pill active state
  */
 export function RouterNav() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-6">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--neutral-6)] bg-[color-mix(in_srgb,var(--neutral-1)_92%,transparent)] backdrop-blur-xl">
+      <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center gap-6 px-6 lg:gap-8">
         <Link
           href="/"
-          className="flex min-w-0 items-center gap-3 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-md)]"
+          className="flex shrink-0 items-center gap-2.5 rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-12)] focus-visible:ring-offset-2"
           aria-label={`${brand.name} Router 首页`}
         >
-          <BrandLogo variant="mark" className="h-8 w-8 md:hidden" />
-          <BrandLogo variant="horizontal" className="hidden h-7 w-auto md:block" />
-          <span className="hidden h-4 w-px bg-[hsl(var(--border))] sm:block" aria-hidden />
-          <span className="text-sm font-medium tracking-tight text-muted-foreground">Router</span>
+          <BrandLogo variant="mark" className="h-8 w-8 sm:hidden" />
+          <BrandLogo variant="horizontal" className="hidden h-[26px] w-auto sm:block" />
+          <span className="hidden h-4 w-px bg-[var(--neutral-6)] sm:block" aria-hidden />
+          <span className="text-[13px] font-medium text-[var(--neutral-11)]">Router</span>
         </Link>
 
         <nav
           aria-label="主导航"
-          className="flex flex-wrap items-center justify-end gap-0.5 sm:gap-1"
+          className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {NAV.map(({ href, label }) => {
             const active =
@@ -51,10 +51,10 @@ export function RouterNav() {
                 key={href}
                 href={href}
                 className={cn(
-                  "rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors sm:px-3 sm:text-sm",
+                  "shrink-0 px-2.5 py-2 text-[13px] transition-colors sm:px-3",
                   active
-                    ? "bg-muted text-foreground"
-                    : "text-muted-foreground hover:text-foreground",
+                    ? "font-medium text-[var(--neutral-12)]"
+                    : "text-[var(--neutral-11)] hover:text-[var(--neutral-12)]",
                 )}
               >
                 {label}
@@ -63,9 +63,11 @@ export function RouterNav() {
           })}
         </nav>
 
-        <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex">
-          <a href="http://localhost:3105">Forge</a>
-        </Button>
+        <div className="flex shrink-0 items-center">
+          <Button asChild variant="outline" size="sm">
+            <a href="http://localhost:3105">Forge</a>
+          </Button>
+        </div>
       </div>
     </header>
   );

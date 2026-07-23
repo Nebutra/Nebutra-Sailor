@@ -1,8 +1,8 @@
 "use client";
 
 import { Button, Textarea } from "@nebutra/ui/primitives";
-
 import { useState } from "react";
+import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
 
 export function TextDiffRunner({ toolId }: { toolId: string }) {
   const [left, setLeft] = useState("alpha\nbeta\ngamma");
@@ -23,7 +23,12 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
       });
       const body = (await res.json()) as {
         ok?: boolean;
-        output?: { patch?: string; addedLines?: number; removedLines?: number; engine?: string };
+        output?: {
+          patch?: string;
+          addedLines?: number;
+          removedLines?: number;
+          engine?: string;
+        };
         message?: string;
       };
       if (!res.ok || body.ok === false) {
@@ -42,39 +47,29 @@ export function TextDiffRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 md:grid-cols-2">
-        <label className="block text-sm">
-          左侧
-          <Textarea
-            value={left}
-            onChange={(e) => setLeft(e.target.value)}
-            rows={12}
-            className="mt-1 w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
-          />
-        </label>
-        <label className="block text-sm">
-          右侧
-          <Textarea
-            value={right}
-            onChange={(e) => setRight(e.target.value)}
-            rows={12}
-            className="mt-1 w-full rounded-lg border border-border bg-background p-3 font-mono text-sm"
-          />
-        </label>
+        <Textarea
+          label="左侧"
+          id="diff-left"
+          value={left}
+          onChange={(e) => setLeft(e.target.value)}
+          rows={12}
+          className="font-mono text-sm"
+        />
+        <Textarea
+          label="右侧"
+          id="diff-right"
+          value={right}
+          onChange={(e) => setRight(e.target.value)}
+          rows={12}
+          className="font-mono text-sm"
+        />
       </div>
-      <Button type="button" disabled={loading} onClick={() => void run()}>
-        {loading ? "对比中…" : "对比（jsdiff）"}
+      <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
+        {loading ? "对比中…" : "对比"}
       </Button>
-      {meta ? <p className="text-sm text-muted-foreground">{meta}</p> : null}
-      {error ? (
-        <pre className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
-          {error}
-        </pre>
-      ) : null}
-      {patch ? (
-        <pre className="max-h-96 overflow-auto rounded-lg border border-border bg-background p-3 font-mono text-xs">
-          {patch}
-        </pre>
-      ) : null}
+      <RunnerNote>{meta}</RunnerNote>
+      <RunnerError>{error}</RunnerError>
+      <RunnerOutput className="max-h-96 text-xs">{patch}</RunnerOutput>
     </div>
   );
 }

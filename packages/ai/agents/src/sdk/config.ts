@@ -27,8 +27,8 @@ export const NebutraAIConfigSchema = z.object({
   /** API key override. Falls back to env vars per provider. */
   apiKey: z.string().optional(),
 
-  /** Default model identifier. Provider-specific format. */
-  defaultModel: z.string().default("anthropic/claude-sonnet-4"),
+  /** Default model id — OpenRouter / models.dev frontier (not Claude 3.x / GPT-4 era). */
+  defaultModel: z.string().default("anthropic/claude-sonnet-4.6"),
 
   /** Default temperature for generations. */
   temperature: z.number().min(0).max(2).default(0.7),

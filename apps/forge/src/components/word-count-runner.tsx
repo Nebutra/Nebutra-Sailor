@@ -3,6 +3,7 @@
 import { Card } from "@nebutra/ui/layout";
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useMemo, useState } from "react";
+import { RunnerError, RunnerNote } from "@/components/runner-ui";
 
 function countClient(text: string) {
   const characters = [...text].length;
@@ -38,14 +39,16 @@ function countClient(text: string) {
 const SAMPLE = `Nebutra Forge 字数统计
 
 中英混排：Hello world，你好世界。
-用于作文、公众号、产品文案与 Agent token 前置估算。`;
+用于作文、公众号、产品文案与 token 前置估算。`;
 
 export function WordCountRunner({ toolId }: { toolId: string }) {
   const [text, setText] = useState(SAMPLE);
   const [apiNote, setApiNote] = useState("");
+  const [error, setError] = useState("");
   const live = useMemo(() => countClient(text), [text]);
 
   const verifyServer = async () => {
+    setError("");
     setApiNote("校验中…");
     const res = await fetch(`/api/v1/tools/invoke/${toolId}`, {
       method: "POST",
@@ -58,10 +61,11 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
       message?: string;
     };
     if (!res.ok || body.ok === false) {
-      setApiNote(body.message ?? "server error");
+      setError(body.message ?? "server error");
+      setApiNote("");
       return;
     }
-    setApiNote(`服务端 words=${body.output?.words ?? "?"}（与 Agent/API 同路径）`);
+    setApiNote(`服务端 words=${body.output?.words ?? "?"} · 与 API 同一路径`);
   };
 
   const stats = [
@@ -79,13 +83,13 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
         {stats.map((s) => (
           <Card
             key={s.label}
-            className={`border-border/80 px-3.5 py-3 ${
+            className={`border-[var(--neutral-6)] px-3.5 py-3 ${
               s.primary
-                ? "border-[color-mix(in_srgb,hsl(var(--primary))_28%,hsl(var(--border)))] bg-[color-mix(in_srgb,hsl(var(--primary))_12%,hsl(var(--background)))]"
+                ? "border-[color-mix(in_srgb,var(--blue-9)_28%,var(--neutral-7))] bg-[color-mix(in_srgb,var(--blue-3)_35%,var(--neutral-1))]"
                 : ""
             }`}
           >
-            <p className="text-[11px] font-medium text-muted-foreground">{s.label}</p>
+            <p className="text-[11px] font-medium text-[var(--neutral-10)]">{s.label}</p>
             <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight">{s.value}</p>
           </Card>
         ))}
@@ -116,10 +120,9 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
           服务端校验
         </Button>
       </div>
-      <p className="text-xs text-muted-foreground">
-        实时引擎：{live.engine} · 不上传即可统计 · Agent 同契约
-      </p>
-      {apiNote ? <p className="text-sm text-muted-foreground">{apiNote}</p> : null}
+      <RunnerNote>实时引擎：{live.engine} · 不上传即可统计 · 与 API 同一路径</RunnerNote>
+      <RunnerError>{error}</RunnerError>
+      <RunnerNote>{apiNote}</RunnerNote>
     </div>
   );
 }

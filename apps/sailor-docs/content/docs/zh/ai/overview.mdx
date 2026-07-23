@@ -13,7 +13,7 @@ Nebutra 通过 `@nebutra/agents` 开箱即用地提供 AI 功能。该包是 [Ve
 |------|------|----------|
 | **聊天补全** | 流式和非流式 LLM 响应 | `ai.chat` |
 | **嵌入向量** | 用于语义搜索和 RAG 的向量表示 | `ai.embeddings` |
-| **图像分析** | 支持视觉能力的模型（GPT-4o） | `ai.chat` |
+| **图像分析** | 支持视觉能力的模型（GPT-5） | `ai.chat` |
 | **模型选择** | 每租户模型覆盖（企业版） | `ai.model_selection` |
 
 ## 架构
@@ -53,22 +53,25 @@ pgvector（仅嵌入向量）         （PostgreSQL 向量存储）
 
 | 模型 | 上下文窗口 | 适用场景 |
 |------|-----------|----------|
-| `gpt-4o` | 128 k | 复杂推理、视觉、编程 |
-| `gpt-4o-mini` | 128 k | 快速、低成本任务 |
+| `gpt-5.5` | ~400 k+ | 旗舰推理、视觉、编程 |
+| `gpt-5.4-mini` | ~400 k+ | 快速、低成本任务 |
 | `text-embedding-3-small` | — | 嵌入向量（1536 维） |
 | `text-embedding-3-large` | — | 高精度嵌入向量（3072 维） |
+
+模型 id 以 [models.dev](https://models.dev) 为准。业务代码优先用 `@nebutra/ai-providers` 的语义档位（`flagship` / `fast`），避免手写过期字符串。
 
   </Tab>
   <Tab title="OpenRouter（多模型）">
 
 | 模型 | 供应商 | 备注 |
 |------|--------|------|
-| `anthropic/claude-3.5-sonnet` | Anthropic | 推理能力最强 |
-| `meta-llama/llama-3.1-70b-instruct` | Meta | 开源，速度快 |
-| `mistralai/mistral-large` | Mistral | 多语言能力强 |
-| `google/gemini-pro-1.5` | Google | 超长上下文（100 万 Token） |
+| `anthropic/claude-sonnet-4.6` | Anthropic | 默认旗舰推理 |
+| `anthropic/claude-haiku-4.5` | Anthropic | 快速 / 低成本 |
+| `openai/gpt-5.5` | OpenAI | OpenRouter 上的 OpenAI 旗舰 |
+| `google/gemini-3.1-pro-preview` | Google | 长上下文旗舰 |
+| `google/gemini-3.5-flash` | Google | 快速多模态 |
 
-将完整的模型标识符传入 `streamText` / `generateText`。完整模型列表请参阅 [OpenRouter 模型页面](https://openrouter.ai/models)。
+将完整模型标识符传入 `streamText` / `generateText`。实时目录见 [models.dev](https://models.dev) / [OpenRouter 模型页](https://openrouter.ai/models)。
 
   </Tab>
 </Tabs>
@@ -99,7 +102,7 @@ OPENAI_API_KEY=""
 OPENROUTER_API_KEY=""
 
 # 未在请求中指定模型时使用的默认模型
-AI_DEFAULT_MODEL="gpt-4o-mini"
+AI_DEFAULT_MODEL="gpt-5.4-mini"
 
 # 可选：覆盖默认嵌入模型
 AI_EMBEDDING_MODEL="text-embedding-3-small"
@@ -136,7 +139,7 @@ import { streamText, generateText, embed } from "@nebutra/agents";
 
 // 流式聊天（SSE）
 const result = await streamText({
-  model: "gpt-4o",
+  model: "gpt-5.5",
   messages: [
     { role: "system", content: "你是一个有帮助的助手。" },
     { role: "user", content: userMessage },
@@ -146,7 +149,7 @@ const result = await streamText({
 
 // 非流式
 const { text } = await generateText({
-  model: "gpt-4o-mini",
+  model: "gpt-5.4-mini",
   prompt: "总结以下内容：" + content,
   tenantId,
 });

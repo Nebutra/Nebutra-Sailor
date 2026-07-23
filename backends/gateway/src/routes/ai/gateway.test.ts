@@ -80,7 +80,7 @@ async function postChat(app: OpenAPIHono) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: "gpt-4o-mini",
+      model: "gpt-5.4-mini",
       messages: [{ role: "user", content: "hi" }],
     }),
   });
@@ -114,7 +114,7 @@ describe("AI gateway upstream governance", () => {
         new Response(
           JSON.stringify({
             id: "chatcmpl_fallback",
-            model: "gpt-4o-mini",
+            model: "gpt-5.4-mini",
             choices: [],
             usage: { prompt_tokens: 2, completion_tokens: 3, total_tokens: 5 },
           }),
@@ -163,7 +163,7 @@ describe("AI gateway upstream governance", () => {
       new Response(
         JSON.stringify({
           id: "chatcmpl_1",
-          model: "gpt-4o-mini",
+          model: "gpt-5.4-mini",
           choices: [],
           usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
         }),
@@ -250,7 +250,7 @@ describe("AI gateway upstream governance", () => {
       new Response(
         JSON.stringify({
           id: "chatcmpl_pool_b",
-          model: "gpt-4o-mini",
+          model: "gpt-5.4-mini",
           choices: [],
           usage: { prompt_tokens: 1, completion_tokens: 2, total_tokens: 3 },
         }),
@@ -283,7 +283,7 @@ describe("AI gateway upstream governance", () => {
     ]);
 
     const response = await postChatBody(app, {
-      model: "gpt-4o-mini",
+      model: "gpt-5.4-mini",
       messages: [{ role: "user", content: "hi" }],
       stream: true,
     });
@@ -322,7 +322,7 @@ describe("AI gateway upstream governance", () => {
     ]);
 
     const response = await postChatBody(app, {
-      model: "gpt-4o-mini",
+      model: "gpt-5.4-mini",
       messages: [{ role: "user", content: "hi" }],
       stream: true,
     });
@@ -361,7 +361,7 @@ describe("AI gateway upstream governance", () => {
     ]);
 
     const response = await postChatBody(app, {
-      model: "gpt-4o-mini",
+      model: "gpt-5.4-mini",
       messages: [{ role: "user", content: "hi" }],
       stream: true,
     });

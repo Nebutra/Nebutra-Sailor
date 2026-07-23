@@ -1,8 +1,8 @@
 "use client";
 
-import { Textarea } from "@nebutra/ui/primitives";
-
+import { Button, Textarea } from "@nebutra/ui/primitives";
 import { useCallback, useState } from "react";
+import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
 
 const SAMPLE = `{
   "name": "Nebutra Forge",
@@ -80,82 +80,68 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-center gap-2">
-        <label className="flex items-center gap-2 text-sm text-muted-foreground">
-          缩进
-          <select
-            data-allow-native
-            value={indent}
-            onChange={(e) => setIndent(Number(e.target.value))}
-            className="rounded-lg border border-border bg-background px-2 py-1.5 text-sm"
-          >
-            {[0, 2, 4].map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button
-          type="button"
-          onClick={() => localFormat("format")}
-          className="forge-btn forge-btn-primary"
+      <div className="flex flex-wrap items-end gap-2">
+        <RunnerSelect
+          label="缩进"
+          id="json-indent"
+          value={String(indent)}
+          onChange={(v) => setIndent(Number(v))}
+          className="w-24"
         >
+          {[0, 2, 4].map((n) => (
+            <option key={n} value={n}>
+              {n}
+            </option>
+          ))}
+        </RunnerSelect>
+        <Button type="button" variant="ink" onClick={() => localFormat("format")}>
           格式化
-        </button>
-        <button
-          type="button"
-          onClick={() => localFormat("minify")}
-          className="forge-btn forge-btn-secondary"
-        >
+        </Button>
+        <Button type="button" variant="outline" onClick={() => localFormat("minify")}>
           压缩
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="outline"
           disabled={loading}
           onClick={() => void serverVerify("format")}
-          className="forge-btn forge-btn-secondary"
         >
           服务端校验
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="ghost"
           onClick={() => void navigator.clipboard.writeText(text)}
-          className="forge-btn forge-btn-ghost"
         >
           复制
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="ghost"
           onClick={() => {
             setText("");
             setError("");
             setStatus("");
           }}
-          className="forge-btn forge-btn-ghost"
         >
           清空
-        </button>
+        </Button>
       </div>
 
       <Textarea
+        label="JSON"
+        id="json-format-input"
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={16}
         spellCheck={false}
-        className="forge-input forge-input-mono min-h-[320px] resize-y"
+        className="min-h-[320px] font-mono text-sm"
         placeholder="粘贴 JSON…"
       />
 
-      {error ? (
-        <pre className="overflow-x-auto rounded-xl border border-[color-mix(in_srgb,hsl(var(--destructive))_35%,transparent)] bg-[color-mix(in_srgb,hsl(var(--destructive))_8%,transparent)] p-3 text-sm text-[hsl(var(--destructive))]">
-          {error}
-        </pre>
-      ) : null}
-      {status ? <p className="text-sm text-muted-foreground">{status}</p> : null}
-      <p className="text-xs text-muted-foreground">
-        引擎：ECMAScript JSON.parse / stringify · 本地即时 · Agent 同路径
-      </p>
+      <RunnerError>{error}</RunnerError>
+      <RunnerNote>{status}</RunnerNote>
+      <RunnerNote>引擎：ECMAScript JSON.parse / stringify · 本地即时 · 与 API 同一路径</RunnerNote>
     </div>
   );
 }

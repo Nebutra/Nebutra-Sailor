@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@nebutra/ui/primitives";
-
+import { Button, Input } from "@nebutra/ui/primitives";
 import { useCallback, useEffect, useState } from "react";
+import { RunnerNote, RunnerPanel } from "@/components/runner-ui";
 
 export function WalletPanel() {
   const [balance, setBalance] = useState<number | null>(null);
@@ -31,7 +31,11 @@ export function WalletPanel() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tenantId: "demo", amount: Number(amount) }),
       });
-      const data = (await res.json()) as { ok?: boolean; message?: string; error?: string };
+      const data = (await res.json()) as {
+        ok?: boolean;
+        message?: string;
+        error?: string;
+      };
       if (!res.ok) {
         setMessage(data.error ?? data.message ?? "top-up failed");
       } else {
@@ -44,31 +48,30 @@ export function WalletPanel() {
   };
 
   return (
-    <div className="space-y-4 rounded-xl border border-border bg-muted p-5">
+    <RunnerPanel className="space-y-4 !p-5">
       <div>
-        <p className="text-sm text-muted-foreground">当前余额（tenant: demo）</p>
+        <p className="text-sm text-[var(--neutral-10)]">当前余额（tenant: demo）</p>
         <p className="text-3xl font-semibold tabular-nums">
           {balance === null ? "…" : balance}{" "}
-          <span className="text-base font-normal text-muted-foreground">{currency}</span>
+          <span className="text-base font-normal text-[var(--neutral-11)]">{currency}</span>
         </p>
       </div>
       <div className="flex flex-wrap items-end gap-3">
-        <label className="block text-sm">
-          充值金额
-          <input
-            type="number"
-            min={1}
-            step={1}
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="mt-1 block w-32 rounded-lg border border-border bg-background px-3 py-2"
-          />
-        </label>
-        <Button type="button" disabled={loading} onClick={() => void topUp()}>
+        <Input
+          label="充值金额"
+          id="wallet-amount"
+          type="number"
+          min={1}
+          step={1}
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-32"
+        />
+        <Button type="button" variant="ink" disabled={loading} onClick={() => void topUp()}>
           {loading ? "处理中…" : "Mock 充值"}
         </Button>
       </div>
-      {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
-    </div>
+      <RunnerNote>{message}</RunnerNote>
+    </RunnerPanel>
   );
 }

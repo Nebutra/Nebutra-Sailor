@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { LogoGithub as Github, LogoTwitterX as Twitter } from "@nebutra/icons";
 import Link from "next/link";
 import { BrandLogo } from "@/components/brand-logo";
 
@@ -9,100 +10,115 @@ const COLUMNS = [
       { href: "/", label: "概览" },
       { href: "/wallet", label: "充值" },
       { href: "/keys", label: "API Keys" },
-      { href: "/models", label: "模型目录" },
+      { href: "/models", label: "模型" },
       { href: "/playground", label: "Playground" },
     ],
   },
   {
-    title: "开发者",
+    title: "开发",
     links: [
       { href: "/docs", label: "接入文档" },
-      { href: "http://localhost:3105", label: "Forge 工具站", external: true },
-      {
-        href: brand.social.github,
-        label: "GitHub",
-        external: true,
-      },
+      { href: "http://localhost:3105", label: "Forge", external: true },
+      { href: brand.social.github, label: "GitHub", external: true },
     ],
   },
   {
-    title: "品牌",
+    title: "公司",
     links: [
-      { href: "https://nebutra.com", label: "Nebutra 官网", external: true },
+      { href: "https://nebutra.com", label: "官网", external: true },
       { href: "https://docs.nebutra.com", label: "Docs", external: true },
       { href: "https://nebutra.com/privacy", label: "隐私", external: true },
     ],
   },
 ] as const;
 
-/**
- * Product chrome footer — landing FooterMinimal structure:
- * neutral top border · horizontal logo · link columns · copyright.
- * (No brand-gradient hairline: --brand-gradient aliases --primary solid fill,
- * which reads as a harsh blue rule on a full-width 1px stripe.)
- */
+const SOCIAL = [
+  { href: brand.social.github, label: "GitHub", Icon: Github },
+  { href: brand.social.twitter, label: "X", Icon: Twitter },
+] as const;
+
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative w-full border-t border-border bg-background">
-      <div className="mx-auto max-w-[1400px] px-6 py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
-          <div className="md:col-span-4">
+    <footer className="mt-auto w-full border-t border-[var(--neutral-6)] bg-[var(--neutral-1)]">
+      <div className="mx-auto w-full max-w-[1400px] px-6 pt-14 pb-8 md:pt-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,2fr)] lg:gap-16">
+          <div className="flex max-w-xs flex-col gap-5">
             <Link
               href="/"
-              className="inline-flex outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-[var(--radius-md)]"
+              className="inline-flex w-fit rounded-[var(--radius-md)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--neutral-12)] focus-visible:ring-offset-2"
               aria-label={`${brand.name} Router`}
             >
-              <BrandLogo variant="horizontal" className="h-7 w-auto" />
+              <BrandLogo variant="horizontal" className="h-6 w-auto" />
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Router 是 {brand.name} 的模型聚合中转——OpenAI-compatible，数据面侧车 New-API /
-              Sub2API，客户只见 Nebutra。
+            <p className="text-[13px] leading-relaxed text-[var(--neutral-11)]">
+              模型聚合中转。OpenAI-compatible，侧车 New-API / Sub2API。
             </p>
-            <p className="mt-3 text-xs font-medium tracking-wide text-muted-foreground">
-              {brand.tagline}
-            </p>
+            <div className="flex items-center gap-1">
+              {SOCIAL.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="rounded-[var(--radius-md)] p-2 text-[var(--neutral-10)] transition-colors hover:bg-[var(--neutral-3)] hover:text-[var(--neutral-12)]"
+                >
+                  <Icon className="size-[18px]" />
+                </a>
+              ))}
+            </div>
           </div>
 
-          <div className="md:col-span-8 grid grid-cols-2 gap-8 sm:grid-cols-3">
+          <nav aria-label="页脚" className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-10">
             {COLUMNS.map((col) => (
               <div key={col.title} className="flex flex-col gap-3">
-                <h2 className="text-sm font-semibold text-foreground">{col.title}</h2>
+                <h2 className="text-[11px] font-semibold tracking-[0.08em] text-[var(--neutral-10)] uppercase">
+                  {col.title}
+                </h2>
                 <ul className="flex flex-col gap-2.5">
-                  {col.links.map((link) => (
-                    <li key={link.href + link.label}>
-                      {"external" in link && link.external ? (
-                        <a
-                          href={link.href}
-                          className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
-                          {...(link.href.startsWith("http")
-                            ? { target: "_blank", rel: "noopener noreferrer" }
-                            : {})}
-                        >
-                          {link.label}
-                        </a>
-                      ) : (
-                        <Link
-                          href={link.href}
-                          className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
-                        >
+                  {col.links.map((link) => {
+                    const external = "external" in link && link.external === true;
+                    const className =
+                      "text-[13px] text-[var(--neutral-11)] transition-colors hover:text-[var(--neutral-12)]";
+                    if (external) {
+                      return (
+                        <li key={link.href + link.label}>
+                          <a
+                            href={link.href}
+                            className={className}
+                            {...(link.href.startsWith("http")
+                              ? {
+                                  target: "_blank",
+                                  rel: "noopener noreferrer",
+                                }
+                              : {})}
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      );
+                    }
+                    return (
+                      <li key={link.href + link.label}>
+                        <Link href={link.href} className={className}>
                           {link.label}
                         </Link>
-                      )}
-                    </li>
-                  ))}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
-          </div>
+          </nav>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-border pt-8 sm:flex-row sm:items-center">
-          <p className="text-[13px] text-muted-foreground">
-            © {year} {brand.name}. All rights reserved.
+        <div className="mt-12 flex flex-col gap-2 border-t border-[var(--neutral-6)] pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[12px] text-[var(--neutral-10)]">
+            © {year} {brand.name}
           </p>
-          <p className="text-[12px] text-muted-foreground">{brand.nameCn} · Router</p>
+          <p className="text-[12px] text-[var(--neutral-10)]">{brand.nameCn}</p>
         </div>
       </div>
     </footer>

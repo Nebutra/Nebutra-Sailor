@@ -89,17 +89,17 @@ describe("@nebutra/agents public API contract", () => {
   });
 
   it("configure() accepts a provider selection and getConfig() reflects it", () => {
-    agents.configure({ provider: "openai", defaultModel: "gpt-4o" });
+    agents.configure({ provider: "openai", defaultModel: "gpt-5.5" });
     const cfg = agents.getConfig();
     expect(cfg.provider).toBe("openai");
-    expect(cfg.defaultModel).toBe("gpt-4o");
+    expect(cfg.defaultModel).toBe("gpt-5.5");
   });
 
   it("NebutraAIConfigSchema validates input config", () => {
     expect(agents.NebutraAIConfigSchema).toBeDefined();
     const parsed = agents.NebutraAIConfigSchema.parse({});
     expect(parsed.provider).toBe("openrouter"); // default
-    expect(parsed.defaultModel).toBeTypeOf("string");
+    expect(parsed.defaultModel).toBe("anthropic/claude-sonnet-4.6");
   });
 
   it("AgentOrchestrator can be instantiated with empty agents", () => {
@@ -112,7 +112,7 @@ describe("@nebutra/agents public API contract", () => {
       id: "test",
       name: "Test Agent",
       description: "Contract test",
-      model: "openai/gpt-4",
+      model: "openai/gpt-5.5",
       instructions: "You are a test agent.",
     });
     expect(agent.config.id).toBe("test");
